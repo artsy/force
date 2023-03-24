@@ -2,6 +2,7 @@ import {
   Button,
   Checkbox,
   Column,
+  Flex,
   GridColumns,
   Message,
   Separator,
@@ -58,11 +59,11 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
     return (
       <>
         <Text variant={["lg-display", "xl"]} mt={6} mb={6}>
-          Email Preference Center
+          Preference Center
         </Text>
 
         <Message variant="error" my={4}>
-          Please sign in to update your email preferences
+          Please sign in to update your preferences
         </Message>
       </>
     )
@@ -72,7 +73,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
     <>
       <MetaTags title="Preferences | Artsy" pathname="/unsubscribe" />
       <Text variant={["lg-display", "xl"]} mt={6} mb={6}>
-        Email Preference Center
+        Preference Center
       </Text>
       <Formik<FormValuesForNotificationPreferences>
         // @ts-ignore
@@ -122,117 +123,186 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
         }) => (
           <Form>
             <GridColumns gridRowGap={4}>
-              <Column span={10}>
+              <Column span={8}>
                 <Text variant="sm-display">Subscribe to all</Text>
-                <Text variant="sm" color="black60">
-                  Get all of Artsy’s emails, including recommendations for you,
-                  Artsy Editorial, guidance on collecting, and updates on your
-                  favorite artists
-                </Text>
               </Column>
-              <Column span={2}>
-                <Checkbox
-                  selected={Object.values(values).every(Boolean)}
-                  onSelect={value => {
-                    Object.keys(values).forEach(field => {
-                      setFieldValue(field, value)
-                      setFieldTouched(field, value)
-                    })
-                  }}
-                >
-                  Email
-                </Checkbox>
+              <Column span={2} start={10}>
+                <Flex flexDirection="row">
+                  <Checkbox
+                    mr={6}
+                    selected={Object.values(values).every(Boolean)}
+                    onSelect={value => {
+                      Object.keys(values).forEach(field => {
+                        setFieldValue(field, value)
+                        setFieldTouched(field, value)
+                      })
+                    }}
+                  >
+                    Email
+                  </Checkbox>
+                  <Checkbox
+                  // selected={Object.values(values).every(Boolean)}
+                  // onSelect={value => {
+                  //   Object.keys(values).forEach(field => {
+                  //     setFieldValue(field, value)
+                  //     setFieldTouched(field, value)
+                  //   })
+                  // }}
+                  >
+                    Push
+                  </Checkbox>
+                </Flex>
               </Column>
               <Column span={12}>
                 <Separator />
               </Column>
-              <Column span={10}>
+              <Column span={8}>
                 <Text variant="sm-display">Recommended for You</Text>
                 <Text variant="sm" color="black60">
                   Artworks, shows, fairs, auctions, and collections we think
                   you’ll love
                 </Text>
               </Column>
-              <Column span={2}>
-                <Checkbox
-                  selected={values.recommendedByArtsy}
-                  onSelect={value => {
-                    setFieldValue("recommendedByArtsy", value)
-                    setFieldTouched("recommendedByArtsy", true)
-                  }}
-                >
-                  Email
-                </Checkbox>
+              <Column span={2} start={10}>
+                <Flex flexDirection="row">
+                  <Checkbox
+                    mr={6}
+                    selected={values.recommendedByArtsy}
+                    onSelect={value => {
+                      setFieldValue("recommendedByArtsy", value)
+                      setFieldTouched("recommendedByArtsy", true)
+                    }}
+                  >
+                    Email
+                  </Checkbox>
+                  <Checkbox
+                  // selected={values.recommendedByArtsy}
+                  // onSelect={value => {
+                  //   setFieldValue("recommendedByArtsy", value)
+                  //   setFieldTouched("recommendedByArtsy", true)
+                  // }}
+                  >
+                    Push
+                  </Checkbox>
+                </Flex>
               </Column>
-              <Column span={10}>
+              <Column span={8}>
                 <Text variant="sm-display">Editorial</Text>
                 <Text variant="sm" color="black60">
                   Market stories, artist profiles, exhibition reviews, and more
                   art world insights
                 </Text>
               </Column>
-              <Column span={2}>
-                <Checkbox
-                  selected={values.artWorldInsights}
-                  onSelect={value => {
-                    setFieldValue("artWorldInsights", value)
-                    setFieldTouched("artWorldInsights", true)
-                  }}
-                >
-                  Email
-                </Checkbox>
+              <Column span={2} start={10}>
+                <Flex flexDirection="row">
+                  <Checkbox
+                    mr={6}
+                    selected={values.artWorldInsights}
+                    onSelect={value => {
+                      setFieldValue("artWorldInsights", value)
+                      setFieldTouched("artWorldInsights", true)
+                    }}
+                  >
+                    Email
+                  </Checkbox>
+                  <Checkbox
+                  // selected={values.artWorldInsights}
+                  // onSelect={value => {
+                  //   setFieldValue("artWorldInsights", value)
+                  //   setFieldTouched("artWorldInsights", true)
+                  // }}
+                  >
+                    Push
+                  </Checkbox>
+                </Flex>
               </Column>
-              <Column span={10}>
+              <Column span={8}>
                 <Text variant="sm-display">Guidance on Collecting</Text>
                 <Text variant="sm" color="black60">
                   Expert advice on buying and selling art, directly from an
                   Artsy specialist
                 </Text>
               </Column>
-              <Column span={2}>
-                <Checkbox
-                  selected={values.guidanceOnCollecting}
-                  onSelect={value => {
-                    setFieldValue("guidanceOnCollecting", value)
-                    setFieldTouched("guidanceOnCollecting", true)
-                  }}
-                >
-                  Email
-                </Checkbox>
+              <Column span={2} start={10}>
+                <Flex flexDirection="row">
+                  <Checkbox
+                    mr={6}
+                    selected={values.guidanceOnCollecting}
+                    onSelect={value => {
+                      setFieldValue("guidanceOnCollecting", value)
+                      setFieldTouched("guidanceOnCollecting", true)
+                    }}
+                  >
+                    Email
+                  </Checkbox>
+                  <Checkbox
+                  // selected={values.guidanceOnCollecting}
+                  // onSelect={value => {
+                  //   setFieldValue("guidanceOnCollecting", value)
+                  //   setFieldTouched("guidanceOnCollecting", true)
+                  // }}
+                  >
+                    Push
+                  </Checkbox>
+                </Flex>
               </Column>
-              <Column span={10}>
+              <Column span={8}>
                 <Text variant="sm-display">Custom Alerts</Text>
                 <Text variant="sm" color="black60">
                   A roundup of updates on your favorite artists, chosen by you
                 </Text>
               </Column>
-              <Column span={2}>
-                <Checkbox
-                  selected={values.customAlerts}
-                  onSelect={value => {
-                    setFieldValue("customAlerts", value)
-                    setFieldTouched("customAlerts", true)
-                  }}
-                >
-                  Email
-                </Checkbox>
+              <Column span={2} start={10}>
+                <Flex flexDirection="row">
+                  <Checkbox
+                    mr={6}
+                    selected={values.customAlerts}
+                    onSelect={value => {
+                      setFieldValue("customAlerts", value)
+                      setFieldTouched("customAlerts", true)
+                    }}
+                  >
+                    Email
+                  </Checkbox>
+                  <Checkbox
+                  // selected={values.customAlerts}
+                  // onSelect={value => {
+                  //   setFieldValue("customAlerts", value)
+                  //   setFieldTouched("customAlerts", true)
+                  // }}
+                  >
+                    Push
+                  </Checkbox>
+                </Flex>
               </Column>
-              <Column span={10}>
+              <Column span={8}>
                 <Text variant="sm-display">Product Updates</Text>
                 <Text variant="sm" color="black60">
                   Announcements of new features on Artsy.net and the mobile app
                 </Text>
               </Column>
-              <Column span={2}>
-                <Checkbox
-                  selected={values.productUpdates}
-                  onSelect={value => {
-                    setFieldValue("productUpdates", value)
-                    setFieldTouched("productUpdates", true)
-                  }}
-                >
-                  Email
-                </Checkbox>
+              <Column span={2} start={10}>
+                <Flex flexDirection="row">
+                  <Checkbox
+                    mr={6}
+                    selected={values.productUpdates}
+                    onSelect={value => {
+                      setFieldValue("productUpdates", value)
+                      setFieldTouched("productUpdates", true)
+                    }}
+                  >
+                    Email
+                  </Checkbox>
+                  <Checkbox
+                  // selected={values.productUpdates}
+                  // onSelect={value => {
+                  //   setFieldValue("productUpdates", value)
+                  //   setFieldTouched("productUpdates", true)
+                  // }}
+                  >
+                    Push
+                  </Checkbox>
+                </Flex>
               </Column>
               <Column span={12}>
                 <Separator my={2} />
@@ -240,28 +310,53 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
               <Column span={10}>
                 <Text variant="sm-display">Unsubscribe from all</Text>
               </Column>
-              <Column span={2}>
-                <Checkbox
-                  selected={!Object.values(values).some(Boolean)}
-                  onSelect={value => {
-                    Object.keys(values).forEach(field => {
-                      setFieldValue(field, !value)
-                      setFieldTouched(field, !value)
-                    })
-                  }}
-                >
-                  Email
-                </Checkbox>
+              <Column span={2} start={10}>
+                <Flex flexDirection="row">
+                  <Checkbox
+                    mr={6}
+                    selected={!Object.values(values).some(Boolean)}
+                    onSelect={value => {
+                      Object.keys(values).forEach(field => {
+                        setFieldValue(field, !value)
+                        setFieldTouched(field, !value)
+                      })
+                    }}
+                  >
+                    Email
+                  </Checkbox>
+                  <Checkbox
+                  // selected={!Object.values(values).some(Boolean)}
+                  // onSelect={value => {
+                  //   Object.keys(values).forEach(field => {
+                  //     setFieldValue(field, !value)
+                  //     setFieldTouched(field, !value)
+                  //   })
+                  // }}
+                  >
+                    Push
+                  </Checkbox>
+                </Flex>
               </Column>
               <Column span={2} start={10} mt={2}>
-                <Button
-                  width="100%"
-                  type="submit"
-                  loading={isSubmitting}
-                  disabled={isEmpty(touched) || isSubmitting}
-                >
-                  Save
-                </Button>
+                <Flex flexDirection="row">
+                  {/* <Button
+                    mr={6}
+                    width="100%"
+                    type="submit"
+                    loading={isSubmitting}
+                    disabled={isEmpty(touched) || isSubmitting}
+                  >
+                    Cancel
+                  </Button> */}
+                  <Button
+                    width="100%"
+                    type="submit"
+                    loading={isSubmitting}
+                    disabled={isEmpty(touched) || isSubmitting}
+                  >
+                    Save
+                  </Button>
+                </Flex>
               </Column>
             </GridColumns>
           </Form>
