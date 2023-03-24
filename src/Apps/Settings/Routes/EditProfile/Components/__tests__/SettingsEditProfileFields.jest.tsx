@@ -4,10 +4,21 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { SettingsEditProfileFieldsFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
 import { useTracking } from "react-tracking"
+import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("Utils/Hooks/Mutations/useUpdateMyUserProfile")
+jest.mock("Apps/Settings/Routes/EditProfile/Mutations/useVerifyID")
+
+const mockSendToast = jest.fn()
+
+jest.mock("@artsy/palette", () => {
+  return {
+    ...jest.requireActual("@artsy/palette"),
+    useToasts: () => ({ sendToast: mockSendToast }),
+  }
+})
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: SettingsEditProfileFieldsFragmentContainer,
@@ -22,7 +33,9 @@ const { renderWithRelay } = setupTestWrapperTL({
 
 describe("SettingsEditProfileFields", () => {
   const mockUseUpdateMyUserProfile = useUpdateMyUserProfile as jest.Mock
+  const mockUseVerifyID = useVerifyID as jest.Mock
   const mockSubmitUpdateMyUserProfile = jest.fn()
+  const mockSubmitVerifyIDMutation = jest.fn()
   const mockUseTracking = useTracking as jest.Mock
   const trackingSpy = jest.fn()
 
@@ -34,10 +47,15 @@ describe("SettingsEditProfileFields", () => {
     mockUseUpdateMyUserProfile.mockImplementation(() => ({
       submitUpdateMyUserProfile: mockSubmitUpdateMyUserProfile,
     }))
+    mockUseVerifyID.mockImplementation(() => ({
+      submitMutation: mockSubmitVerifyIDMutation,
+    }))
   })
 
   afterEach(() => {
     mockUseUpdateMyUserProfile.mockReset()
+    mockUseVerifyID.mockReset()
+    mockSendToast.mockClear()
   })
 
   it("renders the image sectio", () => {
@@ -118,6 +136,33 @@ describe("SettingsEditProfileFields", () => {
         "href",
         expect.stringContaining("mailto:verification@artsy.net")
       )
+    })
+
+    it("upon clicking text submits mutation", async () => {
+      renderWithRelay()
+
+      expect(screen.getByText("Verify Your ID")).toBeInTheDocument()
+      fireEvent.click(screen.getByText("Verify Your ID"))
+
+      await waitFor(() => {
+        expect(mockSubmitVerifyIDMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {},
+            },
+            rejectIf: expect.any(Function),
+          })
+        )
+      })
+
+      await waitFor(() => {
+        expect(mockSendToast).toHaveBeenCalledWith({
+          variant: "success",
+          message:
+            'ID verification link sent to <mock-value-for-field-"email">.',
+          ttl: 6000,
+        })
+      })
     })
   })
 
