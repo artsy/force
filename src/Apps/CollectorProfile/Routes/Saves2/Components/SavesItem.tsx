@@ -33,7 +33,9 @@ const SavesItem: FC<SavesItemProps> = ({ imagesLayout, item }) => {
     return `${BASE_PATH}/${item.internalID}`
   }
 
-  const handleClick = () => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault()
+
     const link = getLink()
 
     window.history.pushState(null, "", link)
