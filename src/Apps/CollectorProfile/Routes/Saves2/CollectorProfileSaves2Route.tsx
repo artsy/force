@@ -2,7 +2,7 @@ import { Shelf, Spacer } from "@artsy/palette"
 import { SavesArtworksQueryRenderer } from "./Components/SavesArtworks"
 import { SavesHeader } from "./Components/SavesHeader"
 import { SavesItemFragmentContainer } from "./Components/SavesItem"
-import { FC, useRef, useState } from "react"
+import { FC, useCallback, useEffect, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { extractNodes } from "Utils/extractNodes"
@@ -12,17 +12,20 @@ interface CollectorProfileSaves2RouteProps {
   me: CollectorProfileSaves2Route_me$data
 }
 
+const URL_REGEX = /^\/collector-profile\/saves2\/?([a-zA-Z0-9\-]+)?$/
+
 const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   me,
 }) => {
   const { match } = useRouter()
   const { page, sort } = match.location.query ?? {}
   const savedCollection = me.defaultSaves!
+  const savedCollectionId = savedCollection.internalID
   let otherCollections = extractNodes(me.otherSaves)
 
   const initialCollectionId = useRef(match.params.id)
   const [selectedCollectionId, setSelectedCollectionId] = useState(
-    match.params.id ?? savedCollection.internalID
+    match.params.id ?? savedCollectionId
   )
 
   if (initialCollectionId.current !== undefined) {
@@ -45,6 +48,27 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   const handleListClick = (id: string) => {
     setSelectedCollectionId(id)
   }
+
+  const popHistoryStateListener = useCallback(() => {
+    const pathname = window.location.pathname ?? ""
+    const matches = pathname.match(URL_REGEX)
+
+    if (matches === null) {
+      return
+    }
+
+    const id = matches[1]
+
+    setSelectedCollectionId(id ?? savedCollectionId)
+  }, [savedCollectionId, setSelectedCollectionId])
+
+  useEffect(() => {
+    window.addEventListener("popstate", popHistoryStateListener)
+
+    return () => {
+      window.removeEventListener("popstate", popHistoryStateListener)
+    }
+  }, [popHistoryStateListener])
 
   return (
     <>
