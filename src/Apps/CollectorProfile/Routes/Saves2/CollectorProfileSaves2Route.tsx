@@ -2,17 +2,16 @@ import { Shelf, Spacer } from "@artsy/palette"
 import { SavesArtworksQueryRenderer } from "./Components/SavesArtworks"
 import { SavesHeader } from "./Components/SavesHeader"
 import { SavesItemFragmentContainer } from "./Components/SavesItem"
-import { FC, useCallback, useEffect, useRef, useState } from "react"
+import { FC, useCallback, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import { CollectorProfileSaves2Route_me$data } from "__generated__/CollectorProfileSaves2Route_me.graphql"
+import { useSavesHistoryEntity } from "Apps/CollectorProfile/Routes/Saves2/Hooks/useSavesHistoryEntity"
 
 interface CollectorProfileSaves2RouteProps {
   me: CollectorProfileSaves2Route_me$data
 }
-
-const URL_REGEX = /^\/collector-profile\/saves2\/?([a-zA-Z0-9\-]+)?$/
 
 const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   me,
@@ -45,30 +44,20 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   // Always display "Saved Artwork" collection first in the list
   const savedCollections = [savedCollection, ...otherCollections]
 
+  const onHistoryChanged = useCallback(
+    (id: string | null) => {
+      setSelectedCollectionId(id ?? savedCollectionId)
+    },
+    [savedCollectionId, setSelectedCollectionId]
+  )
+
+  useSavesHistoryEntity({
+    onChanged: onHistoryChanged,
+  })
+
   const handleListClick = (id: string) => {
     setSelectedCollectionId(id)
   }
-
-  const popHistoryStateListener = useCallback(() => {
-    const pathname = window.location.pathname ?? ""
-    const matches = pathname.match(URL_REGEX)
-
-    if (matches === null) {
-      return
-    }
-
-    const id = matches[1]
-
-    setSelectedCollectionId(id ?? savedCollectionId)
-  }, [savedCollectionId, setSelectedCollectionId])
-
-  useEffect(() => {
-    window.addEventListener("popstate", popHistoryStateListener)
-
-    return () => {
-      window.removeEventListener("popstate", popHistoryStateListener)
-    }
-  }, [popHistoryStateListener])
 
   return (
     <>
