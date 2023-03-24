@@ -1,5 +1,6 @@
 import { useEffect } from "react"
 
+// TODO: Replace `saves2` on `saves` when we're ready to launch the new artworks list page
 const URL_REGEX = /^\/collector-profile\/saves2\/?([a-zA-Z0-9\-]+)?$/
 
 interface Options {
