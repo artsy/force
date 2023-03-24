@@ -42,7 +42,12 @@ const SavesItem: FC<SavesItemProps> = ({
   }
 
   return (
-    <Clickable onClick={handleClick} aria-current={!!isSelected}>
+    <Clickable
+      as="a"
+      textDecoration="none"
+      aria-current={!!isSelected}
+      onClick={handleClick}
+    >
       <Flex
         p={1}
         width={[138, 222]}

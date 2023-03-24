@@ -1,4 +1,4 @@
-import { screen } from "@testing-library/react"
+import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { SavesItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesItem"
@@ -6,12 +6,20 @@ import { SavesItem_test_Query } from "__generated__/SavesItem_test_Query.graphql
 
 jest.unmock("react-relay")
 
+const onClick = jest.fn()
+
 const { renderWithRelay } = setupTestWrapperTL<SavesItem_test_Query>({
   Component: props => {
     const item = props.me?.collectionsConnection?.edges?.[0]?.node
 
     if (item) {
-      return <SavesItemFragmentContainer item={item} imagesLayout="grid" />
+      return (
+        <SavesItemFragmentContainer
+          item={item}
+          imagesLayout="grid"
+          onClick={onClick}
+        />
+      )
     }
 
     return null
@@ -75,35 +83,14 @@ describe("SavesItem", () => {
     expect(screen.getAllByAltText("")).toHaveLength(4)
   })
 
-  it("should render the correct link", () => {
+  it("should call `onClick` handler with id", () => {
     renderWithRelay({
       CollectionsConnection: () => collectionsConnection,
     })
 
-    const link = screen.getByRole("link")
-    const href = "/collector-profile/saves2/collection-id"
+    fireEvent.click(screen.getByText("Collection Name"))
 
-    expect(link).toHaveAttribute("href", href)
-  })
-
-  it("should render the correct link for default collection", () => {
-    renderWithRelay({
-      CollectionsConnection: () => ({
-        edges: [
-          {
-            node: {
-              ...collectionNode,
-              default: true,
-            },
-          },
-        ],
-      }),
-    })
-
-    const link = screen.getByRole("link")
-    const href = "/collector-profile/saves2"
-
-    expect(link).toHaveAttribute("href", href)
+    expect(onClick).toBeCalledWith("collection-id")
   })
 })
 
