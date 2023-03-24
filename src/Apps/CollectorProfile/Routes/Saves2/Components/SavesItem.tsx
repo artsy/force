@@ -1,4 +1,5 @@
 import { Box, Clickable, DROP_SHADOW, Flex, Text } from "@artsy/palette"
+import { useCollectorProfileSaves2Context } from "Apps/CollectorProfile/Routes/Saves2/CollectorProfileSaves2Context"
 import { FourUpImageLayout } from "Apps/CollectorProfile/Routes/Saves2/Components/FourUpImageLayout"
 import { StackedImageLayout } from "Apps/CollectorProfile/Routes/Saves2/Components/StackedImageLayout"
 import { FC } from "react"
@@ -8,23 +9,21 @@ import { extractNodes } from "Utils/extractNodes"
 import { SavesItem_item$data } from "__generated__/SavesItem_item.graphql"
 
 interface SavesItemProps {
-  isSelected?: boolean
   imagesLayout: "stacked" | "grid"
   item: SavesItem_item$data
-  onClick: (id: string) => void
 }
 
 const BASE_PATH = "/collector-profile/saves2"
 
-const SavesItem: FC<SavesItemProps> = ({
-  isSelected,
-  imagesLayout,
-  item,
-  onClick,
-}) => {
+const SavesItem: FC<SavesItemProps> = ({ imagesLayout, item }) => {
   const { t } = useTranslation()
   const artworkNodes = extractNodes(item.artworksConnection)
   const imageURLs = artworkNodes.map(node => node.image?.url ?? null)
+  const {
+    activeCollectionId,
+    setActiveCollectionId,
+  } = useCollectorProfileSaves2Context()
+  const isSelected = activeCollectionId === item.internalID
 
   const getLink = () => {
     if (item.default) {
@@ -38,14 +37,14 @@ const SavesItem: FC<SavesItemProps> = ({
     const link = getLink()
 
     window.history.pushState(null, "", link)
-    onClick(item.internalID)
+    setActiveCollectionId(item.internalID)
   }
 
   return (
     <Clickable
       as="a"
       textDecoration="none"
-      aria-current={!!isSelected}
+      aria-current={isSelected}
       onClick={handleClick}
     >
       <Flex

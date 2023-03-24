@@ -59,10 +59,6 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
     onChanged: onHistoryChanged,
   })
 
-  const handleListClick = (id: string) => {
-    setActiveCollectionId(id)
-  }
-
   const onDeleteCollection = () => {
     setActiveCollectionId(savedCollectionId)
     window.history.replaceState(null, "", "/collector-profile/saves2")
@@ -89,9 +85,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
             <SavesItemFragmentContainer
               key={collection.internalID}
               item={collection}
-              isSelected={collection.internalID === activeCollectionId}
               imagesLayout={isDefaultCollection ? "grid" : "stacked"}
-              onClick={handleListClick}
             />
           )
         })}

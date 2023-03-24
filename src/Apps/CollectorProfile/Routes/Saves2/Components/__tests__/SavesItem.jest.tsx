@@ -1,12 +1,20 @@
-import { fireEvent, screen } from "@testing-library/react"
+import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { SavesItemFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesItem"
 import { SavesItem_test_Query } from "__generated__/SavesItem_test_Query.graphql"
+import {
+  CollectorProfileSaves2ContextProvider,
+  CollectorProfileSaves2ContextValue,
+} from "Apps/CollectorProfile/Routes/Saves2/CollectorProfileSaves2Context"
 
 jest.unmock("react-relay")
 
-const onClick = jest.fn()
+const contextValue: CollectorProfileSaves2ContextValue = {
+  activeCollectionId: "active-id",
+  setActiveCollectionId: () => {},
+  onDeleteCollection: () => {},
+}
 
 const { renderWithRelay } = setupTestWrapperTL<SavesItem_test_Query>({
   Component: props => {
@@ -14,11 +22,9 @@ const { renderWithRelay } = setupTestWrapperTL<SavesItem_test_Query>({
 
     if (item) {
       return (
-        <SavesItemFragmentContainer
-          item={item}
-          imagesLayout="grid"
-          onClick={onClick}
-        />
+        <CollectorProfileSaves2ContextProvider value={contextValue}>
+          <SavesItemFragmentContainer item={item} imagesLayout="grid" />
+        </CollectorProfileSaves2ContextProvider>
       )
     }
 
@@ -81,16 +87,6 @@ describe("SavesItem", () => {
     })
 
     expect(screen.getAllByAltText("")).toHaveLength(4)
-  })
-
-  it("should call `onClick` handler with id", () => {
-    renderWithRelay({
-      CollectionsConnection: () => collectionsConnection,
-    })
-
-    fireEvent.click(screen.getByText("Collection Name"))
-
-    expect(onClick).toBeCalledWith("collection-id")
   })
 })
 
