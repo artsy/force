@@ -3,11 +3,7 @@ import { ArtQuizArtworksFragmentContainer } from "Apps/ArtQuiz/Routes/ArtQuizArt
 import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 
-jest.useFakeTimers()
 jest.unmock("react-relay")
-jest.mock("react-tracking")
-jest.mock("Apps/ArtQuiz/Hooks/useSaveArtwork")
-jest.mock("Apps/ArtQuiz/Hooks/useUpdateQuiz")
 
 describe("ArtQuizArtworks", () => {
   const { renderWithRelay } = setupTestWrapperTL({
@@ -21,8 +17,12 @@ describe("ArtQuizArtworks", () => {
     `,
   })
 
+  //
+
   it("displays a tooltip on the first artwork", () => {
-    renderWithRelay()
+    renderWithRelay({
+      Artwork: () => ({ dominantColors: [] }),
+    })
 
     expect(screen.getByText("Like it? Hit the heart.")).toBeInTheDocument()
     expect(screen.getByText("Not for you? Choose X.")).toBeInTheDocument()

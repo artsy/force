@@ -3,7 +3,10 @@ import {
   createSavedSearchAlertMutation$data,
 } from "__generated__/createSavedSearchAlertMutation.graphql"
 import { commitMutation, Environment, graphql } from "relay-runtime"
-import { SavedSearchAleftFormValues, SearchCriteriaAttributes } from "../types"
+import {
+  SavedSearchAleftFormValues,
+  SearchCriteriaAttributes,
+} from "Components/SavedSearchAlert/types"
 
 export const createSavedSearchAlert = (
   environment: Environment,
@@ -17,6 +20,11 @@ export const createSavedSearchAlert = (
           $input: CreateSavedSearchInput!
         ) {
           createSavedSearch(input: $input) {
+            me {
+              counts {
+                savedSearches
+              }
+            }
             savedSearchOrErrors {
               ... on SearchCriteria {
                 internalID

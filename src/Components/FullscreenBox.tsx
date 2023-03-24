@@ -1,7 +1,6 @@
 import { Box, BoxProps } from "@artsy/palette"
-import { FC, useEffect, useState } from "react"
-import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
-import { scale } from "proportional-scale"
+import { FC } from "react"
+import { useFullscreenBox } from "Utils/Hooks/useFullscreenBox"
 
 export interface FullscreenBoxProps extends BoxProps {
   aspectWidth: number
@@ -20,28 +19,10 @@ export const FullscreenBox: FC<FullscreenBoxProps> = ({
   children,
   ...rest
 }) => {
-  const { ref, width, height } = useSizeAndPosition({
-    debounce: 50,
-    trackMutation: true,
+  const { ref, scaledWidth, scaledHeight } = useFullscreenBox({
+    aspectWidth,
+    aspectHeight,
   })
-
-  const [{ scaledWidth, scaledHeight }, setScaled] = useState({
-    scaledWidth: 0,
-    scaledHeight: 0,
-  })
-
-  useEffect(() => {
-    if (!ref.current) return
-
-    const scaled = scale({
-      width: aspectWidth,
-      height: aspectHeight,
-      maxWidth: width,
-      maxHeight: height,
-    })
-
-    setScaled({ scaledWidth: scaled.width, scaledHeight: scaled.height })
-  }, [aspectHeight, aspectWidth, height, ref, width])
 
   return (
     <Box ref={ref as any} width="100%" height="100%" display="flex">

@@ -5,13 +5,15 @@ import {
   SavedSearchEntity,
 } from "Components/SavedSearchAlert/types"
 import { useActiveFilterPills } from "Components/SavedSearchAlert/useActiveFilterPills"
-import { Flex, Spacer } from "@artsy/palette"
+import { BellIcon, Button, Flex, Spacer } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { usePrepareFiltersForPills } from "Components/ArtworkFilter/Utils/usePrepareFiltersForPills"
 import { getSearchCriteriaFromFilters } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { DEFAULT_METRIC } from "Utils/metrics"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { SavedSearchCreateAlertButton } from "./SavedSearchCreateAlertButton"
+import { ProgressiveOnboardingAlertCreate } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
+import { SavedSearchCreateAlertButtonContainer } from "Components/SavedSearchAlert/Components/SavedSearchCreateAlertButtonContainer"
+import { ProgressiveOnboardingAlertReady } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertReady"
 
 export interface ActiveFilterPillsAndCreateAlertProps {
   savedSearchEntity: SavedSearchEntity
@@ -40,7 +42,7 @@ export const ActiveFilterPillsAndCreateAlert: React.FC<ActiveFilterPillsAndCreat
 
       <Spacer x={PILL_HORIZONTAL_MARGIN_SIZE} />
 
-      <SavedSearchCreateAlertButton
+      <SavedSearchCreateAlertButtonContainer
         entity={savedSearchEntity}
         criteria={criteria}
         metric={metric}
@@ -59,6 +61,28 @@ export const ActiveFilterPillsAndCreateAlert: React.FC<ActiveFilterPillsAndCreat
             intent: Intent.createAlert,
           },
         }}
+        renderButton={({ onClick }) => (
+          <ProgressiveOnboardingAlertCreate>
+            {({ onSkip: createSkip }) => (
+              <ProgressiveOnboardingAlertReady>
+                {({ onSkip: readySkip }) => (
+                  <Button
+                    variant="secondaryBlack"
+                    size="small"
+                    Icon={BellIcon}
+                    onClick={() => {
+                      createSkip()
+                      readySkip()
+                      onClick()
+                    }}
+                  >
+                    Create Alert
+                  </Button>
+                )}
+              </ProgressiveOnboardingAlertReady>
+            )}
+          </ProgressiveOnboardingAlertCreate>
+        )}
       />
     </Flex>
   )

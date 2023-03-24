@@ -24,7 +24,7 @@ export const ProgressiveOnboardingPopover: FC<ProgressiveOnboardingPopoverProps>
       pointer
       visible
       ignoreClickOutside
-      zIndex={Z.dropdown}
+      zIndex={Z.popover}
       manageFocus={false}
       {...rest}
     >

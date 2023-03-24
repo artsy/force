@@ -1,6 +1,6 @@
 import {
-  PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT,
-  PROGRESSIVE_ONBOARDING_FIND_SAVES,
+  PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT,
+  PROGRESSIVE_ONBOARDING_SAVE_FIND,
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import {
@@ -9,29 +9,29 @@ import {
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight"
 import { FC, useEffect } from "react"
 
-interface ProgressiveOnboardingSavesHighlightProps {
+interface ProgressiveOnboardingSaveHighlightProps {
   position: ProgressiveOnboardingHighlightPosition
 }
 
-export const ProgressiveOnboardingSavesHighlight: FC<ProgressiveOnboardingSavesHighlightProps> = ({
+export const ProgressiveOnboardingSaveHighlight: FC<ProgressiveOnboardingSaveHighlightProps> = ({
   children,
   position,
 }) => {
-  const { isDismissed, dismiss, enabled } = useProgressiveOnboarding()
+  const { isDismissed, dismiss, isEnabledFor } = useProgressiveOnboarding()
 
   const isDisplayable =
     // If the feature is enabled
-    enabled &&
+    isEnabledFor("saves") &&
     // And you haven't already dismissed this
-    !isDismissed(PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT) &&
+    !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT) &&
     // And you've previously dismissed the previous onboarding tip
-    isDismissed(PROGRESSIVE_ONBOARDING_FIND_SAVES)
+    isDismissed(PROGRESSIVE_ONBOARDING_SAVE_FIND)
 
   useEffect(() => {
     if (!isDisplayable) return
 
     const handleClick = () => {
-      dismiss(PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT)
+      dismiss(PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT)
     }
 
     document.addEventListener("click", handleClick, { once: true })
@@ -48,7 +48,7 @@ export const ProgressiveOnboardingSavesHighlight: FC<ProgressiveOnboardingSavesH
   return (
     <ProgressiveOnboardingHighlight
       position={position}
-      name={PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT}
+      name={PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT}
     >
       {children}
     </ProgressiveOnboardingHighlight>

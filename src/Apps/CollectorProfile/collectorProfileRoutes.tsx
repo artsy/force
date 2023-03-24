@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
 
@@ -179,6 +180,21 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
           SavesAndFollowsRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
+        render: ({ Component, match, props }) => {
+          if (!(Component && props)) {
+            return
+          }
+
+          const key = "force-enable-artworks-list"
+          const featureFlags = match?.context?.featureFlags ?? {}
+          const isArtworksListEnabled = featureFlags[key]?.flagEnabled ?? false
+
+          if (isArtworksListEnabled) {
+            throw new RedirectException(`/collector-profile/saves2`, 302)
+          }
+
+          return <Component {...props} />
+        },
         query: graphql`
           query collectorProfileRoutes_SavesAndFollowsRouteQuery {
             me {

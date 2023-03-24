@@ -49,8 +49,9 @@ import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMob
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
 import { useNavBarHeight } from "./useNavBarHeight"
-import { ProgressiveOnboardingFindFollowsQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindFollows"
-import { ProgressiveOnboardingFindSavesQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFindSaves"
+import { ProgressiveOnboardingFollowFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
+import { ProgressiveOnboardingSaveFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
+import { ProgressiveOnboardingAlertFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -292,21 +293,27 @@ export const NavBar: React.FC = track(
                       {renderNotificationsIndicator()}
                     </NavBarItemButton>
 
-                    <ProgressiveOnboardingFindFollowsQueryRenderer>
-                      <ProgressiveOnboardingFindSavesQueryRenderer>
-                        <NavBarItemButton
-                          display="flex"
-                          alignItems="center"
-                          justifyContent="center"
-                          aria-label="My Collection"
-                          onClick={() =>
-                            router.push("/collector-profile/my-collection")
-                          }
-                        >
-                          <SoloIcon aria-hidden="true" height={22} width={22} />
-                        </NavBarItemButton>
-                      </ProgressiveOnboardingFindSavesQueryRenderer>
-                    </ProgressiveOnboardingFindFollowsQueryRenderer>
+                    <ProgressiveOnboardingFollowFindQueryRenderer>
+                      <ProgressiveOnboardingSaveFindQueryRenderer>
+                        <ProgressiveOnboardingAlertFindQueryRenderer>
+                          <NavBarItemButton
+                            display="flex"
+                            alignItems="center"
+                            justifyContent="center"
+                            aria-label="My Collection"
+                            onClick={() =>
+                              router.push("/collector-profile/my-collection")
+                            }
+                          >
+                            <SoloIcon
+                              aria-hidden="true"
+                              height={22}
+                              width={22}
+                            />
+                          </NavBarItemButton>
+                        </ProgressiveOnboardingAlertFindQueryRenderer>
+                      </ProgressiveOnboardingSaveFindQueryRenderer>
+                    </ProgressiveOnboardingFollowFindQueryRenderer>
                   </>
                 )}
                 <NavBarItemButton
