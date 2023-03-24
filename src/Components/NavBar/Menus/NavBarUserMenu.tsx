@@ -19,7 +19,7 @@ import { useTracking } from "react-tracking"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
 import { ProgressiveOnboardingSavesHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSavesHighlight"
 import { ProgressiveOnboardingFollowsHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowsHighlight"
-import { useLinkToSaves } from "Apps/CollectorProfile/Routes/Saves2/Utils/useLinksToSaves"
+import { useLinkToSaves } from "Apps/CollectorProfile/Routes/Saves2/Hooks/useLinkToSaves"
 
 export const NavBarUserMenu: React.FC = () => {
   const { trackEvent } = useTracking()

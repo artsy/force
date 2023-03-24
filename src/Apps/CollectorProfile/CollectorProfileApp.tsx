@@ -10,7 +10,7 @@ import { ProgressiveOnboardingFollowsHighlight } from "Components/ProgressiveOnb
 import styled from "styled-components"
 import { Spacer } from "@artsy/palette"
 import { useIsRouteActive } from "System/Router/useRouter"
-import { useLinkToSaves } from "Apps/CollectorProfile/Routes/Saves2/Utils/useLinksToSaves"
+import { useLinkToSaves } from "Apps/CollectorProfile/Routes/Saves2/Hooks/useLinkToSaves"
 
 interface CollectorProfileAppProps {
   me: CollectorProfileApp_me$data
