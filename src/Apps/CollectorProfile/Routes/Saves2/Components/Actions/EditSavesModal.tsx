@@ -9,15 +9,18 @@ import {
 } from "@artsy/palette"
 import EditIcon from "@artsy/icons/EditIcon"
 import { useTranslation } from "react-i18next"
-import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_collection.graphql"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
-import { pick } from "lodash"
 import { useUpdateCollection } from "./Mutations/useUpdateCollection"
 import createLogger from "Utils/logger"
 
+export interface EditSavesModalCollection {
+  internalID: string
+  name: string
+}
+
 interface EditSavesModalProps {
-  collection: SavesArtworks_collection$data
+  collection: EditSavesModalCollection
   onClose: () => void
 }
 
@@ -35,7 +38,9 @@ export const EditSavesModal: React.FC<EditSavesModalProps> = ({
 }) => {
   const { t } = useTranslation()
 
-  const initialValues = pick(collection, "name")
+  const initialValues: FormikValues = {
+    name: collection.name,
+  }
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()

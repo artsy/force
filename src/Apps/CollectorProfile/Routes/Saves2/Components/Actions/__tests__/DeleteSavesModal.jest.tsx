@@ -1,15 +1,17 @@
 import { render, screen, fireEvent } from "@testing-library/react"
 
 import { useMutation } from "Utils/Hooks/useMutation"
-import { DeleteSavesModal } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/DeleteSavesModal"
-import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_collection.graphql"
+import {
+  DeleteSavesModal,
+  DeleteSavesModalCollection,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/DeleteSavesModal"
 
 jest.mock("Utils/Hooks/useMutation")
 
-const collection = {
+const collection: DeleteSavesModalCollection = {
   internalID: "foobar",
   name: "Foo Bar",
-} as SavesArtworks_collection$data
+}
 
 describe("DeleteSavesModal", () => {
   let closeDeleteModal: jest.Mock

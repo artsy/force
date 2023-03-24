@@ -1,12 +1,11 @@
 import { render, screen, fireEvent } from "@testing-library/react"
 
 import { SavesContextualMenu } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/SavesContextualMenu"
-import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_collection.graphql"
 
 const collection = {
   internalID: "foobar",
   name: "Foo Bar",
-} as SavesArtworks_collection$data
+}
 
 describe("SavesContextualMenu", () => {
   it("renders the trigger and the menu items", async () => {

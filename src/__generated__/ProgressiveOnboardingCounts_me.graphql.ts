@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<07d1a7d32a9fe0e7b58f9408f7d53074>>
+ * @generated SignedSource<<0a9836778d30e304dba6bdc556b9741a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type ProgressiveOnboardingCounts_me$data = {
   readonly counts: {
     readonly followedArtists: number;
     readonly savedArtworks: number;
+    readonly savedSearches: number;
   } | null;
   readonly " $fragmentType": "ProgressiveOnboardingCounts_me";
 };
@@ -49,6 +50,13 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "savedArtworks",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "savedSearches",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -58,6 +66,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "ca9be3da6ba2b08cd8e2d31bbd57f171";
+(node as any).hash = "2ffaad10878891bc6b5498e1437409b2";
 
 export default node;

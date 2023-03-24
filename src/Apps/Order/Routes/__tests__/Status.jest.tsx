@@ -289,7 +289,7 @@ describe("Status", () => {
           expect(page.text()).toContain("Bank address")
           expect(page.text()).toContain("Wells Fargo Bank, N.A.")
           expect(page.text()).toContain("420 Montgomery Street")
-          expect(page.text()).toContain("San Francisco, CA 9410")
+          expect(page.text()).toContain("San Francisco, CA 94104")
         })
       })
 
@@ -734,7 +734,7 @@ describe("Status", () => {
           expect(page.text()).toContain("Bank address")
           expect(page.text()).toContain("Wells Fargo Bank, N.A.")
           expect(page.text()).toContain("420 Montgomery Street")
-          expect(page.text()).toContain("San Francisco, CA 9410")
+          expect(page.text()).toContain("San Francisco, CA 94104")
         })
 
         it("renders correct Artsy bank details for orders in GBP", async () => {

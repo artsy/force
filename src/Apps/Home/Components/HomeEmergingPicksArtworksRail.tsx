@@ -84,7 +84,7 @@ export const HomeEmergingPicksArtworksRailFragmentContainer = createFragmentCont
     viewer: graphql`
       fragment HomeEmergingPicksArtworksRail_viewer on Viewer {
         artworksConnection(
-          first: 12
+          first: 20
           marketingCollectionID: "curators-picks-emerging"
           sort: "-decayed_merch"
         ) {

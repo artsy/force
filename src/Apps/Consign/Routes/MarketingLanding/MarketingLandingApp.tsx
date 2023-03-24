@@ -70,6 +70,7 @@ export const MarketingLandingApp = () => {
           <Footer />
           <FooterBanner />
         </Join>
+        <Spacer y={-4} />
       </>
     )
   }

@@ -42,6 +42,7 @@ import {
   submitOrderWithNoInventoryFailure,
   submitOrderWithActionRequired,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/submitOrder"
+import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 
 jest.unmock("react-relay")
 
@@ -81,12 +82,6 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
 
 const testOrder: ReviewTestQuery$rawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
-  internalID: "1234",
-  impulseConversationId: null,
-}
-
-const privateSaleTestOrder: ReviewTestQuery$rawResponse["order"] = {
-  ...PrivateSaleOrderWithShippingDetails,
   internalID: "1234",
   impulseConversationId: null,
 }
@@ -625,9 +620,14 @@ describe("Review", () => {
   describe("private sale orders", () => {
     let page
 
+    const privateSaleOrderWithWire = {
+      ...PrivateSaleOrderWithShippingDetails,
+      availablePaymentMethods: ["WIRE_TRANSFER"] as CommercePaymentMethodEnum[],
+    }
+
     beforeEach(() => {
       const wrapper = getWrapper({
-        CommerceOrder: () => privateSaleTestOrder,
+        CommerceOrder: () => privateSaleOrderWithWire,
       })
       page = new ReviewTestPage(wrapper)
     })
@@ -657,6 +657,20 @@ describe("Review", () => {
       expect(page.text()).toContain("Artwork Description")
       expect(page.text()).toContain(
         "additional artwork details provided by admin"
+      )
+    })
+
+    it("displays artwork provenance", () => {
+      expect(page.text()).toContain("Artwork Description")
+      expect(page.text()).toContain(
+        "Provenance: Artwork acquired via an auction in 2000"
+      )
+    })
+
+    it("displays artwork condition description", () => {
+      expect(page.text()).toContain("Artwork Description")
+      expect(page.text()).toContain(
+        "Condition: Artwork is in perfect condition"
       )
     })
   })

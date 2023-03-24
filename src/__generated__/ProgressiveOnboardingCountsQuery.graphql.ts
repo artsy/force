@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f79a79ac570dae1644ffda27c9429262>>
+ * @generated SignedSource<<f14b51381482a8c373a1204a3789a5dd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -83,6 +83,13 @@ const node: ConcreteRequest = {
                 "kind": "ScalarField",
                 "name": "savedArtworks",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "savedSearches",
+                "storageKey": null
               }
             ],
             "storageKey": null
@@ -100,12 +107,12 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "ba45a08339fdfd30acfa652b7362818f",
+    "cacheID": "8b8a74124a0ba09c3e76970c9e9f7599",
     "id": null,
     "metadata": {},
     "name": "ProgressiveOnboardingCountsQuery",
     "operationKind": "query",
-    "text": "query ProgressiveOnboardingCountsQuery {\n  me {\n    ...ProgressiveOnboardingCounts_me\n    id\n  }\n}\n\nfragment ProgressiveOnboardingCounts_me on Me {\n  counts {\n    followedArtists\n    savedArtworks\n  }\n}\n"
+    "text": "query ProgressiveOnboardingCountsQuery {\n  me {\n    ...ProgressiveOnboardingCounts_me\n    id\n  }\n}\n\nfragment ProgressiveOnboardingCounts_me on Me {\n  counts {\n    followedArtists\n    savedArtworks\n    savedSearches\n  }\n}\n"
   }
 };
 

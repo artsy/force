@@ -1,13 +1,15 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import { useToasts } from "@artsy/palette"
 import { useManageArtworkForSavesContext } from "Components/Artwork/ManageArtworkForSaves"
 import { SaveButtonBase } from "Components/Artwork/SaveButton/SaveButton"
-import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
+import { ResultAction } from "Components/Artwork/SaveButton/useSaveArtworkToLists"
+import { useArtworkLists } from "Components/Artwork/useArtworkLists"
 import { FC } from "react"
-import { useTranslation } from "react-i18next"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
+import createLogger from "Utils/logger"
 import { SaveArtworkToListsButton_artwork$data } from "__generated__/SaveArtworkToListsButton_artwork.graphql"
+
+const logger = createLogger("SaveArtworkToListsButton")
 
 interface SaveArtworkToListsButtonProps {
   artwork: SaveArtworkToListsButton_artwork$data
@@ -19,81 +21,50 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
   contextModule,
 }) => {
   const tracking = useTracking()
-  const { t } = useTranslation()
-  const { sendToast } = useToasts()
-  const {
-    savedListId,
-    isSavedToList,
-    dispatch,
-  } = useManageArtworkForSavesContext()
+  const { savedListId, isSavedToList } = useManageArtworkForSavesContext()
 
   const customListsCount = artwork.customCollections?.totalCount ?? 0
-  const hasCustomLists = customListsCount > 0
-  const isSaved = !!artwork.is_saved || hasCustomLists
+  const isSavedToDefaultList = !!artwork.is_saved
+  const isSavedToCustomLists = customListsCount > 0
 
-  const openManageArtworkForSavesModal = () => {
-    dispatch({
-      type: "SET_ARTWORK",
-      payload: {
-        id: artwork.id,
-        internalID: artwork.internalID,
-        title: `${artwork.title}, ${artwork.date}`,
-        imageURL: artwork.preview?.url ?? null,
-      },
-    })
-  }
-
-  const showToastByAction = (action: string) => {
-    if (action === "Saved Artwork") {
-      sendToast({
-        variant: "success",
-        message: t(
-          "collectorSaves.saveArtworkToListsButton.artworkSavedToast.message"
-        ),
-        action: {
-          label: t(
-            "collectorSaves.saveArtworkToListsButton.artworkSavedToast.button"
-          ),
-          onClick: openManageArtworkForSavesModal,
-        },
-      })
-
-      return
-    }
-
-    sendToast({
-      variant: "message",
-      message: t(
-        "collectorSaves.saveArtworkToListsButton.artworkRemovedToast.message"
-      ),
-    })
-  }
-
-  const { handleSave } = useSaveArtwork({
-    isSaved,
-    artwork,
+  const { isSaved, saveArtworkToLists } = useArtworkLists({
     contextModule,
-    onSave: ({ action, artwork }) => {
-      tracking.trackEvent({
-        action,
-        entity_slug: artwork.slug,
-        entity_id: artwork.internalID,
-      })
-
-      showToastByAction(action)
+    artwork: {
+      internalID: artwork.internalID,
+      id: artwork.id,
+      slug: artwork.slug,
+      title: `${artwork.title}, ${artwork.date}`,
+      imageURL: artwork.preview?.url ?? null,
+      isSavedToDefaultList,
+      isSavedToCustomLists,
     },
   })
 
-  const handleClick = (
+  const handleSave = async () => {
+    try {
+      const action = await saveArtworkToLists()
+
+      if (
+        action === ResultAction.SavedToDefaultList ||
+        action === ResultAction.RemovedFromDefaultList
+      ) {
+        const label = labelByResultAction[action]
+
+        tracking.trackEvent({
+          action: label,
+          entity_slug: artwork.slug,
+          entity_id: artwork.internalID,
+        })
+      }
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
+  const handleClick = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault()
-
-    if (savedListId || hasCustomLists) {
-      openManageArtworkForSavesModal()
-      return
-    }
-
     handleSave()
   }
 
@@ -131,3 +102,8 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
     `,
   }
 )
+
+const labelByResultAction = {
+  [ResultAction.SavedToDefaultList]: "Saved Artwork",
+  [ResultAction.RemovedFromDefaultList]: "Removed Artwork",
+}

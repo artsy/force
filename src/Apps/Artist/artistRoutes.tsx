@@ -1,13 +1,14 @@
 import loadable from "@loadable/component"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
+
+import { initialAuctionResultsFilterState } from "./Routes/AuctionResults/AuctionResultsFilterContext"
 import { renderOrRedirect } from "./Routes/Overview/Utils/renderOrRedirect"
 import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { initialAuctionResultsFilterState } from "./Routes/AuctionResults/AuctionResultsFilterContext"
-import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
 import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
+import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
@@ -89,6 +90,17 @@ const AuctionResultRoute = loadable(
     ),
   {
     resolveComponent: component => component.AuctionResultFragmentContainer,
+  }
+)
+
+const ArtistHeader2Route = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "artistBundle" */ "./Routes/ArtistHeader2Route"
+    ),
+  {
+    resolveComponent: component =>
+      component.ArtistHeader2RouteFragmentContainer,
   }
 )
 
@@ -267,6 +279,21 @@ export const artistRoutes: AppRouteConfig[] = [
           query artistRoutes_ShowsQuery($artistID: String!) {
             viewer {
               ...ArtistShowsRoute_viewer
+            }
+          }
+        `,
+      },
+
+      {
+        path: "artist-header-2",
+        getComponent: () => ArtistHeader2Route,
+        onClientSideRender: () => {
+          ArtistHeader2Route.preload()
+        },
+        query: graphql`
+          query artistRoutes_ArtistHeader2Query($artistID: String!) {
+            artist(id: $artistID) {
+              ...ArtistHeader2Route_artist
             }
           }
         `,

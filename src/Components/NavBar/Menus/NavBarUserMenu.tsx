@@ -19,10 +19,12 @@ import { useTracking } from "react-tracking"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
 import { ProgressiveOnboardingSavesHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSavesHighlight"
 import { ProgressiveOnboardingFollowsHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowsHighlight"
+import { useLinkToSaves } from "Apps/CollectorProfile/Routes/Saves2/Utils/useLinksToSaves"
 
 export const NavBarUserMenu: React.FC = () => {
   const { trackEvent } = useTracking()
   const { user } = useContext(SystemContext)
+  const savesPath = useLinkToSaves()
 
   const trackClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const link = event.currentTarget
@@ -97,7 +99,7 @@ export const NavBarUserMenu: React.FC = () => {
       >
         <NavBarMenuItemLink
           aria-label="View your Saves"
-          to="/collector-profile/saves"
+          to={savesPath}
           onClick={trackClick}
         >
           <HeartIcon mr={1} aria-hidden="true" /> Saves

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<971bd69e1f7fa2b18eaa39b6648b12dc>>
+ * @generated SignedSource<<d23df6d8f725f202823c004f09ede5a6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,6 @@ export type ArtistApp_artist$data = {
     readonly text: string | null;
   } | null;
   readonly counts: {
-    readonly auctionResults: number | null;
     readonly forSaleArtworks: any | null;
   } | null;
   readonly highlights: {
@@ -33,7 +32,6 @@ export type ArtistApp_artist$data = {
     readonly type: string;
   }>;
   readonly internalID: string;
-  readonly name: string | null;
   readonly related: {
     readonly genes: {
       readonly edges: ReadonlyArray<{
@@ -116,14 +114,14 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "artworks",
+          "name": "auctionLots",
           "storageKey": null
         },
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "auctionLots",
+          "name": "artworks",
           "storageKey": null
         }
       ],
@@ -142,13 +140,6 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "forSaleArtworks",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "auctionResults",
           "storageKey": null
         }
       ],
@@ -344,13 +335,6 @@ return {
       "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
     }
   ],
   "type": "Artist",
@@ -358,6 +342,6 @@ return {
 };
 })();
 
-(node as any).hash = "a21c7efae92fa9bb9dffb510abc41558";
+(node as any).hash = "15ea6f062bc9019018ed873a040de7d0";
 
 export default node;

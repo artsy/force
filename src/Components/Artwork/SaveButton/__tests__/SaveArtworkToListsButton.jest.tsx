@@ -2,26 +2,24 @@ import { ContextModule } from "@artsy/cohesion"
 import { fireEvent, screen } from "@testing-library/react"
 import { AppToasts } from "Apps/Components/AppToasts"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
+import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
-import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { SaveArtworkToListsButton_Test_Query } from "__generated__/SaveArtworkToListsButton_Test_Query.graphql"
 
 jest.unmock("react-relay")
-jest.mock("Components/Artwork/SaveButton/useSaveArtwork")
+jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")
 
 describe("SaveArtworkToListsButton", () => {
-  const mockUseSaveArtwork = useSaveArtwork as jest.Mock
+  const mockSaveArtwork = SaveArtwork as jest.Mock
   let savedListId: string | undefined
 
   beforeEach(() => {
     savedListId = undefined
 
-    mockUseSaveArtwork.mockImplementation(() => ({
-      handleSave: jest.fn,
-    }))
+    mockSaveArtwork.mockImplementation(() => ({}))
   })
 
   const { renderWithRelay } = setupTestWrapperTL<
@@ -33,7 +31,7 @@ describe("SaveArtworkToListsButton", () => {
       }
 
       return (
-        <MockBoot>
+        <MockBoot context={{ user: { id: "percy-z" } }}>
           <AppToasts accomodateNav={false} />
 
           <ManageArtworkForSavesProvider savedListId={savedListId}>
@@ -64,34 +62,33 @@ describe("SaveArtworkToListsButton", () => {
 
   describe("Save flow", () => {
     beforeEach(() => {
-      mockUseSaveArtwork.mockImplementation(args => ({
-        handleSave: () => {
-          args.onSave({
-            action: "Saved Artwork",
-            artwork: actionResult,
-          })
+      mockSaveArtwork.mockImplementation(args => ({
+        saveArtwork: {
+          artwork: {
+            is_saved: true,
+          },
         },
       }))
     })
 
-    it("should display a toast message", () => {
+    it("should display a toast message", async () => {
       renderWithRelay({
         Artwork: () => unsavedArtwork,
       })
 
       fireEvent.click(screen.getByText("Save"))
 
-      expect(screen.getByText("Artwork saved")).toBeInTheDocument()
-      expect(screen.getByText("Add to a List")).toBeInTheDocument()
+      expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
+      expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })
 
-    it("should open the modal when `Add to a List` button was pressed", () => {
+    it("should open the modal when `Add to a List` button was pressed", async () => {
       renderWithRelay({
         Artwork: () => unsavedArtwork,
       })
 
-      fireEvent.click(screen.getByText("Save"))
-      fireEvent.click(screen.getByText("Add to a List"))
+      fireEvent.click(await screen.findByText("Save"))
+      fireEvent.click(await screen.findByText("Add to a List"))
 
       const modalTitle = "Select lists for this artwork"
       expect(screen.getByText(modalTitle)).toBeInTheDocument()
@@ -100,12 +97,11 @@ describe("SaveArtworkToListsButton", () => {
 
   describe("Unsave flow", () => {
     beforeEach(() => {
-      mockUseSaveArtwork.mockImplementation(args => ({
-        handleSave: () => {
-          args.onSave({
-            action: "Removed Artwork",
-            artwork: actionResult,
-          })
+      mockSaveArtwork.mockImplementation(args => ({
+        saveArtwork: {
+          artwork: {
+            is_saved: false,
+          },
         },
       }))
     })
@@ -148,17 +144,18 @@ describe("SaveArtworkToListsButton", () => {
       })
     })
 
-    it("should display a toast message when artwork was unsaved", () => {
+    it("should display a toast message when artwork was unsaved", async () => {
       renderWithRelay({
         Artwork: () => savedArtwork,
       })
 
       fireEvent.click(screen.getByText("Unsave"))
 
-      expect(screen.getByText("Removed from All Saves")).toBeInTheDocument()
+      const element = await screen.findByText("Removed from All Saves")
+      expect(element).toBeInTheDocument()
     })
 
-    it("should unsave artwork from `All Saves` list by default", () => {
+    it("should unsave artwork from `All Saves` list by default", async () => {
       renderWithRelay({
         Artwork: () => ({
           is_saved: true,
@@ -170,7 +167,8 @@ describe("SaveArtworkToListsButton", () => {
 
       fireEvent.click(screen.getByText("Unsave"))
 
-      expect(screen.getByText("Removed from All Saves")).toBeInTheDocument()
+      const element = await screen.findByText("Removed from All Saves")
+      expect(element).toBeInTheDocument()
     })
 
     it("should open the modal when artwork was saved in custom lists", () => {
@@ -190,11 +188,6 @@ describe("SaveArtworkToListsButton", () => {
     })
   })
 })
-
-const actionResult = {
-  slug: "artwork-slug",
-  internalID: "artwork-id",
-}
 
 const unsavedArtwork = {
   is_saved: false,

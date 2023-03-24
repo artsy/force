@@ -1,5 +1,5 @@
 import { SavesArtworksGridFragmentContainer } from "./SavesArtworksGrid"
-import { SavesArtworks_collection$data } from "__generated__/SavesArtworks_collection.graphql"
+import { SavesArtworks_me$data } from "__generated__/SavesArtworks_me.graphql"
 import { SavesArtworksQuery } from "__generated__/SavesArtworksQuery.graphql"
 import {
   ArtworkFilterContextProvider,
@@ -22,7 +22,7 @@ interface SavesArtworksQueryRendererProps {
 }
 
 interface SavesArtworksProps {
-  collection: SavesArtworks_collection$data
+  me: SavesArtworks_me$data
   relay: RelayRefetchProp
   initialPage?: number
   initialSort?: string
@@ -34,9 +34,10 @@ const sortOptions: SortOptions = [
 ]
 const defaultSort = sortOptions[0].value
 
-const SavesArtworks: FC<SavesArtworksProps> = ({ collection, relay }) => {
+const SavesArtworks: FC<SavesArtworksProps> = ({ me, relay }) => {
   const { match } = useRouter()
 
+  const collection = me.collection!
   const counts: Counts = {
     artworks: collection.artworks?.totalCount ?? 0,
   }
@@ -70,8 +71,7 @@ const SavesArtworks: FC<SavesArtworksProps> = ({ collection, relay }) => {
       <Spacer y={4} />
 
       <SavesArtworksGridFragmentContainer
-        artworks={collection.artworks!}
-        collection={collection}
+        me={me}
         relayRefetch={relay.refetch}
       />
     </ArtworkFilterContextProvider>
@@ -85,9 +85,8 @@ const QUERY = graphql`
     $page: Int
   ) {
     me {
-      collection(id: $collectionID) {
-        ...SavesArtworks_collection @arguments(page: $page, sort: $sort)
-      }
+      ...SavesArtworks_me
+        @arguments(collectionID: $collectionID, page: $page, sort: $sort)
     }
   }
 `
@@ -95,20 +94,24 @@ const QUERY = graphql`
 export const SavesArtworksRefetchContainer = createRefetchContainer(
   SavesArtworks,
   {
-    collection: graphql`
-      fragment SavesArtworks_collection on Collection
+    me: graphql`
+      fragment SavesArtworks_me on Me
         @argumentDefinitions(
+          collectionID: { type: "String!" }
           page: { type: "Int", defaultValue: 1 }
           sort: { type: "CollectionArtworkSorts" }
         ) {
-        internalID
-        name
-        default
-        artworks: artworksConnection(first: 30, page: $page, sort: $sort) {
-          totalCount
-          ...SavesArtworksGrid_artworks
+        collection(id: $collectionID) {
+          internalID
+          name
+          default
+
+          artworks: artworksConnection(first: 30, page: $page, sort: $sort) {
+            totalCount
+          }
         }
-        ...SavesArtworksGrid_collection
+        ...SavesArtworksGrid_me
+          @arguments(collectionID: $collectionID, page: $page, sort: $sort)
       }
     `,
   },
@@ -135,13 +138,11 @@ export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = (
           return null
         }
 
-        if (!props?.me?.collection) {
+        if (!props?.me) {
           return <SavesArtworksGridPlaceholder />
         }
 
-        return (
-          <SavesArtworksRefetchContainer collection={props.me.collection} />
-        )
+        return <SavesArtworksRefetchContainer me={props.me} />
       }}
     />
   )

@@ -1,4 +1,4 @@
-import * as React from "react";
+import * as React from "react"
 import { RedirectException, RouteRenderArgs } from "found"
 import { hasOverviewContent } from "./hasOverviewContent"
 
@@ -45,7 +45,8 @@ export function renderOrRedirect({
   const onAuctionResultsPath = pathname.includes(
     `${artist.slug}/auction-results`
   )
-  const canShowAuctionResults = artist?.counts?.auctionResults
+
+  const canShowAuctionResults = artist?.statuses?.auctionLots
 
   if (pathname === `/artist/${artist.slug}/`) {
     throw new RedirectException(`/artist/${artist.slug}`, 301)

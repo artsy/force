@@ -2,14 +2,18 @@ import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { SavesEmptyState_collection$data } from "__generated__/SavesEmptyState_collection.graphql"
+import { SavesEmptyState_me$data } from "__generated__/SavesEmptyState_me.graphql"
 
 interface SavesEmptyStateProps {
-  collection: SavesEmptyState_collection$data
+  me: SavesEmptyState_me$data
 }
 
-export const SavesEmptyState: FC<SavesEmptyStateProps> = ({ collection }) => {
-  const text = getTextByCollectionType(collection.default)
+export const SavesEmptyState: FC<SavesEmptyStateProps> = ({ me }) => {
+  const defaultSavesCount = me.defaultSaves?.artworksCount ?? 0
+  const text = getTextByCollectionType(
+    me.collection!.default,
+    defaultSavesCount
+  )
 
   return (
     <Flex
@@ -32,7 +36,7 @@ export const SavesEmptyState: FC<SavesEmptyStateProps> = ({ collection }) => {
         // @ts-ignore
         as={RouterLink}
         variant="secondaryBlack"
-        to="/"
+        to="/collection/trending-this-week"
       >
         Browse Works
       </Button>
@@ -43,16 +47,26 @@ export const SavesEmptyState: FC<SavesEmptyStateProps> = ({ collection }) => {
 export const SavesEmptyStateFragmentContainer = createFragmentContainer(
   SavesEmptyState,
   {
-    collection: graphql`
-      fragment SavesEmptyState_collection on Collection {
-        default
+    me: graphql`
+      fragment SavesEmptyState_me on Me
+        @argumentDefinitions(collectionID: { type: "String!" }) {
+        collection(id: $collectionID) {
+          default
+        }
+
+        defaultSaves: collection(id: "saved-artwork") {
+          artworksCount
+        }
       }
     `,
   }
 )
 
-const getTextByCollectionType = (isDefault: boolean) => {
-  if (isDefault) {
+const getTextByCollectionType = (
+  isDefault: boolean,
+  defaultSavesCount: number
+) => {
+  if (isDefault || !defaultSavesCount) {
     return {
       title: "Keep track of artworks you love",
       description:

@@ -29,7 +29,6 @@ interface DetailsProps {
   showHighDemandIcon?: boolean
   showHoverDetails?: boolean
   showSaveButton?: boolean
-  enableSaveButtonForLists?: boolean
   renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
@@ -205,7 +204,6 @@ export const Details: React.FC<DetailsProps> = ({
   showHighDemandIcon = false,
   showHoverDetails = true,
   showSaveButton,
-  enableSaveButtonForLists,
   renderSaveButton,
   ...rest
 }) => {
@@ -216,7 +214,6 @@ export const Details: React.FC<DetailsProps> = ({
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
 
   const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
-
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
 
   const renderSaveButtonComponent = () => {
@@ -228,7 +225,7 @@ export const Details: React.FC<DetailsProps> = ({
       return renderSaveButton(rest.artwork.internalID)
     }
 
-    if (isArtworksListEnabled && enableSaveButtonForLists) {
+    if (isArtworksListEnabled) {
       return (
         <SaveArtworkToListsButtonFragmentContainer
           contextModule={contextModule!}

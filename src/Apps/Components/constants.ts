@@ -1,6 +1,7 @@
 export const Z = {
-  toasts: 50,
-  globalNav: 100,
   dropdown: 200,
+  globalNav: 100,
+  popover: 75,
+  toasts: 50,
   footer: 1,
 }

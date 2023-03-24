@@ -49,8 +49,8 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
   }
 
   const showOverviewTab = hasOverviewContent(artist)
-  const showArtworksTab = artist?.statuses?.artworks
-  const showAuctionResultsTab = artist?.statuses?.auctionLots
+  const showArtworksTab = artist.statuses?.artworks
+  const showAuctionResultsTab = artist.statuses?.auctionLots
 
   // Default page
   return (
@@ -105,6 +105,7 @@ const PageWrapper: React.FC<Omit<ArtistAppProps, "match"> & BoxProps> = ({
     >
       <Box mt={[2, 4]} {...rest}>
         <ArtistMetaFragmentContainer artist={artist} />
+
         {children}
       </Box>
     </AnalyticsContext.Provider>
@@ -118,12 +119,11 @@ export const ArtistAppFragmentContainer = createFragmentContainer(ArtistApp, {
       ...ArtistMeta_artist
       ...ArtistHeader_artist
       ...BackLink_artist
+      internalID
+      slug
       counts {
         forSaleArtworks
       }
-      internalID
-      name
-      slug
       statuses {
         artworks
         auctionLots
@@ -143,10 +143,10 @@ export const sharedMetaDataQuery = graphql`
       shows
       cv(minShowCount: 0)
       articles
+      auctionLots
     }
     counts {
       forSaleArtworks
-      auctionResults
     }
     related {
       genes {

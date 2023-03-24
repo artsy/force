@@ -7401,6 +7401,7 @@ input CreateSavedSearchInput {
 type CreateSavedSearchPayload {
   # A unique identifier for the client performing the mutation.
   clientMutationId: String
+  me: Me
   savedSearchOrErrors: SearchCriteriaOrErrorsUnion!
 }
 
@@ -8028,6 +8029,10 @@ type deleteUserAdminNoteSuccess {
   adminNote: UserAdminNotes
 }
 
+type DeleteUserFailure {
+  mutationError: GravityMutationError
+}
+
 input DeleteUserIconInput {
   clientMutationId: String
 }
@@ -8035,6 +8040,11 @@ input DeleteUserIconInput {
 type DeleteUserIconPayload {
   clientMutationId: String
   iconOrError: UserIconDeletionMutationType
+}
+
+input DeleteUserInput {
+  clientMutationId: String
+  id: String!
 }
 
 type deleteUserInterestForUserFailure {
@@ -8080,6 +8090,15 @@ type DeleteUserInterestMutationPayload {
   userInterest: UserInterest!
 }
 
+type DeleteUserPayload {
+  clientMutationId: String
+
+  # On success: a deleted User
+  userOrError: DeleteUserResponseOrError
+}
+
+union DeleteUserResponseOrError = DeleteUserFailure | DeleteUserSuccess
+
 type deleteUserRoleFailure {
   mutationError: GravityMutationError
 }
@@ -8102,6 +8121,10 @@ union deleteUserRoleResponseOrError =
   | deleteUserRoleSuccess
 
 type deleteUserRoleSuccess {
+  user: User
+}
+
+type DeleteUserSuccess {
   user: User
 }
 
@@ -11460,6 +11483,7 @@ type Me implements Node {
 type MeCounts {
   followedArtists: Int!
   savedArtworks: Int!
+  savedSearches: Int!
 }
 
 type MergeArtistsFailure {
@@ -11932,6 +11956,9 @@ type Mutation {
   deleteOrderedSetItem(
     input: deleteOrderedSetItemMutationInput!
   ): deleteOrderedSetItemMutationPayload
+
+  # Delete a User
+  deleteUser(input: DeleteUserInput!): DeleteUserPayload
   deleteUserAddress(input: DeleteUserAddressInput!): DeleteUserAddressPayload
 
   # delete an admin note for the user
