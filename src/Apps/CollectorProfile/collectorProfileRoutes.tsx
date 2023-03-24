@@ -189,7 +189,6 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
       },
       {
         path: "saves2/:id?",
-        ignoreScrollBehavior: true,
         getComponent: () => Saves2,
         onClientSideRender: () => {
           Saves2.preload()

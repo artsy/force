@@ -2,7 +2,7 @@ import { Shelf, Spacer } from "@artsy/palette"
 import { SavesArtworksQueryRenderer } from "./Components/SavesArtworks"
 import { SavesHeader } from "./Components/SavesHeader"
 import { SavesItemFragmentContainer } from "./Components/SavesItem"
-import { FC, useRef } from "react"
+import { FC, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { extractNodes } from "Utils/extractNodes"
@@ -16,11 +16,14 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   me,
 }) => {
   const { match } = useRouter()
-  const initialCollectionId = useRef(match.params.id)
   const { page, sort } = match.location.query ?? {}
   const savedCollection = me.defaultSaves!
-  const selectedCollectionId = match.params.id ?? savedCollection.internalID
   let otherCollections = extractNodes(me.otherSaves)
+
+  const initialCollectionId = useRef(match.params.id)
+  const [selectedCollectionId, setSelectedCollectionId] = useState(
+    match.params.id ?? savedCollection.internalID
+  )
 
   if (initialCollectionId.current !== undefined) {
     const index = otherCollections.findIndex(
@@ -39,6 +42,10 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   // Always display "Saved Artwork" collection first in the list
   const savedCollections = [savedCollection, ...otherCollections]
 
+  const handleListClick = (id: string) => {
+    setSelectedCollectionId(id)
+  }
+
   return (
     <>
       <SavesHeader />
@@ -56,6 +63,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
               item={collection}
               isSelected={collection.internalID === selectedCollectionId}
               imagesLayout={isDefaultCollection ? "grid" : "stacked"}
+              onClick={handleListClick}
             />
           )
         })}
