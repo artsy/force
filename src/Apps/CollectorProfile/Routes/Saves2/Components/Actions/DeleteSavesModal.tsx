@@ -1,7 +1,7 @@
 import { Button, Flex, ModalDialog, Text, useToasts } from "@artsy/palette"
+import { useCollectorProfileSaves2Context } from "Apps/CollectorProfile/Routes/Saves2/CollectorProfileSaves2Context"
 import { useDeleteCollection } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/Mutations/useDeleteCollection"
 import { useTranslation } from "react-i18next"
-import { useRouter } from "System/Router/useRouter"
 
 export interface DeleteSavesModalCollection {
   internalID: string
@@ -15,11 +15,9 @@ interface Props {
 
 export const DeleteSavesModal: React.FC<Props> = ({ collection, onClose }) => {
   const { t } = useTranslation()
-  const { router } = useRouter()
-
   const { submitMutation } = useDeleteCollection()
-
   const { sendToast } = useToasts()
+  const { onDeleteCollection } = useCollectorProfileSaves2Context()
 
   const handleDeletePress = async () => {
     try {
@@ -43,7 +41,7 @@ export const DeleteSavesModal: React.FC<Props> = ({ collection, onClose }) => {
         message: t("collectorSaves.deleteListModal.success"),
       })
 
-      router.replace("/collector-profile/saves2")
+      onDeleteCollection(collection.internalID)
     } catch (err) {
       console.error(err)
       sendToast({

@@ -8,6 +8,10 @@ import { useRouter } from "System/Router/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import { CollectorProfileSaves2Route_me$data } from "__generated__/CollectorProfileSaves2Route_me.graphql"
 import { useSavesHistoryEntity } from "Apps/CollectorProfile/Routes/Saves2/Hooks/useSavesHistoryEntity"
+import {
+  CollectorProfileSaves2ContextProvider,
+  CollectorProfileSaves2ContextValue,
+} from "Apps/CollectorProfile/Routes/Saves2/CollectorProfileSaves2Context"
 
 interface CollectorProfileSaves2RouteProps {
   me: CollectorProfileSaves2Route_me$data
@@ -23,7 +27,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   let otherCollections = extractNodes(me.otherSaves)
 
   const initialCollectionId = useRef(match.params.id)
-  const [selectedCollectionId, setSelectedCollectionId] = useState(
+  const [activeCollectionId, setActiveCollectionId] = useState(
     match.params.id ?? savedCollectionId
   )
 
@@ -46,9 +50,9 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
 
   const onHistoryChanged = useCallback(
     (id: string | null) => {
-      setSelectedCollectionId(id ?? savedCollectionId)
+      setActiveCollectionId(id ?? savedCollectionId)
     },
-    [savedCollectionId, setSelectedCollectionId]
+    [savedCollectionId, setActiveCollectionId]
   )
 
   useSavesHistoryEntity({
@@ -56,11 +60,22 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   })
 
   const handleListClick = (id: string) => {
-    setSelectedCollectionId(id)
+    setActiveCollectionId(id)
+  }
+
+  const onDeleteCollection = () => {
+    setActiveCollectionId(savedCollectionId)
+    window.history.replaceState(null, "", "/collector-profile/saves2")
+  }
+
+  const contextValue: CollectorProfileSaves2ContextValue = {
+    activeCollectionId,
+    setActiveCollectionId,
+    onDeleteCollection,
   }
 
   return (
-    <>
+    <CollectorProfileSaves2ContextProvider value={contextValue}>
       <SavesHeader />
 
       <Spacer y={4} />
@@ -74,7 +89,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
             <SavesItemFragmentContainer
               key={collection.internalID}
               item={collection}
-              isSelected={collection.internalID === selectedCollectionId}
+              isSelected={collection.internalID === activeCollectionId}
               imagesLayout={isDefaultCollection ? "grid" : "stacked"}
               onClick={handleListClick}
             />
@@ -85,11 +100,11 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
       <Spacer y={4} />
 
       <SavesArtworksQueryRenderer
-        collectionID={selectedCollectionId}
+        collectionID={activeCollectionId}
         initialPage={(page as unknown) as number}
         initialSort={sort}
       />
-    </>
+    </CollectorProfileSaves2ContextProvider>
   )
 }
 

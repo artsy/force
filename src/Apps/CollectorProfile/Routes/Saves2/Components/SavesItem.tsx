@@ -37,7 +37,7 @@ const SavesItem: FC<SavesItemProps> = ({
   const handleClick = () => {
     const link = getLink()
 
-    window.history.pushState({ id: item.internalID }, "", link)
+    window.history.pushState(null, "", link)
     onClick(item.internalID)
   }
 
