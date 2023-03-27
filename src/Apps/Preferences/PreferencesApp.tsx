@@ -49,6 +49,8 @@ interface FormValuesForNotificationPreferences {
   productUpdates: boolean
   guidanceOnCollecting: boolean
   customAlerts: boolean
+  emailAlerts: boolean
+  pushNotifications: boolean
 }
 
 export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
@@ -135,24 +137,20 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
                 <Flex flexDirection="row">
                   <Checkbox
                     mr={6}
-                    selected={Object.values(values).every(Boolean)}
+                    selected={values.emailAlerts}
                     onSelect={value => {
-                      Object.keys(values).forEach(field => {
-                        setFieldValue(field, value)
-                        setFieldTouched(field, value)
-                      })
+                      setFieldValue("emailAlerts", value)
+                      setFieldTouched("emailAlerts", true)
                     }}
                   >
                     Email
                   </Checkbox>
                   <Checkbox
-                  // selected={Object.values(values).every(Boolean)}
-                  // onSelect={value => {
-                  //   Object.keys(values).forEach(field => {
-                  //     setFieldValue(field, value)
-                  //     setFieldTouched(field, value)
-                  //   })
-                  // }}
+                    selected={values.pushNotifications}
+                    onSelect={value => {
+                      setFieldValue("pushNotifications", value)
+                      setFieldTouched("pushNotifications", true)
+                    }}
                   >
                     Push
                   </Checkbox>
