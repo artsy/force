@@ -4,6 +4,7 @@ import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useSystemContext } from "System/SystemContext"
 import { RouterLink } from "System/Router/RouterLink"
 import { ActionType } from "@artsy/cohesion"
+import { Media } from "Utils/Responsive"
 
 export const Footer: React.FC = () => {
   const { user } = useSystemContext()
@@ -27,7 +28,11 @@ export const Footer: React.FC = () => {
     <>
       <Box px={[2, 4, 12]} mb={[4, 6, 6]}>
         <Text variant={["lg-display", "xl", "xxl"]} pr={0} textAlign="center">
-          Meet your new advisor. It’s Artsy.
+          Meet your new advisor.{" "}
+          <Media at="xs">
+            <Text>{"\n"}</Text>
+          </Media>
+          It’s Artsy.
         </Text>
       </Box>
       <Box display="flex" justifyContent="center">
