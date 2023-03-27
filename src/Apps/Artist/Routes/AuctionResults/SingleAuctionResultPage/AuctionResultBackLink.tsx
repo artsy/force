@@ -18,7 +18,7 @@ export const AuctionResultBackLink: React.FC<AuctionResultBackLinkProps> = ({
   return (
     <Flex py={[2, 1]} justifyContent="space-between" alignItems="center">
       <RouterLink textDecoration="none" to={`/artist/${slug}/auction-results`}>
-        <Flex alignItems="center">
+        <Flex alignItems="center" minHeight={30}>
           <ChevronIcon height={14} width={14} direction="left" />
           <Text variant="xs" pl={1}>
             <Media greaterThan="xs">Back to {name}</Media>
