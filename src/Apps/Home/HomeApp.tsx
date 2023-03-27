@@ -1,4 +1,4 @@
-import { Spacer, Join } from "@artsy/palette"
+import { Spacer, Join, Flex, Pill } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HomeApp_featuredEventsOrderedSet$data } from "__generated__/HomeApp_featuredEventsOrderedSet.graphql"
@@ -15,6 +15,9 @@ import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
 import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { HomeEmergingPicksArtworksRailQueryRenderer } from "./Components/HomeEmergingPicksArtworksRail"
 import { SafeHomeContentCards } from "./Components/HomeContentCards"
+import { SearchBarPills } from "Components/Search/SearchBarPills"
+import { Shelf } from "Components/Shelf"
+import { SearchPills } from "Components/Search/SearchBar"
 
 interface HomeAppProps {
   featuredEventsOrderedSet: HomeApp_featuredEventsOrderedSet$data | null
@@ -34,6 +37,15 @@ export const HomeApp: React.FC<HomeAppProps> = ({
       <SafeHomeContentCards />
 
       <Spacer y={[4, 6]} />
+
+      <Flex>
+        {/* <SearchBarPills /> */}
+        <Shelf showProgress={false}>
+          {SearchPills.map(pill => (
+            <Pill key={pill}>{pill}</Pill>
+          ))}
+        </Shelf>
+      </Flex>
 
       <Join separator={<Spacer y={[6, 12]} />}>
         {featuredEventsOrderedSet && (

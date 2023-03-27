@@ -35,10 +35,11 @@ import { ClassI18n } from "System/i18n/ClassI18n"
 import track from "react-tracking"
 import { getENV } from "Utils/getENV"
 import { HorizontalOverflow } from "Components/Search/HorizontalOverflow"
+import { SearchBarPills } from "Components/Search/SearchBarPills"
 
 const logger = createLogger("Components/Search/SearchBar")
 
-const SearchPills = [
+export const SearchPills = [
   "TOP",
   "ARTWORK",
   "ARTIST",
@@ -49,6 +50,16 @@ const SearchPills = [
   "FAIR",
   "SHOW",
   "GALLERY",
+  "TOP1",
+  "ARTWORK1",
+  "ARTIST1",
+  "ARTICLE1",
+  "SALE1",
+  "ARTIST_SERIES1",
+  "COLLECTION1",
+  "FAIR1",
+  "SHOW1",
+  "GALLERY1",
 ]
 
 export interface Props extends SystemContextProps {
