@@ -3,16 +3,13 @@ import {
   Clickable,
   DROP_SHADOW,
   Flex,
-  HorizontalOverflow,
   paginateCarousel,
   Pill,
   ShelfNavigationProps,
-  Text,
   visuallyDisableScrollbar,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { SearchPills } from "Components/Search/SearchBar"
-import { Shelf } from "Components/Shelf"
 import {
   Children,
   createRef,

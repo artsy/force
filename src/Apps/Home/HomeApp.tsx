@@ -15,7 +15,6 @@ import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
 import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { HomeEmergingPicksArtworksRailQueryRenderer } from "./Components/HomeEmergingPicksArtworksRail"
 import { SafeHomeContentCards } from "./Components/HomeContentCards"
-import { SearchBarPills } from "Components/Search/SearchBarPills"
 import { Shelf } from "Components/Shelf"
 import { SearchPills } from "Components/Search/SearchBar"
 

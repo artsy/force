@@ -35,7 +35,6 @@ import { ClassI18n } from "System/i18n/ClassI18n"
 import track from "react-tracking"
 import { getENV } from "Utils/getENV"
 import { HorizontalOverflow } from "Components/Search/HorizontalOverflow"
-import { SearchBarPills } from "Components/Search/SearchBarPills"
 
 const logger = createLogger("Components/Search/SearchBar")
 
