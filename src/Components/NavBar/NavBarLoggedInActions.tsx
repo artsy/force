@@ -1,11 +1,12 @@
 import { useContext } from "react"
 import * as React from "react"
-import { NavBarUserMenu } from "./Menus"
+import { NavBarCollectorProfileMenu } from "./Menus"
 import { SystemContext } from "System/SystemContext"
 import { Dropdown, Flex } from "@artsy/palette"
 import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import SettingsIcon from "@artsy/icons/SettingsIcon"
 import { graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
@@ -22,6 +23,7 @@ import { ActionType } from "@artsy/cohesion"
 import { ProgressiveOnboardingFollowFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingSaveFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingAlertFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
+import { NavBarSettingsMenu } from "Components/NavBar/Menus/NavBarSettingsMenu"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
@@ -101,7 +103,31 @@ export const NavBarLoggedInActions: React.FC<Partial<
 
       <Dropdown
         zIndex={Z.dropdown}
-        dropdown={<NavBarUserMenu />}
+        dropdown={<NavBarCollectorProfileMenu />}
+        placement="bottom-end"
+        offset={0}
+        openDropdownByClick
+      >
+        {({ anchorRef, anchorProps, visible }) => (
+          <ProgressiveOnboardingSaveFindQueryRenderer>
+            <ProgressiveOnboardingFollowFindQueryRenderer>
+              <ProgressiveOnboardingAlertFindQueryRenderer>
+                <NavBarItemButton
+                  ref={anchorRef as any}
+                  active={visible}
+                  {...anchorProps}
+                >
+                  <PersonIcon title="Your account" fill="currentColor" />
+                </NavBarItemButton>
+              </ProgressiveOnboardingAlertFindQueryRenderer>
+            </ProgressiveOnboardingFollowFindQueryRenderer>
+          </ProgressiveOnboardingSaveFindQueryRenderer>
+        )}
+      </Dropdown>
+
+      <Dropdown
+        zIndex={Z.dropdown}
+        dropdown={<NavBarSettingsMenu />}
         placement="bottom-end"
         offset={0}
         openDropdownByClick
@@ -109,19 +135,13 @@ export const NavBarLoggedInActions: React.FC<Partial<
         {({ anchorRef, anchorProps, visible }) => (
           // Offset to accomodate hit area padding on right side of icon
           <Flex mr={-1}>
-            <ProgressiveOnboardingSaveFindQueryRenderer>
-              <ProgressiveOnboardingFollowFindQueryRenderer>
-                <ProgressiveOnboardingAlertFindQueryRenderer>
-                  <NavBarItemButton
-                    ref={anchorRef as any}
-                    active={visible}
-                    {...anchorProps}
-                  >
-                    <PersonIcon title="Your account" fill="currentColor" />
-                  </NavBarItemButton>
-                </ProgressiveOnboardingAlertFindQueryRenderer>
-              </ProgressiveOnboardingFollowFindQueryRenderer>
-            </ProgressiveOnboardingSaveFindQueryRenderer>
+            <NavBarItemButton
+              ref={anchorRef as any}
+              active={visible}
+              {...anchorProps}
+            >
+              <SettingsIcon title="Settings" fill="currentColor" />
+            </NavBarItemButton>
           </Flex>
         )}
       </Dropdown>

@@ -1,29 +1,23 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import {
-  ArtworkIcon,
-  GraphIcon,
-  GroupIcon,
-  HeartIcon,
-  PowerIcon,
-  Separator,
-  SettingsIcon,
-  Text,
-} from "@artsy/palette"
+import { Box, Separator, Text } from "@artsy/palette"
+import ArtworkIcon from "@artsy/icons/ArtworkIcon"
+import GraphIcon from "@artsy/icons/GraphIcon"
+import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
+import GroupIcon from "@artsy/icons/GroupIcon"
 import { SystemContext } from "System/SystemContext"
-import { logout } from "Utils/auth"
-import { getENV } from "Utils/getENV"
-import { userIsAdmin } from "Utils/user"
 import * as React from "react"
 import { useContext } from "react"
 import { useTracking } from "react-tracking"
-import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
+import { NavBarMenuItemLink } from "./NavBarMenuItem"
 import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
 import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
 import { useLinkToSaves } from "Apps/CollectorProfile/Routes/Saves2/Utils/useLinksToSaves"
 
-export const NavBarUserMenu: React.FC = () => {
+export const NavBarCollectorProfileMenu: React.FC = () => {
   const { trackEvent } = useTracking()
+
   const { user } = useContext(SystemContext)
+
   const savesPath = useLinkToSaves()
 
   const trackClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -36,7 +30,6 @@ export const NavBarUserMenu: React.FC = () => {
 
     trackEvent({
       action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-      // @ts-ignore
       context_module:
         DeprecatedAnalyticsSchema.ContextModule.HeaderUserDropdown,
       subject: text,
@@ -44,39 +37,17 @@ export const NavBarUserMenu: React.FC = () => {
     })
   }
 
-  const isAdmin = userIsAdmin(user)
-  const hasPartnerAccess = Boolean(user?.has_partner_access)
-
-  const handleLogout = async () => {
-    await logout()
-    window.location.reload()
-  }
+  if (!user) return null
 
   return (
     <Text variant="sm" py={1} width={230}>
-      {isAdmin && (
-        <NavBarMenuItemLink to={getENV("ADMIN_URL")} onClick={trackClick}>
-          Admin
-        </NavBarMenuItemLink>
-      )}
+      <Box px={2} py={1}>
+        Hi, {user.name}
+      </Box>
 
-      {(isAdmin || hasPartnerAccess) && (
-        <>
-          <NavBarMenuItemLink to={getENV("CMS_URL")} onClick={trackClick}>
-            CMS
-          </NavBarMenuItemLink>
-
-          <NavBarMenuItemLink
-            aria-label="View your purchases"
-            to="/settings/purchases"
-            onClick={trackClick}
-          >
-            Order History
-          </NavBarMenuItemLink>
-
-          <Separator as="hr" my={1} />
-        </>
-      )}
+      <Box px={2} my={1}>
+        <Separator as="hr" color="black60" />
+      </Box>
 
       <NavBarMenuItemLink
         aria-label="View your Collection"
@@ -102,7 +73,7 @@ export const NavBarUserMenu: React.FC = () => {
           to={savesPath}
           onClick={trackClick}
         >
-          <HeartIcon mr={1} aria-hidden="true" /> Saves
+          <HeartStrokeIcon mr={1} aria-hidden="true" /> Saves
         </NavBarMenuItemLink>
       </ProgressiveOnboardingSaveHighlight>
 
@@ -117,21 +88,6 @@ export const NavBarUserMenu: React.FC = () => {
           <GroupIcon mr={1} aria-hidden="true" /> Follows
         </NavBarMenuItemLink>
       </ProgressiveOnboardingFollowHighlight>
-
-      <NavBarMenuItemLink
-        aria-label="Edit your settings"
-        to="/settings/edit-profile"
-        onClick={trackClick}
-      >
-        <SettingsIcon mr={1} aria-hidden="true" /> Settings
-      </NavBarMenuItemLink>
-
-      <NavBarMenuItemButton
-        aria-label="Log out of your account"
-        onClick={handleLogout}
-      >
-        <PowerIcon mr={1} aria-hidden="true" /> Log out
-      </NavBarMenuItemButton>
     </Text>
   )
 }

@@ -1,4 +1,4 @@
-import { NavBarUserMenu } from "Components/NavBar/Menus/NavBarUserMenu"
+import { NavBarCollectorProfileMenu } from "Components/NavBar/Menus/NavBarCollectorProfileMenu"
 import { SystemContextProvider } from "System/SystemContext"
 import { logout } from "Utils/auth"
 import { mount } from "enzyme"
@@ -11,7 +11,7 @@ jest.mock("react-tracking", () => ({
 
 jest.mock("Utils/auth", () => ({ logout: jest.fn() }))
 
-describe("NavBarUserMenu", () => {
+describe("NavBarCollectorProfileMenu", () => {
   const mockLogout = logout as jest.Mock
 
   afterEach(() => {
@@ -21,7 +21,7 @@ describe("NavBarUserMenu", () => {
   const getWrapper = (props = {}) => {
     return mount(
       <SystemContextProvider user={{}} {...props}>
-        <NavBarUserMenu />
+        <NavBarCollectorProfileMenu />
       </SystemContextProvider>
     )
   }

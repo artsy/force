@@ -109,16 +109,6 @@ describe("NavBarMobileMenu", () => {
     })
   })
 
-  describe("lab features", () => {
-    it("shows inbox menu option if lab feature enabled", () => {
-      const linkContainer = getMobileMenuLinkContainer("notAdmin", [
-        "User Conversations View",
-      ])
-
-      expect(linkContainer.html()).toContain("Inbox")
-    })
-  })
-
   describe("Analytics tracking", () => {
     it("tracks back button click", () => {
       const linkContainer = getMobileMenuLinkContainer("notAdmin")

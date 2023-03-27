@@ -1,2 +1,2 @@
 export * from "./NavBarSubMenu"
-export * from "./NavBarUserMenu"
+export * from "./NavBarCollectorProfileMenu"
