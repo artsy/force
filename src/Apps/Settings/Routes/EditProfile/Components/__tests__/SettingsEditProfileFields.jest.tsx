@@ -5,11 +5,13 @@ import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserPro
 import { SettingsEditProfileFieldsFragmentContainer } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileFields"
 import { useTracking } from "react-tracking"
 import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
+import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("Utils/Hooks/Mutations/useUpdateMyUserProfile")
 jest.mock("Apps/Settings/Routes/EditProfile/Mutations/useVerifyID")
+jest.mock("Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail")
 
 const mockSendToast = jest.fn()
 
@@ -34,8 +36,10 @@ const { renderWithRelay } = setupTestWrapperTL({
 describe("SettingsEditProfileFields", () => {
   const mockUseUpdateMyUserProfile = useUpdateMyUserProfile as jest.Mock
   const mockUseVerifyID = useVerifyID as jest.Mock
+  const mockUseVerifyEmail = useVerifyEmail as jest.Mock
   const mockSubmitUpdateMyUserProfile = jest.fn()
   const mockSubmitVerifyIDMutation = jest.fn()
+  const mockSubmitVerifyEmailMutation = jest.fn()
   const mockUseTracking = useTracking as jest.Mock
   const trackingSpy = jest.fn()
 
@@ -50,11 +54,15 @@ describe("SettingsEditProfileFields", () => {
     mockUseVerifyID.mockImplementation(() => ({
       submitMutation: mockSubmitVerifyIDMutation,
     }))
+    mockUseVerifyEmail.mockImplementation(() => ({
+      submitMutation: mockSubmitVerifyEmailMutation,
+    }))
   })
 
   afterEach(() => {
     mockUseUpdateMyUserProfile.mockReset()
     mockUseVerifyID.mockReset()
+    mockUseVerifyEmail.mockReset()
     mockSendToast.mockClear()
   })
 
@@ -211,11 +219,90 @@ describe("SettingsEditProfileFields", () => {
     it("renders the component", () => {
       renderWithRelay()
 
+      expect(screen.getByText("Verify Your Email")).toBeInTheDocument()
       expect(
         screen.getByText(
           "Secure your account and receive updates about your transactions on Artsy."
         )
       ).toBeInTheDocument()
+    })
+
+    it("when clicked submits mutation", async () => {
+      renderWithRelay({
+        Me: () => ({
+          canRequestEmailConfirmation: true,
+        }),
+      })
+
+      fireEvent.click(screen.getByText("Verify Your Email"))
+
+      await waitFor(() => {
+        expect(mockSubmitVerifyEmailMutation).toHaveBeenCalled()
+      })
+    })
+
+    it("displays success", async () => {
+      renderWithRelay({
+        Me: () => ({
+          email: "success@example.com",
+          canRequestEmailConfirmation: true,
+        }),
+      })
+
+      fireEvent.click(screen.getByText("Verify Your Email"))
+
+      await waitFor(() => {
+        expect(mockSubmitVerifyEmailMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {},
+            },
+            rejectIf: expect.any(Function),
+          })
+        )
+      })
+
+      await waitFor(() => {
+        expect(mockSendToast).toHaveBeenCalledWith({
+          variant: "success",
+          message: "Email verification link sent to success@example.com.",
+          ttl: 6000,
+        })
+      })
+    })
+
+    it("displays error", async () => {
+      mockSubmitVerifyEmailMutation.mockRejectedValueOnce({
+        message: "Too many email re-confirmations. Please try again later.",
+      })
+
+      renderWithRelay({
+        Me: () => ({
+          canRequestEmailConfirmation: true,
+        }),
+      })
+
+      fireEvent.click(screen.getByText("Verify Your Email"))
+
+      await waitFor(() => {
+        expect(mockSubmitVerifyEmailMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {},
+            },
+            rejectIf: expect.any(Function),
+          })
+        )
+      })
+
+      await waitFor(() => {
+        expect(mockSendToast).toBeCalledWith({
+          variant: "error",
+          message: "There was a problem",
+          description:
+            "Too many email re-confirmations. Please try again later.",
+        })
+      })
     })
   })
 })
