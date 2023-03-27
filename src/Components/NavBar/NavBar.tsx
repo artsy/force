@@ -129,14 +129,6 @@ export const NavBar: React.FC = track(
 
   const { height } = useNavBarHeight()
 
-  const renderNotificationsIndicator = () => {
-    if (!showNotificationCount) {
-      return null
-    }
-
-    return <NavBarMobileMenuNotificationsIndicatorQueryRenderer />
-  }
-
   const handleNotificationsClick = () => {
     router.push("/notifications")
 
@@ -204,7 +196,7 @@ export const NavBar: React.FC = track(
                 onFocus={() => {
                   setSearchFocused(true)
                 }}
-                // update only on mobile
+                // Update only on mobile
                 position={[
                   `${searchFocused ? "absolute" : "relative"}`,
                   "relative",
@@ -223,7 +215,7 @@ export const NavBar: React.FC = track(
                     onClick={() => {
                       setSearchFocused(false)
                     }}
-                    // show only on mobile
+                    // Show only on mobile
                     display={["flex", "none"]}
                     alignItems="center"
                     justifyContent="center"
@@ -300,7 +292,10 @@ export const NavBar: React.FC = track(
                       aria-label="Notifications"
                     >
                       <BellIcon aria-hidden="true" height={22} width={22} />
-                      {renderNotificationsIndicator()}
+
+                      {showNotificationCount && (
+                        <NavBarMobileMenuNotificationsIndicatorQueryRenderer />
+                      )}
                     </NavBarItemButton>
 
                     <ProgressiveOnboardingFollowFindQueryRenderer>
@@ -502,13 +497,11 @@ export const NavBar: React.FC = track(
       </Box>
 
       {showMobileMenu && (
-        <>
-          <NavBarMobileMenu
-            onClose={() => toggleMobileNav(false)}
-            isOpen={showMobileMenu}
-            onNavButtonClick={handleMobileNavClick}
-          />
-        </>
+        <NavBarMobileMenu
+          onClose={() => toggleMobileNav(false)}
+          isOpen={showMobileMenu}
+          onNavButtonClick={handleMobileNavClick}
+        />
       )}
     </>
   )
