@@ -138,7 +138,18 @@ describe("SettingsEditProfileFields", () => {
       )
     })
 
-    it("upon clicking text submits mutation", async () => {
+    it("when clicked submits mutation", async () => {
+      renderWithRelay()
+
+      expect(screen.getByText("Verify Your ID")).toBeInTheDocument()
+      fireEvent.click(screen.getByText("Verify Your ID"))
+
+      await waitFor(() => {
+        expect(mockSubmitVerifyIDMutation).toHaveBeenCalled()
+      })
+    })
+
+    it("displays success", async () => {
       renderWithRelay()
 
       expect(screen.getByText("Verify Your ID")).toBeInTheDocument()
@@ -161,6 +172,36 @@ describe("SettingsEditProfileFields", () => {
           message:
             'ID verification link sent to <mock-value-for-field-"email">.',
           ttl: 6000,
+        })
+      })
+    })
+
+    it("displays error", async () => {
+      mockSubmitVerifyIDMutation.mockRejectedValueOnce({
+        message: "Retry later",
+      })
+
+      renderWithRelay()
+
+      expect(screen.getByText("Verify Your ID")).toBeInTheDocument()
+      fireEvent.click(screen.getByText("Verify Your ID"))
+
+      await waitFor(() => {
+        expect(mockSubmitVerifyIDMutation).toHaveBeenCalledWith(
+          expect.objectContaining({
+            variables: {
+              input: {},
+            },
+            rejectIf: expect.any(Function),
+          })
+        )
+      })
+
+      await waitFor(() => {
+        expect(mockSendToast).toBeCalledWith({
+          variant: "error",
+          message: "There was a problem",
+          description: "Retry later",
         })
       })
     })
