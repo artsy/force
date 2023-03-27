@@ -64,7 +64,6 @@ const data: StepsWithImageBlackDataType[] = [
 ]
 
 export const WaysWeSell = () => {
-  console.log("[LOGD] waysWeSellImage1 = ", waysWeSellImage1)
   return (
     <FullBleed background="black" position="relative">
       <AppContainer>
