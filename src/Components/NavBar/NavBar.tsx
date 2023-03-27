@@ -1,16 +1,16 @@
 import {
-  BellIcon,
   Box,
   Button,
   Clickable,
-  CloseIcon,
   Dropdown,
   Flex,
-  SoloIcon,
   Spacer,
   Text,
   themeProps,
 } from "@artsy/palette"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import PersonIcon from "@artsy/icons/PersonIcon"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import { SearchBarQueryRenderer } from "Components/Search/SearchBar"
 import { useSystemContext } from "System/SystemContext"
 import * as React from "react"
@@ -291,7 +291,11 @@ export const NavBar: React.FC = track(
                       onClick={handleNotificationsClick}
                       aria-label="Notifications"
                     >
-                      <BellIcon aria-hidden="true" height={22} width={22} />
+                      <BellStrokeIcon
+                        aria-hidden="true"
+                        height={22}
+                        width={22}
+                      />
 
                       {showNotificationCount && (
                         <NavBarMobileMenuNotificationsIndicatorQueryRenderer />
@@ -310,7 +314,7 @@ export const NavBar: React.FC = track(
                               router.push("/collector-profile/my-collection")
                             }
                           >
-                            <SoloIcon
+                            <PersonIcon
                               aria-hidden="true"
                               height={22}
                               width={22}
