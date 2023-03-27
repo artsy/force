@@ -6,6 +6,7 @@ import { AuctionResultImage } from "Apps/Artist/Routes/AuctionResults/SingleAuct
 import { AuctionResultMetaData } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultMetaData"
 import { AuctionResultPrice } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultPrice"
 import { AuctionResultTitleInfo } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultTitleInfo"
+import { MetaTags } from "Components/MetaTags"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 
@@ -16,15 +17,19 @@ interface AuctionResultProps {
 export const AuctionResult: React.FC<AuctionResultProps> = ({
   auctionResult,
 }) => {
-  const { comparableAuctionResults } = auctionResult
+  const { comparableAuctionResults, title, artist } = auctionResult
 
   const results = extractNodes(comparableAuctionResults)
 
   return (
     <>
+      <MetaTags
+        title={`${title}${artist?.name ? ` by ${artist.name}` : ""} | Artsy`}
+      />
+
       <AuctionResultBackLink auctionResult={auctionResult} />
 
-      <GridColumns gridRowGap={[2, 0]}>
+      <GridColumns mt={[0, 2]} gridRowGap={[2, 0]}>
         <Column span={4}>
           <AuctionResultImage auctionResult={auctionResult} />
         </Column>
@@ -74,6 +79,10 @@ export const AuctionResultFragmentContainer = createFragmentContainer(
   {
     auctionResult: graphql`
       fragment AuctionResult_auctionResult on AuctionResult {
+        artist {
+          name
+        }
+        title
         comparableAuctionResults(first: 6) @optionalField {
           edges {
             cursor
