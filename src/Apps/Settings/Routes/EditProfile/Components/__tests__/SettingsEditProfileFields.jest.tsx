@@ -132,6 +132,7 @@ describe("SettingsEditProfileFields", () => {
     it("renders the component with correct links", async () => {
       renderWithRelay()
 
+      expect(screen.getByText("Verify Your ID")).toBeInTheDocument()
       const faqLink = screen.getByText("FAQs")
       expect(faqLink).toHaveAttribute(
         "href",
@@ -149,7 +150,6 @@ describe("SettingsEditProfileFields", () => {
     it("when clicked submits mutation", async () => {
       renderWithRelay()
 
-      expect(screen.getByText("Verify Your ID")).toBeInTheDocument()
       fireEvent.click(screen.getByText("Verify Your ID"))
 
       await waitFor(() => {
@@ -158,9 +158,13 @@ describe("SettingsEditProfileFields", () => {
     })
 
     it("displays success", async () => {
-      renderWithRelay()
+      renderWithRelay({
+        Me: () => ({
+          email: "success@example.com",
+          canRequestEmailConfirmation: true,
+        }),
+      })
 
-      expect(screen.getByText("Verify Your ID")).toBeInTheDocument()
       fireEvent.click(screen.getByText("Verify Your ID"))
 
       await waitFor(() => {
@@ -177,8 +181,7 @@ describe("SettingsEditProfileFields", () => {
       await waitFor(() => {
         expect(mockSendToast).toHaveBeenCalledWith({
           variant: "success",
-          message:
-            'ID verification link sent to <mock-value-for-field-"email">.',
+          message: "ID verification link sent to success@example.com.",
           ttl: 6000,
         })
       })
@@ -191,7 +194,6 @@ describe("SettingsEditProfileFields", () => {
 
       renderWithRelay()
 
-      expect(screen.getByText("Verify Your ID")).toBeInTheDocument()
       fireEvent.click(screen.getByText("Verify Your ID"))
 
       await waitFor(() => {
