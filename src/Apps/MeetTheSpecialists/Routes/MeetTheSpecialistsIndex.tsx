@@ -157,7 +157,7 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     title: "Senior Private Sales Director",
     location: "London",
     email: "adriana.almeida@artsy.net",
-    image: "https://files.artsy.net/images/IMG_1436.jpg",
+    image: "https://files.artsy.net/images/photo_adriana.jpg",
   },
   {
     name: "Meave Hamill",
