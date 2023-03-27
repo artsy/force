@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6e24b475e1cf91ad2eaa52157e9d4697>>
+ * @generated SignedSource<<33bbce5dcf76c84ad90221fc68d5642d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,8 +9,13 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type verifyEmailMutation$variables = {};
-export type verifyEmailMutation$data = {
+export type SendConfirmationEmailMutationInput = {
+  clientMutationId?: string | null;
+};
+export type useVerifyEmailMutation$variables = {
+  input: SendConfirmationEmailMutationInput;
+};
+export type useVerifyEmailMutation$data = {
   readonly sendConfirmationEmail: {
     readonly confirmationOrError: {
       readonly mutationError?: {
@@ -21,20 +26,27 @@ export type verifyEmailMutation$data = {
     } | null;
   } | null;
 };
-export type verifyEmailMutation = {
-  response: verifyEmailMutation$data;
-  variables: verifyEmailMutation$variables;
+export type useVerifyEmailMutation = {
+  response: useVerifyEmailMutation$data;
+  variables: useVerifyEmailMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "Literal",
-    "name": "input",
-    "value": {}
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "input"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "input",
+    "variableName": "input"
+  }
+],
+v2 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -48,7 +60,7 @@ v1 = {
   "type": "SendConfirmationEmailMutationSuccess",
   "abstractKey": null
 },
-v2 = {
+v3 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -82,14 +94,14 @@ v2 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "verifyEmailMutation",
+    "name": "useVerifyEmailMutation",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "SendConfirmationEmailMutationPayload",
         "kind": "LinkedField",
         "name": "sendConfirmationEmail",
@@ -103,13 +115,13 @@ return {
             "name": "confirmationOrError",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
-              (v2/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
         ],
-        "storageKey": "sendConfirmationEmail(input:{})"
+        "storageKey": null
       }
     ],
     "type": "Mutation",
@@ -117,13 +129,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "verifyEmailMutation",
+    "name": "useVerifyEmailMutation",
     "selections": [
       {
         "alias": null,
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": "SendConfirmationEmailMutationPayload",
         "kind": "LinkedField",
         "name": "sendConfirmationEmail",
@@ -144,27 +156,27 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v1/*: any*/),
-              (v2/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
         ],
-        "storageKey": "sendConfirmationEmail(input:{})"
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "3829cfedf7697d8003b474016174ad35",
+    "cacheID": "c9b6ddcdfec6bdb286b6ddfb676fbb62",
     "id": null,
     "metadata": {},
-    "name": "verifyEmailMutation",
+    "name": "useVerifyEmailMutation",
     "operationKind": "mutation",
-    "text": "mutation verifyEmailMutation {\n  sendConfirmationEmail(input: {}) {\n    confirmationOrError {\n      __typename\n      ... on SendConfirmationEmailMutationSuccess {\n        unconfirmedEmail\n      }\n      ... on SendConfirmationEmailMutationFailure {\n        mutationError {\n          error\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useVerifyEmailMutation(\n  $input: SendConfirmationEmailMutationInput!\n) {\n  sendConfirmationEmail(input: $input) {\n    confirmationOrError {\n      __typename\n      ... on SendConfirmationEmailMutationSuccess {\n        unconfirmedEmail\n      }\n      ... on SendConfirmationEmailMutationFailure {\n        mutationError {\n          error\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "69c843183da787e03abf1b3bb8bb5fed";
+(node as any).hash = "2c62c4d9118b4a117a619d01661052e3";
 
 export default node;

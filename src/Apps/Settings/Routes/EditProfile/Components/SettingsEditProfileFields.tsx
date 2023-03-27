@@ -13,7 +13,6 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
-import { useHandleEmailVerification } from "Apps/Settings/Routes/EditProfile/helpers/useHandleVerification"
 import {
   SettingsEditProfileImageFragmentContainer,
   SettingsEditProfileImageRef,
@@ -29,7 +28,7 @@ import {
   uploadPhotoToS3,
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { Form, Formik } from "formik"
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
@@ -37,6 +36,7 @@ import { SettingsEditProfileFields_me$data } from "__generated__/SettingsEditPro
 import { EditableLocation } from "__generated__/useUpdateMyUserProfileMutation.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
+import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
 import createLogger from "Utils/logger"
 
 const logger = createLogger("SettingsEditProfileFields")
@@ -66,22 +66,9 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
   const { sendToast } = useToasts()
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
   const { submitMutation: submitVerifyIDMutation } = useVerifyID()
+  const { submitMutation: submitVerifyEmailMutation } = useVerifyEmail()
   const { relayEnvironment } = useSystemContext()
   const { editedUserProfile: trackEditProfile } = useEditProfileTracking()
-
-  const {
-    showVerificationBanner: showVerificationBannerForEmail,
-    handleVerification: handleEmailVerification,
-  } = useHandleEmailVerification()
-
-  useEffect(() => {
-    if (!!showVerificationBannerForEmail) {
-      sendToast({
-        variant: "success",
-        message: `Email sent to ${me?.email ?? ""}`,
-      })
-    }
-  }, [me.email, sendToast, showVerificationBannerForEmail])
 
   const isEmailConfirmed = me?.isEmailConfirmed
   const isIdentityVerified = me?.isIdentityVerified
@@ -313,7 +300,34 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
                   <CheckCircleIcon fill="black60" mr={0.5} />
                   {canRequestEmailConfirmation ? (
                     <Clickable
-                      onClick={handleEmailVerification}
+                      onClick={async () => {
+                        try {
+                          await submitVerifyEmailMutation({
+                            variables: { input: {} },
+                            rejectIf: res => {
+                              return res.sendConfirmationEmail
+                                ?.confirmationOrError?.mutationError
+                            },
+                          })
+
+                          sendToast({
+                            variant: "success",
+                            message: `Email verification link sent to ${
+                              me?.email ?? ""
+                            }.`,
+                            ttl: 6000,
+                          })
+                        } catch (error) {
+                          logger.error(error)
+
+                          sendToast({
+                            variant: "error",
+                            message: "There was a problem",
+                            description:
+                              error.message || "Something went wrong",
+                          })
+                        }
+                      }}
                       textDecoration="underline"
                     >
                       <Text variant="sm-display">Verify Your Email</Text>
