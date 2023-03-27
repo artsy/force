@@ -16,13 +16,13 @@ export const LayoutLogoOnly: FC<BaseLayoutProps> = ({ children }) => {
       <LayoutMain>
         <AppContainer>
           <HorizontalPadding>
-            <Spacer y={4} />
+            <Spacer y={[2, 4]} />
 
             <RouterLink to="/" display="block">
               <ArtsyLogoIcon />
             </RouterLink>
 
-            <Spacer y={4} />
+            <Spacer y={[2, 4]} />
 
             {children}
           </HorizontalPadding>
