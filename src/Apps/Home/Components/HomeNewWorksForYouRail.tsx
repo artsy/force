@@ -105,6 +105,7 @@ export const HomeNewWorksForYouRailQueryRenderer: React.FC = () => {
             includeBackfill: true
             first: 20
             maxWorksPerArtist: 3
+            version: "C"
           ) {
             ...HomeNewWorksForYouRail_artworksForUser
           }
