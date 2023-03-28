@@ -36,8 +36,6 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 
       <Spacer y={[4, 6]} />
 
-      <SearchBarPills />
-
       <Join separator={<Spacer y={[6, 12]} />}>
         {featuredEventsOrderedSet && (
           <>
