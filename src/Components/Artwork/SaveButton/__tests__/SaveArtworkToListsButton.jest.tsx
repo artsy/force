@@ -65,7 +65,7 @@ describe("SaveArtworkToListsButton", () => {
       mockSaveArtwork.mockImplementation(args => ({
         saveArtwork: {
           artwork: {
-            is_saved: true,
+            isSaved: true,
           },
         },
       }))
@@ -100,7 +100,7 @@ describe("SaveArtworkToListsButton", () => {
       mockSaveArtwork.mockImplementation(args => ({
         saveArtwork: {
           artwork: {
-            is_saved: false,
+            isSaved: false,
           },
         },
       }))
@@ -110,7 +110,7 @@ describe("SaveArtworkToListsButton", () => {
       it("if artwork was previously saved in `All Saves` list", () => {
         renderWithRelay({
           Artwork: () => ({
-            is_saved: true,
+            isSaved: true,
           }),
         })
 
@@ -120,7 +120,7 @@ describe("SaveArtworkToListsButton", () => {
       it("if artwork was previously saved in custom lists", () => {
         renderWithRelay({
           Artwork: () => ({
-            is_saved: false,
+            isSaved: false,
             customCollections: {
               totalCount: 2,
             },
@@ -133,7 +133,7 @@ describe("SaveArtworkToListsButton", () => {
       it("if artwork was previously saved in `All Saves` and custom lists", () => {
         renderWithRelay({
           Artwork: () => ({
-            is_saved: false,
+            isSaved: false,
             customCollections: {
               totalCount: 2,
             },
@@ -158,7 +158,7 @@ describe("SaveArtworkToListsButton", () => {
     it("should unsave artwork from `All Saves` list by default", async () => {
       renderWithRelay({
         Artwork: () => ({
-          is_saved: true,
+          isSaved: true,
           customCollections: {
             totalCount: 0,
           },
@@ -174,7 +174,7 @@ describe("SaveArtworkToListsButton", () => {
     it("should open the modal when artwork was saved in custom lists", () => {
       renderWithRelay({
         Artwork: () => ({
-          is_saved: true,
+          isSaved: true,
           customCollections: {
             totalCount: 2,
           },
@@ -190,14 +190,14 @@ describe("SaveArtworkToListsButton", () => {
 })
 
 const unsavedArtwork = {
-  is_saved: false,
+  isSaved: false,
   customCollections: {
     totalCount: 0,
   },
 }
 
 const savedArtwork = {
-  is_saved: true,
+  isSaved: true,
   customCollections: {
     totalCount: 0,
   },

@@ -72,7 +72,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
       mockSaveArtwork.mockImplementation(args => ({
         saveArtwork: {
           artwork: {
-            is_saved: true,
+            isSaved: true,
           },
         },
       }))
@@ -118,7 +118,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
       mockSaveArtwork.mockImplementation(args => ({
         saveArtwork: {
           artwork: {
-            is_saved: false,
+            isSaved: false,
           },
         },
       }))
