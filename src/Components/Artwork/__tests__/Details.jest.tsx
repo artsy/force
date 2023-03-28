@@ -527,7 +527,7 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
     },
   ],
   slug: "gerhard-richter-tulips-p17-14",
-  is_saved: false,
+  isSaved: false,
   href: "/artwork/gerhard-richter-tulips-p17-14",
   date: "2017",
   sale_message: "$450",

@@ -19,7 +19,7 @@ export const SaveArtwork = (
             artwork {
               id
               slug
-              is_saved: isSaved
+              isSaved
             }
             me {
               id

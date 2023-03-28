@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d0d7ade0dca0cf774ee86636bbf5afcf>>
+ * @generated SignedSource<<b3a30ced844ea5af16463825d5164bbf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,7 @@ export type SaveArtworkMutation$data = {
   readonly saveArtwork: {
     readonly artwork: {
       readonly id: string;
-      readonly is_saved: boolean | null;
+      readonly isSaved: boolean | null;
       readonly slug: string;
     } | null;
     readonly me: {
@@ -36,7 +36,7 @@ export type SaveArtworkMutation$rawResponse = {
   readonly saveArtwork: {
     readonly artwork: {
       readonly id: string;
-      readonly is_saved: boolean | null;
+      readonly isSaved: boolean | null;
       readonly slug: string;
     } | null;
     readonly me: {
@@ -100,7 +100,7 @@ v2 = [
             "storageKey": null
           },
           {
-            "alias": "is_saved",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "isSaved",
@@ -161,16 +161,16 @@ return {
     "selections": (v2/*: any*/)
   },
   "params": {
-    "cacheID": "e1c161c2bef6461948969789def573e6",
+    "cacheID": "d4ff555787e7ef52d0fb0780ec0fbf6c",
     "id": null,
     "metadata": {},
     "name": "SaveArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation SaveArtworkMutation(\n  $input: SaveArtworkInput!\n) {\n  saveArtwork(input: $input) {\n    artwork {\n      id\n      slug\n      is_saved: isSaved\n    }\n    me {\n      id\n      counts {\n        savedArtworks\n      }\n    }\n  }\n}\n"
+    "text": "mutation SaveArtworkMutation(\n  $input: SaveArtworkInput!\n) {\n  saveArtwork(input: $input) {\n    artwork {\n      id\n      slug\n      isSaved\n    }\n    me {\n      id\n      counts {\n        savedArtworks\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "aded6f26298073e6ff6829afbd8d2593";
+(node as any).hash = "fc926e47dcbd0164ebc7fcf03d15b7b8";
 
 export default node;

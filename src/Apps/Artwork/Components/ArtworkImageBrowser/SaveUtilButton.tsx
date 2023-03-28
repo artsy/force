@@ -14,7 +14,7 @@ export const SaveUtilButton: FC<SaveUtilButtonProps> = ({
   return (
     <UtilButton
       name="heart"
-      Icon={isSaved ? FilledIcon : HeartIcon}
+      Icon={isSaved ? FilledIcon : UnfilledIcon}
       label={isSaved ? "Saved" : "Save"}
       longestLabel="Saved"
       onClick={onClick}
@@ -22,4 +22,5 @@ export const SaveUtilButton: FC<SaveUtilButtonProps> = ({
   )
 }
 
-const FilledIcon = () => <HeartFillIcon fill="blue100" />
+const UnfilledIcon = () => <HeartIcon title="Save icon" />
+const FilledIcon = () => <HeartFillIcon title="Unsave icon" fill="blue100" />

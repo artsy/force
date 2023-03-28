@@ -1,29 +1,29 @@
-import { ContextModule } from "@artsy/cohesion"
 import { fireEvent, screen } from "@testing-library/react"
+import { ArtworkActionsSaveButtonV2FragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsSaveButtonV2"
 import { AppToasts } from "Apps/Components/AppToasts"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
-import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { SaveArtworkToListsButton_Test_Query } from "__generated__/SaveArtworkToListsButton_Test_Query.graphql"
+import { ArtworkActionsSaveButtonV2_Test_Query } from "__generated__/ArtworkActionsSaveButtonV2_Test_Query.graphql"
 
 jest.unmock("react-relay")
 jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")
 
-describe("SaveArtworkToListsButton", () => {
+jest.mock("Utils/getENV", () => ({
+  getENV: () => "test",
+}))
+
+describe("ArtworkActionsSaveButtonV2", () => {
   const mockSaveArtwork = SaveArtwork as jest.Mock
-  let savedListId: string | undefined
 
   beforeEach(() => {
-    savedListId = undefined
-
     mockSaveArtwork.mockImplementation(() => ({}))
   })
 
   const { renderWithRelay } = setupTestWrapperTL<
-    SaveArtworkToListsButton_Test_Query
+    ArtworkActionsSaveButtonV2_Test_Query
   >({
     Component: props => {
       if (!props.artwork) {
@@ -34,19 +34,18 @@ describe("SaveArtworkToListsButton", () => {
         <MockBoot context={{ user: { id: "percy-z" } }}>
           <AppToasts accomodateNav={false} />
 
-          <ManageArtworkForSavesProvider savedListId={savedListId}>
-            <SaveArtworkToListsButtonFragmentContainer
+          <ManageArtworkForSavesProvider>
+            <ArtworkActionsSaveButtonV2FragmentContainer
               artwork={props.artwork}
-              contextModule={ContextModule.artworkGrid}
             />
           </ManageArtworkForSavesProvider>
         </MockBoot>
       )
     },
     query: graphql`
-      query SaveArtworkToListsButton_Test_Query @relay_test_operation {
+      query ArtworkActionsSaveButtonV2_Test_Query @relay_test_operation {
         artwork(id: "artworkID") {
-          ...SaveArtworkToListsButton_artwork
+          ...ArtworkActionsSaveButtonV2_artwork
         }
       }
     `,
@@ -58,6 +57,14 @@ describe("SaveArtworkToListsButton", () => {
     })
 
     expect(screen.getByText("Save")).toBeInTheDocument()
+  })
+
+  it("should display `Watch lot` label", () => {
+    renderWithRelay({
+      Artwork: () => unsavedAuctionArtwork,
+    })
+
+    expect(screen.getByText("Watch lot")).toBeInTheDocument()
   })
 
   describe("Save flow", () => {
@@ -82,12 +89,23 @@ describe("SaveArtworkToListsButton", () => {
       expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })
 
+    it("should display a different toast message when artwork is in auction", async () => {
+      renderWithRelay({
+        Artwork: () => unsavedAuctionArtwork,
+      })
+
+      fireEvent.click(screen.getByText("Watch lot"))
+
+      expect(await screen.findByText("Watch lot saved")).toBeInTheDocument()
+      expect(await screen.findByText("Add to a List")).toBeInTheDocument()
+    })
+
     it("should open the modal when `Add to a List` button was pressed", async () => {
       renderWithRelay({
         Artwork: () => unsavedArtwork,
       })
 
-      fireEvent.click(await screen.findByText("Save"))
+      fireEvent.click(screen.getByText("Save"))
       fireEvent.click(await screen.findByText("Add to a List"))
 
       const modalTitle = "Select lists for this artwork"
@@ -106,7 +124,7 @@ describe("SaveArtworkToListsButton", () => {
       }))
     })
 
-    describe("should display `Unsave` label", () => {
+    describe("should display `Saved` label with selected state", () => {
       it("if artwork was previously saved in `All Saves` list", () => {
         renderWithRelay({
           Artwork: () => ({
@@ -114,7 +132,8 @@ describe("SaveArtworkToListsButton", () => {
           }),
         })
 
-        expect(screen.getByText("Unsave")).toBeInTheDocument()
+        expect(screen.getByText("Saved")).toBeInTheDocument()
+        expect(screen.getByTitle("Unsave icon")).toBeInTheDocument()
       })
 
       it("if artwork was previously saved in custom lists", () => {
@@ -127,20 +146,63 @@ describe("SaveArtworkToListsButton", () => {
           }),
         })
 
-        expect(screen.getByText("Unsave")).toBeInTheDocument()
+        expect(screen.getByText("Saved")).toBeInTheDocument()
+        expect(screen.getByTitle("Unsave icon")).toBeInTheDocument()
       })
 
       it("if artwork was previously saved in `All Saves` and custom lists", () => {
         renderWithRelay({
           Artwork: () => ({
-            isSaved: false,
+            isSaved: true,
             customCollections: {
               totalCount: 2,
             },
           }),
         })
 
-        expect(screen.getByText("Unsave")).toBeInTheDocument()
+        expect(screen.getByText("Saved")).toBeInTheDocument()
+        expect(screen.getByTitle("Unsave icon")).toBeInTheDocument()
+      })
+    })
+
+    describe("should display `Watch lot` button with selected state", () => {
+      it("if artwork was previously saved in `All Saves` list", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isSaved: true,
+            sale,
+          }),
+        })
+
+        expect(screen.getByTitle("Unwatch lot icon")).toBeInTheDocument()
+      })
+
+      it("if artwork was previously saved in custom lists", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isSaved: false,
+            sale,
+            customCollections: {
+              totalCount: 2,
+            },
+          }),
+        })
+
+        expect(screen.getByTitle("Unwatch lot icon")).toBeInTheDocument()
+      })
+
+      it("if artwork was previously saved in `All Saves` and custom lists", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isSaved: true,
+            sale,
+            customCollections: {
+              totalCount: 2,
+            },
+          }),
+        })
+
+        expect(screen.getByTitle("Unwatch lot icon")).toBeInTheDocument()
       })
     })
 
@@ -149,7 +211,7 @@ describe("SaveArtworkToListsButton", () => {
         Artwork: () => savedArtwork,
       })
 
-      fireEvent.click(screen.getByText("Unsave"))
+      fireEvent.click(screen.getByText("Saved"))
 
       const element = await screen.findByText("Removed from All Saves")
       expect(element).toBeInTheDocument()
@@ -165,7 +227,7 @@ describe("SaveArtworkToListsButton", () => {
         }),
       })
 
-      fireEvent.click(screen.getByText("Unsave"))
+      fireEvent.click(screen.getByText("Saved"))
 
       const element = await screen.findByText("Removed from All Saves")
       expect(element).toBeInTheDocument()
@@ -181,13 +243,18 @@ describe("SaveArtworkToListsButton", () => {
         }),
       })
 
-      fireEvent.click(screen.getByText("Unsave"))
+      fireEvent.click(screen.getByText("Saved"))
 
       const modalTitle = "Select lists for this artwork"
       expect(screen.getByText(modalTitle)).toBeInTheDocument()
     })
   })
 })
+
+const sale = {
+  isAuction: true,
+  isClosed: false,
+}
 
 const unsavedArtwork = {
   isSaved: false,
@@ -201,4 +268,9 @@ const savedArtwork = {
   customCollections: {
     totalCount: 0,
   },
+}
+
+const unsavedAuctionArtwork = {
+  ...unsavedArtwork,
+  sale,
 }
