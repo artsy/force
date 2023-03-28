@@ -316,3 +316,19 @@ export const ConditionalChildren = () => {
     </Box>
   )
 }
+
+export const PaginationByCell = () => {
+  return <Demo paginateBy="cell" />
+}
+
+export const PaginationByCellWithVaryingWidths = () => {
+  const widths = Array.from(Array(25)).map((_, i) => {
+    if (i % 15 === 0) return 400
+    if (i % 5 === 0) return 300
+    if (i % 3 === 0) return 333
+    if (i % 2 === 0) return 275
+    return 250
+  })
+
+  return <Demo paginateBy="cell" widths={widths} />
+}
