@@ -7,8 +7,20 @@ import {
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { Carousel, CarouselPrevious } from "Components/Carousel"
-import { SearchPills } from "Components/Search/SearchBar"
 import styled, { css } from "styled-components"
+
+const SearchPills = [
+  "TOP",
+  "ARTWORK",
+  "ARTIST",
+  "ARTICLE",
+  "SALE",
+  "ARTIST_SERIES",
+  "COLLECTION",
+  "FAIR",
+  "SHOW",
+  "GALLERY",
+]
 
 const STATES = {
   hover: css`

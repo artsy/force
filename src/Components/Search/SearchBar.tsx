@@ -38,29 +38,6 @@ import { SearchBarPills } from "Components/Search/SearchBarPills"
 
 const logger = createLogger("Components/Search/SearchBar")
 
-export const SearchPills = [
-  "TOP",
-  "ARTWORK",
-  "ARTIST",
-  "ARTICLE",
-  "SALE",
-  "ARTIST_SERIES",
-  "COLLECTION",
-  "FAIR",
-  "SHOW",
-  "GALLERY",
-  "TOP1",
-  "ARTWORK1",
-  "ARTIST1",
-  "ARTICLE1",
-  "SALE1",
-  "ARTIST_SERIES1",
-  "COLLECTION1",
-  "FAIR1",
-  "SHOW1",
-  "GALLERY1",
-]
-
 export interface Props extends SystemContextProps {
   relay: RelayRefetchProp
   router?: Router
