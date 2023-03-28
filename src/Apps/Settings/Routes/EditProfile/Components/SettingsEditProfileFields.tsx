@@ -232,6 +232,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
                   <Clickable
                     onClick={async () => {
                       try {
+                        // no input, user is derived from the authenticated MP loader context
                         await submitVerifyIDMutation({
                           variables: { input: {} },
                           rejectIf: res => {
@@ -242,9 +243,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
 
                         sendToast({
                           variant: "success",
-                          message: `ID verification link sent to ${
-                            me?.email ?? ""
-                          }.`,
+                          message: `ID verification link sent to ${me.email}.`,
                           ttl: 6000,
                         })
                       } catch (error) {
@@ -302,6 +301,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
                     <Clickable
                       onClick={async () => {
                         try {
+                          // no input, user is derived from the authenticated MP loader context
                           await submitVerifyEmailMutation({
                             variables: { input: {} },
                             rejectIf: res => {
@@ -312,9 +312,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
 
                           sendToast({
                             variant: "success",
-                            message: `Email verification link sent to ${
-                              me?.email ?? ""
-                            }.`,
+                            message: `Email verification link sent to ${me.email}.`,
                             ttl: 6000,
                           })
                         } catch (error) {
