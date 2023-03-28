@@ -7,12 +7,18 @@ import {
   Column,
   SkeletonBox,
   SkeletonText,
+  Box,
+  Button,
 } from "@artsy/palette"
 import { SortFilter } from "Components/SortFilter"
 import { ArtworksListFragmentContainer } from "./ArtworksList"
 import { useTranslation } from "react-i18next"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import {
+  createPaginationContainer,
+  graphql,
+  RelayPaginationProp,
+} from "react-relay"
 import { AddArtworksModalContentQuery } from "__generated__/AddArtworksModalContentQuery.graphql"
 import { AddArtworksModalContent_me$data } from "__generated__/AddArtworksModalContent_me.graphql"
 import { MetadataPlaceholder } from "Components/Artwork/Metadata"
@@ -25,7 +31,7 @@ interface AddArtworksModalContentQueryRenderProps {
 interface AddArtworksModalContentProps
   extends AddArtworksModalContentQueryRenderProps {
   me: AddArtworksModalContent_me$data
-  relay: RelayRefetchProp
+  relay: RelayPaginationProp
 }
 
 const SORTS = [
@@ -43,6 +49,11 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
   const [sort, setSort] = useState(SORTS[0].value)
   const { t } = useTranslation()
 
+  console.log(
+    "[Debug] AddArtworksModalContent me",
+    me.collection?.artworksConnection!
+  )
+
   if (isLoading) {
     return <ContentPlaceholder />
   }
@@ -53,12 +64,27 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
     setSort(option)
     setIsLoading(true)
 
-    relay.refetch({ sort: option }, null, error => {
-      if (error) {
-        console.error(error)
+    relay.refetchConnection(30, null, { sort: option })
+    setIsLoading(false)
+  }
+
+  const handleLoadMore = () => {
+    console.log("[Debug] handleLoadMore", relay.hasMore(), relay.isLoading())
+    if (!relay.hasMore() || relay.isLoading()) {
+      return
+    }
+
+    // setIsLoading(true)
+
+    console.log("[Debug] loadMore inside")
+    relay.loadMore(30, err => {
+      if (err) {
+        console.log("[Debug] loadMore err")
+        console.error(err)
       }
 
-      setIsLoading(false)
+      console.log("[Debug] loadMore succ")
+      // setLoading(false)
     })
   }
 
@@ -89,34 +115,75 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
         onItemClick={handleItemClick}
         selectedIds={selectedArtworkIds}
       />
+
+      {relay.hasMore() && (
+        <Box textAlign="center" mt={4}>
+          <Button onClick={handleLoadMore} loading={isLoading}>
+            Show More
+          </Button>
+        </Box>
+      )}
     </>
   )
 }
 
-const AddArtworksModalContentRefetchContainer = createRefetchContainer(
+const AddArtworksModalContentPaginationContainer = createPaginationContainer(
   AddArtworksModalContent,
   {
     me: graphql`
       fragment AddArtworksModalContent_me on Me
         @argumentDefinitions(
+          cursor: { type: "String" }
+          count: { type: "Int", defaultValue: 30 }
           sort: { type: CollectionArtworkSorts, defaultValue: POSITION_DESC }
         ) {
         collection(id: "saved-artwork") {
-          artworksConnection(first: 30, sort: $sort) {
+          artworksConnection(first: $count, after: $cursor, sort: $sort)
+            @connection(key: "AddArtworksModalContent_artworksConnection") {
             totalCount
             ...ArtworksList_artworks
+
+            edges {
+              node {
+                internalID
+                # ...GridItem_artwork
+              }
+            }
           }
         }
       }
     `,
   },
-  graphql`
-    query AddArtworksModalContentRefetchQuery($sort: CollectionArtworkSorts) {
-      me {
-        ...AddArtworksModalContent_me @arguments(sort: $sort)
+  {
+    direction: "forward",
+    getConnectionFromProps(props) {
+      return props.me.collection?.artworksConnection
+    },
+    getFragmentVariables(prevVars, totalCount) {
+      console.log("[Debug] getFragmentVariables", prevVars, totalCount)
+      return { ...prevVars, count: totalCount }
+    },
+    getVariables(_, { count, cursor }, fragmentVariables) {
+      console.log("[Debug] getVariables", { count, cursor }, fragmentVariables)
+      return {
+        sort: fragmentVariables.sort,
+        count,
+        cursor,
       }
-    }
-  `
+    },
+    query: graphql`
+      query AddArtworksModalContentPaginationQuery(
+        $cursor: String
+        $count: Int!
+        $sort: CollectionArtworkSorts
+      ) {
+        me {
+          ...AddArtworksModalContent_me
+            @arguments(sort: $sort, count: $count, cursor: $cursor)
+        }
+      }
+    `,
+  }
 )
 
 export const AddArtworksModalContentQueryRender: FC<AddArtworksModalContentQueryRenderProps> = props => {
@@ -141,7 +208,7 @@ export const AddArtworksModalContentQueryRender: FC<AddArtworksModalContentQuery
         }
 
         return (
-          <AddArtworksModalContentRefetchContainer
+          <AddArtworksModalContentPaginationContainer
             me={relayProps.me}
             {...props}
           />
