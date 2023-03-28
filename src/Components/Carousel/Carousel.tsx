@@ -195,7 +195,6 @@ export const Carousel: React.FC<CarouselProps> = ({
 
   useUpdateEffect(() => {
     onChange && onChange(index)
-    console.log("[debug] Yess ::")
   }, [onChange, index])
 
   useUpdateEffect(() => {
