@@ -11,6 +11,10 @@ import { ArtworkActionsSaveButtonV2_Test_Query } from "__generated__/ArtworkActi
 jest.unmock("react-relay")
 jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")
 
+jest.mock("Utils/getENV", () => ({
+  getENV: () => "test",
+}))
+
 describe("ArtworkActionsSaveButtonV2", () => {
   const mockSaveArtwork = SaveArtwork as jest.Mock
 
