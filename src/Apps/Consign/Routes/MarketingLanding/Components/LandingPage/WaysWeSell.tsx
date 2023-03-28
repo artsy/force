@@ -114,7 +114,7 @@ const ShelfItem: React.FC<StepsWithImageBlackDataType> = ({
     <>
       <Box
         maxWidth="100%"
-        bg={"black"}
+        bg="black100"
         mb={[1, 2]}
         height={["auto", collumnHeightMediumcreen, collumnHeightBigScreen]}
         maxHeight={BIG_IMAGE_HEIGHT}
