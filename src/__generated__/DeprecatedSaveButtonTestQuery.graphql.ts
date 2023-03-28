@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ee780c85ddd00d42888cba57368e1eb2>>
+ * @generated SignedSource<<1186702075d2bde53360347e1102a717>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -98,7 +98,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": "is_saved",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "isSaved",
@@ -117,7 +117,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6fcac4f64056538d81215e56048581b8",
+    "cacheID": "5689843edccd1cf8f38d68c5974b0b91",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -129,7 +129,7 @@ return {
         },
         "artwork.id": (v1/*: any*/),
         "artwork.internalID": (v1/*: any*/),
-        "artwork.is_saved": {
+        "artwork.isSaved": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
@@ -146,7 +146,7 @@ return {
     },
     "name": "DeprecatedSaveButtonTestQuery",
     "operationKind": "query",
-    "text": "query DeprecatedSaveButtonTestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  is_saved: isSaved\n  title\n}\n"
+    "text": "query DeprecatedSaveButtonTestQuery {\n  artwork(id: \"example-artwork-id\") {\n    ...DeprecatedSaveButton_artwork\n    id\n  }\n}\n\nfragment DeprecatedSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n"
   }
 };
 })();
