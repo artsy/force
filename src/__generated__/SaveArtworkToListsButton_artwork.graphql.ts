@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8361c732c9d50aa6fc2d0716bffdce9c>>
+ * @generated SignedSource<<f304cac2cfd9fe05e3ec8b6199f498f2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,7 @@ export type SaveArtworkToListsButton_artwork$data = {
   readonly date: string | null;
   readonly id: string;
   readonly internalID: string;
-  readonly is_saved: boolean | null;
+  readonly isSaved: boolean | null;
   readonly preview: {
     readonly url: string | null;
   } | null;
@@ -51,7 +51,7 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "is_saved",
+      "alias": null,
       "args": null,
       "kind": "ScalarField",
       "name": "isSaved",
@@ -141,6 +141,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "88fdab251ebf7c0278dc01b28f3153f2";
+(node as any).hash = "fb1c7ee64a043d560297ba34bf2b6a1e";
 
 export default node;

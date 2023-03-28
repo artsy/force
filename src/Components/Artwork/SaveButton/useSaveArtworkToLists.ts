@@ -82,7 +82,7 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
           artwork: {
             id: artwork.id!,
             slug: artwork.slug!,
-            is_saved: !artwork.isSavedToDefaultList,
+            isSaved: !artwork.isSavedToDefaultList,
           },
           /**
            * TODO: We don't _really_ need an optimistic response and
@@ -115,7 +115,7 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
     }
 
     const response = await saveToDefaultList()
-    const isSaved = response?.saveArtwork?.artwork?.is_saved
+    const isSaved = response?.saveArtwork?.artwork?.isSaved
 
     return isSaved
       ? ResultAction.SavedToDefaultList

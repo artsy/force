@@ -37,7 +37,7 @@ export const useSaveArtwork = ({
               artwork: {
                 id: artwork.id!,
                 slug: artwork.slug!,
-                is_saved: !isSaved,
+                isSaved: !isSaved,
               },
               /**
                * TODO: We don't _really_ need an optimistic response and
@@ -59,7 +59,7 @@ export const useSaveArtwork = ({
 
         onSave?.({
           // TODO: Pass "saved" or "removed" value
-          action: !!saveArtwork?.artwork?.is_saved
+          action: !!saveArtwork?.artwork?.isSaved
             ? "Saved Artwork"
             : "Removed Artwork",
           artwork,
