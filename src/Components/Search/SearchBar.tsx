@@ -1,6 +1,6 @@
 import { Component, useContext } from "react"
 import * as React from "react"
-import { Box, BoxProps, Pill } from "@artsy/palette"
+import { Box, BoxProps } from "@artsy/palette"
 import { SearchBar_viewer$data } from "__generated__/SearchBar_viewer.graphql"
 import { SearchBarSuggestQuery } from "__generated__/SearchBarSuggestQuery.graphql"
 import {
@@ -34,7 +34,7 @@ import { useTranslation } from "react-i18next"
 import { ClassI18n } from "System/i18n/ClassI18n"
 import track from "react-tracking"
 import { getENV } from "Utils/getENV"
-import { HorizontalOverflow } from "Components/Search/HorizontalOverflow"
+import { SearchBarPills } from "Components/Search/SearchBarPills"
 
 const logger = createLogger("Components/Search/SearchBar")
 
@@ -408,17 +408,7 @@ export class SearchBar extends Component<Props, State> {
 
   renderInputComponent = props => <SearchInputContainer {...props} />
 
-  renderPills = () => {
-    return (
-      <HorizontalOverflow p={2}>
-        {SearchPills.map(pill => (
-          <Pill mr={1} key={pill}>
-            {pill}
-          </Pill>
-        ))}
-      </HorizontalOverflow>
-    )
-  }
+  renderPills = () => <SearchBarPills />
 
   renderAutosuggestComponent(t, { xs }) {
     const { term } = this.state
