@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c6cd1b4559dd38db2890f3ea9d91a343>>
+ * @generated SignedSource<<95d7ca5be3f9c00662d932c36072426a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,21 +10,21 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavesItem_test_Query$variables = {};
-export type SavesItem_test_Query$data = {
+export type ArtworkListItem_test_Query$variables = {};
+export type ArtworkListItem_test_Query$data = {
   readonly me: {
     readonly collectionsConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly " $fragmentSpreads": FragmentRefs<"SavesItem_item">;
+          readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
         } | null;
       } | null> | null;
     } | null;
   } | null;
 };
-export type SavesItem_test_Query = {
-  response: SavesItem_test_Query$data;
-  variables: SavesItem_test_Query$variables;
+export type ArtworkListItem_test_Query = {
+  response: ArtworkListItem_test_Query$data;
+  variables: ArtworkListItem_test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -53,7 +53,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "SavesItem_test_Query",
+    "name": "ArtworkListItem_test_Query",
     "selections": [
       {
         "alias": null,
@@ -90,7 +90,7 @@ return {
                       {
                         "args": null,
                         "kind": "FragmentSpread",
-                        "name": "SavesItem_item"
+                        "name": "ArtworkListItem_item"
                       }
                     ],
                     "storageKey": null
@@ -112,7 +112,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "SavesItem_test_Query",
+    "name": "ArtworkListItem_test_Query",
     "selections": [
       {
         "alias": null,
@@ -255,7 +255,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "167289e70307205b7596f816d0bde1e4",
+    "cacheID": "ce9d8d1120410408c26f64d90d07d67d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -337,13 +337,13 @@ return {
         "me.id": (v2/*: any*/)
       }
     },
-    "name": "SavesItem_test_Query",
+    "name": "ArtworkListItem_test_Query",
     "operationKind": "query",
-    "text": "query SavesItem_test_Query {\n  me {\n    collectionsConnection(first: 1) {\n      edges {\n        node {\n          ...SavesItem_item\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment SavesItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtworkListItem_test_Query {\n  me {\n    collectionsConnection(first: 1) {\n      edges {\n        node {\n          ...ArtworkListItem_item\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "38742e77853328a34dddd7e4351ddf1e";
+(node as any).hash = "73517165a8d98d9eb1e46ed3c8f6a9d8";
 
 export default node;

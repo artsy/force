@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4106f0b25b745d636a13752eba75182f>>
+ * @generated SignedSource<<fee8bc50cf0dfb91337d69661cd8c7dd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,14 +13,14 @@ import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileSaves2Route_me$data = {
   readonly defaultSaves: {
     readonly internalID: string;
-    readonly " $fragmentSpreads": FragmentRefs<"SavesItem_item">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
   } | null;
   readonly otherSaves: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly default: boolean;
         readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"SavesItem_item">;
+        readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
       } | null;
     } | null> | null;
   } | null;
@@ -42,7 +42,7 @@ var v0 = {
 v1 = {
   "args": null,
   "kind": "FragmentSpread",
-  "name": "SavesItem_item"
+  "name": "ArtworkListItem_item"
 };
 return {
   "argumentDefinitions": [],
@@ -167,6 +167,6 @@ return {
 };
 })();
 
-(node as any).hash = "f49dfdbe88a36651445db15ce310923c";
+(node as any).hash = "3e6be6c69fdf967c072d0b751d24c9fd";
 
 export default node;

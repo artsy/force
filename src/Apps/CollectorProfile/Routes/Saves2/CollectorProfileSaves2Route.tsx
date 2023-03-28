@@ -1,7 +1,7 @@
 import { Shelf, Spacer } from "@artsy/palette"
 import { SavesArtworksQueryRenderer } from "./Components/SavesArtworks"
 import { SavesHeader } from "./Components/SavesHeader"
-import { SavesItemFragmentContainer } from "./Components/SavesItem"
+import { ArtworkListItemFragmentContainer } from "./Components/ArtworkListItem"
 import { FC, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
@@ -52,7 +52,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
             artworkList.internalID === allSavesArtworkList.internalID
 
           return (
-            <SavesItemFragmentContainer
+            <ArtworkListItemFragmentContainer
               key={artworkList.internalID}
               item={artworkList}
               isSelected={artworkList.internalID === selectedArtworkListId}
@@ -80,7 +80,7 @@ export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContai
       fragment CollectorProfileSaves2Route_me on Me {
         defaultSaves: collection(id: "saved-artwork") {
           internalID
-          ...SavesItem_item
+          ...ArtworkListItem_item
         }
 
         otherSaves: collectionsConnection(
@@ -97,7 +97,7 @@ export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContai
             node {
               internalID
               default
-              ...SavesItem_item
+              ...ArtworkListItem_item
             }
           }
         }
