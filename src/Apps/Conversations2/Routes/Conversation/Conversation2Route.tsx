@@ -11,6 +11,7 @@ import { ConversationReply } from "Apps/Conversations2/Routes/Conversation/Compo
 import { ConversationDetails } from "Apps/Conversations2/components/Details/ConversationDetails"
 import { Conversation2Route_viewer$data } from "__generated__/Conversation2Route_viewer.graphql"
 import { Conversation2Route_conversation$data } from "__generated__/Conversation2Route_conversation.graphql"
+import { Suspense } from "react"
 
 const COLUMN_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 const MOBILE_HEIGHT = `calc(100dvh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
@@ -67,7 +68,9 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
               >
                 <ConversationHeader conversation={conversation} />
 
+                {/* <Suspense fallback={null}> */}
                 <ConversationMessages conversation={conversation} />
+                {/* </Suspense> */}
 
                 <ConversationReply conversation={conversation} />
               </Flex>
@@ -85,7 +88,7 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
               p={2}
               pb={6}
             >
-              {/* <ConversationDetails conversation={viewer.conversation} /> */}
+              <ConversationDetails conversation={conversation} />
             </Flex>
           </Resizer>
         </Flex>

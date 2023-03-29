@@ -56,6 +56,7 @@ import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
 import { myCollectionInsightsCollectorProfileRoutes } from "Apps/MyCollectionInsights/myCollectionInsightsCollectorProfileRoutes"
+import { conversations2Routes } from "Apps/Conversations2/conversations2Routes"
 
 export const getAppRoutes = (): AppRouteConfig[] => {
   return buildAppRoutes([
@@ -81,6 +82,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: consignFromCollectorProfileMyCollectionRoutes },
     { routes: contactRoutes },
     { routes: conversationRoutes },
+    { routes: conversations2Routes },
     { routes: exampleRoutes },
     { routes: fairOrganizerRoutes },
     { routes: fairRoutes },

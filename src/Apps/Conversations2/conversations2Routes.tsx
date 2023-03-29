@@ -61,6 +61,8 @@ export const conversations2Routes: AppRouteConfig[] = [
 
       return {
         conversationId: params.conversationId,
+        sellerId: "commerce-test-partner",
+        partnerId: "commerce-test-partner",
         toBeReplied: conversationsFilter.toBeReplied,
         hasReply: conversationsFilter.hasReply,
       }
