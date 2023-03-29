@@ -1,8 +1,6 @@
 import {
+  Box,
   Carousel,
-  CarouselNavigationProps,
-  CarouselNext,
-  CarouselPrevious,
   DROP_SHADOW,
   Flex,
   Pill,
@@ -43,33 +41,9 @@ const STATES = {
 }
 
 const ChevronStyle = css`
-  transform: "translateX(0)";
-  background-color: ${themeGet("colors.white100")};
-  color: ${themeGet("colors.black60")};
-  height: 30px;
+  position: absolute;
   width: 30px;
-  border: 1px solid ${themeGet("colors.black5")};
-  border-radius: 50%;
-  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.08);
-
-  ${props => {
-    return css`
-    ${props.hover && STATES.hover}
-    ${props.focus && STATES.focus}
-    ${props.disabled && STATES.focus}
-  `
-  }}
-
-  &:hover {
-    ${STATES.hover}
-  }
-  &:focus {
-    ${STATES.focus}
-  }
-
-  &:disabled {
-    ${STATES.disabled}
-  }
+  height: 30px;
 
   @media (hover: none) {
     display: none;
@@ -77,34 +51,69 @@ const ChevronStyle = css`
 `
 
 const PreviousChevron = styled(ShelfPrevious)<ShelfNavigationProps>`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  left: 0;
-
-  @media (hover: none) {
-    display: none;
-  }
+  ${ChevronStyle}
 `
 
 const NextChevron = styled(ShelfNext)<ShelfNavigationProps>`
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  right: 0;
-
-  @media (hover: none) {
-    display: none;
-  }
+  ${ChevronStyle}
 `
 
-export const SearchBarPills = () => {
-  const handlePress = (e, props) => {
-    e.stopPropagation()
-    e.preventDefault()
-    props.onClick && props.onClick(e)
+const ChevronContainer = styled(Flex)`
+  position: absolute;
+`
+
+interface GradientBgProps {
+  placement: "right" | "left"
+}
+
+const GradientBg = styled(Box)<GradientBgProps>`
+  position: "absolute";
+  right: 0;
+  width: 100px;
+  height: 30px;
+  background: transparent;
+  background-image: linear-gradient(
+    to ${props => props.placement},
+    rgba(255, 255, 255, 0) 0%,
+    rgba(255, 255, 255, 1) 40%
+  );
+`
+
+interface ChevronButtonProps extends ShelfNavigationProps {
+  placement: "left" | "right"
+}
+
+const ChevronButton = ({ placement, ...rest }: ChevronButtonProps) => {
+  const handlePress = (props: ShelfNavigationProps) => (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.stopPropagation()
+    event.preventDefault()
+    props.onClick?.(event)
   }
 
+  if (rest.disabled) {
+    return null
+  }
+
+  if (placement === "left") {
+    return (
+      <ChevronContainer left={0}>
+        <PreviousChevron {...rest} onClick={handlePress(rest)} left={2} />
+        <GradientBg placement="left" />
+      </ChevronContainer>
+    )
+  }
+
+  return (
+    <ChevronContainer right={0}>
+      <NextChevron {...rest} onClick={handlePress(rest)} right={2} />
+      <GradientBg placement="right" />
+    </ChevronContainer>
+  )
+}
+
+export const SearchBarPills = () => {
   // This is with local Shelf component with some custome changes
   // Lot of code changes required
 
@@ -112,19 +121,16 @@ export const SearchBarPills = () => {
     <Shelf
       showProgress={false}
       noFullBleed
-      p={2}
-      Previous={props => (
-        <PreviousChevron {...props} onClick={e => handlePress(e, props)} />
-      )}
-      Next={props => (
-        <NextChevron {...props} onClick={e => handlePress(e, props)} />
-      )}
+      my={2}
+      Previous={props => <ChevronButton placement="left" {...props} />}
+      Next={props => <ChevronButton placement="right" {...props} />}
       paginateBy="cell"
     >
       {SearchPills.map((pill, index) => {
-        const isLast = index === SearchPills.length - 1
+        const isFirst = index === 0
+
         return (
-          <Pill key={index} mr={isLast ? 0 : -1}>
+          <Pill key={index} ml={isFirst ? 2 : 0}>
             {pill}
           </Pill>
         )
