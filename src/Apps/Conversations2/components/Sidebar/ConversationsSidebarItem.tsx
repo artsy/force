@@ -6,11 +6,13 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
+import { UserVerifiedIcon } from "Apps/Conversations2/components/UserVerifiedIcon"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import { extractNodes } from "Utils/extractNodes"
+import { ConversationsSidebarItem_conversation$key } from "__generated__/ConversationsSidebarItem_conversation.graphql"
 
 interface ConversationsSidebarItemProps {
   conversation: ConversationsSidebarItem_conversation$key
@@ -21,7 +23,7 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
   conversation,
   index,
 }) => {
-  const { query } = useRouter()
+  const { match } = useRouter()
   const { trackEvent } = useTracking()
 
   const data = useFragment(
@@ -102,17 +104,16 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
     <StackableBorderBox
       flexDirection="column"
       backgroundColor={
-        query.conversationId === data.internalID ? "black5" : "white100"
+        match.params.conversationId === data.internalID ? "black5" : "white100"
       }
       style={{ borderLeft: 0, borderRight: 0, ...borderTop }}
     >
       <RouterLink
-        href={{
-          pathname: `${data.internalID}`,
-          query: query.conversationsFilter
-            ? { conversationsFilter: query.conversationsFilter }
-            : {},
-        }}
+        to={`${data.internalID}?${
+          match.location.query.conversationsFilter
+            ? `conversationsFilter=${match.location.query.conversationsFilter}`
+            : ""
+        }`}
         onClick={() =>
           trackEvent({
             action: "Click",

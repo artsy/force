@@ -1,29 +1,29 @@
-import { useRouter } from "next/router"
-import { DEFAULT_CONVERSATION_ID } from "pages/conversations/index.page"
+import { DEFAULT_CONVERSATION_ID } from "Apps/Conversations2/Conversations2App"
 import { useEffect, useState, useCallback } from "react"
+import { useRouter } from "System/Router/useRouter"
 
 // Controls which column we are currently display
 // and exposes methods to change in between these columns
 export const useMobileLayoutActions = () => {
-  const { query, push } = useRouter()
+  const { match, router } = useRouter()
   const [currentColumn, setCurrentColumn] = useState<
     "sidebar" | "conversation" | "detail"
   >("sidebar")
 
   useEffect(() => {
-    if (query.conversationId) {
+    if (match.params.conversationId) {
       const view =
-        query.conversationId !== DEFAULT_CONVERSATION_ID
+        match.params.conversationId !== DEFAULT_CONVERSATION_ID
           ? "conversation"
           : "sidebar"
       setCurrentColumn(view)
     }
-  }, [query.conversationId])
+  }, [match.params.conversationId])
 
   const goToSidebar = useCallback(() => {
     setCurrentColumn("sidebar")
-    push(DEFAULT_CONVERSATION_ID)
-  }, [push])
+    router.push(DEFAULT_CONVERSATION_ID)
+  }, [router])
 
   const goToDetails = useCallback(() => {
     setCurrentColumn("detail")

@@ -11,12 +11,9 @@ import {
 } from "@artsy/palette"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
-import { useRouter } from "next/router"
-import { useDismissInquiry } from "pages/conversations/mutations/useDismissInquiry"
-import { useUpdateArtwork } from "pages/conversations/mutations/useUpdateArtwork"
 import { useState } from "react"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "system/SystemContext"
+import { useSystemContext } from "System/useSystemContext"
 import {
   ActionType,
   ClickedDismissInquiry,
@@ -25,6 +22,9 @@ import {
 } from "@artsy/cohesion"
 import { graphql, useFragment } from "react-relay"
 import { DismissInquiryModal_conversation$key } from "__generated__/DismissInquiryModal_conversation.graphql"
+import { useRouter } from "System/Router/useRouter"
+import { useDismissInquiry } from "Apps/Conversations2/mutations/useDismissInquiry"
+import { useUpdateArtwork } from "Apps/Conversations2/mutations/useUpdateArtwork"
 
 interface DismissInquiryModalProps {
   conversation: DismissInquiryModal_conversation$key
@@ -41,7 +41,7 @@ export const DismissInquiryModal: React.FC<DismissInquiryModalProps> = ({
   conversation,
   onClose,
 }) => {
-  const { query, replace } = useRouter()
+  const { match, router } = useRouter()
   const { sendToast } = useToasts()
   const [isLoading, setIsLoading] = useState(false)
   const [commitDismissInquiry] = useDismissInquiry()
@@ -69,10 +69,12 @@ export const DismissInquiryModal: React.FC<DismissInquiryModalProps> = ({
   const artwork = data?.items?.[0]?.item
 
   const trackingData = {
-    conversation_id: query.conversationId as string,
+    conversation_id: match.params.conversationId as string,
     context_module: "conversations",
     context_page_owner_type: OwnerType.conversation as PageOwnerType,
     artwork_id: artwork?.id ?? "",
+    // FIXME
+    // @ts-ignore
     partner_id: user?.currentPartner?._id ?? "",
   }
 
@@ -103,7 +105,7 @@ export const DismissInquiryModal: React.FC<DismissInquiryModalProps> = ({
 
     // TODO: This moves to the root, which will refetch conversation lists.
     // We will likely need to fine-tune this at some point.
-    replace("/conversations")
+    router.replace("/conversations")
 
     onClose()
   }
@@ -114,7 +116,7 @@ export const DismissInquiryModal: React.FC<DismissInquiryModalProps> = ({
     commitDismissInquiry({
       variables: {
         input: {
-          conversationId: query.conversationId as string,
+          conversationId: match.params.conversationId as string,
           dismissed: true,
           sellerOutcome: values.sellerOutcome,
           sellerOutcomeComment: values.sellerOutcomeComment,
@@ -186,7 +188,7 @@ export const DismissInquiryModal: React.FC<DismissInquiryModalProps> = ({
           <Form>
             <Select
               description="Why are you dismissing this inquiry?"
-              onSelect={(value) => setFieldValue("sellerOutcome", value)}
+              onSelect={value => setFieldValue("sellerOutcome", value)}
               error={errors.sellerOutcome}
               options={[
                 {
@@ -214,7 +216,7 @@ export const DismissInquiryModal: React.FC<DismissInquiryModalProps> = ({
               values.sellerOutcome === "work_unavailable" && (
                 <Checkbox
                   selected={values.sellerOutcomeIsSold}
-                  onSelect={(value) => {
+                  onSelect={value => {
                     setFieldValue("sellerOutcomeIsSold", value)
                   }}
                 >

@@ -1,16 +1,13 @@
 import { graphql } from "relay-runtime"
 import { act, fireEvent, screen } from "@testing-library/react"
-import { MarkAsSpamModal } from "../MarkAsSpamModal"
+import { MarkAsSpamModal } from "Apps/Conversations2/components/Details/MarkAsSpamModal"
 import { MarkAsSpamModalTestQuery } from "__generated__/MarkAsSpamModalTestQuery.graphql"
 import { useTracking } from "react-tracking"
-import { setupTestWrapper } from "utils/test/setupTestWrapper"
-import mockRouter from "next-router-mock"
-
-jest.mock("next/router", () => require("next-router-mock"))
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 
 jest.mock("react-tracking")
 
-jest.mock("system/SystemContext", () => ({
+jest.mock("System/useSystemContext", () => ({
   useSystemContext: () => ({
     user: { currentPartner: { _id: "mocked-partner-id" } },
   }),
@@ -21,7 +18,7 @@ describe("MarkAsSpamModal", () => {
   const mockTracking = useTracking as jest.Mock
   const trackEvent = jest.fn()
 
-  const { renderWithRelay } = setupTestWrapper<MarkAsSpamModalTestQuery>({
+  const { renderWithRelay } = setupTestWrapperTL<MarkAsSpamModalTestQuery>({
     Component: ({ conversation }) => (
       <MarkAsSpamModal conversation={conversation!} onClose={onClose} />
     ),
@@ -38,7 +35,8 @@ describe("MarkAsSpamModal", () => {
     jest.clearAllMocks()
     mockTracking.mockImplementation(() => ({ trackEvent }))
 
-    mockRouter.query = { conversationId: "mocked-conversation-id" }
+    // FIXME
+    // mockRouter.query = { conversationId: "mocked-conversation-id" }
   })
 
   it("tracks when confirming mark as spam", async () => {
@@ -74,7 +72,7 @@ describe("MarkAsSpamModal", () => {
 
   it.each(["Cancel", "Close"])(
     "tracks when mark as spam is canceled using %s button",
-    (text) => {
+    text => {
       renderWithRelay({
         ConversationItemType: () => ({ id: "mocked-artwork-id" }),
       })

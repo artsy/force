@@ -6,12 +6,9 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
-import { useRouter } from "next/router"
-import { useDeleteConversation } from "pages/conversations/mutations/useDeleteConversation"
-import { useMarkAsSpam } from "pages/conversations/mutations/useMarkAsSpam"
 import { useState } from "react"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "system/SystemContext"
+import { useSystemContext } from "System/useSystemContext"
 import {
   ActionType,
   ClickedMarkSpam,
@@ -20,6 +17,9 @@ import {
 } from "@artsy/cohesion"
 import { graphql, useFragment } from "react-relay"
 import { MarkAsSpamModal_conversation$key } from "__generated__/MarkAsSpamModal_conversation.graphql"
+import { useMarkAsSpam } from "Apps/Conversations2/mutations/useMarkAsSpam"
+import { useDeleteConversation } from "Apps/Conversations2/mutations/useDeleteConversation"
+import { useRouter } from "System/Router/useRouter"
 
 interface MarkAsSpamModalProps {
   conversation: MarkAsSpamModal_conversation$key
@@ -30,7 +30,7 @@ export const MarkAsSpamModal: React.FC<MarkAsSpamModalProps> = ({
   conversation,
   onClose,
 }) => {
-  const { query, replace } = useRouter()
+  const { match, router } = useRouter()
   const { sendToast } = useToasts()
   const [isLoading, setIsLoading] = useState(false)
   const [commitMarkAsSpam] = useMarkAsSpam()
@@ -54,10 +54,11 @@ export const MarkAsSpamModal: React.FC<MarkAsSpamModalProps> = ({
   )
 
   const trackingData = {
-    conversation_id: query.conversationId as string,
+    conversation_id: match.params.conversationId as string,
     context_module: "conversations",
     context_page_owner_type: OwnerType.conversation as PageOwnerType,
     artwork_id: data?.items?.[0]?.item?.id ?? "",
+    // @ts-expect-error CONVERSATION_MIGRATION
     partner_id: user?.currentPartner?._id ?? "",
   }
 
@@ -67,7 +68,7 @@ export const MarkAsSpamModal: React.FC<MarkAsSpamModalProps> = ({
     commitMarkAsSpam({
       variables: {
         input: {
-          id: query.conversationId as string,
+          id: match.params.conversationId as string,
           spam: true,
         },
       },
@@ -76,7 +77,7 @@ export const MarkAsSpamModal: React.FC<MarkAsSpamModalProps> = ({
         commitDeleteConversation({
           variables: {
             input: {
-              id: query.conversationId as string,
+              id: match.params.conversationId as string,
             },
           },
           onError: handleError,
@@ -114,7 +115,7 @@ export const MarkAsSpamModal: React.FC<MarkAsSpamModalProps> = ({
 
     // TODO: This moves to the root, which will refetch conversation lists. We
     // will likely need to fine-tune this at some point.
-    replace("/conversations")
+    router.replace("/conversations")
 
     onClose()
   }

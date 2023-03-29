@@ -6,6 +6,7 @@ import { ConversationsSidebarHeader } from "Apps/Conversations2/components/Sideb
 import { ConversationsSidebarEmpty } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarEmpty"
 import { ConversationsSidebarItem } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarItem"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
+import { ConversationsSidebar_viewer$key } from "__generated__/ConversationsSidebar_viewer.graphql"
 
 interface ConversationsSidebarProps {
   viewer: ConversationsSidebar_viewer$key

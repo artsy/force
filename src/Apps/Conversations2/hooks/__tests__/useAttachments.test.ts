@@ -1,6 +1,7 @@
-import { act, renderHook, waitFor } from "@testing-library/react"
-import { useAttachments } from "../useAttachments"
-import * as upload from "utils/hooks/uploadFileToS3"
+import { act, waitFor } from "@testing-library/react"
+import { renderHook } from "@testing-library/react-hooks"
+import { useAttachments } from "Apps/Conversations2/hooks/useAttachments"
+import * as upload from "Apps/Conversations2/hooks/uploadFileToS3"
 
 jest.mock("utils/hooks/uploadFileToS3", () => ({
   __esModule: true, //    <----- this __esModule: true is important
@@ -61,7 +62,7 @@ describe("useAttachments", () => {
   it("sets URL to attachments given completed upload", async () => {
     const promisesCb: ((value: unknown) => void)[] = []
     const uploadMock = jest.fn().mockImplementation(() => {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         promisesCb.push(resolve)
       })
     })
@@ -96,7 +97,7 @@ describe("useAttachments", () => {
     const uploadMock = jest
       .fn()
       .mockImplementationOnce(() => {
-        return new Promise((resolve) => {
+        return new Promise(resolve => {
           promiseCb = resolve
         })
       })
@@ -134,7 +135,7 @@ describe("useAttachments", () => {
   it("handles correctly attachments when the promise resolves of a removed attachment", async () => {
     const promisesCb: ((value: unknown) => void)[] = []
     const uploadMock = jest.fn().mockImplementation(() => {
-      return new Promise((resolve) => {
+      return new Promise(resolve => {
         promisesCb.push(resolve)
       })
     })

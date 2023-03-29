@@ -9,16 +9,21 @@ import { ConversationHeader } from "Apps/Conversations2/Routes/Conversation/Comp
 import { ConversationMessages } from "Apps/Conversations2/Routes/Conversation/Components/ConversationMessages"
 import { ConversationReply } from "Apps/Conversations2/Routes/Conversation/Components/ConversationReply"
 import { ConversationDetails } from "Apps/Conversations2/components/Details/ConversationDetails"
+import { Conversation2Route_viewer$key } from "__generated__/Conversation2Route_viewer.graphql"
+import { Conversation2Route_conversation$key } from "__generated__/Conversation2Route_conversation.graphql"
 
 const COLUMN_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 const MOBILE_HEIGHT = `calc(100dvh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 
 interface Conversation2RouteProps {
-  viewer: Conversation2Route_viewer
-  conversation: Conversation2Route_conversation
+  viewer: Conversation2Route_viewer$key
+  conversation: Conversation2Route_conversation$key
 }
 
-const Conversation2Route: React.FC<Conversation2RouteProps> = () => {
+const Conversation2Route: React.FC<Conversation2RouteProps> = ({
+  viewer,
+  conversation,
+}) => {
   const {
     currentColumn,
     goToDetails,

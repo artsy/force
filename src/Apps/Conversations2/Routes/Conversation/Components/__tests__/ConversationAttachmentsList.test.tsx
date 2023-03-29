@@ -1,7 +1,7 @@
 import React from "react"
 import { fireEvent, render, screen } from "@testing-library/react"
-import { ConversationAttachmentsList } from "../ConversationAttachmentsList"
-import { Attachment } from "pages/conversations/hooks/useAttachments"
+import { ConversationAttachmentsList } from "Apps/Conversations2/Routes/Conversation/Components/ConversationAttachmentsList"
+import { Attachment } from "Apps/Conversations2/hooks/useAttachments"
 
 const attachments = [
   {

@@ -2,8 +2,7 @@ import { Button, Text, Image, Flex, Spacer } from "@artsy/palette"
 import { useTracking } from "react-tracking"
 import { graphql, useFragment } from "react-relay"
 import { ConversationArtwork_conversation$key } from "__generated__/ConversationArtwork_conversation.graphql"
-import { RouterLink } from "components/RouterLink"
-import getConfig from "next/config"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface ConversationArtworkProps {
   conversation: ConversationArtwork_conversation$key
@@ -13,7 +12,6 @@ export const ConversationArtwork: React.FC<ConversationArtworkProps> = ({
   conversation,
 }) => {
   const { trackEvent } = useTracking()
-  const { publicRuntimeConfig } = getConfig()
 
   const data = useFragment(
     graphql`
@@ -78,7 +76,7 @@ export const ConversationArtwork: React.FC<ConversationArtworkProps> = ({
       <Spacer y={2} />
 
       <RouterLink
-        href={`${publicRuntimeConfig.NEXT_PUBLIC_VOLT_V1_URL}/artworks/${item?.slug}`}
+        to={`/artwork/${item?.slug}`}
         onClick={() =>
           trackEvent({
             action: "Click",

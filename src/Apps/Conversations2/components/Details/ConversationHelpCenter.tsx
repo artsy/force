@@ -1,8 +1,8 @@
 import { Box, Spacer, Text } from "@artsy/palette"
-import { RouterLink } from "components/RouterLink"
 import { useTracking } from "react-tracking"
 import { graphql, useFragment } from "react-relay"
 import { ConversationHelpCenter_conversation$key } from "__generated__/ConversationHelpCenter_conversation.graphql"
+import { RouterLink } from "System/Router/RouterLink"
 interface ConversationHelpCenterProps {
   conversation: ConversationHelpCenter_conversation$key
 }
@@ -41,36 +41,36 @@ export const ConversationHelpCenter: React.FC<ConversationHelpCenterProps> = ({
       <Text variant="lg">Help Center</Text>
       <Spacer y={2} />
       <RouterLink
-        href="https://help.artsy.net/hc/en-us/articles/360047666393"
+        to="https://help.artsy.net/hc/en-us/articles/360047666393"
         textDecoration="underline"
-        textColor="black60"
+        // textColor="black60"
         onClick={onClick}
       >
         <Text variant="sm">Helpful Tips About Artsy Inquiries</Text>
       </RouterLink>
       <Spacer y={2} />
       <RouterLink
-        href="https://help.artsy.net/hc/en-us/articles/360047154134"
+        to="https://help.artsy.net/hc/en-us/articles/360047154134"
         textDecoration="underline"
-        textColor="black60"
+        // textColor="black60"
         onClick={onClick}
       >
         <Text variant="sm">Security Best Practices For Artsy CMS</Text>
       </RouterLink>
       <Spacer y={2} />
       <RouterLink
-        href="https://help.artsy.net/hc/en-us/articles/360047805893"
+        to="https://help.artsy.net/hc/en-us/articles/360047805893"
         textDecoration="underline"
-        textColor="black60"
+        // textColor="black60"
         onClick={onClick}
       >
         <Text variant="sm">Stop Phishing Attempts</Text>
       </RouterLink>
       <Spacer y={2} />
       <RouterLink
-        href="https://help.artsy.net/hc/en-us/articles/360047806153"
+        to="https://help.artsy.net/hc/en-us/articles/360047806153"
         textDecoration="underline"
-        textColor="black60"
+        // textColor="black60"
         onClick={onClick}
       >
         <Text variant="sm">Identify Suspicious Collectors</Text>

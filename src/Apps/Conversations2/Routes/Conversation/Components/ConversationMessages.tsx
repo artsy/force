@@ -9,6 +9,7 @@ import { useScrollPagination } from "Apps/Conversations2/hooks/useScrollPaginati
 import { useLoadMore } from "Apps/Conversations2/hooks/useLoadMore"
 import { extractNodes } from "Utils/extractNodes"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
+import { ConversationMessages_conversation$key } from "__generated__/ConversationMessages_conversation.graphql"
 
 interface ConversationMessagesProps {
   conversation: ConversationMessages_conversation$key
