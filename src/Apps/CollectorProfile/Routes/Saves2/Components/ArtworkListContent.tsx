@@ -1,6 +1,6 @@
 import { SavesArtworksGridFragmentContainer } from "./SavesArtworksGrid"
-import { SavesArtworks_me$data } from "__generated__/SavesArtworks_me.graphql"
-import { SavesArtworksQuery } from "__generated__/SavesArtworksQuery.graphql"
+import { ArtworkListContent_me$data } from "__generated__/ArtworkListContent_me.graphql"
+import { ArtworkListContentQuery } from "__generated__/ArtworkListContentQuery.graphql"
 import {
   ArtworkFilterContextProvider,
   Counts,
@@ -15,14 +15,14 @@ import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { SavesArtworksGridPlaceholder } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesPlaceholders"
 import { SavesContextualMenu } from "./Actions/SavesContextualMenu"
 
-interface SavesArtworksQueryRendererProps {
-  collectionID: string
+interface ArtworkListContentQueryRendererProps {
+  listID: string
   initialPage?: number
   initialSort?: string
 }
 
-interface SavesArtworksProps {
-  me: SavesArtworks_me$data
+interface ArtworkListContentProps {
+  me: ArtworkListContent_me$data
   relay: RelayRefetchProp
   initialPage?: number
   initialSort?: string
@@ -34,12 +34,12 @@ const sortOptions: SortOptions = [
 ]
 const defaultSort = sortOptions[0].value
 
-const SavesArtworks: FC<SavesArtworksProps> = ({ me, relay }) => {
+const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
   const { match } = useRouter()
 
-  const collection = me.collection!
+  const artworkList = me.artworkList!
   const counts: Counts = {
-    artworks: collection.artworks?.totalCount ?? 0,
+    artworks: artworkList.artworks?.totalCount ?? 0,
   }
 
   return (
@@ -61,9 +61,9 @@ const SavesArtworks: FC<SavesArtworksProps> = ({ me, relay }) => {
         justifyContent="space-between"
       >
         <Join separator={<Spacer x={2} />}>
-          <Text variant="lg-display">{collection.name}</Text>
-          {!collection.default && (
-            <SavesContextualMenu artworkList={collection} />
+          <Text variant="lg-display">{artworkList.name}</Text>
+          {!artworkList.default && (
+            <SavesContextualMenu artworkList={artworkList} />
           )}
         </Join>
       </Flex>
@@ -79,29 +79,29 @@ const SavesArtworks: FC<SavesArtworksProps> = ({ me, relay }) => {
 }
 
 const QUERY = graphql`
-  query SavesArtworksQuery(
-    $collectionID: String!
+  query ArtworkListContentQuery(
+    $listID: String!
     $sort: CollectionArtworkSorts
     $page: Int
   ) {
     me {
-      ...SavesArtworks_me
-        @arguments(collectionID: $collectionID, page: $page, sort: $sort)
+      ...ArtworkListContent_me
+        @arguments(listID: $listID, page: $page, sort: $sort)
     }
   }
 `
 
-export const SavesArtworksRefetchContainer = createRefetchContainer(
-  SavesArtworks,
+export const ArtworkListContentRefetchContainer = createRefetchContainer(
+  ArtworkListContent,
   {
     me: graphql`
-      fragment SavesArtworks_me on Me
+      fragment ArtworkListContent_me on Me
         @argumentDefinitions(
-          collectionID: { type: "String!" }
+          listID: { type: "String!" }
           page: { type: "Int", defaultValue: 1 }
           sort: { type: "CollectionArtworkSorts" }
         ) {
-        collection(id: $collectionID) {
+        artworkList: collection(id: $listID) {
           internalID
           name
           default
@@ -111,24 +111,24 @@ export const SavesArtworksRefetchContainer = createRefetchContainer(
           }
         }
         ...SavesArtworksGrid_me
-          @arguments(collectionID: $collectionID, page: $page, sort: $sort)
+          @arguments(collectionID: $listID, page: $page, sort: $sort)
       }
     `,
   },
   QUERY
 )
 
-export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = ({
-  collectionID,
+export const ArtworkListContentQueryRenderer: FC<ArtworkListContentQueryRendererProps> = ({
+  listID,
   initialPage,
   initialSort,
 }) => {
   return (
-    <SystemQueryRenderer<SavesArtworksQuery>
+    <SystemQueryRenderer<ArtworkListContentQuery>
       placeholder={<SavesArtworksGridPlaceholder />}
       query={QUERY}
       variables={{
-        collectionID,
+        listID,
         sort: initialSort ?? defaultSort,
         page: initialPage,
       }}
@@ -142,7 +142,7 @@ export const SavesArtworksQueryRenderer: FC<SavesArtworksQueryRendererProps> = (
           return <SavesArtworksGridPlaceholder />
         }
 
-        return <SavesArtworksRefetchContainer me={props.me} />
+        return <ArtworkListContentRefetchContainer me={props.me} />
       }}
     />
   )

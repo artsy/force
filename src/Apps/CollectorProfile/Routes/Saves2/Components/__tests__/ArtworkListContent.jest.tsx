@@ -1,8 +1,8 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { screen } from "@testing-library/react"
-import { SavesArtworks_Test_Query } from "__generated__/SavesArtworks_Test_Query.graphql"
-import { SavesArtworksRefetchContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesArtworks"
+import { ArtworkListContent_Test_Query } from "__generated__/ArtworkListContent_Test_Query.graphql"
+import { ArtworkListContentRefetchContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkListContent"
 
 jest.unmock("react-relay")
 jest.mock("System/Router/useRouter", () => ({
@@ -15,29 +15,29 @@ jest.mock("System/Router/useRouter", () => ({
   })),
 }))
 
-const { renderWithRelay } = setupTestWrapperTL<SavesArtworks_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<ArtworkListContent_Test_Query>({
   Component: props => {
     if (!props.me) {
       return null
     }
 
-    return <SavesArtworksRefetchContainer me={props.me} />
+    return <ArtworkListContentRefetchContainer me={props.me} />
   },
   query: graphql`
-    query SavesArtworks_Test_Query @relay_test_operation {
+    query ArtworkListContent_Test_Query @relay_test_operation {
       me {
-        ...SavesArtworks_me @arguments(collectionID: "collectionID")
+        ...ArtworkListContent_me @arguments(listID: "listID")
       }
     }
   `,
 })
 
-describe("SavesArtworks", () => {
+describe("ArtworkListContent", () => {
   describe("Empty State", () => {
-    it("should render correct texts for default collection", () => {
+    it("should render correct texts for default artwork list", () => {
       renderWithRelay({
         Me: () => ({
-          collection: {
+          artworkList: {
             default: true,
             artworks: {
               edges: [],
@@ -57,10 +57,10 @@ describe("SavesArtworks", () => {
       expect(screen.getByText(description)).toBeInTheDocument()
     })
 
-    it("should render correct texts for non-default collection when user has saved artworks", () => {
+    it("should render correct texts for non-default artwork list when user has saved artworks", () => {
       renderWithRelay({
         Me: () => ({
-          collection: {
+          artworkList: {
             default: false,
             artworks: {
               edges: [],
@@ -80,13 +80,13 @@ describe("SavesArtworks", () => {
       expect(screen.getByText(description)).toBeInTheDocument()
     })
 
-    it("should render correct texts for non-default collection when user doesn't have any saved artworks", () => {
+    it("should render correct texts for non-default artwork list when user doesn't have any saved artworks", () => {
       renderWithRelay({
         Me: () => ({
           defaultSaves: {
             artworksCount: 0,
           },
-          collection: {
+          artworkList: {
             default: false,
             artworks: {
               edges: [],
@@ -105,10 +105,10 @@ describe("SavesArtworks", () => {
   })
 
   describe("Actions contextual menu", () => {
-    it("should not render for default collection", () => {
+    it("should not render for default artwork list", () => {
       renderWithRelay({
         Me: () => ({
-          collection: {
+          artworkList: {
             default: true,
           },
         }),
@@ -118,10 +118,10 @@ describe("SavesArtworks", () => {
       expect(menuTriggerButton).not.toBeInTheDocument()
     })
 
-    it("should render for non-default collection", () => {
+    it("should render for non-default artwork list", () => {
       renderWithRelay({
         Me: () => ({
-          collection: {
+          artworkList: {
             default: false,
           },
         }),

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3d40485b0fc4ef560c9c20339599ba61>>
+ * @generated SignedSource<<f7ba184e6737ce9852b71a39a3b23982>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,8 +10,8 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavesArtworks_me$data = {
-  readonly collection: {
+export type ArtworkListContent_me$data = {
+  readonly artworkList: {
     readonly artworks: {
       readonly totalCount: number | null;
     } | null;
@@ -20,11 +20,11 @@ export type SavesArtworks_me$data = {
     readonly name: string;
   } | null;
   readonly " $fragmentSpreads": FragmentRefs<"SavesArtworksGrid_me">;
-  readonly " $fragmentType": "SavesArtworks_me";
+  readonly " $fragmentType": "ArtworkListContent_me";
 };
-export type SavesArtworks_me$key = {
-  readonly " $data"?: SavesArtworks_me$data;
-  readonly " $fragmentSpreads": FragmentRefs<"SavesArtworks_me">;
+export type ArtworkListContent_me$key = {
+  readonly " $data"?: ArtworkListContent_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkListContent_me">;
 };
 
 const node: ReaderFragment = (function(){
@@ -43,7 +43,7 @@ return {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "collectionID"
+      "name": "listID"
     },
     {
       "defaultValue": 1,
@@ -58,15 +58,15 @@ return {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "SavesArtworks_me",
+  "name": "ArtworkListContent_me",
   "selections": [
     {
-      "alias": null,
+      "alias": "artworkList",
       "args": [
         {
           "kind": "Variable",
           "name": "id",
-          "variableName": "collectionID"
+          "variableName": "listID"
         }
       ],
       "concreteType": "Collection",
@@ -129,7 +129,7 @@ return {
         {
           "kind": "Variable",
           "name": "collectionID",
-          "variableName": "collectionID"
+          "variableName": "listID"
         },
         (v0/*: any*/),
         (v1/*: any*/)
@@ -143,6 +143,6 @@ return {
 };
 })();
 
-(node as any).hash = "91979e1d19abaff3ea85e6cc5701d11f";
+(node as any).hash = "0c972b42d2383d66fe3c97518e52fb5f";
 
 export default node;
