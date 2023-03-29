@@ -14,15 +14,16 @@ import { ShelfNext, ShelfPrevious } from "./ShelfNavigation"
 import { ShelfScrollBar } from "./ShelfScrollBar"
 import {
   FlexProps,
-  FullBleed,
   visuallyDisableScrollbar,
   Box,
   BoxProps,
   CELL_GAP_PADDING_AMOUNT,
-  paginateCarousel,
   ShelfNavigationProps,
   CarouselPaginateBy,
+  Flex,
+  FullBleed,
 } from "@artsy/palette"
+import { paginateCarousel } from "Components/Shelf/paginate"
 
 /** ShelfProps */
 export type ShelfProps = BoxProps & {
@@ -228,7 +229,7 @@ export const Shelf: React.FC<ShelfProps> = ({
       </Nav>
 
       {noFullBleed ? (
-        <>{renderRails()}</>
+        <Flex>{renderRails()}</Flex>
       ) : (
         <FullBleed
           // To prevent any page jank we initially partially disable this component
@@ -299,25 +300,3 @@ const Rail = styled(Box)`
 const Cell = styled(Box)`
   white-space: normal;
 `
-
-// const Next = styled(ShelfNext)`
-//   position: absolute;
-//   top: 50%;
-//   transform: translateY(-50%);
-//   right: 0;
-
-//   @media (hover: none) {
-//     display: none;
-//   }
-// `
-
-// const Previous = styled(ShelfPrevious)`
-//   position: absolute;
-//   top: 50%;
-//   transform: translateY(-50%);
-//   left: 0;
-
-//   @media (hover: none) {
-//     display: none;
-//   }
-// `
