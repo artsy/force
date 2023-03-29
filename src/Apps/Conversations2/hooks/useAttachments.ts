@@ -1,6 +1,6 @@
 import { useToasts } from "@artsy/palette"
+import { uploadFileToS3 } from "Apps/Conversations2/hooks/uploadFileToS3"
 import { useCallback, useEffect, useRef, useState } from "react"
-import { uploadFileToS3 } from "utils/hooks/uploadFileToS3"
 import { ConversationMessageAttachmentInput } from "__generated__/useSendConversationMessageMutation.graphql"
 
 const MAX_ATTACHMENTS_SIZE = 20_000_000
@@ -26,7 +26,7 @@ export const useAttachments = (inquiryId?: string) => {
   const attachmentsSize = attachments.reduce((sum, attachment) => {
     return sum + (attachment.numericSize ?? 0)
   }, 0)
-  const isLoadingAttachments = attachments.some((attachment) => !attachment.url)
+  const isLoadingAttachments = attachments.some(attachment => !attachment.url)
 
   const clearAttachments = useCallback(() => {
     setAttachmentsHash({})
@@ -36,7 +36,7 @@ export const useAttachments = (inquiryId?: string) => {
   const clearError = () => setError(null)
 
   const updateAttachmentURL = useCallback((id: string, url: string) => {
-    setAttachmentsHash((attachmentsHash) => {
+    setAttachmentsHash(attachmentsHash => {
       if (!attachmentsHash[id] || !!attachmentsHash[id].url) {
         return attachmentsHash
       }
@@ -53,9 +53,9 @@ export const useAttachments = (inquiryId?: string) => {
   }, [])
 
   const addAttachments = useCallback((attachments: Attachment[]) => {
-    setAttachmentsHash((attachmentsHash) => {
+    setAttachmentsHash(attachmentsHash => {
       const newHash: AttachmentsMap = {}
-      attachments.forEach((attachment) => {
+      attachments.forEach(attachment => {
         newHash[attachment.id] = attachment
       })
 
@@ -64,7 +64,7 @@ export const useAttachments = (inquiryId?: string) => {
   }, [])
 
   const removeAttachment = useCallback((id: string) => {
-    setAttachmentsHash((attachmentsHash) => {
+    setAttachmentsHash(attachmentsHash => {
       const { [id]: _, ...rest } = attachmentsHash
       const loadingAttachments = attachmentsLoadingRef.current
       loadingAttachments.splice(loadingAttachments.indexOf(id), 1)
@@ -74,10 +74,10 @@ export const useAttachments = (inquiryId?: string) => {
   }, [])
 
   const removeAttachmentsWithoutUrl = useCallback(() => {
-    setAttachmentsHash((attachmentsHash) => {
+    setAttachmentsHash(attachmentsHash => {
       const filteredAttachmentsHash: AttachmentsMap = {}
       const filteredAttachmentsIds: string[] = []
-      Object.values(attachmentsHash).forEach((attachment) => {
+      Object.values(attachmentsHash).forEach(attachment => {
         if (attachmentsHash[attachment.id]?.url) {
           filteredAttachmentsHash[attachment.id] = attachment
           filteredAttachmentsIds.push(attachment.id)
@@ -89,7 +89,7 @@ export const useAttachments = (inquiryId?: string) => {
   }, [])
 
   const uploadFiles = useCallback(() => {
-    Object.keys(attachmentsHash).map((key) => {
+    Object.keys(attachmentsHash).map(key => {
       if (
         attachmentsHash[key]?.url ||
         attachmentsLoadingRef.current.includes(key) ||
@@ -105,8 +105,8 @@ export const useAttachments = (inquiryId?: string) => {
         file,
         key: `messages/${inquiryId}/${id}/${name}`,
       })
-        .then((url) => updateAttachmentURL(key, url))
-        .catch((error) => {
+        .then(url => updateAttachmentURL(key, url))
+        .catch(error => {
           sendToast({
             variant: "error",
             message: "Attachment failed to upload. Please try again.",

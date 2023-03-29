@@ -1,29 +1,29 @@
 import { graphql } from "relay-runtime"
 import { screen } from "@testing-library/react"
-import { setupTestWrapper } from "utils/test/setupTestWrapper"
-import { ConversationsSidebar } from "../ConversationsSidebar"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { ConversationsSidebar } from "Apps/Conversations2/components/Sidebar/ConversationsSidebar"
 import { ConversationsSidebarTestQuery } from "__generated__/ConversationsSidebarTestQuery.graphql"
-import mockRouter from "next-router-mock"
-
-jest.mock("next/router", () => require("next-router-mock"))
 
 describe("ConversationDetails", () => {
-  const { renderWithRelay } = setupTestWrapper<ConversationsSidebarTestQuery>({
-    Component: ({ viewer }) => <ConversationsSidebar viewer={viewer!} />,
-    query: graphql`
-      query ConversationsSidebarTestQuery @relay_test_operation {
-        viewer {
-          ...ConversationsSidebar_viewer
-            @arguments(partnerId: "partner-id", sellerId: "partner-id")
+  const { renderWithRelay } = setupTestWrapperTL<ConversationsSidebarTestQuery>(
+    {
+      Component: ({ viewer }) => <ConversationsSidebar viewer={viewer!} />,
+      query: graphql`
+        query ConversationsSidebarTestQuery @relay_test_operation {
+          viewer {
+            ...ConversationsSidebar_viewer
+              @arguments(partnerId: "partner-id", sellerId: "partner-id")
+          }
         }
-      }
-    `,
-  })
+      `,
+    }
+  )
 
   beforeEach(() => {
     jest.clearAllMocks()
 
-    mockRouter.query = { conversationId: "123" }
+    // FIXME
+    // mockRouter.query = { conversationId: "123" }
   })
 
   it("renders", () => {

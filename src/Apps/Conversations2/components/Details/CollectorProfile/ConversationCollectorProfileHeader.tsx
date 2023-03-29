@@ -1,23 +1,23 @@
 import { Avatar, Box, Flex, Spacer, Text } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import { CollectorProfileHeader_user$key } from "__generated__/CollectorProfileHeader_user.graphql"
-import { Verifications } from "./CollectorProfileVerifications"
+import { ConversationCollectorProfileHeader_user$key } from "__generated__/ConversationCollectorProfileHeader_user.graphql"
+import { Verifications } from "./ConversationCollectorProfileVerifications"
 
 interface CollectorProfileHeaderProps {
-  user: CollectorProfileHeader_user$key
+  user: ConversationCollectorProfileHeader_user$key
 }
 
-export const CollectorProfileHeader = ({
+export const ConversationCollectorProfileHeader = ({
   user,
 }: CollectorProfileHeaderProps) => {
   const data = useFragment(
     graphql`
-      fragment CollectorProfileHeader_user on User {
+      fragment ConversationCollectorProfileHeader_user on User {
         initials
         collectorProfile {
           name
           artsyUserSince(format: "YYYY")
-          ...CollectorProfileVerifications_collectorProfileType
+          ...ConversationCollectorProfileVerifications_collectorProfileType
         }
       }
     `,

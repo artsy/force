@@ -23,6 +23,11 @@ import { useRouter } from "System/Router/useRouter"
 import { useSendConversationMessage } from "Apps/Conversations2/mutations/useSendConversationMessage"
 import { useAttachments } from "Apps/Conversations2/hooks/useAttachments"
 import { ConversationAttachmentsList } from "Apps/Conversations2/Routes/Conversation/Components/ConversationAttachmentsList"
+import {
+  ConversationMessageAttachmentInput,
+  useSendConversationMessageMutation$data,
+} from "__generated__/useSendConversationMessageMutation.graphql"
+import { ConversationReply_conversation$key } from "__generated__/ConversationReply_conversation.graphql"
 
 interface ConversationReplyProps {
   conversation: ConversationReply_conversation$key
@@ -43,7 +48,7 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
   conversation,
 }) => {
   const { user } = useSystemContext()
-  const { query } = useRouter()
+  const { match } = useRouter()
   const { trackEvent } = useTracking()
   const { sendToast } = useToasts()
   const [isLoading, setIsLoading] = useState(false)
@@ -111,7 +116,7 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
     commit({
       variables: {
         input: {
-          from: user.email,
+          from: user.email as string,
           fromId: user.id,
           bodyText: values.message,
           id: data.internalID,
@@ -131,7 +136,7 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
         helpers.resetForm()
         trackEvent(
           sentConversationMessage({
-            impulseConversationId: query.conversationId as string,
+            impulseConversationId: match.params.conversationId as string,
             impulseMessageId:
               response.sendConversationMessage?.conversation?.lastMessageID ??
               "",

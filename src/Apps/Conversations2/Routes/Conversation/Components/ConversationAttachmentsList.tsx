@@ -1,15 +1,16 @@
 import { FC } from "react"
 import { Clickable, Flex, Spinner, Text, CloseIcon, Box } from "@artsy/palette"
-import { Attachment } from "pages/conversations/hooks/useAttachments"
+import { Attachment } from "Apps/Conversations2/hooks/useAttachments"
 
 interface ConversationAttachmentsListProps {
   attachments?: Attachment[]
   onRemoveAttachment: (id: string) => void
 }
 
-export const ConversationAttachmentsList: FC<
-  ConversationAttachmentsListProps
-> = ({ attachments, onRemoveAttachment }) => {
+export const ConversationAttachmentsList: FC<ConversationAttachmentsListProps> = ({
+  attachments,
+  onRemoveAttachment,
+}) => {
   if (!attachments || !attachments.length) {
     return null
   }

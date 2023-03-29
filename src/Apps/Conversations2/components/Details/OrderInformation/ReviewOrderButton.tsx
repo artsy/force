@@ -1,10 +1,9 @@
 import { graphql, useFragment } from "react-relay"
 import { Button, ButtonProps } from "@artsy/palette"
-import { RouterLink } from "components/RouterLink"
 import { ReviewOrderButton_order$key } from "__generated__/ReviewOrderButton_order.graphql"
-import getConfig from "next/config"
 import { CounterOfferState } from "./OrderState"
 import { useTracking } from "react-tracking"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface ReviewOrderButtonProps {
   order: ReviewOrderButton_order$key
@@ -15,7 +14,6 @@ export const ReviewOrderButton: React.FC<ReviewOrderButtonProps> = ({
 }) => {
   const { trackEvent } = useTracking()
 
-  const { publicRuntimeConfig } = getConfig()
   const data = useFragment(
     graphql`
       fragment ReviewOrderButton_order on CommerceOrder {
@@ -83,7 +81,7 @@ export const ReviewOrderButton: React.FC<ReviewOrderButtonProps> = ({
 
   return (
     <RouterLink
-      href={`${publicRuntimeConfig.NEXT_PUBLIC_VOLT_V1_URL}/orders/${data.id}`}
+      to={`/orders/${data.id}`}
       onClick={() =>
         trackEvent({
           action: "Click",

@@ -1,10 +1,10 @@
 import { graphql } from "relay-runtime"
-import { setupTestWrapper } from "utils/test/setupTestWrapper"
-import { ConversationMessages } from "../ConversationMessages"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { ConversationMessages } from "Apps/Conversations2/Routes/Conversation/Components/ConversationMessages"
 import { ConversationMessagesTestQuery } from "__generated__/ConversationMessagesTestQuery.graphql"
 import { format, subDays } from "date-fns"
 import { act, fireEvent, screen } from "@testing-library/react"
-import { intersect } from "utils/test/mockIntersectionObserver"
+import { intersect } from "Utils/Hooks/__tests__/mockIntersectionObserver"
 
 const loadMoreMock = jest.fn()
 const useLoadMoreMock = jest.fn().mockReturnValue({
@@ -18,18 +18,20 @@ jest.mock("next/router", () => require("next-router-mock"))
 
 describe("ConversationMessages", () => {
   const scrollIntoViewMock = jest.fn()
-  const { renderWithRelay } = setupTestWrapper<ConversationMessagesTestQuery>({
-    Component: ({ conversation }) => (
-      <ConversationMessages conversation={conversation!} />
-    ),
-    query: graphql`
-      query ConversationMessagesTestQuery @relay_test_operation {
-        conversation(id: "123") {
-          ...ConversationMessages_conversation
+  const { renderWithRelay } = setupTestWrapperTL<ConversationMessagesTestQuery>(
+    {
+      Component: ({ conversation }) => (
+        <ConversationMessages conversation={conversation!} />
+      ),
+      query: graphql`
+        query ConversationMessagesTestQuery @relay_test_operation {
+          conversation(id: "123") {
+            ...ConversationMessages_conversation
+          }
         }
-      }
-    `,
-  })
+      `,
+    }
+  )
 
   beforeEach(() => {
     jest.clearAllMocks()

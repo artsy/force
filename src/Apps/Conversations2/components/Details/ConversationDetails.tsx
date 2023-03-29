@@ -8,8 +8,9 @@ import CloseIcon from "@artsy/icons/CloseIcon"
 import styled from "styled-components"
 import { extractNodes } from "Utils/extractNodes"
 import { Media } from "Utils/Responsive"
-import { CollectorProfileHeader } from "Apps/Conversations2/components/Details/CollectorProfile/CollectorProfileHeader"
-import { CollectorProfileInformation } from "Apps/Conversations2/components/Details/CollectorProfile/CollectorProfileInformation"
+import { ConversationCollectorProfileHeader } from "Apps/Conversations2/components/Details/CollectorProfile/ConversationCollectorProfileHeader"
+import { ConversationCollectorProfileInformation } from "Apps/Conversations2/components/Details/CollectorProfile/ConversationCollectorProfileInformation"
+import { ConversationDetails_viewer$key } from "__generated__/ConversationDetails_viewer.graphql"
 
 interface ConversationDetailsProps {
   viewer: ConversationDetails_viewer$key
@@ -29,9 +30,9 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
         ) {
         conversation(id: $conversationId) @required(action: NONE) {
           fromUser {
-            ...CollectorProfileHeader_user
+            ...ConversationCollectorProfileHeader_user
             collectorProfile {
-              ...CollectorProfileInformation_collectorProfileType
+              ...ConversationCollectorProfileInformation_collectorProfileType
             }
           }
           orderConnection(
@@ -90,9 +91,11 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
 
       {!!data?.conversation.fromUser && (
         <>
-          <CollectorProfileHeader user={data.conversation.fromUser} />
+          <ConversationCollectorProfileHeader
+            user={data.conversation.fromUser}
+          />
           <Separator my={2} />
-          <CollectorProfileInformation
+          <ConversationCollectorProfileInformation
             collectorProfileType={
               data?.conversation?.fromUser?.collectorProfile!
             }

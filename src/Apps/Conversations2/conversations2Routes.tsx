@@ -18,7 +18,8 @@ const Conversation2Route = loadable(
       /* webpackChunkName: "conversations2Bundle" */ "./Routes/Conversation/Conversation2Route"
     ),
   {
-    resolveComponent: component => component.Conversation2Route,
+    resolveComponent: component =>
+      component.Conversation2RouteFragmentContainer,
   }
 )
 
@@ -67,11 +68,20 @@ export const conversations2Routes: AppRouteConfig[] = [
     query: graphql`
       query conversations2Routes_DetailQuery(
         $conversationId: String!
+        $sellerId: ID!
+        $partnerId: String!
         $toBeReplied: Boolean
         $hasReply: Boolean
       ) {
         viewer {
           ...Conversation2Route_viewer
+            @arguments(
+              conversationId: $conversationId
+              toBeReplied: $toBeReplied
+              hasReply: $hasReply
+              sellerId: $sellerId
+              partnerId: $partnerId
+            )
         }
 
         conversation(id: $conversationId) @required(action: NONE) {

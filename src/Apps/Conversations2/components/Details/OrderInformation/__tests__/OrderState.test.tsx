@@ -1,11 +1,11 @@
-import { OrderState } from "pages/conversations/components/Details/OrderInformation/OrderState"
-import { setupTestWrapper } from "utils/test/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "relay-runtime"
 import { OrderStateTestQuery } from "__generated__/OrderStateTestQuery.graphql"
 import { screen } from "@testing-library/react"
+import { OrderState } from "Apps/Conversations2/components/Details/OrderInformation/OrderState"
 
 describe("OrderState", () => {
-  const { renderWithRelay } = setupTestWrapper<OrderStateTestQuery>({
+  const { renderWithRelay } = setupTestWrapperTL<OrderStateTestQuery>({
     Component: ({ commerceOrder }) => <OrderState order={commerceOrder!} />,
     query: graphql`
       query OrderStateTestQuery @relay_test_operation {
