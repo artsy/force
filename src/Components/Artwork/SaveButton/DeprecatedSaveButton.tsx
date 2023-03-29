@@ -21,7 +21,7 @@ export const DeprecatedSaveButton: React.FC<DeprecatedSaveButtonProps> = ({
   const tracking = useTracking()
   const [isHovered, setIsHovered] = useState(false)
 
-  const isSaved = !!artwork.is_saved
+  const isSaved = !!artwork.isSaved
 
   const { handleSave } = useSaveArtwork({
     isSaved,
@@ -105,7 +105,7 @@ export const DeprecatedSaveButtonFragmentContainer = createFragmentContainer(
         id
         internalID
         slug
-        is_saved: isSaved
+        isSaved
         title
       }
     `,

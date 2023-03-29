@@ -1,5 +1,5 @@
 import { Box, BoxProps } from "@artsy/palette"
-import { FC, useReducer } from "react"
+import { FC, ReactNode, useReducer } from "react"
 import styled, { css } from "styled-components"
 
 export enum Mode {
@@ -10,7 +10,7 @@ export enum Mode {
 }
 
 interface ArtQuizCardProps extends BoxProps {
-  children: JSX.Element
+  children: ReactNode
   mode: Mode
 }
 

@@ -17,8 +17,8 @@ import * as React from "react"
 import { useContext } from "react"
 import { useTracking } from "react-tracking"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
-import { ProgressiveOnboardingSavesHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSavesHighlight"
-import { ProgressiveOnboardingFollowsHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowsHighlight"
+import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
+import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
 import { useLinkToSaves } from "Apps/CollectorProfile/Routes/Saves2/Utils/useLinksToSaves"
 
 export const NavBarUserMenu: React.FC = () => {
@@ -94,7 +94,7 @@ export const NavBarUserMenu: React.FC = () => {
         <GraphIcon mr={1} aria-hidden="true" /> Insights
       </NavBarMenuItemLink>
 
-      <ProgressiveOnboardingSavesHighlight
+      <ProgressiveOnboardingSaveHighlight
         position={{ top: "3.5px", left: "9.5px" }}
       >
         <NavBarMenuItemLink
@@ -104,9 +104,9 @@ export const NavBarUserMenu: React.FC = () => {
         >
           <HeartIcon mr={1} aria-hidden="true" /> Saves
         </NavBarMenuItemLink>
-      </ProgressiveOnboardingSavesHighlight>
+      </ProgressiveOnboardingSaveHighlight>
 
-      <ProgressiveOnboardingFollowsHighlight
+      <ProgressiveOnboardingFollowHighlight
         position={{ top: "3.5px", left: "9.5px" }}
       >
         <NavBarMenuItemLink
@@ -116,7 +116,7 @@ export const NavBarUserMenu: React.FC = () => {
         >
           <GroupIcon mr={1} aria-hidden="true" /> Follows
         </NavBarMenuItemLink>
-      </ProgressiveOnboardingFollowsHighlight>
+      </ProgressiveOnboardingFollowHighlight>
 
       <NavBarMenuItemLink
         aria-label="Edit your settings"

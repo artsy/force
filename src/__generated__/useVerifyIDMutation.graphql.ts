@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c129b262eb8f703c1bdf0e30d2e87fa3>>
+ * @generated SignedSource<<a83297a4333df5b7c97c83a22d0fb996>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,13 +16,13 @@ export type SendIdentityVerificationEmailMutationInput = {
   sendEmail?: boolean | null;
   userID?: string | null;
 };
-export type verifyIDMutation$variables = {
+export type useVerifyIDMutation$variables = {
   input: SendIdentityVerificationEmailMutationInput;
 };
-export type verifyIDMutation$data = {
+export type useVerifyIDMutation$data = {
   readonly sendIdentityVerificationEmail: {
     readonly confirmationOrError: {
-      readonly identityVerificationEmail?: {
+      readonly identityVerification?: {
         readonly internalID: string;
         readonly state: string;
         readonly userID: string | null;
@@ -34,9 +34,9 @@ export type verifyIDMutation$data = {
     } | null;
   } | null;
 };
-export type verifyIDMutation = {
-  response: verifyIDMutation$data;
-  variables: verifyIDMutation$variables;
+export type useVerifyIDMutation = {
+  response: useVerifyIDMutation$data;
+  variables: useVerifyIDMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -112,7 +112,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "verifyIDMutation",
+    "name": "useVerifyIDMutation",
     "selections": [
       {
         "alias": null,
@@ -136,9 +136,9 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "IdentityVerificationEmail",
+                    "concreteType": "IdentityVerification",
                     "kind": "LinkedField",
-                    "name": "identityVerificationEmail",
+                    "name": "identityVerification",
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
@@ -166,7 +166,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "verifyIDMutation",
+    "name": "useVerifyIDMutation",
     "selections": [
       {
         "alias": null,
@@ -197,9 +197,9 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "IdentityVerificationEmail",
+                    "concreteType": "IdentityVerification",
                     "kind": "LinkedField",
-                    "name": "identityVerificationEmail",
+                    "name": "identityVerification",
                     "plural": false,
                     "selections": [
                       (v2/*: any*/),
@@ -229,16 +229,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2e3e1d90294963b6fa0a0fa3b10cabbc",
+    "cacheID": "79cf86f4361bbb038bc513d96891b75c",
     "id": null,
     "metadata": {},
-    "name": "verifyIDMutation",
+    "name": "useVerifyIDMutation",
     "operationKind": "mutation",
-    "text": "mutation verifyIDMutation(\n  $input: SendIdentityVerificationEmailMutationInput!\n) {\n  sendIdentityVerificationEmail(input: $input) {\n    confirmationOrError {\n      __typename\n      ... on IdentityVerificationEmailMutationSuccessType {\n        identityVerificationEmail {\n          internalID\n          state\n          userID\n          id\n        }\n      }\n      ... on IdentityVerificationEmailMutationFailureType {\n        mutationError {\n          error\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useVerifyIDMutation(\n  $input: SendIdentityVerificationEmailMutationInput!\n) {\n  sendIdentityVerificationEmail(input: $input) {\n    confirmationOrError {\n      __typename\n      ... on IdentityVerificationEmailMutationSuccessType {\n        identityVerification {\n          internalID\n          state\n          userID\n          id\n        }\n      }\n      ... on IdentityVerificationEmailMutationFailureType {\n        mutationError {\n          error\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d2524c7f23c0abbefdf4c88d37d789cf";
+(node as any).hash = "6945d5f34eebe2766a806a9fe46506c9";
 
 export default node;

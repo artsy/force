@@ -492,7 +492,7 @@ const mockArtist = {
           sale: null,
           sale_artwork: null,
           slug: "megan-mary-baker-landscape-study-no-dot-3-tiepolo",
-          is_saved: false,
+          isSaved: false,
           attributionClass: {
             name: "Unique",
             id: "QXR0cmlidXRpb25DbGFzczp1bmlxdWU=",
@@ -567,7 +567,7 @@ const mockArtist = {
           sale_artwork: null,
           slug:
             "megan-mary-baker-what-a-thing-to-be-still-when-everything-else-is-moving",
-          is_saved: false,
+          isSaved: false,
           attributionClass: {
             name: "Unique",
             id: "QXR0cmlidXRpb25DbGFzczp1bmlxdWU=",

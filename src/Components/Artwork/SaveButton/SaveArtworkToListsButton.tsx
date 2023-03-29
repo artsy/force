@@ -24,7 +24,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
   const { savedListId, isSavedToList } = useManageArtworkForSavesContext()
 
   const customListsCount = artwork.customCollections?.totalCount ?? 0
-  const isSavedToDefaultList = !!artwork.is_saved
+  const isSavedToDefaultList = !!artwork.isSaved
   const isSavedToCustomLists = customListsCount > 0
 
   const { isSaved, saveArtworkToLists } = useArtworkLists({
@@ -83,7 +83,7 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
       fragment SaveArtworkToListsButton_artwork on Artwork {
         id
         internalID
-        is_saved: isSaved
+        isSaved
         slug
         title
         date

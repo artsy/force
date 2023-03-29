@@ -9,7 +9,7 @@ describe("ThankYou page when artwork is submitted from My Collection", () => {
 
     expect(text).toContain("Your artwork has been submitted")
     expect(text).toContain(
-      "We will email you within 1-3 days to confirm if your artwork has been accepted or not."
+      "We will email you within 3-5 days to confirm if your artwork has been accepted or not."
     )
   })
 

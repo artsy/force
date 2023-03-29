@@ -25,7 +25,7 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
   const { containerProps, isSaveButtonVisible } = useSaveButton({
-    isSaved: !!artwork.is_saved,
+    isSaved: !!artwork.isSaved,
   })
 
   const image = artwork.image?.resized
@@ -151,7 +151,7 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
         }
         artistNames
         href
-        is_saved: isSaved
+        isSaved
       }
     `,
   }

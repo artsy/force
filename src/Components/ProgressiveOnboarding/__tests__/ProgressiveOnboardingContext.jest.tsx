@@ -18,8 +18,8 @@ describe("ProgressiveOnboardingContext", () => {
     it("returns the all dismissed keys if there is a value in local storage", () => {
       __dismiss__(id, "follow-artist")
       expect(get(id)).toEqual(["follow-artist"])
-      __dismiss__(id, "find-follows")
-      expect(get(id)).toEqual(["follow-artist", "find-follows"])
+      __dismiss__(id, "follow-find")
+      expect(get(id)).toEqual(["follow-artist", "follow-find"])
     })
 
     it("does not return duplicate keys", () => {
@@ -51,9 +51,9 @@ describe("ProgressiveOnboardingContext", () => {
       expect(
         parse(
           id,
-          JSON.stringify(["follow-artist", "find-follows", "follows-highlight"])
+          JSON.stringify(["follow-artist", "follow-find", "follow-highlight"])
         )
-      ).toEqual(["follow-artist", "find-follows", "follows-highlight"])
+      ).toEqual(["follow-artist", "follow-find", "follow-highlight"])
     })
 
     it("returns only the valid keys", () => {
@@ -62,8 +62,8 @@ describe("ProgressiveOnboardingContext", () => {
           id,
           JSON.stringify([
             "follow-artist",
-            "find-follows",
-            "follows-highlight",
+            "follow-find",
+            "follow-highlight",
             "foo",
             "bar",
             "baz",
@@ -75,7 +75,7 @@ describe("ProgressiveOnboardingContext", () => {
             undefined,
           ])
         )
-      ).toEqual(["follow-artist", "find-follows", "follows-highlight"])
+      ).toEqual(["follow-artist", "follow-find", "follow-highlight"])
     })
   })
 })

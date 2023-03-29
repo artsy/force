@@ -17,7 +17,7 @@ export const ArticleAd: FC<ArticleAdProps> = memo(({ unit, size, ...rest }) => {
 
   // Since ads are iframed we have to calculate a value to use to scale them via transform.
   // We track the geometry of a responsive box and keep the value in sync with it.
-  const { ref, ...geometry } = useSizeAndPosition({ debounce: 50 })
+  const { ref, ...geometry } = useSizeAndPosition()
   const scale = geometry.width / width
 
   return (
