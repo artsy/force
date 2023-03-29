@@ -4,7 +4,10 @@ import {
   ContextualMenuDivider,
   ContextualMenuItem,
 } from "Components/ContextualMenu"
-import { DeleteSavesModal, DeleteArtworkListEntity } from "./DeleteSavesModal"
+import {
+  DeleteArtworkListModal,
+  DeleteArtworkListEntity,
+} from "./DeleteArtworkListModal"
 import { useTranslation } from "react-i18next"
 import {
   EditSavesModal,
@@ -47,7 +50,7 @@ export const SavesContextualMenu: React.FC<Props> = ({ artworkList }) => {
       )}
 
       {isDeleteModalOpen && (
-        <DeleteSavesModal
+        <DeleteArtworkListModal
           artworkList={artworkList}
           onClose={closeDeleteModal}
         />

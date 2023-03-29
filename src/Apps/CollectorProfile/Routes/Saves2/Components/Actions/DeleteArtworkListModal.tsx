@@ -13,7 +13,10 @@ interface Props {
   onClose: () => void
 }
 
-export const DeleteSavesModal: React.FC<Props> = ({ artworkList, onClose }) => {
+export const DeleteArtworkListModal: React.FC<Props> = ({
+  artworkList,
+  onClose,
+}) => {
   const { t } = useTranslation()
   const { router } = useRouter()
 
