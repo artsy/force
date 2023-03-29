@@ -29,7 +29,7 @@ export const AuctionResult: React.FC<AuctionResultProps> = ({
 
       <AuctionResultBackLink auctionResult={auctionResult} />
 
-      <GridColumns mt={[0, 2]} gridRowGap={[2, 0]}>
+      <GridColumns mt={[0, 2]}>
         <Column span={4}>
           <AuctionResultImage auctionResult={auctionResult} />
         </Column>
