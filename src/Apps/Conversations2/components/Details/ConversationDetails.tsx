@@ -1,18 +1,15 @@
 import { Clickable, Flex, Separator } from "@artsy/palette"
 import { ConversationHelpCenter } from "./ConversationHelpCenter"
 import { graphql, useFragment } from "react-relay"
-import { ConversationDetails_viewer$key } from "__generated__/ConversationDetails_viewer.graphql"
 import { OrderInformation } from "./OrderInformation/OrderInformation"
 import { ConversationArtwork } from "./ConversationArtwork"
 import { ConversationManageThisInquiry } from "./ConversationManageThisInquiry"
-import { SalesforceChatBubble } from "pages/conversations/components/SalesforceChatBubble"
-import { CollectorProfileHeader } from "pages/conversations/components/Details/CollectorProfile/CollectorProfileHeader"
-import { CollectorProfileInformation } from "pages/conversations/components/Details/CollectorProfile/CollectorProfileInformation"
-import { Media } from "utils/responsive"
 import CloseIcon from "@artsy/icons/CloseIcon"
-import { extractNodes } from "utils/extractNodes"
 import styled from "styled-components"
-import getConfig from "next/config"
+import { extractNodes } from "Utils/extractNodes"
+import { Media } from "Utils/Responsive"
+import { CollectorProfileHeader } from "Apps/Conversations2/components/Details/CollectorProfile/CollectorProfileHeader"
+import { CollectorProfileInformation } from "Apps/Conversations2/components/Details/CollectorProfile/CollectorProfileInformation"
 
 interface ConversationDetailsProps {
   viewer: ConversationDetails_viewer$key
@@ -23,15 +20,13 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
   viewer,
   onClose,
 }) => {
-  const { publicRuntimeConfig } = getConfig()
-
   const data = useFragment(
     graphql`
       fragment ConversationDetails_viewer on Viewer
-      @argumentDefinitions(
-        conversationId: { type: "String!" }
-        sellerId: { type: "ID!" }
-      ) {
+        @argumentDefinitions(
+          conversationId: { type: "String!" }
+          sellerId: { type: "ID!" }
+        ) {
         conversation(id: $conversationId) @required(action: NONE) {
           fromUser {
             ...CollectorProfileHeader_user
@@ -109,12 +104,6 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
       <ConversationManageThisInquiry conversation={data.conversation} />
       <Separator borderWidth={2} my={4} />
       <ConversationHelpCenter conversation={data.conversation} />
-
-      <Media greaterThan="sm">
-        {publicRuntimeConfig.NEXT_PUBLIC_SALESFORCE_CHAT_ENABLED === "true" && (
-          <SalesforceChatBubble />
-        )}
-      </Media>
     </Flex>
   )
 }

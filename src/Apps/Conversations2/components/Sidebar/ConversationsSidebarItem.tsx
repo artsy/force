@@ -6,29 +6,28 @@ import {
   Text,
   Tooltip,
 } from "@artsy/palette"
-import { RouterLink } from "components/RouterLink"
 import { graphql, useFragment } from "react-relay"
-import { useRouter } from "next/router"
-import { extractNodes } from "utils/extractNodes"
-import { ConversationsSidebarItem_conversation$key } from "__generated__/ConversationsSidebarItem_conversation.graphql"
-import { UserVerifiedIcon } from "../UserVerifiedIcon"
 import { useTracking } from "react-tracking"
+import { RouterLink } from "System/Router/RouterLink"
+import { useRouter } from "System/Router/useRouter"
+import { extractNodes } from "Utils/extractNodes"
 
 interface ConversationsSidebarItemProps {
   conversation: ConversationsSidebarItem_conversation$key
   index: number
 }
 
-export const ConversationsSidebarItem: React.FC<
-  ConversationsSidebarItemProps
-> = ({ conversation, index }) => {
+export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> = ({
+  conversation,
+  index,
+}) => {
   const { query } = useRouter()
   const { trackEvent } = useTracking()
 
   const data = useFragment(
     graphql`
       fragment ConversationsSidebarItem_conversation on Conversation
-      @argumentDefinitions(sellerId: { type: "ID!" }) {
+        @argumentDefinitions(sellerId: { type: "ID!" }) {
         internalID
         from {
           name

@@ -9,12 +9,14 @@ interface UseIntersectionObserverProperties {
     rootMargin?: string
   }
   onIntersection?: (entries: IntersectionObserverEntry[]) => void
+  onOffIntersection?: (entries: IntersectionObserverEntry[]) => void
 }
 
 export const useIntersectionObserver = ({
   once = true,
   options = { threshold: 0 },
   onIntersection,
+  onOffIntersection,
 }: UseIntersectionObserverProperties) => {
   const ref = useRef<HTMLElement | null>(null)
 
@@ -29,6 +31,8 @@ export const useIntersectionObserver = ({
       if (hasIntersected) {
         onIntersection?.(entries)
         observer.disconnect()
+      } else {
+        onOffIntersection?.(entries)
       }
 
       return
@@ -36,7 +40,10 @@ export const useIntersectionObserver = ({
 
     const isIntersecting = entries[entries.length - 1].isIntersecting
 
-    if (!isIntersecting) return
+    if (!isIntersecting) {
+      onOffIntersection?.(entries)
+      return
+    }
 
     onIntersection?.(entries)
   }

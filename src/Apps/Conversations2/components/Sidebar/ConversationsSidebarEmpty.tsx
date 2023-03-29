@@ -1,5 +1,5 @@
 import { Text } from "@artsy/palette"
-import { useRouter } from "next/router"
+import { useRouter } from "System/Router/useRouter"
 
 export const ConversationsSidebarEmpty = () => {
   const { query } = useRouter()
