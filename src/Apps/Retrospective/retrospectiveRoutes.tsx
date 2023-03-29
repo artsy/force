@@ -13,6 +13,7 @@ export const retrospectiveRoutes: AppRouteConfig[] = [
   {
     path: "/retrospective",
     getComponent: () => RetrospectiveApp,
+    layout: "Blank",
     onClientSideRender: () => {
       RetrospectiveApp.preload()
     },

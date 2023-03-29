@@ -1,9 +1,12 @@
-import { Box, Skeleton, Text } from "@artsy/palette"
+import { Box, Skeleton, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { RetrospectiveFollowsAndSaves_collection$data } from "__generated__/RetrospectiveFollowsAndSaves_collection.graphql"
 import { RetrospectiveFollowsAndSavesQuery } from "__generated__/RetrospectiveFollowsAndSavesQuery.graphql"
-import { useMemo } from "react"
+import { useRetrospectiveData } from "Components/Retrospective/useRetrospectiveData"
+import { RetrospectiveProgressBar } from "Components/Retrospective/RetrospectiveProgressBar"
+import { useCursor } from "use-cursor"
+import { RetrospectiveTopArtists } from "Components/Retrospective/RetrospectiveTopArtists"
 
 interface RetrospectiveFollowsAndSavesProps {
   me: RetrospectiveFollowsAndSaves_collection$data
@@ -12,116 +15,63 @@ interface RetrospectiveFollowsAndSavesProps {
 export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSavesProps> = ({
   me,
 }) => {
-  const artistConnectionEdges = me.followsAndSaves?.artistsConnection?.edges
-  const artworksConnectionEdges = me.followsAndSaves?.artworksConnection?.edges
+  const {
+    topArtists,
+    topGenes,
+    topMediums,
+    topRarities,
+  } = useRetrospectiveData({ me })
 
-  const topGenes = useMemo(() => {
-    const genes = artistConnectionEdges?.flatMap(edge =>
-      edge?.node?.artist?.genes?.map(gene => gene?.name)
-    )
+  const sections = {
+    TOP_ARTISTS: {
+      data: topArtists,
+      Component: RetrospectiveTopArtists,
+    },
+    TOP_GENES: {
+      data: topGenes,
+      Component: () => <>TODO</>,
+    },
+    TOP_MEDIUMS: {
+      data: topMediums,
+      Component: () => <>TODO</>,
+    },
+    TOP_RARITIES: {
+      data: topRarities,
+      Component: () => <>TODO</>,
+    },
+  } as const
 
-    const geneCounts = genes?.reduce((acc, gene) => {
-      if (acc[gene]) {
-        acc[gene]++
-      } else {
-        acc[gene] = 1
-      }
+  const keys = Object.keys(sections)
 
-      return acc
-    }, {})
+  const { index, handleNext } = useCursor({
+    max: keys.length,
+  })
 
-    //extract the top 5 genes
-    const topFiveGenes = Object.entries(geneCounts)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5)
-    // .map(([gene]) => gene)
+  const key = keys[index]
 
-    return topFiveGenes
-  }, [artistConnectionEdges])
-
-  const topMediums = useMemo(() => {
-    const mediums = artworksConnectionEdges?.flatMap(
-      edge => edge?.node?.mediumType?.name
-    )
-
-    const mediumCounts = mediums?.reduce((acc, medium) => {
-      if (acc[medium]) {
-        acc[medium]++
-      } else {
-        acc[medium] = 1
-      }
-
-      return acc
-    }, {})
-
-    // extract the top 5 mediums
-    const topFiveMediums = Object.entries(mediumCounts)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5)
-    // .map(([medium]) => medium)
-
-    return topFiveMediums
-  }, [artworksConnectionEdges])
-
-  const topArtists = useMemo(() => {
-    const artists = artworksConnectionEdges?.flatMap(
-      edge => edge?.node?.artist?.name
-    )
-
-    const artistCounts = artists?.reduce((acc, artist) => {
-      if (acc[artist]) {
-        acc[artist]++
-      } else {
-        acc[artist] = 1
-      }
-
-      return acc
-    }, {})
-
-    // extract the top 5 artists
-    const topFiveArtists = Object.entries(artistCounts)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5)
-    // .map(([artist]) => artist)
-
-    return topFiveArtists
-  }, [artistConnectionEdges])
-
-  const topRarities = useMemo(() => {
-    const rarities = artworksConnectionEdges?.flatMap(
-      edge => edge?.node?.attributionClass?.name
-    )
-
-    const rarityCounts = rarities?.reduce((acc, rarity) => {
-      // omit undefined values
-      if (!rarity) {
-        return acc
-      }
-      if (acc[rarity]) {
-        acc[rarity]++
-      } else {
-        acc[rarity] = 1
-      }
-
-      return acc
-    }, {})
-
-    // extract the top 5 rarities
-    const topFiveRarities = Object.entries(rarityCounts)
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, 5)
-    // .map(([rarity]) => rarity)
-
-    return topFiveRarities
-  }, [artworksConnectionEdges])
+  const { Component, data } = sections[key as keyof typeof sections]
 
   return (
-    <Box>
-      <Text variant="lg-display">Follows and Saves</Text>
-      <pre>Top Mediums: {JSON.stringify(topMediums, null, 2)}</pre>
-      <pre>Top Genes: {JSON.stringify(topGenes, null, 2)}</pre>
-      <pre>Top Artists: {JSON.stringify(topArtists, null, 2)}</pre>
-      <pre>Rarity: {JSON.stringify(topRarities, null, 2)}</pre>
+    <Box width="100%" height="100%" position="fixed" top={0} left={0} p={2}>
+      <Box display="flex" style={{ gap: 10 }}>
+        {keys.map((key, i) => {
+          return (
+            <Box key={key} flex={1}>
+              <RetrospectiveProgressBar
+                active={i === index}
+                onComplete={handleNext}
+                duration={10000}
+              />
+            </Box>
+          )
+        })}
+      </Box>
+
+      <Spacer y={2} />
+
+      {/* <pre>{JSON.stringify(sections[index], null, 2)}</pre> */}
+
+      <Component data={data} />
     </Box>
   )
 }
@@ -169,9 +119,7 @@ export const RetrospectiveFollowsAndSavesFragmentContainer = createFragmentConta
 
 const PLACEHOLDER = (
   <Skeleton>
-    <Text variant="lg-display">
-      We don't have any data for you at this time
-    </Text>
+    <Text variant="lg-display">Loading</Text>
   </Skeleton>
 )
 
