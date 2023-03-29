@@ -71,26 +71,12 @@ export const conversations2Routes: AppRouteConfig[] = [
         $hasReply: Boolean
       ) {
         viewer {
-          ...ConversationHeader_viewer
-            @arguments(conversationId: $conversationId)
-          ...ConversationDetails_viewer
-            @arguments(conversationId: $conversationId)
-          ...ConversationsSidebar_viewer
-            @arguments(
-              # partnerId: $partnerId
-              # sellerId: $sellerId
-              toBeReplied: $toBeReplied
-              hasReply: $hasReply
-            )
+          ...Conversation2Route_viewer
         }
 
         conversation(id: $conversationId) @required(action: NONE) {
-          ...ConversationMessages_conversation
-          ...ConversationReply_conversation
+          ...Conversation2Route_conversation
         }
-        # me {
-        #   ...Conversation_me @arguments(conversationID: $conversationID)
-        # }
       }
     `,
     cacheConfig: {
