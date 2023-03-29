@@ -8,13 +8,11 @@ import {
   Spacer,
 } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import { ConversationHeader_viewer$key } from "__generated__/ConversationHeader_viewer.graphql"
-import { RouterLink } from "components/RouterLink"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
-import { Media } from "utils/responsive"
-import getConfig from "next/config"
 import { useTracking } from "react-tracking"
-import { extractNodes } from "utils/extractNodes"
+import { extractNodes } from "Utils/extractNodes"
+import { Media } from "Utils/Responsive"
+import { RouterLink } from "System/Router/RouterLink"
 
 const DROP_SHADOW = "0 2px 10px rgba(0, 0, 0, .08)"
 
@@ -31,14 +29,13 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
 }) => {
   const { trackEvent } = useTracking()
 
-  const { publicRuntimeConfig } = getConfig()
   const data = useFragment(
     graphql`
       fragment ConversationHeader_viewer on Viewer
-      @argumentDefinitions(
-        conversationId: { type: "String!" }
-        sellerId: { type: "ID!" }
-      ) {
+        @argumentDefinitions(
+          conversationId: { type: "String!" }
+          sellerId: { type: "ID!" }
+        ) {
         conversation(id: $conversationId) @required(action: NONE) {
           from {
             name
@@ -127,7 +124,7 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
             </Flex>
 
             <RouterLink
-              href={`${publicRuntimeConfig.NEXT_PUBLIC_VOLT_V1_URL}/artworks/${item.slug}`}
+              to={`/artwork/${item.slug}`}
               onClick={() =>
                 trackEvent({
                   action: "Click",

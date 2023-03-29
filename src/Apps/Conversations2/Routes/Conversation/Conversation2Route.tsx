@@ -1,14 +1,31 @@
-import { ConversationsLayout } from "../components/ConversationsLayout"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
 import { Flex } from "@artsy/palette"
+import { Resizer } from "Apps/Conversations2/components/Resizer"
+import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
+import { useMobileLayoutActions } from "Apps/Conversations2/hooks/useMobileLayoutActions"
+import { ConversationsSidebar } from "Apps/Conversations2/components/Sidebar/ConversationsSidebar"
+import { ConversationHeader } from "Apps/Conversations2/Routes/Conversation/Components/ConversationHeader"
+import { ConversationMessages } from "Apps/Conversations2/Routes/Conversation/Components/ConversationMessages"
+import { ConversationReply } from "Apps/Conversations2/Routes/Conversation/Components/ConversationReply"
+import { ConversationDetails } from "Apps/Conversations2/components/Details/ConversationDetails"
+
+const COLUMN_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
+const MOBILE_HEIGHT = `calc(100dvh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 
 interface Conversation2RouteProps {
   viewer: Conversation2Route_viewer
   conversation: Conversation2Route_conversation
 }
 
-const Conversation2Route: React.FC = () => {
+const Conversation2Route: React.FC<Conversation2RouteProps> = () => {
+  const {
+    currentColumn,
+    goToDetails,
+    goToSidebar,
+    goToConversation,
+  } = useMobileLayoutActions()
+
   return (
     <>
       <Media greaterThan="sm">
@@ -24,9 +41,9 @@ const Conversation2Route: React.FC = () => {
               borderRight="1px solid"
               borderRightColor="black15"
             >
-              <Suspense fallback={<ConversationsSidebarSkeleton />}>
-                <ConversationsSidebar viewer={viewerConversationsPagination} />
-              </Suspense>
+              {/* <Suspense fallback={<ConversationsSidebarSkeleton />}> */}
+              <ConversationsSidebar viewer={viewer} />
+              {/* </Suspense> */}
             </Flex>
 
             <Flex
@@ -45,9 +62,7 @@ const Conversation2Route: React.FC = () => {
               >
                 <ConversationHeader viewer={viewer} />
 
-                <ConversationMessages
-                  conversation={conversationMessagesPagination}
-                />
+                <ConversationMessages conversation={conversation} />
 
                 <ConversationReply conversation={conversation} />
               </Flex>
@@ -78,9 +93,9 @@ const Conversation2Route: React.FC = () => {
           height={MOBILE_HEIGHT}
           flexDirection="column"
         >
-          <Suspense fallback={<ConversationsSidebarSkeleton />}>
-            <ConversationsSidebar viewer={viewerConversationsPagination} />
-          </Suspense>
+          {/* <Suspense fallback={<ConversationsSidebarSkeleton />}> */}
+          <ConversationsSidebar viewer={viewer} />
+          {/* </Suspense> */}
         </Flex>
 
         <Flex
@@ -99,7 +114,7 @@ const Conversation2Route: React.FC = () => {
             onGoToDetails={goToDetails}
           />
 
-          <ConversationMessages conversation={conversationMessagesPagination} />
+          <ConversationMessages conversation={conversation} />
 
           <ConversationReply conversation={conversation} />
         </Flex>
