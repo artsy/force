@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4ac849d07e9d9f5e166b01db09bb8d06>>
+ * @generated SignedSource<<9db6dd99905d2a2fdb97e3e26dc1e3bb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -245,7 +245,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": "defaultSaves",
+            "alias": "allSavesArtworkList",
             "args": [
               {
                 "kind": "Literal",
@@ -268,7 +268,7 @@ return {
             "storageKey": "collection(id:\"saved-artwork\")"
           },
           {
-            "alias": "otherSaves",
+            "alias": "customArtworkLists",
             "args": (v6/*: any*/),
             "concreteType": "CollectionsConnection",
             "kind": "LinkedField",
@@ -346,11 +346,11 @@ return {
             "storageKey": "collectionsConnection(default:false,first:30,saves:true,sort:\"CREATED_AT_DESC\")"
           },
           {
-            "alias": "otherSaves",
+            "alias": "customArtworkLists",
             "args": (v6/*: any*/),
             "filters": [],
             "handle": "connection",
-            "key": "CollectorProfileSaves2Route_otherSaves",
+            "key": "CollectorProfileSaves2Route_customArtworkLists",
             "kind": "LinkedHandle",
             "name": "collectionsConnection"
           },
@@ -361,7 +361,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0781db7e009f3797bdc957a555721eb4",
+    "cacheID": "870e622986f4243c925e7705a00ee24a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -371,58 +371,58 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.defaultSaves": (v7/*: any*/),
-        "me.defaultSaves.artworksConnection": (v8/*: any*/),
-        "me.defaultSaves.artworksConnection.edges": (v9/*: any*/),
-        "me.defaultSaves.artworksConnection.edges.node": (v10/*: any*/),
-        "me.defaultSaves.artworksConnection.edges.node.id": (v11/*: any*/),
-        "me.defaultSaves.artworksConnection.edges.node.image": (v12/*: any*/),
-        "me.defaultSaves.artworksConnection.edges.node.image.url": (v13/*: any*/),
-        "me.defaultSaves.artworksCount": (v14/*: any*/),
-        "me.defaultSaves.default": (v15/*: any*/),
-        "me.defaultSaves.id": (v11/*: any*/),
-        "me.defaultSaves.internalID": (v11/*: any*/),
-        "me.defaultSaves.name": (v16/*: any*/),
-        "me.id": (v11/*: any*/),
-        "me.otherSaves": {
+        "me.allSavesArtworkList": (v7/*: any*/),
+        "me.allSavesArtworkList.artworksConnection": (v8/*: any*/),
+        "me.allSavesArtworkList.artworksConnection.edges": (v9/*: any*/),
+        "me.allSavesArtworkList.artworksConnection.edges.node": (v10/*: any*/),
+        "me.allSavesArtworkList.artworksConnection.edges.node.id": (v11/*: any*/),
+        "me.allSavesArtworkList.artworksConnection.edges.node.image": (v12/*: any*/),
+        "me.allSavesArtworkList.artworksConnection.edges.node.image.url": (v13/*: any*/),
+        "me.allSavesArtworkList.artworksCount": (v14/*: any*/),
+        "me.allSavesArtworkList.default": (v15/*: any*/),
+        "me.allSavesArtworkList.id": (v11/*: any*/),
+        "me.allSavesArtworkList.internalID": (v11/*: any*/),
+        "me.allSavesArtworkList.name": (v16/*: any*/),
+        "me.customArtworkLists": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "CollectionsConnection"
         },
-        "me.otherSaves.edges": {
+        "me.customArtworkLists.edges": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "CollectionsEdge"
         },
-        "me.otherSaves.edges.cursor": (v16/*: any*/),
-        "me.otherSaves.edges.node": (v7/*: any*/),
-        "me.otherSaves.edges.node.__typename": (v16/*: any*/),
-        "me.otherSaves.edges.node.artworksConnection": (v8/*: any*/),
-        "me.otherSaves.edges.node.artworksConnection.edges": (v9/*: any*/),
-        "me.otherSaves.edges.node.artworksConnection.edges.node": (v10/*: any*/),
-        "me.otherSaves.edges.node.artworksConnection.edges.node.id": (v11/*: any*/),
-        "me.otherSaves.edges.node.artworksConnection.edges.node.image": (v12/*: any*/),
-        "me.otherSaves.edges.node.artworksConnection.edges.node.image.url": (v13/*: any*/),
-        "me.otherSaves.edges.node.artworksCount": (v14/*: any*/),
-        "me.otherSaves.edges.node.default": (v15/*: any*/),
-        "me.otherSaves.edges.node.id": (v11/*: any*/),
-        "me.otherSaves.edges.node.internalID": (v11/*: any*/),
-        "me.otherSaves.edges.node.name": (v16/*: any*/),
-        "me.otherSaves.pageInfo": {
+        "me.customArtworkLists.edges.cursor": (v16/*: any*/),
+        "me.customArtworkLists.edges.node": (v7/*: any*/),
+        "me.customArtworkLists.edges.node.__typename": (v16/*: any*/),
+        "me.customArtworkLists.edges.node.artworksConnection": (v8/*: any*/),
+        "me.customArtworkLists.edges.node.artworksConnection.edges": (v9/*: any*/),
+        "me.customArtworkLists.edges.node.artworksConnection.edges.node": (v10/*: any*/),
+        "me.customArtworkLists.edges.node.artworksConnection.edges.node.id": (v11/*: any*/),
+        "me.customArtworkLists.edges.node.artworksConnection.edges.node.image": (v12/*: any*/),
+        "me.customArtworkLists.edges.node.artworksConnection.edges.node.image.url": (v13/*: any*/),
+        "me.customArtworkLists.edges.node.artworksCount": (v14/*: any*/),
+        "me.customArtworkLists.edges.node.default": (v15/*: any*/),
+        "me.customArtworkLists.edges.node.id": (v11/*: any*/),
+        "me.customArtworkLists.edges.node.internalID": (v11/*: any*/),
+        "me.customArtworkLists.edges.node.name": (v16/*: any*/),
+        "me.customArtworkLists.pageInfo": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "PageInfo"
         },
-        "me.otherSaves.pageInfo.endCursor": (v13/*: any*/),
-        "me.otherSaves.pageInfo.hasNextPage": (v15/*: any*/)
+        "me.customArtworkLists.pageInfo.endCursor": (v13/*: any*/),
+        "me.customArtworkLists.pageInfo.hasNextPage": (v15/*: any*/),
+        "me.id": (v11/*: any*/)
       }
     },
     "name": "CollectorProfileSaves2Route_Test_Query",
     "operationKind": "query",
-    "text": "query CollectorProfileSaves2Route_Test_Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  defaultSaves: collection(id: \"saved-artwork\") {\n    internalID\n    ...ArtworkListItem_item\n    id\n  }\n  otherSaves: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...ArtworkListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query CollectorProfileSaves2Route_Test_Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  allSavesArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    ...ArtworkListItem_item\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...ArtworkListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

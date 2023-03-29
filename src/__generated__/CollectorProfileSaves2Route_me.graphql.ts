@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fee8bc50cf0dfb91337d69661cd8c7dd>>
+ * @generated SignedSource<<c6e897d9c9c0ee9f23c76141af9b3276>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,11 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileSaves2Route_me$data = {
-  readonly defaultSaves: {
+  readonly allSavesArtworkList: {
     readonly internalID: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
   } | null;
-  readonly otherSaves: {
+  readonly customArtworkLists: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly default: boolean;
@@ -54,7 +54,7 @@ return {
         "cursor": null,
         "direction": "forward",
         "path": [
-          "otherSaves"
+          "customArtworkLists"
         ]
       }
     ]
@@ -62,7 +62,7 @@ return {
   "name": "CollectorProfileSaves2Route_me",
   "selections": [
     {
-      "alias": "defaultSaves",
+      "alias": "allSavesArtworkList",
       "args": [
         {
           "kind": "Literal",
@@ -81,11 +81,11 @@ return {
       "storageKey": "collection(id:\"saved-artwork\")"
     },
     {
-      "alias": "otherSaves",
+      "alias": "customArtworkLists",
       "args": null,
       "concreteType": "CollectionsConnection",
       "kind": "LinkedField",
-      "name": "__CollectorProfileSaves2Route_otherSaves_connection",
+      "name": "__CollectorProfileSaves2Route_customArtworkLists_connection",
       "plural": false,
       "selections": [
         {
@@ -167,6 +167,6 @@ return {
 };
 })();
 
-(node as any).hash = "3e6be6c69fdf967c072d0b751d24c9fd";
+(node as any).hash = "38bba4625a0a53bd9aa326879721d816";
 
 export default node;

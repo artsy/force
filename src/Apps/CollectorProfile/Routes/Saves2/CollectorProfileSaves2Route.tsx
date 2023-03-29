@@ -18,27 +18,27 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   const { match } = useRouter()
   const initialArtworkListId = useRef(match.params.id)
   const { page, sort } = match.location.query ?? {}
-  const allSavesArtworkList = me.defaultSaves!
+  const allSavesArtworkList = me.allSavesArtworkList!
   const selectedArtworkListId =
     match.params.id ?? allSavesArtworkList.internalID
-  let otherArtworkLists = extractNodes(me.otherSaves)
+  let customArtworkLists = extractNodes(me.customArtworkLists)
 
   if (initialArtworkListId.current !== undefined) {
-    const index = otherArtworkLists.findIndex(
+    const index = customArtworkLists.findIndex(
       artworkList => artworkList.internalID === initialArtworkListId.current
     )
 
     if (index !== -1) {
       // Remove the initial artwork list from array
-      const initialArtworkList = otherArtworkLists.splice(index, 1)
+      const initialArtworkList = customArtworkLists.splice(index, 1)
 
       // "Locking" the initial artwork list in the first slot
-      otherArtworkLists = [...initialArtworkList, ...otherArtworkLists]
+      customArtworkLists = [...initialArtworkList, ...customArtworkLists]
     }
   }
 
   // Always display "All Saves" artwork list first in the list
-  const artworkLists = [allSavesArtworkList, ...otherArtworkLists]
+  const artworkLists = [allSavesArtworkList, ...customArtworkLists]
 
   return (
     <>
@@ -78,19 +78,19 @@ export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContai
   {
     me: graphql`
       fragment CollectorProfileSaves2Route_me on Me {
-        defaultSaves: collection(id: "saved-artwork") {
+        allSavesArtworkList: collection(id: "saved-artwork") {
           internalID
           ...ArtworkListItem_item
         }
 
-        otherSaves: collectionsConnection(
+        customArtworkLists: collectionsConnection(
           first: 30
           default: false
           saves: true
           sort: CREATED_AT_DESC
         )
           @connection(
-            key: "CollectorProfileSaves2Route_otherSaves"
+            key: "CollectorProfileSaves2Route_customArtworkLists"
             filters: []
           ) {
           edges {
