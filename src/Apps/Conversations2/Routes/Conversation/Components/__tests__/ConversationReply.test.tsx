@@ -1,16 +1,14 @@
 import { act, fireEvent, screen } from "@testing-library/react"
 import { graphql } from "relay-runtime"
-import { setupTestWrapper } from "utils/test/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { ConversationReplyTestQuery } from "__generated__/ConversationReplyTestQuery.graphql"
 import { ConversationReply } from "../ConversationReply"
 import * as formik from "formik"
 import { useTracking } from "react-tracking"
 import { sentConversationMessage } from "@artsy/cohesion"
-import mockRouter from "next-router-mock"
 
 jest.mock("react-tracking")
-jest.mock("next/router", () => require("next-router-mock"))
-jest.mock("system/SystemContext", () => ({
+jest.mock("System/useSystemContext", () => ({
   useSystemContext: () => ({
     user: {
       email: "partner@mail.com",
@@ -42,7 +40,7 @@ describe("ConversationReply", () => {
     lastMessageID: "last-message-id",
   }
 
-  const { renderWithRelay } = setupTestWrapper<ConversationReplyTestQuery>({
+  const { renderWithRelay } = setupTestWrapperTL<ConversationReplyTestQuery>({
     Component: ({ conversation }) => (
       <ConversationReply conversation={conversation!} />
     ),
@@ -72,7 +70,9 @@ describe("ConversationReply", () => {
   beforeEach(() => {
     jest.clearAllMocks()
     mockUseTracking.mockImplementation(() => ({ trackEvent: trackingMock }))
-    mockRouter.query = { conversationId: conversation.internalID }
+
+    // FIXME
+    // mockRouter.query = { conversationId: conversation.internalID }
   })
 
   it("submits a reply", async () => {

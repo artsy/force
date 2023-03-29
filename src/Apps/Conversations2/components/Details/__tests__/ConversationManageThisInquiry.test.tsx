@@ -3,7 +3,7 @@ import { fireEvent, screen } from "@testing-library/react"
 import { ConversationManageThisInquiry } from "../ConversationManageThisInquiry"
 import { ConversationManageThisInquiryTestQuery } from "__generated__/ConversationManageThisInquiryTestQuery.graphql"
 import { useTracking } from "react-tracking"
-import { setupTestWrapper } from "utils/test/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 
 jest.mock("next/router", () => require("next-router-mock"))
 
@@ -13,19 +13,20 @@ describe("ConversationManageThisInquiry", () => {
   const mockTracking = useTracking as jest.Mock
   const trackEvent = jest.fn()
 
-  const { renderWithRelay } =
-    setupTestWrapper<ConversationManageThisInquiryTestQuery>({
-      Component: ({ conversation }) => (
-        <ConversationManageThisInquiry conversation={conversation!} />
-      ),
-      query: graphql`
-        query ConversationManageThisInquiryTestQuery @relay_test_operation {
-          conversation(id: "conversation-id") {
-            ...ConversationManageThisInquiry_conversation
-          }
+  const { renderWithRelay } = setupTestWrapperTL<
+    ConversationManageThisInquiryTestQuery
+  >({
+    Component: ({ conversation }) => (
+      <ConversationManageThisInquiry conversation={conversation!} />
+    ),
+    query: graphql`
+      query ConversationManageThisInquiryTestQuery @relay_test_operation {
+        conversation(id: "conversation-id") {
+          ...ConversationManageThisInquiry_conversation
         }
-      `,
-    })
+      }
+    `,
+  })
 
   beforeEach(() => {
     jest.clearAllMocks()

@@ -1,6 +1,6 @@
 import { graphql } from "relay-runtime"
 import { fireEvent, screen } from "@testing-library/react"
-import { setupTestWrapper } from "utils/test/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { ReviewOrderButton } from "../ReviewOrderButton"
 import { ReviewOrderButtonTestQuery } from "__generated__/ReviewOrderButtonTestQuery.graphql"
 import { useTracking } from "react-tracking"
@@ -23,7 +23,7 @@ describe("ReviewOrderButton", () => {
     artwork_id: "mocked-artwork-id",
   }
 
-  const { renderWithRelay } = setupTestWrapper<ReviewOrderButtonTestQuery>({
+  const { renderWithRelay } = setupTestWrapperTL<ReviewOrderButtonTestQuery>({
     Component: ({ commerceOrder }) => (
       <ReviewOrderButton order={commerceOrder!} />
     ),

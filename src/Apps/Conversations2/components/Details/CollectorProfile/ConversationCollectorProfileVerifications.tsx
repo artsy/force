@@ -2,10 +2,10 @@ import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 import { graphql, useFragment } from "react-relay"
-import { CollectorProfileVerifications_collectorProfileType$key } from "__generated__/CollectorProfileVerifications_collectorProfileType.graphql"
+import { ConversationCollectorProfileVerifications_collectorProfileType$key } from "__generated__/ConversationCollectorProfileVerifications_collectorProfileType.graphql"
 
 interface VerificationProps {
-  verificationFields: CollectorProfileVerifications_collectorProfileType$key
+  verificationFields: ConversationCollectorProfileVerifications_collectorProfileType$key
 }
 
 export const Verifications: React.FC<VerificationProps> = ({
@@ -13,7 +13,7 @@ export const Verifications: React.FC<VerificationProps> = ({
 }) => {
   const data = useFragment(
     graphql`
-      fragment CollectorProfileVerifications_collectorProfileType on CollectorProfileType {
+      fragment ConversationCollectorProfileVerifications_collectorProfileType on CollectorProfileType {
         isIdentityVerified
         isEmailConfirmed
       }

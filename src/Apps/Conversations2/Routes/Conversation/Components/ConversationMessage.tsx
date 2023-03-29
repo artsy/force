@@ -2,13 +2,13 @@ import { ConversationMessageBubble } from "./Message/ConversationMessageBubble"
 import { ConversationMessageImage } from "./Message/ConversationMessageImage"
 import { ConversationMessageFile } from "./Message/ConversationMessageFile"
 import { graphql, useFragment } from "react-relay"
-import {
-  ConversationMessage_message$key,
-  ConversationMessage_message$data,
-} from "__generated__/ConversationMessage_message.graphql"
-import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 import { Spacer, Text } from "@artsy/palette"
 import React from "react"
+import {
+  ConversationMessage_message$data,
+  ConversationMessage_message$key,
+} from "__generated__/ConversationMessage_message.graphql"
+import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 
 interface ConversationMessageProps {
   message: ConversationMessage_message$key
@@ -17,26 +17,6 @@ interface ConversationMessageProps {
   formattedFirstMessage?: NonNullable<
     NonNullable<ConversationMessages_conversation$data>["inquiryRequest"]
   >["formattedFirstMessage"]
-}
-
-export const defineSeenBy = (
-  message: Pick<
-    NonNullable<ConversationMessage_message$data>,
-    "deliveries" | "to" | "cc"
-  >
-): string | undefined => {
-  // FIXME: Disabling this feature for now. NX will redefine how it should work.
-  return undefined
-
-  const opens = message.deliveries
-    .filter((delivery) => !!delivery?.openedAt)
-    .map((delivery) => delivery?.fullTransformedEmail)
-
-  if (!opens.length) return
-  // "Seen by all"
-  if (opens.length === message.to.concat(message.cc).length) return "all"
-  // "Seen by [n]"
-  return opens.length.toString()
 }
 
 export const ConversationMessage: React.FC<ConversationMessageProps> = ({
@@ -138,4 +118,24 @@ const Message: React.FC<{
   }
 
   return <Text fontStyle="italic">This message is no longer available.</Text>
+}
+
+export const defineSeenBy = (
+  message: Pick<
+    NonNullable<ConversationMessage_message$data>,
+    "deliveries" | "to" | "cc"
+  >
+): string | undefined => {
+  // FIXME: Disabling this feature for now. NX will redefine how it should work.
+  return undefined
+
+  const opens = message.deliveries
+    .filter(delivery => !!delivery?.openedAt)
+    .map(delivery => delivery?.fullTransformedEmail)
+
+  if (!opens.length) return
+  // "Seen by all"
+  if (opens.length === message.to.concat(message.cc).length) return "all"
+  // "Seen by [n]"
+  return opens.length.toString()
 }

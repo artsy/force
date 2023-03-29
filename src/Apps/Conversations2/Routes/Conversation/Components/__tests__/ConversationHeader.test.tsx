@@ -1,10 +1,9 @@
 import { graphql } from "relay-runtime"
 import { fireEvent, screen } from "@testing-library/react"
-import { setupTestWrapper } from "utils/test/setupTestWrapper"
-import { ConversationHeader } from "../ConversationHeader"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { ConversationHeader } from "Apps/Conversations2/Routes/Conversation/Components/ConversationHeader"
 import { ConversationHeaderTestQuery } from "__generated__/ConversationHeaderTestQuery.graphql"
-import mockRouter from "next-router-mock"
-import { MediaContextProvider } from "utils/responsive"
+import { MediaContextProvider } from "Utils/Responsive"
 import { useTracking } from "react-tracking"
 
 jest.mock("next/router", () => require("next-router-mock"))
@@ -24,7 +23,7 @@ describe("ConversationDetails", () => {
   const mockTracking = useTracking as jest.Mock
   const trackEvent = jest.fn()
 
-  const { renderWithRelay } = setupTestWrapper<ConversationHeaderTestQuery>({
+  const { renderWithRelay } = setupTestWrapperTL<ConversationHeaderTestQuery>({
     Component: ({ viewer }) => (
       <MediaContextProvider onlyMatch={[breakpoint]}>
         <ConversationHeader
@@ -48,7 +47,8 @@ describe("ConversationDetails", () => {
     jest.clearAllMocks()
     mockTracking.mockImplementation(() => ({ trackEvent }))
 
-    mockRouter.query = { conversationId: "123" }
+    // FIXME
+    // mockRouter.query = { conversationId: "123" }
     breakpoint = "md"
   })
 

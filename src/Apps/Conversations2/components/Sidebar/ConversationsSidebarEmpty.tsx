@@ -2,17 +2,17 @@ import { Text } from "@artsy/palette"
 import { useRouter } from "System/Router/useRouter"
 
 export const ConversationsSidebarEmpty = () => {
-  const { query } = useRouter()
+  const { match } = useRouter()
 
-  if (!query.conversationsFilter) {
+  if (!match.params.conversationsFilter) {
     return <Text m={2}>All conversations with collectors will show here.</Text>
   }
 
-  if (query.conversationsFilter === "new_inquiries") {
+  if (match.params.conversationsFilter === "new_inquiries") {
     return <Text m={2}>New inquiries and messages will show here.</Text>
   }
 
-  if (query.conversationsFilter === "replied") {
+  if (match.params.conversationsFilter === "replied") {
     return (
       <Text m={2}>Conversations you&apos;ve replied to will show here.</Text>
     )

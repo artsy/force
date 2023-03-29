@@ -13,38 +13,43 @@ import { useRouter } from "found"
 type Filters = "" | "new_inquiries" | "replied"
 
 export const ConversationsSidebarHeader: React.FC = () => {
-  const { replace, query } = useRouter()
+  const { match, router } = useRouter()
 
   const { trackEvent } = useTracking()
   const { user } = useSystemContext()
+  // @ts-expect-error CONVERSATION_MIGRATION
   const partner_id = user?.currentPartner?._id || ""
   const context = {
     context_owner_id: partner_id,
+    // @ts-expect-error CONVERSATION_MIGRATION
     context_owner_slug: user?.currentPartner?.id,
     context_page_owner_type: OwnerType.conversation as PageOwnerType,
     context_module: "conversations",
   }
 
   const [selected, setSelected] = useState<Filters>(
-    (query.conversationsFilter as Filters) ?? ""
+    (match.location.query.conversationsFilter as Filters) ?? ""
   )
 
   useEffect(() => {
     if (
-      query.conversationsFilter === selected ||
-      (!query.conversationsFilter && selected === "")
+      match.location.query.conversationsFilter === selected ||
+      (!match.location.query.conversationsFilter && selected === "")
     ) {
       return
     }
 
+    // @ts-expect-error CONVERSATION_MIGRATION
     const queryParam = selected === "" ? {} : { conversationsFilter: selected }
-    replace({
-      query: {
-        conversationId: query.conversationId,
-        ...queryParam,
-      },
-    })
-  }, [selected, replace, query])
+
+    // FIXME: Update the query params without reloading the page using our router
+    // router.replace({
+    //   query: {
+    //     conversationId: match.params.conversationId,
+    //     ...queryParam,
+    //   },
+    // })
+  }, [selected, router, match.location.query])
 
   const onClick = (value: Filters) => {
     if (selected !== value) {

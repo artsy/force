@@ -1,5 +1,5 @@
 import { ProgressBar, Text } from "@artsy/palette"
-import { useTimer } from "utils/hooks/useTimer"
+import { useCountdownTimer } from "Apps/Conversations2/hooks/useCountdownTimer"
 
 interface CountdownTimerProps {
   stateExpiresAt: string
@@ -14,7 +14,7 @@ export const CountdownTimer: React.FC<CountdownTimerProps> = ({
   expiryText,
   respondByText,
 }: CountdownTimerProps) => {
-  const { remainingTime, isImminent, percentComplete } = useTimer({
+  const { remainingTime, isImminent, percentComplete } = useCountdownTimer({
     startTime: stateUpdatedAt,
     endTime: stateExpiresAt,
   })
