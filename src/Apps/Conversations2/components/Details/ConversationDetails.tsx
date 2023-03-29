@@ -10,64 +10,59 @@ import { extractNodes } from "Utils/extractNodes"
 import { Media } from "Utils/Responsive"
 import { ConversationCollectorProfileHeader } from "Apps/Conversations2/components/Details/CollectorProfile/ConversationCollectorProfileHeader"
 import { ConversationCollectorProfileInformation } from "Apps/Conversations2/components/Details/CollectorProfile/ConversationCollectorProfileInformation"
-import { ConversationDetails_viewer$key } from "__generated__/ConversationDetails_viewer.graphql"
+import { ConversationDetails_conversation$key } from "__generated__/ConversationDetails_conversation.graphql"
 
 interface ConversationDetailsProps {
-  viewer: ConversationDetails_viewer$key
+  conversation: ConversationDetails_conversation$key
   onClose?: () => void
 }
 
 export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
-  viewer,
+  conversation,
   onClose,
 }) => {
   const data = useFragment(
     graphql`
-      fragment ConversationDetails_viewer on Viewer
-        @argumentDefinitions(
-          conversationId: { type: "String!" }
-          sellerId: { type: "ID!" }
-        ) {
-        conversation(id: $conversationId) @required(action: NONE) {
-          fromUser {
-            ...ConversationCollectorProfileHeader_user
-            collectorProfile {
-              ...ConversationCollectorProfileInformation_collectorProfileType
-            }
+      fragment ConversationDetails_conversation on Conversation
+        @argumentDefinitions(sellerId: { type: "ID!" }) {
+        fromUser {
+          ...ConversationCollectorProfileHeader_user
+          collectorProfile {
+            ...ConversationCollectorProfileInformation_collectorProfileType
           }
-          orderConnection(
-            first: 1
-            states: [
-              APPROVED
-              FULFILLED
-              SUBMITTED
-              PROCESSING_APPROVAL
-              REFUNDED
-              CANCELED
-            ]
-            sellerId: $sellerId
-          ) {
-            edges @required(action: NONE) {
-              node {
-                __typename
-                ...OrderInformation_order
-              }
-            }
-          }
-          ...ConversationArtwork_conversation
-          ...ConversationManageThisInquiry_conversation
-          ...ConversationHelpCenter_conversation
         }
+        orderConnection(
+          first: 1
+          states: [
+            APPROVED
+            FULFILLED
+            SUBMITTED
+            PROCESSING_APPROVAL
+            REFUNDED
+            CANCELED
+          ]
+          sellerId: $sellerId
+        ) {
+          edges @required(action: NONE) {
+            node {
+              __typename
+              ...OrderInformation_order
+            }
+          }
+        }
+        ...ConversationArtwork_conversation
+        ...ConversationManageThisInquiry_conversation
+        ...ConversationHelpCenter_conversation
       }
     `,
-    viewer
+    conversation
   )
 
   if (!data) {
     return null
   }
 
-  const order = extractNodes(data.conversation.orderConnection)[0]
+  const order = extractNodes(data.orderConnection)[0]
 
   return (
     <Flex flexDirection="column">
@@ -85,28 +80,24 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
       )}
 
       <Media lessThan="md">
-        <ConversationArtwork conversation={data.conversation} />
+        <ConversationArtwork conversation={data} />
         <Separator borderWidth={2} my={4} />
       </Media>
 
-      {!!data?.conversation.fromUser && (
+      {!!data?.fromUser && (
         <>
-          <ConversationCollectorProfileHeader
-            user={data.conversation.fromUser}
-          />
+          <ConversationCollectorProfileHeader user={data.fromUser} />
           <Separator my={2} />
           <ConversationCollectorProfileInformation
-            collectorProfileType={
-              data?.conversation?.fromUser?.collectorProfile!
-            }
+            collectorProfileType={data?.fromUser?.collectorProfile!}
           />
           <Separator borderWidth={2} my={4} />
         </>
       )}
 
-      <ConversationManageThisInquiry conversation={data.conversation} />
+      <ConversationManageThisInquiry conversation={data} />
       <Separator borderWidth={2} my={4} />
-      <ConversationHelpCenter conversation={data.conversation} />
+      <ConversationHelpCenter conversation={data} />
     </Flex>
   )
 }

@@ -2,7 +2,7 @@ import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "relay-runtime"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { ConversationCollectorProfileInformationTestQuery } from "__generated__/ConversationCollectorProfileInformationTestQuery.graphql"
-import { ConversationCollectorProfileInformation } from "../ConversationCollectorProfileInformation"
+import { ConversationCollectorProfileInformation } from "Apps/Conversations2/components/Details/CollectorProfile/ConversationCollectorProfileInformation"
 
 jest.mock("next/router", () => require("next-router-mock"))
 

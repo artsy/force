@@ -24,10 +24,10 @@ describe("ConversationDetails", () => {
   const trackEvent = jest.fn()
 
   const { renderWithRelay } = setupTestWrapperTL<ConversationHeaderTestQuery>({
-    Component: ({ viewer }) => (
+    Component: ({ conversation }) => (
       <MediaContextProvider onlyMatch={[breakpoint]}>
         <ConversationHeader
-          viewer={viewer!}
+          conversation={conversation!}
           onGoToConversations={onGoToConversations}
           onGoToDetails={onGoToDetails}
         />
@@ -35,9 +35,8 @@ describe("ConversationDetails", () => {
     ),
     query: graphql`
       query ConversationHeaderTestQuery @relay_test_operation {
-        viewer {
-          ...ConversationHeader_viewer
-            @arguments(conversationId: "conversation-id", sellerId: "123")
+        conversation(id: "conversation-id") {
+          ...ConversationHeader_conversation @arguments(sellerId: "123")
         }
       }
     `,

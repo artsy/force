@@ -50,7 +50,7 @@ describe("OrderState", () => {
       expect(screen.getByText("Order accepted")).toBeInTheDocument()
     })
 
-    it("Order has been canceled. ", () => {
+    it("Order has been canceled.", () => {
       renderWithRelay({
         CommerceOrder: () => ({
           mode: "BUY",
