@@ -42,8 +42,8 @@ describe("CollectorProfileSaves2Route", () => {
   it("should render collections", () => {
     renderWithRelay({
       Me: () => ({
-        defaultSaves: savedArtworksCollection,
-        otherSaves: collectionsConnection,
+        allSavesArtworkList,
+        customArtworkLists,
       }),
     })
 
@@ -57,8 +57,8 @@ describe("CollectorProfileSaves2Route", () => {
     it("should render the first collection as selected when collection id is NOT passed in url", () => {
       renderWithRelay({
         Me: () => ({
-          defaultSaves: savedArtworksCollection,
-          otherSaves: collectionsConnection,
+          allSavesArtworkList,
+          customArtworkLists,
         }),
       })
 
@@ -80,8 +80,8 @@ describe("CollectorProfileSaves2Route", () => {
 
       renderWithRelay({
         Me: () => ({
-          defaultSaves: savedArtworksCollection,
-          otherSaves: collectionsConnection,
+          allSavesArtworkList,
+          customArtworkLists,
         }),
       })
 
@@ -104,8 +104,8 @@ describe("CollectorProfileSaves2Route", () => {
 
     renderWithRelay({
       Me: () => ({
-        defaultSaves: savedArtworksCollection,
-        otherSaves: collectionsConnection,
+        allSavesArtworkList,
+        customArtworkLists,
       }),
     })
 
@@ -130,12 +130,12 @@ const getCurrentCollectionElement = () => {
   })
 }
 
-const savedArtworksCollection = {
+const allSavesArtworkList = {
   internalID: "saved-artwork",
   name: "Saved Artwork",
 }
 
-const collectionsConnection = {
+const customArtworkLists = {
   edges: [
     {
       node: {

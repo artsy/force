@@ -25,16 +25,16 @@ const deleteCollectionUpdater = (
     return
   }
 
-  const otherSavesConnection = ConnectionHandler.getConnection(
+  const customArtworkListsConnection = ConnectionHandler.getConnection(
     me,
-    "CollectorProfileSaves2Route_otherSaves"
+    "CollectorProfileSaves2Route_customArtworkLists"
   )
 
-  if (!otherSavesConnection) {
+  if (!customArtworkListsConnection) {
     return
   }
 
-  ConnectionHandler.deleteNode(otherSavesConnection, collectionID)
+  ConnectionHandler.deleteNode(customArtworkListsConnection, collectionID)
 }
 
 export const useDeleteCollection = () => {

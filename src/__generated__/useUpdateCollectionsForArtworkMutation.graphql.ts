@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1d3a1380b2f37df1cedb37a726d05e44>>
+ * @generated SignedSource<<aefc8aa1d8dbe30ad725634e05c5b703>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,7 @@ export type useUpdateCollectionsForArtworkMutation$data = {
       readonly addedToCollections?: ReadonlyArray<{
         readonly default: boolean;
         readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"SavesItem_item">;
+        readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
       } | null> | null;
       readonly mutationError?: {
         readonly statusCode: number | null;
@@ -33,7 +33,7 @@ export type useUpdateCollectionsForArtworkMutation$data = {
       readonly removedFromCollections?: ReadonlyArray<{
         readonly default: boolean;
         readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"SavesItem_item">;
+        readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
       } | null> | null;
     } | null;
   } | null;
@@ -78,7 +78,7 @@ v4 = [
   {
     "args": null,
     "kind": "FragmentSpread",
-    "name": "SavesItem_item"
+    "name": "ArtworkListItem_item"
   }
 ],
 v5 = {
@@ -323,16 +323,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "03d50260cbda2f1f464014f94963c5dd",
+    "cacheID": "e3497899201e9638e04bac569cf34404",
     "id": null,
     "metadata": {},
     "name": "useUpdateCollectionsForArtworkMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateCollectionsForArtworkMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        addedToCollections {\n          internalID\n          default\n          ...SavesItem_item\n          id\n        }\n        removedFromCollections {\n          internalID\n          default\n          ...SavesItem_item\n          id\n        }\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n\nfragment SavesItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useUpdateCollectionsForArtworkMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        addedToCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n        removedFromCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2fa498123a31730def62161f4d51032b";
+(node as any).hash = "91d5611269921592899c7efe563d0c84";
 
 export default node;

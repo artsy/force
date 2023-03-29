@@ -1,7 +1,7 @@
 import { Shelf, Spacer } from "@artsy/palette"
 import { SavesArtworksQueryRenderer } from "./Components/SavesArtworks"
 import { SavesHeader } from "./Components/SavesHeader"
-import { SavesItemFragmentContainer } from "./Components/SavesItem"
+import { ArtworkListItemFragmentContainer } from "./Components/ArtworkListItem"
 import { FC, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
@@ -16,28 +16,29 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   me,
 }) => {
   const { match } = useRouter()
-  const initialCollectionId = useRef(match.params.id)
+  const initialArtworkListId = useRef(match.params.id)
   const { page, sort } = match.location.query ?? {}
-  const savedCollection = me.defaultSaves!
-  const selectedCollectionId = match.params.id ?? savedCollection.internalID
-  let otherCollections = extractNodes(me.otherSaves)
+  const allSavesArtworkList = me.allSavesArtworkList!
+  const selectedArtworkListId =
+    match.params.id ?? allSavesArtworkList.internalID
+  let customArtworkLists = extractNodes(me.customArtworkLists)
 
-  if (initialCollectionId.current !== undefined) {
-    const index = otherCollections.findIndex(
-      collection => collection.internalID === initialCollectionId.current
+  if (initialArtworkListId.current !== undefined) {
+    const index = customArtworkLists.findIndex(
+      artworkList => artworkList.internalID === initialArtworkListId.current
     )
 
     if (index !== -1) {
-      // Remove the initial collection from array
-      const initialCollection = otherCollections.splice(index, 1)
+      // Remove the initial artwork list from array
+      const initialArtworkList = customArtworkLists.splice(index, 1)
 
-      // "Locking" the initial collection in the first slot
-      otherCollections = [...initialCollection, ...otherCollections]
+      // "Locking" the initial artwork list in the first slot
+      customArtworkLists = [...initialArtworkList, ...customArtworkLists]
     }
   }
 
-  // Always display "Saved Artwork" collection first in the list
-  const savedCollections = [savedCollection, ...otherCollections]
+  // Always display "All Saves" artwork list first in the list
+  const artworkLists = [allSavesArtworkList, ...customArtworkLists]
 
   return (
     <>
@@ -46,16 +47,16 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
       <Spacer y={4} />
 
       <Shelf showProgress={false}>
-        {savedCollections.map(collection => {
-          const isDefaultCollection =
-            collection.internalID === savedCollection.internalID
+        {artworkLists.map(artworkList => {
+          const isDefaultArtworkList =
+            artworkList.internalID === allSavesArtworkList.internalID
 
           return (
-            <SavesItemFragmentContainer
-              key={collection.internalID}
-              item={collection}
-              isSelected={collection.internalID === selectedCollectionId}
-              imagesLayout={isDefaultCollection ? "grid" : "stacked"}
+            <ArtworkListItemFragmentContainer
+              key={artworkList.internalID}
+              item={artworkList}
+              isSelected={artworkList.internalID === selectedArtworkListId}
+              imagesLayout={isDefaultArtworkList ? "grid" : "stacked"}
             />
           )
         })}
@@ -64,7 +65,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
       <Spacer y={4} />
 
       <SavesArtworksQueryRenderer
-        collectionID={selectedCollectionId}
+        collectionID={selectedArtworkListId}
         initialPage={(page as unknown) as number}
         initialSort={sort}
       />
@@ -77,26 +78,26 @@ export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContai
   {
     me: graphql`
       fragment CollectorProfileSaves2Route_me on Me {
-        defaultSaves: collection(id: "saved-artwork") {
+        allSavesArtworkList: collection(id: "saved-artwork") {
           internalID
-          ...SavesItem_item
+          ...ArtworkListItem_item
         }
 
-        otherSaves: collectionsConnection(
+        customArtworkLists: collectionsConnection(
           first: 30
           default: false
           saves: true
           sort: CREATED_AT_DESC
         )
           @connection(
-            key: "CollectorProfileSaves2Route_otherSaves"
+            key: "CollectorProfileSaves2Route_customArtworkLists"
             filters: []
           ) {
           edges {
             node {
               internalID
               default
-              ...SavesItem_item
+              ...ArtworkListItem_item
             }
           }
         }

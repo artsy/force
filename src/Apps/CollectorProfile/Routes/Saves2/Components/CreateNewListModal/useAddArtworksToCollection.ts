@@ -14,7 +14,7 @@ export const useAddArtworksToCollection = () => {
               addedToCollections {
                 internalID
                 default
-                ...SavesItem_item
+                ...ArtworkListItem_item
               }
             }
             ... on ArtworksCollectionsBatchUpdateFailure {

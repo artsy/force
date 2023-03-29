@@ -17,25 +17,25 @@ const onListAdded = (
     return
   }
 
-  const key = "CollectorProfileSaves2Route_otherSaves"
-  const otherSavesConnection = ConnectionHandler.getConnection(me, key)
+  const key = "CollectorProfileSaves2Route_customArtworkLists"
+  const customArtworkListsConnection = ConnectionHandler.getConnection(me, key)
   const mutationPayload = store.getRootField("createCollection")
   const responseOrError = mutationPayload.getLinkedRecord("responseOrError")
   const createdCollection = responseOrError.getLinkedRecord("collection")
 
-  if (!otherSavesConnection || !createdCollection) {
+  if (!customArtworkListsConnection || !createdCollection) {
     return
   }
 
   const createdCollectionEdge = ConnectionHandler.createEdge(
     store,
-    otherSavesConnection,
+    customArtworkListsConnection,
     createdCollection,
     "Collection"
   )
 
   ConnectionHandler.insertEdgeBefore(
-    otherSavesConnection,
+    customArtworkListsConnection,
     createdCollectionEdge
   )
 }

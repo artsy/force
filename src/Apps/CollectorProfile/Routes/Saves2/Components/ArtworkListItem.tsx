@@ -6,17 +6,21 @@ import { useTranslation } from "react-i18next"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
-import { SavesItem_item$data } from "__generated__/SavesItem_item.graphql"
+import { ArtworkListItem_item$data } from "__generated__/ArtworkListItem_item.graphql"
 
-interface SavesItemProps {
+interface ArtworkListItemProps {
   isSelected?: boolean
   imagesLayout: "stacked" | "grid"
-  item: SavesItem_item$data
+  item: ArtworkListItem_item$data
 }
 
 const BASE_PATH = "/collector-profile/saves2"
 
-const SavesItem: FC<SavesItemProps> = ({ isSelected, imagesLayout, item }) => {
+const ArtworkListItem: FC<ArtworkListItemProps> = ({
+  isSelected,
+  imagesLayout,
+  item,
+}) => {
   const { t } = useTranslation()
   const artworkNodes = extractNodes(item.artworksConnection)
   const imageURLs = artworkNodes.map(node => node.image?.url ?? null)
@@ -67,22 +71,25 @@ const SavesItem: FC<SavesItemProps> = ({ isSelected, imagesLayout, item }) => {
   )
 }
 
-export const SavesItemFragmentContainer = createFragmentContainer(SavesItem, {
-  item: graphql`
-    fragment SavesItem_item on Collection {
-      default
-      name
-      internalID
-      artworksCount
-      artworksConnection(first: 4) {
-        edges {
-          node {
-            image {
-              url(version: "square")
+export const ArtworkListItemFragmentContainer = createFragmentContainer(
+  ArtworkListItem,
+  {
+    item: graphql`
+      fragment ArtworkListItem_item on Collection {
+        default
+        name
+        internalID
+        artworksCount
+        artworksConnection(first: 4) {
+          edges {
+            node {
+              image {
+                url(version: "square")
+              }
             }
           }
         }
       }
-    }
-  `,
-})
+    `,
+  }
+)
