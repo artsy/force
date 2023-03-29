@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<09f29f6b3246d360eadebb1778663cfc>>
+ * @generated SignedSource<<bf862dcfed84cb128b2ae6f0a8aff837>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -100,7 +100,7 @@ v7 = [
   {
     "kind": "Literal",
     "name": "type",
-    "value": "PARTNER"
+    "value": "USER"
   }
 ],
 v8 = {
@@ -466,16 +466,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "dc00b5753150650e79e8b8c7c56490c7",
+    "cacheID": "46f5e3c5115d9aff8ff80e5199864d28",
     "id": null,
     "metadata": {},
     "name": "ConversationsSidebarPaginationQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebarPaginationQuery(\n  $after: String\n  $first: Int = 10\n  $hasReply: Boolean\n  $partnerId: String!\n  $sellerId: ID!\n  $toBeReplied: Boolean\n) {\n  viewer {\n    ...ConversationsSidebar_viewer_4bhtjM\n  }\n}\n\nfragment ConversationsSidebarItem_conversation_2hSCbN on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED], sellerId: $sellerId) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer_4bhtjM on Viewer {\n  conversationsConnection(first: $first, after: $after, partnerId: $partnerId, type: PARTNER, toBeReplied: $toBeReplied, hasReply: $hasReply) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation_2hSCbN\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ConversationsSidebarPaginationQuery(\n  $after: String\n  $first: Int = 10\n  $hasReply: Boolean\n  $partnerId: String!\n  $sellerId: ID!\n  $toBeReplied: Boolean\n) {\n  viewer {\n    ...ConversationsSidebar_viewer_4bhtjM\n  }\n}\n\nfragment ConversationsSidebarItem_conversation_2hSCbN on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED], sellerId: $sellerId) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer_4bhtjM on Viewer {\n  conversationsConnection(first: $first, after: $after, partnerId: $partnerId, type: USER, toBeReplied: $toBeReplied, hasReply: $hasReply) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation_2hSCbN\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c3f94ffc3988eed61e5f71090992f29b";
+(node as any).hash = "27baf5c0c1715a0e661e997b8a874aba";
 
 export default node;

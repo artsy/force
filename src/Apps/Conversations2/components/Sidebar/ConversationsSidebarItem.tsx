@@ -109,7 +109,7 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
       style={{ borderLeft: 0, borderRight: 0, ...borderTop }}
     >
       <RouterLink
-        to={`${data.internalID}?${
+        to={`/user/conversations2/${data.internalID}?${
           match.location.query.conversationsFilter
             ? `conversationsFilter=${match.location.query.conversationsFilter}`
             : ""

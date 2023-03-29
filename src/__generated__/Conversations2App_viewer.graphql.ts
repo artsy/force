@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<759e8b8e697deb21e26c3acafff1dbf9>>
+ * @generated SignedSource<<e990c3b71f5be09e704355d670e564bd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -41,13 +41,8 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Literal",
-          "name": "partnerId",
-          "value": "commerce-test-partner"
-        },
-        {
-          "kind": "Literal",
           "name": "type",
-          "value": "PARTNER"
+          "value": "USER"
         }
       ],
       "concreteType": "ConversationConnection",
@@ -85,13 +80,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "conversationsConnection(first:1,partnerId:\"commerce-test-partner\",type:\"PARTNER\")"
+      "storageKey": "conversationsConnection(first:1,type:\"USER\")"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "262f3806721b50b73380b738fb6f7709";
+(node as any).hash = "47d74eb6eca9ed22c8b0f6cb729c658a";
 
 export default node;

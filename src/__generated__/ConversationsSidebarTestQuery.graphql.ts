@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7b532f35b35ab353d7be739fab4624fe>>
+ * @generated SignedSource<<d3aeb850bc8872db3906cbfa631f33a2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,7 +42,7 @@ v2 = [
   {
     "kind": "Literal",
     "name": "type",
-    "value": "PARTNER"
+    "value": "USER"
   }
 ],
 v3 = {
@@ -400,7 +400,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "conversationsConnection(first:10,partnerId:\"partner-id\",type:\"PARTNER\")"
+            "storageKey": "conversationsConnection(first:10,partnerId:\"partner-id\",type:\"USER\")"
           },
           {
             "alias": null,
@@ -422,7 +422,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "dba6fe4b832a79fbe4cd3f3591b9eee3",
+    "cacheID": "53716ad4164873dc15027c3d3e13f0c8",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -552,7 +552,7 @@ return {
     },
     "name": "ConversationsSidebarTestQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer_6vkwV\n  }\n}\n\nfragment ConversationsSidebarItem_conversation_2b5dec on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED], sellerId: \"partner-id\") {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer_6vkwV on Viewer {\n  conversationsConnection(first: 10, partnerId: \"partner-id\", type: PARTNER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation_2b5dec\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer_6vkwV\n  }\n}\n\nfragment ConversationsSidebarItem_conversation_2b5dec on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED], sellerId: \"partner-id\") {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer_6vkwV on Viewer {\n  conversationsConnection(first: 10, partnerId: \"partner-id\", type: USER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation_2b5dec\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

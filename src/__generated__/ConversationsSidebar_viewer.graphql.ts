@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebebd8f62412dd708a11b50eecd2aefe>>
+ * @generated SignedSource<<f85388ad4edf07b154ad435504045605>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -112,7 +112,7 @@ return {
         {
           "kind": "Literal",
           "name": "type",
-          "value": "PARTNER"
+          "value": "USER"
         }
       ],
       "concreteType": "ConversationConnection",
@@ -208,6 +208,6 @@ return {
 };
 })();
 
-(node as any).hash = "c3f94ffc3988eed61e5f71090992f29b";
+(node as any).hash = "27baf5c0c1715a0e661e997b8a874aba";
 
 export default node;
