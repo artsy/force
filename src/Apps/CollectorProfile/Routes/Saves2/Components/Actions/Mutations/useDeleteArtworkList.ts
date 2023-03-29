@@ -2,13 +2,13 @@ import { ConnectionHandler, graphql } from "react-relay"
 import { RecordSourceSelectorProxy } from "relay-runtime"
 import { useMutation } from "Utils/Hooks/useMutation"
 import {
-  useDeleteCollectionMutation,
-  useDeleteCollectionMutation$data,
-} from "__generated__/useDeleteCollectionMutation.graphql"
+  useDeleteArtworkListMutation,
+  useDeleteArtworkListMutation$data,
+} from "__generated__/useDeleteArtworkListMutation.graphql"
 
-const deleteCollectionUpdater = (
-  store: RecordSourceSelectorProxy<useDeleteCollectionMutation$data>,
-  data: useDeleteCollectionMutation$data
+const deleteArtworkListUpdater = (
+  store: RecordSourceSelectorProxy<useDeleteArtworkListMutation$data>,
+  data: useDeleteArtworkListMutation$data
 ) => {
   const { responseOrError } = data.deleteCollection ?? {}
 
@@ -16,12 +16,12 @@ const deleteCollectionUpdater = (
     return
   }
 
-  const collectionID = responseOrError.collection?.id
+  const artworkListID = responseOrError.artworkList?.id
 
   const root = store.getRoot()
   const me = root.getLinkedRecord("me")
 
-  if (!me || !collectionID) {
+  if (!me || !artworkListID) {
     return
   }
 
@@ -34,18 +34,18 @@ const deleteCollectionUpdater = (
     return
   }
 
-  ConnectionHandler.deleteNode(customArtworkListsConnection, collectionID)
+  ConnectionHandler.deleteNode(customArtworkListsConnection, artworkListID)
 }
 
-export const useDeleteCollection = () => {
-  return useMutation<useDeleteCollectionMutation>({
+export const useDeleteArtworkList = () => {
+  return useMutation<useDeleteArtworkListMutation>({
     mutation: graphql`
-      mutation useDeleteCollectionMutation($input: deleteCollectionInput!) {
+      mutation useDeleteArtworkListMutation($input: deleteCollectionInput!) {
         deleteCollection(input: $input) {
           responseOrError {
             __typename # DeleteCollectionSuccess or DeleteCollectionFailure
             ... on DeleteCollectionSuccess {
-              collection {
+              artworkList: collection {
                 id
               }
             }
@@ -59,6 +59,6 @@ export const useDeleteCollection = () => {
         }
       }
     `,
-    updater: (store, data) => deleteCollectionUpdater(store, data),
+    updater: (store, data) => deleteArtworkListUpdater(store, data),
   })
 }

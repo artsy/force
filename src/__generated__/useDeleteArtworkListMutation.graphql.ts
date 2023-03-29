@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0ac3bffd511b56285bb7476d5b72c405>>
+ * @generated SignedSource<<595c69eafb0e18fe75cef9573ee06427>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,10 +13,10 @@ export type deleteCollectionInput = {
   clientMutationId?: string | null;
   id: string;
 };
-export type useDeleteCollectionMutation$variables = {
+export type useDeleteArtworkListMutation$variables = {
   input: deleteCollectionInput;
 };
-export type useDeleteCollectionMutation$data = {
+export type useDeleteArtworkListMutation$data = {
   readonly deleteCollection: {
     readonly responseOrError: {
       readonly __typename: "DeleteCollectionFailure";
@@ -26,7 +26,7 @@ export type useDeleteCollectionMutation$data = {
       } | null;
     } | {
       readonly __typename: "DeleteCollectionSuccess";
-      readonly collection: {
+      readonly artworkList: {
         readonly id: string;
       } | null;
     } | {
@@ -36,9 +36,9 @@ export type useDeleteCollectionMutation$data = {
     } | null;
   } | null;
 };
-export type useDeleteCollectionMutation = {
-  response: useDeleteCollectionMutation$data;
-  variables: useDeleteCollectionMutation$variables;
+export type useDeleteArtworkListMutation = {
+  response: useDeleteArtworkListMutation$data;
+  variables: useDeleteArtworkListMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -83,7 +83,7 @@ v1 = [
             "kind": "InlineFragment",
             "selections": [
               {
-                "alias": null,
+                "alias": "artworkList",
                 "args": null,
                 "concreteType": "Collection",
                 "kind": "LinkedField",
@@ -148,7 +148,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useDeleteCollectionMutation",
+    "name": "useDeleteArtworkListMutation",
     "selections": (v1/*: any*/),
     "type": "Mutation",
     "abstractKey": null
@@ -157,20 +157,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useDeleteCollectionMutation",
+    "name": "useDeleteArtworkListMutation",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "b55ee2de2db8af67f58443b58b6750ba",
+    "cacheID": "0e755afbf6a66f051770fe2c7b61796e",
     "id": null,
     "metadata": {},
-    "name": "useDeleteCollectionMutation",
+    "name": "useDeleteArtworkListMutation",
     "operationKind": "mutation",
-    "text": "mutation useDeleteCollectionMutation(\n  $input: deleteCollectionInput!\n) {\n  deleteCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on DeleteCollectionSuccess {\n        collection {\n          id\n        }\n      }\n      ... on DeleteCollectionFailure {\n        mutationError {\n          message\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useDeleteArtworkListMutation(\n  $input: deleteCollectionInput!\n) {\n  deleteCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on DeleteCollectionSuccess {\n        artworkList: collection {\n          id\n        }\n      }\n      ... on DeleteCollectionFailure {\n        mutationError {\n          message\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "cd4660036df1dbb6578207830b0db6f5";
+(node as any).hash = "9bb9f88a0393db865d9e3a52df30c4c9";
 
 export default node;
