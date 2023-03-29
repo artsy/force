@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d72af48f81a121e785e5a885a7070319>>
+ * @generated SignedSource<<0921b22f08f1f753064c96c3a9a34b6f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,10 +14,10 @@ export type updateCollectionInput = {
   id: string;
   name: string;
 };
-export type useUpdateCollectionMutation$variables = {
+export type useUpdateArtworkListMutation$variables = {
   input: updateCollectionInput;
 };
-export type useUpdateCollectionMutation$data = {
+export type useUpdateArtworkListMutation$data = {
   readonly updateCollection: {
     readonly responseOrError: {
       readonly __typename: "UpdateCollectionFailure";
@@ -27,7 +27,7 @@ export type useUpdateCollectionMutation$data = {
       } | null;
     } | {
       readonly __typename: "UpdateCollectionSuccess";
-      readonly collection: {
+      readonly artworkList: {
         readonly internalID: string;
         readonly name: string;
       } | null;
@@ -38,9 +38,9 @@ export type useUpdateCollectionMutation$data = {
     } | null;
   } | null;
 };
-export type useUpdateCollectionMutation = {
-  response: useUpdateCollectionMutation$data;
-  variables: useUpdateCollectionMutation$variables;
+export type useUpdateArtworkListMutation = {
+  response: useUpdateArtworkListMutation$data;
+  variables: useUpdateArtworkListMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -116,7 +116,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useUpdateCollectionMutation",
+    "name": "useUpdateArtworkListMutation",
     "selections": [
       {
         "alias": null,
@@ -139,7 +139,7 @@ return {
                 "kind": "InlineFragment",
                 "selections": [
                   {
-                    "alias": null,
+                    "alias": "artworkList",
                     "args": null,
                     "concreteType": "Collection",
                     "kind": "LinkedField",
@@ -170,7 +170,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useUpdateCollectionMutation",
+    "name": "useUpdateArtworkListMutation",
     "selections": [
       {
         "alias": null,
@@ -193,7 +193,7 @@ return {
                 "kind": "InlineFragment",
                 "selections": [
                   {
-                    "alias": null,
+                    "alias": "artworkList",
                     "args": null,
                     "concreteType": "Collection",
                     "kind": "LinkedField",
@@ -226,16 +226,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c89ebb66ea67f9bc1f63e5bd913e145a",
+    "cacheID": "3d41a7050aee3245de65a62294f4ae5b",
     "id": null,
     "metadata": {},
-    "name": "useUpdateCollectionMutation",
+    "name": "useUpdateArtworkListMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateCollectionMutation(\n  $input: updateCollectionInput!\n) {\n  updateCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on UpdateCollectionSuccess {\n        collection {\n          internalID\n          name\n          id\n        }\n      }\n      ... on UpdateCollectionFailure {\n        mutationError {\n          message\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useUpdateArtworkListMutation(\n  $input: updateCollectionInput!\n) {\n  updateCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on UpdateCollectionSuccess {\n        artworkList: collection {\n          internalID\n          name\n          id\n        }\n      }\n      ... on UpdateCollectionFailure {\n        mutationError {\n          message\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "dfbef87048814a5e7d99ec5bf20d7ad9";
+(node as any).hash = "08d28a986fc3b93d6451bfb1be7c42b0";
 
 export default node;

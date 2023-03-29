@@ -11,7 +11,7 @@ import EditIcon from "@artsy/icons/EditIcon"
 import { useTranslation } from "react-i18next"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
-import { useUpdateCollection } from "./Mutations/useUpdateCollection"
+import { useUpdateArtworkList } from "./Mutations/useUpdateArtworkList"
 import createLogger from "Utils/logger"
 
 export interface EditArtworkListEntity {
@@ -48,7 +48,7 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
       .max(MAX_NAME_LENGTH),
   })
 
-  const { submitMutation } = useUpdateCollection()
+  const { submitMutation } = useUpdateArtworkList()
 
   const { sendToast } = useToasts()
 
