@@ -1,38 +1,37 @@
-import { GetServerSideProps } from "next"
-import { fetchRelayData } from "system/relay/fetchRelayData"
-import { graphql } from "react-relay"
-import { conversationsV2Query } from "__generated__/conversationsV2Query.graphql"
-import { extractNodes } from "utils/extractNodes"
-import { getUserFromSession } from "system/user"
-
-import { Box } from "@artsy/palette"
-import { useIntersectionObserver } from "utils/hooks/useIntersectionObserver"
-import { useRouter } from "next/router"
-import { Media } from "utils/responsive"
-
 /**
  * This page simply returns the first conversation on the server and redirects
  * to the appropriate conversation ID page.
  */
 
+import { Box } from "@artsy/palette"
+import { createFragmentContainer, graphql } from "react-relay"
+import { useRouter } from "System/Router/useRouter"
+import { extractNodes } from "Utils/extractNodes"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
+import { Media } from "Utils/Responsive"
+import { Conversations2App_viewer$data } from "__generated__/Conversations2App_viewer.graphql"
+
 export const DEFAULT_CONVERSATION_ID = "new"
 
 interface ConversationsV2StubPageProps {
-  initialConversationID?: string
+  viewer?: Conversations2App_viewer$data
 }
 
-const ConversationsV2StubPage: React.FC<ConversationsV2StubPageProps> = ({
-  initialConversationID,
+export const Conversations2App: React.FC<ConversationsV2StubPageProps> = ({
+  viewer,
 }) => {
-  const { replace } = useRouter()
+  const { router } = useRouter()
+
+  const initialConversationID = extractNodes(viewer?.conversationsConnection)[0]
+    ?.internalID
 
   return (
     <>
       <Media greaterThan="sm">
         <Sentinel
           onIntersection={() =>
-            replace(
-              `/conversations/${
+            router.replace(
+              `/user/conversations2/${
                 initialConversationID ?? DEFAULT_CONVERSATION_ID
               }`
             )
@@ -42,7 +41,7 @@ const ConversationsV2StubPage: React.FC<ConversationsV2StubPageProps> = ({
       <Media lessThan="md">
         <Sentinel
           onIntersection={() =>
-            replace(`/conversations/${DEFAULT_CONVERSATION_ID}`)
+            router.replace(`/user/conversations2/${DEFAULT_CONVERSATION_ID}`)
           }
         />
       </Media>
@@ -50,17 +49,15 @@ const ConversationsV2StubPage: React.FC<ConversationsV2StubPageProps> = ({
   )
 }
 
-export const getServerSideProps: GetServerSideProps = async (ctx) => {
-  const user = await getUserFromSession(ctx.req, ctx.res)
-  const partnerId = user?.currentPartner?._id ?? ""
-
-  const props = await fetchRelayData<conversationsV2Query>({
-    query: graphql`
-      query conversationsV2Query($partnerId: String!) {
+export const Conversations2AppFragmentContainer = createFragmentContainer(
+  Conversations2App,
+  {
+    viewer: graphql`
+      fragment Conversations2App_viewer on Viewer {
         conversationsConnection(
           first: 1
           type: PARTNER
-          partnerId: $partnerId
+          partnerId: "commerce-test-partner"
         ) {
           edges {
             node {
@@ -70,18 +67,8 @@ export const getServerSideProps: GetServerSideProps = async (ctx) => {
         }
       }
     `,
-    cache: false,
-    variables: {
-      partnerId,
-    },
-    ctx,
-  })
-
-  const initialConversationID = extractNodes(props.conversationsConnection)[0]
-    ?.internalID
-
-  return { props: { initialConversationID } }
-}
+  }
+)
 
 const Sentinel: React.FC<{
   onIntersection(): void
@@ -94,5 +81,3 @@ const Sentinel: React.FC<{
 
   return <Box ref={ref as any} />
 }
-
-export default ConversationsV2StubPage
