@@ -127,7 +127,6 @@ export const orderRoutes: AppRouteConfig[] = [
             { order }
           )
 
-          // FIXME RELAY_UPGRADE
           if (redirect === null) {
             // Work around to ensure that all of the "stays on the..." tests
             // remain valid for Relay 13 upgrade, since with the new approach

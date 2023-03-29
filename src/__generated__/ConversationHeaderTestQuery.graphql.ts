@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3590d1f495bd8c57dd79dd1ba844108b>>
+ * @generated SignedSource<<5b5f0c6b28e6cf58577f719fe465b12d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationHeaderTestQuery$variables = {};
 export type ConversationHeaderTestQuery$data = {
-  readonly viewer: {
-    readonly " $fragmentSpreads": FragmentRefs<"ConversationHeader_viewer">;
+  readonly conversation: {
+    readonly " $fragmentSpreads": FragmentRefs<"ConversationHeader_conversation">;
   } | null;
 };
 export type ConversationHeaderTestQuery = {
@@ -22,19 +22,26 @@ export type ConversationHeaderTestQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "id",
+    "value": "conversation-id"
+  }
+],
+v1 = {
   "kind": "Literal",
   "name": "sellerId",
   "value": "123"
 },
-v1 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v2 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -42,28 +49,28 @@ v2 = [
     "name": "name",
     "storageKey": null
   },
-  (v1/*: any*/)
+  (v2/*: any*/)
 ],
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v5 = {
+v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v6 = {
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -78,26 +85,21 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "Viewer",
+        "args": (v0/*: any*/),
+        "concreteType": "Conversation",
         "kind": "LinkedField",
-        "name": "viewer",
+        "name": "conversation",
         "plural": false,
         "selections": [
           {
             "args": [
-              {
-                "kind": "Literal",
-                "name": "conversationId",
-                "value": "conversation-id"
-              },
-              (v0/*: any*/)
+              (v1/*: any*/)
             ],
             "kind": "FragmentSpread",
-            "name": "ConversationHeader_viewer"
+            "name": "ConversationHeader_conversation"
           }
         ],
-        "storageKey": null
+        "storageKey": "conversation(id:\"conversation-id\")"
       }
     ],
     "type": "Query",
@@ -111,42 +113,143 @@ return {
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "Viewer",
+        "args": (v0/*: any*/),
+        "concreteType": "Conversation",
         "kind": "LinkedField",
-        "name": "viewer",
+        "name": "conversation",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ConversationInitiator",
+            "kind": "LinkedField",
+            "name": "from",
+            "plural": false,
+            "selections": (v3/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ConversationItem",
+            "kind": "LinkedField",
+            "name": "items",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": null,
+                "kind": "LinkedField",
+                "name": "item",
+                "plural": false,
+                "selections": [
+                  (v4/*: any*/),
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "slug",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "date",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "title",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Artist",
+                        "kind": "LinkedField",
+                        "name": "artist",
+                        "plural": false,
+                        "selections": (v3/*: any*/),
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Image",
+                        "kind": "LinkedField",
+                        "name": "image",
+                        "plural": false,
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "url",
+                            "storageKey": null
+                          }
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "type": "Artwork",
+                    "abstractKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      (v2/*: any*/)
+                    ],
+                    "type": "Node",
+                    "abstractKey": "__isNode"
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": [
               {
                 "kind": "Literal",
-                "name": "id",
-                "value": "conversation-id"
+                "name": "first",
+                "value": 1
+              },
+              (v1/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "states",
+                "value": [
+                  "APPROVED",
+                  "FULFILLED",
+                  "SUBMITTED",
+                  "PROCESSING_APPROVAL",
+                  "REFUNDED",
+                  "CANCELED"
+                ]
               }
             ],
-            "concreteType": "Conversation",
+            "concreteType": "CommerceOrderConnectionWithTotalCount",
             "kind": "LinkedField",
-            "name": "conversation",
+            "name": "orderConnection",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "ConversationInitiator",
+                "concreteType": "CommerceOrderEdge",
                 "kind": "LinkedField",
-                "name": "from",
-                "plural": false,
-                "selections": (v2/*: any*/),
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "ConversationItem",
-                "kind": "LinkedField",
-                "name": "items",
+                "name": "edges",
                 "plural": true,
                 "selections": [
                   {
@@ -154,231 +257,107 @@ return {
                     "args": null,
                     "concreteType": null,
                     "kind": "LinkedField",
-                    "name": "item",
+                    "name": "node",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
+                      (v4/*: any*/),
                       {
-                        "kind": "InlineFragment",
-                        "selections": [
-                          (v1/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "slug",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "date",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "title",
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Artist",
-                            "kind": "LinkedField",
-                            "name": "artist",
-                            "plural": false,
-                            "selections": (v2/*: any*/),
-                            "storageKey": null
-                          },
-                          {
-                            "alias": null,
-                            "args": null,
-                            "concreteType": "Image",
-                            "kind": "LinkedField",
-                            "name": "image",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "url",
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": null
-                          }
-                        ],
-                        "type": "Artwork",
-                        "abstractKey": null
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "state",
+                        "storageKey": null
                       },
-                      {
-                        "kind": "InlineFragment",
-                        "selections": [
-                          (v1/*: any*/)
-                        ],
-                        "type": "Node",
-                        "abstractKey": "__isNode"
-                      }
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "first",
-                    "value": 1
-                  },
-                  (v0/*: any*/),
-                  {
-                    "kind": "Literal",
-                    "name": "states",
-                    "value": [
-                      "APPROVED",
-                      "FULFILLED",
-                      "SUBMITTED",
-                      "PROCESSING_APPROVAL",
-                      "REFUNDED",
-                      "CANCELED"
-                    ]
-                  }
-                ],
-                "concreteType": "CommerceOrderConnectionWithTotalCount",
-                "kind": "LinkedField",
-                "name": "orderConnection",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "CommerceOrderEdge",
-                    "kind": "LinkedField",
-                    "name": "edges",
-                    "plural": true,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": null,
-                        "kind": "LinkedField",
-                        "name": "node",
-                        "plural": false,
-                        "selections": [
-                          (v3/*: any*/),
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "state",
-                            "storageKey": null
-                          },
-                          (v1/*: any*/)
-                        ],
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": "orderConnection(first:1,sellerId:\"123\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\",\"REFUNDED\",\"CANCELED\"])"
-              },
-              (v1/*: any*/)
+              }
             ],
-            "storageKey": "conversation(id:\"conversation-id\")"
-          }
+            "storageKey": "orderConnection(first:1,sellerId:\"123\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\",\"REFUNDED\",\"CANCELED\"])"
+          },
+          (v2/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "conversation(id:\"conversation-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "05bc89b1aee5042ef2d176d4483ae328",
+    "cacheID": "1bca8c0092f9f638a248ccfb58c27c9d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
-        "viewer": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Viewer"
-        },
-        "viewer.conversation": {
+        "conversation": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Conversation"
         },
-        "viewer.conversation.from": {
+        "conversation.from": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "ConversationInitiator"
         },
-        "viewer.conversation.from.id": (v4/*: any*/),
-        "viewer.conversation.from.name": (v5/*: any*/),
-        "viewer.conversation.id": (v4/*: any*/),
-        "viewer.conversation.items": {
+        "conversation.from.id": (v5/*: any*/),
+        "conversation.from.name": (v6/*: any*/),
+        "conversation.id": (v5/*: any*/),
+        "conversation.items": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "ConversationItem"
         },
-        "viewer.conversation.items.item": {
+        "conversation.items.item": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ConversationItemType"
         },
-        "viewer.conversation.items.item.__isNode": (v5/*: any*/),
-        "viewer.conversation.items.item.__typename": (v5/*: any*/),
-        "viewer.conversation.items.item.artist": {
+        "conversation.items.item.__isNode": (v6/*: any*/),
+        "conversation.items.item.__typename": (v6/*: any*/),
+        "conversation.items.item.artist": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Artist"
         },
-        "viewer.conversation.items.item.artist.id": (v4/*: any*/),
-        "viewer.conversation.items.item.artist.name": (v6/*: any*/),
-        "viewer.conversation.items.item.date": (v6/*: any*/),
-        "viewer.conversation.items.item.id": (v4/*: any*/),
-        "viewer.conversation.items.item.image": {
+        "conversation.items.item.artist.id": (v5/*: any*/),
+        "conversation.items.item.artist.name": (v7/*: any*/),
+        "conversation.items.item.date": (v7/*: any*/),
+        "conversation.items.item.id": (v5/*: any*/),
+        "conversation.items.item.image": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Image"
         },
-        "viewer.conversation.items.item.image.url": (v6/*: any*/),
-        "viewer.conversation.items.item.slug": (v4/*: any*/),
-        "viewer.conversation.items.item.title": (v6/*: any*/),
-        "viewer.conversation.orderConnection": {
+        "conversation.items.item.image.url": (v7/*: any*/),
+        "conversation.items.item.slug": (v5/*: any*/),
+        "conversation.items.item.title": (v7/*: any*/),
+        "conversation.orderConnection": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "CommerceOrderConnectionWithTotalCount"
         },
-        "viewer.conversation.orderConnection.edges": {
+        "conversation.orderConnection.edges": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "CommerceOrderEdge"
         },
-        "viewer.conversation.orderConnection.edges.node": {
+        "conversation.orderConnection.edges.node": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "CommerceOrder"
         },
-        "viewer.conversation.orderConnection.edges.node.__typename": (v5/*: any*/),
-        "viewer.conversation.orderConnection.edges.node.id": (v4/*: any*/),
-        "viewer.conversation.orderConnection.edges.node.state": {
+        "conversation.orderConnection.edges.node.__typename": (v6/*: any*/),
+        "conversation.orderConnection.edges.node.id": (v5/*: any*/),
+        "conversation.orderConnection.edges.node.state": {
           "enumValues": [
             "ABANDONED",
             "APPROVED",
@@ -398,11 +377,11 @@ return {
     },
     "name": "ConversationHeaderTestQuery",
     "operationKind": "query",
-    "text": "query ConversationHeaderTestQuery {\n  viewer {\n    ...ConversationHeader_viewer_7vXw9\n  }\n}\n\nfragment ConversationHeader_viewer_7vXw9 on Viewer {\n  conversation(id: \"conversation-id\") {\n    from {\n      name\n      id\n    }\n    items {\n      item {\n        __typename\n        ... on Artwork {\n          id\n          slug\n          date\n          title\n          artist {\n            name\n            id\n          }\n          image {\n            url\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n    orderConnection(first: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED, CANCELED], sellerId: \"123\") {\n      edges {\n        node {\n          __typename\n          state\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ConversationHeaderTestQuery {\n  conversation(id: \"conversation-id\") {\n    ...ConversationHeader_conversation_1jRLVc\n    id\n  }\n}\n\nfragment ConversationHeader_conversation_1jRLVc on Conversation {\n  from {\n    name\n    id\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        slug\n        date\n        title\n        artist {\n          name\n          id\n        }\n        image {\n          url\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  orderConnection(first: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED, CANCELED], sellerId: \"123\") {\n    edges {\n      node {\n        __typename\n        state\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d800b9960131317cc831358d16705e51";
+(node as any).hash = "a3026351daf32e5c32837261d4004af9";
 
 export default node;

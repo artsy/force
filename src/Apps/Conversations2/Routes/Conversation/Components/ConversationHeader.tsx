@@ -13,18 +13,18 @@ import { useTracking } from "react-tracking"
 import { extractNodes } from "Utils/extractNodes"
 import { Media } from "Utils/Responsive"
 import { RouterLink } from "System/Router/RouterLink"
-import { ConversationHeader_viewer$key } from "__generated__/ConversationHeader_viewer.graphql"
+import { ConversationHeader_conversation$key } from "__generated__/ConversationHeader_conversation.graphql"
 
 const DROP_SHADOW = "0 2px 10px rgba(0, 0, 0, .08)"
 
 interface ConversationHeaderProps {
-  viewer: ConversationHeader_viewer$key
+  conversation: ConversationHeader_conversation$key
   onGoToConversations?: () => void
   onGoToDetails?: () => void
 }
 
 export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
-  viewer,
+  conversation,
   onGoToConversations,
   onGoToDetails,
 }) => {
@@ -32,63 +32,58 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
 
   const data = useFragment(
     graphql`
-      fragment ConversationHeader_viewer on Viewer
-        @argumentDefinitions(
-          conversationId: { type: "String!" }
-          sellerId: { type: "ID!" }
-        ) {
-        conversation(id: $conversationId) @required(action: NONE) {
-          from {
-            name
-          }
-          items {
-            item {
-              __typename
-              ... on Artwork {
-                id
-                slug
-                date
-                title
-                artist {
-                  name
-                }
-                image {
-                  url
-                }
+      fragment ConversationHeader_conversation on Conversation
+        @argumentDefinitions(sellerId: { type: "ID!" }) {
+        from {
+          name
+        }
+        items {
+          item {
+            __typename
+            ... on Artwork {
+              id
+              slug
+              date
+              title
+              artist {
+                name
+              }
+              image {
+                url
               }
             }
           }
-          orderConnection(
-            first: 1
-            states: [
-              APPROVED
-              FULFILLED
-              SUBMITTED
-              PROCESSING_APPROVAL
-              REFUNDED
-              CANCELED
-            ]
-            sellerId: $sellerId
-          ) {
-            edges @required(action: NONE) {
-              node {
-                state @required(action: NONE)
-              }
+        }
+        orderConnection(
+          first: 1
+          states: [
+            APPROVED
+            FULFILLED
+            SUBMITTED
+            PROCESSING_APPROVAL
+            REFUNDED
+            CANCELED
+          ]
+          sellerId: $sellerId
+        ) {
+          edges @required(action: NONE) {
+            node {
+              state @required(action: NONE)
             }
           }
         }
       }
     `,
-    viewer
+    conversation
   )
 
-  const item = data?.conversation.items?.[0]?.item
+  const item = data?.items?.[0]?.item
 
   if (!item || item?.__typename !== "Artwork") {
     return null
   }
 
-  const order = extractNodes(data.conversation.orderConnection)[0]
+  const order = extractNodes(data.orderConnection)[0]
 
   return (
     <>
@@ -100,7 +95,7 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
           borderBottomColor="black15"
           style={{ boxShadow: DROP_SHADOW }}
         >
-          <Text variant="lg">From {data.conversation.from.name}</Text>
+          <Text variant="lg">From {data.from.name}</Text>
 
           <Spacer y={2} />
 
@@ -166,7 +161,7 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
             >
               <ChevronLeftIcon />
               <Spacer x={1} />
-              <Text variant="xs">From {data.conversation.from.name}</Text>
+              <Text variant="xs">From {data.from.name}</Text>
             </Clickable>
 
             <Button
