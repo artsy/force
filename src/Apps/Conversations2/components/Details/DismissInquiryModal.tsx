@@ -105,7 +105,7 @@ export const DismissInquiryModal: React.FC<DismissInquiryModalProps> = ({
 
     // TODO: This moves to the root, which will refetch conversation lists.
     // We will likely need to fine-tune this at some point.
-    router.replace("/conversations")
+    router.replace("/user/conversations2")
 
     onClose()
   }

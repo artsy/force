@@ -33,7 +33,7 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
           first: $first
           after: $after
           partnerId: $partnerId
-          type: PARTNER
+          type: USER
           toBeReplied: $toBeReplied
           hasReply: $hasReply
         )
