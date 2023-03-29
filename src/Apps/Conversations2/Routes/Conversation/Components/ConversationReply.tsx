@@ -1,3 +1,7 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/label-has-for */
+/* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useState, FC, useRef } from "react"
 import { useFormik, FormikHelpers } from "formik"
 import { v4 as uuidv4 } from "uuid"
@@ -11,17 +15,14 @@ import {
   Input,
 } from "@artsy/palette"
 import PaperClipIcon from "@artsy/icons/PaperClipIcon"
-import { useSendConversationMessage } from "pages/conversations/mutations/useSendConversationMessage"
 import { graphql, useFragment } from "react-relay"
-import { ConversationReply_conversation$key } from "__generated__/ConversationReply_conversation.graphql"
-import { useSystemContext } from "system/SystemContext"
-import { ConversationAttachmentsList } from "pages/conversations/[conversationId]/Components/ConversationAttachmentsList"
 import { useTracking } from "react-tracking"
 import { sentConversationMessage } from "@artsy/cohesion"
-import { useRouter } from "next/router"
-import { useSendConversationMessageMutation$data } from "__generated__/useSendConversationMessageMutation.graphql"
-import { ConversationMessageAttachmentInput } from "__generated__/useSendConversationMessageMutation.graphql"
-import { useAttachments } from "pages/conversations/hooks/useAttachments"
+import { useSystemContext } from "System/useSystemContext"
+import { useRouter } from "System/Router/useRouter"
+import { useSendConversationMessage } from "Apps/Conversations2/mutations/useSendConversationMessage"
+import { useAttachments } from "Apps/Conversations2/hooks/useAttachments"
+import { ConversationAttachmentsList } from "Apps/Conversations2/Routes/Conversation/Components/ConversationAttachmentsList"
 
 interface ConversationReplyProps {
   conversation: ConversationReply_conversation$key
@@ -219,7 +220,7 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
             ref={inputRef}
             onChange={({ target }) => {
               if (!target.files?.length) return
-              const files = Array.from(target.files).map((file) => ({
+              const files = Array.from(target.files).map(file => ({
                 name: file.name,
                 type: file.type,
                 size: formatSize(file.size),
@@ -249,7 +250,7 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
             }}
             value={values.message}
             placeholder="Type your message"
-            onInput={(event) => {
+            onInput={event => {
               const field = event.target as HTMLTextAreaElement
               // Set original height each time so scrollHeight is also
               // calculated when the content shrinks.

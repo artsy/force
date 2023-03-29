@@ -1,15 +1,14 @@
 import { Box, Flex, Spinner } from "@artsy/palette"
-import React, { FC, startTransition, useEffect, useRef, useState } from "react"
+import React, { FC, useEffect, useRef, useState } from "react"
 import { graphql, usePaginationFragment } from "react-relay"
-import { extractNodes } from "utils/extractNodes"
-import { useIntersectionObserver } from "utils/hooks/useIntersectionObserver"
-import { useLoadMore } from "utils/hooks/useLoadMore"
-import { ConversationMessages_conversation$key } from "__generated__/ConversationMessages_conversation.graphql"
 import { ConversationMessage } from "./ConversationMessage"
 import { LatestMessages } from "./LatestMessages"
 import { Spacer, Text } from "@artsy/palette"
 import { format, differenceInDays, isSameDay, isSameMinute } from "date-fns"
-import { useScrollPagination } from "pages/conversations/hooks/useScrollPagination"
+import { useScrollPagination } from "Apps/Conversations2/hooks/useScrollPagination"
+import { useLoadMore } from "Apps/Conversations2/hooks/useLoadMore"
+import { extractNodes } from "Utils/extractNodes"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 
 interface ConversationMessagesProps {
   conversation: ConversationMessages_conversation$key
@@ -33,36 +32,41 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
   const bottomRef = useRef<HTMLDivElement>(null)
   const { appendElementRef } = useScrollPagination()
 
-  const { data, isLoadingNext, hasNext, loadNext, refetch } =
-    usePaginationFragment(
-      graphql`
-        fragment ConversationMessages_conversation on Conversation
+  const {
+    data,
+    isLoadingNext,
+    hasNext,
+    loadNext,
+    refetch,
+  } = usePaginationFragment(
+    graphql`
+      fragment ConversationMessages_conversation on Conversation
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 10 }
           after: { type: "String" }
         )
         @refetchable(queryName: "ConversationMessagesPaginationQuery") {
-          messagesConnection(first: $first, after: $after, sort: DESC)
-            @required(action: NONE)
-            @connection(
-              key: "ConversationMessages_conversation_messagesConnection"
-            ) {
-            edges {
-              node {
-                id
-                createdAt
-                isFromUser
-                ...ConversationMessage_message
-              }
+        messagesConnection(first: $first, after: $after, sort: DESC)
+          @required(action: NONE)
+          @connection(
+            key: "ConversationMessages_conversation_messagesConnection"
+          ) {
+          edges {
+            node {
+              id
+              createdAt
+              isFromUser
+              ...ConversationMessage_message
             }
           }
-          inquiryRequest {
-            formattedFirstMessage
-          }
         }
-      `,
-      conversation
-    )
+        inquiryRequest {
+          formattedFirstMessage
+        }
+      }
+    `,
+    conversation
+  )
 
   const { loadMore } = useLoadMore({
     pageSize: PAGE_SIZE,
@@ -84,17 +88,15 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
   const handleLatestMessagesClick = () => {
     setIsLoadingNewMessages(true)
     bottomRef.current?.scrollIntoView({ behavior: "smooth" })
-    startTransition(() => {
-      refetch(
-        {
-          first: PAGE_SIZE,
-        },
-        {
-          fetchPolicy: "network-only",
-          onComplete: () => setIsLoadingNewMessages(false),
-        }
-      )
-    })
+    refetch(
+      {
+        first: PAGE_SIZE,
+      },
+      {
+        fetchPolicy: "network-only",
+        onComplete: () => setIsLoadingNewMessages(false),
+      }
+    )
   }
 
   return (

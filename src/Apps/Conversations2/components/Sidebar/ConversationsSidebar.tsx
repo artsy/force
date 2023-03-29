@@ -1,12 +1,12 @@
 import { graphql, usePaginationFragment } from "react-relay"
-import { ConversationsSidebarHeader } from "./ConversationsSidebarHeader"
-import { ConversationsSidebarItem } from "./ConversationsSidebarItem"
-import { extractNodes } from "utils/extractNodes"
 import { Box, Flex, Spinner } from "@artsy/palette"
-import { ConversationsSidebar_viewer$key } from "__generated__/ConversationsSidebar_viewer.graphql"
-import { useIntersectionObserver } from "utils/hooks/useIntersectionObserver"
-import { ConversationsSidebarEmpty } from "./ConversationsSidebarEmpty"
-import { useLoadMore } from "utils/hooks/useLoadMore"
+import { useLoadMore } from "Apps/Conversations2/hooks/useLoadMore"
+import { extractNodes } from "Utils/extractNodes"
+import { ConversationsSidebarHeader } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarHeader"
+import { ConversationsSidebarEmpty } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarEmpty"
+import { ConversationsSidebarItem } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarItem"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
+
 interface ConversationsSidebarProps {
   viewer: ConversationsSidebar_viewer$key
 }
@@ -19,15 +19,15 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
   const { data, isLoadingNext, hasNext, loadNext } = usePaginationFragment(
     graphql`
       fragment ConversationsSidebar_viewer on Viewer
-      @argumentDefinitions(
-        first: { type: "Int", defaultValue: 10 }
-        after: { type: "String" }
-        partnerId: { type: "String!" }
-        sellerId: { type: "ID!" }
-        toBeReplied: { type: "Boolean" }
-        hasReply: { type: "Boolean" }
-      )
-      @refetchable(queryName: "ConversationsSidebarPaginationQuery") {
+        @argumentDefinitions(
+          first: { type: "Int", defaultValue: 10 }
+          after: { type: "String" }
+          partnerId: { type: "String!" }
+          sellerId: { type: "ID!" }
+          toBeReplied: { type: "Boolean" }
+          hasReply: { type: "Boolean" }
+        )
+        @refetchable(queryName: "ConversationsSidebarPaginationQuery") {
         conversationsConnection(
           first: $first
           after: $after
