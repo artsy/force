@@ -4,21 +4,21 @@ import {
   ContextualMenuDivider,
   ContextualMenuItem,
 } from "Components/ContextualMenu"
-import {
-  DeleteSavesModal,
-  DeleteSavesModalCollection,
-} from "./DeleteSavesModal"
+import { DeleteSavesModal, DeleteArtworkListEntity } from "./DeleteSavesModal"
 import { useTranslation } from "react-i18next"
 import {
   EditSavesModal,
   EditSavesModalCollection,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/EditSavesModal"
 
+export type ArtworkListEntity = DeleteArtworkListEntity &
+  EditSavesModalCollection
+
 interface Props {
-  collection: DeleteSavesModalCollection & EditSavesModalCollection
+  artworkList: ArtworkListEntity
 }
 
-export const SavesContextualMenu: React.FC<Props> = ({ collection }) => {
+export const SavesContextualMenu: React.FC<Props> = ({ artworkList }) => {
   const { t } = useTranslation()
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
@@ -43,11 +43,14 @@ export const SavesContextualMenu: React.FC<Props> = ({ collection }) => {
   return (
     <>
       {isEditModalOpen && (
-        <EditSavesModal collection={collection} onClose={closeEditModal} />
+        <EditSavesModal collection={artworkList} onClose={closeEditModal} />
       )}
 
       {isDeleteModalOpen && (
-        <DeleteSavesModal collection={collection} onClose={closeDeleteModal} />
+        <DeleteSavesModal
+          artworkList={artworkList}
+          onClose={closeDeleteModal}
+        />
       )}
 
       <ContextualMenu>

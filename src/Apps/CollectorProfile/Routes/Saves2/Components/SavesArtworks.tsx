@@ -63,7 +63,7 @@ const SavesArtworks: FC<SavesArtworksProps> = ({ me, relay }) => {
         <Join separator={<Spacer x={2} />}>
           <Text variant="lg-display">{collection.name}</Text>
           {!collection.default && (
-            <SavesContextualMenu collection={collection} />
+            <SavesContextualMenu artworkList={collection} />
           )}
         </Join>
       </Flex>

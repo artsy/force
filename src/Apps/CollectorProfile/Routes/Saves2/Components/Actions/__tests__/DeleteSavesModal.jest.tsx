@@ -3,12 +3,12 @@ import { render, screen, fireEvent } from "@testing-library/react"
 import { useMutation } from "Utils/Hooks/useMutation"
 import {
   DeleteSavesModal,
-  DeleteSavesModalCollection,
+  DeleteArtworkListEntity,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/DeleteSavesModal"
 
 jest.mock("Utils/Hooks/useMutation")
 
-const collection: DeleteSavesModalCollection = {
+const artworkList: DeleteArtworkListEntity = {
   internalID: "foobar",
   name: "Foo Bar",
 }
@@ -27,7 +27,7 @@ describe("DeleteSavesModal", () => {
 
   it("renders the modal content", async () => {
     render(
-      <DeleteSavesModal collection={collection} onClose={closeDeleteModal} />
+      <DeleteSavesModal artworkList={artworkList} onClose={closeDeleteModal} />
     )
 
     expect(screen.getByText("Delete Foo Bar list?")).toBeInTheDocument()
@@ -37,7 +37,7 @@ describe("DeleteSavesModal", () => {
 
   it("dismisses when the Cancel button is clicked", async () => {
     render(
-      <DeleteSavesModal collection={collection} onClose={closeDeleteModal} />
+      <DeleteSavesModal artworkList={artworkList} onClose={closeDeleteModal} />
     )
 
     fireEvent.click(screen.getByRole("button", { name: /Cancel/ }))
@@ -47,7 +47,7 @@ describe("DeleteSavesModal", () => {
 
   it("calls the mutation when the Delete button is clicked", async () => {
     render(
-      <DeleteSavesModal collection={collection} onClose={closeDeleteModal} />
+      <DeleteSavesModal artworkList={artworkList} onClose={closeDeleteModal} />
     )
 
     fireEvent.click(screen.getByRole("button", { name: /Delete/ }))
