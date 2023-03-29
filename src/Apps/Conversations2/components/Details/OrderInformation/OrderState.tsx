@@ -9,8 +9,8 @@ import {
   CommerceOrderStateEnum,
   CommerceOrderModeEnum,
 } from "__generated__/OrderState_state.graphql"
-import { CountdownTimer } from "pages/conversations/components/Details/OrderInformation/CountdownTimer"
 import { OrderStateStatusWithCounter_order$key } from "__generated__/OrderStateStatusWithCounter_order.graphql"
+import { CountdownTimer } from "Apps/Conversations2/components/Details/OrderInformation/CountdownTimer"
 
 type ModeState = `${CommerceOrderModeEnum}_${CommerceOrderStateEnum}`
 export type CounterOfferState = `${"COUNTER_OFFER" | "OFFER"}_${

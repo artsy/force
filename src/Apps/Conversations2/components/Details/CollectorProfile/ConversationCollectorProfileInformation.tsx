@@ -5,19 +5,19 @@ import BriefcaseIcon from "@artsy/icons/BriefcaseIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import MessageIcon from "@artsy/icons/MessageIcon"
 import GavelIcon from "@artsy/icons/GavelIcon"
-import { UserVerifiedIcon } from "pages/conversations/components/UserVerifiedIcon"
 import { graphql, useFragment } from "react-relay"
-import { CollectorProfileInformation_collectorProfileType$key } from "__generated__/CollectorProfileInformation_collectorProfileType.graphql"
+import { ConversationCollectorProfileInformation_collectorProfileType$key } from "__generated__/ConversationCollectorProfileInformation_collectorProfileType.graphql"
+import { UserVerifiedIcon } from "Apps/Conversations2/components/UserVerifiedIcon"
 
 interface Props {
-  collectorProfileType: CollectorProfileInformation_collectorProfileType$key
+  collectorProfileType: ConversationCollectorProfileInformation_collectorProfileType$key
 }
-export const CollectorProfileInformation: React.FC<Props> = ({
+export const ConversationCollectorProfileInformation: React.FC<Props> = ({
   collectorProfileType,
 }) => {
   const data = useFragment(
     graphql`
-      fragment CollectorProfileInformation_collectorProfileType on CollectorProfileType {
+      fragment ConversationCollectorProfileInformation_collectorProfileType on CollectorProfileType {
         profession
         location {
           city

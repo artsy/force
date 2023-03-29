@@ -3,7 +3,7 @@ import { fireEvent, screen } from "@testing-library/react"
 import { ConversationHelpCenter } from "../ConversationHelpCenter"
 import { ConversationHelpCenterTestQuery } from "__generated__/ConversationHelpCenterTestQuery.graphql"
 import { useTracking } from "react-tracking"
-import { setupTestWrapper } from "utils/test/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 
 jest.mock("react-tracking")
 
@@ -11,20 +11,20 @@ describe("ConversationHelpCenter", () => {
   const mockTracking = useTracking as jest.Mock
   const trackEvent = jest.fn()
 
-  const { renderWithRelay } = setupTestWrapper<ConversationHelpCenterTestQuery>(
-    {
-      Component: ({ conversation }) => (
-        <ConversationHelpCenter conversation={conversation!} />
-      ),
-      query: graphql`
-        query ConversationHelpCenterTestQuery @relay_test_operation {
-          conversation(id: "conversation-id") {
-            ...ConversationHelpCenter_conversation
-          }
+  const { renderWithRelay } = setupTestWrapperTL<
+    ConversationHelpCenterTestQuery
+  >({
+    Component: ({ conversation }) => (
+      <ConversationHelpCenter conversation={conversation!} />
+    ),
+    query: graphql`
+      query ConversationHelpCenterTestQuery @relay_test_operation {
+        conversation(id: "conversation-id") {
+          ...ConversationHelpCenter_conversation
         }
-      `,
-    }
-  )
+      }
+    `,
+  })
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -36,7 +36,7 @@ describe("ConversationHelpCenter", () => {
     "Security Best Practices For Artsy CMS",
     "Stop Phishing Attempts",
     "Identify Suspicious Collectors",
-  ])("tracks click on %s", (text) => {
+  ])("tracks click on %s", text => {
     renderWithRelay({
       ConversationItemType: () => ({ id: "mocked-artwork-id" }),
     })

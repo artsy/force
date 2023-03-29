@@ -13,6 +13,7 @@ import { useTracking } from "react-tracking"
 import { extractNodes } from "Utils/extractNodes"
 import { Media } from "Utils/Responsive"
 import { RouterLink } from "System/Router/RouterLink"
+import { ConversationHeader_viewer$key } from "__generated__/ConversationHeader_viewer.graphql"
 
 const DROP_SHADOW = "0 2px 10px rgba(0, 0, 0, .08)"
 

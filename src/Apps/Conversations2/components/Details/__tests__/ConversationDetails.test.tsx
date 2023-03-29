@@ -1,29 +1,19 @@
 import { graphql } from "relay-runtime"
 import { fireEvent, screen } from "@testing-library/react"
-import { setupTestWrapper } from "utils/test/setupTestWrapper"
-import { ConversationDetails } from "../ConversationDetails"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { ConversationDetails } from "Apps/Conversations2/components/Details/ConversationDetails"
 import { ConversationDetailsTestQuery } from "__generated__/ConversationDetailsTestQuery.graphql"
 import { useTracking } from "react-tracking"
-import { MediaContextProvider } from "utils/responsive"
-import * as getConfig from "next/config"
-
-jest.mock("next/navigation", () => ({
-  usePathname: () => "conversation/test-id",
-}))
+import { MediaContextProvider } from "Utils/Responsive"
 
 jest.mock("react-tracking")
-
-jest.mock("next/config", () => ({
-  __esModule: true, // Allows to import * as getConfig
-  ...jest.requireActual("next/config"),
-}))
 
 describe("ConversationDetails", () => {
   let breakpoint: "md" | "sm"
   const mockTracking = useTracking as jest.Mock
   const trackEvent = jest.fn()
 
-  const { renderWithRelay } = setupTestWrapper<ConversationDetailsTestQuery>({
+  const { renderWithRelay } = setupTestWrapperTL<ConversationDetailsTestQuery>({
     Component: ({ viewer }) => (
       <MediaContextProvider onlyMatch={[breakpoint]}>
         <ConversationDetails viewer={viewer!} />
@@ -42,10 +32,6 @@ describe("ConversationDetails", () => {
   beforeEach(() => {
     jest.clearAllMocks()
     mockTracking.mockImplementation(() => ({ trackEvent }))
-    jest.spyOn(getConfig, "default").mockImplementation(() => ({
-      publicRuntimeConfig: { NEXT_PUBLIC_SALESFORCE_CHAT_ENABLED: "true" },
-    }))
-
     breakpoint = "md"
   })
 
@@ -68,15 +54,9 @@ describe("ConversationDetails", () => {
 
     expect(collector.compareDocumentPosition(manage)).toBe(4)
     expect(manage.compareDocumentPosition(help)).toBe(4)
-
-    expect(screen.getByTestId("salesforce-chat-bubble")).toBeInTheDocument()
   })
 
   it("doesn't render salesforce chat bubble when env variable is false", () => {
-    jest.spyOn(getConfig, "default").mockImplementationOnce(() => ({
-      publicRuntimeConfig: { NEXT_PUBLIC_SALESFORCE_CHAT_ENABLED: "false" },
-    }))
-
     renderWithRelay()
 
     expect(

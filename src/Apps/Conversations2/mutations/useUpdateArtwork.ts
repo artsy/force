@@ -1,9 +1,11 @@
 import { graphql, useMutation } from "react-relay"
-import { useUpdateArtworkMutation } from "__generated__/useUpdateArtworkMutation.graphql"
+import { useUpdateArtworkConversationMutation } from "__generated__/useUpdateArtworkConversationMutation.graphql"
 
 export const useUpdateArtwork = () => {
-  return useMutation<useUpdateArtworkMutation>(graphql`
-    mutation useUpdateArtworkMutation($input: UpdateArtworkMutationInput!) {
+  return useMutation<useUpdateArtworkConversationMutation>(graphql`
+    mutation useUpdateArtworkConversationMutation(
+      $input: UpdateArtworkMutationInput!
+    ) {
       updateArtwork(input: $input) {
         artworkOrError {
           ... on updateArtworkSuccess {

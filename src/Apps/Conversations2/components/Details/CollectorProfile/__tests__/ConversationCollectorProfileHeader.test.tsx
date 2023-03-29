@@ -1,26 +1,28 @@
 import { screen } from "@testing-library/react"
 import { graphql } from "relay-runtime"
-import { setupTestWrapper } from "utils/test/setupTestWrapper"
-import { CollectorProfileHeaderTestQuery } from "__generated__/CollectorProfileHeaderTestQuery.graphql"
-import { CollectorProfileHeader } from "../CollectorProfileHeader"
+import { ConversationCollectorProfileHeaderTestQuery } from "__generated__/ConversationCollectorProfileHeaderTestQuery.graphql"
+import { ConversationCollectorProfileHeader } from "Apps/Conversations2/components/Details/CollectorProfile/ConversationCollectorProfileHeader"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 
 describe("CollectorProfileHeader", () => {
-  const { renderWithRelay } = setupTestWrapper<CollectorProfileHeaderTestQuery>(
-    {
-      Component: (props) => (
-        <CollectorProfileHeader user={props.conversation?.fromUser!} />
-      ),
-      query: graphql`
-        query CollectorProfileHeaderTestQuery @relay_test_operation {
-          conversation(id: "conversation-id") {
-            fromUser {
-              ...CollectorProfileHeader_user
-            }
+  const { renderWithRelay } = setupTestWrapperTL<
+    ConversationCollectorProfileHeaderTestQuery
+  >({
+    Component: props => (
+      <ConversationCollectorProfileHeader
+        user={props.conversation?.fromUser!}
+      />
+    ),
+    query: graphql`
+      query ConversationCollectorProfileHeaderTestQuery @relay_test_operation {
+        conversation(id: "conversation-id") {
+          fromUser {
+            ...ConversationCollectorProfileHeader_user
           }
         }
-      `,
-    }
-  )
+      }
+    `,
+  })
 
   it("Renders CollectorProfileHeader", () => {
     renderWithRelay({

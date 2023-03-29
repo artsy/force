@@ -1,4 +1,4 @@
-import { render, RenderResult } from "@testing-library/react"
+import { act, render, RenderResult } from "@testing-library/react"
 import { mount } from "enzyme"
 import * as React from "react"
 import { QueryRenderer } from "react-relay"
@@ -77,7 +77,13 @@ type RTLRenderResult = RenderResult<
   typeof import("@testing-library/dom/types/queries"),
   HTMLElement
 >
-type RenderWithRelay = RTLRenderResult & { env: MockEnvironment }
+
+type RenderWithRelay = RTLRenderResult & {
+  env: MockEnvironment
+  mockResolveLastOperation: (mockResolvers: MockResolvers) => void
+  mockRejectLastOperation: (error: Error) => void
+}
+
 export const setupTestWrapperTL = <T extends OperationType>({
   Component,
   query,
@@ -104,6 +110,20 @@ export const setupTestWrapperTL = <T extends OperationType>({
       />
     )
 
+    const mockResolveLastOperation = (mockResolvers: MockResolvers) => {
+      act(() => {
+        env.mock.resolveMostRecentOperation(operation => {
+          return MockPayloadGenerator.generate(operation, mockResolvers)
+        })
+      })
+    }
+
+    const mockRejectLastOperation = (error: Error) => {
+      act(() => {
+        env.mock.rejectMostRecentOperation(error)
+      })
+    }
+
     const view = render(<TestRenderer />)
 
     if (!manualEnvControl) {
@@ -112,7 +132,7 @@ export const setupTestWrapperTL = <T extends OperationType>({
       })
     }
 
-    return { ...view, env }
+    return { ...view, env, mockResolveLastOperation, mockRejectLastOperation }
   }
 
   return { renderWithRelay }

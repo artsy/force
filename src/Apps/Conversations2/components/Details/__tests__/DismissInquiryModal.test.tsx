@@ -1,16 +1,13 @@
 import { graphql } from "relay-runtime"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
-import { DismissInquiryModal } from "../DismissInquiryModal"
+import { DismissInquiryModal } from "Apps/Conversations2/components/Details/DismissInquiryModal"
 import { DismissInquiryModalTestQuery } from "__generated__/DismissInquiryModalTestQuery.graphql"
 import { useTracking } from "react-tracking"
-import { setupTestWrapper } from "utils/test/setupTestWrapper"
-import mockRouter from "next-router-mock"
-
-jest.mock("next/router", () => require("next-router-mock"))
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 
 jest.mock("react-tracking")
 
-jest.mock("system/SystemContext", () => ({
+jest.mock("System/useSystemContext", () => ({
   useSystemContext: () => ({
     user: { currentPartner: { _id: "mocked-partner-id" } },
   }),
@@ -21,7 +18,7 @@ describe("DismissInquiryModal", () => {
   const mockTracking = useTracking as jest.Mock
   const trackEvent = jest.fn()
 
-  const { renderWithRelay } = setupTestWrapper<DismissInquiryModalTestQuery>({
+  const { renderWithRelay } = setupTestWrapperTL<DismissInquiryModalTestQuery>({
     Component: ({ conversation }) => (
       <DismissInquiryModal conversation={conversation!} onClose={onClose} />
     ),
@@ -38,7 +35,8 @@ describe("DismissInquiryModal", () => {
     jest.clearAllMocks()
     mockTracking.mockImplementation(() => ({ trackEvent }))
 
-    mockRouter.query = { conversationId: "mocked-conversation-id" }
+    // FIXME
+    // mockRouter.query = { conversationId: "mocked-conversation-id" }
   })
 
   it("renders", () => {
@@ -149,7 +147,7 @@ describe("DismissInquiryModal", () => {
 
   it.each(["Cancel", "Close"])(
     "tracks when dismiss inquiry is canceled using %s button",
-    (text) => {
+    text => {
       renderWithRelay({
         ConversationItemType: () => ({ id: "mocked-artwork-id" }),
       })

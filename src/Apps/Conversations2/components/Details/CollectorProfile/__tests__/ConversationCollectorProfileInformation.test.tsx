@@ -1,33 +1,35 @@
 import { fireEvent, screen } from "@testing-library/react"
 import { graphql } from "relay-runtime"
-import { setupTestWrapper } from "utils/test/setupTestWrapper"
-import { CollectorProfileInformationTestQuery } from "__generated__/CollectorProfileInformationTestQuery.graphql"
-import { CollectorProfileInformation } from "../CollectorProfileInformation"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { ConversationCollectorProfileInformationTestQuery } from "__generated__/ConversationCollectorProfileInformationTestQuery.graphql"
+import { ConversationCollectorProfileInformation } from "../ConversationCollectorProfileInformation"
 
 jest.mock("next/router", () => require("next-router-mock"))
 
 describe("CollectorProfileInformation", () => {
-  const { renderWithRelay } =
-    setupTestWrapper<CollectorProfileInformationTestQuery>({
-      Component: (props) => (
-        <CollectorProfileInformation
-          collectorProfileType={props.conversation?.fromUser?.collectorProfile!}
-        />
-      ),
-      query: graphql`
-        query CollectorProfileInformationTestQuery @relay_test_operation {
-          conversation(id: "conversation-id") {
-            fromUser {
-              collectorProfile {
-                ...CollectorProfileInformation_collectorProfileType
-              }
+  const { renderWithRelay } = setupTestWrapperTL<
+    ConversationCollectorProfileInformationTestQuery
+  >({
+    Component: props => (
+      <ConversationCollectorProfileInformation
+        collectorProfileType={props.conversation?.fromUser?.collectorProfile!}
+      />
+    ),
+    query: graphql`
+      query ConversationCollectorProfileInformationTestQuery
+        @relay_test_operation {
+        conversation(id: "conversation-id") {
+          fromUser {
+            collectorProfile {
+              ...ConversationCollectorProfileInformation_collectorProfileType
             }
           }
         }
-      `,
-    })
+      }
+    `,
+  })
 
-  it("Renders all fields if they exist ", () => {
+  it("Renders all fields if they exist", () => {
     renderWithRelay({
       CollectorProfileType: () => ({
         profession: "Developer",
