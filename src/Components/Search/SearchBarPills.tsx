@@ -1,5 +1,6 @@
 import {
   Carousel,
+  CarouselNavigationProps,
   CarouselNext,
   CarouselPrevious,
   DROP_SHADOW,
@@ -8,6 +9,7 @@ import {
   ShelfNavigationProps,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { Shelf, ShelfNext, ShelfPrevious } from "Components/Shelf"
 import styled, { css } from "styled-components"
 
 const SearchPills = [
@@ -42,7 +44,7 @@ const STATES = {
 
 const ChevronStyle = css`
   transform: "translateX(0)";
-  background-color: white;
+  background-color: ${themeGet("colors.white100")};
   color: ${themeGet("colors.black60")};
   height: 30px;
   width: 30px;
@@ -74,14 +76,26 @@ const ChevronStyle = css`
   }
 `
 
-const PreviousChevron = styled(CarouselPrevious)<ShelfNavigationProps>`
-  margin-left: 20px;
-  ${ChevronStyle}
+const PreviousChevron = styled(ShelfPrevious)<ShelfNavigationProps>`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: 0;
+
+  @media (hover: none) {
+    display: none;
+  }
 `
 
-const NextChevron = styled(CarouselNext)<ShelfNavigationProps>`
-  margin-right: 20px;
-  ${ChevronStyle}
+const NextChevron = styled(ShelfNext)<ShelfNavigationProps>`
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+
+  @media (hover: none) {
+    display: none;
+  }
 `
 
 export const SearchBarPills = () => {
@@ -90,8 +104,40 @@ export const SearchBarPills = () => {
     e.preventDefault()
     props.onClick && props.onClick(e)
   }
+
+  // This is with local Shelf component with some custome changes
+  // Lot of code changes required
+
   return (
-    <Flex p={2}>
+    <Shelf
+      showProgress={false}
+      noFullBleed
+      p={2}
+      Previous={props => (
+        <PreviousChevron {...props} onClick={e => handlePress(e, props)} />
+      )}
+      Next={props => (
+        <NextChevron {...props} onClick={e => handlePress(e, props)} />
+      )}
+      paginateBy="cell"
+    >
+      {SearchPills.map((pill, index) => {
+        const isLast = index === SearchPills.length - 1
+        return (
+          <Pill key={index} mr={isLast ? 0 : -1}>
+            {pill}
+          </Pill>
+        )
+      })}
+    </Shelf>
+  )
+
+  // This is with Carousel from palette latest version.
+  // No scroll on mouse/track event
+  // Chevron icons with z-index
+
+  return (
+    <Flex p={2} overflowX="scroll">
       <Carousel
         Previous={props => (
           <PreviousChevron {...props} onClick={e => handlePress(e, props)} />
