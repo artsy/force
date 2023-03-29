@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<850db7992de0e16037c268dd3e331bf8>>
+ * @generated SignedSource<<de6c67eab3f355cb9f47bed080fcd22e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Conversation2Route_viewer$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"ConversationDetails_viewer" | "ConversationHeader_viewer" | "ConversationsSidebar_viewer">;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationsSidebar_viewer">;
   readonly " $fragmentType": "Conversation2Route_viewer";
 };
 export type Conversation2Route_viewer$key = {
@@ -19,27 +19,8 @@ export type Conversation2Route_viewer$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Conversation2Route_viewer">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "kind": "Variable",
-  "name": "sellerId",
-  "variableName": "sellerId"
-},
-v1 = [
-  {
-    "kind": "Variable",
-    "name": "conversationId",
-    "variableName": "conversationId"
-  },
-  (v0/*: any*/)
-];
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "conversationId"
-    },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
@@ -66,16 +47,6 @@ return {
   "name": "Conversation2Route_viewer",
   "selections": [
     {
-      "args": (v1/*: any*/),
-      "kind": "FragmentSpread",
-      "name": "ConversationHeader_viewer"
-    },
-    {
-      "args": (v1/*: any*/),
-      "kind": "FragmentSpread",
-      "name": "ConversationDetails_viewer"
-    },
-    {
       "args": [
         {
           "kind": "Variable",
@@ -87,7 +58,11 @@ return {
           "name": "partnerId",
           "variableName": "partnerId"
         },
-        (v0/*: any*/),
+        {
+          "kind": "Variable",
+          "name": "sellerId",
+          "variableName": "sellerId"
+        },
         {
           "kind": "Variable",
           "name": "toBeReplied",
@@ -101,8 +76,7 @@ return {
   "type": "Viewer",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "d297def4ad22bcff2953a395f2b18b5f";
+(node as any).hash = "7a5a5b89675d965a7aa4b14612244818";
 
 export default node;

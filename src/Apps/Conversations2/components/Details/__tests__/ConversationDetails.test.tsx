@@ -14,16 +14,15 @@ describe("ConversationDetails", () => {
   const trackEvent = jest.fn()
 
   const { renderWithRelay } = setupTestWrapperTL<ConversationDetailsTestQuery>({
-    Component: ({ viewer }) => (
+    Component: ({ conversation }) => (
       <MediaContextProvider onlyMatch={[breakpoint]}>
-        <ConversationDetails viewer={viewer!} />
+        <ConversationDetails conversation={conversation!} />
       </MediaContextProvider>
     ),
     query: graphql`
       query ConversationDetailsTestQuery @relay_test_operation {
-        viewer {
-          ...ConversationDetails_viewer
-            @arguments(conversationId: "conversation-id", sellerId: "123")
+        conversation(id: "conversation-id") {
+          ...ConversationDetails_conversation @arguments(sellerId: "123")
         }
       }
     `,

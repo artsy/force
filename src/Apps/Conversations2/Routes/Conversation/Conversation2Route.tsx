@@ -9,15 +9,15 @@ import { ConversationHeader } from "Apps/Conversations2/Routes/Conversation/Comp
 import { ConversationMessages } from "Apps/Conversations2/Routes/Conversation/Components/ConversationMessages"
 import { ConversationReply } from "Apps/Conversations2/Routes/Conversation/Components/ConversationReply"
 import { ConversationDetails } from "Apps/Conversations2/components/Details/ConversationDetails"
-import { Conversation2Route_viewer$key } from "__generated__/Conversation2Route_viewer.graphql"
-import { Conversation2Route_conversation$key } from "__generated__/Conversation2Route_conversation.graphql"
+import { Conversation2Route_viewer$data } from "__generated__/Conversation2Route_viewer.graphql"
+import { Conversation2Route_conversation$data } from "__generated__/Conversation2Route_conversation.graphql"
 
 const COLUMN_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 const MOBILE_HEIGHT = `calc(100dvh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 
 interface Conversation2RouteProps {
-  viewer: Conversation2Route_viewer$key
-  conversation: Conversation2Route_conversation$key
+  viewer: Conversation2Route_viewer$data
+  conversation: Conversation2Route_conversation$data
 }
 
 const Conversation2Route: React.FC<Conversation2RouteProps> = ({
@@ -65,7 +65,7 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
                 flexGrow={1}
                 width="100%"
               >
-                <ConversationHeader viewer={viewer} />
+                <ConversationHeader conversation={conversation} />
 
                 <ConversationMessages conversation={conversation} />
 
@@ -85,7 +85,7 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
               p={2}
               pb={6}
             >
-              <ConversationDetails viewer={viewer} />
+              {/* <ConversationDetails conversation={viewer.conversation} /> */}
             </Flex>
           </Resizer>
         </Flex>
@@ -98,9 +98,7 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
           height={MOBILE_HEIGHT}
           flexDirection="column"
         >
-          {/* <Suspense fallback={<ConversationsSidebarSkeleton />}> */}
           <ConversationsSidebar viewer={viewer} />
-          {/* </Suspense> */}
         </Flex>
 
         <Flex
@@ -114,7 +112,7 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
           overflowY="auto"
         >
           <ConversationHeader
-            viewer={viewer}
+            conversation={conversation}
             onGoToConversations={goToSidebar}
             onGoToDetails={goToDetails}
           />
@@ -134,7 +132,10 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
           p={2}
           pb={6}
         >
-          <ConversationDetails viewer={viewer} onClose={goToConversation} />
+          <ConversationDetails
+            conversation={conversation}
+            onClose={goToConversation}
+          />
         </Flex>
       </Media>
     </>
@@ -147,16 +148,11 @@ export const Conversation2RouteFragmentContainer = createFragmentContainer(
     viewer: graphql`
       fragment Conversation2Route_viewer on Viewer
         @argumentDefinitions(
-          conversationId: { type: "String!" }
           sellerId: { type: "ID!" }
           partnerId: { type: "String!" }
           toBeReplied: { type: "Boolean" }
           hasReply: { type: "Boolean" }
         ) {
-        ...ConversationHeader_viewer
-          @arguments(conversationId: $conversationId, sellerId: $sellerId)
-        ...ConversationDetails_viewer
-          @arguments(conversationId: $conversationId, sellerId: $sellerId)
         ...ConversationsSidebar_viewer
           @arguments(
             partnerId: $partnerId
@@ -167,7 +163,10 @@ export const Conversation2RouteFragmentContainer = createFragmentContainer(
       }
     `,
     conversation: graphql`
-      fragment Conversation2Route_conversation on Conversation {
+      fragment Conversation2Route_conversation on Conversation
+        @argumentDefinitions(sellerId: { type: "ID!" }) {
+        ...ConversationHeader_conversation @arguments(sellerId: $sellerId)
+        ...ConversationDetails_conversation @arguments(sellerId: $sellerId)
         ...ConversationReply_conversation
         ...ConversationMessages_conversation
       }
