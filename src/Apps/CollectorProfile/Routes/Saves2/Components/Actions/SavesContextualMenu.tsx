@@ -10,12 +10,11 @@ import {
 } from "./DeleteArtworkListModal"
 import { useTranslation } from "react-i18next"
 import {
-  EditSavesModal,
-  EditSavesModalCollection,
-} from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/EditSavesModal"
+  EditArtworkListModal,
+  EditArtworkListEntity,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/EditArtworkListModal"
 
-export type ArtworkListEntity = DeleteArtworkListEntity &
-  EditSavesModalCollection
+export type ArtworkListEntity = DeleteArtworkListEntity & EditArtworkListEntity
 
 interface Props {
   artworkList: ArtworkListEntity
@@ -46,7 +45,10 @@ export const SavesContextualMenu: React.FC<Props> = ({ artworkList }) => {
   return (
     <>
       {isEditModalOpen && (
-        <EditSavesModal collection={artworkList} onClose={closeEditModal} />
+        <EditArtworkListModal
+          artworkList={artworkList}
+          onClose={closeEditModal}
+        />
       )}
 
       {isDeleteModalOpen && (
