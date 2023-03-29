@@ -24,7 +24,9 @@ export const AuctionResult: React.FC<AuctionResultProps> = ({
   return (
     <>
       <MetaTags
-        title={`${title}${artist?.name ? ` by ${artist.name}` : ""} | Artsy`}
+        title={`${title}${
+          artist?.name ? ` by ${artist.name}` : ""
+        } | Auction Results on Artsy`}
       />
 
       <AuctionResultBackLink auctionResult={auctionResult} />
