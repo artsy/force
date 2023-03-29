@@ -76,16 +76,14 @@ export const conversations2Routes: AppRouteConfig[] = [
         viewer {
           ...Conversation2Route_viewer
             @arguments(
-              conversationId: $conversationId
               toBeReplied: $toBeReplied
               hasReply: $hasReply
               sellerId: $sellerId
               partnerId: $partnerId
             )
         }
-
         conversation(id: $conversationId) @required(action: NONE) {
-          ...Conversation2Route_conversation
+          ...Conversation2Route_conversation @arguments(sellerId: $sellerId)
         }
       }
     `,
