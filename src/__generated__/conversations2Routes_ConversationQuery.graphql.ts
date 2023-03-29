@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<da95e94f45af60ec20f5fb20f67ae0ff>>
+ * @generated SignedSource<<7570a05882856f2572d4df177bb9af54>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -72,13 +72,8 @@ const node: ConcreteRequest = {
               },
               {
                 "kind": "Literal",
-                "name": "partnerId",
-                "value": "commerce-test-partner"
-              },
-              {
-                "kind": "Literal",
                 "name": "type",
-                "value": "PARTNER"
+                "value": "USER"
               }
             ],
             "concreteType": "ConversationConnection",
@@ -123,7 +118,7 @@ const node: ConcreteRequest = {
                 "storageKey": null
               }
             ],
-            "storageKey": "conversationsConnection(first:1,partnerId:\"commerce-test-partner\",type:\"PARTNER\")"
+            "storageKey": "conversationsConnection(first:1,type:\"USER\")"
           }
         ],
         "storageKey": null
@@ -131,12 +126,12 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "c03b7acb651ce302c2e99c429b156c3c",
+    "cacheID": "85ffadbba4a105277f93303e5a8d94e4",
     "id": null,
     "metadata": {},
     "name": "conversations2Routes_ConversationQuery",
     "operationKind": "query",
-    "text": "query conversations2Routes_ConversationQuery {\n  viewer {\n    ...Conversations2App_viewer\n  }\n}\n\nfragment Conversations2App_viewer on Viewer {\n  conversationsConnection(first: 1, type: PARTNER, partnerId: \"commerce-test-partner\") {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query conversations2Routes_ConversationQuery {\n  viewer {\n    ...Conversations2App_viewer\n  }\n}\n\nfragment Conversations2App_viewer on Viewer {\n  conversationsConnection(first: 1, type: USER) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 

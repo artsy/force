@@ -54,11 +54,7 @@ export const Conversations2AppFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment Conversations2App_viewer on Viewer {
-        conversationsConnection(
-          first: 1
-          type: PARTNER
-          partnerId: "commerce-test-partner"
-        ) {
+        conversationsConnection(first: 1, type: USER) {
           edges {
             node {
               internalID
