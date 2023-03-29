@@ -1,12 +1,13 @@
 import {
+  Carousel,
   CarouselNext,
+  CarouselPrevious,
   DROP_SHADOW,
   Flex,
   Pill,
   ShelfNavigationProps,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { Carousel, CarouselPrevious } from "Components/Carousel"
 import styled, { css } from "styled-components"
 
 const SearchPills = [
@@ -41,20 +42,13 @@ const STATES = {
 
 const ChevronStyle = css`
   transform: "translateX(0)";
-  background-color: "white";
+  background-color: white;
   color: ${themeGet("colors.black60")};
   height: 30px;
   width: 30px;
   border: 1px solid ${themeGet("colors.black5")};
   border-radius: 50%;
-  pointer-events: auto;
-
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  user-select: none;
-  transition: opacity 250ms, color 250ms, border-color 250ms,
-    box-shadow 0.25s ease;
+  box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.08);
 
   ${props => {
     return css`
@@ -80,26 +74,42 @@ const ChevronStyle = css`
   }
 `
 
+const PreviousChevron = styled(CarouselPrevious)<ShelfNavigationProps>`
+  margin-left: 20px;
+  ${ChevronStyle}
+`
+
+const NextChevron = styled(CarouselNext)<ShelfNavigationProps>`
+  margin-right: 20px;
+  ${ChevronStyle}
+`
+
 export const SearchBarPills = () => {
+  const handlePress = (e, props) => {
+    e.stopPropagation()
+    e.preventDefault()
+    props.onClick && props.onClick(e)
+  }
   return (
     <Flex p={2}>
       <Carousel
-        Previous={props => <Previous {...props} />}
-        Next={props => <Next {...props} />}
+        Previous={props => (
+          <PreviousChevron {...props} onClick={e => handlePress(e, props)} />
+        )}
+        Next={props => (
+          <NextChevron {...props} onClick={e => handlePress(e, props)} />
+        )}
         paginateBy="cell"
       >
-        {SearchPills.map(pill => (
-          <Pill key={pill}>{pill}</Pill>
-        ))}
+        {SearchPills.map((pill, index) => {
+          const isLast = index === SearchPills.length - 1
+          return (
+            <Pill key={index} mr={isLast ? 0 : -1}>
+              {pill}
+            </Pill>
+          )
+        })}
       </Carousel>
     </Flex>
   )
 }
-
-const Previous = styled(CarouselPrevious)<ShelfNavigationProps>`
-  ${ChevronStyle}
-`
-
-const Next = styled(CarouselNext)<ShelfNavigationProps>`
-  ${ChevronStyle}
-`
