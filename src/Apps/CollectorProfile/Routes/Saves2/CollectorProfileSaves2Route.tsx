@@ -1,5 +1,5 @@
 import { Shelf, Spacer } from "@artsy/palette"
-import { SavesArtworksQueryRenderer } from "./Components/SavesArtworks"
+import { ArtworkListContentQueryRenderer } from "./Components/ArtworkListContent"
 import { SavesHeader } from "./Components/SavesHeader"
 import { ArtworkListItemFragmentContainer } from "./Components/ArtworkListItem"
 import { FC, useRef } from "react"
@@ -64,8 +64,8 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
 
       <Spacer y={4} />
 
-      <SavesArtworksQueryRenderer
-        collectionID={selectedArtworkListId}
+      <ArtworkListContentQueryRenderer
+        listID={selectedArtworkListId}
         initialPage={(page as unknown) as number}
         initialSort={sort}
       />

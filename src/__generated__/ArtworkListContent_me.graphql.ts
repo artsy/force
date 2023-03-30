@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3d40485b0fc4ef560c9c20339599ba61>>
+ * @generated SignedSource<<3dfb0c48765c36f85d9996fdf1ed2376>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,8 +10,8 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavesArtworks_me$data = {
-  readonly collection: {
+export type ArtworkListContent_me$data = {
+  readonly artworkList: {
     readonly artworks: {
       readonly totalCount: number | null;
     } | null;
@@ -19,12 +19,12 @@ export type SavesArtworks_me$data = {
     readonly internalID: string;
     readonly name: string;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"SavesArtworksGrid_me">;
-  readonly " $fragmentType": "SavesArtworks_me";
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkListArtworksGrid_me">;
+  readonly " $fragmentType": "ArtworkListContent_me";
 };
-export type SavesArtworks_me$key = {
-  readonly " $data"?: SavesArtworks_me$data;
-  readonly " $fragmentSpreads": FragmentRefs<"SavesArtworks_me">;
+export type ArtworkListContent_me$key = {
+  readonly " $data"?: ArtworkListContent_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkListContent_me">;
 };
 
 const node: ReaderFragment = (function(){
@@ -43,7 +43,7 @@ return {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "collectionID"
+      "name": "listID"
     },
     {
       "defaultValue": 1,
@@ -58,15 +58,15 @@ return {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "SavesArtworks_me",
+  "name": "ArtworkListContent_me",
   "selections": [
     {
-      "alias": null,
+      "alias": "artworkList",
       "args": [
         {
           "kind": "Variable",
           "name": "id",
-          "variableName": "collectionID"
+          "variableName": "listID"
         }
       ],
       "concreteType": "Collection",
@@ -128,14 +128,14 @@ return {
       "args": [
         {
           "kind": "Variable",
-          "name": "collectionID",
-          "variableName": "collectionID"
+          "name": "listID",
+          "variableName": "listID"
         },
         (v0/*: any*/),
         (v1/*: any*/)
       ],
       "kind": "FragmentSpread",
-      "name": "SavesArtworksGrid_me"
+      "name": "ArtworkListArtworksGrid_me"
     }
   ],
   "type": "Me",
@@ -143,6 +143,6 @@ return {
 };
 })();
 
-(node as any).hash = "91979e1d19abaff3ea85e6cc5701d11f";
+(node as any).hash = "44934bb899fe4769458b3db09bee9aa3";
 
 export default node;

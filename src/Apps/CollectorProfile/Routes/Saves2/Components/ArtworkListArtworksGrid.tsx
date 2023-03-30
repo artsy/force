@@ -1,5 +1,5 @@
 import { createFragmentContainer, graphql, RelayRefetchProp } from "react-relay"
-import { SavesArtworksGrid_me$data } from "__generated__/SavesArtworksGrid_me.graphql"
+import { ArtworkListArtworksGrid_me$data } from "__generated__/ArtworkListArtworksGrid_me.graphql"
 import { useTracking } from "react-tracking"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
@@ -17,25 +17,25 @@ import {
 import { LoadingArea } from "Components/LoadingArea"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FC, useState } from "react"
-import { SavesArtworksGridHeader } from "./SavesArtworksGridHeader"
+import { ArtworkListArtworksGridHeader } from "./ArtworkListArtworksGridHeader"
 import { Spacer } from "@artsy/palette"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { isEqual } from "lodash"
 import { Jump } from "Utils/Hooks/useJump"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
-import { SavesEmptyStateFragmentContainer } from "./SavesEmptyState"
+import { ArtworkListEmptyStateFragmentContainer } from "./ArtworkListEmptyState"
 
-interface SavesArtworksGridProps {
+interface ArtworkListArtworksGridProps {
   relayRefetch: RelayRefetchProp["refetch"]
-  me: SavesArtworksGrid_me$data
+  me: ArtworkListArtworksGrid_me$data
 }
 
 /**
  * In the future we plan to use the `BaseArtworkFilter` and `ArtworkFilterArtworkGrid` components
  * when filter support is added.
  */
-const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
+const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
   relayRefetch,
   me,
 }) => {
@@ -50,7 +50,7 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
   const [fetching, setFetching] = useState(false)
   const previousFilters = usePrevious(filters)
 
-  const artworks = me.collection?.artworks!
+  const artworks = me.artworkList?.artworks!
   const {
     pageCursors,
     pageInfo: { hasNextPage },
@@ -143,14 +143,14 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
   }, [context.filters])
 
   if (artworks.edges?.length === 0) {
-    return <SavesEmptyStateFragmentContainer me={me} />
+    return <ArtworkListEmptyStateFragmentContainer me={me} />
   }
 
   return (
     <>
       <Jump id="artworksGrid" />
 
-      <SavesArtworksGridHeader />
+      <ArtworkListArtworksGridHeader />
 
       <Spacer y={2} />
 
@@ -161,7 +161,7 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
           contextModule={ContextModule.artworkGrid}
           itemMargin={40}
           emptyStateComponent={null}
-          savedListId={me.collection?.internalID!}
+          savedListId={me.artworkList?.internalID!}
           onBrickClick={(artwork, artworkIndex) => {
             // TODO: Clarify moments about analytics
             trackEvent(
@@ -190,34 +190,34 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
   )
 }
 
-const PageWrapper: FC<SavesArtworksGridProps> = props => {
+const PageWrapper: FC<ArtworkListArtworksGridProps> = props => {
   const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
 
   return (
     <AnalyticsContext.Provider
       value={{
-        contextPageOwnerId: props.me.collection!.internalID,
+        contextPageOwnerId: props.me.artworkList!.internalID,
         contextPageOwnerSlug,
         // TODO: Clarify some moment about analytics later (maybe we should pass OwnerType.collection)
         contextPageOwnerType,
       }}
     >
-      <SavesArtworksGrid {...props} />
+      <ArtworkListArtworksGrid {...props} />
     </AnalyticsContext.Provider>
   )
 }
 
-export const SavesArtworksGridFragmentContainer = createFragmentContainer(
+export const ArtworkListArtworksGridFragmentContainer = createFragmentContainer(
   PageWrapper,
   {
     me: graphql`
-      fragment SavesArtworksGrid_me on Me
+      fragment ArtworkListArtworksGrid_me on Me
         @argumentDefinitions(
-          collectionID: { type: "String!" }
+          listID: { type: "String!" }
           page: { type: "Int", defaultValue: 1 }
           sort: { type: "CollectionArtworkSorts" }
         ) {
-        collection(id: $collectionID) {
+        artworkList: collection(id: $listID) {
           internalID
 
           artworks: artworksConnection(first: 30, page: $page, sort: $sort) {
@@ -235,7 +235,7 @@ export const SavesArtworksGridFragmentContainer = createFragmentContainer(
             ...ArtworkGrid_artworks
           }
         }
-        ...SavesEmptyState_me @arguments(collectionID: $collectionID)
+        ...ArtworkListEmptyState_me @arguments(listID: $listID)
       }
     `,
   }

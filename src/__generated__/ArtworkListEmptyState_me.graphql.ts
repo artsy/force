@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d1f382b6ae33c1a83cab4b9e917bd6a2>>
+ * @generated SignedSource<<1cda8ae439e132cdebc59be36fee9046>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,18 +10,18 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavesEmptyState_me$data = {
-  readonly collection: {
-    readonly default: boolean;
-  } | null;
-  readonly defaultSaves: {
+export type ArtworkListEmptyState_me$data = {
+  readonly allSavesArtworkList: {
     readonly artworksCount: number;
   } | null;
-  readonly " $fragmentType": "SavesEmptyState_me";
+  readonly artworkList: {
+    readonly default: boolean;
+  } | null;
+  readonly " $fragmentType": "ArtworkListEmptyState_me";
 };
-export type SavesEmptyState_me$key = {
-  readonly " $data"?: SavesEmptyState_me$data;
-  readonly " $fragmentSpreads": FragmentRefs<"SavesEmptyState_me">;
+export type ArtworkListEmptyState_me$key = {
+  readonly " $data"?: ArtworkListEmptyState_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkListEmptyState_me">;
 };
 
 const node: ReaderFragment = {
@@ -29,20 +29,20 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "collectionID"
+      "name": "listID"
     }
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "SavesEmptyState_me",
+  "name": "ArtworkListEmptyState_me",
   "selections": [
     {
-      "alias": null,
+      "alias": "artworkList",
       "args": [
         {
           "kind": "Variable",
           "name": "id",
-          "variableName": "collectionID"
+          "variableName": "listID"
         }
       ],
       "concreteType": "Collection",
@@ -61,7 +61,7 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "defaultSaves",
+      "alias": "allSavesArtworkList",
       "args": [
         {
           "kind": "Literal",
@@ -89,6 +89,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "9931654c0b2af368d1a83b27d14adf35";
+(node as any).hash = "90bb32479b2bcc574e460785e500657f";
 
 export default node;

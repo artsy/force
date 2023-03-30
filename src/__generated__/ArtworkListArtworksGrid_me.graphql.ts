@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b58db19902df1d7272365a9d7f58afc9>>
+ * @generated SignedSource<<c578f53018eb307473d4ded1c7e1743d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,8 +10,8 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavesArtworksGrid_me$data = {
-  readonly collection: {
+export type ArtworkListArtworksGrid_me$data = {
+  readonly artworkList: {
     readonly artworks: {
       readonly edges: ReadonlyArray<{
         readonly node: {
@@ -28,12 +28,12 @@ export type SavesArtworksGrid_me$data = {
     } | null;
     readonly internalID: string;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"SavesEmptyState_me">;
-  readonly " $fragmentType": "SavesArtworksGrid_me";
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkListEmptyState_me">;
+  readonly " $fragmentType": "ArtworkListArtworksGrid_me";
 };
-export type SavesArtworksGrid_me$key = {
-  readonly " $data"?: SavesArtworksGrid_me$data;
-  readonly " $fragmentSpreads": FragmentRefs<"SavesArtworksGrid_me">;
+export type ArtworkListArtworksGrid_me$key = {
+  readonly " $data"?: ArtworkListArtworksGrid_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkListArtworksGrid_me">;
 };
 
 const node: ReaderFragment = {
@@ -41,7 +41,7 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "collectionID"
+      "name": "listID"
     },
     {
       "defaultValue": 1,
@@ -56,15 +56,15 @@ const node: ReaderFragment = {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "SavesArtworksGrid_me",
+  "name": "ArtworkListArtworksGrid_me",
   "selections": [
     {
-      "alias": null,
+      "alias": "artworkList",
       "args": [
         {
           "kind": "Variable",
           "name": "id",
-          "variableName": "collectionID"
+          "variableName": "listID"
         }
       ],
       "concreteType": "Collection",
@@ -181,18 +181,18 @@ const node: ReaderFragment = {
       "args": [
         {
           "kind": "Variable",
-          "name": "collectionID",
-          "variableName": "collectionID"
+          "name": "listID",
+          "variableName": "listID"
         }
       ],
       "kind": "FragmentSpread",
-      "name": "SavesEmptyState_me"
+      "name": "ArtworkListEmptyState_me"
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "0ef7ff9c1efb53679e42123e3ae26e46";
+(node as any).hash = "470207e2f9af102fa62e10d232191f50";
 
 export default node;

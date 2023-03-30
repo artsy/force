@@ -2,18 +2,18 @@ import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { SavesEmptyState_me$data } from "__generated__/SavesEmptyState_me.graphql"
+import { ArtworkListEmptyState_me$data } from "__generated__/ArtworkListEmptyState_me.graphql"
 
-interface SavesEmptyStateProps {
-  me: SavesEmptyState_me$data
+interface ArtworkListEmptyStateProps {
+  me: ArtworkListEmptyState_me$data
 }
 
-export const SavesEmptyState: FC<SavesEmptyStateProps> = ({ me }) => {
-  const defaultSavesCount = me.defaultSaves?.artworksCount ?? 0
-  const text = getTextByCollectionType(
-    me.collection!.default,
-    defaultSavesCount
-  )
+export const ArtworkListEmptyState: FC<ArtworkListEmptyStateProps> = ({
+  me,
+}) => {
+  const allSavesArtworksCount = me.allSavesArtworkList?.artworksCount ?? 0
+  const isDefaultArtworkList = me.artworkList?.default ?? false
+  const text = getText(isDefaultArtworkList, allSavesArtworksCount)
 
   return (
     <Flex
@@ -44,17 +44,17 @@ export const SavesEmptyState: FC<SavesEmptyStateProps> = ({ me }) => {
   )
 }
 
-export const SavesEmptyStateFragmentContainer = createFragmentContainer(
-  SavesEmptyState,
+export const ArtworkListEmptyStateFragmentContainer = createFragmentContainer(
+  ArtworkListEmptyState,
   {
     me: graphql`
-      fragment SavesEmptyState_me on Me
-        @argumentDefinitions(collectionID: { type: "String!" }) {
-        collection(id: $collectionID) {
+      fragment ArtworkListEmptyState_me on Me
+        @argumentDefinitions(listID: { type: "String!" }) {
+        artworkList: collection(id: $listID) {
           default
         }
 
-        defaultSaves: collection(id: "saved-artwork") {
+        allSavesArtworkList: collection(id: "saved-artwork") {
           artworksCount
         }
       }
@@ -62,11 +62,11 @@ export const SavesEmptyStateFragmentContainer = createFragmentContainer(
   }
 )
 
-const getTextByCollectionType = (
-  isDefault: boolean,
-  defaultSavesCount: number
+const getText = (
+  isDefaultArtworkList: boolean,
+  allSavesArtworksCount: number
 ) => {
-  if (isDefault || !defaultSavesCount) {
+  if (isDefaultArtworkList || allSavesArtworksCount === 0) {
     return {
       title: "Keep track of artworks you love",
       description:
