@@ -1,5 +1,5 @@
 import { Image } from "@artsy/palette"
-import { SavesNoImage } from "./SavesNoImage"
+import { ArtworkListNoImage } from "./Images/ArtworkListNoImage"
 import { FC } from "react"
 import { cropped } from "Utils/resized"
 
@@ -13,7 +13,7 @@ export const SavesEntityImage: FC<SavesEntityImageProps> = ({
   size = 60,
 }) => {
   if (url === null) {
-    return <SavesNoImage width={size} height={size} />
+    return <ArtworkListNoImage width={size} height={size} />
   }
 
   const image = cropped(url, {

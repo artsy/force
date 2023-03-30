@@ -1,5 +1,5 @@
 import { Box, Flex, Image, Spacer } from "@artsy/palette"
-import { SavesNoImage } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesNoImage"
+import { ArtworkListNoImage } from "./ArtworkListNoImage"
 import { prepareImageURLs } from "Apps/CollectorProfile/Routes/Saves2/Utils/prepareImageURLs"
 import { FC } from "react"
 import { cropped } from "Utils/resized"
@@ -44,7 +44,7 @@ const RowImage: FC<RowImageProps> = ({ url }) => {
   const SIZE = [SMALL_IMAGE_SIZE, LARGE_IMAGE_SIZE]
 
   if (url === null) {
-    return <SavesNoImage width={SIZE} height={SIZE} />
+    return <ArtworkListNoImage width={SIZE} height={SIZE} />
   }
 
   const image = cropped(url, {

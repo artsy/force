@@ -1,6 +1,6 @@
 import { Shelf, Spacer } from "@artsy/palette"
 import { ArtworkListContentQueryRenderer } from "./Components/ArtworkListContent"
-import { SavesHeader } from "./Components/SavesHeader"
+import { ArtworkListsHeader } from "./Components/ArtworkListsHeader"
 import { ArtworkListItemFragmentContainer } from "./Components/ArtworkListItem"
 import { FC, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -42,7 +42,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
 
   return (
     <>
-      <SavesHeader />
+      <ArtworkListsHeader />
 
       <Spacer y={4} />
 

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next"
 import { CreateNewListModalWizard } from "./CreateNewListModal/CreateNewListModalWizard"
 import { ArtworkList } from "./CreateNewListModal/CreateNewListModal"
 
-export const SavesHeader: FC = () => {
+export const ArtworkListsHeader: FC = () => {
   const { t } = useTranslation()
   const { sendToast } = useToasts()
   const [modalIsOpened, setModalIsOpened] = useState(false)
@@ -19,7 +19,7 @@ export const SavesHeader: FC = () => {
 
     sendToast({
       variant: "success",
-      message: t("collectorSaves.savesHeader.listCreated", {
+      message: t("collectorSaves.artworkListsHeader.listCreated", {
         listName: artworkList.name,
       }),
     })
@@ -40,7 +40,7 @@ export const SavesHeader: FC = () => {
 
       <Join separator={<Spacer y={0.5} />}>
         <Text variant="lg-display">
-          {t("collectorSaves.savesHeader.savedArtworks")}
+          {t("collectorSaves.artworkListsHeader.savedArtworks")}
         </Text>
 
         <Box
@@ -50,7 +50,7 @@ export const SavesHeader: FC = () => {
           alignItems={["stretch", "center"]}
         >
           <Text variant="sm-display" color="black60">
-            {t("collectorSaves.savesHeader.curateYourList")}
+            {t("collectorSaves.artworkListsHeader.curateYourList")}
           </Text>
 
           <Button
@@ -59,7 +59,7 @@ export const SavesHeader: FC = () => {
             onClick={handleCreateNewListClick}
             mt={[2, 0]}
           >
-            {t("collectorSaves.savesHeader.createNewListButton")}
+            {t("collectorSaves.artworkListsHeader.createNewListButton")}
           </Button>
         </Box>
       </Join>
