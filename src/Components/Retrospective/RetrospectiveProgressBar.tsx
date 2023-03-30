@@ -35,7 +35,7 @@ export const RetrospectiveProgressBar: FC<RetrospectiveProgressBarProps> = ({
   }, [active, duration, onComplete])
 
   return (
-    <Box height="2px" width="100%" bg="black30">
+    <Box height="2px" width="100%" bg="blue10">
       <Box
         ref={ref as any}
         width="100%"

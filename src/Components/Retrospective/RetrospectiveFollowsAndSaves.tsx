@@ -1,4 +1,4 @@
-import { Box, Skeleton, Spacer, Text } from "@artsy/palette"
+import { Box, Spacer, Spinner } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { RetrospectiveFollowsAndSaves_collection$data } from "__generated__/RetrospectiveFollowsAndSaves_collection.graphql"
@@ -117,12 +117,6 @@ export const RetrospectiveFollowsAndSavesFragmentContainer = createFragmentConta
   }
 )
 
-const PLACEHOLDER = (
-  <Skeleton>
-    <Text variant="lg-display">Loading</Text>
-  </Skeleton>
-)
-
 export const RetrospectiveFollowsAndSavesQueryRenderer: React.FC = () => {
   return (
     <SystemQueryRenderer<RetrospectiveFollowsAndSavesQuery>
@@ -133,22 +127,18 @@ export const RetrospectiveFollowsAndSavesQueryRenderer: React.FC = () => {
           }
         }
       `}
-      placeholder={PLACEHOLDER}
+      placeholder={<Spinner />}
       render={({ error, props }) => {
         if (error) {
           console.error(error)
           return null
         }
 
-        if (!props) {
-          return PLACEHOLDER
+        if (!props || !props.me) {
+          return <Spinner />
         }
 
-        if (props.me) {
-          return <RetrospectiveFollowsAndSavesFragmentContainer me={props.me} />
-        }
-
-        return null
+        return <RetrospectiveFollowsAndSavesFragmentContainer me={props.me} />
       }}
     />
   )
