@@ -9,6 +9,7 @@ import { useCursor } from "use-cursor"
 import { RetrospectiveTopArtists } from "Components/Retrospective/RetrospectiveTopArtists"
 import { RetrospectiveTopArtist } from "Components/Retrospective/RetrospectiveTopArtist"
 import { RetrospectiveTopGenes } from "Components/Retrospective/RetrospectiveTopGenes"
+import { RetrospectiveYourArtTaste } from "Components/Retrospective/RetrospectiveYourArtTaste"
 import { useMode } from "Utils/Hooks/useMode"
 import { RetrospectiveBegin } from "Components/Retrospective/RetrospectiveBegin"
 import { useEffect } from "react"
@@ -30,34 +31,21 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
     }
   }, [])
 
-  const {
-    topArtists,
-    topGenes,
-    topMediums,
-    topRarities,
-  } = useRetrospectiveData({ me })
+  const data = useRetrospectiveData({ me })
 
   const sections = {
     TOP_ARTIST: {
-      data: topArtists,
       Component: RetrospectiveTopArtist,
     },
     TOP_ARTISTS: {
-      data: topArtists,
       Component: RetrospectiveTopArtists,
     },
     TOP_GENES: {
-      data: topGenes,
       Component: RetrospectiveTopGenes,
     },
-    // TOP_MEDIUMS: {
-    //   data: topMediums,
-    //   Component: () => <>TODO</>,
-    // },
-    // TOP_RARITIES: {
-    //   data: topRarities,
-    //   Component: () => <>TODO</>,
-    // },
+    YOUR_ART_TASTE: {
+      Component: RetrospectiveYourArtTaste,
+    },
   } as const
 
   const keys = Object.keys(sections)
@@ -68,7 +56,7 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
 
   const key = keys[index]
 
-  const { Component, data } = sections[key as keyof typeof sections]
+  const { Component } = sections[key as keyof typeof sections]
 
   if (mode === "Pending") {
     return (
@@ -113,8 +101,6 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
 
       <Spacer y={2} />
 
-      {/* <pre>{JSON.stringify(sections[index], null, 2)}</pre> */}
-
       <Box p={2} flex={1}>
         <Component data={data} />
       </Box>
@@ -137,10 +123,14 @@ export const RetrospectiveFollowsAndSavesFragmentContainer = createFragmentConta
                 }
                 id
                 attributionClass {
+                  internalID
                   name
                 }
                 mediumType {
-                  name
+                  filterGene {
+                    name
+                    internalID
+                  }
                 }
               }
             }
@@ -151,6 +141,7 @@ export const RetrospectiveFollowsAndSavesFragmentContainer = createFragmentConta
                 artist {
                   slug
                   genes {
+                    name
                     slug
                   }
                 }

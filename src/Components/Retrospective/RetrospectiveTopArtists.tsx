@@ -6,13 +6,14 @@ import styled from "styled-components"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
 import { graphql } from "react-relay"
 import { RetrospectiveTopArtistsQuery } from "__generated__/RetrospectiveTopArtistsQuery.graphql"
+import { RetrospectiveData } from "./useRetrospectiveData"
 
 interface RetrospectiveTopArtistsProps {
-  data: [string, number][]
+  data: RetrospectiveData
 }
 
 export const RetrospectiveTopArtists: FC<RetrospectiveTopArtistsProps> = ({
-  data: datums,
+  data: { topArtists },
 }) => {
   const { data } = useClientQuery<RetrospectiveTopArtistsQuery>({
     query: graphql`
@@ -24,12 +25,12 @@ export const RetrospectiveTopArtists: FC<RetrospectiveTopArtistsProps> = ({
       }
     `,
     variables: {
-      ids: datums.map(([id]) => id),
+      ids: topArtists.map(([id]) => id),
     },
   })
 
-  const maxCount = Math.max(...datums.map(([_, count]) => count))
-  const percentages = datums.map(([_, count]) => (count / maxCount) * 100)
+  const maxCount = Math.max(...topArtists.map(([_, count]) => count))
+  const percentages = topArtists.map(([_, count]) => (count / maxCount) * 100)
 
   const { transition, register } = useTransition({
     initialStatus: "Out",
@@ -69,7 +70,7 @@ export const RetrospectiveTopArtists: FC<RetrospectiveTopArtistsProps> = ({
         flexDirection="column"
         style={{ gap: 40 }}
       >
-        {datums.map(([slug, count], i) => {
+        {topArtists.map(([slug, count], i) => {
           const percentage = percentages[i]
           const artist = data?.artists?.find(a => a?.slug === slug)
 

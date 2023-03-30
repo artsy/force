@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6154b49663fe0c675e1f5cb13bf11060>>
+ * @generated SignedSource<<70201cddab99bb2c82f848f68194923d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,7 @@ export type RetrospectiveFollowsAndSaves_collection$data = {
         readonly node: {
           readonly artist: {
             readonly genes: ReadonlyArray<{
+              readonly name: string | null;
               readonly slug: string;
             } | null> | null;
             readonly slug: string;
@@ -31,11 +32,15 @@ export type RetrospectiveFollowsAndSaves_collection$data = {
             readonly slug: string;
           } | null;
           readonly attributionClass: {
+            readonly internalID: string;
             readonly name: string | null;
           } | null;
           readonly id: string;
           readonly mediumType: {
-            readonly name: string | null;
+            readonly filterGene: {
+              readonly internalID: string;
+              readonly name: string | null;
+            } | null;
           } | null;
         } | null;
       } | null> | null;
@@ -62,18 +67,20 @@ v1 = {
   "name": "slug",
   "storageKey": null
 },
-v2 = [
-  (v1/*: any*/)
-],
-v3 = [
-  {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "name",
-    "storageKey": null
-  }
-];
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -138,7 +145,9 @@ return {
                       "kind": "LinkedField",
                       "name": "artist",
                       "plural": false,
-                      "selections": (v2/*: any*/),
+                      "selections": [
+                        (v1/*: any*/)
+                      ],
                       "storageKey": null
                     },
                     {
@@ -155,7 +164,10 @@ return {
                       "kind": "LinkedField",
                       "name": "attributionClass",
                       "plural": false,
-                      "selections": (v3/*: any*/),
+                      "selections": [
+                        (v2/*: any*/),
+                        (v3/*: any*/)
+                      ],
                       "storageKey": null
                     },
                     {
@@ -165,7 +177,21 @@ return {
                       "kind": "LinkedField",
                       "name": "mediumType",
                       "plural": false,
-                      "selections": (v3/*: any*/),
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "Gene",
+                          "kind": "LinkedField",
+                          "name": "filterGene",
+                          "plural": false,
+                          "selections": [
+                            (v3/*: any*/),
+                            (v2/*: any*/)
+                          ],
+                          "storageKey": null
+                        }
+                      ],
                       "storageKey": null
                     }
                   ],
@@ -219,7 +245,10 @@ return {
                           "kind": "LinkedField",
                           "name": "genes",
                           "plural": true,
-                          "selections": (v2/*: any*/),
+                          "selections": [
+                            (v3/*: any*/),
+                            (v1/*: any*/)
+                          ],
                           "storageKey": null
                         }
                       ],
@@ -243,6 +272,6 @@ return {
 };
 })();
 
-(node as any).hash = "1f4be1bc704dde71bc622f99e7d707e2";
+(node as any).hash = "d73a1e8760901444bdb27780920d1c5d";
 
 export default node;

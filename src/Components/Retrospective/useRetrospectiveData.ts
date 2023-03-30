@@ -6,21 +6,50 @@ interface UseRetrospectiveDataProps {
   me: RetrospectiveFollowsAndSaves_collection$data
 }
 
-export const useRetrospectiveData = ({ me }: UseRetrospectiveDataProps) => {
+export type RetrospectiveData = {
+  topGenes: [string, number][]
+  topMediums: [string, number][]
+  topArtists: [string, number][]
+  topRarities: [string, number][]
+  genes: { name: string | null; slug: string }[]
+  mediums: { internalID: string; name: string | null }[]
+  rarities: { internalID: string; name: string | null }[]
+  me: RetrospectiveFollowsAndSaves_collection$data
+}
+
+export const useRetrospectiveData = ({
+  me,
+}: UseRetrospectiveDataProps): RetrospectiveData => {
   const artistConnectionEdges = me.followsAndSaves?.artistsConnection?.edges
   const artworksConnectionEdges = me.followsAndSaves?.artworksConnection?.edges
 
-  const topGenes = useMemo(() => {
-    const genes = artistConnectionEdges?.flatMap(edge =>
-      edge?.node?.artist?.genes?.map(gene => gene?.slug)
+  const genes = useMemo(() => {
+    return compact(
+      artistConnectionEdges?.flatMap(edge => edge?.node?.artist?.genes)
     )
+  }, [artistConnectionEdges])
 
+  const mediums = useMemo(() => {
+    return compact(
+      artworksConnectionEdges?.flatMap(
+        edge => edge?.node?.mediumType?.filterGene
+      )
+    )
+  }, [artworksConnectionEdges])
+
+  const rarities = useMemo(() => {
+    return compact(
+      artworksConnectionEdges?.flatMap(edge => edge?.node?.attributionClass)
+    )
+  }, [artworksConnectionEdges])
+
+  const topGenes = useMemo(() => {
     const geneCounts = compact(genes).reduce(
       (acc: Record<string, number>, gene) => {
-        if (acc[gene]) {
-          acc[gene]++
+        if (acc[gene.slug]) {
+          acc[gene.slug]++
         } else {
-          acc[gene] = 1
+          acc[gene.slug] = 1
         }
 
         return acc
@@ -34,19 +63,15 @@ export const useRetrospectiveData = ({ me }: UseRetrospectiveDataProps) => {
       .slice(0, 5)
 
     return topFiveGenes
-  }, [artistConnectionEdges])
+  }, [genes])
 
   const topMediums = useMemo(() => {
-    const mediums = artworksConnectionEdges?.flatMap(
-      edge => edge?.node?.mediumType?.name
-    )
-
     const mediumCounts = compact(mediums).reduce(
       (acc: Record<string, number>, medium) => {
-        if (acc[medium]) {
-          acc[medium]++
+        if (acc[medium.internalID]) {
+          acc[medium.internalID]++
         } else {
-          acc[medium] = 1
+          acc[medium.internalID] = 1
         }
 
         return acc
@@ -54,13 +79,12 @@ export const useRetrospectiveData = ({ me }: UseRetrospectiveDataProps) => {
       {}
     )
 
-    // extract the top 5 mediums
     const topFiveMediums = Object.entries(mediumCounts!)
       .sort((a, b) => b[1] - a[1])
       .slice(0, 5)
 
     return topFiveMediums
-  }, [artworksConnectionEdges])
+  }, [mediums])
 
   const topArtists = useMemo(() => {
     const artists = artworksConnectionEdges?.flatMap(
@@ -89,16 +113,12 @@ export const useRetrospectiveData = ({ me }: UseRetrospectiveDataProps) => {
   }, [artworksConnectionEdges])
 
   const topRarities = useMemo(() => {
-    const rarities = artworksConnectionEdges?.flatMap(
-      edge => edge?.node?.attributionClass?.name
-    )
-
     const rarityCounts = compact(rarities).reduce(
       (acc: Record<string, number>, rarity) => {
-        if (acc[rarity]) {
-          acc[rarity]++
+        if (acc[rarity.internalID]) {
+          acc[rarity.internalID]++
         } else {
-          acc[rarity] = 1
+          acc[rarity.internalID] = 1
         }
 
         return acc
@@ -112,12 +132,16 @@ export const useRetrospectiveData = ({ me }: UseRetrospectiveDataProps) => {
       .slice(0, 5)
 
     return topFiveRarities
-  }, [artworksConnectionEdges])
+  }, [rarities])
 
   return {
     topGenes,
     topMediums,
     topArtists,
     topRarities,
+    genes,
+    mediums,
+    rarities,
+    me,
   }
 }

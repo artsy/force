@@ -6,13 +6,14 @@ import { useTransition } from "Utils/Hooks/useTransition"
 import { RetrospectiveTopGenesQuery } from "__generated__/RetrospectiveTopGenesQuery.graphql"
 import styled from "styled-components"
 import { wait } from "Utils/wait"
+import { RetrospectiveData } from "./useRetrospectiveData"
 
 interface RetrospectiveTopGenesProps {
-  data: [string, number][]
+  data: RetrospectiveData
 }
 
 export const RetrospectiveTopGenes: FC<RetrospectiveTopGenesProps> = ({
-  data: datums,
+  data: { topGenes },
 }) => {
   const { data, loading } = useClientQuery<RetrospectiveTopGenesQuery>({
     query: graphql`
@@ -36,7 +37,7 @@ export const RetrospectiveTopGenes: FC<RetrospectiveTopGenesProps> = ({
       }
     `,
     variables: {
-      ids: datums.map(([slug]) => slug),
+      ids: topGenes.map(([slug]) => slug),
     },
   })
 
@@ -120,7 +121,7 @@ export const RetrospectiveTopGenes: FC<RetrospectiveTopGenesProps> = ({
               <Box>
                 <Text variant="xl">{gene.name}</Text>
                 <Text variant="xl" color="black60">
-                  {datums[index][1]} saved artworks
+                  {topGenes[index][1]} saved artworks
                 </Text>
               </Box>
             </Gene>

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7b843825f8d860d7f9b3df8a951dee84>>
+ * @generated SignedSource<<7842c32f53068146fc62f70eae94cd6a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -41,10 +41,13 @@ v2 = {
   "name": "id",
   "storageKey": null
 },
-v3 = [
-  (v1/*: any*/),
-  (v2/*: any*/)
-],
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
 v4 = {
   "alias": null,
   "args": null,
@@ -151,7 +154,10 @@ return {
                             "kind": "LinkedField",
                             "name": "artist",
                             "plural": false,
-                            "selections": (v3/*: any*/),
+                            "selections": [
+                              (v1/*: any*/),
+                              (v2/*: any*/)
+                            ],
                             "storageKey": null
                           },
                           (v2/*: any*/),
@@ -163,6 +169,7 @@ return {
                             "name": "attributionClass",
                             "plural": false,
                             "selections": [
+                              (v3/*: any*/),
                               (v4/*: any*/),
                               (v2/*: any*/)
                             ],
@@ -176,7 +183,20 @@ return {
                             "name": "mediumType",
                             "plural": false,
                             "selections": [
-                              (v4/*: any*/)
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "Gene",
+                                "kind": "LinkedField",
+                                "name": "filterGene",
+                                "plural": false,
+                                "selections": [
+                                  (v4/*: any*/),
+                                  (v3/*: any*/),
+                                  (v2/*: any*/)
+                                ],
+                                "storageKey": null
+                              }
                             ],
                             "storageKey": null
                           }
@@ -231,7 +251,11 @@ return {
                                 "kind": "LinkedField",
                                 "name": "genes",
                                 "plural": true,
-                                "selections": (v3/*: any*/),
+                                "selections": [
+                                  (v4/*: any*/),
+                                  (v1/*: any*/),
+                                  (v2/*: any*/)
+                                ],
                                 "storageKey": null
                               },
                               (v2/*: any*/)
@@ -258,12 +282,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a3ac0d72332b8b81cdb21b0ca1033f23",
+    "cacheID": "9d362ddfa11a4da53ef5e970c6987069",
     "id": null,
     "metadata": {},
     "name": "RetrospectiveFollowsAndSavesQuery",
     "operationKind": "query",
-    "text": "query RetrospectiveFollowsAndSavesQuery {\n  me {\n    ...RetrospectiveFollowsAndSaves_collection\n    id\n  }\n}\n\nfragment RetrospectiveFollowsAndSaves_collection on Me {\n  followsAndSaves {\n    artworksConnection(first: 100, page: 1, private: true) {\n      totalCount\n      edges {\n        node {\n          artist {\n            slug\n            id\n          }\n          id\n          attributionClass {\n            name\n            id\n          }\n          mediumType {\n            name\n          }\n        }\n      }\n    }\n    artistsConnection(first: 100) {\n      edges {\n        node {\n          artist {\n            slug\n            genes {\n              slug\n              id\n            }\n            id\n          }\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query RetrospectiveFollowsAndSavesQuery {\n  me {\n    ...RetrospectiveFollowsAndSaves_collection\n    id\n  }\n}\n\nfragment RetrospectiveFollowsAndSaves_collection on Me {\n  followsAndSaves {\n    artworksConnection(first: 100, page: 1, private: true) {\n      totalCount\n      edges {\n        node {\n          artist {\n            slug\n            id\n          }\n          id\n          attributionClass {\n            internalID\n            name\n            id\n          }\n          mediumType {\n            filterGene {\n              name\n              internalID\n              id\n            }\n          }\n        }\n      }\n    }\n    artistsConnection(first: 100) {\n      edges {\n        node {\n          artist {\n            slug\n            genes {\n              name\n              slug\n              id\n            }\n            id\n          }\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

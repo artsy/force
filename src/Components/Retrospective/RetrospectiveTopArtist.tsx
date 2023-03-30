@@ -1,5 +1,6 @@
 import { Box, Image, Spacer, Text } from "@artsy/palette"
 import { useArtistHeaderPalette } from "Apps/Artist/Components/ArtistHeader/useArtistHeaderPalette"
+import { RetrospectiveData } from "Components/Retrospective/useRetrospectiveData"
 import { FC, useEffect } from "react"
 import { graphql } from "react-relay"
 import styled from "styled-components"
@@ -9,13 +10,13 @@ import { wait } from "Utils/wait"
 import { RetrospectiveTopArtistQuery } from "__generated__/RetrospectiveTopArtistQuery.graphql"
 
 interface RetrospectiveTopArtistProps {
-  data: [string, number][]
+  data: RetrospectiveData
 }
 
 export const RetrospectiveTopArtist: FC<RetrospectiveTopArtistProps> = ({
-  data: datums,
+  data: { topArtists },
 }) => {
-  const [[slug, count]] = datums
+  const [[slug, count]] = topArtists
 
   const { data, loading } = useClientQuery<RetrospectiveTopArtistQuery>({
     query: graphql`
