@@ -7,12 +7,12 @@ import {
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
 
-export const SelectListsForArtworkHeader: FC = () => {
+export const SelectArtworkListsHeader: FC = () => {
   const { t } = useTranslation()
   const { state, dispatch } = useManageArtworkForSavesContext()
   const artwork = state.artwork!
 
-  const openCreateListModal = () => {
+  const openCreateArtworkListModal = () => {
     dispatch({
       type: "SET_MODAL_KEY",
       payload: ModalKey.CreateNewList,
@@ -36,9 +36,9 @@ export const SelectListsForArtworkHeader: FC = () => {
         <Button
           variant="secondaryBlack"
           size="small"
-          onClick={openCreateListModal}
+          onClick={openCreateArtworkListModal}
         >
-          {t("collectorSaves.selectedListsForArtwork.createNewListButton")}
+          {t("collectorSaves.selectArtworkLists.header.createNewListButton")}
         </Button>
       </Flex>
 
@@ -48,12 +48,12 @@ export const SelectListsForArtworkHeader: FC = () => {
         <Message
           variant="success"
           title={t(
-            "collectorSaves.selectedListsForArtwork.recentlyAddedList.title"
+            "collectorSaves.selectArtworkLists.header.recentlyAddedList.title"
           )}
           mx={-2}
         >
           {t(
-            "collectorSaves.selectedListsForArtwork.recentlyAddedList.message",
+            "collectorSaves.selectArtworkLists.header.recentlyAddedList.message",
             {
               name: state.recentlyAddedList.name,
             }

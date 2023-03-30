@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a41b10f0f9888387daf490f90ed620e3>>
+ * @generated SignedSource<<ce5c31c20bee38fb49cb31d49ea4f114>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,7 @@ export type SelectListsForArtworkModal_me$data = {
         readonly internalID: string;
         readonly isSavedArtwork: boolean;
         readonly name: string;
-        readonly " $fragmentSpreads": FragmentRefs<"SelectListItem_item">;
+        readonly " $fragmentSpreads": FragmentRefs<"SelectArtworkListItem_item">;
       } | null;
     } | null> | null;
   } | null;
@@ -25,7 +25,7 @@ export type SelectListsForArtworkModal_me$data = {
     readonly internalID: string;
     readonly isSavedArtwork: boolean;
     readonly name: string;
-    readonly " $fragmentSpreads": FragmentRefs<"SelectListItem_item">;
+    readonly " $fragmentSpreads": FragmentRefs<"SelectArtworkListItem_item">;
   } | null;
   readonly " $fragmentType": "SelectListsForArtworkModal_me";
 };
@@ -66,7 +66,7 @@ var v0 = [
   {
     "args": null,
     "kind": "FragmentSpread",
-    "name": "SelectListItem_item"
+    "name": "SelectArtworkListItem_item"
   }
 ];
 return {
@@ -156,6 +156,6 @@ return {
 };
 })();
 
-(node as any).hash = "57cf30d6a741d22f91ab04b28929bc09";
+(node as any).hash = "ca3ee92e1e287595b399aedda0fd4f70";
 
 export default node;
