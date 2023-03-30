@@ -11,6 +11,7 @@ import { RetrospectiveTopArtistQuery } from "__generated__/RetrospectiveTopArtis
 
 interface RetrospectiveTopArtistProps {
   data: RetrospectiveData
+  onEnd: () => void
 }
 
 export const RetrospectiveTopArtist: FC<RetrospectiveTopArtistProps> = ({

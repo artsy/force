@@ -1,4 +1,4 @@
-import { Box, FullBleed, Image, Spacer, Text } from "@artsy/palette"
+import { Box, Button, FullBleed, Image, Spacer, Text } from "@artsy/palette"
 import { FC, useEffect } from "react"
 import { graphql } from "react-relay"
 import { useClientQuery } from "Utils/Hooks/useClientQuery"
@@ -12,10 +12,12 @@ import { wait } from "Utils/wait"
 
 interface RetrospectiveYourArtTasteProps {
   data: RetrospectiveData
+  onEnd: () => void
 }
 
 export const RetrospectiveYourArtTaste: FC<RetrospectiveYourArtTasteProps> = ({
   data: { topGenes, topMediums, topRarities, mediums, genes, rarities },
+  onEnd,
 }) => {
   const [[favGeneId]] = topGenes
   const [[favMediumId]] = topMediums
@@ -206,6 +208,19 @@ export const RetrospectiveYourArtTaste: FC<RetrospectiveYourArtTasteProps> = ({
           </Marquee>
         </FullBleed>
       </MarqueeTransition>
+
+      <Spacer y={4} />
+
+      <Cta
+        display="flex"
+        justifyContent="center"
+        ref={register(2)}
+        data-state="Out"
+      >
+        <Button variant="secondaryWhite" onClick={onEnd}>
+          Revisit
+        </Button>
+      </Cta>
     </Box>
   )
 }
@@ -236,6 +251,20 @@ const Title = styled(Text)`
 `
 
 const MarqueeTransition = styled(Box)`
+  transition: opacity 500ms, transform 500ms;
+
+  &[data-state="Out"] {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  &[data-state="In"] {
+    opacity: 1;
+    transform: translateY(0);
+  }
+`
+
+const Cta = styled(Box)`
   transition: opacity 500ms, transform 500ms;
 
   &[data-state="Out"] {

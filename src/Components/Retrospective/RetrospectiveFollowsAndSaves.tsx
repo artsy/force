@@ -5,14 +5,13 @@ import { RetrospectiveFollowsAndSaves_collection$data } from "__generated__/Retr
 import { RetrospectiveFollowsAndSavesQuery } from "__generated__/RetrospectiveFollowsAndSavesQuery.graphql"
 import { useRetrospectiveData } from "Components/Retrospective/useRetrospectiveData"
 import { RetrospectiveProgressBar } from "Components/Retrospective/RetrospectiveProgressBar"
-import { useCursor } from "use-cursor"
 import { RetrospectiveTopArtists } from "Components/Retrospective/RetrospectiveTopArtists"
 import { RetrospectiveTopArtist } from "Components/Retrospective/RetrospectiveTopArtist"
 import { RetrospectiveTopGenes } from "Components/Retrospective/RetrospectiveTopGenes"
 import { RetrospectiveYourArtTaste } from "Components/Retrospective/RetrospectiveYourArtTaste"
 import { useMode } from "Utils/Hooks/useMode"
 import { RetrospectiveBegin } from "Components/Retrospective/RetrospectiveBegin"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 
 interface RetrospectiveFollowsAndSavesProps {
   me: RetrospectiveFollowsAndSaves_collection$data
@@ -22,6 +21,7 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
   me,
 }) => {
   const [mode, setMode] = useMode<"Pending" | "Playing">("Pending")
+  const [renders, setRenders] = useState(0)
 
   useEffect(() => {
     document.body.style.transition = "background-color 500ms"
@@ -50,9 +50,21 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
 
   const keys = Object.keys(sections)
 
-  const { index, handleNext } = useCursor({
-    max: keys.length,
-  })
+  const [index, setIndex] = useState(0)
+
+  const handleNext = () => {
+    if (index === keys.length - 1) {
+      return
+    }
+
+    setIndex(prevIndex => prevIndex + 1)
+  }
+
+  const handleReset = () => {
+    setIndex(0)
+    setMode("Playing")
+    setRenders(prevRenders => prevRenders + 1)
+  }
 
   const key = keys[index]
 
@@ -79,6 +91,7 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
       left={0}
     >
       <Box
+        key={renders}
         display="flex"
         style={{ gap: 10 }}
         px={2}
@@ -102,7 +115,7 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
       <Spacer y={2} />
 
       <Box p={2} flex={1}>
-        <Component data={data} />
+        <Component data={data} onEnd={handleReset} />
       </Box>
     </Box>
   )

@@ -10,6 +10,7 @@ import { RetrospectiveData } from "./useRetrospectiveData"
 
 interface RetrospectiveTopGenesProps {
   data: RetrospectiveData
+  onEnd: () => void
 }
 
 export const RetrospectiveTopGenes: FC<RetrospectiveTopGenesProps> = ({

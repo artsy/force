@@ -10,6 +10,7 @@ import { RetrospectiveData } from "./useRetrospectiveData"
 
 interface RetrospectiveTopArtistsProps {
   data: RetrospectiveData
+  onEnd: () => void
 }
 
 export const RetrospectiveTopArtists: FC<RetrospectiveTopArtistsProps> = ({
