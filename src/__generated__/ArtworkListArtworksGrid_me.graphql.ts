@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<792a3ecf3b880802ecf10f56c8bf1454>>
+ * @generated SignedSource<<c578f53018eb307473d4ded1c7e1743d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkListArtworksGrid_me$data = {
-  readonly collection: {
+  readonly artworkList: {
     readonly artworks: {
       readonly edges: ReadonlyArray<{
         readonly node: {
@@ -59,7 +59,7 @@ const node: ReaderFragment = {
   "name": "ArtworkListArtworksGrid_me",
   "selections": [
     {
-      "alias": null,
+      "alias": "artworkList",
       "args": [
         {
           "kind": "Variable",
@@ -193,6 +193,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e6aafb5cfb8db1594a105deffd0a794f";
+(node as any).hash = "470207e2f9af102fa62e10d232191f50";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1d433fcc867afdf4273cda47c3c0dd61>>
+ * @generated SignedSource<<1cda8ae439e132cdebc59be36fee9046>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type ArtworkListEmptyState_me$data = {
   readonly allSavesArtworkList: {
     readonly artworksCount: number;
   } | null;
-  readonly customArtworkList: {
+  readonly artworkList: {
     readonly default: boolean;
   } | null;
   readonly " $fragmentType": "ArtworkListEmptyState_me";
@@ -37,7 +37,7 @@ const node: ReaderFragment = {
   "name": "ArtworkListEmptyState_me",
   "selections": [
     {
-      "alias": "customArtworkList",
+      "alias": "artworkList",
       "args": [
         {
           "kind": "Variable",
@@ -89,6 +89,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "9979b08215ff63a0c4dd2fb1e1b77e09";
+(node as any).hash = "90bb32479b2bcc574e460785e500657f";
 
 export default node;
