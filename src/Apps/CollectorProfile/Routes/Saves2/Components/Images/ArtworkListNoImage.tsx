@@ -3,7 +3,7 @@ import { FC } from "react"
 
 const NO_ICON_SIZE = 18
 
-export const SavesNoImage: FC<FlexProps> = props => {
+export const ArtworkListNoImage: FC<FlexProps> = props => {
   return (
     <Flex
       bg="black5"

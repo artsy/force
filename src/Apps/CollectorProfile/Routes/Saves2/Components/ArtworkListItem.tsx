@@ -1,6 +1,6 @@
 import { Box, DROP_SHADOW, Flex, Text } from "@artsy/palette"
-import { FourUpImageLayout } from "Apps/CollectorProfile/Routes/Saves2/Components/FourUpImageLayout"
-import { StackedImageLayout } from "Apps/CollectorProfile/Routes/Saves2/Components/StackedImageLayout"
+import { FourUpImageLayout } from "./Images/FourUpImageLayout"
+import { StackedImageLayout } from "./Images/StackedImageLayout"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
 import { createFragmentContainer, graphql } from "react-relay"

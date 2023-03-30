@@ -1,5 +1,5 @@
 import { Box, Image } from "@artsy/palette"
-import { SavesNoImage } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesNoImage"
+import { ArtworkListNoImage } from "./ArtworkListNoImage"
 import { prepareImageURLs } from "Apps/CollectorProfile/Routes/Saves2/Utils/prepareImageURLs"
 import { FC } from "react"
 import { cropped } from "Utils/resized"
@@ -46,7 +46,7 @@ const StackImage: FC<StackImageProps> = ({ url, index }) => {
 
   if (url === null) {
     return (
-      <SavesNoImage
+      <ArtworkListNoImage
         width={SIZE}
         height={SIZE}
         position="absolute"
