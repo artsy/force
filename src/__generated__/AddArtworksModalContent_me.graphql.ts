@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c7f102f47ca481e66f79132fd7b30f4f>>
+ * @generated SignedSource<<ef3a99b936b23b65895b5c0523121826>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,14 +32,14 @@ export type AddArtworksModalContent_me$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
-      "defaultValue": 30,
-      "kind": "LocalArgument",
-      "name": "count"
-    },
-    {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "cursor"
+      "name": "after"
+    },
+    {
+      "defaultValue": 30,
+      "kind": "LocalArgument",
+      "name": "first"
     },
     {
       "defaultValue": "POSITION_DESC",
@@ -51,8 +51,8 @@ const node: ReaderFragment = {
   "metadata": {
     "connection": [
       {
-        "count": "count",
-        "cursor": "cursor",
+        "count": "first",
+        "cursor": "after",
         "direction": "forward",
         "path": [
           "collection",
@@ -182,6 +182,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "641c4bd0123ddf3098fd9ba2c2f566bc";
+(node as any).hash = "f098f83fb7f84b81499016f34adb459f";
 
 export default node;

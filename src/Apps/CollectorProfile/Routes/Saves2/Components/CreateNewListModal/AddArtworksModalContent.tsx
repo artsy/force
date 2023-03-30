@@ -46,13 +46,9 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
   onArtworkClick,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingNextPage, setIsLoadingNextPage] = useState(false)
   const [sort, setSort] = useState(SORTS[0].value)
   const { t } = useTranslation()
-
-  console.log(
-    "[Debug] AddArtworksModalContent me",
-    me.collection?.artworksConnection!
-  )
 
   if (isLoading) {
     return <ContentPlaceholder />
@@ -62,35 +58,43 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
 
   const handleSortChange = (option: string) => {
     setSort(option)
-    setIsLoading(true)
 
-    relay.refetchConnection(30, null, { sort: option })
+    relay.refetchConnection(
+      30,
+      err => {
+        console.error(err)
+      },
+      { sort: option }
+    )
     setIsLoading(false)
   }
 
   const handleLoadMore = () => {
-    console.log("[Debug] handleLoadMore", relay.hasMore(), relay.isLoading())
     if (!relay.hasMore() || relay.isLoading()) {
       return
     }
 
-    // setIsLoading(true)
+    setIsLoadingNextPage(true)
 
-    console.log("[Debug] loadMore inside")
     relay.loadMore(30, err => {
       if (err) {
-        console.log("[Debug] loadMore err")
         console.error(err)
       }
 
-      console.log("[Debug] loadMore succ")
-      // setLoading(false)
+      setIsLoadingNextPage(false)
     })
   }
 
   const handleItemClick = (artworkID: string) => {
     onArtworkClick(artworkID)
   }
+
+  console.log(
+    "[Debug] isLoadingNextPage",
+    isLoadingNextPage,
+    "hasMore",
+    relay.hasMore()
+  )
 
   return (
     <>
@@ -116,13 +120,15 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
         selectedIds={selectedArtworkIds}
       />
 
-      {relay.hasMore() && (
+      {relay.hasMore() && !isLoadingNextPage && (
         <Box textAlign="center" mt={4}>
-          <Button onClick={handleLoadMore} loading={isLoading}>
+          <Button onClick={handleLoadMore} loading={isLoadingNextPage}>
             Show More
           </Button>
         </Box>
       )}
+
+      {isLoadingNextPage && <ContentPlaceholder gridOnly={true} />}
     </>
   )
 }
@@ -133,12 +139,12 @@ const AddArtworksModalContentPaginationContainer = createPaginationContainer(
     me: graphql`
       fragment AddArtworksModalContent_me on Me
         @argumentDefinitions(
-          cursor: { type: "String" }
-          count: { type: "Int", defaultValue: 30 }
+          first: { type: "Int", defaultValue: 30 }
+          after: { type: "String" }
           sort: { type: CollectionArtworkSorts, defaultValue: POSITION_DESC }
         ) {
         collection(id: "saved-artwork") {
-          artworksConnection(first: $count, after: $cursor, sort: $sort)
+          artworksConnection(first: $first, after: $after, sort: $sort)
             @connection(key: "AddArtworksModalContent_artworksConnection") {
             totalCount
             ...ArtworksList_artworks
@@ -146,7 +152,6 @@ const AddArtworksModalContentPaginationContainer = createPaginationContainer(
             edges {
               node {
                 internalID
-                # ...GridItem_artwork
               }
             }
           }
@@ -160,26 +165,24 @@ const AddArtworksModalContentPaginationContainer = createPaginationContainer(
       return props.me.collection?.artworksConnection
     },
     getFragmentVariables(prevVars, totalCount) {
-      console.log("[Debug] getFragmentVariables", prevVars, totalCount)
       return { ...prevVars, count: totalCount }
     },
     getVariables(_, { count, cursor }, fragmentVariables) {
-      console.log("[Debug] getVariables", { count, cursor }, fragmentVariables)
       return {
         sort: fragmentVariables.sort,
-        count,
-        cursor,
+        first: count,
+        after: cursor,
       }
     },
     query: graphql`
       query AddArtworksModalContentPaginationQuery(
-        $cursor: String
-        $count: Int!
+        $after: String
+        $first: Int!
         $sort: CollectionArtworkSorts
       ) {
         me {
           ...AddArtworksModalContent_me
-            @arguments(sort: $sort, count: $count, cursor: $cursor)
+            @arguments(sort: $sort, first: $first, after: $after)
         }
       }
     `,
@@ -218,24 +221,33 @@ export const AddArtworksModalContentQueryRender: FC<AddArtworksModalContentQuery
   )
 }
 
-const ContentPlaceholder: FC = () => {
+interface ContentPlaceholderProps {
+  gridOnly?: boolean
+}
+
+const ContentPlaceholder: FC<ContentPlaceholderProps> = props => {
   const { t } = useTranslation()
+  const gridOnly = props.gridOnly ?? false
 
   return (
     <>
-      <Flex justifyContent="space-between" alignItems="center">
-        <SkeletonText variant={["xs", "sm"]}>
-          {t("collectorSaves.addArtworksModal.artworksCount", {
-            count: 127,
-          })}
-        </SkeletonText>
+      {!gridOnly && (
+        <>
+          <Flex justifyContent="space-between" alignItems="center">
+            <SkeletonText variant={["xs", "sm"]}>
+              {t("collectorSaves.addArtworksModal.artworksCount", {
+                count: 127,
+              })}
+            </SkeletonText>
 
-        <SortFilter
-          sortOptions={SORTS}
-          selected={SORTS[0].value}
-          onSort={() => {}}
-        />
-      </Flex>
+            <SortFilter
+              sortOptions={SORTS}
+              selected={SORTS[0].value}
+              onSort={() => {}}
+            />
+          </Flex>
+        </>
+      )}
 
       <Spacer y={2} />
 

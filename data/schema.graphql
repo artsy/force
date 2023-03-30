@@ -2724,6 +2724,7 @@ type AuctionLotPerformance {
 }
 
 type AuctionResult implements Node {
+  # Be careful when querying for artist data within a connection as it can lead to performance issues.
   artist: Artist
   artistID: String!
   boughtIn: Boolean
@@ -2758,6 +2759,7 @@ type AuctionResult implements Node {
 
   # A type-specific ID likely used as a database ID.
   internalID: ID!
+  isInArtsyAuction: Boolean!
   isUpcoming: Boolean
   location: String
   lotNumber: String
@@ -2873,6 +2875,7 @@ type AuctionResultsByArtistsEdge {
 }
 
 enum AuctionResultSorts {
+  DATE_ASC
   DATE_DESC
   ESTIMATE_AND_DATE_DESC
   PRICE_AND_DATE_DESC
@@ -3632,7 +3635,7 @@ type Collection {
     before: String
     first: Int
     last: Int
-    page: Int = 1
+    page: Int
     sort: CollectionArtworkSorts
   ): ArtworkConnection
 
