@@ -5,7 +5,7 @@ import { ArtworkSortFilter } from "Components/ArtworkFilter/ArtworkFilters/Artwo
 import { FC } from "react"
 import { Media } from "Utils/Responsive"
 
-export const SavesArtworksGridHeader: FC = () => {
+export const ArtworkListArtworksGridHeader: FC = () => {
   const filterContext = useArtworkFilterContext()
   const totalCountLabel = getTotalCountLabel({
     total: `${filterContext.counts!.artworks}`,

@@ -17,7 +17,7 @@ import {
 import { LoadingArea } from "Components/LoadingArea"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FC, useState } from "react"
-import { SavesArtworksGridHeader } from "./SavesArtworksGridHeader"
+import { ArtworkListArtworksGridHeader } from "./ArtworkListArtworksGridHeader"
 import { Spacer } from "@artsy/palette"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { usePrevious } from "Utils/Hooks/usePrevious"
@@ -150,7 +150,7 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
     <>
       <Jump id="artworksGrid" />
 
-      <SavesArtworksGridHeader />
+      <ArtworkListArtworksGridHeader />
 
       <Spacer y={2} />
 
