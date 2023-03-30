@@ -13,6 +13,7 @@ import {
   themeProps,
   Input,
 } from "@artsy/palette"
+import axios from "axios"
 import { SearchBarQueryRenderer } from "Components/Search/SearchBar"
 import { useSystemContext } from "System/SystemContext"
 import * as React from "react"
@@ -79,6 +80,8 @@ export const NavBar: React.FC = track(
   const [showMobileMenu, toggleMobileNav] = useState(false)
   const [searchFocused, setSearchFocused] = useState(false)
   const [showAdvisorModal, setShowAdvisorModal] = useState(false)
+  const [prompt, setPrompt] = useState("")
+  const [response, setResponse] = useState("")
   const xs = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const sm = __internal__useMatchMedia(themeProps.mediaQueries.sm)
   const isMobile = xs || sm
@@ -107,6 +110,52 @@ export const NavBar: React.FC = track(
       }
       // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       target = target.parentElement
+    }
+  }
+
+  async function callOpenaiApi(prompt: string) {
+    const apiKey = "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"
+    const headers = {
+      Authorization: `Bearer ${apiKey}`,
+      "Content-Type": "application/json",
+    }
+    const body = JSON.stringify({
+      model: "gpt-3.5-turbo",
+      // prompt,
+      max_tokens: 500,
+      n: 1,
+      stop: null,
+      temperature: 0.5,
+      messages: [
+        {
+          role: "system",
+          content:
+            'You are an art recommendation assistant on Artsy.net, designed to help collectors find new artist on Artsy.net based on their preferences and interests. Your name is Art Advisor. Each artist recommendation you provide will contain a hyperlink to that artist on Artsy. The path before the artist name slug will be "https://www.artsy.net/artist/", a complete example would be "https://www.artsy.net/artist/gerhard-richter". Any links to specific artworks should be real and on Artsy.net currently. Provide a brief reason why a given artist matches what they are searching for related to the artists bio. Provide up to 3 artists unless the collector specifies that you provide more or only provide 1 if a collector is searching for works by a specific. If the collector has not already specified a price range after asking the collector what type of art they are interested in, ask them what price range they are considering. Then use this price range information to make a recommendation. You will not provide links to specific artworks and if asked to you will say that you do not have the capability to tell whether an artwork is currently available at this time.',
+        },
+        { role: "user", content: prompt },
+      ],
+    })
+
+    const response = await axios.post(
+      "https://api.openai.com/v1/chat/completions",
+      body,
+      { headers }
+    )
+
+    if (response.status === 200) {
+      console.log(response.data)
+      return response.data
+    } else {
+      throw new Error(response.data)
+    }
+  }
+
+  async function handleChatButtonClick() {
+    try {
+      const apiResponse = await callOpenaiApi(prompt)
+      setResponse(JSON.stringify(apiResponse))
+    } catch (error) {
+      console.error(error)
     }
   }
 
@@ -254,13 +303,18 @@ export const NavBar: React.FC = track(
                         }
                         footer={
                           <Flex flexDirection="column">
-                            <Input placeholder="Type herewooo" />
+                            <Input
+                              placeholder="Type here"
+                              value={prompt}
+                              onChange={event => setPrompt(event.target.value)}
+                            />
                             <Button
                               width="80px"
                               mt={1}
                               alignSelf="flex-end"
                               size="small"
                               variant="primaryBlack"
+                              onClick={handleChatButtonClick}
                             >
                               Send
                             </Button>
@@ -269,61 +323,7 @@ export const NavBar: React.FC = track(
                         onClose={() => setShowAdvisorModal(false)}
                       >
                         <Flex flexDirection="column">
-                          <Text variant="sm">How can we help you?</Text>
-                          <Text variant="sm">
-                            User: Hello I'd like a big painting
-                          </Text>
-                          <Text variant="sm">
-                            Art Advisor: Ok let me help you
-                          </Text>
-                          <Text variant="sm">
-                            User: Hello I'd like a big painting
-                          </Text>
-                          <Text variant="sm">
-                            Art Advisor: Ok let me help you
-                          </Text>
-                          <Text variant="sm">
-                            User: Hello I'd like a big painting
-                          </Text>
-                          <Text variant="sm">
-                            Art Advisor: Ok let me help you
-                          </Text>
-                          <Text variant="sm">
-                            User: Hello I'd like a big painting
-                          </Text>
-                          <Text variant="sm">
-                            Art Advisor: Ok let me help you
-                          </Text>
-                          <Text variant="sm">
-                            User: Hello I'd like a big painting
-                          </Text>
-                          <Text variant="sm">
-                            Art Advisor: Ok let me help you
-                          </Text>
-                          <Text variant="sm">
-                            User: Hello I'd like a big painting
-                          </Text>
-                          <Text variant="sm">
-                            Art Advisor: Ok let me help you
-                          </Text>
-                          <Text variant="sm">
-                            User: Hello I'd like a big painting
-                          </Text>
-                          <Text variant="sm">
-                            Art Advisor: Ok let me help you
-                          </Text>
-                          <Text variant="sm">
-                            User: Hello I'd like a big painting
-                          </Text>
-                          <Text variant="sm">
-                            Art Advisor: Ok let me help you
-                          </Text>
-                          <Text variant="sm">
-                            User: Hello I'd like a big painting
-                          </Text>
-                          <Text variant="sm">
-                            Art Advisor: Ok let me help you
-                          </Text>
+                          <Text variant="sm">How can I help you today?</Text>
                         </Flex>
                       </ModalDialog>
                     )}
