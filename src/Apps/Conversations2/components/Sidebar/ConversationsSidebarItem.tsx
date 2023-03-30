@@ -115,6 +115,7 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
             ? `conversationsFilter=${match.location.query.conversationsFilter}`
             : ""
         }`}
+        textDecoration={"none"}
         onClick={() =>
           trackEvent({
             action: "Click",

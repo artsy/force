@@ -110,6 +110,7 @@ export const orderRoutes: AppRouteConfig[] = [
     Component: OrderApp,
     onClientSideRender: () => {
       OrderApp.preload()
+      OfferRoute.preload()
     },
 
     // TODO: Better support `@principalField` in Metaphysics.
