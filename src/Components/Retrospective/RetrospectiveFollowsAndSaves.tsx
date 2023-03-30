@@ -7,6 +7,7 @@ import { useRetrospectiveData } from "Components/Retrospective/useRetrospectiveD
 import { RetrospectiveProgressBar } from "Components/Retrospective/RetrospectiveProgressBar"
 import { useCursor } from "use-cursor"
 import { RetrospectiveTopArtists } from "Components/Retrospective/RetrospectiveTopArtists"
+import { RetrospectiveTopArtist } from "Components/Retrospective/RetrospectiveTopArtist"
 
 interface RetrospectiveFollowsAndSavesProps {
   me: RetrospectiveFollowsAndSaves_collection$data
@@ -23,22 +24,26 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
   } = useRetrospectiveData({ me })
 
   const sections = {
+    TOP_ARTIST: {
+      data: topArtists,
+      Component: RetrospectiveTopArtist,
+    },
     TOP_ARTISTS: {
       data: topArtists,
       Component: RetrospectiveTopArtists,
     },
-    TOP_GENES: {
-      data: topGenes,
-      Component: () => <>TODO</>,
-    },
-    TOP_MEDIUMS: {
-      data: topMediums,
-      Component: () => <>TODO</>,
-    },
-    TOP_RARITIES: {
-      data: topRarities,
-      Component: () => <>TODO</>,
-    },
+    // TOP_GENES: {
+    //   data: topGenes,
+    //   Component: () => <>TODO</>,
+    // },
+    // TOP_MEDIUMS: {
+    //   data: topMediums,
+    //   Component: () => <>TODO</>,
+    // },
+    // TOP_RARITIES: {
+    //   data: topRarities,
+    //   Component: () => <>TODO</>,
+    // },
   } as const
 
   const keys = Object.keys(sections)
@@ -52,8 +57,15 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
   const { Component, data } = sections[key as keyof typeof sections]
 
   return (
-    <Box width="100%" height="100%" position="fixed" top={0} left={0} p={2}>
-      <Box display="flex" style={{ gap: 10 }}>
+    <Box width="100%" height="100%" position="fixed" top={0} left={0}>
+      <Box
+        display="flex"
+        style={{ gap: 10 }}
+        px={2}
+        pt={2}
+        pb={6}
+        background="linear-gradient(rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);"
+      >
         {keys.map((key, i) => {
           return (
             <Box key={key} flex={1}>
@@ -71,7 +83,9 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
 
       {/* <pre>{JSON.stringify(sections[index], null, 2)}</pre> */}
 
-      <Component data={data} />
+      <Box p={2}>
+        <Component data={data} />
+      </Box>
     </Box>
   )
 }
@@ -87,7 +101,7 @@ export const RetrospectiveFollowsAndSavesFragmentContainer = createFragmentConta
             edges {
               node {
                 artist {
-                  name
+                  slug
                 }
                 id
                 attributionClass {
@@ -103,9 +117,9 @@ export const RetrospectiveFollowsAndSavesFragmentContainer = createFragmentConta
             edges {
               node {
                 artist {
-                  name
+                  slug
                   genes {
-                    name
+                    slug
                   }
                 }
               }

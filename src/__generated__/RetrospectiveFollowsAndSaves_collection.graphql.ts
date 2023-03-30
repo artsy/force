@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c4c7fdb5a01a8035de7efb5cac20b05a>>
+ * @generated SignedSource<<6154b49663fe0c675e1f5cb13bf11060>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,9 +17,9 @@ export type RetrospectiveFollowsAndSaves_collection$data = {
         readonly node: {
           readonly artist: {
             readonly genes: ReadonlyArray<{
-              readonly name: string | null;
+              readonly slug: string;
             } | null> | null;
-            readonly name: string | null;
+            readonly slug: string;
           } | null;
         } | null;
       } | null> | null;
@@ -28,7 +28,7 @@ export type RetrospectiveFollowsAndSaves_collection$data = {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly artist: {
-            readonly name: string | null;
+            readonly slug: string;
           } | null;
           readonly attributionClass: {
             readonly name: string | null;
@@ -59,11 +59,20 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "slug",
   "storageKey": null
 },
 v2 = [
   (v1/*: any*/)
+],
+v3 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "name",
+    "storageKey": null
+  }
 ];
 return {
   "argumentDefinitions": [],
@@ -146,7 +155,7 @@ return {
                       "kind": "LinkedField",
                       "name": "attributionClass",
                       "plural": false,
-                      "selections": (v2/*: any*/),
+                      "selections": (v3/*: any*/),
                       "storageKey": null
                     },
                     {
@@ -156,7 +165,7 @@ return {
                       "kind": "LinkedField",
                       "name": "mediumType",
                       "plural": false,
-                      "selections": (v2/*: any*/),
+                      "selections": (v3/*: any*/),
                       "storageKey": null
                     }
                   ],
@@ -234,6 +243,6 @@ return {
 };
 })();
 
-(node as any).hash = "df7275a7a38cd2850befc299197890f5";
+(node as any).hash = "1f4be1bc704dde71bc622f99e7d707e2";
 
 export default node;

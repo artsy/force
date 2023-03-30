@@ -1,19 +1,35 @@
-import { forwardRef, useEffect, useImperativeHandle } from "react"
+import { FC, useEffect } from "react"
 import { Box, Spacer, Text } from "@artsy/palette"
 import { useTransition } from "Utils/Hooks/useTransition"
 import { wait } from "Utils/wait"
 import styled from "styled-components"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { graphql } from "react-relay"
+import { RetrospectiveTopArtistsQuery } from "__generated__/RetrospectiveTopArtistsQuery.graphql"
 
 interface RetrospectiveTopArtistsProps {
   data: [string, number][]
 }
 
-export const RetrospectiveTopArtists = forwardRef<
-  { transitionOut: () => void },
-  RetrospectiveTopArtistsProps
->(({ data }, forwardedRef) => {
-  const maxCount = Math.max(...data.map(([_, count]) => count))
-  const percentages = data.map(([_, count]) => (count / maxCount) * 100)
+export const RetrospectiveTopArtists: FC<RetrospectiveTopArtistsProps> = ({
+  data: datums,
+}) => {
+  const { data } = useClientQuery<RetrospectiveTopArtistsQuery>({
+    query: graphql`
+      query RetrospectiveTopArtistsQuery($ids: [String!]!) {
+        artists(slugs: $ids) {
+          slug
+          name
+        }
+      }
+    `,
+    variables: {
+      ids: datums.map(([id]) => id),
+    },
+  })
+
+  const maxCount = Math.max(...datums.map(([_, count]) => count))
+  const percentages = datums.map(([_, count]) => (count / maxCount) * 100)
 
   const { transition, register } = useTransition({
     initialStatus: "Out",
@@ -30,31 +46,24 @@ export const RetrospectiveTopArtists = forwardRef<
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useImperativeHandle(
-    forwardedRef,
-    () => ({
-      transitionOut: () => {
-        transition("Out")
-      },
-    }),
-    [transition]
-  )
-
   return (
     <>
       <Title ref={register(0)} variant="xxxl" data-state="Out">
-        Top Artists
+        Your Top Artists
       </Title>
 
       <Spacer y={6} />
 
       <Box display="flex" flexDirection="column" style={{ gap: 40 }}>
-        {data.map(([name, count], i) => {
+        {datums.map(([slug, count], i) => {
           const percentage = percentages[i]
+          const artist = data?.artists?.find(a => a?.slug === slug)
+
+          if (!artist) return null
 
           return (
             <Element ref={register(i + 1)} key={i} data-state="Out">
-              <Count key={name} variant="sm-display" color="black60">
+              <Count key={slug} variant="sm-display" color="black60">
                 {count} works
               </Count>
 
@@ -66,8 +75,8 @@ export const RetrospectiveTopArtists = forwardRef<
 
               <Spacer y={1} />
 
-              <Text key={name} variant="xxl">
-                {name}
+              <Text key={slug} variant="xxl">
+                {artist.name}
               </Text>
             </Element>
           )
@@ -75,7 +84,7 @@ export const RetrospectiveTopArtists = forwardRef<
       </Box>
     </>
   )
-})
+}
 
 const Title = styled(Text)`
   transition: opacity 500ms, transform 500ms;

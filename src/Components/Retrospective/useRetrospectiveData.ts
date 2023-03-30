@@ -12,7 +12,7 @@ export const useRetrospectiveData = ({ me }: UseRetrospectiveDataProps) => {
 
   const topGenes = useMemo(() => {
     const genes = artistConnectionEdges?.flatMap(edge =>
-      edge?.node?.artist?.genes?.map(gene => gene?.name)
+      edge?.node?.artist?.genes?.map(gene => gene?.slug)
     )
 
     const geneCounts = compact(genes).reduce(
@@ -64,7 +64,7 @@ export const useRetrospectiveData = ({ me }: UseRetrospectiveDataProps) => {
 
   const topArtists = useMemo(() => {
     const artists = artworksConnectionEdges?.flatMap(
-      edge => edge?.node?.artist?.name
+      edge => edge?.node?.artist?.slug
     )
 
     const artistCounts = compact(artists).reduce(
