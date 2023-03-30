@@ -26,6 +26,7 @@ export const ConversationArtwork: React.FC<ConversationArtworkProps> = ({
               title
               artist {
                 name
+                slug
               }
               image {
                 url
@@ -63,7 +64,9 @@ export const ConversationArtwork: React.FC<ConversationArtworkProps> = ({
         <Spacer x={1} />
 
         <Flex flexDirection="column">
-          <Text variant="xs">{item?.artist?.name}</Text>
+          <RouterLink to={`/artist/${item?.artist?.slug}`}>
+            <Text variant="xs">{item?.artist?.name}</Text>
+          </RouterLink>
           <Text variant="xs" color="black60">
             <Text fontStyle="italic" display="inline" variant="xs">
               {item?.title}
