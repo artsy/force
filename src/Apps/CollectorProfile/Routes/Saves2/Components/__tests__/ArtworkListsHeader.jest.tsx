@@ -1,9 +1,9 @@
 import { render, screen, fireEvent } from "@testing-library/react"
-import { SavesHeader } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesHeader"
+import { ArtworkListsHeader } from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkListsHeader"
 
-describe("SavesHeader", () => {
+describe("ArtworkListsHeader", () => {
   it("renders header text and creates button", () => {
-    render(<SavesHeader />)
+    render(<ArtworkListsHeader />)
 
     const title = "Saved Artworks"
     const description = "Curate your own lists of the works you love"
@@ -13,7 +13,7 @@ describe("SavesHeader", () => {
   })
 
   it("opens the 'Create a new list' modal", () => {
-    render(<SavesHeader />)
+    render(<ArtworkListsHeader />)
 
     const button = screen.getByText("Create New List")
     fireEvent.click(button)
