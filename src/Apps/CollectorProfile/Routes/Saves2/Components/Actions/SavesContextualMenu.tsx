@@ -5,20 +5,22 @@ import {
   ContextualMenuItem,
 } from "Components/ContextualMenu"
 import {
-  DeleteSavesModal,
-  DeleteSavesModalCollection,
-} from "./DeleteSavesModal"
+  DeleteArtworkListModal,
+  DeleteArtworkListEntity,
+} from "./DeleteArtworkListModal"
 import { useTranslation } from "react-i18next"
 import {
-  EditSavesModal,
-  EditSavesModalCollection,
-} from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/EditSavesModal"
+  EditArtworkListModal,
+  EditArtworkListEntity,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/EditArtworkListModal"
+
+export type ArtworkListEntity = DeleteArtworkListEntity & EditArtworkListEntity
 
 interface Props {
-  collection: DeleteSavesModalCollection & EditSavesModalCollection
+  artworkList: ArtworkListEntity
 }
 
-export const SavesContextualMenu: React.FC<Props> = ({ collection }) => {
+export const SavesContextualMenu: React.FC<Props> = ({ artworkList }) => {
   const { t } = useTranslation()
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)
@@ -43,11 +45,17 @@ export const SavesContextualMenu: React.FC<Props> = ({ collection }) => {
   return (
     <>
       {isEditModalOpen && (
-        <EditSavesModal collection={collection} onClose={closeEditModal} />
+        <EditArtworkListModal
+          artworkList={artworkList}
+          onClose={closeEditModal}
+        />
       )}
 
       {isDeleteModalOpen && (
-        <DeleteSavesModal collection={collection} onClose={closeDeleteModal} />
+        <DeleteArtworkListModal
+          artworkList={artworkList}
+          onClose={closeDeleteModal}
+        />
       )}
 
       <ContextualMenu>

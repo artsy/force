@@ -2,13 +2,13 @@ import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 
 import { useMutation } from "Utils/Hooks/useMutation"
 import {
-  EditSavesModal,
-  EditSavesModalCollection,
-} from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/EditSavesModal"
+  EditArtworkListModal,
+  EditArtworkListEntity,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/EditArtworkListModal"
 
 jest.mock("Utils/Hooks/useMutation")
 
-const collection: EditSavesModalCollection = {
+const artworkList: EditArtworkListEntity = {
   internalID: "foobar",
   name: "Foo Bar",
 }
@@ -21,7 +21,7 @@ const setup = () => {
   return { nameInputField, saveButton, cancelButton }
 }
 
-describe("EditSavesModal", () => {
+describe("EditArtworkListModal", () => {
   let closeEditModal: jest.Mock
   let submitMutation: jest.Mock
 
@@ -34,7 +34,12 @@ describe("EditSavesModal", () => {
   })
 
   it("renders the modal content", async () => {
-    render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
+    render(
+      <EditArtworkListModal
+        artworkList={artworkList}
+        onClose={closeEditModal}
+      />
+    )
 
     expect(screen.getByText("Edit your list")).toBeInTheDocument()
     expect(screen.getByRole("button", { name: /Cancel/ })).toBeInTheDocument()
@@ -42,7 +47,12 @@ describe("EditSavesModal", () => {
   })
 
   it("dismisses when the Cancel button is clicked", async () => {
-    render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
+    render(
+      <EditArtworkListModal
+        artworkList={artworkList}
+        onClose={closeEditModal}
+      />
+    )
     const { cancelButton } = setup()
 
     fireEvent.click(cancelButton)
@@ -51,7 +61,12 @@ describe("EditSavesModal", () => {
   })
 
   it("calls the mutation when the Save button is clicked", async () => {
-    render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
+    render(
+      <EditArtworkListModal
+        artworkList={artworkList}
+        onClose={closeEditModal}
+      />
+    )
     const { nameInputField, saveButton } = setup()
 
     fireEvent.change(nameInputField, {
@@ -75,7 +90,12 @@ describe("EditSavesModal", () => {
   })
 
   it("trims extra whitespace", async () => {
-    render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
+    render(
+      <EditArtworkListModal
+        artworkList={artworkList}
+        onClose={closeEditModal}
+      />
+    )
     const { nameInputField, saveButton } = setup()
 
     fireEvent.change(nameInputField, {
@@ -99,7 +119,12 @@ describe("EditSavesModal", () => {
   })
 
   it("disables Save button until form is dirty", async () => {
-    render(<EditSavesModal collection={collection} onClose={closeEditModal} />)
+    render(
+      <EditArtworkListModal
+        artworkList={artworkList}
+        onClose={closeEditModal}
+      />
+    )
     const { nameInputField, saveButton } = setup()
 
     expect(saveButton).toBeDisabled()

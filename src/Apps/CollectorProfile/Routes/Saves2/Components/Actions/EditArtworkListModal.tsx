@@ -11,16 +11,16 @@ import EditIcon from "@artsy/icons/EditIcon"
 import { useTranslation } from "react-i18next"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
-import { useUpdateCollection } from "./Mutations/useUpdateCollection"
+import { useUpdateArtworkList } from "./Mutations/useUpdateArtworkList"
 import createLogger from "Utils/logger"
 
-export interface EditSavesModalCollection {
+export interface EditArtworkListEntity {
   internalID: string
   name: string
 }
 
-interface EditSavesModalProps {
-  collection: EditSavesModalCollection
+interface EditArtworkListModalProps {
+  artworkList: EditArtworkListEntity
   onClose: () => void
 }
 
@@ -30,16 +30,16 @@ interface FormikValues {
 
 const MAX_NAME_LENGTH = 40
 
-const logger = createLogger("EditSavesModal")
+const logger = createLogger("EditArtworkListModal")
 
-export const EditSavesModal: React.FC<EditSavesModalProps> = ({
-  collection,
+export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
+  artworkList,
   onClose,
 }) => {
   const { t } = useTranslation()
 
   const initialValues: FormikValues = {
-    name: collection.name,
+    name: artworkList.name,
   }
 
   const validationSchema = Yup.object().shape({
@@ -48,7 +48,7 @@ export const EditSavesModal: React.FC<EditSavesModalProps> = ({
       .max(MAX_NAME_LENGTH),
   })
 
-  const { submitMutation } = useUpdateCollection()
+  const { submitMutation } = useUpdateArtworkList()
 
   const { sendToast } = useToasts()
 
@@ -57,7 +57,7 @@ export const EditSavesModal: React.FC<EditSavesModalProps> = ({
       await submitMutation({
         variables: {
           input: {
-            id: collection.internalID,
+            id: artworkList.internalID,
             name: formikValues.name.trim(),
           },
         },

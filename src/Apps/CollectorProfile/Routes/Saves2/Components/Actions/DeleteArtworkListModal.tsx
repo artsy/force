@@ -1,23 +1,26 @@
 import { Button, Flex, ModalDialog, Text, useToasts } from "@artsy/palette"
-import { useDeleteCollection } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/Mutations/useDeleteCollection"
+import { useDeleteArtworkList } from "./Mutations/useDeleteArtworkList"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "System/Router/useRouter"
 
-export interface DeleteSavesModalCollection {
+export interface DeleteArtworkListEntity {
   internalID: string
   name: string
 }
 
 interface Props {
-  collection: DeleteSavesModalCollection
+  artworkList: DeleteArtworkListEntity
   onClose: () => void
 }
 
-export const DeleteSavesModal: React.FC<Props> = ({ collection, onClose }) => {
+export const DeleteArtworkListModal: React.FC<Props> = ({
+  artworkList,
+  onClose,
+}) => {
   const { t } = useTranslation()
   const { router } = useRouter()
 
-  const { submitMutation } = useDeleteCollection()
+  const { submitMutation } = useDeleteArtworkList()
 
   const { sendToast } = useToasts()
 
@@ -26,7 +29,7 @@ export const DeleteSavesModal: React.FC<Props> = ({ collection, onClose }) => {
       await submitMutation({
         variables: {
           input: {
-            id: collection.internalID,
+            id: artworkList.internalID,
           },
         },
         rejectIf: res => {
@@ -58,7 +61,7 @@ export const DeleteSavesModal: React.FC<Props> = ({ collection, onClose }) => {
   return (
     <ModalDialog
       title={t("collectorSaves.deleteListModal.title", {
-        name: collection.name,
+        name: artworkList.name,
       })}
       onClose={onClose}
       footer={
