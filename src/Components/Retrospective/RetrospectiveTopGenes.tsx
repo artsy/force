@@ -24,8 +24,8 @@ export const RetrospectiveTopGenes: FC<RetrospectiveTopGenesProps> = ({
           name
           image {
             cropped(
-              width: 150
-              height: 150
+              width: 100
+              height: 100
               version: ["big_and_tall", "square500", "tall"]
             ) {
               width
@@ -56,13 +56,14 @@ export const RetrospectiveTopGenes: FC<RetrospectiveTopGenesProps> = ({
 
   useEffect(() => {
     const init = async () => {
+      if (loading) return
       await wait(500)
       transition("In")
     }
 
     init()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [loading])
 
   if (loading) return null
 

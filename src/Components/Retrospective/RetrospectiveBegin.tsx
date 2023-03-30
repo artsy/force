@@ -47,15 +47,15 @@ export const RetrospectiveBegin: FC<RetrospectiveBeginProps> = ({
       p={4}
       onClick={handleClick}
     >
-      <Logo ref={register(0)}>
+      <Logo ref={register(0)} data-state="Out">
         <ArtsyLogoIcon />
       </Logo>
 
-      <Title ref={register(1)} variant="xxxl">
+      <Title ref={register(1)} variant="xxxl" data-state="Out">
         Your 2023 Retrospective
       </Title>
 
-      <Cta ref={register(2)} variant="xxxl" color="black60">
+      <Cta ref={register(2)} variant="xxxl" color="black60" data-state="Out">
         Let’s Begin
       </Cta>
     </Clickable>

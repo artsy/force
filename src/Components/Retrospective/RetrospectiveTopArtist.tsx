@@ -31,8 +31,8 @@ export const RetrospectiveTopArtist: FC<RetrospectiveTopArtistProps> = ({
                 dominantColors
                 image {
                   resized(
-                    width: 800
-                    height: 800
+                    width: 600
+                    height: 500
                     version: ["normalized", "larger", "large"]
                   ) {
                     width
@@ -71,13 +71,14 @@ export const RetrospectiveTopArtist: FC<RetrospectiveTopArtistProps> = ({
 
   useEffect(() => {
     const init = async () => {
+      if (loading) return
       await wait(500)
       transition("In")
     }
 
     init()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [loading])
 
   useEffect(() => {
     document.body.style.backgroundColor = backgroundColor

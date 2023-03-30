@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<044009a0af90cfe401aea23a83216f37>>
+ * @generated SignedSource<<c121d0ea77c6a7c82677f118b15c3a98>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,9 +31,6 @@ export type RetrospectiveYourArtTasteQuery$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly gene: {
-    readonly name: string | null;
-  } | null;
 };
 export type RetrospectiveYourArtTasteQuery = {
   response: RetrospectiveYourArtTasteQuery$data;
@@ -57,20 +54,6 @@ v2 = {
   "name": "rarity"
 },
 v3 = [
-  {
-    "kind": "Variable",
-    "name": "id",
-    "variableName": "geneID"
-  }
-],
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v5 = [
   {
     "kind": "Variable",
     "name": "attributionClass",
@@ -97,21 +80,21 @@ v5 = [
     "value": "-merchandisability"
   }
 ],
-v6 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "title",
   "storageKey": null
 },
-v7 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v8 = {
+v6 = {
   "alias": null,
   "args": null,
   "concreteType": "Image",
@@ -125,7 +108,7 @@ v8 = {
         {
           "kind": "Literal",
           "name": "height",
-          "value": 300
+          "value": 200
         },
         {
           "kind": "Literal",
@@ -170,12 +153,12 @@ v8 = {
           "storageKey": null
         }
       ],
-      "storageKey": "resized(height:300,version:[\"larger\",\"large\"])"
+      "storageKey": "resized(height:200,version:[\"larger\",\"large\"])"
     }
   ],
   "storageKey": null
 },
-v9 = {
+v7 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -196,18 +179,6 @@ return {
       {
         "alias": null,
         "args": (v3/*: any*/),
-        "concreteType": "Gene",
-        "kind": "LinkedField",
-        "name": "gene",
-        "plural": false,
-        "selections": [
-          (v4/*: any*/)
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v5/*: any*/),
         "concreteType": "FilterArtworksConnection",
         "kind": "LinkedField",
         "name": "artworksConnection",
@@ -229,9 +200,9 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v6/*: any*/),
-                  (v7/*: any*/),
-                  (v8/*: any*/)
+                  (v4/*: any*/),
+                  (v5/*: any*/),
+                  (v6/*: any*/)
                 ],
                 "storageKey": null
               }
@@ -258,19 +229,6 @@ return {
       {
         "alias": null,
         "args": (v3/*: any*/),
-        "concreteType": "Gene",
-        "kind": "LinkedField",
-        "name": "gene",
-        "plural": false,
-        "selections": [
-          (v4/*: any*/),
-          (v9/*: any*/)
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v5/*: any*/),
         "concreteType": "FilterArtworksConnection",
         "kind": "LinkedField",
         "name": "artworksConnection",
@@ -292,33 +250,33 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
+                  (v4/*: any*/),
+                  (v5/*: any*/),
                   (v6/*: any*/),
-                  (v7/*: any*/),
-                  (v8/*: any*/),
-                  (v9/*: any*/)
+                  (v7/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
             "storageKey": null
           },
-          (v9/*: any*/)
+          (v7/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "4832a6fad57db5e5ff8f50daf24fdf7e",
+    "cacheID": "67609e0c1d28d68f129dde8dd386d874",
     "id": null,
     "metadata": {},
     "name": "RetrospectiveYourArtTasteQuery",
     "operationKind": "query",
-    "text": "query RetrospectiveYourArtTasteQuery(\n  $medium: String!\n  $geneID: String!\n  $rarity: [String]!\n) {\n  gene(id: $geneID) {\n    name\n    id\n  }\n  artworksConnection(first: 50, medium: $medium, geneID: $geneID, attributionClass: $rarity, sort: \"-merchandisability\") {\n    edges {\n      node {\n        title\n        href\n        image {\n          resized(height: 300, version: [\"larger\", \"large\"]) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query RetrospectiveYourArtTasteQuery(\n  $medium: String!\n  $geneID: String!\n  $rarity: [String]!\n) {\n  artworksConnection(first: 50, medium: $medium, geneID: $geneID, attributionClass: $rarity, sort: \"-merchandisability\") {\n    edges {\n      node {\n        title\n        href\n        image {\n          resized(height: 200, version: [\"larger\", \"large\"]) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b77f2931c2ab8d4362ffa2d2c75cd9f4";
+(node as any).hash = "23a1908c96bb362af028ac07d46cc330";
 
 export default node;

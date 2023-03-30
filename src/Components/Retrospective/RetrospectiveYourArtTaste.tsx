@@ -34,9 +34,6 @@ export const RetrospectiveYourArtTaste: FC<RetrospectiveYourArtTasteProps> = ({
         $geneID: String!
         $rarity: [String]!
       ) {
-        gene(id: $geneID) {
-          name
-        }
         artworksConnection(
           first: 50
           medium: $medium
@@ -49,7 +46,7 @@ export const RetrospectiveYourArtTaste: FC<RetrospectiveYourArtTasteProps> = ({
               title
               href
               image {
-                resized(height: 300, version: ["larger", "large"]) {
+                resized(height: 200, version: ["larger", "large"]) {
                   width
                   height
                   src
@@ -84,13 +81,14 @@ export const RetrospectiveYourArtTaste: FC<RetrospectiveYourArtTasteProps> = ({
 
   useEffect(() => {
     const init = async () => {
+      if (loading) return
       await wait(500)
       transition("In")
     }
 
     init()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [loading])
 
   const artworks = compact(
     data?.artworksConnection?.edges?.map(edge => edge?.node)

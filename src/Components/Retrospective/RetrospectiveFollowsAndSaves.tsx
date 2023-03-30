@@ -96,7 +96,7 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
         style={{ gap: 10 }}
         px={2}
         pt={2}
-        pb={6}
+        pb={4}
         background="linear-gradient(rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0) 100%);"
       >
         {keys.map((key, i) => {

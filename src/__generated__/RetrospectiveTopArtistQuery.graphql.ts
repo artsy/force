@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fe8f91f8fa3af4814281cbf0da6e10dc>>
+ * @generated SignedSource<<8504c9dbc169f5c07c270355cfcdcb63>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -100,7 +100,7 @@ v6 = {
         {
           "kind": "Literal",
           "name": "height",
-          "value": 800
+          "value": 500
         },
         {
           "kind": "Literal",
@@ -114,7 +114,7 @@ v6 = {
         {
           "kind": "Literal",
           "name": "width",
-          "value": 800
+          "value": 600
         }
       ],
       "concreteType": "ResizedImageUrl",
@@ -151,7 +151,7 @@ v6 = {
           "storageKey": null
         }
       ],
-      "storageKey": "resized(height:800,version:[\"normalized\",\"larger\",\"large\"],width:800)"
+      "storageKey": "resized(height:500,version:[\"normalized\",\"larger\",\"large\"],width:600)"
     }
   ],
   "storageKey": null
@@ -281,16 +281,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cbdaa09be39ae1819211af846e280e5c",
+    "cacheID": "71eda9473308260709f4131945cc1b30",
     "id": null,
     "metadata": {},
     "name": "RetrospectiveTopArtistQuery",
     "operationKind": "query",
-    "text": "query RetrospectiveTopArtistQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    slug\n    name\n    iconicArtworks: artworksConnection(first: 1, sort: ICONICITY_DESC) {\n      edges {\n        node {\n          dominantColors\n          image {\n            resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n              width\n              height\n              src\n              srcSet\n            }\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query RetrospectiveTopArtistQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    slug\n    name\n    iconicArtworks: artworksConnection(first: 1, sort: ICONICITY_DESC) {\n      edges {\n        node {\n          dominantColors\n          image {\n            resized(width: 600, height: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n              width\n              height\n              src\n              srcSet\n            }\n          }\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f03fd0e8bc2e562c5b46f036c7df9890";
+(node as any).hash = "fbe6515eedd53640fd000ebc2df67076";
 
 export default node;

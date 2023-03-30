@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<82d5aeca40f3935b079489bbb2b1dd93>>
+ * @generated SignedSource<<855eaf7cab27aef8c148581c0a77900d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -74,7 +74,7 @@ v4 = {
         {
           "kind": "Literal",
           "name": "height",
-          "value": 150
+          "value": 100
         },
         {
           "kind": "Literal",
@@ -88,7 +88,7 @@ v4 = {
         {
           "kind": "Literal",
           "name": "width",
-          "value": 150
+          "value": 100
         }
       ],
       "concreteType": "CroppedImageUrl",
@@ -125,7 +125,7 @@ v4 = {
           "storageKey": null
         }
       ],
-      "storageKey": "cropped(height:150,version:[\"big_and_tall\",\"square500\",\"tall\"],width:150)"
+      "storageKey": "cropped(height:100,version:[\"big_and_tall\",\"square500\",\"tall\"],width:100)"
     }
   ],
   "storageKey": null
@@ -185,16 +185,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "aca15ca5ad51825cdd53050748af525f",
+    "cacheID": "cebd6ded1a70dd1877695cf9230e48ac",
     "id": null,
     "metadata": {},
     "name": "RetrospectiveTopGenesQuery",
     "operationKind": "query",
-    "text": "query RetrospectiveTopGenesQuery(\n  $ids: [String!]!\n) {\n  genes(slugs: $ids) {\n    slug\n    name\n    image {\n      cropped(width: 150, height: 150, version: [\"big_and_tall\", \"square500\", \"tall\"]) {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query RetrospectiveTopGenesQuery(\n  $ids: [String!]!\n) {\n  genes(slugs: $ids) {\n    slug\n    name\n    image {\n      cropped(width: 100, height: 100, version: [\"big_and_tall\", \"square500\", \"tall\"]) {\n        width\n        height\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a324c6a795e588cccb7a853e29992c1b";
+(node as any).hash = "5fb60cf8398ec3b09f156974000e5763";
 
 export default node;

@@ -16,7 +16,7 @@ interface RetrospectiveTopArtistsProps {
 export const RetrospectiveTopArtists: FC<RetrospectiveTopArtistsProps> = ({
   data: { topArtists },
 }) => {
-  const { data } = useClientQuery<RetrospectiveTopArtistsQuery>({
+  const { data, loading } = useClientQuery<RetrospectiveTopArtistsQuery>({
     query: graphql`
       query RetrospectiveTopArtistsQuery($ids: [String!]!) {
         artists(slugs: $ids) {
@@ -40,13 +40,14 @@ export const RetrospectiveTopArtists: FC<RetrospectiveTopArtistsProps> = ({
 
   useEffect(() => {
     const init = async () => {
-      await wait(1000)
+      if (loading) return
+      await wait(500)
       transition("In")
     }
 
     init()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [loading])
 
   return (
     <Box
@@ -69,7 +70,7 @@ export const RetrospectiveTopArtists: FC<RetrospectiveTopArtistsProps> = ({
         width="100%"
         display="flex"
         flexDirection="column"
-        style={{ gap: 40 }}
+        style={{ gap: 20 }}
       >
         {topArtists.map(([slug, count], i) => {
           const percentage = percentages[i]
