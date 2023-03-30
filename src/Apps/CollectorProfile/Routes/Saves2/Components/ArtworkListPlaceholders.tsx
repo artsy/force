@@ -11,11 +11,11 @@ import { times } from "lodash"
 import { FC } from "react"
 import { Media } from "Utils/Responsive"
 
-interface SavesArtworksRowPlaceholderProps {
+interface ArtworksRowPlaceholderProps {
   count: number
 }
 
-const SavesArtworkPlaceholder = () => {
+const ArtworkGridPlaceholder = () => {
   return (
     <Box width="100%">
       <SkeletonBox height={300} />
@@ -24,37 +24,35 @@ const SavesArtworkPlaceholder = () => {
   )
 }
 
-const SavesArtworksRowPlaceholder: FC<SavesArtworksRowPlaceholderProps> = ({
-  count,
-}) => {
+const ArtworksRowPlaceholder: FC<ArtworksRowPlaceholderProps> = ({ count }) => {
   return (
     <Flex flexDirection="row">
       <Join separator={<Spacer x={2} />}>
         {times(count).map((_, index) => (
-          <SavesArtworkPlaceholder key={`artwork-grid-placeholder-${index}`} />
+          <ArtworkGridPlaceholder key={`artwork-grid-placeholder-${index}`} />
         ))}
       </Join>
     </Flex>
   )
 }
 
-const SavesArtworksRowResponsivePlaceholder = () => {
+const ArtworksRowResponsivePlaceholder = () => {
   return (
     <>
       {/* Mobile view */}
       <Media lessThan="lg">
-        <SavesArtworksRowPlaceholder count={2} />
+        <ArtworksRowPlaceholder count={2} />
       </Media>
 
       {/* Desktop view */}
       <Media greaterThanOrEqual="lg">
-        <SavesArtworksRowPlaceholder count={3} />
+        <ArtworksRowPlaceholder count={3} />
       </Media>
     </>
   )
 }
 
-const SavesArtworksCountPlaceholder = () => {
+const ArtworksCountPlaceholder = () => {
   return (
     <SkeletonText variant="sm" fontWeight="bold">
       36 Artworks:
@@ -62,43 +60,43 @@ const SavesArtworksCountPlaceholder = () => {
   )
 }
 
-const SavesSortPlaceholder = () => {
+const SortPlaceholder = () => {
   return <SkeletonBox width={200} height={50} />
 }
 
-const SavesArtworksGridHeaderPlaceholder = () => {
+const HeaderPlaceholder = () => {
   return (
     <>
       {/* Mobile view */}
       <Media at="xs">
-        <SavesSortPlaceholder />
+        <SortPlaceholder />
 
         <Spacer y={2} />
 
-        <SavesArtworksCountPlaceholder />
+        <ArtworksCountPlaceholder />
       </Media>
 
       {/* Desktop view */}
       <Media greaterThan="xs">
         <Flex flexDirection="row" justifyContent="space-between">
-          <SavesArtworksCountPlaceholder />
-          <SavesSortPlaceholder />
+          <ArtworksCountPlaceholder />
+          <SortPlaceholder />
         </Flex>
       </Media>
     </>
   )
 }
 
-export const SavesArtworksGridPlaceholder = () => {
+export const ArtworkListArtworksGridPlaceholder = () => {
   return (
     <>
-      <SkeletonText variant="lg-display">Collection name</SkeletonText>
+      <SkeletonText variant="lg-display">Artwork list name</SkeletonText>
       <Spacer y={4} />
-      <SavesArtworksGridHeaderPlaceholder />
+      <HeaderPlaceholder />
       <Spacer y={2} />
-      <SavesArtworksRowResponsivePlaceholder />
+      <ArtworksRowResponsivePlaceholder />
       <Spacer y={4} />
-      <SavesArtworksRowResponsivePlaceholder />
+      <ArtworksRowResponsivePlaceholder />
     </>
   )
 }

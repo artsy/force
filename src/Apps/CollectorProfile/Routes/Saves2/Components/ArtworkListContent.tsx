@@ -12,7 +12,7 @@ import { useRouter } from "System/Router/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Flex, Join, Spacer, Text } from "@artsy/palette"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { SavesArtworksGridPlaceholder } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesPlaceholders"
+import { ArtworkListArtworksGridPlaceholder } from "./ArtworkListPlaceholders"
 import { ArtworkListContextualMenu } from "./Actions/ArtworkListContextualMenu"
 
 interface ArtworkListContentQueryRendererProps {
@@ -125,7 +125,7 @@ export const ArtworkListContentQueryRenderer: FC<ArtworkListContentQueryRenderer
 }) => {
   return (
     <SystemQueryRenderer<ArtworkListContentQuery>
-      placeholder={<SavesArtworksGridPlaceholder />}
+      placeholder={<ArtworkListArtworksGridPlaceholder />}
       query={QUERY}
       variables={{
         listID,
@@ -139,7 +139,7 @@ export const ArtworkListContentQueryRenderer: FC<ArtworkListContentQueryRenderer
         }
 
         if (!props?.me) {
-          return <SavesArtworksGridPlaceholder />
+          return <ArtworkListArtworksGridPlaceholder />
         }
 
         return <ArtworkListContentRefetchContainer me={props.me} />
