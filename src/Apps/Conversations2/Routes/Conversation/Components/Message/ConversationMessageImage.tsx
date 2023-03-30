@@ -1,10 +1,4 @@
-import {
-  Clickable,
-  Image,
-  ImageProps,
-  Skeleton,
-  SkeletonBox,
-} from "@artsy/palette"
+import { Clickable, Image, ImageProps } from "@artsy/palette"
 import { FC, useState } from "react"
 
 export const ConversationMessageImage: FC<ImageProps> = ({
@@ -15,7 +9,6 @@ export const ConversationMessageImage: FC<ImageProps> = ({
   const [isLoading, setIsLoading] = useState(true)
   return (
     <>
-      {isLoading && <ConversationMessageImagePlaceholder />}
       <Clickable display="flex" onClick={() => window?.open(src, "_blank")}>
         <Image
           {...props}
@@ -30,13 +23,5 @@ export const ConversationMessageImage: FC<ImageProps> = ({
         />
       </Clickable>
     </>
-  )
-}
-
-const ConversationMessageImagePlaceholder: FC = () => {
-  return (
-    <Skeleton>
-      <SkeletonBox width="100%" height={800} borderRadius={10} />
-    </Skeleton>
   )
 }

@@ -4,30 +4,17 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import { useEffect, useState, FC, useRef } from "react"
 import { useFormik, FormikHelpers } from "formik"
-import { v4 as uuidv4 } from "uuid"
 import * as Yup from "yup"
-import {
-  Button,
-  Flex,
-  Spacer,
-  TextArea,
-  useToasts,
-  Input,
-} from "@artsy/palette"
-import PaperClipIcon from "@artsy/icons/PaperClipIcon"
+import { Button, Flex, TextArea, useToasts } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 import { sentConversationMessage } from "@artsy/cohesion"
 import { useSystemContext } from "System/useSystemContext"
 import { useRouter } from "System/Router/useRouter"
 import { useSendConversationMessage } from "Apps/Conversations2/mutations/useSendConversationMessage"
-import { useAttachments } from "Apps/Conversations2/hooks/useAttachments"
-import { ConversationAttachmentsList } from "Apps/Conversations2/Routes/Conversation/Components/ConversationAttachmentsList"
-import {
-  ConversationMessageAttachmentInput,
-  useSendConversationMessageMutation$data,
-} from "__generated__/useSendConversationMessageMutation.graphql"
+import { useSendConversationMessageMutation$data } from "__generated__/useSendConversationMessageMutation.graphql"
 import { ConversationReply_conversation$key } from "__generated__/ConversationReply_conversation.graphql"
+import { Conversation2CTA } from "Apps/Conversations2/Routes/Conversation/Components/ConversationCTA/Conversation2CTA"
 
 interface ConversationReplyProps {
   conversation: ConversationReply_conversation$key
@@ -39,11 +26,6 @@ interface ConversationReplyFormValues {
 
 const TEXT_AREA_MIN_HEIGHT = "50px"
 
-export const formatSize = (size: number): string => {
-  const mb = size / 1_000_000
-  return mb >= 1 ? `${mb.toFixed(1)} MB` : `${Math.round(size / 1000)} KB`
-}
-
 export const ConversationReply: FC<ConversationReplyProps> = ({
   conversation,
 }) => {
@@ -54,12 +36,13 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
   const [isLoading, setIsLoading] = useState(false)
   const [commit, isSendingMutation] = useSendConversationMessage()
   const [textAreaHeight, setTextAreaHeight] = useState(TEXT_AREA_MIN_HEIGHT)
-  const fileAttachmentRef = useRef<HTMLInputElement>(null)
   const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
   const data = useFragment(
     graphql`
       fragment ConversationReply_conversation on Conversation {
+        ...Conversation2CTA_conversation
+
         from @required(action: NONE) {
           email @required(action: NONE)
           id @required(action: NONE)
@@ -82,16 +65,6 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
     conversation
   )
 
-  const {
-    attachments,
-    isLoadingAttachments,
-    error,
-    addAttachments,
-    removeAttachment,
-    clearAttachments,
-    clearError,
-  } = useAttachments(data?.inquiryID)
-
   const handleError = (error?: unknown) => {
     console.error("Error sending message:", error)
     sendToast({
@@ -105,7 +78,7 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
     values: ConversationReplyFormValues,
     helpers: FormikHelpers<ConversationReplyFormValues>
   ) => {
-    if (!data || !user || isLoadingAttachments) {
+    if (!data || !user) {
       sendToast({
         variant: "alert",
         message: "Wait for the attachments to be fully loaded.",
@@ -122,10 +95,6 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
           bodyText: values.message,
           id: data.internalID,
           replyToMessageID: data.lastMessageID ?? "",
-          attachments: attachments.map(
-            ({ numericSize: _, id: __, file: ___, ...rest }) =>
-              rest as ConversationMessageAttachmentInput
-          ),
         },
       },
       onCompleted(response: useSendConversationMessageMutation$data, errors) {
@@ -144,7 +113,6 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
           })
         )
         setIsLoading(false)
-        clearAttachments()
         setTextAreaHeight(TEXT_AREA_MIN_HEIGHT)
       },
       onError: handleError,
@@ -166,20 +134,8 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
 
   useEffect(() => {
     resetForm()
-    clearAttachments()
-  }, [data?.internalID, resetForm, clearAttachments])
-
-  useEffect(() => {
-    if (error === "size") {
-      sendToast({
-        variant: "error",
-        message:
-          "Unable to attach document (exceeds message size limit of 20MB)",
-        ttl: 6000,
-      })
-      clearError()
-    }
-  }, [error, clearError, sendToast])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data?.internalID, resetForm])
 
   // Listen for Command+Enter keypress
   useEffect(() => {
@@ -211,60 +167,14 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
       backgroundColor="black5"
       flexDirection="column"
     >
-      <ConversationAttachmentsList
-        attachments={attachments}
-        onRemoveAttachment={removeAttachment}
-      />
+      <Conversation2CTA conversation={data} px={1} pt={1} />
+
       <form name="reply" onSubmit={handleSubmit}>
         <Flex alignItems="flex-end" position="relative">
-          <label
-            htmlFor="attachmentsFileInput"
-            style={{ cursor: "pointer" }}
-            onClick={() =>
-              trackEvent({
-                action: "Click",
-                label: "Attach",
-                context_module: "conversations",
-                artwork_id: data.items?.[0]?.item?.id,
-              })
-            }
-            data-testid="attach-button"
-          >
-            <Flex size={50} alignItems="center" justifyContent="center">
-              <PaperClipIcon color="black100" size={16} />
-            </Flex>
-            <Spacer y={1} />
-          </label>
-          <Input
-            type="file"
-            hidden
-            display="none"
-            multiple
-            accept="image/*, .pdf"
-            id="attachmentsFileInput"
-            ref={fileAttachmentRef}
-            onChange={({ target }) => {
-              if (!target.files?.length) return
-              const files = Array.from(target.files).map(file => ({
-                name: file.name,
-                type: file.type,
-                size: formatSize(file.size),
-                numericSize: file.size,
-                id: uuidv4(),
-                file,
-              }))
-              addAttachments(files)
-              if (fileAttachmentRef.current) {
-                fileAttachmentRef.current.value = ""
-              }
-            }}
-            data-testid="attachments-input"
-          />
-
           <TextArea
             ref={textAreaRef}
             my={1}
-            mr={1}
+            mx={1}
             style={{
               borderRadius: "10px",
               minHeight: "50px",
@@ -302,4 +212,9 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
       </form>
     </Flex>
   )
+}
+
+export const formatSize = (size: number): string => {
+  const mb = size / 1_000_000
+  return mb >= 1 ? `${mb.toFixed(1)} MB` : `${Math.round(size / 1000)} KB`
 }

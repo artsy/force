@@ -5,7 +5,7 @@ import { useRouter } from "System/Router/useRouter"
 // Controls which column we are currently display
 // and exposes methods to change in between these columns
 export const useMobileLayoutActions = () => {
-  const { match, router } = useRouter()
+  const { match } = useRouter()
   const [currentColumn, setCurrentColumn] = useState<
     "sidebar" | "conversation" | "detail"
   >("sidebar")
@@ -22,8 +22,7 @@ export const useMobileLayoutActions = () => {
 
   const goToSidebar = useCallback(() => {
     setCurrentColumn("sidebar")
-    router.push(DEFAULT_CONVERSATION_ID)
-  }, [router])
+  }, [])
 
   const goToDetails = useCallback(() => {
     setCurrentColumn("detail")

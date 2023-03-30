@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<41373fc9414e873b74451b8a4fd4a3da>>
+ * @generated SignedSource<<2b16917531f15966bf215924abf512c3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationDetails_conversation$data = {
-  readonly fromUser: {
-    readonly collectorProfile: {
-      readonly " $fragmentSpreads": FragmentRefs<"ConversationCollectorProfileInformation_collectorProfileType">;
-    } | null;
-    readonly " $fragmentSpreads": FragmentRefs<"ConversationCollectorProfileHeader_user">;
-  } | null;
   readonly orderConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -25,7 +19,7 @@ export type ConversationDetails_conversation$data = {
       } | null;
     } | null>;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ConversationArtwork_conversation" | "ConversationHelpCenter_conversation" | "ConversationManageThisInquiry_conversation">;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationArtwork_conversation" | "ConversationHelpCenter_conversation">;
   readonly " $fragmentType": "ConversationDetails_conversation";
 };
 export type ConversationDetails_conversation$key = {
@@ -39,38 +33,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ConversationDetails_conversation",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "User",
-      "kind": "LinkedField",
-      "name": "fromUser",
-      "plural": false,
-      "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ConversationCollectorProfileHeader_user"
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "CollectorProfileType",
-          "kind": "LinkedField",
-          "name": "collectorProfile",
-          "plural": false,
-          "selections": [
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "ConversationCollectorProfileInformation_collectorProfileType"
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": [
@@ -147,11 +109,6 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ConversationManageThisInquiry_conversation"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
       "name": "ConversationHelpCenter_conversation"
     }
   ],
@@ -159,6 +116,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "efdb8c756b4079ca40517331c13f46ef";
+(node as any).hash = "32a79da268421b83ab3cbeceedb473fe";
 
 export default node;

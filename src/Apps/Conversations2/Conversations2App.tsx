@@ -3,7 +3,7 @@
  * to the appropriate conversation ID page.
  */
 
-import { Box } from "@artsy/palette"
+import { Box, Flex } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { extractNodes } from "Utils/extractNodes"
@@ -26,7 +26,7 @@ export const Conversations2App: React.FC<ConversationsV2StubPageProps> = ({
     ?.internalID
 
   return (
-    <>
+    <Flex flex={1}>
       <Media greaterThan="sm">
         <Sentinel
           onIntersection={() =>
@@ -45,7 +45,7 @@ export const Conversations2App: React.FC<ConversationsV2StubPageProps> = ({
           }
         />
       </Media>
-    </>
+    </Flex>
   )
 }
 

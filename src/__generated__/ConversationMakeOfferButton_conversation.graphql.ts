@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<153d399c202200a542c3ca0394175f4d>>
+ * @generated SignedSource<<c36552d1604e5171d7bff20d2ec004c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,32 +10,29 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConversationArtwork_conversation$data = {
+export type ConversationMakeOfferButton_conversation$data = {
+  readonly internalID: string | null;
   readonly items: ReadonlyArray<{
-    readonly item: {
+    readonly liveArtwork: {
       readonly __typename: "Artwork";
-      readonly artist: {
-        readonly name: string | null;
-        readonly slug: string;
-      } | null;
-      readonly date: string | null;
-      readonly id: string;
-      readonly image: {
-        readonly url: string | null;
-      } | null;
+      readonly editionSets: ReadonlyArray<{
+        readonly internalID: string;
+      } | null> | null;
+      readonly internalID: string;
+      readonly isEdition: boolean | null;
       readonly slug: string;
-      readonly title: string | null;
+      readonly " $fragmentSpreads": FragmentRefs<"ConfirmArtworkButton_artwork">;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     } | null;
   } | null> | null;
-  readonly " $fragmentType": "ConversationArtwork_conversation";
+  readonly " $fragmentType": "ConversationMakeOfferButton_conversation";
 };
-export type ConversationArtwork_conversation$key = {
-  readonly " $data"?: ConversationArtwork_conversation$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ConversationArtwork_conversation">;
+export type ConversationMakeOfferButton_conversation$key = {
+  readonly " $data"?: ConversationMakeOfferButton_conversation$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationMakeOfferButton_conversation">;
 };
 
 const node: ReaderFragment = (function(){
@@ -43,15 +40,16 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "internalID",
   "storageKey": null
 };
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ConversationArtwork_conversation",
+  "name": "ConversationMakeOfferButton_conversation",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -65,16 +63,9 @@ return {
           "args": null,
           "concreteType": null,
           "kind": "LinkedField",
-          "name": "item",
+          "name": "liveArtwork",
           "plural": false,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "__typename",
-              "storageKey": null
-            },
             {
               "kind": "InlineFragment",
               "selections": [
@@ -82,7 +73,14 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "id",
+                  "name": "__typename",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isEdition",
                   "storageKey": null
                 },
                 (v0/*: any*/),
@@ -90,52 +88,25 @@ return {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "date",
+                  "name": "slug",
                   "storageKey": null
                 },
                 {
                   "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "title",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "Artist",
+                  "concreteType": "EditionSet",
                   "kind": "LinkedField",
-                  "name": "artist",
-                  "plural": false,
+                  "name": "editionSets",
+                  "plural": true,
                   "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "name",
-                      "storageKey": null
-                    },
                     (v0/*: any*/)
                   ],
                   "storageKey": null
                 },
                 {
-                  "alias": null,
                   "args": null,
-                  "concreteType": "Image",
-                  "kind": "LinkedField",
-                  "name": "image",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "url",
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
+                  "kind": "FragmentSpread",
+                  "name": "ConfirmArtworkButton_artwork"
                 }
               ],
               "type": "Artwork",
@@ -153,6 +124,6 @@ return {
 };
 })();
 
-(node as any).hash = "dd69d366f41fdb5c692852966f4100b4";
+(node as any).hash = "6614867da1fdb370c26acbc1cdb46cd9";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b39257a95d1e2ca86d325190b88e528e>>
+ * @generated SignedSource<<50a607d5ea6c4e0da8a304e1185a4908>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,11 @@ export type ConversationMessages_conversation$data = {
         readonly " $fragmentSpreads": FragmentRefs<"ConversationMessage_message">;
       } | null;
     } | null> | null;
+    readonly pageInfo: {
+      readonly hasNextPage: boolean;
+      readonly hasPreviousPage: boolean;
+      readonly startCursor: string | null;
+    };
   };
   readonly " $fragmentType": "ConversationMessages_conversation";
 } | null;
@@ -75,6 +80,45 @@ const node: ReaderFragment = {
         "name": "__ConversationMessages_conversation_messagesConnection_connection",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "PageInfo",
+            "kind": "LinkedField",
+            "name": "pageInfo",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "hasNextPage",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "hasPreviousPage",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "startCursor",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "endCursor",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -136,31 +180,6 @@ const node: ReaderFragment = {
               }
             ],
             "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "PageInfo",
-            "kind": "LinkedField",
-            "name": "pageInfo",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "endCursor",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "hasNextPage",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
           }
         ],
         "storageKey": "__ConversationMessages_conversation_messagesConnection_connection(sort:\"DESC\")"
@@ -191,6 +210,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "3ad8969f427d1f6509b1a364f4b8780d";
+(node as any).hash = "68843758a0e1d9724ab86bfc7400634b";
 
 export default node;

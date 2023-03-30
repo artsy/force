@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<595c99d9981f7f6114f797397dd61f76>>
+ * @generated SignedSource<<da3ecff64566325ebc4b7278d4ff9f5e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,7 +33,7 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "__typename",
   "storageKey": null
 },
 v2 = {
@@ -43,37 +43,31 @@ v2 = {
   "name": "id",
   "storageKey": null
 },
-v3 = {
+v3 = [
+  (v2/*: any*/)
+],
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
+  "name": "slug",
   "storageKey": null
 },
-v4 = [
-  (v2/*: any*/)
-],
 v5 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v6 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
+v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
 v7 = {
   "enumValues": null,
   "nullable": true,
-  "plural": false,
-  "type": "Boolean"
-},
-v8 = {
-  "enumValues": null,
-  "nullable": false,
   "plural": false,
   "type": "String"
 };
@@ -120,145 +114,6 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": null,
-            "concreteType": "User",
-            "kind": "LinkedField",
-            "name": "fromUser",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "initials",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "CollectorProfileType",
-                "kind": "LinkedField",
-                "name": "collectorProfile",
-                "plural": false,
-                "selections": [
-                  (v1/*: any*/),
-                  {
-                    "alias": null,
-                    "args": [
-                      {
-                        "kind": "Literal",
-                        "name": "format",
-                        "value": "YYYY"
-                      }
-                    ],
-                    "kind": "ScalarField",
-                    "name": "artsyUserSince",
-                    "storageKey": "artsyUserSince(format:\"YYYY\")"
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isIdentityVerified",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isEmailConfirmed",
-                    "storageKey": null
-                  },
-                  (v2/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "profession",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "MyLocation",
-                    "kind": "LinkedField",
-                    "name": "location",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "city",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "country",
-                        "storageKey": null
-                      },
-                      (v2/*: any*/)
-                    ],
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isActiveInquirer",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "isActiveBidder",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "confirmedBuyerAt",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "otherRelevantPositions",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "bio",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "CollectorProfileArtists",
-                    "kind": "LinkedField",
-                    "name": "collectorProfileArtists",
-                    "plural": true,
-                    "selections": [
-                      (v1/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              (v2/*: any*/)
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
             "args": [
               {
                 "kind": "Literal",
@@ -299,7 +154,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/),
+                      (v1/*: any*/),
                       {
                         "kind": "TypeDiscriminator",
                         "abstractKey": "__isCommerceOrder"
@@ -351,7 +206,7 @@ return {
                                 "name": "from",
                                 "plural": false,
                                 "selections": [
-                                  (v3/*: any*/)
+                                  (v1/*: any*/)
                                 ],
                                 "storageKey": null
                               },
@@ -442,7 +297,7 @@ return {
                                     "kind": "LinkedField",
                                     "name": "artwork",
                                     "plural": false,
-                                    "selections": (v4/*: any*/),
+                                    "selections": (v3/*: any*/),
                                     "storageKey": null
                                   },
                                   (v2/*: any*/)
@@ -480,18 +335,12 @@ return {
                 "name": "item",
                 "plural": false,
                 "selections": [
-                  (v3/*: any*/),
+                  (v1/*: any*/),
                   {
                     "kind": "InlineFragment",
                     "selections": [
                       (v2/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "slug",
-                        "storageKey": null
-                      },
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -514,7 +363,14 @@ return {
                         "name": "artist",
                         "plural": false,
                         "selections": [
-                          (v1/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "name",
+                            "storageKey": null
+                          },
+                          (v4/*: any*/),
                           (v2/*: any*/)
                         ],
                         "storageKey": null
@@ -536,20 +392,6 @@ return {
                           }
                         ],
                         "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "availability",
-                        "storageKey": null
                       }
                     ],
                     "type": "Artwork",
@@ -557,7 +399,7 @@ return {
                   },
                   {
                     "kind": "InlineFragment",
-                    "selections": (v4/*: any*/),
+                    "selections": (v3/*: any*/),
                     "type": "Node",
                     "abstractKey": "__isNode"
                   }
@@ -574,7 +416,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a6f6fc9a2a4568285e4da2af50fdc309",
+    "cacheID": "125108f46713a6a4a4d565a4142a24fc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -584,48 +426,7 @@ return {
           "plural": false,
           "type": "Conversation"
         },
-        "conversation.fromUser": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "User"
-        },
-        "conversation.fromUser.collectorProfile": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CollectorProfileType"
-        },
-        "conversation.fromUser.collectorProfile.artsyUserSince": (v5/*: any*/),
-        "conversation.fromUser.collectorProfile.bio": (v5/*: any*/),
-        "conversation.fromUser.collectorProfile.collectorProfileArtists": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": true,
-          "type": "CollectorProfileArtists"
-        },
-        "conversation.fromUser.collectorProfile.collectorProfileArtists.name": (v5/*: any*/),
-        "conversation.fromUser.collectorProfile.confirmedBuyerAt": (v5/*: any*/),
-        "conversation.fromUser.collectorProfile.id": (v6/*: any*/),
-        "conversation.fromUser.collectorProfile.isActiveBidder": (v7/*: any*/),
-        "conversation.fromUser.collectorProfile.isActiveInquirer": (v7/*: any*/),
-        "conversation.fromUser.collectorProfile.isEmailConfirmed": (v7/*: any*/),
-        "conversation.fromUser.collectorProfile.isIdentityVerified": (v7/*: any*/),
-        "conversation.fromUser.collectorProfile.location": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "MyLocation"
-        },
-        "conversation.fromUser.collectorProfile.location.city": (v5/*: any*/),
-        "conversation.fromUser.collectorProfile.location.country": (v5/*: any*/),
-        "conversation.fromUser.collectorProfile.location.id": (v6/*: any*/),
-        "conversation.fromUser.collectorProfile.name": (v5/*: any*/),
-        "conversation.fromUser.collectorProfile.otherRelevantPositions": (v5/*: any*/),
-        "conversation.fromUser.collectorProfile.profession": (v5/*: any*/),
-        "conversation.fromUser.id": (v6/*: any*/),
-        "conversation.fromUser.initials": (v5/*: any*/),
-        "conversation.id": (v6/*: any*/),
+        "conversation.id": (v5/*: any*/),
         "conversation.items": {
           "enumValues": null,
           "nullable": true,
@@ -638,29 +439,28 @@ return {
           "plural": false,
           "type": "ConversationItemType"
         },
-        "conversation.items.item.__isNode": (v8/*: any*/),
-        "conversation.items.item.__typename": (v8/*: any*/),
+        "conversation.items.item.__isNode": (v6/*: any*/),
+        "conversation.items.item.__typename": (v6/*: any*/),
         "conversation.items.item.artist": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Artist"
         },
-        "conversation.items.item.artist.id": (v6/*: any*/),
-        "conversation.items.item.artist.name": (v5/*: any*/),
-        "conversation.items.item.availability": (v5/*: any*/),
-        "conversation.items.item.date": (v5/*: any*/),
-        "conversation.items.item.id": (v6/*: any*/),
+        "conversation.items.item.artist.id": (v5/*: any*/),
+        "conversation.items.item.artist.name": (v7/*: any*/),
+        "conversation.items.item.artist.slug": (v5/*: any*/),
+        "conversation.items.item.date": (v7/*: any*/),
+        "conversation.items.item.id": (v5/*: any*/),
         "conversation.items.item.image": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Image"
         },
-        "conversation.items.item.image.url": (v5/*: any*/),
-        "conversation.items.item.internalID": (v6/*: any*/),
-        "conversation.items.item.slug": (v6/*: any*/),
-        "conversation.items.item.title": (v5/*: any*/),
+        "conversation.items.item.image.url": (v7/*: any*/),
+        "conversation.items.item.slug": (v5/*: any*/),
+        "conversation.items.item.title": (v7/*: any*/),
         "conversation.orderConnection": {
           "enumValues": null,
           "nullable": true,
@@ -679,26 +479,26 @@ return {
           "plural": false,
           "type": "CommerceOrder"
         },
-        "conversation.orderConnection.edges.node.__isCommerceOrder": (v8/*: any*/),
-        "conversation.orderConnection.edges.node.__typename": (v8/*: any*/),
-        "conversation.orderConnection.edges.node.code": (v8/*: any*/),
-        "conversation.orderConnection.edges.node.formattedStateExpiresAt": (v5/*: any*/),
-        "conversation.orderConnection.edges.node.id": (v6/*: any*/),
+        "conversation.orderConnection.edges.node.__isCommerceOrder": (v6/*: any*/),
+        "conversation.orderConnection.edges.node.__typename": (v6/*: any*/),
+        "conversation.orderConnection.edges.node.code": (v6/*: any*/),
+        "conversation.orderConnection.edges.node.formattedStateExpiresAt": (v7/*: any*/),
+        "conversation.orderConnection.edges.node.id": (v5/*: any*/),
         "conversation.orderConnection.edges.node.lastOffer": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "CommerceOffer"
         },
-        "conversation.orderConnection.edges.node.lastOffer.amount": (v5/*: any*/),
+        "conversation.orderConnection.edges.node.lastOffer.amount": (v7/*: any*/),
         "conversation.orderConnection.edges.node.lastOffer.from": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "CommerceOrderPartyUnion"
         },
-        "conversation.orderConnection.edges.node.lastOffer.from.__typename": (v8/*: any*/),
-        "conversation.orderConnection.edges.node.lastOffer.id": (v6/*: any*/),
+        "conversation.orderConnection.edges.node.lastOffer.from.__typename": (v6/*: any*/),
+        "conversation.orderConnection.edges.node.lastOffer.id": (v5/*: any*/),
         "conversation.orderConnection.edges.node.lastOffer.offerAmountChanged": {
           "enumValues": null,
           "nullable": false,
@@ -729,8 +529,8 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "conversation.orderConnection.edges.node.lineItems.edges.node.artwork.id": (v6/*: any*/),
-        "conversation.orderConnection.edges.node.lineItems.edges.node.id": (v6/*: any*/),
+        "conversation.orderConnection.edges.node.lineItems.edges.node.artwork.id": (v5/*: any*/),
+        "conversation.orderConnection.edges.node.lineItems.edges.node.id": (v5/*: any*/),
         "conversation.orderConnection.edges.node.mode": {
           "enumValues": [
             "BUY",
@@ -756,14 +556,14 @@ return {
           "plural": false,
           "type": "CommerceOrderStateEnum"
         },
-        "conversation.orderConnection.edges.node.stateExpiresAt": (v5/*: any*/),
-        "conversation.orderConnection.edges.node.stateReason": (v5/*: any*/),
-        "conversation.orderConnection.edges.node.stateUpdatedAt": (v5/*: any*/)
+        "conversation.orderConnection.edges.node.stateExpiresAt": (v7/*: any*/),
+        "conversation.orderConnection.edges.node.stateReason": (v7/*: any*/),
+        "conversation.orderConnection.edges.node.stateUpdatedAt": (v7/*: any*/)
       }
     },
     "name": "ConversationDetailsTestQuery",
     "operationKind": "query",
-    "text": "query ConversationDetailsTestQuery {\n  conversation(id: \"conversation-id\") {\n    ...ConversationDetails_conversation\n    id\n  }\n}\n\nfragment ConversationArtwork_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        slug\n        date\n        title\n        artist {\n          name\n          id\n        }\n        image {\n          url\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationCollectorProfileHeader_user on User {\n  initials\n  collectorProfile {\n    name\n    artsyUserSince(format: \"YYYY\")\n    ...ConversationCollectorProfileVerifications_collectorProfileType\n    id\n  }\n}\n\nfragment ConversationCollectorProfileInformation_collectorProfileType on CollectorProfileType {\n  profession\n  location {\n    city\n    country\n    id\n  }\n  isActiveInquirer\n  isActiveBidder\n  confirmedBuyerAt\n  otherRelevantPositions\n  bio\n  collectorProfileArtists {\n    name\n  }\n}\n\nfragment ConversationCollectorProfileVerifications_collectorProfileType on CollectorProfileType {\n  isIdentityVerified\n  isEmailConfirmed\n}\n\nfragment ConversationDetails_conversation on Conversation {\n  fromUser {\n    ...ConversationCollectorProfileHeader_user\n    collectorProfile {\n      ...ConversationCollectorProfileInformation_collectorProfileType\n      id\n    }\n    id\n  }\n  orderConnection(first: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED, CANCELED]) {\n    edges {\n      node {\n        __typename\n        ...OrderInformation_order\n        id\n      }\n    }\n  }\n  ...ConversationArtwork_conversation\n  ...ConversationManageThisInquiry_conversation\n  ...ConversationHelpCenter_conversation\n}\n\nfragment ConversationHelpCenter_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationManageThisInquiry_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  ...MarkAsSpamModal_conversation\n  ...DismissInquiryModal_conversation\n}\n\nfragment DismissInquiryModal_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        internalID\n        availability\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment MarkAsSpamModal_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment OrderInformation_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  code\n  ...OrderState_state\n  ...ReviewOrderButton_order\n  ... on CommerceOfferOrder {\n    lastOffer {\n      amount(precision: 2)\n      id\n    }\n  }\n}\n\nfragment OrderStateStatusWithCounter_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  stateExpiresAt\n  stateUpdatedAt\n  formattedStateExpiresAt: stateExpiresAt(format: \"MMM D, h:mm A zz\")\n}\n\nfragment OrderState_state on CommerceOrder {\n  __isCommerceOrder: __typename\n  state\n  mode\n  stateReason\n  ... on CommerceOfferOrder {\n    lastOffer {\n      from {\n        __typename\n      }\n      offerAmountChanged\n      id\n    }\n  }\n  ...OrderStateStatusWithCounter_order\n}\n\nfragment ReviewOrderButton_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  id\n  state\n  mode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      from {\n        __typename\n      }\n      offerAmountChanged\n      id\n    }\n  }\n}\n"
+    "text": "query ConversationDetailsTestQuery {\n  conversation(id: \"conversation-id\") {\n    ...ConversationDetails_conversation\n    id\n  }\n}\n\nfragment ConversationArtwork_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        slug\n        date\n        title\n        artist {\n          name\n          slug\n          id\n        }\n        image {\n          url\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationDetails_conversation on Conversation {\n  orderConnection(first: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED, CANCELED]) {\n    edges {\n      node {\n        __typename\n        ...OrderInformation_order\n        id\n      }\n    }\n  }\n  ...ConversationArtwork_conversation\n  ...ConversationHelpCenter_conversation\n}\n\nfragment ConversationHelpCenter_conversation on Conversation {\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment OrderInformation_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  code\n  ...OrderState_state\n  ...ReviewOrderButton_order\n  ... on CommerceOfferOrder {\n    lastOffer {\n      amount(precision: 2)\n      id\n    }\n  }\n}\n\nfragment OrderStateStatusWithCounter_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  stateExpiresAt\n  stateUpdatedAt\n  formattedStateExpiresAt: stateExpiresAt(format: \"MMM D, h:mm A zz\")\n}\n\nfragment OrderState_state on CommerceOrder {\n  __isCommerceOrder: __typename\n  state\n  mode\n  stateReason\n  ... on CommerceOfferOrder {\n    lastOffer {\n      from {\n        __typename\n      }\n      offerAmountChanged\n      id\n    }\n  }\n  ...OrderStateStatusWithCounter_order\n}\n\nfragment ReviewOrderButton_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  id\n  state\n  mode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      from {\n        __typename\n      }\n      offerAmountChanged\n      id\n    }\n  }\n}\n"
   }
 };
 })();

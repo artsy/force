@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b151651087e05f92b50ca9aed98483f3>>
+ * @generated SignedSource<<847153677b7cdf445fdf6cd4a951c35f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,35 +9,42 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type DeleteConversationMutationInput = {
+export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type CommerceCreateInquiryOrderWithArtworkInput = {
+  artworkId: string;
   clientMutationId?: string | null;
-  id: string;
+  editionSetId?: string | null;
+  impulseConversationId: string;
+  quantity?: number | null;
 };
-export type useDeleteConversationMutation$variables = {
-  input: DeleteConversationMutationInput;
+export type useMakeInquiryOrderMutation$variables = {
+  input: CommerceCreateInquiryOrderWithArtworkInput;
 };
-export type useDeleteConversationMutation$data = {
-  readonly deleteConversation: {
-    readonly conversationOrError: {
-      readonly __typename: "DeleteConversationFailure";
-      readonly mutationError: {
-        readonly message: string;
-      } | null;
+export type useMakeInquiryOrderMutation$data = {
+  readonly createInquiryOrder: {
+    readonly orderOrError: {
+      readonly __typename: "CommerceOrderWithMutationFailure";
+      readonly error: {
+        readonly code: string;
+        readonly data: string | null;
+        readonly type: string;
+      };
     } | {
-      readonly __typename: "DeleteConversationSuccess";
-      readonly conversation: {
-        readonly deletedAt: string | null;
-      } | null;
+      readonly __typename: "CommerceOrderWithMutationSuccess";
+      readonly order: {
+        readonly internalID: string;
+        readonly mode: CommerceOrderModeEnum | null;
+      };
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
-    } | null;
+    };
   } | null;
 };
-export type useDeleteConversationMutation = {
-  response: useDeleteConversationMutation$data;
-  variables: useDeleteConversationMutation$variables;
+export type useMakeInquiryOrderMutation = {
+  response: useMakeInquiryOrderMutation$data;
+  variables: useMakeInquiryOrderMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -66,32 +73,53 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "deletedAt",
+  "name": "internalID",
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "mode",
+  "storageKey": null
+},
+v5 = {
   "kind": "InlineFragment",
   "selections": [
     {
       "alias": null,
       "args": null,
-      "concreteType": "GravityMutationError",
+      "concreteType": "CommerceApplicationError",
       "kind": "LinkedField",
-      "name": "mutationError",
+      "name": "error",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "message",
+          "name": "type",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "code",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "data",
           "storageKey": null
         }
       ],
       "storageKey": null
     }
   ],
-  "type": "DeleteConversationFailure",
+  "type": "CommerceOrderWithMutationFailure",
   "abstractKey": null
 };
 return {
@@ -99,14 +127,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useDeleteConversationMutation",
+    "name": "useMakeInquiryOrderMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "DeleteConversationMutationPayload",
+        "concreteType": "CommerceCreateInquiryOrderWithArtworkPayload",
         "kind": "LinkedField",
-        "name": "deleteConversation",
+        "name": "createInquiryOrder",
         "plural": false,
         "selections": [
           {
@@ -114,7 +142,7 @@ return {
             "args": null,
             "concreteType": null,
             "kind": "LinkedField",
-            "name": "conversationOrError",
+            "name": "orderOrError",
             "plural": false,
             "selections": [
               (v2/*: any*/),
@@ -124,20 +152,21 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Conversation",
+                    "concreteType": null,
                     "kind": "LinkedField",
-                    "name": "conversation",
+                    "name": "order",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/)
+                      (v3/*: any*/),
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
-                "type": "DeleteConversationSuccess",
+                "type": "CommerceOrderWithMutationSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -152,14 +181,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useDeleteConversationMutation",
+    "name": "useMakeInquiryOrderMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "DeleteConversationMutationPayload",
+        "concreteType": "CommerceCreateInquiryOrderWithArtworkPayload",
         "kind": "LinkedField",
-        "name": "deleteConversation",
+        "name": "createInquiryOrder",
         "plural": false,
         "selections": [
           {
@@ -167,7 +196,7 @@ return {
             "args": null,
             "concreteType": null,
             "kind": "LinkedField",
-            "name": "conversationOrError",
+            "name": "orderOrError",
             "plural": false,
             "selections": [
               (v2/*: any*/),
@@ -177,12 +206,14 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Conversation",
+                    "concreteType": null,
                     "kind": "LinkedField",
-                    "name": "conversation",
+                    "name": "order",
                     "plural": false,
                     "selections": [
+                      (v2/*: any*/),
                       (v3/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -194,10 +225,10 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "DeleteConversationSuccess",
+                "type": "CommerceOrderWithMutationSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -207,16 +238,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c067018923fe953924a117137b2a5e68",
+    "cacheID": "5b2257feed48092867a26ac247440168",
     "id": null,
     "metadata": {},
-    "name": "useDeleteConversationMutation",
+    "name": "useMakeInquiryOrderMutation",
     "operationKind": "mutation",
-    "text": "mutation useDeleteConversationMutation(\n  $input: DeleteConversationMutationInput!\n) {\n  deleteConversation(input: $input) {\n    conversationOrError {\n      __typename\n      ... on DeleteConversationSuccess {\n        conversation {\n          deletedAt\n          id\n        }\n      }\n      ... on DeleteConversationFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useMakeInquiryOrderMutation(\n  $input: CommerceCreateInquiryOrderWithArtworkInput!\n) {\n  createInquiryOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          internalID\n          mode\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "5c104eb15f4926926207377c85f57d3d";
+(node as any).hash = "87a530403dec9ff469e81eace41d3258";
 
 export default node;
