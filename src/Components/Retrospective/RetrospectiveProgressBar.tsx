@@ -35,12 +35,12 @@ export const RetrospectiveProgressBar: FC<RetrospectiveProgressBarProps> = ({
   }, [active, duration, onComplete])
 
   return (
-    <Box height="2px" width="100%" bg="blue10">
+    <Box height="2px" width="100%" bg="black60">
       <Box
         ref={ref as any}
         width="100%"
         height="100%"
-        bg="brand"
+        bg="white100"
         style={{
           transform: "scaleX(0)",
           transformOrigin: "left",

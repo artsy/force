@@ -47,14 +47,28 @@ export const RetrospectiveTopArtists: FC<RetrospectiveTopArtistsProps> = ({
   }, [])
 
   return (
-    <>
-      <Title ref={register(0)} variant="xxxl" data-state="Out">
+    <Box
+      maxWidth={700}
+      m="auto"
+      display="flex"
+      flexDirection="column"
+      alignItems="center"
+      justifyContent="center"
+      height="100%"
+      pb={6}
+    >
+      <Title ref={register(0)} variant="xxl" data-state="Out" width="100%">
         Your Top Artists
       </Title>
 
       <Spacer y={6} />
 
-      <Box display="flex" flexDirection="column" style={{ gap: 40 }}>
+      <Box
+        width="100%"
+        display="flex"
+        flexDirection="column"
+        style={{ gap: 40 }}
+      >
         {datums.map(([slug, count], i) => {
           const percentage = percentages[i]
           const artist = data?.artists?.find(a => a?.slug === slug)
@@ -69,8 +83,8 @@ export const RetrospectiveTopArtists: FC<RetrospectiveTopArtistsProps> = ({
 
               <Spacer y={0.5} />
 
-              <Box height={40} overflow="hidden" width={`${percentage}%`}>
-                <Bar height={40} bg="blue150" />
+              <Box height={5} overflow="hidden" width={`${percentage}%`}>
+                <Bar height="100%" bg="blue150" />
               </Box>
 
               <Spacer y={1} />
@@ -82,7 +96,7 @@ export const RetrospectiveTopArtists: FC<RetrospectiveTopArtistsProps> = ({
           )
         })}
       </Box>
-    </>
+    </Box>
   )
 }
 

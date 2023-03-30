@@ -8,6 +8,7 @@ import { RetrospectiveProgressBar } from "Components/Retrospective/Retrospective
 import { useCursor } from "use-cursor"
 import { RetrospectiveTopArtists } from "Components/Retrospective/RetrospectiveTopArtists"
 import { RetrospectiveTopArtist } from "Components/Retrospective/RetrospectiveTopArtist"
+import { RetrospectiveTopGenes } from "Components/Retrospective/RetrospectiveTopGenes"
 
 interface RetrospectiveFollowsAndSavesProps {
   me: RetrospectiveFollowsAndSaves_collection$data
@@ -24,18 +25,18 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
   } = useRetrospectiveData({ me })
 
   const sections = {
-    TOP_ARTIST: {
-      data: topArtists,
-      Component: RetrospectiveTopArtist,
-    },
-    TOP_ARTISTS: {
-      data: topArtists,
-      Component: RetrospectiveTopArtists,
-    },
-    // TOP_GENES: {
-    //   data: topGenes,
-    //   Component: () => <>TODO</>,
+    // TOP_ARTIST: {
+    //   data: topArtists,
+    //   Component: RetrospectiveTopArtist,
     // },
+    // TOP_ARTISTS: {
+    //   data: topArtists,
+    //   Component: RetrospectiveTopArtists,
+    // },
+    TOP_GENES: {
+      data: topGenes,
+      Component: RetrospectiveTopGenes,
+    },
     // TOP_MEDIUMS: {
     //   data: topMediums,
     //   Component: () => <>TODO</>,
@@ -57,7 +58,15 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
   const { Component, data } = sections[key as keyof typeof sections]
 
   return (
-    <Box width="100%" height="100%" position="fixed" top={0} left={0}>
+    <Box
+      display="flex"
+      flexDirection="column"
+      width="100%"
+      height="100%"
+      position="fixed"
+      top={0}
+      left={0}
+    >
       <Box
         display="flex"
         style={{ gap: 10 }}
@@ -83,7 +92,7 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
 
       {/* <pre>{JSON.stringify(sections[index], null, 2)}</pre> */}
 
-      <Box p={2}>
+      <Box p={2} flex={1}>
         <Component data={data} />
       </Box>
     </Box>
