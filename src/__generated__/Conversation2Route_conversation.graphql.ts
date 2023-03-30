@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9f148772e0898f2c06a8b1c2fd6827f1>>
+ * @generated SignedSource<<c6a1b4bfa006dd0afc1e7be41d8ce012>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,33 +19,19 @@ export type Conversation2Route_conversation$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Conversation2Route_conversation">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  {
-    "kind": "Variable",
-    "name": "sellerId",
-    "variableName": "sellerId"
-  }
-];
-return {
-  "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "sellerId"
-    }
-  ],
+const node: ReaderFragment = {
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "Conversation2Route_conversation",
   "selections": [
     {
-      "args": (v0/*: any*/),
+      "args": null,
       "kind": "FragmentSpread",
       "name": "ConversationHeader_conversation"
     },
     {
-      "args": (v0/*: any*/),
+      "args": null,
       "kind": "FragmentSpread",
       "name": "ConversationDetails_conversation"
     },
@@ -63,8 +49,7 @@ return {
   "type": "Conversation",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "59a79f1c8a6ade9760e80551df6773f1";
+(node as any).hash = "ca57d504e85bcb1cfee4e32009dbf2d3";
 
 export default node;

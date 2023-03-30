@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d3aeb850bc8872db3906cbfa631f33a2>>
+ * @generated SignedSource<<e16339cf1455f438ef4194c78f3cb38e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,37 +22,26 @@ export type ConversationsSidebarTestQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "kind": "Literal",
-  "name": "partnerId",
-  "value": "partner-id"
-},
-v1 = {
-  "kind": "Literal",
-  "name": "sellerId",
-  "value": "partner-id"
-},
-v2 = [
+var v0 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 10
   },
-  (v0/*: any*/),
   {
     "kind": "Literal",
     "name": "type",
     "value": "USER"
   }
 ],
-v3 = {
+v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v4 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -60,28 +49,28 @@ v4 = [
     "name": "name",
     "storageKey": null
   },
-  (v3/*: any*/)
+  (v1/*: any*/)
 ],
-v5 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v6 = {
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v7 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v8 = {
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -103,10 +92,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": [
-              (v0/*: any*/),
-              (v1/*: any*/)
-            ],
+            "args": null,
             "kind": "FragmentSpread",
             "name": "ConversationsSidebar_viewer"
           }
@@ -133,7 +119,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v0/*: any*/),
             "concreteType": "ConversationConnection",
             "kind": "LinkedField",
             "name": "conversationsConnection",
@@ -176,7 +162,7 @@ return {
                         "kind": "LinkedField",
                         "name": "from",
                         "plural": false,
-                        "selections": (v4/*: any*/),
+                        "selections": (v2/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -202,12 +188,22 @@ return {
                                 "name": "confirmedBuyerAt",
                                 "storageKey": null
                               },
-                              (v3/*: any*/)
+                              (v1/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v3/*: any*/)
+                          (v1/*: any*/)
                         ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "ConversationResponder",
+                        "kind": "LinkedField",
+                        "name": "to",
+                        "plural": false,
+                        "selections": (v2/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -231,7 +227,6 @@ return {
                             "name": "last",
                             "value": 1
                           },
-                          (v1/*: any*/),
                           {
                             "kind": "Literal",
                             "name": "states",
@@ -265,8 +260,8 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v5/*: any*/),
-                                  (v3/*: any*/)
+                                  (v3/*: any*/),
+                                  (v1/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -274,7 +269,7 @@ return {
                             "storageKey": null
                           }
                         ],
-                        "storageKey": "orderConnection(last:1,sellerId:\"partner-id\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\",\"REFUNDED\"])"
+                        "storageKey": "orderConnection(last:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\",\"REFUNDED\"])"
                       },
                       {
                         "alias": null,
@@ -292,11 +287,11 @@ return {
                             "name": "item",
                             "plural": false,
                             "selections": [
-                              (v5/*: any*/),
+                              (v3/*: any*/),
                               {
                                 "kind": "InlineFragment",
                                 "selections": [
-                                  (v3/*: any*/),
+                                  (v1/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -318,7 +313,7 @@ return {
                                     "kind": "LinkedField",
                                     "name": "artist",
                                     "plural": false,
-                                    "selections": (v4/*: any*/),
+                                    "selections": (v2/*: any*/),
                                     "storageKey": null
                                   },
                                   {
@@ -355,7 +350,7 @@ return {
                               {
                                 "kind": "InlineFragment",
                                 "selections": [
-                                  (v3/*: any*/)
+                                  (v1/*: any*/)
                                 ],
                                 "type": "Node",
                                 "abstractKey": "__isNode"
@@ -366,8 +361,8 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v3/*: any*/),
-                      (v5/*: any*/)
+                      (v1/*: any*/),
+                      (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -400,13 +395,12 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "conversationsConnection(first:10,partnerId:\"partner-id\",type:\"USER\")"
+            "storageKey": "conversationsConnection(first:10,type:\"USER\")"
           },
           {
             "alias": null,
-            "args": (v2/*: any*/),
+            "args": (v0/*: any*/),
             "filters": [
-              "partnerId",
               "type",
               "toBeReplied",
               "hasReply"
@@ -422,7 +416,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "53716ad4164873dc15027c3d3e13f0c8",
+    "cacheID": "b09f635a1a49b8907b9f0103cd467f7f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -444,22 +438,22 @@ return {
           "plural": true,
           "type": "ConversationEdge"
         },
-        "viewer.conversationsConnection.edges.cursor": (v6/*: any*/),
+        "viewer.conversationsConnection.edges.cursor": (v4/*: any*/),
         "viewer.conversationsConnection.edges.node": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Conversation"
         },
-        "viewer.conversationsConnection.edges.node.__typename": (v6/*: any*/),
+        "viewer.conversationsConnection.edges.node.__typename": (v4/*: any*/),
         "viewer.conversationsConnection.edges.node.from": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "ConversationInitiator"
         },
-        "viewer.conversationsConnection.edges.node.from.id": (v7/*: any*/),
-        "viewer.conversationsConnection.edges.node.from.name": (v6/*: any*/),
+        "viewer.conversationsConnection.edges.node.from.id": (v5/*: any*/),
+        "viewer.conversationsConnection.edges.node.from.name": (v4/*: any*/),
         "viewer.conversationsConnection.edges.node.fromUser": {
           "enumValues": null,
           "nullable": true,
@@ -472,10 +466,10 @@ return {
           "plural": false,
           "type": "CollectorProfileType"
         },
-        "viewer.conversationsConnection.edges.node.fromUser.collectorProfile.confirmedBuyerAt": (v8/*: any*/),
-        "viewer.conversationsConnection.edges.node.fromUser.collectorProfile.id": (v7/*: any*/),
-        "viewer.conversationsConnection.edges.node.fromUser.id": (v7/*: any*/),
-        "viewer.conversationsConnection.edges.node.id": (v7/*: any*/),
+        "viewer.conversationsConnection.edges.node.fromUser.collectorProfile.confirmedBuyerAt": (v6/*: any*/),
+        "viewer.conversationsConnection.edges.node.fromUser.collectorProfile.id": (v5/*: any*/),
+        "viewer.conversationsConnection.edges.node.fromUser.id": (v5/*: any*/),
+        "viewer.conversationsConnection.edges.node.id": (v5/*: any*/),
         "viewer.conversationsConnection.edges.node.internalID": {
           "enumValues": null,
           "nullable": true,
@@ -494,27 +488,27 @@ return {
           "plural": false,
           "type": "ConversationItemType"
         },
-        "viewer.conversationsConnection.edges.node.items.item.__isNode": (v6/*: any*/),
-        "viewer.conversationsConnection.edges.node.items.item.__typename": (v6/*: any*/),
+        "viewer.conversationsConnection.edges.node.items.item.__isNode": (v4/*: any*/),
+        "viewer.conversationsConnection.edges.node.items.item.__typename": (v4/*: any*/),
         "viewer.conversationsConnection.edges.node.items.item.artist": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Artist"
         },
-        "viewer.conversationsConnection.edges.node.items.item.artist.id": (v7/*: any*/),
-        "viewer.conversationsConnection.edges.node.items.item.artist.name": (v8/*: any*/),
-        "viewer.conversationsConnection.edges.node.items.item.date": (v8/*: any*/),
-        "viewer.conversationsConnection.edges.node.items.item.id": (v7/*: any*/),
+        "viewer.conversationsConnection.edges.node.items.item.artist.id": (v5/*: any*/),
+        "viewer.conversationsConnection.edges.node.items.item.artist.name": (v6/*: any*/),
+        "viewer.conversationsConnection.edges.node.items.item.date": (v6/*: any*/),
+        "viewer.conversationsConnection.edges.node.items.item.id": (v5/*: any*/),
         "viewer.conversationsConnection.edges.node.items.item.image": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Image"
         },
-        "viewer.conversationsConnection.edges.node.items.item.image.url": (v8/*: any*/),
-        "viewer.conversationsConnection.edges.node.items.item.title": (v8/*: any*/),
-        "viewer.conversationsConnection.edges.node.lastMessageAt": (v8/*: any*/),
+        "viewer.conversationsConnection.edges.node.items.item.image.url": (v6/*: any*/),
+        "viewer.conversationsConnection.edges.node.items.item.title": (v6/*: any*/),
+        "viewer.conversationsConnection.edges.node.lastMessageAt": (v6/*: any*/),
         "viewer.conversationsConnection.edges.node.orderConnection": {
           "enumValues": null,
           "nullable": true,
@@ -533,15 +527,23 @@ return {
           "plural": false,
           "type": "CommerceOrder"
         },
-        "viewer.conversationsConnection.edges.node.orderConnection.edges.node.__typename": (v6/*: any*/),
-        "viewer.conversationsConnection.edges.node.orderConnection.edges.node.id": (v7/*: any*/),
+        "viewer.conversationsConnection.edges.node.orderConnection.edges.node.__typename": (v4/*: any*/),
+        "viewer.conversationsConnection.edges.node.orderConnection.edges.node.id": (v5/*: any*/),
+        "viewer.conversationsConnection.edges.node.to": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ConversationResponder"
+        },
+        "viewer.conversationsConnection.edges.node.to.id": (v5/*: any*/),
+        "viewer.conversationsConnection.edges.node.to.name": (v4/*: any*/),
         "viewer.conversationsConnection.pageInfo": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "PageInfo"
         },
-        "viewer.conversationsConnection.pageInfo.endCursor": (v8/*: any*/),
+        "viewer.conversationsConnection.pageInfo.endCursor": (v6/*: any*/),
         "viewer.conversationsConnection.pageInfo.hasNextPage": {
           "enumValues": null,
           "nullable": false,
@@ -552,11 +554,11 @@ return {
     },
     "name": "ConversationsSidebarTestQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer_6vkwV\n  }\n}\n\nfragment ConversationsSidebarItem_conversation_2b5dec on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED], sellerId: \"partner-id\") {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer_6vkwV on Viewer {\n  conversationsConnection(first: 10, partnerId: \"partner-id\", type: USER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation_2b5dec\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ConversationsSidebarTestQuery {\n  viewer {\n    ...ConversationsSidebar_viewer\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer on Viewer {\n  conversationsConnection(first: 10, type: USER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "953263b8309e72cb20b1a789def60ce9";
+(node as any).hash = "08c363b140d7b9f703b83f01b5716023";
 
 export default node;

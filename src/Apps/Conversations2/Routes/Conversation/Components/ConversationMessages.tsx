@@ -1,6 +1,10 @@
 import { Box, Flex, Spinner } from "@artsy/palette"
 import React, { FC, useEffect, useRef, useState } from "react"
-import { graphql, usePaginationFragment } from "react-relay"
+import {
+  createPaginationContainer,
+  graphql,
+  RelayPaginationProp,
+} from "react-relay"
 import { ConversationMessage } from "./ConversationMessage"
 import { LatestMessages } from "./LatestMessages"
 import { Spacer, Text } from "@artsy/palette"
@@ -9,10 +13,11 @@ import { useScrollPagination } from "Apps/Conversations2/hooks/useScrollPaginati
 import { useLoadMore } from "Apps/Conversations2/hooks/useLoadMore"
 import { extractNodes } from "Utils/extractNodes"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
-import { ConversationMessages_conversation$key } from "__generated__/ConversationMessages_conversation.graphql"
+import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 
 interface ConversationMessagesProps {
-  conversation: ConversationMessages_conversation$key
+  conversation: ConversationMessages_conversation$data
+  relay: RelayPaginationProp
 }
 
 const getDayAsText = (messageDate: Date): string => {
@@ -26,6 +31,7 @@ const PAGE_SIZE = 15
 
 export const ConversationMessages: FC<ConversationMessagesProps> = ({
   conversation,
+  relay,
 }) => {
   const [hasScrolledBottom, setHasScrolledBottom] = useState(false)
   const [showLatestMessages, setShowLatestMessages] = useState(false)
@@ -33,51 +39,15 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
   const bottomRef = useRef<HTMLDivElement>(null)
   const { appendElementRef } = useScrollPagination()
 
-  const {
-    data,
-    isLoadingNext,
-    hasNext,
-    loadNext,
-    refetch,
-  } = usePaginationFragment(
-    graphql`
-      fragment ConversationMessages_conversation on Conversation
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 10 }
-          after: { type: "String" }
-        )
-        @refetchable(queryName: "ConversationMessagesPaginationQuery") {
-        messagesConnection(first: $first, after: $after, sort: DESC)
-          @required(action: NONE)
-          @connection(
-            key: "ConversationMessages_conversation_messagesConnection"
-          ) {
-          edges {
-            node {
-              id
-              createdAt
-              isFromUser
-              ...ConversationMessage_message
-            }
-          }
-        }
-        inquiryRequest {
-          formattedFirstMessage
-        }
-      }
-    `,
-    conversation
-  )
-
   const { loadMore } = useLoadMore({
     pageSize: PAGE_SIZE,
-    hasNext,
-    isLoadingNext,
-    loadNext,
+    hasNext: relay.hasMore,
+    isLoadingNext: relay.isLoading,
+    loadNext: relay.loadMore,
     when: hasScrolledBottom,
   })
 
-  const messages = extractNodes(data?.messagesConnection)
+  const messages = extractNodes(conversation?.messagesConnection)
   const lastMessageId = messages.length > 0 ? messages[0].id : null
 
   useEffect(() => {
@@ -89,21 +59,16 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
   const handleLatestMessagesClick = () => {
     setIsLoadingNewMessages(true)
     bottomRef.current?.scrollIntoView({ behavior: "smooth" })
-    refetch(
-      {
-        first: PAGE_SIZE,
-      },
-      {
-        fetchPolicy: "network-only",
-        onComplete: () => setIsLoadingNewMessages(false),
-      }
-    )
+
+    relay.loadMore(PAGE_SIZE, error => {
+      setIsLoadingNewMessages(false)
+    })
   }
 
   return (
     <Flex flexDirection="column" overflowY="auto" p={2} flexGrow={1}>
       <Flex flexDirection="column" position="relative">
-        {isLoadingNext && (
+        {relay.isLoading() && (
           <Spinner my={2} display="block" position="unset" alignSelf="center" />
         )}
 
@@ -154,7 +119,7 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
               <ConversationMessage
                 message={message}
                 formattedFirstMessage={
-                  data?.inquiryRequest?.formattedFirstMessage
+                  conversation?.inquiryRequest?.formattedFirstMessage
                 }
                 simplified={isSimplifiedBubble}
                 isLastGroupedPartnerMessage={isLastGroupedPartnerMessage}
@@ -194,6 +159,58 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
     </Flex>
   )
 }
+
+export const ConversationMessagesPaginationContainer = createPaginationContainer(
+  ConversationMessages,
+  {
+    conversation: graphql`
+      fragment ConversationMessages_conversation on Conversation
+        @argumentDefinitions(
+          first: { type: "Int", defaultValue: 10 }
+          after: { type: "String" }
+        ) {
+        messagesConnection(first: $first, after: $after, sort: DESC)
+          @required(action: NONE)
+          @connection(
+            key: "ConversationMessages_conversation_messagesConnection"
+          ) {
+          edges {
+            node {
+              id
+              createdAt
+              isFromUser
+              ...ConversationMessage_message
+            }
+          }
+        }
+        inquiryRequest {
+          formattedFirstMessage
+        }
+      }
+    `,
+  },
+  {
+    direction: "forward",
+    getFragmentVariables(prevVars, totalCount) {
+      return { ...prevVars, totalCount }
+    },
+    getVariables(_, { cursor: after }, fragmentVariables) {
+      return { ...fragmentVariables, after }
+    },
+    query: graphql`
+      query ConversationMessagesPaginationQuery(
+        $conversationId: String!
+        $first: Int!
+        $after: String
+      ) {
+        conversation(id: $conversationId) {
+          ...ConversationMessages_conversation
+            @arguments(first: $first, after: $after)
+        }
+      }
+    `,
+  }
+)
 
 const Sentinel: React.FC<{
   onIntersection(): void

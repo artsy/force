@@ -23,8 +23,7 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
 }) => {
   const data = useFragment(
     graphql`
-      fragment ConversationDetails_conversation on Conversation
-        @argumentDefinitions(sellerId: { type: "ID!" }) {
+      fragment ConversationDetails_conversation on Conversation {
         fromUser {
           ...ConversationCollectorProfileHeader_user
           collectorProfile {
@@ -41,7 +40,6 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
             REFUNDED
             CANCELED
           ]
-          sellerId: $sellerId
         ) {
           edges @required(action: NONE) {
             node {
@@ -79,8 +77,8 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
         </>
       )}
 
+      <ConversationArtwork conversation={data} />
       <Media lessThan="md">
-        <ConversationArtwork conversation={data} />
         <Separator borderWidth={2} my={4} />
       </Media>
 
