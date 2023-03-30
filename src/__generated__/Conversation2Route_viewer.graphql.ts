@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<de6c67eab3f355cb9f47bed080fcd22e>>
+ * @generated SignedSource<<33a47322cf84e42127fd19544158b8b3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,16 +29,6 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "partnerId"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "sellerId"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
       "name": "toBeReplied"
     }
   ],
@@ -55,16 +45,6 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Variable",
-          "name": "partnerId",
-          "variableName": "partnerId"
-        },
-        {
-          "kind": "Variable",
-          "name": "sellerId",
-          "variableName": "sellerId"
-        },
-        {
-          "kind": "Variable",
           "name": "toBeReplied",
           "variableName": "toBeReplied"
         }
@@ -77,6 +57,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "7a5a5b89675d965a7aa4b14612244818";
+(node as any).hash = "f3aeaef9bf6a3feb65b9f120435c27b8";
 
 export default node;

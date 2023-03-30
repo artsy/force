@@ -22,7 +22,7 @@ describe("ConversationDetails", () => {
     query: graphql`
       query ConversationDetailsTestQuery @relay_test_operation {
         conversation(id: "conversation-id") {
-          ...ConversationDetails_conversation @arguments(sellerId: "123")
+          ...ConversationDetails_conversation
         }
       }
     `,
