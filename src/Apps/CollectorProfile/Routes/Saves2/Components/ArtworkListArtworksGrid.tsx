@@ -24,7 +24,7 @@ import { usePrevious } from "Utils/Hooks/usePrevious"
 import { isEqual } from "lodash"
 import { Jump } from "Utils/Hooks/useJump"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
-import { SavesEmptyStateFragmentContainer } from "./SavesEmptyState"
+import { ArtworkListEmptyStateFragmentContainer } from "./ArtworkListEmptyState"
 
 interface ArtworkListArtworksGridProps {
   relayRefetch: RelayRefetchProp["refetch"]
@@ -143,7 +143,7 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
   }, [context.filters])
 
   if (artworks.edges?.length === 0) {
-    return <SavesEmptyStateFragmentContainer me={me} />
+    return <ArtworkListEmptyStateFragmentContainer me={me} />
   }
 
   return (
@@ -235,7 +235,7 @@ export const ArtworkListArtworksGridFragmentContainer = createFragmentContainer(
             ...ArtworkGrid_artworks
           }
         }
-        ...SavesEmptyState_me @arguments(collectionID: $listID)
+        ...ArtworkListEmptyState_me @arguments(listID: $listID)
       }
     `,
   }
