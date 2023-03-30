@@ -43,6 +43,16 @@ export const RetrospectiveTopGenes: FC<RetrospectiveTopGenesProps> = ({
   const { register, transition } = useTransition()
 
   useEffect(() => {
+    document.body.style.backgroundColor = "#000"
+    document.body.style.color = "#fff"
+
+    return () => {
+      document.body.style.backgroundColor = ""
+      document.body.style.color = ""
+    }
+  }, [])
+
+  useEffect(() => {
     const init = async () => {
       await wait(500)
       transition("In")

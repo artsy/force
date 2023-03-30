@@ -9,6 +9,9 @@ import { useCursor } from "use-cursor"
 import { RetrospectiveTopArtists } from "Components/Retrospective/RetrospectiveTopArtists"
 import { RetrospectiveTopArtist } from "Components/Retrospective/RetrospectiveTopArtist"
 import { RetrospectiveTopGenes } from "Components/Retrospective/RetrospectiveTopGenes"
+import { useMode } from "Utils/Hooks/useMode"
+import { RetrospectiveBegin } from "Components/Retrospective/RetrospectiveBegin"
+import { useEffect } from "react"
 
 interface RetrospectiveFollowsAndSavesProps {
   me: RetrospectiveFollowsAndSaves_collection$data
@@ -17,6 +20,16 @@ interface RetrospectiveFollowsAndSavesProps {
 export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSavesProps> = ({
   me,
 }) => {
+  const [mode, setMode] = useMode<"Pending" | "Playing">("Pending")
+
+  useEffect(() => {
+    document.body.style.transition = "background-color 500ms"
+
+    return () => {
+      document.body.style.transition = ""
+    }
+  }, [])
+
   const {
     topArtists,
     topGenes,
@@ -25,14 +38,14 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
   } = useRetrospectiveData({ me })
 
   const sections = {
-    // TOP_ARTIST: {
-    //   data: topArtists,
-    //   Component: RetrospectiveTopArtist,
-    // },
-    // TOP_ARTISTS: {
-    //   data: topArtists,
-    //   Component: RetrospectiveTopArtists,
-    // },
+    TOP_ARTIST: {
+      data: topArtists,
+      Component: RetrospectiveTopArtist,
+    },
+    TOP_ARTISTS: {
+      data: topArtists,
+      Component: RetrospectiveTopArtists,
+    },
     TOP_GENES: {
       data: topGenes,
       Component: RetrospectiveTopGenes,
@@ -56,6 +69,16 @@ export const RetrospectiveFollowsAndSaves: React.FC<RetrospectiveFollowsAndSaves
   const key = keys[index]
 
   const { Component, data } = sections[key as keyof typeof sections]
+
+  if (mode === "Pending") {
+    return (
+      <RetrospectiveBegin
+        onStart={() => {
+          setMode("Playing")
+        }}
+      />
+    )
+  }
 
   return (
     <Box
