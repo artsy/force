@@ -1,12 +1,19 @@
+import { isFunction } from "lodash"
 import { useCallback, useEffect, useState } from "react"
-import { usePaginationFragment } from "react-relay"
+import { RelayPaginationProp, usePaginationFragment } from "react-relay"
 
 type UsePaginationFragmentProps = ReturnType<typeof usePaginationFragment>
 interface UseLoadNext {
   pageSize: number
-  hasNext: UsePaginationFragmentProps["hasNext"]
-  isLoadingNext: UsePaginationFragmentProps["isLoadingNext"]
-  loadNext: UsePaginationFragmentProps["loadNext"]
+  hasNext:
+    | UsePaginationFragmentProps["hasNext"]
+    | RelayPaginationProp["hasMore"]
+  isLoadingNext:
+    | UsePaginationFragmentProps["isLoadingNext"]
+    | RelayPaginationProp["isLoading"]
+  loadNext:
+    | UsePaginationFragmentProps["loadNext"]
+    | RelayPaginationProp["loadMore"]
   when?: boolean
 }
 
@@ -19,12 +26,21 @@ export const useLoadMore = ({
 }: UseLoadNext) => {
   const [shouldLoadMore, setLoadMore] = useState<boolean>(false)
 
+  const hasMore = () => {
+    return isFunction(hasNext) ? hasNext() : hasNext
+  }
+
+  const isLoading = () => {
+    return isFunction(isLoadingNext) ? isLoadingNext() : isLoadingNext
+  }
+
   useEffect(() => {
-    if (shouldLoadMore && hasNext && !isLoadingNext && when !== false) {
+    if (shouldLoadMore && hasMore() && !isLoading() && when !== false) {
       loadNext(pageSize)
       setLoadMore(false)
     }
-  }, [shouldLoadMore, hasNext, isLoadingNext, loadNext, when, pageSize])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shouldLoadMore, isLoadingNext, loadNext, when, pageSize])
 
   const loadMore = useCallback(() => {
     setLoadMore(true)

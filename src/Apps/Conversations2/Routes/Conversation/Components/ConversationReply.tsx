@@ -52,9 +52,10 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
   const { trackEvent } = useTracking()
   const { sendToast } = useToasts()
   const [isLoading, setIsLoading] = useState(false)
-  const [commit] = useSendConversationMessage()
+  const [commit, isSendingMutation] = useSendConversationMessage()
   const [textAreaHeight, setTextAreaHeight] = useState(TEXT_AREA_MIN_HEIGHT)
-  const inputRef = useRef<HTMLInputElement>(null)
+  const fileAttachmentRef = useRef<HTMLInputElement>(null)
+  const textAreaRef = useRef<HTMLTextAreaElement>(null)
 
   const data = useFragment(
     graphql`
@@ -180,6 +181,25 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
     }
   }, [error, clearError, sendToast])
 
+  // Listen for Command+Enter keypress
+  useEffect(() => {
+    const inputArea = textAreaRef?.current
+
+    const handleKeyDown = event => {
+      if (event.key === "Enter" && event.metaKey) {
+        if (!isSendingMutation) {
+          handleSubmit(event)
+        }
+      }
+    }
+
+    inputArea?.addEventListener("keydown", handleKeyDown)
+
+    return () => {
+      inputArea?.removeEventListener("keydown", handleKeyDown)
+    }
+  }, [handleSubmit, isSendingMutation])
+
   if (!data || !user) {
     return null
   }
@@ -222,7 +242,7 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
             multiple
             accept="image/*, .pdf"
             id="attachmentsFileInput"
-            ref={inputRef}
+            ref={fileAttachmentRef}
             onChange={({ target }) => {
               if (!target.files?.length) return
               const files = Array.from(target.files).map(file => ({
@@ -234,14 +254,15 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
                 file,
               }))
               addAttachments(files)
-              if (inputRef.current) {
-                inputRef.current.value = ""
+              if (fileAttachmentRef.current) {
+                fileAttachmentRef.current.value = ""
               }
             }}
             data-testid="attachments-input"
           />
 
           <TextArea
+            ref={textAreaRef}
             my={1}
             mr={1}
             style={{

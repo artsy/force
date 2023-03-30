@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f85388ad4edf07b154ad435504045605>>
+ * @generated SignedSource<<c8587aa6a473645281e146c177d351a2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -51,16 +51,6 @@ return {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "partnerId"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "sellerId"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
       "name": "toBeReplied"
     }
   ],
@@ -98,11 +88,6 @@ return {
           "kind": "Variable",
           "name": "hasReply",
           "variableName": "hasReply"
-        },
-        {
-          "kind": "Variable",
-          "name": "partnerId",
-          "variableName": "partnerId"
         },
         {
           "kind": "Variable",
@@ -151,13 +136,7 @@ return {
                   "storageKey": null
                 },
                 {
-                  "args": [
-                    {
-                      "kind": "Variable",
-                      "name": "sellerId",
-                      "variableName": "sellerId"
-                    }
-                  ],
+                  "args": null,
                   "kind": "FragmentSpread",
                   "name": "ConversationsSidebarItem_conversation"
                 },
@@ -208,6 +187,6 @@ return {
 };
 })();
 
-(node as any).hash = "27baf5c0c1715a0e661e997b8a874aba";
+(node as any).hash = "b8034dba33527a2d376f8720e9d281a4";
 
 export default node;

@@ -36,7 +36,7 @@ describe("ConversationDetails", () => {
     query: graphql`
       query ConversationHeaderTestQuery @relay_test_operation {
         conversation(id: "conversation-id") {
-          ...ConversationHeader_conversation @arguments(sellerId: "123")
+          ...ConversationHeader_conversation
         }
       }
     `,

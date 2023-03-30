@@ -28,8 +28,7 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
 
   const data = useFragment(
     graphql`
-      fragment ConversationsSidebarItem_conversation on Conversation
-        @argumentDefinitions(sellerId: { type: "ID!" }) {
+      fragment ConversationsSidebarItem_conversation on Conversation {
         internalID
         from {
           name
@@ -38,6 +37,9 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
           collectorProfile {
             confirmedBuyerAt
           }
+        }
+        to {
+          name
         }
         lastMessageAt(format: "MMM D")
 
@@ -50,7 +52,6 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
             PROCESSING_APPROVAL
             REFUNDED
           ]
-          sellerId: $sellerId
         ) {
           edges {
             node {
@@ -134,7 +135,7 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
           <Flex flexDirection="column" mx={1} flex={1} overflow="hidden">
             <Box display="inherit">
               <Text variant="xs" {...fontWeight} overflowEllipsis>
-                {data?.from?.name}
+                {data?.to?.name}
               </Text>
               {data.fromUser?.collectorProfile?.confirmedBuyerAt && (
                 <Tooltip

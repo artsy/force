@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4bfa05439cd7a39e2817bc88518fbaa3>>
+ * @generated SignedSource<<d987d2ee5a3e4123728b7e7c5750ffa8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -41,6 +41,9 @@ export type ConversationHeader_conversation$data = {
       } | null;
     } | null>;
   } | null;
+  readonly to: {
+    readonly name: string;
+  };
   readonly " $fragmentType": "ConversationHeader_conversation";
 };
 export type ConversationHeader_conversation$key = {
@@ -59,13 +62,7 @@ var v0 = [
   }
 ];
 return {
-  "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "sellerId"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ConversationHeader_conversation",
@@ -76,6 +73,16 @@ return {
       "concreteType": "ConversationInitiator",
       "kind": "LinkedField",
       "name": "from",
+      "plural": false,
+      "selections": (v0/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ConversationResponder",
+      "kind": "LinkedField",
+      "name": "to",
       "plural": false,
       "selections": (v0/*: any*/),
       "storageKey": null
@@ -181,11 +188,6 @@ return {
           "value": 1
         },
         {
-          "kind": "Variable",
-          "name": "sellerId",
-          "variableName": "sellerId"
-        },
-        {
           "kind": "Literal",
           "name": "states",
           "value": [
@@ -243,7 +245,7 @@ return {
           "path": "orderConnection.edges"
         }
       ],
-      "storageKey": null
+      "storageKey": "orderConnection(first:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\",\"REFUNDED\",\"CANCELED\"])"
     }
   ],
   "type": "Conversation",
@@ -251,6 +253,6 @@ return {
 };
 })();
 
-(node as any).hash = "9aa8da0d097bde0c41e56bae350709db";
+(node as any).hash = "a2384077464ebb8089305b517f8ea9b7";
 
 export default node;

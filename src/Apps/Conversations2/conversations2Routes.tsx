@@ -61,8 +61,6 @@ export const conversations2Routes: AppRouteConfig[] = [
 
       return {
         conversationId: params.conversationId,
-        sellerId: "commerce-test-partner",
-        partnerId: "commerce-test-partner",
         toBeReplied: conversationsFilter.toBeReplied,
         hasReply: conversationsFilter.hasReply,
       }
@@ -70,22 +68,15 @@ export const conversations2Routes: AppRouteConfig[] = [
     query: graphql`
       query conversations2Routes_DetailQuery(
         $conversationId: String!
-        $sellerId: ID!
-        $partnerId: String!
         $toBeReplied: Boolean
         $hasReply: Boolean
       ) {
         viewer {
           ...Conversation2Route_viewer
-            @arguments(
-              toBeReplied: $toBeReplied
-              hasReply: $hasReply
-              sellerId: $sellerId
-              partnerId: $partnerId
-            )
+            @arguments(toBeReplied: $toBeReplied, hasReply: $hasReply)
         }
         conversation(id: $conversationId) @required(action: NONE) {
-          ...Conversation2Route_conversation @arguments(sellerId: $sellerId)
+          ...Conversation2Route_conversation
         }
       }
     `,

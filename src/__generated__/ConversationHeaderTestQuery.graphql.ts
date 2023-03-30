@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5b5f0c6b28e6cf58577f719fe465b12d>>
+ * @generated SignedSource<<74644005394384f14bb4e2441cc7f8e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,18 +30,13 @@ var v0 = [
   }
 ],
 v1 = {
-  "kind": "Literal",
-  "name": "sellerId",
-  "value": "123"
-},
-v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -49,28 +44,28 @@ v3 = [
     "name": "name",
     "storageKey": null
   },
-  (v2/*: any*/)
+  (v1/*: any*/)
 ],
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v5 = {
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v6 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v7 = {
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -92,9 +87,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": [
-              (v1/*: any*/)
-            ],
+            "args": null,
             "kind": "FragmentSpread",
             "name": "ConversationHeader_conversation"
           }
@@ -126,7 +119,17 @@ return {
             "kind": "LinkedField",
             "name": "from",
             "plural": false,
-            "selections": (v3/*: any*/),
+            "selections": (v2/*: any*/),
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ConversationResponder",
+            "kind": "LinkedField",
+            "name": "to",
+            "plural": false,
+            "selections": (v2/*: any*/),
             "storageKey": null
           },
           {
@@ -145,11 +148,11 @@ return {
                 "name": "item",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
+                  (v3/*: any*/),
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v2/*: any*/),
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -178,7 +181,7 @@ return {
                         "kind": "LinkedField",
                         "name": "artist",
                         "plural": false,
-                        "selections": (v3/*: any*/),
+                        "selections": (v2/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -206,7 +209,7 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v2/*: any*/)
+                      (v1/*: any*/)
                     ],
                     "type": "Node",
                     "abstractKey": "__isNode"
@@ -225,7 +228,6 @@ return {
                 "name": "first",
                 "value": 1
               },
-              (v1/*: any*/),
               {
                 "kind": "Literal",
                 "name": "states",
@@ -260,7 +262,7 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -268,7 +270,7 @@ return {
                         "name": "state",
                         "storageKey": null
                       },
-                      (v2/*: any*/)
+                      (v1/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -276,16 +278,16 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "orderConnection(first:1,sellerId:\"123\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\",\"REFUNDED\",\"CANCELED\"])"
+            "storageKey": "orderConnection(first:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\",\"REFUNDED\",\"CANCELED\"])"
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": "conversation(id:\"conversation-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "1bca8c0092f9f638a248ccfb58c27c9d",
+    "cacheID": "6b84f848ae62d3bf3df24b75337c2e7e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -301,9 +303,9 @@ return {
           "plural": false,
           "type": "ConversationInitiator"
         },
-        "conversation.from.id": (v5/*: any*/),
-        "conversation.from.name": (v6/*: any*/),
-        "conversation.id": (v5/*: any*/),
+        "conversation.from.id": (v4/*: any*/),
+        "conversation.from.name": (v5/*: any*/),
+        "conversation.id": (v4/*: any*/),
         "conversation.items": {
           "enumValues": null,
           "nullable": true,
@@ -316,27 +318,27 @@ return {
           "plural": false,
           "type": "ConversationItemType"
         },
-        "conversation.items.item.__isNode": (v6/*: any*/),
-        "conversation.items.item.__typename": (v6/*: any*/),
+        "conversation.items.item.__isNode": (v5/*: any*/),
+        "conversation.items.item.__typename": (v5/*: any*/),
         "conversation.items.item.artist": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Artist"
         },
-        "conversation.items.item.artist.id": (v5/*: any*/),
-        "conversation.items.item.artist.name": (v7/*: any*/),
-        "conversation.items.item.date": (v7/*: any*/),
-        "conversation.items.item.id": (v5/*: any*/),
+        "conversation.items.item.artist.id": (v4/*: any*/),
+        "conversation.items.item.artist.name": (v6/*: any*/),
+        "conversation.items.item.date": (v6/*: any*/),
+        "conversation.items.item.id": (v4/*: any*/),
         "conversation.items.item.image": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Image"
         },
-        "conversation.items.item.image.url": (v7/*: any*/),
-        "conversation.items.item.slug": (v5/*: any*/),
-        "conversation.items.item.title": (v7/*: any*/),
+        "conversation.items.item.image.url": (v6/*: any*/),
+        "conversation.items.item.slug": (v4/*: any*/),
+        "conversation.items.item.title": (v6/*: any*/),
         "conversation.orderConnection": {
           "enumValues": null,
           "nullable": true,
@@ -355,8 +357,8 @@ return {
           "plural": false,
           "type": "CommerceOrder"
         },
-        "conversation.orderConnection.edges.node.__typename": (v6/*: any*/),
-        "conversation.orderConnection.edges.node.id": (v5/*: any*/),
+        "conversation.orderConnection.edges.node.__typename": (v5/*: any*/),
+        "conversation.orderConnection.edges.node.id": (v4/*: any*/),
         "conversation.orderConnection.edges.node.state": {
           "enumValues": [
             "ABANDONED",
@@ -372,16 +374,24 @@ return {
           "nullable": false,
           "plural": false,
           "type": "CommerceOrderStateEnum"
-        }
+        },
+        "conversation.to": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ConversationResponder"
+        },
+        "conversation.to.id": (v4/*: any*/),
+        "conversation.to.name": (v5/*: any*/)
       }
     },
     "name": "ConversationHeaderTestQuery",
     "operationKind": "query",
-    "text": "query ConversationHeaderTestQuery {\n  conversation(id: \"conversation-id\") {\n    ...ConversationHeader_conversation_1jRLVc\n    id\n  }\n}\n\nfragment ConversationHeader_conversation_1jRLVc on Conversation {\n  from {\n    name\n    id\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        slug\n        date\n        title\n        artist {\n          name\n          id\n        }\n        image {\n          url\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  orderConnection(first: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED, CANCELED], sellerId: \"123\") {\n    edges {\n      node {\n        __typename\n        state\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ConversationHeaderTestQuery {\n  conversation(id: \"conversation-id\") {\n    ...ConversationHeader_conversation\n    id\n  }\n}\n\nfragment ConversationHeader_conversation on Conversation {\n  from {\n    name\n    id\n  }\n  to {\n    name\n    id\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        slug\n        date\n        title\n        artist {\n          name\n          id\n        }\n        image {\n          url\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n  orderConnection(first: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED, CANCELED]) {\n    edges {\n      node {\n        __typename\n        state\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a3026351daf32e5c32837261d4004af9";
+(node as any).hash = "5facbfc78ac65a264f477e952438d89c";
 
 export default node;

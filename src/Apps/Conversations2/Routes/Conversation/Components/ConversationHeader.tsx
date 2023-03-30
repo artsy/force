@@ -32,9 +32,11 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
 
   const data = useFragment(
     graphql`
-      fragment ConversationHeader_conversation on Conversation
-        @argumentDefinitions(sellerId: { type: "ID!" }) {
+      fragment ConversationHeader_conversation on Conversation {
         from {
+          name
+        }
+        to {
           name
         }
         items {
@@ -64,7 +66,6 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
             REFUNDED
             CANCELED
           ]
-          sellerId: $sellerId
         ) {
           edges @required(action: NONE) {
             node {
@@ -161,7 +162,7 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
             >
               <ChevronLeftIcon />
               <Spacer x={1} />
-              <Text variant="xs">From {data.from.name}</Text>
+              <Text variant="xs">To {data.to.name}</Text>
             </Clickable>
 
             <Button
@@ -179,7 +180,7 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
                 onGoToDetails?.()
               }}
             >
-              Review
+              Details
             </Button>
           </Flex>
 
