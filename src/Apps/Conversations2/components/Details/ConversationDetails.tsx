@@ -3,13 +3,10 @@ import { ConversationHelpCenter } from "./ConversationHelpCenter"
 import { graphql, useFragment } from "react-relay"
 import { OrderInformation } from "./OrderInformation/OrderInformation"
 import { ConversationArtwork } from "./ConversationArtwork"
-import { ConversationManageThisInquiry } from "./ConversationManageThisInquiry"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import styled from "styled-components"
 import { extractNodes } from "Utils/extractNodes"
 import { Media } from "Utils/Responsive"
-import { ConversationCollectorProfileHeader } from "Apps/Conversations2/components/Details/CollectorProfile/ConversationCollectorProfileHeader"
-import { ConversationCollectorProfileInformation } from "Apps/Conversations2/components/Details/CollectorProfile/ConversationCollectorProfileInformation"
 import { ConversationDetails_conversation$key } from "__generated__/ConversationDetails_conversation.graphql"
 
 interface ConversationDetailsProps {
@@ -24,12 +21,6 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
   const data = useFragment(
     graphql`
       fragment ConversationDetails_conversation on Conversation {
-        fromUser {
-          ...ConversationCollectorProfileHeader_user
-          collectorProfile {
-            ...ConversationCollectorProfileInformation_collectorProfileType
-          }
-        }
         orderConnection(
           first: 1
           states: [
@@ -49,7 +40,6 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
           }
         }
         ...ConversationArtwork_conversation
-        ...ConversationManageThisInquiry_conversation
         ...ConversationHelpCenter_conversation
       }
     `,
@@ -78,23 +68,10 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
       )}
 
       <ConversationArtwork conversation={data} />
-      <Media lessThan="md">
-        <Separator borderWidth={2} my={4} />
-      </Media>
-
-      {!!data?.fromUser && (
-        <>
-          <ConversationCollectorProfileHeader user={data.fromUser} />
-          <Separator my={2} />
-          <ConversationCollectorProfileInformation
-            collectorProfileType={data?.fromUser?.collectorProfile!}
-          />
-          <Separator borderWidth={2} my={4} />
-        </>
-      )}
-
-      <ConversationManageThisInquiry conversation={data} />
       <Separator borderWidth={2} my={4} />
+
+      {/* <ConversationManageThisInquiry conversation={data} /> */}
+      {/* <Separator borderWidth={2} my={4} /> */}
       <ConversationHelpCenter conversation={data} />
     </Flex>
   )

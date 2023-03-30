@@ -1,6 +1,6 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { Box, Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette"
 import { Resizer } from "Apps/Conversations2/components/Resizer"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { useMobileLayoutActions } from "Apps/Conversations2/hooks/useMobileLayoutActions"
@@ -33,10 +33,12 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
     goToConversation,
   } = useMobileLayoutActions()
 
-  const ClientOnlySuspense = typeof window !== "undefined" ? Suspense : Fragment
+  const ClientOnlySuspense = (typeof window !== "undefined"
+    ? Suspense
+    : Fragment) as typeof Suspense
 
   return (
-    <>
+    <Flex flex={1} flexGrow={1} height="100%">
       <Media greaterThan="sm">
         <Flex display={["none", "flex"]}>
           <Resizer split="vertical" minSize={200} defaultSizes={[1, 2, 1]}>
@@ -66,19 +68,19 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
                 flexDirection="column"
                 justifyContent="space-between"
                 height="100%"
-                flexGrow={1}
+                flex={1}
                 width="100%"
               >
                 {/* TODO: Do we need a header? We have the details sidebar */}
                 {/* <ConversationHeader conversation={conversation} /> */}
 
-                <Box>
+                <Flex height="90%">
                   <ClientOnlySuspense fallback={null}>
                     <ConversationMessagesPaginationContainer
                       conversation={conversation}
                     />
                   </ClientOnlySuspense>
-                </Box>
+                </Flex>
 
                 <ConversationReply conversation={conversation} />
               </Flex>
@@ -153,7 +155,7 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
           />
         </Flex>
       </Media>
-    </>
+    </Flex>
   )
 }
 

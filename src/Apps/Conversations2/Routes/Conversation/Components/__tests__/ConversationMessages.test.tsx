@@ -1,6 +1,6 @@
 import { graphql } from "relay-runtime"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { ConversationMessages } from "Apps/Conversations2/Routes/Conversation/Components/ConversationMessages"
+import { ConversationMessagesPaginationContainer } from "Apps/Conversations2/Routes/Conversation/Components/ConversationMessages"
 import { ConversationMessagesTestQuery } from "__generated__/ConversationMessagesTestQuery.graphql"
 import { format, subDays } from "date-fns"
 import { act, fireEvent, screen } from "@testing-library/react"
@@ -21,7 +21,7 @@ describe("ConversationMessages", () => {
   const { renderWithRelay } = setupTestWrapperTL<ConversationMessagesTestQuery>(
     {
       Component: ({ conversation }) => (
-        <ConversationMessages conversation={conversation!} />
+        <ConversationMessagesPaginationContainer conversation={conversation!} />
       ),
       query: graphql`
         query ConversationMessagesTestQuery @relay_test_operation {

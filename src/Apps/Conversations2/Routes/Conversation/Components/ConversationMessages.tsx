@@ -1,4 +1,4 @@
-import { Box, Flex, Spinner } from "@artsy/palette"
+import { Box, Flex } from "@artsy/palette"
 import React, { FC, useEffect, useRef, useState } from "react"
 import {
   createPaginationContainer,
@@ -14,20 +14,16 @@ import { useLoadMore } from "Apps/Conversations2/hooks/useLoadMore"
 import { extractNodes } from "Utils/extractNodes"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
+import { usePoll } from "Utils/Hooks/usePoll"
+
+const PAGE_SIZE = 15
+
+const BACKGROUND_REFETCH_INTERVAL = 5000
 
 interface ConversationMessagesProps {
   conversation: ConversationMessages_conversation$data
   relay: RelayPaginationProp
 }
-
-const getDayAsText = (messageDate: Date): string => {
-  const daysSinceCreated = differenceInDays(messageDate, new Date())
-  if (daysSinceCreated === 0) return "Today"
-  if (daysSinceCreated === -1) return "Yesterday"
-  return format(messageDate, "PP")
-}
-
-const PAGE_SIZE = 15
 
 export const ConversationMessages: FC<ConversationMessagesProps> = ({
   conversation,
@@ -35,7 +31,6 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
 }) => {
   const [hasScrolledBottom, setHasScrolledBottom] = useState(false)
   const [showLatestMessages, setShowLatestMessages] = useState(false)
-  const [isLoadingNewMessages, setIsLoadingNewMessages] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
   const { appendElementRef } = useScrollPagination()
 
@@ -56,24 +51,36 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
     }
   }, [lastMessageId])
 
-  const handleLatestMessagesClick = () => {
-    setIsLoadingNewMessages(true)
-    bottomRef.current?.scrollIntoView({ behavior: "smooth" })
-
-    relay.loadMore(PAGE_SIZE, error => {
-      setIsLoadingNewMessages(false)
-    })
+  const refreshList = () => {
+    if (!relay.isLoading()) {
+      relay.refetchConnection(PAGE_SIZE, null, {
+        first: messages.length,
+      })
+    }
   }
+
+  const handleLatestMessagesClick = () => {
+    refreshList()
+    bottomRef.current?.scrollIntoView({ behavior: "smooth" })
+  }
+
+  // Refetch messages in the background
+  usePoll({
+    callback: () => refreshList(),
+    intervalTime: BACKGROUND_REFETCH_INTERVAL,
+    key: "conversationMessages",
+  })
 
   return (
     <Flex flexDirection="column" overflowY="auto" p={2} flexGrow={1}>
       <Flex flexDirection="column" position="relative">
-        {relay.isLoading() && (
-          <Spinner my={2} display="block" position="unset" alignSelf="center" />
-        )}
-
         {!!hasScrolledBottom && (
-          <Sentinel onIntersection={loadMore} testId="messages-top-sentinel" />
+          <Sentinel
+            onIntersection={() => {
+              loadMore()
+            }}
+            testId="messages-top-sentinel"
+          />
         )}
 
         {messages.reverse().map((message, index) => {
@@ -115,7 +122,9 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
                   <Spacer y={1} />
                 </>
               )}
+
               <Spacer y={isSimplifiedBubble ? 0.5 : 2} />
+
               <ConversationMessage
                 message={message}
                 formattedFirstMessage={
@@ -144,16 +153,6 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
           testId="messages-bottom-sentinel"
         />
 
-        {!!isLoadingNewMessages && (
-          <Spinner
-            my={2}
-            display="block"
-            position="unset"
-            alignSelf="center"
-            data-testid="messages-bottom-spinner"
-          />
-        )}
-
         <Box ref={bottomRef as any} />
       </Flex>
     </Flex>
@@ -174,6 +173,12 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
           @connection(
             key: "ConversationMessages_conversation_messagesConnection"
           ) {
+          pageInfo {
+            hasNextPage
+            hasPreviousPage
+            startCursor
+          }
+
           edges {
             node {
               id
@@ -225,4 +230,11 @@ const Sentinel: React.FC<{
   })
 
   return <Box ref={ref as any} data-testid={testId} />
+}
+
+const getDayAsText = (messageDate: Date): string => {
+  const daysSinceCreated = differenceInDays(messageDate, new Date())
+  if (daysSinceCreated === 0) return "Today"
+  if (daysSinceCreated === -1) return "Yesterday"
+  return format(messageDate, "PP")
 }

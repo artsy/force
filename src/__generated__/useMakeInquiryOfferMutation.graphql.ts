@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ee046e33b2b3a31505ee66588318ac66>>
+ * @generated SignedSource<<00e8a47f411aae1083d555d737064061>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,36 +9,43 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type UpdateMessageMutationInput = {
+export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type CommerceCreateInquiryOfferOrderWithArtworkInput = {
+  artworkId: string;
   clientMutationId?: string | null;
-  id: string;
-  spam: boolean;
+  editionSetId?: string | null;
+  findActiveOrCreate?: boolean | null;
+  impulseConversationId: string;
+  quantity?: number | null;
 };
-export type useMarkAsSpamMutation$variables = {
-  input: UpdateMessageMutationInput;
+export type useMakeInquiryOfferMutation$variables = {
+  input: CommerceCreateInquiryOfferOrderWithArtworkInput;
 };
-export type useMarkAsSpamMutation$data = {
-  readonly updateMessage: {
-    readonly conversationOrError: {
-      readonly __typename: "UpdateMessageFailure";
-      readonly mutationError: {
-        readonly message: string;
-      } | null;
+export type useMakeInquiryOfferMutation$data = {
+  readonly createInquiryOfferOrder: {
+    readonly orderOrError: {
+      readonly __typename: "CommerceOrderWithMutationFailure";
+      readonly error: {
+        readonly code: string;
+        readonly data: string | null;
+        readonly type: string;
+      };
     } | {
-      readonly __typename: "UpdateMessageSuccess";
-      readonly conversation: {
-        readonly initialMessage: string;
-      } | null;
+      readonly __typename: "CommerceOrderWithMutationSuccess";
+      readonly order: {
+        readonly internalID: string;
+        readonly mode: CommerceOrderModeEnum | null;
+      };
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
-    } | null;
+    };
   } | null;
 };
-export type useMarkAsSpamMutation = {
-  response: useMarkAsSpamMutation$data;
-  variables: useMarkAsSpamMutation$variables;
+export type useMakeInquiryOfferMutation = {
+  response: useMakeInquiryOfferMutation$data;
+  variables: useMakeInquiryOfferMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -67,32 +74,53 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "initialMessage",
+  "name": "internalID",
   "storageKey": null
 },
 v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "mode",
+  "storageKey": null
+},
+v5 = {
   "kind": "InlineFragment",
   "selections": [
     {
       "alias": null,
       "args": null,
-      "concreteType": "GravityMutationError",
+      "concreteType": "CommerceApplicationError",
       "kind": "LinkedField",
-      "name": "mutationError",
+      "name": "error",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "message",
+          "name": "type",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "code",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "data",
           "storageKey": null
         }
       ],
       "storageKey": null
     }
   ],
-  "type": "UpdateMessageFailure",
+  "type": "CommerceOrderWithMutationFailure",
   "abstractKey": null
 };
 return {
@@ -100,14 +128,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useMarkAsSpamMutation",
+    "name": "useMakeInquiryOfferMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "UpdateMessageMutationPayload",
+        "concreteType": "CommerceCreateInquiryOfferOrderWithArtworkPayload",
         "kind": "LinkedField",
-        "name": "updateMessage",
+        "name": "createInquiryOfferOrder",
         "plural": false,
         "selections": [
           {
@@ -115,7 +143,7 @@ return {
             "args": null,
             "concreteType": null,
             "kind": "LinkedField",
-            "name": "conversationOrError",
+            "name": "orderOrError",
             "plural": false,
             "selections": [
               (v2/*: any*/),
@@ -125,20 +153,21 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Conversation",
+                    "concreteType": null,
                     "kind": "LinkedField",
-                    "name": "conversation",
+                    "name": "order",
                     "plural": false,
                     "selections": [
-                      (v3/*: any*/)
+                      (v3/*: any*/),
+                      (v4/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
-                "type": "UpdateMessageSuccess",
+                "type": "CommerceOrderWithMutationSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -153,14 +182,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useMarkAsSpamMutation",
+    "name": "useMakeInquiryOfferMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "UpdateMessageMutationPayload",
+        "concreteType": "CommerceCreateInquiryOfferOrderWithArtworkPayload",
         "kind": "LinkedField",
-        "name": "updateMessage",
+        "name": "createInquiryOfferOrder",
         "plural": false,
         "selections": [
           {
@@ -168,7 +197,7 @@ return {
             "args": null,
             "concreteType": null,
             "kind": "LinkedField",
-            "name": "conversationOrError",
+            "name": "orderOrError",
             "plural": false,
             "selections": [
               (v2/*: any*/),
@@ -178,12 +207,14 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Conversation",
+                    "concreteType": null,
                     "kind": "LinkedField",
-                    "name": "conversation",
+                    "name": "order",
                     "plural": false,
                     "selections": [
+                      (v2/*: any*/),
                       (v3/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -195,10 +226,10 @@ return {
                     "storageKey": null
                   }
                 ],
-                "type": "UpdateMessageSuccess",
+                "type": "CommerceOrderWithMutationSuccess",
                 "abstractKey": null
               },
-              (v4/*: any*/)
+              (v5/*: any*/)
             ],
             "storageKey": null
           }
@@ -208,16 +239,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b15a7b37918a168f342378c027b3f93e",
+    "cacheID": "608a7887d4dc157b92b154f1485fcf65",
     "id": null,
     "metadata": {},
-    "name": "useMarkAsSpamMutation",
+    "name": "useMakeInquiryOfferMutation",
     "operationKind": "mutation",
-    "text": "mutation useMarkAsSpamMutation(\n  $input: UpdateMessageMutationInput!\n) {\n  updateMessage(input: $input) {\n    conversationOrError {\n      __typename\n      ... on UpdateMessageSuccess {\n        conversation {\n          initialMessage\n          id\n        }\n      }\n      ... on UpdateMessageFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useMakeInquiryOfferMutation(\n  $input: CommerceCreateInquiryOfferOrderWithArtworkInput!\n) {\n  createInquiryOfferOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        order {\n          __typename\n          internalID\n          mode\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c32e53ef67b327fd385a74a7fd710846";
+(node as any).hash = "5898b804fc9add5556aed2ab1012d923";
 
 export default node;
