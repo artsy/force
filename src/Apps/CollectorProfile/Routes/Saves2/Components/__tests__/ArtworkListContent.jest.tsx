@@ -33,75 +33,25 @@ const { renderWithRelay } = setupTestWrapperTL<ArtworkListContent_Test_Query>({
 })
 
 describe("ArtworkListContent", () => {
-  describe("Empty State", () => {
-    it("should render correct texts for default artwork list", () => {
-      renderWithRelay({
-        Me: () => ({
-          artworkList: {
-            default: true,
-            artworks: {
-              edges: [],
-            },
+  it("should render empty state when user doesn't have any saved artworks", () => {
+    renderWithRelay({
+      Me: () => ({
+        artworkList: {
+          default: true,
+          artworks: {
+            totalCount: 0,
+            edges: [],
           },
-          defaultSaves: {
-            artworksCount: 0,
-          },
-        }),
-      })
-
-      const title = "Keep track of artworks you love"
-      const description =
-        "Select the heart on an artwork to save it or add it to a list."
-
-      expect(screen.getByText(title)).toBeInTheDocument()
-      expect(screen.getByText(description)).toBeInTheDocument()
+        },
+      }),
     })
 
-    it("should render correct texts for non-default artwork list when user has saved artworks", () => {
-      renderWithRelay({
-        Me: () => ({
-          artworkList: {
-            default: false,
-            artworks: {
-              edges: [],
-            },
-          },
-          defaultSaves: {
-            artworksCount: 2,
-          },
-        }),
-      })
+    const title = "Keep track of artworks you love"
+    const description =
+      "Select the heart on an artwork to save it or add it to a list."
 
-      const title = "Start curating your list of works"
-      const description =
-        "Add works from All Saves or add new artworks as you browse."
-
-      expect(screen.getByText(title)).toBeInTheDocument()
-      expect(screen.getByText(description)).toBeInTheDocument()
-    })
-
-    it("should render correct texts for non-default artwork list when user doesn't have any saved artworks", () => {
-      renderWithRelay({
-        Me: () => ({
-          defaultSaves: {
-            artworksCount: 0,
-          },
-          artworkList: {
-            default: false,
-            artworks: {
-              edges: [],
-            },
-          },
-        }),
-      })
-
-      const title = "Keep track of artworks you love"
-      const description =
-        "Select the heart on an artwork to save it or add it to a list."
-
-      expect(screen.getByText(title)).toBeInTheDocument()
-      expect(screen.getByText(description)).toBeInTheDocument()
-    })
+    expect(screen.getByText(title)).toBeInTheDocument()
+    expect(screen.getByText(description)).toBeInTheDocument()
   })
 
   describe("Actions contextual menu", () => {

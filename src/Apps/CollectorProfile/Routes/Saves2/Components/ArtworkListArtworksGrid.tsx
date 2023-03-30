@@ -50,7 +50,7 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
   const [fetching, setFetching] = useState(false)
   const previousFilters = usePrevious(filters)
 
-  const artworks = me.collection?.artworks!
+  const artworks = me.artworkList?.artworks!
   const {
     pageCursors,
     pageInfo: { hasNextPage },
@@ -161,7 +161,7 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
           contextModule={ContextModule.artworkGrid}
           itemMargin={40}
           emptyStateComponent={null}
-          savedListId={me.collection?.internalID!}
+          savedListId={me.artworkList?.internalID!}
           onBrickClick={(artwork, artworkIndex) => {
             // TODO: Clarify moments about analytics
             trackEvent(
@@ -196,7 +196,7 @@ const PageWrapper: FC<ArtworkListArtworksGridProps> = props => {
   return (
     <AnalyticsContext.Provider
       value={{
-        contextPageOwnerId: props.me.collection!.internalID,
+        contextPageOwnerId: props.me.artworkList!.internalID,
         contextPageOwnerSlug,
         // TODO: Clarify some moment about analytics later (maybe we should pass OwnerType.collection)
         contextPageOwnerType,
@@ -217,7 +217,7 @@ export const ArtworkListArtworksGridFragmentContainer = createFragmentContainer(
           page: { type: "Int", defaultValue: 1 }
           sort: { type: "CollectionArtworkSorts" }
         ) {
-        collection(id: $listID) {
+        artworkList: collection(id: $listID) {
           internalID
 
           artworks: artworksConnection(first: 30, page: $page, sort: $sort) {
