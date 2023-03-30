@@ -6,10 +6,12 @@ import {
   CloseIcon,
   Dropdown,
   Flex,
+  ModalDialog,
   SoloIcon,
   Spacer,
   Text,
   themeProps,
+  Input,
 } from "@artsy/palette"
 import { SearchBarQueryRenderer } from "Components/Search/SearchBar"
 import { useSystemContext } from "System/SystemContext"
@@ -76,6 +78,7 @@ export const NavBar: React.FC = track(
   const { router } = useRouter()
   const [showMobileMenu, toggleMobileNav] = useState(false)
   const [searchFocused, setSearchFocused] = useState(false)
+  const [showAdvisorModal, setShowAdvisorModal] = useState(false)
   const xs = __internal__useMatchMedia(themeProps.mediaQueries.xs)
   const sm = __internal__useMatchMedia(themeProps.mediaQueries.sm)
   const isMobile = xs || sm
@@ -227,6 +230,103 @@ export const NavBar: React.FC = track(
               <Flex display={["none", "flex"]} ml={1} alignItems="stretch">
                 <Text variant="sm" lineHeight={1} display={["none", "flex"]}>
                   <Flex alignItems="center" display={["none", "none", "flex"]}>
+                    <NavBarItemLink
+                      textDecoration="none"
+                      onClick={() => setShowAdvisorModal(true)}
+                      data-label="Art Advisor"
+                    >
+                      Art Advisor
+                    </NavBarItemLink>
+                    {showAdvisorModal && (
+                      <ModalDialog
+                        title="Art Advisor"
+                        header={
+                          <Flex flexDirection="column" mt="-40px">
+                            <Text variant="xs">Powered by ChatGPT</Text>
+                            <Text mt={0.5} variant="sm">
+                              How can we help you?
+                            </Text>
+                            <Text color="black60" variant="xs">
+                              Type your question: ex: I am looking for bold art
+                              in the price range of $10,000 - $20,000
+                            </Text>
+                          </Flex>
+                        }
+                        footer={
+                          <Flex flexDirection="column">
+                            <Input placeholder="Type herewooo" />
+                            <Button
+                              width="80px"
+                              mt={1}
+                              alignSelf="flex-end"
+                              size="small"
+                              variant="primaryBlack"
+                            >
+                              Send
+                            </Button>
+                          </Flex>
+                        }
+                        onClose={() => setShowAdvisorModal(false)}
+                      >
+                        <Flex flexDirection="column">
+                          <Text variant="sm">How can we help you?</Text>
+                          <Text variant="sm">
+                            User: Hello I'd like a big painting
+                          </Text>
+                          <Text variant="sm">
+                            Art Advisor: Ok let me help you
+                          </Text>
+                          <Text variant="sm">
+                            User: Hello I'd like a big painting
+                          </Text>
+                          <Text variant="sm">
+                            Art Advisor: Ok let me help you
+                          </Text>
+                          <Text variant="sm">
+                            User: Hello I'd like a big painting
+                          </Text>
+                          <Text variant="sm">
+                            Art Advisor: Ok let me help you
+                          </Text>
+                          <Text variant="sm">
+                            User: Hello I'd like a big painting
+                          </Text>
+                          <Text variant="sm">
+                            Art Advisor: Ok let me help you
+                          </Text>
+                          <Text variant="sm">
+                            User: Hello I'd like a big painting
+                          </Text>
+                          <Text variant="sm">
+                            Art Advisor: Ok let me help you
+                          </Text>
+                          <Text variant="sm">
+                            User: Hello I'd like a big painting
+                          </Text>
+                          <Text variant="sm">
+                            Art Advisor: Ok let me help you
+                          </Text>
+                          <Text variant="sm">
+                            User: Hello I'd like a big painting
+                          </Text>
+                          <Text variant="sm">
+                            Art Advisor: Ok let me help you
+                          </Text>
+                          <Text variant="sm">
+                            User: Hello I'd like a big painting
+                          </Text>
+                          <Text variant="sm">
+                            Art Advisor: Ok let me help you
+                          </Text>
+                          <Text variant="sm">
+                            User: Hello I'd like a big painting
+                          </Text>
+                          <Text variant="sm">
+                            Art Advisor: Ok let me help you
+                          </Text>
+                        </Flex>
+                      </ModalDialog>
+                    )}
                     <NavBarItemLink
                       href="/collect"
                       textDecoration="none"
