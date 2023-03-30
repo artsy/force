@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f7ba184e6737ce9852b71a39a3b23982>>
+ * @generated SignedSource<<3dfb0c48765c36f85d9996fdf1ed2376>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type ArtworkListContent_me$data = {
     readonly internalID: string;
     readonly name: string;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"SavesArtworksGrid_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkListArtworksGrid_me">;
   readonly " $fragmentType": "ArtworkListContent_me";
 };
 export type ArtworkListContent_me$key = {
@@ -128,14 +128,14 @@ return {
       "args": [
         {
           "kind": "Variable",
-          "name": "collectionID",
+          "name": "listID",
           "variableName": "listID"
         },
         (v0/*: any*/),
         (v1/*: any*/)
       ],
       "kind": "FragmentSpread",
-      "name": "SavesArtworksGrid_me"
+      "name": "ArtworkListArtworksGrid_me"
     }
   ],
   "type": "Me",
@@ -143,6 +143,6 @@ return {
 };
 })();
 
-(node as any).hash = "0c972b42d2383d66fe3c97518e52fb5f";
+(node as any).hash = "44934bb899fe4769458b3db09bee9aa3";
 
 export default node;

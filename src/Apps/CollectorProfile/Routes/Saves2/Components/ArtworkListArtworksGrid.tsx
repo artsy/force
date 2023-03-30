@@ -1,5 +1,5 @@
 import { createFragmentContainer, graphql, RelayRefetchProp } from "react-relay"
-import { SavesArtworksGrid_me$data } from "__generated__/SavesArtworksGrid_me.graphql"
+import { ArtworkListArtworksGrid_me$data } from "__generated__/ArtworkListArtworksGrid_me.graphql"
 import { useTracking } from "react-tracking"
 import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
 import { PaginationFragmentContainer as Pagination } from "Components/Pagination"
@@ -26,16 +26,16 @@ import { Jump } from "Utils/Hooks/useJump"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { SavesEmptyStateFragmentContainer } from "./SavesEmptyState"
 
-interface SavesArtworksGridProps {
+interface ArtworkListArtworksGridProps {
   relayRefetch: RelayRefetchProp["refetch"]
-  me: SavesArtworksGrid_me$data
+  me: ArtworkListArtworksGrid_me$data
 }
 
 /**
  * In the future we plan to use the `BaseArtworkFilter` and `ArtworkFilterArtworkGrid` components
  * when filter support is added.
  */
-const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
+const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
   relayRefetch,
   me,
 }) => {
@@ -190,7 +190,7 @@ const SavesArtworksGrid: FC<SavesArtworksGridProps> = ({
   )
 }
 
-const PageWrapper: FC<SavesArtworksGridProps> = props => {
+const PageWrapper: FC<ArtworkListArtworksGridProps> = props => {
   const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
 
   return (
@@ -202,22 +202,22 @@ const PageWrapper: FC<SavesArtworksGridProps> = props => {
         contextPageOwnerType,
       }}
     >
-      <SavesArtworksGrid {...props} />
+      <ArtworkListArtworksGrid {...props} />
     </AnalyticsContext.Provider>
   )
 }
 
-export const SavesArtworksGridFragmentContainer = createFragmentContainer(
+export const ArtworkListArtworksGridFragmentContainer = createFragmentContainer(
   PageWrapper,
   {
     me: graphql`
-      fragment SavesArtworksGrid_me on Me
+      fragment ArtworkListArtworksGrid_me on Me
         @argumentDefinitions(
-          collectionID: { type: "String!" }
+          listID: { type: "String!" }
           page: { type: "Int", defaultValue: 1 }
           sort: { type: "CollectionArtworkSorts" }
         ) {
-        collection(id: $collectionID) {
+        collection(id: $listID) {
           internalID
 
           artworks: artworksConnection(first: 30, page: $page, sort: $sort) {
@@ -235,7 +235,7 @@ export const SavesArtworksGridFragmentContainer = createFragmentContainer(
             ...ArtworkGrid_artworks
           }
         }
-        ...SavesEmptyState_me @arguments(collectionID: $collectionID)
+        ...SavesEmptyState_me @arguments(collectionID: $listID)
       }
     `,
   }

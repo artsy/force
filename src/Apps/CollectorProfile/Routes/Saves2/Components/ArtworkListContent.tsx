@@ -1,4 +1,4 @@
-import { SavesArtworksGridFragmentContainer } from "./SavesArtworksGrid"
+import { ArtworkListArtworksGridFragmentContainer } from "./ArtworkListArtworksGrid"
 import { ArtworkListContent_me$data } from "__generated__/ArtworkListContent_me.graphql"
 import { ArtworkListContentQuery } from "__generated__/ArtworkListContentQuery.graphql"
 import {
@@ -70,7 +70,7 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
 
       <Spacer y={4} />
 
-      <SavesArtworksGridFragmentContainer
+      <ArtworkListArtworksGridFragmentContainer
         me={me}
         relayRefetch={relay.refetch}
       />
@@ -110,8 +110,8 @@ export const ArtworkListContentRefetchContainer = createRefetchContainer(
             totalCount
           }
         }
-        ...SavesArtworksGrid_me
-          @arguments(collectionID: $listID, page: $page, sort: $sort)
+        ...ArtworkListArtworksGrid_me
+          @arguments(listID: $listID, page: $page, sort: $sort)
       }
     `,
   },
