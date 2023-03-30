@@ -1,17 +1,17 @@
 import { render, screen, fireEvent } from "@testing-library/react"
 import {
   ArtworkListEntity,
-  SavesContextualMenu,
-} from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/SavesContextualMenu"
+  ArtworkListContextualMenu,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/ArtworkListContextualMenu"
 
 const artworkList: ArtworkListEntity = {
   internalID: "foobar",
   name: "Foo Bar",
 }
 
-describe("SavesContextualMenu", () => {
+describe("ArtworkListContextualMenu", () => {
   it("renders the trigger and the menu items", async () => {
-    render(<SavesContextualMenu artworkList={artworkList} />)
+    render(<ArtworkListContextualMenu artworkList={artworkList} />)
 
     const menuTriggerButton = screen.getByLabelText("Open contextual menu")
     expect(menuTriggerButton).toBeInTheDocument()
@@ -23,7 +23,7 @@ describe("SavesContextualMenu", () => {
   })
 
   it("opens the Delete modal", async () => {
-    render(<SavesContextualMenu artworkList={artworkList} />)
+    render(<ArtworkListContextualMenu artworkList={artworkList} />)
 
     fireEvent.click(screen.getByLabelText("Open contextual menu"))
     fireEvent.click(await screen.findByText("Delete List"))

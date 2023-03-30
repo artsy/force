@@ -16,11 +16,13 @@ import {
 
 export type ArtworkListEntity = DeleteArtworkListEntity & EditArtworkListEntity
 
-interface Props {
+interface ArtworkListContextualMenuProps {
   artworkList: ArtworkListEntity
 }
 
-export const SavesContextualMenu: React.FC<Props> = ({ artworkList }) => {
+export const ArtworkListContextualMenu: React.FC<ArtworkListContextualMenuProps> = ({
+  artworkList,
+}) => {
   const { t } = useTranslation()
 
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false)

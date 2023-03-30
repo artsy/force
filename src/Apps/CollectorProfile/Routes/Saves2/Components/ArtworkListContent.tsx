@@ -13,7 +13,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Flex, Join, Spacer, Text } from "@artsy/palette"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { SavesArtworksGridPlaceholder } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesPlaceholders"
-import { SavesContextualMenu } from "./Actions/SavesContextualMenu"
+import { ArtworkListContextualMenu } from "./Actions/ArtworkListContextualMenu"
 
 interface ArtworkListContentQueryRendererProps {
   listID: string
@@ -63,7 +63,7 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
         <Join separator={<Spacer x={2} />}>
           <Text variant="lg-display">{artworkList.name}</Text>
           {!artworkList.default && (
-            <SavesContextualMenu artworkList={artworkList} />
+            <ArtworkListContextualMenu artworkList={artworkList} />
           )}
         </Join>
       </Flex>
