@@ -39,10 +39,13 @@ export const ConversationsSidebarHeader: React.FC = () => {
       return
     }
 
-    // @ts-expect-error CONVERSATION_MIGRATION
     const queryParam = selected === "" ? {} : { conversationsFilter: selected }
 
     // FIXME: Update the query params without reloading the page using our router
+    router.replace({
+      pathname: match.location.pathname,
+      query: queryParam,
+    })
     // router.replace({
     //   query: {
     //     conversationId: match.params.conversationId,

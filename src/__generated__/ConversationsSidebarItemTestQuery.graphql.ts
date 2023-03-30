@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<72e5afd73eefe60392b844c02393c875>>
+ * @generated SignedSource<<6a91d63e4171e6cb3b2773d1b1c63de5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,18 +30,13 @@ var v0 = [
   }
 ],
 v1 = {
-  "kind": "Literal",
-  "name": "sellerId",
-  "value": "partner-id"
-},
-v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v3 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -49,28 +44,28 @@ v3 = [
     "name": "name",
     "storageKey": null
   },
-  (v2/*: any*/)
+  (v1/*: any*/)
 ],
-v4 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v5 = {
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v6 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v7 = {
+v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -92,9 +87,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": [
-              (v1/*: any*/)
-            ],
+            "args": null,
             "kind": "FragmentSpread",
             "name": "ConversationsSidebarItem_conversation"
           }
@@ -133,7 +126,7 @@ return {
             "kind": "LinkedField",
             "name": "from",
             "plural": false,
-            "selections": (v3/*: any*/),
+            "selections": (v2/*: any*/),
             "storageKey": null
           },
           {
@@ -159,12 +152,22 @@ return {
                     "name": "confirmedBuyerAt",
                     "storageKey": null
                   },
-                  (v2/*: any*/)
+                  (v1/*: any*/)
                 ],
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v1/*: any*/)
             ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ConversationResponder",
+            "kind": "LinkedField",
+            "name": "to",
+            "plural": false,
+            "selections": (v2/*: any*/),
             "storageKey": null
           },
           {
@@ -188,7 +191,6 @@ return {
                 "name": "last",
                 "value": 1
               },
-              (v1/*: any*/),
               {
                 "kind": "Literal",
                 "name": "states",
@@ -222,8 +224,8 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v4/*: any*/),
-                      (v2/*: any*/)
+                      (v3/*: any*/),
+                      (v1/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -231,7 +233,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "orderConnection(last:1,sellerId:\"partner-id\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\",\"REFUNDED\"])"
+            "storageKey": "orderConnection(last:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\",\"REFUNDED\"])"
           },
           {
             "alias": null,
@@ -249,11 +251,11 @@ return {
                 "name": "item",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
+                  (v3/*: any*/),
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v2/*: any*/),
+                      (v1/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -275,7 +277,7 @@ return {
                         "kind": "LinkedField",
                         "name": "artist",
                         "plural": false,
-                        "selections": (v3/*: any*/),
+                        "selections": (v2/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -312,7 +314,7 @@ return {
                   {
                     "kind": "InlineFragment",
                     "selections": [
-                      (v2/*: any*/)
+                      (v1/*: any*/)
                     ],
                     "type": "Node",
                     "abstractKey": "__isNode"
@@ -323,14 +325,14 @@ return {
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v1/*: any*/)
         ],
         "storageKey": "conversation(id:\"conversation-id\")"
       }
     ]
   },
   "params": {
-    "cacheID": "c2611b26bb62901a7e665aecacb248f1",
+    "cacheID": "8b0455d8a139ae48b19b8bd94fb8ac88",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -346,8 +348,8 @@ return {
           "plural": false,
           "type": "ConversationInitiator"
         },
-        "conversation.from.id": (v5/*: any*/),
-        "conversation.from.name": (v6/*: any*/),
+        "conversation.from.id": (v4/*: any*/),
+        "conversation.from.name": (v5/*: any*/),
         "conversation.fromUser": {
           "enumValues": null,
           "nullable": true,
@@ -360,10 +362,10 @@ return {
           "plural": false,
           "type": "CollectorProfileType"
         },
-        "conversation.fromUser.collectorProfile.confirmedBuyerAt": (v7/*: any*/),
-        "conversation.fromUser.collectorProfile.id": (v5/*: any*/),
-        "conversation.fromUser.id": (v5/*: any*/),
-        "conversation.id": (v5/*: any*/),
+        "conversation.fromUser.collectorProfile.confirmedBuyerAt": (v6/*: any*/),
+        "conversation.fromUser.collectorProfile.id": (v4/*: any*/),
+        "conversation.fromUser.id": (v4/*: any*/),
+        "conversation.id": (v4/*: any*/),
         "conversation.internalID": {
           "enumValues": null,
           "nullable": true,
@@ -382,27 +384,27 @@ return {
           "plural": false,
           "type": "ConversationItemType"
         },
-        "conversation.items.item.__isNode": (v6/*: any*/),
-        "conversation.items.item.__typename": (v6/*: any*/),
+        "conversation.items.item.__isNode": (v5/*: any*/),
+        "conversation.items.item.__typename": (v5/*: any*/),
         "conversation.items.item.artist": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Artist"
         },
-        "conversation.items.item.artist.id": (v5/*: any*/),
-        "conversation.items.item.artist.name": (v7/*: any*/),
-        "conversation.items.item.date": (v7/*: any*/),
-        "conversation.items.item.id": (v5/*: any*/),
+        "conversation.items.item.artist.id": (v4/*: any*/),
+        "conversation.items.item.artist.name": (v6/*: any*/),
+        "conversation.items.item.date": (v6/*: any*/),
+        "conversation.items.item.id": (v4/*: any*/),
         "conversation.items.item.image": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Image"
         },
-        "conversation.items.item.image.url": (v7/*: any*/),
-        "conversation.items.item.title": (v7/*: any*/),
-        "conversation.lastMessageAt": (v7/*: any*/),
+        "conversation.items.item.image.url": (v6/*: any*/),
+        "conversation.items.item.title": (v6/*: any*/),
+        "conversation.lastMessageAt": (v6/*: any*/),
         "conversation.orderConnection": {
           "enumValues": null,
           "nullable": true,
@@ -421,17 +423,25 @@ return {
           "plural": false,
           "type": "CommerceOrder"
         },
-        "conversation.orderConnection.edges.node.__typename": (v6/*: any*/),
-        "conversation.orderConnection.edges.node.id": (v5/*: any*/)
+        "conversation.orderConnection.edges.node.__typename": (v5/*: any*/),
+        "conversation.orderConnection.edges.node.id": (v4/*: any*/),
+        "conversation.to": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ConversationResponder"
+        },
+        "conversation.to.id": (v4/*: any*/),
+        "conversation.to.name": (v5/*: any*/)
       }
     },
     "name": "ConversationsSidebarItemTestQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebarItemTestQuery {\n  conversation(id: \"conversation-id\") {\n    ...ConversationsSidebarItem_conversation_2b5dec\n    id\n  }\n}\n\nfragment ConversationsSidebarItem_conversation_2b5dec on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED], sellerId: \"partner-id\") {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ConversationsSidebarItemTestQuery {\n  conversation(id: \"conversation-id\") {\n    ...ConversationsSidebarItem_conversation\n    id\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d5a853f6696205e989d0b73aa995fd56";
+(node as any).hash = "f8afa542088cd5b9eee1a6b390cf4c31";
 
 export default node;

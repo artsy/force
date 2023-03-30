@@ -1,17 +1,18 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
-import { Flex } from "@artsy/palette"
+import { Box, Flex } from "@artsy/palette"
 import { Resizer } from "Apps/Conversations2/components/Resizer"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { useMobileLayoutActions } from "Apps/Conversations2/hooks/useMobileLayoutActions"
 import { ConversationsSidebar } from "Apps/Conversations2/components/Sidebar/ConversationsSidebar"
 import { ConversationHeader } from "Apps/Conversations2/Routes/Conversation/Components/ConversationHeader"
-import { ConversationMessages } from "Apps/Conversations2/Routes/Conversation/Components/ConversationMessages"
+import { ConversationMessagesPaginationContainer } from "Apps/Conversations2/Routes/Conversation/Components/ConversationMessages"
 import { ConversationReply } from "Apps/Conversations2/Routes/Conversation/Components/ConversationReply"
 import { ConversationDetails } from "Apps/Conversations2/components/Details/ConversationDetails"
 import { Conversation2Route_viewer$data } from "__generated__/Conversation2Route_viewer.graphql"
 import { Conversation2Route_conversation$data } from "__generated__/Conversation2Route_conversation.graphql"
-import { Suspense } from "react"
+import { Fragment, Suspense } from "react"
+import { ConversationsSidebarSkeleton } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarSkeleton"
 
 const COLUMN_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 const MOBILE_HEIGHT = `calc(100dvh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
@@ -32,6 +33,8 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
     goToConversation,
   } = useMobileLayoutActions()
 
+  const ClientOnlySuspense = typeof window !== "undefined" ? Suspense : Fragment
+
   return (
     <>
       <Media greaterThan="sm">
@@ -47,9 +50,9 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
               borderRight="1px solid"
               borderRightColor="black15"
             >
-              {/* <Suspense fallback={<ConversationsSidebarSkeleton />}> */}
-              <ConversationsSidebar viewer={viewer} />
-              {/* </Suspense> */}
+              <ClientOnlySuspense fallback={<ConversationsSidebarSkeleton />}>
+                <ConversationsSidebar viewer={viewer} />
+              </ClientOnlySuspense>
             </Flex>
 
             <Flex
@@ -66,11 +69,16 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
                 flexGrow={1}
                 width="100%"
               >
-                <ConversationHeader conversation={conversation} />
+                {/* TODO: Do we need a header? We have the details sidebar */}
+                {/* <ConversationHeader conversation={conversation} /> */}
 
-                {/* <Suspense fallback={null}> */}
-                <ConversationMessages conversation={conversation} />
-                {/* </Suspense> */}
+                <Box>
+                  <ClientOnlySuspense fallback={null}>
+                    <ConversationMessagesPaginationContainer
+                      conversation={conversation}
+                    />
+                  </ClientOnlySuspense>
+                </Box>
 
                 <ConversationReply conversation={conversation} />
               </Flex>
@@ -120,7 +128,11 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
             onGoToDetails={goToDetails}
           />
 
-          <ConversationMessages conversation={conversation} />
+          <ClientOnlySuspense fallback={null}>
+            <ConversationMessagesPaginationContainer
+              conversation={conversation}
+            />
+          </ClientOnlySuspense>
 
           <ConversationReply conversation={conversation} />
         </Flex>
@@ -151,25 +163,17 @@ export const Conversation2RouteFragmentContainer = createFragmentContainer(
     viewer: graphql`
       fragment Conversation2Route_viewer on Viewer
         @argumentDefinitions(
-          sellerId: { type: "ID!" }
-          partnerId: { type: "String!" }
           toBeReplied: { type: "Boolean" }
           hasReply: { type: "Boolean" }
         ) {
         ...ConversationsSidebar_viewer
-          @arguments(
-            partnerId: $partnerId
-            sellerId: $sellerId
-            toBeReplied: $toBeReplied
-            hasReply: $hasReply
-          )
+          @arguments(toBeReplied: $toBeReplied, hasReply: $hasReply)
       }
     `,
     conversation: graphql`
-      fragment Conversation2Route_conversation on Conversation
-        @argumentDefinitions(sellerId: { type: "ID!" }) {
-        ...ConversationHeader_conversation @arguments(sellerId: $sellerId)
-        ...ConversationDetails_conversation @arguments(sellerId: $sellerId)
+      fragment Conversation2Route_conversation on Conversation {
+        ...ConversationHeader_conversation
+        ...ConversationDetails_conversation
         ...ConversationReply_conversation
         ...ConversationMessages_conversation
       }

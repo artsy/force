@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b509d7775bcffc46b54f079701bd4aa9>>
+ * @generated SignedSource<<4cc2aac9253ef626884ef36bc3b27c4c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -46,6 +46,9 @@ export type ConversationsSidebarItem_conversation$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly to: {
+    readonly name: string;
+  };
   readonly " $fragmentType": "ConversationsSidebarItem_conversation";
 };
 export type ConversationsSidebarItem_conversation$key = {
@@ -61,7 +64,10 @@ var v0 = {
   "name": "name",
   "storageKey": null
 },
-v1 = {
+v1 = [
+  (v0/*: any*/)
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -69,13 +75,7 @@ v1 = {
   "storageKey": null
 };
 return {
-  "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "sellerId"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ConversationsSidebarItem_conversation",
@@ -94,9 +94,7 @@ return {
       "kind": "LinkedField",
       "name": "from",
       "plural": false,
-      "selections": [
-        (v0/*: any*/)
-      ],
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
     {
@@ -130,6 +128,16 @@ return {
     },
     {
       "alias": null,
+      "args": null,
+      "concreteType": "ConversationResponder",
+      "kind": "LinkedField",
+      "name": "to",
+      "plural": false,
+      "selections": (v1/*: any*/),
+      "storageKey": null
+    },
+    {
+      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -148,11 +156,6 @@ return {
           "kind": "Literal",
           "name": "last",
           "value": 1
-        },
-        {
-          "kind": "Variable",
-          "name": "sellerId",
-          "variableName": "sellerId"
         },
         {
           "kind": "Literal",
@@ -187,7 +190,7 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v1/*: any*/)
+                (v2/*: any*/)
               ],
               "storageKey": null
             }
@@ -195,7 +198,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "orderConnection(last:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\",\"REFUNDED\"])"
     },
     {
       "alias": null,
@@ -215,7 +218,7 @@ return {
             "name": "item",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
+              (v2/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
@@ -323,6 +326,6 @@ return {
 };
 })();
 
-(node as any).hash = "58dbb033afcce1fe69e15cab69901fd7";
+(node as any).hash = "8f9a8564f9bbee0ccebf279596eecd6c";
 
 export default node;

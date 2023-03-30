@@ -12,7 +12,6 @@ describe("ConversationDetails", () => {
         query ConversationsSidebarTestQuery @relay_test_operation {
           viewer {
             ...ConversationsSidebar_viewer
-              @arguments(partnerId: "partner-id", sellerId: "partner-id")
           }
         }
       `,

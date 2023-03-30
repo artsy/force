@@ -1,7 +1,7 @@
 import { graphql } from "relay-runtime"
 import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { ConversationsSidebarItem } from "../ConversationsSidebarItem"
+import { ConversationsSidebarItem } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarItem"
 import { ConversationsSidebarItemTestQuery } from "__generated__/ConversationsSidebarItemTestQuery.graphql"
 import { useTracking } from "react-tracking"
 
@@ -23,7 +23,6 @@ describe("ConversationSidebarItem", () => {
       query ConversationsSidebarItemTestQuery @relay_test_operation {
         conversation(id: "conversation-id") {
           ...ConversationsSidebarItem_conversation
-            @arguments(sellerId: "partner-id")
         }
       }
     `,

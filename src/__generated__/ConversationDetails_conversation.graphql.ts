@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<19660df15ce45e2d406bc84dbcf0973e>>
+ * @generated SignedSource<<41373fc9414e873b74451b8a4fd4a3da>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,13 +34,7 @@ export type ConversationDetails_conversation$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "sellerId"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ConversationDetails_conversation",
@@ -84,11 +78,6 @@ const node: ReaderFragment = {
           "kind": "Literal",
           "name": "first",
           "value": 1
-        },
-        {
-          "kind": "Variable",
-          "name": "sellerId",
-          "variableName": "sellerId"
         },
         {
           "kind": "Literal",
@@ -148,7 +137,7 @@ const node: ReaderFragment = {
           "path": "orderConnection.edges"
         }
       ],
-      "storageKey": null
+      "storageKey": "orderConnection(first:1,states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"PROCESSING_APPROVAL\",\"REFUNDED\",\"CANCELED\"])"
     },
     {
       "args": null,
@@ -170,6 +159,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "acf7879247afb89e4211d31b855d4e40";
+(node as any).hash = "efdb8c756b4079ca40517331c13f46ef";
 
 export default node;

@@ -23,8 +23,6 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 10 }
           after: { type: "String" }
-          partnerId: { type: "String!" }
-          sellerId: { type: "ID!" }
           toBeReplied: { type: "Boolean" }
           hasReply: { type: "Boolean" }
         )
@@ -32,7 +30,6 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
         conversationsConnection(
           first: $first
           after: $after
-          partnerId: $partnerId
           type: USER
           toBeReplied: $toBeReplied
           hasReply: $hasReply
@@ -45,7 +42,6 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
             node {
               internalID
               ...ConversationsSidebarItem_conversation
-                @arguments(sellerId: $sellerId)
             }
           }
         }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8f763bb66b96c2ac7d991a7af4a7d738>>
+ * @generated SignedSource<<b39257a95d1e2ca86d325190b88e528e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -8,10 +8,9 @@
 /* eslint-disable */
 // @ts-nocheck
 
-import { ReaderFragment, RefetchableFragment } from 'relay-runtime';
+import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationMessages_conversation$data = {
-  readonly id: string;
   readonly inquiryRequest: {
     readonly formattedFirstMessage: string | null;
   } | null;
@@ -32,18 +31,7 @@ export type ConversationMessages_conversation$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ConversationMessages_conversation">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = [
-  "messagesConnection"
-],
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -63,24 +51,11 @@ return {
         "count": "first",
         "cursor": "after",
         "direction": "forward",
-        "path": (v0/*: any*/)
+        "path": [
+          "messagesConnection"
+        ]
       }
-    ],
-    "refetch": {
-      "connection": {
-        "forward": {
-          "count": "first",
-          "cursor": "after"
-        },
-        "backward": null,
-        "path": (v0/*: any*/)
-      },
-      "fragmentPathInResult": [
-        "node"
-      ],
-      "operation": require('./ConversationMessagesPaginationQuery.graphql'),
-      "identifierField": "id"
-    }
+    ]
   },
   "name": "ConversationMessages_conversation",
   "selections": [
@@ -116,7 +91,13 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "id",
+                    "storageKey": null
+                  },
                   {
                     "alias": null,
                     "args": null,
@@ -204,14 +185,12 @@ return {
         }
       ],
       "storageKey": null
-    },
-    (v1/*: any*/)
+    }
   ],
   "type": "Conversation",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "6a0ac5931c4c59e2b8baf366eca98e99";
+(node as any).hash = "3ad8969f427d1f6509b1a364f4b8780d";
 
 export default node;
