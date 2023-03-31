@@ -18,6 +18,9 @@ import {
   ResultListEntity,
   useManageArtworkForSavesContext,
 } from "Components/Artwork/ManageArtworkForSaves"
+import { ActionType, AddedArtworkToArtworkList } from "@artsy/cohesion"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useTracking } from "react-tracking"
 
 const logger = createLogger("SelectListsForArtworkModal")
 
@@ -32,6 +35,8 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
 }) => {
   const { t } = useTranslation()
   const { state, dispatch, reset, onSave } = useManageArtworkForSavesContext()
+  const analytics = useAnalyticsContext()
+  const { trackEvent } = useTracking()
   const [isSaving, setIsSaving] = useState(false)
   const allSavesArtworkList = me?.allSavesArtworkList
   const customArtworkLists = extractNodes(me?.customArtworkLists)
@@ -100,6 +105,19 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
     })
   }
 
+  const trackAddedArtworkToArtworkLists = () => {
+    const event: AddedArtworkToArtworkList = {
+      action: ActionType.addedArtworkToArtworkList,
+      context_owner_id: analytics.contextPageOwnerId,
+      context_owner_slug: analytics.contextPageOwnerSlug,
+      context_owner_type: analytics.contextPageOwnerType!,
+      artwork_ids: [state.artwork!.internalID],
+      owner_ids: state.addingListIDs,
+    }
+
+    trackEvent(event)
+  }
+
   const handleSaveClicked = async () => {
     try {
       setIsSaving(true)
@@ -119,6 +137,10 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
           return !!error?.mutationError
         },
       })
+
+      if (state.addingListIDs.length > 0) {
+        trackAddedArtworkToArtworkLists()
+      }
 
       const result = getOnSaveResult()
       onSave(result)
