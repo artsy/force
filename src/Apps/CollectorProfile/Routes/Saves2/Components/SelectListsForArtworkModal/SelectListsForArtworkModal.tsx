@@ -33,9 +33,11 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const { t } = useTranslation()
   const { state, dispatch, reset, onSave } = useManageArtworkForSavesContext()
   const [isSaving, setIsSaving] = useState(false)
-  const savedCollection = me?.defaultSaves
-  const nodes = extractNodes(me?.collectionsConnection)
-  const collections = savedCollection ? [savedCollection, ...nodes] : nodes
+  const allSavesArtworkList = me?.allSavesArtworkList
+  const customArtworkLists = extractNodes(me?.customArtworkLists)
+  const collections = allSavesArtworkList
+    ? [allSavesArtworkList, ...customArtworkLists]
+    : customArtworkLists
   const selectedCollectionIds = getSelectedCollectionIds({
     collections,
     addToCollectionIDs: state.addingListIDs,
@@ -198,14 +200,14 @@ export const SelectListsForArtworkModalFragmentContainer = createFragmentContain
     me: graphql`
       fragment SelectListsForArtworkModal_me on Me
         @argumentDefinitions(artworkID: { type: "String!" }) {
-        defaultSaves: collection(id: "saved-artwork") {
+        allSavesArtworkList: collection(id: "saved-artwork") {
           internalID
           isSavedArtwork(artworkID: $artworkID)
           name
           ...SelectArtworkListItem_item
         }
 
-        collectionsConnection(
+        customArtworkLists: collectionsConnection(
           first: 30
           default: false
           saves: true

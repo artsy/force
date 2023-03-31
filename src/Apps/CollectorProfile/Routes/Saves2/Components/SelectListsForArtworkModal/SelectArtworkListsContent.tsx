@@ -6,8 +6,8 @@ import { SelectListsForArtworkModal_me$data } from "__generated__/SelectListsFor
 import { FC } from "react"
 
 type ArtworkListEntity = ExtractNodeType<
-  | SelectListsForArtworkModal_me$data["defaultSaves"]
-  | SelectListsForArtworkModal_me$data["collectionsConnection"]
+  | SelectListsForArtworkModal_me$data["allSavesArtworkList"]
+  | SelectListsForArtworkModal_me$data["customArtworkLists"]
 >
 
 interface SelectArtworkListsContentProps {
