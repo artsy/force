@@ -1,21 +1,53 @@
-import { render, screen, fireEvent } from "@testing-library/react"
+import { OwnerType } from "@artsy/cohesion"
+import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import {
   CreateNewListModalContainer,
   CreateNewListModalContainerProps,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
+import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useMutation } from "Utils/Hooks/useMutation"
+import { useTracking } from "react-tracking"
 
+jest.mock("Utils/Hooks/useMutation")
+
+const mockUseMutation = useMutation as jest.Mock
+const mockUseTracking = useTracking as jest.Mock
 const onCloseMock = jest.fn()
 const onCompleteMock = jest.fn()
+const submitMutation = jest.fn()
+const trackEvent = jest.fn()
 
 describe("CreateNewListModal", () => {
+  beforeEach(() => {
+    mockUseMutation.mockImplementation(() => {
+      return { submitMutation }
+    })
+
+    mockUseTracking.mockImplementation(() => ({
+      trackEvent,
+    }))
+  })
+
+  afterEach(() => {
+    submitMutation.mockClear()
+  })
+
   const TestComponent = (props: Partial<CreateNewListModalContainerProps>) => {
     return (
-      <CreateNewListModalContainer
-        {...props}
-        visible={props.visible ?? true}
-        onClose={props.onClose ?? onCloseMock}
-        onComplete={props.onComplete ?? onCompleteMock}
-      />
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "page-owner-id",
+          contextPageOwnerSlug: "page-owner-slug",
+          contextPageOwnerType: OwnerType.saves,
+        }}
+      >
+        <CreateNewListModalContainer
+          {...props}
+          visible={props.visible ?? true}
+          onClose={props.onClose ?? onCloseMock}
+          onComplete={props.onComplete ?? onCompleteMock}
+        />
+      </AnalyticsContext.Provider>
     )
   }
 
@@ -86,5 +118,40 @@ describe("CreateNewListModal", () => {
     )
 
     expect(screen.getByText("Artwork Title, 2023")).toBeInTheDocument()
+  })
+
+  it("track event when artwork list was created", async () => {
+    const artworkList = {
+      internalID: "artwork-list-id",
+      name: "Artwork List Name",
+    }
+
+    submitMutation.mockImplementation(() => ({
+      createCollection: {
+        responseOrError: {
+          collection: artworkList,
+        },
+      },
+    }))
+
+    render(<TestComponent />)
+
+    fireEvent.change(screen.getByRole("textbox"), {
+      target: {
+        value: artworkList.name,
+      },
+    })
+
+    fireEvent.click(screen.getByText("Create List"))
+
+    await waitFor(() =>
+      expect(trackEvent).toHaveBeenLastCalledWith({
+        action: "createdArtworkList",
+        context_owner_id: "page-owner-id",
+        context_owner_slug: "page-owner-slug",
+        context_owner_type: "saves",
+        owner_id: artworkList.internalID,
+      })
+    )
   })
 })
