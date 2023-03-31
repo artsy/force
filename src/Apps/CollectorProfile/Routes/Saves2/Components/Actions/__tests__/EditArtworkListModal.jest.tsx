@@ -5,6 +5,7 @@ import {
   EditArtworkListModal,
   EditArtworkListEntity,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/EditArtworkListModal"
+import { useTracking } from "react-tracking"
 
 jest.mock("Utils/Hooks/useMutation")
 
@@ -22,6 +23,9 @@ const setup = () => {
 }
 
 describe("EditArtworkListModal", () => {
+  const mockUseTracking = useTracking as jest.Mock
+  const trackEvent = jest.fn()
+
   let closeEditModal: jest.Mock
   let submitMutation: jest.Mock
 
@@ -31,6 +35,10 @@ describe("EditArtworkListModal", () => {
     ;(useMutation as jest.Mock).mockImplementation(() => {
       return { submitMutation }
     })
+
+    mockUseTracking.mockImplementation(() => ({
+      trackEvent,
+    }))
   })
 
   it("renders the modal content", async () => {
@@ -134,5 +142,41 @@ describe("EditArtworkListModal", () => {
     })
 
     expect(saveButton).toBeEnabled()
+  })
+
+  it("tracks event when artwork list was edited", async () => {
+    submitMutation.mockImplementation(() => ({
+      updateCollection: {
+        responseOrError: {
+          __typename: "UpdateCollectionSuccess",
+          artworkList: {
+            internalID: "artwork-list",
+            name: "All saves",
+          },
+        },
+      },
+    }))
+
+    render(
+      <EditArtworkListModal
+        artworkList={artworkList}
+        onClose={closeEditModal}
+      />
+    )
+    const { nameInputField, saveButton } = setup()
+
+    fireEvent.change(nameInputField, {
+      target: { value: "Foo Bar!" },
+    })
+
+    fireEvent.click(saveButton)
+
+    await waitFor(() =>
+      expect(trackEvent).toHaveBeenLastCalledWith({
+        action: "editedArtworkList",
+        context_owner_type: "saves",
+        owner_id: artworkList.internalID,
+      })
+    )
   })
 })

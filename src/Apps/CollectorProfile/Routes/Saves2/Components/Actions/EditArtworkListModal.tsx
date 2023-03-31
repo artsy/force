@@ -13,6 +13,8 @@ import { Form, Formik } from "formik"
 import * as Yup from "yup"
 import { useUpdateArtworkList } from "./Mutations/useUpdateArtworkList"
 import createLogger from "Utils/logger"
+import { useTracking } from "react-tracking"
+import { ActionType, EditedArtworkList, OwnerType } from "@artsy/cohesion"
 
 export interface EditArtworkListEntity {
   internalID: string
@@ -37,6 +39,7 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
   onClose,
 }) => {
   const { t } = useTranslation()
+  const { trackEvent } = useTracking()
 
   const initialValues: FormikValues = {
     name: artworkList.name,
@@ -51,6 +54,16 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
   const { submitMutation } = useUpdateArtworkList()
 
   const { sendToast } = useToasts()
+
+  const trackAnalyticEvent = () => {
+    const event: EditedArtworkList = {
+      action: ActionType.editedArtworkList,
+      context_owner_type: OwnerType.saves,
+      owner_id: artworkList.internalID,
+    }
+
+    trackEvent(event)
+  }
 
   const handleSubmit = async (formikValues: FormikValues) => {
     try {
@@ -74,6 +87,8 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
         variant: "success",
         message: t("collectorSaves.editListModal.success"),
       })
+
+      trackAnalyticEvent()
     } catch (error) {
       logger.error(error)
       sendToast({
