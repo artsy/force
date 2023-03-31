@@ -2,13 +2,15 @@ import { useNetworkOfflineMonitor } from "Utils/Hooks/useNetworkOfflineMonitor"
 import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 import { Match } from "found"
 import { isFunction } from "lodash"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import * as React from "react"
 import createLogger from "Utils/logger"
 import { useProductionEnvironmentWarning } from "Utils/Hooks/useProductionEnvironmentWarning"
 import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
 import { Layout } from "Apps/Components/Layouts"
 import { useSetupAuth } from "Utils/Hooks/useSetupAuth"
+import { useSystemContext } from "System/SystemContext"
+import { Renderer } from "System/Router/RenderStatus"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -20,6 +22,8 @@ export const AppShell: React.FC<AppShellProps> = props => {
   useSetupAuth()
 
   const { onboardingComponent } = useOnboardingModal()
+  const { isFetching } = useSystemContext()
+  const [shouldRender, setShouldRender] = useState(!isFetching)
 
   const { children, match } = props
   const routeConfig = match ? findCurrentRoute(match) : null
@@ -43,12 +47,18 @@ export const AppShell: React.FC<AppShellProps> = props => {
     document.body.setAttribute("data-test", "AppReady")
   }, [])
 
+  useEffect(() => {
+    setShouldRender(!isFetching)
+  }, [isFetching])
+
   useNetworkOfflineMonitor()
   useProductionEnvironmentWarning()
 
   return (
     <>
-      <Layout variant={routeConfig?.layout}>{children}</Layout>
+      <Renderer shouldUpdate={shouldRender}>
+        <Layout variant={routeConfig?.layout}>{children}</Layout>
+      </Renderer>
 
       {onboardingComponent}
     </>
