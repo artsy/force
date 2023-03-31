@@ -1,4 +1,4 @@
-import { Box, Flex, FlexProps, GuaranteeIcon, Text } from "@artsy/palette"
+import { Flex, FlexProps, GuaranteeIcon, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { ConversationMakeOfferButton } from "Apps/Conversations2/Routes/Conversation/Components/ConversationCTA/ConversationMakeOfferButton"
 import { ConversationPurchaseButton } from "Apps/Conversations2/Routes/Conversation/Components/ConversationCTA/ConversationPurchaseButton"
@@ -116,7 +116,7 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
       )}
       */}
 
-      <Box mx={1} my={1}>
+      <Flex flexDirection="row">
         {artwork.isAcquireable && (
           <ConversationPurchaseButton
             // TODO
@@ -133,7 +133,7 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
             conversation={data}
           />
         )}
-      </Box>
+      </Flex>
     </Flex>
   )
 }
