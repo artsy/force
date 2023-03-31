@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aefc8aa1d8dbe30ad725634e05c5b703>>
+ * @generated SignedSource<<77a42691e5a6a1ecd903d006cda968ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,13 +16,13 @@ export type ArtworksCollectionsBatchUpdateInput = {
   clientMutationId?: string | null;
   removeFromCollectionIDs?: ReadonlyArray<string> | null;
 };
-export type useUpdateCollectionsForArtworkMutation$variables = {
+export type useSelectArtworkListsMutation$variables = {
   input: ArtworksCollectionsBatchUpdateInput;
 };
-export type useUpdateCollectionsForArtworkMutation$data = {
+export type useSelectArtworkListsMutation$data = {
   readonly artworksCollectionsBatchUpdate: {
     readonly responseOrError: {
-      readonly addedToCollections?: ReadonlyArray<{
+      readonly addedToArtworkLists?: ReadonlyArray<{
         readonly default: boolean;
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
@@ -30,7 +30,7 @@ export type useUpdateCollectionsForArtworkMutation$data = {
       readonly mutationError?: {
         readonly statusCode: number | null;
       } | null;
-      readonly removedFromCollections?: ReadonlyArray<{
+      readonly removedFromArtworkLists?: ReadonlyArray<{
         readonly default: boolean;
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
@@ -38,9 +38,9 @@ export type useUpdateCollectionsForArtworkMutation$data = {
     } | null;
   } | null;
 };
-export type useUpdateCollectionsForArtworkMutation = {
-  response: useUpdateCollectionsForArtworkMutation$data;
-  variables: useUpdateCollectionsForArtworkMutation$variables;
+export type useSelectArtworkListsMutation = {
+  response: useSelectArtworkListsMutation$data;
+  variables: useSelectArtworkListsMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -201,7 +201,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useUpdateCollectionsForArtworkMutation",
+    "name": "useSelectArtworkListsMutation",
     "selections": [
       {
         "alias": null,
@@ -223,7 +223,7 @@ return {
                 "kind": "InlineFragment",
                 "selections": [
                   {
-                    "alias": null,
+                    "alias": "addedToArtworkLists",
                     "args": null,
                     "concreteType": "Collection",
                     "kind": "LinkedField",
@@ -233,7 +233,7 @@ return {
                     "storageKey": null
                   },
                   {
-                    "alias": null,
+                    "alias": "removedFromArtworkLists",
                     "args": null,
                     "concreteType": "Collection",
                     "kind": "LinkedField",
@@ -261,7 +261,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useUpdateCollectionsForArtworkMutation",
+    "name": "useSelectArtworkListsMutation",
     "selections": [
       {
         "alias": null,
@@ -290,7 +290,7 @@ return {
                 "kind": "InlineFragment",
                 "selections": [
                   {
-                    "alias": null,
+                    "alias": "addedToArtworkLists",
                     "args": null,
                     "concreteType": "Collection",
                     "kind": "LinkedField",
@@ -300,7 +300,7 @@ return {
                     "storageKey": null
                   },
                   {
-                    "alias": null,
+                    "alias": "removedFromArtworkLists",
                     "args": null,
                     "concreteType": "Collection",
                     "kind": "LinkedField",
@@ -323,16 +323,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e3497899201e9638e04bac569cf34404",
+    "cacheID": "381f8154647f04dcb9485edd64cd5cee",
     "id": null,
     "metadata": {},
-    "name": "useUpdateCollectionsForArtworkMutation",
+    "name": "useSelectArtworkListsMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateCollectionsForArtworkMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        addedToCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n        removedFromCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useSelectArtworkListsMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        addedToArtworkLists: addedToCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n        removedFromArtworkLists: removedFromCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "91d5611269921592899c7efe563d0c84";
+(node as any).hash = "eccaa75c432a092ab88db2a70d44cda8";
 
 export default node;

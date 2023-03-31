@@ -8,7 +8,7 @@ import { SelectListsForArtworkModal_me$data } from "__generated__/SelectListsFor
 import { SelectListsForArtworkModalQuery } from "__generated__/SelectListsForArtworkModalQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { getSelectedCollectionIds } from "Apps/CollectorProfile/Routes/Saves2/Utils/getSelectedCollectionIds"
-import { useUpdateCollectionsForArtwork } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/useUpdateCollectionsForArtwork"
+import { useSelectArtworkLists } from "./useSelectArtworkLists"
 import createLogger from "Utils/logger"
 import { useTranslation } from "react-i18next"
 import { SelectArtworkListsContent } from "./SelectArtworkListsContent"
@@ -44,7 +44,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const hasChanges =
     state.addingListIDs.length !== 0 || state.removingListIDs.length !== 0
 
-  const { submitMutation } = useUpdateCollectionsForArtwork(state.artwork!.id)
+  const { submitMutation } = useSelectArtworkLists(state.artwork!.id)
   const { sendToast } = useToasts()
 
   const onClose = () => {
