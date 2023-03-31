@@ -144,7 +144,7 @@ describe("EditArtworkListModal", () => {
     expect(saveButton).toBeEnabled()
   })
 
-  it("tracks event", async () => {
+  it("tracks event when artwork list was edited", async () => {
     submitMutation.mockImplementation(() => ({
       updateCollection: {
         responseOrError: {

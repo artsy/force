@@ -55,7 +55,7 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
 
   const { sendToast } = useToasts()
 
-  const trackAnalyticsEvent = () => {
+  const trackAnalyticEvent = () => {
     const event: EditedArtworkList = {
       action: ActionType.editedArtworkList,
       context_owner_type: OwnerType.saves,
@@ -88,7 +88,7 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
         message: t("collectorSaves.editListModal.success"),
       })
 
-      trackAnalyticsEvent()
+      trackAnalyticEvent()
     } catch (error) {
       logger.error(error)
       sendToast({
