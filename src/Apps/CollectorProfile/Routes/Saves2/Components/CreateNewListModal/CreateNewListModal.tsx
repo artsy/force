@@ -18,6 +18,9 @@ import {
 } from "./CreateNewListModalHeader"
 import { useCreateCollection } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/Mutations/useCreateCollection"
 import { FC } from "react"
+import { useTracking } from "react-tracking"
+import { ActionType, CreatedArtworkList } from "@artsy/cohesion"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 export interface CreateNewListValues {
   name: string
@@ -55,11 +58,25 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   const { t } = useTranslation()
   const { relayEnvironment } = useSystemContext()
   const { submitMutation } = useCreateCollection()
+  const { trackEvent } = useTracking()
+  const analytics = useAnalyticsContext()
 
   const handleBackOnCancelClick = onBackClick ?? onClose
   const backOrCancelLabel = onBackClick
     ? t("common.buttons.back")
     : t("common.buttons.cancel")
+
+  const trackAnalyticEvent = (artworkListId: string) => {
+    const event: CreatedArtworkList = {
+      action: ActionType.createdArtworkList,
+      context_owner_id: analytics.contextPageOwnerId,
+      context_owner_slug: analytics.contextPageOwnerSlug,
+      context_owner_type: analytics.contextPageOwnerType!,
+      owner_id: artworkListId,
+    }
+
+    trackEvent(event)
+  }
 
   const handleSubmit = async (
     values: CreateNewListValues,
@@ -82,10 +99,15 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
         },
       })
 
+      const response = createCollection?.responseOrError
+      const artworkListId = response?.collection?.internalID!
+
       onComplete({
-        internalID: createCollection?.responseOrError?.collection?.internalID!,
+        internalID: artworkListId,
         name: values.name,
       })
+
+      trackAnalyticEvent(artworkListId)
     } catch (error) {
       logger.error(error)
       helpers.setFieldError(
