@@ -1,10 +1,11 @@
-import { render, screen, fireEvent } from "@testing-library/react"
+import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 
 import { useMutation } from "Utils/Hooks/useMutation"
 import {
   DeleteArtworkListModal,
   DeleteArtworkListEntity,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/DeleteArtworkListModal"
+import { useTracking } from "react-tracking"
 
 jest.mock("Utils/Hooks/useMutation")
 
@@ -14,6 +15,9 @@ const artworkList: DeleteArtworkListEntity = {
 }
 
 describe("DeleteArtworkListModal", () => {
+  const mockUseTracking = useTracking as jest.Mock
+  const trackEvent = jest.fn()
+
   let closeDeleteModal: jest.Mock
   let submitMutation: jest.Mock
 
@@ -23,6 +27,10 @@ describe("DeleteArtworkListModal", () => {
     ;(useMutation as jest.Mock).mockImplementation(() => {
       return { submitMutation }
     })
+
+    mockUseTracking.mockImplementation(() => ({
+      trackEvent,
+    }))
   })
 
   it("renders the modal content", async () => {
@@ -66,6 +74,36 @@ describe("DeleteArtworkListModal", () => {
         variables: {
           input: { id: "foobar" },
         },
+      })
+    )
+  })
+
+  it("tracks event when artwork list was deleted", async () => {
+    submitMutation.mockImplementation(() => ({
+      deleteCollection: {
+        responseOrError: {
+          __typename: "DeleteCollectionSuccess",
+          artworkList: {
+            id: "artwork-list-id",
+          },
+        },
+      },
+    }))
+
+    render(
+      <DeleteArtworkListModal
+        artworkList={artworkList}
+        onClose={closeDeleteModal}
+      />
+    )
+
+    fireEvent.click(screen.getByRole("button", { name: /Delete/ }))
+
+    await waitFor(() =>
+      expect(trackEvent).toHaveBeenLastCalledWith({
+        action: "deletedArtworkList",
+        context_owner_type: "saves",
+        owner_id: artworkList.internalID,
       })
     )
   })
