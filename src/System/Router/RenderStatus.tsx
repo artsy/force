@@ -61,11 +61,11 @@ export const RenderReady = ({ elements }: { elements: React.ReactNode }) => {
   const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
 
   if (isFetching) {
-    timeoutRef.current = setTimeout(() => setFetching?.(false), 0)
+    timeoutRef.current = setTimeout(() => setFetching?.(false), 1000)
     return undefined
   }
 
-  if (timeoutRef.current) clearTimeout(timeoutRef.current)
+  // if (timeoutRef.current) clearTimeout(timeoutRef.current)
 
   return (
     <Renderer shouldUpdate>
@@ -108,7 +108,7 @@ export const RenderError: FC<{
  * between the top most container and StaticContainer.
  *
  */
-const Renderer = ({ children, ...props }) => {
+export const Renderer = ({ children, ...props }) => {
   return (
     <Box>
       <StaticContainer {...props}>{children}</StaticContainer>
