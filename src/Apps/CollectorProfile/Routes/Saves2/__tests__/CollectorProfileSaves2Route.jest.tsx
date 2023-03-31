@@ -1,9 +1,10 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { CollectorProfileSaves2Route_Test_Query } from "__generated__/CollectorProfileSaves2Route_Test_Query.graphql"
 import { CollectorProfileSaves2RouteFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/CollectorProfileSaves2Route"
 import { useRouter } from "System/Router/useRouter"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
 jest.mock("System/Router/useRouter")
@@ -23,8 +24,14 @@ const { renderWithRelay } = setupTestWrapperTL<
 
 describe("CollectorProfileSaves2Route", () => {
   const mockUseRouter = useRouter as jest.Mock
+  const mockUseTracking = useTracking as jest.Mock
+  const trackEvent = jest.fn()
 
   beforeEach(() => {
+    mockUseTracking.mockImplementation(() => ({
+      trackEvent,
+    }))
+
     mockUseRouter.mockImplementation(() => ({
       match: {
         params: {},
@@ -115,6 +122,23 @@ describe("CollectorProfileSaves2Route", () => {
     // Check the second slot
     expect(lockedElement).toHaveTextContent("Collection Three")
     expect(isAriaCurrentAttributeSetToTrue(lockedElement)).toBe(true)
+  })
+
+  it("should track event on mount", async () => {
+    renderWithRelay({
+      Me: () => ({
+        allSavesArtworkList,
+        customArtworkLists,
+      }),
+    })
+
+    await waitFor(() =>
+      expect(trackEvent).toHaveBeenLastCalledWith({
+        action: "viewedArtworkList",
+        context_owner_type: "saves",
+        owner_id: "saved-artwork",
+      })
+    )
   })
 })
 
