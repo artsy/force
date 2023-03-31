@@ -3,19 +3,19 @@ import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SelectListItem_item$data } from "__generated__/SelectListItem_item.graphql"
+import { SelectArtworkListItem_item$data } from "__generated__/SelectArtworkListItem_item.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { SavesEntityImage } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesEntityImage"
 
 const ICON_SIZE = 24
 
-interface SelectListItemProps {
-  item: SelectListItem_item$data
+interface SelectArtworkListItemProps {
+  item: SelectArtworkListItem_item$data
   isSelected: boolean
   onClick: () => void
 }
 
-const SelectListItem: FC<SelectListItemProps> = ({
+const SelectArtworkListItem: FC<SelectArtworkListItemProps> = ({
   isSelected,
   item,
   onClick,
@@ -62,11 +62,11 @@ const SelectListItem: FC<SelectListItemProps> = ({
   )
 }
 
-export const SelectListItemFragmentContainer = createFragmentContainer(
-  SelectListItem,
+export const SelectArtworkListItemFragmentContainer = createFragmentContainer(
+  SelectArtworkListItem,
   {
     item: graphql`
-      fragment SelectListItem_item on Collection {
+      fragment SelectArtworkListItem_item on Collection {
         name
         artworksCount
         artworksConnection(first: 1, sort: SAVED_AT_DESC) {

@@ -44,9 +44,9 @@ describe("ManageArtworkForSaves", () => {
 
     const mockResolvers: MockResolvers = {
       Me: () => ({
-        defaultSaves: null,
-        collectionsConnection: {
-          edges: [customListNodeOne, customListNodeTwo],
+        allSavesArtworkList: null,
+        customArtworkLists: {
+          edges: [customArtworkListNodeOne, customArtworkListNodeTwo],
         },
       }),
     }
@@ -170,7 +170,7 @@ const TestButton = () => {
   return <Button onClick={openModal}>Open Modal</Button>
 }
 
-const customListNodeOne = {
+const customArtworkListNodeOne = {
   node: {
     internalID: "list-one",
     name: "List 1",
@@ -178,7 +178,7 @@ const customListNodeOne = {
   },
 }
 
-const customListNodeTwo = {
+const customArtworkListNodeTwo = {
   node: {
     internalID: "list-two",
     name: "List 2",

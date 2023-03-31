@@ -1,6 +1,6 @@
 import { Flex, Join, SkeletonBox, SkeletonText, Spacer } from "@artsy/palette"
 
-export const SelectListItemPlaceholder = () => {
+export const SelectArtworkListItemPlaceholder = () => {
   return (
     <Flex p={1} flexDirection="row" alignItems="center">
       <SkeletonBox width={60} height={60} />
@@ -19,12 +19,12 @@ export const SelectListItemPlaceholder = () => {
   )
 }
 
-export const SelectListsPlaceholder = () => {
+export const SelectArtworkListsPlaceholder = () => {
   return (
     <Join separator={<Spacer y={1} />}>
-      <SelectListItemPlaceholder />
-      <SelectListItemPlaceholder />
-      <SelectListItemPlaceholder />
+      <SelectArtworkListItemPlaceholder />
+      <SelectArtworkListItemPlaceholder />
+      <SelectArtworkListItemPlaceholder />
     </Join>
   )
 }

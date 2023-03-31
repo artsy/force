@@ -1,17 +1,17 @@
 import React, { FC, useState } from "react"
 import { Box, ModalDialog, useToasts } from "@artsy/palette"
-import { SelectListsForArtworkHeader } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkHeader"
-import { SelectListsForArtworkFooter } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkFooter"
+import { SelectArtworkListsHeader } from "./SelectArtworkListsHeader"
+import { SelectArtworkListsFooter } from "./SelectArtworkListsFooter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SelectListsForArtworkModal_me$data } from "__generated__/SelectListsForArtworkModal_me.graphql"
 import { SelectListsForArtworkModalQuery } from "__generated__/SelectListsForArtworkModalQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { getSelectedCollectionIds } from "Apps/CollectorProfile/Routes/Saves2/Utils/getSelectedCollectionIds"
-import { useUpdateCollectionsForArtwork } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/useUpdateCollectionsForArtwork"
+import { useSelectArtworkLists } from "./useSelectArtworkLists"
 import createLogger from "Utils/logger"
 import { useTranslation } from "react-i18next"
-import { SelectListsForArtworkContent } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkContent"
+import { SelectArtworkListsContent } from "./SelectArtworkListsContent"
 import {
   ListKey,
   OnSaveResultData,
@@ -33,9 +33,11 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const { t } = useTranslation()
   const { state, dispatch, reset, onSave } = useManageArtworkForSavesContext()
   const [isSaving, setIsSaving] = useState(false)
-  const savedCollection = me?.defaultSaves
-  const nodes = extractNodes(me?.collectionsConnection)
-  const collections = savedCollection ? [savedCollection, ...nodes] : nodes
+  const allSavesArtworkList = me?.allSavesArtworkList
+  const customArtworkLists = extractNodes(me?.customArtworkLists)
+  const collections = allSavesArtworkList
+    ? [allSavesArtworkList, ...customArtworkLists]
+    : customArtworkLists
   const selectedCollectionIds = getSelectedCollectionIds({
     collections,
     addToCollectionIDs: state.addingListIDs,
@@ -44,7 +46,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const hasChanges =
     state.addingListIDs.length !== 0 || state.removingListIDs.length !== 0
 
-  const { submitMutation } = useUpdateCollectionsForArtwork(state.artwork!.id)
+  const { submitMutation } = useSelectArtworkLists(state.artwork!.id)
   const { sendToast } = useToasts()
 
   const onClose = () => {
@@ -86,12 +88,12 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
     }
   }
 
-  const handleItemPress = (item: typeof collections[0]) => {
+  const handleArtworkListPress = (artworkList: typeof collections[0]) => {
     dispatch({
       type: "ADD_OR_REMOVE_LIST_ID",
       payload: {
-        listID: item.internalID,
-        listKey: item.isSavedArtwork
+        listID: artworkList.internalID,
+        listKey: artworkList.isSavedArtwork
           ? ListKey.RemovingListIDs
           : ListKey.AddingListIDs,
       },
@@ -133,24 +135,24 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
     }
   }
 
-  const checkIsItemSelected = (item: typeof collections[0]) => {
+  const checkIsArtworkListSelected = (artworkList: typeof collections[0]) => {
     /**
-     * User added artwork to the previously unselected collection
-     * So we have to display the collection as *selected*
+     * User added artwork to the previously unselected artwork list
+     * So we have to display the artwork list as *selected*
      */
-    if (state.addingListIDs.includes(item.internalID)) {
+    if (state.addingListIDs.includes(artworkList.internalID)) {
       return true
     }
 
     /**
-     * User deleted artwork from the previously selected collection
-     * So we have to display the collection as *unselected*
+     * User deleted artwork from the previously selected artwork list
+     * So we have to display the artwork list as *unselected*
      */
-    if (state.removingListIDs.includes(item.internalID)) {
+    if (state.removingListIDs.includes(artworkList.internalID)) {
       return false
     }
 
-    return item.isSavedArtwork
+    return artworkList.isSavedArtwork
   }
 
   return (
@@ -168,11 +170,11 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
       m={0}
       header={
         <Box mt={[-2, 0]} mb={-2}>
-          <SelectListsForArtworkHeader />
+          <SelectArtworkListsHeader />
         </Box>
       }
       footer={
-        <SelectListsForArtworkFooter
+        <SelectArtworkListsFooter
           selectedListsCount={selectedCollectionIds.length}
           hasChanges={hasChanges}
           onSaveClick={handleSaveClicked}
@@ -181,11 +183,11 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
       }
     >
       <Box mt={1}>
-        <SelectListsForArtworkContent
+        <SelectArtworkListsContent
           isFetching={me === null}
-          collections={collections}
-          checkIsItemSelected={checkIsItemSelected}
-          onItemPress={handleItemPress}
+          artworkLists={collections}
+          checkIsArtworkListSelected={checkIsArtworkListSelected}
+          onArtworkListPress={handleArtworkListPress}
         />
       </Box>
     </ModalDialog>
@@ -198,14 +200,14 @@ export const SelectListsForArtworkModalFragmentContainer = createFragmentContain
     me: graphql`
       fragment SelectListsForArtworkModal_me on Me
         @argumentDefinitions(artworkID: { type: "String!" }) {
-        defaultSaves: collection(id: "saved-artwork") {
+        allSavesArtworkList: collection(id: "saved-artwork") {
           internalID
           isSavedArtwork(artworkID: $artworkID)
           name
-          ...SelectListItem_item
+          ...SelectArtworkListItem_item
         }
 
-        collectionsConnection(
+        customArtworkLists: collectionsConnection(
           first: 30
           default: false
           saves: true
@@ -216,7 +218,7 @@ export const SelectListsForArtworkModalFragmentContainer = createFragmentContain
               internalID
               isSavedArtwork(artworkID: $artworkID)
               name
-              ...SelectListItem_item
+              ...SelectArtworkListItem_item
             }
           }
         }

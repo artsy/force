@@ -1,9 +1,9 @@
 import { graphql } from "react-relay"
 import { useMutation } from "Utils/Hooks/useMutation"
 import {
-  useUpdateCollectionsForArtworkMutation,
-  useUpdateCollectionsForArtworkMutation$data,
-} from "__generated__/useUpdateCollectionsForArtworkMutation.graphql"
+  useSelectArtworkListsMutation,
+  useSelectArtworkListsMutation$data,
+} from "__generated__/useSelectArtworkListsMutation.graphql"
 
 interface Counts {
   custom: number
@@ -13,29 +13,29 @@ interface Counts {
 type Response = NonNullable<
   NonNullable<
     NonNullable<
-      useUpdateCollectionsForArtworkMutation$data
+      useSelectArtworkListsMutation$data
     >["artworksCollectionsBatchUpdate"]
   >["responseOrError"]
 >
 type ListEntity =
-  | Response["addedToCollections"]
-  | Response["removedFromCollections"]
+  | Response["addedToArtworkLists"]
+  | Response["removedFromArtworkLists"]
 
-export const useUpdateCollectionsForArtwork = (artworkID: string) => {
-  return useMutation<useUpdateCollectionsForArtworkMutation>({
+export const useSelectArtworkLists = (artworkID: string) => {
+  return useMutation<useSelectArtworkListsMutation>({
     mutation: graphql`
-      mutation useUpdateCollectionsForArtworkMutation(
+      mutation useSelectArtworkListsMutation(
         $input: ArtworksCollectionsBatchUpdateInput!
       ) {
         artworksCollectionsBatchUpdate(input: $input) {
           responseOrError {
             ... on ArtworksCollectionsBatchUpdateSuccess {
-              addedToCollections {
+              addedToArtworkLists: addedToCollections {
                 internalID
                 default
                 ...ArtworkListItem_item
               }
-              removedFromCollections {
+              removedFromArtworkLists: removedFromCollections {
                 internalID
                 default
                 ...ArtworkListItem_item
@@ -58,8 +58,8 @@ export const useUpdateCollectionsForArtwork = (artworkID: string) => {
       }
 
       const response = data.artworksCollectionsBatchUpdate?.responseOrError
-      const addedCounts = getCountsByLists(response?.addedToCollections)
-      const removedCounts = getCountsByLists(response?.removedFromCollections)
+      const addedCounts = getCountsByLists(response?.addedToArtworkLists)
+      const removedCounts = getCountsByLists(response?.removedFromArtworkLists)
 
       // Set `isSaved` field to `true` if artwork was saved in "All Saves"
       if (addedCounts.default > 0) {
