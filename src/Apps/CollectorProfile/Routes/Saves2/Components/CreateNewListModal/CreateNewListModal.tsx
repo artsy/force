@@ -9,7 +9,6 @@ import {
   EditIcon,
   Text,
 } from "@artsy/palette"
-import { useSystemContext } from "System/useSystemContext"
 import { Media } from "Utils/Responsive"
 import { useTranslation } from "react-i18next"
 import {
@@ -56,7 +55,6 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   onBackClick,
 }) => {
   const { t } = useTranslation()
-  const { relayEnvironment } = useSystemContext()
   const { submitMutation } = useCreateCollection()
   const { trackEvent } = useTracking()
   const analytics = useAnalyticsContext()
@@ -82,10 +80,6 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
     values: CreateNewListValues,
     helpers: FormikHelpers<CreateNewListValues>
   ) => {
-    if (!relayEnvironment) {
-      return null
-    }
-
     try {
       const { createCollection } = await submitMutation({
         variables: {
