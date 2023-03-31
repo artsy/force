@@ -90,7 +90,12 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
 
   return (
     <Flex {...flexProps} flexDirection="column">
-      <Flex flexDirection="row" alignItems="center" justifyContent={"center"}>
+      <Flex
+        flexDirection="row"
+        alignItems="center"
+        justifyContent={"center"}
+        mb={1}
+      >
         <GuaranteeIconBlue mr={1} />
         <Flex>
           <Text color="black60" variant="xs">
