@@ -84,7 +84,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
       </Dropdown>
 
       <NavBarItemLink
-        href="/user/conversations"
+        href="/user/conversations2"
         aria-label={
           hasConversations
             ? `${me?.unreadConversationCount} unread conversations`
