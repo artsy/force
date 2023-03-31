@@ -2,6 +2,8 @@ import { Button, Flex, ModalDialog, Text, useToasts } from "@artsy/palette"
 import { useDeleteArtworkList } from "./Mutations/useDeleteArtworkList"
 import { useTranslation } from "react-i18next"
 import { useRouter } from "System/Router/useRouter"
+import { useTracking } from "react-tracking"
+import { ActionType, DeletedArtworkList, OwnerType } from "@artsy/cohesion"
 
 export interface DeleteArtworkListEntity {
   internalID: string
@@ -19,10 +21,21 @@ export const DeleteArtworkListModal: React.FC<Props> = ({
 }) => {
   const { t } = useTranslation()
   const { router } = useRouter()
+  const { trackEvent } = useTracking()
 
   const { submitMutation } = useDeleteArtworkList()
 
   const { sendToast } = useToasts()
+
+  const trackAnalyticEvent = () => {
+    const event: DeletedArtworkList = {
+      action: ActionType.deletedArtworkList,
+      context_owner_type: OwnerType.saves,
+      owner_id: artworkList.internalID,
+    }
+
+    trackEvent(event)
+  }
 
   const handleDeletePress = async () => {
     try {
@@ -46,6 +59,7 @@ export const DeleteArtworkListModal: React.FC<Props> = ({
         message: t("collectorSaves.deleteListModal.success"),
       })
 
+      trackAnalyticEvent()
       router.replace("/collector-profile/saves2")
     } catch (err) {
       console.error(err)
