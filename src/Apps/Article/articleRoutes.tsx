@@ -10,6 +10,13 @@ const ArticleApp = loadable(
   }
 )
 
+const Article2App = loadable(
+  () => import(/* webpackChunkName: "articleBundle" */ "./Article2App"),
+  {
+    resolveComponent: component => component.Article2AppFragmentContainer,
+  }
+)
+
 const redirectToArticle = ({
   match: {
     params: { id },
@@ -40,4 +47,18 @@ export const articleRoutes: AppRouteConfig[] = [
   { path: "/series/:ignore/:id", render: redirectToArticle },
   { path: "/:ignore/article/:id", render: redirectToArticle },
   { path: "/partner/:ignore/article/:id", render: redirectToArticle },
+  {
+    path: "/article2/:id",
+    Component: Article2App,
+    // onClientSideRender: () => {
+    //   Article2App.preload()
+    // },
+    query: graphql`
+      query articleRoutes_Article2Query($id: String!) {
+        contentfulArticle(id: $id) @principalField {
+          ...Article2App_article
+        }
+      }
+    `,
+  },
 ]

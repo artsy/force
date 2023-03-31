@@ -3214,7 +3214,6 @@ type Author {
   # A type-specific ID.
   internalID: ID!
   name: String
-  twitterHandle: String
 }
 
 # Backup Two-Factor Authentication factor
@@ -6849,6 +6848,19 @@ enum ConsignmentSubmissionStateAggregation {
   PUBLISHED
   REJECTED
   SUBMITTED
+}
+
+type ContentfulArticle implements Node {
+  authors: [Author!]!
+  cached: Int
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID.
+  internalID: ID!
+  sections: [String!]!
+  title: String
 }
 
 type ConvectionService {
@@ -14388,6 +14400,15 @@ type Query {
     sort: ConsignmentSort
   ): ConsignmentConnection
 
+  # An Article
+  contentfulArticle(
+    # The ID of the Article
+    id: String!
+  ): ContentfulArticle
+
+  # A list of Articles
+  contentfulArticles: [ContentfulArticle!]!
+
   # A conversation, usually between a user and a partner
   conversation(
     # The ID of the Conversation
@@ -18706,6 +18727,15 @@ type Viewer {
 
   # A collector profile.
   collectorProfile(userID: String): CollectorProfileType
+
+  # An Article
+  contentfulArticle(
+    # The ID of the Article
+    id: String!
+  ): ContentfulArticle
+
+  # A list of Articles
+  contentfulArticles: [ContentfulArticle!]!
 
   # A conversation, usually between a user and a partner
   conversation(
