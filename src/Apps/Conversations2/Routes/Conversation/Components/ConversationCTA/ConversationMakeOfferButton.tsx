@@ -1,4 +1,4 @@
-import { Button } from "@artsy/palette"
+import { Button, Spacer } from "@artsy/palette"
 import { useMakeInquiryOffer } from "Apps/Conversations2/mutations/useMakeInquiryOfferMutation"
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
@@ -24,6 +24,7 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
           liveArtwork {
             ... on Artwork {
               __typename
+              is_acquireable: isAcquireable
               isEdition
               internalID
               slug
@@ -44,6 +45,8 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
   }
 
   const artwork = data?.items?.[0]?.liveArtwork as any
+  const isPurchaseButtonPresent = artwork.is_acquireable
+  const variant = isPurchaseButtonPresent ? "secondaryBlack" : "primaryBlack"
 
   const handleClick = async () => {
     setIsSubmitting(true)
@@ -81,8 +84,17 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
   }
 
   return (
-    <Button width="100%" onClick={handleClick} loading={isSubmitting}>
-      Make an Offer
-    </Button>
+    <>
+      <Spacer x={isPurchaseButtonPresent ? 1 : 0} />
+      <p>{isPurchaseButtonPresent}</p>
+      <Button
+        width="100%"
+        onClick={handleClick}
+        loading={isSubmitting}
+        variant={variant}
+      >
+        Make an Offer
+      </Button>
+    </>
   )
 }
