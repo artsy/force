@@ -5,6 +5,7 @@ import { BoxProps, boxMixin } from "@artsy/palette"
 import styled from "styled-components"
 import { compose, ResponsiveValue, system } from "styled-system"
 import { useMemo } from "react"
+import { useSystemContext } from "System/SystemContext"
 
 /**
  * Wrapper component around found's <Link> component with a fallback to a normal
@@ -28,6 +29,7 @@ export type RouterLinkProps = Omit<
 export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
   ({ to, noUnderline, ...rest }, ref) => {
     const context = useContext(RouterContext)
+    const { setFetching } = useSystemContext()
     const routes = context?.router?.matcher?.routeConfig ?? []
     const matcher = context?.router?.matcher
     const isSupportedInRouter = useMemo(
@@ -39,7 +41,14 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
     const deprecated = noUnderline ? { textDecoration: "none" } : {}
 
     if (isSupportedInRouter) {
-      return <RouterAwareLink to={to ?? ""} {...deprecated} {...rest} />
+      return (
+        <RouterAwareLink
+          to={to ?? ""}
+          {...deprecated}
+          {...rest}
+          onMouseDown={() => setFetching?.(true)}
+        />
+      )
     }
 
     return <RouterUnawareLink href={to ?? ""} {...deprecated} {...rest} />
