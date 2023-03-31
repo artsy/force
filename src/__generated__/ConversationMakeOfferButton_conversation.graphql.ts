@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c36552d1604e5171d7bff20d2ec004c5>>
+ * @generated SignedSource<<ec389830225d8318434e8892db7baa0b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type ConversationMakeOfferButton_conversation$data = {
       } | null> | null;
       readonly internalID: string;
       readonly isEdition: boolean | null;
+      readonly is_acquireable: boolean | null;
       readonly slug: string;
       readonly " $fragmentSpreads": FragmentRefs<"ConfirmArtworkButton_artwork">;
     } | {
@@ -77,6 +78,13 @@ return {
                   "storageKey": null
                 },
                 {
+                  "alias": "is_acquireable",
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isAcquireable",
+                  "storageKey": null
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
@@ -124,6 +132,6 @@ return {
 };
 })();
 
-(node as any).hash = "6614867da1fdb370c26acbc1cdb46cd9";
+(node as any).hash = "53cdca2049f44b97fd7e526a403007ad";
 
 export default node;
