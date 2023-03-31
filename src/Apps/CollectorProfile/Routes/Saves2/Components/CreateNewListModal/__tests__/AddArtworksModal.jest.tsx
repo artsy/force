@@ -5,6 +5,7 @@ import { AddArtworksModal } from "Apps/CollectorProfile/Routes/Saves2/Components
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/SystemContext"
 import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.mock("Utils/Hooks/useMutation")
 jest.mock("System/useSystemContext")
@@ -80,7 +81,7 @@ describe("AddArtworksModal", () => {
       })
     }
 
-    it("doesn't track event if no artwork is selected", async () => {
+    it("doesn't track event if no artworks are selected", async () => {
       submitMutation.mockImplementation(() => ({
         artworksCollectionsBatchUpdate: {
           responseOrError: {
@@ -97,7 +98,8 @@ describe("AddArtworksModal", () => {
 
       fireEvent.click(screen.getByText("Save"))
 
-      await waitFor(() => expect(trackEvent).not.toHaveBeenCalled())
+      await flushPromiseQueue()
+      expect(trackEvent).not.toHaveBeenCalled()
     })
 
     it("tracks event when one artwork is selected", async () => {

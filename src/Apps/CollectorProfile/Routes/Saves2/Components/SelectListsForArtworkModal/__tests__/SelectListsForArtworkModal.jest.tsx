@@ -1,12 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import {
-  act,
-  fireEvent,
-  screen,
-  waitFor,
-  waitForElementToBeRemoved,
-} from "@testing-library/react"
+import { fireEvent, screen, waitFor } from "@testing-library/react"
 import {
   SelectListsForArtworkModal_Test_Query,
   SelectListsForArtworkModal_Test_Query$data,
@@ -21,6 +15,7 @@ import { useMutation } from "Utils/Hooks/useMutation"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
 import { FC } from "react"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.unmock("react-relay")
 jest.mock("Utils/Hooks/useMutation")
@@ -269,10 +264,7 @@ describe("SelectListsForArtworkModal", () => {
       fireEvent.click(screen.getByText("Collection 1"))
       fireEvent.click(screen.getByText("Save"))
 
-      await waitForElementToBeRemoved(
-        screen.getByText("Select lists for this artwork")
-      )
-
+      await flushPromiseQueue()
       expect(trackEvent).not.toHaveBeenCalled()
     })
 
