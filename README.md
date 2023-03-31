@@ -1,6 +1,6 @@
 # Force
 
-[Force](https://github.com/artsy/force) is the Artsy website, [www.artsy.net](https://www.artsy.net)..
+[Force](https://github.com/artsy/force) is the Artsy website, [www.artsy.net](https://www.artsy.net).
 
 Are you an Engineer? Don't know what Artsy is? Check out [this overview](https://github.com/artsy/meta/blob/master/meta/what_is_artsy.md) and [more](https://github.com/artsy/meta/blob/master/README.md).
 
