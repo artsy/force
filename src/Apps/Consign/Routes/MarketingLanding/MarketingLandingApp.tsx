@@ -14,9 +14,7 @@ import { CollectorsOverview } from "Apps/Consign/Routes/MarketingLanding/Compone
 import { PreviouslySoldOnArtsyRailQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PreviouslySoldOnArtsyRail"
 import { FooterBanner } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FooterBanner"
 import { SpeakToTheTeam } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpeakToTheTeam"
-import { FAQ } from "Apps/Consign/Routes/MarketingLanding/Components/FAQ" // TODO: refactor
 import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
-import { SoldRecentlyOnArtsyQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/SoldRecentlyOnArtsy" // TODO: refactor
 
 export const MarketingLandingApp = () => {
   const {
