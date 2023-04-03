@@ -1,8 +1,8 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { SoldRecentlyOnArtsyFragmentContainer } from "Apps/Consign/Routes/MarketingLanding/Components/SoldRecentlyOnArtsy"
 import { fireEvent, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
+import { SoldRecentlyOnArtsyFragmentContainer } from "Apps/Consign/Routes/SubmissionFlow/SoldRecentlyOnArtsy"
 
 jest.unmock("react-relay")
 
