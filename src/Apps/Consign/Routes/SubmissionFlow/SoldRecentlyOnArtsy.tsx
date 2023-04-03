@@ -177,7 +177,6 @@ const PLACEHOLDER = (
 )
 
 export const SoldRecentlyOnArtsyQueryRenderer: React.FC = () => {
-  console.log("[LOGD] HELLO ")
   return (
     <SystemQueryRenderer<SoldRecentlyOnArtsyQuery>
       lazyLoad
