@@ -4,6 +4,7 @@ import { useSystemContext } from "System/useSystemContext"
 import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HeaderSWA"
 
 jest.mock("react-tracking")
+jest.mock("System/useSystemContext")
 jest.mock("System/Analytics/AnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
     contextPageOwnerType: "sell",
