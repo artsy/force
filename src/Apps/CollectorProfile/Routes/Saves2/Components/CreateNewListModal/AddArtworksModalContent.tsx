@@ -8,7 +8,6 @@ import {
   SkeletonBox,
   SkeletonText,
   Box,
-  Button,
 } from "@artsy/palette"
 import { SortFilter } from "Components/SortFilter"
 import { ArtworksListFragmentContainer } from "./ArtworksList"
@@ -22,6 +21,7 @@ import {
 import { AddArtworksModalContentQuery } from "__generated__/AddArtworksModalContentQuery.graphql"
 import { AddArtworksModalContent_me$data } from "__generated__/AddArtworksModalContent_me.graphql"
 import { MetadataPlaceholder } from "Components/Artwork/Metadata"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 
 interface AddArtworksModalContentQueryRenderProps {
   selectedArtworkIds: string[]
@@ -38,6 +38,8 @@ const SORTS = [
   { text: "Recently Saved", value: "POSITION_DESC" },
   { text: "Oldest first", value: "POSITION_ASC" },
 ]
+
+const ARTWORKS_PER_SCROLL = 30
 
 export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
   me,
@@ -59,13 +61,16 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
   const handleSortChange = (option: string) => {
     setSort(option)
 
+    setIsLoading(true)
+
     relay.refetchConnection(
-      30,
+      ARTWORKS_PER_SCROLL,
       err => {
         console.error(err)
       },
       { sort: option }
     )
+
     setIsLoading(false)
   }
 
@@ -76,7 +81,7 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
 
     setIsLoadingNextPage(true)
 
-    relay.loadMore(30, err => {
+    relay.loadMore(ARTWORKS_PER_SCROLL, err => {
       if (err) {
         console.error(err)
       }
@@ -88,13 +93,6 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
   const handleItemClick = (artworkID: string) => {
     onArtworkClick(artworkID)
   }
-
-  console.log(
-    "[Debug] isLoadingNextPage",
-    isLoadingNextPage,
-    "hasMore",
-    relay.hasMore()
-  )
 
   return (
     <>
@@ -120,17 +118,26 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
         selectedIds={selectedArtworkIds}
       />
 
-      {relay.hasMore() && !isLoadingNextPage && (
-        <Box textAlign="center" mt={4}>
-          <Button onClick={handleLoadMore} loading={isLoadingNextPage}>
-            Show More
-          </Button>
-        </Box>
-      )}
+      {relay.hasMore() && <InfiniteScrollSentinel onNext={handleLoadMore} />}
 
       {isLoadingNextPage && <ContentPlaceholder gridOnly={true} />}
     </>
   )
+}
+
+interface InfiniteScrollSentinelProps {
+  onNext(): void
+}
+
+const InfiniteScrollSentinel: FC<InfiniteScrollSentinelProps> = ({
+  onNext,
+}) => {
+  const { ref } = useIntersectionObserver({
+    onIntersection: onNext,
+    once: false,
+  })
+
+  return <Box ref={ref as any} height={0} />
 }
 
 const AddArtworksModalContentPaginationContainer = createPaginationContainer(
