@@ -1,11 +1,35 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
-import { SelectListsForArtworkModal_Test_Query } from "__generated__/SelectListsForArtworkModal_Test_Query.graphql"
+import {
+  SelectListsForArtworkModal_Test_Query,
+  SelectListsForArtworkModal_Test_Query$data,
+} from "__generated__/SelectListsForArtworkModal_Test_Query.graphql"
 import { SelectListsForArtworkModalFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
-import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
+import {
+  ManageArtworkForSavesProvider,
+  useManageArtworkForSavesContext,
+} from "Components/Artwork/ManageArtworkForSaves"
+import { useTracking } from "react-tracking"
+import { useMutation } from "Utils/Hooks/useMutation"
+import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { OwnerType } from "@artsy/cohesion"
+import { FC } from "react"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.unmock("react-relay")
+jest.mock("Utils/Hooks/useMutation")
+
+const TestComponent: FC<SelectListsForArtworkModal_Test_Query$data> = props => {
+  const { state } = useManageArtworkForSavesContext()
+
+  // Modal is not displayed in the ManageArtworkForSaves component if artwork is null
+  if (!state.artwork) {
+    return null
+  }
+
+  return <SelectListsForArtworkModalFragmentContainer {...props} />
+}
 
 const { renderWithRelay } = setupTestWrapperTL<
   SelectListsForArtworkModal_Test_Query
@@ -16,9 +40,17 @@ const { renderWithRelay } = setupTestWrapperTL<
     }
 
     return (
-      <ManageArtworkForSavesProvider artwork={artwork}>
-        <SelectListsForArtworkModalFragmentContainer me={props.me} />
-      </ManageArtworkForSavesProvider>
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "page-owner-id",
+          contextPageOwnerSlug: "page-owner-slug",
+          contextPageOwnerType: OwnerType.artist,
+        }}
+      >
+        <ManageArtworkForSavesProvider artwork={artwork}>
+          <TestComponent {...props} />
+        </ManageArtworkForSavesProvider>
+      </AnalyticsContext.Provider>
     )
   },
   query: graphql`
@@ -31,6 +63,21 @@ const { renderWithRelay } = setupTestWrapperTL<
 })
 
 describe("SelectListsForArtworkModal", () => {
+  const mockUseMutation = useMutation as jest.Mock
+  const mockUseTracking = useTracking as jest.Mock
+  const trackEvent = jest.fn()
+  const submitMutation = jest.fn()
+
+  beforeEach(() => {
+    mockUseMutation.mockImplementation(() => {
+      return { submitMutation }
+    })
+
+    mockUseTracking.mockImplementation(() => ({
+      trackEvent,
+    }))
+  })
+
   it("should render artwork data", async () => {
     renderWithRelay()
 
@@ -200,6 +247,70 @@ describe("SelectListsForArtworkModal", () => {
       expect(screen.getByText("1 list selected")).toBeInTheDocument()
       expect(selectedOptions.length).toBe(1)
       expect(selectedOptions[0]).toHaveTextContent("Collection 2")
+    })
+  })
+
+  describe("Analytics", () => {
+    it("doesn't track event when no new collections are selected", async () => {
+      renderWithRelay({
+        CollectionsConnection: () => collectionsConnection,
+      })
+
+      await waitForModalToBePresented()
+
+      // Make some changes (in our case we unselect previously selected collection)
+      // Otherwise, the "Save" button will be disabled
+      // and the mutation will not be performed when the button is clicked
+      fireEvent.click(screen.getByText("Collection 1"))
+      fireEvent.click(screen.getByText("Save"))
+
+      await flushPromiseQueue()
+      expect(trackEvent).not.toHaveBeenCalled()
+    })
+
+    it("track event when one new collection is selected", async () => {
+      renderWithRelay({
+        CollectionsConnection: () => unselectedCollectionsConnection,
+      })
+
+      await waitForModalToBePresented()
+
+      fireEvent.click(screen.getByText("Collection 1"))
+      fireEvent.click(screen.getByText("Save"))
+
+      await waitFor(() =>
+        expect(trackEvent).toHaveBeenLastCalledWith({
+          action: "addedArtworkToArtworkList",
+          context_owner_id: "page-owner-id",
+          context_owner_slug: "page-owner-slug",
+          context_owner_type: "artist",
+          artwork_ids: [artwork.internalID],
+          owner_ids: ["collection-one"],
+        })
+      )
+    })
+
+    it("track event when multiple new collections are selected", async () => {
+      renderWithRelay({
+        CollectionsConnection: () => unselectedCollectionsConnection,
+      })
+
+      await waitForModalToBePresented()
+
+      fireEvent.click(screen.getByText("Collection 1"))
+      fireEvent.click(screen.getByText("Collection 2"))
+      fireEvent.click(screen.getByText("Save"))
+
+      await waitFor(() =>
+        expect(trackEvent).toHaveBeenLastCalledWith({
+          action: "addedArtworkToArtworkList",
+          context_owner_id: "page-owner-id",
+          context_owner_slug: "page-owner-slug",
+          context_owner_type: "artist",
+          artwork_ids: [artwork.internalID],
+          owner_ids: ["collection-one", "collection-two"],
+        })
+      )
     })
   })
 })
