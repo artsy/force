@@ -10,10 +10,7 @@ import {
   ActionType,
   commercialFilterParamsChanged,
 } from "@artsy/cohesion"
-import {
-  AnalyticsContext,
-  useAnalyticsContext,
-} from "System/Analytics/AnalyticsContext"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { LoadingArea } from "Components/LoadingArea"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FC, useState } from "react"
@@ -190,25 +187,8 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
   )
 }
 
-const PageWrapper: FC<ArtworkListArtworksGridProps> = props => {
-  const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
-
-  return (
-    <AnalyticsContext.Provider
-      value={{
-        contextPageOwnerId: props.me.artworkList!.internalID,
-        contextPageOwnerSlug,
-        // TODO: Clarify some moment about analytics later (maybe we should pass OwnerType.collection)
-        contextPageOwnerType,
-      }}
-    >
-      <ArtworkListArtworksGrid {...props} />
-    </AnalyticsContext.Provider>
-  )
-}
-
 export const ArtworkListArtworksGridFragmentContainer = createFragmentContainer(
-  PageWrapper,
+  ArtworkListArtworksGrid,
   {
     me: graphql`
       fragment ArtworkListArtworksGrid_me on Me
