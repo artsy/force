@@ -32,7 +32,7 @@ export const NavBarMobileMenuLoggedIn: React.FC = () => {
           color="black60"
           onClick={handleClick}
         >
-          Settings
+          Account
         </NavBarMobileMenuItemLink>
       </>
 
