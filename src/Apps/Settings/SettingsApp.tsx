@@ -12,8 +12,8 @@ import { TopContextBar } from "Components/TopContextBar"
 export const SETTINGS_ROUTE_TABS_MARGIN = [2, 4]
 const SETTINGS_TABS = [
   { name: "Edit Profile", url: "/settings/edit-profile" },
-  { name: "Saved Alerts", url: "/settings/alerts" },
   { name: "Account Settings", url: "/settings/edit-settings" },
+  { name: "Saved Alerts", url: "/settings/alerts" },
   { name: "Order History", url: "/settings/purchases" },
   { name: "Bids", url: "/settings/auctions" },
   { name: "Payments", url: "/settings/payments" },
