@@ -14,15 +14,9 @@ import { CollectorsOverview } from "Apps/Consign/Routes/MarketingLanding/Compone
 import { PreviouslySoldOnArtsyRailQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PreviouslySoldOnArtsyRail"
 import { FooterBanner } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FooterBanner"
 import { SpeakToTheTeam } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpeakToTheTeam"
-import { CtaBanner } from "Apps/Consign/Routes/MarketingLanding/Components/CtaBanner"
-import { CtaSection } from "Apps/Consign/Routes/MarketingLanding/Components/CtaSection"
-import { FAQ } from "Apps/Consign/Routes/MarketingLanding/Components/FAQ"
-import { HowItWorks } from "Apps/Consign/Routes/MarketingLanding/Components/HowItWorks"
-import { PromoSpace } from "Apps/Consign/Routes/MarketingLanding/Components/PromoSpace"
+import { FAQ } from "Apps/Consign/Routes/MarketingLanding/Components/FAQ" // TODO: refactor
 import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
-import { SoldRecentlyOnArtsyQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/SoldRecentlyOnArtsy"
-import { WhySellWithArtsy } from "Apps/Consign/Routes/MarketingLanding/Components/WhySellWithArtsy"
-import { Header } from "Apps/Consign/Routes/MarketingLanding/Components/Header"
+import { SoldRecentlyOnArtsyQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/SoldRecentlyOnArtsy" // TODO: refactor
 
 export const MarketingLandingApp = () => {
   const {
