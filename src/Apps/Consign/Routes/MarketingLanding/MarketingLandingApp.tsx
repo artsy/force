@@ -2,7 +2,6 @@ import { useEffect } from "react"
 import { useRouter } from "System/Router/useRouter"
 import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
 import { Join, Spacer } from "@artsy/palette"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HeaderSWA"
 import { Highlights } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Highlights"
 import { WaysWeSell } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/WaysWeSell"
@@ -26,10 +25,6 @@ import { WhySellWithArtsy } from "Apps/Consign/Routes/MarketingLanding/Component
 import { Header } from "Apps/Consign/Routes/MarketingLanding/Components/Header"
 
 export const MarketingLandingApp = () => {
-  const enableNewSWALandingPage = useFeatureFlag(
-    "cx-swa-landing-page-redesign-2023"
-  )
-
   const {
     match: {
       location: { query },
@@ -51,51 +46,25 @@ export const MarketingLandingApp = () => {
     }
   }, [query.utm_medium, query.utm_source, query.utm_term])
 
-  if (enableNewSWALandingPage) {
-    return (
-      <>
-        <SellMeta />
-
-        <Join separator={<Spacer y={[6, 12]} />}>
-          <HeaderSWA />
-          <Highlights />
-          <WaysWeSell />
-          <HowItWorksSteps />
-          <SpeakToTheTeam />
-          {/* <MeetTheSpecialists /> */}
-          <CollectorsOverview />
-          <PreviouslySoldOnArtsyRailQueryRenderer />
-          {/* <Reviews /> */}
-          <FAQSWA />
-          <Footer />
-          <FooterBanner />
-        </Join>
-        <Spacer y={-4} />
-      </>
-    )
-  }
-
   return (
     <>
       <SellMeta />
 
-      <Header />
-
-      <CtaBanner />
-
       <Join separator={<Spacer y={[6, 12]} />}>
-        <PromoSpace />
-
-        <WhySellWithArtsy />
-
-        <HowItWorks />
-
-        <SoldRecentlyOnArtsyQueryRenderer />
-
-        <CtaSection />
-
-        <FAQ />
+        <HeaderSWA />
+        <Highlights />
+        <WaysWeSell />
+        <HowItWorksSteps />
+        <SpeakToTheTeam />
+        {/* <MeetTheSpecialists /> */}
+        <CollectorsOverview />
+        <PreviouslySoldOnArtsyRailQueryRenderer />
+        {/* <Reviews /> */}
+        <FAQSWA />
+        <Footer />
+        <FooterBanner />
       </Join>
+      <Spacer y={-4} />
     </>
   )
 }
