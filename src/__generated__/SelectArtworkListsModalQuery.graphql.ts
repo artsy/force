@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4eb15cc44e1228a2c961ad425ce00c83>>
+ * @generated SignedSource<<1d465a554ccbfa2f12a94311309d3259>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SelectListsForArtworkModalQuery$variables = {
+export type SelectArtworkListsModalQuery$variables = {
   artworkID: string;
 };
-export type SelectListsForArtworkModalQuery$data = {
+export type SelectArtworkListsModalQuery$data = {
   readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"SelectListsForArtworkModal_me">;
+    readonly " $fragmentSpreads": FragmentRefs<"SelectArtworkListsModal_me">;
   } | null;
 };
-export type SelectListsForArtworkModalQuery = {
-  response: SelectListsForArtworkModalQuery$data;
-  variables: SelectListsForArtworkModalQuery$variables;
+export type SelectArtworkListsModalQuery = {
+  response: SelectArtworkListsModalQuery$data;
+  variables: SelectArtworkListsModalQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -150,7 +150,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "SelectListsForArtworkModalQuery",
+    "name": "SelectArtworkListsModalQuery",
     "selections": [
       {
         "alias": null,
@@ -163,7 +163,7 @@ return {
           {
             "args": (v1/*: any*/),
             "kind": "FragmentSpread",
-            "name": "SelectListsForArtworkModal_me"
+            "name": "SelectArtworkListsModal_me"
           }
         ],
         "storageKey": null
@@ -176,7 +176,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "SelectListsForArtworkModalQuery",
+    "name": "SelectArtworkListsModalQuery",
     "selections": [
       {
         "alias": null,
@@ -262,16 +262,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "71aff69ecfcafaece79c86b7bbd2c0e8",
+    "cacheID": "22f69fdec9b7d056ae50d5b7d4479a71",
     "id": null,
     "metadata": {},
-    "name": "SelectListsForArtworkModalQuery",
+    "name": "SelectArtworkListsModalQuery",
     "operationKind": "query",
-    "text": "query SelectListsForArtworkModalQuery(\n  $artworkID: String!\n) {\n  me {\n    ...SelectListsForArtworkModal_me_2R6IMa\n    id\n  }\n}\n\nfragment SelectArtworkListItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 1, sort: SAVED_AT_DESC) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectListsForArtworkModal_me_2R6IMa on Me {\n  allSavesArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    isSavedArtwork(artworkID: $artworkID)\n    name\n    ...SelectArtworkListItem_item\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        isSavedArtwork(artworkID: $artworkID)\n        name\n        ...SelectArtworkListItem_item\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SelectArtworkListsModalQuery(\n  $artworkID: String!\n) {\n  me {\n    ...SelectArtworkListsModal_me_2R6IMa\n    id\n  }\n}\n\nfragment SelectArtworkListItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 1, sort: SAVED_AT_DESC) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectArtworkListsModal_me_2R6IMa on Me {\n  allSavesArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    isSavedArtwork(artworkID: $artworkID)\n    name\n    ...SelectArtworkListItem_item\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        isSavedArtwork(artworkID: $artworkID)\n        name\n        ...SelectArtworkListItem_item\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "28cf328fddb31d1f4e1e97491bde3b98";
+(node as any).hash = "8444b6fc06a1580fb795cf6e4f564fe7";
 
 export default node;

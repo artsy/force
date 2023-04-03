@@ -4,8 +4,8 @@ import { SelectArtworkListsHeader } from "./SelectArtworkListsHeader"
 import { SelectArtworkListsFooter } from "./SelectArtworkListsFooter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { SelectListsForArtworkModal_me$data } from "__generated__/SelectListsForArtworkModal_me.graphql"
-import { SelectListsForArtworkModalQuery } from "__generated__/SelectListsForArtworkModalQuery.graphql"
+import { SelectArtworkListsModal_me$data } from "__generated__/SelectArtworkListsModal_me.graphql"
+import { SelectArtworkListsModalQuery } from "__generated__/SelectArtworkListsModalQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { getSelectedArtworkListIds } from "Apps/CollectorProfile/Routes/Saves2/Utils/getSelectedArtworkListIds"
 import { useSelectArtworkLists } from "./useSelectArtworkLists"
@@ -22,15 +22,15 @@ import { ActionType, AddedArtworkToArtworkList } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useTracking } from "react-tracking"
 
-const logger = createLogger("SelectListsForArtworkModal")
+const logger = createLogger("SelectArtworkListsModal")
 
-export interface SelectListsForArtworkModalProps {
-  me: SelectListsForArtworkModal_me$data | null
+export interface SelectArtworkListsModalProps {
+  me: SelectArtworkListsModal_me$data | null
 }
 
 type ArtworkListById = Record<string, ResultListEntity>
 
-export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProps> = ({
+export const SelectArtworkListsModal: React.FC<SelectArtworkListsModalProps> = ({
   me,
 }) => {
   const { t } = useTranslation()
@@ -216,11 +216,11 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   )
 }
 
-export const SelectListsForArtworkModalFragmentContainer = createFragmentContainer(
-  SelectListsForArtworkModal,
+export const SelectArtworkListsModalFragmentContainer = createFragmentContainer(
+  SelectArtworkListsModal,
   {
     me: graphql`
-      fragment SelectListsForArtworkModal_me on Me
+      fragment SelectArtworkListsModal_me on Me
         @argumentDefinitions(artworkID: { type: "String!" }) {
         allSavesArtworkList: collection(id: "saved-artwork") {
           internalID
@@ -249,11 +249,11 @@ export const SelectListsForArtworkModalFragmentContainer = createFragmentContain
   }
 )
 
-export const SelectListsForArtworkModalQueryRender: FC = () => {
+export const SelectArtworkListsModalQueryRender: FC = () => {
   const { state } = useManageArtworkForSavesContext()
 
   return (
-    <SystemQueryRenderer<SelectListsForArtworkModalQuery>
+    <SystemQueryRenderer<SelectArtworkListsModalQuery>
       query={query}
       variables={{ artworkID: state.artwork!.internalID }}
       render={({ props, error }) => {
@@ -263,7 +263,7 @@ export const SelectListsForArtworkModalQueryRender: FC = () => {
         }
 
         return (
-          <SelectListsForArtworkModalFragmentContainer me={props?.me ?? null} />
+          <SelectArtworkListsModalFragmentContainer me={props?.me ?? null} />
         )
       }}
     />
@@ -271,9 +271,9 @@ export const SelectListsForArtworkModalQueryRender: FC = () => {
 }
 
 const query = graphql`
-  query SelectListsForArtworkModalQuery($artworkID: String!) {
+  query SelectArtworkListsModalQuery($artworkID: String!) {
     me {
-      ...SelectListsForArtworkModal_me @arguments(artworkID: $artworkID)
+      ...SelectArtworkListsModal_me @arguments(artworkID: $artworkID)
     }
   }
 `
