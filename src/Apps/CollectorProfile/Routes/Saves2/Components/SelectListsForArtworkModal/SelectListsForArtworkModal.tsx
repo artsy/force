@@ -7,7 +7,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SelectListsForArtworkModal_me$data } from "__generated__/SelectListsForArtworkModal_me.graphql"
 import { SelectListsForArtworkModalQuery } from "__generated__/SelectListsForArtworkModalQuery.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import { getSelectedCollectionIds } from "Apps/CollectorProfile/Routes/Saves2/Utils/getSelectedCollectionIds"
+import { getSelectedArtworkListIds } from "Apps/CollectorProfile/Routes/Saves2/Utils/getSelectedArtworkListIds"
 import { useSelectArtworkLists } from "./useSelectArtworkLists"
 import createLogger from "Utils/logger"
 import { useTranslation } from "react-i18next"
@@ -43,10 +43,10 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const collections = allSavesArtworkList
     ? [allSavesArtworkList, ...customArtworkLists]
     : customArtworkLists
-  const selectedCollectionIds = getSelectedCollectionIds({
-    collections,
-    addToCollectionIDs: state.addingListIDs,
-    removeFromCollectionIDs: state.removingListIDs,
+  const selectedCollectionIds = getSelectedArtworkListIds({
+    artworkLists: collections,
+    addToArtworkListIDs: state.addingListIDs,
+    removeFromArtowrkListIDs: state.removingListIDs,
   })
   const hasChanges =
     state.addingListIDs.length !== 0 || state.removingListIDs.length !== 0
