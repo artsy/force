@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
-import { ConditionsOfSaleCheckbox } from "../ConditionsOfSaleCheckbox"
+import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
 
 jest.mock("Apps/Auction/Hooks/useFormContext")
 
@@ -29,7 +29,9 @@ describe("ConditionsOfSaleCheckbox", () => {
   it("renders correct components", () => {
     const wrapper = getWrapper()
     expect(wrapper.find("Checkbox")).toHaveLength(1)
-    expect(wrapper.text()).toContain("Agree to Conditions of Sale")
+    expect(wrapper.text()).toContain(
+      "I agree to the Conditions of Sale. I understand that all bids are binding and may not be retracted."
+    )
   })
 
   it("shows error message if error", () => {
