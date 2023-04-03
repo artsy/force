@@ -9,6 +9,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { CollectorProfileSaves2Route_me$data } from "__generated__/CollectorProfileSaves2Route_me.graphql"
 import { useTracking } from "react-tracking"
 import { ActionType, OwnerType, ViewedArtworkList } from "@artsy/cohesion"
+import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 interface CollectorProfileSaves2RouteProps {
   me: CollectorProfileSaves2Route_me$data
@@ -86,8 +87,23 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   )
 }
 
+const PageWrapper: FC<CollectorProfileSaves2RouteProps> = props => {
+  const { match } = useRouter()
+
+  return (
+    <AnalyticsContext.Provider
+      value={{
+        contextPageOwnerId: match.params.id,
+        contextPageOwnerType: OwnerType.saves,
+      }}
+    >
+      <CollectorProfileSaves2Route {...props} />
+    </AnalyticsContext.Provider>
+  )
+}
+
 export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContainer(
-  CollectorProfileSaves2Route,
+  PageWrapper,
   {
     me: graphql`
       fragment CollectorProfileSaves2Route_me on Me {
