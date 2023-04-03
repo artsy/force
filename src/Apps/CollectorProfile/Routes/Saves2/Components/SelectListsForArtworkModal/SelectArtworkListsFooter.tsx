@@ -3,14 +3,14 @@ import { FC } from "react"
 import { useTranslation } from "react-i18next"
 
 interface SelectArtworkListsFooterProps {
-  selectedListsCount: number
+  selectedArtworkListsCount: number
   hasChanges?: boolean
   isSaving?: boolean
   onSaveClick: () => void
 }
 
 export const SelectArtworkListsFooter: FC<SelectArtworkListsFooterProps> = ({
-  selectedListsCount,
+  selectedArtworkListsCount,
   hasChanges,
   isSaving,
   onSaveClick,
@@ -25,7 +25,7 @@ export const SelectArtworkListsFooter: FC<SelectArtworkListsFooterProps> = ({
     >
       <Text variant="sm-display">
         {t("collectorSaves.selectArtworkLists.footer.listsCount", {
-          count: selectedListsCount,
+          count: selectedArtworkListsCount,
         })}
       </Text>
       <Button onClick={onSaveClick} loading={isSaving} disabled={!hasChanges}>

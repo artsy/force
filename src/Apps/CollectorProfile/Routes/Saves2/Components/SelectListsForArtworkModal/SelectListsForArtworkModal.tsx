@@ -28,7 +28,7 @@ export interface SelectListsForArtworkModalProps {
   me: SelectListsForArtworkModal_me$data | null
 }
 
-type CollectionsById = Record<string, ResultListEntity>
+type ArtworkListById = Record<string, ResultListEntity>
 
 export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProps> = ({
   me,
@@ -40,11 +40,11 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
   const [isSaving, setIsSaving] = useState(false)
   const allSavesArtworkList = me?.allSavesArtworkList
   const customArtworkLists = extractNodes(me?.customArtworkLists)
-  const collections = allSavesArtworkList
+  const artworkLists = allSavesArtworkList
     ? [allSavesArtworkList, ...customArtworkLists]
     : customArtworkLists
-  const selectedCollectionIds = getSelectedArtworkListIds({
-    artworkLists: collections,
+  const selectedArtworkListIds = getSelectedArtworkListIds({
+    artworkLists,
     addToArtworkListIDs: state.addingListIDs,
     removeFromArtowrkListIDs: state.removingListIDs,
   })
@@ -58,32 +58,32 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
     reset()
   }
 
-  const getCollectionsById = () => {
-    const collectionsById: CollectionsById = {}
+  const getArtworkListsById = () => {
+    const artworkListById: ArtworkListById = {}
 
-    collections.forEach(collection => {
-      collectionsById[collection.internalID] = {
-        id: collection.internalID,
-        name: collection.name,
+    artworkLists.forEach(artworkList => {
+      artworkListById[artworkList.internalID] = {
+        id: artworkList.internalID,
+        name: artworkList.name,
       }
     })
 
-    return collectionsById
+    return artworkListById
   }
 
   const getOnSaveResult = (): OnSaveResultData => {
-    const collectionsById = getCollectionsById()
+    const artworkListById = getArtworkListsById()
     const selectedLists = getResultEntitiesByIds(
-      selectedCollectionIds,
-      collectionsById
+      selectedArtworkListIds,
+      artworkListById
     )
     const addedLists = getResultEntitiesByIds(
       state.addingListIDs,
-      collectionsById
+      artworkListById
     )
     const removedLists = getResultEntitiesByIds(
       state.removingListIDs,
-      collectionsById
+      artworkListById
     )
 
     return {
@@ -93,7 +93,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
     }
   }
 
-  const handleArtworkListPress = (artworkList: typeof collections[0]) => {
+  const handleArtworkListPress = (artworkList: typeof artworkLists[0]) => {
     dispatch({
       type: "ADD_OR_REMOVE_LIST_ID",
       payload: {
@@ -157,7 +157,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
     }
   }
 
-  const checkIsArtworkListSelected = (artworkList: typeof collections[0]) => {
+  const checkIsArtworkListSelected = (artworkList: typeof artworkLists[0]) => {
     /**
      * User added artwork to the previously unselected artwork list
      * So we have to display the artwork list as *selected*
@@ -197,7 +197,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
       }
       footer={
         <SelectArtworkListsFooter
-          selectedListsCount={selectedCollectionIds.length}
+          selectedArtworkListsCount={selectedArtworkListIds.length}
           hasChanges={hasChanges}
           onSaveClick={handleSaveClicked}
           isSaving={isSaving}
@@ -207,7 +207,7 @@ export const SelectListsForArtworkModal: React.FC<SelectListsForArtworkModalProp
       <Box mt={1}>
         <SelectArtworkListsContent
           isFetching={me === null}
-          artworkLists={collections}
+          artworkLists={artworkLists}
           checkIsArtworkListSelected={checkIsArtworkListSelected}
           onArtworkListPress={handleArtworkListPress}
         />
@@ -280,7 +280,7 @@ const query = graphql`
 
 const getResultEntitiesByIds = (
   ids: string[],
-  collectionsById: CollectionsById
+  artworkListById: ArtworkListById
 ) => {
-  return ids.map(id => collectionsById[id])
+  return ids.map(id => artworkListById[id])
 }
