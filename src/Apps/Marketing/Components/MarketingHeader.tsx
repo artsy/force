@@ -26,8 +26,8 @@ export const MarketingHeader: FC<MarketingHeaderProps> = ({
   const height = useFullBleedHeaderHeight()
 
   const images = {
-    desktop: cropped(src, { width: 2000, height: 600 }),
-    mobile: cropped(src, { width: 375, height: 360 }),
+    desktop: cropped(src, { width: 1000, height: 1000 }),
+    mobile: cropped(src, { width: 400, height: 400 }),
   }
 
   return (
@@ -51,12 +51,12 @@ export const MarketingHeader: FC<MarketingHeaderProps> = ({
             >
               <Text variant={["xl", "xl", "xxl", "xxxl"]}>{title}</Text>
 
-              <Spacer y={4} />
+              <Spacer y={[1, 2, 2, 4]} />
 
               <Text variant="lg">{subtitle}</Text>
             </Column>
 
-            <Column span={7} bg="black60">
+            <Column span={7} bg="black60" overflow="hidden">
               <Image
                 {...images.desktop}
                 width="100%"

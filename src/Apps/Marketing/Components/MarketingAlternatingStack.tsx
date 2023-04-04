@@ -55,7 +55,7 @@ export const MarketingAlternatingStack: FC<MarketingAlternatingStackProps> = ({
 
                 <Spacer y={[1, 2, 2, 4]} />
 
-                <Text variant={["sm", "sm", "sm", "lg"]}>{card.subtitle}</Text>
+                <Text variant={["sm", "sm", "lg", "lg"]}>{card.subtitle}</Text>
 
                 {card.cta && (
                   <>
