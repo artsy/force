@@ -2,7 +2,7 @@ import { FC, useState } from "react"
 import { Box, Text, Spacer, Button, Join } from "@artsy/palette"
 import { useToasts } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
-import { CreateNewListModalWizard } from "./CreateNewListModal/CreateNewListModalWizard"
+import { CreateNewListModalWizardQueryRenderer } from "./CreateNewListModal/CreateNewListModalWizard"
 import { ArtworkList } from "./CreateNewListModal/CreateNewListModal"
 
 export const ArtworkListsHeader: FC = () => {
@@ -32,7 +32,7 @@ export const ArtworkListsHeader: FC = () => {
   return (
     <>
       {modalIsOpened && (
-        <CreateNewListModalWizard
+        <CreateNewListModalWizardQueryRenderer
           onComplete={handleComplete}
           onClose={handleClose}
         />

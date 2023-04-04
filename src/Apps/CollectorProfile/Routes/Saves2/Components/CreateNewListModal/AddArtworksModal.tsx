@@ -42,6 +42,11 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
   }
 
   const handleSave = async () => {
+    if (selectedArtworkIds.length === 0) {
+      onComplete()
+      return
+    }
+
     try {
       setIsSaving(true)
 
