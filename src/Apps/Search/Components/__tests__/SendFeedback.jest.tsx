@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from "@testing-library/react"
 import { SendFeedback } from "Apps/Search/Components/SendFeedback"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { SystemContextProvider } from "System/SystemContext"
 
 jest.mock("Utils/Hooks/useMutation")
 
@@ -46,6 +47,34 @@ describe("SendFeedback", () => {
         input: {
           name: "Example Name",
           email: "example@example.com",
+          message: "Example Message",
+        },
+      },
+    })
+  })
+
+  it("submits the form (logged-id user)", async () => {
+    render(
+      <SystemContextProvider
+        user={{ id: "percy-z", email: "user@example.com", name: "Percy Z" }}
+      >
+        <SendFeedback />
+      </SystemContextProvider>
+    )
+
+    const message = screen.getByPlaceholderText("Your comments here")
+    fireEvent.change(message, { target: { value: "Example Message" } })
+
+    fireEvent.click(screen.getByText("Submit"))
+
+    await flushPromiseQueue()
+
+    expect(submitMutation).toHaveBeenCalledWith({
+      rejectIf: expect.anything(),
+      variables: {
+        input: {
+          name: "Percy Z",
+          email: "user@example.com",
           message: "Example Message",
         },
       },
