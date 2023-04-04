@@ -5,9 +5,30 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { SystemContextProvider } from "System/SystemContext"
 
 jest.mock("Utils/Hooks/useMutation")
+jest.mock("Utils/getENV", () => ({
+  getENV: (name: string) => {
+    const envs = {
+      APP_URL: "https://www.artsy.net",
+    }
+
+    return envs[name]
+  },
+}))
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        pathname: "/search",
+        search: "?term=something%20very%20unpopular",
+      },
+    },
+  }),
+}))
 
 describe("SendFeedback", () => {
   const submitMutation = jest.fn()
+  const url = "https://www.artsy.net/search?term=something%20very%20unpopular"
+
   beforeEach(() => {
     ;(useMutation as jest.Mock).mockImplementation(() => ({ submitMutation }))
   })
@@ -48,6 +69,7 @@ describe("SendFeedback", () => {
           name: "Example Name",
           email: "example@example.com",
           message: "Example Message",
+          url,
         },
       },
     })
@@ -76,6 +98,7 @@ describe("SendFeedback", () => {
           name: "Percy Z",
           email: "user@example.com",
           message: "Example Message",
+          url,
         },
       },
     })
