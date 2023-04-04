@@ -46,7 +46,7 @@ export const SelectArtworkListsModal: React.FC<SelectArtworkListsModalProps> = (
   const selectedArtworkListIds = getSelectedArtworkListIds({
     artworkLists,
     addToArtworkListIDs: state.addingListIDs,
-    removeFromArtowrkListIDs: state.removingListIDs,
+    removeFromArtworkListIDs: state.removingListIDs,
   })
   const hasChanges =
     state.addingListIDs.length !== 0 || state.removingListIDs.length !== 0

@@ -5,7 +5,7 @@ describe("getSelectedArtworkListIds", () => {
     const result = getSelectedArtworkListIds({
       artworkLists: [],
       addToArtworkListIDs: [],
-      removeFromArtowrkListIDs: [],
+      removeFromArtworkListIDs: [],
     })
 
     expect(result).toEqual([])
@@ -15,7 +15,7 @@ describe("getSelectedArtworkListIds", () => {
     const result = getSelectedArtworkListIds({
       artworkLists,
       addToArtworkListIDs: [],
-      removeFromArtowrkListIDs: [],
+      removeFromArtworkListIDs: [],
     })
 
     // for `bbb` artwork list the value of `isSavedArtwork` is set to `false`
@@ -26,27 +26,27 @@ describe("getSelectedArtworkListIds", () => {
     const result = getSelectedArtworkListIds({
       artworkLists,
       addToArtworkListIDs: ["aaa", "eee"],
-      removeFromArtowrkListIDs: [],
+      removeFromArtworkListIDs: [],
     })
 
     expect(result).toEqual(["aaa", "ccc", "ddd", "eee"])
   })
 
-  it("without `removeFromArtowrkListIDs`", () => {
+  it("without `removeFromArtworkListIDs`", () => {
     const result = getSelectedArtworkListIds({
       artworkLists,
       addToArtworkListIDs: [],
-      removeFromArtowrkListIDs: ["aaa", "ddd"],
+      removeFromArtworkListIDs: ["aaa", "ddd"],
     })
 
     expect(result).toEqual(["ccc"])
   })
 
-  it("with `addToArtworkListIDs` and without `removeFromArtowrkListIDs`", () => {
+  it("with `addToArtworkListIDs` and without `removeFromArtworkListIDs`", () => {
     const result = getSelectedArtworkListIds({
       artworkLists,
       addToArtworkListIDs: ["aaa", "eee"],
-      removeFromArtowrkListIDs: ["ccc", "ddd"],
+      removeFromArtworkListIDs: ["ccc", "ddd"],
     })
 
     expect(result).toEqual(["aaa", "eee"])
