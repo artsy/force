@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9e7ecaa6100ef90d4767abccc7e2bb0b>>
+ * @generated SignedSource<<a41a40e78ba8d2dba236f22d1200f23d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SelectListsForArtworkModal_me$data = {
+export type SelectArtworkListsModal_me$data = {
   readonly allSavesArtworkList: {
     readonly internalID: string;
     readonly isSavedArtwork: boolean;
@@ -27,11 +27,11 @@ export type SelectListsForArtworkModal_me$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly " $fragmentType": "SelectListsForArtworkModal_me";
+  readonly " $fragmentType": "SelectArtworkListsModal_me";
 };
-export type SelectListsForArtworkModal_me$key = {
-  readonly " $data"?: SelectListsForArtworkModal_me$data;
-  readonly " $fragmentSpreads": FragmentRefs<"SelectListsForArtworkModal_me">;
+export type SelectArtworkListsModal_me$key = {
+  readonly " $data"?: SelectArtworkListsModal_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SelectArtworkListsModal_me">;
 };
 
 const node: ReaderFragment = (function(){
@@ -79,7 +79,7 @@ return {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "SelectListsForArtworkModal_me",
+  "name": "SelectArtworkListsModal_me",
   "selections": [
     {
       "alias": "allSavesArtworkList",
@@ -156,6 +156,6 @@ return {
 };
 })();
 
-(node as any).hash = "31f06d5dba3fda2876a8075a00fad4c1";
+(node as any).hash = "a09345848a0cf7de26da55bd2367ebfb";
 
 export default node;

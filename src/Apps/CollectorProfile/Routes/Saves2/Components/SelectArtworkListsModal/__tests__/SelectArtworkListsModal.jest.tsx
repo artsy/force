@@ -2,10 +2,10 @@ import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import {
-  SelectListsForArtworkModal_Test_Query,
-  SelectListsForArtworkModal_Test_Query$data,
-} from "__generated__/SelectListsForArtworkModal_Test_Query.graphql"
-import { SelectListsForArtworkModalFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
+  SelectArtworkListsModal_Test_Query,
+  SelectArtworkListsModal_Test_Query$data,
+} from "__generated__/SelectArtworkListsModal_Test_Query.graphql"
+import { SelectArtworkListsModalFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectArtworkListsModal/SelectArtworkListsModal"
 import {
   ManageArtworkForSavesProvider,
   useManageArtworkForSavesContext,
@@ -20,7 +20,7 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 jest.unmock("react-relay")
 jest.mock("Utils/Hooks/useMutation")
 
-const TestComponent: FC<SelectListsForArtworkModal_Test_Query$data> = props => {
+const TestComponent: FC<SelectArtworkListsModal_Test_Query$data> = props => {
   const { state } = useManageArtworkForSavesContext()
 
   // Modal is not displayed in the ManageArtworkForSaves component if artwork is null
@@ -28,11 +28,11 @@ const TestComponent: FC<SelectListsForArtworkModal_Test_Query$data> = props => {
     return null
   }
 
-  return <SelectListsForArtworkModalFragmentContainer {...props} />
+  return <SelectArtworkListsModalFragmentContainer {...props} />
 }
 
 const { renderWithRelay } = setupTestWrapperTL<
-  SelectListsForArtworkModal_Test_Query
+  SelectArtworkListsModal_Test_Query
 >({
   Component: props => {
     if (!props.me) {
@@ -54,15 +54,15 @@ const { renderWithRelay } = setupTestWrapperTL<
     )
   },
   query: graphql`
-    query SelectListsForArtworkModal_Test_Query @relay_test_operation {
+    query SelectArtworkListsModal_Test_Query @relay_test_operation {
       me {
-        ...SelectListsForArtworkModal_me @arguments(artworkID: "artworkID")
+        ...SelectArtworkListsModal_me @arguments(artworkID: "artworkID")
       }
     }
   `,
 })
 
-describe("SelectListsForArtworkModal", () => {
+describe("SelectArtworkListsModal", () => {
   const mockUseMutation = useMutation as jest.Mock
   const mockUseTracking = useTracking as jest.Mock
   const trackEvent = jest.fn()

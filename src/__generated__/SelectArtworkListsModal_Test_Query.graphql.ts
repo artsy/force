@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f630b1cc0a277a24db631a95bd106a10>>
+ * @generated SignedSource<<01aca1218f87a984107a85c975429ed5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SelectListsForArtworkModal_Test_Query$variables = {};
-export type SelectListsForArtworkModal_Test_Query$data = {
+export type SelectArtworkListsModal_Test_Query$variables = {};
+export type SelectArtworkListsModal_Test_Query$data = {
   readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"SelectListsForArtworkModal_me">;
+    readonly " $fragmentSpreads": FragmentRefs<"SelectArtworkListsModal_me">;
   } | null;
 };
-export type SelectListsForArtworkModal_Test_Query = {
-  response: SelectListsForArtworkModal_Test_Query$data;
-  variables: SelectListsForArtworkModal_Test_Query$variables;
+export type SelectArtworkListsModal_Test_Query = {
+  response: SelectArtworkListsModal_Test_Query$data;
+  variables: SelectArtworkListsModal_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -201,7 +201,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "SelectListsForArtworkModal_Test_Query",
+    "name": "SelectArtworkListsModal_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -214,7 +214,7 @@ return {
           {
             "args": (v0/*: any*/),
             "kind": "FragmentSpread",
-            "name": "SelectListsForArtworkModal_me"
+            "name": "SelectArtworkListsModal_me"
           }
         ],
         "storageKey": null
@@ -227,7 +227,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "SelectListsForArtworkModal_Test_Query",
+    "name": "SelectArtworkListsModal_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -313,7 +313,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "db226ec330ea65e272d440e8c4907527",
+    "cacheID": "7d580f403cc4640b47e2d170dc92cc3e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -362,13 +362,13 @@ return {
         "me.id": (v7/*: any*/)
       }
     },
-    "name": "SelectListsForArtworkModal_Test_Query",
+    "name": "SelectArtworkListsModal_Test_Query",
     "operationKind": "query",
-    "text": "query SelectListsForArtworkModal_Test_Query {\n  me {\n    ...SelectListsForArtworkModal_me_42bAl0\n    id\n  }\n}\n\nfragment SelectArtworkListItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 1, sort: SAVED_AT_DESC) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectListsForArtworkModal_me_42bAl0 on Me {\n  allSavesArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    isSavedArtwork(artworkID: \"artworkID\")\n    name\n    ...SelectArtworkListItem_item\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        isSavedArtwork(artworkID: \"artworkID\")\n        name\n        ...SelectArtworkListItem_item\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SelectArtworkListsModal_Test_Query {\n  me {\n    ...SelectArtworkListsModal_me_42bAl0\n    id\n  }\n}\n\nfragment SelectArtworkListItem_item on Collection {\n  name\n  artworksCount\n  artworksConnection(first: 1, sort: SAVED_AT_DESC) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectArtworkListsModal_me_42bAl0 on Me {\n  allSavesArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    isSavedArtwork(artworkID: \"artworkID\")\n    name\n    ...SelectArtworkListItem_item\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        isSavedArtwork(artworkID: \"artworkID\")\n        name\n        ...SelectArtworkListItem_item\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "fd37a25a329f34d0efae1d411aea815e";
+(node as any).hash = "5b28708f4ebbee300f8ceda10af92be0";
 
 export default node;
