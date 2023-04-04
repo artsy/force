@@ -7,7 +7,6 @@ import {
   Column,
   SkeletonBox,
   SkeletonText,
-  Box,
 } from "@artsy/palette"
 import { SortFilter } from "Components/SortFilter"
 import { ArtworksListFragmentContainer } from "./ArtworksList"
@@ -21,7 +20,7 @@ import {
 import { AddArtworksModalContentQuery } from "__generated__/AddArtworksModalContentQuery.graphql"
 import { AddArtworksModalContent_me$data } from "__generated__/AddArtworksModalContent_me.graphql"
 import { MetadataPlaceholder } from "Components/Artwork/Metadata"
-import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
+import { ArtworksInfiniteScrollSentinel } from "./ArtworksInfiniteScrollSentinel"
 
 interface AddArtworksModalContentQueryRenderProps {
   selectedArtworkIds: string[]
@@ -66,12 +65,14 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
     relay.refetchConnection(
       ARTWORKS_PER_SCROLL,
       err => {
-        console.error(err)
+        if (err) {
+          console.error(err)
+        }
+
+        setIsLoading(false)
       },
       { sort: option }
     )
-
-    setIsLoading(false)
   }
 
   const handleLoadMore = () => {
@@ -118,26 +119,13 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
         selectedIds={selectedArtworkIds}
       />
 
-      {relay.hasMore() && <InfiniteScrollSentinel onNext={handleLoadMore} />}
+      {relay.hasMore() && (
+        <ArtworksInfiniteScrollSentinel onNext={handleLoadMore} />
+      )}
 
-      {isLoadingNextPage && <ContentPlaceholder gridOnly={true} />}
+      {isLoadingNextPage && <ArtworksGridPlaceholder />}
     </>
   )
-}
-
-interface InfiniteScrollSentinelProps {
-  onNext(): void
-}
-
-const InfiniteScrollSentinel: FC<InfiniteScrollSentinelProps> = ({
-  onNext,
-}) => {
-  const { ref } = useIntersectionObserver({
-    onIntersection: onNext,
-    once: false,
-  })
-
-  return <Box ref={ref as any} height={0} />
 }
 
 const AddArtworksModalContentPaginationContainer = createPaginationContainer(
@@ -228,36 +216,34 @@ export const AddArtworksModalContentQueryRender: FC<AddArtworksModalContentQuery
   )
 }
 
-interface ContentPlaceholderProps {
-  gridOnly?: boolean
-}
-
-const ContentPlaceholder: FC<ContentPlaceholderProps> = props => {
+const ContentPlaceholder: FC = () => {
   const { t } = useTranslation()
-  const gridOnly = props.gridOnly ?? false
 
   return (
     <>
-      {!gridOnly && (
-        <>
-          <Flex justifyContent="space-between" alignItems="center">
-            <SkeletonText variant={["xs", "sm"]}>
-              {t("collectorSaves.addArtworksModal.artworksCount", {
-                count: 127,
-              })}
-            </SkeletonText>
+      <Flex justifyContent="space-between" alignItems="center">
+        <SkeletonText variant={["xs", "sm"]}>
+          {t("collectorSaves.addArtworksModal.artworksCount", {
+            count: 127,
+          })}
+        </SkeletonText>
 
-            <SortFilter
-              sortOptions={SORTS}
-              selected={SORTS[0].value}
-              onSort={() => {}}
-            />
-          </Flex>
-        </>
-      )}
+        <SortFilter
+          sortOptions={SORTS}
+          selected={SORTS[0].value}
+          onSort={() => {}}
+        />
+      </Flex>
 
+      <ArtworksGridPlaceholder />
+    </>
+  )
+}
+
+const ArtworksGridPlaceholder = () => {
+  return (
+    <>
       <Spacer y={2} />
-
       <GridColumns>
         {[...Array(9)].map((_, index) => {
           return (
