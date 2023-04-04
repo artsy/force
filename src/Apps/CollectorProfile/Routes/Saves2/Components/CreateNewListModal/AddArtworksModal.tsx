@@ -5,6 +5,12 @@ import { AddArtworksModalContentQueryRender } from "./AddArtworksModalContent"
 import { useAddArtworksToCollection } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/useAddArtworksToCollection"
 import createLogger from "Utils/logger"
 import { ArtworkList } from "./CreateNewListModal"
+import { useTracking } from "react-tracking"
+import {
+  ActionType,
+  AddedArtworkToArtworkList,
+  OwnerType,
+} from "@artsy/cohesion"
 
 interface AddArtworksModalProps {
   onComplete: () => void
@@ -21,7 +27,19 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
   const { t } = useTranslation()
   const { sendToast } = useToasts()
   const { submitMutation } = useAddArtworksToCollection()
+  const { trackEvent } = useTracking()
   const [isSaving, setIsSaving] = useState(false)
+
+  const trackAnalyticEvent = () => {
+    const event: AddedArtworkToArtworkList = {
+      action: ActionType.addedArtworkToArtworkList,
+      context_owner_type: OwnerType.saves,
+      artwork_ids: selectedArtworkIds,
+      owner_ids: [artworkList.internalID],
+    }
+
+    trackEvent(event)
+  }
 
   const handleSave = async () => {
     try {
@@ -41,6 +59,10 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
           return !!error?.mutationError
         },
       })
+
+      if (selectedArtworkIds.length > 0) {
+        trackAnalyticEvent()
+      }
 
       onComplete()
     } catch (error) {

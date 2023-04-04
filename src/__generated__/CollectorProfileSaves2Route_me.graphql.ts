@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4106f0b25b745d636a13752eba75182f>>
+ * @generated SignedSource<<c6e897d9c9c0ee9f23c76141af9b3276>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,16 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileSaves2Route_me$data = {
-  readonly defaultSaves: {
+  readonly allSavesArtworkList: {
     readonly internalID: string;
-    readonly " $fragmentSpreads": FragmentRefs<"SavesItem_item">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
   } | null;
-  readonly otherSaves: {
+  readonly customArtworkLists: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly default: boolean;
         readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"SavesItem_item">;
+        readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
       } | null;
     } | null> | null;
   } | null;
@@ -42,7 +42,7 @@ var v0 = {
 v1 = {
   "args": null,
   "kind": "FragmentSpread",
-  "name": "SavesItem_item"
+  "name": "ArtworkListItem_item"
 };
 return {
   "argumentDefinitions": [],
@@ -54,7 +54,7 @@ return {
         "cursor": null,
         "direction": "forward",
         "path": [
-          "otherSaves"
+          "customArtworkLists"
         ]
       }
     ]
@@ -62,7 +62,7 @@ return {
   "name": "CollectorProfileSaves2Route_me",
   "selections": [
     {
-      "alias": "defaultSaves",
+      "alias": "allSavesArtworkList",
       "args": [
         {
           "kind": "Literal",
@@ -81,11 +81,11 @@ return {
       "storageKey": "collection(id:\"saved-artwork\")"
     },
     {
-      "alias": "otherSaves",
+      "alias": "customArtworkLists",
       "args": null,
       "concreteType": "CollectionsConnection",
       "kind": "LinkedField",
-      "name": "__CollectorProfileSaves2Route_otherSaves_connection",
+      "name": "__CollectorProfileSaves2Route_customArtworkLists_connection",
       "plural": false,
       "selections": [
         {
@@ -167,6 +167,6 @@ return {
 };
 })();
 
-(node as any).hash = "f49dfdbe88a36651445db15ce310923c";
+(node as any).hash = "38bba4625a0a53bd9aa326879721d816";
 
 export default node;

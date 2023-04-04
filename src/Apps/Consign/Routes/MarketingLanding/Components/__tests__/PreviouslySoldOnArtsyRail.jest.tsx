@@ -7,7 +7,6 @@ import { PreviouslySoldOnArtsyRailFragmentContainer } from "Apps/Consign/Routes/
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-// TODO: Remove feature flag mock when feature flag is removed
 jest.mock("System/useSystemContext")
 const trackEvent = useTracking as jest.Mock
 
@@ -31,9 +30,6 @@ describe("PreviouslySoldOnArtsyRail", () => {
     })
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       user: { id: "user-id", email: "user-email@artsy.net" },
-      featureFlags: {
-        "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-      },
     }))
   })
 

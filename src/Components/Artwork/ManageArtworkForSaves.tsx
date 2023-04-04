@@ -1,7 +1,7 @@
 import { useToasts } from "@artsy/palette"
 import { ArtworkList } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
 import { CreateNewListModalForManageArtwork } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModalForManageArtwork"
-import { SelectListsForArtworkModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
+import { SelectArtworkListsModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectArtworkListsModal/SelectArtworkListsModal"
 import {
   createContext,
   Dispatch,
@@ -243,7 +243,7 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
       return <CreateNewListModalForManageArtwork />
     }
 
-    return <SelectListsForArtworkModalQueryRender />
+    return <SelectArtworkListsModalQueryRender />
   }
 
   return (

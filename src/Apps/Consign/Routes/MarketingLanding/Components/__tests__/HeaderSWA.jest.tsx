@@ -4,7 +4,6 @@ import { useSystemContext } from "System/useSystemContext"
 import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HeaderSWA"
 
 jest.mock("react-tracking")
-// TODO: Remove feature flag mock when feature flag is removed
 jest.mock("System/useSystemContext")
 jest.mock("System/Analytics/AnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
@@ -28,9 +27,6 @@ describe("HeaderSWA", () => {
     })
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       user: { id: "user-id", email: "user-email@artsy.net" },
-      featureFlags: {
-        "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-      },
     }))
   })
 
@@ -92,9 +88,6 @@ describe("HeaderSWA", () => {
     it("links out to email provider", () => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => ({
         user: { id: "user-id", email: "user-email@artsy.net" },
-        featureFlags: {
-          "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-        },
       }))
 
       render(<HeaderSWA />)
