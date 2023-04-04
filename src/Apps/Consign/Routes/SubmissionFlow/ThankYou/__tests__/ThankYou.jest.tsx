@@ -12,10 +12,10 @@ jest.mock("System/Router/useRouter")
 
 jest.mock("System/useSystemContext")
 
-jest.mock("../../../MarketingLanding/Components/SoldRecentlyOnArtsy", () => ({
+jest.mock("../../SoldRecentlyOnArtsy", () => ({
   SoldRecentlyOnArtsyQueryRenderer: () => <div />,
 }))
-jest.mock("../../../MarketingLanding/Components/FAQ", () => ({
+jest.mock("../../FAQ/FAQ", () => ({
   FAQ: () => <div />,
 }))
 

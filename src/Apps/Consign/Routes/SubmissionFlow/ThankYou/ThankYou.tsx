@@ -6,8 +6,8 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
 import { useTracking } from "react-tracking"
 import { ConfirmationScreenComponent } from "Components/ConfirmationScreenComponent"
-import { SoldRecentlyOnArtsyQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/SoldRecentlyOnArtsy"
-import { FAQ } from "Apps/Consign/Routes/MarketingLanding/Components/FAQ"
+import { FAQ } from "Apps/Consign/Routes/SubmissionFlow/FAQ/FAQ"
+import { SoldRecentlyOnArtsyQueryRenderer } from "Apps/Consign/Routes/SubmissionFlow/SoldRecentlyOnArtsy"
 
 export const ThankYou: React.FC = () => {
   const { user, isLoggedIn } = useSystemContext()

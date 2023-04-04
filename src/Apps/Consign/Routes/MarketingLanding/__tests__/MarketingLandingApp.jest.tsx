@@ -1,5 +1,5 @@
-import { render, screen } from "@testing-library/react"
-import { MarketingLandingApp } from "../MarketingLandingApp"
+import { render } from "@testing-library/react"
+import { MarketingLandingApp } from "Apps/Consign/Routes/MarketingLanding/MarketingLandingApp"
 import { HeadProvider } from "react-head"
 import { useTracking } from "react-tracking"
 
@@ -38,26 +38,6 @@ describe("MarketingLandingApp", () => {
     jest.clearAllMocks()
   })
 
-  describe("Initial render", () => {
-    it("renders correctly", async () => {
-      render(
-        <HeadProvider>
-          <MarketingLandingApp />
-        </HeadProvider>
-      )
-
-      expect(
-        screen.queryByText("Sell Artworks from Your Collection")
-      ).toBeInTheDocument()
-      expect(screen.queryByText(/^Gallery or art dealer/)).toBeInTheDocument()
-      expect(screen.queryByText("Why Sell with Artsy")).toBeInTheDocument()
-      expect(screen.queryByText("How It Works")).toBeInTheDocument()
-      expect(
-        screen.queryByText("Frequently Asked Questions")
-      ).toBeInTheDocument()
-    })
-  })
-
   describe("Saving UTM params to session storage", () => {
     it("save if session storage is empty", async () => {
       mockQueryUtmParams = {
@@ -89,7 +69,7 @@ describe("MarketingLandingApp", () => {
 
       render(
         <HeadProvider>
-          <MarketingLandingApp></MarketingLandingApp>
+          <MarketingLandingApp />
         </HeadProvider>
       )
 

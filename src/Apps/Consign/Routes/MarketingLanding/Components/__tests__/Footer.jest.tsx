@@ -4,7 +4,6 @@ import { useSystemContext } from "System/useSystemContext"
 import { Footer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Footer"
 
 jest.mock("react-tracking")
-// TODO: Remove feature flag mock when feature flag is removed
 jest.mock("System/useSystemContext")
 jest.mock("System/Analytics/AnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
@@ -23,9 +22,6 @@ describe("Footer", () => {
     })
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       user: { id: "user-id", email: "user-email@artsy.net" },
-      featureFlags: {
-        "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-      },
     }))
   })
 
