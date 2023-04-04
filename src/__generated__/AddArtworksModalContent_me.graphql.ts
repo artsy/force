@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8112f4131d135125a154f91443d4a870>>
+ * @generated SignedSource<<ef3a99b936b23b65895b5c0523121826>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,11 @@ import { FragmentRefs } from "relay-runtime";
 export type AddArtworksModalContent_me$data = {
   readonly collection: {
     readonly artworksConnection: {
+      readonly edges: ReadonlyArray<{
+        readonly node: {
+          readonly internalID: string;
+        } | null;
+      } | null> | null;
       readonly totalCount: number | null;
       readonly " $fragmentSpreads": FragmentRefs<"ArtworksList_artworks">;
     } | null;
@@ -27,13 +32,35 @@ export type AddArtworksModalContent_me$key = {
 const node: ReaderFragment = {
   "argumentDefinitions": [
     {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "after"
+    },
+    {
+      "defaultValue": 30,
+      "kind": "LocalArgument",
+      "name": "first"
+    },
+    {
       "defaultValue": "POSITION_DESC",
       "kind": "LocalArgument",
       "name": "sort"
     }
   ],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": "first",
+        "cursor": "after",
+        "direction": "forward",
+        "path": [
+          "collection",
+          "artworksConnection"
+        ]
+      }
+    ]
+  },
   "name": "AddArtworksModalContent_me",
   "selections": [
     {
@@ -51,13 +78,8 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
-          "alias": null,
+          "alias": "artworksConnection",
           "args": [
-            {
-              "kind": "Literal",
-              "name": "first",
-              "value": 30
-            },
             {
               "kind": "Variable",
               "name": "sort",
@@ -66,7 +88,7 @@ const node: ReaderFragment = {
           ],
           "concreteType": "ArtworkConnection",
           "kind": "LinkedField",
-          "name": "artworksConnection",
+          "name": "__AddArtworksModalContent_artworksConnection_connection",
           "plural": false,
           "selections": [
             {
@@ -80,6 +102,74 @@ const node: ReaderFragment = {
               "args": null,
               "kind": "FragmentSpread",
               "name": "ArtworksList_artworks"
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "ArtworkEdge",
+              "kind": "LinkedField",
+              "name": "edges",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Artwork",
+                  "kind": "LinkedField",
+                  "name": "node",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "internalID",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "__typename",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "cursor",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "PageInfo",
+              "kind": "LinkedField",
+              "name": "pageInfo",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "endCursor",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "hasNextPage",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -92,6 +182,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b6e1dd03a4d872a2dab27966ce8e3351";
+(node as any).hash = "f098f83fb7f84b81499016f34adb459f";
 
 export default node;

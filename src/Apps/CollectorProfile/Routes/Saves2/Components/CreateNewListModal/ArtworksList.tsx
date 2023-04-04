@@ -21,19 +21,23 @@ const ArtworksList: FC<ArtworksListProps> = ({
   }
 
   return (
-    <GridColumns>
-      {extractNodes(artworks).map(artwork => {
-        return (
-          <Column span={[6, 4]} key={artwork.internalID}>
-            <ArtworkItem
-              item={artwork}
-              selected={selectedIds.includes(artwork.internalID)}
-              onItemClick={handleItemClick}
-            />
-          </Column>
-        )
-      })}
-    </GridColumns>
+    // Disable scroll anchoring for infinite article scroll
+    // https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor/Guide_to_scroll_anchoring
+    <div style={{ overflowAnchor: "none" }}>
+      <GridColumns>
+        {extractNodes(artworks).map(artwork => {
+          return (
+            <Column span={[6, 4]} key={artwork.internalID}>
+              <ArtworkItem
+                item={artwork}
+                selected={selectedIds.includes(artwork.internalID)}
+                onItemClick={handleItemClick}
+              />
+            </Column>
+          )
+        })}
+      </GridColumns>
+    </div>
   )
 }
 

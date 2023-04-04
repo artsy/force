@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6bacf3cbb330b2f323c540475d037d7e>>
+ * @generated SignedSource<<46fe53319d54d462c5d76ee66ad014a7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,19 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectionArtworkSorts = "POSITION_ASC" | "POSITION_DESC" | "SAVED_AT_ASC" | "SAVED_AT_DESC" | "%future added value";
-export type AddArtworksModalContentRefetchQuery$variables = {
+export type AddArtworksModalContentPaginationQuery$variables = {
+  after?: string | null;
+  first: number;
   sort?: CollectionArtworkSorts | null;
 };
-export type AddArtworksModalContentRefetchQuery$data = {
+export type AddArtworksModalContentPaginationQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"AddArtworksModalContent_me">;
   } | null;
 };
-export type AddArtworksModalContentRefetchQuery = {
-  response: AddArtworksModalContentRefetchQuery$data;
-  variables: AddArtworksModalContentRefetchQuery$variables;
+export type AddArtworksModalContentPaginationQuery = {
+  response: AddArtworksModalContentPaginationQuery$data;
+  variables: AddArtworksModalContentPaginationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -29,14 +31,36 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
+    "name": "after"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "first"
+  },
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
     "name": "sort"
   }
 ],
-v1 = {
-  "kind": "Variable",
-  "name": "sort",
-  "variableName": "sort"
-},
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "after"
+  },
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "first"
+  },
+  {
+    "kind": "Variable",
+    "name": "sort",
+    "variableName": "sort"
+  }
+],
 v2 = {
   "alias": null,
   "args": null,
@@ -104,7 +128,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "AddArtworksModalContentRefetchQuery",
+    "name": "AddArtworksModalContentPaginationQuery",
     "selections": [
       {
         "alias": null,
@@ -115,9 +139,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": [
-              (v1/*: any*/)
-            ],
+            "args": (v1/*: any*/),
             "kind": "FragmentSpread",
             "name": "AddArtworksModalContent_me"
           }
@@ -132,7 +154,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "AddArtworksModalContentRefetchQuery",
+    "name": "AddArtworksModalContentPaginationQuery",
     "selections": [
       {
         "alias": null,
@@ -158,14 +180,7 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "first",
-                    "value": 30
-                  },
-                  (v1/*: any*/)
-                ],
+                "args": (v1/*: any*/),
                 "concreteType": "ArtworkConnection",
                 "kind": "LinkedField",
                 "name": "artworksConnection",
@@ -615,8 +630,47 @@ return {
                             "kind": "ScalarField",
                             "name": "isBiddable",
                             "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "__typename",
+                            "storageKey": null
                           }
                         ],
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "cursor",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "PageInfo",
+                    "kind": "LinkedField",
+                    "name": "pageInfo",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "endCursor",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "hasNextPage",
                         "storageKey": null
                       }
                     ],
@@ -624,6 +678,17 @@ return {
                   }
                 ],
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": (v1/*: any*/),
+                "filters": [
+                  "sort"
+                ],
+                "handle": "connection",
+                "key": "AddArtworksModalContent_artworksConnection",
+                "kind": "LinkedHandle",
+                "name": "artworksConnection"
               },
               (v5/*: any*/)
             ],
@@ -636,16 +701,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "50cab68c0de9a930061964ab35515e3c",
+    "cacheID": "76620305bbe72753ebda7423a8e13bc0",
     "id": null,
     "metadata": {},
-    "name": "AddArtworksModalContentRefetchQuery",
+    "name": "AddArtworksModalContentPaginationQuery",
     "operationKind": "query",
-    "text": "query AddArtworksModalContentRefetchQuery(\n  $sort: CollectionArtworkSorts\n) {\n  me {\n    ...AddArtworksModalContent_me_2GL9EE\n    id\n  }\n}\n\nfragment AddArtworksModalContent_me_2GL9EE on Me {\n  collection(id: \"saved-artwork\") {\n    artworksConnection(first: 30, sort: $sort) {\n      totalCount\n      ...ArtworksList_artworks\n    }\n    id\n  }\n}\n\nfragment ArtworksList_artworks on ArtworkConnection {\n  edges {\n    node {\n      internalID\n      ...GridItem_artwork\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n"
+    "text": "query AddArtworksModalContentPaginationQuery(\n  $after: String\n  $first: Int!\n  $sort: CollectionArtworkSorts\n) {\n  me {\n    ...AddArtworksModalContent_me_dWkdd\n    id\n  }\n}\n\nfragment AddArtworksModalContent_me_dWkdd on Me {\n  collection(id: \"saved-artwork\") {\n    artworksConnection(first: $first, after: $after, sort: $sort) {\n      totalCount\n      ...ArtworksList_artworks\n      edges {\n        node {\n          internalID\n          id\n          __typename\n        }\n        cursor\n      }\n      pageInfo {\n        endCursor\n        hasNextPage\n      }\n    }\n    id\n  }\n}\n\nfragment ArtworksList_artworks on ArtworkConnection {\n  edges {\n    node {\n      internalID\n      ...GridItem_artwork\n      id\n    }\n  }\n}\n\nfragment Badge_artwork on Artwork {\n  is_biddable: isBiddable\n  href\n  sale {\n    is_preview: isPreview\n    display_timely_at: displayTimelyAt\n    id\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment GridItem_artwork on Artwork {\n  internalID\n  title\n  imageTitle\n  image(includeAll: false) {\n    internalID\n    placeholder\n    url(version: [\"larger\", \"large\"])\n    aspectRatio\n    versions\n  }\n  artistNames\n  href\n  ...Metadata_artwork\n  ...Badge_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3d99a87076805a6fbaf9c706f1d118f0";
+(node as any).hash = "999964a2c0fda08c4378655c498f8ed5";
 
 export default node;

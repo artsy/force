@@ -12,10 +12,15 @@ import { SortFilter } from "Components/SortFilter"
 import { ArtworksListFragmentContainer } from "./ArtworksList"
 import { useTranslation } from "react-i18next"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
+import {
+  createPaginationContainer,
+  graphql,
+  RelayPaginationProp,
+} from "react-relay"
 import { AddArtworksModalContentQuery } from "__generated__/AddArtworksModalContentQuery.graphql"
 import { AddArtworksModalContent_me$data } from "__generated__/AddArtworksModalContent_me.graphql"
 import { MetadataPlaceholder } from "Components/Artwork/Metadata"
+import { ArtworksInfiniteScrollSentinel } from "./ArtworksInfiniteScrollSentinel"
 
 interface AddArtworksModalContentQueryRenderProps {
   selectedArtworkIds: string[]
@@ -25,13 +30,15 @@ interface AddArtworksModalContentQueryRenderProps {
 interface AddArtworksModalContentProps
   extends AddArtworksModalContentQueryRenderProps {
   me: AddArtworksModalContent_me$data
-  relay: RelayRefetchProp
+  relay: RelayPaginationProp
 }
 
 const SORTS = [
   { text: "Recently Saved", value: "POSITION_DESC" },
   { text: "Oldest first", value: "POSITION_ASC" },
 ]
+
+const ARTWORKS_PER_SCROLL = 30
 
 export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
   me,
@@ -40,6 +47,7 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
   onArtworkClick,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
+  const [isLoadingNextPage, setIsLoadingNextPage] = useState(false)
   const [sort, setSort] = useState(SORTS[0].value)
   const { t } = useTranslation()
 
@@ -51,14 +59,35 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
 
   const handleSortChange = (option: string) => {
     setSort(option)
+
     setIsLoading(true)
 
-    relay.refetch({ sort: option }, null, error => {
-      if (error) {
-        console.error(error)
+    relay.refetchConnection(
+      ARTWORKS_PER_SCROLL,
+      err => {
+        if (err) {
+          console.error(err)
+        }
+
+        setIsLoading(false)
+      },
+      { sort: option }
+    )
+  }
+
+  const handleLoadMore = () => {
+    if (!relay.hasMore() || relay.isLoading()) {
+      return
+    }
+
+    setIsLoadingNextPage(true)
+
+    relay.loadMore(ARTWORKS_PER_SCROLL, err => {
+      if (err) {
+        console.error(err)
       }
 
-      setIsLoading(false)
+      setIsLoadingNextPage(false)
     })
   }
 
@@ -89,34 +118,70 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
         onItemClick={handleItemClick}
         selectedIds={selectedArtworkIds}
       />
+
+      {relay.hasMore() && (
+        <ArtworksInfiniteScrollSentinel onNext={handleLoadMore} />
+      )}
+
+      {isLoadingNextPage && <ArtworksGridPlaceholder />}
     </>
   )
 }
 
-const AddArtworksModalContentRefetchContainer = createRefetchContainer(
+const AddArtworksModalContentPaginationContainer = createPaginationContainer(
   AddArtworksModalContent,
   {
     me: graphql`
       fragment AddArtworksModalContent_me on Me
         @argumentDefinitions(
+          first: { type: "Int", defaultValue: 30 }
+          after: { type: "String" }
           sort: { type: CollectionArtworkSorts, defaultValue: POSITION_DESC }
         ) {
         collection(id: "saved-artwork") {
-          artworksConnection(first: 30, sort: $sort) {
+          artworksConnection(first: $first, after: $after, sort: $sort)
+            @connection(key: "AddArtworksModalContent_artworksConnection") {
             totalCount
             ...ArtworksList_artworks
+
+            edges {
+              node {
+                internalID
+              }
+            }
           }
         }
       }
     `,
   },
-  graphql`
-    query AddArtworksModalContentRefetchQuery($sort: CollectionArtworkSorts) {
-      me {
-        ...AddArtworksModalContent_me @arguments(sort: $sort)
+  {
+    direction: "forward",
+    getConnectionFromProps(props) {
+      return props.me.collection?.artworksConnection
+    },
+    getFragmentVariables(prevVars, totalCount) {
+      return { ...prevVars, count: totalCount }
+    },
+    getVariables(_, { count, cursor }, fragmentVariables) {
+      return {
+        sort: fragmentVariables.sort,
+        first: count,
+        after: cursor,
       }
-    }
-  `
+    },
+    query: graphql`
+      query AddArtworksModalContentPaginationQuery(
+        $after: String
+        $first: Int!
+        $sort: CollectionArtworkSorts
+      ) {
+        me {
+          ...AddArtworksModalContent_me
+            @arguments(sort: $sort, first: $first, after: $after)
+        }
+      }
+    `,
+  }
 )
 
 export const AddArtworksModalContentQueryRender: FC<AddArtworksModalContentQueryRenderProps> = props => {
@@ -141,7 +206,7 @@ export const AddArtworksModalContentQueryRender: FC<AddArtworksModalContentQuery
         }
 
         return (
-          <AddArtworksModalContentRefetchContainer
+          <AddArtworksModalContentPaginationContainer
             me={relayProps.me}
             {...props}
           />
@@ -170,8 +235,15 @@ const ContentPlaceholder: FC = () => {
         />
       </Flex>
 
-      <Spacer y={2} />
+      <ArtworksGridPlaceholder />
+    </>
+  )
+}
 
+const ArtworksGridPlaceholder = () => {
+  return (
+    <>
+      <Spacer y={2} />
       <GridColumns>
         {[...Array(9)].map((_, index) => {
           return (
