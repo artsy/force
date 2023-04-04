@@ -47,7 +47,7 @@ describe("SendFeedback", () => {
     ).toBeInTheDocument()
   })
 
-  it("submits the form (not logged-id user)", async () => {
+  it("submits the form (not logged-in user)", async () => {
     render(<SendFeedback />)
 
     const name = screen.getByPlaceholderText("Your name")
@@ -75,7 +75,7 @@ describe("SendFeedback", () => {
     })
   })
 
-  it("submits the form (logged-id user)", async () => {
+  it("submits the form (logged-in user)", async () => {
     render(
       <SystemContextProvider
         user={{ id: "percy-z", email: "user@example.com", name: "Percy Z" }}
