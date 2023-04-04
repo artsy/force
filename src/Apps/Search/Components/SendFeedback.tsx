@@ -48,9 +48,9 @@ export const SendFeedback: FC = () => {
           await submitMutation({
             variables: {
               input: {
-                ...(isLoggedIn
-                  ? { message, test: "1" }
-                  : { name, email, message }),
+                name,
+                email,
+                message,
               },
             },
             rejectIf: res => {

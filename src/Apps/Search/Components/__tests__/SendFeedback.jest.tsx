@@ -25,7 +25,7 @@ describe("SendFeedback", () => {
     ).toBeInTheDocument()
   })
 
-  it("submits the form", async () => {
+  it("submits the form (not logged-id user)", async () => {
     render(<SendFeedback />)
 
     const name = screen.getByPlaceholderText("Your name")
