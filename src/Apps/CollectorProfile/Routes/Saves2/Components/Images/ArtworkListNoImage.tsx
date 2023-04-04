@@ -1,18 +1,14 @@
-import { Flex, FlexProps, NoArtworkIcon } from "@artsy/palette"
+import { FlexProps, NoArtworkIcon } from "@artsy/palette"
+import { ArtworkListImageBorder } from "Apps/CollectorProfile/Routes/Saves2/Components/Images/ArtworkListImageBorder"
 import { FC } from "react"
 
 const NO_ICON_SIZE = 18
 
 export const ArtworkListNoImage: FC<FlexProps> = props => {
   return (
-    <Flex
+    <ArtworkListImageBorder
       bg="black5"
-      border="1px solid"
-      borderColor="black15"
       aria-label="Image placeholder"
-      justifyContent="center"
-      alignItems="center"
-      flexShrink={0}
       {...props}
     >
       <NoArtworkIcon
@@ -20,6 +16,6 @@ export const ArtworkListNoImage: FC<FlexProps> = props => {
         height={NO_ICON_SIZE}
         fill="black60"
       />
-    </Flex>
+    </ArtworkListImageBorder>
   )
 }
