@@ -16,12 +16,14 @@ interface MarketingHeaderProps {
   title: string
   subtitle: string
   src: string
+  accentColor: string
 }
 
 export const MarketingHeader: FC<MarketingHeaderProps> = ({
   title,
   subtitle,
   src,
+  accentColor,
 }) => {
   const height = useFullBleedHeaderHeight()
 
@@ -56,7 +58,7 @@ export const MarketingHeader: FC<MarketingHeaderProps> = ({
               <Text variant="lg">{subtitle}</Text>
             </Column>
 
-            <Column span={7} bg="black60" overflow="hidden">
+            <Column span={7} bg={accentColor} overflow="hidden">
               <Image
                 {...images.desktop}
                 width="100%"
@@ -70,7 +72,7 @@ export const MarketingHeader: FC<MarketingHeaderProps> = ({
       </Media>
 
       <Media at="xs">
-        <FullBleed minHeight={height} bg="black60">
+        <FullBleed height={height} bg={accentColor}>
           <Image
             {...images.mobile}
             width="100%"

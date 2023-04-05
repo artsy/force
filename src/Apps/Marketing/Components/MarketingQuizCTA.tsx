@@ -10,17 +10,18 @@ import {
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { cropped } from "Utils/resized"
+import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
+import { resized } from "Utils/resized"
 import { FC } from "react"
 
 export const MarketingQuizCTA: FC = () => {
-  const image = cropped("https://picsum.photos/seed/ae/2000/2000", {
-    width: 400,
-    height: 300,
-  })
+  const image = resized(
+    "https://files.artsy.net/images/marketing_find_art-quiz.png",
+    { width: 688, height: 1109 }
+  )
 
   return (
-    <FullBleed bg="#6798DD">
+    <FullBleed bg={BRAND_PALETTE.blue}>
       <AppContainer>
         <HorizontalPadding>
           <GridColumns>
@@ -53,10 +54,9 @@ export const MarketingQuizCTA: FC = () => {
               justifyContent="center"
             >
               <ResponsiveBox
-                aspectWidth={3}
-                aspectHeight={4}
+                aspectWidth={688}
+                aspectHeight={1109}
                 maxWidth="100%"
-                bg="black10"
               >
                 <Image
                   {...image}
@@ -64,7 +64,6 @@ export const MarketingQuizCTA: FC = () => {
                   height="100%"
                   style={{ display: "block" }}
                   alt=""
-                  lazyLoad
                 />
               </ResponsiveBox>
             </Column>
