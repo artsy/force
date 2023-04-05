@@ -36,7 +36,7 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
                 "https://files.artsy.net/images/marketing_meet_new-works-for-you.jpg",
               cta: {
                 label: "Start Looking",
-                href: "/todo",
+                href: "/find-the-art-you-want",
               },
             },
             {
@@ -47,7 +47,7 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
                 "https://files.artsy.net/images/marketing_meet_price-database.jpg",
               cta: {
                 label: "Search the Artsy Price Database",
-                href: "/todo",
+                href: "/price-database",
               },
             },
             {
@@ -58,7 +58,7 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
                 "https://files.artsy.net/images/marketing_meet_my-collection.jpg",
               cta: {
                 label: "View My Collection",
-                href: "/todo",
+                href: "/collector-profile/my-collection",
               },
             },
             {
@@ -68,7 +68,7 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
               src: "https://files.artsy.net/images/marketing_meet_consign.jpg",
               cta: {
                 label: "Learn More",
-                href: "/todo",
+                href: "/sell",
               },
             },
           ]}
@@ -81,7 +81,16 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
             </Column>
 
             <Column span={4} start={5}>
-              <Button width="100%">Get the App</Button>
+              <Button
+                width="100%"
+                // @ts-ignore
+                as="a"
+                href="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Get the App
+              </Button>
             </Column>
           </GridColumns>
         </FullBleed>

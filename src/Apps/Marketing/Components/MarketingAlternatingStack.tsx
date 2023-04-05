@@ -9,6 +9,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { FC, Fragment } from "react"
+import { RouterLink } from "System/Router/RouterLink"
 import { cropped } from "Utils/resized"
 
 interface Card {
@@ -30,7 +31,7 @@ export const MarketingAlternatingStack: FC<MarketingAlternatingStackProps> = ({
 }) => {
   return (
     <>
-      <GridColumns gridRowGap={6}>
+      <GridColumns gridRowGap={[2, 6]}>
         {cards.map((card, index) => {
           const order = {
             // Mobile: [[image], [info], [image], [info]]
@@ -46,7 +47,8 @@ export const MarketingAlternatingStack: FC<MarketingAlternatingStackProps> = ({
               <Column
                 span={5}
                 order={order.info}
-                p={4}
+                p={[0, 4]}
+                pb={[4, 0]}
                 display="flex"
                 flexDirection="column"
                 justifyContent="center"
@@ -62,7 +64,13 @@ export const MarketingAlternatingStack: FC<MarketingAlternatingStackProps> = ({
                     <Spacer y={[1, 2, 2, 4]} />
 
                     <Box>
-                      <Button>{card.cta.label}</Button>
+                      <Button
+                        // @ts-ignore
+                        as={RouterLink}
+                        to={card.cta.href}
+                      >
+                        {card.cta.label}
+                      </Button>
                     </Box>
                   </>
                 )}

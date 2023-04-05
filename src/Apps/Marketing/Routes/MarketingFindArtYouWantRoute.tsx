@@ -31,7 +31,7 @@ export const MarketingFindArtYouWantRoute: FC = () => {
           accentColor={BRAND_PALETTE.green}
         />
 
-        <Text variant={["xl", "xxl"]}>
+        <Text variant={["xl", "xl"]}>
           Explore the world’s best art, on Artsy
         </Text>
 
@@ -42,7 +42,7 @@ export const MarketingFindArtYouWantRoute: FC = () => {
         <FullBleed bg="black5" py={[6, 12]}>
           <AppContainer>
             <HorizontalPadding>
-              <Text variant={["xl", "xxl", "xxxl"]}>
+              <Text variant={["xl", "xxl", "xxl"]}>
                 Saves, follows, and alerts
               </Text>
 
@@ -82,7 +82,7 @@ export const MarketingFindArtYouWantRoute: FC = () => {
           ]}
         />
 
-        <Text variant={["xl", "xxl"]}>
+        <Text variant={["lg-display", "xl"]}>
           Explore our most popular collections
         </Text>
 

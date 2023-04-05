@@ -35,13 +35,11 @@ export const MarketingHeader: FC<MarketingHeaderProps> = ({
   return (
     <>
       <Media greaterThan="xs">
-        <FullBleed height={height} position="relative">
+        <FullBleed>
           <GridColumns
-            position="absolute"
-            width="100%"
-            height="100%"
-            top={0}
-            left={0}
+            // Matches homepage hero units
+            height={[300, 400, 500]}
+            overflow="hidden"
             bg="black10"
           >
             <Column
@@ -49,9 +47,10 @@ export const MarketingHeader: FC<MarketingHeaderProps> = ({
               display="flex"
               flexDirection="column"
               justifyContent="center"
-              p={4}
+              px={4}
+              py={[2, 2, 4]}
             >
-              <Text variant={["xl", "xl", "xxl", "xxxl"]}>{title}</Text>
+              <Text variant={["xl", "xl", "xxl", "xxl"]}>{title}</Text>
 
               <Spacer y={[1, 2, 2, 4]} />
 
@@ -83,7 +82,7 @@ export const MarketingHeader: FC<MarketingHeaderProps> = ({
         </FullBleed>
 
         <FullBleed bg="black10">
-          <HorizontalPadding py={4}>
+          <HorizontalPadding py={6}>
             <Text variant="xl">{title}</Text>
 
             <Spacer y={0.5} />

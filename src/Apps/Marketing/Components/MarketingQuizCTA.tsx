@@ -7,6 +7,7 @@ import {
   Spacer,
   Button,
   ResponsiveBox,
+  Box,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
@@ -26,28 +27,34 @@ export const MarketingQuizCTA: FC = () => {
         <HorizontalPadding>
           <GridColumns>
             <Column
-              span={8}
+              span={[12, 8, 9]}
               order={[1, 0]}
-              py={[6, 12]}
+              pt={[0, 6]}
+              pb={[6, 6]}
               textAlign={["center", "left"]}
+              display="flex"
+              flexDirection="column"
+              justifyContent="center"
             >
-              <Text variant={["xl", "xxl", "xxxl"]}>
+              <Text variant={["xl", "xxl", "xxl"]}>
                 Don’t know your taste yet?
               </Text>
 
               <Spacer y={[2, 4]} />
 
-              <Text variant="lg" maxWidth={["100%", "50%"]}>
+              <Text variant="lg" maxWidth={["100%", "75%"]}>
                 Rate artworks and get recommendations tailored to you.
               </Text>
 
               <Spacer y={[2, 4]} />
 
-              <Button>Get Started</Button>
+              <Box>
+                <Button>Get Started</Button>
+              </Box>
             </Column>
 
             <Column
-              span={4}
+              span={[12, 4, 3]}
               order={[0, 1]}
               display="flex"
               alignItems="center"
