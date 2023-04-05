@@ -18,24 +18,26 @@ export const ArtworkListEmptyState: FC<ArtworkListEmptyStateProps> = ({
   return (
     <Flex
       flex={1}
+      flexDirection={["column", "row"]}
       justifyContent="space-between"
       alignItems="center"
       bg="black5"
       p={2}
     >
       <Box>
-        <Text variant="sm-display">{text.title}</Text>
-        <Text variant="sm-display" color="black60">
+        <Text variant={["sm", "sm-display"]}>{text.title}</Text>
+        <Text variant={["sm", "sm-display"]} color="black60">
           {text.description}
         </Text>
       </Box>
 
-      <Spacer x={2} />
+      <Spacer x={[0, 2]} y={[2, 0]} />
 
       <Button
         // @ts-ignore
         as={RouterLink}
-        variant="secondaryBlack"
+        width={["100%", "auto"]}
+        variant="primaryBlack"
         to="/collection/trending-this-week"
       >
         Browse Works
