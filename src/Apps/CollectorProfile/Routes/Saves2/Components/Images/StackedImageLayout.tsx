@@ -67,8 +67,16 @@ const StackImage: FC<StackImageProps> = ({ url, index }) => {
       position="absolute"
       top={OFFSET_BY_INDEX}
       left={OFFSET_BY_INDEX}
+      width={SIZE}
+      height={SIZE}
     >
-      <Image src={image.src} srcSet={image.srcSet} alt="" />
+      <Image
+        src={image.src}
+        srcSet={image.srcSet}
+        width="100%"
+        height="100%"
+        alt=""
+      />
     </ArtworkListImageBorder>
   )
 }
