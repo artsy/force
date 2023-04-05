@@ -10,6 +10,11 @@ import { HttpError } from "found"
 jest.unmock("react-relay")
 jest.mock("System/Router/useRouter")
 jest.mock("found")
+jest.mock("react-head", () => ({
+  Title: ({ children }) => <title>{children}</title>,
+  Meta: () => null,
+  Link: () => null,
+}))
 
 const { renderWithRelay } = setupTestWrapperTL<
   CollectorProfileSaves2Route_Test_Query
@@ -142,6 +147,17 @@ describe("CollectorProfileSaves2Route", () => {
         owner_id: "saved-artwork",
       })
     )
+  })
+
+  it("should set title tag", async () => {
+    renderWithRelay({
+      Me: () => ({
+        allSavesArtworkList,
+        customArtworkLists,
+      }),
+    })
+
+    await waitFor(() => expect(document.title).toBe("Saves | Artsy"))
   })
 
   it("should render 404 for non-existent list", async () => {
