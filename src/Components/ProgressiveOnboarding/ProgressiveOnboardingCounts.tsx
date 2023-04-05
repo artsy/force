@@ -1,4 +1,4 @@
-import { FC, useRef } from "react"
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "System/SystemContext"
@@ -8,9 +8,8 @@ import { ProgressiveOnboardingCounts_me$data } from "__generated__/ProgressiveOn
 export interface WithProgressiveOnboardingCountsProps {
   counts: {
     followedArtists: number
-    initialFollowedArtists: number
-    initialSavedArtworks: number
     savedArtworks: number
+    savedSearches: number
   }
 }
 
@@ -26,20 +25,22 @@ const ProgressiveOnboardingCounts: FC<ProgressiveOnboardingCountsProps> = ({
   children,
   me,
 }) => {
-  const counts = me.counts || { savedArtworks: 0, followedArtists: 0 }
+  const counts = me.counts || {
+    savedArtworks: 0,
+    followedArtists: 0,
+    savedSearches: 0,
+  }
+
   const savedArtworksCount = counts.savedArtworks
   const followedArtistsCount = counts.followedArtists
-
-  const initialSavedArtworksCount = useRef(savedArtworksCount)
-  const initialFollowedArtistsCount = useRef(followedArtistsCount)
+  const savedSearchesCount = counts.savedSearches
 
   return (
     <Component
       counts={{
         followedArtists: followedArtistsCount,
-        initialFollowedArtists: initialFollowedArtistsCount.current,
-        initialSavedArtworks: initialSavedArtworksCount.current,
         savedArtworks: savedArtworksCount,
+        savedSearches: savedSearchesCount,
       }}
     >
       {children}
@@ -55,6 +56,7 @@ const ProgressiveOnboardingCountsFragmentContainer = createFragmentContainer(
         counts {
           followedArtists
           savedArtworks
+          savedSearches
         }
       }
     `,

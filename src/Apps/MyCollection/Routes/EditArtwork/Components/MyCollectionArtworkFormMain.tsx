@@ -170,6 +170,7 @@ export const MyCollectionArtworkFormMain: React.FC<MyCollectionArtworkFormMainPr
               </>
             )}
           </>
+
           <Media at="xs">
             <Flex>
               <Box

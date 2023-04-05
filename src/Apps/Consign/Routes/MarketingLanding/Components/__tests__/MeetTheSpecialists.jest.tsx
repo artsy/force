@@ -4,7 +4,6 @@ import { useSystemContext } from "System/useSystemContext"
 import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
 
 jest.mock("react-tracking")
-// TODO: Remove feature flag mock when feature flag is removed
 jest.mock("System/useSystemContext")
 jest.mock("System/Analytics/AnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
@@ -31,9 +30,6 @@ describe("MeetTheSpecialists", () => {
     })
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       user: { id: "user-id", email: "user-email@artsy.net" },
-      featureFlags: {
-        "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-      },
     }))
   })
 
@@ -72,11 +68,6 @@ describe("MeetTheSpecialists", () => {
     })
 
     it("links out to email provider", () => {
-      ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-        featureFlags: {
-          "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-        },
-      }))
       render(<MeetTheSpecialists />)
 
       const link = screen.getByTestId("get-in-touch-button")

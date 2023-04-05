@@ -18,20 +18,16 @@ export const Default = () => {
         { id: "morris-louis-gamma-delta" },
         {
           id: "morris-louis-gamma-delta",
-          width: [100],
         },
         {
           id: "morris-louis-gamma-delta",
-          width: [400],
         },
         { id: "roni-horn-best-witchcraft-is-geometry" },
         {
           id: "roni-horn-best-witchcraft-is-geometry",
-          width: [100],
         },
         {
           id: "roni-horn-best-witchcraft-is-geometry",
-          width: [400],
         },
         // Very tall + narrow
         { id: "barnett-newman-the-moment-from-four-on-plexiglas" },

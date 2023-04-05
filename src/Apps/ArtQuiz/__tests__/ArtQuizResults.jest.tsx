@@ -43,17 +43,19 @@ describe("ArtQuizResults", () => {
         }),
       })
 
-      expect(screen.getByText("Explore Your Quiz Results")).toBeInTheDocument()
+      expect(
+        screen.getByText("Explore Art We Think You’ll Love")
+      ).toBeInTheDocument()
       expect(
         screen.getByText(
-          "We think you’ll enjoy these works and artists based on your likes. To tailor your recommendations to your art tastes, follow artists and save works you love."
+          "Based on your responses, we think you’ll enjoy these artworks and artists. Keep saving and following to continue tailoring Artsy to you."
         )
       ).toBeInTheDocument()
 
       expect(screen.getByText("Email My Results")).toBeInTheDocument()
       expect(screen.getByText("Works You Liked")).toBeInTheDocument()
-      expect(screen.getByText("Explore Artworks")).toBeInTheDocument()
-      expect(screen.getByText("Explore Artists")).toBeInTheDocument()
+      expect(screen.getByText("Works for You")).toBeInTheDocument()
+      expect(screen.getByText("Artists for You")).toBeInTheDocument()
     })
   })
 })

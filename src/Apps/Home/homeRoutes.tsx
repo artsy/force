@@ -16,9 +16,6 @@ export const homeRoutes: AppRouteConfig[] = [
     },
     query: graphql`
       query homeRoutes_HomeQuery {
-        homePage {
-          ...HomeApp_homePage
-        }
         featuredEventsOrderedSet: orderedSet(id: "529939e2275b245e290004a0") {
           ...HomeApp_featuredEventsOrderedSet
         }

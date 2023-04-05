@@ -22,6 +22,7 @@ export interface ArtworkModel {
   provenance: string
   artworkLocation: string
   postalCode?: string
+  confidentialNotes: string
 }
 
 export interface MyCollectionPhoto {

@@ -549,12 +549,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         color="red100"
         data-test="artaErrorMessage"
       >
-        We need to confirm some details with you before processing this order.
-        Please reach out to{" "}
+        In order to provide a shipping quote, we need some more information from
+        you. Please contact{" "}
         <RouterLink color="red100" to="mailto:orders@artsy.net">
           orders@artsy.net
         </RouterLink>{" "}
-        for assistance.
+        so we can assist you.
       </Text>
     )
   }

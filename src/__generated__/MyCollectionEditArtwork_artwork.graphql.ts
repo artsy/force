@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2c774501ea0760fc5e10a50d098ba9f3>>
+ * @generated SignedSource<<64671becdbc3bce330ce485b1c17de1e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,7 @@ export type MyCollectionEditArtwork_artwork$data = {
     readonly name: string | null;
   } | null;
   readonly category: string | null;
+  readonly confidentialNotes: string | null;
   readonly consignmentSubmission: {
     readonly inProgress: boolean | null;
   } | null;
@@ -421,6 +422,13 @@ return {
     },
     (v3/*: any*/),
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "confidentialNotes",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "MyCollectionArtworkFormMain_artwork"
@@ -431,6 +439,6 @@ return {
 };
 })();
 
-(node as any).hash = "e2f8cf7f6b424c415a82f63130ecb056";
+(node as any).hash = "41b1d5a70445a9a51daa764c80870ac2";
 
 export default node;

@@ -17,10 +17,10 @@ const ProgressiveOnboardingFollowArtist: FC<ProgressiveOnboardingFollowArtistPro
   counts,
   children,
 }) => {
-  const { dismiss, isDismissed, enabled } = useProgressiveOnboarding()
+  const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
 
   const isDisplayable =
-    enabled &&
+    isEnabledFor("follows") &&
     !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST) &&
     counts.followedArtists === 0
 
@@ -36,12 +36,7 @@ const ProgressiveOnboardingFollowArtist: FC<ProgressiveOnboardingFollowArtistPro
     ) {
       dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
     }
-  }, [
-    counts.followedArtists,
-    counts.initialFollowedArtists,
-    dismiss,
-    isDismissed,
-  ])
+  }, [counts.followedArtists, dismiss, isDismissed])
 
   if (!isDisplayable) {
     return <>{children}</>

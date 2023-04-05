@@ -16,7 +16,8 @@ export const FAQSWA: React.FC = () => {
       text={
         <>
           <Text variant={["lg", "xl", "xxl"]} mb={4} textColor="white100">
-            No upfront fees, clear pricing estimates and commission structures.
+            No upfront fees, clear pricing estimates, and competitive commission
+            structures.
           </Text>
           <Text variant={["xs", "sm", "sm"]} mb={[2, 4]} textColor="white100">
             Have more questions?

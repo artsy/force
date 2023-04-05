@@ -3,16 +3,20 @@ import {
   ContextModule,
   SelectedSearchSuggestionQuickNavigationItem,
 } from "@artsy/cohesion"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
   ArtworkIcon,
   AuctionIcon,
   Flex,
   Pill,
   PillProps,
+  Spacer,
   Text,
 } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
+import { SuggestionItemPreview } from "Components/Search/Suggestions/SuggestionItemPreview"
 import * as React from "react"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
@@ -21,6 +25,7 @@ import { RouterLink } from "System/Router/RouterLink"
 interface SuggestionItemProps {
   display: string
   href: string
+  imageUrl?: string
   isHighlighted: boolean
   label: string
   query: string
@@ -40,12 +45,18 @@ export const FirstSuggestionItem: React.FC<SuggestionItemProps> = ({
   return (
     <SuggestionItemLink
       bg={isHighlighted ? "black5" : "white100"}
-      borderBottom="1px solid"
-      borderBottomColor="black10"
+      mt={1}
+      borderTop="1px solid"
+      borderTopColor="black10"
       onClick={handleClick}
       to={href}
     >
-      <Text variant="sm">See full results for &ldquo;{query}&rdquo;</Text>
+      <Flex alignItems="center">
+        <Text variant="sm" mr={1}>
+          See full results for <Highlight>{query}</Highlight>
+        </Text>
+        <ChevronRightIcon />
+      </Flex>
     </SuggestionItemLink>
   )
 }
@@ -94,23 +105,28 @@ const DefaultSuggestion: React.FC<SuggestionItemProps> = ({
   display,
   label,
   query,
+  imageUrl,
 }) => {
   const matches = match(display, query)
   const parts = parse(display, matches)
   const partTags = parts.map(({ highlight, text }, index) =>
-    highlight ? <strong key={index}>{text}</strong> : text
+    highlight ? <Highlight key={index}>{text}</Highlight> : text
   )
 
   return (
-    <>
-      <Text variant="sm" overflowEllipsis>
-        {partTags}
-      </Text>
+    <Flex alignItems="center">
+      <SuggestionItemPreview imageUrl={imageUrl} label={label} />
+      <Spacer x={1} />
+      <Flex flexDirection="column" flex={1} overflow="hidden">
+        <Text variant="sm-display" overflowEllipsis>
+          {partTags}
+        </Text>
 
-      <Text color="black60" variant="xs" overflowEllipsis>
-        {label}
-      </Text>
-    </>
+        <Text color="black60" variant="xs" overflowEllipsis>
+          {label}
+        </Text>
+      </Flex>
+    </Flex>
   )
 }
 
@@ -202,3 +218,7 @@ const tracks = {
     label,
   }),
 }
+
+export const Highlight = styled.strong`
+  color: ${themeGet("colors.blue100")};
+`

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac95b60df0914ad7bc357822f0c59ec2>>
+ * @generated SignedSource<<2def3d61cd6a9c2979af1469960962e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
-export type AuctionResultSorts = "DATE_DESC" | "ESTIMATE_AND_DATE_DESC" | "PRICE_AND_DATE_DESC" | "%future added value";
+export type AuctionResultSorts = "DATE_ASC" | "DATE_DESC" | "ESTIMATE_AND_DATE_DESC" | "PRICE_AND_DATE_DESC" | "%future added value";
 export type AuctionResultsState = "ALL" | "PAST" | "UPCOMING" | "%future added value";
 export type ArtistAuctionResultsQuery$variables = {
   after?: string | null;

@@ -34,16 +34,23 @@ jest.mock("Components/AuthDialog/useAuthDialog", () => ({
 }))
 
 jest.mock(
-  "Components/ProgressiveOnboarding/ProgressiveOnboardingFindFollows",
+  "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind",
   () => ({
-    ProgressiveOnboardingFindFollowsQueryRenderer: ({ children }) => children,
+    ProgressiveOnboardingFollowFindQueryRenderer: ({ children }) => children,
   })
 )
 
 jest.mock(
-  "Components/ProgressiveOnboarding/ProgressiveOnboardingFindSaves",
+  "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind",
   () => ({
-    ProgressiveOnboardingFindSavesQueryRenderer: ({ children }) => children,
+    ProgressiveOnboardingSaveFindQueryRenderer: ({ children }) => children,
+  })
+)
+
+jest.mock(
+  "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind",
+  () => ({
+    ProgressiveOnboardingAlertFindQueryRenderer: ({ children }) => children,
   })
 )
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<845954cb7e9ebe4e5af1a104ae9f77d4>>
+ * @generated SignedSource<<52404741f80e81fed54116e4e48a3e9a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,6 +30,10 @@ export type Review_order$data = {
           } | null> | null;
           readonly internalID: string;
           readonly slug: string;
+        } | null;
+        readonly artworkVersion: {
+          readonly condition_description: string | null;
+          readonly provenance: string | null;
         } | null;
         readonly " $fragmentSpreads": FragmentRefs<"ItemReview_lineItem">;
       } | null;
@@ -209,6 +213,31 @@ return {
                     }
                   ],
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "ArtworkVersion",
+                  "kind": "LinkedField",
+                  "name": "artworkVersion",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "provenance",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "condition_description",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -291,6 +320,6 @@ return {
 };
 })();
 
-(node as any).hash = "8a942ae1c0810a549f305790a2c1049b";
+(node as any).hash = "bef72db09da81130a96281294fc82958";
 
 export default node;

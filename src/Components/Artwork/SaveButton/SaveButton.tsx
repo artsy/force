@@ -73,7 +73,7 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
   contextModule,
 }) => {
   const tracking = useTracking()
-  const isSaved = !!artwork.is_saved
+  const isSaved = !!artwork.isSaved
 
   const { handleSave } = useSaveArtwork({
     isSaved,
@@ -105,7 +105,7 @@ export const SaveButtonFragmentContainer = createFragmentContainer(SaveButton, {
       id
       internalID
       slug
-      is_saved: isSaved
+      isSaved
       title
     }
   `,

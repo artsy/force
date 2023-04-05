@@ -56,6 +56,7 @@ const OrdersReviewOwnerType = OwnerType.ordersReview
 export const ReviewRoute: FC<ReviewProps> = props => {
   const { trackEvent } = useTracking()
   const productId = extractNodes(props.order.lineItems)[0].artwork?.internalID
+  const artworkVersion = extractNodes(props.order.lineItems)[0]?.artworkVersion
 
   const onSubmit = async (setupIntentId?: any) => {
     const submitEvent = {
@@ -464,9 +465,12 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                 order={order}
                 transactionStep="review"
               />
-              {order.source === "private_sale" && order.artworkDetails && (
-                <AdditionalArtworkDetails order={order} />
-              )}
+              {order.source === "private_sale" &&
+                (order.artworkDetails ||
+                  artworkVersion?.provenance ||
+                  artworkVersion?.condition_description) && (
+                  <AdditionalArtworkDetails order={order} />
+                )}
               <BuyerGuarantee
                 contextModule={ContextModule.ordersReview}
                 contextPageOwnerType={OwnerType.ordersReview}
@@ -517,6 +521,10 @@ export const ReviewFragmentContainer = createFragmentContainer(
                 artists {
                   slug
                 }
+              }
+              artworkVersion {
+                provenance
+                condition_description
               }
             }
           }

@@ -107,6 +107,26 @@ describe("ArtistAuctionResultItem", () => {
       expect(screen.getAllByText("Awaiting results")).toHaveLength(2)
     })
 
+    it("renders bought in when the auction result was bought in by the auction house", () => {
+      const lastMonth = new Date().setDate(new Date().getDate() - 1)
+      const lastMonthISO = new Date(lastMonth).toISOString()
+
+      renderWithRelay(
+        {
+          AuctionResult: () => ({
+            ...auctionResult,
+            saleDate: lastMonthISO,
+            boughtIn: true,
+          }),
+        },
+        false
+      )
+
+      expect(screen.getAllByText("Bought In")).toHaveLength(2)
+      expect(screen.queryByText("Awaiting results")).not.toBeInTheDocument()
+    })
+
+
     it("renders price not available when the auction result is over a month with no price", () => {
       renderWithRelay(mockResolver, false)
 

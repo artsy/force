@@ -77,6 +77,10 @@ describe("ShowArtworks", () => {
     const filterWrappers = wrapper.find("FilterExpandable")
     const filters = [
       {
+        label: "Keyword Search",
+        expanded: true,
+      },
+      {
         label: "Artists",
         expanded: true,
       },

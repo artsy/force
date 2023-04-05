@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fb37e68cbefc66e22b0484df477d5c5c>>
+ * @generated SignedSource<<883712793fb5d4bb587dfd795f30013a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -97,7 +97,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": "is_saved",
+            "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "isSaved",
@@ -188,7 +188,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d0a217061726cffedcae9ea835f50e03",
+    "cacheID": "a68ad45e68158047ba9a8c7eaa3ab92b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -213,7 +213,7 @@ return {
         "artwork.date": (v1/*: any*/),
         "artwork.id": (v2/*: any*/),
         "artwork.internalID": (v2/*: any*/),
-        "artwork.is_saved": {
+        "artwork.isSaved": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
@@ -232,7 +232,7 @@ return {
     },
     "name": "SaveArtworkToListsButton_Test_Query",
     "operationKind": "query",
-    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  is_saved: isSaved\n  slug\n  title\n  date\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n}\n"
+    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n}\n"
   }
 };
 })();

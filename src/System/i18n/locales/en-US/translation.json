@@ -21,9 +21,11 @@
     },
     "loadingScreen": {
       "calculatingResults": "Calculating Results…",
-      "resultsComplete": "Results Complete"
+      "findingArt": "Finding art for you...",
+      "resultsComplete": "Results Complete",
+      "resultsReady": "Your results are ready"
     },
-    "title": "Art Taste Quiz",
+    "title": "What’s your art taste?",
     "results": {
       "emailButton": "Email My Results",
       "emailSuccess": "Results sent to {{email}}",
@@ -31,19 +33,19 @@
         "title": "Explore Trending Collections and Artists",
         "subtitle": "There are almost 2 million artworks on Artsy—keep exploring to find something you love."
       },
-      "title": "Explore Your Quiz Results",
-      "subtitle": "We think you’ll enjoy these works and artists based on your likes. To tailor your recommendations to your art tastes, follow artists and save works you love.",
+      "title": "Explore Art We Think You’ll Love",
+      "subtitle": "Based on your responses, we think you’ll enjoy these artworks and artists. Keep saving and following to continue tailoring Artsy to you.",
       "tabs": {
         "worksYouLiked": "Works You Liked",
         "recommendedCollections": "Explore Collections",
-        "recommendedArtworks": "Explore Artworks",
-        "recommendedArtists": "Explore Artists"
+        "recommendedArtworks": "Works for You",
+        "recommendedArtists": "Artists for You"
       }
     },
     "welcomeScreen": {
-      "subtitle1": "See more of what you love.",
-      "subtitle2": "Rate artworks and get recommendations tailored to your art taste.",
-      "getStartedButton": "Start the Quiz",
+      "subtitle1": "Let us be your art advisor.",
+      "subtitle2": "Rate artworks and get recommendations tailored to you.",
+      "getStartedButton": "Get Started",
       "skipButton": "Skip"
     }
   },
@@ -107,7 +109,7 @@
   },
   "collectorSaves": {
     "addArtworksModal": {
-      "modalTitle": "{{value}} created.\nAdd saved works to the list.",
+      "modalTitle": "{{value}} created. Add saved works to the list.",
       "artworksSelected_one": "{{count}} artwork selected",
       "artworksSelected_other": "{{count}} artworks selected",
       "artworksCount_one": "{{count}} Artwork:",
@@ -117,8 +119,8 @@
       "artworkWithCount_one": "{{count}} Artwork",
       "artworkWithCount_other": "{{count}} Artworks"
     },
-    "savesHeader": {
-      "listCreated": "List Created",
+    "artworkListsHeader": {
+      "listCreated": "{{listName}} Created",
       "savedArtworks": "Saved Artworks",
       "curateYourList": "Curate your own lists of the works you love",
       "createNewListButton": "Create New List"
@@ -142,24 +144,33 @@
         "viewSavesButton": "View Saves"
       }
     },
-    "saveArtworkToListsButton": {
-      "artworkSavedToast": {
-        "message": "Artwork saved",
-        "button": "Add to a List"
-      },
-      "artworkRemovedToast": {
-        "message": "Removed from All Saves"
+    "saveArtworkToLists": {
+      "toast": {
+        "artworkSaved": {
+          "message": {
+            "forNonAuctionArtwork": "Artwork saved",
+            "forAuctionArtwork": "Watch lot saved"
+          },
+          "button": "Add to a List"
+        },
+        "artworkRemoved": {
+          "message": "Removed from All Saves"
+        }
       }
     },
-    "selectedListsForArtwork": {
-      "createNewListButton": "Create New List",
-      "recentlyAddedList": {
-        "title": "List created",
-        "message": "Artwork has been added to \"{{name}}\""
+    "selectArtworkLists": {
+      "header": {
+        "createNewListButton": "Create New List",
+        "recentlyAddedList": {
+          "title": "List created",
+          "message": "Artwork has been added to \"{{name}}\""
+        }
       },
-      "listsCount_one": "{{count}} list selected",
-      "listsCount_other": "{{count}} lists selected",
-      "saveButton": "Save"
+      "footer": {
+        "listsCount_one": "{{count}} list selected",
+        "listsCount_other": "{{count}} lists selected",
+        "saveButton": "Save"
+      }
     },
     "contextualMenu": {
       "edit": "Edit List",

@@ -105,7 +105,7 @@ describe("IdentityVerification route", () => {
       const wrapper = getWrapper()
       const page = new IdentityVerificationAppTestPage(wrapper)
 
-      expect(page.text()).toContain("Artsy identity verification")
+      expect(page.text()).toContain("Artsy Identity Verification")
     })
 
     describe("user enters verification flow", () => {

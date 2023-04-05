@@ -6,8 +6,8 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
 import { useTracking } from "react-tracking"
 import { ConfirmationScreenComponent } from "Components/ConfirmationScreenComponent"
-import { SoldRecentlyOnArtsyQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/SoldRecentlyOnArtsy"
-import { FAQ } from "Apps/Consign/Routes/MarketingLanding/Components/FAQ"
+import { FAQ } from "Apps/Consign/Routes/SubmissionFlow/FAQ/FAQ"
+import { SoldRecentlyOnArtsyQueryRenderer } from "Apps/Consign/Routes/SubmissionFlow/SoldRecentlyOnArtsy"
 
 export const ThankYou: React.FC = () => {
   const { user, isLoggedIn } = useSystemContext()
@@ -42,7 +42,7 @@ export const ThankYou: React.FC = () => {
           customSubtitle={
             <>
               <Text>
-                We will email you within 1-3 days to confirm if your artwork has
+                We will email you within 3-5 days to confirm if your artwork has
                 been accepted or not. In the meantime your submission will
                 appear in the feature, My Collection.
               </Text>
@@ -59,7 +59,7 @@ export const ThankYou: React.FC = () => {
           customSubtitle={
             <>
               <Text>
-                We’ll email you within 1–3 business days to let you know the
+                We’ll email you within 3-5 business days to let you know the
                 status of your submission.
               </Text>
               <Text mt={2}>

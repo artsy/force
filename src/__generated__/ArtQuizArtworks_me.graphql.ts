@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8fbfadb152f529dae898124e21e32265>>
+ * @generated SignedSource<<1c3e6c8e739c10de7000f39d3eb91ae7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,21 +17,12 @@ export type ArtQuizArtworks_me$data = {
       readonly edges: ReadonlyArray<{
         readonly interactedAt: string | null;
         readonly node: {
-          readonly image: {
-            readonly resized: {
-              readonly height: number | null;
-              readonly src: string;
-              readonly srcSet: string;
-              readonly width: number | null;
-            } | null;
-          } | null;
           readonly internalID: string;
           readonly isDisliked: boolean;
           readonly isSaved: boolean | null;
           readonly slug: string;
-          readonly title: string | null;
+          readonly " $fragmentSpreads": FragmentRefs<"ArtQuizArtworksCard_artwork">;
         } | null;
-        readonly position: number;
       } | null> | null;
     } | null;
   };
@@ -95,18 +86,16 @@ const node: ReaderFragment = {
                 {
                   "alias": null,
                   "args": null,
-                  "kind": "ScalarField",
-                  "name": "position",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
                   "concreteType": "Artwork",
                   "kind": "LinkedField",
                   "name": "node",
                   "plural": false,
                   "selections": [
+                    {
+                      "args": null,
+                      "kind": "FragmentSpread",
+                      "name": "ArtQuizArtworksCard_artwork"
+                    },
                     {
                       "alias": null,
                       "args": null,
@@ -117,71 +106,8 @@ const node: ReaderFragment = {
                     {
                       "alias": null,
                       "args": null,
-                      "concreteType": "Image",
-                      "kind": "LinkedField",
-                      "name": "image",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": [
-                            {
-                              "kind": "Literal",
-                              "name": "height",
-                              "value": 900
-                            },
-                            {
-                              "kind": "Literal",
-                              "name": "version",
-                              "value": [
-                                "normalized",
-                                "larger",
-                                "large"
-                              ]
-                            },
-                            {
-                              "kind": "Literal",
-                              "name": "width",
-                              "value": 900
-                            }
-                          ],
-                          "concreteType": "ResizedImageUrl",
-                          "kind": "LinkedField",
-                          "name": "resized",
-                          "plural": false,
-                          "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "src",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "srcSet",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "width",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "height",
-                              "storageKey": null
-                            }
-                          ],
-                          "storageKey": "resized(height:900,version:[\"normalized\",\"larger\",\"large\"],width:900)"
-                        }
-                      ],
+                      "kind": "ScalarField",
+                      "name": "slug",
                       "storageKey": null
                     },
                     {
@@ -196,20 +122,6 @@ const node: ReaderFragment = {
                       "args": null,
                       "kind": "ScalarField",
                       "name": "isSaved",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "slug",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "title",
                       "storageKey": null
                     }
                   ],
@@ -229,6 +141,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2c1459d1f5884b942c8ebd3dbaa9a1b3";
+(node as any).hash = "ab176323e68d5d2dd3e855e7a91304c6";
 
 export default node;

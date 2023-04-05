@@ -48,7 +48,7 @@ const MarketingLandingApp = loadable(
 const FAQApp = loadable(
   () =>
     import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/MarketingLanding/FAQApp"
+      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/FAQ/FAQApp"
     ),
   {
     resolveComponent: component => component.FAQApp,

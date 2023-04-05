@@ -20,7 +20,7 @@ const InsightsAuctionResults: React.FC<InsightsAuctionResultsProps> = ({
   return (
     <>
       <Text variant={["sm-display", "md"]} textAlign="left">
-        Recently Sold at Auctions
+        Recently Sold at Auction
       </Text>
 
       <Spacer y={2} />

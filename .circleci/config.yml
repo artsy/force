@@ -6,7 +6,7 @@ orbs:
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@4.12.1
-  yarn: artsy/yarn@6.4.0
+  yarn: artsy/yarn@6.5.0
 
 jobs:
   validate_production_schema:
@@ -109,9 +109,12 @@ jobs:
       - run:
           name: "Create or update review app"
           command: |
+            set -x
             review_app_name=$(echo $CIRCLE_BRANCH | sed 's/review-app-//')
             kubectl config use-context staging
-            if $(kubectl get namespace | grep -qi $review_app_name); then
+            namespaces=$(kubectl get namespace)
+            echo
+            if echo "$namespaces" | grep -qi "$review_app_name"; then
               ./scripts/update_review_app.sh $review_app_name
             else
               ./scripts/build_review_app.sh $review_app_name

@@ -7,11 +7,13 @@ import {
   GridColumns,
   Column,
   FullBleed,
+  Flex,
 } from "@artsy/palette"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { useWindowSize } from "Utils/Hooks/useWindowSize"
 
 export type StepsWithImageBlackDataType = {
   src: string
@@ -23,20 +25,21 @@ export type StepsWithImageBlackDataType = {
 }
 
 const IMAGE_WIDTH = 600
+const BIG_IMAGE_HEIGHT = 575
 
 const waysWeSellImage1 = resized(
-  "https://files.artsy.net/images/ways-we-sell-auctions-swa-landing-page.jpg",
-  { width: IMAGE_WIDTH, height: 392, quality: 100 }
+  "https://files.artsy.net/images/ways-we-sell-auctions.jpg",
+  { width: IMAGE_WIDTH, height: 415, quality: 100 }
 )
 
 const waysWeSellImage2 = resized(
-  "https://files.artsy.net/images/ways-we-sell-privat-sales-swa-landing-page.jpg",
-  { width: IMAGE_WIDTH, height: 317, quality: 100 }
+  "https://files.artsy.net/images/ways-we-sell-private-sales.jpg",
+  { width: IMAGE_WIDTH, height: BIG_IMAGE_HEIGHT, quality: 100 }
 )
 
 const waysWeSellImage3 = resized(
-  "https://files.artsy.net/images/ways-we-sell-online-storefront-swa-landing-page.jpg",
-  { width: IMAGE_WIDTH, height: 358, quality: 100 }
+  "https://files.artsy.net/images/ways-we-sell-online-storefront.jpg",
+  { width: IMAGE_WIDTH, height: 344, quality: 100 }
 )
 
 const data: StepsWithImageBlackDataType[] = [
@@ -95,34 +98,61 @@ const ShelfItem: React.FC<StepsWithImageBlackDataType> = ({
   title,
   text,
   srcSet,
-}) => (
-  <>
-    <Box maxWidth="100%" bg="black10" mb={[1, 2]}>
-      <Image
-        src={src}
-        srcSet={srcSet}
-        width="100%"
-        height="100%"
-        lazyLoad
-        alt={`${title} image`}
-        style={{
-          display: "block",
-        }}
-      />
-    </Box>
-    {title && (
-      <Text mb={[0.5, 1]} variant={["md", "lg-display", "xl"]} color="white100">
-        {title}
-      </Text>
-    )}
+}) => {
+  const { width } = useWindowSize()
 
-    {text && (
-      <Text variant={["xs", "sm"]} color="white100">
-        {text}
-      </Text>
-    )}
-  </>
-)
+  const aspectRatio = BIG_IMAGE_HEIGHT / IMAGE_WIDTH
+
+  // calculating the width of the image contailer
+  // (screen width - HorizontalPadding - px of the parent - gridColumnGap) / 3
+  const collumnHeightMediumcreen =
+    ((width - 20 * 2 - 20 * 2 - 20 * 2) / 3) * aspectRatio
+  const collumnHeightBigScreen =
+    ((width - 40 * 2 - 40 * 2 - 40 * 2) / 3) * aspectRatio
+
+  return (
+    <>
+      <Box
+        maxWidth="100%"
+        bg="black100"
+        mb={[1, 2]}
+        height={["auto", collumnHeightMediumcreen, collumnHeightBigScreen]}
+        maxHeight={BIG_IMAGE_HEIGHT}
+      >
+        <Flex height="100%" alignItems="flex-end">
+          <Image
+            src={src}
+            srcSet={srcSet}
+            width="100%"
+            height="auto"
+            lazyLoad
+            alt={`${title} image`}
+            style={{
+              display: "flex",
+              alignSelf: "flex-end",
+            }}
+          />
+        </Flex>
+      </Box>
+
+      {title && (
+        <Text
+          mb={[0.5, 1]}
+          variant={["md", "lg-display", "xl"]}
+          color="white100"
+        >
+          {title}
+        </Text>
+      )}
+
+      {text && (
+        <Text variant={["xs", "sm"]} color="white100">
+          {text}
+        </Text>
+      )}
+    </>
+  )
+}
 
 const DesctopLayout: React.FC = () => {
   return (
@@ -136,7 +166,7 @@ const DesctopLayout: React.FC = () => {
               data-test="artworkShelfArtwork"
               display="flex"
               flexDirection="column"
-              justifyContent="flex-end"
+              justifyContent={["flex-end", "flex-start", "flex-start"]}
             >
               <ShelfItem
                 src={step.src}

@@ -33,10 +33,8 @@ export const artistSeriesRoutes: AppRouteConfig[] = [
   },
 ]
 
-function initializeVariablesWithFilterState({ slug }, { context, location }) {
+function initializeVariablesWithFilterState({ slug }, { location }) {
   const initialFilterState = getInitialFilterState(location?.query ?? {})
-  const { featureFlags = {} } = context
-  const newPriceFilterFlag = featureFlags["new_price_filter"]
 
   const aggregations = [
     "MEDIUM",
@@ -45,12 +43,8 @@ function initializeVariablesWithFilterState({ slug }, { context, location }) {
     "PARTNER",
     "LOCATION_CITY",
     "MATERIALS_TERMS",
+    "SIMPLE_PRICE_HISTOGRAM",
   ]
-
-  // Fetch histogram data for price filter
-  if (newPriceFilterFlag?.flagEnabled) {
-    aggregations.push("SIMPLE_PRICE_HISTOGRAM")
-  }
 
   const input = {
     sort: "-decayed_merch",

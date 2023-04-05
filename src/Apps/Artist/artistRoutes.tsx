@@ -82,6 +82,17 @@ const ConsignRoute = loadable(
   }
 )
 
+const ArtistHeader2Route = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "artistBundle" */ "./Routes/ArtistHeader2Route"
+    ),
+  {
+    resolveComponent: component =>
+      component.ArtistHeader2RouteFragmentContainer,
+  }
+)
+
 export const artistRoutes: AppRouteConfig[] = [
   {
     path: "/artist/:artistID",
@@ -257,6 +268,21 @@ export const artistRoutes: AppRouteConfig[] = [
           query artistRoutes_ShowsQuery($artistID: String!) {
             viewer {
               ...ArtistShowsRoute_viewer
+            }
+          }
+        `,
+      },
+
+      {
+        path: "artist-header-2",
+        getComponent: () => ArtistHeader2Route,
+        onClientSideRender: () => {
+          ArtistHeader2Route.preload()
+        },
+        query: graphql`
+          query artistRoutes_ArtistHeader2Query($artistID: String!) {
+            artist(id: $artistID) {
+              ...ArtistHeader2Route_artist
             }
           }
         `,

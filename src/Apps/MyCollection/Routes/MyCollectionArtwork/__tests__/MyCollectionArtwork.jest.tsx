@@ -94,7 +94,7 @@ describe("MyCollectionArtwork", () => {
   })
 
   describe("Request Price Estimate section", () => {
-    describe("with P1 artist", () => {
+    describe("when the price estimate is requestable", () => {
       it("the section is rendered", () => {
         const { renderWithRelay } = getWrapper("lg")
         renderWithRelay(mockResolversWithInsightsWithoutSubmission)
@@ -108,20 +108,23 @@ describe("MyCollectionArtwork", () => {
           `/collector-profile/my-collection/artwork/63035a6b41808b000c7e2933/price-estimate`
         )
       })
+    })
 
-      describe("when artist was already submitted", () => {
-        it("the section is not rendered", () => {
-          const { renderWithRelay } = getWrapper("lg")
-          renderWithRelay(mockResolversWithInsights)
+    describe("when the price estimate has been already requested", () => {
+      it("the request confirmation is rendered", () => {
+        const { renderWithRelay } = getWrapper("lg")
+        renderWithRelay(mockResolversWithPriceEstimateRequest)
 
-          expect(
-            screen.queryByText("Request a Price Estimate")
-          ).not.toBeInTheDocument()
-        })
+        expect(
+          screen.queryByText("Request a Price Estimate")
+        ).not.toBeInTheDocument()
+        expect(
+          screen.getByText("Price estimate request sent")
+        ).toBeInTheDocument()
       })
     })
 
-    describe("with non P1 artist", () => {
+    describe("when the price estimate is not requestable", () => {
       it("the section is not rendered", () => {
         const { renderWithRelay } = getWrapper("lg")
         renderWithRelay(mockResolversNotP1)
@@ -159,12 +162,8 @@ const mockResolversWithInsightsWithoutSubmission = {
     date: "2007",
     artistNames: "Banksy",
     hasMarketPriceInsights: true,
+    isPriceEstimateRequestable: true,
     consignmentSubmission: null,
-    artist: {
-      targetSupply: {
-        isP1: true,
-      },
-    },
   }),
 }
 
@@ -201,5 +200,17 @@ const mockResolversNotP1 = {
         isP1: false,
       },
     },
+  }),
+}
+
+const mockResolversWithPriceEstimateRequest = {
+  Artwork: () => ({
+    internalID: "61efced8a47135000c7b4c31",
+    title: "Anima",
+    date: "2020",
+    artistNames: "MAria",
+    hasMarketPriceInsights: false,
+    hasPriceEstimateRequest: true,
+    consignmentSubmission: null,
   }),
 }

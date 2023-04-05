@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e2c0d80722a901e9b0d118334bbdab2>>
+ * @generated SignedSource<<c94a954c60b0a468c3d40981b437b510>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,17 +17,9 @@ export type ArtworkActionsSaveButton_artwork$data = {
   readonly sale: {
     readonly isAuction: boolean | null;
     readonly isClosed: boolean | null;
-    readonly isLiveOpen: boolean | null;
-    readonly isRegistrationClosed: boolean | null;
-    readonly liveStartAt: string | null;
-    readonly registrationStatus: {
-      readonly qualifiedForBidding: boolean | null;
-    } | null;
-    readonly requireIdentityVerification: boolean | null;
   } | null;
   readonly slug: string;
-  readonly title: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionRegistrationPanel_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkActionsSaveButtonV2_artwork" | "ArtworkActionsWatchLotButton_artwork" | "ArtworkAuctionRegistrationPanel_artwork">;
   readonly " $fragmentType": "ArtworkActionsSaveButton_artwork";
 };
 export type ArtworkActionsSaveButton_artwork$key = {
@@ -45,14 +37,14 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "internalID",
+      "name": "id",
       "storageKey": null
     },
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "id",
+      "name": "internalID",
       "storageKey": null
     },
     {
@@ -66,7 +58,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "title",
+      "name": "isSaved",
       "storageKey": null
     },
     {
@@ -90,73 +82,30 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "isClosed",
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isLiveOpen",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isRegistrationClosed",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "requireIdentityVerification",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "liveStartAt",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Bidder",
-          "kind": "LinkedField",
-          "name": "registrationStatus",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "qualifiedForBidding",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
         }
       ],
       "storageKey": null
     },
     {
-      "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "isSaved",
-      "storageKey": null
+      "kind": "FragmentSpread",
+      "name": "ArtworkActionsWatchLotButton_artwork"
     },
     {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkAuctionRegistrationPanel_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkActionsSaveButtonV2_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "9177039c8ed31bc810f7568c56ddc54f";
+(node as any).hash = "0e3b8c0c932990c00d680379298e5407";
 
 export default node;

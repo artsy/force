@@ -1,4 +1,13 @@
-import { Column, GridColumns, Join, Spacer } from "@artsy/palette"
+import {
+  Column,
+  GridColumns,
+  Join,
+  Spacer,
+  Flex,
+  Spinner,
+  Text,
+} from "@artsy/palette"
+import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
 import { ArtworkApp_artwork$data } from "__generated__/ArtworkApp_artwork.graphql"
@@ -77,6 +86,8 @@ const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
 
 export const ArtworkApp: React.FC<Props> = props => {
   const { artwork, me, referrer, tracking, shouldTrackPageView } = props
+  const { match } = useRouter()
+
   const showUnlistedArtworkBanner =
     artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
 
@@ -175,6 +186,22 @@ export const ArtworkApp: React.FC<Props> = props => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [shouldTrackPageView])
+
+  if (match?.location?.query?.creating_order) {
+    return (
+      <>
+        <Spacer y={6} />
+        <Flex flexDirection="column" alignItems="center" mb={12} mt={12}>
+          <SpinnerContainer>
+            <Spinner size="large" color="blue100" />
+          </SpinnerContainer>
+          <Text variant="md" color="blue100">
+            Loading...
+          </Text>
+        </Flex>
+      </>
+    )
+  }
 
   return (
     <>
@@ -295,6 +322,12 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
     </AnalyticsContext.Provider>
   )
 }
+
+const SpinnerContainer = styled.div`
+  width: 100%;
+  height: 100px;
+  position: relative;
+`
 
 export const ArtworkAppFragmentContainer = createFragmentContainer(
   withSystemContext(TrackingWrappedArtworkApp),

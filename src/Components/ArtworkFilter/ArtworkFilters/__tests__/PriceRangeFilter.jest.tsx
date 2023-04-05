@@ -1,23 +1,34 @@
-import { Input } from "@artsy/palette"
-import { mount } from "enzyme"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { fireEvent, render, screen } from "@testing-library/react"
 import {
+  Aggregations,
   ArtworkFilterContextProps,
   ArtworkFilterContextProvider,
   useArtworkFilterContext,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { PriceRangeFilter, PriceRangeFilterProps } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { getENV } from "Utils/getENV"
+import {
+  convertToFilterFormatRange,
+  getBarsFromAggregations,
+  getValue,
+  parseRange,
+  PriceRangeFilter,
+  PriceRangeFilterProps,
+} from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
+jest.mock("Utils/getENV")
 
-describe("PriceRangeFilter", () => {
+describe("PriceRangeFilterNew", () => {
   let context: ArtworkFilterContextProps
 
-  const getWrapper = (props: PriceRangeFilterProps = { expanded: true }) => {
-    return mount(
-      <ArtworkFilterContextProvider>
+  const renderPriceRangeFilter = (
+    props: PriceRangeFilterProps = { expanded: true },
+    contextProps = {}
+  ) => {
+    return render(
+      <ArtworkFilterContextProvider {...contextProps}>
         <PriceRangeFilterTest {...props} />
       </ArtworkFilterContextProvider>
     )
@@ -28,144 +39,273 @@ describe("PriceRangeFilter", () => {
     return <PriceRangeFilter {...props} />
   }
 
-  it("renders the options", () => {
-    const wrapper = getWrapper()
-    const options = wrapper.find("Radio")
+  const mockGetENV = getENV as jest.Mock
 
-    expect(options).toHaveLength(7)
+  beforeAll(() => {
+    mockGetENV.mockImplementation(() => {
+      return true
+    })
   })
 
-  it("updates the filter on select", async () => {
-    const wrapper = getWrapper()
-    const option = wrapper
-      .find("Radio")
-      .filterWhere(n => n.text() === "$25K – $50K")
+  // FIXME: SWC_COMPILER_MIGRATION
+  it.skip("updates the filter and min slider when the min custom input is changed", () => {
+    renderPriceRangeFilter()
 
-    option.simulate("click")
-    await flushPromiseQueue()
+    const minSliderHandle = screen.queryAllByLabelText("Min price")[1]
 
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    expect(context.filters.priceRange).toEqual("25000-50000")
+    fireEvent.input(minSliderHandle, {
+      target: { valueAsNumber: 10000 },
+    })
+
+    expect(context.filters?.priceRange).toEqual("10000-*")
+    expect(minSliderHandle).toHaveValue("10000")
   })
 
-  it("toggles the custom input", async () => {
-    const wrapper = getWrapper()
+  // FIXME: SWC_COMPILER_MIGRATION
+  it.skip("updates the filter and max slider when the max custom input is changed", () => {
+    renderPriceRangeFilter()
 
-    expect(wrapper.find(Input)).toHaveLength(0)
+    const maxSliderHandle = screen.queryAllByLabelText("Max price")[1]
 
-    wrapper.find("Radio").last().simulate("click")
-    await flushPromiseQueue()
-    wrapper.update()
+    fireEvent.input(maxSliderHandle, {
+      target: { valueAsNumber: 35000 },
+    })
 
-    expect(wrapper.find(Input)).toHaveLength(2)
-    expect(wrapper.find("Button").last().text()).toEqual("Set price")
+    expect(context.filters?.priceRange).toEqual("*-35000")
+    expect(maxSliderHandle).toHaveValue("35000")
   })
 
-  it("updates the input values when the radio selected option updates", async () => {
-    const wrapper = getWrapper()
-    const options = wrapper.find("Radio")
+  // FIXME: SWC_COMPILER_MIGRATION
+  it.skip("updates the filter and sliders when the custom inputs are changed", () => {
+    renderPriceRangeFilter()
 
-    const showCustomPrice = async () => {
-      options.last().simulate("click")
-      await flushPromiseQueue()
-      wrapper.update()
-    }
+    const minSliderHandle = screen.queryAllByLabelText("Min price")[1]
+    const maxSliderHandle = screen.queryAllByLabelText("Max price")[1]
 
-    await showCustomPrice()
+    fireEvent.input(minSliderHandle, {
+      target: { valueAsNumber: 10000 },
+    })
+    fireEvent.input(maxSliderHandle, {
+      target: { valueAsNumber: 35000 },
+    })
 
-    expect(wrapper.find(Input).first().html()).toContain('value=""')
-    expect(wrapper.find(Input).last().html()).toContain('value=""')
-
-    options.first().simulate("click")
-    await showCustomPrice()
-
-    expect(wrapper.find(Input).first().html()).toContain('value="50000"')
-    expect(wrapper.find(Input).last().html()).toContain('value=""')
-
-    options.at(1).simulate("click")
-    await showCustomPrice()
-
-    expect(wrapper.find(Input).first().html()).toContain('value="25000"')
-    expect(wrapper.find(Input).last().html()).toContain('value="50000"')
+    expect(context.filters?.priceRange).toEqual("10000-35000")
+    expect(minSliderHandle).toHaveValue("10000")
+    expect(maxSliderHandle).toHaveValue("35000")
   })
 
-  it("updates the filter when the custom input is applied", async () => {
-    const wrapper = getWrapper()
+  // FIXME: SWC_COMPILER_MIGRATION
+  it.skip("do not apply price restrictions when the custom inputs are empty", () => {
+    renderPriceRangeFilter()
 
-    wrapper.find("Radio").last().simulate("click")
-    await flushPromiseQueue()
-    wrapper.update()
+    fireEvent.input(screen.queryAllByLabelText("Min price")[1], {
+      target: { valueAsNumber: 10000 },
+    })
+    fireEvent.input(screen.queryAllByLabelText("Max price")[1], {
+      target: { valueAsNumber: 35000 },
+    })
 
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    wrapper.find(Input).first().find("input").prop("onChange")({
-      currentTarget: { value: "400" },
-    } as any)
+    expect(context.filters?.priceRange).toEqual("10000-35000")
 
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    wrapper.find(Input).last().find("input").prop("onChange")({
-      currentTarget: { value: "7500" },
-    } as any)
+    fireEvent.input(screen.queryAllByLabelText("Min price")[1], {
+      target: { valueAsNumber: null },
+    })
+    fireEvent.input(screen.queryAllByLabelText("Max price")[1], {
+      target: { valueAsNumber: null },
+    })
 
-    wrapper.update()
-    wrapper.find("Button").last().simulate("click")
-
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    expect(context.filters.priceRange).toEqual("400-7500")
+    expect(context.filters?.priceRange).toEqual("*-0")
   })
 
-  it("deleting the min sets a wildcard value", async () => {
-    const wrapper = getWrapper()
+  it("should display histogram when some bars are filled", () => {
+    renderPriceRangeFilter(undefined, { aggregations })
 
-    wrapper.find("Radio").last().simulate("click")
-    await flushPromiseQueue()
-    wrapper.update()
+    expect(screen.getByTestId("PriceFilterHistogram")).toBeInTheDocument()
+  })
 
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    wrapper.find(Input).first().find("input").prop("onChange")({
-      currentTarget: { value: "400" },
-    } as any)
+  it("should hide histogram when all bars are empty", () => {
+    const emptyBarsAggregations: Aggregations = [
+      {
+        slice: "SIMPLE_PRICE_HISTOGRAM",
+        counts: [
+          {
+            name: "0",
+            value: "0",
+            count: 0,
+          },
+          {
+            name: "50000",
+            value: "50000",
+            count: 0,
+          },
+          {
+            name: "2000",
+            value: "2000",
+            count: 0,
+          },
+        ],
+      },
+    ]
+    renderPriceRangeFilter(undefined, { aggregations: emptyBarsAggregations })
 
-    wrapper.update()
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    wrapper.find("Button").last().prop("onClick")({} as any)
-
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    expect(context.filters.priceRange).toEqual("400-*")
-
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    wrapper.find(Input).first().find("input").prop("onChange")({
-      currentTarget: { value: "" },
-    } as any)
-
-    wrapper.update()
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    wrapper.find("Button").last().prop("onClick")({} as any)
-
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    expect(context.filters.priceRange).toEqual("*-*")
+    expect(screen.queryByTestId("PriceFilterHistogram")).not.toBeInTheDocument()
   })
 
   describe("the `expanded` prop", () => {
     it("hides the filter controls when not set", () => {
-      const wrapper = getWrapper({})
+      renderPriceRangeFilter({})
 
-      expect(wrapper.find("RadioGroup").length).toBe(0)
+      const minSliderHandle = screen.queryByLabelText("Min price")
+      const maxSliderHandle = screen.queryByLabelText("Min price")
+
+      expect(screen.queryByLabelText("Min price")).not.toBeInTheDocument()
+      expect(screen.queryByLabelText("Max price")).not.toBeInTheDocument()
+
+      expect(minSliderHandle).not.toBeInTheDocument()
+      expect(maxSliderHandle).not.toBeInTheDocument()
     })
 
     it("hides the filter controls when `false`", () => {
-      const wrapper = getWrapper({
+      renderPriceRangeFilter({
         expanded: false,
       })
 
-      expect(wrapper.find("RadioGroup").length).toBe(0)
+      const minSliderHandle = screen.queryByLabelText("Min price")
+      const maxSliderHandle = screen.queryByLabelText("Min price")
+
+      expect(screen.queryByLabelText("Min price")).not.toBeInTheDocument()
+      expect(screen.queryByLabelText("Max price")).not.toBeInTheDocument()
+
+      expect(minSliderHandle).not.toBeInTheDocument()
+      expect(maxSliderHandle).not.toBeInTheDocument()
     })
 
     it("shows the filter controls when `true`", () => {
-      const wrapper = getWrapper({
+      renderPriceRangeFilter({
         expanded: true,
       })
 
-      expect(wrapper.find("RadioGroup").length).not.toBe(0)
+      const minSliderHandle = screen.queryAllByLabelText("Min price")[1]
+      const maxSliderHandle = screen.queryAllByLabelText("Min price")[1]
+
+      expect(screen.queryAllByLabelText("Min price")[0]).toBeInTheDocument()
+      expect(screen.queryAllByLabelText("Max price")[0]).toBeInTheDocument()
+
+      expect(minSliderHandle).toBeInTheDocument()
+      expect(maxSliderHandle).toBeInTheDocument()
     })
   })
 })
+
+describe("convertToFilterFormatRange", () => {
+  it("should return passed values", () => {
+    expect(convertToFilterFormatRange([10, 20])).toEqual([10, 20])
+    expect(convertToFilterFormatRange([1000, 2000])).toEqual([1000, 2000])
+    expect(convertToFilterFormatRange([35000, 60000])).toEqual([35000, 60000])
+  })
+
+  it("should return default range value for min if min slider value is passed", () => {
+    expect(convertToFilterFormatRange([0, 20])).toEqual(["*", 20])
+  })
+
+  it("should return default range value for max if max slider value is passed", () => {
+    expect(convertToFilterFormatRange([10, 50000])).toEqual([10, "*"])
+  })
+
+  it("should return default range value if min and max slider values are passed", () => {
+    expect(convertToFilterFormatRange([0, 50000])).toEqual(["*", "*"])
+  })
+})
+
+describe("getValue", () => {
+  it("should return passed values", () => {
+    expect(getValue(10)).toBe(10)
+    expect(getValue(15000)).toBe(15000)
+    expect(getValue(60000)).toBe(60000)
+  })
+
+  it("should return empty string when default range value is passed", () => {
+    expect(getValue("*")).toBe("")
+  })
+
+  it("should return empty string when 0 is passed", () => {
+    expect(getValue(0)).toBe("")
+  })
+})
+
+describe("parseRange", () => {
+  it("should correctly parse range when valid range is passed", () => {
+    expect(parseRange("5-10")).toEqual([5, 10])
+  })
+
+  it("should return numeric values", () => {
+    expect(parseRange("5.5-10.789")).toEqual([5, 10])
+  })
+
+  it("should correctly parse range when default range values are passed", () => {
+    expect(parseRange("*-5")).toEqual(["*", 5])
+    expect(parseRange("5-*")).toEqual([5, "*"])
+    expect(parseRange("*-*")).toEqual(["*", "*"])
+  })
+})
+
+describe("getBarsFromAggregations", () => {
+  it("should return empty array if there is no aggregation", () => {
+    const result = getBarsFromAggregations([
+      {
+        slice: "MAJOR_PERIOD",
+        counts: [
+          {
+            name: "0",
+            value: "0",
+            count: 1445,
+          },
+        ],
+      },
+    ])
+
+    expect(result).toEqual([])
+  })
+
+  it("should return sorted bars", () => {
+    const result = getBarsFromAggregations(aggregations)
+
+    expect(result).toEqual([
+      {
+        count: 1445,
+        value: 0,
+      },
+      {
+        count: 133,
+        value: 2000,
+      },
+      {
+        count: 750,
+        value: 50000,
+      },
+    ])
+  })
+})
+
+const aggregations: Aggregations = [
+  {
+    slice: "SIMPLE_PRICE_HISTOGRAM",
+    counts: [
+      {
+        name: "0",
+        value: "0",
+        count: 1445,
+      },
+      {
+        name: "50000",
+        value: "50000",
+        count: 750,
+      },
+      {
+        name: "2000",
+        value: "2000",
+        count: 133,
+      },
+    ],
+  },
+]

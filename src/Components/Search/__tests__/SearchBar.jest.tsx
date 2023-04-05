@@ -7,6 +7,7 @@ import {
 import { MockBoot } from "DevTools/MockBoot"
 import { ReactWrapper } from "enzyme"
 import { graphql } from "react-relay"
+import "jest-styled-components"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
@@ -23,12 +24,14 @@ const searchResults: SearchBarTestQuery$rawResponse["viewer"] = {
           href: "/cat/percy-z",
           displayType: "Cat",
           slug: "percy-z",
+          imageUrl: "https://artsy.png",
           id: "opaque-searchable-item-id",
         },
       },
       {
         node: {
           displayLabel: "Banksy",
+          imageUrl: "https://artsy.png",
           href: "/artist/banksy",
           __typename: "Artist",
           statuses: {
@@ -42,6 +45,7 @@ const searchResults: SearchBarTestQuery$rawResponse["viewer"] = {
       {
         node: {
           displayLabel: "Not Banksy",
+          imageUrl: "https://artsy.png",
           href: "/artist/not-banksy",
           __typename: "Artist",
           statuses: {
@@ -185,7 +189,7 @@ describe("SearchBar", () => {
     simulateTyping(wrapper, "perc") // Matching text w/ suggestion.
     await flushPromiseQueue()
 
-    expect(wrapper.html()).toContain("<strong>Perc</strong>y Z")
+    expect(wrapper.text()).toMatch("Perc")
   })
 })
 

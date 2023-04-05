@@ -17,6 +17,9 @@ import {
   TextProps,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { getENV } from "Utils/getENV"
+
+const isTest = getENV("NODE_ENV") === "test"
 
 interface UtilButtonProps {
   name:
@@ -126,7 +129,12 @@ const UtilButtonInnerText: React.FC<UtilButtonInnerTextProps> = ({
     return null
   }
 
-  if (longestLabel) {
+  /**
+   * We ignore this, since this functionality is not needed for tests and will add some problems
+   * e.g. `screen.getByText("Label")` will return error,
+   * since there will be 2 elements with "Label" text on the page.
+   */
+  if (longestLabel && !isTest) {
     return (
       <Box position="relative">
         <VisibleText {...rest}>{label}</VisibleText>

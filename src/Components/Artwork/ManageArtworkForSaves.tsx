@@ -1,7 +1,7 @@
 import { useToasts } from "@artsy/palette"
-import { NewAddedList } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
+import { ArtworkList } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
 import { CreateNewListModalForManageArtwork } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModalForManageArtwork"
-import { SelectListsForArtworkModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectListsForArtworkModal/SelectListsForArtworkModal"
+import { SelectArtworkListsModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectArtworkListsModal/SelectArtworkListsModal"
 import {
   createContext,
   Dispatch,
@@ -23,7 +23,7 @@ type State = {
   artwork: ArtworkEntity | null
   addingListIDs: string[]
   removingListIDs: string[]
-  recentlyAddedList: NewAddedList | null
+  recentlyAddedList: ArtworkList | null
 }
 
 export enum ListKey {
@@ -33,7 +33,7 @@ export enum ListKey {
 
 type Action =
   | { type: "SET_MODAL_KEY"; payload: ModalKey }
-  | { type: "SET_RECENTLY_ADDED_LIST"; payload: NewAddedList | null }
+  | { type: "SET_RECENTLY_ADDED_LIST"; payload: ArtworkList | null }
   | { type: "SET_ARTWORK"; payload: ArtworkEntity | null }
   | { type: "RESET" }
   | {
@@ -243,7 +243,7 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
       return <CreateNewListModalForManageArtwork />
     }
 
-    return <SelectListsForArtworkModalQueryRender />
+    return <SelectArtworkListsModalQueryRender />
   }
 
   return (

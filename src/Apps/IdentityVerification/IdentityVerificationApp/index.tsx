@@ -156,7 +156,7 @@ const IdentityVerificationApp: React.FC<Props> = ({
           ) : (
             <>
               <Text variant="xl" textAlign="center">
-                Artsy identity verification
+                Artsy Identity Verification
               </Text>
 
               <Spacer y={4} />
@@ -166,32 +166,46 @@ const IdentityVerificationApp: React.FC<Props> = ({
               <Spacer y={1} />
 
               <Text variant="sm">
-                • Your non-expired government id
-                <br />• A camera on your mobile device or computer to take a
+                • Your non-expired government ID
+                <br />• A mobile phone or computer with a camera to take a
                 picture of yourself
               </Text>
 
               <Spacer y={4} />
 
-              <Text variant="lg-display">Keep in mind</Text>
+              <Text variant="lg-display">
+                Complete the process in a single session
+              </Text>
 
               <Spacer y={1} />
 
               <Text variant="sm">
-                • The verification process can take up to 5 minutes, and needs
-                to be completed at one time
-                <br />
-                • You will have to enable permissions to your camera to take a
-                photo of your ID and yourself
-                <br />• All four corners of your ID must be captured
-                <br />• Artsy can not accept emails of your personal documents,
-                they must be submitted to our secure identity verification
-                partner during this process
+                Once you click “Continue to verification” below, the
+                verification process must be fully completed within 15 minutes.
+                It will take up to 5 minutes to complete.
               </Text>
 
               <Spacer y={4} />
 
-              <Text variant="lg-display">Compatible browsers</Text>
+              <Text variant="lg-display">Good to know</Text>
+
+              <Spacer y={1} />
+
+              <Text variant="sm">
+                • You will have to enable permissions for your camera to take a
+                photo of your ID and yourself.
+                <br />
+                • All four corners of your ID must be captured.
+                <br />• Artsy can not accept emails of your personal documents,
+                they must be submitted to our secure identity verification
+                partner during this process.
+              </Text>
+
+              <Spacer y={4} />
+
+              <Text variant="lg-display">
+                Please use a supported web browser
+              </Text>
 
               <Spacer y={1} />
 
@@ -225,8 +239,15 @@ const IdentityVerificationApp: React.FC<Props> = ({
               <Spacer y={1} />
 
               <Text variant="xs" color="black60" textAlign="center">
-                For more information, see the{" "}
-                <RouterLink to="/identity-verification-faq">FAQ</RouterLink>.
+                Questions about identity verification? Read the{" "}
+                <RouterLink to="https://support.artsy.net/hc/en-us/articles/360062798613-How-to-Complete-Identity-Verification">
+                  step by step instructions
+                </RouterLink>{" "}
+                or contact{" "}
+                <RouterLink to={"mailto:verification@artsy.net"}>
+                  verification@artsy.net
+                </RouterLink>
+                .
               </Text>
             </>
           )}

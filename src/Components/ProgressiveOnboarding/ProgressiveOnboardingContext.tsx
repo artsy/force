@@ -30,9 +30,9 @@ export const ProgressiveOnboardingProvider: FC = ({ children }) => {
   const dismiss = useCallback(
     (key: ProgressiveOnboardingKey) => {
       __dismiss__(id, key)
-      setDismissed([...dismissed, key])
+      setDismissed(prevDismissed => [...prevDismissed, key])
     },
-    [dismissed, id]
+    [id]
   )
 
   useEffect(() => {
@@ -57,19 +57,36 @@ export const ProgressiveOnboardingProvider: FC = ({ children }) => {
   )
 }
 
-const FEATURE_FLAG_KEY = "progressive-onboarding-artist"
+const FEATURE_FLAG_FOLLOW_KEY = "progressive-onboarding-artist"
+const FEATURE_FLAG_SAVE_KEY = "progressive-onboarding-artist"
+const FEATURE_FLAG_ALERT_KEY = "grow_progressive-onboarding-alerts"
+
+type Kind = "follows" | "saves" | "alerts"
 
 export const useProgressiveOnboarding = () => {
   const { dismiss, dismissed, isDismissed } = useContext(
     ProgressiveOnboardingContext
   )
 
-  const enabled = useFeatureFlag(FEATURE_FLAG_KEY)
+  const followEnabled = useFeatureFlag(FEATURE_FLAG_FOLLOW_KEY)
+  const saveEnabled = useFeatureFlag(FEATURE_FLAG_SAVE_KEY)
+  const alertEnabled = useFeatureFlag(FEATURE_FLAG_ALERT_KEY)
+
+  const isEnabledFor = (kind: Kind) => {
+    switch (kind) {
+      case "follows":
+        return followEnabled
+      case "saves":
+        return saveEnabled
+      case "alerts":
+        return alertEnabled
+    }
+  }
 
   return {
     dismiss,
     dismissed,
-    enabled,
+    isEnabledFor,
     isDismissed,
   }
 }
@@ -78,20 +95,31 @@ export const localStorageKey = (id: string) => {
   return `progressive-onboarding.dismissed.${id}`
 }
 
+// Follows
 export const PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST = "follow-artist"
-export const PROGRESSIVE_ONBOARDING_FIND_FOLLOWS = "find-follows"
-export const PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT = "follows-highlight"
+export const PROGRESSIVE_ONBOARDING_FOLLOW_FIND = "follow-find"
+export const PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT = "follow-highlight"
+// Saves
 export const PROGRESSIVE_ONBOARDING_SAVE_ARTWORK = "save-artwork"
-export const PROGRESSIVE_ONBOARDING_FIND_SAVES = "find-saves"
-export const PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT = "saves-highlight"
+export const PROGRESSIVE_ONBOARDING_SAVE_FIND = "save-find"
+export const PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT = "save-highlight"
+// Alerts
+export const PROGRESSIVE_ONBOARDING_ALERT_CREATE = "alert-create"
+export const PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER = "alert-select-filter"
+export const PROGRESSIVE_ONBOARDING_ALERT_READY = "alert-ready"
+export const PROGRESSIVE_ONBOARDING_ALERT_FIND = "alert-find"
 
-const PROGRESSIVE_ONBOARDING_KEYS = [
+export const PROGRESSIVE_ONBOARDING_KEYS = [
   PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST,
-  PROGRESSIVE_ONBOARDING_FIND_FOLLOWS,
-  PROGRESSIVE_ONBOARDING_FOLLOWS_HIGHLIGHT,
+  PROGRESSIVE_ONBOARDING_FOLLOW_FIND,
+  PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT,
   PROGRESSIVE_ONBOARDING_SAVE_ARTWORK,
-  PROGRESSIVE_ONBOARDING_FIND_SAVES,
-  PROGRESSIVE_ONBOARDING_SAVES_HIGHLIGHT,
+  PROGRESSIVE_ONBOARDING_SAVE_FIND,
+  PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT,
+  PROGRESSIVE_ONBOARDING_ALERT_CREATE,
+  PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER,
+  PROGRESSIVE_ONBOARDING_ALERT_READY,
+  PROGRESSIVE_ONBOARDING_ALERT_FIND,
 ] as const
 
 export type ProgressiveOnboardingKey = typeof PROGRESSIVE_ONBOARDING_KEYS[number]
