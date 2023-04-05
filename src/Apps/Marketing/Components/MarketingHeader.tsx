@@ -16,12 +16,14 @@ interface MarketingHeaderProps {
   title: string
   subtitle: string
   src: string
+  accentColor: string
 }
 
 export const MarketingHeader: FC<MarketingHeaderProps> = ({
   title,
   subtitle,
   src,
+  accentColor,
 }) => {
   const height = useFullBleedHeaderHeight()
 
@@ -33,13 +35,11 @@ export const MarketingHeader: FC<MarketingHeaderProps> = ({
   return (
     <>
       <Media greaterThan="xs">
-        <FullBleed height={height} position="relative">
+        <FullBleed>
           <GridColumns
-            position="absolute"
-            width="100%"
-            height="100%"
-            top={0}
-            left={0}
+            // Matches homepage hero units
+            height={[300, 400, 500]}
+            overflow="hidden"
             bg="black10"
           >
             <Column
@@ -47,16 +47,17 @@ export const MarketingHeader: FC<MarketingHeaderProps> = ({
               display="flex"
               flexDirection="column"
               justifyContent="center"
-              p={4}
+              px={4}
+              py={[2, 2, 4]}
             >
-              <Text variant={["xl", "xl", "xxl", "xxxl"]}>{title}</Text>
+              <Text variant={["xl", "xl", "xxl", "xxl"]}>{title}</Text>
 
               <Spacer y={[1, 2, 2, 4]} />
 
               <Text variant="lg">{subtitle}</Text>
             </Column>
 
-            <Column span={7} bg="black60" overflow="hidden">
+            <Column span={7} bg={accentColor} overflow="hidden">
               <Image
                 {...images.desktop}
                 width="100%"
@@ -70,7 +71,7 @@ export const MarketingHeader: FC<MarketingHeaderProps> = ({
       </Media>
 
       <Media at="xs">
-        <FullBleed minHeight={height} bg="black60">
+        <FullBleed height={height} bg={accentColor}>
           <Image
             {...images.mobile}
             width="100%"
@@ -81,7 +82,7 @@ export const MarketingHeader: FC<MarketingHeaderProps> = ({
         </FullBleed>
 
         <FullBleed bg="black10">
-          <HorizontalPadding py={4}>
+          <HorizontalPadding py={6}>
             <Text variant="xl">{title}</Text>
 
             <Spacer y={0.5} />

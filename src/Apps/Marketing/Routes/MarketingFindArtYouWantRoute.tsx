@@ -16,6 +16,7 @@ import { MetaTags } from "Components/MetaTags"
 import { FC } from "react"
 import { MarketingCollectionCell } from "Apps/Marketing/Components/MarketingCollectionCell"
 import { MarketingQuizCTA } from "Apps/Marketing/Components/MarketingQuizCTA"
+import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
 
 export const MarketingFindArtYouWantRoute: FC = () => {
   return (
@@ -26,10 +27,11 @@ export const MarketingFindArtYouWantRoute: FC = () => {
         <MarketingHeader
           title="Get the art you want."
           subtitle="Discover the tools you need to collect art that fits your taste."
-          src="https://picsum.photos/seed/aa/2000/2000"
+          src="https://files.artsy.net/images/marketing_find_header.jpg"
+          accentColor={BRAND_PALETTE.green}
         />
 
-        <Text variant={["xl", "xxl"]}>
+        <Text variant={["xl", "xl"]}>
           Explore the world’s best art, on Artsy
         </Text>
 
@@ -40,7 +42,7 @@ export const MarketingFindArtYouWantRoute: FC = () => {
         <FullBleed bg="black5" py={[6, 12]}>
           <AppContainer>
             <HorizontalPadding>
-              <Text variant={["xl", "xxl", "xxxl"]}>
+              <Text variant={["xl", "xxl", "xxl"]}>
                 Saves, follows, and alerts
               </Text>
 
@@ -60,24 +62,27 @@ export const MarketingFindArtYouWantRoute: FC = () => {
               title: "Save artworks",
               subtitle:
                 "Keep track of artworks that catch your eye, and get better recommendations with every save.",
-              src: "https://picsum.photos/seed/ab/2000/2000",
+              src:
+                "https://files.artsy.net/images/marketing_find_save-artworks.jpg",
             },
             {
               title: "Follow artists",
               subtitle:
                 "Get updates on your favorite artists, including new artworks, shows, and more.",
-              src: "https://picsum.photos/seed/ac/2000/2000",
+              src:
+                "https://files.artsy.net/images/marketing_find_follow-artists.jpg",
             },
             {
               title: "Set alerts",
               subtitle:
                 "On the hunt for a particular work? Create an alert and we’ll let you know when there’s a match.",
-              src: "https://picsum.photos/seed/ad/2000/2000",
+              src:
+                "https://files.artsy.net/images/marketing_find_set-alerts.jpg",
             },
           ]}
         />
 
-        <Text variant={["xl", "xxl"]}>
+        <Text variant={["lg-display", "xl"]}>
           Explore our most popular collections
         </Text>
 
@@ -86,7 +91,7 @@ export const MarketingFindArtYouWantRoute: FC = () => {
             <MarketingCollectionCell
               title="Trending Now"
               href="/collection/trending-now"
-              src="https://picsum.photos/seed/af/2000/2000"
+              src="https://files.artsy.net/images/marketing_find_collection_trending-now.jpg"
             />
           </Column>
 
@@ -94,7 +99,7 @@ export const MarketingFindArtYouWantRoute: FC = () => {
             <MarketingCollectionCell
               title="Curators’ Picks: Emerging"
               href="/collection/curators-picks-emerging"
-              src="https://picsum.photos/seed/ag/2000/2000"
+              src="https://files.artsy.net/images/marketing_find_collection_curators-picks-emerging.jpg"
             />
           </Column>
 
@@ -102,7 +107,7 @@ export const MarketingFindArtYouWantRoute: FC = () => {
             <MarketingCollectionCell
               title="Top Auction Lots"
               href="/collection/top-auction-lots"
-              src="https://picsum.photos/seed/ah/2000/2000"
+              src="https://files.artsy.net/images/marketing_find_collection_top-auction-lots.jpg"
             />
           </Column>
         </GridColumns>
