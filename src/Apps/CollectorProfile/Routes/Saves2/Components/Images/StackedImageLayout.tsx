@@ -3,6 +3,7 @@ import { ArtworkListNoImage } from "./ArtworkListNoImage"
 import { prepareImageURLs } from "Apps/CollectorProfile/Routes/Saves2/Utils/prepareImageURLs"
 import { FC } from "react"
 import { cropped } from "Utils/resized"
+import { ArtworkListImageBorder } from "Apps/CollectorProfile/Routes/Saves2/Components/Images/ArtworkListImageBorder"
 
 interface StackedImageLayoutProps {
   imageURLs: (string | null)[]
@@ -62,14 +63,12 @@ const StackImage: FC<StackImageProps> = ({ url, index }) => {
   })
 
   return (
-    <Box position="absolute" top={OFFSET_BY_INDEX} left={OFFSET_BY_INDEX}>
-      <Image
-        width={SIZE}
-        height={SIZE}
-        src={image.src}
-        srcSet={image.srcSet}
-        alt=""
-      />
-    </Box>
+    <ArtworkListImageBorder
+      position="absolute"
+      top={OFFSET_BY_INDEX}
+      left={OFFSET_BY_INDEX}
+    >
+      <Image src={image.src} srcSet={image.srcSet} alt="" />
+    </ArtworkListImageBorder>
   )
 }

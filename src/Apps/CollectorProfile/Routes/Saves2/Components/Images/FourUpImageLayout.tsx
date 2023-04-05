@@ -3,6 +3,7 @@ import { ArtworkListNoImage } from "./ArtworkListNoImage"
 import { prepareImageURLs } from "Apps/CollectorProfile/Routes/Saves2/Utils/prepareImageURLs"
 import { FC } from "react"
 import { cropped } from "Utils/resized"
+import { ArtworkListImageBorder } from "Apps/CollectorProfile/Routes/Saves2/Components/Images/ArtworkListImageBorder"
 
 interface FourUpImageLayoutProps {
   imageURLs: (string | null)[]
@@ -53,12 +54,8 @@ const RowImage: FC<RowImageProps> = ({ url }) => {
   })
 
   return (
-    <Image
-      width={SIZE}
-      height={SIZE}
-      src={image.src}
-      srcSet={image.srcSet}
-      alt=""
-    />
+    <ArtworkListImageBorder width={SIZE} height={SIZE}>
+      <Image src={image.src} srcSet={image.srcSet} alt="" />
+    </ArtworkListImageBorder>
   )
 }
