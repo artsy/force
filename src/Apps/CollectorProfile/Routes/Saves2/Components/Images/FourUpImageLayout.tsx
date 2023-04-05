@@ -55,7 +55,13 @@ const RowImage: FC<RowImageProps> = ({ url }) => {
 
   return (
     <ArtworkListImageBorder width={SIZE} height={SIZE}>
-      <Image src={image.src} srcSet={image.srcSet} alt="" />
+      <Image
+        src={image.src}
+        srcSet={image.srcSet}
+        width="100%"
+        height="100%"
+        alt=""
+      />
     </ArtworkListImageBorder>
   )
 }
