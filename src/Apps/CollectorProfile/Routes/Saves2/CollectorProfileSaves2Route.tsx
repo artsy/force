@@ -10,7 +10,6 @@ import { CollectorProfileSaves2Route_me$data } from "__generated__/CollectorProf
 import { useTracking } from "react-tracking"
 import { ActionType, OwnerType, ViewedArtworkList } from "@artsy/cohesion"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { ErrorPage } from "Components/ErrorPage"
 import { HttpError } from "found"
 
 interface CollectorProfileSaves2RouteProps {
