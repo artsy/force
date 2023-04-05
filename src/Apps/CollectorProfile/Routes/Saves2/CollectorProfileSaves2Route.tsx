@@ -56,7 +56,12 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   // Always display "All Saves" artwork list first in the list
   const artworkLists = [allSavesArtworkList, ...customArtworkLists]
 
-  // TODO: Add comment about `useMemo`
+  /**
+   * When the artwork list has been successfully deleted,
+   * We also clear all info about the deleted artwork list from the relay store in updater.
+   * For this reason, 404 error will be displayed immediately.
+   * To prevent this from happening, `useMemo` is used here
+   */
   const selectedArtworkList = useMemo(
     () => {
       return artworkLists.find(
