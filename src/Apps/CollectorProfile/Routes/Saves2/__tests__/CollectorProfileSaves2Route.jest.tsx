@@ -5,9 +5,11 @@ import { CollectorProfileSaves2Route_Test_Query } from "__generated__/CollectorP
 import { CollectorProfileSaves2RouteFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/CollectorProfileSaves2Route"
 import { useRouter } from "System/Router/useRouter"
 import { useTracking } from "react-tracking"
+import { HttpError } from "found"
 
 jest.unmock("react-relay")
 jest.mock("System/Router/useRouter")
+jest.mock("found")
 
 const { renderWithRelay } = setupTestWrapperTL<
   CollectorProfileSaves2Route_Test_Query
@@ -25,6 +27,7 @@ const { renderWithRelay } = setupTestWrapperTL<
 describe("CollectorProfileSaves2Route", () => {
   const mockUseRouter = useRouter as jest.Mock
   const mockUseTracking = useTracking as jest.Mock
+  const mockHttpError = HttpError as jest.Mock
   const trackEvent = jest.fn()
 
   beforeEach(() => {
@@ -139,6 +142,28 @@ describe("CollectorProfileSaves2Route", () => {
         owner_id: "saved-artwork",
       })
     )
+  })
+
+  it("should render 404 for non-existent list", async () => {
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        params: {
+          id: "non-existent-list-id",
+        },
+        location: {
+          query: {},
+        },
+      },
+    }))
+
+    renderWithRelay({
+      Me: () => ({
+        allSavesArtworkList,
+        customArtworkLists,
+      }),
+    })
+
+    expect(mockHttpError).toHaveBeenCalledWith(404)
   })
 })
 
