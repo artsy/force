@@ -9,7 +9,7 @@ import { LayoutMain } from "Apps/Components/Layouts/Components/LayoutMain"
 export const LayoutNavOnly: FC<BaseLayoutProps> = ({ children }) => {
   return (
     <>
-      <AppToasts accomodateNav />
+      <AppToasts />
 
       <LayoutNav />
 

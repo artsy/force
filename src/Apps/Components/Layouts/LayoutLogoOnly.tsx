@@ -11,7 +11,7 @@ import { LayoutMain } from "Apps/Components/Layouts/Components/LayoutMain"
 export const LayoutLogoOnly: FC<BaseLayoutProps> = ({ children }) => {
   return (
     <>
-      <AppToasts accomodateNav={false} />
+      <AppToasts />
 
       <LayoutMain>
         <AppContainer>
