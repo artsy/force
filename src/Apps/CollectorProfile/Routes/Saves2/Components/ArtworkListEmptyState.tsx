@@ -35,7 +35,7 @@ export const ArtworkListEmptyState: FC<ArtworkListEmptyStateProps> = ({
       <Button
         // @ts-ignore
         as={RouterLink}
-        variant="secondaryBlack"
+        variant="primaryGray"
         to="/collection/trending-this-week"
       >
         Browse Works
