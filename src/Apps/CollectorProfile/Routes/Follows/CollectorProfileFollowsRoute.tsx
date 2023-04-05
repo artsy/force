@@ -6,6 +6,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsSavesArtistsQueryRenderer } from "Apps/Settings/Routes/Saves/Components/SettingsSavesArtists"
 import { SettingsSavesCategoriesQueryRenderer } from "Apps/Settings/Routes/Saves/Components/SettingsSavesCategories"
 import { SettingsSavesProfilesQueryRenderer } from "Apps/Settings/Routes/Saves/Components/SettingsSavesProfiles"
+import { MetaTags } from "Components/MetaTags"
 interface CollectorProfileFollowsRouteProps {
   me: CollectorProfileFollowsRoute_me$data
 }
@@ -14,13 +15,17 @@ const CollectorProfileFollowsRoute: React.FC<CollectorProfileFollowsRouteProps> 
   me,
 }) => {
   return (
-    <Join separator={<Separator my={4} />}>
-      <SettingsSavesArtistsQueryRenderer />
+    <>
+      <MetaTags title="Follows | Artsy" pathname="collector-profile/follows" />
 
-      <SettingsSavesProfilesQueryRenderer />
+      <Join separator={<Separator my={4} />}>
+        <SettingsSavesArtistsQueryRenderer />
 
-      <SettingsSavesCategoriesQueryRenderer />
-    </Join>
+        <SettingsSavesProfilesQueryRenderer />
+
+        <SettingsSavesCategoriesQueryRenderer />
+      </Join>
+    </>
   )
 }
 export const CollectorProfileFollowsRouteFragmentContainer = createFragmentContainer(
