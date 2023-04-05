@@ -37,7 +37,7 @@ export const ArtworkListEmptyState: FC<ArtworkListEmptyStateProps> = ({
         // @ts-ignore
         as={RouterLink}
         width={["100%", "auto"]}
-        variant="primaryGray"
+        variant="primaryBlack"
         to="/collection/trending-this-week"
       >
         Browse Works
