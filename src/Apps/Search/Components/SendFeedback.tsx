@@ -14,9 +14,12 @@ import * as Yup from "yup"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { graphql } from "react-relay"
 import { SendFeedbackSearchResultsMutation } from "__generated__/SendFeedbackSearchResultsMutation.graphql"
+import { useRouter } from "System/Router/useRouter"
+import { getENV } from "Utils/getENV"
 
 export const SendFeedback: FC = () => {
   const { isLoggedIn, user } = useSystemContext()
+  const { match } = useRouter()
 
   const { sendToast } = useToasts()
 
@@ -45,12 +48,16 @@ export const SendFeedback: FC = () => {
       validationSchema={VALIDATION_SCHEMA}
       onSubmit={async ({ name, email, message }, { resetForm }) => {
         try {
+          const { pathname, search } = match.location
+          const url = `${getENV("APP_URL")}${pathname}${search}`
+
           await submitMutation({
             variables: {
               input: {
-                ...(isLoggedIn
-                  ? { message, test: "1" }
-                  : { name, email, message }),
+                name,
+                email,
+                message,
+                url,
               },
             },
             rejectIf: res => {
