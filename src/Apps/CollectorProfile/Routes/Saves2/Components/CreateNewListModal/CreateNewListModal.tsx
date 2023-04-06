@@ -23,6 +23,7 @@ import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import {
   ArtworkListFormikValues,
   MAX_NAME_LENGTH,
+  validationSchema,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkListForm/ArtworkListForm"
 
 export interface ArtworkList {
@@ -112,6 +113,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   return (
     <Formik<ArtworkListFormikValues>
       initialValues={{ name: "" }}
+      validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
       {({
