@@ -10,6 +10,7 @@ import {
   Column,
   Dropdown,
   Flex,
+  FullBleed,
   GridColumns,
   Image,
   Join,
@@ -41,7 +42,13 @@ export const Footer: React.FC<FooterProps> = props => {
     <Box {...props}>
       <FooterDownloadAppBanner />
 
-      <footer>
+      <Spacer y={2} />
+
+      <FullBleed>
+        <Separator />
+      </FullBleed>
+
+      <Box as="footer">
         <GridColumns pt={4} pb={6} gridRowGap={[4, 0]}>
           <Column span={3}>
             <Text variant="sm-display" fontWeight="bold" mb={2}>
@@ -262,7 +269,7 @@ export const Footer: React.FC<FooterProps> = props => {
             </Join>
           </Flex>
         </Flex>
-      </footer>
+      </Box>
     </Box>
   )
 }

@@ -3,11 +3,19 @@ import { Column, GridColumns, Image, Spacer, Text } from "@artsy/palette"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 import { DownloadAppBadges } from "Components/DownloadAppBadges/DownloadAppBadges"
+import { FooterDownloadAppBanner2 } from "Components/Footer/FooterDownloadAppBanner2"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 const APP_BANNER_SRC =
   "https://files.artsy.net/images/App_Download_Banner_1200x2440_2x-1656078840527.jpg"
 
 export const FooterDownloadAppBanner = () => {
+  const isNewFooterEnabled = useFeatureFlag("grow_universal-footer")
+
+  if (isNewFooterEnabled) {
+    return <FooterDownloadAppBanner2 />
+  }
+
   const desktopCoverImage = resized(APP_BANNER_SRC, {
     width: 1220,
     quality: 50,
@@ -16,13 +24,7 @@ export const FooterDownloadAppBanner = () => {
   const mobileCoverImage = resized(APP_BANNER_SRC, { width: 725, quality: 50 })
 
   return (
-    <GridColumns
-      gridRowGap={1}
-      borderTop="1px solid"
-      borderBottom="1px solid"
-      borderColor="black10"
-      pb={1}
-    >
+    <GridColumns gridRowGap={1} borderTop="1px solid" borderColor="black10">
       <Column
         span={4}
         display="flex"
