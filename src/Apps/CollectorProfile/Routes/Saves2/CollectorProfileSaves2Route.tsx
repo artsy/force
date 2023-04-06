@@ -2,7 +2,7 @@ import { Shelf, Spacer } from "@artsy/palette"
 import { ArtworkListContentQueryRenderer } from "./Components/ArtworkListContent"
 import { ArtworkListsHeader } from "./Components/ArtworkListsHeader"
 import { ArtworkListItemFragmentContainer } from "./Components/ArtworkListItem"
-import { FC, useEffect, useRef } from "react"
+import { FC, useEffect, useMemo, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { extractNodes } from "Utils/extractNodes"
@@ -10,6 +10,7 @@ import { CollectorProfileSaves2Route_me$data } from "__generated__/CollectorProf
 import { useTracking } from "react-tracking"
 import { ActionType, OwnerType, ViewedArtworkList } from "@artsy/cohesion"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { HttpError } from "found"
 
 interface CollectorProfileSaves2RouteProps {
   me: CollectorProfileSaves2Route_me$data
@@ -53,6 +54,26 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
 
   // Always display "All Saves" artwork list first in the list
   const artworkLists = [allSavesArtworkList, ...customArtworkLists]
+
+  /**
+   * When the artwork list has been successfully deleted,
+   * We also clear all info about the deleted artwork list from the relay store in updater.
+   * For this reason, 404 error will be displayed immediately.
+   * To prevent this from happening, `useMemo` is used here
+   */
+  const selectedArtworkList = useMemo(
+    () => {
+      return artworkLists.find(
+        artworkList => artworkList.internalID === selectedArtworkListId
+      )
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [selectedArtworkListId]
+  )
+
+  if (!selectedArtworkList) {
+    throw new HttpError(404)
+  }
 
   return (
     <>
