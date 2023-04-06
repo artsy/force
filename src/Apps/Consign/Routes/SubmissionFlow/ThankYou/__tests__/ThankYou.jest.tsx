@@ -58,12 +58,12 @@ describe("ThankYou page", () => {
       const wrapper = mount(<ThankYou />)
       const text = wrapper.text()
 
-      expect(text).toContain("Your artwork has been submitted")
+      expect(text).toContain("Thank you for submitting your artwork")
       expect(text).toContain(
         "We will email you within 3-5 days to confirm if your artwork has been accepted or not. In the meantime your submission will appear in the feature, My Collection."
       )
       expect(text).toContain(
-        "With low fees, informed pricing, and multiple sales options, why not submit another piece with Artsy."
+        "With low fees, informed pricing, and multiple sales options, why not submit another piece with Artsy?"
       )
 
       expect(
@@ -97,12 +97,12 @@ describe("ThankYou page", () => {
       const wrapper = mount(<ThankYou />)
       const text = wrapper.text()
 
-      expect(text).toContain("Thank you for submitting a work")
+      expect(text).toContain("Thank you for submitting your artwork")
       expect(text).toContain(
-        "We’ll email you within 3-5 business days to let you know the status of your submission."
+        "We will email you within 3-5 days to confirm if your artwork has been accepted or not. In the meantime your submission will appear in the feature, My Collection."
       )
       expect(text).toContain(
-        "In the meantime, feel free to submit another work—and benefit from Artsy’s low fees, informed pricing, and multiple selling options."
+        "With low fees, informed pricing, and multiple sales options, why not submit another piece with Artsy?"
       )
 
       expect(
