@@ -11,11 +11,21 @@ jest.mock("Utils/Hooks/useMutation")
 jest.mock("System/useSystemContext")
 jest.unmock("react-relay")
 
+const relayEnv = createMockEnvironment()
+const resolveMostRecentOperation = () => {
+  act(() => {
+    relayEnv.mock.resolveMostRecentOperation(operation => {
+      return MockPayloadGenerator.generate(operation, {
+        Me: () => mockedMe,
+      })
+    })
+  })
+}
+
 describe("AddArtworksModal", () => {
   const mockUseTracking = useTracking as jest.Mock
   const mockUseSystemContext = useSystemContext as jest.Mock
   const trackEvent = jest.fn()
-  const relayEnv = createMockEnvironment()
 
   let onComplete: jest.Mock
   let submitMutation: jest.Mock
@@ -34,6 +44,10 @@ describe("AddArtworksModal", () => {
     mockUseSystemContext.mockImplementation(() => ({
       relayEnvironment: relayEnv,
     }))
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
   it("renders the modal content", async () => {
@@ -59,17 +73,31 @@ describe("AddArtworksModal", () => {
     expect(submitMutation).toHaveBeenCalledTimes(0)
   })
 
-  describe("Analytics", () => {
-    const resolveMostRecentOperation = () => {
-      act(() => {
-        relayEnv.mock.resolveMostRecentOperation(operation => {
-          return MockPayloadGenerator.generate(operation, {
-            Me: () => mockedMe,
-          })
-        })
-      })
-    }
+  it("executes mutation if artworks were selected", async () => {
+    render(
+      <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />
+    )
 
+    resolveMostRecentOperation()
+
+    fireEvent.click(screen.getByText("Artwork #1"))
+    fireEvent.click(screen.getByText("Artwork #2"))
+    fireEvent.click(screen.getByText("Save"))
+
+    expect(submitMutation).toHaveBeenCalledTimes(1)
+    expect(submitMutation).toHaveBeenCalledWith(
+      expect.objectContaining({
+        variables: {
+          input: {
+            artworkIDs: ["artwork-id-one", "artwork-id-two"],
+            addToCollectionIDs: [artworkList.internalID],
+          },
+        },
+      })
+    )
+  })
+
+  describe("Analytics", () => {
     it("doesn't track event if no artworks are selected", async () => {
       submitMutation.mockImplementation(() => ({
         artworksCollectionsBatchUpdate: {
