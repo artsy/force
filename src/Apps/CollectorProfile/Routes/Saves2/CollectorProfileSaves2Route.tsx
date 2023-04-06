@@ -11,6 +11,7 @@ import { useTracking } from "react-tracking"
 import { ActionType, OwnerType, ViewedArtworkList } from "@artsy/cohesion"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { HttpError } from "found"
+import { MetaTags } from "Components/MetaTags"
 
 interface CollectorProfileSaves2RouteProps {
   me: CollectorProfileSaves2Route_me$data
@@ -77,6 +78,8 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
 
   return (
     <>
+      <MetaTags title="Saves | Artsy" pathname="collector-profile/saves2" />
+
       <ArtworkListsHeader
         savedArtworksCount={
           me?.allSavesArtworkList?.artworksConnection?.totalCount ?? 0

@@ -30,7 +30,7 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
   return (
     <>
       <MetaTags
-        title="My Collection Insights | Artsy"
+        title="Insights | Artsy"
         pathname={"collector-profile/insights"}
       />
 
