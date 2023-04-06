@@ -13,7 +13,7 @@ export const MAX_NAME_LENGTH = 40
 
 export const validationSchema = Yup.object().shape({
   name: Yup.string()
-    .required(i18n.t("collectorSaves.editListModal.fields.name.required"))
+    .required(i18n.t("collectorSaves.artworkListForm.fields.name.required"))
     .max(MAX_NAME_LENGTH),
 })
 
@@ -42,10 +42,12 @@ export const ArtworkListForm: React.FC<ArtworkListFormProps> = props => {
         value={formik.values.name}
         title={
           mode === "create"
-            ? t("collectorSaves.createNewListModal.nameLabel")
-            : t("collectorSaves.editListModal.fields.name.label")
+            ? t("collectorSaves.artworkListForm.fields.name.label.create")
+            : t("collectorSaves.artworkListForm.fields.name.label.edit")
         }
-        placeholder={t("collectorSaves.createNewListModal.namePlaceholder")}
+        placeholder={t(
+          "collectorSaves.artworkListForm.fields.name.placeholder"
+        )}
         label={<EditIcon display={["none", "block"]} />}
         error={formik.touched.name && formik.errors.name}
         maxLength={MAX_NAME_LENGTH}
@@ -57,9 +59,12 @@ export const ArtworkListForm: React.FC<ArtworkListFormProps> = props => {
       <Spacer y={1} />
 
       <Text variant="xs">
-        {t("collectorSaves.createNewListModal.remainingCharactersCount", {
-          count: MAX_NAME_LENGTH - formik.values.name.length,
-        })}
+        {t(
+          "collectorSaves.artworkListForm.fields.name.remainingCharactersCount",
+          {
+            count: MAX_NAME_LENGTH - formik.values.name.length,
+          }
+        )}
       </Text>
 
       <Spacer y={2} />
@@ -74,8 +79,8 @@ export const ArtworkListForm: React.FC<ArtworkListFormProps> = props => {
           disabled={!formik.dirty || !formik.isValid}
         >
           {mode === "create"
-            ? t("collectorSaves.createNewListModal.createListButton")
-            : t("collectorSaves.editListModal.save")}
+            ? t("collectorSaves.artworkListForm.buttons.create")
+            : t("collectorSaves.artworkListForm.buttons.edit")}
         </Button>
 
         <Spacer y={[1, 0]} />
