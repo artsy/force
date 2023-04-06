@@ -98,16 +98,7 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({
-        values,
-        errors,
-        touched,
-        dirty,
-        handleBlur,
-        handleChange,
-        isSubmitting,
-        isValid,
-      }) => {
+      {formik => {
         return (
           <ModalDialog
             title={t("collectorSaves.editListModal.title")}
@@ -117,20 +108,20 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
             <Form /* TODO: confirm implicit form submission */>
               <LabeledInput
                 name="name"
-                value={values.name}
+                value={formik.values.name}
                 title={t("collectorSaves.editListModal.fields.name.label")}
                 label={<EditIcon />}
-                error={touched.name && errors.name}
+                error={formik.touched.name && formik.errors.name}
                 maxLength={MAX_NAME_LENGTH}
                 required // TODO: confirm
-                onChange={handleChange}
-                onBlur={handleBlur}
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
               />
               <Spacer y={1} />
               <Text variant="xs">
                 {t(
                   "collectorSaves.createNewListModal.remainingCharactersCount",
-                  { count: MAX_NAME_LENGTH - values.name.length }
+                  { count: MAX_NAME_LENGTH - formik.values.name.length }
                 )}
               </Text>
               <Spacer y={2} />
@@ -140,8 +131,8 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
               >
                 <Button
                   type="submit"
-                  loading={!!isSubmitting}
-                  disabled={!dirty || !isValid}
+                  loading={!!formik.isSubmitting}
+                  disabled={!formik.dirty || !formik.isValid}
                 >
                   {t("collectorSaves.editListModal.save")}
                 </Button>
