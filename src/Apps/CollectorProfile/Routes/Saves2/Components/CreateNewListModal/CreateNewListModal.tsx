@@ -20,7 +20,10 @@ import { FC } from "react"
 import { useTracking } from "react-tracking"
 import { ActionType, CreatedArtworkList } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { ArtworkListFormikValues } from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkListForm/ArtworkListForm"
+import {
+  ArtworkListFormikValues,
+  MAX_NAME_LENGTH,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkListForm/ArtworkListForm"
 
 export interface ArtworkList {
   internalID: string
@@ -42,8 +45,6 @@ export interface CreateNewListModalContainerProps
 const logger = createLogger(
   "CollectorProfile/Routes/Saves2/Components/CreateNewListModal"
 )
-
-const MAX_NAME_LENGTH = 40
 
 export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   artwork,
