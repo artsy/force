@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0bf879e8d0cbd2eb3ca461a31853700c>>
+ * @generated SignedSource<<7eb7052ec3749e71b13181ce5b6af487>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileSaves2Route_me$data = {
   readonly allSavesArtworkList: {
-    readonly internalID: string;
-    readonly savedArtworksConnection: {
+    readonly artworksConnection: {
       readonly totalCount: number | null;
     } | null;
+    readonly internalID: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
   } | null;
   readonly customArtworkLists: {
@@ -81,8 +81,14 @@ return {
         (v0/*: any*/),
         (v1/*: any*/),
         {
-          "alias": "savedArtworksConnection",
-          "args": null,
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "first",
+              "value": 4
+            }
+          ],
           "concreteType": "ArtworkConnection",
           "kind": "LinkedField",
           "name": "artworksConnection",
@@ -96,7 +102,7 @@ return {
               "storageKey": null
             }
           ],
-          "storageKey": null
+          "storageKey": "artworksConnection(first:4)"
         }
       ],
       "storageKey": "collection(id:\"saved-artwork\")"
@@ -188,6 +194,6 @@ return {
 };
 })();
 
-(node as any).hash = "cdecdcf43b4e6bb415c0a94d4347bd1f";
+(node as any).hash = "db3ce8798d7cf6e558349db9e91aebcc";
 
 export default node;

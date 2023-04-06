@@ -58,7 +58,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
     <>
       <ArtworkListsHeader
         savedArtworksCount={
-          me?.allSavesArtworkList?.savedArtworksConnection?.totalCount ?? 0
+          me?.allSavesArtworkList?.artworksConnection?.totalCount ?? 0
         }
       />
 
@@ -115,7 +115,7 @@ export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContai
           internalID
           ...ArtworkListItem_item
 
-          savedArtworksConnection: artworksConnection {
+          artworksConnection(first: 4) {
             totalCount
           }
         }
