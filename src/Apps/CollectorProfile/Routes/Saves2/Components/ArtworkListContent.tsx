@@ -29,8 +29,8 @@ interface ArtworkListContentProps {
 }
 
 const sortOptions: SortOptions = [
-  { value: "SAVED_AT_DESC", text: "Recently Saved" },
-  { value: "SAVED_AT_ASC", text: "Oldest First" },
+  { value: "SAVED_AT_DESC", text: "Recently Added" },
+  { value: "SAVED_AT_ASC", text: "First Added" },
 ]
 const defaultSort = sortOptions[0].value
 
