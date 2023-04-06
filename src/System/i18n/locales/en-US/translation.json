@@ -126,12 +126,7 @@
       "createNewListButton": "Create New List"
     },
     "createNewListModal": {
-      "title": "Create a new list",
-      "createListButton": "Create List",
-      "nameLabel": "Name your list",
-      "namePlaceholder": "E.g. Photography, Warhol, etc.",
-      "remainingCharactersCount_one": "{{count}} character remaining",
-      "remainingCharactersCount_other": "{{count}} characters remaining"
+      "title": "Create a new list"
     },
     "manageArtworkForSaves": {
       "toasts": {
@@ -184,15 +179,26 @@
     },
     "editListModal": {
       "title": "Edit your list",
+      "success": "Changes saved"
+    },
+    "artworkListForm": {
       "fields": {
         "name": {
-          "label": "List Name",
-          "required": "Name is required"
+          "label": {
+            "create": "Name your list",
+            "edit": "List Name"
+          },
+          "placeholder": "E.g. Photography, Warhol, etc.",
+          "required": "Name is required",
+          "remainingCharactersCount_one": "{{count}} character remaining",
+          "remainingCharactersCount_other": "{{count}} characters remaining"
+
         }
       },
-      "back": "Back",
-      "save": "Save Changes",
-      "success": "Changes saved"
+      "buttons": {
+        "create": "Create List",
+        "edit": "Save Changes"
+      }
     }
   },
   "common": {
