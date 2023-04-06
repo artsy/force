@@ -129,7 +129,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
 
         return (
           <ModalDialog
-            width={["100%", 713]}
+            width={["100%", 700]}
             onClose={onClose}
             title={t("collectorSaves.createNewListModal.title")}
             data-testid="CreateNewList"
