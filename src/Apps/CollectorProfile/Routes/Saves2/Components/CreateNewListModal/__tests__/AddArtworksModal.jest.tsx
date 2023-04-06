@@ -11,11 +11,21 @@ jest.mock("Utils/Hooks/useMutation")
 jest.mock("System/useSystemContext")
 jest.unmock("react-relay")
 
+const relayEnv = createMockEnvironment()
+const resolveMostRecentOperation = () => {
+  act(() => {
+    relayEnv.mock.resolveMostRecentOperation(operation => {
+      return MockPayloadGenerator.generate(operation, {
+        Me: () => mockedMe,
+      })
+    })
+  })
+}
+
 describe("AddArtworksModal", () => {
   const mockUseTracking = useTracking as jest.Mock
   const mockUseSystemContext = useSystemContext as jest.Mock
   const trackEvent = jest.fn()
-  const relayEnv = createMockEnvironment()
 
   let onComplete: jest.Mock
   let submitMutation: jest.Mock
@@ -36,6 +46,10 @@ describe("AddArtworksModal", () => {
     }))
   })
 
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
   it("renders the modal content", async () => {
     render(
       <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />
@@ -48,7 +62,7 @@ describe("AddArtworksModal", () => {
     expect(screen.getByRole("button", { name: /Save/ })).toBeInTheDocument()
   })
 
-  it("calls the mutation when the Save button is clicked", async () => {
+  it("closes the modal without executing mutation if no artworks were selected", async () => {
     render(
       <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />
     )
@@ -56,14 +70,27 @@ describe("AddArtworksModal", () => {
     const saveButton = screen.getByRole("button", { name: /Save/ })
     fireEvent.click(saveButton)
 
-    await waitFor(() => expect(submitMutation).toHaveBeenCalledTimes(1))
+    expect(submitMutation).toHaveBeenCalledTimes(0)
+  })
 
+  it("executes mutation if artworks were selected", async () => {
+    render(
+      <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />
+    )
+
+    resolveMostRecentOperation()
+
+    fireEvent.click(screen.getByText("Artwork #1"))
+    fireEvent.click(screen.getByText("Artwork #2"))
+    fireEvent.click(screen.getByText("Save"))
+
+    expect(submitMutation).toHaveBeenCalledTimes(1)
     expect(submitMutation).toHaveBeenCalledWith(
       expect.objectContaining({
         variables: {
           input: {
-            artworkIDs: [],
-            addToCollectionIDs: ["artwork-list-one"],
+            artworkIDs: ["artwork-id-one", "artwork-id-two"],
+            addToCollectionIDs: [artworkList.internalID],
           },
         },
       })
@@ -71,16 +98,6 @@ describe("AddArtworksModal", () => {
   })
 
   describe("Analytics", () => {
-    const resolveMostRecentOperation = () => {
-      act(() => {
-        relayEnv.mock.resolveMostRecentOperation(operation => {
-          return MockPayloadGenerator.generate(operation, {
-            Me: () => mockedMe,
-          })
-        })
-      })
-    }
-
     it("doesn't track event if no artworks are selected", async () => {
       submitMutation.mockImplementation(() => ({
         artworksCollectionsBatchUpdate: {

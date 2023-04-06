@@ -5,7 +5,13 @@ import { useTranslation } from "react-i18next"
 import { CreateNewListModalWizard } from "./CreateNewListModal/CreateNewListModalWizard"
 import { ArtworkList } from "./CreateNewListModal/CreateNewListModal"
 
-export const ArtworkListsHeader: FC = () => {
+interface ArtworkListsHeaderProps {
+  savedArtworksCount: number
+}
+
+export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
+  savedArtworksCount,
+}) => {
   const { t } = useTranslation()
   const { sendToast } = useToasts()
   const [modalIsOpened, setModalIsOpened] = useState(false)
@@ -35,6 +41,7 @@ export const ArtworkListsHeader: FC = () => {
         <CreateNewListModalWizard
           onComplete={handleComplete}
           onClose={handleClose}
+          savedArtworksCount={savedArtworksCount}
         />
       )}
 

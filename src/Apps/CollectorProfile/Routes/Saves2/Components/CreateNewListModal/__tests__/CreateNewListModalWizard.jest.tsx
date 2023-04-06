@@ -49,6 +49,7 @@ describe("CreateNewListModalWizard", () => {
       <CreateNewListModalWizard
         onClose={props.onClose ?? onCloseMock}
         onComplete={props.onComplete ?? onCompleteMock}
+        savedArtworksCount={1}
       />
     )
   }
