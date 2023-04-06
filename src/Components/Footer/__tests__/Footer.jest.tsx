@@ -1,8 +1,15 @@
 import { MockBoot } from "DevTools/MockBoot"
 import { mount } from "enzyme"
-import { Footer } from "../Footer"
+import { Footer } from "Components/Footer/Footer"
 import { DownloadAppBadge } from "Components/DownloadAppBadges/DownloadAppBadge"
 import { Breakpoint } from "@artsy/palette/dist/themes/types"
+import { useRouter } from "System/Router/useRouter"
+
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: jest.fn().mockReturnValue({
+    match: { location: { pathname: "/" } },
+  }),
+}))
 
 describe("Footer", () => {
   const getWrapper = (breakpoint: Breakpoint) =>
@@ -54,6 +61,20 @@ describe("Footer", () => {
     it("renders the CCPA request button", () => {
       const wrapper = getWrapper("xs")
       expect(wrapper.find("button").length).toEqual(1)
+    })
+
+    it("renders the app download banner", () => {
+      const wrapper = getWrapper("lg")
+      expect(wrapper.text()).toContain("Get the Artsy app")
+    })
+
+    it("hides the app download banner if we are on an ignored route", () => {
+      ;(useRouter as jest.Mock).mockImplementationOnce(() => ({
+        match: { location: { pathname: "/meet-your-new-art-advisor" } },
+      }))
+
+      const wrapper = getWrapper("lg")
+      expect(wrapper.text()).not.toContain("Get the Artsy app")
     })
   })
 

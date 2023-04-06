@@ -12,6 +12,7 @@ import {
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
+import { RouterLink } from "System/Router/RouterLink"
 import { resized } from "Utils/resized"
 import { FC } from "react"
 
@@ -49,7 +50,13 @@ export const MarketingQuizCTA: FC = () => {
               <Spacer y={[2, 4]} />
 
               <Box>
-                <Button>Get Started</Button>
+                <Button
+                  // @ts-ignore
+                  as={RouterLink}
+                  to="/art-quiz"
+                >
+                  Get Started
+                </Button>
               </Box>
             </Column>
 

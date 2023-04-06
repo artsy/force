@@ -5,12 +5,21 @@ import { Media } from "Utils/Responsive"
 import { DownloadAppBadges } from "Components/DownloadAppBadges/DownloadAppBadges"
 import { FooterDownloadAppBanner2 } from "Components/Footer/FooterDownloadAppBanner2"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { useRouter } from "System/Router/useRouter"
+
+const IGNORE_PATHS = ["/meet-your-new-art-advisor"]
 
 const APP_BANNER_SRC =
   "https://files.artsy.net/images/App_Download_Banner_1200x2440_2x-1656078840527.jpg"
 
 export const FooterDownloadAppBanner = () => {
+  const { match } = useRouter()
+
   const isNewFooterEnabled = useFeatureFlag("grow_universal-footer")
+
+  if (IGNORE_PATHS.includes(match.location.pathname)) {
+    return null
+  }
 
   if (isNewFooterEnabled) {
     return <FooterDownloadAppBanner2 />
