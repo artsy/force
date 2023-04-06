@@ -96,7 +96,7 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
             onClose={onClose}
             width={["100%", 700]}
           >
-            <ArtworkListForm formik={formik} onClose={onClose} />
+            <ArtworkListForm mode="edit" formik={formik} onClose={onClose} />
           </ModalDialog>
         )
       }}

@@ -1,15 +1,6 @@
 import { Formik, FormikHelpers } from "formik"
 import createLogger from "Utils/logger"
-import {
-  Flex,
-  Button,
-  LabeledInput,
-  ModalDialog,
-  Spacer,
-  EditIcon,
-  Text,
-} from "@artsy/palette"
-import { Media } from "Utils/Responsive"
+import { ModalDialog } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
 import {
   ArtworkEntity,
@@ -21,8 +12,8 @@ import { useTracking } from "react-tracking"
 import { ActionType, CreatedArtworkList } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import {
+  ArtworkListForm,
   ArtworkListFormikValues,
-  MAX_NAME_LENGTH,
   validationSchema,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkListForm/ArtworkListForm"
 
@@ -59,9 +50,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   const analytics = useAnalyticsContext()
 
   const handleBackOnCancelClick = onBackClick ?? onClose
-  const backOrCancelLabel = onBackClick
-    ? t("common.buttons.back")
-    : t("common.buttons.cancel")
+  const cancelMode = onBackClick ? "back" : "dismiss"
 
   const trackAnalyticEvent = (artworkListId: string) => {
     const event: CreatedArtworkList = {
@@ -116,17 +105,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       validationSchema={validationSchema}
       onSubmit={handleSubmit}
     >
-      {({
-        values,
-        isSubmitting,
-        handleSubmit,
-        handleChange,
-        handleBlur,
-        errors,
-        touched,
-      }) => {
-        const isCreateButtonDisabled = !values.name
-
+      {formik => {
         return (
           <ModalDialog
             width={["100%", 700]}
@@ -136,56 +115,13 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
             header={
               artwork ? <CreateNewListModalHeader artwork={artwork} /> : null
             }
-            footer={
-              <Flex
-                justifyContent={["flex-start", "space-between"]}
-                flexDirection={["column", "row-reverse"]}
-              >
-                <Button
-                  disabled={isCreateButtonDisabled}
-                  loading={isSubmitting}
-                  onClick={() => handleSubmit()}
-                >
-                  {t("collectorSaves.createNewListModal.createListButton")}
-                </Button>
-
-                <Spacer y={[1, 0]} />
-
-                <Button
-                  variant="secondaryBlack"
-                  onClick={handleBackOnCancelClick}
-                >
-                  {backOrCancelLabel}
-                </Button>
-              </Flex>
-            }
           >
-            <LabeledInput
-              title={t("collectorSaves.createNewListModal.nameLabel")}
-              name="name"
-              placeholder={t(
-                "collectorSaves.createNewListModal.namePlaceholder"
-              )}
-              value={values.name}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              error={touched.name && errors.name}
-              maxLength={MAX_NAME_LENGTH}
-              label={
-                <>
-                  {/* Desktop view */}
-                  <Media greaterThanOrEqual="sm">
-                    <EditIcon />
-                  </Media>
-                </>
-              }
+            <ArtworkListForm
+              mode="create"
+              formik={formik}
+              onClose={handleBackOnCancelClick}
+              cancelMode={cancelMode}
             />
-            <Spacer y={1} />
-            <Text variant="xs">
-              {t("collectorSaves.createNewListModal.remainingCharactersCount", {
-                count: MAX_NAME_LENGTH - values.name.length,
-              })}
-            </Text>
           </ModalDialog>
         )
       }}

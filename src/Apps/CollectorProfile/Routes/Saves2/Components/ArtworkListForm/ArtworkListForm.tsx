@@ -18,12 +18,21 @@ export const validationSchema = Yup.object().shape({
 })
 
 interface ArtworkListFormProps {
+  /** The bag of Formik props to be used by the form */
   formik: FormikProps<ArtworkListFormikValues>
+
+  /** Is this form being used to create or edit an artwork list? */
+  mode: "create" | "edit"
+
+  /** Handler for the Cancel button */
   onClose: () => void
+
+  /** Does the handler for the Cancel button simply dismiss, or navigate back to the previous step? */
+  cancelMode?: "dismiss" | "back"
 }
 
 export const ArtworkListForm: React.FC<ArtworkListFormProps> = props => {
-  const { formik, onClose } = props
+  const { formik, mode, onClose, cancelMode } = props
   const { t } = useTranslation()
 
   return (
@@ -31,8 +40,13 @@ export const ArtworkListForm: React.FC<ArtworkListFormProps> = props => {
       <LabeledInput
         name="name"
         value={formik.values.name}
-        title={t("collectorSaves.editListModal.fields.name.label")}
-        label={<EditIcon />}
+        title={
+          mode === "create"
+            ? t("collectorSaves.createNewListModal.nameLabel")
+            : t("collectorSaves.editListModal.fields.name.label")
+        }
+        placeholder={t("collectorSaves.createNewListModal.namePlaceholder")}
+        label={<EditIcon display={["none", "block"]} />}
         error={formik.touched.name && formik.errors.name}
         maxLength={MAX_NAME_LENGTH}
         required
@@ -59,13 +73,17 @@ export const ArtworkListForm: React.FC<ArtworkListFormProps> = props => {
           loading={!!formik.isSubmitting}
           disabled={!formik.dirty || !formik.isValid}
         >
-          {t("collectorSaves.editListModal.save")}
+          {mode === "create"
+            ? t("collectorSaves.createNewListModal.createListButton")
+            : t("collectorSaves.editListModal.save")}
         </Button>
 
         <Spacer y={[1, 0]} />
 
         <Button variant="secondaryBlack" onClick={onClose}>
-          {t("common.buttons.cancel")}
+          {cancelMode === "back"
+            ? t("common.buttons.back")
+            : t("common.buttons.cancel")}
         </Button>
       </Flex>
     </Form>
