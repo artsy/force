@@ -20,10 +20,7 @@ import { FC } from "react"
 import { useTracking } from "react-tracking"
 import { ActionType, CreatedArtworkList } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-
-export interface CreateNewListValues {
-  name: string
-}
+import { ArtworkListFormikValues } from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkListForm/ArtworkListForm"
 
 export interface ArtworkList {
   internalID: string
@@ -77,8 +74,8 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   }
 
   const handleSubmit = async (
-    values: CreateNewListValues,
-    helpers: FormikHelpers<CreateNewListValues>
+    values: ArtworkListFormikValues,
+    helpers: FormikHelpers<ArtworkListFormikValues>
   ) => {
     try {
       const { createCollection } = await submitMutation({
@@ -112,7 +109,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
   }
 
   return (
-    <Formik<CreateNewListValues>
+    <Formik<ArtworkListFormikValues>
       initialValues={{ name: "" }}
       onSubmit={handleSubmit}
     >
