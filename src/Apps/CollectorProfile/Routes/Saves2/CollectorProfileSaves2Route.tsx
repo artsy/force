@@ -56,7 +56,11 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
 
   return (
     <>
-      <ArtworkListsHeader />
+      <ArtworkListsHeader
+        savedArtworksCount={
+          me?.allSavesArtworkList?.savedArtworksConnection?.totalCount ?? 0
+        }
+      />
 
       <Spacer y={4} />
 
@@ -110,6 +114,10 @@ export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContai
         allSavesArtworkList: collection(id: "saved-artwork") {
           internalID
           ...ArtworkListItem_item
+
+          savedArtworksConnection: artworksConnection {
+            totalCount
+          }
         }
 
         customArtworkLists: collectionsConnection(

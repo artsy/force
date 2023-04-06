@@ -48,7 +48,7 @@ describe("AddArtworksModal", () => {
     expect(screen.getByRole("button", { name: /Save/ })).toBeInTheDocument()
   })
 
-  it("calls the mutation when the Save button is clicked", async () => {
+  it("closes the modal without executing mutation if no artworks were selected", async () => {
     render(
       <AddArtworksModal artworkList={artworkList} onComplete={onComplete} />
     )
@@ -56,18 +56,7 @@ describe("AddArtworksModal", () => {
     const saveButton = screen.getByRole("button", { name: /Save/ })
     fireEvent.click(saveButton)
 
-    await waitFor(() => expect(submitMutation).toHaveBeenCalledTimes(1))
-
-    expect(submitMutation).toHaveBeenCalledWith(
-      expect.objectContaining({
-        variables: {
-          input: {
-            artworkIDs: [],
-            addToCollectionIDs: ["artwork-list-one"],
-          },
-        },
-      })
-    )
+    expect(submitMutation).toHaveBeenCalledTimes(0)
   })
 
   describe("Analytics", () => {

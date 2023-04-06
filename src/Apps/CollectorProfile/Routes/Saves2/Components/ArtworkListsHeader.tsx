@@ -2,10 +2,16 @@ import { FC, useState } from "react"
 import { Box, Text, Spacer, Button, Join } from "@artsy/palette"
 import { useToasts } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
-import { CreateNewListModalWizardQueryRenderer } from "./CreateNewListModal/CreateNewListModalWizard"
+import { CreateNewListModalWizard } from "./CreateNewListModal/CreateNewListModalWizard"
 import { ArtworkList } from "./CreateNewListModal/CreateNewListModal"
 
-export const ArtworkListsHeader: FC = () => {
+interface ArtworkListsHeaderProps {
+  savedArtworksCount: number
+}
+
+export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
+  savedArtworksCount,
+}) => {
   const { t } = useTranslation()
   const { sendToast } = useToasts()
   const [modalIsOpened, setModalIsOpened] = useState(false)
@@ -32,9 +38,10 @@ export const ArtworkListsHeader: FC = () => {
   return (
     <>
       {modalIsOpened && (
-        <CreateNewListModalWizardQueryRenderer
+        <CreateNewListModalWizard
           onComplete={handleComplete}
           onClose={handleClose}
+          savedArtworksCount={savedArtworksCount}
         />
       )}
 
