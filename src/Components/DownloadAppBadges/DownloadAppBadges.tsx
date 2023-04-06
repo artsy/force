@@ -1,5 +1,5 @@
 import { ContextModule } from "@artsy/cohesion"
-import { Flex, FlexProps } from "@artsy/palette"
+import { Flex, FlexProps, Spacer } from "@artsy/palette"
 import React from "react"
 import {
   Device,
@@ -20,30 +20,34 @@ export const DownloadAppBadges: React.FC<DownloadAppBadgesProps> = ({
 
   if (device === Device.Unknown) {
     return (
-      <Flex flexWrap="wrap" justifyContent="center" {...rest}>
+      <Flex
+        justifyContent="center"
+        alignItems="center"
+        flexDirection={["column", "column", "row"]}
+        {...rest}
+      >
         <DownloadAppBadge
           contextModule={contextModule}
           device={Device.iPhone}
           downloadAppUrl={DOWNLOAD_APP_URLS[Device.iPhone]}
-          mx={0.5}
-          mb={0.5}
         />
+
+        <Spacer x={1} y={1} />
 
         <DownloadAppBadge
           contextModule={contextModule}
           device={Device.Android}
           downloadAppUrl={DOWNLOAD_APP_URLS[Device.Android]}
-          mx={0.5}
         />
       </Flex>
     )
-  } else {
-    return (
-      <DownloadAppBadge
-        contextModule={contextModule}
-        device={device}
-        downloadAppUrl={downloadAppUrl}
-      />
-    )
   }
+
+  return (
+    <DownloadAppBadge
+      contextModule={contextModule}
+      device={device}
+      downloadAppUrl={downloadAppUrl}
+    />
+  )
 }

@@ -10,6 +10,7 @@ import {
   Column,
   Dropdown,
   Flex,
+  FullBleed,
   GridColumns,
   Image,
   Join,
@@ -20,7 +21,6 @@ import {
 import { useCCPARequest } from "Components/CCPARequest"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
-import { Jump } from "Utils/Hooks/useJump"
 import TwitterIcon from "@artsy/icons/TwitterIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import WeChatIcon from "@artsy/icons/WeChatIcon"
@@ -39,17 +39,16 @@ export const Footer: React.FC<FooterProps> = props => {
   }
 
   return (
-    <Box
-      id="download-app-banner"
-      borderTop="1px solid"
-      borderColor="black10"
-      {...props}
-    >
-      <Jump id="download-app-banner" />
-
+    <Box {...props}>
       <FooterDownloadAppBanner />
 
-      <footer>
+      <Spacer y={2} />
+
+      <FullBleed>
+        <Separator />
+      </FullBleed>
+
+      <Box as="footer">
         <GridColumns pt={4} pb={6} gridRowGap={[4, 0]}>
           <Column span={3}>
             <Text variant="sm-display" fontWeight="bold" mb={2}>
@@ -270,7 +269,7 @@ export const Footer: React.FC<FooterProps> = props => {
             </Join>
           </Flex>
         </Flex>
-      </footer>
+      </Box>
     </Box>
   )
 }
