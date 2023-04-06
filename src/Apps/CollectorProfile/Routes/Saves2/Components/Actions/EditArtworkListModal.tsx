@@ -10,7 +10,6 @@ import {
 import EditIcon from "@artsy/icons/EditIcon"
 import { useTranslation } from "react-i18next"
 import { Form, Formik } from "formik"
-import * as Yup from "yup"
 import { useUpdateArtworkList } from "./Mutations/useUpdateArtworkList"
 import createLogger from "Utils/logger"
 import { useTracking } from "react-tracking"
@@ -18,6 +17,7 @@ import { ActionType, EditedArtworkList, OwnerType } from "@artsy/cohesion"
 import {
   ArtworkListFormikValues,
   MAX_NAME_LENGTH,
+  validationSchema,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkListForm/ArtworkListForm"
 
 export interface EditArtworkListEntity {
@@ -42,12 +42,6 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
   const initialValues: ArtworkListFormikValues = {
     name: artworkList.name,
   }
-
-  const validationSchema = Yup.object().shape({
-    name: Yup.string()
-      .required(t("collectorSaves.editListModal.fields.name.required")) // TODO: confirm copy
-      .max(MAX_NAME_LENGTH),
-  })
 
   const { submitMutation } = useUpdateArtworkList()
 
