@@ -20,7 +20,6 @@ import {
 import { useCCPARequest } from "Components/CCPARequest"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
-import { Jump } from "Utils/Hooks/useJump"
 import TwitterIcon from "@artsy/icons/TwitterIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import WeChatIcon from "@artsy/icons/WeChatIcon"
@@ -39,14 +38,7 @@ export const Footer: React.FC<FooterProps> = props => {
   }
 
   return (
-    <Box
-      id="download-app-banner"
-      borderTop="1px solid"
-      borderColor="black10"
-      {...props}
-    >
-      <Jump id="download-app-banner" />
-
+    <Box {...props}>
       <FooterDownloadAppBanner />
 
       <footer>

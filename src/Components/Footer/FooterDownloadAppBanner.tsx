@@ -18,6 +18,7 @@ export const FooterDownloadAppBanner = () => {
   return (
     <GridColumns
       gridRowGap={1}
+      borderTop="1px solid"
       borderBottom="1px solid"
       borderColor="black10"
       pb={1}
