@@ -413,9 +413,9 @@ export const wireTransferArtsyBankDetails = order => {
           </Text>
           <Spacer y={1} />
           <Text>Account name: Art.sy Inc.</Text>
-          <Text>Account Number: 88005417</Text>
+          <Text>Account number: 88005417</Text>
           <Text>IBAN: GB30PNBP16567188005417</Text>
-          <Text>SWIFT: PNBPGB2L</Text>
+          <Text>International SWIFT: PNBPGB2L</Text>
           <Text>Sort Code: 16-56-71</Text>
           <Spacer y={2} />
           <Text
@@ -433,7 +433,10 @@ export const wireTransferArtsyBankDetails = order => {
           <Spacer y={2} />
           <Text color="#1023D7">
             Add order number #{order.code} to the notes section in your wire
-            transfer.
+            transfer. If your bank account is not in GBP, please reference
+            Artsy's intermediary bank ING Brussels (Intermediary Bank BIC/SWIFT:
+            NWBKGB2LXXX) along with Artsy's international SWIFT (PNBPGB2L) when
+            making payment. Ask your bank for further instructions.
           </Text>
         </>
       )
@@ -449,8 +452,9 @@ export const wireTransferArtsyBankDetails = order => {
           </Text>
           <Spacer y={1} />
           <Text>Account name: Art.sy Inc.</Text>
+          <Text>Account number: 88005419</Text>
           <Text>IBAN: GB73PNBP16567188005419</Text>
-          <Text>BIC: PNBPGB2LXXX</Text>
+          <Text>International SWIFT: PNBPGB2L</Text>
           <Spacer y={2} />
           <Text
             variant={["xs", "sm-display"]}
@@ -467,7 +471,10 @@ export const wireTransferArtsyBankDetails = order => {
           <Spacer y={2} />
           <Text color="#1023D7">
             Add order number #{order.code} to the notes section in your wire
-            transfer.
+            transfer. If your bank account is not in EUR, please reference
+            Artsy's intermediary bank ING Brussels (Intermediary Bank BIC/SWIFT:
+            BBRUBEBB010) along with Artsy's international SWIFT (PNBPGB2L) when
+            making payment. Ask your bank for further instructions.
           </Text>
         </>
       )
@@ -501,7 +508,10 @@ export const wireTransferArtsyBankDetails = order => {
           <Spacer y={2} />
           <Text color="#1023D7">
             Add order number #{order.code} to the notes section in your wire
-            transfer.
+            transfer. If your bank account is not in USD, please reference
+            Artsy's intermediary bank ING Brussels (Intermediary Bank BIC/SWIFT:
+            PNBPUS3NNYC) along with Artsy's international SWIFT (WFBIUS6S) when
+            making payment. Ask your bank for further instructions.
           </Text>
         </>
       )

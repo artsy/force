@@ -750,9 +750,9 @@ describe("Status", () => {
 
           expect(page.text()).toContain("Send wire transfer to")
           expect(page.text()).toContain("Account name: Art.sy Inc.")
-          expect(page.text()).toContain("Account Number: 88005417")
+          expect(page.text()).toContain("Account number: 88005417")
           expect(page.text()).toContain("IBAN: GB30PNBP16567188005417")
-          expect(page.text()).toContain("SWIFT: PNBPGB2L")
+          expect(page.text()).toContain("International SWIFT: PNBPGB2L")
           expect(page.text()).toContain("Sort Code: 16-56-71")
           expect(page.text()).toContain("Bank address")
           expect(page.text()).toContain("Wells Fargo Bank, N.A. London Branch")
@@ -774,8 +774,9 @@ describe("Status", () => {
 
           expect(page.text()).toContain("Send wire transfer to")
           expect(page.text()).toContain("Account name: Art.sy Inc.")
+          expect(page.text()).toContain("Account number: 88005419")
           expect(page.text()).toContain("IBAN: GB73PNBP16567188005419")
-          expect(page.text()).toContain("BIC: PNBPGB2LXXX")
+          expect(page.text()).toContain("International SWIFT: PNBPGB2L")
           expect(page.text()).toContain("Bank address")
           expect(page.text()).toContain("Wells Fargo Bank, N.A. London Branch")
           expect(page.text()).toContain("1 Planation Place")
