@@ -167,6 +167,7 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
             date: "2015",
             additionalInformation: "some description",
             href: "/artwork/bill-miles-beep-beep",
+            artistNames: "Artist Name",
             artist: {
               id: "artist-id",
               targetSupply: {
@@ -315,6 +316,7 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
             date: "2018",
             additionalInformation: "some description",
             href: "/artwork/emma-johnson-please-do-not-touch",
+            artistNames: "Artist Name",
             artist: {
               id: "artist-id",
               targetSupply: {

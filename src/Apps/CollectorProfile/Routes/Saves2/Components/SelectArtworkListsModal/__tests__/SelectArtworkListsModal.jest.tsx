@@ -322,7 +322,9 @@ const waitForModalToBePresented = () => {
 const artwork = {
   id: "artwork-id",
   internalID: "artwork-internal-id",
-  title: "Artwork Title, 2023",
+  title: "Artwork Title",
+  year: "2023",
+  artists: "Banksy",
   imageURL: null,
 }
 
