@@ -45,6 +45,8 @@ interface ArtworkEntity {
   id: string
   internalID: string
   title: string
+  year: string | null
+  artists: string | null
   imageURL: string | null
 }
 

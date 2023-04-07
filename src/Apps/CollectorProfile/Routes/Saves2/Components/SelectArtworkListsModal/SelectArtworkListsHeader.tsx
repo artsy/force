@@ -28,7 +28,11 @@ export const SelectArtworkListsHeader: FC = () => {
         <Flex flex={1} flexDirection="row" alignItems="center">
           <SavesEntityImage size={50} url={artwork.imageURL} />
           <Spacer x={1} />
-          <Text lineClamp={2}>{artwork.title}</Text>
+          <Text lineClamp={2}>
+            {artwork.artists && `${artwork.artists}, `}
+            <i>{artwork.title}</i>
+            {artwork.year && `, ${artwork.year}`}
+          </Text>
         </Flex>
 
         <Spacer x={[0, 1]} y={[2, 0]} />

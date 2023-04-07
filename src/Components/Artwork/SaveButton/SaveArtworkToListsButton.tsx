@@ -33,7 +33,9 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
       internalID: artwork.internalID,
       id: artwork.id,
       slug: artwork.slug,
-      title: `${artwork.title}, ${artwork.date}`,
+      title: artwork.title!,
+      year: artwork.date,
+      artists: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,
       isSavedToDefaultList,
       isSavedToCustomLists,
@@ -87,10 +89,10 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
         slug
         title
         date
+        artistNames
         preview: image {
           url(version: "square")
         }
-
         customCollections: collectionsConnection(
           first: 0
           default: false

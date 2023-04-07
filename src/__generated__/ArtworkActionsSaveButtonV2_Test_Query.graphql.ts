@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fa9cb381db5795529479792727c89350>>
+ * @generated SignedSource<<3466f3df91c2f55c6184a59b1e6e0bba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -130,6 +130,13 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "date",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "artistNames",
             "storageKey": null
           },
           {
@@ -270,7 +277,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3e7e55c6576b4bb0cdb6e7443a433675",
+    "cacheID": "6172a59faae0c01fe93ff7eabe7093cc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -280,6 +287,7 @@ return {
           "plural": false,
           "type": "Artwork"
         },
+        "artwork.artistNames": (v3/*: any*/),
         "artwork.customCollections": {
           "enumValues": null,
           "nullable": true,
@@ -331,7 +339,7 @@ return {
     },
     "name": "ArtworkActionsSaveButtonV2_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkActionsSaveButtonV2_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...ArtworkActionsSaveButtonV2_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButtonV2_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n}\n\nfragment ArtworkActionsWatchLotButton_artwork on Artwork {\n  sale {\n    isLiveOpen\n    isRegistrationClosed\n    liveStartAt\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n  ...ArtworkAuctionRegistrationPanel_artwork\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n"
+    "text": "query ArtworkActionsSaveButtonV2_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...ArtworkActionsSaveButtonV2_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButtonV2_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n}\n\nfragment ArtworkActionsWatchLotButton_artwork on Artwork {\n  sale {\n    isLiveOpen\n    isRegistrationClosed\n    liveStartAt\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n  ...ArtworkAuctionRegistrationPanel_artwork\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n"
   }
 };
 })();

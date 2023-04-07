@@ -9,6 +9,8 @@ type Artwork = {
   id: string
   slug: string
   title: string
+  year: string | null
+  artists: string | null
   imageURL: string | null
   isSavedToDefaultList: boolean
   isSavedToCustomLists: boolean
@@ -63,6 +65,8 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
         id: artwork.id,
         internalID: artwork.internalID,
         title: artwork.title,
+        year: artwork.year,
+        artists: artwork.artists,
         imageURL: artwork.imageURL,
       },
     })
