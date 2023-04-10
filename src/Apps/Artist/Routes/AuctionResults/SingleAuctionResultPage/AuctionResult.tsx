@@ -29,7 +29,7 @@ export const AuctionResult: React.FC<AuctionResultProps> = ({
         } | Auction Results on Artsy`}
       />
 
-      <AuctionResultBackLink auctionResult={auctionResult} />
+      <AuctionResultBackLink />
 
       <GridColumns mt={[0, 2]}>
         <Column span={4}>
@@ -93,7 +93,6 @@ export const AuctionResultFragmentContainer = createFragmentContainer(
             }
           }
         }
-        ...AuctionResultBackLink_auctionResult
         ...AuctionResultImage_auctionResult
         ...AuctionResultMetaData_auctionResult
         ...AuctionResultPrice_auctionResult

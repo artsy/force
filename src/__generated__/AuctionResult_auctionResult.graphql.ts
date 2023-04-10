@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34965f5693792ecf43997603d37d2906>>
+ * @generated SignedSource<<5fe8246cd90934933a5f322176467531>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,7 +23,7 @@ export type AuctionResult_auctionResult$data = {
     } | null> | null;
   } | null;
   readonly title: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"AuctionResultBackLink_auctionResult" | "AuctionResultImage_auctionResult" | "AuctionResultMetaData_auctionResult" | "AuctionResultPrice_auctionResult" | "AuctionResultTitleInfo_auctionResult">;
+  readonly " $fragmentSpreads": FragmentRefs<"AuctionResultImage_auctionResult" | "AuctionResultMetaData_auctionResult" | "AuctionResultPrice_auctionResult" | "AuctionResultTitleInfo_auctionResult">;
   readonly " $fragmentType": "AuctionResult_auctionResult";
 };
 export type AuctionResult_auctionResult$key = {
@@ -116,11 +116,6 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "AuctionResultBackLink_auctionResult"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
       "name": "AuctionResultImage_auctionResult"
     },
     {
@@ -143,6 +138,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "37755af0da4035a369d5cf2d61808844";
+(node as any).hash = "77474a33395b14e99df6ca230075357c";
 
 export default node;
