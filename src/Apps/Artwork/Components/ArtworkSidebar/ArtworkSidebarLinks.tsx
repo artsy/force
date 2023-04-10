@@ -43,6 +43,7 @@ const ArtworkSidebarLinks: React.FC<ArtworkSidebarLinksProps> = ({
           <Text variant="xs" color="black60">
             {t("artworkPage.sidebar.conditionsOfSale")}{" "}
             <RouterLink
+              inline
               to="/conditions-of-sale"
               onClick={trackClickedConditionsOfSale}
             >
@@ -54,7 +55,7 @@ const ArtworkSidebarLinks: React.FC<ArtworkSidebarLinksProps> = ({
       )}
       <Text variant="xs" color="black60">
         {t("artworkPage.sidebar.sellWithArtsy")}{" "}
-        <RouterLink to="/sell" onClick={trackClickedSellWithArtsy}>
+        <RouterLink inline to="/sell" onClick={trackClickedSellWithArtsy}>
           {t("artworkPage.sidebar.sellWithArtsyLink")}
         </RouterLink>
       </Text>

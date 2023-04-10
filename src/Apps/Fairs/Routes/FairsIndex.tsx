@@ -298,7 +298,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
               return (
                 <Text key={fair.internalID} my={2} variant="sm">
                   {fair.organizer?.profile?.href ? (
-                    <RouterLink to={fair.organizer.profile.href}>
+                    <RouterLink inline to={fair.organizer.profile.href}>
                       {fair.name}
                     </RouterLink>
                   ) : (

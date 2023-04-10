@@ -23,6 +23,7 @@ import { DisableFactorConfirmation } from "Apps/Settings/Routes/EditSettings/Com
 import { isArtsyEmail } from "./isArtsyEmail"
 import { OnCompleteRedirectModal, SmsSecondFactorModal } from "./Modal"
 import { CreateSmsSecondFactor } from "./Mutation/CreateSmsSecondFactor"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface SmsSecondFactorProps {
   me: SmsSecondFactor_me$data
@@ -172,9 +173,12 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
           method via 1Password (or your preferred password manager)."
           >
             You may find a detailed walkthrough{" "}
-            <a href="https://artsy.net/employees-mfa-instructions">
+            <RouterLink
+              inline
+              to="https://artsy.net/employees-mfa-instructions"
+            >
               here in Notion
-            </a>
+            </RouterLink>
             .
           </Message>
         )}

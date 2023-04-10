@@ -8,6 +8,7 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import styled from "styled-components"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface ErrorPageProps extends BoxProps {
   code: number | string
@@ -40,13 +41,15 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({
 
           <Text variant="sm-display" color="black60">
             Please contact{" "}
-            <a href="mailto:support@artsy.net">support@artsy.net</a> with any
-            questions.
+            <RouterLink inline to="mailto:support@artsy.net">
+              support@artsy.net
+            </RouterLink>{" "}
+            with any questions.
           </Text>
 
           {children ?? (
             <Text variant="sm-display" color="black60">
-              <a href="/">Go to Artsy Homepage</a>
+              <RouterLink to="/">Go to Artsy Homepage</RouterLink>
             </Text>
           )}
         </Column>

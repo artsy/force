@@ -59,7 +59,7 @@ const ArtistIconicCollectionsRail: React.FC<ArtistIconicCollectionsRailProps> = 
             <RouterLink
               to={`/collection/${marketingCollection.slug}`}
               key={index}
-              noUnderline
+              textDecoration="none"
               onClick={() => {
                 tracking.trackEvent({
                   action_type: DeprecatedAnalyticsSchema.ActionType.Click,

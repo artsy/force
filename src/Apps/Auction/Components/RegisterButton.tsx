@@ -206,7 +206,9 @@ const IdentityVerificationMessage = () => {
   return (
     <Text variant="sm">
       Identity verification required to bid.{" "}
-      <RouterLink to="/identity-verification-faq">FAQ</RouterLink>
+      <RouterLink inline to="/identity-verification-faq">
+        FAQ
+      </RouterLink>
     </Text>
   )
 }

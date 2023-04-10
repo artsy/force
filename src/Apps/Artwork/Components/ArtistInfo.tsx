@@ -90,7 +90,9 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
           totalExhibitions={artist.counts?.partnerShows ?? 0}
           exhibitions={compact(artist.exhibitionHighlights)}
           ViewAllLink={
-            <RouterLink to={`/artist/${artist.slug}/cv`}>View all</RouterLink>
+            <RouterLink inline to={`/artist/${artist.slug}/cv`}>
+              View all
+            </RouterLink>
           }
           Container={Container}
         />

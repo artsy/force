@@ -66,7 +66,7 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
               <Text color="black60" variant="xs" mb={1}>
                 Always complete purchases with our secure checkout in order to
                 be covered by{" "}
-                <RouterLink to="/buyer-guarantee" target="_blank">
+                <RouterLink inline to="/buyer-guarantee" target="_blank">
                   The Artsy Guarantee
                 </RouterLink>
                 .

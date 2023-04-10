@@ -1,5 +1,6 @@
 import { Button, Message, Spacer, Text } from "@artsy/palette"
 import * as React from "react"
+import { RouterLink } from "System/Router/RouterLink"
 
 export const CompleteFailed: React.FC = () => {
   return (
@@ -13,7 +14,10 @@ export const CompleteFailed: React.FC = () => {
         title="We’re sorry, we were not able to verify your identity."
       >
         For assistance, please contact Artsy verification support at{" "}
-        <a href="mailto:verification@artsy.net">verification@artsy.net</a>.
+        <RouterLink inline to="mailto:verification@artsy.net">
+          verification@artsy.net
+        </RouterLink>
+        .
       </Message>
 
       <Spacer y={2} />

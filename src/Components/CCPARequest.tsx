@@ -18,6 +18,7 @@ import * as Yup from "yup"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { graphql } from "react-relay"
 import { CCPARequestMutation } from "__generated__/CCPARequestMutation.graphql"
+import { RouterLink } from "System/Router/RouterLink"
 
 const logger = createLogger("Components/CCPARequest.tsx")
 
@@ -121,13 +122,15 @@ export const CCPARequest: FC<CCPARequestProps> = ({ onClose }) => {
           >
             <Text variant="sm">
               Our{" "}
-              <a target="_blank" href="/privacy">
+              <RouterLink inline target="_blank" to="/privacy">
                 Privacy Policy
-              </a>{" "}
+              </RouterLink>{" "}
               has the information we collect, how we use it, and why we use it.
               You can also email{" "}
-              <a href="mailto:privacy@artsy.net">privacy@artsy.net</a> for more
-              information or to submit a request.
+              <RouterLink inline to="mailto:privacy@artsy.net">
+                privacy@artsy.net
+              </RouterLink>{" "}
+              for more information or to submit a request.
             </Text>
 
             <Spacer y={4} />

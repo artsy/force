@@ -2,6 +2,7 @@ import { Expandable, Join, Spacer, Text } from "@artsy/palette"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { RouterLink } from "System/Router/RouterLink"
 
 export interface FAQProps {
   shouldTrackClickEvent?: boolean
@@ -57,21 +58,29 @@ export const FAQ: React.FC<FAQProps> = ({ shouldTrackClickEvent }) => {
           <p>
             If you are represented by a gallery, you can encourage them to
             partner with us by getting in touch at{" "}
-            <a href="mailto:partners@artsy.net">partners@artsy.net</a>.
+            <RouterLink inline to="mailto:partners@artsy.net">
+              partners@artsy.net
+            </RouterLink>
+            .
           </p>
           <p>
             If you’re looking for gallery representation, you might be
             interested in reading Artsy Editorial’s{" "}
-            <a
-              href="/article/artsy-editorial-artists-gallery-representation"
+            <RouterLink
+              inline
+              to="/article/artsy-editorial-artists-gallery-representation"
               target="_blank"
             >
               Gallery Representation Guide
-            </a>{" "}
+            </RouterLink>{" "}
             and{" "}
-            <a href="/series/working-artists-guide" target="_blank">
+            <RouterLink
+              inline
+              to="/series/working-artists-guide"
+              target="_blank"
+            >
               Working Artist’s Guide
-            </a>
+            </RouterLink>
             .
           </p>
         </TextItem>
@@ -82,9 +91,9 @@ export const FAQ: React.FC<FAQProps> = ({ shouldTrackClickEvent }) => {
       value: (
         <TextItem>
           Visit{" "}
-          <a href="https://partners.artsy.net" target="_blank">
+          <RouterLink inline to="https://partners.artsy.net" target="_blank">
             partners.artsy.net
-          </a>{" "}
+          </RouterLink>{" "}
           to apply to become a gallery partner and learn more about our
           marketplace plans.
         </TextItem>

@@ -48,13 +48,13 @@ const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
           <Spacer y={2} />
 
           <Text variant="sm">
-            <RouterLink to="/article/artsy-jobs-life-artsy">
+            <RouterLink inline to="/article/artsy-jobs-life-artsy">
               Life at Artsy
             </RouterLink>
 
             <br />
 
-            <RouterLink to="/article/artsy-jobs-engineering">
+            <RouterLink inline to="/article/artsy-jobs-engineering">
               Artsy Engineering
             </RouterLink>
           </Text>
@@ -63,29 +63,32 @@ const JobsApp: FC<JobsAppProps> = ({ viewer }) => {
 
           <Text variant="sm">
             Check us out on{" "}
-            <a
-              href="http://www.glassdoor.com/Overview/Working-at-Artsy-EI_IE793485.11,16.htm"
+            <RouterLink
+              inline
+              to="http://www.glassdoor.com/Overview/Working-at-Artsy-EI_IE793485.11,16.htm"
               target="_blank"
               rel="noopener noreferrer"
             >
               Glassdoor
-            </a>
+            </RouterLink>
             ,{" "}
-            <a
-              href="https://angel.co/artsy"
+            <RouterLink
+              inline
+              to="https://angel.co/artsy"
               target="_blank"
               rel="noopener noreferrer"
             >
               AngelList
-            </a>
+            </RouterLink>
             , and{" "}
-            <a
-              href="https://www.linkedin.com/company/artsyinc?trk=top_nav_home"
+            <RouterLink
+              inline
+              to="https://www.RouterLinkedin.com/company/artsyinc?trk=top_nav_home"
               target="_blank"
               rel="noopener noreferrer"
             >
               LinkedIn
-            </a>
+            </RouterLink>
           </Text>
         </Column>
       </GridColumns>

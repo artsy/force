@@ -426,7 +426,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     <>
       There was a problem getting shipping quotes. <br />
       Please contact{" "}
-      <RouterLink to={`mailto:orders@artsy.net`}>orders@artsy.net</RouterLink>.
+      <RouterLink inline to={`mailto:orders@artsy.net`}>
+        orders@artsy.net
+      </RouterLink>
+      .
     </>
   )
 

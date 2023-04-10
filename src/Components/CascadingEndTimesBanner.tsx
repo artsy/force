@@ -2,6 +2,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import { getENV } from "Utils/getENV"
 import { CascadingEndTimesBanner_sale$data } from "__generated__/CascadingEndTimesBanner_sale.graphql"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface CascadingEndTimesBannerProps {
   sale: CascadingEndTimesBanner_sale$data
@@ -25,9 +26,9 @@ const CascadingEndTimesBanner: React.FC<CascadingEndTimesBannerProps> = ({
       {!!helpArticleLink && (
         <>
           &nbsp;
-          <a target="_blank" href={helpArticleLink}>
+          <RouterLink inline target="_blank" to={helpArticleLink}>
             Learn More
-          </a>
+          </RouterLink>
         </>
       )}
     </FullBleedBanner>

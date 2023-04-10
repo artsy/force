@@ -22,7 +22,7 @@ export const MyBidsBidHeader: React.FC<MyBidsBidHeaderProps> = ({ sale }) => {
   return (
     <RouterLink
       to={auctionURL}
-      noUnderline
+      textDecoration="none"
       onClick={() => {
         trackEvent(
           clickedEntityGroup({

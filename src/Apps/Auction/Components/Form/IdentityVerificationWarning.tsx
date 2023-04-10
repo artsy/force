@@ -21,7 +21,12 @@ export const IdentityVerificationWarning: React.FC<{
 
       <Text variant="sm-display">
         To complete your registration, please confirm that you agree to the{" "}
-        <RouterLink color="black100" to="/conditions-of-sale" target="_blank">
+        <RouterLink
+          inline
+          color="black100"
+          to="/conditions-of-sale"
+          target="_blank"
+        >
           Conditions of Sale
         </RouterLink>
         {additionalText}.

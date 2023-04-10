@@ -10,6 +10,7 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { RouterLink } from "System/Router/RouterLink"
 import { AuctionFAQsDialog_viewer$data } from "__generated__/AuctionFAQsDialog_viewer.graphql"
 
 interface AuctionFAQsDialogProps {
@@ -51,7 +52,10 @@ const AuctionFAQsDialog: React.FC<AuctionFAQsDialogProps> = ({
       <Text variant="sm" mb={2}>
         How can we help you? Below are a few general categories to help you find
         the answers you’re looking for. Need more immediate assistance? Please{" "}
-        <a href="mailto:specialist@artsy.net">contact us</a>.
+        <RouterLink inline to="mailto:specialist@artsy.net">
+          contact us
+        </RouterLink>
+        .
       </Text>
 
       <Tabs>

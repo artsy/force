@@ -22,7 +22,7 @@ export const InquiryConfirmation: React.FC = () => {
 
       <Text variant="sm-display" my={2}>
         Conversation with the gallery will continue{" "}
-        <RouterLink to="/user/conversations" onClick={next}>
+        <RouterLink inline to="/user/conversations" onClick={next}>
           in the Inbox.
         </RouterLink>
       </Text>

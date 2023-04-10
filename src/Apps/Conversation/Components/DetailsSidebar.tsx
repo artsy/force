@@ -102,7 +102,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
           key={attachment!.id}
           to={attachment!.downloadURL}
           target="_blank"
-          noUnderline
+          textDecoration="none"
         >
           <Flex alignItems="center">
             <DocumentIcon mr={0.5} />
@@ -201,7 +201,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
           <RouterLink
             to={`https://support.artsy.net/hc/en-us/sections/360008203054-Contact-a-gallery`}
             target="_blank"
-            noUnderline
+            textDecoration="none"
           >
             <Flex alignItems="center" mb={1}>
               <QuestionCircleIcon mr={1} />

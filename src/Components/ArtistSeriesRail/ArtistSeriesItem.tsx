@@ -59,7 +59,7 @@ export const ArtistSeriesItem: React.FC<ArtistSeriesItemProps> = ({
     <RouterLink
       onClick={onClick}
       to={`/artist-series/${slug}`}
-      noUnderline
+      textDecoration="none"
       style={{ display: "block" }}
     >
       {image?.cropped?.src ? (

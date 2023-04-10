@@ -240,11 +240,14 @@ const IdentityVerificationApp: React.FC<Props> = ({
 
               <Text variant="xs" color="black60" textAlign="center">
                 Questions about identity verification? Read the{" "}
-                <RouterLink to="https://support.artsy.net/hc/en-us/articles/360062798613-How-to-Complete-Identity-Verification">
+                <RouterLink
+                  inline
+                  to="https://support.artsy.net/hc/en-us/articles/360062798613-How-to-Complete-Identity-Verification"
+                >
                   step by step instructions
                 </RouterLink>{" "}
                 or contact{" "}
-                <RouterLink to={"mailto:verification@artsy.net"}>
+                <RouterLink inline to={"mailto:verification@artsy.net"}>
                   verification@artsy.net
                 </RouterLink>
                 .

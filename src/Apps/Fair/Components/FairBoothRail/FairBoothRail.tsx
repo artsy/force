@@ -17,7 +17,7 @@ import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import {
   initialBoothFilterState,
   useBoothsFilterContext,
-} from "../BoothFilterContext"
+} from "Apps/Fair/Components/BoothFilterContext"
 import {
   paramsToSnakeCase,
   removeDefaultValues,
@@ -79,7 +79,7 @@ export const FairBoothRail: React.FC<FairBoothRailProps> = ({
             <Text as="h3" variant="lg-display">
               <RouterLink
                 to={link}
-                noUnderline
+                textDecoration="none"
                 onClick={() => tracking.trackEvent(tappedViewTrackingData)}
               >
                 {show.partner?.name || ""}

@@ -23,6 +23,7 @@ import { ConsignmentInquiryFormAbandonEditModal } from "Apps/Consign/Routes/Cons
 import { useState } from "react"
 import { TopContextBar } from "Components/TopContextBar"
 import { SPECIALISTS } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpecialistsData"
+import { RouterLink } from "System/Router/RouterLink"
 
 const logger = createLogger("ConsignmentInquiry/ConsignmentInquiry.tsx")
 
@@ -216,9 +217,13 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
               <Spacer y={4} />
               <Text color="black60" mb="1">
                 By continuing, you agree to{" "}
-                <a href="https://www.artsy.net/privacy" target="_blank">
+                <RouterLink
+                  inline
+                  to="https://www.artsy.net/privacy"
+                  target="_blank"
+                >
                   Privacy Policy
-                </a>
+                </RouterLink>
               </Text>
               <Button
                 data-testid="consignment-inquiry-send-button"

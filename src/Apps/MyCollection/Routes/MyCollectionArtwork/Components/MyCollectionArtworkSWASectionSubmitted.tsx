@@ -159,11 +159,16 @@ const SubmissionStatusModal: React.FC<SubmissionStatusModalProps> = ({
       </Text>
       <Text variant="sm-display" mb={2}>
         For more information, see our Collector Help Center article{" "}
-        <RouterLink to={article}>What items do you accept?</RouterLink>
+        <RouterLink inline to={article}>
+          What items do you accept?
+        </RouterLink>
       </Text>
       <Text variant="sm-display">
         Or get in touch with one of our specialists at{" "}
-        <RouterLink to={"mailto:sell@artsy.net"}>sell@artsy.net</RouterLink>.
+        <RouterLink inline to={"mailto:sell@artsy.net"}>
+          sell@artsy.net
+        </RouterLink>
+        .
       </Text>
     </ModalDialog>
   )

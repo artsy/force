@@ -196,7 +196,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
 
           <Text variant="sm-display" color="black60">
             {isOrderActive ? (
-              <RouterLink to={`/orders/${order.internalID}/status`}>
+              <RouterLink inline to={`/orders/${order.internalID}/status`}>
                 {order.code}
               </RouterLink>
             ) : (
@@ -238,11 +238,13 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
         <Text variant="xs" color="black60">
           Need Help?{" "}
           {isPrivateSale ? (
-            <RouterLink to="mailto:privatesales@artsy.net">
+            <RouterLink inline to="mailto:privatesales@artsy.net">
               privatesales@artsy.net
             </RouterLink>
           ) : (
-            <RouterLink to="mailto:support@artsy.net">Contact Us.</RouterLink>
+            <RouterLink inline to="mailto:support@artsy.net">
+              Contact Us.
+            </RouterLink>
           )}
         </Text>
       </Flex>

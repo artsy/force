@@ -11,6 +11,7 @@ import { AuthenticityCertificate_artwork$data } from "__generated__/Authenticity
 import { useState, FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { shouldRenderAuthenticityCertificate } from "Apps/Artwork/Utils/badges"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface AuthenticityCertificateProps {
   artwork: AuthenticityCertificate_artwork$data
@@ -79,13 +80,14 @@ export const AuthenticityCertificate: FC<AuthenticityCertificateProps> = ({
 
             <Text variant="sm">
               Read more about artwork authenticity in our{" "}
-              <a
-                href="https://support.artsy.net/hc/en-us/articles/360058123933-What-Counts-as-an-Artwork-s-Proof-of-Authenticity-"
+              <RouterLink
+                inline
+                to="https://support.artsy.net/hc/en-us/articles/360058123933-What-Counts-as-an-Artwork-s-Proof-of-Authenticity-"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 Help Center
-              </a>
+              </RouterLink>
               .
             </Text>
           </Flex>

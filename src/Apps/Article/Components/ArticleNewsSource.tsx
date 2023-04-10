@@ -1,7 +1,8 @@
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useArticleTracking } from "../useArticleTracking"
+import { useArticleTracking } from "Apps/Article/useArticleTracking"
 import { ArticleNewsSource_article$data } from "__generated__/ArticleNewsSource_article.graphql"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface ArticleNewsSourceProps {
   article: ArticleNewsSource_article$data
@@ -16,8 +17,9 @@ const ArticleNewsSource: FC<ArticleNewsSourceProps> = ({ article }) => {
         <>
           , via&nbsp;
           {article.newsSource.url ? (
-            <a
-              href={article.newsSource.url}
+            <RouterLink
+              inline
+              to={article.newsSource.url}
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => {
@@ -26,7 +28,7 @@ const ArticleNewsSource: FC<ArticleNewsSourceProps> = ({ article }) => {
               }}
             >
               {article.newsSource.title}
-            </a>
+            </RouterLink>
           ) : (
             article.newsSource.title
           )}

@@ -16,7 +16,7 @@ const AuctionInfoSidebar: React.FC<AuctionInfoSidebarProps> = ({ sale }) => {
       <Box>
         <Text variant="sm">Questions?</Text>
 
-        <RouterLink to="/how-auctions-work" target="_blank">
+        <RouterLink inline to="/how-auctions-work" target="_blank">
           <Text variant="sm">How to bid on Artsy?</Text>
         </RouterLink>
       </Box>
@@ -24,9 +24,9 @@ const AuctionInfoSidebar: React.FC<AuctionInfoSidebarProps> = ({ sale }) => {
       <Box>
         <Text variant="sm">Contact Us</Text>
 
-        <a href="mailto:specialist@artsy.net">
+        <RouterLink inline to="mailto:specialist@artsy.net">
           <Text variant="sm">specialist@artsy.net</Text>
-        </a>
+        </RouterLink>
         <Text variant="sm">+1-845-582-3967</Text>
       </Box>
     </Join>

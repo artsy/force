@@ -33,6 +33,7 @@ import { trackEvent } from "Server/analytics/helpers"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 import { TopContextBar } from "Components/TopContextBar"
+import { RouterLink } from "System/Router/RouterLink"
 
 const logger = createLogger("SubmissionFlow/ArtworkDetails.tsx")
 
@@ -255,13 +256,14 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
 
       <Text mt={1} variant="sm" color="black60">
         &#8226; Currently, artists can not sell their own work on Artsy.{" "}
-        <a
-          href="https://support.artsy.net/hc/en-us/articles/360046646374-I-m-an-artist-Can-I-submit-my-own-work-to-sell-"
+        <RouterLink
+          inline
+          to="https://support.artsy.net/hc/en-us/articles/360046646374-I-m-an-artist-Can-I-submit-my-own-work-to-sell-"
           target="_blank"
           data-testid="learn-more-anchor"
         >
           Learn More.
-        </a>
+        </RouterLink>
       </Text>
       <Text mb={[4, 6]} variant="sm" color="black60">
         &#8226; All fields are required to submit a work.

@@ -8,6 +8,7 @@ import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
 import { getConsignSubmissionUrl } from "./Utils/getConsignSubmissionUrl"
 import { Masonry } from "Components/Masonry"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface ArtistConsignFAQProps {
   artist: ArtistConsignFAQ_artist$data
@@ -41,7 +42,8 @@ const ArtistConsignFAQ: React.FC<ArtistConsignFAQProps> = props => {
                   your work sells. Artsy specialists guide you along the way and
                   help you choose the right sales strategy. To get started,
                   submit works you’re interested in selling{" "}
-                  <a
+                  <RouterLink
+                    inline
                     data-test="submitOnFAQ"
                     onClick={() => {
                       tracking.trackEvent({
@@ -53,13 +55,13 @@ const ArtistConsignFAQ: React.FC<ArtistConsignFAQProps> = props => {
                             .SubmitWorksInterestedInSelling,
                       })
                     }}
-                    href={getConsignSubmissionUrl({
+                    to={getConsignSubmissionUrl({
                       contextPath: props.artist.href || "",
                       subject: DeprecatedAnalyticsSchema.Subject.Here,
                     })}
                   >
                     here
-                  </a>
+                  </RouterLink>
                   .
                 </>
               }
@@ -126,9 +128,11 @@ const ArtistConsignFAQ: React.FC<ArtistConsignFAQProps> = props => {
                 <>
                   If you wish to edit your submission or update missing
                   information, please email us at{" "}
-                  <a href="mailto:sell@artsty.net">sell@artsty.net</a> with your
-                  submission ID number, and we will update the submission on
-                  your behalf.
+                  <RouterLink inline to="mailto:sell@artsty.net">
+                    sell@artsty.net
+                  </RouterLink>{" "}
+                  with your submission ID number, and we will update the
+                  submission on your behalf.
                 </>
               }
             />
@@ -138,7 +142,10 @@ const ArtistConsignFAQ: React.FC<ArtistConsignFAQProps> = props => {
               answer={
                 <>
                   Contact us at{" "}
-                  <a href="mailto:sell@artsty.net">sell@artsty.net</a>.
+                  <RouterLink inline to="mailto:sell@artsty.net">
+                    sell@artsty.net
+                  </RouterLink>
+                  .
                 </>
               }
             />

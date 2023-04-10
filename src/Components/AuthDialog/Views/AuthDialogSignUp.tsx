@@ -22,6 +22,7 @@ import { isTouch } from "Utils/device"
 import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialogTracking"
 import { AuthDialogSignUpPlaceholder } from "Components/AuthDialog/Components/AuthDialogSignUpPlaceholder"
 import { useCountryCode } from "Components/AuthDialog/Hooks/useCountryCode"
+import { RouterLink } from "System/Router/RouterLink"
 
 export const AuthDialogSignUp: FC = () => {
   const {
@@ -189,13 +190,13 @@ export const AuthDialogSignUp: FC = () => {
               <Text variant="xs" color="black60" textAlign="center">
                 By {isTouch ? "tapping" : "clicking"} Sign Up or Continue with
                 Apple, Google, or Facebook, you agree to Artsy’s{" "}
-                <a href="/terms" target="_blank">
+                <RouterLink inline to="/terms" target="_blank">
                   Terms of Use
-                </a>{" "}
+                </RouterLink>{" "}
                 and{" "}
-                <a href="/privacy" target="_blank">
+                <RouterLink inline to="/privacy" target="_blank">
                   Privacy Policy
-                </a>
+                </RouterLink>
                 {isAutomaticallySubscribed && (
                   <> and to receiving emails from Artsy</>
                 )}
@@ -204,21 +205,23 @@ export const AuthDialogSignUp: FC = () => {
 
               <Text variant="xs" color="black60" textAlign="center">
                 This site is protected by reCAPTCHA and the{" "}
-                <a
-                  href="https://policies.google.com/privacy"
+                <RouterLink
+                  inline
+                  to="https://policies.google.com/privacy"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   Google Privacy Policy
-                </a>{" "}
+                </RouterLink>{" "}
                 and{" "}
-                <a
-                  href="https://policies.google.com/terms"
+                <RouterLink
+                  inline
+                  to="https://policies.google.com/terms"
                   target="_blank"
                   rel="noopener noreferrer"
                 >
                   Terms of Service
-                </a>{" "}
+                </RouterLink>{" "}
                 apply.
               </Text>
             </Join>

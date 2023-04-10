@@ -46,14 +46,16 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
           </Text>
 
           <Text mb={1} variant="sm">
-            <RouterLink to={partnerHref}>{credit}</RouterLink>
+            <RouterLink inline to={partnerHref}>
+              {credit}
+            </RouterLink>
           </Text>
 
           <HTML html={text!} variant="sm" />
 
           <Spacer y={2} />
 
-          <RouterLink to={`/artist/${artist.slug}/cv`}>
+          <RouterLink inline to={`/artist/${artist.slug}/cv`}>
             {t("artistPage.overview.cvLink")}
           </RouterLink>
 

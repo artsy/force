@@ -1,5 +1,6 @@
 import { Text, TextProps } from "@artsy/palette"
 import * as React from "react"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface Props {
   textProps?: Partial<TextProps>
@@ -14,14 +15,15 @@ export const ConditionsOfSaleDisclaimer: React.FC<Props> = ({
     return (
       <Text variant="sm" color="black60" {...textProps}>
         By clicking Complete Purchase, I agree to the{" "}
-        <a
+        <RouterLink
+          inline
           style={{ textDecoration: "underline", color: "#000" }}
-          href="/private-sales-conditions-of-sale"
+          to="/private-sales-conditions-of-sale"
           target="_blank"
           rel="noopener noreferrer"
         >
           Artsy Private Sales LLC Conditions of Sale
-        </a>{" "}
+        </RouterLink>{" "}
         and any Additional Conditions of Sale specified on this page and in the
         order confirmation email.
       </Text>
@@ -31,9 +33,9 @@ export const ConditionsOfSaleDisclaimer: React.FC<Props> = ({
   return (
     <Text variant="xs" color="black60" {...textProps}>
       By clicking Submit, I agree to Artsy’s{" "}
-      <a href="/conditions-of-sale" target="_blank">
+      <RouterLink inline to="/conditions-of-sale" target="_blank">
         Conditions of Sale.
-      </a>
+      </RouterLink>
     </Text>
   )
 }

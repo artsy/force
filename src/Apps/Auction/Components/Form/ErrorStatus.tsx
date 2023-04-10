@@ -1,6 +1,7 @@
 import { Banner, BannerProps, Flex, Text } from "@artsy/palette"
 import { errorMessageForBidding } from "Apps/Auction/Components/Form/Utils/errorMessages"
 import { useFormContext } from "Apps/Auction/Hooks/useFormContext"
+import { RouterLink } from "System/Router/RouterLink"
 
 export const ErrorStatus = () => {
   const { status } = useFormContext()
@@ -70,7 +71,9 @@ export const ErrorStatus = () => {
           message: (
             <>
               Something went wrong. Please try again or contact{" "}
-              <a href="mailto:support@artsy.net">support@artsy.net</a>
+              <RouterLink inline to="mailto:support@artsy.net">
+                support@artsy.net
+              </RouterLink>
             </>
           ),
         }
