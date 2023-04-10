@@ -1,6 +1,6 @@
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
-import sanitizeRedirect from "Server/passport/sanitize-redirect"
 import { isStaticAuthRoute } from "./isStaticAuthRoute"
+import { sanitizeRedirect } from "Utils/sanitizeRedirect"
 
 export const checkForRedirect = ({
   req,

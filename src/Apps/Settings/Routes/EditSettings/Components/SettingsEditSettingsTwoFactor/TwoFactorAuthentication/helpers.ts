@@ -1,6 +1,6 @@
 import { getClientParam } from "Utils/getClientParam"
+import { sanitizeRedirect } from "Utils/sanitizeRedirect"
 import { getURLHost } from "Utils/url"
-import sanitizeRedirect from "Server/passport/sanitize-redirect"
 
 export const afterUpdateRedirect = () => {
   const afterUpdateURL = getClientParam("after_update")
