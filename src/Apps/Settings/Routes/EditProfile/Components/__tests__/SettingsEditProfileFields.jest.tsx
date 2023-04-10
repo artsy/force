@@ -135,12 +135,12 @@ describe("SettingsEditProfileFields", () => {
       expect(screen.getByText("Verify Your ID")).toBeInTheDocument()
       const faqLink = screen.getByText("FAQs")
       expect(faqLink).toHaveAttribute(
-        "to",
+        "href",
         expect.stringContaining("/identity-verification-faq")
       )
       const mailLink = screen.getByText("verification@artsy.net")
       expect(mailLink).toHaveAttribute(
-        "to",
+        "href",
         expect.stringContaining("mailto:verification@artsy.net")
       )
     })
