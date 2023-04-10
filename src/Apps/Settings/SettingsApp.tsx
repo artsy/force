@@ -63,7 +63,7 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
       <MetaTags title="Settings | Artsy" />
 
       <>
-        <Breadcrumbs py={1}>
+        <Breadcrumbs py={[2, 1]}>
           <Link to="/collector-profile/my-collection">
             <Flex flexDirection="row" alignItems="center" minHeight={30}>
               <ChevronIcon
@@ -78,7 +78,8 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
             </Flex>
           </Link>
         </Breadcrumbs>
-        <Spacer y={6} />
+
+        <Spacer y={4} />
       </>
 
       <RouteTabs my={SETTINGS_ROUTE_TABS_MARGIN}>
