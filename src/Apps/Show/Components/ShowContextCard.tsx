@@ -80,8 +80,12 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
           </Column>
         )}
         <Column span={6}>
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-          <StyledLink noUnderline to={fair.href} onClick={handleClick}>
+          <StyledLink
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            to={fair.href}
+            textDecoration="none"
+            onClick={handleClick}
+          >
             {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
             <FairCard fair={fair} />
 
@@ -143,8 +147,12 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
           <Text variant="lg-display">Presented by {partnerName}</Text>
         </Column>
         <Column span={6}>
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-          <StyledLink to={partnerHref} noUnderline onClick={handleClick}>
+          <StyledLink
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            to={partnerHref}
+            textDecoration="none"
+            onClick={handleClick}
+          >
             <TriptychCard
               title={partnerName}
               subtitle={locationNames}

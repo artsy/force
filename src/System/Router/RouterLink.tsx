@@ -22,13 +22,11 @@ export type RouterLinkProps = Omit<
      */
     to: string | null
     textDecoration?: ResponsiveValue<string>
-    /** @deprecated Use `textDecoration` */
-    noUnderline?: boolean
     inline?: boolean
   }
 
 export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
-  ({ inline, to, noUnderline, ...rest }, ref) => {
+  ({ inline, to, ...rest }, ref) => {
     const context = useContext(RouterContext)
     const routes = context?.router?.matcher?.routeConfig ?? []
     const matcher = context?.router?.matcher
@@ -37,28 +35,11 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
       [matcher, routes, to]
     )
 
-    // TODO: Bulk replace
-    const deprecated = noUnderline ? { textDecoration: "none" } : {}
-
     if (isSupportedInRouter) {
-      return (
-        <RouterAwareLink
-          inline={inline}
-          to={to ?? ""}
-          {...deprecated}
-          {...rest}
-        />
-      )
+      return <RouterAwareLink inline={inline} to={to ?? ""} {...rest} />
     }
 
-    return (
-      <RouterUnawareLink
-        inline={inline}
-        href={to ?? ""}
-        {...deprecated}
-        {...rest}
-      />
-    )
+    return <RouterUnawareLink inline={inline} href={to ?? ""} {...rest} />
   }
 )
 
@@ -96,10 +77,10 @@ export const RouterAwareLink: React.FC<LinkPropsSimple & RouterLinkMixinProps> =
     },
   })`
     :hover {
-      color: ${props => (props.inline ? themeGet("colors.blue100") : null)};
+      color: ${props => props.inline && themeGet("colors.blue100")};
     }
     :visited {
-      color: ${props => (props.inline ? themeGet("colors.blue150") : null)};
+      color: ${props => props.inline && themeGet("colors.blue150")};
     }
     ${routerLinkMixin}
   `
@@ -113,10 +94,10 @@ export const RouterUnawareLink: React.FC<
     shouldForwardProp: (prop, defaultValidatorFn) => defaultValidatorFn(prop),
   })`
     :hover {
-      color: ${props => (props.inline ? themeGet("colors.blue100") : null)};
+      color: ${props => props.inline && themeGet("colors.blue100")};
     }
     :visited {
-      color: ${props => (props.inline ? themeGet("colors.blue150") : null)};
+      color: ${props => props.inline && themeGet("colors.blue150")};
     }
     ${routerLinkMixin}
   `
