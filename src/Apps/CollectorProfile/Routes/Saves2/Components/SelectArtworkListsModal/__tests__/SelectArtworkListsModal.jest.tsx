@@ -83,8 +83,9 @@ describe("SelectArtworkListsModal", () => {
 
     await waitForModalToBePresented()
 
-    const entity = screen.getByText("Artwork Title, 2023")
-    expect(entity).toBeInTheDocument()
+    expect(screen.getByText(/Banksy/)).toBeInTheDocument()
+    expect(screen.getByText(/Artwork Title/)).toBeInTheDocument()
+    expect(screen.getByText(/2023/)).toBeInTheDocument()
   })
 
   it("should render collections", async () => {
