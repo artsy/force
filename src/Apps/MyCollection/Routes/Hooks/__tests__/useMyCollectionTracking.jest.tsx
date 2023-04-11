@@ -79,12 +79,13 @@ describe("useMyCollectionTracking", () => {
   })
 
   it("#saveCollectedArtwork", () => {
-    setupHook().saveCollectedArtwork()
+    setupHook().saveCollectedArtwork("artist-id")
 
     expect(trackingSpy).toBeCalledWith({
       action: "saveCollectedArtwork",
       context_module: "myCollectionHome",
       context_owner_type: "myCollection",
+      artist_id: "artist-id",
       platform: "web",
     })
   })

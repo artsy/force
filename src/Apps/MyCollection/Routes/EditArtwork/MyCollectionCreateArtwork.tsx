@@ -102,7 +102,7 @@ export const MyCollectionCreateArtwork: React.FC<MyCollectionCreateArtworkProps>
     try {
       const artwork = await createOrUpdateArtwork(values)
 
-      trackSaveCollectedArtwork()
+      trackSaveCollectedArtwork(values.artistId)
 
       // Store images locally
       localImages.forEach((image, index) => {
