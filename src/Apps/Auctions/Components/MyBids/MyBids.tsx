@@ -82,7 +82,7 @@ const MyBids: React.FC<MyBidsProps> = props => {
                     <Box py={1} px={2}>
                       <RouterLink
                         to={auctionURL}
-                        noUnderline
+                        textDecoration="none"
                         data-test="registeredOnlyButton"
                         onClick={() => {
                           trackEvent(

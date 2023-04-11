@@ -147,8 +147,10 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
             <>
               Please allow 5–7 business days for the refund to appear on your
               bank statement. Contact{" "}
-              <a href="mailto:orders@artsy.net">orders@artsy.net</a> with any
-              questions.
+              <RouterLink inline to="mailto:orders@artsy.net">
+                orders@artsy.net
+              </RouterLink>{" "}
+              with any questions.
             </>
           ),
         }
@@ -183,8 +185,10 @@ export const canceledOfferOrderCopy = (order, logger?): StatusPageConfig => {
             decision to end the negotiation process.
             <Spacer y={2} />
             We’d love to get your feedback. Contact{" "}
-            <a href="mailto:orders@artsy.net">orders@artsy.net</a> with any
-            comments you have.
+            <RouterLink inline to="mailto:orders@artsy.net">
+              orders@artsy.net
+            </RouterLink>{" "}
+            with any comments you have.
           </>
         ),
         showTransactionSummary: false,
@@ -334,7 +338,7 @@ export const approvedDescription = (
       <Text color="black100">
         You will receive an email from our team with next steps. If you have any
         questions about your purchase, email us at{" "}
-        <RouterLink to="privatesales@artsy.net">
+        <RouterLink inline to="privatesales@artsy.net">
           privatesales@artsy.net.
         </RouterLink>
       </Text>
@@ -386,7 +390,7 @@ export const processingApprovalDescription = (
       <Text color="black100">
         You will receive an email from our team with next steps. If you have any
         questions about your purchase, email us at{" "}
-        <RouterLink to="privatesales@artsy.net">
+        <RouterLink inline to="privatesales@artsy.net">
           privatesales@artsy.net.
         </RouterLink>
       </Text>

@@ -55,7 +55,11 @@ export const RelatedCollectionEntity: React.FC<RelatedCollectionEntityProps> = (
 
   return (
     <Box>
-      <RouterLink to={`/collection/${slug}`} onClick={onLinkClick} noUnderline>
+      <RouterLink
+        to={`/collection/${slug}`}
+        onClick={onLinkClick}
+        textDecoration="none"
+      >
         <Flex alignItems="flex-end" mb={1}>
           {artworks.every(artwork => !!artwork.image) ? (
             artworks.map((artwork, index) => {

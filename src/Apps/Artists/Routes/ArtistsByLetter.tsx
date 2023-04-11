@@ -92,7 +92,7 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
           </Text>
 
           <Breadcrumbs>
-            <RouterLink to="/artists" noUnderline>
+            <RouterLink to="/artists" textDecoration="none">
               Artists
             </RouterLink>
 

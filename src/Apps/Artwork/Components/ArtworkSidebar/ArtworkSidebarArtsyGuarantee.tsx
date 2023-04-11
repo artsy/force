@@ -8,6 +8,7 @@ import {
   VerifiedIcon,
 } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
+import { RouterLink } from "System/Router/RouterLink"
 
 export const ArtworkSidebarArtsyGuarantee: React.FC<{}> = () => {
   const { t } = useTranslation()
@@ -45,15 +46,16 @@ export const ArtworkSidebarArtsyGuarantee: React.FC<{}> = () => {
         </Flex>
         <Spacer y={1} />
       </Text>
-      <a
-        href="https://artsy.net/buyer-guarantee"
+      <RouterLink
+        inline
+        to="/buyer-guarantee"
         target="_blank"
         rel="noopener noreferrer"
       >
-        <Text variant="xs" color="black60">
+        <Text variant="xs">
           {t("artworkPage.sidebar.artsyGuarantee.learnMore")}
         </Text>
-      </a>
+      </RouterLink>
     </>
   )
 }

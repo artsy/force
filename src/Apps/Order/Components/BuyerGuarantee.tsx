@@ -2,13 +2,13 @@ import { ActionType, ContextModule } from "@artsy/cohesion"
 import {
   CircleBlackCheckIcon,
   Flex,
-  Link,
   Text,
   StackableBorderBox,
   Spacer,
 } from "@artsy/palette"
 import * as React from "react"
 import { useTracking } from "react-tracking"
+import { RouterLink } from "System/Router/RouterLink"
 
 export const BUYER_GUARANTEE_URL =
   "https://support.artsy.net/hc/en-us/articles/360048946973-How-does-Artsy-protect-me"
@@ -49,14 +49,15 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
         {renderArtsyPrivateSaleConditions && (
           <Text variant="sm" color="black60">
             This purchase is subject to{" "}
-            <a
+            <RouterLink
+              inline
               style={{ textDecoration: "underline", color: "#000" }}
-              href="/private-sales-conditions-of-sale"
+              to="/private-sales-conditions-of-sale"
               target="_blank"
               rel="noopener noreferrer"
             >
               Artsy Private Sales LLC Conditions of Sale
-            </a>
+            </RouterLink>
           </Text>
         )}
 
@@ -87,14 +88,15 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
           </Text>
           <Text variant="xs" color="black60">
             Learn more about{" "}
-            <Link
+            <RouterLink
+              inline
               target="_blank"
               rel="noopener noreferrer"
-              href={BUYER_GUARANTEE_URL}
+              to={BUYER_GUARANTEE_URL}
               onClick={handleClick}
             >
               Artsy’s buyer protection.
-            </Link>
+            </RouterLink>
           </Text>
         </Flex>
       </Flex>

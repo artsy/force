@@ -136,9 +136,7 @@ describe("SettingsEditProfileFields", () => {
       const faqLink = screen.getByText("FAQs")
       expect(faqLink).toHaveAttribute(
         "href",
-        expect.stringContaining(
-          "https://www.artsy.net/identity-verification-faq"
-        )
+        expect.stringContaining("/identity-verification-faq")
       )
       const mailLink = screen.getByText("verification@artsy.net")
       expect(mailLink).toHaveAttribute(

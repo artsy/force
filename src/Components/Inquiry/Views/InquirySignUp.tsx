@@ -4,10 +4,10 @@ import { useState } from "react"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { EnableRecaptcha } from "Utils/EnableRecaptcha"
 import { wait } from "Utils/wait"
-import { useInquiryContext } from "../Hooks/useInquiryContext"
-import { useArtworkInquiryRequest } from "../Hooks/useArtworkInquiryRequest"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
 import { signUp } from "Utils/auth"
-import { logger } from "../util"
+import { logger } from "Components/Inquiry/util"
 import {
   ActionType,
   AuthModalType,
@@ -17,6 +17,7 @@ import {
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { useMode } from "Utils/Hooks/useMode"
+import { RouterLink } from "System/Router/RouterLink"
 
 type Mode = "Pending" | "Loading" | "Error" | "Done" | "Success"
 
@@ -163,37 +164,39 @@ export const InquirySignUp: React.FC = () => {
 
         <Text variant="xs" color="black60">
           By signing up, you agree to our{" "}
-          <a href="/terms" target="_blank">
+          <RouterLink inline to="/terms" target="_blank">
             Terms of Use
-          </a>
+          </RouterLink>
           ,{" "}
-          <a href="/privacy" target="_blank">
+          <RouterLink inline to="/privacy" target="_blank">
             Privacy Policy
-          </a>
+          </RouterLink>
           ,{" "}
-          <a href="/conditions-of-sale" target="_blank">
+          <RouterLink inline to="/conditions-of-sale" target="_blank">
             Conditions of Sale
-          </a>{" "}
+          </RouterLink>{" "}
           and to receiving emails from Artsy.
         </Text>
 
         <Text variant="xs" color="black60" mt={1}>
           This site is protected by reCAPTCHA and the{" "}
-          <a
-            href="https://policies.google.com/privacy"
+          <RouterLink
+            inline
+            to="https://policies.google.com/privacy"
             target="_blank"
             rel="noopener noreferrer"
           >
             Google Privacy Policy
-          </a>{" "}
+          </RouterLink>{" "}
           and{" "}
-          <a
-            href="https://policies.google.com/terms"
+          <RouterLink
+            inline
+            to="https://policies.google.com/terms"
             target="_blank"
             rel="noopener noreferrer"
           >
             Terms of Service
-          </a>{" "}
+          </RouterLink>{" "}
           apply.
         </Text>
       </Box>

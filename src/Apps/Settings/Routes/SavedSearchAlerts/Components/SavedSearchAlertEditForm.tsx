@@ -191,7 +191,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                     mt={2}
                   >
                     To receive Email Alerts, please update{" "}
-                    <RouterLink to="/unsubscribe">
+                    <RouterLink inline to="/unsubscribe">
                       your email preferences
                     </RouterLink>
                     .

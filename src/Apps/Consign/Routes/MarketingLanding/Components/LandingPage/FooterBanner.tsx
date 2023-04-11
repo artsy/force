@@ -7,7 +7,7 @@ export const FooterBanner: React.FC = () => {
     <Box display={["none", "block"]}>
       <FullBleedBanner dismissable={false} variant="defaultLight">
         Gallery or art dealer?{" "}
-        <RouterLink to="https://partners.artsy.net">
+        <RouterLink inline to="https://partners.artsy.net">
           Become a partner
         </RouterLink>{" "}
         to access the world’s largest online marketplace.

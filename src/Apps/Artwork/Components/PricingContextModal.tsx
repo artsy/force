@@ -87,7 +87,7 @@ export class PricingContextModal extends Component<State> {
 
             <Text variant="sm">
               Artwork prices are affected by{" "}
-              <RouterLink to="/article/artsy-editorial-artworks-prices">
+              <RouterLink inline to="/article/artsy-editorial-artworks-prices">
                 a variety of objective and subjective factors
               </RouterLink>{" "}
               including the artist's relative position in the art market and the
@@ -95,7 +95,10 @@ export class PricingContextModal extends Component<State> {
               factors are unique to every artwork. As such, this feature is not
               intended to provide pricing guidance for the artwork being viewed.
               If you have feedback or questions{" "}
-              <a href="mailto:support@artsy.net">let us know</a>.
+              <RouterLink inline to="mailto:support@artsy.net">
+                let us know
+              </RouterLink>
+              .
             </Text>
           </ModalDialog>
         )}

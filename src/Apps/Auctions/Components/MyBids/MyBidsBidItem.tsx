@@ -36,7 +36,7 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
     <RouterLink
       display="block"
       to={`/artwork/${saleArtwork.slug}`}
-      noUnderline
+      textDecoration="none"
       onClick={() => {
         trackEvent(
           trackHelpers.clickedArtworkGroup(

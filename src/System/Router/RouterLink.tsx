@@ -5,6 +5,7 @@ import { BoxProps, boxMixin } from "@artsy/palette"
 import styled from "styled-components"
 import { compose, ResponsiveValue, system } from "styled-system"
 import { useMemo } from "react"
+import { themeGet } from "@styled-system/theme-get"
 
 /**
  * Wrapper component around found's <Link> component with a fallback to a normal
@@ -21,12 +22,11 @@ export type RouterLinkProps = Omit<
      */
     to: string | null
     textDecoration?: ResponsiveValue<string>
-    /** @deprecated Use `textDecoration` */
-    noUnderline?: boolean
+    inline?: boolean
   }
 
 export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
-  ({ to, noUnderline, ...rest }, ref) => {
+  ({ inline, to, ...rest }, ref) => {
     const context = useContext(RouterContext)
     const routes = context?.router?.matcher?.routeConfig ?? []
     const matcher = context?.router?.matcher
@@ -35,14 +35,11 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
       [matcher, routes, to]
     )
 
-    // TODO: Bulk replace
-    const deprecated = noUnderline ? { textDecoration: "none" } : {}
-
     if (isSupportedInRouter) {
-      return <RouterAwareLink to={to ?? ""} {...deprecated} {...rest} />
+      return <RouterAwareLink inline={inline} to={to ?? ""} {...rest} />
     }
 
-    return <RouterUnawareLink href={to ?? ""} {...deprecated} {...rest} />
+    return <RouterUnawareLink inline={inline} href={to ?? ""} {...rest} />
   }
 )
 
@@ -53,6 +50,7 @@ const routerLinkMixin = compose(boxMixin, textDecoration)
 
 type RouterLinkMixinProps = BoxProps & {
   textDecoration?: ResponsiveValue<string>
+  inline?: boolean
 }
 
 const VALID_ROUTER_LINK_PROPS = [
@@ -78,6 +76,12 @@ export const RouterAwareLink: React.FC<LinkPropsSimple & RouterLinkMixinProps> =
       return defaultValidatorFn(prop) || routerLinkValidator(prop)
     },
   })`
+    :hover {
+      color: ${props => props.inline && themeGet("colors.blue100")};
+    }
+    :visited {
+      color: ${props => props.inline && themeGet("colors.blue150")};
+    }
     ${routerLinkMixin}
   `
 
@@ -89,5 +93,11 @@ export const RouterUnawareLink: React.FC<
   styled.a.withConfig({
     shouldForwardProp: (prop, defaultValidatorFn) => defaultValidatorFn(prop),
   })`
+    :hover {
+      color: ${props => props.inline && themeGet("colors.blue100")};
+    }
+    :visited {
+      color: ${props => props.inline && themeGet("colors.blue150")};
+    }
     ${routerLinkMixin}
   `

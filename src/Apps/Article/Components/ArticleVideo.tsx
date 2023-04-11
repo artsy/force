@@ -178,7 +178,7 @@ const ArticleVideo: FC<ArticleVideoProps> = ({ article }) => {
               <Text variant="lg-display">
                 More in{" "}
                 {article.seriesArticle ? (
-                  <RouterLink to={article.seriesArticle.href}>
+                  <RouterLink inline to={article.seriesArticle.href}>
                     {article.seriesArticle.title}
                   </RouterLink>
                 ) : (

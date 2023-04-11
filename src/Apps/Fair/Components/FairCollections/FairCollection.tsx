@@ -83,7 +83,7 @@ export const FairCollection: React.FC<FairCollectionProps> = ({
   return (
     <RouterLink
       to={`/collection/${collection.slug}`}
-      noUnderline
+      textDecoration="none"
       onClick={() => tracking.trackEvent(collectionTrackingData)}
       display="block"
     >

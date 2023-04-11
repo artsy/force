@@ -159,6 +159,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
               <Text variant="xs" color="black60">
                 By continuing, you agree to{" "}
                 <RouterLink
+                  inline
                   color="black60"
                   to="/privacy"
                   target="_blank"

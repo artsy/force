@@ -264,14 +264,15 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
               )}
               <Text variant="sm" mt={1} color="black60">
                 For details, see{" "}
-                <a
-                  href="https://www.artsy.net/identity-verification-faq"
+                <RouterLink
+                  inline
+                  to="/identity-verification-faq"
                   target="_blank"
                 >
                   FAQs
-                </a>{" "}
+                </RouterLink>{" "}
                 or contact{" "}
-                <RouterLink to={"mailto:verification@artsy.net"}>
+                <RouterLink inline to={"mailto:verification@artsy.net"}>
                   verification@artsy.net
                 </RouterLink>
                 .

@@ -16,6 +16,7 @@ import {
 import { RequestConditionReportQuery } from "__generated__/RequestConditionReportQuery.graphql"
 import track, { useTracking } from "react-tracking"
 import { useAuthDialog } from "Components/AuthDialog"
+import { RouterLink } from "System/Router/RouterLink"
 
 const logger = createLogger(
   "Apps/Artwork/Components/ArtworkDetails/RequestConditionReport"
@@ -177,7 +178,10 @@ const RequestedConditionReportModal: React.FC<{
 
       <Text variant="sm" mt={1}>
         For questions, contact{" "}
-        <a href="mailto:specialist@artsy.net">specialist@artsy.net</a>.
+        <RouterLink inline to="mailto:specialist@artsy.net">
+          specialist@artsy.net
+        </RouterLink>
+        .
       </Text>
     </ModalDialog>
   )

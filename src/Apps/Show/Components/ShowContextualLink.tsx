@@ -32,17 +32,18 @@ export const ContextualLink: React.FC<Props> = ({ show }) => {
   const partnerHref = partner?.isLinkable && partner?.href
   const partnerName = partner?.name
   const fairName = fair?.name
-  const fairHref = fair?.href
+  const fairHref = fair?.href || ""
 
   if (isFairBooth) {
     return (
       <>
-        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-        {fair.isActive && (
+        {fair?.isActive && (
           <Box>
             <Text variant="sm">
-              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-              Part of <RouterLink to={fairHref}>{fairName}</RouterLink>
+              Part of{" "}
+              <RouterLink inline to={fairHref}>
+                {fairName}
+              </RouterLink>
             </Text>
           </Box>
         )}
@@ -55,7 +56,9 @@ export const ContextualLink: React.FC<Props> = ({ show }) => {
       <Text variant="sm" textAlign="left">
         Presented by&nbsp;
         {!!partnerHref ? (
-          <RouterLink to={partnerHref}>{partnerName}</RouterLink>
+          <RouterLink inline to={partnerHref}>
+            {partnerName}
+          </RouterLink>
         ) : (
           partnerName
         )}

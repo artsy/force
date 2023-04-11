@@ -24,6 +24,7 @@ export const ConditionsOfSaleCheckbox: React.FC = () => {
         <Text variant="sm-display" ml={0.5}>
           I agree to the{" "}
           <RouterLink
+            inline
             display="inline"
             color="black100"
             to="/conditions-of-sale"

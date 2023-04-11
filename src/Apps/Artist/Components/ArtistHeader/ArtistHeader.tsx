@@ -115,7 +115,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
             )}
             {!hideBioInHeaderIfPartnerSupplied && (
               <>
-                <RouterLink to={`/artist/${artist.slug}/cv`}>
+                <RouterLink inline to={`/artist/${artist.slug}/cv`}>
                   {t("artistPage.overview.cvLink")}
                 </RouterLink>
               </>

@@ -16,7 +16,7 @@ export const SubscriberBanner: React.FC<SubscriberBannerProps> = ({
   return (
     <Message mb={4} title={hasFairPartnership ? fairPartner : churnedPartner}>
       <Text display="inline">{`Are you a representative of ${name}?`}</Text>
-      <RouterLink to="https://partners.artsy.net/gallery-partnerships/">
+      <RouterLink inline to="https://partners.artsy.net/gallery-partnerships/">
         <Text display="inline">
           &nbsp;Learn about Artsy gallery partnerships.
         </Text>
