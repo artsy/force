@@ -130,6 +130,10 @@ export const Footer: React.FC<FooterProps> = props => {
             </Text>
 
             <Text variant="sm">
+              <FooterLink my={2} to="/meet-the-specialists">
+                Talk to a Specialist
+              </FooterLink>
+
               <FooterLink my={2} to="https://support.artsy.net">
                 Visit our Help Center
               </FooterLink>
