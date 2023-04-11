@@ -40,10 +40,7 @@ export const CreateNewListModalForManageArtwork: FC = () => {
       onClose={openSelectListsForArtworkModal}
       onBackClick={openSelectListsForArtworkModal}
       onComplete={onNewListCreated}
-      artwork={{
-        title: artwork.title,
-        imageURL: artwork.imageURL,
-      }}
+      artwork={artwork}
     />
   )
 }

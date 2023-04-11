@@ -113,11 +113,20 @@ describe("CreateNewListModal", () => {
   it("displays artwork info", () => {
     render(
       <TestComponent
-        artwork={{ title: "Artwork Title, 2023", imageURL: null }}
+        artwork={{
+          internalID: "artwork-internal-id",
+          id: "artwork-id",
+          title: "Artwork Title",
+          year: "2023",
+          artists: "Banksy",
+          imageURL: null,
+        }}
       />
     )
 
-    expect(screen.getByText("Artwork Title, 2023")).toBeInTheDocument()
+    expect(screen.getByText(/Banksy/)).toBeInTheDocument()
+    expect(screen.getByText(/Artwork Title/)).toBeInTheDocument()
+    expect(screen.getByText(/2023/)).toBeInTheDocument()
   })
 
   it("track event when artwork list was created", async () => {
