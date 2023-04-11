@@ -15,8 +15,17 @@ interface ArtworkModalHeaderInfoProps {
 export const ArtworkModalHeaderInfo: FC<ArtworkModalHeaderInfoProps> = ({
   artwork,
 }) => {
+  const getArtists = () => {
+    if (artwork.artists === null || artwork.artists === "") {
+      return "Artist Unavailable"
+    }
+
+    return artwork.artists
+  }
+
+  const artists = getArtists()
   const titleElements = [
-    artwork.artists && `${artwork.artists}, `,
+    `${artists}, `,
     <i>{artwork.title}</i>,
     artwork.year && `, ${artwork.year}`,
   ]
