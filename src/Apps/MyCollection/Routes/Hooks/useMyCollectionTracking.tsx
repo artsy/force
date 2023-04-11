@@ -58,11 +58,12 @@ export const useMyCollectionTracking = () => {
       trackEvent(payload)
     },
 
-    saveCollectedArtwork: () => {
+    saveCollectedArtwork: (artistId: string) => {
       const payload: SaveCollectedArtwork = {
         action: ActionType.saveCollectedArtwork,
         context_module: ContextModule.myCollectionHome,
         context_owner_type: OwnerType.myCollection,
+        artist_id: artistId,
         platform: "web",
       }
 
