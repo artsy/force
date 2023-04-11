@@ -65,8 +65,7 @@ RUN apk --no-cache --quiet add \
   bash \
   build-base \
   curl \
-  git \
-  python
+  git
 
 # ---------------------------------------------------------
 # Yarn base
