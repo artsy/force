@@ -189,7 +189,7 @@ export const SelectArtworkListsModal: React.FC<SelectArtworkListsModalProps> = (
         height: ["100%", "auto"],
         maxHeight: [null, 800],
       }}
-      m={0}
+      m={[0, 2]}
       header={
         <Box mt={[-2, 0]} mb={-2}>
           <SelectArtworkListsHeader />
