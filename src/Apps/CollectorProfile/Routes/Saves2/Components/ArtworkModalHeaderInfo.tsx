@@ -16,7 +16,7 @@ export const ArtworkModalHeaderInfo: FC<ArtworkModalHeaderInfoProps> = ({
   artwork,
 }) => {
   const getArtists = () => {
-    if (artwork.artists === null || artwork.artists === "") {
+    if (!artwork.artists) {
       return "Artist Unavailable"
     }
 
