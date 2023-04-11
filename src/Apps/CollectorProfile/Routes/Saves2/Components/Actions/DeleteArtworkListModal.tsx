@@ -92,10 +92,7 @@ export const DeleteArtworkListModal: React.FC<Props> = ({
           </Button>
         </Flex>
       }
-      width={[
-        "100%",
-        753, // vs. 713px for create and edit modals and 673px for manage-artworks modal -- should be consistent (700?) or maybe just "auto"?
-      ]}
+      width={["100%", 700]}
     >
       <Text>{t("collectorSaves.deleteListModal.message")}</Text>
     </ModalDialog>
