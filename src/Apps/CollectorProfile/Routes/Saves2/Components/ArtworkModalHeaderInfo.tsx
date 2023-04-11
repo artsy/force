@@ -3,8 +3,13 @@ import { SavesEntityImage } from "Apps/CollectorProfile/Routes/Saves2/Components
 import { ArtworkEntity } from "Components/Artwork/ManageArtworkForSaves"
 import { FC } from "react"
 
+export type ArtworkModalHeaderInfoEntity = Pick<
+  ArtworkEntity,
+  "title" | "year" | "imageURL" | "artists"
+>
+
 interface ArtworkModalHeaderInfoProps {
-  artwork: ArtworkEntity
+  artwork: ArtworkModalHeaderInfoEntity
 }
 
 export const ArtworkModalHeaderInfo: FC<ArtworkModalHeaderInfoProps> = ({

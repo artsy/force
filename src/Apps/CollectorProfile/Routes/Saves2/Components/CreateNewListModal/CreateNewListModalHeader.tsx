@@ -1,10 +1,12 @@
 import { Spacer } from "@artsy/palette"
-import { ArtworkModalHeaderInfo } from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkModalHeaderInfo"
-import { ArtworkEntity } from "Components/Artwork/ManageArtworkForSaves"
+import {
+  ArtworkModalHeaderInfo,
+  ArtworkModalHeaderInfoEntity,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkModalHeaderInfo"
 import { FC } from "react"
 
 interface CreateNewListModalHeaderProps {
-  artwork: ArtworkEntity
+  artwork: ArtworkModalHeaderInfoEntity
 }
 
 export const CreateNewListModalHeader: FC<CreateNewListModalHeaderProps> = ({

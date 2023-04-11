@@ -114,8 +114,6 @@ describe("CreateNewListModal", () => {
     render(
       <TestComponent
         artwork={{
-          internalID: "artwork-internal-id",
-          id: "artwork-id",
           title: "Artwork Title",
           year: "2023",
           artists: "Banksy",

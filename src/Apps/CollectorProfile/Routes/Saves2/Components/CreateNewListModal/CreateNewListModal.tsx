@@ -13,7 +13,7 @@ import {
   ArtworkListFormikValues,
   validationSchema,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkListForm/ArtworkListForm"
-import { ArtworkEntity } from "Components/Artwork/ManageArtworkForSaves"
+import { ArtworkModalHeaderInfoEntity } from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkModalHeaderInfo"
 
 export interface ArtworkList {
   internalID: string
@@ -21,7 +21,7 @@ export interface ArtworkList {
 }
 
 interface CreateNewListModalProps {
-  artwork?: ArtworkEntity
+  artwork?: ArtworkModalHeaderInfoEntity
   onClose: () => void
   onComplete: (data: ArtworkList) => void
   onBackClick?: () => void
