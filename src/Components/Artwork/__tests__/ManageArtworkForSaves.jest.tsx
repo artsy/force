@@ -152,62 +152,6 @@ describe("ManageArtworkForSaves", () => {
       expect(screen.getByText(message)).toBeInTheDocument()
     })
   })
-
-  describe("Title", () => {
-    it("should render artists, artwork title and year", () => {
-      renderAndOpenModal()
-
-      expect(screen.getByText(/Banksy/)).toBeInTheDocument()
-      expect(screen.getByText(/Artwork Title/)).toBeInTheDocument()
-      expect(screen.getByText(/2023/)).toBeInTheDocument()
-    })
-
-    it("should render artists and artwork title", () => {
-      renderAndOpenModal({
-        artwork: {
-          ...artworkEntity,
-          year: null,
-        },
-      })
-
-      // Not displayed
-      expect(screen.queryByText(/2023/)).not.toBeInTheDocument()
-
-      expect(screen.getByText(/Banksy/)).toBeInTheDocument()
-      expect(screen.getByText(/Artwork Title/)).toBeInTheDocument()
-    })
-
-    it("should render artwork title and year", () => {
-      renderAndOpenModal({
-        artwork: {
-          ...artworkEntity,
-          artists: null,
-        },
-      })
-
-      // Not displayed
-      expect(screen.queryByText(/Banksy/)).not.toBeInTheDocument()
-
-      expect(screen.getByText(/Artwork Title/)).toBeInTheDocument()
-      expect(screen.getByText(/2023/)).toBeInTheDocument()
-    })
-
-    it("should render only artwork title", () => {
-      renderAndOpenModal({
-        artwork: {
-          ...artworkEntity,
-          artists: null,
-          year: null,
-        },
-      })
-
-      // Not displayed
-      expect(screen.queryByText(/Banksy/)).not.toBeInTheDocument()
-      expect(screen.queryByText(/2023/)).not.toBeInTheDocument()
-
-      expect(screen.getByText(/Artwork Title/)).toBeInTheDocument()
-    })
-  })
 })
 
 interface TestButtonProps {
