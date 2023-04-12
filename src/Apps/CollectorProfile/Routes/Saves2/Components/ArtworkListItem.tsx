@@ -79,7 +79,7 @@ export const ArtworkListItemFragmentContainer = createFragmentContainer(
         default
         name
         internalID
-        artworksCount
+        artworksCount(onlyVisible: true)
         artworksConnection(first: 4) {
           edges {
             node {

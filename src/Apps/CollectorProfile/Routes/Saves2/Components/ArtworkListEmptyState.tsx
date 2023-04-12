@@ -57,7 +57,7 @@ export const ArtworkListEmptyStateFragmentContainer = createFragmentContainer(
         }
 
         allSavesArtworkList: collection(id: "saved-artwork") {
-          artworksCount
+          artworksCount(onlyVisible: true)
         }
       }
     `,

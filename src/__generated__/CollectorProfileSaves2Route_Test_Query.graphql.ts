@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c58164974c7bfac1b4c85678299f75de>>
+ * @generated SignedSource<<5feb06ec3c75fcb724ae02ac02fb93bb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,10 +45,16 @@ v2 = {
 },
 v3 = {
   "alias": null,
-  "args": null,
+  "args": [
+    {
+      "kind": "Literal",
+      "name": "onlyVisible",
+      "value": true
+    }
+  ],
   "kind": "ScalarField",
   "name": "artworksCount",
-  "storageKey": null
+  "storageKey": "artworksCount(onlyVisible:true)"
 },
 v4 = [
   {
@@ -380,7 +386,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "41cce23e01ccaed8c054e43ba169cfa9",
+    "cacheID": "7792627067bf8e55e5184dce4f9b26d5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -447,7 +453,7 @@ return {
     },
     "name": "CollectorProfileSaves2Route_Test_Query",
     "operationKind": "query",
-    "text": "query CollectorProfileSaves2Route_Test_Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  allSavesArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    ...ArtworkListItem_item\n    artworksConnection(first: 4) {\n      totalCount\n    }\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...ArtworkListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query CollectorProfileSaves2Route_Test_Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  allSavesArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    ...ArtworkListItem_item\n    artworksConnection(first: 4) {\n      totalCount\n    }\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...ArtworkListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

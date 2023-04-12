@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1cda8ae439e132cdebc59be36fee9046>>
+ * @generated SignedSource<<e630b172aafdd58ade92a913a70759aa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -76,10 +76,16 @@ const node: ReaderFragment = {
       "selections": [
         {
           "alias": null,
-          "args": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "onlyVisible",
+              "value": true
+            }
+          ],
           "kind": "ScalarField",
           "name": "artworksCount",
-          "storageKey": null
+          "storageKey": "artworksCount(onlyVisible:true)"
         }
       ],
       "storageKey": "collection(id:\"saved-artwork\")"
@@ -89,6 +95,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "90bb32479b2bcc574e460785e500657f";
+(node as any).hash = "17a7c49c2a826f870afc60cee0a39ea4";
 
 export default node;

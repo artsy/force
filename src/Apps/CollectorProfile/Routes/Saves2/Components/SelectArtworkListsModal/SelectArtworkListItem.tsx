@@ -68,7 +68,7 @@ export const SelectArtworkListItemFragmentContainer = createFragmentContainer(
     item: graphql`
       fragment SelectArtworkListItem_item on Collection {
         name
-        artworksCount
+        artworksCount(onlyVisible: true)
         artworksConnection(first: 1, sort: SAVED_AT_DESC) {
           edges {
             node {
