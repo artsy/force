@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<341447969f5d4ddf4560a102187087a8>>
+ * @generated SignedSource<<ed8d6bb99b829483f915aac58deb4bd0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -129,10 +129,16 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "onlyVisible",
+                    "value": true
+                  }
+                ],
                 "kind": "ScalarField",
                 "name": "artworksCount",
-                "storageKey": null
+                "storageKey": "artworksCount(onlyVisible:true)"
               },
               (v0/*: any*/)
             ],
@@ -145,7 +151,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0a76641fbae41df2c34b5867490b5e76",
+    "cacheID": "af860ac0294a746f02ec0a393f17f761",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -176,7 +182,7 @@ return {
     },
     "name": "ArtworkListEmptyState_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkListEmptyState_Test_Query {\n  me {\n    ...ArtworkListEmptyState_me_3NGuxX\n    id\n  }\n}\n\nfragment ArtworkListEmptyState_me_3NGuxX on Me {\n  artworkList: collection(id: \"listID\") {\n    default\n    id\n  }\n  allSavesArtworkList: collection(id: \"saved-artwork\") {\n    artworksCount\n    id\n  }\n}\n"
+    "text": "query ArtworkListEmptyState_Test_Query {\n  me {\n    ...ArtworkListEmptyState_me_3NGuxX\n    id\n  }\n}\n\nfragment ArtworkListEmptyState_me_3NGuxX on Me {\n  artworkList: collection(id: \"listID\") {\n    default\n    id\n  }\n  allSavesArtworkList: collection(id: \"saved-artwork\") {\n    artworksCount(onlyVisible: true)\n    id\n  }\n}\n"
   }
 };
 })();

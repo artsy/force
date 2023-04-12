@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b59651e8a8ed86fcd4a1457afba040b0>>
+ * @generated SignedSource<<ee1b1e6e6a709046da4df3eec36cac31>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -209,10 +209,16 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "onlyVisible",
+                            "value": true
+                          }
+                        ],
                         "kind": "ScalarField",
                         "name": "artworksCount",
-                        "storageKey": null
+                        "storageKey": "artworksCount(onlyVisible:true)"
                       },
                       {
                         "alias": null,
@@ -296,12 +302,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "82bb2b08d8321215c7da41be51f11437",
+    "cacheID": "17a6a7c9d5da0a1f788be5df31870af0",
     "id": null,
     "metadata": {},
     "name": "useAddArtworksToCollectionMutation",
     "operationKind": "mutation",
-    "text": "mutation useAddArtworksToCollectionMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        addedToCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useAddArtworksToCollectionMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        addedToCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
