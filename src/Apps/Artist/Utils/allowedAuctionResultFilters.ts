@@ -25,7 +25,7 @@ export const allowedAuctionResultFilters = (
   }, {})
 }
 
-const INTEGER_INPUT_ARGS = ["createdAfterYear", "createdBeforeYear"]
+const INTEGER_INPUT_ARGS = ["createdAfterYear", "createdBeforeYear", "page"]
 const BOOLEAN_INPUT_ARGS = ["allowEmptyCreatedDates", "hideUpcoming"]
 const SUPPORTED_INPUT_ARGS = [
   "organizations",
@@ -33,4 +33,6 @@ const SUPPORTED_INPUT_ARGS = [
   "sizes",
   "metric",
   "hideUpcoming",
+  "page",
+  "allowEmptyCreatedDates",
 ]

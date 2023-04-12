@@ -13,7 +13,7 @@ export interface AuctionResultsFilters {
   hideUpcoming?: boolean
   sizes?: string[]
   keyword?: string
-  pageAndCursor?: { page: number; cursor: string | null }
+  page?: number
   sort?: string
   createdAfterYear?: number | null
   createdBeforeYear?: number | null
@@ -41,7 +41,7 @@ export const initialAuctionResultsFilterState = ({
   hideUpcoming: false,
   sizes: [],
   keyword: undefined,
-  pageAndCursor: { page: 1, cursor: null },
+  page: 1,
   sort: "DATE_DESC",
   createdAfterYear: typeof startDate === "number" ? startDate : MIN_START_DATE,
   createdBeforeYear: typeof endDate === "number" ? endDate : MAX_END_DATE,
@@ -275,7 +275,7 @@ const AuctionResultsFilterReducer = (
     case "SET": {
       const { name, value } = action.payload || {}
       const filterState: AuctionResultsFilters = {
-        pageAndCursor: { page: 1, cursor: null },
+        page: 1,
       }
 
       arrayFilterTypes.forEach(filter => {
@@ -289,7 +289,7 @@ const AuctionResultsFilterReducer = (
         "sort",
         "hideUpcoming",
         "keyword",
-        "pageAndCursor",
+        "page",
         "createdAfterYear",
         "createdBeforeYear",
         "allowEmptyCreatedDates",
@@ -301,12 +301,6 @@ const AuctionResultsFilterReducer = (
           filterState[name as string] = value
         }
       })
-
-      // do not allow a real cursor to be set for page 1. to agree with initial
-      // filter state.
-      if (filterState.pageAndCursor?.page === 1) {
-        filterState.pageAndCursor.cursor = null
-      }
 
       if (
         name === "createdBeforeYear" &&
@@ -339,7 +333,7 @@ const AuctionResultsFilterReducer = (
       const { name } = action.payload || {}
 
       const filterState: AuctionResultsFilters = {
-        pageAndCursor: { page: 1, cursor: null },
+        page: 1,
       }
 
       const filters: Array<keyof AuctionResultsFilters> = ["sort"]

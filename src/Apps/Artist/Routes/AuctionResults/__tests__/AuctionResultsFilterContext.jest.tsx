@@ -42,12 +42,9 @@ describe("AuctionResultsFilterContext", () => {
         return new Promise<void>(done => {
           getWrapper()
           act(() => {
-            context.setFilter?.("pageAndCursor", { page: 10, cursor: null })
+            context.setFilter?.("page", 10)
             setTimeout(() => {
-              expect(context.filters?.pageAndCursor).toEqual({
-                page: 10,
-                cursor: null,
-              })
+              expect(context.filters?.page).toEqual(10)
               done()
             })
           })
@@ -58,17 +55,14 @@ describe("AuctionResultsFilterContext", () => {
         return new Promise<void>(done => {
           getWrapper({
             filters: {
-              pageAndCursor: { page: 10, cursor: null },
+              page: 10,
             },
           })
           act(() => {
-            expect(context.filters?.pageAndCursor?.page).toEqual(10)
+            expect(context.filters?.page).toEqual(10)
             context.setFilter?.("sort", "relevant")
             setTimeout(() => {
-              expect(context.filters?.pageAndCursor).toEqual({
-                page: 1,
-                cursor: null,
-              })
+              expect(context.filters?.page).toEqual(1)
               done()
             })
           })
@@ -170,16 +164,13 @@ describe("AuctionResultsFilterContext", () => {
         return new Promise<void>(done => {
           getWrapper()
           act(() => {
-            context.setFilter?.("pageAndCursor", { page: 10, cursor: null })
+            context.setFilter?.("page", 10)
             setTimeout(() => {
-              expect(context.filters?.pageAndCursor?.page).toEqual(10)
+              expect(context.filters?.page).toEqual(10)
               act(() => {
-                context.unsetFilter?.("pageAndCursor")
+                context.unsetFilter?.("page")
                 setTimeout(() => {
-                  expect(context.filters?.pageAndCursor).toEqual({
-                    page: 1,
-                    cursor: null,
-                  })
+                  expect(context.filters?.page).toEqual(1)
                   done()
                 })
               })
@@ -192,18 +183,15 @@ describe("AuctionResultsFilterContext", () => {
         return new Promise<void>(done => {
           getWrapper({
             filters: {
-              pageAndCursor: { page: 10, cursor: null },
+              page: 10,
               sort: "relevant",
             },
           })
           act(() => {
-            expect(context.filters?.pageAndCursor?.page).toEqual(10)
+            expect(context.filters?.page).toEqual(10)
             context.unsetFilter?.("sort")
             setTimeout(() => {
-              expect(context.filters?.pageAndCursor).toEqual({
-                page: 1,
-                cursor: null,
-              })
+              expect(context.filters?.page).toEqual(1)
               done()
             })
           })

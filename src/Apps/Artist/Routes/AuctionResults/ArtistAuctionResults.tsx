@@ -49,7 +49,7 @@ import { TableSidebar } from "./Components/TableSidebar"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
-const PAGE_SIZE = 10
+const PAGE_SIZE = 50
 
 interface AuctionResultsProps {
   relay: RelayRefetchProp
@@ -95,7 +95,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   }
 
   const loadNext = () => {
-    const currentPageNumber = filters?.pageAndCursor?.page ?? 0
+    const currentPageNumber = filters?.page ?? 0
     const nextPageNum = currentPageNumber + 1
     if (hasNextPage) {
       loadPage(endCursor, nextPageNum)
@@ -104,10 +104,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   const loadPage = (cursor, pageNum) => {
     scrollToAuctionResultsTop()
-    setFilter?.("pageAndCursor", {
-      cursor: cursor,
-      page: pageNum,
-    })
+    setFilter?.("page", pageNum)
   }
 
   const [isLoading, setIsLoading] = useState(false)
@@ -181,11 +178,12 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     setIsLoading(true)
 
     const relayParams = {
-      after: filters?.pageAndCursor?.cursor,
+      page: filters?.page,
       artistID: artist.slug,
       artistInternalID: artist.internalID,
       before: null,
       first: PAGE_SIZE,
+      size: PAGE_SIZE,
       last: null,
     }
 
@@ -381,9 +379,10 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
       fragment ArtistAuctionResults_artist on Artist
         @argumentDefinitions(
           sort: { type: "AuctionResultSorts", defaultValue: DATE_DESC }
-          first: { type: "Int", defaultValue: 10 }
+          first: { type: "Int", defaultValue: 50 }
           last: { type: "Int" }
-          after: { type: "String" }
+          page: { type: "Int" }
+          size: { type: "Int" }
           before: { type: "String" }
           organizations: { type: "[String]" }
           keyword: { type: "String" }
@@ -399,7 +398,8 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         name
         auctionResultsConnection(
           first: $first
-          after: $after
+          page: $page
+          size: $size
           before: $before
           last: $last
           sort: $sort
@@ -462,7 +462,8 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
     query ArtistAuctionResultsQuery(
       $first: Int
       $last: Int
-      $after: String
+      $page: Int
+      $size: Int
       $before: String
       $sort: AuctionResultSorts
       $state: AuctionResultsState
@@ -480,7 +481,8 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           @arguments(
             first: $first
             last: $last
-            after: $after
+            page: $page
+            size: $size
             before: $before
             sort: $sort
             state: $state
