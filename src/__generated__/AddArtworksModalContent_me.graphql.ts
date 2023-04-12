@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<31d93d41461a81d51db8834d192d72fd>>
+ * @generated SignedSource<<57da098abf87e87f87dcb24855a24fae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,6 @@ export type AddArtworksModalContent_me$data = {
           readonly internalID: string;
         } | null;
       } | null> | null;
-      readonly totalCount: number | null;
       readonly " $fragmentSpreads": FragmentRefs<"ArtworksList_artworks">;
     } | null;
     readonly artworksCount: number;
@@ -106,13 +105,6 @@ const node: ReaderFragment = {
           "plural": false,
           "selections": [
             {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "totalCount",
-              "storageKey": null
-            },
-            {
               "args": null,
               "kind": "FragmentSpread",
               "name": "ArtworksList_artworks"
@@ -196,6 +188,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b758769671e74e7c4e4bd1b6f71c21ce";
+(node as any).hash = "ea2cc81f2557279171315b4210f986d7";
 
 export default node;

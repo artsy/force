@@ -142,7 +142,6 @@ const AddArtworksModalContentPaginationContainer = createPaginationContainer(
           artworksCount(onlyVisible: true)
           artworksConnection(first: $first, after: $after, sort: $sort)
             @connection(key: "AddArtworksModalContent_artworksConnection") {
-            totalCount
             ...ArtworksList_artworks
 
             edges {
