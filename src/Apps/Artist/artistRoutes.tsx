@@ -1,13 +1,14 @@
 import loadable from "@loadable/component"
+import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
+
+import { initialAuctionResultsFilterState } from "./Routes/AuctionResults/AuctionResultsFilterContext"
 import { renderOrRedirect } from "./Routes/Overview/Utils/renderOrRedirect"
 import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
-import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { initialAuctionResultsFilterState } from "./Routes/AuctionResults/AuctionResultsFilterContext"
-import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
 import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
+import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
@@ -79,6 +80,16 @@ const ConsignRoute = loadable(
   {
     resolveComponent: component =>
       component.ArtistConsignRouteFragmentContainer,
+  }
+)
+
+const AuctionResultRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "artistBundle" */ "./Routes/AuctionResults/SingleAuctionResultPage/AuctionResult"
+    ),
+  {
+    resolveComponent: component => component.AuctionResultFragmentContainer,
   }
 )
 
@@ -300,5 +311,21 @@ export const artistRoutes: AppRouteConfig[] = [
         to: "/artist/:artistID",
       }) as any,
     ],
+  },
+  {
+    path: "/auction-result/:auctionResultId",
+    hideNavigationTabs: true,
+    getComponent: () => AuctionResultRoute,
+    onServerSideRender: enableArtistPageCTA,
+    onClientSideRender: () => {
+      AuctionResultRoute.preload()
+    },
+    query: graphql`
+      query artistRoutes_AuctionResultQuery($auctionResultId: String!) {
+        auctionResult(id: $auctionResultId) {
+          ...AuctionResult_auctionResult
+        }
+      }
+    `,
   },
 ]

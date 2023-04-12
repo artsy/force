@@ -557,6 +557,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
       edges: [
         {
           node: {
+            internalID: "123",
             artist: null,
             title: "Oiseau fantastique",
             dimension_text: "27.2 x 21.1 cm",
@@ -595,6 +596,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "124",
             artist: null,
             title: "Mandoline sur une table",
             dimension_text: "82.2 x 100.4 cm",
@@ -633,6 +635,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "125",
             artist: null,
             title: "Tête d'homme",
             dimension_text: "51.2 x 34.2 cm",
@@ -671,6 +674,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "126",
             artist: null,
             title: "Picador et taureau (A.R. 197)",
             dimension_text: "23.5 cm.",
@@ -709,6 +713,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "127",
             artist: null,
             title: "Colombe à la lucarne (A.R. 78)",
             dimension_text: "15 3/8 in.",
@@ -747,6 +752,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "128",
             artist: null,
             title: "Scène de plage (A.R. 391)",
             dimension_text: "10 in.",
@@ -785,6 +791,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "129",
             artist: null,
             title: "Tête de femme couronnée de fleurs (A.R. 236)",
             dimension_text: "9 1/8 in.",
@@ -823,6 +830,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "130",
             artist: null,
             title: "Femme (A.R. 297)",
             dimension_text: "13 in.",
@@ -861,6 +869,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "131",
             artist: null,
             title: "Taureau dans l'arène (A.R. 80)",
             dimension_text: "37.6 cm.",
@@ -899,6 +908,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "132",
             artist: null,
             title: "Visage de femme (A.R. 192)",
             dimension_text: "13 3/8 in.",

@@ -1,9 +1,9 @@
 import { Box, Clickable, ModalDialog, Text, themeProps } from "@artsy/palette"
+import { MyCollectionArtworkSidebarMetadata_artwork$data } from "__generated__/MyCollectionArtworkSidebarMetadata_artwork.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { MyCollectionArtworkSidebarMetadata_artwork$data } from "__generated__/MyCollectionArtworkSidebarMetadata_artwork.graphql"
 
 export interface MyCollectionArtworkSidebarMetadataProps {
   artwork: MyCollectionArtworkSidebarMetadata_artwork$data
@@ -107,7 +107,7 @@ export const MetadataField = ({
 
   return (
     <Box mb={[1, 0.5]} display="flex">
-      <Text color="black60" variant="sm" minWidth={[100, 100, 190]} mr={2}>
+      <Text color="black60" variant="sm" minWidth={[105, 105, 190]} mr={2}>
         {label}
       </Text>
 

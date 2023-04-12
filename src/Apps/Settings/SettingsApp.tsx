@@ -6,6 +6,7 @@ import {
   Text,
   useToasts,
 } from "@artsy/palette"
+import { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
 import { MyCollectionRouteLoggedOutState } from "Apps/Settings/Routes/MyCollection/MyCollectionRouteLoggedOutState"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
@@ -13,9 +14,8 @@ import { Link } from "found"
 import { compact } from "lodash"
 import React, { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
 import { useRouter } from "System/Router/useRouter"
-import { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
+import { useSystemContext } from "System/useSystemContext"
 
 export const SETTINGS_ROUTE_TABS_MARGIN = [2, 4]
 
@@ -63,9 +63,9 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
       <MetaTags title="Settings | Artsy" />
 
       <>
-        <Breadcrumbs>
+        <Breadcrumbs py={[2, 1]}>
           <Link to="/collector-profile/my-collection">
-            <Flex flexDirection="row" alignItems="center" py={2}>
+            <Flex flexDirection="row" alignItems="center" minHeight={30}>
               <ChevronIcon
                 direction="left"
                 color="black100"
@@ -78,7 +78,8 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
             </Flex>
           </Link>
         </Breadcrumbs>
-        <Spacer y={6} />
+
+        <Spacer y={4} />
       </>
 
       <RouteTabs my={SETTINGS_ROUTE_TABS_MARGIN}>
