@@ -1,8 +1,8 @@
 import { Component, useContext } from "react"
 import * as React from "react"
 import { Box, BoxProps } from "@artsy/palette"
-import { SearchBar_viewer$data } from "__generated__/SearchBar_viewer.graphql"
-import { SearchBarSuggestQuery } from "__generated__/SearchBarSuggestQuery.graphql"
+import { OldSearchBar_viewer$data } from "__generated__/OldSearchBar_viewer.graphql"
+import { OldSearchBarSuggestQuery } from "__generated__/OldSearchBarSuggestQuery.graphql"
 import {
   SystemContext,
   SystemContextProps,
@@ -35,12 +35,12 @@ import { ClassI18n } from "System/i18n/ClassI18n"
 import track from "react-tracking"
 import { getENV } from "Utils/getENV"
 
-const logger = createLogger("Components/Search/SearchBar")
+const logger = createLogger("Components/Search/OldSearchBar")
 
 export interface Props extends SystemContextProps {
   relay: RelayRefetchProp
   router?: Router
-  viewer: SearchBar_viewer$data
+  viewer: OldSearchBar_viewer$data
 }
 
 interface State {
@@ -88,7 +88,7 @@ const Form = styled.form`
 @track(null, {
   dispatch: data => Events.postEvent(data),
 })
-export class SearchBar extends Component<Props, State> {
+export class OldSearchBar extends Component<Props, State> {
   public input: HTMLInputElement
 
   // Once this is set, we don't ever expect to change it back. A click on a
@@ -459,7 +459,7 @@ export class SearchBar extends Component<Props, State> {
                 this.onBlur(event)
               } else {
                 console.error(
-                  "[Components/Search/SearchBar] `router` instance not found."
+                  "[Components/Search/OldSearchBar] `router` instance not found."
                 )
               }
             }}
@@ -477,11 +477,11 @@ export class SearchBar extends Component<Props, State> {
   }
 }
 
-export const SearchBarRefetchContainer = createRefetchContainer(
-  withSystemContext(SearchBar),
+export const OldSearchBarRefetchContainer = createRefetchContainer(
+  withSystemContext(OldSearchBar),
   {
     viewer: graphql`
-      fragment SearchBar_viewer on Viewer
+      fragment OldSearchBar_viewer on Viewer
         @argumentDefinitions(
           term: { type: "String!", defaultValue: "" }
           hasTerm: { type: "Boolean!", defaultValue: false }
@@ -511,9 +511,9 @@ export const SearchBarRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query SearchBarRefetchQuery($term: String!, $hasTerm: Boolean!) {
+    query OldSearchBarRefetchQuery($term: String!, $hasTerm: Boolean!) {
       viewer {
-        ...SearchBar_viewer @arguments(term: $term, hasTerm: $hasTerm)
+        ...OldSearchBar_viewer @arguments(term: $term, hasTerm: $hasTerm)
       }
     }
   `
@@ -556,12 +556,12 @@ export const OldSearchBarQueryRenderer: React.FC<BoxProps> = props => {
   }
 
   return (
-    <SystemQueryRenderer<SearchBarSuggestQuery>
+    <SystemQueryRenderer<OldSearchBarSuggestQuery>
       environment={relayEnvironment}
       query={graphql`
-        query SearchBarSuggestQuery($term: String!, $hasTerm: Boolean!) {
+        query OldSearchBarSuggestQuery($term: String!, $hasTerm: Boolean!) {
           viewer {
-            ...SearchBar_viewer @arguments(term: $term, hasTerm: $hasTerm)
+            ...OldSearchBar_viewer @arguments(term: $term, hasTerm: $hasTerm)
           }
         }
       `}
@@ -571,7 +571,7 @@ export const OldSearchBarQueryRenderer: React.FC<BoxProps> = props => {
       }}
       render={({ props }) => {
         if (props) {
-          return <SearchBarRefetchContainer viewer={props.viewer} />
+          return <OldSearchBarRefetchContainer viewer={props.viewer} />
           // SSR render pass. Since we don't have access to `<Boot>` context
           // from within the NavBar (it's not a part of any app) we need to lean
           // on styled-system for showing / hiding depending upon breakpoint.
