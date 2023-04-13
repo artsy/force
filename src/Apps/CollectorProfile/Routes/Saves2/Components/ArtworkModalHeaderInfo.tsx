@@ -5,7 +5,7 @@ import { FC } from "react"
 
 export type ArtworkModalHeaderInfoEntity = Pick<
   ArtworkEntity,
-  "title" | "year" | "imageURL" | "artists"
+  "title" | "year" | "imageURL" | "artistNames"
 >
 
 interface ArtworkModalHeaderInfoProps {
@@ -15,17 +15,17 @@ interface ArtworkModalHeaderInfoProps {
 export const ArtworkModalHeaderInfo: FC<ArtworkModalHeaderInfoProps> = ({
   artwork,
 }) => {
-  const getArtists = () => {
-    if (!artwork.artists) {
+  const getArtistNames = () => {
+    if (!artwork.artistNames) {
       return "Artist Unavailable"
     }
 
-    return artwork.artists
+    return artwork.artistNames
   }
 
-  const artists = getArtists()
+  const artistNames = getArtistNames()
   const titleElements = [
-    `${artists}, `,
+    `${artistNames}, `,
     <i>{artwork.title}</i>,
     artwork.year && `, ${artwork.year}`,
   ]

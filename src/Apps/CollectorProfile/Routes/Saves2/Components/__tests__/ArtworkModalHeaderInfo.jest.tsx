@@ -5,7 +5,7 @@ import {
 } from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkModalHeaderInfo"
 
 describe("ArtworkModalHeaderInfo", () => {
-  it("should render artists, artwork title and year", () => {
+  it("should render artist names, artwork title and year", () => {
     render(<ArtworkModalHeaderInfo artwork={artworkEntity} />)
 
     expect(screen.getByText(/Banksy/)).toBeInTheDocument()
@@ -13,7 +13,7 @@ describe("ArtworkModalHeaderInfo", () => {
     expect(screen.getByText(/2023/)).toBeInTheDocument()
   })
 
-  it("should render artists and artwork title", () => {
+  it("should render artist names and artwork title", () => {
     render(
       <ArtworkModalHeaderInfo artwork={{ ...artworkEntity, year: null }} />
     )
@@ -27,7 +27,9 @@ describe("ArtworkModalHeaderInfo", () => {
 
   it("should render artwork title and year", () => {
     render(
-      <ArtworkModalHeaderInfo artwork={{ ...artworkEntity, artists: null }} />
+      <ArtworkModalHeaderInfo
+        artwork={{ ...artworkEntity, artistNames: null }}
+      />
     )
 
     // Not displayed
@@ -40,7 +42,7 @@ describe("ArtworkModalHeaderInfo", () => {
   it("should render only artwork title", () => {
     render(
       <ArtworkModalHeaderInfo
-        artwork={{ ...artworkEntity, artists: null, year: null }}
+        artwork={{ ...artworkEntity, artistNames: null, year: null }}
       />
     )
 
@@ -52,17 +54,21 @@ describe("ArtworkModalHeaderInfo", () => {
   })
 
   describe("Artists", () => {
-    it("should render `Artist Unavailable` when `artists` value is null", () => {
+    it("should render `Artist Unavailable` when `artistNames` value is null", () => {
       render(
-        <ArtworkModalHeaderInfo artwork={{ ...artworkEntity, artists: null }} />
+        <ArtworkModalHeaderInfo
+          artwork={{ ...artworkEntity, artistNames: null }}
+        />
       )
 
       expect(screen.getByText(/Artist Unavailable/)).toBeInTheDocument()
     })
 
-    it("should render `Artist Unavailable` when `artists` value is empty string", () => {
+    it("should render `Artist Unavailable` when `artistNames` value is empty string", () => {
       render(
-        <ArtworkModalHeaderInfo artwork={{ ...artworkEntity, artists: "" }} />
+        <ArtworkModalHeaderInfo
+          artwork={{ ...artworkEntity, artistNames: "" }}
+        />
       )
 
       expect(screen.getByText(/Artist Unavailable/)).toBeInTheDocument()
@@ -71,7 +77,7 @@ describe("ArtworkModalHeaderInfo", () => {
 })
 
 const artworkEntity: ArtworkModalHeaderInfoEntity = {
-  artists: "Banksy",
+  artistNames: "Banksy",
   title: "Artwork Title",
   year: "2023",
   imageURL: null,

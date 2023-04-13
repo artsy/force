@@ -10,7 +10,7 @@ type Artwork = {
   slug: string
   title: string
   year: string | null
-  artists: string | null
+  artistNames: string | null
   imageURL: string | null
   isSavedToDefaultList: boolean
   isSavedToCustomLists: boolean
@@ -66,7 +66,7 @@ export const useSaveArtworkToLists = (options: SaveArtworkToListsOptions) => {
         internalID: artwork.internalID,
         title: artwork.title,
         year: artwork.year,
-        artists: artwork.artists,
+        artistNames: artwork.artistNames,
         imageURL: artwork.imageURL,
       },
     })

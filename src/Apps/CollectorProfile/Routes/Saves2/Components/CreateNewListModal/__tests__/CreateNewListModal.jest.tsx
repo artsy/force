@@ -116,7 +116,7 @@ describe("CreateNewListModal", () => {
         artwork={{
           title: "Artwork Title",
           year: "2023",
-          artists: "Banksy",
+          artistNames: "Banksy",
           imageURL: null,
         }}
       />

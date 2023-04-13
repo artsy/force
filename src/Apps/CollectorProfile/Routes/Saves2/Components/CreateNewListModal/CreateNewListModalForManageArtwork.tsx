@@ -43,7 +43,7 @@ export const CreateNewListModalForManageArtwork: FC = () => {
       artwork={{
         title: artwork.title,
         year: artwork.year,
-        artists: artwork.artists,
+        artistNames: artwork.artistNames,
         imageURL: artwork.imageURL,
       }}
     />

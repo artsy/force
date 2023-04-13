@@ -46,7 +46,7 @@ export interface ArtworkEntity {
   internalID: string
   title: string
   year: string | null
-  artists: string | null
+  artistNames: string | null
   imageURL: string | null
 }
 

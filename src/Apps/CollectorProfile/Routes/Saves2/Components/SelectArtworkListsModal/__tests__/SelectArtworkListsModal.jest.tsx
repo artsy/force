@@ -325,7 +325,7 @@ const artwork = {
   internalID: "artwork-internal-id",
   title: "Artwork Title",
   year: "2023",
-  artists: "Banksy",
+  artistNames: "Banksy",
   imageURL: null,
 }
 

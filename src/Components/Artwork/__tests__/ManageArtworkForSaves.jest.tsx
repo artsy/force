@@ -191,7 +191,7 @@ const customArtworkListNodeTwo = {
 const artworkEntity: ArtworkEntity = {
   id: "artwork-id",
   internalID: "artwork-internal-id",
-  artists: "Banksy",
+  artistNames: "Banksy",
   title: "Artwork Title",
   year: "2023",
   imageURL: null,

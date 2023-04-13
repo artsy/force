@@ -30,7 +30,7 @@ export const ArtworkActionsSaveButtonV2: FC<ArtworkActionsSaveButtonV2Props> = (
       slug: artwork.slug,
       title: artwork.title!,
       year: artwork.date,
-      artists: artwork.artistNames,
+      artistNames: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,
       isSavedToDefaultList: !!artwork.isSaved,
       isSavedToCustomLists: isSavedToCustomLists,
