@@ -13,7 +13,9 @@ import { useSystemContext } from "System/SystemContext"
 
 const ProgressiveOnboardingContext = createContext<{
   dismissed: ProgressiveOnboardingKey[]
-  dismiss: (key: ProgressiveOnboardingKey | ProgressiveOnboardingKey[]) => void
+  dismiss: (
+    key: ProgressiveOnboardingKey | readonly ProgressiveOnboardingKey[]
+  ) => void
   isDismissed: (key: ProgressiveOnboardingKey) => boolean
 }>({
   dismissed: [],
@@ -48,6 +50,20 @@ export const ProgressiveOnboardingProvider: FC = ({ children }) => {
     },
     [dismissed, mounted]
   )
+
+  // Ensure that the dismissed state stays in sync incase the user
+  // has multiple tabs open.
+  useEffect(() => {
+    const handleFocus = () => {
+      setDismissed(get(id))
+    }
+
+    window.addEventListener("focus", handleFocus)
+
+    return () => {
+      window.removeEventListener("focus", handleFocus)
+    }
+  }, [id])
 
   return (
     <ProgressiveOnboardingContext.Provider
@@ -104,7 +120,7 @@ export const PROGRESSIVE_ONBOARDING_FOLLOW_CHAIN = [
   PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST,
   PROGRESSIVE_ONBOARDING_FOLLOW_FIND,
   PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT,
-]
+] as const
 
 // Saves
 export const PROGRESSIVE_ONBOARDING_SAVE_ARTWORK = "save-artwork"
@@ -114,7 +130,7 @@ export const PROGRESSIVE_ONBOARDING_SAVE_CHAIN = [
   PROGRESSIVE_ONBOARDING_SAVE_ARTWORK,
   PROGRESSIVE_ONBOARDING_SAVE_FIND,
   PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT,
-]
+] as const
 
 // Alerts
 export const PROGRESSIVE_ONBOARDING_ALERT_CREATE = "alert-create"
@@ -126,7 +142,7 @@ export const PROGRESSIVE_ONBOARDING_ALERT_CHAIN = [
   PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER,
   PROGRESSIVE_ONBOARDING_ALERT_READY,
   PROGRESSIVE_ONBOARDING_ALERT_FIND,
-]
+] as const
 
 export const PROGRESSIVE_ONBOARDING_KEYS = [
   PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST,
