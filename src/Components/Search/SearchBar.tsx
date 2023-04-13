@@ -1,4 +1,4 @@
-import { Component, useContext } from "react"
+import { useCallback, useContext, useEffect, useState } from "react"
 import * as React from "react"
 import { Box, BoxProps } from "@artsy/palette"
 import { SearchBar_viewer$data } from "__generated__/SearchBar_viewer.graphql"
@@ -32,7 +32,7 @@ import { Media } from "Utils/Responsive"
 import { SearchInputContainer } from "./SearchInputContainer"
 import { useTranslation } from "react-i18next"
 import { ClassI18n } from "System/i18n/ClassI18n"
-import track from "react-tracking"
+import track, { useTracking } from "react-tracking"
 import { getENV } from "Utils/getENV"
 
 const logger = createLogger("Components/Search/SearchBar")
@@ -85,29 +85,36 @@ const Form = styled.form`
 `
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-@track(null, {
+const SearchBar = track(null, {
   dispatch: data => Events.postEvent(data),
-})
-export class SearchBar extends Component<Props, State> {
-  public input: HTMLInputElement
+})(({ router, relay, viewer }) => {
+  const [entityID, setEntityID] = useState(null)
+  const [entityType, setEntityType] = useState(null)
+  const [focused, setFocused] = useState(false)
+  const [term, setTerm] = useState(getSearchTerm(window.location))
+  const { trackEvent } = useTracking()
 
   // Once this is set, we don't ever expect to change it back. A click on a
   // descendant indicates that we're going to navigate away from the page, so
   // this behaviour  is acceptable.
-  private userClickedOnDescendant: boolean
+  let userClickedOnDescendant: boolean
 
-  private removeNavigationListener: () => void
+  const removeNavigationListener = useCallback(() => {
+    if (!router) {
+      return null
+    }
 
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-  state = {
-    entityID: null,
-    entityType: null,
-    focused: false,
-    term: getSearchTerm(window.location),
-  }
+    return router.addNavigationListener(location => {
+      if (!location.pathname.startsWith("/search")) {
+        setTerm("")
+      }
+
+      return true
+    })
+  }, [router])
 
   // Throttled method to toggle previews.
-  throttledOnSuggestionHighlighted = ({ suggestion }) => {
+  const throttledOnSuggestionHighlighted = ({ suggestion }) => {
     if (!suggestion) return
 
     const {
@@ -116,79 +123,58 @@ export class SearchBar extends Component<Props, State> {
 
     if (entityType === "FirstItem") return
 
-    this.setState({
-      entityID,
-      entityType,
-    })
+    setEntityID(entityID)
+    setEntityType(entityType)
   }
 
-  @track((_props, _state, [query, hasResults]) => ({
+  track((_props, _state, [query, hasResults]) => ({
     action_type: hasResults
       ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
       : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
     query,
   }))
-  trackSearch(_term, _hasResults) {
+
+  const trackSearch = (_term, _hasResults) => {
     /* no-op */
   }
 
   // Throttled method to perform refetch for new suggest query.
-  throttledFetch = ({ value: term }) => {
-    const { relay } = this.props
-    const performanceStart = performance && performance.now()
+  const throttledFetch = useCallback(
+    ({ value: term }) => {
+      const performanceStart = performance && performance.now()
 
-    relay.refetch(
-      {
-        hasTerm: true,
-        term,
-      },
-      null,
-      error => {
-        if (error) {
-          logger.error(error)
-          return
-        } else if (performanceStart && getENV("VOLLEY_ENDPOINT")) {
-          this.reportPerformanceMeasurement(performanceStart)
+      relay.refetch(
+        {
+          hasTerm: true,
+          term,
+        },
+        null,
+        error => {
+          if (error) {
+            logger.error(error)
+            return
+          } else if (performanceStart && getENV("VOLLEY_ENDPOINT")) {
+            reportPerformanceMeasurement(performanceStart)
+          }
+          const edges = get(viewer, v => v.searchConnection.edges, [])
+          trackSearch(term, edges.length > 0)
         }
-        const { viewer } = this.props
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const edges = get(viewer, v => v.searchConnection.edges, [])
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        this.trackSearch(term, edges.length > 0)
-      }
-    )
-  }
+      )
+    },
+    [relay, viewer]
+  )
 
-  componentDidMount() {
-    this.throttledFetch = throttle(this.throttledFetch, 500, {
+  useEffect(() => {
+    throttle(throttledFetch, 500, {
       leading: true,
     })
 
-    this.throttledOnSuggestionHighlighted = throttle(
-      this.throttledOnSuggestionHighlighted,
-      500,
-      { leading: true }
-    )
+    throttle(throttledOnSuggestionHighlighted, 500, { leading: true })
 
-    // Clear the search term once you navigate away from search results
-    this.removeNavigationListener = this.props.router
-      ? this.props.router.addNavigationListener(location => {
-          if (!location.pathname.startsWith("/search")) {
-            this.setState({ term: "" })
-          }
+    return removeNavigationListener
+  }, [removeNavigationListener, router, throttledFetch])
 
-          return true
-        })
-      : () => {
-          // noop
-        }
-  }
-
-  componentWillUnmount() {
-    this.removeNavigationListener()
-  }
-
-  reportPerformanceMeasurement = performanceStart => {
+  const reportPerformanceMeasurement = performanceStart => {
     const duration = performance.now() - performanceStart
     const deviceType = getENV("IS_MOBILE") ? "mobile" : "desktop"
 
@@ -208,90 +194,60 @@ export class SearchBar extends Component<Props, State> {
       .end()
   }
 
-  searchTextChanged = (_e, { newValue: term }) => {
-    this.setState({ term })
+  const searchTextChanged = (_e, { newValue: term }) => {
+    setTerm(term)
   }
 
-  @track({
-    action_type: DeprecatedSchema.ActionType.FocusedOnAutosuggestInput,
-  })
-  onFocus() {
-    this.setState({ focused: true })
+  const onFocus = () => {
+    setFocused(true)
+    trackEvent({
+      action_type: DeprecatedSchema.ActionType.FocusedOnAutosuggestInput,
+    })
   }
 
-  onBlur = event => {
+  const onBlur = event => {
     const isClickOnSearchIcon =
       event.relatedTarget &&
       event.relatedTarget.form &&
       event.relatedTarget.form === event.target.form
     if (isClickOnSearchIcon) {
       if (!isEmpty(event.target.value)) {
-        this.userClickedOnDescendant = true
+        userClickedOnDescendant = true
       }
     } else {
-      this.setState({ focused: false })
+      setFocused(false)
     }
   }
 
-  onSuggestionsClearRequested = () => {
+  const onSuggestionsClearRequested = () => {
     // This event _also_ fires when a user clicks on a link in the preview pane
     //  or the magnifying glass icon. If we initialize state when that happens,
     //  the link will get removed from the DOM before the browser has a chance
     //  to follow it.
-    if (!this.userClickedOnDescendant) {
-      this.setState({
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        entityID: null,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        entityType: null,
-      })
+    if (!userClickedOnDescendant) {
+      setEntityID(null)
+      setEntityType(null)
     }
   }
 
   // Navigate to selected search item.
-  @track(
-    (
-      _props,
-      state: State,
-      [
-        {
-          suggestion: {
-            node: { href, displayType, id, __typename },
-          },
-          suggestionIndex,
-        },
-      ]
-    ) => ({
-      action_type: DeprecatedSchema.ActionType.SelectedItemFromSearch,
-      destination_path:
-        __typename === "Artist" ? `${href}/works-for-sale` : href,
-      item_id: id,
-      item_number: suggestionIndex,
-      item_type: displayType,
-      query: state.term,
-    })
-  )
-  onSuggestionSelected({
+  const onSuggestionSelected = ({
     suggestion: {
-      node: { href },
+      node: { href, displayType, id, __typename },
     },
+    suggestionIndex,
     method,
-  }) {
-    this.userClickedOnDescendant = true
+  }) => {
+    userClickedOnDescendant = true
 
-    if (this.props.router) {
-      // @ts-ignore (routeConfig not found; need to update DT types)
-      const routes = this.props.router.matcher.routeConfig
-      // @ts-ignore (matchRoutes not found; need to update DT types)
-      const isSupportedInRouter = !!this.props.router.matcher.matchRoutes(
-        routes,
-        href
-      )
+    if (router) {
+      const routes = router.matcher.routeConfig
+      const isSupportedInRouter = !!router.matcher.matchRoutes(routes, href)
 
       // Check if url exists within the global router context
       if (isSupportedInRouter) {
-        this.props.router.push(href)
-        this.onBlur({})
+        router.push(href)
+        onBlur({})
       } else {
         window.location.assign(href)
       }
@@ -299,15 +255,23 @@ export class SearchBar extends Component<Props, State> {
     } else {
       window.location.assign(href)
     }
+
+    trackEvent({
+      action_type: DeprecatedSchema.ActionType.SelectedItemFromSearch,
+      destination_path:
+        __typename === "Artist" ? `${href}/works-for-sale` : href,
+      item_id: id,
+      item_number: suggestionIndex,
+      item_type: displayType,
+      query: term,
+    })
   }
 
-  renderSuggestionsContainer = ({ containerProps, children, query }) => {
+  const renderSuggestionsContainer = ({ containerProps, children, query }) => {
     const noResults = get(
-      this.props,
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+      viewer,
       p => p.viewer.searchConnection.edges.length === 0
     )
-    const { focused } = this.state
 
     if (noResults || !focused || !query) {
       return null
@@ -323,25 +287,25 @@ export class SearchBar extends Component<Props, State> {
     return <SuggestionContainer {...props}>{children}</SuggestionContainer>
   }
 
-  getSuggestionValue = ({ node: { displayLabel } }) => {
+  const getSuggestionValue = ({ node: { displayLabel } }) => {
     return displayLabel
   }
 
-  getLabel = ({ displayType, __typename }) =>
+  const getLabel = ({ displayType, __typename }) =>
     displayType || (__typename === "Artist" ? "Artist" : null)
 
-  renderSuggestion = (edge, rest) => {
+  const renderSuggestion = (edge, rest) => {
     const renderer = edge.node.isFirstItem
-      ? this.renderFirstSuggestion
-      : this.renderDefaultSuggestion
+      ? renderFirstSuggestion
+      : renderDefaultSuggestion
     const item = renderer(edge, rest)
     return item
   }
 
-  renderFirstSuggestion = (edge, { query, isHighlighted }) => {
+  const renderFirstSuggestion = (edge, { query, isHighlighted }) => {
     const { displayLabel, href } = edge.node
 
-    const label = this.getLabel(edge.node)
+    const label = getLabel(edge.node)
 
     return (
       <FirstSuggestionItem
@@ -354,10 +318,10 @@ export class SearchBar extends Component<Props, State> {
     )
   }
 
-  renderDefaultSuggestion = (edge, { query, isHighlighted }) => {
+  const renderDefaultSuggestion = (edge, { query, isHighlighted }) => {
     const { displayLabel, href, statuses, imageUrl } = edge.node
 
-    const label = this.getLabel(edge.node)
+    const label = getLabel(edge.node)
 
     const showArtworksButton = !!statuses?.artworks
     const showAuctionResultsButton = !!statuses?.auctionLots
@@ -376,18 +340,15 @@ export class SearchBar extends Component<Props, State> {
     )
   }
 
-  renderInputComponent = props => <SearchInputContainer {...props} />
+  const renderInputComponent = props => <SearchInputContainer {...props} />
 
-  renderAutosuggestComponent(t, { xs }) {
-    const { term } = this.state
-    const { viewer } = this.props
-
+  const renderAutosuggestComponent = (t, { xs }) => {
     const inputProps = {
       "aria-label": "Search Artsy",
       name: "term",
-      onBlur: this.onBlur,
-      onChange: this.searchTextChanged,
-      onFocus: this.onFocus.bind(this),
+      onBlur,
+      onChange: searchTextChanged,
+      onFocus,
       onKeyDown: (event: React.KeyboardEvent<HTMLInputElement>) => {
         if (
           event.keyCode === 13 && // Enter key press ...
@@ -410,72 +371,64 @@ export class SearchBar extends Component<Props, State> {
       },
     }
 
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const edges = get(viewer, v => v.searchConnection.edges, [])
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const suggestions = [...edges, firstSuggestionPlaceholder]
 
     return (
       <Autosuggest
         focusInputOnSuggestionClick={false}
-        alwaysRenderSuggestions={this.userClickedOnDescendant}
+        alwaysRenderSuggestions={userClickedOnDescendant}
         suggestions={suggestions}
-        onSuggestionsClearRequested={this.onSuggestionsClearRequested}
-        onSuggestionHighlighted={this.throttledOnSuggestionHighlighted}
-        onSuggestionsFetchRequested={this.throttledFetch}
-        getSuggestionValue={this.getSuggestionValue}
-        renderSuggestion={this.renderSuggestion}
+        onSuggestionsClearRequested={onSuggestionsClearRequested}
+        onSuggestionHighlighted={throttledOnSuggestionHighlighted}
+        onSuggestionsFetchRequested={throttledFetch}
+        getSuggestionValue={getSuggestionValue}
+        renderSuggestion={renderSuggestion}
         renderSuggestionsContainer={props => {
-          return this.renderSuggestionsContainer(props)
+          return renderSuggestionsContainer(props)
         }}
         inputProps={inputProps}
         onSuggestionSelected={(e, selection) => {
           e.preventDefault()
-          this.onSuggestionSelected(selection)
+          onSuggestionSelected(selection)
         }}
-        renderInputComponent={this.renderInputComponent}
+        renderInputComponent={renderInputComponent}
       />
     )
   }
 
-  render() {
-    const { router } = this.props
+  return (
+    <ClassI18n>
+      {({ t }) => (
+        <Form
+          action="/search"
+          method="GET"
+          onSubmit={event => {
+            if (router) {
+              event.preventDefault()
+              const encodedTerm = encodeURIComponent(term)
 
-    return (
-      <ClassI18n>
-        {({ t }) => (
-          <Form
-            action="/search"
-            method="GET"
-            onSubmit={event => {
-              if (router) {
-                event.preventDefault()
-                const encodedTerm = encodeURIComponent(this.state.term)
-
-                // TODO: Reenable in-router push once all routes have been moved over
-                // to new app shell
-                // router.push(`/search?term=${this.state.term}`)
-                window.location.assign(`/search?term=${encodedTerm}`)
-                this.onBlur(event)
-              } else {
-                console.error(
-                  "[Components/Search/SearchBar] `router` instance not found."
-                )
-              }
-            }}
-          >
-            <Media at="xs">
-              {this.renderAutosuggestComponent(t, { xs: true })}
-            </Media>
-            <Media greaterThan="xs">
-              {this.renderAutosuggestComponent(t, { xs: false })}
-            </Media>
-          </Form>
-        )}
-      </ClassI18n>
-    )
-  }
-}
+              // TODO: Reenable in-router push once all routes have been moved over
+              // to new app shell
+              // router.push(`/search?term=${this.state.term}`)
+              window.location.assign(`/search?term=${encodedTerm}`)
+              onBlur(event)
+            } else {
+              console.error(
+                "[Components/Search/SearchBar] `router` instance not found."
+              )
+            }
+          }}
+        >
+          <Media at="xs">{renderAutosuggestComponent(t, { xs: true })}</Media>
+          <Media greaterThan="xs">
+            {renderAutosuggestComponent(t, { xs: false })}
+          </Media>
+        </Form>
+      )}
+    </ClassI18n>
+  )
+})
 
 export const SearchBarRefetchContainer = createRefetchContainer(
   withSystemContext(SearchBar),
