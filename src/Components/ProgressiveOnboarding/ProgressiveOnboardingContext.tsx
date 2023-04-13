@@ -13,7 +13,7 @@ import { useSystemContext } from "System/SystemContext"
 
 const ProgressiveOnboardingContext = createContext<{
   dismissed: ProgressiveOnboardingKey[]
-  dismiss: (key: ProgressiveOnboardingKey) => void
+  dismiss: (key: ProgressiveOnboardingKey | ProgressiveOnboardingKey[]) => void
   isDismissed: (key: ProgressiveOnboardingKey) => boolean
 }>({
   dismissed: [],
@@ -28,9 +28,10 @@ export const ProgressiveOnboardingProvider: FC = ({ children }) => {
   const [dismissed, setDismissed] = useState<ProgressiveOnboardingKey[]>([])
 
   const dismiss = useCallback(
-    (key: ProgressiveOnboardingKey) => {
-      __dismiss__(id, key)
-      setDismissed(prevDismissed => [...prevDismissed, key])
+    (key: ProgressiveOnboardingKey | ProgressiveOnboardingKey[]) => {
+      const keys = Array.isArray(key) ? key : [key]
+      __dismiss__(id, keys)
+      setDismissed(prevDismissed => uniq([...prevDismissed, ...keys]))
     },
     [id]
   )
@@ -99,15 +100,33 @@ export const localStorageKey = (id: string) => {
 export const PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST = "follow-artist"
 export const PROGRESSIVE_ONBOARDING_FOLLOW_FIND = "follow-find"
 export const PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT = "follow-highlight"
+export const PROGRESSIVE_ONBOARDING_FOLLOW_CHAIN = [
+  PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST,
+  PROGRESSIVE_ONBOARDING_FOLLOW_FIND,
+  PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT,
+]
+
 // Saves
 export const PROGRESSIVE_ONBOARDING_SAVE_ARTWORK = "save-artwork"
 export const PROGRESSIVE_ONBOARDING_SAVE_FIND = "save-find"
 export const PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT = "save-highlight"
+export const PROGRESSIVE_ONBOARDING_SAVE_CHAIN = [
+  PROGRESSIVE_ONBOARDING_SAVE_ARTWORK,
+  PROGRESSIVE_ONBOARDING_SAVE_FIND,
+  PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT,
+]
+
 // Alerts
 export const PROGRESSIVE_ONBOARDING_ALERT_CREATE = "alert-create"
 export const PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER = "alert-select-filter"
 export const PROGRESSIVE_ONBOARDING_ALERT_READY = "alert-ready"
 export const PROGRESSIVE_ONBOARDING_ALERT_FIND = "alert-find"
+export const PROGRESSIVE_ONBOARDING_ALERT_CHAIN = [
+  PROGRESSIVE_ONBOARDING_ALERT_CREATE,
+  PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER,
+  PROGRESSIVE_ONBOARDING_ALERT_READY,
+  PROGRESSIVE_ONBOARDING_ALERT_FIND,
+]
 
 export const PROGRESSIVE_ONBOARDING_KEYS = [
   PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST,
@@ -141,14 +160,21 @@ export const parse = (
   }
 }
 
-export const __dismiss__ = (id: string, key: ProgressiveOnboardingKey) => {
-  const item = localStorage.getItem(localStorageKey(id))
-  const dismissed = parse(id, item)
+export const __dismiss__ = (
+  id: string,
+  key: ProgressiveOnboardingKey | ProgressiveOnboardingKey[]
+) => {
+  const keys = Array.isArray(key) ? key : [key]
 
-  localStorage.setItem(
-    localStorageKey(id),
-    JSON.stringify(uniq([...dismissed, key]))
-  )
+  keys.forEach(key => {
+    const item = localStorage.getItem(localStorageKey(id))
+    const dismissed = parse(id, item)
+
+    localStorage.setItem(
+      localStorageKey(id),
+      JSON.stringify(uniq([...dismissed, key]))
+    )
+  })
 }
 
 export const get = (id: string) => {

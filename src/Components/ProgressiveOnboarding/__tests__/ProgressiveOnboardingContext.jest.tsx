@@ -1,12 +1,15 @@
+import { renderHook } from "@testing-library/react-hooks"
 import {
+  ProgressiveOnboardingProvider,
   __dismiss__,
   get,
   parse,
   reset,
+  useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 
 describe("ProgressiveOnboardingContext", () => {
-  const id = "example"
+  const id = "user"
 
   describe("get", () => {
     afterEach(() => reset(id))
@@ -76,6 +79,70 @@ describe("ProgressiveOnboardingContext", () => {
           ])
         )
       ).toEqual(["follow-artist", "follow-find", "follow-highlight"])
+    })
+  })
+
+  describe("__dismiss__", () => {
+    afterEach(() => reset(id))
+
+    it("adds the key to local storage", () => {
+      __dismiss__(id, "follow-artist")
+      expect(get(id)).toEqual(["follow-artist"])
+    })
+
+    it("adds multiple keys to local storage", () => {
+      __dismiss__(id, ["follow-artist", "follow-find"])
+      expect(get(id)).toEqual(["follow-artist", "follow-find"])
+    })
+
+    it("does not add duplicate keys to local storage", () => {
+      __dismiss__(id, "follow-artist")
+      expect(get(id)).toEqual(["follow-artist"])
+      __dismiss__(id, "follow-artist")
+      expect(get(id)).toEqual(["follow-artist"])
+    })
+
+    it('handles subsequent calls to "dismiss"', () => {
+      __dismiss__(id, "follow-artist")
+      expect(get(id)).toEqual(["follow-artist"])
+      __dismiss__(id, "follow-find")
+      expect(get(id)).toEqual(["follow-artist", "follow-find"])
+      __dismiss__(id, "follow-highlight")
+      expect(get(id)).toEqual([
+        "follow-artist",
+        "follow-find",
+        "follow-highlight",
+      ])
+    })
+  })
+
+  describe("dismiss", () => {
+    afterEach(() => reset(id))
+
+    const wrapper = ({ children }) => (
+      <ProgressiveOnboardingProvider>{children}</ProgressiveOnboardingProvider>
+    )
+
+    it("dismisses keys", () => {
+      const { result } = renderHook(useProgressiveOnboarding, { wrapper })
+
+      result.current.dismiss("follow-artist")
+      expect(result.current.isDismissed("follow-artist")).toBe(true)
+      expect(result.current.isDismissed("follow-find")).toBe(false)
+      expect(result.current.isDismissed("follow-highlight")).toBe(false)
+
+      expect(get(id)).toEqual(["follow-artist"])
+
+      result.current.dismiss(["follow-find", "follow-highlight"])
+      expect(result.current.isDismissed("follow-artist")).toBe(true)
+      expect(result.current.isDismissed("follow-find")).toBe(true)
+      expect(result.current.isDismissed("follow-highlight")).toBe(true)
+
+      expect(get(id)).toEqual([
+        "follow-artist",
+        "follow-find",
+        "follow-highlight",
+      ])
     })
   })
 })
