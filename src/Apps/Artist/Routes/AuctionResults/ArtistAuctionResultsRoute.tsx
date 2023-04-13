@@ -17,6 +17,8 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
     artist: graphql`
       fragment ArtistAuctionResultsRoute_artist on Artist
         @argumentDefinitions(
+          page: { type: "Int" }
+          state: { type: "AuctionResultsState", defaultValue: ALL }
           organizations: { type: "[String]" }
           categories: { type: "[String]" }
           sizes: { type: "[ArtworkSizes]" }
@@ -26,6 +28,8 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
         ) {
         ...ArtistAuctionResults_artist
           @arguments(
+            page: $page
+            state: $state
             organizations: $organizations
             categories: $categories
             sizes: $sizes

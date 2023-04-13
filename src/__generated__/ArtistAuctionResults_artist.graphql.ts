@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c3ed1b7fec711ebc60a4b5002f4c8047>>
+ * @generated SignedSource<<7f479c2b778764d42909f4377bbcebda>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -98,11 +98,6 @@ return {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "after"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
       "name": "allowEmptyCreatedDates"
     },
     {
@@ -126,7 +121,7 @@ return {
       "name": "createdBeforeYear"
     },
     {
-      "defaultValue": 10,
+      "defaultValue": 50,
       "kind": "LocalArgument",
       "name": "first"
     },
@@ -144,6 +139,16 @@ return {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "organizations"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "page"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "size"
     },
     {
       "defaultValue": null,
@@ -189,11 +194,6 @@ return {
     {
       "alias": null,
       "args": [
-        {
-          "kind": "Variable",
-          "name": "after",
-          "variableName": "after"
-        },
         (v0/*: any*/),
         {
           "kind": "Variable",
@@ -215,6 +215,16 @@ return {
         },
         (v4/*: any*/),
         (v5/*: any*/),
+        {
+          "kind": "Variable",
+          "name": "page",
+          "variableName": "page"
+        },
+        {
+          "kind": "Variable",
+          "name": "size",
+          "variableName": "size"
+        },
         (v6/*: any*/),
         {
           "kind": "Variable",
@@ -388,6 +398,6 @@ return {
 };
 })();
 
-(node as any).hash = "c800def08a7d26042d0b4e394d4856ac";
+(node as any).hash = "3ee3695defd2061f12258d34da66df86";
 
 export default node;
