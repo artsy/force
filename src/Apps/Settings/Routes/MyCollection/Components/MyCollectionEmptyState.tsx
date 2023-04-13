@@ -33,15 +33,12 @@ export const MyCollectionEmptyState: React.FC = () => {
   return (
     <GridColumns gridRowGap={4} alignItems="center">
       <Column span={6} order={[1, 0]} py={[0, 2]}>
-        <Text variant={["xl", "xl", "xxl"]}>
-          Manage Your Art Collection Online
-        </Text>
+        <Text variant={["xl", "xl", "xxl"]}>Know Your Collection Better</Text>
 
         <Spacer y={[0, 2]} />
 
         <Text variant="sm">
-          Access price and market insights and build an online record of your
-          collection.
+          Manage your collection online and get free market insights.
         </Text>
 
         <Spacer y={[2, 4, 6]} />
