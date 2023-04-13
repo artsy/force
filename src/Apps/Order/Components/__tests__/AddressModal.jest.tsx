@@ -244,6 +244,43 @@ describe("AddressModal", () => {
       expect(wrapper.find(errorBoxQuery).text()).toContain(GENERIC_FAIL_MESSAGE)
     })
   })
+  it("sets formik error when adding an address returns phone validation error", async () => {
+    let wrapper = getWrapper({
+      ...testAddressModalProps,
+      modalDetails: {
+        addressModalTitle: "Add address",
+        addressModalAction: "createUserAddress",
+      },
+    })
+    commitMutation.mockImplementationOnce((_, { onCompleted }) =>
+      onCompleted({
+        createUserAddress: {
+          userAddressOrErrors: {
+            errors: [
+              {
+                message:
+                  "Validation failed for phone: not a valid phone number",
+              },
+            ],
+          },
+        },
+      })
+    )
+    const formik = wrapper.find("Formik").first()
+    const setFieldError = jest.fn()
+    const onSubmit = formik.props().onSubmit as any
+    onSubmit(validAddress as any, {
+      setFieldError: setFieldError,
+      setSubmitting: jest.fn(),
+    })
+
+    await wrapper.update()
+    await tick()
+    expect(setFieldError).toHaveBeenCalledWith(
+      "phoneNumber",
+      "Please enter a valid phone number"
+    )
+  })
 
   it("sets formik error when mutation returns phone validation error", async () => {
     let wrapper = getWrapper(testAddressModalProps)
