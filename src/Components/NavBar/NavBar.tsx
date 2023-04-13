@@ -52,6 +52,8 @@ import { useNavBarHeight } from "./useNavBarHeight"
 import { ProgressiveOnboardingFollowFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingSaveFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingAlertFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { OldSearchBarQueryRenderer } from "Components/Search/OldSearchBar"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -81,6 +83,9 @@ export const NavBar: React.FC = track(
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
   const showNotificationCount = isLoggedIn && !showMobileMenu
+  const isSearchDropDownImprovementsEnabled = useFeatureFlag(
+    "fx-force-search-dropdown-improvements"
+  )
 
   // Close mobile menu if dragging window from small size to desktop
   useEffect(() => {
@@ -206,7 +211,11 @@ export const NavBar: React.FC = track(
                 width={[`${searchFocused ? "90%" : "auto"}`, "auto"]}
                 zIndex={9}
               >
-                <SearchBarQueryRenderer width="100%" />
+                {isSearchDropDownImprovementsEnabled ? (
+                  <SearchBarQueryRenderer width="100%" />
+                ) : (
+                  <OldSearchBarQueryRenderer width="100%" />
+                )}
 
                 {searchFocused && (
                   <Clickable
