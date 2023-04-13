@@ -64,6 +64,8 @@ export const useMyCollectionTracking = () => {
         context_module: ContextModule.myCollectionHome,
         context_owner_type: OwnerType.myCollection,
         artist_id: artistId,
+        // TODO: Get this from the artist
+        is_p1_artist: false,
         platform: "web",
       }
 
