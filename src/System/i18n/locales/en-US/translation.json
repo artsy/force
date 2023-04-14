@@ -104,7 +104,9 @@
       "save": {
         "registerToBidWithDeadline": "Register ahead of time to bid in this auction and get notifications for this lot.",
         "registerToBidWithoutDeadline": "Register to bid in this auction and get notifications for this lot."
-      }
+      },
+      "watchLot": "Watch lot",
+      "watchingLot": "Watching lot"
     }
   },
   "collectorSaves": {
