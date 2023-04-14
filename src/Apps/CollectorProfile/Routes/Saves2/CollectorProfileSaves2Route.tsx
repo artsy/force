@@ -24,9 +24,9 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   const { trackEvent } = useTracking()
   const initialArtworkListId = useRef(match.params.id)
   const { page, sort } = match.location.query ?? {}
-  const allSavesArtworkList = me.allSavesArtworkList!
+  const savedArtworksArtworkList = me.savedArtworksArtworkList!
   const selectedArtworkListId =
-    match.params.id ?? allSavesArtworkList.internalID
+    match.params.id ?? savedArtworksArtworkList.internalID
   let customArtworkLists = extractNodes(me.customArtworkLists)
 
   useEffect(() => {
@@ -54,7 +54,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   }
 
   // Always display "Saved Artworks" artwork list first in the list
-  const artworkLists = [allSavesArtworkList, ...customArtworkLists]
+  const artworkLists = [savedArtworksArtworkList, ...customArtworkLists]
 
   /**
    * When the artwork list has been successfully deleted,
@@ -82,7 +82,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
 
       <ArtworkListsHeader
         savedArtworksCount={
-          me?.allSavesArtworkList?.artworksConnection?.totalCount ?? 0
+          me?.savedArtworksArtworkList?.artworksConnection?.totalCount ?? 0
         }
       />
 
@@ -91,7 +91,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
       <Shelf showProgress={false}>
         {artworkLists.map(artworkList => {
           const isDefaultArtworkList =
-            artworkList.internalID === allSavesArtworkList.internalID
+            artworkList.internalID === savedArtworksArtworkList.internalID
 
           return (
             <ArtworkListItemFragmentContainer
@@ -135,7 +135,7 @@ export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContai
   {
     me: graphql`
       fragment CollectorProfileSaves2Route_me on Me {
-        allSavesArtworkList: collection(id: "saved-artwork") {
+        savedArtworksArtworkList: collection(id: "saved-artwork") {
           internalID
           ...ArtworkListItem_item
 

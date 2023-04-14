@@ -11,9 +11,9 @@ interface ArtworkListEmptyStateProps {
 export const ArtworkListEmptyState: FC<ArtworkListEmptyStateProps> = ({
   me,
 }) => {
-  const allSavesArtworksCount = me.allSavesArtworkList?.artworksCount ?? 0
+  const savedArtworksCount = me.savedArtworksArtworkList?.artworksCount ?? 0
   const isDefaultArtworkList = me.artworkList?.default ?? false
-  const text = getText(isDefaultArtworkList, allSavesArtworksCount)
+  const text = getText(isDefaultArtworkList, savedArtworksCount)
 
   return (
     <Flex
@@ -56,7 +56,7 @@ export const ArtworkListEmptyStateFragmentContainer = createFragmentContainer(
           default
         }
 
-        allSavesArtworkList: collection(id: "saved-artwork") {
+        savedArtworksArtworkList: collection(id: "saved-artwork") {
           artworksCount(onlyVisible: true)
         }
       }
@@ -64,11 +64,8 @@ export const ArtworkListEmptyStateFragmentContainer = createFragmentContainer(
   }
 )
 
-const getText = (
-  isDefaultArtworkList: boolean,
-  allSavesArtworksCount: number
-) => {
-  if (isDefaultArtworkList || allSavesArtworksCount === 0) {
+const getText = (isDefaultArtworkList: boolean, savedArtworksCount: number) => {
+  if (isDefaultArtworkList || savedArtworksCount === 0) {
     return {
       title: "Keep track of artworks you love",
       description:

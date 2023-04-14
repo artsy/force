@@ -44,7 +44,7 @@ describe("ArtworkListEmptyState", () => {
             edges: [],
           },
         },
-        allSavesArtworkList: {
+        savedArtworksArtworkList: {
           artworksCount: 0,
         },
       }),
@@ -67,7 +67,7 @@ describe("ArtworkListEmptyState", () => {
             edges: [],
           },
         },
-        allSavesArtworkList: {
+        savedArtworksArtworkList: {
           artworksCount: 2,
         },
       }),
@@ -90,7 +90,7 @@ describe("ArtworkListEmptyState", () => {
             edges: [],
           },
         },
-        allSavesArtworkList: {
+        savedArtworksArtworkList: {
           artworksCount: 0,
         },
       }),
