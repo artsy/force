@@ -151,7 +151,7 @@ describe("EditArtworkListModal", () => {
           __typename: "UpdateCollectionSuccess",
           artworkList: {
             internalID: "artwork-list",
-            name: "Saved Artworks",
+            name: "Custom Artwork List",
           },
         },
       },
