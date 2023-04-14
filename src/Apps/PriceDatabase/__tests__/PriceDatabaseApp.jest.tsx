@@ -1,11 +1,11 @@
 import { Button, MultiSelect } from "@artsy/palette"
 import { mount, ReactWrapper } from "enzyme"
 import { HeadProvider } from "react-head"
-import { SystemContextProvider } from "System/SystemContext"
 import { createMockEnvironment } from "relay-test-utils"
 import { PriceDatabaseArtistAutosuggest } from "./../Components/PriceDatabaseArtistAutosuggest"
 import { PriceDatabase } from "./../PriceDatabase"
 import { useTracking } from "react-tracking"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.mock("System/Router/useRouter", () => {
   return {
@@ -20,6 +20,7 @@ const trackEvent = jest.fn()
 
 describe("PriceDatabaseApp", () => {
   let wrapper: ReactWrapper
+  let mockEnvironment = createMockEnvironment()
 
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => {
@@ -29,11 +30,11 @@ describe("PriceDatabaseApp", () => {
     })
 
     wrapper = mount(
-      <SystemContextProvider relayEnvironment={createMockEnvironment() as any}>
+      <MockBoot relayEnvironment={mockEnvironment}>
         <HeadProvider>
           <PriceDatabase />
         </HeadProvider>
-      </SystemContextProvider>
+      </MockBoot>
     )
   })
   afterEach(() => {
