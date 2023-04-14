@@ -50,7 +50,7 @@ export const useCreateCollection = () => {
               collection {
                 internalID
                 name
-                artworksCount
+                artworksCount(onlyVisible: true)
               }
             }
 
