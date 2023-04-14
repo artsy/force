@@ -1,5 +1,5 @@
 import { mount } from "enzyme"
-import { ArtistSeriesItem } from "../ArtistSeriesItem"
+import { ArtistSeriesItem } from "./../ArtistSeriesItem"
 import { ArtistSeriesItem_artistSeries$data } from "__generated__/ArtistSeriesItem_artistSeries.graphql"
 import { useTracking } from "react-tracking"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
@@ -39,22 +39,22 @@ describe("Artist Series Rail Item", () => {
     elem.props().onClick({} as any)
 
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-            Array [
-              Object {
-                "action": "clickedArtistSeriesGroup",
-                "context_module": "context-module",
-                "context_page_owner_id": "context-page-owner-id",
-                "context_page_owner_slug": "context-page-owner-slug",
-                "context_page_owner_type": "artist",
-                "curation_boost": true,
-                "destination_page_owner_id": "internal-id",
-                "destination_page_owner_slug": "slug",
-                "destination_page_owner_type": "artistSeries",
-                "horizontal_slide_position": 2,
-                "type": "thumbnail",
-              },
-            ]
-          `)
+      [
+        {
+          "action": "clickedArtistSeriesGroup",
+          "context_module": "context-module",
+          "context_page_owner_id": "context-page-owner-id",
+          "context_page_owner_slug": "context-page-owner-slug",
+          "context_page_owner_type": "artist",
+          "curation_boost": true,
+          "destination_page_owner_id": "internal-id",
+          "destination_page_owner_slug": "slug",
+          "destination_page_owner_type": "artistSeries",
+          "horizontal_slide_position": 2,
+          "type": "thumbnail",
+        },
+      ]
+    `)
   })
 
   it("does not try to render a null image", () => {

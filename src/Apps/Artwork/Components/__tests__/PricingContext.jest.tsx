@@ -216,11 +216,11 @@ describe("PricingContext", () => {
     })
 
     expect(wrapper.find(BarChart).props().bars[0].label).toMatchInlineSnapshot(`
-Object {
-  "description": "1 work",
-  "title": "$0–$247",
-}
-`)
+      {
+        "description": "1 work",
+        "title": "$0–$247",
+      }
+    `)
   })
 
   it("Puts the artwork in the last bin when the price is larger than the last bin's max price", async () => {
@@ -260,11 +260,11 @@ Object {
     })
 
     expect(wrapper.find(BarChart).props().bars[1].label).toMatchInlineSnapshot(`
-Object {
-  "description": "1 work",
-  "title": "$247+",
-}
-`)
+      {
+        "description": "1 work",
+        "title": "$247+",
+      }
+    `)
   })
 
   describe("Analytics", () => {

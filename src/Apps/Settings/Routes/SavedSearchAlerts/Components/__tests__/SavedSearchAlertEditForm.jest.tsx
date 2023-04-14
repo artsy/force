@@ -197,11 +197,11 @@ describe("SavedSearchAlertEditForm", () => {
     await waitFor(() => expect(mockOnCompleted).toBeCalled())
 
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action": "editedSavedSearch",
-          "changed": "{\\"name\\":\\"Updated Name\\",\\"push\\":false,\\"email\\":true,\\"frequency\\":\\"daily\\"}",
-          "current": "{\\"name\\":\\"Alert #1\\",\\"email\\":true,\\"push\\":false,\\"frequency\\":\\"daily\\"}",
+          "changed": "{"name":"Updated Name","push":false,"email":true,"frequency":"daily"}",
+          "current": "{"name":"Alert #1","email":true,"push":false,"frequency":"daily"}",
           "saved_search_id": "alert-id",
         },
       ]

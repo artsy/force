@@ -3,7 +3,7 @@ import { useTracking } from "react-tracking"
 import { Link } from "@artsy/palette"
 import { ContextModule } from "@artsy/cohesion"
 import { Device } from "Utils/Hooks/useDeviceDetection"
-import { DownloadAppBadge } from "../DownloadAppBadge"
+import { DownloadAppBadge } from "Components/DownloadAppBadges/DownloadAppBadge"
 
 describe("DownloadAppBadge", () => {
   const trackEvent = jest.fn()
@@ -33,8 +33,8 @@ describe("DownloadAppBadge", () => {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     downloadLink.props().onClick({} as any)
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action": "clickedAppDownload",
           "context_module": "footer",
           "context_page_owner_id": undefined,

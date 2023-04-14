@@ -1684,7 +1684,7 @@ describe("Shipping", () => {
             .find(Input)
             .map(input => input.props().value)
         ).toMatchInlineSnapshot(`
-          Array [
+          [
             "Test Name",
             "28001",
             "1 Main St",

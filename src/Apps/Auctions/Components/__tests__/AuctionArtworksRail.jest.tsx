@@ -71,8 +71,8 @@ describe("AuctionArtworksRail", () => {
     )
 
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action": "clickedArtworkGroup",
           "context_module": "currentAuctions",
           "context_page_owner_type": undefined,

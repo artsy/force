@@ -47,7 +47,7 @@ describe("PriceDatabaseApp", () => {
 
     expect(trackEvent).toHaveBeenCalledTimes(1)
     expect(trackEvent.mock.calls[0][0]).toMatchInlineSnapshot(`
-      Object {
+      {
         "action": "screen",
         "context_module": "priceDatabaseLanding",
         "context_screen_owner_type": "priceDatabase",
@@ -68,14 +68,14 @@ describe("PriceDatabaseApp", () => {
 
     expect(trackEvent).toHaveBeenCalledTimes(1)
     expect(trackEvent.mock.calls[0][0]).toMatchInlineSnapshot(`
-      Object {
+      {
         "action": "searchedPriceDatabase",
         "context_module": "priceDatabaseLanding",
         "context_owner_type": "priceDatabase",
         "destination_owner_slug": "gerhard-richter",
         "destination_owner_type": "artistAuctionResults",
         "destination_path": "/artist/gerhard-richter/auction-results",
-        "filters": "{\\"categories\\":[],\\"sizes\\":[]}",
+        "filters": "{"categories":[],"sizes":[]}",
         "query": "",
       }
     `)
@@ -100,14 +100,14 @@ describe("PriceDatabaseApp", () => {
     )
 
     expect(trackEvent.mock.calls[3][0]).toMatchInlineSnapshot(`
-      Object {
+      {
         "action": "searchedPriceDatabase",
         "context_module": "priceDatabaseLanding",
         "context_owner_type": "priceDatabase",
         "destination_owner_slug": "banksy",
         "destination_owner_type": "artistAuctionResults",
         "destination_path": "/artist/banksy/auction-results",
-        "filters": "{\\"categories\\":[\\"Painting\\"],\\"sizes\\":[\\"SMALL\\",\\"MEDIUM\\"]}",
+        "filters": "{"categories":["Painting"],"sizes":["SMALL","MEDIUM"]}",
         "query": "categories%5B0%5D=Painting&sizes%5B0%5D=SMALL&sizes%5B1%5D=MEDIUM",
       }
     `)
