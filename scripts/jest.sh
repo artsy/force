@@ -7,7 +7,6 @@ NODE_ENV=test
 
 node \
   --expose-gc \
-  --no-compilation-cache \
   --max_old_space_size=4096 \
   ./node_modules/.bin/jest \
     --logHeapUsage \
