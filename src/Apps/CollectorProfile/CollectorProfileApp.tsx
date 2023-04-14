@@ -47,18 +47,24 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
       <Spacer y={[0, 2]} />
 
       <RouteTabs fill>
-        <Tab to="/collector-profile/my-collection">My Collection</Tab>
+        <Tab to="/collector-profile/my-collection" variant={["xs", "sm"]}>
+          My Collection
+        </Tab>
 
-        <Tab to="/collector-profile/insights">Insights</Tab>
+        <Tab to="/collector-profile/insights" variant={["xs", "sm"]}>
+          Insights
+        </Tab>
 
         <ProgressiveOnboardingSaveHighlight position="center">
-          <Tab to={savesPath} active={isSavesPathActive}>
+          <Tab to={savesPath} active={isSavesPathActive} variant={["xs", "sm"]}>
             Saves
           </Tab>
         </ProgressiveOnboardingSaveHighlight>
 
         <ProgressiveOnboardingFollowHighlight position="center">
-          <Tab to="/collector-profile/follows">Follows</Tab>
+          <Tab to="/collector-profile/follows" variant={["xs", "sm"]}>
+            Follows
+          </Tab>
         </ProgressiveOnboardingFollowHighlight>
       </RouteTabs>
 
