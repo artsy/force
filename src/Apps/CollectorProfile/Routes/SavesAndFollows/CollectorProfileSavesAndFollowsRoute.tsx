@@ -26,8 +26,12 @@ export const CollectorProfileSavesAndFollowsRouteFragmentContainer = createFragm
   CollectorProfileSavesAndFollowsRoute,
   {
     me: graphql`
-      fragment CollectorProfileSavesAndFollowsRoute_me on Me {
+      fragment CollectorProfileSavesAndFollowsRoute_me on Me
+        @argumentDefinitions(
+          shouldFetchArtworkListsData: { type: "Boolean!" }
+        ) {
         ...CollectorProfileSaves2Route_me
+          @include(if: $shouldFetchArtworkListsData)
       }
     `,
   }

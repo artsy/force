@@ -169,10 +169,24 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
           SavesAndFollowsRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
+        prepareVariables: (_, { context }) => {
+          const featureFlags = context?.featureFlags ?? {}
+          const featureFlag = featureFlags["force-enable-artworks-list"]
+          const isArtworkListsFlagEnabled = featureFlag?.flagEnabled ?? false
+
+          return {
+            shouldFetchArtworkListsData: isArtworkListsFlagEnabled,
+          }
+        },
         query: graphql`
-          query collectorProfileRoutes_SavesAndFollowsRouteQuery {
+          query collectorProfileRoutes_SavesAndFollowsRouteQuery(
+            $shouldFetchArtworkListsData: Boolean!
+          ) {
             me {
               ...CollectorProfileSavesAndFollowsRoute_me
+                @arguments(
+                  shouldFetchArtworkListsData: $shouldFetchArtworkListsData
+                )
             }
           }
         `,

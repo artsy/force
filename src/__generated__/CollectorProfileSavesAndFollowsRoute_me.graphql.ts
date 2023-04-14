@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fc5b75e224878bdc7ab6dfdd3610bf1c>>
+ * @generated SignedSource<<38216ee1aa6581e607da11ffab32960f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,21 +20,34 @@ export type CollectorProfileSavesAndFollowsRoute_me$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "shouldFetchArtworkListsData"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "CollectorProfileSavesAndFollowsRoute_me",
   "selections": [
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "CollectorProfileSaves2Route_me"
+      "condition": "shouldFetchArtworkListsData",
+      "kind": "Condition",
+      "passingValue": true,
+      "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "CollectorProfileSaves2Route_me"
+        }
+      ]
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "7d6e841a6acb85de872d896dd62bd08d";
+(node as any).hash = "df84f18dc3f0d68178bd40473394a42a";
 
 export default node;
