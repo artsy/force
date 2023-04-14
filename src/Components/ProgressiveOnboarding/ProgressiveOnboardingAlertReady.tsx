@@ -19,9 +19,9 @@ export const ProgressiveOnboardingAlertReady: FC<ProgressiveOnboardingAlertReady
 
   const isDisplayable =
     isEnabledFor("alerts") &&
-    isDismissed(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER) &&
-    isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE) &&
-    !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_READY)
+    isDismissed(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER).status &&
+    isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE).status &&
+    !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_READY).status
 
   const handleClose = () => {
     dismiss(PROGRESSIVE_ONBOARDING_ALERT_CREATE)

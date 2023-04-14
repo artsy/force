@@ -1,14 +1,16 @@
 import { render, screen } from "@testing-library/react"
 import {
+  PROGRESSIVE_ONBOARDING_FOLLOW_FIND,
   ProgressiveOnboardingProvider,
   reset,
+  useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import { ProgressiveOnboardingCountsQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingCounts"
 import { ProgressiveOnboardingFollowArtistQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { ProgressiveOnboardingFollowFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { FC } from "react"
+import { FC, useEffect } from "react"
 
 jest.mock("System/useFeatureFlag", () => ({
   useFeatureFlag: () => true,
@@ -111,5 +113,63 @@ describe("ProgressiveOnboarding: Follows", () => {
     expect(screen.queryByText(followArtistText)).not.toBeInTheDocument()
     expect(screen.queryByText(followFindText)).not.toBeInTheDocument()
     expect(screen.queryByText(followHiglightedText)).not.toBeInTheDocument()
+  })
+})
+
+const DismissFollowFind = () => {
+  const { dismiss } = useProgressiveOnboarding()
+
+  useEffect(() => {
+    dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_FIND)
+  }, [dismiss])
+
+  return null
+}
+
+describe("ProgressiveOnboardingFollowHighlight", () => {
+  it("renders the highlight", () => {
+    render(
+      <ProgressiveOnboardingProvider>
+        <DismissFollowFind />
+        <ProgressiveOnboardingFollowHighlight position="center">
+          <div>Example</div>
+        </ProgressiveOnboardingFollowHighlight>
+      </ProgressiveOnboardingProvider>
+    )
+
+    expect(screen.getByText("Example")).toBeInTheDocument()
+    expect(screen.getByText("Highlighted")).toBeInTheDocument()
+  })
+
+  it("does not render the highlight if 20 seconds have passed since the last dismissal", () => {
+    jest.useFakeTimers()
+
+    const Example = ({ display }) => {
+      return (
+        <ProgressiveOnboardingProvider>
+          <DismissFollowFind />
+
+          {display && (
+            <ProgressiveOnboardingFollowHighlight position="center">
+              <div>Example</div>
+            </ProgressiveOnboardingFollowHighlight>
+          )}
+        </ProgressiveOnboardingProvider>
+      )
+    }
+
+    const { rerender } = render(<Example display={false} />)
+
+    expect(screen.queryByText("Example")).not.toBeInTheDocument()
+    expect(screen.queryByText("Highlighted")).not.toBeInTheDocument()
+
+    jest.advanceTimersByTime(20 * 1000)
+
+    rerender(<Example display />)
+
+    expect(screen.getByText("Example")).toBeInTheDocument()
+    expect(screen.queryByText("Highlighted")).not.toBeInTheDocument()
+
+    jest.useRealTimers()
   })
 })

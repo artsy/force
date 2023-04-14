@@ -2,7 +2,9 @@ import { FC, useCallback, useEffect } from "react"
 import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import {
+  PROGRESSIVE_ONBOARDING_ALERT_CHAIN,
   PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST,
+  PROGRESSIVE_ONBOARDING_SAVE_CHAIN,
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import {
@@ -21,7 +23,7 @@ const ProgressiveOnboardingFollowArtist: FC<ProgressiveOnboardingFollowArtistPro
 
   const isDisplayable =
     isEnabledFor("follows") &&
-    !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST) &&
+    !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST).status &&
     counts.followedArtists === 0
 
   const handleClose = useCallback(() => {
@@ -32,9 +34,18 @@ const ProgressiveOnboardingFollowArtist: FC<ProgressiveOnboardingFollowArtistPro
     // Dismiss the follow artist onboarding once you follow an artist.
     if (
       counts.followedArtists > 0 &&
-      !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
+      !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST).status
     ) {
       dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
+
+      // If you've started another onboarding chain, ensure they are dismissed.
+      if (isDismissed(PROGRESSIVE_ONBOARDING_SAVE_CHAIN[0]).status) {
+        dismiss(PROGRESSIVE_ONBOARDING_SAVE_CHAIN)
+      }
+
+      if (isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CHAIN[0]).status) {
+        dismiss(PROGRESSIVE_ONBOARDING_ALERT_CHAIN)
+      }
     }
   }, [counts.followedArtists, dismiss, isDismissed])
 

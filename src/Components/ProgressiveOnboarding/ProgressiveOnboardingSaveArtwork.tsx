@@ -2,6 +2,8 @@ import { FC, useCallback, useEffect } from "react"
 import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import {
+  PROGRESSIVE_ONBOARDING_ALERT_CHAIN,
+  PROGRESSIVE_ONBOARDING_FOLLOW_CHAIN,
   PROGRESSIVE_ONBOARDING_SAVE_ARTWORK,
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
@@ -21,7 +23,7 @@ export const ProgressiveOnboardingSaveArtwork: FC<ProgressiveOnboardingSaveArtwo
 
   const isDisplayble =
     isEnabledFor("saves") &&
-    !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK) &&
+    !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK).status &&
     counts.savedArtworks === 0
 
   const handleClose = useCallback(() => {
@@ -32,9 +34,18 @@ export const ProgressiveOnboardingSaveArtwork: FC<ProgressiveOnboardingSaveArtwo
     // Dismiss the save artwork onboarding once you save an artwork.
     if (
       counts.savedArtworks > 0 &&
-      !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK)
+      !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK).status
     ) {
       dismiss(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK)
+
+      // If you've started another onboarding chain, ensure they are dismissed.
+      if (isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_CHAIN[0]).status) {
+        dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_CHAIN)
+      }
+
+      if (isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CHAIN[0]).status) {
+        dismiss(PROGRESSIVE_ONBOARDING_ALERT_CHAIN)
+      }
     }
   }, [counts.savedArtworks, dismiss, isDismissed])
 

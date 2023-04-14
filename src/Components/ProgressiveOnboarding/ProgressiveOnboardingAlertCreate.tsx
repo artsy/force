@@ -1,7 +1,6 @@
 import {
+  PROGRESSIVE_ONBOARDING_ALERT_CHAIN,
   PROGRESSIVE_ONBOARDING_ALERT_CREATE,
-  PROGRESSIVE_ONBOARDING_ALERT_READY,
-  PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER,
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
@@ -27,14 +26,13 @@ export const ProgressiveOnboardingAlertCreate: FC<ProgressiveOnboardingAlertCrea
   const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
 
   const isDisplayable =
-    isEnabledFor("alerts") && !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE)
+    isEnabledFor("alerts") &&
+    !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE).status
 
   const image = resized(IMAGE.src, { width: 230 })
 
   const handleDismiss = () => {
-    dismiss(PROGRESSIVE_ONBOARDING_ALERT_CREATE)
-    dismiss(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER)
-    dismiss(PROGRESSIVE_ONBOARDING_ALERT_READY)
+    dismiss(PROGRESSIVE_ONBOARDING_ALERT_CHAIN)
   }
 
   const handleNext = () => {
