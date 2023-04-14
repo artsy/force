@@ -1,3 +1,4 @@
+import * as Yup from "yup"
 import { useDidMount } from "@artsy/palette"
 import {
   createContext,
@@ -7,33 +8,52 @@ import {
   useEffect,
   useState,
 } from "react"
-import { uniq } from "lodash"
+import { uniqBy } from "lodash"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useSystemContext } from "System/SystemContext"
 
+interface DismissedKey {
+  key: ProgressiveOnboardingKey
+  timestamp: number
+}
+
+interface DismissedKeyStatus {
+  status: boolean
+  timestamp: number
+}
+
 const ProgressiveOnboardingContext = createContext<{
-  dismissed: ProgressiveOnboardingKey[]
+  dismissed: DismissedKey[]
   dismiss: (
     key: ProgressiveOnboardingKey | readonly ProgressiveOnboardingKey[]
   ) => void
-  isDismissed: (key: ProgressiveOnboardingKey) => boolean
+  isDismissed: (key: ProgressiveOnboardingKey) => DismissedKeyStatus
 }>({
   dismissed: [],
   dismiss: () => {},
-  isDismissed: () => false,
+  isDismissed: _key => ({ status: false, timestamp: 0 }),
 })
 
 export const ProgressiveOnboardingProvider: FC = ({ children }) => {
   const { user } = useSystemContext()
+
   const id = user?.id ?? "user"
 
-  const [dismissed, setDismissed] = useState<ProgressiveOnboardingKey[]>([])
+  const [dismissed, setDismissed] = useState<DismissedKey[]>([])
 
   const dismiss = useCallback(
     (key: ProgressiveOnboardingKey | ProgressiveOnboardingKey[]) => {
       const keys = Array.isArray(key) ? key : [key]
-      __dismiss__(id, keys)
-      setDismissed(prevDismissed => uniq([...prevDismissed, ...keys]))
+      const timestamp = Date.now()
+
+      __dismiss__(id, timestamp, keys)
+
+      setDismissed(prevDismissed =>
+        uniqBy(
+          [...prevDismissed, ...keys.map(k => ({ key: k, timestamp }))],
+          d => d.key
+        )
+      )
     },
     [id]
   )
@@ -46,7 +66,13 @@ export const ProgressiveOnboardingProvider: FC = ({ children }) => {
 
   const isDismissed = useCallback(
     (key: ProgressiveOnboardingKey) => {
-      return !mounted || dismissed.includes(key)
+      if (!mounted) return { status: false, timestamp: 0 }
+
+      const dismissedKey = dismissed.find(d => d.key === key)
+
+      return dismissedKey
+        ? { status: true, timestamp: dismissedKey.timestamp }
+        : { status: false, timestamp: 0 }
     },
     [dismissed, mounted]
   )
@@ -159,17 +185,23 @@ export const PROGRESSIVE_ONBOARDING_KEYS = [
 
 export type ProgressiveOnboardingKey = typeof PROGRESSIVE_ONBOARDING_KEYS[number]
 
-export const parse = (
-  id: string,
-  value: string | null
-): ProgressiveOnboardingKey[] => {
+const schema = Yup.object().shape({
+  key: Yup.string().oneOf([...PROGRESSIVE_ONBOARDING_KEYS]),
+  timestamp: Yup.number(),
+})
+
+const isValid = (value: any): value is DismissedKey => {
+  return schema.isValidSync(value)
+}
+
+export const parse = (value: string | null): DismissedKey[] => {
   if (!value) return []
 
   try {
     const parsed = JSON.parse(value)
 
-    return parsed.filter((key: any) => {
-      return PROGRESSIVE_ONBOARDING_KEYS.includes(key)
+    return parsed.filter((obj: any) => {
+      return isValid(obj) && PROGRESSIVE_ONBOARDING_KEYS.includes(obj.key)
     })
   } catch (err) {
     return []
@@ -178,17 +210,20 @@ export const parse = (
 
 export const __dismiss__ = (
   id: string,
+  timestamp: number,
   key: ProgressiveOnboardingKey | ProgressiveOnboardingKey[]
 ) => {
   const keys = Array.isArray(key) ? key : [key]
 
   keys.forEach(key => {
     const item = localStorage.getItem(localStorageKey(id))
-    const dismissed = parse(id, item)
+    const dismissed = parse(item)
 
     localStorage.setItem(
       localStorageKey(id),
-      JSON.stringify(uniq([...dismissed, key]))
+      JSON.stringify(
+        uniqBy([...dismissed, { key, timestamp }], ({ key }) => key)
+      )
     )
   })
 }
@@ -196,7 +231,7 @@ export const __dismiss__ = (
 export const get = (id: string) => {
   const item = localStorage.getItem(localStorageKey(id))
 
-  return parse(id, item)
+  return parse(item)
 }
 
 export const reset = (id: string) => {

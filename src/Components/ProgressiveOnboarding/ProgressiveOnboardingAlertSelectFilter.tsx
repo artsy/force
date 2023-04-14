@@ -18,8 +18,8 @@ export const ProgressiveOnboardingAlertSelectFilter: FC = ({ children }) => {
 
   const isDisplayable =
     isEnabledFor("alerts") &&
-    isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE) &&
-    !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER)
+    isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE).status &&
+    !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER).status
 
   const handleClose = () => {
     dismiss(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER)
@@ -37,7 +37,7 @@ export const ProgressiveOnboardingAlertSelectFilter: FC = ({ children }) => {
     if (
       isEnabledFor("alerts") &&
       isFilterStateChanged &&
-      !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER)
+      !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER).status
     ) {
       dismiss(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER)
     }
