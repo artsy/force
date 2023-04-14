@@ -90,7 +90,6 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
                 ? t(`artworkPage.actions.watchingLot`)
                 : t(`artworkPage.actions.watchLot`)
             }
-            longestLabel={t(`artworkPage.actions.watchingLot`)}
             onClick={handleButtonClick}
           />
         )
