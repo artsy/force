@@ -83,7 +83,8 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
             ref={anchorRef}
             name="bell"
             Icon={isSaved ? FilledIcon : UnfilledIcon}
-            label="Watch lot"
+            label={isSaved ? "Watching lot" : "Watch lot"}
+            longestLabel="Watching lot"
             onClick={handleButtonClick}
           />
         )
