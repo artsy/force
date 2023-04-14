@@ -89,14 +89,14 @@ describe("ArtworkActionsSaveButtonV2", () => {
       expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })
 
-    it("should display a different toast message when artwork is in auction", async () => {
+    it("should display the same toast message when artwork is in auction", async () => {
       renderWithRelay({
         Artwork: () => unsavedAuctionArtwork,
       })
 
       fireEvent.click(screen.getByText("Watch lot"))
 
-      expect(await screen.findByText("Watch lot saved")).toBeInTheDocument()
+      expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
       expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })
 

@@ -144,10 +144,7 @@
     "saveArtworkToLists": {
       "toast": {
         "artworkSaved": {
-          "message": {
-            "forNonAuctionArtwork": "Artwork saved",
-            "forAuctionArtwork": "Watch lot saved"
-          },
+          "message": "Artwork saved",
           "button": "Add to a List"
         },
         "artworkRemoved": {
