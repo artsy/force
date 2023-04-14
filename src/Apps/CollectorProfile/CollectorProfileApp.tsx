@@ -10,6 +10,7 @@ import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnbo
 import styled from "styled-components"
 import { Spacer } from "@artsy/palette"
 import { useIsRouteActive } from "System/Router/useRouter"
+import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 
 interface CollectorProfileAppProps {
   me: CollectorProfileApp_me$data
@@ -20,7 +21,7 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
   children,
 }) => {
   const { isLoggedIn } = useSystemContext()
-  const isSavesPathActive = useIsRouteActive("/collector-profile/saves", {
+  const isSavesPathActive = useIsRouteActive(BASE_SAVES_PATH, {
     exact: false,
   })
 
@@ -53,7 +54,7 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
 
         <ProgressiveOnboardingSaveHighlight position="center">
           <Tab
-            to="/collector-profile/saves"
+            to={BASE_SAVES_PATH}
             active={isSavesPathActive}
             variant={["xs", "sm"]}
           >

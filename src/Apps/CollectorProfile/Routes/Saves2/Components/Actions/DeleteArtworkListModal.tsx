@@ -4,6 +4,7 @@ import { useTranslation } from "react-i18next"
 import { useRouter } from "System/Router/useRouter"
 import { useTracking } from "react-tracking"
 import { ActionType, DeletedArtworkList, OwnerType } from "@artsy/cohesion"
+import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 
 export interface DeleteArtworkListEntity {
   internalID: string
@@ -60,7 +61,7 @@ export const DeleteArtworkListModal: React.FC<Props> = ({
       })
 
       trackAnalyticEvent()
-      router.replace("/collector-profile/saves")
+      router.replace(BASE_SAVES_PATH)
     } catch (err) {
       console.error(err)
       sendToast({

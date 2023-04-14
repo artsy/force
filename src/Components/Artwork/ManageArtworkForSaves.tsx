@@ -1,4 +1,5 @@
 import { useToasts } from "@artsy/palette"
+import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 import { ArtworkList } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
 import { CreateNewListModalForManageArtwork } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModalForManageArtwork"
 import { SelectArtworkListsModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectArtworkListsModal/SelectArtworkListsModal"
@@ -113,11 +114,11 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
   const { router } = useRouter()
 
   const navigateToSaveListById = (listId: string) => {
-    router.push(`/collector-profile/saves/${listId}`)
+    router.push(`${BASE_SAVES_PATH}/${listId}`)
   }
 
   const navigateToSaves = () => {
-    router.push(`/collector-profile/saves`)
+    router.push(BASE_SAVES_PATH)
   }
 
   const showToastForAddedLists = (addedLists: ResultListEntity[]) => {

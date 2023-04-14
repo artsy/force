@@ -7,14 +7,13 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import { ArtworkListItem_item$data } from "__generated__/ArtworkListItem_item.graphql"
+import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 
 interface ArtworkListItemProps {
   isSelected?: boolean
   imagesLayout: "stacked" | "grid"
   item: ArtworkListItem_item$data
 }
-
-const BASE_PATH = "/collector-profile/saves"
 
 const ArtworkListItem: FC<ArtworkListItemProps> = ({
   isSelected,
@@ -27,10 +26,10 @@ const ArtworkListItem: FC<ArtworkListItemProps> = ({
 
   const getLink = () => {
     if (item.default) {
-      return BASE_PATH
+      return BASE_SAVES_PATH
     }
 
-    return `${BASE_PATH}/${item.internalID}`
+    return `${BASE_SAVES_PATH}/${item.internalID}`
   }
 
   return (
