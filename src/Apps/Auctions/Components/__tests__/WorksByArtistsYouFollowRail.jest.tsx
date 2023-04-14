@@ -74,7 +74,7 @@ describe("WorksByArtistsYouFollowRail", () => {
       }),
     })
 
-    const link = (await screen.findAllByRole("link"))[2]
+    const link = (await screen.findAllByRole("link"))[0]
 
     fireEvent(
       link,

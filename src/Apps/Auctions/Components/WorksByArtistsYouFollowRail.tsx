@@ -30,8 +30,6 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
   return (
     <Rail
       title="Auction Lots for you ending soon"
-      viewAllLabel="View All"
-      viewAllHref="/" //TODO: to be added
       getItems={() => {
         return nodes.map((node, index) => {
           return (
