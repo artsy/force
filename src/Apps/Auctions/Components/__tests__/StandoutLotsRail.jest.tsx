@@ -91,18 +91,18 @@ describe("StandoutLotsRail", () => {
     )
 
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-        Array [
-          Object {
-            "action": "clickedArtworkGroup",
-            "context_module": "standoutLots",
-            "context_page_owner_type": undefined,
-            "destination_page_owner_id": "<Artwork-mock-id-1>",
-            "destination_page_owner_slug": "<Artwork-mock-id-2>",
-            "destination_page_owner_type": "artwork",
-            "horizontal_slide_position": 0,
-            "type": "thumbnail",
-          },
-        ]
-      `)
+      [
+        {
+          "action": "clickedArtworkGroup",
+          "context_module": "standoutLots",
+          "context_page_owner_type": undefined,
+          "destination_page_owner_id": "<Artwork-mock-id-1>",
+          "destination_page_owner_slug": "<Artwork-mock-id-2>",
+          "destination_page_owner_type": "artwork",
+          "horizontal_slide_position": 0,
+          "type": "thumbnail",
+        },
+      ]
+    `)
   })
 })
