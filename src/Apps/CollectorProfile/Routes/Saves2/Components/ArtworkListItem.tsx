@@ -14,7 +14,7 @@ interface ArtworkListItemProps {
   item: ArtworkListItem_item$data
 }
 
-const BASE_PATH = "/collector-profile/saves2"
+const BASE_PATH = "/collector-profile/saves"
 
 const ArtworkListItem: FC<ArtworkListItemProps> = ({
   isSelected,

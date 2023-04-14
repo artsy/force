@@ -60,7 +60,7 @@ export const DeleteArtworkListModal: React.FC<Props> = ({
       })
 
       trackAnalyticEvent()
-      router.replace("/collector-profile/saves2")
+      router.replace("/collector-profile/saves")
     } catch (err) {
       console.error(err)
       sendToast({

@@ -94,10 +94,8 @@ export const useManageArtworkForSavesContext = () => {
 
 /**
  *
- * If `savedListId` was passed, it means the user is on a saved artwork list page
+ * If `savedListId` was passed, it means the user is on the artwork lists page
  * In this case, whether the artwork is saved or not will depend on the local state (not on the status received from backend)
- *
- * https://artsy.net/collector-profile/saves2
  */
 export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
   children,
@@ -115,11 +113,11 @@ export const ManageArtworkForSavesProvider: FC<ProviderProps> = ({
   const { router } = useRouter()
 
   const navigateToSaveListById = (listId: string) => {
-    router.push(`/collector-profile/saves2/${listId}`)
+    router.push(`/collector-profile/saves/${listId}`)
   }
 
   const navigateToSaves = () => {
-    router.push(`/collector-profile/saves2`)
+    router.push(`/collector-profile/saves`)
   }
 
   const showToastForAddedLists = (addedLists: ResultListEntity[]) => {

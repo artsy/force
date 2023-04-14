@@ -9,8 +9,6 @@ import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboar
 import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
 import styled from "styled-components"
 import { Spacer } from "@artsy/palette"
-import { useIsRouteActive } from "System/Router/useRouter"
-import { useLinkToSaves } from "Apps/CollectorProfile/Routes/Saves2/Utils/useLinksToSaves"
 
 interface CollectorProfileAppProps {
   me: CollectorProfileApp_me$data
@@ -21,12 +19,6 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
   children,
 }) => {
   const { isLoggedIn } = useSystemContext()
-
-  // TODO: Remove this👇 when we're ready to launch the new artworks list page
-  const savesPath = useLinkToSaves()
-
-  const isSavesPathActive = useIsRouteActive(savesPath, { exact: false })
-  // TODO: Remove this ☝️ when we're ready to launch the new artworks list page
 
   if (!isLoggedIn) {
     return (
@@ -56,7 +48,7 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
         </Tab>
 
         <ProgressiveOnboardingSaveHighlight position="center">
-          <Tab to={savesPath} active={isSavesPathActive} variant={["xs", "sm"]}>
+          <Tab to="/collector-profile/saves" variant={["xs", "sm"]}>
             Saves
           </Tab>
         </ProgressiveOnboardingSaveHighlight>
