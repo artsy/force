@@ -75,7 +75,7 @@ describe("ArtworkListEmptyState", () => {
 
     const title = "Start curating your list of works"
     const description =
-      "Add works from All Saves or add new artworks as you browse."
+      "Add works from Saved Artworks or add new artworks as you browse."
 
     expect(screen.getByText(title)).toBeInTheDocument()
     expect(screen.getByText(description)).toBeInTheDocument()

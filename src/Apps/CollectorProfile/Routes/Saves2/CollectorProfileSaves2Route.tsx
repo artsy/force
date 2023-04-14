@@ -53,7 +53,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
     }
   }
 
-  // Always display "All Saves" artwork list first in the list
+  // Always display "Saved Artworks" artwork list first in the list
   const artworkLists = [allSavesArtworkList, ...customArtworkLists]
 
   /**

@@ -149,7 +149,7 @@
           "button": "Add to a List"
         },
         "artworkRemoved": {
-          "message": "Removed from All Saves"
+          "message": "Removed from Saved Artworks"
         }
       }
     },

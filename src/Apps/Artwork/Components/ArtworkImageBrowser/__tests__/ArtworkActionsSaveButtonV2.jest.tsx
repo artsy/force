@@ -125,7 +125,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
     })
 
     describe("should display `Saved` label with selected state", () => {
-      it("if artwork was previously saved in `All Saves` list", () => {
+      it("if artwork was previously saved in `Saved Artworks` list", () => {
         renderWithRelay({
           Artwork: () => ({
             isSaved: true,
@@ -150,7 +150,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
         expect(screen.getByTitle("Unsave icon")).toBeInTheDocument()
       })
 
-      it("if artwork was previously saved in `All Saves` and custom lists", () => {
+      it("if artwork was previously saved in `Saved Artworks` and custom lists", () => {
         renderWithRelay({
           Artwork: () => ({
             isSaved: true,
@@ -166,7 +166,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
     })
 
     describe("should display `Watch lot` button with selected state", () => {
-      it("if artwork was previously saved in `All Saves` list", () => {
+      it("if artwork was previously saved in `Saved Artworks` list", () => {
         renderWithRelay({
           Artwork: () => ({
             isSaved: true,
@@ -191,7 +191,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
         expect(screen.getByTitle("Unwatch lot icon")).toBeInTheDocument()
       })
 
-      it("if artwork was previously saved in `All Saves` and custom lists", () => {
+      it("if artwork was previously saved in `Saved Artworks` and custom lists", () => {
         renderWithRelay({
           Artwork: () => ({
             isSaved: true,
@@ -213,11 +213,11 @@ describe("ArtworkActionsSaveButtonV2", () => {
 
       fireEvent.click(screen.getByText("Saved"))
 
-      const element = await screen.findByText("Removed from All Saves")
+      const element = await screen.findByText("Removed from Saved Artworks")
       expect(element).toBeInTheDocument()
     })
 
-    it("should unsave artwork from `All Saves` list by default", async () => {
+    it("should unsave artwork from `Saved Artworks` list by default", async () => {
       renderWithRelay({
         Artwork: () => ({
           isSaved: true,
@@ -229,7 +229,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
 
       fireEvent.click(screen.getByText("Saved"))
 
-      const element = await screen.findByText("Removed from All Saves")
+      const element = await screen.findByText("Removed from Saved Artworks")
       expect(element).toBeInTheDocument()
     })
 

@@ -78,6 +78,7 @@ const getText = (
 
   return {
     title: "Start curating your list of works",
-    description: "Add works from All Saves or add new artworks as you browse.",
+    description:
+      "Add works from Saved Artworks or add new artworks as you browse.",
   }
 }
