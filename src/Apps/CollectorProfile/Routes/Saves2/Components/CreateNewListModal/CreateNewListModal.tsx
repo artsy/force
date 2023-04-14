@@ -2,10 +2,7 @@ import { Formik, FormikHelpers } from "formik"
 import createLogger from "Utils/logger"
 import { ModalDialog } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
-import {
-  ArtworkEntity,
-  CreateNewListModalHeader,
-} from "./CreateNewListModalHeader"
+import { CreateNewListModalHeader } from "./CreateNewListModalHeader"
 import { useCreateCollection } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/Mutations/useCreateCollection"
 import { FC } from "react"
 import { useTracking } from "react-tracking"
@@ -16,6 +13,7 @@ import {
   ArtworkListFormikValues,
   validationSchema,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkListForm/ArtworkListForm"
+import { ArtworkModalHeaderInfoEntity } from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkModalHeaderInfo"
 
 export interface ArtworkList {
   internalID: string
@@ -23,7 +21,7 @@ export interface ArtworkList {
 }
 
 interface CreateNewListModalProps {
-  artwork?: ArtworkEntity
+  artwork?: ArtworkModalHeaderInfoEntity
   onClose: () => void
   onComplete: (data: ArtworkList) => void
   onBackClick?: () => void

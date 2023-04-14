@@ -41,10 +41,12 @@ type Action =
       payload: { listKey: ListKey; listID: string }
     }
 
-interface ArtworkEntity {
+export interface ArtworkEntity {
   id: string
   internalID: string
   title: string
+  year: string | null
+  artistNames: string | null
   imageURL: string | null
 }
 

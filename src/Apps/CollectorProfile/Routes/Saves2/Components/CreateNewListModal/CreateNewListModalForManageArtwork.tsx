@@ -42,6 +42,8 @@ export const CreateNewListModalForManageArtwork: FC = () => {
       onComplete={onNewListCreated}
       artwork={{
         title: artwork.title,
+        year: artwork.year,
+        artistNames: artwork.artistNames,
         imageURL: artwork.imageURL,
       }}
     />
