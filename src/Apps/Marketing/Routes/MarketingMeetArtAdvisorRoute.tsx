@@ -25,7 +25,7 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
         <MarketingHeader
           title="Meet your new art advisor."
           subtitle="See what you can do on Artsy—the best tool for art collectors."
-          src="https://files.artsy.net/images/marketing_meet_header.jpg"
+          src="https://files.artsy.net/images/marketing_meet_header_april-14.jpg"
           accentColor={BRAND_PALETTE.blue}
         />
 
@@ -54,7 +54,7 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
               },
             },
             {
-              title: "Get to know your collection better.",
+              title: "Know your collection better.",
               subtitle:
                 "See all the works you own, on your phone—and keep up with market insights.",
               src:

@@ -87,7 +87,7 @@ export const MarketingHeader: FC<MarketingHeaderProps> = ({
 
             <Spacer y={0.5} />
 
-            <Text variant="xs">{subtitle}</Text>
+            <Text variant="sm">{subtitle}</Text>
           </HorizontalPadding>
         </FullBleed>
       </Media>

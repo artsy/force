@@ -30,7 +30,7 @@ export const MarketingFindArtYouLoveRoute: FC = () => {
         <MarketingHeader
           title="Find the art you love."
           subtitle="Discover the tools you need to collect artworks that fit your taste."
-          src="https://files.artsy.net/images/marketing_find_header.jpg"
+          src="https://files.artsy.net/images/marketing_find_header_april-14.jpg"
           accentColor={BRAND_PALETTE.green}
         />
 
