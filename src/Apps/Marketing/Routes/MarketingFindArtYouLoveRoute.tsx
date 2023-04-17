@@ -34,7 +34,7 @@ export const MarketingFindArtYouLoveRoute: FC = () => {
           accentColor={BRAND_PALETTE.green}
         />
 
-        <Text variant={["xl", "xl"]}>
+        <Text variant={["lg-display", "xl"]}>
           Explore the world’s best art, on Artsy
         </Text>
 
