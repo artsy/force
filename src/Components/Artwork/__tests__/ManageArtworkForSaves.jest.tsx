@@ -145,7 +145,7 @@ describe("ManageArtworkForSaves", () => {
 
       const expectedModalTitle = "Select lists for this artwork"
       const title = "List created"
-      const message = 'Artwork has been added to "List Name"'
+      const message = 'Artwork will be added to "List Name"'
 
       expect(await screen.findByText(expectedModalTitle)).toBeInTheDocument()
       expect(screen.getByText(title)).toBeInTheDocument()
