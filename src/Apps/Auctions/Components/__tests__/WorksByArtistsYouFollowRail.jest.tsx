@@ -41,6 +41,9 @@ describe("WorksByArtistsYouFollowRail", () => {
       }),
     })
 
+    expect(
+      screen.queryByText("Works at auction by artists you follow")
+    ).not.toBeInTheDocument()
     expect(screen.getByText("No Works To Show")).toBeInTheDocument()
     expect(screen.queryByTestId("ShelfArtwork")).not.toBeInTheDocument()
   })
@@ -52,6 +55,9 @@ describe("WorksByArtistsYouFollowRail", () => {
       }),
     })
 
+    expect(
+      screen.queryByText("Works at auction by artists you follow")
+    ).not.toBeInTheDocument()
     expect(screen.getByText("No Works To Show")).toBeInTheDocument()
     expect(screen.queryByTestId("ShelfArtwork")).not.toBeInTheDocument()
   })
@@ -63,6 +69,9 @@ describe("WorksByArtistsYouFollowRail", () => {
       }),
     })
 
+    expect(
+      screen.queryByText("Works at auction by artists you follow")
+    ).toBeInTheDocument()
     expect(screen.queryByText("No Works To Show")).not.toBeInTheDocument()
     expect(screen.queryByTestId("ShelfArtwork")).toBeInTheDocument()
   })
@@ -73,7 +82,6 @@ describe("WorksByArtistsYouFollowRail", () => {
         edges: [{ node: { sale: { isClosed: false } } }],
       }),
     })
-
     const link = (await screen.findAllByRole("link"))[0]
 
     fireEvent(

@@ -13,9 +13,6 @@ const DEFAULT_AREA = 200 * 200
 const DEFAULT_MAX_IMG_HEIGHT = 250
 const DEFAULT_MAX_WIDTH = 500
 
-const BIG_IMAGE_AREA = 400 * 400
-const BIG_MAX_IMAGE_HEIGHT = 480
-
 export interface ShelfArtworkProps
   extends Omit<RouterLinkProps, "to" | "width"> {
   // Target number of pixels for image to occupy
@@ -24,43 +21,31 @@ export interface ShelfArtworkProps
   children?: React.ReactNode
   contextModule?: AuthContextModule
   hideSaleInfo?: boolean
-  hidePartnerName?: boolean
   lazyLoad?: boolean
   maxImageHeight?: number
-  useBigImage?: boolean
-  showSaveButton?: boolean
   onClick?: () => void
 }
 
 const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
-  area,
+  area = DEFAULT_AREA,
   artwork,
   children,
   contextModule,
   hideSaleInfo,
-  hidePartnerName,
   lazyLoad,
-  maxImageHeight,
+  maxImageHeight = DEFAULT_MAX_IMG_HEIGHT,
   maxWidth = DEFAULT_MAX_WIDTH,
-  useBigImage,
-  showSaveButton = true,
   onClick,
   ...rest
 }) => {
   const { isHovered, onMouseEnter, onMouseLeave } = useHoverMetadata()
-
-  const setArea = area ?? useBigImage ? BIG_IMAGE_AREA : DEFAULT_AREA
-  const setImageHeight =
-    maxImageHeight ?? useBigImage
-      ? BIG_MAX_IMAGE_HEIGHT
-      : DEFAULT_MAX_IMG_HEIGHT
 
   if (!artwork.image?.src || !artwork.image.width || !artwork.image.height) {
     return null
   }
 
   const width = maxWidthByArea({
-    area: setArea,
+    area,
     height: artwork.image.height,
     width: artwork.image.width,
   })
@@ -90,7 +75,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
         overflow="hidden"
         {...rest}
       >
-        <Box height={setImageHeight} display="flex" alignItems="flex-end">
+        <Box height={maxImageHeight} display="flex" alignItems="flex-end">
           <Box
             width="100%"
             style={{
@@ -115,10 +100,9 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
         <Metadata
           artwork={artwork}
           hideSaleInfo={hideSaleInfo}
-          hidePartnerName={hidePartnerName}
           isHovered={isHovered}
           contextModule={contextModule}
-          showSaveButton={showSaveButton}
+          showSaveButton
           disableRouterLinking
           maxWidth="100%"
         />
