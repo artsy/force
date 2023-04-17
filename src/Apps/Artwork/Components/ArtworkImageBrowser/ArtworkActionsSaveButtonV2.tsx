@@ -34,7 +34,6 @@ export const ArtworkActionsSaveButtonV2: FC<ArtworkActionsSaveButtonV2Props> = (
       imageURL: artwork.preview?.url ?? null,
       isSavedToDefaultList: !!artwork.isSaved,
       isSavedToCustomLists: isSavedToCustomLists,
-      isInAuction: !!isOpenSale,
     },
   })
 

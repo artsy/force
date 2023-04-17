@@ -6,6 +6,7 @@ import { useSystemContext } from "System/SystemContext"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkActionsWatchLotButton_artwork$data } from "__generated__/ArtworkActionsWatchLotButton_artwork.graphql"
+import { useTranslation } from "react-i18next"
 
 interface ArtworkActionsWatchLotButtonProps {
   isSaved: boolean
@@ -22,6 +23,7 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
 }) => {
   const { isLoggedIn } = useSystemContext()
   const [popoverVisible, setPopoverVisible] = useState(false)
+  const { t } = useTranslation()
 
   const { isLiveOpen, isRegistrationClosed, registrationStatus, liveStartAt } =
     artwork.sale ?? {}
@@ -83,7 +85,11 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
             ref={anchorRef}
             name="bell"
             Icon={isSaved ? FilledIcon : UnfilledIcon}
-            label="Watch lot"
+            label={
+              isSaved
+                ? t(`artworkPage.actions.watchingLot`)
+                : t(`artworkPage.actions.watchLot`)
+            }
             onClick={handleButtonClick}
           />
         )

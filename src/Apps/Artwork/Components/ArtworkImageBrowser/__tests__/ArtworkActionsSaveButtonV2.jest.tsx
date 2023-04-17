@@ -89,14 +89,14 @@ describe("ArtworkActionsSaveButtonV2", () => {
       expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })
 
-    it("should display a different toast message when artwork is in auction", async () => {
+    it("should display the same toast message when artwork is in auction", async () => {
       renderWithRelay({
         Artwork: () => unsavedAuctionArtwork,
       })
 
       fireEvent.click(screen.getByText("Watch lot"))
 
-      expect(await screen.findByText("Watch lot saved")).toBeInTheDocument()
+      expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
       expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })
 
@@ -175,6 +175,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
         })
 
         expect(screen.getByTitle("Unwatch lot icon")).toBeInTheDocument()
+        expect(screen.getByText("Watching lot")).toBeInTheDocument()
       })
 
       it("if artwork was previously saved in custom lists", () => {
@@ -189,6 +190,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
         })
 
         expect(screen.getByTitle("Unwatch lot icon")).toBeInTheDocument()
+        expect(screen.getByText("Watching lot")).toBeInTheDocument()
       })
 
       it("if artwork was previously saved in `Saved Artworks` and custom lists", () => {
@@ -203,6 +205,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
         })
 
         expect(screen.getByTitle("Unwatch lot icon")).toBeInTheDocument()
+        expect(screen.getByText("Watching lot")).toBeInTheDocument()
       })
     })
 

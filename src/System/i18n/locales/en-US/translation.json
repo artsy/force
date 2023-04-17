@@ -104,7 +104,9 @@
       "save": {
         "registerToBidWithDeadline": "Register ahead of time to bid in this auction and get notifications for this lot.",
         "registerToBidWithoutDeadline": "Register to bid in this auction and get notifications for this lot."
-      }
+      },
+      "watchLot": "Watch lot",
+      "watchingLot": "Watching lot"
     }
   },
   "collectorSaves": {
@@ -121,7 +123,7 @@
     },
     "artworkListsHeader": {
       "listCreated": "{{listName}} Created",
-      "savedArtworks": "Saved Artworks",
+      "savedArtworks": "Saves",
       "curateYourList": "Curate your own lists of the works you love",
       "createNewListButton": "Create New List"
     },
@@ -142,10 +144,7 @@
     "saveArtworkToLists": {
       "toast": {
         "artworkSaved": {
-          "message": {
-            "forNonAuctionArtwork": "Artwork saved",
-            "forAuctionArtwork": "Watch lot saved"
-          },
+          "message": "Artwork saved",
           "button": "Add to a List"
         },
         "artworkRemoved": {
