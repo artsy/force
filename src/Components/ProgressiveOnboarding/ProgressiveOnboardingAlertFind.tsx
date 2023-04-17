@@ -23,7 +23,7 @@ const ProgressiveOnboardingAlertFind: FC<ProgressiveOnboardingAlertFindProps> = 
   const isDisplayable =
     isEnabledFor("alerts") &&
     counts.savedSearches === 1 &&
-    !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_FIND)
+    !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_FIND).status
 
   const handleClose = () => {
     dismiss(PROGRESSIVE_ONBOARDING_ALERT_FIND)

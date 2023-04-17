@@ -56,7 +56,7 @@ describe("WorksByArtistsYouFollowRail", () => {
     expect(screen.queryByTestId("ShelfArtwork")).not.toBeInTheDocument()
   })
 
-  it('renders "Works at auction by artists you follow" and a carousel', () => {
+  it("renders carousel", () => {
     renderWithRelay({
       SaleArtworksConnection: () => ({
         edges: [{ node: { sale: { isClosed: false } } }],
@@ -73,7 +73,6 @@ describe("WorksByArtistsYouFollowRail", () => {
         edges: [{ node: { sale: { isClosed: false } } }],
       }),
     })
-
     const link = (await screen.findAllByRole("link"))[0]
 
     fireEvent(

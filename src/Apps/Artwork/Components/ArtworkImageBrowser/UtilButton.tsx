@@ -150,9 +150,11 @@ const UtilButtonInnerText: React.FC<UtilButtonInnerTextProps> = ({
 
 const VisibleText = styled(Text)`
   position: absolute;
+  width: 100%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  text-align: center;
 `
 
 const HiddenText = styled(Text)`

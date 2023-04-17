@@ -14,7 +14,6 @@ type Artwork = {
   imageURL: string | null
   isSavedToDefaultList: boolean
   isSavedToCustomLists: boolean
-  isInAuction?: boolean
 }
 
 export interface SaveArtworkToListsOptions {

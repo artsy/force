@@ -6,7 +6,7 @@ import { SelectArtworkListsModal_me$data } from "__generated__/SelectArtworkList
 import { FC } from "react"
 
 type ArtworkListEntity = ExtractNodeType<
-  | SelectArtworkListsModal_me$data["allSavesArtworkList"]
+  | SelectArtworkListsModal_me$data["savedArtworksArtworkList"]
   | SelectArtworkListsModal_me$data["customArtworkLists"]
 >
 

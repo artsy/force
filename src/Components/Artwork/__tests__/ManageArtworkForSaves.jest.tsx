@@ -46,7 +46,7 @@ describe("ManageArtworkForSaves", () => {
 
     const mockResolvers: MockResolvers = {
       Me: () => ({
-        allSavesArtworkList: null,
+        savedArtworksArtworkList: null,
         customArtworkLists: {
           edges: [customArtworkListNodeOne, customArtworkListNodeTwo],
         },

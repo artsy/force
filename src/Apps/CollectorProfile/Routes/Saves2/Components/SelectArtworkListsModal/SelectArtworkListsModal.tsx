@@ -38,10 +38,10 @@ export const SelectArtworkListsModal: React.FC<SelectArtworkListsModalProps> = (
   const analytics = useAnalyticsContext()
   const { trackEvent } = useTracking()
   const [isSaving, setIsSaving] = useState(false)
-  const allSavesArtworkList = me?.allSavesArtworkList
+  const savedArtworksArtworkList = me?.savedArtworksArtworkList
   const customArtworkLists = extractNodes(me?.customArtworkLists)
-  const artworkLists = allSavesArtworkList
-    ? [allSavesArtworkList, ...customArtworkLists]
+  const artworkLists = savedArtworksArtworkList
+    ? [savedArtworksArtworkList, ...customArtworkLists]
     : customArtworkLists
   const selectedArtworkListIds = getSelectedArtworkListIds({
     artworkLists,
@@ -222,7 +222,7 @@ export const SelectArtworkListsModalFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment SelectArtworkListsModal_me on Me
         @argumentDefinitions(artworkID: { type: "String!" }) {
-        allSavesArtworkList: collection(id: "saved-artwork") {
+        savedArtworksArtworkList: collection(id: "saved-artwork") {
           internalID
           isSavedArtwork(artworkID: $artworkID)
           name

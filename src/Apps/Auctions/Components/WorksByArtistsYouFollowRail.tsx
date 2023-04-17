@@ -29,7 +29,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
 
   return (
     <Rail
-      title="Auction Lots for you ending soon"
+      title="Auction Lots for You Ending Soon"
       getItems={() => {
         return nodes.map((node, index) => {
           return (
@@ -37,9 +37,6 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
               artwork={node}
               key={node.slug}
               contextModule={contextModule}
-              hidePartnerName
-              useBigImage
-              showSaveButton={false}
               lazyLoad
               onClick={() => {
                 trackEvent(

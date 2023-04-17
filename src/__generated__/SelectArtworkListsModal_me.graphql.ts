@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a41a40e78ba8d2dba236f22d1200f23d>>
+ * @generated SignedSource<<ffb33f6c631124a56ec3d8031e8362a8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SelectArtworkListsModal_me$data = {
-  readonly allSavesArtworkList: {
-    readonly internalID: string;
-    readonly isSavedArtwork: boolean;
-    readonly name: string;
-    readonly " $fragmentSpreads": FragmentRefs<"SelectArtworkListItem_item">;
-  } | null;
   readonly customArtworkLists: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -26,6 +20,12 @@ export type SelectArtworkListsModal_me$data = {
         readonly " $fragmentSpreads": FragmentRefs<"SelectArtworkListItem_item">;
       } | null;
     } | null> | null;
+  } | null;
+  readonly savedArtworksArtworkList: {
+    readonly internalID: string;
+    readonly isSavedArtwork: boolean;
+    readonly name: string;
+    readonly " $fragmentSpreads": FragmentRefs<"SelectArtworkListItem_item">;
   } | null;
   readonly " $fragmentType": "SelectArtworkListsModal_me";
 };
@@ -82,7 +82,7 @@ return {
   "name": "SelectArtworkListsModal_me",
   "selections": [
     {
-      "alias": "allSavesArtworkList",
+      "alias": "savedArtworksArtworkList",
       "args": [
         {
           "kind": "Literal",
@@ -156,6 +156,6 @@ return {
 };
 })();
 
-(node as any).hash = "a09345848a0cf7de26da55bd2367ebfb";
+(node as any).hash = "dc11ab6d83cb3ee9de1c1c051aef033a";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<67f538ee31f34d6a1364a352713f07fb>>
+ * @generated SignedSource<<e00b3ccc4528ad892ba9b38d03661dee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -66,10 +66,16 @@ v3 = {
 },
 v4 = {
   "alias": null,
-  "args": null,
+  "args": [
+    {
+      "kind": "Literal",
+      "name": "onlyVisible",
+      "value": true
+    }
+  ],
   "kind": "ScalarField",
   "name": "artworksCount",
-  "storageKey": null
+  "storageKey": "artworksCount(onlyVisible:true)"
 },
 v5 = {
   "kind": "InlineFragment",
@@ -218,16 +224,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "36c54d518b8cabce78fd0dbc275f7abd",
+    "cacheID": "6aa55b3508b7a34139240081f1edd951",
     "id": null,
     "metadata": {},
     "name": "useCreateCollectionMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateCollectionMutation(\n  $input: createCollectionInput!\n) {\n  createCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateCollectionSuccess {\n        collection {\n          internalID\n          name\n          artworksCount\n          id\n        }\n      }\n      ... on CreateCollectionFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useCreateCollectionMutation(\n  $input: createCollectionInput!\n) {\n  createCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateCollectionSuccess {\n        collection {\n          internalID\n          name\n          artworksCount(onlyVisible: true)\n          id\n        }\n      }\n      ... on CreateCollectionFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "597ce93e5e4bd561fc2f21cf4e0e8de0";
+(node as any).hash = "c0bb16726fed5499e888571e86d9c43b";
 
 export default node;

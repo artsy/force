@@ -57,7 +57,7 @@ describe("CollectorProfileSaves2Route", () => {
   it("should render collections", () => {
     renderWithRelay({
       Me: () => ({
-        allSavesArtworkList,
+        savedArtworksArtworkList,
         customArtworkLists,
       }),
     })
@@ -72,13 +72,13 @@ describe("CollectorProfileSaves2Route", () => {
     it("should render the first collection as selected when collection id is NOT passed in url", () => {
       renderWithRelay({
         Me: () => ({
-          allSavesArtworkList,
+          savedArtworksArtworkList,
           customArtworkLists,
         }),
       })
 
       const selectedElement = getCurrentCollectionElement()
-      expect(selectedElement).toHaveTextContent("Saved Artwork")
+      expect(selectedElement).toHaveTextContent("Saved Artworks")
     })
 
     it("should render the corresponding collection as selected when collection id is passed in url", () => {
@@ -95,7 +95,7 @@ describe("CollectorProfileSaves2Route", () => {
 
       renderWithRelay({
         Me: () => ({
-          allSavesArtworkList,
+          savedArtworksArtworkList,
           customArtworkLists,
         }),
       })
@@ -119,7 +119,7 @@ describe("CollectorProfileSaves2Route", () => {
 
     renderWithRelay({
       Me: () => ({
-        allSavesArtworkList,
+        savedArtworksArtworkList,
         customArtworkLists,
       }),
     })
@@ -135,7 +135,7 @@ describe("CollectorProfileSaves2Route", () => {
   it("should track event on mount", async () => {
     renderWithRelay({
       Me: () => ({
-        allSavesArtworkList,
+        savedArtworksArtworkList,
         customArtworkLists,
       }),
     })
@@ -152,7 +152,7 @@ describe("CollectorProfileSaves2Route", () => {
   it("should set title tag", async () => {
     renderWithRelay({
       Me: () => ({
-        allSavesArtworkList,
+        savedArtworksArtworkList,
         customArtworkLists,
       }),
     })
@@ -174,7 +174,7 @@ describe("CollectorProfileSaves2Route", () => {
 
     renderWithRelay({
       Me: () => ({
-        allSavesArtworkList,
+        savedArtworksArtworkList,
         customArtworkLists,
       }),
     })
@@ -195,9 +195,9 @@ const getCurrentCollectionElement = () => {
   })
 }
 
-const allSavesArtworkList = {
+const savedArtworksArtworkList = {
   internalID: "saved-artwork",
-  name: "Saved Artwork",
+  name: "Saved Artworks",
 }
 
 const customArtworkLists = {

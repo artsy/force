@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ed8d6bb99b829483f915aac58deb4bd0>>
+ * @generated SignedSource<<8013900c8b0c19c769b4f48f4e766bf1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -114,7 +114,7 @@ return {
             "storageKey": "collection(id:\"listID\")"
           },
           {
-            "alias": "allSavesArtworkList",
+            "alias": "savedArtworksArtworkList",
             "args": [
               {
                 "kind": "Literal",
@@ -151,7 +151,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "af860ac0294a746f02ec0a393f17f761",
+    "cacheID": "51706a21faefe5cc17cd15569653c686",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -161,14 +161,6 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.allSavesArtworkList": (v1/*: any*/),
-        "me.allSavesArtworkList.artworksCount": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "Int"
-        },
-        "me.allSavesArtworkList.id": (v2/*: any*/),
         "me.artworkList": (v1/*: any*/),
         "me.artworkList.default": {
           "enumValues": null,
@@ -177,12 +169,20 @@ return {
           "type": "Boolean"
         },
         "me.artworkList.id": (v2/*: any*/),
-        "me.id": (v2/*: any*/)
+        "me.id": (v2/*: any*/),
+        "me.savedArtworksArtworkList": (v1/*: any*/),
+        "me.savedArtworksArtworkList.artworksCount": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Int"
+        },
+        "me.savedArtworksArtworkList.id": (v2/*: any*/)
       }
     },
     "name": "ArtworkListEmptyState_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkListEmptyState_Test_Query {\n  me {\n    ...ArtworkListEmptyState_me_3NGuxX\n    id\n  }\n}\n\nfragment ArtworkListEmptyState_me_3NGuxX on Me {\n  artworkList: collection(id: \"listID\") {\n    default\n    id\n  }\n  allSavesArtworkList: collection(id: \"saved-artwork\") {\n    artworksCount(onlyVisible: true)\n    id\n  }\n}\n"
+    "text": "query ArtworkListEmptyState_Test_Query {\n  me {\n    ...ArtworkListEmptyState_me_3NGuxX\n    id\n  }\n}\n\nfragment ArtworkListEmptyState_me_3NGuxX on Me {\n  artworkList: collection(id: \"listID\") {\n    default\n    id\n  }\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    artworksCount(onlyVisible: true)\n    id\n  }\n}\n"
   }
 };
 })();
