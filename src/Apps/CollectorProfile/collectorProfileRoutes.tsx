@@ -1,5 +1,4 @@
 import loadable from "@loadable/component"
-import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
 
@@ -44,17 +43,6 @@ const SavesAndFollowsRoute = loadable(
   {
     resolveComponent: component =>
       component.CollectorProfileSavesAndFollowsRouteFragmentContainer,
-  }
-)
-
-const Saves2 = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "collectorProfileBundle" */ "./Routes/Saves2/CollectorProfileSaves2Route"
-    ),
-  {
-    resolveComponent: component =>
-      component.CollectorProfileSaves2RouteFragmentContainer,
   }
 )
 
@@ -174,46 +162,31 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
         `,
       },
       {
-        path: "saves",
+        path: "saves/:id?",
+        ignoreScrollBehavior: true,
         getComponent: () => SavesAndFollowsRoute,
         onClientSideRender: () => {
           SavesAndFollowsRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
-        render: ({ Component, match, props }) => {
-          if (!(Component && props)) {
-            return
+        prepareVariables: (_, { context }) => {
+          const featureFlags = context?.featureFlags ?? {}
+          const featureFlag = featureFlags["force-enable-artworks-list"]
+          const isArtworkListsFlagEnabled = featureFlag?.flagEnabled ?? false
+
+          return {
+            shouldFetchArtworkListsData: isArtworkListsFlagEnabled,
           }
-
-          const key = "force-enable-artworks-list"
-          const featureFlags = match?.context?.featureFlags ?? {}
-          const isArtworksListEnabled = featureFlags[key]?.flagEnabled ?? false
-
-          if (isArtworksListEnabled) {
-            throw new RedirectException(`/collector-profile/saves2`, 302)
-          }
-
-          return <Component {...props} />
         },
         query: graphql`
-          query collectorProfileRoutes_SavesAndFollowsRouteQuery {
+          query collectorProfileRoutes_SavesAndFollowsRouteQuery(
+            $shouldFetchArtworkListsData: Boolean!
+          ) {
             me {
               ...CollectorProfileSavesAndFollowsRoute_me
-            }
-          }
-        `,
-      },
-      {
-        path: "saves2/:id?",
-        ignoreScrollBehavior: true,
-        getComponent: () => Saves2,
-        onClientSideRender: () => {
-          Saves2.preload()
-        },
-        query: graphql`
-          query collectorProfileRoutes_Saves2Query {
-            me {
-              ...CollectorProfileSaves2Route_me
+                @arguments(
+                  shouldFetchArtworkListsData: $shouldFetchArtworkListsData
+                )
             }
           }
         `,

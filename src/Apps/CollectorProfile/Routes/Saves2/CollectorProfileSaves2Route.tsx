@@ -78,7 +78,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
 
   return (
     <>
-      <MetaTags title="Saves | Artsy" pathname="collector-profile/saves2" />
+      <MetaTags title="Saves | Artsy" pathname="collector-profile/saves" />
 
       <ArtworkListsHeader
         savedArtworksCount={
