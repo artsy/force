@@ -18,7 +18,7 @@ import { MarketingCollectionCell } from "Apps/Marketing/Components/MarketingColl
 import { MarketingQuizCTA } from "Apps/Marketing/Components/MarketingQuizCTA"
 import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
 
-export const MarketingFindArtYouWantRoute: FC = () => {
+export const MarketingFindArtYouLoveRoute: FC = () => {
   return (
     <>
       <MetaTags title="Get the art you want." />

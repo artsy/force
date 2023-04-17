@@ -36,7 +36,7 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
                 "https://files.artsy.net/images/marketing_meet_new-works-for-you.jpg",
               cta: {
                 label: "Start Looking",
-                href: "/find-the-art-you-want",
+                href: "/find-the-art-you-love",
               },
             },
             {
