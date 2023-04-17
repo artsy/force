@@ -19,6 +19,7 @@ import { useTracking } from "react-tracking"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
 import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
 import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
+import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 
 export const NavBarUserMenu: React.FC = () => {
   const { trackEvent } = useTracking()
@@ -97,7 +98,7 @@ export const NavBarUserMenu: React.FC = () => {
       >
         <NavBarMenuItemLink
           aria-label="View your Saves"
-          to="/collector-profile/saves"
+          to={BASE_SAVES_PATH}
           onClick={trackClick}
         >
           <HeartIcon mr={1} aria-hidden="true" /> Saves
