@@ -4,7 +4,7 @@ import { graphql } from "react-relay"
 import { ArtsyResponse } from "Server/middleware/artsyExpress"
 import { AppRouteConfig } from "System/Router/Route"
 
-const LOGIN_COPY = "Log in to take the Art Quiz."
+const LOGIN_COPY = "Log in to take the art quiz."
 const REDIRECT_URL = `/login?redirectTo=/art-quiz&copy=${LOGIN_COPY}`
 
 const artQuizServerSideRedirect = ({ res }: { res: ArtsyResponse }) => {

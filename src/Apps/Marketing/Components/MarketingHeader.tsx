@@ -40,7 +40,7 @@ export const MarketingHeader: FC<MarketingHeaderProps> = ({
             // Matches homepage hero units
             height={[300, 400, 500]}
             overflow="hidden"
-            bg="black10"
+            bg="black5"
           >
             <Column
               span={5}
@@ -87,7 +87,7 @@ export const MarketingHeader: FC<MarketingHeaderProps> = ({
 
             <Spacer y={0.5} />
 
-            <Text variant="xs">{subtitle}</Text>
+            <Text variant="sm">{subtitle}</Text>
           </HorizontalPadding>
         </FullBleed>
       </Media>

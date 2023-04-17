@@ -17,7 +17,8 @@ import {
 import { DownloadAppBadge } from "Components/DownloadAppBadges/DownloadAppBadge"
 import { ContextModule } from "@artsy/cohesion"
 
-const APP_BANNER_SRC = "https://files.artsy.net/images/universal-footer.jpg"
+const APP_BANNER_SRC =
+  "https://files.artsy.net/images/universal-footer_april-14.jpg"
 
 export const FooterDownloadAppBanner2 = () => {
   const { device, downloadAppUrl } = useDeviceDetection()

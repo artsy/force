@@ -9,12 +9,12 @@ const MarketingMeetArtAdvisorRoute = loadable(
   { resolveComponent: component => component.MarketingMeetArtAdvisorRoute }
 )
 
-const MarketingFindArtYouWantRoute = loadable(
+const MarketingFindArtYouLoveRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "marketingBundle" */ "./Routes/MarketingFindArtYouWantRoute"
+      /* webpackChunkName: "marketingBundle" */ "./Routes/MarketingFindArtYouLoveRoute"
     ),
-  { resolveComponent: component => component.MarketingFindArtYouWantRoute }
+  { resolveComponent: component => component.MarketingFindArtYouLoveRoute }
 )
 
 export const marketingRoutes: AppRouteConfig[] = [
@@ -26,10 +26,10 @@ export const marketingRoutes: AppRouteConfig[] = [
     },
   },
   {
-    path: "/find-the-art-you-want",
-    getComponent: () => MarketingFindArtYouWantRoute,
+    path: "/find-the-art-you-love",
+    getComponent: () => MarketingFindArtYouLoveRoute,
     onClientSideRender: () => {
-      MarketingFindArtYouWantRoute.preload()
+      MarketingFindArtYouLoveRoute.preload()
     },
   },
 ]

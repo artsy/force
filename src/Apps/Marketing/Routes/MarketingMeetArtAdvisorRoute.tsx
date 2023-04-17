@@ -16,27 +16,30 @@ import { FC } from "react"
 export const MarketingMeetArtAdvisorRoute: FC = () => {
   return (
     <>
-      <MetaTags title="Meet your new art advisor. | Artsy" />
+      <MetaTags
+        title="Meet your new art advisor | Artsy"
+        description="See what you can do on Artsy—the best tool for art collectors. In-demand artworks, free auction results, collection management, expert sales advice, and more."
+      />
 
       <Join separator={<Spacer y={6} />}>
         <MarketingHeader
           title="Meet your new art advisor."
-          subtitle="Collect what you love confidently on the largest platform for in-demand art."
-          src="https://files.artsy.net/images/marketing_meet_header.jpg"
+          subtitle="See what you can do on Artsy—the best tool for art collectors."
+          src="https://files.artsy.net/images/marketing_meet_header_april-14.jpg"
           accentColor={BRAND_PALETTE.blue}
         />
 
         <MarketingAlternatingStack
           cards={[
             {
-              title: "Get the art you want.",
+              title: "Find the art you love.",
               subtitle:
-                "Discover the tools you need to collect art that fits your taste.",
+                "Discover the tools you need to collect artworks that fit your taste.",
               src:
                 "https://files.artsy.net/images/marketing_meet_new-works-for-you.jpg",
               cta: {
                 label: "Start Looking",
-                href: "/find-the-art-you-want",
+                href: "/find-the-art-you-love",
               },
             },
             {
@@ -51,7 +54,7 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
               },
             },
             {
-              title: "Get to know your collection better.",
+              title: "Know your collection better.",
               subtitle:
                 "See all the works you own, on your phone—and keep up with market insights.",
               src:
