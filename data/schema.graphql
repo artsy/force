@@ -3740,6 +3740,7 @@ type CollectorProfileType {
     @deprecated(
       reason: "identityVerified is going to be removed, use isIdentityVerified instead"
     )
+  initials(length: Int = 3): String
   institutionalAffiliations: String
   intents: [String]
 
@@ -10358,6 +10359,7 @@ type InquirerCollectorProfile {
     @deprecated(
       reason: "identityVerified is going to be removed, use isIdentityVerified instead"
     )
+  initials(length: Int = 3): String
   institutionalAffiliations: String
   intents: [String]
 
@@ -17246,6 +17248,7 @@ type UpdateCollectorProfilePayload {
     @deprecated(
       reason: "identityVerified is going to be removed, use isIdentityVerified instead"
     )
+  initials(length: Int = 3): String
   institutionalAffiliations: String
   intents: [String]
 
