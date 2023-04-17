@@ -33,8 +33,8 @@ const MarketingFeaturedArtworksRail: FC<MarketingFeaturedArtworksRailProps> = ({
 
   return (
     <Rail
-      title="Trending artworks"
-      viewAllLabel="View All"
+      title="Featured artworks"
+      viewAllLabel="View All Works"
       viewAllHref="/artworks"
       getItems={() => {
         return artworks.map(artwork => {
@@ -53,7 +53,7 @@ const MarketingFeaturedArtworksRail: FC<MarketingFeaturedArtworksRailProps> = ({
 const PLACEHOLDER = (
   <Skeleton>
     <Rail
-      title="Trending artworks"
+      title="Featured artworks"
       viewAllLabel="View All Artists"
       viewAllHref="/artworks"
       getItems={() => {

@@ -21,12 +21,15 @@ import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
 export const MarketingFindArtYouLoveRoute: FC = () => {
   return (
     <>
-      <MetaTags title="Get the art you want." />
+      <MetaTags
+        title="Find the art you love"
+        description="Discover the tools you need to collect artworks that fit your taste. Save works, follow artists, and set alerts to get the art you’re looking for."
+      />
 
       <Join separator={<Spacer y={6} />}>
         <MarketingHeader
-          title="Get the art you want."
-          subtitle="Discover the tools you need to collect art that fits your taste."
+          title="Find the art you love."
+          subtitle="Discover the tools you need to collect artworks that fit your taste."
           src="https://files.artsy.net/images/marketing_find_header.jpg"
           accentColor={BRAND_PALETTE.green}
         />
@@ -49,7 +52,7 @@ export const MarketingFindArtYouLoveRoute: FC = () => {
               <Spacer y={4} />
 
               <Text variant="lg" maxWidth={["100%", "50%"]}>
-                Three ways to find what you’re looking for and get better
+                Three easy ways to find what you’re looking for and get better
                 recommendations.
               </Text>
             </HorizontalPadding>
