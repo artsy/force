@@ -35,7 +35,7 @@ const MarketingFeaturedArtworksRail: FC<MarketingFeaturedArtworksRailProps> = ({
     <Rail
       title="Featured artworks"
       viewAllLabel="View All Works"
-      viewAllHref="/artworks"
+      viewAllHref="/collection/trending-this-week"
       getItems={() => {
         return artworks.map(artwork => {
           return (
