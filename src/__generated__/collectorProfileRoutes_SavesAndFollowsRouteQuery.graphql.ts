@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5b99ae541992d92852345e793dfe2318>>
+ * @generated SignedSource<<d9f221da74432c7f70012c4d557d1719>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -201,7 +201,7 @@ return {
             "passingValue": true,
             "selections": [
               {
-                "alias": "allSavesArtworkList",
+                "alias": "savedArtworksArtworkList",
                 "args": [
                   {
                     "kind": "Literal",
@@ -348,12 +348,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3be5a5a6f3b8a9e4350a9db612207b53",
+    "cacheID": "65e39e366c0d135a24bf6d8a9aa3b1e4",
     "id": null,
     "metadata": {},
     "name": "collectorProfileRoutes_SavesAndFollowsRouteQuery",
     "operationKind": "query",
-    "text": "query collectorProfileRoutes_SavesAndFollowsRouteQuery(\n  $shouldFetchArtworkListsData: Boolean!\n) {\n  me {\n    ...CollectorProfileSavesAndFollowsRoute_me_HU02r\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  allSavesArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    ...ArtworkListItem_item\n    artworksConnection(first: 4) {\n      totalCount\n    }\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...ArtworkListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CollectorProfileSavesAndFollowsRoute_me_HU02r on Me {\n  ...CollectorProfileSaves2Route_me @include(if: $shouldFetchArtworkListsData)\n}\n"
+    "text": "query collectorProfileRoutes_SavesAndFollowsRouteQuery(\n  $shouldFetchArtworkListsData: Boolean!\n) {\n  me {\n    ...CollectorProfileSavesAndFollowsRoute_me_HU02r\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    ...ArtworkListItem_item\n    artworksConnection(first: 4) {\n      totalCount\n    }\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...ArtworkListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CollectorProfileSavesAndFollowsRoute_me_HU02r on Me {\n  ...CollectorProfileSaves2Route_me @include(if: $shouldFetchArtworkListsData)\n}\n"
   }
 };
 })();
