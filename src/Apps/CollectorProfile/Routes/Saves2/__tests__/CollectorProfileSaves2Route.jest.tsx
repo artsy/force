@@ -57,12 +57,12 @@ describe("CollectorProfileSaves2Route", () => {
   it("should render collections", () => {
     renderWithRelay({
       Me: () => ({
-        allSavesArtworkList,
+        savedArtworksArtworkList,
         customArtworkLists,
       }),
     })
 
-    expect(screen.getByText("Saved Artworks")).toBeInTheDocument()
+    expect(screen.getByText("Saved Artwork")).toBeInTheDocument()
     expect(screen.getByText("Collection One")).toBeInTheDocument()
     expect(screen.getByText("Collection Two")).toBeInTheDocument()
     expect(screen.getByText("Collection Three")).toBeInTheDocument()
@@ -72,7 +72,7 @@ describe("CollectorProfileSaves2Route", () => {
     it("should render the first collection as selected when collection id is NOT passed in url", () => {
       renderWithRelay({
         Me: () => ({
-          allSavesArtworkList,
+          savedArtworksArtworkList,
           customArtworkLists,
         }),
       })
@@ -95,7 +95,7 @@ describe("CollectorProfileSaves2Route", () => {
 
       renderWithRelay({
         Me: () => ({
-          allSavesArtworkList,
+          savedArtworksArtworkList,
           customArtworkLists,
         }),
       })
@@ -119,7 +119,7 @@ describe("CollectorProfileSaves2Route", () => {
 
     renderWithRelay({
       Me: () => ({
-        allSavesArtworkList,
+        savedArtworksArtworkList,
         customArtworkLists,
       }),
     })
@@ -135,7 +135,7 @@ describe("CollectorProfileSaves2Route", () => {
   it("should track event on mount", async () => {
     renderWithRelay({
       Me: () => ({
-        allSavesArtworkList,
+        savedArtworksArtworkList,
         customArtworkLists,
       }),
     })
@@ -152,7 +152,7 @@ describe("CollectorProfileSaves2Route", () => {
   it("should set title tag", async () => {
     renderWithRelay({
       Me: () => ({
-        allSavesArtworkList,
+        savedArtworksArtworkList,
         customArtworkLists,
       }),
     })
@@ -174,7 +174,7 @@ describe("CollectorProfileSaves2Route", () => {
 
     renderWithRelay({
       Me: () => ({
-        allSavesArtworkList,
+        savedArtworksArtworkList,
         customArtworkLists,
       }),
     })
@@ -195,7 +195,7 @@ const getCurrentCollectionElement = () => {
   })
 }
 
-const allSavesArtworkList = {
+const savedArtworksArtworkList = {
   internalID: "saved-artwork",
   name: "Saved Artwork",
 }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1e7c1f6347cf9cdcf8cb2ebc103a77c7>>
+ * @generated SignedSource<<26514d6389aeb7edb230cafff24da467>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -244,7 +244,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": "allSavesArtworkList",
+            "alias": "savedArtworksArtworkList",
             "args": [
               {
                 "kind": "Literal",
@@ -319,7 +319,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "515128164b0f43cc2d98fe5e52ff5678",
+    "cacheID": "43a5bf5d9947fd062430be748b2ade1d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -329,18 +329,6 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.allSavesArtworkList": (v3/*: any*/),
-        "me.allSavesArtworkList.artworksConnection": (v4/*: any*/),
-        "me.allSavesArtworkList.artworksConnection.edges": (v5/*: any*/),
-        "me.allSavesArtworkList.artworksConnection.edges.node": (v6/*: any*/),
-        "me.allSavesArtworkList.artworksConnection.edges.node.id": (v7/*: any*/),
-        "me.allSavesArtworkList.artworksConnection.edges.node.image": (v8/*: any*/),
-        "me.allSavesArtworkList.artworksConnection.edges.node.image.url": (v9/*: any*/),
-        "me.allSavesArtworkList.artworksCount": (v10/*: any*/),
-        "me.allSavesArtworkList.id": (v7/*: any*/),
-        "me.allSavesArtworkList.internalID": (v7/*: any*/),
-        "me.allSavesArtworkList.isSavedArtwork": (v11/*: any*/),
-        "me.allSavesArtworkList.name": (v12/*: any*/),
         "me.customArtworkLists": {
           "enumValues": null,
           "nullable": true,
@@ -365,12 +353,24 @@ return {
         "me.customArtworkLists.edges.node.internalID": (v7/*: any*/),
         "me.customArtworkLists.edges.node.isSavedArtwork": (v11/*: any*/),
         "me.customArtworkLists.edges.node.name": (v12/*: any*/),
-        "me.id": (v7/*: any*/)
+        "me.id": (v7/*: any*/),
+        "me.savedArtworksArtworkList": (v3/*: any*/),
+        "me.savedArtworksArtworkList.artworksConnection": (v4/*: any*/),
+        "me.savedArtworksArtworkList.artworksConnection.edges": (v5/*: any*/),
+        "me.savedArtworksArtworkList.artworksConnection.edges.node": (v6/*: any*/),
+        "me.savedArtworksArtworkList.artworksConnection.edges.node.id": (v7/*: any*/),
+        "me.savedArtworksArtworkList.artworksConnection.edges.node.image": (v8/*: any*/),
+        "me.savedArtworksArtworkList.artworksConnection.edges.node.image.url": (v9/*: any*/),
+        "me.savedArtworksArtworkList.artworksCount": (v10/*: any*/),
+        "me.savedArtworksArtworkList.id": (v7/*: any*/),
+        "me.savedArtworksArtworkList.internalID": (v7/*: any*/),
+        "me.savedArtworksArtworkList.isSavedArtwork": (v11/*: any*/),
+        "me.savedArtworksArtworkList.name": (v12/*: any*/)
       }
     },
     "name": "SelectArtworkListsModal_Test_Query",
     "operationKind": "query",
-    "text": "query SelectArtworkListsModal_Test_Query {\n  me {\n    ...SelectArtworkListsModal_me_42bAl0\n    id\n  }\n}\n\nfragment SelectArtworkListItem_item on Collection {\n  name\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 1, sort: SAVED_AT_DESC) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectArtworkListsModal_me_42bAl0 on Me {\n  allSavesArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    isSavedArtwork(artworkID: \"artworkID\")\n    name\n    ...SelectArtworkListItem_item\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        isSavedArtwork(artworkID: \"artworkID\")\n        name\n        ...SelectArtworkListItem_item\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SelectArtworkListsModal_Test_Query {\n  me {\n    ...SelectArtworkListsModal_me_42bAl0\n    id\n  }\n}\n\nfragment SelectArtworkListItem_item on Collection {\n  name\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 1, sort: SAVED_AT_DESC) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectArtworkListsModal_me_42bAl0 on Me {\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    isSavedArtwork(artworkID: \"artworkID\")\n    name\n    ...SelectArtworkListItem_item\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        isSavedArtwork(artworkID: \"artworkID\")\n        name\n        ...SelectArtworkListItem_item\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
