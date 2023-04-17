@@ -11,6 +11,10 @@ interface NewForYouArtworksGridProps {
 export const NewForYouArtworksGrid: FC<NewForYouArtworksGridProps> = ({
   viewer,
 }) => {
+  console.log(
+    "[LOGD] viewer.artworksForUser.totalCount = ",
+    viewer.artworksForUser?.totalCount
+  )
   return (
     <>
       {viewer.artworksForUser &&

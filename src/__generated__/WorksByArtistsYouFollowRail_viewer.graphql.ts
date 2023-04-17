@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bcd14af8fb3d9c127080914b03e02846>>
+ * @generated SignedSource<<bd4fb4d23fce888fa4bcdbbd62dd240b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type WorksByArtistsYouFollowRail_viewer$data = {
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
       } | null;
     } | null> | null;
+    readonly totalCount: number | null;
   } | null;
   readonly " $fragmentType": "WorksByArtistsYouFollowRail_viewer";
 };
@@ -62,6 +63,13 @@ const node: ReaderFragment = {
       "name": "saleArtworksConnection",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -111,6 +119,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "eb7e8e8e4eca5480745363a7175fa074";
+(node as any).hash = "d7b0e1a9189ac4309a17f68fb6210d12";
 
 export default node;
