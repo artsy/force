@@ -77,6 +77,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
      * See https://bugs.chromium.org/p/chromium/issues/detail?id=571722
      */
     "User-Agent": userAgent ? `${userAgent}; ${USER_AGENT}` : USER_AGENT,
+    "x-original-session-id": getENV("SESSION_ID"),
   }
 
   let timeZone
