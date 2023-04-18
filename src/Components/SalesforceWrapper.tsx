@@ -21,26 +21,28 @@ export const SalesforceWrapper: React.FC = () => {
 
   useLoadScript({
     id: "salesforce-chat-script",
-    src: "https://service.force.com/embeddedservice/5.0/esw.min.js",
+    src: `${getENV(
+      "SALESFORCE_CHAT_INSTANCE_URL"
+    )}/embeddedservice/5.0/esw.min.js`,
     removeOnUnmount: true,
     onReady: () => {
       window.embedded_svc.settings.enabledFeatures = ["LiveAgent"]
       window.embedded_svc.settings.entryFeature = "LiveAgent"
 
       window.embedded_svc.init(
-        `${getENV("SALESFORCE_CHAT_SUBDOMAIN")}.my.salesforce.com`,
-        `${getENV("SALESFORCE_CHAT_SUBDOMAIN")}.my.site.com/help`,
+        getENV("SALESFORCE_CHAT_INSTANCE_URL"),
+        getENV("SALESFORCE_CHAT_HELP_URL"),
         "https://service.force.com",
-        getENV("SALESFORCE_CHAT_ID"),
-        "Collector_Support_Chat",
+        getENV("SALESFORCE_CHAT_ORG_ID"),
+        getENV("SALESFORCE_CHAT_EMBEDDED_SERVICE_NAME"),
         {
           baseLiveAgentContentURL:
             "https://c.la3-c1cs-ia2.salesforceliveagent.com/content",
           deploymentId: getENV("SALESFORCE_CHAT_DEPLOYMENT_ID"),
-          buttonId: "5730r0000009kUG",
+          buttonId: getENV("SALESFORCE_CHAT_BUTTON_ID"),
           baseLiveAgentURL:
             "https://d.la3-c1cs-ia2.salesforceliveagent.com/chat",
-          eswLiveAgentDevName: "Support",
+          eswLiveAgentDevName: getENV("SALESFORCE_CHAT_EMBEDDED_SERVICE_NAME"),
           isOfflineSupportEnabled: true,
         }
       )

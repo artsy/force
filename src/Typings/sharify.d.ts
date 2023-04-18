@@ -82,9 +82,12 @@ declare module "sharify" {
       RESET_PASSWORD_REDIRECT_TO: string
       RESET_PASSWORD_TOKEN: string
       SALESFORCE_CHAT_ENABLED: boolean
-      SALESFORCE_CHAT_SUBDOMAIN: string
-      SALESFORCE_CHAT_ID: string
+      SALESFORCE_CHAT_INSTANCE_URL: string
+      SALESFORCE_CHAT_HELP_URL: string
+      SALESFORCE_CHAT_ORG_ID: string
+      SALESFORCE_CHAT_EMBEDDED_SERVICE_NAME: string
       SALESFORCE_CHAT_DEPLOYMENT_ID: string
+      SALESFORCE_CHAT_BUTTON_ID: string
       SECTION?: { slug?: string } // FIXME: used only for /venice-biennale-2015
       SEGMENT_WRITE_KEY: string
       SENTRY_PUBLIC_DSN: string
