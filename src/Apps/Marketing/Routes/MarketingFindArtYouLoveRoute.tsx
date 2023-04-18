@@ -66,21 +66,21 @@ export const MarketingFindArtYouLoveRoute: FC = () => {
               subtitle:
                 "Keep track of artworks that catch your eye, and get better recommendations with every save.",
               src:
-                "https://files.artsy.net/images/marketing_find_save-artworks.jpg",
+                "https://files.artsy.net/images/marketing_find_01_april-14.jpg",
             },
             {
               title: "Follow artists",
               subtitle:
                 "Get updates on your favorite artists, including new artworks, shows, and more.",
               src:
-                "https://files.artsy.net/images/marketing_find_follow-artists.jpg",
+                "https://files.artsy.net/images/marketing_find_02_april-14.jpg",
             },
             {
               title: "Set alerts",
               subtitle:
                 "On the hunt for a particular work? Create an alert and we’ll let you know when there’s a match.",
               src:
-                "https://files.artsy.net/images/marketing_find_set-alerts.jpg",
+                "https://files.artsy.net/images/marketing_find_03_april-14.jpg",
             },
           ]}
         />
@@ -94,7 +94,7 @@ export const MarketingFindArtYouLoveRoute: FC = () => {
             <MarketingCollectionCell
               title="Trending Now"
               href="/collection/trending-now"
-              src="https://files.artsy.net/images/marketing_find_collection_trending-now.jpg"
+              src="https://files.artsy.net/images/marketing_trending-now_april-14.jpg"
             />
           </Column>
 
@@ -102,7 +102,7 @@ export const MarketingFindArtYouLoveRoute: FC = () => {
             <MarketingCollectionCell
               title="Curators’ Picks: Emerging"
               href="/collection/curators-picks-emerging"
-              src="https://files.artsy.net/images/marketing_find_collection_curators-picks-emerging.jpg"
+              src="https://files.artsy.net/images/marketing_emerging_april-14.jpg"
             />
           </Column>
 
@@ -110,7 +110,7 @@ export const MarketingFindArtYouLoveRoute: FC = () => {
             <MarketingCollectionCell
               title="Top Auction Lots"
               href="/collection/top-auction-lots"
-              src="https://files.artsy.net/images/marketing_find_collection_top-auction-lots.jpg"
+              src="https://files.artsy.net/images/marketing_top-lots_april-14.jpg"
             />
           </Column>
         </GridColumns>

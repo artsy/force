@@ -69,16 +69,18 @@ export const MarketingQuizCTA: FC = () => {
               alignItems="center"
               justifyContent="center"
             >
-              <Image
-                {...image}
-                width="100%"
-                height={["auto", height + MARGIN_OFFSET]}
-                style={{
-                  display: "block",
-                  objectFit: "contain",
-                }}
-                alt=""
-              />
+              {height > 0 && (
+                <Image
+                  {...image}
+                  width="100%"
+                  height={["auto", height]}
+                  style={{
+                    display: "block",
+                    objectFit: "contain",
+                  }}
+                  alt=""
+                />
+              )}
             </Column>
           </GridColumns>
         </HorizontalPadding>
@@ -86,5 +88,3 @@ export const MarketingQuizCTA: FC = () => {
     </FullBleed>
   )
 }
-
-const MARGIN_OFFSET = 40
