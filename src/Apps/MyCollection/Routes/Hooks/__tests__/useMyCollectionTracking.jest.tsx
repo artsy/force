@@ -79,7 +79,7 @@ describe("useMyCollectionTracking", () => {
   })
 
   it("#saveCollectedArtwork", () => {
-    setupHook().saveCollectedArtwork("artist-id")
+    setupHook().saveCollectedArtwork("artist-id", true)
 
     expect(trackingSpy).toBeCalledWith({
       action: "saveCollectedArtwork",

@@ -479,6 +479,7 @@ const mockArtwork = {
     targetSupply: {
       isP1: true,
     },
+    isPersonalArtist: false,
     image: {
       cropped: {
         src: "https://example.com/image.jpg",
