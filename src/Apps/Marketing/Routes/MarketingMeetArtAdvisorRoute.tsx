@@ -36,7 +36,7 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
               subtitle:
                 "Discover the tools you need to collect artworks that fit your taste.",
               src:
-                "https://files.artsy.net/images/marketing_meet_new-works-for-you.jpg",
+                "https://files.artsy.net/images/marketing_meet_01_april-14.jpg",
               cta: {
                 label: "Start Looking",
                 href: "/find-the-art-you-love",
@@ -47,7 +47,7 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
               subtitle:
                 "Buy and bid confidently with free access to millions of auction results.",
               src:
-                "https://files.artsy.net/images/marketing_meet_price-database.jpg",
+                "https://files.artsy.net/images/marketing_meet_02_april-14.jpg",
               cta: {
                 label: "Search the Artsy Price Database",
                 href: "/price-database",
@@ -58,7 +58,7 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
               subtitle:
                 "See all the works you own, on your phone—and keep up with market insights.",
               src:
-                "https://files.artsy.net/images/marketing_meet_my-collection.jpg",
+                "https://files.artsy.net/images/marketing_meet_03_april-14.jpg",
               cta: {
                 label: "View My Collection",
                 href: "/collector-profile/my-collection",
@@ -68,7 +68,8 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
               title: "When you’re ready to sell, we can help.",
               subtitle:
                 "Earn more and worry less with our expert guidance, tailored to you.",
-              src: "https://files.artsy.net/images/marketing_meet_consign.jpg",
+              src:
+                "https://files.artsy.net/images/marketing_meet_04_april-14.jpg",
               cta: {
                 label: "Learn More",
                 href: "/sell",
