@@ -11,7 +11,6 @@ export const NewSearchBar = () => {
     return (
       <AutocompleteInput
         placeholder={xs ? t`navbar.searchArtsy` : t`navbar.searchBy`}
-        data-test-id="autocomplete-input"
         spellCheck={false}
         options={[]}
         onChange={handleChange}
