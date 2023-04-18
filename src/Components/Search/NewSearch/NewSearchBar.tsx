@@ -1,23 +1,36 @@
-import { Text } from "@artsy/palette"
+import { AutocompleteInput, Box } from "@artsy/palette"
 import { ClassI18n } from "System/i18n/ClassI18n"
-import styled from "styled-components"
+import { Media } from "Utils/Responsive"
 
-export const NewSeacrhBar = () => {
+export const NewSearchBar = () => {
+  const handleChange = ({ target: { value } }) => {
+    console.log("Seach input value ", value)
+  }
+
+  const renderAutosuggestComponent = (t, { xs }) => {
+    return (
+      <AutocompleteInput
+        placeholder={xs ? t`navbar.searchArtsy` : t`navbar.searchBy`}
+        data-test-id="autocomplete-input"
+        spellCheck={false}
+        options={[]}
+        onChange={handleChange}
+      />
+    )
+  }
+
   return (
-    <ClassI18n>
-      {({ t }) => (
-        <Form
-          action="/search"
-          method="GET"
-          onSubmit={() => console.log("Pressed ")}
-        >
-          <Text> I am the new Search bar</Text>
-        </Form>
-      )}
-    </ClassI18n>
+    <Box flex={1}>
+      <ClassI18n>
+        {({ t }) => (
+          <>
+            <Media at="xs">{renderAutosuggestComponent(t, { xs: true })}</Media>
+            <Media greaterThan="xs">
+              {renderAutosuggestComponent(t, { xs: false })}
+            </Media>
+          </>
+        )}
+      </ClassI18n>
+    </Box>
   )
 }
-
-const Form = styled.form`
-  width: 100%;
-`

@@ -53,7 +53,7 @@ import { ProgressiveOnboardingFollowFindQueryRenderer } from "Components/Progres
 import { ProgressiveOnboardingSaveFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingAlertFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { NewSeacrhBar } from "Components/Search/NewSearch/NewSearchBar"
+import { NewSearchBar } from "Components/Search/NewSearch/NewSearchBar"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -213,7 +213,7 @@ export const NavBar: React.FC = track(
                 zIndex={9}
               >
                 {isSearchDropDownImprovementsEnabled ? (
-                  <NewSeacrhBar />
+                  <NewSearchBar />
                 ) : (
                   <SearchBarQueryRenderer width="100%" />
                 )}
