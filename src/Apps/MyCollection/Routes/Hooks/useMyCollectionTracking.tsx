@@ -68,7 +68,6 @@ export const useMyCollectionTracking = () => {
         platform: "web",
       }
 
-      console.log({ payload })
       trackEvent(payload)
     },
 
