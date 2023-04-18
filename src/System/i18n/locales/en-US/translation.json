@@ -157,7 +157,7 @@
         "createNewListButton": "Create New List",
         "recentlyAddedList": {
           "title": "List created",
-          "message": "Artwork has been added to \"{{name}}\""
+          "message": "Artwork will be added to \"{{name}}\""
         }
       },
       "footer": {
