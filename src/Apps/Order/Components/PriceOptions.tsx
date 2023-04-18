@@ -30,15 +30,14 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 }) => {
   const tracking = useTracking()
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
-
   const [customValue, setCustomValue] = useState<number>()
   const [toggle, setToggle] = useState(false)
   const [selectedRadio, setSelectedRadio] = useState<string>()
   const listPrice = artwork?.listPrice
 
   useEffect(() => {
-    if (listPrice?.major && !toggle && !customValue) {
-      onChange(listPrice?.major)
+    if (listPrice && !toggle && !customValue) {
+      onChange(listPrice.major ?? listPrice.maxPrice?.major!)
       setSelectedRadio("price-option-0")
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

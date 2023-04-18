@@ -1,7 +1,7 @@
 import { PriceOptionsFragmentContainer } from "Apps/Order/Components/PriceOptions"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { fireEvent, screen, within } from "@testing-library/react"
+import { fireEvent, screen, waitFor, within } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { PriceOptions_Test_Query } from "__generated__/PriceOptions_Test_Query.graphql"
 
@@ -89,10 +89,14 @@ describe("PriceOptions", () => {
       expect(radios[2]).toHaveTextContent("US$100.00")
       expect(radios[3]).toHaveTextContent("Different amount")
     })
+    it("defaults to the correct value", async () => {
+      expect(onChange).toHaveBeenCalledWith(200)
+      await waitFor(() => expect(radios[0]).toBeChecked())
+    })
     it("fires click event with correct value", () => {
       fireEvent.click(radios[1])
       expect(radios[1]).toBeChecked()
-      expect(onChange).toHaveBeenLastCalledWith(150)
+      expect(onChange).toHaveBeenCalledWith(150)
     })
     it("conditionally displays input field", async () => {
       expect(within(radios[3]).queryByRole("textbox")).not.toBeInTheDocument()
@@ -168,6 +172,10 @@ describe("PriceOptions", () => {
       expect(radios[1]).toHaveTextContent("€90.00")
       expect(radios[2]).toHaveTextContent("€80.00")
       expect(radios[3]).toHaveTextContent("Different amount")
+    })
+    it("defaults to the correct value", async () => {
+      expect(onChange).toHaveBeenCalledWith(100)
+      await waitFor(() => expect(radios[0]).toBeChecked())
     })
     it("correctly tracks the clicking of an option", async () => {
       fireEvent.click(radios[0])
