@@ -13,32 +13,10 @@ export const endingSoonAuctionsRoutes: AppRouteConfig[] = [
     onClientSideRender: () => {
       EndingSoonAuctions.preload()
     },
-    prepareVariables: (params, props) => {
-      const includeArtworksByFollowedArtists = true
-      const isAuction = true
-      const liveSale = true
-
-      return {
-        ...params,
-        ...props,
-        includeArtworksByFollowedArtists,
-        isAuction,
-        liveSale,
-      }
-    },
     query: graphql`
-      query endingSoonAuctionsRoutes_TopLevelQuery(
-        $includeArtworksByFollowedArtists: Boolean!
-        $isAuction: Boolean!
-        $liveSale: Boolean!
-      ) {
+      query endingSoonAuctionsRoutes_TopLevelQuery {
         viewer {
           ...EndingSoonAuctions_viewer
-            @arguments(
-              includeArtworksByFollowedArtists: $includeArtworksByFollowedArtists
-              isAuction: $isAuction
-              liveSale: $liveSale
-            )
         }
       }
     `,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1f1cd1dad411d80c20885d3764522b26>>
+ * @generated SignedSource<<f8bd5087892f08c162717482cf138ad1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,45 +20,13 @@ export type EndingSoonAuctions_viewer$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "includeArtworksByFollowedArtists"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "isAuction"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "liveSale"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "EndingSoonAuctions_viewer",
   "selections": [
     {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "includeArtworksByFollowedArtists",
-          "variableName": "includeArtworksByFollowedArtists"
-        },
-        {
-          "kind": "Variable",
-          "name": "isAuction",
-          "variableName": "isAuction"
-        },
-        {
-          "kind": "Variable",
-          "name": "liveSale",
-          "variableName": "liveSale"
-        }
-      ],
+      "args": null,
       "kind": "FragmentSpread",
       "name": "EndingSoonAuctionsGrid_viewer"
     }
@@ -67,6 +35,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "bf4468b2b30e19f27affaea2ce372a46";
+(node as any).hash = "b0531722577445b9bec32d24fb7d49c7";
 
 export default node;

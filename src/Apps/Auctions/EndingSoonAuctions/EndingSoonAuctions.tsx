@@ -1,6 +1,6 @@
 import { ContextModule } from "@artsy/cohesion"
 import { Clickable, Message, Spacer, Text } from "@artsy/palette"
-import { EndingSoonAuctionsGridFragmentContainer } from "Apps/Auctions/Routes/EndingSoonAuctionsGrid"
+import { EndingSoonAuctionsGridPaginationContainer } from "Apps/Auctions/Routes/EndingSoonAuctionsGrid"
 import { useAuthDialog } from "Components/AuthDialog"
 import { MetaTags } from "Components/MetaTags"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -53,7 +53,7 @@ const EndingSoonAuctions: React.FC<EndingSoonAuctionsProps> = ({ viewer }) => {
         </>
       )}
 
-      {viewer && <EndingSoonAuctionsGridFragmentContainer viewer={viewer} />}
+      {viewer && <EndingSoonAuctionsGridPaginationContainer viewer={viewer} />}
     </>
   )
 }
@@ -62,18 +62,8 @@ export const EndingSoonAuctionsFragmentContainer = createFragmentContainer(
   EndingSoonAuctions,
   {
     viewer: graphql`
-      fragment EndingSoonAuctions_viewer on Viewer
-        @argumentDefinitions(
-          includeArtworksByFollowedArtists: { type: "Boolean!" }
-          isAuction: { type: "Boolean!" }
-          liveSale: { type: "Boolean!" }
-        ) {
+      fragment EndingSoonAuctions_viewer on Viewer {
         ...EndingSoonAuctionsGrid_viewer
-          @arguments(
-            includeArtworksByFollowedArtists: $includeArtworksByFollowedArtists
-            isAuction: $isAuction
-            liveSale: $liveSale
-          )
       }
     `,
   }

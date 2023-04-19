@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<85d89849aa411103a62450232404a0d5>>
+ * @generated SignedSource<<7f14a2221df9171031f5ac894069fbae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,11 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EndingSoonAuctionsGrid_viewer$data = {
   readonly saleArtworksConnection: {
-    readonly counts: {
-      readonly total: any | null;
-    } | null;
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly id: string;
+      } | null;
+    } | null> | null;
     readonly pageInfo: {
       readonly endCursor: string | null;
       readonly hasNextPage: boolean;
@@ -33,70 +35,53 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "includeArtworksByFollowedArtists"
+      "name": "after"
     },
     {
-      "defaultValue": null,
+      "defaultValue": 10,
       "kind": "LocalArgument",
-      "name": "isAuction"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "liveSale"
+      "name": "first"
     }
   ],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": "first",
+        "cursor": "after",
+        "direction": "forward",
+        "path": [
+          "saleArtworksConnection"
+        ]
+      }
+    ]
+  },
   "name": "EndingSoonAuctionsGrid_viewer",
   "selections": [
     {
-      "alias": null,
+      "alias": "saleArtworksConnection",
       "args": [
         {
-          "kind": "Variable",
+          "kind": "Literal",
           "name": "includeArtworksByFollowedArtists",
-          "variableName": "includeArtworksByFollowedArtists"
+          "value": true
         },
         {
-          "kind": "Variable",
+          "kind": "Literal",
           "name": "isAuction",
-          "variableName": "isAuction"
+          "value": true
         },
         {
-          "kind": "Variable",
+          "kind": "Literal",
           "name": "liveSale",
-          "variableName": "liveSale"
+          "value": true
         }
       ],
       "concreteType": "SaleArtworksConnection",
       "kind": "LinkedField",
-      "name": "saleArtworksConnection",
+      "name": "__EndingSoonAuctionsGrid_saleArtworksConnection_connection",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "FilterSaleArtworksCounts",
-          "kind": "LinkedField",
-          "name": "counts",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "total",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArtworkGrid_artworks"
-        },
         {
           "alias": null,
           "args": null,
@@ -121,15 +106,63 @@ const node: ReaderFragment = {
             }
           ],
           "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArtworkGrid_artworks"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "SaleArtwork",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Artwork",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "__EndingSoonAuctionsGrid_saleArtworksConnection_connection(includeArtworksByFollowedArtists:true,isAuction:true,liveSale:true)"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "c7a1a48ecb2cc2c7bd538f8b0ef9126e";
+(node as any).hash = "7b113725246f3e007a14e32dfe78f7f3";
 
 export default node;
