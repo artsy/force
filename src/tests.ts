@@ -14,6 +14,9 @@ useTracking.mockImplementation(() => ({ trackEvent: jest.fn() }))
 
 jest.mock("lodash/debounce", () => jest.fn(e => e))
 jest.mock("Utils/logger")
+jest.mock("Components/CookieConsentManager/CookieConsentManager", () => ({
+  CookieConsentManager: ({ children }) => children,
+}))
 
 /**
  * We want each test to have assertions, otherwise it’s too easy to write async
