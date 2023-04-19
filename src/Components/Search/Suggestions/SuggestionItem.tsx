@@ -4,15 +4,7 @@ import {
   SelectedSearchSuggestionQuickNavigationItem,
 } from "@artsy/cohesion"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
-import {
-  ArtworkIcon,
-  AuctionIcon,
-  Flex,
-  Pill,
-  PillProps,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Flex, Pill, PillProps, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
@@ -21,6 +13,8 @@ import * as React from "react"
 import { useTracking } from "react-tracking"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
+import GavelIcon from "@artsy/icons/GavelIcon"
+import ArtworkIcon from "@artsy/icons/ArtworkIcon"
 
 interface SuggestionItemProps {
   display: string
@@ -172,7 +166,7 @@ const QuickNavigation: React.FC<{
         <QuickNavigationItem
           onClick={handleAuctionResultsItemClicked}
           to={`${href}/auction-results`}
-          Icon={AuctionIcon}
+          Icon={GavelIcon}
         >
           Auction Results
         </QuickNavigationItem>

@@ -104,11 +104,12 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-4.0.1.tgz#ef171c0449f3c0a1c0765253a06beec160b0eed1"
   integrity sha512-JQ4t6eCAL3LpYnwyIMJCKc3UiVWY17IvKadNXRXfplo+GFZUqZs61nFGlchNWZvtNESpHkGKOksA5dZq3G1wiw==
 
-"@artsy/palette@31.2.0":
-  version "31.2.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-31.2.0.tgz#7714d04f0618723f89efb22dc541577831b2f2da"
-  integrity sha512-2FjfBvMTIRJpdWusnsGJnSkpF6VLuwjXfH+Xdpri+7UOXlpOr25l++EWQHJDUxbvwMDlzMdwTo8qwZxRbJ0e3g==
+"@artsy/palette@31.4.1":
+  version "31.4.1"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-31.4.1.tgz#091544a46c8817235b98576e854b2b3f0c6e5905"
+  integrity sha512-UuCDGBOodJmBPPVoZbRwwpGCVGIFBxvTf68MKkvFWRwvSgAt1fDq/DPqWMEbT4Kmay8bbSc0o3A/0AqlCI7Vwg==
   dependencies:
+    "@artsy/icons" "^3.2.2"
     "@artsy/palette-tokens" "^4.0.1"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"

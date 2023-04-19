@@ -1042,7 +1042,7 @@ describe("Shipping", () => {
         const page = new ShippingTestPage(wrapper)
 
         expect(page.orderStepper.text()).toMatchInlineSnapshot(
-          `"OfferCheckNavigate rightShippingNavigate rightPaymentNavigate rightReviewNavigate right"`
+          `"OfferShippingPaymentReview"`
         )
         expect(page.orderStepperCurrentStep).toBe("Shipping")
       })

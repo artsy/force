@@ -1,9 +1,7 @@
 import {
   AppleIcon,
   Button,
-  FacebookIcon,
   GoogleIcon,
-  IconProps,
   Join,
   Spacer,
   Text,
@@ -19,6 +17,7 @@ import {
   SettingsEditSettingsLinkedAccounts_me$data,
 } from "__generated__/SettingsEditSettingsLinkedAccounts_me.graphql"
 import { useUnlinkSettingsLinkedAccount } from "./useUnlinkSettingsLinkedAccount"
+import FacebookIcon from "@artsy/icons/FacebookIcon"
 
 interface SettingsEditSettingsLinkedAccountsProps {
   me: SettingsEditSettingsLinkedAccounts_me$data
@@ -100,7 +99,7 @@ export const SettingsEditSettingsLinkedAccountsFragmentContainer = createFragmen
 )
 
 interface SettingsEditSettingsLinkedAccountsButtonProps {
-  Icon: React.FunctionComponent<IconProps>
+  Icon: React.FunctionComponent<any>
   me: SettingsEditSettingsLinkedAccounts_me$data
   href?: string
   provider: AuthenticationProvider

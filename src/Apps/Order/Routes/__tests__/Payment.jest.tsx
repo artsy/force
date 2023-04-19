@@ -296,7 +296,7 @@ describe("Payment", () => {
 
     it("shows an active offer stepper if the order is an Offer Order", () => {
       expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"OfferCheckNavigate rightShippingCheckNavigate rightPaymentNavigate rightReviewNavigate right"`
+        `"OfferShippingPaymentReview"`
       )
       expect(page.orderStepperCurrentStep).toBe("Payment")
     })
@@ -653,9 +653,7 @@ describe("Payment", () => {
     })
 
     it("shows private sale stepper if the order source is private sale", () => {
-      expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"PaymentNavigate rightReviewNavigate right"`
-      )
+      expect(page.orderStepper.text()).toMatchInlineSnapshot(`"PaymentReview"`)
       expect(page.orderStepperCurrentStep).toBe("Payment")
     })
 
