@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c2141d51ed665ca355eff8794b3a7ccf>>
+ * @generated SignedSource<<856d249dc4f6d96a80ce82f9dacb6898>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,7 +31,11 @@ export type ArtistAutocomplete_SearchConnection_Query$data = {
         } | null;
         readonly initials?: string | null;
         readonly internalID?: string;
+        readonly isPersonalArtist?: boolean | null;
         readonly name?: string | null;
+        readonly targetSupply?: {
+          readonly isP1: boolean | null;
+        } | null;
       } | null;
     } | null> | null;
   } | null;
@@ -130,6 +134,13 @@ v3 = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "isPersonalArtist",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Image",
       "kind": "LinkedField",
       "name": "image",
@@ -184,6 +195,24 @@ v3 = {
             }
           ],
           "storageKey": "cropped(height:44,width:44)"
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtistTargetSupply",
+      "kind": "LinkedField",
+      "name": "targetSupply",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isP1",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -303,16 +332,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "77c07db478b4b7430c395ef815637e5b",
+    "cacheID": "ee6256efc8eabd5b60a0802259ae7d86",
     "id": null,
     "metadata": {},
     "name": "ArtistAutocomplete_SearchConnection_Query",
     "operationKind": "query",
-    "text": "query ArtistAutocomplete_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 6) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          counts {\n            artworks\n          }\n          formattedNationalityAndBirthday\n          name\n          initials\n          internalID\n          image {\n            cropped(width: 44, height: 44) {\n              height\n              src\n              srcSet\n              width\n            }\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistAutocomplete_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 6) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          counts {\n            artworks\n          }\n          formattedNationalityAndBirthday\n          name\n          initials\n          internalID\n          isPersonalArtist\n          image {\n            cropped(width: 44, height: 44) {\n              height\n              src\n              srcSet\n              width\n            }\n          }\n          targetSupply {\n            isP1\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "cf75a02bd75c9fd68b5a131be1781547";
+(node as any).hash = "c6318c01fb735a86d53e0671cc16bd24";
 
 export default node;

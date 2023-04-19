@@ -140,6 +140,7 @@ export const MyCollectionEditArtworkFragmentContainer = createFragmentContainer(
           targetSupply {
             isP1
           }
+          isPersonalArtist
           image {
             cropped(width: 44, height: 44) {
               height

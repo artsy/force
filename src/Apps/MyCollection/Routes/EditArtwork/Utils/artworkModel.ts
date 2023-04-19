@@ -36,6 +36,9 @@ export interface MyCollectionPhoto {
 export interface Artist {
   formattedNationalityAndBirthday?: string | null
   initials?: string | null
+  targetSupply: {
+    isP1: boolean | null
+  } | null
   image?: {
     cropped: {
       src: string
