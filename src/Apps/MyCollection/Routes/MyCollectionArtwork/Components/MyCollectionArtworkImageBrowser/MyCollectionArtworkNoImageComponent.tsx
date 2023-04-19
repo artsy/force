@@ -1,5 +1,6 @@
-import { AddCircleIcon, Button, Flex } from "@artsy/palette"
+import { Button, Flex } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
+import AddStrokeIcon from "@artsy/icons/AddStrokeIcon"
 
 interface MyCollectionArtworkNoImageComponentProps {
   artworkID?: string
@@ -25,7 +26,7 @@ export const MyCollectionArtworkNoImageComponent: React.FC<MyCollectionArtworkNo
         to={`/collector-profile/my-collection/artworks/${artworkID}/edit?step=photos`}
         variant="secondaryNeutral"
         size="large"
-        Icon={AddCircleIcon}
+        Icon={AddStrokeIcon}
       >
         Upload Photos
       </Button>
