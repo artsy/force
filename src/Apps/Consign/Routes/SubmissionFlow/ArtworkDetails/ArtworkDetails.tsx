@@ -258,7 +258,7 @@ export const ArtworkDetails: React.FC<ArtworkDetailsProps> = ({
         &#8226; Currently, artists can not sell their own work on Artsy.{" "}
         <RouterLink
           inline
-          to="https://support.artsy.net/hc/en-us/articles/360046646374-I-m-an-artist-Can-I-submit-my-own-work-to-sell-"
+          to="https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell"
           target="_blank"
           data-testid="learn-more-anchor"
         >

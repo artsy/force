@@ -32,7 +32,7 @@ describe("Sticky footer", () => {
     component.find("Clickable[data-test='help-center-link']").simulate("click")
 
     expect(window.open).toHaveBeenCalledWith(
-      "https://support.artsy.net/hc/en-us/sections/360008203114-Buy-Now-and-Make-Offer",
+      "https://support.artsy.net/s/topic/0TO3b000000UessGAC/buy",
       "_blank"
     )
   })

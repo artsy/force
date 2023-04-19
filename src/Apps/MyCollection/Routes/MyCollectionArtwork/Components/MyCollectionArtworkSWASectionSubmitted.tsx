@@ -42,7 +42,7 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
   }
 
   const article =
-    "https://support.artsy.net/hc/en-us/sections/360008311913-Sell-with-Artsy"
+    "https://support.artsy.net/s/topic/s/topic/0TO3b000000UevOGAS/sell-with-artsy"
 
   const approvedDisplayText = STATUSES[displayText!.toLowerCase()]?.text
   const statusDescription =
@@ -125,8 +125,7 @@ const SubmissionStatusModal: React.FC<SubmissionStatusModalProps> = ({
   onClose,
 }) => {
   if (!show) return null
-  const article =
-    "https://support.artsy.net/hc/en-us/articles/360046646494-What-items-do-you-accept-"
+  const article = "https://support.artsy.net/s/article/What-items-do-you-accept"
 
   return (
     <ModalDialog

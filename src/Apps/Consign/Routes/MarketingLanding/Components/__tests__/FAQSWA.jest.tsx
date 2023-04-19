@@ -33,7 +33,7 @@ describe("FAQSWA", () => {
       expect(link).toHaveTextContent("Read FAQs")
       expect(link).toHaveAttribute(
         "href",
-        "https://support.artsy.net/hc/en-us/categories/360003689533-Sell"
+        "https://support.artsy.net/s/topic/0TO3b000000UesxGAC/sell"
       )
     })
   })

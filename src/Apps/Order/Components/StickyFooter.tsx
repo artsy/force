@@ -29,7 +29,7 @@ export const StickyFooter: FC<StickyFooterProps> = ({
     })
 
     window.open(
-      "https://support.artsy.net/hc/en-us/sections/360008203114-Buy-Now-and-Make-Offer",
+      "https://support.artsy.net/s/topic/0TO3b000000UessGAC/buy",
       "_blank"
     )
   }

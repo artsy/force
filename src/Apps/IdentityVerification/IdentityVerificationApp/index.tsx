@@ -242,7 +242,7 @@ const IdentityVerificationApp: React.FC<Props> = ({
                 Questions about identity verification? Read the{" "}
                 <RouterLink
                   inline
-                  to="https://support.artsy.net/hc/en-us/articles/360062798613-How-to-Complete-Identity-Verification"
+                  to="https://support.artsy.net/s/article/How-to-Complete-Identity-Verification"
                 >
                   step by step instructions
                 </RouterLink>{" "}

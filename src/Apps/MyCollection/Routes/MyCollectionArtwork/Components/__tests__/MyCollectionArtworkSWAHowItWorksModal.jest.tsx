@@ -29,7 +29,7 @@ describe("MyCollectionArtworkSWAHowItWorksModal", () => {
 
     expect(wrapper.find("RouterLink")).toBeDefined()
     expect(wrapper.find("RouterLink").first().props().to).toBe(
-      "https://support.artsy.net/hc/en-us/sections/360008311913-Sell-with-Artsy"
+      "https://support.artsy.net/s/topic/s/topic/0TO3b000000UevOGAS/sell-with-artsy"
     )
   })
 })

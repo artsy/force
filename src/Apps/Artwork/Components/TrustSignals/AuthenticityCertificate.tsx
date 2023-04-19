@@ -82,7 +82,7 @@ export const AuthenticityCertificate: FC<AuthenticityCertificateProps> = ({
               Read more about artwork authenticity in our{" "}
               <RouterLink
                 inline
-                to="https://support.artsy.net/hc/en-us/articles/360058123933-What-Counts-as-an-Artwork-s-Proof-of-Authenticity-"
+                to="https://support.artsy.net/s/article/What-Counts-as-an-Artworks-Proof-of-Authenticity"
                 target="_blank"
                 rel="noopener noreferrer"
               >

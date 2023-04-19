@@ -5,7 +5,7 @@ export const MyCollectionArtworkSWAHowItWorksModal: React.FC<{
   onClose: () => void
 }> = ({ onClose }) => {
   const article =
-    "https://support.artsy.net/hc/en-us/sections/360008311913-Sell-with-Artsy"
+    "https://support.artsy.net/s/topic/s/topic/0TO3b000000UevOGAS/sell-with-artsy"
 
   return (
     <ModalDialog
