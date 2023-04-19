@@ -34,17 +34,8 @@ export const EndingSoonAuctionsGrid: FC<EndingSoonAuctionsGridProps> = ({
 
     setIsLoading(true)
 
-    const previousScrollY = window.scrollY
-
     relay.loadMore(10, err => {
       setIsLoading(false)
-
-      if (window.scrollY > previousScrollY) {
-        window.scrollTo({
-          behavior: "auto",
-          top: previousScrollY,
-        })
-      }
 
       if (err) {
         console.error(err)
