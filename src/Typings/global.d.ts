@@ -40,6 +40,7 @@ declare global {
     analytics: any
     braze?: typeof Braze
     desktopPageTimeTrackers: [{ path: string; reset: (path) => void }]
+    embedded_svc?: any
     grecaptcha: any
     OnetrustActiveGroups: string
     Optanon: any

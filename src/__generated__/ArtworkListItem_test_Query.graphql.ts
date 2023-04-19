@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<95d7ca5be3f9c00662d932c36072426a>>
+ * @generated SignedSource<<de7cce5f5398533ee2fe8dba660705ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -169,10 +169,16 @@ return {
                       },
                       {
                         "alias": null,
-                        "args": null,
+                        "args": [
+                          {
+                            "kind": "Literal",
+                            "name": "onlyVisible",
+                            "value": true
+                          }
+                        ],
                         "kind": "ScalarField",
                         "name": "artworksCount",
-                        "storageKey": null
+                        "storageKey": "artworksCount(onlyVisible:true)"
                       },
                       {
                         "alias": null,
@@ -255,7 +261,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ce9d8d1120410408c26f64d90d07d67d",
+    "cacheID": "5be2a5c170db9fbbbaf88d989379b03c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -339,7 +345,7 @@ return {
     },
     "name": "ArtworkListItem_test_Query",
     "operationKind": "query",
-    "text": "query ArtworkListItem_test_Query {\n  me {\n    collectionsConnection(first: 1) {\n      edges {\n        node {\n          ...ArtworkListItem_item\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtworkListItem_test_Query {\n  me {\n    collectionsConnection(first: 1) {\n      edges {\n        node {\n          ...ArtworkListItem_item\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

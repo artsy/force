@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f304cac2cfd9fe05e3ec8b6199f498f2>>
+ * @generated SignedSource<<20c7aa3f8cd4c067575234ec93496ce6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SaveArtworkToListsButton_artwork$data = {
+  readonly artistNames: string | null;
   readonly customCollections: {
     readonly totalCount: number | null;
   } | null;
@@ -79,6 +80,13 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "artistNames",
+      "storageKey": null
+    },
+    {
       "alias": "preview",
       "args": null,
       "concreteType": "Image",
@@ -141,6 +149,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "fb1c7ee64a043d560297ba34bf2b6a1e";
+(node as any).hash = "e4180eda164a1cff51671d47323a6eb7";
 
 export default node;

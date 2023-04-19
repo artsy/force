@@ -24,10 +24,15 @@ const ArtworksList: FC<ArtworksListProps> = ({
     // Disable scroll anchoring for infinite article scroll
     // https://developer.mozilla.org/en-US/docs/Web/CSS/overflow-anchor/Guide_to_scroll_anchoring
     <div style={{ overflowAnchor: "none" }}>
-      <GridColumns>
+      <GridColumns alignItems="flex-end">
         {extractNodes(artworks).map(artwork => {
           return (
-            <Column span={[6, 4]} key={artwork.internalID}>
+            <Column
+              span={[6, 4]}
+              key={artwork.internalID}
+              // Fix for issue in Firefox where contents overflow container.
+              width="100%"
+            >
               <ArtworkItem
                 item={artwork}
                 selected={selectedIds.includes(artwork.internalID)}

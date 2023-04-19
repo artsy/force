@@ -16,27 +16,30 @@ import { FC } from "react"
 export const MarketingMeetArtAdvisorRoute: FC = () => {
   return (
     <>
-      <MetaTags title="Meet your new art advisor. | Artsy" />
+      <MetaTags
+        title="Meet your new art advisor | Artsy"
+        description="See what you can do on Artsy—the best tool for art collectors. In-demand artworks, free auction results, collection management, expert sales advice, and more."
+      />
 
       <Join separator={<Spacer y={6} />}>
         <MarketingHeader
           title="Meet your new art advisor."
-          subtitle="Collect what you love confidently on the largest platform for in-demand art."
-          src="https://files.artsy.net/images/marketing_meet_header.jpg"
+          subtitle="See what you can do on Artsy—the best tool for art collectors."
+          src="https://files.artsy.net/images/marketing_meet_header_april-14.jpg"
           accentColor={BRAND_PALETTE.blue}
         />
 
         <MarketingAlternatingStack
           cards={[
             {
-              title: "Get the art you want.",
+              title: "Find the art you love.",
               subtitle:
-                "Discover the tools you need to collect art that fits your taste.",
+                "Discover the tools you need to collect artworks that fit your taste.",
               src:
-                "https://files.artsy.net/images/marketing_meet_new-works-for-you.jpg",
+                "https://files.artsy.net/images/marketing_meet_01_april-14.jpg",
               cta: {
                 label: "Start Looking",
-                href: "/find-the-art-you-want",
+                href: "/find-the-art-you-love",
               },
             },
             {
@@ -44,18 +47,18 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
               subtitle:
                 "Buy and bid confidently with free access to millions of auction results.",
               src:
-                "https://files.artsy.net/images/marketing_meet_price-database.jpg",
+                "https://files.artsy.net/images/marketing_meet_02_april-14.jpg",
               cta: {
                 label: "Search the Artsy Price Database",
                 href: "/price-database",
               },
             },
             {
-              title: "Get to know your collection better.",
+              title: "Know your collection better.",
               subtitle:
                 "See all the works you own, on your phone—and keep up with market insights.",
               src:
-                "https://files.artsy.net/images/marketing_meet_my-collection.jpg",
+                "https://files.artsy.net/images/marketing_meet_03_april-14.jpg",
               cta: {
                 label: "View My Collection",
                 href: "/collector-profile/my-collection",
@@ -65,7 +68,8 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
               title: "When you’re ready to sell, we can help.",
               subtitle:
                 "Earn more and worry less with our expert guidance, tailored to you.",
-              src: "https://files.artsy.net/images/marketing_meet_consign.jpg",
+              src:
+                "https://files.artsy.net/images/marketing_meet_04_april-14.jpg",
               cta: {
                 label: "Learn More",
                 href: "/sell",

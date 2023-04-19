@@ -11,9 +11,9 @@ interface ArtworkListEmptyStateProps {
 export const ArtworkListEmptyState: FC<ArtworkListEmptyStateProps> = ({
   me,
 }) => {
-  const allSavesArtworksCount = me.allSavesArtworkList?.artworksCount ?? 0
+  const savedArtworksCount = me.savedArtworksArtworkList?.artworksCount ?? 0
   const isDefaultArtworkList = me.artworkList?.default ?? false
-  const text = getText(isDefaultArtworkList, allSavesArtworksCount)
+  const text = getText(isDefaultArtworkList, savedArtworksCount)
 
   return (
     <Flex
@@ -56,19 +56,16 @@ export const ArtworkListEmptyStateFragmentContainer = createFragmentContainer(
           default
         }
 
-        allSavesArtworkList: collection(id: "saved-artwork") {
-          artworksCount
+        savedArtworksArtworkList: collection(id: "saved-artwork") {
+          artworksCount(onlyVisible: true)
         }
       }
     `,
   }
 )
 
-const getText = (
-  isDefaultArtworkList: boolean,
-  allSavesArtworksCount: number
-) => {
-  if (isDefaultArtworkList || allSavesArtworksCount === 0) {
+const getText = (isDefaultArtworkList: boolean, savedArtworksCount: number) => {
+  if (isDefaultArtworkList || savedArtworksCount === 0) {
     return {
       title: "Keep track of artworks you love",
       description:
@@ -78,6 +75,7 @@ const getText = (
 
   return {
     title: "Start curating your list of works",
-    description: "Add works from All Saves or add new artworks as you browse.",
+    description:
+      "Add works from Saved Artworks or add new artworks as you browse.",
   }
 }

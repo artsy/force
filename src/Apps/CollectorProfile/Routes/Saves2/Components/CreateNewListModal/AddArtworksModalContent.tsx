@@ -55,7 +55,7 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
     return <ContentPlaceholder />
   }
 
-  const artworksCount = me?.collection?.artworksConnection?.totalCount ?? 0
+  const artworksCount = me?.collection?.artworksCount ?? 0
 
   const handleSortChange = (option: string) => {
     setSort(option)
@@ -139,9 +139,9 @@ const AddArtworksModalContentPaginationContainer = createPaginationContainer(
           sort: { type: CollectionArtworkSorts, defaultValue: POSITION_DESC }
         ) {
         collection(id: "saved-artwork") {
+          artworksCount(onlyVisible: true)
           artworksConnection(first: $first, after: $after, sort: $sort)
             @connection(key: "AddArtworksModalContent_artworksConnection") {
-            totalCount
             ...ArtworksList_artworks
 
             edges {

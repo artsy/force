@@ -5,7 +5,7 @@ describe("ArtworkListsHeader", () => {
   it("renders header text and creates button", () => {
     render(<ArtworkListsHeader savedArtworksCount={0} />)
 
-    const title = "Saved Artworks"
+    const title = "Saves"
     const description = "Curate your own lists of the works you love"
 
     expect(screen.getByText(title)).toBeInTheDocument()

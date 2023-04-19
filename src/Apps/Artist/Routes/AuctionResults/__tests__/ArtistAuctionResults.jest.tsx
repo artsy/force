@@ -331,7 +331,7 @@ describe("AuctionResults", () => {
               categories: ["Work on Paper"],
               organizations: [],
               sizes: [],
-              pageAndCursor: { page: 1, cursor: null },
+              page: 1,
               sort: "DATE_DESC",
               allowEmptyCreatedDates: true,
               createdAfterYear: 1880,

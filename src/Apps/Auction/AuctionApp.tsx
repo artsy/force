@@ -21,6 +21,8 @@ import { useAuctionTracking } from "./Hooks/useAuctionTracking"
 import { AuctionCurrentAuctionsRailFragmentContainer } from "./Components/AuctionCurrentAuctionsRail"
 import { WebsocketContextProvider } from "System/WebsocketContext"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
+import { getENV } from "Utils/getENV"
+import { SalesforceWrapper } from "Components/SalesforceWrapper"
 
 export interface AuctionAppProps {
   me: AuctionApp_me$data
@@ -156,7 +158,11 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
         </WebsocketContextProvider>
       </AnalyticsContext.Provider>
 
-      <ZendeskWrapper mode="auction" />
+      {getENV("SALESFORCE_CHAT_ENABLED") ? (
+        <SalesforceWrapper />
+      ) : (
+        <ZendeskWrapper mode="auction" />
+      )}
     </>
   )
 }

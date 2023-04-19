@@ -172,14 +172,21 @@ export const artistRoutes: AppRouteConfig[] = [
             props.location ? props.location.query : {}
           )
 
-          return {
-            artistID,
+          const initialInput = {
             ...initialAuctionResultsFilterState({}),
             ...allowedAuctionResultFilters(urlFilterState),
+          }
+
+          return {
+            artistID,
+            ...initialInput,
+            state: initialInput?.hideUpcoming ? "PAST" : "ALL",
           }
         },
         query: graphql`
           query artistRoutes_AuctionResultsQuery(
+            $page: Int
+            $state: AuctionResultsState
             $artistID: String!
             $organizations: [String]
             $categories: [String]
@@ -191,6 +198,8 @@ export const artistRoutes: AppRouteConfig[] = [
             artist(id: $artistID) {
               ...ArtistAuctionResultsRoute_artist
                 @arguments(
+                  page: $page
+                  state: $state
                   organizations: $organizations
                   categories: $categories
                   sizes: $sizes

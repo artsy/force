@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c58164974c7bfac1b4c85678299f75de>>
+ * @generated SignedSource<<80db98c49193464d5fa8c9f55b723726>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,10 +45,16 @@ v2 = {
 },
 v3 = {
   "alias": null,
-  "args": null,
+  "args": [
+    {
+      "kind": "Literal",
+      "name": "onlyVisible",
+      "value": true
+    }
+  ],
   "kind": "ScalarField",
   "name": "artworksCount",
-  "storageKey": null
+  "storageKey": "artworksCount(onlyVisible:true)"
 },
 v4 = [
   {
@@ -135,63 +141,63 @@ v7 = [
 ],
 v8 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
-  "type": "Collection"
+  "type": "String"
 },
 v9 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "ArtworkConnection"
+  "type": "Collection"
 },
 v10 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "ArtworkConnection"
+},
+v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": true,
   "type": "ArtworkEdge"
 },
-v11 = {
+v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Artwork"
 },
-v12 = {
+v13 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v13 = {
+v14 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "Image"
 },
-v14 = {
+v15 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v15 = {
+v16 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "Int"
 },
-v16 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "Boolean"
-},
 v17 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "String"
+  "type": "Boolean"
 };
 return {
   "fragment": {
@@ -235,7 +241,7 @@ return {
         "plural": false,
         "selections": [
           {
-            "alias": "allSavesArtworkList",
+            "alias": "savedArtworksArtworkList",
             "args": [
               {
                 "kind": "Literal",
@@ -380,7 +386,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "41cce23e01ccaed8c054e43ba169cfa9",
+    "cacheID": "88b3e1cc5d853c59c22856c483b03d1e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -390,24 +396,6 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.allSavesArtworkList": (v8/*: any*/),
-        "me.allSavesArtworkList.artworksConnection": (v9/*: any*/),
-        "me.allSavesArtworkList.artworksConnection.edges": (v10/*: any*/),
-        "me.allSavesArtworkList.artworksConnection.edges.node": (v11/*: any*/),
-        "me.allSavesArtworkList.artworksConnection.edges.node.id": (v12/*: any*/),
-        "me.allSavesArtworkList.artworksConnection.edges.node.image": (v13/*: any*/),
-        "me.allSavesArtworkList.artworksConnection.edges.node.image.url": (v14/*: any*/),
-        "me.allSavesArtworkList.artworksConnection.totalCount": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Int"
-        },
-        "me.allSavesArtworkList.artworksCount": (v15/*: any*/),
-        "me.allSavesArtworkList.default": (v16/*: any*/),
-        "me.allSavesArtworkList.id": (v12/*: any*/),
-        "me.allSavesArtworkList.internalID": (v12/*: any*/),
-        "me.allSavesArtworkList.name": (v17/*: any*/),
         "me.customArtworkLists": {
           "enumValues": null,
           "nullable": true,
@@ -420,34 +408,52 @@ return {
           "plural": true,
           "type": "CollectionsEdge"
         },
-        "me.customArtworkLists.edges.cursor": (v17/*: any*/),
-        "me.customArtworkLists.edges.node": (v8/*: any*/),
-        "me.customArtworkLists.edges.node.__typename": (v17/*: any*/),
-        "me.customArtworkLists.edges.node.artworksConnection": (v9/*: any*/),
-        "me.customArtworkLists.edges.node.artworksConnection.edges": (v10/*: any*/),
-        "me.customArtworkLists.edges.node.artworksConnection.edges.node": (v11/*: any*/),
-        "me.customArtworkLists.edges.node.artworksConnection.edges.node.id": (v12/*: any*/),
-        "me.customArtworkLists.edges.node.artworksConnection.edges.node.image": (v13/*: any*/),
-        "me.customArtworkLists.edges.node.artworksConnection.edges.node.image.url": (v14/*: any*/),
-        "me.customArtworkLists.edges.node.artworksCount": (v15/*: any*/),
-        "me.customArtworkLists.edges.node.default": (v16/*: any*/),
-        "me.customArtworkLists.edges.node.id": (v12/*: any*/),
-        "me.customArtworkLists.edges.node.internalID": (v12/*: any*/),
-        "me.customArtworkLists.edges.node.name": (v17/*: any*/),
+        "me.customArtworkLists.edges.cursor": (v8/*: any*/),
+        "me.customArtworkLists.edges.node": (v9/*: any*/),
+        "me.customArtworkLists.edges.node.__typename": (v8/*: any*/),
+        "me.customArtworkLists.edges.node.artworksConnection": (v10/*: any*/),
+        "me.customArtworkLists.edges.node.artworksConnection.edges": (v11/*: any*/),
+        "me.customArtworkLists.edges.node.artworksConnection.edges.node": (v12/*: any*/),
+        "me.customArtworkLists.edges.node.artworksConnection.edges.node.id": (v13/*: any*/),
+        "me.customArtworkLists.edges.node.artworksConnection.edges.node.image": (v14/*: any*/),
+        "me.customArtworkLists.edges.node.artworksConnection.edges.node.image.url": (v15/*: any*/),
+        "me.customArtworkLists.edges.node.artworksCount": (v16/*: any*/),
+        "me.customArtworkLists.edges.node.default": (v17/*: any*/),
+        "me.customArtworkLists.edges.node.id": (v13/*: any*/),
+        "me.customArtworkLists.edges.node.internalID": (v13/*: any*/),
+        "me.customArtworkLists.edges.node.name": (v8/*: any*/),
         "me.customArtworkLists.pageInfo": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "PageInfo"
         },
-        "me.customArtworkLists.pageInfo.endCursor": (v14/*: any*/),
-        "me.customArtworkLists.pageInfo.hasNextPage": (v16/*: any*/),
-        "me.id": (v12/*: any*/)
+        "me.customArtworkLists.pageInfo.endCursor": (v15/*: any*/),
+        "me.customArtworkLists.pageInfo.hasNextPage": (v17/*: any*/),
+        "me.id": (v13/*: any*/),
+        "me.savedArtworksArtworkList": (v9/*: any*/),
+        "me.savedArtworksArtworkList.artworksConnection": (v10/*: any*/),
+        "me.savedArtworksArtworkList.artworksConnection.edges": (v11/*: any*/),
+        "me.savedArtworksArtworkList.artworksConnection.edges.node": (v12/*: any*/),
+        "me.savedArtworksArtworkList.artworksConnection.edges.node.id": (v13/*: any*/),
+        "me.savedArtworksArtworkList.artworksConnection.edges.node.image": (v14/*: any*/),
+        "me.savedArtworksArtworkList.artworksConnection.edges.node.image.url": (v15/*: any*/),
+        "me.savedArtworksArtworkList.artworksConnection.totalCount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        },
+        "me.savedArtworksArtworkList.artworksCount": (v16/*: any*/),
+        "me.savedArtworksArtworkList.default": (v17/*: any*/),
+        "me.savedArtworksArtworkList.id": (v13/*: any*/),
+        "me.savedArtworksArtworkList.internalID": (v13/*: any*/),
+        "me.savedArtworksArtworkList.name": (v8/*: any*/)
       }
     },
     "name": "CollectorProfileSaves2Route_Test_Query",
     "operationKind": "query",
-    "text": "query CollectorProfileSaves2Route_Test_Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  allSavesArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    ...ArtworkListItem_item\n    artworksConnection(first: 4) {\n      totalCount\n    }\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...ArtworkListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query CollectorProfileSaves2Route_Test_Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    ...ArtworkListItem_item\n    artworksConnection(first: 4) {\n      totalCount\n    }\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...ArtworkListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

@@ -29,7 +29,7 @@ describe("Footer", () => {
     render(<Footer />)
 
     expect(
-      screen.getByText("Meet your new advisor. It’s Artsy.")
+      screen.getByText("Meet your new art advisor. It’s Artsy.")
     ).toBeInTheDocument()
     expect(screen.getByText("Start Selling")).toBeInTheDocument()
   })

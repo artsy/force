@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1cda8ae439e132cdebc59be36fee9046>>
+ * @generated SignedSource<<e275726d29aa9727693fd3358e7e1700>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,11 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkListEmptyState_me$data = {
-  readonly allSavesArtworkList: {
-    readonly artworksCount: number;
-  } | null;
   readonly artworkList: {
     readonly default: boolean;
+  } | null;
+  readonly savedArtworksArtworkList: {
+    readonly artworksCount: number;
   } | null;
   readonly " $fragmentType": "ArtworkListEmptyState_me";
 };
@@ -61,7 +61,7 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "allSavesArtworkList",
+      "alias": "savedArtworksArtworkList",
       "args": [
         {
           "kind": "Literal",
@@ -76,10 +76,16 @@ const node: ReaderFragment = {
       "selections": [
         {
           "alias": null,
-          "args": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "onlyVisible",
+              "value": true
+            }
+          ],
           "kind": "ScalarField",
           "name": "artworksCount",
-          "storageKey": null
+          "storageKey": "artworksCount(onlyVisible:true)"
         }
       ],
       "storageKey": "collection(id:\"saved-artwork\")"
@@ -89,6 +95,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "90bb32479b2bcc574e460785e500657f";
+(node as any).hash = "826da11b7f2e3121cb0b6f3ff39f96e2";
 
 export default node;

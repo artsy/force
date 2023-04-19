@@ -10,12 +10,9 @@ import { Device } from "Utils/Hooks/useDeviceDetection"
 // - Avoids adding ~15kb to every page load
 // - Can be cached
 // - Can be lazyloaded
-
-const DOWNLOAD_IOS_APP_BADGE =
-  "https://files.artsy.net/images/App Download_iOS-1656079682156.png"
-
+const DOWNLOAD_IOS_APP_BADGE = "https://files.artsy.net/images/download-ios.svg"
 const DOWNLOAD_ANDROID_APP_BADGE =
-  "https://files.artsy.net/images/App Download_Google Play-1656079682114.png"
+  "https://files.artsy.net/images/download-google-play.svg"
 
 interface DownloadAppBadgeProps extends LinkProps {
   contextModule: ContextModule

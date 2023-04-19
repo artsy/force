@@ -10,7 +10,7 @@ import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnbo
 import styled from "styled-components"
 import { Spacer } from "@artsy/palette"
 import { useIsRouteActive } from "System/Router/useRouter"
-import { useLinkToSaves } from "Apps/CollectorProfile/Routes/Saves2/Utils/useLinksToSaves"
+import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 
 interface CollectorProfileAppProps {
   me: CollectorProfileApp_me$data
@@ -21,12 +21,9 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
   children,
 }) => {
   const { isLoggedIn } = useSystemContext()
-
-  // TODO: Remove this👇 when we're ready to launch the new artworks list page
-  const savesPath = useLinkToSaves()
-
-  const isSavesPathActive = useIsRouteActive(savesPath, { exact: false })
-  // TODO: Remove this ☝️ when we're ready to launch the new artworks list page
+  const isSavesPathActive = useIsRouteActive(BASE_SAVES_PATH, {
+    exact: false,
+  })
 
   if (!isLoggedIn) {
     return (
@@ -47,18 +44,28 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
       <Spacer y={[0, 2]} />
 
       <RouteTabs fill>
-        <Tab to="/collector-profile/my-collection">My Collection</Tab>
+        <Tab to="/collector-profile/my-collection" variant={["xs", "sm"]}>
+          My Collection
+        </Tab>
 
-        <Tab to="/collector-profile/insights">Insights</Tab>
+        <Tab to="/collector-profile/insights" variant={["xs", "sm"]}>
+          Insights
+        </Tab>
 
         <ProgressiveOnboardingSaveHighlight position="center">
-          <Tab to={savesPath} active={isSavesPathActive}>
+          <Tab
+            to={BASE_SAVES_PATH}
+            active={isSavesPathActive}
+            variant={["xs", "sm"]}
+          >
             Saves
           </Tab>
         </ProgressiveOnboardingSaveHighlight>
 
         <ProgressiveOnboardingFollowHighlight position="center">
-          <Tab to="/collector-profile/follows">Follows</Tab>
+          <Tab to="/collector-profile/follows" variant={["xs", "sm"]}>
+            Follows
+          </Tab>
         </ProgressiveOnboardingFollowHighlight>
       </RouteTabs>
 

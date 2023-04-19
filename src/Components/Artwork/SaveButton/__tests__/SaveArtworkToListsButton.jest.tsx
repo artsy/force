@@ -107,7 +107,7 @@ describe("SaveArtworkToListsButton", () => {
     })
 
     describe("should display `Unsave` label", () => {
-      it("if artwork was previously saved in `All Saves` list", () => {
+      it("if artwork was previously saved in `Saved Artworks` list", () => {
         renderWithRelay({
           Artwork: () => ({
             isSaved: true,
@@ -130,7 +130,7 @@ describe("SaveArtworkToListsButton", () => {
         expect(screen.getByText("Unsave")).toBeInTheDocument()
       })
 
-      it("if artwork was previously saved in `All Saves` and custom lists", () => {
+      it("if artwork was previously saved in `Saved Artworks` and custom lists", () => {
         renderWithRelay({
           Artwork: () => ({
             isSaved: false,
@@ -151,11 +151,11 @@ describe("SaveArtworkToListsButton", () => {
 
       fireEvent.click(screen.getByText("Unsave"))
 
-      const element = await screen.findByText("Removed from All Saves")
+      const element = await screen.findByText("Removed from Saved Artworks")
       expect(element).toBeInTheDocument()
     })
 
-    it("should unsave artwork from `All Saves` list by default", async () => {
+    it("should unsave artwork from `Saved Artworks` list by default", async () => {
       renderWithRelay({
         Artwork: () => ({
           isSaved: true,
@@ -167,7 +167,7 @@ describe("SaveArtworkToListsButton", () => {
 
       fireEvent.click(screen.getByText("Unsave"))
 
-      const element = await screen.findByText("Removed from All Saves")
+      const element = await screen.findByText("Removed from Saved Artworks")
       expect(element).toBeInTheDocument()
     })
 

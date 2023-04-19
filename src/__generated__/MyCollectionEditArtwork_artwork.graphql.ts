@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<64671becdbc3bce330ce485b1c17de1e>>
+ * @generated SignedSource<<f6b9dd9c3709e637eac639d8e5bc188e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type MyCollectionEditArtwork_artwork$data = {
     } | null;
     readonly initials: string | null;
     readonly internalID: string;
+    readonly isPersonalArtist: boolean | null;
     readonly name: string | null;
     readonly targetSupply: {
       readonly isP1: boolean | null;
@@ -151,6 +152,13 @@ return {
               "storageKey": null
             }
           ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isPersonalArtist",
           "storageKey": null
         },
         {
@@ -439,6 +447,6 @@ return {
 };
 })();
 
-(node as any).hash = "41b1d5a70445a9a51daa764c80870ac2";
+(node as any).hash = "203c396e79abcd0668b691bf8b8a0af4";
 
 export default node;

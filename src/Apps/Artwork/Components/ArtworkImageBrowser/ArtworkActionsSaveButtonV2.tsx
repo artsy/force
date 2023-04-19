@@ -28,11 +28,12 @@ export const ArtworkActionsSaveButtonV2: FC<ArtworkActionsSaveButtonV2Props> = (
       internalID: artwork.internalID,
       id: artwork.id,
       slug: artwork.slug,
-      title: `${artwork.title}, ${artwork.date}`,
+      title: artwork.title!,
+      year: artwork.date,
+      artistNames: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,
       isSavedToDefaultList: !!artwork.isSaved,
       isSavedToCustomLists: isSavedToCustomLists,
-      isInAuction: !!isOpenSale,
     },
   })
 
@@ -73,6 +74,7 @@ export const ArtworkActionsSaveButtonV2FragmentContainer = createFragmentContain
         slug
         title
         date
+        artistNames
         preview: image {
           url(version: "square")
         }

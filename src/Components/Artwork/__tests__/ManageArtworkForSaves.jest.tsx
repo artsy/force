@@ -1,11 +1,13 @@
 import { Button } from "@artsy/palette"
 import { fireEvent, render, screen } from "@testing-library/react"
 import {
+  ArtworkEntity,
   ManageArtworkForSavesProvider,
   useManageArtworkForSavesContext,
 } from "Components/Artwork/ManageArtworkForSaves"
 import { MockBoot } from "DevTools/MockBoot"
 import { useMutation } from "Utils/Hooks/useMutation"
+import { FC } from "react"
 import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 
@@ -27,24 +29,24 @@ describe("ManageArtworkForSaves", () => {
     relayEnv.mockClear()
   })
 
-  const TestRenderer = () => {
+  const TestRenderer: FC<TestButtonProps> = props => {
     return (
       <MockBoot relayEnvironment={relayEnv}>
         <ManageArtworkForSavesProvider>
-          <TestButton />
+          <TestButton {...props} />
         </ManageArtworkForSavesProvider>
       </MockBoot>
     )
   }
 
-  const renderAndOpenModal = () => {
-    render(<TestRenderer />)
+  const renderAndOpenModal = (props: TestButtonProps = {}) => {
+    render(<TestRenderer {...props} />)
 
     fireEvent.click(screen.getByText("Open Modal"))
 
     const mockResolvers: MockResolvers = {
       Me: () => ({
-        allSavesArtworkList: null,
+        savedArtworksArtworkList: null,
         customArtworkLists: {
           edges: [customArtworkListNodeOne, customArtworkListNodeTwo],
         },
@@ -143,7 +145,7 @@ describe("ManageArtworkForSaves", () => {
 
       const expectedModalTitle = "Select lists for this artwork"
       const title = "List created"
-      const message = 'Artwork has been added to "List Name"'
+      const message = 'Artwork will be added to "List Name"'
 
       expect(await screen.findByText(expectedModalTitle)).toBeInTheDocument()
       expect(screen.getByText(title)).toBeInTheDocument()
@@ -152,18 +154,18 @@ describe("ManageArtworkForSaves", () => {
   })
 })
 
-const TestButton = () => {
+interface TestButtonProps {
+  artwork?: ArtworkEntity
+}
+
+const TestButton = (props: TestButtonProps) => {
+  const { artwork = artworkEntity } = props
   const { dispatch } = useManageArtworkForSavesContext()
 
   const openModal = () => {
     dispatch({
       type: "SET_ARTWORK",
-      payload: {
-        id: "artwork-id",
-        internalID: "artwork-internal-id",
-        title: "Artwork Title, 2023",
-        imageURL: null,
-      },
+      payload: artwork,
     })
   }
 
@@ -184,4 +186,13 @@ const customArtworkListNodeTwo = {
     name: "List 2",
     isSavedArtwork: false,
   },
+}
+
+const artworkEntity: ArtworkEntity = {
+  id: "artwork-id",
+  internalID: "artwork-internal-id",
+  artistNames: "Banksy",
+  title: "Artwork Title",
+  year: "2023",
+  imageURL: null,
 }

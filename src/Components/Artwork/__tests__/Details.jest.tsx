@@ -519,6 +519,7 @@ const artworkInAuction: Details_Test_Query$rawResponse["artwork"] = {
   marketPriceInsights: {
     demandRank: 0.9,
   },
+  artistNames: "Gerhard Richter",
   artists: [
     {
       id: "QXJ0aXN0OmdlcmhhcmQtcmljaHRlcg==",

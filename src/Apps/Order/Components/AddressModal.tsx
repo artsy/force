@@ -58,6 +58,10 @@ const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
     field: "phoneNumber",
     message: "Please enter a valid phone number",
   },
+  "Validation failed: Phone not a valid phone number": {
+    field: "phoneNumber",
+    message: "Please enter a valid phone number",
+  },
 }
 
 export const GENERIC_FAIL_MESSAGE =
@@ -122,6 +126,7 @@ export const AddressModal: React.FC<Props> = ({
               const handleError = message => {
                 const userMessage: Record<string, string> | null =
                   SERVER_ERROR_MAP[message]
+
                 if (userMessage) {
                   actions.setFieldError(userMessage.field, userMessage.message)
                 } else {

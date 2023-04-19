@@ -83,8 +83,9 @@ describe("SelectArtworkListsModal", () => {
 
     await waitForModalToBePresented()
 
-    const entity = screen.getByText("Artwork Title, 2023")
-    expect(entity).toBeInTheDocument()
+    expect(screen.getByText(/Banksy/)).toBeInTheDocument()
+    expect(screen.getByText(/Artwork Title/)).toBeInTheDocument()
+    expect(screen.getByText(/2023/)).toBeInTheDocument()
   })
 
   it("should render collections", async () => {
@@ -322,7 +323,9 @@ const waitForModalToBePresented = () => {
 const artwork = {
   id: "artwork-id",
   internalID: "artwork-internal-id",
-  title: "Artwork Title, 2023",
+  title: "Artwork Title",
+  year: "2023",
+  artistNames: "Banksy",
   imageURL: null,
 }
 

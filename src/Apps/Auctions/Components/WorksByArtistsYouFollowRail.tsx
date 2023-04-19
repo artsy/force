@@ -29,8 +29,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
 
   return (
     <Rail
-      title="Works for you"
-      subTitle="Works at auction by artists you follow"
+      title="Auction Lots for You Ending Soon"
       getItems={() => {
         return nodes.map((node, index) => {
           return (

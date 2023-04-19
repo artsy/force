@@ -20,7 +20,7 @@ import { ArtworkDetailsFormModel } from "./ArtworkDetailsForm"
 
 const DEBOUNCE_DELAY = 300
 
-type AutocompleteArtist =
+export type AutocompleteArtist =
   | NonNullable<
       NonNullable<
         NonNullable<
@@ -225,6 +225,7 @@ const fetchSuggestions = async (
                 name
                 initials
                 internalID
+                isPersonalArtist
                 image {
                   cropped(width: 44, height: 44) {
                     height
@@ -232,6 +233,9 @@ const fetchSuggestions = async (
                     srcSet
                     width
                   }
+                }
+                targetSupply {
+                  isP1
                 }
               }
             }

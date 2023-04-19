@@ -9,7 +9,10 @@ import {
   Text,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
-import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
+import {
+  ArtistAutoComplete,
+  AutocompleteArtist,
+} from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
 import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
@@ -48,21 +51,21 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
   const [query, setQuery] = useState("")
   const trimmedQuery = query?.trimStart()
 
-  const onSelect = artist => {
+  const onSelect = (artist: AutocompleteArtist) => {
     trackSelectArtist()
 
-    setFieldValue("artistId", artist.internalID)
-    setFieldValue("artistName", artist.name || "")
+    setFieldValue("artistId", artist?.internalID)
+    setFieldValue("artistName", artist?.name || "")
     setFieldValue("artist", artist)
 
-    if (!artist.internalID) {
+    if (!artist?.internalID) {
       setQuery("")
 
       return
     }
 
     // Skip the artwork step if the artist has no public artworks on Artsy or is a personal artist
-    const skipNext = artist.isPersonalArtist || artist.counts.artworks === 0
+    const skipNext = artist?.isPersonalArtist || artist?.counts?.artworks === 0
 
     onNext?.({ skipNext })
   }
@@ -159,7 +162,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
                 {collectedArtists.map(artist => (
                   <Column span={[12, 4]} key={artist.internalID} mt={1}>
                     <Clickable
-                      onClick={() => onSelect(artist)}
+                      onClick={() => onSelect(artist as AutocompleteArtist)}
                       data-testid={`artist-${artist.internalID}`}
                     >
                       <EntityHeaderArtistFragmentContainer
@@ -205,6 +208,9 @@ const MyCollectionArtworkFormArtistStepFragment = graphql`
             isPersonalArtist
             name
             slug
+            targetSupply {
+              isP1
+            }
           }
         }
       }

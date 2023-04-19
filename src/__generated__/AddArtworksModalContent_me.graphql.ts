@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef3a99b936b23b65895b5c0523121826>>
+ * @generated SignedSource<<57da098abf87e87f87dcb24855a24fae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,9 +18,9 @@ export type AddArtworksModalContent_me$data = {
           readonly internalID: string;
         } | null;
       } | null> | null;
-      readonly totalCount: number | null;
       readonly " $fragmentSpreads": FragmentRefs<"ArtworksList_artworks">;
     } | null;
+    readonly artworksCount: number;
   } | null;
   readonly " $fragmentType": "AddArtworksModalContent_me";
 };
@@ -78,6 +78,19 @@ const node: ReaderFragment = {
       "plural": false,
       "selections": [
         {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "onlyVisible",
+              "value": true
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "artworksCount",
+          "storageKey": "artworksCount(onlyVisible:true)"
+        },
+        {
           "alias": "artworksConnection",
           "args": [
             {
@@ -91,13 +104,6 @@ const node: ReaderFragment = {
           "name": "__AddArtworksModalContent_artworksConnection_connection",
           "plural": false,
           "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "totalCount",
-              "storageKey": null
-            },
             {
               "args": null,
               "kind": "FragmentSpread",
@@ -182,6 +188,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "f098f83fb7f84b81499016f34adb459f";
+(node as any).hash = "ea2cc81f2557279171315b4210f986d7";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<77a42691e5a6a1ecd903d006cda968ce>>
+ * @generated SignedSource<<7ac046355f21ec80ebda85b427cb4b3d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -125,10 +125,16 @@ v7 = [
   },
   {
     "alias": null,
-    "args": null,
+    "args": [
+      {
+        "kind": "Literal",
+        "name": "onlyVisible",
+        "value": true
+      }
+    ],
     "kind": "ScalarField",
     "name": "artworksCount",
-    "storageKey": null
+    "storageKey": "artworksCount(onlyVisible:true)"
   },
   {
     "alias": null,
@@ -323,12 +329,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "381f8154647f04dcb9485edd64cd5cee",
+    "cacheID": "20eb03b4da8633da71604515f3221b0f",
     "id": null,
     "metadata": {},
     "name": "useSelectArtworkListsMutation",
     "operationKind": "mutation",
-    "text": "mutation useSelectArtworkListsMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        addedToArtworkLists: addedToCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n        removedFromArtworkLists: removedFromCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "mutation useSelectArtworkListsMutation(\n  $input: ArtworksCollectionsBatchUpdateInput!\n) {\n  artworksCollectionsBatchUpdate(input: $input) {\n    responseOrError {\n      __typename\n      ... on ArtworksCollectionsBatchUpdateSuccess {\n        addedToArtworkLists: addedToCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n        removedFromArtworkLists: removedFromCollections {\n          internalID\n          default\n          ...ArtworkListItem_item\n          id\n        }\n      }\n      ... on ArtworksCollectionsBatchUpdateFailure {\n        mutationError {\n          statusCode\n        }\n      }\n    }\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

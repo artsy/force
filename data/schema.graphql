@@ -1365,9 +1365,11 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
 
     # Filter auction results by organizations
     organizations: [String]
+    page: Int
 
     # When true, will only return records for allowed artists.
     recordsTrusted: Boolean = false
+    size: Int
 
     # Filter auction results by Artwork sizes
     sizes: [ArtworkSizes]
@@ -3738,6 +3740,7 @@ type CollectorProfileType {
     @deprecated(
       reason: "identityVerified is going to be removed, use isIdentityVerified instead"
     )
+  initials(length: Int = 3): String
   institutionalAffiliations: String
   intents: [String]
 
@@ -6973,9 +6976,16 @@ type Conversation implements Node {
 
   # The participant(s) responding to the conversation
   to: ConversationResponder!
+  toLastViewedMessageID: String
 
-  # True if there is an unread message by the user.
-  unread: Boolean
+  # True if there is an unread message by the Collector(from).
+  unread: Boolean @deprecated(reason: "Use `unreadByCollector` instead")
+
+  # True if there is an unread message by the Collector(from).
+  unreadByCollector: Boolean
+
+  # True if there is an unread message by the Partner(to).
+  unreadByPartner: Boolean
 }
 
 # A connection to a list of items.
@@ -10356,6 +10366,7 @@ type InquirerCollectorProfile {
     @deprecated(
       reason: "identityVerified is going to be removed, use isIdentityVerified instead"
     )
+  initials(length: Int = 3): String
   institutionalAffiliations: String
   intents: [String]
 
@@ -10837,6 +10848,9 @@ type MarketingCollection {
 
   # Returns collections by the same artist if more than 4 exist, otherwise returns collections from the same category
   relatedCollections(size: Int = 10): [MarketingCollection!]!
+
+  # ID of an artwork with highest merchandis ability
+  representativeArtworkID: String
 
   # Show featured artists section in header. Defaults to true
   showFeaturedArtists: Boolean!
@@ -17241,6 +17255,7 @@ type UpdateCollectorProfilePayload {
     @deprecated(
       reason: "identityVerified is going to be removed, use isIdentityVerified instead"
     )
+  initials(length: Int = 3): String
   institutionalAffiliations: String
   intents: [String]
 
