@@ -17,11 +17,9 @@ export const EndingSoonAuctionsGrid: FC<EndingSoonAuctionsGridProps> = ({
       (viewer.saleArtworksConnection.counts?.total ?? 0) > 0 ? (
         <ArtworkGrid artworks={viewer.saleArtworksConnection} />
       ) : (
-        <>
-          <Text variant="lg" mt={4} color="black60">
-            Nothing yet.
-          </Text>
-        </>
+        <Text variant="lg" mt={4} color="black60">
+          Nothing yet.
+        </Text>
       )}
     </>
   )
