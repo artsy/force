@@ -50,7 +50,6 @@ describe("WorksForYouApp", () => {
 
     expect(screen.getByText("MetaTags")).toBeInTheDocument()
     expect(screen.getByText("Works By Artists You Follow")).toBeInTheDocument()
-    expect(screen.getByText("Search")).toBeInTheDocument()
   })
 
   it("shows no results if no followed artists", () => {

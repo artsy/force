@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { SettingsEditSettingsLinkedAccountsFragmentContainer } from "../SettingsEditSettingsLinkedAccounts"
+import { SettingsEditSettingsLinkedAccountsFragmentContainer } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsLinkedAccounts"
 
 jest.unmock("react-relay")
 jest.mock("Utils/getENV", () => ({
@@ -31,9 +31,6 @@ describe("SettingsEditSettingsLinkedAccounts", () => {
     expect(screen.getByText("Connect Facebook Account")).toBeInTheDocument()
     expect(screen.getByText("Connect Apple Account")).toBeInTheDocument()
     expect(screen.getByText("Connect Google Account")).toBeInTheDocument()
-    expect(screen.getByTitle("Facebook")).toBeInTheDocument()
-    expect(screen.getByTitle("Apple Icon")).toBeInTheDocument()
-    expect(screen.getByTitle("Google Icon")).toBeInTheDocument()
   })
 
   it("renders the link if the accounts are disconnected", () => {

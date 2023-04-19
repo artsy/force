@@ -66,7 +66,7 @@ describe("FairArtworks", () => {
     const artistFilter = wrapper.find("ArtistsFilter")
     expect(artistFilter.length).toBe(1)
 
-    artistFilter.find("ChevronIcon").simulate("click")
+    artistFilter.find("button").simulate("click")
     expect(artistFilter.find("Checkbox").at(0).text()).toMatch(
       "Artists You Follow (10)"
     )
