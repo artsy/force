@@ -51,7 +51,7 @@ describe("CollectorProfileSaves2Route", () => {
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
+    jest.restoreAllMocks()
   })
 
   it("should render collections", () => {

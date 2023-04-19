@@ -56,7 +56,6 @@ describe("ArtworkFilter", () => {
   const trackEvent = jest.fn()
 
   beforeEach(() => {
-    jest.resetAllMocks()
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
@@ -71,6 +70,10 @@ describe("ArtworkFilter", () => {
       { value: "sortTest1", text: "Sort Test 1" },
       { value: "sortTest2", text: "Sort Test 2" },
     ]
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
   it("renders content above artworks when FilterPillsSection prop is passed", () => {
