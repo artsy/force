@@ -8,8 +8,7 @@ export const FAQSWA: React.FC = () => {
     "https://files.artsy.net/images/SWA-landing-FAQ-section-x2.jpg",
     { width: 950, height: 419 }
   )
-  const supportUrl =
-    "https://support.artsy.net/hc/en-us/categories/360003689533-Sell"
+  const supportUrl = "https://support.artsy.net/s/topic/0TO3b000000UesxGAC/sell"
 
   return (
     <TextAndImageLayout

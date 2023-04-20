@@ -44,7 +44,7 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
           <Spacer y={2} />
 
           <RouterLink
-            to="https://support.artsy.net/hc/en-us/sections/360008298773-Bid-at-Auction"
+            to="https://support.artsy.net/s/article/How-do-I-place-a-bid-in-an-auction"
             textDecoration="none"
             display="block"
           >

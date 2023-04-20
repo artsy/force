@@ -11,7 +11,7 @@ import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 
 export const BUYER_GUARANTEE_URL =
-  "https://support.artsy.net/hc/en-us/articles/360048946973-How-does-Artsy-protect-me"
+  "https://support.artsy.net/s/article/The-Artsy-Guarantee"
 
 interface BuyerGuaranteeProps {
   contextModule: ContextModule
