@@ -1,31 +1,28 @@
-import {
-  Breadcrumbs,
-  ChevronIcon,
-  Flex,
-  Spacer,
-  Text,
-  useToasts,
-} from "@artsy/palette"
-import { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
-import { MyCollectionRouteLoggedOutState } from "Apps/Settings/Routes/MyCollection/MyCollectionRouteLoggedOutState"
+import { Spacer, useToasts } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
-import { Link } from "found"
-import { compact } from "lodash"
 import React, { useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
-import { useSystemContext } from "System/useSystemContext"
+import { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
+import { TopContextBar } from "Components/TopContextBar"
 
 export const SETTINGS_ROUTE_TABS_MARGIN = [2, 4]
+const SETTINGS_TABS = [
+  { name: "Edit Profile", url: "/settings/edit-profile" },
+  { name: "Saved Alerts", url: "/settings/alerts" },
+  { name: "Account Settings", url: "/settings/edit-settings" },
+  { name: "Order History", url: "/settings/purchases" },
+  { name: "Bids", url: "/settings/auctions" },
+  { name: "Payments", url: "/settings/payments" },
+  { name: "Shipping", url: "/settings/shipping" },
+]
 
 interface SettingsAppProps {
   me: SettingsApp_me$data
 }
 
 const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
-  const { isLoggedIn } = useSystemContext()
-
   const { sendToast } = useToasts()
 
   const {
@@ -44,48 +41,20 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
     })
   }, [location.query.error, sendToast])
 
-  const tabsWhenCollectorProfileEnabled = compact([
-    { name: "Edit Profile", url: "/settings/edit-profile" },
-    { name: "Saved Alerts", url: "/settings/alerts" },
-    { name: "Account", url: "/settings/edit-settings" },
-    { name: "Order History", url: "/settings/purchases" },
-    { name: "Bids", url: "/settings/auctions" },
-    { name: "Payments", url: "/settings/payments" },
-    { name: "Shipping", url: "/settings/shipping" },
-  ])
-
-  if (!isLoggedIn) {
-    return <MyCollectionRouteLoggedOutState />
-  }
-
   return (
     <>
       <MetaTags title="Settings | Artsy" />
 
-      <>
-        <Breadcrumbs py={[2, 1]}>
-          <Link to="/collector-profile/my-collection">
-            <Flex flexDirection="row" alignItems="center" minHeight={30}>
-              <ChevronIcon
-                direction="left"
-                color="black100"
-                height={14}
-                width={14}
-              />
-              <Text variant="xs" pl={1}>
-                Collector Profile
-              </Text>
-            </Flex>
-          </Link>
-        </Breadcrumbs>
+      <TopContextBar displayBackArrow href="/collector-profile/my-collection">
+        Collector Profile
+      </TopContextBar>
 
-        <Spacer y={4} />
-      </>
+      <Spacer y={[4, 6]} />
 
       <RouteTabs my={SETTINGS_ROUTE_TABS_MARGIN}>
-        {tabsWhenCollectorProfileEnabled.map(tab => {
+        {SETTINGS_TABS.map(tab => {
           return (
-            <RouteTab key={tab.url} to={tab.url} variant={["xs", "sm"]}>
+            <RouteTab key={tab.url} to={tab.url}>
               {tab.name}
             </RouteTab>
           )

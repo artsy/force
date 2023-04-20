@@ -71,6 +71,7 @@ const PERMANENT_REDIRECTS = {
   "/user/payments": "/settings/payments",
   "/user/alerts": "/settings/alerts",
   "/my-collection": "/collector-profile/my-collection",
+  "/settings/my-collection": "/collector-profile/my-collection",
   "/page/collector-faqs-selling-on-artsy": "/sell",
   "/apply/gallery": "http://apply.artsy.net/galleries",
   "/apply/institution": "http://apply.artsy.net/institutions",
