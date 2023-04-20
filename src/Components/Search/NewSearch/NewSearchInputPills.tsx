@@ -6,8 +6,10 @@ import {
   ShelfNext,
   ShelfPrevious,
 } from "@artsy/palette"
-import { useEffect, useRef, useState } from "react"
+import { FC, useEffect, useRef, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
+import { NewSearchInputPills_viewer$data } from "__generated__/NewSearchInputPills_viewer.graphql"
 
 const PILLS_OPTIONS = [
   "TOP",
@@ -68,7 +70,11 @@ const PillsContainer = styled(Flex)`
 
 const GRADIENT_BG_WIDTH = 30
 
-export const NewSearchInputPillsContainer = () => {
+interface NewSearchInputPillsProps {
+  viewer: NewSearchInputPills_viewer$data
+}
+
+const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({ viewer }) => {
   const pillsRef = useRef<HTMLDivElement>(null)
   const [showPreviousChevron, setShowPreviousChevron] = useState<boolean>(false)
   const [showNextChevron, setShowNextChevron] = useState<boolean>(false)
@@ -183,3 +189,27 @@ export const NewSearchInputPillsContainer = () => {
     </Flex>
   )
 }
+
+export const NewSearchInputPillsFragmentContainer = createFragmentContainer(
+  NewSearchInputPills,
+  {
+    viewer: graphql`
+      fragment NewSearchInputPills_viewer on Viewer
+        @argumentDefinitions(term: { type: "String!", defaultValue: "" }) {
+        searchConnectionAggregation: searchConnection(
+          first: 0
+          mode: AUTOSUGGEST
+          query: $term
+          aggregations: [TYPE]
+        ) {
+          aggregations {
+            counts {
+              count
+              name
+            }
+          }
+        }
+      }
+    `,
+  }
+)

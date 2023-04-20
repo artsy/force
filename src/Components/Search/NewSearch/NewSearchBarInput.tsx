@@ -1,6 +1,5 @@
 import { AutocompleteInput, Box, BoxProps } from "@artsy/palette"
 import { NewSearchBarSuggestion } from "Components/Search/NewSearch/NewSearchBarSuggestion"
-import { NewSearchInputPillsContainer } from "Components/Search/NewSearch/NewSearchInputPillsContainer"
 import { SearchInputContainer } from "Components/Search/SearchInputContainer"
 import { Router } from "found"
 import { ChangeEvent, FC, useContext, useState } from "react"
@@ -76,7 +75,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       spellCheck={false}
       options={value.length < 2 ? [] : formattedOptions}
       value={value}
-      header={<NewSearchInputPillsContainer />}
+      // header={<NewSearchInputPillsFragmentContainer viewer={viewer} />}
       renderOption={option => <NewSearchBarSuggestion option={option} />}
       onChange={handleChange}
       onClear={() => setValue("")}
@@ -121,6 +120,7 @@ export const NewSearchBarInputRefetchContainer = createRefetchContainer(
     query NewSearchBarInputRefetchQuery($term: String!, $hasTerm: Boolean!) {
       viewer {
         ...NewSearchBarInput_viewer @arguments(term: $term, hasTerm: $hasTerm)
+        ...NewSearchInputPills_viewer @arguments(term: $term)
       }
     }
   `
