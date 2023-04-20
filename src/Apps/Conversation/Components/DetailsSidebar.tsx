@@ -199,7 +199,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
             Support
           </Text>
           <RouterLink
-            to="https://support.artsy.net/s/topic/s/topic/0TO3b000000UevEGAS/contacting-a-gallery"
+            to="https://support.artsy.net/s/topic/0TO3b000000UevEGAS/contacting-a-gallery"
             target="_blank"
             textDecoration="none"
           >
