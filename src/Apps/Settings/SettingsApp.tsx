@@ -1,5 +1,4 @@
 import { Spacer, useToasts } from "@artsy/palette"
-import { MyCollectionRouteLoggedOutState } from "Apps/Settings/Routes/MyCollection/MyCollectionRouteLoggedOutState"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import React, { useEffect } from "react"
@@ -7,7 +6,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
 import { TopContextBar } from "Components/TopContextBar"
-import { useSystemContext } from "System/SystemContext"
 
 export const SETTINGS_ROUTE_TABS_MARGIN = [2, 4]
 const SETTINGS_TABS = [
@@ -25,8 +23,6 @@ interface SettingsAppProps {
 }
 
 const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
-  const { isLoggedIn } = useSystemContext()
-
   const { sendToast } = useToasts()
 
   const {
@@ -44,10 +40,6 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
       ttl: Infinity,
     })
   }, [location.query.error, sendToast])
-
-  if (!isLoggedIn) {
-    return <MyCollectionRouteLoggedOutState />
-  }
 
   return (
     <>

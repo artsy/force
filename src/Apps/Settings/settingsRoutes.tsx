@@ -8,6 +8,7 @@ const SettingsApp = loadable(
     resolveComponent: component => component.SettingsAppFragmentContainer,
   }
 )
+
 const AuctionsRoute = loadable(
   () =>
     import(
@@ -18,6 +19,7 @@ const AuctionsRoute = loadable(
       component.SettingsAuctionsRouteFragmentContainer,
   }
 )
+
 const EditProfileRoute = loadable(
   () =>
     import(
@@ -28,6 +30,7 @@ const EditProfileRoute = loadable(
       component.SettingsEditProfileRouteFragmentContainer,
   }
 )
+
 const PaymentsRoute = loadable(
   () =>
     import(
@@ -38,6 +41,7 @@ const PaymentsRoute = loadable(
       component.SettingsPaymentsRouteFragmentContainer,
   }
 )
+
 const PurchasesRoute = loadable(
   () =>
     import(
@@ -48,6 +52,7 @@ const PurchasesRoute = loadable(
       component.SettingsPurchasesRouteFragmentContainer,
   }
 )
+
 const SavesRoute = loadable(
   () =>
     import(
@@ -56,16 +61,6 @@ const SavesRoute = loadable(
   {
     resolveComponent: component =>
       component.SettingsSavesRouteFragmentContainer,
-  }
-)
-const MyCollectionRoute = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/MyCollection/MyCollectionRoute"
-    ),
-  {
-    resolveComponent: component =>
-      component.MyCollectionRoutePaginationContainer,
   }
 )
 
@@ -88,6 +83,7 @@ const EditSettingsRoute = loadable(
     resolveComponent: component => component.SettingsEditRouteFragmentContainer,
   }
 )
+
 const ShippingRoute = loadable(
   () =>
     import(
@@ -98,6 +94,7 @@ const ShippingRoute = loadable(
       component.SettingsShippingRouteFragmentContainer,
   }
 )
+
 const DeleteAccountRoute = loadable(
   () =>
     import(
@@ -216,21 +213,6 @@ export const settingsRoutes: AppRouteConfig[] = [
             }
           }
         `,
-      },
-      {
-        path: "my-collection",
-        getComponent: () => MyCollectionRoute,
-        onClientSideRender: () => {
-          MyCollectionRoute.preload()
-        },
-        query: graphql`
-          query settingsRoutes_MyCollectionRouteQuery {
-            me {
-              ...MyCollectionRoute_me
-            }
-          }
-        `,
-        cacheConfig: { force: true },
       },
       {
         path: "insights",
