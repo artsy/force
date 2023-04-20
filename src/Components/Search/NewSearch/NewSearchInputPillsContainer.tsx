@@ -66,6 +66,8 @@ const PillsContainer = styled(Flex)`
   }
 `
 
+const GRADIENT_BG_WIDTH = 30
+
 export const NewSearchInputPillsContainer = () => {
   const pillsRef = useRef<HTMLDivElement>(null)
   const [showPreviousChevron, setShowPreviousChevron] = useState<boolean>(false)
@@ -73,8 +75,27 @@ export const NewSearchInputPillsContainer = () => {
 
   const scrollToLeft = () => {
     if (pillsRef.current) {
-      pillsRef.current.scrollBy({
-        left: -100,
+      const pillsContainer = pillsRef.current
+      const pills = pillsContainer.children
+      const currentScroll = pillsContainer.scrollLeft
+      const visibleWidth = pillsContainer.offsetWidth
+      let scrollBy = 0
+
+      // Find the last visible pill and the next pill
+      for (let i = pills.length - 1; i >= 0; i--) {
+        const pill = pills[i] as HTMLElement
+        if (
+          pill.offsetLeft + pill.offsetWidth <=
+          currentScroll + visibleWidth
+        ) {
+          const prevPill = pills[i - 1] as HTMLElement
+          scrollBy = -prevPill.offsetWidth
+          break
+        }
+      }
+
+      pillsContainer.scrollBy({
+        left: scrollBy - GRADIENT_BG_WIDTH,
         behavior: "smooth",
       })
     }
@@ -82,8 +103,23 @@ export const NewSearchInputPillsContainer = () => {
 
   const scrollToRight = () => {
     if (pillsRef.current) {
-      pillsRef.current.scrollBy({
-        left: 100,
+      const pillsContainer = pillsRef.current
+      const pills = pillsContainer.children
+      const currentScroll = pillsContainer.scrollLeft
+      let scrollBy = 0
+
+      // Find the first visible pill and the next pill
+      for (let i = 0; i < pills.length; i++) {
+        const pill = pills[i] as HTMLElement
+        if (pill.offsetLeft >= currentScroll) {
+          const nextPill = pills[i + 1] as HTMLElement
+          scrollBy = nextPill.offsetWidth
+          break
+        }
+      }
+
+      pillsContainer.scrollBy({
+        left: scrollBy + GRADIENT_BG_WIDTH,
         behavior: "smooth",
       })
     }
@@ -126,9 +162,9 @@ export const NewSearchInputPillsContainer = () => {
         onScroll={handleScroll}
       >
         {PILLS_OPTIONS.map(pill => (
-          <Flex key={pill}>
-            <Pill mr={1}>{pill}</Pill>
-          </Flex>
+          <Pill key={pill} mr={1}>
+            {pill}
+          </Pill>
         ))}
       </PillsContainer>
       <Flex position="absolute" right={0} zIndex={showNextChevron ? 0 : -1}>
