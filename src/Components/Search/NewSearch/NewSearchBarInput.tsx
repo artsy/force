@@ -16,6 +16,7 @@ import { useDidMount } from "Utils/Hooks/useDidMount"
 import { NewSearchBarInput_viewer$data } from "__generated__/NewSearchBarInput_viewer.graphql"
 import { NewSearchBarInputSuggestQuery } from "__generated__/NewSearchBarInputSuggestQuery.graphql"
 import createLogger from "Utils/logger"
+import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 
@@ -75,7 +76,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       spellCheck={false}
       options={value.length < 2 ? [] : formattedOptions}
       value={value}
-      // header={<NewSearchInputPillsFragmentContainer viewer={viewer} />}
+      header={<NewSearchInputPillsFragmentContainer viewer={viewer} />}
       renderOption={option => <NewSearchBarSuggestion option={option} />}
       onChange={handleChange}
       onClear={() => setValue("")}
@@ -113,6 +114,7 @@ export const NewSearchBarInputRefetchContainer = createRefetchContainer(
             }
           }
         }
+        ...NewSearchInputPills_viewer @arguments(term: $term)
       }
     `,
   },
@@ -120,7 +122,6 @@ export const NewSearchBarInputRefetchContainer = createRefetchContainer(
     query NewSearchBarInputRefetchQuery($term: String!, $hasTerm: Boolean!) {
       viewer {
         ...NewSearchBarInput_viewer @arguments(term: $term, hasTerm: $hasTerm)
-        ...NewSearchInputPills_viewer @arguments(term: $term)
       }
     }
   `

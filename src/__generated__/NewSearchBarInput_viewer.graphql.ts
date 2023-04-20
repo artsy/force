@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<37f7f8aee6fbb817b7d8fe1189af95d7>>
+ * @generated SignedSource<<b2e14ff8f9f8e64e69c9ce4d54a937dc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,6 +27,7 @@ export type NewSearchBarInput_viewer$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly " $fragmentSpreads": FragmentRefs<"NewSearchInputPills_viewer">;
   readonly " $fragmentType": "NewSearchBarInput_viewer";
 };
 export type NewSearchBarInput_viewer$key = {
@@ -187,12 +188,23 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ]
+    },
+    {
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "term",
+          "variableName": "term"
+        }
+      ],
+      "kind": "FragmentSpread",
+      "name": "NewSearchInputPills_viewer"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "913fc7684785da9e9a262d6b3ac99807";
+(node as any).hash = "d0bdf3e1f93015b9216c370c0defe4ab";
 
 export default node;

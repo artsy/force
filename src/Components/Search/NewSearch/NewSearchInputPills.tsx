@@ -10,19 +10,7 @@ import { FC, useEffect, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
 import { NewSearchInputPills_viewer$data } from "__generated__/NewSearchInputPills_viewer.graphql"
-
-const PILLS_OPTIONS = [
-  "TOP",
-  "ARTWORK",
-  "ARTIST",
-  "ARTICLE",
-  "SALE",
-  "ARTIST_SERIES",
-  "COLLECTION",
-  "FAIR",
-  "SHOW",
-  "GALLERY",
-]
+import { PILLS, TOP_PILL } from "Components/Search/NewSearch/constants"
 
 const ChevronStyle = css`
   position: absolute;
@@ -78,6 +66,16 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({ viewer }) => {
   const pillsRef = useRef<HTMLDivElement>(null)
   const [showPreviousChevron, setShowPreviousChevron] = useState<boolean>(false)
   const [showNextChevron, setShowNextChevron] = useState<boolean>(false)
+
+  const aggregation = viewer.searchConnectionAggregation?.aggregations?.[0]
+
+  const isPillDisabled = (key: string) => {
+    if (key === TOP_PILL.key) {
+      return false
+    }
+
+    return !aggregation?.counts?.find(agg => agg?.name === key)
+  }
 
   const showNextChevronHandler = () => {
     if (pillsRef.current) {
@@ -176,11 +174,16 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({ viewer }) => {
         py={2}
         onScroll={handleScroll}
       >
-        {PILLS_OPTIONS.map(pill => (
-          <Pill key={pill} mr={1}>
-            {pill}
-          </Pill>
-        ))}
+        {PILLS.map(pill => {
+          const { key, displayName } = pill
+          const disabled = isPillDisabled(key)
+
+          return (
+            <Pill key={key} mr={1} disabled={disabled}>
+              {displayName}
+            </Pill>
+          )
+        })}
       </PillsContainer>
       <Flex position="absolute" right={0} opacity={showNextChevron ? 1 : 0}>
         <NextChevron onClick={scrollToRight} right={2} />
