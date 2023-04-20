@@ -21,6 +21,8 @@ import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboar
 import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
 import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+
 export const NavBarUserMenu: React.FC = () => {
   const { trackEvent } = useTracking()
   const { user } = useContext(SystemContext)
@@ -116,6 +118,14 @@ export const NavBarUserMenu: React.FC = () => {
           <GroupIcon mr={1} aria-hidden="true" /> Follows
         </NavBarMenuItemLink>
       </ProgressiveOnboardingFollowHighlight>
+
+      <NavBarMenuItemLink
+        aria-label="View your saved alerts"
+        to="/settings/alerts"
+        onClick={trackClick}
+      >
+        <BellStrokeIcon mr={1} aria-hidden="true" /> Alerts
+      </NavBarMenuItemLink>
 
       <NavBarMenuItemLink
         aria-label="Edit your settings"
