@@ -69,9 +69,9 @@ spec:
         resources:
           requests:
             cpu: 100m
-            memory: 1Gi
+            memory: 500Mi
           limits:
-            memory: 1.5Gi
+            memory: 1Gi
         lifecycle:
           preStop:
             exec:
