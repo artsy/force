@@ -6,7 +6,7 @@ import {
   ShelfNext,
   ShelfPrevious,
 } from "@artsy/palette"
-import { useRef, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import styled, { css } from "styled-components"
 
 const PILLS_OPTIONS = [
@@ -71,7 +71,34 @@ const GRADIENT_BG_WIDTH = 30
 export const NewSearchInputPillsContainer = () => {
   const pillsRef = useRef<HTMLDivElement>(null)
   const [showPreviousChevron, setShowPreviousChevron] = useState<boolean>(false)
-  const [showNextChevron, setShowNextChevron] = useState<boolean>(true)
+  const [showNextChevron, setShowNextChevron] = useState<boolean>(false)
+
+  // On inital load
+  useEffect(() => {
+    if (pillsRef.current) {
+      const pillsContainer = pillsRef.current
+      setShowNextChevron(
+        pillsContainer.scrollWidth > pillsContainer.clientWidth
+      )
+    }
+  }, [])
+
+  // when screen width changes
+  useEffect(() => {
+    const handleResize = () => {
+      if (pillsRef.current) {
+        const pillsContainer = pillsRef.current
+        if (pillsContainer.scrollWidth <= pillsContainer.clientWidth) {
+          setShowNextChevron(false)
+        } else {
+          setShowNextChevron(true)
+        }
+      }
+    }
+
+    window.addEventListener("resize", handleResize)
+    return () => window.removeEventListener("resize", handleResize)
+  }, [])
 
   const scrollToLeft = () => {
     if (pillsRef.current) {
