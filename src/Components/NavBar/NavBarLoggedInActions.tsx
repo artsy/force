@@ -67,7 +67,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
               }
             }}
           >
-            <BellStrokeIcon title="Notifications" fill="currentColor" />
+            <BellStrokeIcon fill="currentColor" />
 
             {shouldDisplayBlueDot && (
               <NavBarNotificationIndicator
@@ -88,7 +88,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
             : "Conversations"
         }
       >
-        <EnvelopeIcon title="Inbox" fill="currentColor" />
+        <EnvelopeIcon fill="currentColor" />
 
         {hasConversations && (
           <NavBarNotificationIndicator
@@ -115,9 +115,10 @@ export const NavBarLoggedInActions: React.FC<Partial<
                   <NavBarItemButton
                     ref={anchorRef as any}
                     active={visible}
+                    aria-label="Your account"
                     {...anchorProps}
                   >
-                    <PersonIcon title="Your account" fill="currentColor" />
+                    <PersonIcon fill="currentColor" />
                   </NavBarItemButton>
                 </ProgressiveOnboardingAlertFindQueryRenderer>
               </ProgressiveOnboardingFollowFindQueryRenderer>
