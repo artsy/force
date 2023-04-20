@@ -79,7 +79,7 @@
     "@artsy/detect-responsive-traits": "^0.1.0",
     "@artsy/eigen-web-association": "^1.6.0",
     "@artsy/express-reloadable": "^1.7.0",
-    "@artsy/fresnel": "3.5.0",
+    "@artsy/fresnel": "6.1.0",
     "@artsy/icons": "3.2.2",
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
