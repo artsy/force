@@ -1,5 +1,4 @@
 import { AutocompleteInput, Box, BoxProps } from "@artsy/palette"
-import { NewSearchBarSuggestion } from "Components/Search/NewSearch/NewSearchBarSuggestion"
 import { SearchInputContainer } from "Components/Search/SearchInputContainer"
 import { Router } from "found"
 import { ChangeEvent, FC, useContext, useState } from "react"
@@ -17,6 +16,10 @@ import { NewSearchBarInput_viewer$data } from "__generated__/NewSearchBarInput_v
 import { NewSearchBarInputSuggestQuery } from "__generated__/NewSearchBarInputSuggestQuery.graphql"
 import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
+import {
+  FirstSuggestionItem,
+  SuggestionItem,
+} from "Components/Search/Suggestions/SuggestionItem"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 
@@ -48,13 +51,17 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
         displayType: option.displayType,
         __typename: option.__typename,
       }),
+      imageUrl: option.imageUrl!,
+      showArtworksButton: !!option.statuses?.artworks,
+      showAuctionResultsButton: !!option.statuses?.auctionLots,
+      href: option.href!,
     }
   })
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
-    console.log("[Debug] refetch")
 
+    //TODO: Add throttle
     relay.refetch(
       {
         hasTerm: true,
@@ -76,10 +83,31 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       spellCheck={false}
       options={value.length < 2 ? [] : formattedOptions}
       value={value}
-      header={<NewSearchInputPillsFragmentContainer viewer={viewer} />}
-      renderOption={option => <NewSearchBarSuggestion option={option} />}
       onChange={handleChange}
       onClear={() => setValue("")}
+      header={<NewSearchInputPillsFragmentContainer viewer={viewer} />}
+      // renderOption={option => <NewSearchBarSuggestion option={option} />}
+      renderOption={option => (
+        <SuggestionItem
+          display={option.text}
+          href={option.href}
+          isHighlighted={false} // TODO: change
+          label={option.subtitle}
+          imageUrl={option.imageUrl}
+          query={value}
+          showArtworksButton={option.showArtworksButton}
+          showAuctionResultsButton={option.showAuctionResultsButton}
+        />
+      )}
+      footer={
+        <FirstSuggestionItem
+          display={value}
+          href={`/search?term=${encodeURIComponent(value)}`}
+          isHighlighted={false}
+          label={value}
+          query={value}
+        />
+      }
     />
   )
 }
