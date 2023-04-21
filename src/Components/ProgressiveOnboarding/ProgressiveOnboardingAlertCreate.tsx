@@ -15,19 +15,26 @@ import {
   Text,
 } from "@artsy/palette"
 import { resized } from "Utils/resized"
+import {
+  ProgressiveOnboardingCountsQueryRenderer,
+  WithProgressiveOnboardingCountsProps,
+} from "Components/ProgressiveOnboarding/ProgressiveOnboardingCounts"
 
-interface ProgressiveOnboardingAlertCreateProps {
+interface ProgressiveOnboardingAlertCreateProps
+  extends WithProgressiveOnboardingCountsProps {
   children: (actions: { onSkip(): void }) => ReactNode
 }
 
-export const ProgressiveOnboardingAlertCreate: FC<ProgressiveOnboardingAlertCreateProps> = ({
+const ProgressiveOnboardingAlertCreate: FC<ProgressiveOnboardingAlertCreateProps> = ({
   children,
+  counts,
 }) => {
   const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
 
   const isDisplayable =
     isEnabledFor("alerts") &&
-    !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE).status
+    !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE).status &&
+    counts.savedSearches === 0
 
   const image = resized(IMAGE.src, { width: 230 })
 
@@ -113,6 +120,18 @@ export const ProgressiveOnboardingAlertCreate: FC<ProgressiveOnboardingAlertCrea
     >
       {children({ onSkip: handleDismiss })}
     </ProgressiveOnboardingPopover>
+  )
+}
+
+export const ProgressiveOnboardingAlertCreateQueryRenderer: FC = ({
+  children,
+}) => {
+  return (
+    <ProgressiveOnboardingCountsQueryRenderer
+      Component={ProgressiveOnboardingAlertCreate}
+    >
+      {children}
+    </ProgressiveOnboardingCountsQueryRenderer>
   )
 }
 

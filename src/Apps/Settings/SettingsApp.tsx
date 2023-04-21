@@ -6,17 +6,9 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { SettingsApp_me$data } from "__generated__/SettingsApp_me.graphql"
 import { TopContextBar } from "Components/TopContextBar"
+import { ProgressiveOnboardingAlertHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertHighlight"
 
 export const SETTINGS_ROUTE_TABS_MARGIN = [2, 4]
-const SETTINGS_TABS = [
-  { name: "Edit Profile", url: "/settings/edit-profile" },
-  { name: "Saved Alerts", url: "/settings/alerts" },
-  { name: "Account Settings", url: "/settings/edit-settings" },
-  { name: "Order History", url: "/settings/purchases" },
-  { name: "Bids", url: "/settings/auctions" },
-  { name: "Payments", url: "/settings/payments" },
-  { name: "Shipping", url: "/settings/shipping" },
-]
 
 interface SettingsAppProps {
   me: SettingsApp_me$data
@@ -52,13 +44,21 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
       <Spacer y={[4, 6]} />
 
       <RouteTabs my={SETTINGS_ROUTE_TABS_MARGIN}>
-        {SETTINGS_TABS.map(tab => {
-          return (
-            <RouteTab key={tab.url} to={tab.url}>
-              {tab.name}
-            </RouteTab>
-          )
-        })}
+        <RouteTab to="/settings/edit-profile">Edit Profile</RouteTab>
+
+        <ProgressiveOnboardingAlertHighlight position="center">
+          <RouteTab to="/settings/alerts">Saved Alerts</RouteTab>
+        </ProgressiveOnboardingAlertHighlight>
+
+        <RouteTab to="/settings/edit-settings">Account Settings</RouteTab>
+
+        <RouteTab to="/settings/purchases">Order History</RouteTab>
+
+        <RouteTab to="/settings/auctions">Bids</RouteTab>
+
+        <RouteTab to="/settings/payments">Payments</RouteTab>
+
+        <RouteTab to="/settings/shipping">Shipping</RouteTab>
       </RouteTabs>
 
       {children}

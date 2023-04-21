@@ -10,6 +10,7 @@ import { useTracking } from "react-tracking"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
 import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
 import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
+import { ProgressiveOnboardingAlertHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertHighlight"
 import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import ArtworkIcon from "@artsy/icons/ArtworkIcon"
@@ -115,13 +116,17 @@ export const NavBarUserMenu: React.FC = () => {
         </NavBarMenuItemLink>
       </ProgressiveOnboardingFollowHighlight>
 
-      <NavBarMenuItemLink
-        aria-label="View your saved alerts"
-        to="/settings/alerts"
-        onClick={trackClick}
+      <ProgressiveOnboardingAlertHighlight
+        position={{ top: "3.5px", left: "9.5px" }}
       >
-        <BellStrokeIcon mr={1} aria-hidden="true" /> Alerts
-      </NavBarMenuItemLink>
+        <NavBarMenuItemLink
+          aria-label="View your saved alerts"
+          to="/settings/alerts"
+          onClick={trackClick}
+        >
+          <BellStrokeIcon mr={1} aria-hidden="true" /> Alerts
+        </NavBarMenuItemLink>
+      </ProgressiveOnboardingAlertHighlight>
 
       <NavBarMenuItemLink
         aria-label="Edit your settings"

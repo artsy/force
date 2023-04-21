@@ -7,11 +7,19 @@ import { OwnerType } from "@artsy/cohesion"
 import {
   ActiveFilterPillsAndCreateAlert,
   ActiveFilterPillsAndCreateAlertProps,
-} from "../ActiveFilterPillsAndCreateAlert"
+} from "Components/SavedSearchAlert/Components/ActiveFilterPillsAndCreateAlert"
 import {
   ArtworkFilterContextProvider,
   ArtworkFiltersState,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
+
+jest.mock(
+  "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate",
+  () => ({
+    ProgressiveOnboardingAlertCreateQueryRenderer: ({ children }) =>
+      children({ onSkip: jest.fn() }),
+  })
+)
 
 describe("ActiveFilterPillsAndCreateAlert", () => {
   const TestWrapper = (
