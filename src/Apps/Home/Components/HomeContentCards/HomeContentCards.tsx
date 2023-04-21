@@ -96,10 +96,10 @@ export const HomeContentCards: React.FC = () => {
     renderFallback,
   })
 
+  if (hasBrazeCards) return <BrazeCards braze={braze} cards={cards} />
   if (renderFallback) return <FallbackCards />
-  if (!hasBrazeCards) return <PlaceholderCards />
 
-  return <BrazeCards braze={braze} cards={cards} />
+  return <PlaceholderCards />
 }
 
 export const SafeHomeContentCards = () => {
