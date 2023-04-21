@@ -302,7 +302,7 @@ describe("Payment", () => {
     })
   })
 
-  describe("stripe ACH enabled", () => {
+  describe("bank transfer enabled", () => {
     let page: PaymentTestPage
 
     const achOrder = {
@@ -397,7 +397,29 @@ describe("Payment", () => {
     })
   })
 
-  describe("stripe SEPA enabled", () => {
+  describe("only bank transfer enabled", () => {
+    let page: PaymentTestPage
+
+    const bankOrder = {
+      ...testOrder,
+      availablePaymentMethods: [
+        "US_BANK_ACCOUNT",
+      ] as CommercePaymentMethodEnum[],
+    }
+
+    beforeEach(() => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => bankOrder,
+      })
+      page = new PaymentTestPage(wrapper)
+    })
+
+    it("renders bank transfer title", () => {
+      expect(page.text()).toContain("Bank transfer payment details")
+    })
+  })
+
+  describe("SEPA bank transfer enabled", () => {
     let page: PaymentTestPage
 
     const sepaOrder = {
@@ -470,6 +492,26 @@ describe("Payment", () => {
         payment_method: "SEPA_DEBIT",
         subject: "click_payment_method",
       })
+    })
+  })
+
+  describe("only SEPA bank transfer enabled", () => {
+    let page: PaymentTestPage
+
+    const sepaOrder = {
+      ...testOrder,
+      availablePaymentMethods: ["SEPA_DEBIT"] as CommercePaymentMethodEnum[],
+    }
+
+    beforeEach(() => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => sepaOrder,
+      })
+      page = new PaymentTestPage(wrapper)
+    })
+
+    it("renders sepa transfer title", () => {
+      expect(page.text()).toContain("SEPA bank transfer payment details")
     })
   })
 
@@ -573,8 +615,6 @@ describe("Payment", () => {
     }
 
     beforeEach(() => {
-      jest.clearAllMocks()
-
       const wrapper = getWrapper({
         CommerceOrder: () => wireOrder,
       })
