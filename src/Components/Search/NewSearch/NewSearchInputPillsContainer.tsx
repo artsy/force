@@ -163,7 +163,7 @@ export const NewSearchInputPillsContainer = () => {
 
   return (
     <Flex alignItems="center" bg="white">
-      <Flex position="absolute" left={0} zIndex={showPreviousChevron ? 0 : -1}>
+      <Flex position="absolute" left={0} opacity={showPreviousChevron ? 1 : 0}>
         <PreviousChevron onClick={scrollToLeft} left={2} />
         <GradientBg placement="left" />
       </Flex>
@@ -180,7 +180,7 @@ export const NewSearchInputPillsContainer = () => {
           </Pill>
         ))}
       </PillsContainer>
-      <Flex position="absolute" right={0} zIndex={showNextChevron ? 0 : -1}>
+      <Flex position="absolute" right={0} opacity={showNextChevron ? 1 : 0}>
         <NextChevron onClick={scrollToRight} right={2} />
         <GradientBg placement="right" />
       </Flex>
