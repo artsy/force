@@ -1,4 +1,4 @@
-import { Button, Column, GridColumns, Text } from "@artsy/palette"
+import { Box, Button, Text } from "@artsy/palette"
 import React, { FC, useState } from "react"
 import {
   createPaginationContainer,
@@ -29,7 +29,7 @@ export const EndingSoonAuctionsGrid: FC<EndingSoonAuctionsGridProps> = ({
     )
   }
 
-  const handleClick = () => {
+  const handleLoadMore = () => {
     if (!relay.hasMore() || relay.isLoading()) return
 
     setIsLoading(true)
@@ -45,19 +45,17 @@ export const EndingSoonAuctionsGrid: FC<EndingSoonAuctionsGridProps> = ({
 
   return (
     <>
-      <ArtworkGrid artworks={viewer.saleArtworksConnection} />
-      <GridColumns my={6}>
-        <Column span={12} mx="auto">
-          <Button
-            width="100%"
-            onClick={handleClick}
-            loading={isLoading}
-            disabled={!relay.hasMore()}
-          >
+      <ArtworkGrid
+        artworks={viewer.saleArtworksConnection}
+        onLoadMore={handleLoadMore}
+      />
+      {relay.hasMore() && (
+        <Box textAlign="center" mt={4}>
+          <Button onClick={handleLoadMore} loading={isLoading}>
             Show More
           </Button>
-        </Column>
-      </GridColumns>
+        </Box>
+      )}
     </>
   )
 }
