@@ -16,10 +16,8 @@ import { NewSearchBarInput_viewer$data } from "__generated__/NewSearchBarInput_v
 import { NewSearchBarInputSuggestQuery } from "__generated__/NewSearchBarInputSuggestQuery.graphql"
 import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
-import {
-  FirstSuggestionItem,
-  SuggestionItem,
-} from "Components/Search/Suggestions/SuggestionItem"
+import { SuggestionItem } from "Components/Search/Suggestions/SuggestionItem"
+import { NewSearchBarFooter } from "Components/Search/NewSearch/NewSearchBarFooter"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 
@@ -100,7 +98,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
         />
       )}
       footer={
-        <FirstSuggestionItem
+        <NewSearchBarFooter
           display={value}
           href={`/search?term=${encodeURIComponent(value)}`}
           isHighlighted={false}
