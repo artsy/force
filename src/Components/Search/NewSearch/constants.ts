@@ -9,7 +9,7 @@ export enum AlgoliaIndexKey {
   Gallery = "partner_gallery",
 }
 
-interface PillType {
+export interface PillType {
   indexName?: string
   displayName: string
   disabled?: boolean
