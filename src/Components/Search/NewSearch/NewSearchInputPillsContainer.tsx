@@ -73,27 +73,22 @@ export const NewSearchInputPillsContainer = () => {
   const [showPreviousChevron, setShowPreviousChevron] = useState<boolean>(false)
   const [showNextChevron, setShowNextChevron] = useState<boolean>(false)
 
-  // On inital load
-  useEffect(() => {
+  const showNextChevronHandler = () => {
     if (pillsRef.current) {
       const pillsContainer = pillsRef.current
       setShowNextChevron(
         pillsContainer.scrollWidth > pillsContainer.clientWidth
       )
     }
+  }
+
+  useEffect(() => {
+    showNextChevronHandler()
   }, [])
 
-  // when screen width changes
   useEffect(() => {
     const handleResize = () => {
-      if (pillsRef.current) {
-        const pillsContainer = pillsRef.current
-        if (pillsContainer.scrollWidth <= pillsContainer.clientWidth) {
-          setShowNextChevron(false)
-        } else {
-          setShowNextChevron(true)
-        }
-      }
+      showNextChevronHandler()
     }
 
     window.addEventListener("resize", handleResize)
@@ -158,20 +153,11 @@ export const NewSearchInputPillsContainer = () => {
       const maxScroll =
         pillsRef.current.scrollWidth - pillsRef.current.clientWidth
 
-      // Check if the scroll position is at the beginning or end
-      if (currentPosition === 0) {
-        // Hide PreviousChevron when pills is at the beginning
-        setShowPreviousChevron(false)
-        setShowNextChevron(true)
-      } else if (currentPosition === maxScroll) {
-        // Hide NextChevron when pills reaches the end
-        setShowPreviousChevron(true)
-        setShowNextChevron(false)
-      } else {
-        // Show both chevrons otherwise
-        setShowPreviousChevron(true)
-        setShowNextChevron(true)
-      }
+      const isAtStart = currentPosition === 0
+      const isAtEnd = currentPosition === maxScroll
+
+      setShowPreviousChevron(!isAtStart)
+      setShowNextChevron(!isAtEnd)
     }
   }
 
