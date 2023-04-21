@@ -31,7 +31,7 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
     <Rail
       title="Auction Lots for You Ending Soon"
       viewAllLabel="View all"
-      viewAllHref="/auctions/ending-soon"
+      viewAllHref="/auctions/lots-for-you-ending-soon"
       getItems={() => {
         return nodes.map((node, index) => {
           return (

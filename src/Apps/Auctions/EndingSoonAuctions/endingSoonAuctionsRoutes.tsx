@@ -8,7 +8,7 @@ const EndingSoonAuctions = loadable(() => import("./EndingSoonAuctions"), {
 
 export const endingSoonAuctionsRoutes: AppRouteConfig[] = [
   {
-    path: "/auctions/ending-soon",
+    path: "/auctions/lots-for-you-ending-soon",
     getComponent: () => EndingSoonAuctions,
     onClientSideRender: () => {
       EndingSoonAuctions.preload()
