@@ -73,7 +73,7 @@ describe("WorksByArtistsYouFollowRail", () => {
         edges: [{ node: { sale: { isClosed: false } } }],
       }),
     })
-    const link = (await screen.findAllByRole("link"))[0]
+    const link = (await screen.findAllByRole("link"))[2]
 
     fireEvent(
       link,

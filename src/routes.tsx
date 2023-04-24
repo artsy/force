@@ -56,6 +56,7 @@ import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
 import { myCollectionInsightsCollectorProfileRoutes } from "Apps/MyCollectionInsights/myCollectionInsightsCollectorProfileRoutes"
+import { endingSoonAuctionsRoutes } from "Apps/Auctions/EndingSoonAuctions/endingSoonAuctionsRoutes"
 
 export const getAppRoutes = (): AppRouteConfig[] => {
   return buildAppRoutes([
@@ -82,6 +83,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: contactRoutes },
     { routes: conversationRoutes },
     { routes: exampleRoutes },
+    { routes: endingSoonAuctionsRoutes },
     { routes: fairOrganizerRoutes },
     { routes: fairRoutes },
     { routes: fairsRoutes },

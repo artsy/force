@@ -1,14 +1,5 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import {
-  ArtworkIcon,
-  GraphIcon,
-  GroupIcon,
-  HeartIcon,
-  PowerIcon,
-  Separator,
-  SettingsIcon,
-  Text,
-} from "@artsy/palette"
+import { Separator, Text } from "@artsy/palette"
 import { SystemContext } from "System/SystemContext"
 import { logout } from "Utils/auth"
 import { getENV } from "Utils/getENV"
@@ -19,7 +10,15 @@ import { useTracking } from "react-tracking"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
 import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
 import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
+import { ProgressiveOnboardingAlertHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertHighlight"
 import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import ArtworkIcon from "@artsy/icons/ArtworkIcon"
+import GraphIcon from "@artsy/icons/GraphIcon"
+import GroupIcon from "@artsy/icons/GroupIcon"
+import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
+import LogoutIcon from "@artsy/icons/LogoutIcon"
+import SettingsIcon from "@artsy/icons/SettingsIcon"
 
 export const NavBarUserMenu: React.FC = () => {
   const { trackEvent } = useTracking()
@@ -101,7 +100,7 @@ export const NavBarUserMenu: React.FC = () => {
           to={BASE_SAVES_PATH}
           onClick={trackClick}
         >
-          <HeartIcon mr={1} aria-hidden="true" /> Saves
+          <HeartStrokeIcon mr={1} aria-hidden="true" /> Saves
         </NavBarMenuItemLink>
       </ProgressiveOnboardingSaveHighlight>
 
@@ -117,6 +116,18 @@ export const NavBarUserMenu: React.FC = () => {
         </NavBarMenuItemLink>
       </ProgressiveOnboardingFollowHighlight>
 
+      <ProgressiveOnboardingAlertHighlight
+        position={{ top: "3.5px", left: "9.5px" }}
+      >
+        <NavBarMenuItemLink
+          aria-label="View your saved alerts"
+          to="/settings/alerts"
+          onClick={trackClick}
+        >
+          <BellStrokeIcon mr={1} aria-hidden="true" /> Alerts
+        </NavBarMenuItemLink>
+      </ProgressiveOnboardingAlertHighlight>
+
       <NavBarMenuItemLink
         aria-label="Edit your settings"
         to="/settings/edit-profile"
@@ -129,7 +140,7 @@ export const NavBarUserMenu: React.FC = () => {
         aria-label="Log out of your account"
         onClick={handleLogout}
       >
-        <PowerIcon mr={1} aria-hidden="true" /> Log out
+        <LogoutIcon mr={1} aria-hidden="true" /> Log out
       </NavBarMenuItemButton>
     </Text>
   )

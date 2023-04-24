@@ -218,7 +218,7 @@ describe("ArtworkDetails", () => {
       expect(learnMoreLink).toBeInTheDocument()
       expect(learnMoreLink).toHaveAttribute(
         "href",
-        "https://support.artsy.net/hc/en-us/articles/360046646374-I-m-an-artist-Can-I-submit-my-own-work-to-sell-"
+        "https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell"
       )
     })
 

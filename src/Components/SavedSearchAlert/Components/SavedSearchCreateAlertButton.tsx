@@ -1,9 +1,10 @@
 import React from "react"
-import { BellIcon, Button, ButtonProps } from "@artsy/palette"
+import { Button, ButtonProps } from "@artsy/palette"
 import {
   SavedSearchCreateAlertButtonContainer,
   SavedSearchCreateAlertButtonContainerProps,
 } from "./SavedSearchCreateAlertButtonContainer"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 
 export interface Props extends SavedSearchCreateAlertButtonContainerProps {
   buttonProps?: ButtonProps
@@ -21,7 +22,7 @@ export const SavedSearchCreateAlertButton: React.FC<Props> = ({
           onClick={onClick}
           variant="secondaryBlack"
           size="small"
-          Icon={BellIcon}
+          Icon={BellStrokeIcon}
           {...buttonProps}
         >
           Create Alert

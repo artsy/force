@@ -19,7 +19,7 @@ const PERMANENT_REDIRECTS = {
   "/feature/art-fairs": "art-fairs",
   "/collector/edit": "/profile/edit",
   "/how-auctions-work":
-    "https://support.artsy.net/hc/en-us/articles/4419870291351-The-Complete-Guide-to-Auctions-on-Artsy",
+    "https://support.artsy.net/s/article/The-Complete-Guide-to-Auctions-on-Artsy",
   "/_=_": "/", // Facebook passport bug, see: https://github.com/jaredhanson/passport-facebook/issues/12#issuecomment-5913711
   "/press": "/press/in-the-media",
   "/about/press": "/press/press-releases",
@@ -71,6 +71,7 @@ const PERMANENT_REDIRECTS = {
   "/user/payments": "/settings/payments",
   "/user/alerts": "/settings/alerts",
   "/my-collection": "/collector-profile/my-collection",
+  "/settings/my-collection": "/collector-profile/my-collection",
   "/page/collector-faqs-selling-on-artsy": "/sell",
   "/apply/gallery": "http://apply.artsy.net/galleries",
   "/apply/institution": "http://apply.artsy.net/institutions",

@@ -1,16 +1,16 @@
 import {
-  BellIcon,
   Box,
   Button,
   Clickable,
-  CloseIcon,
   Dropdown,
   Flex,
-  SoloIcon,
   Spacer,
   Text,
   themeProps,
 } from "@artsy/palette"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import PersonIcon from "@artsy/icons/PersonIcon"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import { SearchBarQueryRenderer } from "Components/Search/SearchBar"
 import { useSystemContext } from "System/SystemContext"
 import * as React from "react"
@@ -52,6 +52,8 @@ import { useNavBarHeight } from "./useNavBarHeight"
 import { ProgressiveOnboardingFollowFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingSaveFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingAlertFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { NewSearchBar } from "Components/Search/NewSearch/NewSearchBar"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -81,6 +83,10 @@ export const NavBar: React.FC = track(
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
   const showNotificationCount = isLoggedIn && !showMobileMenu
+
+  const isSearchDropDownImprovementsEnabled = useFeatureFlag(
+    "fx-force-search-dropdown-improvements"
+  )
 
   // Close mobile menu if dragging window from small size to desktop
   useEffect(() => {
@@ -122,14 +128,6 @@ export const NavBar: React.FC = track(
   }
 
   const { height } = useNavBarHeight()
-
-  const renderNotificationsIndicator = () => {
-    if (!showNotificationCount) {
-      return null
-    }
-
-    return <NavBarMobileMenuNotificationsIndicatorQueryRenderer />
-  }
 
   const handleNotificationsClick = () => {
     router.push("/notifications")
@@ -198,7 +196,7 @@ export const NavBar: React.FC = track(
                 onFocus={() => {
                   setSearchFocused(true)
                 }}
-                // update only on mobile
+                // Update only on mobile
                 position={[
                   `${searchFocused ? "absolute" : "relative"}`,
                   "relative",
@@ -206,14 +204,18 @@ export const NavBar: React.FC = track(
                 width={[`${searchFocused ? "90%" : "auto"}`, "auto"]}
                 zIndex={9}
               >
-                <SearchBarQueryRenderer width="100%" />
+                {isSearchDropDownImprovementsEnabled ? (
+                  <NewSearchBar />
+                ) : (
+                  <SearchBarQueryRenderer width="100%" />
+                )}
 
                 {searchFocused && (
                   <Clickable
                     onClick={() => {
                       setSearchFocused(false)
                     }}
-                    // show only on mobile
+                    // Show only on mobile
                     display={["flex", "none"]}
                     alignItems="center"
                     justifyContent="center"
@@ -289,8 +291,15 @@ export const NavBar: React.FC = track(
                       onClick={handleNotificationsClick}
                       aria-label="Notifications"
                     >
-                      <BellIcon aria-hidden="true" height={22} width={22} />
-                      {renderNotificationsIndicator()}
+                      <BellStrokeIcon
+                        aria-hidden="true"
+                        height={22}
+                        width={22}
+                      />
+
+                      {showNotificationCount && (
+                        <NavBarMobileMenuNotificationsIndicatorQueryRenderer />
+                      )}
                     </NavBarItemButton>
 
                     <ProgressiveOnboardingFollowFindQueryRenderer>
@@ -305,7 +314,7 @@ export const NavBar: React.FC = track(
                               router.push("/collector-profile/my-collection")
                             }
                           >
-                            <SoloIcon
+                            <PersonIcon
                               aria-hidden="true"
                               height={22}
                               width={22}
@@ -492,13 +501,11 @@ export const NavBar: React.FC = track(
       </Box>
 
       {showMobileMenu && (
-        <>
-          <NavBarMobileMenu
-            onClose={() => toggleMobileNav(false)}
-            isOpen={showMobileMenu}
-            onNavButtonClick={handleMobileNavClick}
-          />
-        </>
+        <NavBarMobileMenu
+          onClose={() => toggleMobileNav(false)}
+          isOpen={showMobileMenu}
+          onNavButtonClick={handleMobileNavClick}
+        />
       )}
     </>
   )

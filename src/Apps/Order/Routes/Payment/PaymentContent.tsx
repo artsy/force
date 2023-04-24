@@ -117,7 +117,11 @@ export const PaymentContent: FC<Props> = props => {
 
       {/* US Bank transfer */}
       <Collapse open={selectedPaymentMethod === "US_BANK_ACCOUNT"}>
-        {getPaymentMethodInfo(selectedPaymentMethod)}
+        {getPaymentMethodInfo(
+          selectedPaymentMethod,
+          order.source,
+          order.availablePaymentMethods
+        )}
         <Spacer y={2} />
         {selectedPaymentMethod === "US_BANK_ACCOUNT" && (
           <Flex
@@ -137,7 +141,11 @@ export const PaymentContent: FC<Props> = props => {
 
       {/* SEPA bank transfer */}
       <Collapse open={selectedPaymentMethod === "SEPA_DEBIT"}>
-        {getPaymentMethodInfo(selectedPaymentMethod)}
+        {getPaymentMethodInfo(
+          selectedPaymentMethod,
+          order.source,
+          order.availablePaymentMethods
+        )}
         <Spacer y={2} />
         <Flex
           style={{
@@ -318,6 +326,9 @@ const getPaymentMethodInfo = (
     case "US_BANK_ACCOUNT":
       return (
         <>
+          {availablePaymentMethods?.length === 1 && (
+            <Text variant="lg-display">Bank transfer payment details</Text>
+          )}
           <Text color="black60" variant="sm">
             • Search for your bank institution or select from the options below.
           </Text>
@@ -337,6 +348,9 @@ const getPaymentMethodInfo = (
     case "SEPA_DEBIT":
       return (
         <>
+          {availablePaymentMethods?.length === 1 && (
+            <Text variant="lg-display">SEPA bank transfer payment details</Text>
+          )}
           <Flex>
             <Text color="black60" variant="sm">
               • Your bank account must be located in one of the SEPA countries.

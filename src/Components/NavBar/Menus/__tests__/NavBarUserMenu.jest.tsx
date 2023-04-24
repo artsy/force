@@ -30,13 +30,13 @@ describe("NavBarUserMenu", () => {
     const wrapper = getWrapper()
     const links = wrapper.find("a")
 
-    expect(links.map(a => [a.prop("href"), a.text()])).toEqual([
-      // Label also includes SVG image title
-      ["/collector-profile/my-collection", "Artwork My Collection"],
-      ["/collector-profile/insights", "View dashboard Insights"],
-      ["/collector-profile/saves", "Save Saves"],
-      ["/collector-profile/follows", "Group Follows"],
-      ["/settings/edit-profile", "Settings Settings"],
+    expect(links.map(a => [a.prop("href"), a.text().trim()])).toEqual([
+      ["/collector-profile/my-collection", "My Collection"],
+      ["/collector-profile/insights", "Insights"],
+      ["/collector-profile/saves", "Saves"],
+      ["/collector-profile/follows", "Follows"],
+      ["/settings/alerts", "Alerts"],
+      ["/settings/edit-profile", "Settings"],
     ])
 
     expect(wrapper.find("button").last().text()).toContain("Log out")

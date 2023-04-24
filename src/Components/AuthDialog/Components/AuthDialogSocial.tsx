@@ -1,17 +1,11 @@
-import {
-  Button,
-  Join,
-  Spacer,
-  AppleIcon,
-  GoogleIcon,
-  FacebookIcon,
-} from "@artsy/palette"
+import { Button, Join, Spacer, AppleIcon, GoogleIcon } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 import { setSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
 import { stringify } from "qs"
 import { FC } from "react"
 import { getENV } from "Utils/getENV"
+import FacebookIcon from "@artsy/icons/FacebookIcon"
 
 export const AuthDialogSocial: FC = () => {
   const { applePath, facebookPath, googlePath } = getENV("AP") ?? {
@@ -53,7 +47,7 @@ export const AuthDialogSocial: FC = () => {
       <Button
         variant="secondaryBlack"
         width="100%"
-        Icon={AppleIcon}
+        Icon={AppleIcon as any}
         // @ts-ignore
         as="a"
         href={`${applePath}?${query}`}
@@ -66,7 +60,7 @@ export const AuthDialogSocial: FC = () => {
       <Button
         variant="secondaryBlack"
         width="100%"
-        Icon={GoogleIcon}
+        Icon={GoogleIcon as any}
         // @ts-ignore
         as="a"
         href={`${googlePath}?${query}`}

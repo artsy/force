@@ -19,7 +19,7 @@ const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
         {t`artworkPage.sidebar.shippingAndTaxes.taxInformation`}{" "}
         <RouterLink
           inline
-          to="https://support.artsy.net/hc/en-us/articles/360047294733-How-is-sales-tax-and-VAT-handled-on-works-listed-with-secure-checkout-"
+          to="https://support.artsy.net/s/article/How-are-taxes-customs-VAT-and-import-fees-handled-on-works-listed-with-secure-checkout"
           target="_blank"
           rel="noopener noreferrer"
         >

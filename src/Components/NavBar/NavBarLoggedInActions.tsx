@@ -2,13 +2,10 @@ import { useContext } from "react"
 import * as React from "react"
 import { NavBarUserMenu } from "./Menus"
 import { SystemContext } from "System/SystemContext"
-import {
-  BellIcon,
-  Dropdown,
-  EnvelopeIcon,
-  Flex,
-  SoloIcon,
-} from "@artsy/palette"
+import { Dropdown, Flex } from "@artsy/palette"
+import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
+import PersonIcon from "@artsy/icons/PersonIcon"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import { graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
@@ -70,7 +67,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
               }
             }}
           >
-            <BellIcon title="Notifications" fill="currentColor" />
+            <BellStrokeIcon fill="currentColor" />
 
             {shouldDisplayBlueDot && (
               <NavBarNotificationIndicator
@@ -91,7 +88,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
             : "Conversations"
         }
       >
-        <EnvelopeIcon title="Inbox" fill="currentColor" />
+        <EnvelopeIcon fill="currentColor" />
 
         {hasConversations && (
           <NavBarNotificationIndicator
@@ -118,9 +115,10 @@ export const NavBarLoggedInActions: React.FC<Partial<
                   <NavBarItemButton
                     ref={anchorRef as any}
                     active={visible}
+                    aria-label="Your account"
                     {...anchorProps}
                   >
-                    <SoloIcon title="Your account" fill="currentColor" />
+                    <PersonIcon fill="currentColor" />
                   </NavBarItemButton>
                 </ProgressiveOnboardingAlertFindQueryRenderer>
               </ProgressiveOnboardingFollowFindQueryRenderer>

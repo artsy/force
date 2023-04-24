@@ -5,15 +5,16 @@ import {
   SavedSearchEntity,
 } from "Components/SavedSearchAlert/types"
 import { useActiveFilterPills } from "Components/SavedSearchAlert/useActiveFilterPills"
-import { BellIcon, Button, Flex, Spacer } from "@artsy/palette"
+import { Button, Flex, Spacer } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { usePrepareFiltersForPills } from "Components/ArtworkFilter/Utils/usePrepareFiltersForPills"
 import { getSearchCriteriaFromFilters } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { DEFAULT_METRIC } from "Utils/metrics"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { ProgressiveOnboardingAlertCreate } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
+import { ProgressiveOnboardingAlertCreateQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
 import { SavedSearchCreateAlertButtonContainer } from "Components/SavedSearchAlert/Components/SavedSearchCreateAlertButtonContainer"
 import { ProgressiveOnboardingAlertReady } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertReady"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 
 export interface ActiveFilterPillsAndCreateAlertProps {
   savedSearchEntity: SavedSearchEntity
@@ -62,14 +63,14 @@ export const ActiveFilterPillsAndCreateAlert: React.FC<ActiveFilterPillsAndCreat
           },
         }}
         renderButton={({ onClick }) => (
-          <ProgressiveOnboardingAlertCreate>
+          <ProgressiveOnboardingAlertCreateQueryRenderer>
             {({ onSkip: createSkip }) => (
               <ProgressiveOnboardingAlertReady>
                 {({ onSkip: readySkip }) => (
                   <Button
                     variant="secondaryBlack"
                     size="small"
-                    Icon={BellIcon}
+                    Icon={BellStrokeIcon}
                     onClick={() => {
                       createSkip()
                       readySkip()
@@ -81,7 +82,7 @@ export const ActiveFilterPillsAndCreateAlert: React.FC<ActiveFilterPillsAndCreat
                 )}
               </ProgressiveOnboardingAlertReady>
             )}
-          </ProgressiveOnboardingAlertCreate>
+          </ProgressiveOnboardingAlertCreateQueryRenderer>
         )}
       />
     </Flex>

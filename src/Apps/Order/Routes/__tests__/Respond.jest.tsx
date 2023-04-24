@@ -146,9 +146,7 @@ describe("The respond page", () => {
 
       expect(page.countdownTimer.text()).toContain("01d 04h 22m 59s left")
       expect(page.offerInput.text()).toContain("Your offer")
-      expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"RespondNavigate rightReviewNavigate right"`
-      )
+      expect(page.orderStepper.text()).toMatchInlineSnapshot(`"RespondReview"`)
       expect(page.orderStepperCurrentStep).toBe("Respond")
       expect(page.text()).not.toContain("Your note")
       expect(page.transactionSummary.text()).toMatch("Seller's offerUS$14,000")

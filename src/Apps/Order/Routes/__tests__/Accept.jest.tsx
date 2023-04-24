@@ -142,9 +142,7 @@ describe("Accept seller offer", () => {
       let page = new OrderAppTestPage(wrapper)
 
       expect(page.countdownTimer.text()).toContain("01d 04h 22m 59s left")
-      expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"RespondCheckNavigate rightReviewNavigate right"`
-      )
+      expect(page.orderStepper.text()).toMatchInlineSnapshot(`"RespondReview"`)
       expect(page.orderStepperCurrentStep).toBe(`Review`)
       expect(page.transactionSummary.text()).toMatch(
         "Accept seller's offerChange"

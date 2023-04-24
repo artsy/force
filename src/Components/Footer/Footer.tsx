@@ -140,7 +140,7 @@ export const Footer: React.FC<FooterProps> = props => {
 
               <FooterLink
                 mt={2}
-                to="https://support.artsy.net/hc/en-us/categories/360003689513-Buy"
+                to="https://support.artsy.net/s/topic/0TO3b000000UessGAC/buy"
               >
                 Buying on Artsy
               </FooterLink>

@@ -30,6 +30,8 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
   return (
     <Rail
       title="Auction Lots for You Ending Soon"
+      viewAllLabel="View all"
+      viewAllHref="/auctions/lots-for-you-ending-soon"
       getItems={() => {
         return nodes.map((node, index) => {
           return (
@@ -68,6 +70,7 @@ export const WorksByArtistsYouFollowRailFragmentContainer = createFragmentContai
           liveSale: true
           first: 50
         ) {
+          totalCount
           edges {
             node {
               internalID

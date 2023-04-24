@@ -1,4 +1,3 @@
-import { BellIcon, EnvelopeIcon, SoloIcon } from "@artsy/palette"
 import { SystemContextProvider } from "System/SystemContext"
 import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
@@ -84,8 +83,6 @@ describe("NavBar", () => {
       const wrapper = getWrapper()
       expect(wrapper.html()).toContain("Log In")
       expect(wrapper.html()).toContain("Sign Up")
-      expect(wrapper.find(BellIcon).length).toEqual(0)
-      expect(wrapper.find(SoloIcon).length).toEqual(0)
     })
 
     it("renders logged in items", () => {
@@ -93,16 +90,9 @@ describe("NavBar", () => {
       const wrapper = getWrapper({ user: true })
       expect(wrapper.html()).not.toContain("Log In")
       expect(wrapper.html()).not.toContain("Sign Up")
-    })
 
-    describe("lab features", () => {
-      it("shows inquiries icon if lab feature enabled", () => {
-        const wrapper = getWrapper({
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          user: { type: "NotAdmin", lab_features: ["User Conversations View"] },
-        })
-        expect(wrapper.find(EnvelopeIcon).length).toEqual(1)
-      })
+      expect(wrapper.find('[aria-label="Conversations"]').length > 0).toBe(true)
+      expect(wrapper.find('[aria-label="Notifications"]').length > 0).toBe(true)
     })
 
     it("includes the sub-menus when rendering", () => {
