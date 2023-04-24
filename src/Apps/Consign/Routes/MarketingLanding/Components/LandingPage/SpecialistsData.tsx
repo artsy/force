@@ -46,7 +46,8 @@ export const SPECIALISTS: SpecialistsData[] = [
     name: "Shlomi Rabi",
     firstName: "Shlomi",
     jobTitle: "VP and Head of Auctions",
-    bio: "SOME BIO",
+    bio:
+      "The person being referred to in this document has been working for Artsy for over two decades, holding the position of Vice President in both the commercial and benefit auctions businesses. Their long-standing experience and expertise have been invaluable to the company over the years, contributing to the success of various initiatives and endeavors. Their contributions have included but are not limited to developing and implementing effective strategies, building and maintaining relationships with key stakeholders, and providing leadership and guidance to their team. Overall, their dedication and hard work have earned them the respect and admiration of their colleagues, as well as the trust and confidence of the company's clients and partners.",
     image: TEST_imageAuctions,
     email: "shlomi.rabi@artsy.net",
   },
@@ -55,7 +56,8 @@ export const SPECIALISTS: SpecialistsData[] = [
     name: "Lauren Carpinelli",
     firstName: "Lauren",
     jobTitle: "Specialist, Prints and Contemporary",
-    bio: "SOME BIO",
+    bio:
+      "The person being referred to in this document has been working for Artsy for over two decades",
     image: TEST_imageAuctions,
     email: "lauren.carpinelli@artsy.net",
   },

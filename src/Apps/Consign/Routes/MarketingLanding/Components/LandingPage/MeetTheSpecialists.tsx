@@ -5,6 +5,7 @@ import {
   Flex,
   Image,
   Pill,
+  ReadMore,
   ResponsiveBox,
   Text,
 } from "@artsy/palette"
@@ -154,7 +155,7 @@ export const MeetTheSpecialists: React.FC = () => {
                     {i.jobTitle}
                   </Text>
                   <Text mb={2} variant={["xs", "sm"]} color="white100">
-                    {i.bio}
+                    <ReadMore content={i.bio} maxChars={100} />
                   </Text>
                   <Button
                     // @ts-ignore
