@@ -17,7 +17,7 @@ export const useAuthValidation = () => {
           }
         `,
         {}
-      )?.toPromise()
+      ).toPromise()
 
       if (data?.authenticationStatus === "INVALID") {
         try {
