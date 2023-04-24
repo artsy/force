@@ -101,25 +101,23 @@ export const NewSearchInputPillsContainer = () => {
       const pills = pillsContainer.children
       const currentScroll = pillsContainer.scrollLeft
       const visibleWidth = pillsContainer.offsetWidth
-      let scrollBy = 0
 
-      // Find the last visible pill and the next pill
-      for (let i = pills.length - 1; i >= 0; i--) {
-        const pill = pills[i] as HTMLElement
-        if (
-          pill.offsetLeft + pill.offsetWidth <=
-          currentScroll + visibleWidth
-        ) {
-          const prevPill = pills[i - 1] as HTMLElement
-          scrollBy = -prevPill.offsetWidth
-          break
-        }
+      const lastVisiblePill = Array.from(pills)
+        .reverse()
+        .find(
+          (pill: HTMLElement) =>
+            pill.offsetLeft + pill.offsetWidth <= currentScroll + visibleWidth
+        )
+
+      if (lastVisiblePill) {
+        const prevPill = lastVisiblePill.previousElementSibling as HTMLElement
+        const scrollBy = -prevPill.offsetWidth - GRADIENT_BG_WIDTH
+
+        pillsContainer.scrollBy({
+          left: scrollBy,
+          behavior: "smooth",
+        })
       }
-
-      pillsContainer.scrollBy({
-        left: scrollBy - GRADIENT_BG_WIDTH,
-        behavior: "smooth",
-      })
     }
   }
 
@@ -128,22 +126,20 @@ export const NewSearchInputPillsContainer = () => {
       const pillsContainer = pillsRef.current
       const pills = pillsContainer.children
       const currentScroll = pillsContainer.scrollLeft
-      let scrollBy = 0
 
-      // Find the first visible pill and the next pill
-      for (let i = 0; i < pills.length; i++) {
-        const pill = pills[i] as HTMLElement
-        if (pill.offsetLeft >= currentScroll) {
-          const nextPill = pills[i + 1] as HTMLElement
-          scrollBy = nextPill.offsetWidth
-          break
-        }
+      const firstInvisiblePill = Array.from(pills).find(
+        (pill: HTMLElement) => pill.offsetLeft >= currentScroll
+      )
+
+      if (firstInvisiblePill) {
+        const nextPill = firstInvisiblePill.nextElementSibling as HTMLElement
+        const scrollBy = nextPill.offsetWidth + GRADIENT_BG_WIDTH
+
+        pillsContainer.scrollBy({
+          left: scrollBy,
+          behavior: "smooth",
+        })
       }
-
-      pillsContainer.scrollBy({
-        left: scrollBy + GRADIENT_BG_WIDTH,
-        behavior: "smooth",
-      })
     }
   }
 
