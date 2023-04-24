@@ -71,15 +71,20 @@ describe("Submit Pending Counter Offer", () => {
       .toString(),
   }
 
-  beforeAll(() => {
+  beforeEach(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent: jest.fn(),
     }))
-    jest.restoreAllMocks()
   })
 
   beforeEach(() => {
     isCommittingMutation = false
+  })
+
+  afterEach(() => {
+    mockCommitMutation.mockReset()
+    mockShowErrorDialog.mockReset()
+    pushMock.mockReset()
   })
 
   const { getWrapper } = setupTestWrapper({

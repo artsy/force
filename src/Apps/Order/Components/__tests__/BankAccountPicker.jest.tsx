@@ -205,7 +205,7 @@ describe("BankAccountFragmentContainer", () => {
         }),
       })
       const page = new BankAccountPickerTestPage(wrapper)
-      page.clickRadio(3)
+      page.clickRadio(2)
       expect(page.find(Collapse).at(0).props().open).toBeTruthy()
     })
 

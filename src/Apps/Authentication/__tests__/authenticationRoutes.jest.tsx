@@ -27,6 +27,7 @@ jest.mock("Utils/EnableRecaptcha", () => ({
 }))
 
 jest.mock("Utils/Hooks/useAuthValidation")
+jest.mock("Components/AuthDialog/Hooks/useAuthDialogTracking")
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn(),
@@ -79,8 +80,7 @@ describe("authenticationRoutes", () => {
   }
 
   afterEach(() => {
-    jest.restoreAllMocks()
-    mockRedirectIfLoggedIn.mockReset()
+    jest.resetAllMocks()
   })
 
   describe("/forgot", () => {
@@ -155,11 +155,11 @@ describe("authenticationRoutes", () => {
     describe("server", () => {
       describe("onServerSideRender", () => {
         it("runs middleware if query param found", () => {
-          renderServerRoute(
+          const { res, onServerSideRender } = renderServerRoute(
             "/reset_password?reset_password_token=foo&set_password=bar&reset_password_redirect_to=/home"
           )
-          expect(mockCheckForRedirect).toHaveBeenCalled()
-          expect(mockSetReferer).toHaveBeenCalled()
+          onServerSideRender()
+          expect(res.redirect).toHaveBeenCalled()
         })
 
         it("redirects if no reset_password_token is found", () => {
@@ -209,17 +209,17 @@ describe("authenticationRoutes", () => {
   })
 
   describe("/auth-redirect", () => {
-    mockGetENV.mockImplementation(key => {
-      switch (key) {
-        case "APP_URL":
-          return "https://artsy.net"
-        case "ALLOWED_REDIRECT_HOSTS":
-          return "off.artsy.net"
-      }
-    })
-
     describe("server", () => {
       it("redirects to redirectTo", () => {
+        mockGetENV.mockImplementation(key => {
+          switch (key) {
+            case "APP_URL":
+              return "https://artsy.net"
+            case "ALLOWED_REDIRECT_HOSTS":
+              return "off.artsy.net"
+          }
+        })
+
         const { res, onServerSideRender } = renderServerRoute(
           "/auth-redirect?redirectTo=https://off.artsy.net/blah"
         )

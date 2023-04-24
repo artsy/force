@@ -31,8 +31,8 @@ describe("BuyerGuarantee", () => {
 
         expect(trackEvent).toHaveBeenCalledTimes(1)
         expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-          Array [
-            Object {
+          [
+            {
               "action": "clickedBuyerProtection",
               "context_module": "ordersShipping",
               "context_page_owner_type": "test-owner",

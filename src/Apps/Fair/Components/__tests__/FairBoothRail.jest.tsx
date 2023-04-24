@@ -103,8 +103,8 @@ describe("FairBoothRail", () => {
     fireEvent.click(link)
 
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action": "clickedArtworkGroup",
           "context_module": "galleryBoothRail",
           "context_page_owner_id": "context-page-owner-id",

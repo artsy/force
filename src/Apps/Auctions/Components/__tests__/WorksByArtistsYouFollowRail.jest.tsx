@@ -84,8 +84,8 @@ describe("WorksByArtistsYouFollowRail", () => {
     )
 
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action": "clickedArtworkGroup",
           "context_module": "worksByArtistsYouFollowRail",
           "context_page_owner_type": undefined,

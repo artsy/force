@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { SavedAddressesFragmentContainer } from "../SavedAddresses"
+import { SavedAddressesFragmentContainer } from "./../SavedAddresses"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { BorderBox } from "@artsy/palette"
 import { AddressModal } from "Apps/Order/Components/AddressModal"
@@ -212,8 +212,8 @@ describe("Saved Addresses", () => {
 
         expect(trackEvent).toHaveBeenCalled()
         expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-          Array [
-            Object {
+          [
+            {
               "action": "clickedAddNewShippingAddress",
               "context_module": "ordersShipping",
               "context_page_owner_type": "orders-shipping",
