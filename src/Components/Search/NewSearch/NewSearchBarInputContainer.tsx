@@ -1,5 +1,6 @@
 import { AutocompleteInput } from "@artsy/palette"
 import { NewSearchBarSuggestion } from "Components/Search/NewSearch/NewSearchBarSuggestion"
+import { NewSearchInputPillsContainer } from "Components/Search/NewSearch/NewSearchInputPillsContainer"
 import { ChangeEvent, useState } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -38,6 +39,7 @@ export const NewSearchBarInputContainer = ({ isXs }: { isXs: boolean }) => {
       spellCheck={false}
       options={value.length < 2 ? [] : OPTIONS}
       value={value}
+      header={<NewSearchInputPillsContainer />}
       renderOption={option => <NewSearchBarSuggestion option={option} />}
       onChange={handleChange}
       onClear={() => setValue("")}
