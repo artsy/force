@@ -36,13 +36,15 @@ export const SalesforceWrapper: React.FC = () => {
         getENV("SALESFORCE_CHAT_ORG_ID"),
         getENV("SALESFORCE_CHAT_EMBEDDED_SERVICE_NAME"),
         {
-          baseLiveAgentContentURL:
-            "https://c.la3-c1cs-ia2.salesforceliveagent.com/content",
+          baseLiveAgentContentURL: getENV(
+            "SALESFORCE_CHAT_LIVE_AGENT_CONTENT_URL"
+          ),
           deploymentId: getENV("SALESFORCE_CHAT_DEPLOYMENT_ID"),
           buttonId: getENV("SALESFORCE_CHAT_BUTTON_ID"),
-          baseLiveAgentURL:
-            "https://d.la3-c1cs-ia2.salesforceliveagent.com/chat",
-          eswLiveAgentDevName: getENV("SALESFORCE_CHAT_EMBEDDED_SERVICE_NAME"),
+          baseLiveAgentURL: getENV("SALESFORCE_CHAT_LIVE_AGENT_URL"),
+          eswLiveAgentDevName: getENV(
+            "SALESFORCE_CHAT_ESW_LIVE_AGENT_DEV_NAME"
+          ),
           isOfflineSupportEnabled: true,
         }
       )
