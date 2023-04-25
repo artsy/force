@@ -1,7 +1,6 @@
 import {
   Box,
   Clickable,
-  CloseIcon,
   DROP_SHADOW,
   HTML,
   Tab,
@@ -12,6 +11,7 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { AuctionFAQsDialog_viewer$data } from "__generated__/AuctionFAQsDialog_viewer.graphql"
+import CloseIcon from "@artsy/icons/CloseIcon"
 
 interface AuctionFAQsDialogProps {
   onClose(): void

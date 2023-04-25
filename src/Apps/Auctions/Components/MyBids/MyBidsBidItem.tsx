@@ -1,21 +1,14 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MyBidsBidItem_saleArtwork$data } from "__generated__/MyBidsBidItem_saleArtwork.graphql"
-import {
-  ArrowDownCircleIcon,
-  ArrowUpCircleIcon,
-  Box,
-  Flex,
-  Image,
-  Spacer,
-  Text,
-  WatchingIcon,
-} from "@artsy/palette"
+import { Box, Flex, Image, Spacer, Text } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
+import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
+import ChevronCircleDownIcon from "@artsy/icons/ChevronCircleDownIcon"
 
 interface MyBidsBidItemProps {
   horizontalSlidePosition: number
@@ -89,7 +82,8 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
                   display="flex"
                   alignItems="center"
                 >
-                  <WatchingIcon height={12} width={10} />
+                  {/* FIXME: Replace with BookmarkFillIcon (?) */}
+                  {/* <WatchingIcon height={12} width={10} /> */}
                   &nbsp; Watching
                 </Text>
               </>
@@ -113,7 +107,11 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
                     overflowEllipsis
                     display="flex"
                   >
-                    <ArrowUpCircleIcon height={15} width={15} fill="green100" />
+                    <ChevronCircleUpIcon
+                      height={15}
+                      width={15}
+                      fill="green100"
+                    />
                     &nbsp; Highest bid
                   </Text>
                 ) : (
@@ -123,7 +121,11 @@ export const MyBidsBidItem: React.FC<MyBidsBidItemProps> = ({
                     overflowEllipsis
                     alignItems="center"
                   >
-                    <ArrowDownCircleIcon height={15} width={15} fill="red100" />
+                    <ChevronCircleDownIcon
+                      height={15}
+                      width={15}
+                      fill="red100"
+                    />
                     &nbsp; Outbid
                   </Text>
                 )}

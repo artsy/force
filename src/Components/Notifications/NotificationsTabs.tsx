@@ -3,7 +3,6 @@ import {
   BaseTabs,
   Box,
   Clickable,
-  CloseIcon,
   Flex,
   useTabs,
 } from "@artsy/palette"
@@ -18,6 +17,7 @@ import {
 } from "./MarkAllAsReadPanel"
 import { ActionType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
+import CloseIcon from "@artsy/icons/CloseIcon"
 
 const TABS_CONTAINER_HEIGHT = 60
 const DROPDOWN_HEADER_HEIGHT =

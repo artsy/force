@@ -1,13 +1,9 @@
-import {
-  MagnifyingGlassIcon,
-  LabeledInput,
-  Clickable,
-  LabeledInputProps,
-} from "@artsy/palette"
+import { LabeledInput, Clickable, LabeledInputProps } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { isEmpty } from "lodash"
 import * as React from "react"
 import styled from "styled-components"
+import SearchIcon from "@artsy/icons/SearchIcon"
 
 const SearchButton = styled(Clickable)`
   width: 24px;
@@ -47,7 +43,7 @@ export const SearchInputContainer: React.ForwardRefExoticComponent<
             }
           }}
         >
-          <MagnifyingGlassIcon height={22} width={22} />
+          <SearchIcon height={22} width={22} />
         </SearchButton>
       }
       {...props}

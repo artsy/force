@@ -57,7 +57,7 @@ describe("SaveArtworkToListsButton", () => {
       Artwork: () => unsavedArtwork,
     })
 
-    expect(screen.getByText("Save")).toBeInTheDocument()
+    expect(screen.getByLabelText("Save")).toBeInTheDocument()
   })
 
   describe("Save flow", () => {
@@ -76,7 +76,7 @@ describe("SaveArtworkToListsButton", () => {
         Artwork: () => unsavedArtwork,
       })
 
-      fireEvent.click(screen.getByText("Save"))
+      fireEvent.click(screen.getByLabelText("Save"))
 
       expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
       expect(await screen.findByText("Add to a List")).toBeInTheDocument()
@@ -87,7 +87,7 @@ describe("SaveArtworkToListsButton", () => {
         Artwork: () => unsavedArtwork,
       })
 
-      fireEvent.click(await screen.findByText("Save"))
+      fireEvent.click(await screen.findByLabelText("Save"))
       fireEvent.click(await screen.findByText("Add to a List"))
 
       const modalTitle = "Select lists for this artwork"
@@ -114,7 +114,7 @@ describe("SaveArtworkToListsButton", () => {
           }),
         })
 
-        expect(screen.getByText("Unsave")).toBeInTheDocument()
+        expect(screen.getByLabelText("Unsave")).toBeInTheDocument()
       })
 
       it("if artwork was previously saved in custom lists", () => {
@@ -127,7 +127,7 @@ describe("SaveArtworkToListsButton", () => {
           }),
         })
 
-        expect(screen.getByText("Unsave")).toBeInTheDocument()
+        expect(screen.getByLabelText("Unsave")).toBeInTheDocument()
       })
 
       it("if artwork was previously saved in `Saved Artworks` and custom lists", () => {
@@ -140,7 +140,7 @@ describe("SaveArtworkToListsButton", () => {
           }),
         })
 
-        expect(screen.getByText("Unsave")).toBeInTheDocument()
+        expect(screen.getByLabelText("Unsave")).toBeInTheDocument()
       })
     })
 
@@ -149,7 +149,7 @@ describe("SaveArtworkToListsButton", () => {
         Artwork: () => savedArtwork,
       })
 
-      fireEvent.click(screen.getByText("Unsave"))
+      fireEvent.click(screen.getByLabelText("Unsave"))
 
       const element = await screen.findByText("Removed from Saved Artworks")
       expect(element).toBeInTheDocument()
@@ -165,7 +165,7 @@ describe("SaveArtworkToListsButton", () => {
         }),
       })
 
-      fireEvent.click(screen.getByText("Unsave"))
+      fireEvent.click(screen.getByLabelText("Unsave"))
 
       const element = await screen.findByText("Removed from Saved Artworks")
       expect(element).toBeInTheDocument()
@@ -181,7 +181,7 @@ describe("SaveArtworkToListsButton", () => {
         }),
       })
 
-      fireEvent.click(screen.getByText("Unsave"))
+      fireEvent.click(screen.getByLabelText("Unsave"))
 
       const modalTitle = "Select lists for this artwork"
       expect(screen.getByText(modalTitle)).toBeInTheDocument()

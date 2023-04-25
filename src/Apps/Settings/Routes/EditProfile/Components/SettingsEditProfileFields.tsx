@@ -1,8 +1,6 @@
 import {
   Box,
   Button,
-  CheckCircleFillIcon,
-  CheckCircleIcon,
   Clickable,
   Flex,
   Input,
@@ -38,6 +36,8 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
 import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
 import createLogger from "Utils/logger"
+import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
+import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 
 const logger = createLogger("SettingsEditProfileFields")
 
@@ -222,13 +222,13 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
               {isIdentityVerified ? (
                 <Box>
                   <Flex alignItems="center">
-                    <CheckCircleFillIcon fill="green100" mr={0.5} />
+                    <CheckmarkFillIcon fill="green100" mr={0.5} />
                     <Text variant="sm-display">ID Verified</Text>
                   </Flex>
                 </Box>
               ) : (
                 <Flex alignItems="center">
-                  <CheckCircleIcon fill="black60" mr={0.5} />
+                  <CheckmarkStrokeIcon fill="black60" mr={0.5} />
                   <Clickable
                     onClick={async () => {
                       try {
@@ -285,7 +285,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
             {isEmailConfirmed ? (
               <Box>
                 <Flex alignItems="center">
-                  <CheckCircleFillIcon fill="green100" mr={0.5} />
+                  <CheckmarkFillIcon fill="green100" mr={0.5} />
                   <Text variant="sm-display">Email Address Verified</Text>
                 </Flex>
 
@@ -297,7 +297,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
             ) : (
               <Box>
                 <Flex alignItems="center">
-                  <CheckCircleIcon fill="black60" mr={0.5} />
+                  <CheckmarkStrokeIcon fill="black60" mr={0.5} />
                   {canRequestEmailConfirmation ? (
                     <Clickable
                       onClick={async () => {

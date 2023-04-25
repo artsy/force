@@ -1,5 +1,5 @@
 import { AuthContextModule, ContextModule } from "@artsy/cohesion"
-import { Box, Flex, NoImageIcon, ResponsiveBox } from "@artsy/palette"
+import { Box, Flex, ResponsiveBox } from "@artsy/palette"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { MagnifyImage } from "Components/MagnifyImage"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -13,6 +13,7 @@ import { GridItem_artwork$data } from "__generated__/GridItem_artwork.graphql"
 import Badge from "./Badge"
 import Metadata from "./Metadata"
 import { useHoverMetadata } from "./useHoverMetadata"
+import NoArtIcon from "@artsy/icons/NoArtIcon"
 
 export const DEFAULT_GRID_ITEM_ASPECT_RATIO = 4 / 3
 
@@ -197,7 +198,7 @@ const ArtworkGridItemImage: React.FC<
         justifyContent="center"
         alignItems="center"
       >
-        <NoImageIcon width="28px" height="28px" fill="black60" />
+        <NoArtIcon width="28px" height="28px" fill="black60" />
       </Flex>
     </>
   )

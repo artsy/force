@@ -3,13 +3,15 @@ import {
   Box,
   Clickable,
   Flex,
-  ChevronIcon,
   Text,
   Spacer,
 } from "@artsy/palette"
 import { useState } from "react"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
+import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
+import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
+
 interface ExpandableProps extends ClickableProps {
   label: string
   expanded?: boolean
@@ -17,9 +19,13 @@ interface ExpandableProps extends ClickableProps {
 }
 
 /**
+ * FIXME: WHAT is this component and WHY does this exist?
+ *
  * A toggleable component used to show / hide content.
  * Stolen from Palette's Expandable component, which wasn't quite flexible
  * enough for our needs.
+ *
+ * @deprecated: DO NOT USE, REPLACE WITH EXPANDABLE
  */
 export const SidebarExpandable: React.FC<ExpandableProps> = ({
   label,
@@ -61,16 +67,24 @@ export const SidebarExpandable: React.FC<ExpandableProps> = ({
           <Text variant="sm-display">{label}</Text>
         </Flex>
 
-        {!disabled && (
-          <ChevronIcon
-            direction={expanded ? "up" : "down"}
-            width={14}
-            height={14}
-            ml={1}
-            mr={1}
-            aria-hidden="true"
-          />
-        )}
+        {!disabled &&
+          (expanded ? (
+            <ChevronUpIcon
+              width={14}
+              height={14}
+              ml={1}
+              mr={1}
+              aria-hidden="true"
+            />
+          ) : (
+            <ChevronDownIcon
+              width={14}
+              height={14}
+              ml={1}
+              mr={1}
+              aria-hidden="true"
+            />
+          ))}
       </Clickable>
 
       {expanded &&

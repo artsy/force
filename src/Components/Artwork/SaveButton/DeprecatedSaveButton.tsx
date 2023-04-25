@@ -3,11 +3,12 @@ import { DeprecatedSaveButton_artwork$data } from "__generated__/DeprecatedSaveB
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
-import { CloseIcon, Flex, HeartIcon, Clickable } from "@artsy/palette"
+import { Flex, HeartIcon, Clickable } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { useState } from "react"
 import { useSaveArtwork } from "./useSaveArtwork"
 import { useTracking } from "react-tracking"
+import CloseIcon from "@artsy/icons/CloseIcon"
 
 export interface DeprecatedSaveButtonProps {
   artwork: DeprecatedSaveButton_artwork$data

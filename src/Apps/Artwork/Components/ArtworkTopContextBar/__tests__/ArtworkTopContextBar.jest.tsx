@@ -208,7 +208,7 @@ describe("ArtworkTopContextBar", () => {
 
       const html = wrapper.html()
       const text = wrapper.text()
-      expect(wrapper.find("ChevronIcon").length).toBe(1)
+      expect(wrapper.find("ChevronLeftIcon").length).toBe(1)
       expect(text).toContain("showName")
       expect(html).toContain("showHref")
       expect(text).toContain("In current show")

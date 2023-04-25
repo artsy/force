@@ -2,7 +2,6 @@ import {
   Box,
   BoxProps,
   Clickable,
-  CloseCircleIcon,
   Column,
   CSSGrid,
   Flex,
@@ -15,6 +14,7 @@ import { formatFileSize, Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { ComponentProps, useEffect, useState } from "react"
 import styled from "styled-components"
 import { Media } from "Utils/Responsive"
+import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
 
 export interface PhotoThumbnailProps {
   photo: Photo
@@ -134,7 +134,7 @@ const RemoveButton: React.FC<RemoveButtonProps> = ({
 }) => (
   <Clickable data-testid="delete-photo-thumbnail" ml={2} onClick={handleDelete}>
     {withIconButton ? (
-      <CloseCircleIcon
+      <CloseStrokeIcon
         display="flex"
         aria-label="Cancel"
         title="Cancel"

@@ -1,14 +1,13 @@
 import * as React from "react"
 import styled from "styled-components"
-
 import {
   Flex,
   FlexProps,
-  LockIcon,
   Text,
   StackableBorderBox,
   Clickable,
 } from "@artsy/palette"
+import LockIcon from "@artsy/icons/LockIcon"
 
 export interface StepSummaryItemProps extends FlexProps {
   title?: React.ReactNode

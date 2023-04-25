@@ -1,11 +1,12 @@
-import { LabeledInput, MagnifyingGlassIcon } from "@artsy/palette"
+import { LabeledInput } from "@artsy/palette"
 import { FilterExpandable } from "./FilterExpandable"
 import React, { useRef, useEffect, useMemo, useState } from "react"
 import { debounce } from "lodash"
 import {
   useCurrentlySelectedFilters,
   useArtworkFilterContext,
-} from "../ArtworkFilterContext"
+} from "Components/ArtworkFilter/ArtworkFilterContext"
+import SearchIcon from "@artsy/icons/SearchIcon"
 
 const DEBOUNCE_DELAY = 300
 
@@ -54,7 +55,7 @@ export const KeywordFilter: React.FC = () => {
         placeholder="Enter a search term"
         onChange={event => handleChangeText(event.currentTarget.value)}
         type="text"
-        label={<MagnifyingGlassIcon />}
+        label={<SearchIcon />}
         data-testid="keywordSearchInput"
       />
     </FilterExpandable>

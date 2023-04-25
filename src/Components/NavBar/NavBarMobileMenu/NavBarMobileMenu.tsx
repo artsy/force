@@ -1,5 +1,5 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { CloseIcon, MenuIcon, ModalBase, Separator, Text } from "@artsy/palette"
+import { ModalBase, Separator, Text } from "@artsy/palette"
 import {
   ARTISTS_SUBMENU_DATA,
   ARTWORKS_SUBMENU_DATA,
@@ -17,6 +17,8 @@ import {
 import { NavBarMobileMenuNavigationProvider } from "./NavBarMobileMenuNavigation"
 import { NavBarMobileMenuTransition } from "./NavBarMobileMenuTransition"
 import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import MenuIcon from "@artsy/icons/MenuIcon"
 
 interface NavBarMobileMenuProps {
   isOpen: boolean
@@ -75,6 +77,7 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
             onClick={onClose}
             zIndex={2}
             bg="transparent"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
           >
             <NavBarMobileMenuIcon open />
           </NavBarMobileMenuItemButton>

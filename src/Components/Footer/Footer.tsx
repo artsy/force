@@ -2,7 +2,6 @@ import * as React from "react"
 import styled from "styled-components"
 import { Media } from "Utils/Responsive"
 import {
-  ArtsyMarkIcon,
   Box,
   boxMixin,
   BoxProps,
@@ -28,6 +27,7 @@ import InstagramIcon from "@artsy/icons/InstagramIcon"
 import TikTokIcon from "@artsy/icons/TikTokIcon"
 import SpotifyIcon from "@artsy/icons/SpotifyIcon"
 import { useSystemContext } from "System/useSystemContext"
+import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 
 interface FooterProps extends BoxProps {}
 

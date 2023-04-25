@@ -3,7 +3,6 @@ import {
   ArrowRightIcon,
   Box,
   Clickable,
-  CloseIcon,
   Flex,
   ModalBase,
   Spinner,
@@ -23,6 +22,7 @@ import { ArticleZoomGalleryCaptionFragmentContainer } from "./ArticleZoomGallery
 import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
 import { useArticleContext } from "Apps/Article/Components/ArticleContext"
 import { mapCursorToMax } from "map-cursor-to-max"
+import CloseIcon from "@artsy/icons/CloseIcon"
 
 interface ArticleZoomGalleryProps {
   article: ArticleZoomGallery_article$data

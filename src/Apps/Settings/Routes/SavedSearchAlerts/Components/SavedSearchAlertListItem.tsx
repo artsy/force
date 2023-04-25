@@ -1,12 +1,9 @@
 import {
-  ArrowDownIcon,
-  ArrowUpIcon,
   Box,
   Clickable,
   Column,
   Flex,
   GridColumns,
-  IconProps,
   Pill,
   Spacer,
   Text,
@@ -16,6 +13,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAlertListItem_item.graphql"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
+import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
+import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 
 export type SavedSearchAlertListItemVariant = "active" | "inactive"
 
@@ -32,7 +31,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
 }) => {
   const viewAllHref = `${item.href}&search_criteria_id=${item.internalID}`
   const [isExpanded, setIsExpanded] = useState(false)
-  const Icon: React.FC<IconProps> = isExpanded ? ArrowUpIcon : ArrowDownIcon
+  const Icon = isExpanded ? ChevronUpIcon : ChevronDownIcon
 
   const toggleExpandFilters = () => setIsExpanded(isExpanded => !isExpanded)
 
