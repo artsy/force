@@ -3,12 +3,32 @@ version: 2.1
 orbs:
   artsy-remote-docker: artsy/remote-docker@volatile
   aws-s3: circleci/aws-s3@2.0.0
+  cypress: cypress-io/cypress@3.1.1
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
   slack: circleci/slack@4.12.1
   yarn: artsy/yarn@6.5.0
 
 jobs:
+  cypress-install-and-persist:
+    executor: cypress/browsers:node18.6.0-chrome105-ff104
+    steps:
+      - cypress/install:
+          package-manager: yarn
+      - persist_to_workspace:
+          paths:
+            - .cache/cypress
+            - cypress
+          root: .
+  cypress-run-tests-in-parallel:
+    executor: cypress/browsers:node18.6.0-chrome105-ff104
+    # parallelism: 8
+    steps:
+      - attach_workspace:
+          at: /app
+      - cypress/run-tests:
+          cypress-command: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:smoke
+
   validate_production_schema:
     docker:
       - image: cimg/node:18.16.0
@@ -181,14 +201,17 @@ jobs:
 
   acceptance:
     docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-electron-runner
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
+      - image: cimg/node:18.16.0
+      # - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-electron-runner
+      #   aws_auth:
+      #     aws_access_key_id: $AWS_ACCESS_KEY_ID
+      #     aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     working_directory: /app
     parallelism: 6
     steps:
-      - run: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:smoke
+      - cypress-install-and-persist
+      - cypress-run-tests-in-parallel
+      # - run: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:smoke
       - store_artifacts:
           path: cypress/videos
       - store_artifacts:
@@ -332,11 +355,20 @@ workflows:
           requires:
             - builder-image-push
 
-      - acceptance:
-          <<: *not_staging_or_release
-          context: hokusai
+      - cypress-install-and-persist:
+          name: Install & Persist To Workspace
+      - cypress-run-tests-in-parallel:
+          name: Run Tests in Parallel
           requires:
-            - electron-runner-image-push
+            - Install & Persist To Workspace
+
+      # - acceptance:
+      #     <<: *not_staging_or_release
+      #     context: hokusai
+      #     requires:
+      #       - cypress-install-and-persist
+      #       - cypress-run-tests-in-parallel
+      #       - electron-runner-image-push
 
       # Staging
       - artsy-remote-docker/buildkit-build:
@@ -356,7 +388,7 @@ workflows:
             - test
             - type-check
             - relay-check
-            - acceptance
+            # - acceptance
             - production-image-build
 
       - hokusai/deploy-staging:
