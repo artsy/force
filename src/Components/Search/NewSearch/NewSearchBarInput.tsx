@@ -1,6 +1,5 @@
 import { AutocompleteInput, Box, BoxProps } from "@artsy/palette"
 import { SearchInputContainer } from "Components/Search/SearchInputContainer"
-import { Router } from "found"
 import { ChangeEvent, FC, useContext, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
@@ -23,7 +22,6 @@ const logger = createLogger("Components/Search/NewSearchBar")
 
 export interface NewSearchBarInputProps extends SystemContextProps {
   relay: RelayRefetchProp
-  router?: Router
   viewer: NewSearchBarInput_viewer$data
   isXs: boolean
 }
@@ -31,7 +29,6 @@ export interface NewSearchBarInputProps extends SystemContextProps {
 const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
   isXs,
   relay,
-  router,
   viewer,
 }) => {
   const { t } = useTranslation()

@@ -1,19 +1,8 @@
-export enum AlgoliaIndexKey {
-  Artist = "artist",
-  Article = "article",
-  Sale = "sale",
-  ArtistSeries = "artist_series",
-  Collection = "marketing_collection",
-  Fair = "fair",
-  Show = "partner_show",
-  Gallery = "partner_gallery",
-}
-
 export interface PillType {
   indexName?: string
   displayName: string
   disabled?: boolean
-  key: AlgoliaIndexKey | string
+  key: string
 }
 
 export const TOP_PILL: PillType = {

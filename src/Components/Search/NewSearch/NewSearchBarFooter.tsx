@@ -2,6 +2,7 @@ import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Flex, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { RouterLink } from "System/Router/RouterLink"
+import { FC } from "react"
 import styled from "styled-components"
 
 interface SuggestionItemProps {
@@ -15,12 +16,14 @@ interface SuggestionItemProps {
   showAuctionResultsButton?: boolean
 }
 
-export const NewSearchBarFooter: React.FC<SuggestionItemProps> = ({
+export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
   href,
   isHighlighted,
   query,
 }) => {
-  const handleClick = event => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
     event.preventDefault()
   }
 
