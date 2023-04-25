@@ -44,6 +44,7 @@ export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
 
   return (
     <Clickable
+      aria-label={isSaved ? "Unsave" : "Save"}
       data-test="saveButton"
       height={BTN_HEIGHT}
       width={BTN_WIDTH}
