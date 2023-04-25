@@ -88,6 +88,9 @@ declare module "sharify" {
       SALESFORCE_CHAT_EMBEDDED_SERVICE_NAME: string
       SALESFORCE_CHAT_DEPLOYMENT_ID: string
       SALESFORCE_CHAT_BUTTON_ID: string
+      SALESFORCE_CHAT_ESW_LIVE_AGENT_DEV_NAME: string
+      SALESFORCE_CHAT_LIVE_AGENT_URL: string
+      SALESFORCE_CHAT_LIVE_AGENT_CONTENT_URL: string
       SECTION?: { slug?: string } // FIXME: used only for /venice-biennale-2015
       SEGMENT_WRITE_KEY: string
       SENTRY_PUBLIC_DSN: string
