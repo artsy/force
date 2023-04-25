@@ -130,8 +130,6 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
       {!isSold && artworkEcommerceAvailable && (
         <>
-          <Separator />
-
           <SidebarExpandable
             label={t`artworkPage.sidebar.shippingAndTaxes.expandableLabel`}
           >
@@ -139,18 +137,20 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
               artwork={artwork}
             />
           </SidebarExpandable>
+
+          <Spacer y={1} />
         </>
       )}
 
       {!!isEligibleForArtsyGuarantee && (
         <>
-          <Separator />
-
           <SidebarExpandable
             label={t`artworkPage.sidebar.artsyGuarantee.expandableLabel`}
           >
             <ArtworkSidebarArtsyGuarantee />
           </SidebarExpandable>
+
+          <Spacer y={1} />
         </>
       )}
 
