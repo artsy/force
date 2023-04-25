@@ -19,7 +19,6 @@ import {
   BoxProps,
   Button,
   Column,
-  FilterIcon,
   Flex,
   FullBleed,
   GridColumns,
@@ -42,6 +41,7 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Jump } from "Utils/Hooks/useJump"
+import FilterIcon from "@artsy/icons/FilterIcon"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element

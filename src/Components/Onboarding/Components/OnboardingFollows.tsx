@@ -1,11 +1,4 @@
-import {
-  Box,
-  Text,
-  LabeledInput,
-  MagnifyingGlassIcon,
-  Button,
-  Flex,
-} from "@artsy/palette"
+import { Box, Text, LabeledInput, Button, Flex } from "@artsy/palette"
 import { FC, useState } from "react"
 import { OnboardingOrderedSetQueryRenderer } from "Components/Onboarding/Components/OnboardingOrderedSet"
 import { useOnboardingContext } from "Components/Onboarding/Hooks/useOnboardingContext"
@@ -16,6 +9,7 @@ import { OnboardingFigure } from "Components/Onboarding/Components/OnboardingFig
 import { useOnboardingTracking } from "Components/Onboarding/Hooks/useOnboardingTracking"
 import { SplitLayout } from "Components/SplitLayout"
 import { useTranslation } from "react-i18next"
+import SearchIcon from "@artsy/icons/SearchIcon"
 
 interface OnboardingFollowsProps {
   kind: "artists" | "galleries"
@@ -71,7 +65,7 @@ export const OnboardingFollows: FC<OnboardingFollowsProps> = ({ kind }) => {
 
             <Box ref={register(3)}>
               <LabeledInput
-                label={<MagnifyingGlassIcon />}
+                label={<SearchIcon />}
                 placeholder={t(`onboarding.follows.${kind}.placeholder`)}
                 mb={4}
                 onChange={event => setQuery(event.currentTarget.value)}

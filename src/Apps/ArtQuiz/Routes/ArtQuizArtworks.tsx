@@ -1,7 +1,6 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtQuizArtworks_me$data } from "__generated__/ArtQuizArtworks_me.graphql"
 import {
-  ArrowLeftIcon,
   Clickable,
   Flex,
   FullBleed,
@@ -28,6 +27,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { useTranslation } from "react-i18next"
 import { compact } from "lodash"
 import { ArtQuizArtworksCardFragmentContainer } from "Apps/ArtQuiz/Components/ArtQuizArtworksCard"
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 
 interface ArtQuizArtworksProps {
   me: ArtQuizArtworks_me$data
@@ -217,7 +217,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
             alignItems="center"
             justifyContent="center"
           >
-            <ArrowLeftIcon />
+            <ChevronLeftIcon />
           </Clickable>
 
           <Text

@@ -5,7 +5,8 @@ import {
   useInquiryContext,
 } from "./Hooks/useInquiryContext"
 import { InquiryBackdrop } from "./Components/InquiryBackdrop"
-import { Box, Clickable, CloseIcon, DROP_SHADOW } from "@artsy/palette"
+import { Box, Clickable, DROP_SHADOW } from "@artsy/palette"
+import CloseIcon from "@artsy/icons/CloseIcon"
 
 interface InquiryProps {
   artworkID: string

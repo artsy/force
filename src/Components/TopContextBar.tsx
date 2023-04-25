@@ -1,15 +1,8 @@
 import * as React from "react"
-import {
-  Box,
-  ChevronIcon,
-  Flex,
-  FullBleed,
-  Separator,
-  Text,
-  Image,
-} from "@artsy/palette"
+import { Box, Flex, FullBleed, Separator, Text, Image } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { cropped } from "Utils/resized"
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 
 export interface TopContextBarProps {
   displayBackArrow?: boolean
@@ -57,13 +50,7 @@ export const TopContextBar: React.FC<TopContextBarProps> = ({
       >
         <Flex flex={1} flexDirection="row" alignItems="center">
           {displayBackArrow && (
-            <ChevronIcon
-              direction="left"
-              height={14}
-              mr={1}
-              title=""
-              aria-hidden
-            />
+            <ChevronLeftIcon height={14} mr={1} title="" aria-hidden />
           )}
 
           {image && (

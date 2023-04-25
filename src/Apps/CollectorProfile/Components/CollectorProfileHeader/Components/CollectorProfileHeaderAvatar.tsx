@@ -1,7 +1,8 @@
-import { Avatar, Flex, UserSingleIcon } from "@artsy/palette"
+import { Avatar, Flex } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
 import { CollectorProfileHeaderAvatar_me$data } from "__generated__/CollectorProfileHeaderAvatar_me.graphql"
+import PersonIcon from "@artsy/icons/PersonIcon"
 
 interface CollectorProfileHeaderAvatarProps {
   me: CollectorProfileHeaderAvatar_me$data
@@ -54,7 +55,7 @@ const NoAvatarComponent: React.FC = () => {
       backgroundColor="black10"
       mr={[1, 2]}
     >
-      <UserSingleIcon />
+      <PersonIcon />
     </Flex>
   )
 }

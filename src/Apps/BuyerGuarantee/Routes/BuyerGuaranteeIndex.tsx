@@ -1,18 +1,14 @@
 import { FC } from "react"
 import {
   Button,
-  CertificateIcon,
-  ChevronIcon,
   Column,
   Flex,
   FullBleed,
   GridColumns,
   Image,
-  LockIcon,
   ResponsiveBox,
   Spacer,
   Text,
-  VerifiedIcon,
 } from "@artsy/palette"
 import {
   FullBleedHeader,
@@ -34,6 +30,10 @@ import {
 } from "Apps/BuyerGuarantee/Components/BuyerGuaranteeTables"
 import { Media } from "Utils/Responsive"
 import { Jump, useJump } from "Utils/Hooks/useJump"
+import LockIcon from "@artsy/icons/LockIcon"
+import VerifiedIcon from "@artsy/icons/VerifiedIcon"
+import CertificateIcon from "@artsy/icons/CertificateIcon"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 
 const SUPPORT_ARTICLE_URL =
   "https://support.artsy.net/hc/en-us/articles/360048946973"
@@ -132,7 +132,12 @@ export const BuyerGuaranteeIndex: FC = () => {
             }}
           >
             Learn More
-            <ChevronIcon ml={0.5} width={12} height={12} fill="currentColor" />
+            <ChevronRightIcon
+              ml={0.5}
+              width={12}
+              height={12}
+              fill="currentColor"
+            />
           </Button>
         </Column>
 
@@ -156,7 +161,12 @@ export const BuyerGuaranteeIndex: FC = () => {
             }}
           >
             Learn More
-            <ChevronIcon ml={0.5} width={12} height={12} fill="currentColor" />
+            <ChevronRightIcon
+              ml={0.5}
+              width={12}
+              height={12}
+              fill="currentColor"
+            />
           </Button>
         </Column>
 
@@ -180,7 +190,12 @@ export const BuyerGuaranteeIndex: FC = () => {
             }}
           >
             Learn More
-            <ChevronIcon ml={0.5} width={12} height={12} fill="currentColor" />
+            <ChevronRightIcon
+              ml={0.5}
+              width={12}
+              height={12}
+              fill="currentColor"
+            />
           </Button>
         </Column>
       </GridColumns>

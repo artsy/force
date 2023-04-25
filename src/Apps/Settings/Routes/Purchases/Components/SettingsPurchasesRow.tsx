@@ -1,11 +1,9 @@
 import {
   Box,
-  CheckCircleFillIcon,
   Column,
   EntityHeader,
   Flex,
   GridColumns,
-  HelpIcon,
   Image,
   PendingCircleIcon,
   Separator,
@@ -13,7 +11,6 @@ import {
   SkeletonBox,
   SkeletonText,
   Text,
-  XCircleIcon,
 } from "@artsy/palette"
 import { DateTime } from "luxon"
 import { FC } from "react"
@@ -24,6 +21,9 @@ import { LocaleOptions } from "luxon"
 import { extractNodes } from "Utils/extractNodes"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
+import HelpIcon from "@artsy/icons/HelpIcon"
+import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 
 const ORDER_LABELS = {
   APPROVED: "Confirmed",
@@ -38,11 +38,11 @@ const ORDER_LABELS = {
 
 const ORDER_ICONS = {
   APPROVED: <PendingCircleIcon fill="black100" />,
-  CANCELED: <XCircleIcon fill="red100" />,
-  FULFILLED: <CheckCircleFillIcon fill="green100" />,
+  CANCELED: <CloseStrokeIcon fill="red100" />,
+  FULFILLED: <CheckmarkFillIcon fill="green100" />,
   IN_TRANSIT: <PendingCircleIcon fill="black60" />,
   PROCESSING: <PendingCircleIcon fill="black60" />,
-  REFUNDED: <XCircleIcon fill="red100" />,
+  REFUNDED: <CloseStrokeIcon fill="red100" />,
   SUBMITTED: <PendingCircleIcon fill="black60" />,
   PROCESSING_APPROVAL: <PendingCircleIcon fill="black60" />,
 } as const

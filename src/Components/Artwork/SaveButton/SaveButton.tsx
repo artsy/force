@@ -2,11 +2,13 @@ import { AuthContextModule } from "@artsy/cohesion"
 import { SaveButton_artwork$data } from "__generated__/SaveButton_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { HeartIcon, Clickable, HeartFillIcon } from "@artsy/palette"
+import { Clickable } from "@artsy/palette"
 import { useSaveArtwork } from "./useSaveArtwork"
 import { useTracking } from "react-tracking"
 import { useState } from "react"
 import { isTouch } from "Utils/device"
+import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
+import HeartFillIcon from "@artsy/icons/HeartFillIcon"
 
 export interface SaveButtonProps {
   artwork: SaveButton_artwork$data
@@ -57,7 +59,7 @@ export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
           height={BTN_HEIGHT}
         />
       ) : (
-        <HeartIcon
+        <HeartStrokeIcon
           title={title}
           fill="black100"
           width={BTN_WIDTH}

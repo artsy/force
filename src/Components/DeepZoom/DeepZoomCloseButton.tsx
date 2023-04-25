@@ -1,5 +1,6 @@
-import { Clickable, ClickableProps, CloseIcon } from "@artsy/palette"
-import * as React from "react";
+import { Clickable, ClickableProps } from "@artsy/palette"
+import * as React from "react"
+import CloseIcon from "@artsy/icons/CloseIcon"
 
 interface DeepZoomCloseButtonProps extends ClickableProps {}
 

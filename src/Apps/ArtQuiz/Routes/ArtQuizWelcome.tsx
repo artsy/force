@@ -1,18 +1,11 @@
-import {
-  Flex,
-  Text,
-  Spacer,
-  Button,
-  ArtsyMarkBlackIcon,
-  FullBleed,
-  ArtsyLogoIcon,
-  Box,
-} from "@artsy/palette"
+import { Flex, Text, Spacer, Button, FullBleed, Box } from "@artsy/palette"
 import { SplitLayout } from "Components/SplitLayout"
 import { FC } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTranslation } from "react-i18next"
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
+import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
 interface ArtQuizWelcomeProps {
   onStartQuiz: () => void
@@ -28,7 +21,7 @@ export const ArtQuizWelcome: FC<ArtQuizWelcomeProps> = ({ onStartQuiz }) => {
           hideLogo
           left={
             <Flex height="100%" alignItems="center" justifyContent="center">
-              <ArtsyMarkBlackIcon height={65} width={65} fill="white100" />
+              <ArtsyMarkIcon height={65} width={65} fill="white100" />
             </Flex>
           }
           right={
