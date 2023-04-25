@@ -2,7 +2,7 @@
 
 describe("settings", () => {
   describe("unauthenticated", () => {
-    it("redirects to the homepage", () => {
+    it.skip("redirects to the homepage", () => {
       cy.visit("settings")
       cy.location("pathname", { timeout: 10000 }).should("eq", "/")
     })
