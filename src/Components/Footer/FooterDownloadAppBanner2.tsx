@@ -71,7 +71,7 @@ export const FooterDownloadAppBanner2 = () => {
               to="/meet-your-new-art-advisor"
               minWidth={[0, 0, 200, 250]}
             >
-              Explore Artsy
+              Discover Artsy
             </Button>
           </Media>
         </Column>
