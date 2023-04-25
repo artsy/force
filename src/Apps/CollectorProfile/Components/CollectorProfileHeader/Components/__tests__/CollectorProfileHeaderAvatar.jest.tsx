@@ -28,11 +28,10 @@ describe("CollectorProfileHeaderAvatar", () => {
     expect(screen.getByRole("img")).toBeInTheDocument()
   })
 
-  it("renders the icon when there is no picture", () => {
+  it("does not render the image when there is no picture", () => {
     renderWithRelay({ Me: () => ({ icon: null }) }, false)
 
     expect(screen.queryByRole("img")).not.toBeInTheDocument()
-    expect(screen.getByTitle("User")).toBeInTheDocument()
   })
 })
 

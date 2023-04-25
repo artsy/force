@@ -154,10 +154,10 @@ describe("The respond page", () => {
         "Lisa BreslowGramercy Park South"
       )
       expect(page.shippingSummary.text()).toMatch(
-        "Ship toLockedJoelle Van Dyne401 Broadway"
+        "Ship toJoelle Van Dyne401 Broadway"
       )
       expect(page.paymentSummary.text()).toMatchInlineSnapshot(
-        `"Lockedvisa•••• 4444   Exp 03/21"`
+        `"visa•••• 4444   Exp 03/21"`
       )
       expect(page.buyerGuarantee.length).toBe(1)
       expect(page.submitButton.text()).toBe("Continue")

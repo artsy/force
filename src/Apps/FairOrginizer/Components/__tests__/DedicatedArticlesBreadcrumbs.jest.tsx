@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { DedicatedArticlesBreadcrumbs_Test_Query } from "__generated__/DedicatedArticlesBreadcrumbs_Test_Query.graphql"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { DedicatedArticlesBreadcrumbsFragmentContainer } from "../DedicatedArticlesBreadcrumbs"
+import { DedicatedArticlesBreadcrumbsFragmentContainer } from "Apps/FairOrginizer/Components/DedicatedArticlesBreadcrumbs"
 
 jest.unmock("react-relay")
 
@@ -41,7 +41,7 @@ describe("DedicatedArticlesBreadcrumbs", () => {
   it("displays arrow left icon", () => {
     const wrapper = getWrapper({})
 
-    expect(wrapper.find("ArrowLeftIcon").length).toBe(1)
+    expect(wrapper.find("ChevronLeftIcon").length).toBe(1)
   })
 
   it("displays image", () => {

@@ -92,11 +92,7 @@ describe("NavBarTracking", () => {
         </Wrapper>
       )
 
-      wrapper
-        .find("button")
-        .findWhere(node => node.text() === "Menu")
-        .first()
-        .simulate("click")
+      wrapper.find('[aria-label="Menu"]').first().simulate("click")
 
       expect(trackEvent).toBeCalledWith({
         action_type: DeprecatedAnalyticsSchema.ActionType.Click,

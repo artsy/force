@@ -74,7 +74,7 @@ describe("NavBar", () => {
 
   it("renders Artsy Logo and SearchBar", () => {
     const wrapper = getWrapper()
-    expect(wrapper.find("ArtsyMarkBlackIcon").length).toEqual(1)
+    expect(wrapper.find("ArtsyMarkIcon").length).toEqual(1)
     expect(wrapper.find("SearchBarQueryRenderer").length).toEqual(1)
   })
 
@@ -151,19 +151,10 @@ describe("NavBar", () => {
 
       expect(wrapper.find("NavBarMobileMenuIcon").length).toEqual(1)
 
-      const toggle = () =>
-        wrapper
-          .find("button")
-          .findWhere(node => {
-            return node.text() === "Menu" || node.text() === "Close"
-          })
-          .first()
-          .simulate("click")
-
       expect(wrapper.find("NavBarMobileMenu").length).toEqual(0)
-      toggle()
+      wrapper.find('[aria-label="Menu"]').first().simulate("click")
       expect(wrapper.find("NavBarMobileMenu").length).toEqual(1)
-      toggle()
+      wrapper.find('[aria-label="Close menu"]').first().simulate("click")
       expect(wrapper.find("NavBarMobileMenu").length).toEqual(0)
     })
 

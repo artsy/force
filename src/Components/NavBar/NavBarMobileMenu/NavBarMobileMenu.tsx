@@ -77,6 +77,7 @@ export const NavBarMobileMenu: React.FC<NavBarMobileMenuProps> = ({
             onClick={onClose}
             zIndex={2}
             bg="transparent"
+            aria-label={isOpen ? "Close menu" : "Open menu"}
           >
             <NavBarMobileMenuIcon open />
           </NavBarMobileMenuItemButton>
