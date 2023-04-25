@@ -47,7 +47,7 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
               subtitle:
                 "Buy and bid confidently with free access to millions of auction results.",
               src:
-                "https://files.artsy.net/images/marketing_meet_02_april-14.jpg",
+                "https://files.artsy.net/images/marketing_meet_02_april-25_2.jpg",
               cta: {
                 label: "Search the Artsy Price Database",
                 href: "/price-database",
