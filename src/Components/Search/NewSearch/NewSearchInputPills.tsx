@@ -172,7 +172,12 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({ viewer }) => {
 
   return (
     <Flex alignItems="center" bg="white">
-      <Flex position="absolute" left={0} opacity={showPreviousChevron ? 1 : 0}>
+      <Flex
+        position="absolute"
+        left={0}
+        opacity={showPreviousChevron ? 1 : 0}
+        zIndex={showPreviousChevron ? 1 : -1}
+      >
         <PreviousChevron onClick={scrollToLeft} left={2} />
         <GradientBg placement="left" />
       </Flex>
@@ -201,7 +206,12 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({ viewer }) => {
           )
         })}
       </PillsContainer>
-      <Flex position="absolute" right={0} opacity={showNextChevron ? 1 : 0}>
+      <Flex
+        position="absolute"
+        right={0}
+        opacity={showNextChevron ? 1 : 0}
+        zIndex={showNextChevron ? 1 : -1}
+      >
         <NextChevron onClick={scrollToRight} right={2} />
         <GradientBg placement="right" />
       </Flex>

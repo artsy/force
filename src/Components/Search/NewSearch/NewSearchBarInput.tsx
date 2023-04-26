@@ -1,22 +1,19 @@
 import { AutocompleteInput, Box, BoxProps } from "@artsy/palette"
 import { SearchInputContainer } from "Components/Search/SearchInputContainer"
-import { ChangeEvent, FC, useContext, useState } from "react"
+import { ChangeEvent, FC, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import {
-  SystemContext,
-  SystemContextProps,
-  withSystemContext,
-} from "System/SystemContext"
+import { SystemContextProps, useSystemContext } from "System/SystemContext"
 import { extractNodes } from "Utils/extractNodes"
-import { useDidMount } from "Utils/Hooks/useDidMount"
 import { NewSearchBarInput_viewer$data } from "__generated__/NewSearchBarInput_viewer.graphql"
 import { NewSearchBarInputSuggestQuery } from "__generated__/NewSearchBarInputSuggestQuery.graphql"
 import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
 import { SuggestionItem } from "Components/Search/Suggestions/SuggestionItem"
 import { NewSearchBarFooter } from "Components/Search/NewSearch/NewSearchBarFooter"
+import { getLabel } from "./utils/getLabel"
+import { isServer } from "Server/isServer"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 
@@ -34,17 +31,14 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
   const { t } = useTranslation()
   const [value, setValue] = useState("")
 
-  const getLabel = ({ displayType, __typename }) =>
-    displayType || (__typename === "Artist" ? "Artist" : null)
-
   const options = extractNodes(viewer.searchConnection)
   const formattedOptions = options.map(option => {
     return {
       text: option.displayLabel!,
       value: option.displayLabel!,
       subtitle: getLabel({
-        displayType: option.displayType,
-        __typename: option.__typename,
+        displayType: option.displayType ?? "",
+        typename: option.__typename,
       }),
       imageUrl: option.imageUrl!,
       showArtworksButton: !!option.statuses?.artworks,
@@ -81,13 +75,12 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       onChange={handleChange}
       onClear={() => setValue("")}
       header={<NewSearchInputPillsFragmentContainer viewer={viewer} />}
-      // renderOption={option => <NewSearchBarSuggestion option={option} />}
       renderOption={option => (
         <SuggestionItem
           display={option.text}
           href={option.href}
           isHighlighted={false} // TODO: change
-          label={option.subtitle}
+          label={option.subtitle ?? ""}
           imageUrl={option.imageUrl}
           query={value}
           showArtworksButton={option.showArtworksButton}
@@ -108,7 +101,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
 }
 
 export const NewSearchBarInputRefetchContainer = createRefetchContainer(
-  withSystemContext(NewSearchBarInput),
+  NewSearchBarInput,
   {
     viewer: graphql`
       fragment NewSearchBarInput_viewer on Viewer
@@ -155,10 +148,9 @@ interface NewSearchBarInputQueryRendererProps extends BoxProps {
 }
 
 export const NewSearchBarInputQueryRenderer: FC<NewSearchBarInputQueryRendererProps> = props => {
-  const { relayEnvironment, searchQuery = "" } = useContext(SystemContext)
-  const isMounted = useDidMount(typeof window !== "undefined")
+  const { relayEnvironment, searchQuery = "" } = useSystemContext()
 
-  if (!isMounted) {
+  if (isServer) {
     return <StaticSearchContainer searchQuery={searchQuery} {...props} />
   }
 
@@ -181,7 +173,7 @@ export const NewSearchBarInputQueryRenderer: FC<NewSearchBarInputQueryRendererPr
         term: "",
       }}
       render={({ props: relayProps }) => {
-        if (relayProps) {
+        if (relayProps && relayProps.viewer) {
           return (
             <NewSearchBarInputRefetchContainer
               viewer={relayProps.viewer}

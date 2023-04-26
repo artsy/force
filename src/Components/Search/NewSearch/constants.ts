@@ -1,7 +1,5 @@
 export interface PillType {
-  indexName?: string
   displayName: string
-  disabled?: boolean
   key: string
 }
 
