@@ -14,6 +14,11 @@ import { SuggestionItem } from "Components/Search/Suggestions/SuggestionItem"
 import { NewSearchBarFooter } from "Components/Search/NewSearch/NewSearchBarFooter"
 import { getLabel } from "./utils/getLabel"
 import { isServer } from "Server/isServer"
+import {
+  ELASTIC_PILL_KEY_TO_SEARCH_ENTITY,
+  PillType,
+  TOP_PILL,
+} from "Components/Search/NewSearch/constants"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 
@@ -30,6 +35,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
 }) => {
   const { t } = useTranslation()
   const [value, setValue] = useState("")
+  const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
 
   const options = extractNodes(viewer.searchConnection)
   const formattedOptions = options.map(option => {
@@ -50,11 +56,29 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
 
-    //TODO: Add throttle
     relay.refetch(
       {
         hasTerm: true,
         term: event.target.value,
+      },
+      null,
+      error => {
+        if (error) {
+          logger.error(error)
+          return
+        }
+      }
+    )
+  }
+
+  const handlePillClick = (pill: PillType) => {
+    setSelectedPill(pill)
+
+    relay.refetch(
+      {
+        hasTerm: true,
+        term: value,
+        entities: ELASTIC_PILL_KEY_TO_SEARCH_ENTITY?.[pill.key],
       },
       null,
       error => {
@@ -74,7 +98,13 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       value={value}
       onChange={handleChange}
       onClear={() => setValue("")}
-      header={<NewSearchInputPillsFragmentContainer viewer={viewer} />}
+      header={
+        <NewSearchInputPillsFragmentContainer
+          viewer={viewer}
+          selectedPill={selectedPill}
+          onPillClick={handlePillClick}
+        />
+      }
       renderOption={option => (
         <SuggestionItem
           display={option.text}
@@ -108,9 +138,14 @@ export const NewSearchBarInputRefetchContainer = createRefetchContainer(
         @argumentDefinitions(
           term: { type: "String!", defaultValue: "" }
           hasTerm: { type: "Boolean!", defaultValue: false }
+          entities: { type: "[SearchEntity]" }
         ) {
-        searchConnection(query: $term, mode: AUTOSUGGEST, first: 7)
-          @include(if: $hasTerm) {
+        searchConnection(
+          query: $term
+          entities: $entities
+          mode: AUTOSUGGEST
+          first: 7
+        ) @include(if: $hasTerm) {
           edges {
             node {
               displayLabel
@@ -135,9 +170,14 @@ export const NewSearchBarInputRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query NewSearchBarInputRefetchQuery($term: String!, $hasTerm: Boolean!) {
+    query NewSearchBarInputRefetchQuery(
+      $term: String!
+      $hasTerm: Boolean!
+      $entities: [SearchEntity]
+    ) {
       viewer {
-        ...NewSearchBarInput_viewer @arguments(term: $term, hasTerm: $hasTerm)
+        ...NewSearchBarInput_viewer
+          @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
       }
     }
   `
@@ -161,16 +201,18 @@ export const NewSearchBarInputQueryRenderer: FC<NewSearchBarInputQueryRendererPr
         query NewSearchBarInputSuggestQuery(
           $term: String!
           $hasTerm: Boolean!
+          $entities: [SearchEntity]
         ) {
           viewer {
             ...NewSearchBarInput_viewer
-              @arguments(term: $term, hasTerm: $hasTerm)
+              @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
           }
         }
       `}
       variables={{
         hasTerm: false,
         term: "",
+        entities: null,
       }}
       render={({ props: relayProps }) => {
         if (relayProps && relayProps.viewer) {

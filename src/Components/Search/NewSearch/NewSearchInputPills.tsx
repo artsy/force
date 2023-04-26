@@ -64,11 +64,16 @@ const GRADIENT_BG_WIDTH = 30
 
 interface NewSearchInputPillsProps {
   viewer: NewSearchInputPills_viewer$data
+  selectedPill: PillType
+  onPillClick: (pill: PillType) => void
 }
 
-const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({ viewer }) => {
+const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({
+  viewer,
+  selectedPill,
+  onPillClick,
+}) => {
   const pillsRef = useRef<HTMLDivElement>(null)
-  const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
   const [showPreviousChevron, setShowPreviousChevron] = useState<boolean>(false)
   const [showNextChevron, setShowNextChevron] = useState<boolean>(false)
 
@@ -103,6 +108,14 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({ viewer }) => {
     window.addEventListener("resize", handleResize)
     return () => window.removeEventListener("resize", handleResize)
   }, [])
+
+  const scrollToLeft = () => {
+    return scroll("left")
+  }
+
+  const scrollToRight = () => {
+    return scroll("right")
+  }
 
   // TODO: comments
   const scroll = (direction: "left" | "right") => {
@@ -150,10 +163,6 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({ viewer }) => {
     }
   }
 
-  const onPillClick = (pill: PillType) => {
-    setSelectedPill(pill)
-  }
-
   return (
     <Flex alignItems="center" bg="white">
       <Flex
@@ -162,7 +171,7 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({ viewer }) => {
         opacity={showPreviousChevron ? 1 : 0}
         zIndex={showPreviousChevron ? 1 : -1}
       >
-        <PreviousChevron onClick={scroll("left")} left={2} />
+        <PreviousChevron onClick={scrollToLeft} left={2} />
         <GradientBg placement="left" />
       </Flex>
 
@@ -196,7 +205,7 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({ viewer }) => {
         opacity={showNextChevron ? 1 : 0}
         zIndex={showNextChevron ? 1 : -1}
       >
-        <NextChevron onClick={scroll("right")} right={2} />
+        <NextChevron onClick={scrollToRight} right={2} />
         <GradientBg placement="right" />
       </Flex>
     </Flex>

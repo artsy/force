@@ -1,3 +1,5 @@
+import { SearchEntity } from "__generated__/NewSearchBarInputSuggestQuery.graphql"
+
 export interface PillType {
   displayName: string
   key: string
@@ -65,3 +67,19 @@ export const PILLS: PillType[] = [
   SHOW_PILL,
   GALLERY_PILL,
 ]
+
+interface SearchEntityMap {
+  [key: string]: SearchEntity
+}
+
+export const ELASTIC_PILL_KEY_TO_SEARCH_ENTITY: SearchEntityMap = {
+  artwork: "ARTWORK",
+  artist: "ARTIST",
+  article: "ARTICLE",
+  sale: "SALE",
+  artist_series: "ARTIST_SERIES",
+  marketing_collection: "COLLECTION",
+  fair: "FAIR",
+  partner_show: "SHOW",
+  PartnerGallery: "GALLERY",
+}
