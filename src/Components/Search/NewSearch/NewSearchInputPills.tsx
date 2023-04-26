@@ -104,51 +104,35 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({ viewer }) => {
     return () => window.removeEventListener("resize", handleResize)
   }, [])
 
-  const scrollToLeft = () => {
-    if (pillsRef.current) {
-      const pillsContainer = pillsRef.current
-      const pills = pillsContainer.children
-      const currentScroll = pillsContainer.scrollLeft
-      const visibleWidth = pillsContainer.offsetWidth
-
-      const lastVisiblePill = Array.from(pills)
-        .reverse()
-        .find(
-          (pill: HTMLElement) =>
-            pill.offsetLeft + pill.offsetWidth <= currentScroll + visibleWidth
-        )
-
-      if (lastVisiblePill) {
-        const prevPill = lastVisiblePill.previousElementSibling as HTMLElement
-        const scrollBy = -prevPill.offsetWidth - GRADIENT_BG_WIDTH
-
-        pillsContainer.scrollBy({
-          left: scrollBy,
-          behavior: "smooth",
-        })
-      }
+  // TODO: comments
+  const scroll = (direction: "left" | "right") => {
+    if (!pillsRef.current) {
+      return undefined
     }
-  }
 
-  const scrollToRight = () => {
-    if (pillsRef.current) {
-      const pillsContainer = pillsRef.current
-      const pills = pillsContainer.children
-      const currentScroll = pillsContainer.scrollLeft
+    const pillsContainer = pillsRef.current
+    const pills = Array.from(pillsContainer.children)
+    const currentScroll = pillsContainer.scrollLeft
+    const visibleWidth = pillsContainer.offsetWidth
+    const sortedPills = direction === "left" ? pills.reverse() : pills
 
-      const firstInvisiblePill = Array.from(pills).find(
-        (pill: HTMLElement) => pill.offsetLeft >= currentScroll
-      )
+    const currentPill = sortedPills.find((pill: HTMLElement) =>
+      direction === "left"
+        ? pill.offsetLeft + pill.offsetWidth <= currentScroll + visibleWidth
+        : pill.offsetLeft >= currentScroll
+    )
 
-      if (firstInvisiblePill) {
-        const nextPill = firstInvisiblePill.nextElementSibling as HTMLElement
-        const scrollBy = nextPill.offsetWidth + GRADIENT_BG_WIDTH
+    if (currentPill) {
+      const nextPill = (direction === "left"
+        ? currentPill.previousElementSibling
+        : currentPill.nextElementSibling) as HTMLElement
+      let scrollBy = nextPill.offsetWidth + GRADIENT_BG_WIDTH
+      scrollBy = direction == "left" ? -scrollBy : scrollBy
 
-        pillsContainer.scrollBy({
-          left: scrollBy,
-          behavior: "smooth",
-        })
-      }
+      pillsContainer.scrollBy({
+        left: scrollBy,
+        behavior: "smooth",
+      })
     }
   }
 
@@ -178,7 +162,7 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({ viewer }) => {
         opacity={showPreviousChevron ? 1 : 0}
         zIndex={showPreviousChevron ? 1 : -1}
       >
-        <PreviousChevron onClick={scrollToLeft} left={2} />
+        <PreviousChevron onClick={scroll("left")} left={2} />
         <GradientBg placement="left" />
       </Flex>
 
@@ -212,7 +196,7 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({ viewer }) => {
         opacity={showNextChevron ? 1 : 0}
         zIndex={showNextChevron ? 1 : -1}
       >
-        <NextChevron onClick={scrollToRight} right={2} />
+        <NextChevron onClick={scroll("right")} right={2} />
         <GradientBg placement="right" />
       </Flex>
     </Flex>
