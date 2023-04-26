@@ -1,12 +1,5 @@
 import { ActionType } from "@artsy/cohesion"
-import {
-  ArtsyLogoBlackIcon,
-  Button,
-  Flex,
-  Spacer,
-  Text,
-  useToasts,
-} from "@artsy/palette"
+import { Button, Flex, Spacer, Text, useToasts } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import {
   ContactInformationFormFragmentContainer,
@@ -27,6 +20,7 @@ import {
   contactInformationValidationSchema,
   validate,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
 const getContactInformationFormInitialValues = (
   me: PriceEstimateContactInformation_me$data
@@ -119,7 +113,7 @@ export const PriceEstimateContactInformation: React.FC<PriceEstimateContactInfor
 
       <Flex mt={4}>
         <RouterLink to={"/collector-profile/my-collection"} display="block">
-          <ArtsyLogoBlackIcon display="block" />
+          <ArtsyLogoIcon display="block" />
         </RouterLink>
       </Flex>
 

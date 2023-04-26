@@ -1,12 +1,9 @@
-import {
-  FairIcon,
-  GroupIcon,
-  IconProps,
-  MuseumIcon,
-  PublicationIcon,
-  SoloIcon,
-} from "@artsy/palette"
-import { FC, Fragment } from "react"
+import { ComponentProps, FC, Fragment } from "react"
+import PersonIcon from "@artsy/icons/PersonIcon"
+import PublicationIcon from "@artsy/icons/PublicationIcon"
+import InstitutionIcon from "@artsy/icons/InstitutionIcon"
+import GroupIcon from "@artsy/icons/GroupIcon"
+import FairIcon from "@artsy/icons/FairIcon"
 
 export type CareerHighlightKind =
   | "SOLO_SHOW"
@@ -21,7 +18,7 @@ export const getCareerHighlight = (
   count: number
 ) => {
   let label: string = ""
-  let Icon: FC<IconProps> = Fragment
+  let Icon: FC<ComponentProps<typeof PersonIcon>> = Fragment
 
   // plural
   const pl = count > 1
@@ -39,7 +36,7 @@ export const getCareerHighlight = (
       label = `${
         pl ? "Artists are" : "Artist is"
       } collected by ${article}major institution${ending}.`
-      Icon = MuseumIcon
+      Icon = InstitutionIcon
       break
     case "GROUP_SHOW":
       label = `${
@@ -58,7 +55,7 @@ export const getCareerHighlight = (
       label = `${
         pl ? "Artists" : "Artist"
       } had a solo show at ${article}major institution${ending}.`
-      Icon = SoloIcon
+      Icon = PersonIcon
       break
     /*
     case "": // TODO: Collected by artists

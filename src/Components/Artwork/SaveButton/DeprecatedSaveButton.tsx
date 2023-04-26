@@ -3,12 +3,13 @@ import { DeprecatedSaveButton_artwork$data } from "__generated__/DeprecatedSaveB
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
-import { Flex, HeartIcon, Clickable } from "@artsy/palette"
+import { Flex, Clickable } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { useState } from "react"
 import { useSaveArtwork } from "./useSaveArtwork"
 import { useTracking } from "react-tracking"
 import CloseIcon from "@artsy/icons/CloseIcon"
+import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
 
 export interface DeprecatedSaveButtonProps {
   artwork: DeprecatedSaveButton_artwork$data
@@ -67,7 +68,7 @@ export const DeprecatedSaveButton: React.FC<DeprecatedSaveButtonProps> = ({
         {isSaved && isHovered ? (
           <CloseIcon fill="white100" width={24} height={24} />
         ) : (
-          <HeartIcon fill="white100" width={24} height={24} />
+          <HeartStrokeIcon fill="white100" width={24} height={24} />
         )}
       </Inner>
     </Clickable>

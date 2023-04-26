@@ -2,7 +2,6 @@ import {
   Box,
   Button,
   Flex,
-  HelpIcon,
   Link,
   Select,
   Option,
@@ -25,6 +24,7 @@ import { useRouter } from "System/Router/useRouter"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { ShowAuthDialog, withAuthDialog } from "Components/AuthDialog"
+import HelpIcon from "@artsy/icons/HelpIcon"
 
 export interface ArtworkSidebarBidActionProps {
   artwork: ArtworkSidebarBidAction_artwork$data

@@ -1,15 +1,11 @@
-import {
-  BriefcaseIcon,
-  Flex,
-  IconProps,
-  MapPinIcon,
-  MuseumIcon,
-  Text,
-} from "@artsy/palette"
-import { FC, Fragment } from "react"
+import { Flex, Text } from "@artsy/palette"
+import { ComponentProps, FC, Fragment } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
 import { CollectorProfileHeaderInfo_me$data } from "__generated__/CollectorProfileHeaderInfo_me.graphql"
+import BriefcaseIcon from "@artsy/icons/BriefcaseIcon"
+import MapPinIcon from "@artsy/icons/MapPinIcon"
+import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 
 const MOBILE_ICON_SIZE = 14
 const DESKTOP_ICON_SIZE = 18
@@ -60,7 +56,7 @@ interface InfoFieldProps {
 }
 
 const InfoField: FC<InfoFieldProps> = ({ type, value }) => {
-  let Icon: FC<IconProps> = Fragment
+  let Icon: FC<ComponentProps<typeof InstitutionIcon>> = Fragment
 
   switch (type) {
     case "Location":
@@ -70,7 +66,7 @@ const InfoField: FC<InfoFieldProps> = ({ type, value }) => {
       Icon = BriefcaseIcon
       break
     case "OtherRelevantPositions":
-      Icon = MuseumIcon
+      Icon = InstitutionIcon
       break
   }
 

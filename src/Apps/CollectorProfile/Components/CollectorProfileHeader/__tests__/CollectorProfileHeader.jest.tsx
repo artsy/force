@@ -60,17 +60,17 @@ describe("CollectorProfileHeader", () => {
 
       renderWithRelay(mockResolvers, false)
 
-      expect(screen.getByTitle("Settings")).toBeInTheDocument()
+      expect(screen.getByLabelText("Settings")).toBeInTheDocument()
     })
+
     it("navigates when the the settings icon in Mobile is pressed", () => {
       const { renderWithRelay } = getWrapper("xs")
       renderWithRelay(mockResolvers, false)
 
-      expect(
-        screen
-          .getAllByRole("link")
-          .find(c => c.textContent?.includes("Settings"))
-      ).toHaveAttribute("href", `/settings/edit-profile`)
+      expect(screen.getByLabelText("Settings")).toHaveAttribute(
+        "href",
+        `/settings/edit-profile`
+      )
     })
   })
 })

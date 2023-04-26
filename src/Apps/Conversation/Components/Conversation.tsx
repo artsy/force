@@ -9,17 +9,9 @@ import { graphql } from "react-relay"
 // FIXME:
 // eslint-disable-next-line no-restricted-imports
 import Waypoint from "react-waypoint"
-import {
-  Banner,
-  Box,
-  Flex,
-  GuaranteeIcon,
-  Spacer,
-  Spinner,
-} from "@artsy/palette"
+import { Banner, Box, Flex, Spacer, Spinner } from "@artsy/palette"
 import compact from "lodash/compact"
 import styled from "styled-components"
-
 import { extractNodes } from "Utils/extractNodes"
 import { ItemFragmentContainer } from "./Item"
 import { Reply } from "./Reply"
@@ -31,9 +23,10 @@ import { OrderModal } from "./OrderModal"
 import { UnreadMessagesToastQueryRenderer } from "./UnreadMessagesToast"
 import useOnScreen from "Apps/Conversation/Utils/useOnScreen"
 import { UpdateConversation } from "Apps/Conversation/Mutation/UpdateConversationMutation"
-
 import { Conversation_conversation$data } from "__generated__/Conversation_conversation.graphql"
 import { useRouter } from "System/Router/useRouter"
+import VerifiedIcon from "@artsy/icons/VerifiedIcon"
+
 export interface ConversationProps {
   conversation: Conversation_conversation$data
   showDetails: boolean
@@ -64,7 +57,7 @@ const GuaranteeBanner: React.FC<{ conversationID: string }> = ({
 
   return showBanner ? (
     <Banner variant="brand">
-      <GuaranteeIcon mr={1} fill="white100" />
+      <VerifiedIcon mr={1} fill="white100" />
       To be covered by the Artsy Guarantee, always communicate and pay through
       the Artsy platform.
     </Banner>

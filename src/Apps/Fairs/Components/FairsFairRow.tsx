@@ -1,11 +1,12 @@
 import * as React from "react"
-import { Box, BoxProps, ChevronIcon, Flex, Image, Text } from "@artsy/palette"
+import { Box, BoxProps, Flex, Image, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
 import { DateTime } from "luxon"
 import { RouterLink } from "System/Router/RouterLink"
 import { FairsFairRow_fair$data } from "__generated__/FairsFairRow_fair.graphql"
 import { themeGet } from "@styled-system/theme-get"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 
 const Container = styled(Flex)<{ href?: string }>`
   ${({ href }) =>
@@ -80,7 +81,7 @@ const FairsFairRow: React.FC<FairsFairRowProps> = ({ fair, ...rest }) => {
           </Text>
         </Flex>
 
-        {href && <ChevronIcon direction="right" fill="black60" />}
+        {href && <ChevronRightIcon fill="black60" />}
       </Container>
     </LinkOrBox>
   )

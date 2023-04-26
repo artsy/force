@@ -1,6 +1,6 @@
 import { useState } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { Box, Flex, Title, breakpoints } from "@artsy/palette"
+import { Box, Flex, breakpoints } from "@artsy/palette"
 import { Match } from "found"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
@@ -13,6 +13,7 @@ import {
   MOBILE_LOGGED_IN_NAV_HEIGHT,
   DESKTOP_NAV_BAR_HEIGHT,
 } from "Components/NavBar/constants"
+import { MetaTags } from "Components/MetaTags"
 const LARGE_SCREEN_CONVERSATION_LIST_WIDTH = "375px"
 
 interface ConversationRouteProps {
@@ -55,7 +56,7 @@ export const ConversationRoute: React.FC<ConversationRouteProps> = props => {
   const [showDetails, setShowDetails] = useState(false)
   return (
     <>
-      <Title>Inbox | Artsy</Title>
+      <MetaTags title="Inbox | Artsy" />
 
       <ConstrainedHeightContainer>
         <ConversationContainer>
