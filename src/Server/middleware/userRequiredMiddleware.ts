@@ -10,6 +10,7 @@ const USER_REQUIRED_ROUTES = [
   "/settings/shipping",
   "/user/conversations(.*)",
   "/collector-profile/saves(.*)",
+  "/auction-result(.*)",
 ]
 
 const isRequestRequiringUser = req => {
