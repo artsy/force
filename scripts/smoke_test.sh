@@ -18,7 +18,16 @@ NODE_ENV=production nohup yarn start &
 
 # Leverage the server boot time to begin the cypress install.
 # Run install with a 45 second timeout as a workaround for hanging installs.
+set +e
 timeout 45 ./node_modules/.bin/cypress install
+
+EXIT_STATUS=$?
+if [ $EXIT_STATUS -eq 124 ]; then
+    echo "Cypress install timed out. Continue anyway."
+elif [ $EXIT_STATUS -ne 0 ]; then
+    exit $EXIT_STATUS
+fi
+set -e
 
 # wait for it to accept connections
 while ! curl --output /dev/null --silent --head --fail http://localhost:5000; do
