@@ -1,8 +1,9 @@
-import { Button, Flex, Separator, Text, WinningBidIcon } from "@artsy/palette"
+import { Button, Flex, Separator, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkRequestPriceEstimateSection_artwork$data } from "__generated__/MyCollectionArtworkRequestPriceEstimateSection_artwork.graphql"
+import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 
 interface MyCollectionArtworkRequestPriceEstimateSectionProps {
   artwork: MyCollectionArtworkRequestPriceEstimateSection_artwork$data
@@ -16,7 +17,7 @@ export const MyCollectionArtworkRequestPriceEstimateSection: React.FC<MyCollecti
       <>
         <Separator my={2} />
         <Flex alignItems="center" flexDirection={"row"} mb={2} mt={2}>
-          <WinningBidIcon />
+          <CheckmarkStrokeIcon />
           <Text variant="sm" ml={0.5}>
             Price estimate request sent
           </Text>

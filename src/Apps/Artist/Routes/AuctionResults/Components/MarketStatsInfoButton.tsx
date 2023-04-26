@@ -1,14 +1,7 @@
-import {
-  Box,
-  Clickable,
-  InfoCircleIcon,
-  Join,
-  ModalDialog,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Box, Clickable, Join, ModalDialog, Spacer, Text } from "@artsy/palette"
 import { useState } from "react"
 import * as React from "react"
+import InfoIcon from "@artsy/icons/InfoIcon"
 
 interface MarketStatsInfoButtonProps {
   onClick?: () => void
@@ -27,7 +20,7 @@ export const MarketStatsInfoButton: React.FC<MarketStatsInfoButtonProps> = ({
           onClick?.()
         }}
       >
-        <InfoCircleIcon />
+        <InfoIcon />
       </Clickable>
 
       {showModal && (

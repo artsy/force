@@ -1,9 +1,10 @@
 import { MetaTags } from "Components/MetaTags"
 import { ConfirmationScreenComponent } from "Components/ConfirmationScreenComponent"
-import { ArtsyLogoBlackIcon, Flex } from "@artsy/palette"
+import { Flex } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { useRouter } from "System/Router/useRouter"
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
 export const PriceEstimateConfirmation = () => {
   const { match } = useRouter()
@@ -14,7 +15,7 @@ export const PriceEstimateConfirmation = () => {
       <MetaTags title="Request a Price Estimate | Artsy" />
       <Flex my={4}>
         <RouterLink to={"/collector-profile/my-collection"} display="block">
-          <ArtsyLogoBlackIcon display="block" />
+          <ArtsyLogoIcon display="block" />
         </RouterLink>
       </Flex>
 

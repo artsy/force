@@ -4,7 +4,8 @@ import { useTracking } from "react-tracking"
 import { ArtworkSidebarClassification_artwork$data } from "__generated__/ArtworkSidebarClassification_artwork.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
-import { ArtworkIcon, Clickable, Flex, Text } from "@artsy/palette"
+import { Clickable, Flex, Text } from "@artsy/palette"
+import ArtworkIcon from "@artsy/icons/ArtworkIcon"
 
 interface ArtworkSidebarClassificationProps {
   artwork: ArtworkSidebarClassification_artwork$data

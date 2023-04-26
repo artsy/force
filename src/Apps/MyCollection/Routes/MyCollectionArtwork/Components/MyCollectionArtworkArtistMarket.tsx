@@ -1,11 +1,8 @@
 import {
   Clickable,
   Column,
-  DecreaseIcon,
   Flex,
   GridColumns,
-  IncreaseIcon,
-  InfoCircleIcon,
   Spacer,
   Text,
   Tooltip,
@@ -14,6 +11,9 @@ import { formatSellThroughRate } from "Apps/Artwork/Utils/insightHelpers"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkArtistMarket_marketPriceInsights$data } from "__generated__/MyCollectionArtworkArtistMarket_marketPriceInsights.graphql"
+import InfoIcon from "@artsy/icons/InfoIcon"
+import ArrowUpIcon from "@artsy/icons/ArrowUpIcon"
+import ArrowDownIcon from "@artsy/icons/ArrowDownIcon"
 
 export const MyCollectionArtworkArtistMarket = ({
   marketPriceInsights,
@@ -52,7 +52,7 @@ export const MyCollectionArtworkArtistMarket = ({
             content="These statistics are based on the last 36 months of auction sale data from top commercial auction houses."
           >
             <Clickable ml={0.5} style={{ lineHeight: 0 }}>
-              <InfoCircleIcon />
+              <InfoIcon />
             </Clickable>
           </Tooltip>
         </Flex>
@@ -116,7 +116,7 @@ const InsightColumn = ({ name, value }: { name: string; value: string }) => {
 const SalePriceEstimatePerformance = ({ value }: { value: number }) => {
   const sign = value < 0 ? "down" : "up"
   const color = sign === "up" ? "green100" : "red100"
-  const Arrow = sign === "up" ? IncreaseIcon : DecreaseIcon
+  const Arrow = sign === "up" ? ArrowUpIcon : ArrowDownIcon
 
   return (
     <Flex flexDirection="row" alignItems="baseline">
