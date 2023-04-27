@@ -34,6 +34,16 @@ jest.mock(
 
 jest.mock("Components/ProgressiveOnboarding/ProgressiveOnboardingCounts")
 
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        pathname: "/artist/example",
+      },
+    },
+  }),
+}))
+
 const Example: FC = () => {
   return (
     <ProgressiveOnboardingProvider>

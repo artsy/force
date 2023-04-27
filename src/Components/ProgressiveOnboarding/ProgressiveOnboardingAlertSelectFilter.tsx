@@ -4,11 +4,19 @@ import {
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
-import { FC, useEffect, useRef } from "react"
-import { Text } from "@artsy/palette"
+import { FC, ReactNode, useEffect, useRef } from "react"
+import { Position, Text } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 
-export const ProgressiveOnboardingAlertSelectFilter: FC = ({ children }) => {
+interface ProgressiveOnboardingAlertSelectFilterProps {
+  children: ReactNode
+  placement?: Position
+}
+
+export const ProgressiveOnboardingAlertSelectFilter: FC<ProgressiveOnboardingAlertSelectFilterProps> = ({
+  children,
+  placement = "left-start",
+}) => {
   const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
 
   const { currentlySelectedFilters } = useArtworkFilterContext()
@@ -50,7 +58,7 @@ export const ProgressiveOnboardingAlertSelectFilter: FC = ({ children }) => {
   return (
     <ProgressiveOnboardingPopover
       name={PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER}
-      placement="left-start"
+      placement={placement}
       onClose={handleClose}
       onDismiss={handleDismiss}
       popover={<Text variant="xs">First, select the relevant filters.</Text>}

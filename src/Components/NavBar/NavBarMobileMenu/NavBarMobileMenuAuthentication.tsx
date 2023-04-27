@@ -5,6 +5,7 @@ import { trackEvent } from "Server/analytics/helpers"
 import { useSystemContext } from "System/useSystemContext"
 import * as React from "react"
 import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
+import { ProgressiveOnboardingAlertHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertHighlight"
 
 export const NavBarMobileMenuLoggedIn: React.FC = () => {
   const handleClick = (
@@ -25,16 +26,22 @@ export const NavBarMobileMenuLoggedIn: React.FC = () => {
 
   return (
     <>
-      <>
-        <NavBarMobileMenuNotificationsQueryRenderer />
-        <NavBarMobileMenuItemLink
-          to="/settings/edit-profile"
-          color="black60"
-          onClick={handleClick}
-        >
-          Settings
+      <NavBarMobileMenuNotificationsQueryRenderer />
+
+      <ProgressiveOnboardingAlertHighlight
+        position={{ top: "2.5px", left: "23px" }}
+      >
+        <NavBarMobileMenuItemLink to="/settings/alerts">
+          Alerts
         </NavBarMobileMenuItemLink>
-      </>
+      </ProgressiveOnboardingAlertHighlight>
+
+      <NavBarMobileMenuItemLink
+        to="/settings/edit-profile"
+        onClick={handleClick}
+      >
+        Settings
+      </NavBarMobileMenuItemLink>
 
       <NavBarMobileMenuItemLink to="/works-for-you">
         Works for you
