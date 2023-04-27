@@ -72,6 +72,10 @@ export const auctionRoutes: AppRouteConfig[] = [
       }
     `,
     prepareVariables: (params, props) => {
+      const auctionFilterDefaults = {
+        sort: "sale_position",
+      }
+
       const initialFilterStateFromUrl = getInitialFilterState(
         props.location?.query ?? {}
       )
@@ -83,6 +87,7 @@ export const auctionRoutes: AppRouteConfig[] = [
       const variables = {
         slug: params.slug,
         input: {
+          ...auctionFilterDefaults,
           ...initialFilterStateFromUrl,
           ...userSpecificFilterState,
           saleID: params.slug,

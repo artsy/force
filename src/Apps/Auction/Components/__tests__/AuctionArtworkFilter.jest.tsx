@@ -3,7 +3,7 @@ import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import {
   AuctionArtworkFilterRefetchContainer,
   getArtworkFilterInputArgs,
-} from "../AuctionArtworkFilter"
+} from "Apps/Auction/Components/AuctionArtworkFilter"
 import { AuctionArtworkFilterTestQuery } from "__generated__/AuctionArtworkFilterTestQuery.graphql"
 
 jest.unmock("react-relay")
@@ -82,7 +82,6 @@ describe("AuctionArtworkFilter", () => {
       expect(getArtworkFilterInputArgs()).toEqual({
         aggregations: ["ARTIST", "MEDIUM", "TOTAL"],
         first: 39,
-        sort: "sale_position",
       })
     })
 
