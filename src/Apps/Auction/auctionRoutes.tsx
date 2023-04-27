@@ -72,20 +72,26 @@ export const auctionRoutes: AppRouteConfig[] = [
       }
     `,
     prepareVariables: (params, props) => {
-      const initialFilterState = getInitialFilterState(
+      const initialFilterStateFromUrl = getInitialFilterState(
         props.location?.query ?? {}
       )
 
-      return {
+      const userSpecificFilterState = getArtworkFilterInputArgs(
+        props.context.user
+      )
+
+      const variables = {
         slug: params.slug,
         input: {
-          ...initialFilterState,
-          ...getArtworkFilterInputArgs(props.context.user),
+          ...initialFilterStateFromUrl,
+          ...userSpecificFilterState,
           saleID: params.slug,
           // FIXME: Understand why this is needed to view lots in `the-artist-is-present-a-benefit-auction-for-ukraine` while logged out
           priceRange: "*-*",
         },
       }
+
+      return variables
     },
     children: [
       { path: "" },
