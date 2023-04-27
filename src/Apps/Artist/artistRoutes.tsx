@@ -331,7 +331,7 @@ export const artistRoutes: AppRouteConfig[] = [
     },
     query: graphql`
       query artistRoutes_AuctionResultQuery($auctionResultId: String!) {
-        auctionResult(id: $auctionResultId) {
+        auctionResult(id: $auctionResultId) @principalField {
           ...AuctionResult_auctionResult
         }
       }
