@@ -42,6 +42,7 @@ import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCou
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { Jump } from "Utils/Hooks/useJump"
 import FilterIcon from "@artsy/icons/FilterIcon"
+import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -246,20 +247,25 @@ export const BaseArtworkFilter: React.FC<
                         }
                       : {})}
                   >
-                    <Button
-                      size="small"
-                      onClick={() => toggleMobileActionSheet(true)}
-                      mr={2}
-                    >
-                      <Flex justifyContent="space-between" alignItems="center">
-                        <FilterIcon fill="white100" />
-                        <Spacer x={0.5} />
-                        Filter
-                        {appliedFiltersTotalCount > 0
-                          ? ` • ${appliedFiltersTotalCount}`
-                          : ""}
-                      </Flex>
-                    </Button>
+                    <ProgressiveOnboardingAlertSelectFilter placement="bottom-start">
+                      <Button
+                        size="small"
+                        onClick={() => toggleMobileActionSheet(true)}
+                        mr={2}
+                      >
+                        <Flex
+                          justifyContent="space-between"
+                          alignItems="center"
+                        >
+                          <FilterIcon fill="white100" />
+                          <Spacer x={0.5} />
+                          Filter
+                          {appliedFiltersTotalCount > 0
+                            ? ` • ${appliedFiltersTotalCount}`
+                            : ""}
+                        </Flex>
+                      </Button>
+                    </ProgressiveOnboardingAlertSelectFilter>
 
                     <ArtworkSortFilter />
                   </Flex>

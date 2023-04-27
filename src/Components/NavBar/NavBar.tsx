@@ -304,56 +304,57 @@ export const NavBar: React.FC = track(
 
                     <ProgressiveOnboardingFollowFindQueryRenderer>
                       <ProgressiveOnboardingSaveFindQueryRenderer>
-                        <ProgressiveOnboardingAlertFindQueryRenderer>
-                          <NavBarItemButton
-                            display="flex"
-                            alignItems="center"
-                            justifyContent="center"
-                            aria-label="My Collection"
-                            onClick={() =>
-                              router.push("/collector-profile/my-collection")
-                            }
-                          >
-                            <PersonIcon
-                              aria-hidden="true"
-                              height={22}
-                              width={22}
-                            />
-                          </NavBarItemButton>
-                        </ProgressiveOnboardingAlertFindQueryRenderer>
+                        <NavBarItemButton
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          aria-label="My Collection"
+                          onClick={() =>
+                            router.push("/collector-profile/my-collection")
+                          }
+                        >
+                          <PersonIcon
+                            aria-hidden="true"
+                            height={22}
+                            width={22}
+                          />
+                        </NavBarItemButton>
                       </ProgressiveOnboardingSaveFindQueryRenderer>
                     </ProgressiveOnboardingFollowFindQueryRenderer>
                   </>
                 )}
-                <NavBarItemButton
-                  mr={-1}
-                  width={40}
-                  height={40}
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  aria-label="Menu"
-                  aria-expanded={showMobileMenu}
-                  onClick={event => {
-                    event.preventDefault()
 
-                    toggleMobileNav(prevShowMenu => {
-                      if (!prevShowMenu) {
-                        trackEvent({
-                          action_type:
-                            DeprecatedAnalyticsSchema.ActionType.Click,
-                          subject:
-                            DeprecatedAnalyticsSchema.Subject
-                              .SmallScreenMenuSandwichIcon,
-                        })
-                      }
+                <ProgressiveOnboardingAlertFindQueryRenderer>
+                  <NavBarItemButton
+                    mr={-1}
+                    width={40}
+                    height={40}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    aria-label="Menu"
+                    aria-expanded={showMobileMenu}
+                    onClick={event => {
+                      event.preventDefault()
 
-                      return !prevShowMenu
-                    })
-                  }}
-                >
-                  <NavBarMobileMenuIcon open={showMobileMenu} />
-                </NavBarItemButton>
+                      toggleMobileNav(prevShowMenu => {
+                        if (!prevShowMenu) {
+                          trackEvent({
+                            action_type:
+                              DeprecatedAnalyticsSchema.ActionType.Click,
+                            subject:
+                              DeprecatedAnalyticsSchema.Subject
+                                .SmallScreenMenuSandwichIcon,
+                          })
+                        }
+
+                        return !prevShowMenu
+                      })
+                    }}
+                  >
+                    <NavBarMobileMenuIcon open={showMobileMenu} />
+                  </NavBarItemButton>
+                </ProgressiveOnboardingAlertFindQueryRenderer>
               </Flex>
             </Flex>
 
