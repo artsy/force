@@ -47,7 +47,7 @@ const FALLBACK_DATA = [
   {
     credit: null,
     description:
-      "See what you can do on Artsy–the best tool for art collectors.",
+      "See what you can do on Artsy—the best tool for art collectors.",
     id: 1,
     imageUrl: "https://files.artsy.net/images/01_Overarching-CC_Launch.png",
     label: null,
