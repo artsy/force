@@ -581,9 +581,9 @@ describe("OrderApp routing redirects", () => {
 describe("OrderApp", () => {
   const mockGetENV = getENV as jest.Mock
 
-  const getWrapper = ({ props, context }: any) => {
+  const getWrapper = ({ props, context, breakpoint = "lg" }: any) => {
     return mount(
-      <MockBoot>
+      <MockBoot breakpoint={breakpoint}>
         <HeadProvider>
           <SystemContextProvider {...context}>
             <OrderAppFragmentContainer {...props} />
@@ -645,38 +645,6 @@ describe("OrderApp", () => {
     )
   })
 
-  it("shows the Zendesk chat integration button", () => {
-    const props = getProps() as any
-    const subject = getWrapper({ props }) as any
-    expect(subject.find("ZendeskWrapper")).toHaveLength(1)
-  })
-
-  it("does not show the Zendesk chat integration button if in a modal", () => {
-    const props = getProps()
-    const subject = getWrapper({
-      props: { ...props, location: { query: { isModal: true } } },
-    })
-
-    expect(subject.find("ZendeskWrapper")).toHaveLength(1)
-  })
-
-  it("shows the Salesforce chat integration button", () => {
-    mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
-    const props = getProps() as any
-    const subject = getWrapper({ props }) as any
-    expect(subject.find("SalesforceWrapper")).toHaveLength(1)
-  })
-
-  it("does not show the Salesforce chat integration button if in a modal", () => {
-    mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
-    const props = getProps()
-    const subject = getWrapper({
-      props: { ...props, location: { query: { isModal: true } } },
-    })
-
-    expect(subject.find("SalesforceWrapper")).toHaveLength(0)
-  })
-
   it("shows an error page if the order is missing", () => {
     const props = getProps()
     const subject = getWrapper({
@@ -689,5 +657,46 @@ describe("OrderApp", () => {
     expect(subject.find(ErrorPage).text()).toContain(
       "Sorry, the page you were looking for doesn’t exist at this URL."
     )
+  })
+
+  describe("chat bubble", () => {
+    it("shows the Zendesk chat integration button", () => {
+      const props = getProps() as any
+      const subject = getWrapper({ props }) as any
+      expect(subject.find("ZendeskWrapper")).toHaveLength(1)
+    })
+
+    it("does not show the Zendesk chat integration button if in a modal", () => {
+      const props = getProps()
+      const subject = getWrapper({
+        props: { ...props, location: { query: { isModal: true } } },
+      })
+
+      expect(subject.find("ZendeskWrapper")).toHaveLength(1)
+    })
+
+    it("shows the Salesforce chat integration button", () => {
+      mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+      const props = getProps() as any
+      const subject = getWrapper({ props }) as any
+      expect(subject.find("SalesforceWrapper")).toHaveLength(1)
+    })
+
+    it("does not show the Salesforce chat integration button on mobile", () => {
+      mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+      const props = getProps() as any
+      const subject = getWrapper({ props, breakpoint: "xs" }) as any
+      expect(subject.find("SalesforceWrapper")).toHaveLength(0)
+    })
+
+    it("does not show the Salesforce chat integration button if in a modal", () => {
+      mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+      const props = getProps()
+      const subject = getWrapper({
+        props: { ...props, location: { query: { isModal: true } } },
+      })
+
+      expect(subject.find("SalesforceWrapper")).toHaveLength(0)
+    })
   })
 })

@@ -5,6 +5,7 @@ import { AuctionAppTestQuery } from "__generated__/AuctionAppTestQuery.graphql"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { getENV } from "Utils/getENV"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.unmock("react-relay")
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
@@ -54,10 +55,15 @@ jest.mock("Utils/getENV")
 describe("AuctionApp", () => {
   const mockUseAuctionTracking = useAuctionTracking as jest.Mock
   const mockGetENV = getENV as jest.Mock
+  let breakpoint
 
   const { getWrapper } = setupTestWrapper<AuctionAppTestQuery>({
     Component: (props: any) => {
-      return <AuctionAppFragmentContainer {...props} />
+      return (
+        <MockBoot breakpoint={breakpoint}>
+          <AuctionAppFragmentContainer {...props} />
+        </MockBoot>
+      )
     },
     query: graphql`
       query AuctionAppTestQuery($input: FilterArtworksInput, $slug: String!) {
@@ -79,6 +85,7 @@ describe("AuctionApp", () => {
   })
 
   beforeAll(() => {
+    breakpoint = "lg"
     mockUseAuctionTracking.mockImplementation(() => ({
       tracking: {
         auctionPageView: jest.fn(),
@@ -111,6 +118,14 @@ describe("AuctionApp", () => {
     mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
     const wrapper = getWrapper()
     expect(wrapper.find("SalesforceWrapper").exists()).toBeTruthy()
+    expect(wrapper.find("ZendeskWrapper").exists()).toBeFalsy()
+  })
+
+  it("does not embed Salesforce widget on mobile", () => {
+    breakpoint = "xs"
+    mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+    const wrapper = getWrapper()
+    expect(wrapper.find("SalesforceWrapper").exists()).toBeFalsy()
     expect(wrapper.find("ZendeskWrapper").exists()).toBeFalsy()
   })
 
