@@ -1,6 +1,6 @@
 import { AutocompleteInput, Box, BoxProps } from "@artsy/palette"
 import { SearchInputContainer } from "Components/Search/SearchInputContainer"
-import { ChangeEvent, FC, useState } from "react"
+import { ChangeEvent, FC, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -20,6 +20,7 @@ import {
 } from "Components/Search/NewSearch/constants"
 import { SearchResult } from "Components/Search/NewSearch/SearchResult"
 import qs from "qs"
+import { throttle } from "lodash"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 
@@ -38,6 +39,8 @@ export const getSearchTerm = (location: Location): string => {
 
   return term
 }
+
+const SEARCH_THROTTLE_DELAY = 500
 
 const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
   isXs,
@@ -64,13 +67,11 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
     }
   })
 
-  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-    setValue(event.target.value)
-
+  const searchRequest = (value: string) => {
     relay.refetch(
       {
         hasTerm: true,
-        term: event.target.value,
+        term: value,
       },
       null,
       error => {
@@ -78,8 +79,21 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
           logger.error(error)
           return
         }
+
+        // TODO: Report performance
+        // TODO: Tracking
       }
     )
+  }
+  const throttledSearchRequest = useMemo(
+    () => throttle(searchRequest, SEARCH_THROTTLE_DELAY, { leading: true }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
+
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    setValue(event.target.value)
+    throttledSearchRequest(event.target.value)
   }
 
   const handlePillClick = (pill: PillType) => {
@@ -105,6 +119,12 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
     setValue("")
   }
 
+  const handleSubmit = () => {
+    if (value) {
+      window.location.href = `/search?term=${encodeURIComponent(value)}`
+    }
+  }
+
   return (
     <AutocompleteInput
       placeholder={isXs ? t`navbar.searchArtsy` : t`navbar.searchBy`}
@@ -113,6 +133,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       value={value}
       onChange={handleChange}
       onClear={() => setValue("")}
+      onSubmit={handleSubmit}
       header={
         <NewSearchInputPillsFragmentContainer
           viewer={viewer}
