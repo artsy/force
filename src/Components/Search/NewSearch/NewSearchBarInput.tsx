@@ -10,7 +10,6 @@ import { NewSearchBarInput_viewer$data } from "__generated__/NewSearchBarInput_v
 import { NewSearchBarInputSuggestQuery } from "__generated__/NewSearchBarInputSuggestQuery.graphql"
 import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
-import { SuggestionItem } from "Components/Search/Suggestions/SuggestionItem"
 import { NewSearchBarFooter } from "Components/Search/NewSearch/NewSearchBarFooter"
 import { getLabel } from "./utils/getLabel"
 import { isServer } from "Server/isServer"
@@ -19,6 +18,8 @@ import {
   PillType,
   TOP_PILL,
 } from "Components/Search/NewSearch/constants"
+import { SearchResult } from "Components/Search/NewSearch/SearchResult"
+import qs from "qs"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 
@@ -28,13 +29,23 @@ export interface NewSearchBarInputProps extends SystemContextProps {
   isXs: boolean
 }
 
+export const getSearchTerm = (location: Location): string => {
+  const term = qs.parse(location.search?.slice(1))?.term ?? ""
+
+  if (Array.isArray(term)) {
+    return term[0]
+  }
+
+  return term
+}
+
 const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
   isXs,
   relay,
   viewer,
 }) => {
   const { t } = useTranslation()
-  const [value, setValue] = useState("")
+  const [value, setValue] = useState(getSearchTerm(window.location))
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
 
   const options = extractNodes(viewer.searchConnection)
@@ -90,6 +101,10 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
     )
   }
 
+  const handleRedirect = () => {
+    setValue("")
+  }
+
   return (
     <AutocompleteInput
       placeholder={isXs ? t`navbar.searchArtsy` : t`navbar.searchBy`}
@@ -106,24 +121,24 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
         />
       }
       renderOption={option => (
-        <SuggestionItem
+        <SearchResult
           display={option.text}
           href={option.href}
-          isHighlighted={false} // TODO: change
           label={option.subtitle ?? ""}
           imageUrl={option.imageUrl}
           query={value}
           showArtworksButton={option.showArtworksButton}
           showAuctionResultsButton={option.showAuctionResultsButton}
+          onRedirect={handleRedirect}
         />
       )}
       footer={
         <NewSearchBarFooter
           display={value}
           href={`/search?term=${encodeURIComponent(value)}`}
-          isHighlighted={false}
           label={value}
           query={value}
+          onRedirect={handleRedirect}
         />
       }
     />

@@ -9,27 +9,27 @@ interface SuggestionItemProps {
   display: string
   href: string
   imageUrl?: string
-  isHighlighted: boolean
   label: string
   query: string
   showArtworksButton?: boolean
   showAuctionResultsButton?: boolean
+  onRedirect: () => void
 }
 
 export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
   href,
-  isHighlighted,
   query,
+  onRedirect,
 }) => {
   const handleClick = (
     event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
-    event.preventDefault()
+    // TODO: send stats here?
+    onRedirect()
   }
 
   return (
     <SuggestionItemLink
-      bg={isHighlighted ? "black5" : "white100"}
       borderTop="1px solid"
       borderTopColor="black10"
       onClick={handleClick}
@@ -55,6 +55,11 @@ const SuggestionItemLink = styled(RouterLink).attrs({
   justify-content: center;
   text-decoration: none;
   min-height: 60px;
+  background-color: ${themeGet("colors.white100")};
+
+  &:hover {
+    background-color: ${themeGet("colors.black5")};
+  }
 `
 
 const Highlight = styled.strong`
