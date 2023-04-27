@@ -1,21 +1,27 @@
 import { getENV } from "Utils/getENV"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { useAppendStylesheet } from "Utils/Hooks/useAppendStylesheet"
-import { themeGet } from "@styled-system/theme-get"
 
 export const SalesforceWrapper: React.FC = () => {
   useAppendStylesheet({
     id: "salesforce-chat-styles",
     body: `
-    .embeddedServiceHelpButton .helpButton .uiButton {
-      background: ${themeGet("colors.black100")};
-      font-family: ${themeGet("fonts.sans")};
-      box-shadow: none;
-    }
-  
-    .embeddedServiceHelpButton .helpButton .uiButton:focus {
-      background: ${themeGet("colors.blue100")};
-    }
+      .embeddedServiceHelpButton .helpButton .uiButton {
+        background: #000000; /* colors.black100 */
+        font-family: "ll-unica77", "Helvetica Neue", Helvetica, Arial, sans-serif; /* fonts.sans */
+        box-shadow: none;
+      }
+    
+      .embeddedServiceHelpButton .helpButton .uiButton:focus {
+        background: #1023D7; /* colors.blue100 */
+      }
+      
+      /* Make sure it doesn't render when loaded on desktop and then the window is resized */
+      @media (max-width: 767px) { /* mediaQueries.xs */
+        .embeddedServiceHelpButton .helpButton .uiButton {
+          display: none;
+        }
+      }
     `,
   })
 
