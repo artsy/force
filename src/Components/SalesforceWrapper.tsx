@@ -1,6 +1,7 @@
 import { getENV } from "Utils/getENV"
 import { useLoadScript } from "Utils/Hooks/useLoadScript"
 import { useAppendStylesheet } from "Utils/Hooks/useAppendStylesheet"
+import { useEffect } from "react"
 
 export const SalesforceWrapper: React.FC = () => {
   useAppendStylesheet({
@@ -56,6 +57,14 @@ export const SalesforceWrapper: React.FC = () => {
       )
     },
   })
+
+  window.embedded_svc.showHelpButton?.()
+
+  useEffect(() => {
+    return () => {
+      window.embedded_svc?.hideHelpButton?.()
+    }
+  }, [])
 
   return null
 }
