@@ -58,7 +58,7 @@ export const SalesforceWrapper: React.FC = () => {
     },
   })
 
-  window.embedded_svc.showHelpButton?.()
+  window.embedded_svc?.showHelpButton?.()
 
   useEffect(() => {
     return () => {
