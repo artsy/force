@@ -1,6 +1,6 @@
-import { Box, Input, TextArea } from "@artsy/palette"
+import { Box, Input, PhoneInput, TextArea } from "@artsy/palette"
 import { useFormikContext } from "formik"
-import { PhoneNumberInput } from "Components/PhoneNumberInput"
+import { countries } from "Utils/countries"
 
 export interface ConsignmentInquiryFormModel {
   name: string
@@ -44,23 +44,19 @@ export const ConsignmentInquiryForm: React.FC<{}> = ({ ...rest }) => {
         error={touched.email && errors.email}
         required
       />
-      <PhoneNumberInput
+      <PhoneInput
+        options={countries}
+        onSelect={option => {
+          setFieldValue("phoneNumberCountryCode", option.value)
+        }}
+        name="phoneNumber"
+        onChange={handleChange}
+        onBlur={handleBlur}
         mt={4}
-        inputProps={{
-          name: "phoneNumber",
-          onBlur: handleBlur,
-          onChange: handleChange,
-          placeholder: "(000) 000 0000",
-          value: values.phoneNumber,
-        }}
-        selectProps={{
-          name: "phoneNumberCountryCode",
-          onBlur: handleBlur,
-          selected: values.phoneNumberCountryCode,
-          onSelect: value => {
-            setFieldValue("phoneNumberCountryCode", value)
-          },
-        }}
+        dropdownValue={values.phoneNumberCountryCode}
+        inputValue={values.phoneNumber}
+        placeholder="(000) 000 0000"
+        required
         error={
           (touched.phoneNumberCountryCode && errors.phoneNumberCountryCode) ||
           (touched.phoneNumber && errors.phoneNumber)
