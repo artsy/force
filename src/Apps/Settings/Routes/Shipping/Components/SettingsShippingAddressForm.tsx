@@ -7,6 +7,7 @@ import {
   Input,
   Message,
   ModalDialog,
+  PhoneInput,
   useToasts,
   VisuallyHidden,
 } from "@artsy/palette"
@@ -16,10 +17,8 @@ import { CountrySelect } from "Components/CountrySelect"
 import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
 import { useEditAddress } from "Apps/Settings/Routes/Shipping/useEditAddress"
 import { useSetDefaultAddress } from "Apps/Settings/Routes/Shipping/useSetDefaultAddress"
-import {
-  PhoneNumberInput,
-  validatePhoneNumber,
-} from "Components/PhoneNumberInput"
+import { validatePhoneNumber } from "Components/PhoneNumberInput"
+import { countries } from "Utils/countries"
 
 export const INITIAL_ADDRESS = {
   name: "",
@@ -305,25 +304,20 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
                 </Column>
 
                 <Column span={12}>
-                  <PhoneNumberInput
-                    inputProps={{
-                      name: "attributes.phoneNumber",
-                      onBlur: handleBlur,
-                      onChange: handleChange,
-                      placeholder: "(000) 000 0000",
-                      value: values.attributes.phoneNumber,
+                  <PhoneInput
+                    options={countries}
+                    onSelect={option => {
+                      setFieldValue(
+                        "attributes.phoneNumberCountryCode",
+                        option.value
+                      )
                     }}
-                    selectProps={{
-                      name: "attributes.phoneNumberCountryCode",
-                      onBlur: handleBlur,
-                      selected: values.attributes.phoneNumberCountryCode,
-                      onSelect: value => {
-                        setFieldValue(
-                          "attributes.phoneNumberCountryCode",
-                          value
-                        )
-                      },
-                    }}
+                    name="attributes.phoneNumber"
+                    onChange={handleChange}
+                    onBlur={handleBlur}
+                    dropdownValue={values.attributes.phoneNumberCountryCode}
+                    inputValue={values.attributes.phoneNumber}
+                    placeholder="(000) 000 0000"
                     required
                     error={
                       (touched.attributes?.phoneNumberCountryCode &&
