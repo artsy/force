@@ -1,10 +1,10 @@
-import { redirectCollectionToArtistSeries } from "../redirectCollectionToArtistSeries"
+import { redirectCollectionToArtistSeries } from "Apps/Collect/Server/redirectCollectionToArtistSeries"
 
 describe("redirectCollectionToArtistSeries", () => {
   it("does not redirect for a non-migrated artist series", () => {
     const req = {
       params: {
-        collectionSlug: "not-artist-series",
+        slug: "not-artist-series",
       },
     }
     const res = {
@@ -19,7 +19,7 @@ describe("redirectCollectionToArtistSeries", () => {
     const spy = jest.fn()
     const req = {
       params: {
-        collectionSlug: "kaws-four-foot-companion",
+        slug: "kaws-four-foot-companion",
       },
     }
     const res = {
