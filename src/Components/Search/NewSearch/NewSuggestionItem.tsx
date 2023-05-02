@@ -4,17 +4,16 @@ import {
   SelectedSearchSuggestionQuickNavigationItem,
 } from "@artsy/cohesion"
 import { Flex, Pill, PillProps, Spacer, Text } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
 import { SuggestionItemPreview } from "Components/Search/Suggestions/SuggestionItemPreview"
 import * as React from "react"
 import { useTracking } from "react-tracking"
-import styled from "styled-components"
-import { RouterLink } from "System/Router/RouterLink"
 import GavelIcon from "@artsy/icons/GavelIcon"
 import ArtworkIcon from "@artsy/icons/ArtworkIcon"
 import { FC } from "react"
+import { SuggestionItemLink } from "./SuggestionItemLink"
+import { Highlight } from "./Highlight"
 
 export interface SuggionItemOptionProps {
   text: string
@@ -39,7 +38,9 @@ interface SuggestionItemProps {
 export const NewSuggestionItem: FC<SuggestionItemProps> = props => {
   const { option, onRedirect } = props
 
-  const handleClick = event => {
+  const handleClick = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
     event.preventDefault()
     onRedirect()
   }
@@ -51,23 +52,6 @@ export const NewSuggestionItem: FC<SuggestionItemProps> = props => {
     </SuggestionItemLink>
   )
 }
-
-const SuggestionItemLink = styled(RouterLink).attrs({
-  color: "black100",
-  px: 2,
-  py: 1,
-})`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-decoration: none;
-  min-height: 60px;
-  background-color: ${themeGet("colors.white100")};
-
-  &:hover {
-    background-color: ${themeGet("colors.black5")};
-  }
-`
 
 interface DefaultSuggestionProps {
   option: SuggionItemOptionProps
@@ -191,7 +175,3 @@ const tracks = {
     label,
   }),
 }
-
-export const Highlight = styled.strong`
-  color: ${themeGet("colors.blue100")};
-`

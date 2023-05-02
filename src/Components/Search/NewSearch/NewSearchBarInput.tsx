@@ -1,6 +1,5 @@
 import { AutocompleteInput, Box, BoxProps } from "@artsy/palette"
-import { SearchInputContainer } from "Components/Search/SearchInputContainer"
-import { ChangeEvent, FC, useMemo, useState } from "react"
+import { ChangeEvent, FC, useMemo, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -33,6 +32,8 @@ import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { getENV } from "Utils/getENV"
 // eslint-disable-next-line no-restricted-imports
 import request from "superagent"
+import { StaticSearchContainer } from "./StaticSearchContainer"
+import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 const SEARCH_THROTTLE_DELAY = 500
@@ -68,6 +69,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
   relay,
   viewer,
 }) => {
+  const autocompleteInputRef = useRef()
   const tracking = useTracking()
   const { t } = useTranslation()
   const [value, setValue] = useState(getSearchTerm(window.location))
@@ -181,6 +183,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
 
   return (
     <AutocompleteInput
+      maxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px)`}
       placeholder={isXs ? t`navbar.searchArtsy` : t`navbar.searchBy`}
       spellCheck={false}
       options={value.length < 2 ? [] : formattedOptions}
@@ -316,33 +319,5 @@ export const NewSearchBarInputQueryRenderer: FC<NewSearchBarInputQueryRendererPr
         }
       }}
     />
-  )
-}
-
-/**
- * Displays during SSR render, but once mounted is swapped out with
- * QueryRenderer below.
- */
-const StaticSearchContainer: FC<{ searchQuery: string } & BoxProps> = ({
-  searchQuery,
-  ...rest
-}) => {
-  const { t } = useTranslation()
-  return (
-    <>
-      <Box display={["block", "none"]} {...rest}>
-        <SearchInputContainer
-          placeholder={searchQuery || t`navbar.searchArtsy`}
-          defaultValue={searchQuery}
-        />
-      </Box>
-
-      <Box display={["none", "block"]} {...rest}>
-        <SearchInputContainer
-          placeholder={searchQuery || t`navbar.searchBy`}
-          defaultValue={searchQuery}
-        />
-      </Box>
-    </>
   )
 }

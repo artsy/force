@@ -1,11 +1,10 @@
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Flex, Text } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
-import { RouterLink } from "System/Router/RouterLink"
 import { FC } from "react"
 import { useTracking } from "react-tracking"
-import styled from "styled-components"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { SuggestionItemLink } from "./SuggestionItemLink"
+import { Highlight } from "./Highlight"
 
 interface SuggestionItemProps {
   href: string
@@ -50,24 +49,3 @@ export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
     </SuggestionItemLink>
   )
 }
-
-const SuggestionItemLink = styled(RouterLink).attrs({
-  color: "black100",
-  px: 2,
-  py: 1,
-})`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-decoration: none;
-  min-height: 60px;
-  background-color: ${themeGet("colors.white100")};
-
-  &:hover {
-    background-color: ${themeGet("colors.black5")};
-  }
-`
-
-const Highlight = styled.strong`
-  color: ${themeGet("colors.blue100")};
-`
