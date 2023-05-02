@@ -100,7 +100,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
       if (selectedShippingQuote) {
         return `${
           shippingQuoteDisplayNames[selectedShippingQuote.typeName]
-        } delivery`
+        } delivery*`
       }
     }
 
@@ -196,6 +196,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
       )
     }
   }
+  const offer = getOffer()
 
   return (
     <StepSummaryItem {...others}>
@@ -208,7 +209,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
       />
 
       <Entry
-        label="Tax*"
+        label="Tax†"
         value={taxDisplayAmount()}
         data-test="taxDisplayAmount"
       />
@@ -220,8 +221,13 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
         data-test="buyerTotalDisplayAmount"
       />
       <Spacer y={2} />
+      {offer?.shippingTotal ? (
+        <Text variant="sm" color="black60">
+          *Estimate Only. Price may vary once offer is finalized.
+        </Text>
+      ) : null}
       <Text variant="sm" color="black60">
-        *Additional duties and taxes{" "}
+        †Additional duties and taxes{" "}
         <RouterLink
           inline
           to="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
