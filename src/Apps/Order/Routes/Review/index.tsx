@@ -130,16 +130,12 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
 
-        // TODO: replace usage with order.state === "IN_REVIEW" once buyerStatus
-        // is implemented in Exchange.
-        // See https://www.notion.so/artsy/2023-02-09-Platform-Practice-Meeting-Notes-87f4cc9987a7436c9c4b207847e318db?pvs=4
-        const orderInReviewFacsimile =
-          order.paymentMethod === "WIRE_TRANSFER" &&
-          order.source === "artwork_page"
-
         if (isEigen) {
           if (order.mode === "OFFER") {
-            if (orderInReviewFacsimile) {
+            if (
+              order.state === "IN_REVIEW" &&
+              order.source === "artwork_page"
+            ) {
               window?.ReactNativeWebView?.postMessage(
                 JSON.stringify({
                   key: "orderSuccessful",
@@ -170,8 +166,18 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           }
         }
 
-        // Eigen redirects to the status page for non-Offer orders (must keep the user inside the webview)
-        if (isEigen || (order.mode === "OFFER" && orderInReviewFacsimile)) {
+        // Eigen redirects to the status page for non-Offer orders (must keep
+        // the user inside the webview)
+        // For in-review offers, we also want to override the default "go to
+        // artwork page and display modal linking to conversation" behavior
+        // because we hold off on creating a conversation until the offer passes
+        // review
+        if (
+          isEigen ||
+          (order.mode === "OFFER" &&
+            order.state === "IN_REVIEW" &&
+            order.source === "artwork_page")
+        ) {
           return router.push(`/orders/${orderId}/status`)
         }
         // Make offer and Purchase in inquiry redirects to the conversation page
