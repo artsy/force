@@ -703,8 +703,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             <Collapse open={showArtsyShipping}>
               <Text variant="sm">Artsy shipping options</Text>
               <Text variant="xs" mb="1" color="black60">
-                All options are eligible for Artsy’s Buyer Protection policy,
-                which protects against damage and loss.
+                Please note that these are estimates and may change once offer
+                is finalized. All options are eligible for Artsy’s Buyer
+                Protection policy, which protects against damage and loss.
               </Text>
 
               <ShippingQuotesFragmentContainer
