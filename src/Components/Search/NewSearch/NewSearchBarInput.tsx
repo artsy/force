@@ -7,22 +7,35 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { SystemContextProps, useSystemContext } from "System/SystemContext"
 import { extractNodes } from "Utils/extractNodes"
 import { NewSearchBarInput_viewer$data } from "__generated__/NewSearchBarInput_viewer.graphql"
-import { NewSearchBarInputSuggestQuery } from "__generated__/NewSearchBarInputSuggestQuery.graphql"
+import {
+  NewSearchBarInputSuggestQuery,
+  SearchEntity,
+} from "__generated__/NewSearchBarInputSuggestQuery.graphql"
 import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
 import { NewSearchBarFooter } from "Components/Search/NewSearch/NewSearchBarFooter"
 import { getLabel } from "./utils/getLabel"
+import { getSearchTerm } from "./utils/getSearchTerm"
 import { isServer } from "Server/isServer"
 import {
   ELASTIC_PILL_KEY_TO_SEARCH_ENTITY,
   PillType,
   TOP_PILL,
 } from "Components/Search/NewSearch/constants"
-import { SearchResult } from "Components/Search/NewSearch/SearchResult"
-import qs from "qs"
+import {
+  NewSuggestionItem,
+  SuggionItemOptionProps,
+} from "Components/Search/NewSearch/NewSuggestionItem"
 import { throttle } from "lodash"
+import { useTracking } from "react-tracking"
+import { get } from "Utils/get"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { getENV } from "Utils/getENV"
+// eslint-disable-next-line no-restricted-imports
+import request from "superagent"
 
 const logger = createLogger("Components/Search/NewSearchBar")
+const SEARCH_THROTTLE_DELAY = 500
 
 export interface NewSearchBarInputProps extends SystemContextProps {
   relay: RelayRefetchProp
@@ -30,48 +43,68 @@ export interface NewSearchBarInputProps extends SystemContextProps {
   isXs: boolean
 }
 
-export const getSearchTerm = (location: Location): string => {
-  const term = qs.parse(location.search?.slice(1))?.term ?? ""
+const reportPerformanceMeasurement = performanceStart => {
+  const duration = performance.now() - performanceStart
+  const deviceType = getENV("IS_MOBILE") ? "mobile" : "desktop"
 
-  if (Array.isArray(term)) {
-    return term[0]
+  const metricPayload = {
+    name: "autocomplete-search-response",
+    tags: [`device-type:${deviceType}`, "design:rich"],
+    timing: duration,
+    type: "timing",
   }
 
-  return term
+  request
+    .post(getENV("VOLLEY_ENDPOINT"))
+    .send({
+      metrics: [metricPayload],
+      serviceName: "force",
+    })
+    .end()
 }
-
-const SEARCH_THROTTLE_DELAY = 500
 
 const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
   isXs,
   relay,
   viewer,
 }) => {
+  const tracking = useTracking()
   const { t } = useTranslation()
   const [value, setValue] = useState(getSearchTerm(window.location))
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
 
   const options = extractNodes(viewer.searchConnection)
-  const formattedOptions = options.map(option => {
-    return {
-      text: option.displayLabel!,
-      value: option.displayLabel!,
-      subtitle: getLabel({
-        displayType: option.displayType ?? "",
+  const formattedOptions: SuggionItemOptionProps[] = options.map(
+    (option, index) => {
+      return {
+        text: option.displayLabel!,
+        value: option.displayLabel!,
+        subtitle:
+          getLabel({
+            displayType: option.displayType ?? "",
+            typename: option.__typename,
+          }) ?? "",
+        imageUrl: option.imageUrl!,
+        showArtworksButton: !!option.statuses?.artworks,
+        showAuctionResultsButton: !!option.statuses?.auctionLots,
+        href: option.href!,
         typename: option.__typename,
-      }),
-      imageUrl: option.imageUrl!,
-      showArtworksButton: !!option.statuses?.artworks,
-      showAuctionResultsButton: !!option.statuses?.auctionLots,
-      href: option.href!,
+        item_id: option.id!, // TODO: in SearchBar id is not requested via fragment, how?
+        item_number: index,
+        item_type: option.displayType!,
+      }
     }
-  })
+  )
 
-  const searchRequest = (value: string) => {
+  const refetch = (value: string, entity?: SearchEntity) => {
+    const entities = entity ? [entity] : []
+    const performanceStart = performance && performance.now()
+
     relay.refetch(
       {
         hasTerm: true,
         term: value,
+        entities: entities,
       },
       null,
       error => {
@@ -80,13 +113,25 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
           return
         }
 
-        // TODO: Report performance
-        // TODO: Tracking
+        if (performanceStart && getENV("VOLLEY_ENDPOINT")) {
+          reportPerformanceMeasurement(performanceStart)
+        }
+
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+        const { viewer } = this.props
+        const edges = get(viewer, v => v.searchConnection.edges, [])
+        const hasResults = edges.length > 0
+        tracking.trackEvent({
+          action_type: hasResults
+            ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
+            : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
+          query: value,
+        })
       }
     )
   }
   const throttledSearchRequest = useMemo(
-    () => throttle(searchRequest, SEARCH_THROTTLE_DELAY, { leading: true }),
+    () => throttle(refetch, SEARCH_THROTTLE_DELAY, { leading: true }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
@@ -98,21 +143,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
 
   const handlePillClick = (pill: PillType) => {
     setSelectedPill(pill)
-
-    relay.refetch(
-      {
-        hasTerm: true,
-        term: value,
-        entities: ELASTIC_PILL_KEY_TO_SEARCH_ENTITY?.[pill.key],
-      },
-      null,
-      error => {
-        if (error) {
-          logger.error(error)
-          return
-        }
-      }
-    )
+    refetch(value, ELASTIC_PILL_KEY_TO_SEARCH_ENTITY?.[pill.key])
   }
 
   const handleRedirect = () => {
@@ -125,6 +156,29 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
     }
   }
 
+  const handleSelect = (option: any) => {
+    tracking.trackEvent({
+      action_type: DeprecatedSchema.ActionType.SelectedItemFromSearch,
+      destination_path:
+        option.typename === "Artist"
+          ? `${option.href}/works-for-sale`
+          : option.href,
+      item_id: option.id,
+      item_number: option.item_number,
+      item_type: option.item_type,
+      query: value,
+    })
+
+    setValue("")
+    window.location.href = option.href
+  }
+
+  const handleFocus = () => {
+    tracking.trackEvent({
+      action_type: DeprecatedSchema.ActionType.FocusedOnAutosuggestInput,
+    })
+  }
+
   return (
     <AutocompleteInput
       placeholder={isXs ? t`navbar.searchArtsy` : t`navbar.searchBy`}
@@ -134,6 +188,8 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       onChange={handleChange}
       onClear={() => setValue("")}
       onSubmit={handleSubmit}
+      onFocus={handleFocus}
+      onSelect={handleSelect}
       header={
         <NewSearchInputPillsFragmentContainer
           viewer={viewer}
@@ -142,23 +198,16 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
         />
       }
       renderOption={option => (
-        <SearchResult
-          display={option.text}
-          href={option.href}
-          label={option.subtitle ?? ""}
-          imageUrl={option.imageUrl}
+        <NewSuggestionItem
           query={value}
-          showArtworksButton={option.showArtworksButton}
-          showAuctionResultsButton={option.showAuctionResultsButton}
+          option={option}
           onRedirect={handleRedirect}
         />
       )}
       footer={
         <NewSearchBarFooter
-          display={value}
-          href={`/search?term=${encodeURIComponent(value)}`}
-          label={value}
           query={value}
+          href={`/search?term=${encodeURIComponent(value)}`}
           onRedirect={handleRedirect}
         />
       }
@@ -189,6 +238,7 @@ export const NewSearchBarInputRefetchContainer = createRefetchContainer(
               imageUrl
               __typename
               ... on SearchableItem {
+                id
                 displayType
                 slug
               }

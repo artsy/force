@@ -3,16 +3,13 @@ import { Flex, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { RouterLink } from "System/Router/RouterLink"
 import { FC } from "react"
+import { useTracking } from "react-tracking"
 import styled from "styled-components"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 
 interface SuggestionItemProps {
-  display: string
   href: string
-  imageUrl?: string
-  label: string
   query: string
-  showArtworksButton?: boolean
-  showAuctionResultsButton?: boolean
   onRedirect: () => void
 }
 
@@ -21,10 +18,19 @@ export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
   query,
   onRedirect,
 }) => {
+  const tracking = useTracking()
+
   const handleClick = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+    _event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
   ) => {
-    // TODO: send stats here?
+    tracking.trackEvent({
+      action_type: DeprecatedSchema.ActionType.SelectedItemFromSearch,
+      destination_path: href,
+      item_number: 7,
+      item_type: "FirstItem",
+      query: query,
+    })
+
     onRedirect()
   }
 

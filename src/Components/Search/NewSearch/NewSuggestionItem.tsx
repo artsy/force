@@ -14,40 +14,40 @@ import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
 import GavelIcon from "@artsy/icons/GavelIcon"
 import ArtworkIcon from "@artsy/icons/ArtworkIcon"
+import { FC } from "react"
+
+export interface SuggionItemOptionProps {
+  text: string
+  value: string
+  subtitle: string
+  imageUrl: string
+  showArtworksButton: boolean
+  showAuctionResultsButton: boolean
+  href: string
+  typename: string
+  item_id: string
+  item_number: number
+  item_type: string
+}
 
 interface SuggestionItemProps {
-  display: string
-  href: string
-  imageUrl?: string
-  label: string
   query: string
-  showArtworksButton?: boolean
-  showAuctionResultsButton?: boolean
+  option: SuggionItemOptionProps
   onRedirect: () => void
 }
 
-// TODO: make it a fragment container?
-const SuggestionItem: React.FC<SuggestionItemProps> = props => {
-  const {
-    href,
-    showArtworksButton,
-    showAuctionResultsButton,
-    onRedirect,
-  } = props
+export const NewSuggestionItem: FC<SuggestionItemProps> = props => {
+  const { option, onRedirect } = props
 
-  const handleClick = _event => {
-    // TODO: send stats here?
+  const handleClick = event => {
+    event.preventDefault()
     onRedirect()
   }
 
   return (
-    <SuggestionItemLink onClick={handleClick} to={href}>
+    <SuggestionItemLink onClick={handleClick} to={option.href}>
       <DefaultSuggestion {...props} />
-      <QuickNavigation
-        href={href}
-        showArtworksButton={!!showArtworksButton}
-        showAuctionResultsButton={!!showAuctionResultsButton}
-      />
+      <QuickNavigation option={option} />
     </SuggestionItemLink>
   )
 }
@@ -69,21 +69,24 @@ const SuggestionItemLink = styled(RouterLink).attrs({
   }
 `
 
-const DefaultSuggestion: React.FC<SuggestionItemProps> = ({
-  display,
-  label,
-  query,
-  imageUrl,
-}) => {
-  const matches = match(display, query)
-  const parts = parse(display, matches)
+interface DefaultSuggestionProps {
+  option: SuggionItemOptionProps
+  query: string
+}
+
+const DefaultSuggestion: FC<DefaultSuggestionProps> = ({ option, query }) => {
+  const matches = match(option.text, query)
+  const parts = parse(option.text, matches)
   const partTags = parts.map(({ highlight, text }, index) =>
     highlight ? <Highlight key={index}>{text}</Highlight> : text
   )
 
   return (
     <Flex alignItems="center">
-      <SuggestionItemPreview imageUrl={imageUrl} label={label} />
+      <SuggestionItemPreview
+        imageUrl={option.imageUrl}
+        label={option.subtitle}
+      />
       <Spacer x={1} />
       <Flex flexDirection="column" flex={1} overflow="hidden">
         <Text variant="sm-display" overflowEllipsis>
@@ -91,24 +94,24 @@ const DefaultSuggestion: React.FC<SuggestionItemProps> = ({
         </Text>
 
         <Text color="black60" variant="xs" overflowEllipsis>
-          {label}
+          {option.subtitle}
         </Text>
       </Flex>
     </Flex>
   )
 }
 
-const QuickNavigation: React.FC<{
-  href: string
-  showArtworksButton: boolean
-  showAuctionResultsButton: boolean
-}> = ({ href, showArtworksButton, showAuctionResultsButton }) => {
+interface QuickNavigationProps {
+  option: SuggionItemOptionProps
+}
+
+const QuickNavigation: FC<QuickNavigationProps> = ({ option }) => {
   const { trackEvent } = useTracking()
 
   const handleArtworksItemClicked = () => {
     trackEvent(
       tracks.quickNavigationItemClicked({
-        destinationPath: `${href}/works-for-sale`,
+        destinationPath: `${option.href}/works-for-sale`,
         label: "Artworks",
       })
     )
@@ -117,29 +120,30 @@ const QuickNavigation: React.FC<{
   const handleAuctionResultsItemClicked = () => {
     trackEvent(
       tracks.quickNavigationItemClicked({
-        destinationPath: `${href}/auction-results`,
+        destinationPath: `${option.href}/auction-results`,
         label: "Auction Results",
       })
     )
   }
 
-  if (!showArtworksButton && !showAuctionResultsButton) return null
+  if (!option.showArtworksButton && !option.showAuctionResultsButton)
+    return null
 
   return (
     <Flex flexWrap="wrap">
-      {!!showArtworksButton && (
+      {!!option.showArtworksButton && (
         <QuickNavigationItem
           onClick={handleArtworksItemClicked}
-          to={`${href}/works-for-sale`}
+          to={`${option.href}/works-for-sale`}
           Icon={ArtworkIcon}
         >
           Artworks
         </QuickNavigationItem>
       )}
-      {!!showAuctionResultsButton && (
+      {!!option.showAuctionResultsButton && (
         <QuickNavigationItem
           onClick={handleAuctionResultsItemClicked}
-          to={`${href}/auction-results`}
+          to={`${option.href}/auction-results`}
           Icon={GavelIcon}
         >
           Auction Results
@@ -154,7 +158,7 @@ interface QuickNavigationItemProps {
   onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
 }
 
-const QuickNavigationItem: React.FC<QuickNavigationItemProps & PillProps> = ({
+const QuickNavigationItem: FC<QuickNavigationItemProps & PillProps> = ({
   to,
   onClick,
   ...rest
@@ -191,9 +195,3 @@ const tracks = {
 export const Highlight = styled.strong`
   color: ${themeGet("colors.blue100")};
 `
-
-interface SearchResultProps extends SuggestionItemProps {}
-
-export const SearchResult: React.FC<SearchResultProps> = props => {
-  return <SuggestionItem {...props}></SuggestionItem>
-}
