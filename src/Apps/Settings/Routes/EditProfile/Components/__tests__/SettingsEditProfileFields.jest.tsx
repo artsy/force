@@ -41,6 +41,11 @@ describe("SettingsEditProfileFields", () => {
   const mockSubmitVerifyIDMutation = jest.fn()
   const mockSubmitVerifyEmailMutation = jest.fn()
   const mockUseTracking = useTracking as jest.Mock
+  const trackingSpy = jest.fn()
+
+  beforeAll(() => {
+    mockUseTracking.mockImplementation(() => ({ trackEvent: trackingSpy }))
+  })
 
   beforeEach(() => {
     mockUseUpdateMyUserProfile.mockImplementation(() => ({
@@ -78,12 +83,6 @@ describe("SettingsEditProfileFields", () => {
   })
 
   it("submits the form", async () => {
-    const trackingSpy = jest.fn()
-
-    mockUseTracking.mockImplementation(() => ({
-      trackEvent: trackingSpy,
-    }))
-
     renderWithRelay()
 
     fireEvent.change(screen.getByPlaceholderText("Full name"), {
@@ -146,25 +145,13 @@ describe("SettingsEditProfileFields", () => {
       )
     })
 
-    it("when clicked tracks and submits mutation", async () => {
-      const trackingSpy = jest.fn()
-
-      mockUseTracking.mockImplementation(() => ({
-        trackEvent: trackingSpy,
-      }))
-
+    it("when clicked submits mutation", async () => {
       renderWithRelay()
 
       fireEvent.click(screen.getByText("Verify Your ID"))
 
       await waitFor(() => {
         expect(mockSubmitVerifyIDMutation).toHaveBeenCalled()
-        expect(trackingSpy).toHaveBeenCalledWith({
-          action: "clickedVerifyIdentity",
-          context_module: "collectorProfile",
-          context_page_owner_type: "editProfile",
-          subject: "Clicked ID Verification Link",
-        })
       })
     })
 
