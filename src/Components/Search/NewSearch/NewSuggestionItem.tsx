@@ -24,7 +24,6 @@ export interface SuggionItemOptionProps {
   showAuctionResultsButton: boolean
   href: string
   typename: string
-  item_id: string
   item_number: number
   item_type: string
 }

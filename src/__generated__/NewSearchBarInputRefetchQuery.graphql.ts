@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<88e8b66679e4c7bec931b3fdada8782c>>
+ * @generated SignedSource<<55095039f535ab0351d68fe090eb1693>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -56,13 +56,6 @@ v5 = {
   "kind": "Variable",
   "name": "query",
   "variableName": "term"
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
 };
 return {
   "fragment": {
@@ -194,7 +187,6 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v6/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -248,7 +240,13 @@ return {
                           {
                             "kind": "InlineFragment",
                             "selections": [
-                              (v6/*: any*/)
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "id",
+                                "storageKey": null
+                              }
                             ],
                             "type": "Node",
                             "abstractKey": "__isNode"
@@ -332,12 +330,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "440b7c6ef4fb3f5b6b7264a7042a1d43",
+    "cacheID": "58a551411af36e1230870fdbef18f921",
     "id": null,
     "metadata": {},
     "name": "NewSearchBarInputRefetchQuery",
     "operationKind": "query",
-    "text": "query NewSearchBarInputRefetchQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...NewSearchBarInput_viewer_1B9obU\n  }\n}\n\nfragment NewSearchBarInput_viewer_1B9obU on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          id\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n  ...NewSearchInputPills_viewer_4hh6ED\n}\n\nfragment NewSearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n"
+    "text": "query NewSearchBarInputRefetchQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...NewSearchBarInput_viewer_1B9obU\n  }\n}\n\nfragment NewSearchBarInput_viewer_1B9obU on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n  ...NewSearchInputPills_viewer_4hh6ED\n}\n\nfragment NewSearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n"
   }
 };
 })();

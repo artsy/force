@@ -1,4 +1,4 @@
-import { AutocompleteInput, BoxProps } from "@artsy/palette"
+import { AutocompleteInput, BoxProps, useUpdateEffect } from "@artsy/palette"
 import { ChangeEvent, FC, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
@@ -27,7 +27,6 @@ import {
 } from "Components/Search/NewSearch/NewSuggestionItem"
 import { throttle } from "lodash"
 import { useTracking } from "react-tracking"
-import { get } from "Utils/get"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { getENV } from "Utils/getENV"
 // eslint-disable-next-line no-restricted-imports
@@ -73,6 +72,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
   const { t } = useTranslation()
   const [value, setValue] = useState(getSearchTerm(window.location))
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
+  const [searchIncrement, setSearchIncrement] = useState(0)
 
   const options = extractNodes(viewer.searchConnection)
   const formattedOptions: SuggionItemOptionProps[] = options.map(
@@ -90,12 +90,22 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
         showAuctionResultsButton: !!option.statuses?.auctionLots,
         href: option.href!,
         typename: option.__typename,
-        item_id: option.id!, // TODO: in SearchBar id is not requested via fragment, how?
         item_number: index,
         item_type: option.displayType!,
       }
     }
   )
+
+  useUpdateEffect(() => {
+    tracking.trackEvent({
+      action_type:
+        options.length > 0
+          ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
+          : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
+      query: value,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchIncrement])
 
   const refetch = (value: string, entity?: SearchEntity) => {
     const entities = entity ? [entity] : []
@@ -118,16 +128,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
           reportPerformanceMeasurement(performanceStart)
         }
 
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        const { viewer } = this.props
-        const edges = get(viewer, v => v.searchConnection.edges, [])
-        const hasResults = edges.length > 0
-        tracking.trackEvent({
-          action_type: hasResults
-            ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
-            : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
-          query: value,
-        })
+        setSearchIncrement(prevCounter => prevCounter + 1)
       }
     )
   }
@@ -240,7 +241,6 @@ export const NewSearchBarInputRefetchContainer = createRefetchContainer(
               imageUrl
               __typename
               ... on SearchableItem {
-                id
                 displayType
                 slug
               }

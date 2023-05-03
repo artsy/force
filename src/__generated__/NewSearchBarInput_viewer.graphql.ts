@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1c344fd2b125886346a783f8c6cf7570>>
+ * @generated SignedSource<<1bd9858b31c6193f77dfdbc8eff12410>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,6 @@ export type NewSearchBarInput_viewer$data = {
         readonly displayLabel: string | null;
         readonly displayType?: string | null;
         readonly href: string | null;
-        readonly id?: string;
         readonly imageUrl: string | null;
         readonly slug?: string;
         readonly statuses?: {
@@ -143,13 +142,6 @@ const node: ReaderFragment = {
                           "alias": null,
                           "args": null,
                           "kind": "ScalarField",
-                          "name": "id",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
                           "name": "displayType",
                           "storageKey": null
                         },
@@ -223,6 +215,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2cd89cf5ce427d4195f9e2d220adb4c2";
+(node as any).hash = "34be6c938696883ffedbacb2ad694f1f";
 
 export default node;
