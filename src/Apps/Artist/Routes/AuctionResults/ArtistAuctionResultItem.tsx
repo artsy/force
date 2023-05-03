@@ -18,7 +18,7 @@ import { DateTime, LocaleOptions } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
 import { useAuthDialog } from "Components/AuthDialog"
-import { useRouter } from "System/Router/useRouter"
+import { RouterLink } from "System/Router/RouterLink"
 
 export interface Props extends SystemContextProps {
   auctionResult: ArtistAuctionResultItem_auctionResult$data
@@ -27,7 +27,6 @@ export interface Props extends SystemContextProps {
 }
 
 export const ArtistAuctionResultItem: React.FC<Props> = props => {
-  const { router } = useRouter()
   const { user } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
 
@@ -67,8 +66,6 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
           contextModule: ContextModule.auctionResult,
         },
       })
-    } else {
-      router.push(`/auction-result/${internalID}`)
     }
   }
 
@@ -78,110 +75,116 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
       width="100%"
       onClick={onAuctionResultClick}
     >
-      <GridColumns>
-        <Column span={[4, 2]}>
-          <ResponsiveBox
-            aspectWidth={1}
-            aspectHeight={1}
-            maxWidth={130}
-            bg="black10"
-          >
-            {image ? (
-              <Image
-                src={image.src}
-                srcSet={image.srcSet}
-                width="100%"
-                height="100%"
-                alt=""
-                lazyLoad
-              />
-            ) : (
-              <Box
-                display="flex"
-                justifyContent="center"
-                alignItems="center"
-                height="100%"
-              >
-                <NoArtworkIcon height={24} width={24} fill="black60" />
-              </Box>
-            )}
-          </ResponsiveBox>
-        </Column>
+      <RouterLink
+        to={`/auction-result/${internalID}`}
+        textDecoration="none"
+        style={{ pointerEvents: user ? "auto" : "none" }}
+      >
+        <GridColumns>
+          <Column span={[4, 2]}>
+            <ResponsiveBox
+              aspectWidth={1}
+              aspectHeight={1}
+              maxWidth={130}
+              bg="black10"
+            >
+              {image ? (
+                <Image
+                  src={image.src}
+                  srcSet={image.srcSet}
+                  width="100%"
+                  height="100%"
+                  alt=""
+                  lazyLoad
+                />
+              ) : (
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  height="100%"
+                >
+                  <NoArtworkIcon height={24} width={24} fill="black60" />
+                </Box>
+              )}
+            </ResponsiveBox>
+          </Column>
 
-        <Column span={[8, 1]} display={["block", "none"]}>
-          <Box>
-            {!!showArtistName && <Text variant="xs">{artistName}</Text>}
+          <Column span={[8, 1]} display={["block", "none"]}>
+            <Box>
+              {!!showArtistName && <Text variant="xs">{artistName}</Text>}
 
-            <Text variant="xs" lineClamp={1}>
-              {[title, date_text].filter(Boolean).join(", ")}
+              <Text variant="xs" lineClamp={1}>
+                {[title, date_text].filter(Boolean).join(", ")}
+              </Text>
+
+              {mediumText !== "Unknown" && (
+                <Text variant="xs" color="black60" lineClamp={1}>
+                  {mediumText}
+                </Text>
+              )}
+
+              {dimension_text && (
+                <Text variant="xs" color="black60" lineClamp={1}>
+                  {dimension_text}
+                </Text>
+              )}
+
+              <Spacer y={1} />
+
+              <Text variant="xs" color="black60" lineClamp={1}>
+                {dateOfSale} • {organization}
+              </Text>
+
+              <ArtistAuctionResultItemPrice {...props} />
+            </Box>
+          </Column>
+
+          <Column span={4} display={["none", "block"]}>
+            {!!showArtistName && <Text variant="sm-display">{artistName}</Text>}
+
+            <Text variant="sm-display">
+              <i>{title?.trim()}</i>
+              {date_text &&
+                date_text.replace(/\s+/g, "").length > 0 &&
+                ", " + date_text}
             </Text>
 
             {mediumText !== "Unknown" && (
-              <Text variant="xs" color="black60" lineClamp={1}>
+              <Text variant="xs" color="black60">
                 {mediumText}
               </Text>
             )}
 
             {dimension_text && (
-              <Text variant="xs" color="black60" lineClamp={1}>
+              <Text variant="xs" color="black60">
                 {dimension_text}
               </Text>
             )}
+          </Column>
 
-            <Spacer y={1} />
+          <Column span={3} display={["none", "block"]}>
+            <Text variant="sm-display">{dateOfSale}</Text>
 
-            <Text variant="xs" color="black60" lineClamp={1}>
-              {dateOfSale} • {organization}
+            <Text variant="xs" color="black60">
+              {organization}
+              {!!location && ` • ${location}`}
             </Text>
 
+            <Text variant="xs" color="black60">
+              {saleTitle}
+            </Text>
+
+            <Text variant="xs" color="black60">
+              Lot {lotNumber}
+            </Text>
+          </Column>
+
+          <Column span={3} display={["none", "flex"]} justifyContent="flex-end">
             <ArtistAuctionResultItemPrice {...props} />
-          </Box>
-        </Column>
-
-        <Column span={4} display={["none", "block"]}>
-          {!!showArtistName && <Text variant="sm-display">{artistName}</Text>}
-
-          <Text variant="sm-display">
-            <i>{title?.trim()}</i>
-            {date_text &&
-              date_text.replace(/\s+/g, "").length > 0 &&
-              ", " + date_text}
-          </Text>
-
-          {mediumText !== "Unknown" && (
-            <Text variant="xs" color="black60">
-              {mediumText}
-            </Text>
-          )}
-
-          {dimension_text && (
-            <Text variant="xs" color="black60">
-              {dimension_text}
-            </Text>
-          )}
-        </Column>
-
-        <Column span={3} display={["none", "block"]}>
-          <Text variant="sm-display">{dateOfSale}</Text>
-
-          <Text variant="xs" color="black60">
-            {organization}
-            {!!location && ` • ${location}`}
-          </Text>
-
-          <Text variant="xs" color="black60">
-            {saleTitle}
-          </Text>
-
-          <Text variant="xs" color="black60">
-            Lot {lotNumber}
-          </Text>
-        </Column>
-
-        <Column span={3} display={["none", "flex"]} justifyContent="flex-end">
-          <ArtistAuctionResultItemPrice {...props} />
-        </Column>
-      </GridColumns>
+          </Column>
+        </GridColumns>
+      </RouterLink>
     </Box>
   )
 }

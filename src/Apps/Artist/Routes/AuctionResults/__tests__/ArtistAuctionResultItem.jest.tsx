@@ -6,18 +6,7 @@ import { graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 
 jest.unmock("react-relay")
-
 jest.mock("System/useSystemContext")
-
-const mockRouterPush = jest.fn()
-jest.mock("System/Router/useRouter", () => ({
-  useRouter: jest.fn(() => ({
-    router: {
-      push: mockRouterPush,
-    },
-    match: { location: { pathname: "anything" } },
-  })),
-}))
 
 describe("ArtistAuctionResultItem", () => {
   const { renderWithRelay } = setupTestWrapperTL<
@@ -80,9 +69,10 @@ describe("ArtistAuctionResultItem", () => {
 
     renderWithRelay(mockResolver, false)
 
-    screen.getByText("Neuschwanstein (Feldmann & Schellmann 372), 1987").click()
+    const auctioResultLink = screen.getByRole("link")
 
-    expect(mockRouterPush).toHaveBeenCalledWith(
+    expect(auctioResultLink).toHaveAttribute(
+      "href",
       "/auction-result/auction-result-id"
     )
   })
