@@ -1,5 +1,5 @@
-import { AutocompleteInput, Box, BoxProps } from "@artsy/palette"
-import { ChangeEvent, FC, useMemo, useRef, useState } from "react"
+import { AutocompleteInput, BoxProps } from "@artsy/palette"
+import { ChangeEvent, FC, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -33,7 +33,7 @@ import { getENV } from "Utils/getENV"
 // eslint-disable-next-line no-restricted-imports
 import request from "superagent"
 import { StaticSearchContainer } from "./StaticSearchContainer"
-import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
+// import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 const SEARCH_THROTTLE_DELAY = 500
@@ -69,7 +69,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
   relay,
   viewer,
 }) => {
-  const autocompleteInputRef = useRef()
   const tracking = useTracking()
   const { t } = useTranslation()
   const [value, setValue] = useState(getSearchTerm(window.location))
@@ -183,7 +182,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
 
   return (
     <AutocompleteInput
-      maxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px)`}
+      // dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px)`}
       placeholder={isXs ? t`navbar.searchArtsy` : t`navbar.searchBy`}
       spellCheck={false}
       options={value.length < 2 ? [] : formattedOptions}
