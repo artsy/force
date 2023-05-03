@@ -49,7 +49,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
   }
 
   const showOverviewTab = hasOverviewContent(artist)
-  const showArtworksTab = artist.statuses?.artworks
+  const showArtworksTab = true
   const showAuctionResultsTab = artist.statuses?.auctionLots
 
   // Default page
@@ -62,23 +62,21 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children, match }) => {
       <Jump id="artistContentArea" />
 
       <RouteTabs mb={2} fill data-test="navigationTabs">
-        {showOverviewTab && (
-          <RouteTab exact to={`/artist/${artist.slug}`}>
-            Overview
-          </RouteTab>
-        )}
-
         {showArtworksTab && (
           <RouteTab to={`/artist/${artist.slug}/works-for-sale`}>
-            {artist?.counts?.forSaleArtworks! > 0
-              ? `Works for Sale (${artist?.counts?.forSaleArtworks?.toLocaleString()})`
-              : "Artworks"}
+            Artworks
           </RouteTab>
         )}
 
         {showAuctionResultsTab && (
           <RouteTab to={`/artist/${artist.slug}/auction-results`}>
             Auction Results
+          </RouteTab>
+        )}
+
+        {showOverviewTab && (
+          <RouteTab exact to={`/artist/${artist.slug}`}>
+            About
           </RouteTab>
         )}
       </RouteTabs>
