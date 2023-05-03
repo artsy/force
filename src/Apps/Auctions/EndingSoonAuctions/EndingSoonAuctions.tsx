@@ -14,7 +14,7 @@ const EndingSoonAuctions: React.FC<EndingSoonAuctionsProps> = ({ viewer }) => {
   return (
     <>
       <MetaTags
-        title="Auction Lots for You Ending Soon"
+        title="Auction Lots for You Ending Soon | Artsy"
         pathname="/auctions/lots-for-you-ending-soon"
       />
 
