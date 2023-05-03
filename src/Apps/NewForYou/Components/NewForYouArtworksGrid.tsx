@@ -15,7 +15,10 @@ export const NewForYouArtworksGrid: FC<NewForYouArtworksGridProps> = ({
     <>
       {viewer.artworksForUser &&
       (viewer.artworksForUser.totalCount ?? 0) > 0 ? (
-        <ArtworkGrid artworks={viewer.artworksForUser} />
+        <ArtworkGrid
+          artworks={viewer.artworksForUser}
+          columnCount={[2, 3, 4]}
+        />
       ) : (
         <Text variant="lg" mt={4} color="black60">
           Nothing yet.
