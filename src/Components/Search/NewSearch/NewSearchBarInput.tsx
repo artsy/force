@@ -165,7 +165,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
         option.typename === "Artist"
           ? `${option.href}/works-for-sale`
           : option.href,
-      item_id: option.id,
       item_number: option.item_number,
       item_type: option.item_type,
       query: value,
@@ -183,7 +182,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
 
   return (
     <AutocompleteInput
-      // dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px)`}
       placeholder={isXs ? t`navbar.searchArtsy` : t`navbar.searchBy`}
       spellCheck={false}
       options={value.length < 2 ? [] : formattedOptions}
