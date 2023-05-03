@@ -5,7 +5,6 @@ import {
   Flex,
   GridColumns,
   Image,
-  PendingCircleIcon,
   Separator,
   Skeleton,
   SkeletonBox,
@@ -24,6 +23,7 @@ import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPl
 import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
 import HelpIcon from "@artsy/icons/HelpIcon"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
+import PendingIcon from "@artsy/icons/PendingIcon"
 
 const ORDER_LABELS = {
   APPROVED: "Confirmed",
@@ -37,14 +37,14 @@ const ORDER_LABELS = {
 } as const
 
 const ORDER_ICONS = {
-  APPROVED: <PendingCircleIcon fill="black100" />,
+  APPROVED: <PendingIcon fill="black100" />,
   CANCELED: <CloseStrokeIcon fill="red100" />,
   FULFILLED: <CheckmarkFillIcon fill="green100" />,
-  IN_TRANSIT: <PendingCircleIcon fill="black60" />,
-  PROCESSING: <PendingCircleIcon fill="black60" />,
+  IN_TRANSIT: <PendingIcon fill="black60" />,
+  PROCESSING: <PendingIcon fill="black60" />,
   REFUNDED: <CloseStrokeIcon fill="red100" />,
-  SUBMITTED: <PendingCircleIcon fill="black60" />,
-  PROCESSING_APPROVAL: <PendingCircleIcon fill="black60" />,
+  SUBMITTED: <PendingIcon fill="black60" />,
+  PROCESSING_APPROVAL: <PendingIcon fill="black60" />,
 } as const
 
 const ORDER_COLORS = {

@@ -1,15 +1,8 @@
-import {
-  Box,
-  Clickable,
-  Flex,
-  InfoCircleIcon,
-  Text,
-  TimerIcon,
-  Tooltip,
-} from "@artsy/palette"
+import { Box, Clickable, Flex, Text, TimerIcon, Tooltip } from "@artsy/palette"
 import { AuctionResultPrice_auctionResult$key } from "__generated__/AuctionResultPrice_auctionResult.graphql"
 import { DateTime } from "luxon"
 import { graphql, useFragment } from "react-relay"
+import InfoIcon from "@artsy/icons/InfoIcon"
 
 interface AuctionResultPriceProps {
   auctionResult: AuctionResultPrice_auctionResult$key
@@ -62,7 +55,7 @@ export const AuctionResultPrice: React.FC<AuctionResultPriceProps> = ({
           content="The sale price includes the hammer price and buyer's premium, as well as any other additional fees (e.g., Artist's Resale Rights)."
         >
           <Clickable ml={0.5} style={{ lineHeight: 0 }}>
-            <InfoCircleIcon fill="black60" />
+            <InfoIcon fill="black60" />
           </Clickable>
         </Tooltip>
       </Flex>

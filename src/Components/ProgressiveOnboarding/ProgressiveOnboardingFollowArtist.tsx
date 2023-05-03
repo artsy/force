@@ -11,6 +11,8 @@ import {
   ProgressiveOnboardingCountsQueryRenderer,
   WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingCounts"
+import { useRouter } from "System/Router/useRouter"
+import { pathToRegexp } from "path-to-regexp"
 
 interface ProgressiveOnboardingFollowArtistProps
   extends WithProgressiveOnboardingCountsProps {}
@@ -19,12 +21,22 @@ const ProgressiveOnboardingFollowArtist: FC<ProgressiveOnboardingFollowArtistPro
   counts,
   children,
 }) => {
+  const router = useRouter()
+
   const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
 
   const isDisplayable =
+    // Is enabled for follows.
     isEnabledFor("follows") &&
+    // Hasn't dismissed the follow artist onboarding.
     !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST).status &&
-    counts.followedArtists === 0
+    // Hasn't followed an artist yet.
+    counts.followedArtists === 0 &&
+    // If you've already dismissed the alerts onboarding OR you're not on the works-for-sale page.
+    (PROGRESSIVE_ONBOARDING_ALERT_CHAIN.every(key => isDismissed(key).status) ||
+      !pathToRegexp("/artist/:artistID/works-for-sale").test(
+        router.match.location.pathname
+      ))
 
   const handleClose = useCallback(() => {
     dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)

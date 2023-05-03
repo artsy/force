@@ -2,14 +2,7 @@ import { FC, useState } from "react"
 import { StripeError } from "@stripe/stripe-js"
 import { PaymentElement, useStripe, useElements } from "@stripe/react-stripe-js"
 import { ActionType, OwnerType } from "@artsy/cohesion"
-import {
-  Checkbox,
-  Clickable,
-  Flex,
-  InfoCircleIcon,
-  Tooltip,
-  Spacer,
-} from "@artsy/palette"
+import { Checkbox, Clickable, Flex, Tooltip, Spacer } from "@artsy/palette"
 import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
 import { InsufficientFundsError } from "Apps/Order/Components/InsufficientFundsError"
@@ -18,6 +11,7 @@ import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButt
 import { getENV } from "Utils/getENV"
 import { camelCase, upperFirst } from "lodash"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+import InfoIcon from "@artsy/icons/InfoIcon"
 
 interface Props {
   order: { mode: string | null; internalID: string }
@@ -133,7 +127,7 @@ export const BankDebitForm: FC<Props> = ({ order, onError }) => {
                   you authorize Artsy to save the bank account specified above.`}
           >
             <Clickable ml={0.5} style={{ lineHeight: 0 }}>
-              <InfoCircleIcon />
+              <InfoIcon />
             </Clickable>
           </Tooltip>
         </Flex>

@@ -6,11 +6,9 @@ import {
   Flex,
   GridColumns,
   Image,
-  NoArtworkIcon,
   ResponsiveBox,
   Spacer,
   Text,
-  TimerIcon,
 } from "@artsy/palette"
 import { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
 import { SystemContextProps, useSystemContext } from "System/SystemContext"
@@ -19,6 +17,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
 import { useAuthDialog } from "Components/AuthDialog"
 import { RouterLink } from "System/Router/RouterLink"
+import StopwatchIcon from "@artsy/icons/StopwatchIcon"
+import NoArtIcon from "@artsy/icons/NoArtIcon"
 
 export interface Props extends SystemContextProps {
   auctionResult: ArtistAuctionResultItem_auctionResult$data
@@ -104,7 +104,7 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
                   alignItems="center"
                   height="100%"
                 >
-                  <NoArtworkIcon height={24} width={24} fill="black60" />
+                  <NoArtIcon height={24} width={24} fill="black60" />
                 </Box>
               )}
             </ResponsiveBox>
@@ -326,7 +326,7 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
 
       {!salePrice && !boughtIn && awaitingResults && (
         <Flex flexDirection="row" justifyContent="flex-end" alignItems="center">
-          <TimerIcon fill="black100" width={16} height={16} />
+          <StopwatchIcon fill="black100" width={16} height={16} />
 
           <Spacer x="4px" />
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<51127039bd04f1f357acf8111f2ecda0>>
+ * @generated SignedSource<<e715b2671298bd097d39d6aea1a23613>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type updateNotificationPreferencesMutationInput = {
   subscriptionGroups: ReadonlyArray<NotificationPreferenceInput>;
 };
 export type NotificationPreferenceInput = {
+  channel?: string | null;
   name: string;
   status: SubGroupInputStatus;
 };

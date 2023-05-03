@@ -14,7 +14,7 @@ services:
     env_file:
       - ../.env.shared
       - ../.env
-    command: ["yarn", "start:dev"]
+    command: ["yarn", "start"]
     ports:
       - 5000:5000
     volumes:

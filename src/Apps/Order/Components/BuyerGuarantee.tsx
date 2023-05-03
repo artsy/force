@@ -1,14 +1,9 @@
 import { ActionType, ContextModule } from "@artsy/cohesion"
-import {
-  CircleBlackCheckIcon,
-  Flex,
-  Text,
-  StackableBorderBox,
-  Spacer,
-} from "@artsy/palette"
+import { Flex, Text, StackableBorderBox, Spacer } from "@artsy/palette"
 import * as React from "react"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
+import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 
 export const BUYER_GUARANTEE_URL =
   "https://support.artsy.net/s/article/The-Artsy-Guarantee"
@@ -81,7 +76,7 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
   if (orderSource !== "private_sale") {
     return (
       <Flex p={2} my={1} backgroundColor="black10">
-        <CircleBlackCheckIcon mr={1} />
+        <CheckmarkFillIcon mr={1} />
         <Flex flexDirection="column">
           <Text fontWeight="bold" variant="sm-display">
             Your purchase is protected.

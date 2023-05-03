@@ -1,7 +1,6 @@
-import ddTracer from "dd-trace"
+import ddTracer, { Span } from "dd-trace"
 import url from "url"
 import { Request } from "express"
-import { Span } from "opentracing"
 
 if (process.env.DD_APM_ENABLED) {
   ddTracer.init({

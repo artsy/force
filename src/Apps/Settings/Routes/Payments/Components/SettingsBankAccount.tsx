@@ -1,8 +1,9 @@
-import { InstitutionIcon, Text } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsBankAccount_bankAccount$data } from "__generated__/SettingsBankAccount_bankAccount.graphql"
-import { useDeleteBankAccount } from "../useDeleteBankAccount"
+import { useDeleteBankAccount } from "Apps/Settings/Routes/Payments/useDeleteBankAccount"
 import { SettingsPaymentsMethod } from "./SettingsPaymentsMethod"
+import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 
 interface SettingsBankAccountProps {
   bankAccount: SettingsBankAccount_bankAccount$data

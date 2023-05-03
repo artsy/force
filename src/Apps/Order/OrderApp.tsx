@@ -19,6 +19,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { useSystemContext } from "System/useSystemContext"
 import { OrderPaymentContextProvider } from "./Routes/Payment/PaymentContext/OrderPaymentContext"
 import { SalesforceWrapper } from "Components/SalesforceWrapper"
+import { Media } from "Utils/Responsive"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -93,7 +94,9 @@ const OrderApp: FC<OrderAppProps> = props => {
     }
 
     return getENV("SALESFORCE_CHAT_ENABLED") ? (
-      <SalesforceWrapper />
+      <Media greaterThan="xs">
+        <SalesforceWrapper />
+      </Media>
     ) : (
       <ZendeskWrapper />
     )

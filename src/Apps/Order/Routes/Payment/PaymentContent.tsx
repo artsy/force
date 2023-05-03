@@ -5,13 +5,11 @@ import {
   Clickable,
   Spacer,
   BorderedRadio,
-  InstitutionIcon,
   CreditCardIcon,
   RadioGroup,
   Text,
   Collapse,
   RadioProps,
-  InfoCircleIcon,
   Tooltip,
   Flex,
 } from "@artsy/palette"
@@ -20,7 +18,6 @@ import {
   Payment_order$data,
   CommercePaymentMethodEnum,
 } from "__generated__/Payment_order.graphql"
-
 import { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import {
   CreditCardPicker,
@@ -29,6 +26,8 @@ import {
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
+import InfoIcon from "@artsy/icons/InfoIcon"
+import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 
 export interface Props {
   order: Payment_order$data
@@ -361,7 +360,7 @@ const getPaymentMethodInfo = (
               content="SEPA countries: Austria, Belgium, Britain, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Iceland, Ireland, Italy, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Monaco, Netherlands, Norway, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden, and Switzerland."
             >
               <Clickable ml={0.5} style={{ lineHeight: 0 }}>
-                <InfoCircleIcon />
+                <InfoIcon />
               </Clickable>
             </Tooltip>
           </Flex>
