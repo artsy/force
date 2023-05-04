@@ -14,5 +14,5 @@ export function redirectWithCanonicalParams({ req, res }) {
 
 function hasCanonicalSort(query: { sort: string }) {
   // See https://artsyproduct.atlassian.net/browse/FX-4778
-  return query.sort != "-default_trending_score"
+  return query.sort !== "-default_trending_score"
 }
