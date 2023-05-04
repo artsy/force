@@ -9,7 +9,7 @@ import { MetaTags } from "Components/MetaTags"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { TopContextBar } from "Components/TopContextBar"
-import { useRouter } from "found"
+import { useRouter } from "System/Router/useRouter"
 
 interface AuctionResultProps {
   auctionResult: AuctionResult_auctionResult$data
