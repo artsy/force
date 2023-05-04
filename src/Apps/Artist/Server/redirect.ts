@@ -1,3 +1,5 @@
+import { stringify } from "qs"
+
 export function redirectWithCanonicalParams({ req, res }) {
   if (hasCanonicalSort(req.query)) {
     // all good
@@ -7,7 +9,7 @@ export function redirectWithCanonicalParams({ req, res }) {
   // else remove the offending sort, causing fallback to default sort
   delete req.query.sort
 
-  const sanitizedQuerystring = new URLSearchParams(req.query).toString()
+  const sanitizedQuerystring = stringify(req.query)
   const sanitizedPath = [req.path, sanitizedQuerystring].join("?")
   res.redirect(301, sanitizedPath)
 }
