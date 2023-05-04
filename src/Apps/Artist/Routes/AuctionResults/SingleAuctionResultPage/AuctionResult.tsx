@@ -17,7 +17,7 @@ interface AuctionResultProps {
 export const AuctionResult: React.FC<AuctionResultProps> = ({
   auctionResult,
 }) => {
-  const { comparableAuctionResults, title, artist } = auctionResult
+  const { comparableAuctionResults, title, artist, internalID } = auctionResult
 
   const results = extractNodes(comparableAuctionResults)
 
@@ -27,6 +27,7 @@ export const AuctionResult: React.FC<AuctionResultProps> = ({
         title={`${title}${
           artist?.name ? ` by ${artist.name}` : ""
         } | Auction Results on Artsy`}
+        pathname={`/auction-result/${internalID}`}
       />
 
       <AuctionResultBackLink />
@@ -81,6 +82,7 @@ export const AuctionResultFragmentContainer = createFragmentContainer(
   {
     auctionResult: graphql`
       fragment AuctionResult_auctionResult on AuctionResult {
+        internalID
         artist {
           name
         }

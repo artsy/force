@@ -25,6 +25,7 @@ export const LogInPrompt: React.FC<LogInPromptProps> = ({ contextModule }) => {
       },
     })
   }
+
   return (
     <>
       {!isLoggedIn && (

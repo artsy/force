@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5fe8246cd90934933a5f322176467531>>
+ * @generated SignedSource<<df48403e2b98fb96eb10ccde739666e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type AuctionResult_auctionResult$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly internalID: string;
   readonly title: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"AuctionResultImage_auctionResult" | "AuctionResultMetaData_auctionResult" | "AuctionResultPrice_auctionResult" | "AuctionResultTitleInfo_auctionResult">;
   readonly " $fragmentType": "AuctionResult_auctionResult";
@@ -37,6 +38,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "AuctionResult_auctionResult",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -138,6 +146,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "77474a33395b14e99df6ca230075357c";
+(node as any).hash = "e4799c7c9a9a2ed27b94936b54bb7bfe";
 
 export default node;
