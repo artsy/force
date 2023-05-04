@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<df48403e2b98fb96eb10ccde739666e3>>
+ * @generated SignedSource<<9f5eab6fe03359b553cce9fc4506087f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResult_auctionResult$data = {
   readonly artist: {
+    readonly href: string | null;
     readonly name: string | null;
   } | null;
   readonly comparableAuctionResults: {
@@ -58,6 +59,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "name",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "href",
           "storageKey": null
         }
       ],
@@ -146,6 +154,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "e4799c7c9a9a2ed27b94936b54bb7bfe";
+(node as any).hash = "5baccfec80bd4c2f62daeca23da3c38e";
 
 export default node;
