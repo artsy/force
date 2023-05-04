@@ -1,8 +1,9 @@
-import { Button, QuestionCircleIcon } from "@artsy/palette"
+import { Button } from "@artsy/palette"
 import { mockTracking } from "DevTools/mockTracking"
 import { mount } from "enzyme"
 import { PricingContextModal } from "Apps/Artwork/Components/PricingContextModal"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import HelpIcon from "@artsy/icons/HelpIcon"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -11,9 +12,9 @@ describe("PricingContextModal", () => {
   it("renders with the modal closed", () => {
     const component = mount(<PricingContextModal />)
 
-    component.find(QuestionCircleIcon)
+    component.find(HelpIcon)
 
-    expect(component.find(QuestionCircleIcon).length).toEqual(1)
+    expect(component.find(HelpIcon).length).toEqual(1)
 
     expect(component.text()).not.toContain(
       "This feature aims to provide insight into the range of prices for an artist's works and allow buyers to discover other available works by the artist at different price points."
@@ -23,7 +24,7 @@ describe("PricingContextModal", () => {
   it("renders the link to 'How Artworks Get Their Prices' article", async () => {
     const component = mount(<PricingContextModal />)
 
-    component.find(QuestionCircleIcon).simulate("click")
+    component.find(HelpIcon).simulate("click")
 
     await flushPromiseQueue()
     component.update()
@@ -38,7 +39,7 @@ describe("PricingContextModal", () => {
   it("renders the support mailto link", async () => {
     const component = mount(<PricingContextModal />)
 
-    component.find(QuestionCircleIcon).at(0).simulate("click")
+    component.find(HelpIcon).at(0).simulate("click")
 
     await flushPromiseQueue()
     component.update()
@@ -51,7 +52,7 @@ describe("PricingContextModal", () => {
   it("opens the modal when the question mark icon is clicked", async () => {
     const component = mount(<PricingContextModal />)
 
-    component.find(QuestionCircleIcon).at(0).simulate("click")
+    component.find(HelpIcon).at(0).simulate("click")
 
     await flushPromiseQueue()
     component.update()
@@ -64,7 +65,7 @@ describe("PricingContextModal", () => {
   it("closes the modal when the 'Got it' button is clicked", async () => {
     const component = mount(<PricingContextModal />)
 
-    component.find(QuestionCircleIcon).at(0).simulate("click")
+    component.find(HelpIcon).at(0).simulate("click")
 
     await flushPromiseQueue()
     component.update()
@@ -93,7 +94,7 @@ describe("PricingContextModal", () => {
     it("tracks clicks on the question mark icon", () => {
       const { Component, dispatch } = mockTracking(PricingContextModal)
       const component = mount(<Component />)
-      component.find(QuestionCircleIcon).at(0).simulate("click")
+      component.find(HelpIcon).at(0).simulate("click")
 
       expect(dispatch).toBeCalledWith({
         context_module: "Price Context",

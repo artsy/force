@@ -3,15 +3,12 @@ import {
   BoxProps,
   Button,
   Clickable,
-  EnvelopeIcon,
-  FacebookIcon,
   Flex,
   Input,
   PinterestIcon,
   Separator,
   Text,
   TumblrIcon,
-  TwitterIcon,
 } from "@artsy/palette"
 import * as React from "react"
 import { useRef, useState } from "react"
@@ -20,6 +17,9 @@ import { ArtworkSharePanel_artwork$data } from "__generated__/ArtworkSharePanel_
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { RouterLink } from "System/Router/RouterLink"
+import TwitterIcon from "@artsy/icons/TwitterIcon"
+import FacebookIcon from "@artsy/icons/FacebookIcon"
+import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
 
 interface ArtworkSharePanelProps extends BoxProps {
   artwork: ArtworkSharePanel_artwork$data

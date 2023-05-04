@@ -1,13 +1,4 @@
-import {
-  ArrowLeftIcon,
-  ArrowRightIcon,
-  Box,
-  Clickable,
-  Flex,
-  ModalBase,
-  Spinner,
-  Text,
-} from "@artsy/palette"
+import { Box, Clickable, Flex, ModalBase, Spinner, Text } from "@artsy/palette"
 import { FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -23,6 +14,8 @@ import { useNextPrevious } from "Utils/Hooks/useNextPrevious"
 import { useArticleContext } from "Apps/Article/Components/ArticleContext"
 import { mapCursorToMax } from "map-cursor-to-max"
 import CloseIcon from "@artsy/icons/CloseIcon"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 
 interface ArticleZoomGalleryProps {
   article: ArticleZoomGallery_article$data
@@ -77,7 +70,7 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
       <Box bg="white100" width="100vw" height="100vh" ref={containerRef as any}>
         {figures.length > 1 && (
           <NextPrevious onClick={handleNext} right={0}>
-            <ArrowRightIcon fill="currentColor" width={30} height={30} />
+            <ChevronRightIcon fill="currentColor" width={30} height={30} />
           </NextPrevious>
         )}
 
@@ -87,7 +80,7 @@ const ArticleZoomGallery: FC<ArticleZoomGalleryProps> = ({
 
         {figures.length > 1 && (
           <NextPrevious onClick={handlePrev} left={0}>
-            <ArrowLeftIcon fill="currentColor" width={30} height={30} />
+            <ChevronLeftIcon fill="currentColor" width={30} height={30} />
           </NextPrevious>
         )}
 

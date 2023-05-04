@@ -1,6 +1,7 @@
-import { Flex, Image, NoImageIcon, ResponsiveBox } from "@artsy/palette"
+import { Flex, Image, ResponsiveBox } from "@artsy/palette"
 import { AuctionResultImage_auctionResult$key } from "__generated__/AuctionResultImage_auctionResult.graphql"
 import { graphql, useFragment } from "react-relay"
+import NoArtIcon from "@artsy/icons/NoArtIcon"
 
 export const MAX_DIMENSION = 400
 
@@ -34,7 +35,7 @@ export const AuctionResultImage: React.FC<AuctionResultImageProps> = ({
           aspectHeight={1}
         >
           <Flex height="100%" justifyContent="center" alignItems="center">
-            <NoImageIcon width={28} height={28} fill="black60" />
+            <NoArtIcon width={28} height={28} fill="black60" />
           </Flex>
         </ResponsiveBox>
       </Flex>
