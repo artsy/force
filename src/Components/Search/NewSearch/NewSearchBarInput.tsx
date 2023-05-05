@@ -18,7 +18,7 @@ import {
   NewSuggestionItem,
   SuggionItemOptionProps,
 } from "Components/Search/NewSearch/NewSuggestionItem"
-import { throttle } from "lodash"
+import { debounce } from "lodash"
 import { useTracking } from "react-tracking"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { getENV } from "Utils/getENV"
@@ -29,7 +29,7 @@ import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useRouter } from "System/Router/useRouter"
 
 const logger = createLogger("Components/Search/NewSearchBar")
-const SEARCH_THROTTLE_DELAY = 500
+const SEARCH_DEBOUNCE_DELAY = 250
 
 export interface NewSearchBarInputProps extends SystemContextProps {
   relay: RelayRefetchProp
@@ -127,8 +127,9 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       }
     )
   }
-  const throttledSearchRequest = useMemo(
-    () => throttle(refetch, SEARCH_THROTTLE_DELAY, { leading: true }),
+
+  const debouncedSearchRequest = useMemo(
+    () => debounce(refetch, SEARCH_DEBOUNCE_DELAY),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
@@ -139,7 +140,9 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
-    throttledSearchRequest(event.target.value)
+
+    if (event.target.value.length > 1)
+      debouncedSearchRequest(event.target.value)
   }
 
   const handlePillClick = (pill: PillType) => {
