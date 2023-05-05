@@ -3,9 +3,7 @@ import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
-
 import { initialAuctionResultsFilterState } from "./Routes/AuctionResults/AuctionResultsFilterContext"
-import { renderOrRedirect } from "./Routes/Overview/Utils/renderOrRedirect"
 import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
 import { redirectWithCanonicalParams } from "./Server/redirect"
@@ -13,10 +11,14 @@ import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
-  {
-    resolveComponent: component => component.ArtistAppFragmentContainer,
-  }
+  { resolveComponent: component => component.ArtistAppFragmentContainer }
 )
+
+const ArtistSubApp = loadable(
+  () => import(/* webpackChunkName: "artistBundle" */ "./ArtistSubApp"),
+  { resolveComponent: component => component.ArtistSubAppFragmentContainer }
+)
+
 const OverviewRoute = loadable(
   () =>
     import(
@@ -27,6 +29,7 @@ const OverviewRoute = loadable(
       component.ArtistOverviewRouteFragmentContainer,
   }
 )
+
 const WorksForSaleRoute = loadable(
   () =>
     import(
@@ -37,13 +40,13 @@ const WorksForSaleRoute = loadable(
       component.ArtistWorksForSaleRouteFragmentContainer,
   }
 )
+
 const CVRoute = loadable(
   () =>
     import(/* webpackChunkName: "artistBundle" */ "./Routes/CV/ArtistCVRoute"),
-  {
-    resolveComponent: component => component.ArtistCVRouteFragmentContainer,
-  }
+  { resolveComponent: component => component.ArtistCVRouteFragmentContainer }
 )
+
 const ArticlesRoute = loadable(
   () =>
     import(
@@ -54,15 +57,15 @@ const ArticlesRoute = loadable(
       component.ArtistArticlesRouteFragmentContainer,
   }
 )
+
 const ShowsRoute = loadable(
   () =>
     import(
       /* webpackChunkName: "artistBundle" */ "./Routes/Shows/ArtistShowsRoute"
     ),
-  {
-    resolveComponent: component => component.ArtistShowsRouteFragmentContainer,
-  }
+  { resolveComponent: component => component.ArtistShowsRouteFragmentContainer }
 )
+
 const AuctionResultsRoute = loadable(
   () =>
     import(
@@ -73,6 +76,7 @@ const AuctionResultsRoute = loadable(
       component.AuctionResultsRouteFragmentContainer,
   }
 )
+
 const ConsignRoute = loadable(
   () =>
     import(
@@ -89,20 +93,7 @@ const AuctionResultRoute = loadable(
     import(
       /* webpackChunkName: "artistBundle" */ "./Routes/AuctionResults/SingleAuctionResultPage/AuctionResult"
     ),
-  {
-    resolveComponent: component => component.AuctionResultFragmentContainer,
-  }
-)
-
-const ArtistHeader2Route = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "artistBundle" */ "./Routes/ArtistHeader2Route"
-    ),
-  {
-    resolveComponent: component =>
-      component.ArtistHeader2RouteFragmentContainer,
-  }
+  { resolveComponent: component => component.AuctionResultFragmentContainer }
 )
 
 export const artistRoutes: AppRouteConfig[] = [
@@ -117,33 +108,15 @@ export const artistRoutes: AppRouteConfig[] = [
       WorksForSaleRoute.preload()
     },
     query: graphql`
-      query artistRoutes_TopLevelQuery($artistID: String!) {
+      query artistRoutes_ArtistAppQuery($artistID: String!) {
         artist(id: $artistID) @principalField {
           ...ArtistApp_artist
-          ...ArtistApp_sharedMetadata @relay(mask: false) # used to determine redirects and renderability
         }
       }
     `,
-    render: renderOrRedirect,
-
     children: [
       {
-        path: "/",
-        getComponent: () => OverviewRoute,
-        onServerSideRender: enableArtistPageCTA,
-        onClientSideRender: () => {
-          OverviewRoute.preload()
-        },
-        query: graphql`
-          query artistRoutes_OverviewQuery($artistID: String!) {
-            artist(id: $artistID) {
-              ...ArtistOverviewRoute_artist
-            }
-          }
-        `,
-      },
-      {
-        path: "works-for-sale",
+        path: "",
         getComponent: () => WorksForSaleRoute,
         onServerSideRender: redirectWithCanonicalParams,
         onClientSideRender: () => {
@@ -213,8 +186,35 @@ export const artistRoutes: AppRouteConfig[] = [
           }
         `,
       },
-
-      // Routes not in tabs
+      {
+        path: "about",
+        getComponent: () => OverviewRoute,
+        onServerSideRender: enableArtistPageCTA,
+        onClientSideRender: () => {
+          OverviewRoute.preload()
+        },
+        query: graphql`
+          query artistRoutes_OverviewQuery($artistID: String!) {
+            artist(id: $artistID) {
+              ...ArtistOverviewRoute_artist
+            }
+          }
+        `,
+      },
+    ],
+  },
+  {
+    path: "/artist/:artistID",
+    ignoreScrollBehaviorBetweenChildren: true,
+    getComponent: () => ArtistSubApp,
+    query: graphql`
+      query artistRoutes_ArtistSubAppQuery($artistID: String!) {
+        artist(id: $artistID) {
+          ...ArtistSubApp_artist
+        }
+      }
+    `,
+    children: [
       {
         path: "articles/:artworkId?",
         hideNavigationTabs: true,
@@ -230,7 +230,6 @@ export const artistRoutes: AppRouteConfig[] = [
           }
         `,
       },
-
       {
         path: "consign",
         hideNavigationTabs: true,
@@ -290,21 +289,6 @@ export const artistRoutes: AppRouteConfig[] = [
           query artistRoutes_ShowsQuery($artistID: String!) {
             viewer {
               ...ArtistShowsRoute_viewer
-            }
-          }
-        `,
-      },
-
-      {
-        path: "artist-header-2",
-        getComponent: () => ArtistHeader2Route,
-        onClientSideRender: () => {
-          ArtistHeader2Route.preload()
-        },
-        query: graphql`
-          query artistRoutes_ArtistHeader2Query($artistID: String!) {
-            artist(id: $artistID) {
-              ...ArtistHeader2Route_artist
             }
           }
         `,

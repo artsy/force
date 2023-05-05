@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { BackLinkFragmentContainer } from "Apps/Artist/Components/BackLink"
-import { BackLink_Test_Query } from "__generated__/BackLink_Test_Query.graphql"
+import { ArtistBackLinkFragmentContainer } from "Apps/Artist/Components/ArtistBackLink"
+import { ArtistBackLink_Test_Query } from "__generated__/ArtistBackLink_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"
 
@@ -15,9 +15,9 @@ jest.mock("System/Router/useRouter", () => ({
 }))
 
 const QUERY = graphql`
-  query BackLink_Test_Query @relay_test_operation {
+  query ArtistBackLink_Test_Query @relay_test_operation {
     artist(id: "example") {
-      ...BackLink_artist
+      ...ArtistBackLink_artist
     }
   }
 `
@@ -33,11 +33,11 @@ describe("BackLink when ff disabled", () => {
   })
 
   describe("The articles page was opened from the Artist page", () => {
-    const { getWrapper } = setupTestWrapper<BackLink_Test_Query>({
+    const { getWrapper } = setupTestWrapper<ArtistBackLink_Test_Query>({
       Component: props => {
         return (
           <MockBoot>
-            <BackLinkFragmentContainer artist={props.artist!} />
+            <ArtistBackLinkFragmentContainer artist={props.artist!} />
           </MockBoot>
         )
       },
@@ -71,14 +71,11 @@ describe("BackLink when ff disabled", () => {
 
   describe("The articles page was opened from the My Collection Artwork page", () => {
     const artworkId = "artwork-id"
-    const { getWrapper } = setupTestWrapper<BackLink_Test_Query>({
+    const { getWrapper } = setupTestWrapper<ArtistBackLink_Test_Query>({
       Component: props => {
         return (
           <MockBoot>
-            <BackLinkFragmentContainer
-              artist={props.artist!}
-              artworkId={artworkId}
-            />
+            <ArtistBackLinkFragmentContainer artist={props.artist!} />
           </MockBoot>
         )
       },
@@ -120,11 +117,11 @@ describe("BackLink when ff enabled", () => {
   })
 
   describe("The articles page was opened from the Artist page", () => {
-    const { getWrapper } = setupTestWrapper<BackLink_Test_Query>({
+    const { getWrapper } = setupTestWrapper<ArtistBackLink_Test_Query>({
       Component: props => {
         return (
           <MockBoot>
-            <BackLinkFragmentContainer artist={props.artist!} />
+            <ArtistBackLinkFragmentContainer artist={props.artist!} />
           </MockBoot>
         )
       },
@@ -158,14 +155,11 @@ describe("BackLink when ff enabled", () => {
 
   describe("The articles page was opened from the My Collection Artwork page", () => {
     const artworkId = "artwork-id"
-    const { getWrapper } = setupTestWrapper<BackLink_Test_Query>({
+    const { getWrapper } = setupTestWrapper<ArtistBackLink_Test_Query>({
       Component: props => {
         return (
           <MockBoot>
-            <BackLinkFragmentContainer
-              artist={props.artist!}
-              artworkId={artworkId}
-            />
+            <ArtistBackLinkFragmentContainer artist={props.artist!} />
           </MockBoot>
         )
       },
