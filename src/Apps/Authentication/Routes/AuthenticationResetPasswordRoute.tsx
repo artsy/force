@@ -1,5 +1,4 @@
 import {
-  ArtsyLogoBlackIcon,
   Spacer,
   Button,
   Flex,
@@ -17,6 +16,7 @@ import { getENV } from "Utils/getENV"
 import { useMode } from "Utils/Hooks/useMode"
 import * as Yup from "yup"
 import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
 interface AuthenticationResetPasswordRouteProps {}
 
@@ -111,7 +111,7 @@ export const AuthenticationResetPasswordRoute: React.FC<AuthenticationResetPassw
               onSubmit={handleSubmit}
             >
               <Join separator={<Spacer y={2} />}>
-                <ArtsyLogoBlackIcon />
+                <ArtsyLogoIcon />
 
                 <Text variant="lg-display">{verb} Your Password</Text>
 

@@ -133,7 +133,6 @@ describe("ArtworkActionsSaveButtonV2", () => {
         })
 
         expect(screen.getByText("Saved")).toBeInTheDocument()
-        expect(screen.getByTitle("Unsave icon")).toBeInTheDocument()
       })
 
       it("if artwork was previously saved in custom lists", () => {
@@ -147,7 +146,6 @@ describe("ArtworkActionsSaveButtonV2", () => {
         })
 
         expect(screen.getByText("Saved")).toBeInTheDocument()
-        expect(screen.getByTitle("Unsave icon")).toBeInTheDocument()
       })
 
       it("if artwork was previously saved in `Saved Artworks` and custom lists", () => {
@@ -161,7 +159,6 @@ describe("ArtworkActionsSaveButtonV2", () => {
         })
 
         expect(screen.getByText("Saved")).toBeInTheDocument()
-        expect(screen.getByTitle("Unsave icon")).toBeInTheDocument()
       })
     })
 
@@ -174,7 +171,6 @@ describe("ArtworkActionsSaveButtonV2", () => {
           }),
         })
 
-        expect(screen.getByTitle("Unwatch lot icon")).toBeInTheDocument()
         expect(screen.getByText("Watching lot")).toBeInTheDocument()
       })
 
@@ -189,7 +185,6 @@ describe("ArtworkActionsSaveButtonV2", () => {
           }),
         })
 
-        expect(screen.getByTitle("Unwatch lot icon")).toBeInTheDocument()
         expect(screen.getByText("Watching lot")).toBeInTheDocument()
       })
 
@@ -204,7 +199,6 @@ describe("ArtworkActionsSaveButtonV2", () => {
           }),
         })
 
-        expect(screen.getByTitle("Unwatch lot icon")).toBeInTheDocument()
         expect(screen.getByText("Watching lot")).toBeInTheDocument()
       })
     })

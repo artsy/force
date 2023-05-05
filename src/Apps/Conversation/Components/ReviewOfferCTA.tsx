@@ -2,20 +2,12 @@ import * as React from "react"
 import { useTracking } from "react-tracking"
 import { TappedViewOffer, ActionType, OwnerType } from "@artsy/cohesion"
 import { DateTime } from "luxon"
-import {
-  AlertCircleFillIcon,
-  ArrowRightIcon,
-  Color,
-  Flex,
-  IconProps,
-  MoneyFillIcon,
-  Text,
-} from "@artsy/palette"
+import { Color, Flex, MoneyFillIcon, Text } from "@artsy/palette"
 import styled from "styled-components"
-
 import { useEventTiming } from "Utils/Hooks/useEventTiming"
-
 import { CommerceBuyerOfferActionEnum } from "__generated__/ConversationCTA_conversation.graphql"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
+import AlertFillIcon from "@artsy/icons/AlertFillIcon"
 
 export const ClickableFlex = styled(Flex)`
   cursor: pointer;
@@ -49,13 +41,13 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
 
   const expiresIn =
     Number(hoursTillEnd) < 1 ? `${minutes}m` : `${Math.round(hoursTillEnd)}hr`
-  const offerType = (offers?.edges?.length || []) > 1 ? "Counteroffer" : "Offer"
+  const offerType = (offers?.edges?.length ?? 0) > 1 ? "Counteroffer" : "Offer"
 
   let ctaAttributes: {
     backgroundColor: Color
     message: string
     subMessage: string
-    Icon: React.FC<IconProps>
+    Icon: React.FC<any>
   }
 
   switch (kind) {
@@ -65,7 +57,7 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
         message: "Payment Failed",
         subMessage:
           "Unable to process payment for accepted offer. Update payment method.",
-        Icon: AlertCircleFillIcon,
+        Icon: AlertFillIcon,
       }
       break
     }
@@ -74,7 +66,7 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
         backgroundColor: "orange150" as Color, // FIXME: Needs v3 typing
         message: `${offerType} Received`,
         subMessage: `The offer expires in ${expiresIn}`,
-        Icon: AlertCircleFillIcon,
+        Icon: AlertFillIcon,
       }
       break
     }
@@ -92,7 +84,7 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
         backgroundColor: "orange150" as Color, // FIXME: Needs v3 typing
         message: `Offer Accepted - Confirm total`,
         subMessage: `The offer expires in ${expiresIn}`,
-        Icon: AlertCircleFillIcon,
+        Icon: AlertFillIcon,
       }
       break
     }
@@ -101,7 +93,7 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
         backgroundColor: "orange150" as Color, // FIXME: Needs v3 typing
         message: `Counteroffer Received - Confirm Total`,
         subMessage: `The offer expires in ${expiresIn}`,
-        Icon: AlertCircleFillIcon,
+        Icon: AlertFillIcon,
       }
       break
     }
@@ -153,7 +145,7 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
           </Flex>
         </Flex>
         <Flex>
-          <ArrowRightIcon fill="white100" />
+          <ChevronRightIcon fill="white100" />
         </Flex>
       </ClickableFlex>
     </>

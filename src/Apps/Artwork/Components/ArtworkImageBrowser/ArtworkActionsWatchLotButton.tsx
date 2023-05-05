@@ -1,4 +1,4 @@
-import { BellFillIcon, BellIcon, Popover, THEME } from "@artsy/palette"
+import { Popover, THEME } from "@artsy/palette"
 import { ArtworkAuctionRegistrationPanelFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkAuctionRegistrationPanel"
 import { UtilButton } from "./UtilButton"
 import { FC, useCallback, useEffect, useState } from "react"
@@ -7,6 +7,8 @@ import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkActionsWatchLotButton_artwork$data } from "__generated__/ArtworkActionsWatchLotButton_artwork.graphql"
 import { useTranslation } from "react-i18next"
+import BellFilledIcon from "@artsy/icons/BellFilledIcon"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 
 interface ArtworkActionsWatchLotButtonProps {
   isSaved: boolean
@@ -84,7 +86,7 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
           <UtilButton
             ref={anchorRef}
             name="bell"
-            Icon={isSaved ? FilledIcon : UnfilledIcon}
+            Icon={isSaved ? FilledIcon : BellStrokeIcon}
             label={
               isSaved
                 ? t(`artworkPage.actions.watchingLot`)
@@ -98,10 +100,7 @@ const ArtworkActionsWatchLotButton: FC<ArtworkActionsWatchLotButtonProps> = ({
   )
 }
 
-const UnfilledIcon = () => <BellIcon title="Unwatch lot icon" />
-const FilledIcon = () => (
-  <BellFillIcon title="Unwatch lot icon" fill="blue100" />
-)
+const FilledIcon = () => <BellFilledIcon fill="blue100" />
 
 export const ArtworkActionsWatchLotButtonFragmentContainer = createFragmentContainer(
   ArtworkActionsWatchLotButton,

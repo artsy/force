@@ -1,4 +1,4 @@
-import { Link, QuestionCircleIcon } from "@artsy/palette"
+import { Link } from "@artsy/palette"
 import { BarChart } from "@artsy/palette-charts"
 import {
   PricingContextTestQuery$rawResponse,
@@ -15,6 +15,7 @@ import {
   PricingContextFragmentContainer,
 } from "Apps/Artwork/Components/PricingContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import HelpIcon from "@artsy/icons/HelpIcon"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
@@ -124,8 +125,8 @@ describe("PricingContext", () => {
 
   it("renders pricing context question mark icon and informational modal", async () => {
     const wrapper = await getWrapper()
-    expect(wrapper.find(QuestionCircleIcon).length).toEqual(1)
-    wrapper.find(QuestionCircleIcon).at(0).simulate("click")
+    expect(wrapper.find(HelpIcon).length).toEqual(1)
+    wrapper.find(HelpIcon).at(0).simulate("click")
 
     await flushPromiseQueue()
 
