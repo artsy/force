@@ -6,21 +6,14 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { SystemContextProps, useSystemContext } from "System/SystemContext"
 import { extractNodes } from "Utils/extractNodes"
 import { NewSearchBarInput_viewer$data } from "__generated__/NewSearchBarInput_viewer.graphql"
-import {
-  NewSearchBarInputSuggestQuery,
-  SearchEntity,
-} from "__generated__/NewSearchBarInputSuggestQuery.graphql"
+import { NewSearchBarInputSuggestQuery } from "__generated__/NewSearchBarInputSuggestQuery.graphql"
 import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
 import { NewSearchBarFooter } from "Components/Search/NewSearch/NewSearchBarFooter"
 import { getLabel } from "./utils/getLabel"
 import { getSearchTerm } from "./utils/getSearchTerm"
 import { isServer } from "Server/isServer"
-import {
-  ELASTIC_PILL_KEY_TO_SEARCH_ENTITY,
-  PillType,
-  TOP_PILL,
-} from "Components/Search/NewSearch/constants"
+import { PillType, TOP_PILL } from "Components/Search/NewSearch/constants"
 import {
   NewSuggestionItem,
   SuggionItemOptionProps,
@@ -32,7 +25,8 @@ import { getENV } from "Utils/getENV"
 // eslint-disable-next-line no-restricted-imports
 import request from "superagent"
 import { StaticSearchContainer } from "./StaticSearchContainer"
-// import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
+import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
+import { useRouter } from "System/Router/useRouter"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 const SEARCH_THROTTLE_DELAY = 500
@@ -72,7 +66,8 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
   const { t } = useTranslation()
   const [value, setValue] = useState(getSearchTerm(window.location))
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
-  const [searchIncrement, setSearchIncrement] = useState(0)
+  const [fetchCounter, setFetchCounter] = useState(0)
+  const { router } = useRouter()
 
   const options = extractNodes(viewer.searchConnection)
   const formattedOptions: SuggionItemOptionProps[] = options.map(
@@ -105,9 +100,9 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       query: value,
     })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchIncrement])
+  }, [fetchCounter])
 
-  const refetch = (value: string, entity?: SearchEntity) => {
+  const refetch = (value: string, entity?: string) => {
     const entities = entity ? [entity] : []
     const performanceStart = performance && performance.now()
 
@@ -128,7 +123,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
           reportPerformanceMeasurement(performanceStart)
         }
 
-        setSearchIncrement(prevCounter => prevCounter + 1)
+        setFetchCounter(prevCounter => prevCounter + 1)
       }
     )
   }
@@ -138,6 +133,10 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
     []
   )
 
+  const clearSearchInput = () => {
+    setValue("")
+  }
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
     throttledSearchRequest(event.target.value)
@@ -145,20 +144,20 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
 
   const handlePillClick = (pill: PillType) => {
     setSelectedPill(pill)
-    refetch(value, ELASTIC_PILL_KEY_TO_SEARCH_ENTITY?.[pill.key])
+    refetch(value, pill.searchEntityName)
   }
 
   const handleRedirect = () => {
-    setValue("")
+    clearSearchInput()
   }
 
   const handleSubmit = () => {
     if (value) {
-      window.location.href = `/search?term=${encodeURIComponent(value)}`
+      router.push(`/search?term=${encodeURIComponent(value)}`)
     }
   }
 
-  const handleSelect = (option: any) => {
+  const handleSelect = (option: SuggionItemOptionProps) => {
     tracking.trackEvent({
       action_type: DeprecatedSchema.ActionType.SelectedItemFromSearch,
       destination_path:
@@ -170,8 +169,8 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       query: value,
     })
 
-    setValue("")
-    window.location.href = option.href
+    clearSearchInput()
+    router.push(option.href)
   }
 
   const handleFocus = () => {
@@ -187,7 +186,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       options={value.length < 2 ? [] : formattedOptions}
       value={value}
       onChange={handleChange}
-      onClear={() => setValue("")}
+      onClear={clearSearchInput}
       onSubmit={handleSubmit}
       onFocus={handleFocus}
       onSelect={handleSelect}
@@ -210,8 +209,10 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
           query={value}
           href={`/search?term=${encodeURIComponent(value)}`}
           onRedirect={handleRedirect}
+          currentIndex={options.length}
         />
       }
+      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px)`}
     />
   )
 }

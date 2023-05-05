@@ -1,7 +1,7 @@
 import { Box, BoxProps } from "@artsy/palette"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
-import { SearchInputContainer } from "Components/Search/SearchInputContainer"
+import { SearchInputContainer } from "./SearchInputContainer"
 
 /**
  * Displays during SSR render.

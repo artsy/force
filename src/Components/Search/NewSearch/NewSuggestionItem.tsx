@@ -37,10 +37,7 @@ interface SuggestionItemProps {
 export const NewSuggestionItem: FC<SuggestionItemProps> = props => {
   const { option, onRedirect } = props
 
-  const handleClick = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
-    event.preventDefault()
+  const handleClick = () => {
     onRedirect()
   }
 

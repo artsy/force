@@ -9,23 +9,23 @@ import { Highlight } from "./Highlight"
 interface SuggestionItemProps {
   href: string
   query: string
+  currentIndex: number
   onRedirect: () => void
 }
 
 export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
   href,
   query,
+  currentIndex,
   onRedirect,
 }) => {
   const tracking = useTracking()
 
-  const handleClick = (
-    _event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
+  const handleClick = () => {
     tracking.trackEvent({
       action_type: DeprecatedSchema.ActionType.SelectedItemFromSearch,
       destination_path: href,
-      item_number: 7,
+      item_number: currentIndex,
       item_type: "FirstItem",
       query: query,
     })
