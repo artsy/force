@@ -3,8 +3,8 @@ import { Flex, Text } from "@artsy/palette"
 import { FC } from "react"
 import { useTracking } from "react-tracking"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { SuggestionItemLink } from "./SuggestionItemLink"
-import { Highlight } from "./Highlight"
+import { SuggestionItemLink } from "./SuggestionItem/SuggestionItemLink"
+import { Highlight } from "./SuggestionItem/Highlight"
 
 interface SuggestionItemProps {
   href: string

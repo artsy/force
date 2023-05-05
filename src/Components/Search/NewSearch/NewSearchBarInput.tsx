@@ -17,7 +17,7 @@ import { PillType, TOP_PILL } from "Components/Search/NewSearch/constants"
 import {
   NewSuggestionItem,
   SuggionItemOptionProps,
-} from "Components/Search/NewSearch/NewSuggestionItem"
+} from "./SuggestionItem/NewSuggestionItem"
 import { debounce } from "lodash"
 import { useTracking } from "react-tracking"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
