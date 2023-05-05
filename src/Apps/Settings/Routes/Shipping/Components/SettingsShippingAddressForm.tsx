@@ -191,7 +191,7 @@ export const SettingsShippingAddressForm: FC<SettingsShippingAddressFormProps> =
             }
           >
             <Form>
-              <GridColumns>
+              <GridColumns pt={2}>
                 <Column span={12}>
                   <Input
                     name="attributes.name"

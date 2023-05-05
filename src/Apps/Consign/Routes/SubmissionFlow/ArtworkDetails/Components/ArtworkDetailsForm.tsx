@@ -337,54 +337,43 @@ export const ArtworkDetailsForm: React.FC = () => {
       <GridColumns mt={[30, 2]}>
         <Column span={6}>
           <Flex height="100%">
-            <Box width="50%" mr={2} height="100%">
-              <Text variant="xs" mb={0.5} mr={0.5}>
-                Height
-              </Text>
-              <LabeledInput
-                maxLength={256}
-                label={values.units}
-                name="height"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.height}
-              />
-            </Box>
-            <Box width="50%" height="100%">
-              <Text variant="xs" mb={0.5} mr={0.5}>
-                Width
-              </Text>
-              <LabeledInput
-                maxLength={256}
-                label={values.units}
-                name="width"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.width}
-              />
-            </Box>
+            <LabeledInput
+              title="Height"
+              width="50%"
+              mr={2}
+              maxLength={256}
+              label={values.units}
+              name="height"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.height}
+            />
+
+            <LabeledInput
+              title="Width"
+              width="50%"
+              maxLength={256}
+              label={values.units}
+              name="width"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.width}
+            />
           </Flex>
         </Column>
         <Column span={6} mt={[4, 0]}>
           <Flex height="100%">
-            <Box pr={[0, 1]} width="50%" height="100%">
-              <Flex>
-                <Text variant="xs" mb={0.5} mr={0.5}>
-                  Depth
-                </Text>
-                <Text variant="xs" color="black60">
-                  (Optional)
-                </Text>
-              </Flex>
-              <LabeledInput
-                maxLength={256}
-                label={values.units}
-                name="depth"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.depth}
-              />
-            </Box>
+            <LabeledInput
+              title="Depth (Optional)"
+              pr={[0, 1]}
+              width="50%"
+              maxLength={256}
+              label={values.units}
+              name="depth"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.depth}
+            />
             <RadioGroup
               width="50%"
               defaultValue={values.units}
@@ -401,11 +390,7 @@ export const ArtworkDetailsForm: React.FC = () => {
       </GridColumns>
       <GridColumns mt={[4, 2]}>
         <Column span={6}>
-          <Flex justifyContent="space-between">
-            <Text variant="xs" mb={0.5}>
-              Provenance
-            </Text>
-
+          <Flex justifyContent="flex-end">
             <Clickable
               onClick={() => setIsProvenanceModalOpen(true)}
               data-test-id="open-provenance-modal"
@@ -417,6 +402,7 @@ export const ArtworkDetailsForm: React.FC = () => {
           </Flex>
 
           <Input
+            title="Provenance"
             name="provenance"
             placeholder="Describe how you acquired the work"
             maxLength={256}
