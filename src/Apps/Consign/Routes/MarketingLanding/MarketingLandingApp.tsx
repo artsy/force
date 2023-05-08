@@ -15,6 +15,7 @@ import { PreviouslySoldOnArtsyRailQueryRenderer } from "Apps/Consign/Routes/Mark
 import { FooterBanner } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FooterBanner"
 import { SpeakToTheTeam } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpeakToTheTeam"
 import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
+import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
 
 export const MarketingLandingApp = () => {
   const {
@@ -43,12 +44,13 @@ export const MarketingLandingApp = () => {
       <SellMeta />
 
       <Join separator={<Spacer y={[6, 12]} />}>
+        <MeetTheSpecialists />
+
         <HeaderSWA />
         <Highlights />
         <WaysWeSell />
         <HowItWorksSteps />
         <SpeakToTheTeam />
-        {/* <MeetTheSpecialists /> */}
         <CollectorsOverview />
         <PreviouslySoldOnArtsyRailQueryRenderer />
         {/* <Reviews /> */}

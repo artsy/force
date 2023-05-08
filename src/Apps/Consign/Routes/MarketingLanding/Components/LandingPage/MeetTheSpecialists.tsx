@@ -155,7 +155,7 @@ export const MeetTheSpecialists: React.FC = () => {
                     {i.jobTitle}
                   </Text>
                   <Text mb={2} variant={["xs", "sm"]} color="white100">
-                    <ReadMore content={i.bio} maxChars={100} />
+                    <ReadMore content={i.bio} maxChars={88} />
                   </Text>
                   <Button
                     // @ts-ignore
