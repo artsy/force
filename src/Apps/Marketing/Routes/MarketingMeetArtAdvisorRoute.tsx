@@ -81,7 +81,7 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
           ]}
         />
 
-        {!!isEigen && (
+        {!isEigen && (
           <FullBleed bg={["black5", "transparent"]} py={[4, 0]} px={[2, 4]}>
             <GridColumns gridRowGap={4}>
               <Column span={12} textAlign="center">
