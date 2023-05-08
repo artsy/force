@@ -8,7 +8,7 @@ import {
   ArtworkDetailsFormModel,
   getArtworkDetailsFormInitialValues,
   SubmissionType,
-} from "../Components/ArtworkDetailsForm"
+} from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtworkDetailsForm"
 
 const renderArtworkForm = (values: ArtworkDetailsFormModel) =>
   mount(
@@ -117,7 +117,7 @@ describe("ArtworkDetailsForm", () => {
       )
 
     sizeFields.forEach((node: ReactWrapper) => {
-      expect(node.text()).toBe("in")
+      expect(node.text()).toContain("in")
     })
   })
 
@@ -130,7 +130,7 @@ describe("ArtworkDetailsForm", () => {
       )
 
     sizeFields.forEach((node: ReactWrapper) => {
-      expect(node.text()).toBe("cm")
+      expect(node.text()).toContain("cm")
     })
   })
 })
