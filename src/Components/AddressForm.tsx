@@ -136,7 +136,6 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           </Text>
           <CountrySelect
             tabIndex={tabIndex}
-            id="AddressForm_country"
             selected={
               lockCountryToOrigin || (lockCountriesToEU && !address.country)
                 ? shippingCountry
@@ -145,6 +144,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             onSelect={changeValueHandler("country")}
             disabled={lockCountryToOrigin}
             euShippingOnly={lockCountriesToEU}
+            data-test="AddressForm_country"
           />
           {(lockCountryToOrigin || lockCountriesToEU) && (
             <>
