@@ -9,6 +9,7 @@ export const Footer: React.FC = () => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
+  const { isEigen } = useSystemContext()
 
   const trackStartSellingClick = () => {
     trackEvent({
@@ -22,6 +23,8 @@ export const Footer: React.FC = () => {
       user_id: user?.id,
     })
   }
+
+  if (isEigen) return null
 
   return (
     <>
