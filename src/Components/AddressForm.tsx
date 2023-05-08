@@ -127,6 +127,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           value={address.name}
           onChange={changeEventHandler("name")}
           error={getError("name")}
+          data-test="AddressForm_name"
         />
       </Flex>
       <TwoColumnSplit>
@@ -168,6 +169,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             value={address.postalCode}
             onChange={changeEventHandler("postalCode")}
             error={getError("postalCode")}
+            data-test="AddressForm_postalCode"
           />
         </Flex>
       </TwoColumnSplit>
@@ -181,6 +183,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             value={address.addressLine1}
             onChange={changeEventHandler("addressLine1")}
             error={getError("addressLine1")}
+            data-test="AddressForm_addressLine1"
           />
         </Flex>
         <Flex flexDirection="column">
@@ -192,6 +195,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             value={address.addressLine2}
             onChange={changeEventHandler("addressLine2")}
             error={getError("addressLine2")}
+            data-test="AddressForm_addressLine2"
           />
         </Flex>
       </TwoColumnSplit>
@@ -205,6 +209,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             value={address.city}
             onChange={changeEventHandler("city")}
             error={getError("city")}
+            data-test="AddressForm_city"
           />
         </Flex>
         <Flex flexDirection="column">
@@ -217,6 +222,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             value={address.region}
             onChange={changeEventHandler("region")}
             error={getError("region")}
+            data-test="AddressForm_region"
           />
         </Flex>
       </TwoColumnSplit>
@@ -234,6 +240,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
               value={address.phoneNumber}
               onChange={changeEventHandler("phoneNumber")}
               error={getError("phoneNumber")}
+              data-test="AddressForm_phoneNumber"
             />
           </Flex>
           <Spacer y={2} />
