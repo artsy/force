@@ -35,11 +35,6 @@ const TEST_imagePriveteSalesAndAdvisory = resized(
   imageOptions
 )
 
-const TEST_CollectorServices = resized(
-  "https://files.artsy.net/images/07_CVP_About_Discover.png",
-  imageOptions
-)
-
 export const SPECIALISTS: SpecialistsData[] = [
   {
     specialty: "auctions",
