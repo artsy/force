@@ -2,7 +2,6 @@ import {
   Button,
   Clickable,
   ModalDialog,
-  QuestionCircleIcon,
   Spacer,
   Text,
   Tooltip,
@@ -12,6 +11,7 @@ import { Component } from "react"
 import Events from "Utils/Events"
 import track from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
+import HelpIcon from "@artsy/icons/HelpIcon"
 
 interface State {
   isModalOpen?: boolean
@@ -51,8 +51,9 @@ export class PricingContextModal extends Component<State> {
             onClick={this.openModal.bind(this)}
             ml={1}
             style={{ lineHeight: 0 }}
+            aria-label="Learn more"
           >
-            <QuestionCircleIcon aria-hidden title="" />
+            <HelpIcon aria-hidden title="" />
           </Clickable>
         </Tooltip>
 
