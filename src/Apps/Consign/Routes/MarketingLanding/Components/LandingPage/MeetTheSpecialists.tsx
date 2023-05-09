@@ -2,7 +2,7 @@ import { ActionType, ContextModule } from "@artsy/cohesion"
 import {
   Box,
   Button,
-  Flex,
+  HorizontalOverflow,
   Image,
   Pill,
   ReadMore,
@@ -96,7 +96,7 @@ export const MeetTheSpecialists: React.FC = () => {
       <Text mb={2} variant={["xs", "sm"]}>
         Our specialists span today’s most popular collecting categories.
       </Text>
-      <Flex overflowY="scroll">
+      <HorizontalOverflow>
         {filteredPills.map(pill => (
           <Pill
             mr={1}
@@ -109,20 +109,11 @@ export const MeetTheSpecialists: React.FC = () => {
                 SPECIALISTS.filter(i => i.specialty === pill.type)
               )
             }}
-            style={
-              selectedSpecialty === pill.type
-                ? {
-                    color: "white",
-                    backgroundColor: "black",
-                    borderColor: "black",
-                  }
-                : undefined
-            }
           >
             {pill.title}
           </Pill>
         ))}
-      </Flex>
+      </HorizontalOverflow>
       <Rail
         title=""
         getItems={() => {
