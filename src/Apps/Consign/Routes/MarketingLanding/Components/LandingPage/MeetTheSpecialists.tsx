@@ -21,6 +21,7 @@ import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { RouterLink } from "System/Router/RouterLink"
 import { useSystemContext } from "System/SystemContext"
+import { resized } from "Utils/resized"
 import { useState } from "react"
 import { useTracking } from "react-tracking"
 
@@ -43,6 +44,10 @@ const pills: PillData[] = [
     title: "Collector Services",
   },
 ]
+
+const filteredPills = pills.filter(pill =>
+  SPECIALISTS.some(specialist => specialist.specialty === pill.type)
+) as PillData[]
 
 export const MeetTheSpecialists: React.FC = () => {
   const { user } = useSystemContext()
@@ -92,7 +97,7 @@ export const MeetTheSpecialists: React.FC = () => {
         Our specialists span today’s most popular collecting categories.
       </Text>
       <Flex overflowY="scroll">
-        {pills.map(pill => (
+        {filteredPills.map(pill => (
           <Pill
             mr={1}
             hover={false}
@@ -140,8 +145,10 @@ export const MeetTheSpecialists: React.FC = () => {
                   <Image
                     width="100%"
                     height="100%"
-                    src={i.image.src}
-                    srcSet={i.image.srcSet}
+                    {...resized(i.imageUrl, {
+                      width: CARD_WIDTH,
+                      height: CARD_HEIGHT,
+                    })}
                     lazyLoad
                     alt={`specialist ${i.firstName}`}
                   />
