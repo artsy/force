@@ -57,6 +57,10 @@ const reportPerformanceMeasurement = performanceStart => {
     .end()
 }
 
+const shouldStartSearching = (value: string) => {
+  return value.length > 1
+}
+
 const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
   isXs,
   relay,
@@ -66,8 +70,10 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
   const { t } = useTranslation()
   const [value, setValue] = useState(getSearchTerm(window.location))
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
+  // We use fetchCounter together with useUpdateEffect to track typing
   const [fetchCounter, setFetchCounter] = useState(0)
   const { router } = useRouter()
+  const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
   const options = extractNodes(viewer.searchConnection)
   const formattedOptions: SuggionItemOptionProps[] = options.map(
@@ -90,6 +96,18 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       }
     }
   )
+
+  // Clear the search term once you navigate away from search results
+  useMemo(() => {
+    router.addNavigationListener(location => {
+      if (!location.pathname.startsWith("/search")) {
+        setValue("")
+      }
+
+      return true
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useUpdateEffect(() => {
     tracking.trackEvent({
@@ -138,11 +156,15 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
     setValue("")
   }
 
+  const redirect = (to: string) => {
+    router.push(to)
+  }
+
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
 
-    if (event.target.value.length > 1)
-      debouncedSearchRequest(event.target.value)
+    if (shouldStartSearching(event.target.value))
+      debouncedSearchRequest(event.target.value, selectedPill.searchEntityName)
   }
 
   const handlePillClick = (pill: PillType) => {
@@ -156,7 +178,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
 
   const handleSubmit = () => {
     if (value) {
-      router.push(`/search?term=${encodeURIComponent(value)}`)
+      redirect(encodedSearchURL)
     }
   }
 
@@ -173,7 +195,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
     })
 
     clearSearchInput()
-    router.push(option.href)
+    redirect(option.href)
   }
 
   const handleFocus = () => {
@@ -186,7 +208,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
     <AutocompleteInput
       placeholder={isXs ? t`navbar.searchArtsy` : t`navbar.searchBy`}
       spellCheck={false}
-      options={value.length < 2 ? [] : formattedOptions}
+      options={shouldStartSearching(value) ? formattedOptions : []}
       value={value}
       onChange={handleChange}
       onClear={clearSearchInput}
@@ -210,12 +232,11 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       footer={
         <NewSearchBarFooter
           query={value}
-          href={`/search?term=${encodeURIComponent(value)}`}
-          onRedirect={handleRedirect}
-          currentIndex={options.length}
+          href={encodedSearchURL}
+          index={options.length}
         />
       }
-      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px)`}
+      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 10px)`}
     />
   )
 }
@@ -302,7 +323,7 @@ export const NewSearchBarInputQueryRenderer: FC<NewSearchBarInputQueryRendererPr
       variables={{
         hasTerm: false,
         term: "",
-        entities: null,
+        entities: [],
       }}
       render={({ props: relayProps }) => {
         if (relayProps && relayProps.viewer) {

@@ -9,15 +9,13 @@ import { Highlight } from "./SuggestionItem/Highlight"
 interface SuggestionItemProps {
   href: string
   query: string
-  currentIndex: number
-  onRedirect: () => void
+  index: number
 }
 
 export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
   href,
   query,
-  currentIndex,
-  onRedirect,
+  index,
 }) => {
   const tracking = useTracking()
 
@@ -25,12 +23,10 @@ export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
     tracking.trackEvent({
       action_type: DeprecatedSchema.ActionType.SelectedItemFromSearch,
       destination_path: href,
-      item_number: currentIndex,
+      item_number: index,
       item_type: "FirstItem",
       query: query,
     })
-
-    onRedirect()
   }
 
   return (

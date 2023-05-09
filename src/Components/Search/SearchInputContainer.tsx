@@ -35,8 +35,7 @@ export const SearchInputContainer: React.ForwardRefExoticComponent<
         <SearchButton
           type="submit"
           onClick={event => {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            ;(event.target as HTMLElement).parentElement.blur()
+            ;(event.target as HTMLElement)?.parentElement?.blur()
 
             if (isEmpty(props.value)) {
               event.preventDefault()
