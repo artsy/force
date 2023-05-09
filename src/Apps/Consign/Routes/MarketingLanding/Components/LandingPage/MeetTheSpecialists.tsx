@@ -100,9 +100,7 @@ export const MeetTheSpecialists: React.FC = () => {
         {filteredPills.map(pill => (
           <Pill
             mr={1}
-            hover={false}
             selected={selectedSpecialty === pill.type}
-            variant="default"
             onClick={() => {
               setSelectedSpecialty(pill.type)
               setSpecialistsTooDisplay(
