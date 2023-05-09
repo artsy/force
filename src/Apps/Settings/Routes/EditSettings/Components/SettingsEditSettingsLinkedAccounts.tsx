@@ -1,12 +1,4 @@
-import {
-  AppleIcon,
-  Button,
-  GoogleIcon,
-  Join,
-  Spacer,
-  Text,
-  useToasts,
-} from "@artsy/palette"
+import { Button, Join, Spacer, Text, useToasts } from "@artsy/palette"
 import { FC, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
@@ -18,6 +10,8 @@ import {
 } from "__generated__/SettingsEditSettingsLinkedAccounts_me.graphql"
 import { useUnlinkSettingsLinkedAccount } from "./useUnlinkSettingsLinkedAccount"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
+import AppleIcon from "@artsy/icons/AppleIcon"
+import GoogleIcon from "@artsy/icons/GoogleIcon"
 
 interface SettingsEditSettingsLinkedAccountsProps {
   me: SettingsEditSettingsLinkedAccounts_me$data

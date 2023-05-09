@@ -1,6 +1,4 @@
 import {
-  ArrowDownCircleIcon,
-  ArrowUpCircleIcon,
   Box,
   Button,
   ButtonSize,
@@ -8,7 +6,6 @@ import {
   ColumnProps,
   GridColumns,
   Join,
-  MessageIcon,
   Separator,
   Spacer,
   Text,
@@ -21,6 +18,9 @@ import { AuctionActiveBids_me$data } from "__generated__/AuctionActiveBids_me.gr
 import { AuctionLotInfoFragmentContainer } from "Apps/Auction/Routes/Bid/Components/AuctionLotInfo"
 import { Media } from "Utils/Responsive"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
+import MessageIcon from "@artsy/icons/MessageIcon"
+import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
+import ChevronCircleDownIcon from "@artsy/icons/ChevronCircleDownIcon"
 
 interface AuctionActiveBidsProps {
   me: AuctionActiveBids_me$data
@@ -174,7 +174,7 @@ const BidStatus: React.FC<{
     case lotStanding.isHighestBidder: {
       return (
         <Text variant="xs" color="green100" display="flex">
-          <ArrowUpCircleIcon height={15} width={15} fill="green100" />
+          <ChevronCircleUpIcon height={15} width={15} fill="green100" />
           &nbsp; Highest bid
         </Text>
       )
@@ -191,7 +191,7 @@ const BidStatus: React.FC<{
     default: {
       return (
         <Text variant="xs" color="red100" display="flex" alignItems="center">
-          <ArrowDownCircleIcon height={15} width={15} fill="red100" />
+          <ChevronCircleDownIcon height={15} width={15} fill="red100" />
           &nbsp; Outbid
         </Text>
       )

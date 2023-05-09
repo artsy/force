@@ -1,5 +1,4 @@
 import {
-  CertificateIcon,
   Flex,
   Text,
   Spacer,
@@ -12,6 +11,7 @@ import { useState, FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { shouldRenderAuthenticityCertificate } from "Apps/Artwork/Utils/badges"
 import { RouterLink } from "System/Router/RouterLink"
+import CertificateIcon from "@artsy/icons/CertificateIcon"
 
 interface AuthenticityCertificateProps {
   artwork: AuthenticityCertificate_artwork$data

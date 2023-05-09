@@ -14,7 +14,6 @@ import {
   FullBleedHeader,
   FullBleedHeaderOverlay,
 } from "Components/FullBleedHeader/FullBleedHeader"
-import { PoweredByStripeIcon } from "Apps/BuyerGuarantee/Components/BuyerGuaranteeIcons"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { MetaTags } from "Components/MetaTags"
 import { cropped } from "Utils/resized"
@@ -308,7 +307,15 @@ export const BuyerGuaranteeIndex: FC = () => {
             millions of global businesses.
           </Text>
 
-          <PoweredByStripeIcon width={150} height={34} mt={2} />
+          <Spacer y={2} />
+
+          <img
+            src="https://files.artsy.net/images/PoweredByStripe_1.svg"
+            alt="Powered by Stripe"
+            width={150}
+            height={34}
+            loading="lazy"
+          />
         </Column>
       </GridColumns>
 

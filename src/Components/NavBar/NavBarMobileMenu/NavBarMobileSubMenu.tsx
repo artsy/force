@@ -1,4 +1,4 @@
-import { Box, ChevronIcon, Flex, Separator, Text } from "@artsy/palette"
+import { Box, Flex, Separator, Text } from "@artsy/palette"
 import * as React from "react"
 import { useTracking } from "react-tracking"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
@@ -10,6 +10,8 @@ import {
 import { NavBarMobileMenuTransition } from "./NavBarMobileMenuTransition"
 import { useNavBarMobileMenuNavigation } from "./NavBarMobileMenuNavigation"
 import { useTrackingContextModule } from "./useTrackingContextModule"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 
 interface NavBarMobileSubMenuProps {
   menu: MenuData
@@ -40,8 +42,7 @@ export const NavBarMobileSubMenu: React.FC<NavBarMobileSubMenuProps> = ({
       >
         {children}
 
-        <ChevronIcon
-          direction="right"
+        <ChevronRightIcon
           fill="black60"
           height={14}
           width={14}
@@ -153,8 +154,7 @@ export const NavBarMobileSubMenuBack: React.FC = () => {
         pop()
       }}
     >
-      <ChevronIcon
-        direction="left"
+      <ChevronLeftIcon
         fill="black100"
         height={14}
         width={14}

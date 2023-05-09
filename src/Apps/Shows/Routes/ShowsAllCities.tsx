@@ -1,9 +1,10 @@
-import { Box, ChevronIcon, Text } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { ShowsAllCities_viewer$data } from "__generated__/ShowsAllCities_viewer.graphql"
 import { ShowsMeta } from "Apps/Shows/Components/ShowsMeta"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 
 interface ShowsAllCitiesProps {
   viewer: ShowsAllCities_viewer$data
@@ -44,7 +45,7 @@ export const ShowsAllCities: React.FC<ShowsAllCitiesProps> = ({
               )}
             </Box>
 
-            <ChevronIcon direction="right" color="black60" />
+            <ChevronRightIcon color="black60" />
           </RouterLink>
         )
       })}

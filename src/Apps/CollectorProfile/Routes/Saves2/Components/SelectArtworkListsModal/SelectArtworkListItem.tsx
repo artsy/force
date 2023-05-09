@@ -1,4 +1,4 @@
-import { CheckCircleIcon, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import EmptyCheckCircleIcon from "@artsy/icons/EmptyCheckCircleIcon"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
@@ -6,6 +6,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SelectArtworkListItem_item$data } from "__generated__/SelectArtworkListItem_item.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { SavesEntityImage } from "Apps/CollectorProfile/Routes/Saves2/Components/SavesEntityImage"
+import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 
 const ICON_SIZE = 24
 
@@ -54,7 +55,7 @@ const SelectArtworkListItem: FC<SelectArtworkListItemProps> = ({
       <Spacer x={1} />
 
       {isSelected ? (
-        <CheckCircleIcon width={ICON_SIZE} height={ICON_SIZE} />
+        <CheckmarkStrokeIcon width={ICON_SIZE} height={ICON_SIZE} />
       ) : (
         <EmptyCheckCircleIcon width={ICON_SIZE} height={ICON_SIZE} />
       )}

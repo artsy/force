@@ -1,17 +1,10 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import {
-  Clickable,
-  Color,
-  Flex,
-  MoneyFillIcon,
-  Spacer,
-  Text,
-  THEME_V3,
-} from "@artsy/palette"
+import { Clickable, Color, Flex, Spacer, Text, THEME_V3 } from "@artsy/palette"
 import { TimeSince } from "./TimeSince"
 import { OrderUpdate_event$data } from "__generated__/OrderUpdate_event.graphql"
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
+import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
 
 export interface OrderUpdateProps {
   event: OrderUpdate_event$data

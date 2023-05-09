@@ -1,4 +1,5 @@
-import { CreditCardIcon, Flex, Text } from "@artsy/palette"
+import { Flex, Text } from "@artsy/palette"
+import { Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 
 interface Props {
   brand: string
@@ -19,7 +20,7 @@ export const CreditCardDetails = (props: Props) => {
 
   return (
     <Flex alignItems="center">
-      <CreditCardIcon mr={1} type={brand} width="25px" />
+      <BrandCreditCardIcon mr={1} type={brand as Brand} width="25px" />
       <Text
         variant="sm-display"
         color={textColor}
