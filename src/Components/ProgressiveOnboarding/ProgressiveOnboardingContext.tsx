@@ -100,8 +100,6 @@ export const ProgressiveOnboardingProvider: FC = ({ children }) => {
   )
 }
 
-const FEATURE_FLAG_FOLLOW_KEY = "progressive-onboarding-artist"
-const FEATURE_FLAG_SAVE_KEY = "progressive-onboarding-artist"
 const FEATURE_FLAG_ALERT_KEY = "grow_progressive-onboarding-alerts"
 
 type Kind = "follows" | "saves" | "alerts"
@@ -111,16 +109,14 @@ export const useProgressiveOnboarding = () => {
     ProgressiveOnboardingContext
   )
 
-  const followEnabled = useFeatureFlag(FEATURE_FLAG_FOLLOW_KEY)
-  const saveEnabled = useFeatureFlag(FEATURE_FLAG_SAVE_KEY)
   const alertEnabled = useFeatureFlag(FEATURE_FLAG_ALERT_KEY)
 
   const isEnabledFor = (kind: Kind) => {
     switch (kind) {
       case "follows":
-        return followEnabled
+        return true
       case "saves":
-        return saveEnabled
+        return true
       case "alerts":
         return alertEnabled
     }
