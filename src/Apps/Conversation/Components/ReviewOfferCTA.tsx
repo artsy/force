@@ -2,12 +2,13 @@ import * as React from "react"
 import { useTracking } from "react-tracking"
 import { TappedViewOffer, ActionType, OwnerType } from "@artsy/cohesion"
 import { DateTime } from "luxon"
-import { Color, Flex, MoneyFillIcon, Text } from "@artsy/palette"
+import { Color, Flex, Text } from "@artsy/palette"
 import styled from "styled-components"
 import { useEventTiming } from "Utils/Hooks/useEventTiming"
 import { CommerceBuyerOfferActionEnum } from "__generated__/ConversationCTA_conversation.graphql"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
+import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
 
 export const ClickableFlex = styled(Flex)`
   cursor: pointer;

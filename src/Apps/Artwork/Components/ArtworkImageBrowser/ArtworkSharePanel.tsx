@@ -5,10 +5,8 @@ import {
   Clickable,
   Flex,
   Input,
-  PinterestIcon,
   Separator,
   Text,
-  TumblrIcon,
 } from "@artsy/palette"
 import * as React from "react"
 import { useRef, useState } from "react"
@@ -20,6 +18,8 @@ import { RouterLink } from "System/Router/RouterLink"
 import TwitterIcon from "@artsy/icons/TwitterIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
+import TumblrIcon from "@artsy/icons/TumblrIcon"
+import PinterestIcon from "@artsy/icons/PinterestIcon"
 
 interface ArtworkSharePanelProps extends BoxProps {
   artwork: ArtworkSharePanel_artwork$data

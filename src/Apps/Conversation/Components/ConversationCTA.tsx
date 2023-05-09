@@ -1,12 +1,6 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import {
-  FLAT_SHADOW,
-  Flex,
-  GuaranteeIcon,
-  Separator,
-  Text,
-} from "@artsy/palette"
+import { FLAT_SHADOW, Flex, Separator, Text } from "@artsy/palette"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
@@ -14,7 +8,6 @@ import { ReviewOfferCTA } from "./ReviewOfferCTA"
 import { PurchaseOnInquiryButtonFragmentContainer } from "./PurchaseOnInquiryButton"
 import { MakeOfferOnInquiryButtonFragmentContainer } from "./MakeOfferOnInquiryButton"
 import { ConversationCTA_conversation$data } from "__generated__/ConversationCTA_conversation.graphql"
-import { themeGet } from "@styled-system/theme-get"
 
 interface ConversationCTAProps {
   conversation: ConversationCTA_conversation$data
@@ -26,12 +19,6 @@ const ShadowSeparator = styled(Separator)`
   box-shadow: ${FLAT_SHADOW};
   width: 100%;
   height: 0;
-`
-
-const GuaranteeIconBlue = styled(GuaranteeIcon)`
-  .guarantee-checkmark {
-    fill: ${themeGet("colors.brand")};
-  }
 `
 
 export const ConversationCTA: React.FC<ConversationCTAProps> = ({
@@ -59,20 +46,19 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
     return (
       <>
         <ShadowSeparator />
+
         <Flex flexDirection="column" p={1}>
           <Flex flexDirection="row">
-            <GuaranteeIconBlue mr={1} />
-            <Flex flexShrink={1}>
-              <Text color="black60" variant="xs" mb={1}>
-                Always complete purchases with our secure checkout in order to
-                be covered by{" "}
-                <RouterLink inline to="/buyer-guarantee" target="_blank">
-                  The Artsy Guarantee
-                </RouterLink>
-                .
-              </Text>
-            </Flex>
+            <Text color="black60" variant="xs" mb={1}>
+              Always complete purchases with our secure checkout in order to be
+              covered by{" "}
+              <RouterLink inline to="/buyer-guarantee" target="_blank">
+                The Artsy Guarantee
+              </RouterLink>
+              .
+            </Text>
           </Flex>
+
           <Flex flexDirection="row">
             {isAcquireable && (
               <PurchaseOnInquiryButtonFragmentContainer
