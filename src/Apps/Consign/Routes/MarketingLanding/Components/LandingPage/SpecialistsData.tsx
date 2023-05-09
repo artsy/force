@@ -56,26 +56,6 @@ export const SPECIALISTS: SpecialistsData[] = [
     image: TEST_imagePriveteSalesAndAdvisory,
     email: "akanksha@artsy.net",
   },
-  {
-    specialty: "auctions",
-    name: "Christine Aschwald",
-    firstName: "Christine",
-    jobTitle: "Head of Advisory and Senior Private Sales Director",
-    bio:
-      "Christine advises top-tier private collectors, blue-chip secondary market galleries, and the fiduciary community on buying and selling opportunities. With 17 years of experience, she brings long-standing relationships with top collectors and institutional clients from her time as VP at Christie’s client advisory department. She graduated from Williams College with a degree in Art History and Political Science.",
-    image: TEST_imageAuctions,
-    email: "christine.aschwald@artsy.net",
-  },
-  {
-    specialty: "auctions",
-    name: "Adam McCoy",
-    firstName: "Adam",
-    jobTitle: "Senior Specialist and Head of Prints",
-    bio:
-      "Adam is the Head of Prints & Multiples, which has achieved records for leading post-war and pop art artists. He began his career in museums, before joining Christie's prints and multiples department in 2008, where he rose to Vice President, Senior Specialist. He holds a graduate degree from the University of Chicago and undergraduate degrees from the University of Kansas.",
-    image: TEST_imageAuctions,
-    email: "adam.mccoy@artsy.net",
-  },
   // {
   //   specialty: "priveteSalesAndAdvisory",
   //   name: "Adriana Almeida",
@@ -86,53 +66,14 @@ export const SPECIALISTS: SpecialistsData[] = [
   //   email: "adriana.almeida@artsy.net",
   // },
   {
-    specialty: "priveteSalesAndAdvisory",
-    name: "Robin Roche",
-    firstName: "Robin",
-    jobTitle: "Senior Private Sales Director",
-    bio:
-      "Robin has 20+ years experience in modern, contemporary, and emerging art, including at Christie's (10 years), Gerald Peters Gallery (5 years), Auctionata and Artnet. She was instrumental in developing Artsy’s private sales business, and brokered our first 7-figure private sale.",
-    image: TEST_imagePriveteSalesAndAdvisory,
-    email: "robin.roche@artsy.net",
-  },
-  // {
-  //   specialty: "priveteSalesAndAdvisory",
-  //   name: "Meave Hamill",
-  //   firstName: "Meave",
-  //   jobTitle: "Senior Advisor, Private Sales",
-  //   bio: "SOME BIO",
-  //   image: TEST_imagePriveteSalesAndAdvisory,
-  //   email: "meave@artsy.net",
-  // },
-  {
     specialty: "auctions",
-    name: "Alan Zeng",
-    firstName: "Alan",
-    jobTitle: "Senior Specialist & Head of Street Art",
+    name: "Christine Aschwald",
+    firstName: "Christine",
+    jobTitle: "Head of Advisory and Senior Private Sales Director",
     bio:
-      "At Artsy since 2020, Alan’s street art sales continuously set world auction records. Alan was previously Head of Street Art at Paddle8, where he led the company to great success. Alan holds an undergraduate degree from Baruch College, New York.",
+      "Christine advises top-tier private collectors, blue-chip secondary market galleries, and the fiduciary community on buying and selling opportunities. With 17 years of experience, she brings long-standing relationships with top collectors and institutional clients from her time as VP at Christie’s client advisory department. She graduated from Williams College with a degree in Art History and Political Science.",
     image: TEST_imageAuctions,
-    email: "alan@artsy.net",
-  },
-  {
-    specialty: "auctions",
-    name: "Celine Cunha",
-    firstName: "Celine",
-    jobTitle: "Specialist in Post-War & Contemporary Art",
-    bio:
-      "With 13+ years of experience, Celine specializes in emerging and post-war artist markets. Her background includes MoMA-PS1 and Christie’s, where she was a post-war and contemporary specialist focused on auction and private sales, and led corporate social responsibility initiatives. She holds a Contemporary Art Business degree from Christie’s Education, and a BA from Cornell University.",
-    image: TEST_imageAuctions,
-    email: "celine.cunha@artsymail.com",
-  },
-  {
-    specialty: "priveteSalesAndAdvisory",
-    name: "Caroline Perkins",
-    firstName: "Caroline",
-    jobTitle: "Advisor",
-    bio:
-      "Caroline advises collectors on buying and selling hard-to-access unique artworks. Her passion and foremost expertise is emerging and ultra contemporary artist markets. With Artsy since 2016, she holds a Bachelor of Arts in Art History from Wake Forest University.",
-    image: TEST_imagePriveteSalesAndAdvisory,
-    email: "caroline.perkins@artsy.net",
+    email: "christine.aschwald@artsy.net",
   },
   {
     specialty: "auctions",
@@ -146,6 +87,16 @@ export const SPECIALISTS: SpecialistsData[] = [
   },
   {
     specialty: "auctions",
+    name: "Celine Cunha",
+    firstName: "Celine",
+    jobTitle: "Specialist in Post-War & Contemporary Art",
+    bio:
+      "With 13+ years of experience, Celine specializes in emerging and post-war artist markets. Her background includes MoMA-PS1 and Christie’s, where she was a post-war and contemporary specialist focused on auction and private sales, and led corporate social responsibility initiatives. She holds a Contemporary Art Business degree from Christie’s Education, and a BA from Cornell University.",
+    image: TEST_imageAuctions,
+    email: "celine.cunha@artsymail.com",
+  },
+  {
+    specialty: "auctions",
     name: "Erica Lyon",
     firstName: "Erica",
     jobTitle: "Director of Business Strategy and Operations",
@@ -154,6 +105,55 @@ export const SPECIALISTS: SpecialistsData[] = [
     image: TEST_imageAuctions,
     email: "erica@artsy.net",
   },
+  {
+    specialty: "auctions",
+    name: "Adam McCoy",
+    firstName: "Adam",
+    jobTitle: "Senior Specialist and Head of Prints",
+    bio:
+      "Adam is the Head of Prints & Multiples, which has achieved records for leading post-war and pop art artists. He began his career in museums, before joining Christie's prints and multiples department in 2008, where he rose to Vice President, Senior Specialist. He holds a graduate degree from the University of Chicago and undergraduate degrees from the University of Kansas.",
+    image: TEST_imageAuctions,
+    email: "adam.mccoy@artsy.net",
+  },
+  {
+    specialty: "priveteSalesAndAdvisory",
+    name: "Caroline Perkins",
+    firstName: "Caroline",
+    jobTitle: "Advisor",
+    bio:
+      "Caroline advises collectors on buying and selling hard-to-access unique artworks. Her passion and foremost expertise is emerging and ultra contemporary artist markets. With Artsy since 2016, she holds a Bachelor of Arts in Art History from Wake Forest University.",
+    image: TEST_imagePriveteSalesAndAdvisory,
+    email: "caroline.perkins@artsy.net",
+  },
+  {
+    specialty: "priveteSalesAndAdvisory",
+    name: "Robin Roche",
+    firstName: "Robin",
+    jobTitle: "Senior Private Sales Director",
+    bio:
+      "Robin has 20+ years experience in modern, contemporary, and emerging art, including at Christie's (10 years), Gerald Peters Gallery (5 years), Auctionata and Artnet. She was instrumental in developing Artsy’s private sales business, and brokered our first 7-figure private sale.",
+    image: TEST_imagePriveteSalesAndAdvisory,
+    email: "robin.roche@artsy.net",
+  },
+  {
+    specialty: "auctions",
+    name: "Alan Zeng",
+    firstName: "Alan",
+    jobTitle: "Senior Specialist & Head of Street Art",
+    bio:
+      "At Artsy since 2020, Alan’s street art sales continuously set world auction records. Alan was previously Head of Street Art at Paddle8, where he led the company to great success. Alan holds an undergraduate degree from Baruch College, New York.",
+    image: TEST_imageAuctions,
+    email: "alan@artsy.net",
+  },
+  // {
+  //   specialty: "priveteSalesAndAdvisory",
+  //   name: "Meave Hamill",
+  //   firstName: "Meave",
+  //   jobTitle: "Senior Advisor, Private Sales",
+  //   bio: "SOME BIO",
+  //   image: TEST_imagePriveteSalesAndAdvisory,
+  //   email: "meave@artsy.net",
+  // },
   // {
   //   specialty: "auctions",
   //   name: "Laura Martin",
