@@ -1,6 +1,6 @@
 import loadable from "@loadable/component"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { Redirect, RedirectException } from "found"
+import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
 import { initialAuctionResultsFilterState } from "./Routes/AuctionResults/AuctionResultsFilterContext"
@@ -293,18 +293,13 @@ export const artistRoutes: AppRouteConfig[] = [
           }
         `,
       },
-
-      /**
-       * Redirect all unhandled tabs to the artist page.
-       *
-       * Note: there is a deep-linked standalone auction-lot page in Force,
-       * under /artist/:artistID/auction-result/:id. That app needs to be
-       * mounted before this app for that to work and not get caught here.
-       */
-      new Redirect({
-        from: "*",
-        to: "/artist/:artistID",
-      }) as any,
+      {
+        // Redirect all unhandled tabs to the artist page.
+        path: ":tab?",
+        render: ({ match }) => {
+          throw new RedirectException(`/artist/${match.params.artistID}`, 301)
+        },
+      },
     ],
   },
   {
