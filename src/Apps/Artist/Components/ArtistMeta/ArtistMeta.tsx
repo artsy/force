@@ -13,7 +13,6 @@ interface Props {
 
 export const ArtistMeta: React.FC<Props> = ({ artist }) => {
   const alternateNames = artist?.alternate_names || []
-  const showNoIndex = artist.counts?.artworks === 0 && !artist.blurb
 
   return (
     <>
@@ -24,6 +23,7 @@ export const ArtistMeta: React.FC<Props> = ({ artist }) => {
         )}
         description={artist.meta?.description}
         imageURL={artist.image?.large}
+        pathname={artist.href}
       />
 
       <Meta
@@ -50,8 +50,6 @@ export const ArtistMeta: React.FC<Props> = ({ artist }) => {
       {alternateNames.length > 0 && (
         <Meta name="skos:prefLabel" content={alternateNames.join("; ")} />
       )}
-
-      {showNoIndex && <Meta name="robots" content="noindex, follow" />}
 
       {/* FIXME: */}
       <SeoDataForArtist data={structuredDataAttributes(artist)} />
