@@ -92,53 +92,30 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@31.0.0-canary.1292.27479.0":
-  version "31.0.0-canary.1292.27479.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-31.0.0-canary.1292.27479.0.tgz#452730a4cc9a99ec51eac10cf103a5ce5ba0092f"
-  integrity sha512-ubYoV5p8XVHAgmnOvQAD/bX17IM4G16HTlD5+hd4cxUo+q4SzR0TLD/wE6QXcECToSsfodJRbAICbgKYZcY6dw==
+"@artsy/palette-charts@31.0.0":
+  version "31.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-31.0.0.tgz#f6dc111f2ed9c681e77d44355e1d21704e3ddcfe"
+  integrity sha512-HHOnT8F9lj0k5zTxvSlukNS6D5uh59nUVJkmIlkSa9mjuyx2av4ZxJIuyfzVthBxov0V1OeVimFu0+Tk23oK9g==
   dependencies:
-    "@artsy/palette" "32.0.0-canary.1292.27479.0"
+    "@artsy/palette" "^32.0.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
     d3-shape "^1.3.5"
     styled-system "^5.1.5"
 
-"@artsy/palette-tokens@5.0.0-canary.1292.27479.0":
-  version "5.0.0-canary.1292.27479.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-5.0.0-canary.1292.27479.0.tgz#82e5e81ec9b0d850426e79e087c572ab2ab2339c"
-  integrity sha512-QCrt7CrBgUgN0MsGehp3c5MP6+2hvaw5zZDmBReU5Zd8vkh1eVGOnfvXvEq7i7+uD+f/kbXwEzFXX778FeoYFw==
+"@artsy/palette-tokens@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-5.0.0.tgz#d1e1917d8163d88e7a9f877cf06b609fa8c8178c"
+  integrity sha512-nloC0ubH5XDVNiplehwTtDLEgY0vjeE3l8QUYppEIHFCgadntXm6aVlmEC79inO7L3lDYN7JckYlIYRrTJg3vw==
 
-"@artsy/palette-tokens@5.0.0-canary.1292.27534.0":
-  version "5.0.0-canary.1292.27534.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-5.0.0-canary.1292.27534.0.tgz#3515d59c4b27105005dcb1f690fe5346af63870b"
-  integrity sha512-+N84ar54SgErKUU48dleiAZtm8lU10vfNOM8sFK7/ioJQ8F7K1ySBbgEzqN7lWFGhalkUJXV1dFJjPVj3pG7Eg==
-
-"@artsy/palette@32.0.0-canary.1292.27479.0":
-  version "32.0.0-canary.1292.27479.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-32.0.0-canary.1292.27479.0.tgz#30a05903b7f86703b86b6b367e6294cf4b826bb3"
-  integrity sha512-fT8Vk6ndt0j75B8QmN1dpeYterCDa8Az3akTit4zV+ZFSipg9kLtpHk4OPN8YaYj8nORUvxKlbzoyFg388QVpA==
+"@artsy/palette@32.0.0", "@artsy/palette@^32.0.0":
+  version "32.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-32.0.0.tgz#671b646e0caeb74c7e306eb34bbcfc6b93d162fc"
+  integrity sha512-xP/0R6KhEnU5UrD5FACqEyGj47RMiydublyIpoPlM6wwBx8FCCxgUIR2sGhvMJi+ajWRYpc5MlK8tPtNajZE1Q==
   dependencies:
     "@artsy/icons" "^3.2.2"
-    "@artsy/palette-tokens" "5.0.0-canary.1292.27479.0"
-    "@seznam/compose-react-refs" "^1.0.6"
-    "@styled-system/theme-get" "^5.1.2"
-    lodash "^4.17.21"
-    proportional-scale "^4.0.0"
-    react-focus-on "^3.7.0"
-    react-lazy-load-image-component "1.5.5"
-    styled-system "^5.1.5"
-    trunc-html "^1.1.2"
-    use-cursor "^1.2.3"
-    use-keyboard-list-navigation "2.4.2"
-
-"@artsy/palette@^32.0.0-canary.1292.27534.0":
-  version "32.0.0-canary.1292.27534.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-32.0.0-canary.1292.27534.0.tgz#56eff31f6f15cbb63e6903599c8334db28f9ef77"
-  integrity sha512-pPMMZiJ28x3sqHmU8hMOgZdaOxEm+it8D8Ax0z/jBo5zLrzCbAfYRwsnNM5jy1fJv2fxmyf93NiRcS1741xPqQ==
-  dependencies:
-    "@artsy/icons" "^3.2.2"
-    "@artsy/palette-tokens" "5.0.0-canary.1292.27534.0"
+    "@artsy/palette-tokens" "^5.0.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     lodash "^4.17.21"
