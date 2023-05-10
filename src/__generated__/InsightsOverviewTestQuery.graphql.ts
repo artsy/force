@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<51515c81f32a6df37253a78a81ac5fe2>>
+ * @generated SignedSource<<757346e01edf9dd945c9b339a8caa087>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,19 +25,6 @@ export type InsightsOverviewTestQuery = {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v1 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
-v2 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -116,19 +103,24 @@ return {
                 "kind": "ScalarField",
                 "name": "artistsCount",
                 "storageKey": null
-              },
-              (v0/*: any*/)
+              }
             ],
             "storageKey": null
           },
-          (v0/*: any*/)
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "df5359d0a071a10bc8d4d755f08ee8af",
+    "cacheID": "ba8ce52ad6d67553f10078b5735a49a2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -138,21 +130,25 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.id": (v1/*: any*/),
+        "me.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
         "me.myCollectionInfo": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "MyCollectionInfo"
         },
-        "me.myCollectionInfo.artistsCount": (v2/*: any*/),
-        "me.myCollectionInfo.artworksCount": (v2/*: any*/),
-        "me.myCollectionInfo.id": (v1/*: any*/)
+        "me.myCollectionInfo.artistsCount": (v0/*: any*/),
+        "me.myCollectionInfo.artworksCount": (v0/*: any*/)
       }
     },
     "name": "InsightsOverviewTestQuery",
     "operationKind": "query",
-    "text": "query InsightsOverviewTestQuery {\n  me {\n    myCollectionInfo {\n      ...InsightsOverview_info\n      id\n    }\n    id\n  }\n}\n\nfragment InsightsOverview_info on MyCollectionInfo {\n  artworksCount\n  artistsCount\n}\n"
+    "text": "query InsightsOverviewTestQuery {\n  me {\n    myCollectionInfo {\n      ...InsightsOverview_info\n    }\n    id\n  }\n}\n\nfragment InsightsOverview_info on MyCollectionInfo {\n  artworksCount\n  artistsCount\n}\n"
   }
 };
 })();
