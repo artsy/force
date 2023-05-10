@@ -6,7 +6,7 @@ import {
   Flex,
   Spacer,
   Text,
-  themeProps,
+  THEME,
 } from "@artsy/palette"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
@@ -78,8 +78,8 @@ export const NavBar: React.FC = track(
   const { router } = useRouter()
   const [showMobileMenu, toggleMobileNav] = useState(false)
   const [searchFocused, setSearchFocused] = useState(false)
-  const xs = __internal__useMatchMedia(themeProps.mediaQueries.xs)
-  const sm = __internal__useMatchMedia(themeProps.mediaQueries.sm)
+  const xs = __internal__useMatchMedia(THEME.mediaQueries.xs)
+  const sm = __internal__useMatchMedia(THEME.mediaQueries.sm)
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
   const showNotificationCount = isLoggedIn && !showMobileMenu

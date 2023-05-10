@@ -1,4 +1,4 @@
-import { Text, THEME_V3 as THEME, Box, Spacer, BoxProps } from "@artsy/palette"
+import { Text, THEME, Box, Spacer, BoxProps } from "@artsy/palette"
 import type { StripeCardElementChangeEvent } from "@stripe/stripe-js"
 import { CardElement } from "@stripe/react-stripe-js"
 import styled, { css } from "styled-components"

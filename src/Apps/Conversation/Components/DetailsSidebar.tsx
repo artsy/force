@@ -57,7 +57,7 @@ const DetailsContainer = styled(Flex)<{
       showDetails ? "translateX(0)" : `translateX(${DETAIL_BOX_WIDTH})`};
   }
 
-  @media (min-width: ${breakpoints.xl}) {
+  @media (min-width: ${breakpoints.lg}) {
     transform: initial;
     position: static;
     z-index: 0;

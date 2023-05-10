@@ -1,4 +1,4 @@
-import { Box, Clickable, ModalDialog, Text, themeProps } from "@artsy/palette"
+import { Box, Clickable, ModalDialog, Text, THEME } from "@artsy/palette"
 import { MyCollectionArtworkSidebarMetadata_artwork$data } from "__generated__/MyCollectionArtworkSidebarMetadata_artwork.graphql"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -92,7 +92,7 @@ export const MetadataField = ({
   const emptyValue = "----"
   const [expanded, setExpanded] = useState(false)
   const [modalOpen, setModalOpen] = useState(false)
-  const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
+  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
 
   const truncatedValue = truncateLimit ? value?.slice(0, truncateLimit) : value
   const canExpand = (truncatedValue?.length ?? 0) < (value?.length ?? 0)

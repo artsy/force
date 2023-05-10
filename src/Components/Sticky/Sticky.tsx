@@ -1,4 +1,4 @@
-import { Box, themeProps } from "@artsy/palette"
+import { Box, THEME } from "@artsy/palette"
 import { ReactNode, useEffect, useRef, useState } from "react"
 import ReactSticky, { Props as ReactStickyProps } from "react-stickynode"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
@@ -37,7 +37,7 @@ export const Sticky: React.FC<
 
   const { desktop, mobile } = useNavBarHeight()
 
-  const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
+  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
 
   const [stuck, setStuck] = useState(false)
 

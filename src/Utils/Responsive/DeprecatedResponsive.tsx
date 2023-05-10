@@ -3,11 +3,12 @@ import {
   ResponsiveProviderProps as _ResponsiveProviderProps,
   createResponsiveComponents,
 } from "@artsy/fresnel/dist/DynamicResponsive"
-import { themeProps } from "@artsy/palette"
+import { THEME, breakpoints } from "@artsy/palette"
 import * as React from "react"
+// eslint-disable-next-line no-restricted-imports
 import * as sharify from "sharify"
 
-type MediaQuery = keyof typeof themeProps["mediaQueries"]
+type MediaQuery = keyof typeof THEME["mediaQueries"]
 
 const ResponsiveComponents = createResponsiveComponents<MediaQuery>()
 
@@ -46,7 +47,7 @@ export class Responsive extends React.Component<
 //
 // export const ResponsiveProvider = Responsive.Provider
 
-export type Breakpoint = keyof typeof themeProps["grid"]["breakpoints"]
+export type Breakpoint = keyof typeof breakpoints
 
 interface DeprecatedResponsiveProviderProps {
   initialBreakpoint?: Breakpoint
