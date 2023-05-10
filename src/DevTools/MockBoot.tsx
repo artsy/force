@@ -6,7 +6,7 @@ import { ClientContext } from "System/Router/buildClientAppContext"
 import { createMockEnvironment } from "relay-test-utils"
 
 export const MockBoot: React.FC<{
-  breakpoint?: Breakpoint
+  breakpoint?: Breakpoint | undefined
   headTags?: JSX.Element[]
   user?: User
   context?: object

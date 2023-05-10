@@ -20,7 +20,7 @@ describe("ArtistBio", () => {
   const getWrapper = () => {
     return renderRelayTree({
       Component: ({ bio }: ArtistBioTestQuery$data) => (
-        <MockBoot breakpoint="xl">
+        <MockBoot breakpoint="lg">
           {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <ArtistBio bio={bio} />
         </MockBoot>

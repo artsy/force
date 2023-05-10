@@ -38,7 +38,7 @@ const StyledTextArea = styled.textarea<{ height?: string }>`
   resize: none;
   min-height: 40px;
   font-size: 16px;
-  font-family: ${THEME.fontFamily.sans.regular as string};
+  font-family: ${THEME.fonts.sans};
   padding-top: ${themeGet("space.0.5")}px;
   padding-left: ${themeGet("space.1")}px;
   padding-right: ${themeGet("space.1")}px;

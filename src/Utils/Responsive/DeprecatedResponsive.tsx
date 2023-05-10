@@ -3,7 +3,7 @@ import {
   ResponsiveProviderProps as _ResponsiveProviderProps,
   createResponsiveComponents,
 } from "@artsy/fresnel/dist/DynamicResponsive"
-import { THEME } from "@artsy/palette"
+import { THEME, breakpoints } from "@artsy/palette"
 import * as React from "react"
 // eslint-disable-next-line no-restricted-imports
 import * as sharify from "sharify"
@@ -47,7 +47,7 @@ export class Responsive extends React.Component<
 //
 // export const ResponsiveProvider = Responsive.Provider
 
-export type Breakpoint = keyof typeof THEME["grid"]["breakpoints"]
+export type Breakpoint = keyof typeof breakpoints
 
 interface DeprecatedResponsiveProviderProps {
   initialBreakpoint?: Breakpoint
