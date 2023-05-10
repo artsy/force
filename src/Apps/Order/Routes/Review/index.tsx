@@ -133,7 +133,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         if (isEigen) {
           if (order.mode === "OFFER") {
             if (
-              order.state === "IN_REVIEW" &&
+              orderOrError?.order?.state === "IN_REVIEW" &&
               order.source === "artwork_page"
             ) {
               window?.ReactNativeWebView?.postMessage(
@@ -175,7 +175,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         if (
           isEigen ||
           (order.mode === "OFFER" &&
-            order.state === "IN_REVIEW" &&
+            orderOrError?.order?.state === "IN_REVIEW" &&
             order.source === "artwork_page")
         ) {
           return router.push(`/orders/${orderId}/status`)
