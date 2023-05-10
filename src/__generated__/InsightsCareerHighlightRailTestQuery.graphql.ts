@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e9deafb813d309d2da88e8b1adb6a992>>
+ * @generated SignedSource<<4ee830d2372ee8df732b2b9e0eb00dc2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,19 @@ export type InsightsCareerHighlightRailTestQuery = {
 
 const node: ConcreteRequest = (function(){
 var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v1 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v2 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -122,24 +135,19 @@ return {
                   }
                 ],
                 "storageKey": null
-              }
+              },
+              (v0/*: any*/)
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v0/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "47717270de5d70201125df6d335eb907",
+    "cacheID": "908e01ae0b9677db1143c8ff1067c2bc",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -149,12 +157,7 @@ return {
           "plural": false,
           "type": "Me"
         },
-        "me.id": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "ID"
-        },
+        "me.id": (v1/*: any*/),
         "me.myCollectionInfo": {
           "enumValues": null,
           "nullable": true,
@@ -167,16 +170,17 @@ return {
           "plural": false,
           "type": "ArtistInsightsCount"
         },
-        "me.myCollectionInfo.artistInsightsCount.BIENNIAL": (v0/*: any*/),
-        "me.myCollectionInfo.artistInsightsCount.COLLECTED": (v0/*: any*/),
-        "me.myCollectionInfo.artistInsightsCount.GROUP_SHOW": (v0/*: any*/),
-        "me.myCollectionInfo.artistInsightsCount.REVIEWED": (v0/*: any*/),
-        "me.myCollectionInfo.artistInsightsCount.SOLO_SHOW": (v0/*: any*/)
+        "me.myCollectionInfo.artistInsightsCount.BIENNIAL": (v2/*: any*/),
+        "me.myCollectionInfo.artistInsightsCount.COLLECTED": (v2/*: any*/),
+        "me.myCollectionInfo.artistInsightsCount.GROUP_SHOW": (v2/*: any*/),
+        "me.myCollectionInfo.artistInsightsCount.REVIEWED": (v2/*: any*/),
+        "me.myCollectionInfo.artistInsightsCount.SOLO_SHOW": (v2/*: any*/),
+        "me.myCollectionInfo.id": (v1/*: any*/)
       }
     },
     "name": "InsightsCareerHighlightRailTestQuery",
     "operationKind": "query",
-    "text": "query InsightsCareerHighlightRailTestQuery {\n  me {\n    ...InsightsCareerHighlightRail_me\n    id\n  }\n}\n\nfragment InsightsCareerHighlightRail_me on Me {\n  myCollectionInfo {\n    artistInsightsCount {\n      BIENNIAL: biennialCount\n      COLLECTED: collectedCount\n      GROUP_SHOW: groupShowCount\n      SOLO_SHOW: soloShowCount\n      REVIEWED: reviewedCount\n    }\n  }\n}\n"
+    "text": "query InsightsCareerHighlightRailTestQuery {\n  me {\n    ...InsightsCareerHighlightRail_me\n    id\n  }\n}\n\nfragment InsightsCareerHighlightRail_me on Me {\n  myCollectionInfo {\n    artistInsightsCount {\n      BIENNIAL: biennialCount\n      COLLECTED: collectedCount\n      GROUP_SHOW: groupShowCount\n      SOLO_SHOW: soloShowCount\n      REVIEWED: reviewedCount\n    }\n    id\n  }\n}\n"
   }
 };
 })();
