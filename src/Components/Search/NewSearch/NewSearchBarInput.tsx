@@ -164,7 +164,7 @@ export const NewSearchBarInputQueryRenderer: FC = () => {
         term: "",
       }}
       render={({ props }) => {
-        if (props && props.viewer) {
+        if (props?.viewer) {
           return <NewSearchBarInputRefetchContainer viewer={props.viewer} />
           // SSR render pass. Since we don't have access to `<Boot>` context
           // from within the NavBar (it's not a part of any app) we need to lean
