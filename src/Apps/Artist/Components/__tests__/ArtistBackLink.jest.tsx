@@ -7,185 +7,51 @@ import { MockBoot } from "DevTools/MockBoot"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-const mockRouterReplace = jest.fn()
-jest.mock("System/Router/useRouter", () => ({
-  useRouter: jest.fn(() => ({
-    router: { replace: mockRouterReplace },
-  })),
-}))
 
-const QUERY = graphql`
-  query ArtistBackLink_Test_Query @relay_test_operation {
-    artist(id: "example") {
-      ...ArtistBackLink_artist
+const { getWrapper } = setupTestWrapper<ArtistBackLink_Test_Query>({
+  Component: props => {
+    return (
+      <MockBoot>
+        <ArtistBackLinkFragmentContainer artist={props.artist!} />
+      </MockBoot>
+    )
+  },
+  query: graphql`
+    query ArtistBackLink_Test_Query @relay_test_operation {
+      artist(id: "example") {
+        ...ArtistBackLink_artist
+      }
     }
-  }
-`
-
-describe("BackLink when ff disabled", () => {
-  const mockuseTracking = useTracking as jest.Mock
-  const trackingSpy = jest.fn()
-
-  beforeAll(() => {
-    mockuseTracking.mockImplementation(() => ({
-      trackEvent: trackingSpy,
-    }))
-  })
-
-  describe("The articles page was opened from the Artist page", () => {
-    const { getWrapper } = setupTestWrapper<ArtistBackLink_Test_Query>({
-      Component: props => {
-        return (
-          <MockBoot>
-            <ArtistBackLinkFragmentContainer artist={props.artist!} />
-          </MockBoot>
-        )
-      },
-      query: QUERY,
-    })
-
-    it("renders correctly", () => {
-      const wrapper = getWrapper({
-        Artist: () => ({
-          name: "artistName",
-        }),
-      })
-
-      expect(wrapper.text()).toContain("Back to artistName")
-    })
-
-    it("tracks correctly", () => {
-      const wrapper = getWrapper({
-        Artist: () => ({
-          href: "/artist/artistSlug",
-        }),
-      })
-      wrapper.simulate("click")
-      expect(trackingSpy).toHaveBeenCalledWith({
-        action_type: "Click",
-        destination_path: "/artist/artistSlug",
-        subject: "Back to artist link",
-      })
-    })
-  })
-
-  describe("The articles page was opened from the My Collection Artwork page", () => {
-    const artworkId = "artwork-id"
-    const { getWrapper } = setupTestWrapper<ArtistBackLink_Test_Query>({
-      Component: props => {
-        return (
-          <MockBoot>
-            <ArtistBackLinkFragmentContainer artist={props.artist!} />
-          </MockBoot>
-        )
-      },
-      query: QUERY,
-    })
-    it("renders correctly", () => {
-      const wrapper = getWrapper({
-        Artist: () => ({
-          name: "artistName",
-        }),
-      })
-
-      expect(wrapper.text()).toContain("Back to My Collection")
-    })
-
-    it("redirects correctly", () => {
-      const wrapper = getWrapper({
-        Artist: () => ({
-          href: "/artist/artistSlug",
-        }),
-      })
-
-      wrapper.simulate("click")
-      expect(mockRouterReplace).toHaveBeenCalledWith({
-        pathname: `/collector-profile/my-collection/artwork/${artworkId}`,
-      })
-    })
-  })
+  `,
 })
 
-describe("BackLink when ff enabled", () => {
-  const mockuseTracking = useTracking as jest.Mock
-  const trackingSpy = jest.fn()
+describe("ArtistBackLink", () => {
+  const mockUseTracking = useTracking as jest.Mock
+  const trackEvent = jest.fn()
 
   beforeAll(() => {
-    mockuseTracking.mockImplementation(() => ({
-      trackEvent: trackingSpy,
-    }))
+    mockUseTracking.mockImplementation(() => ({ trackEvent }))
   })
 
-  describe("The articles page was opened from the Artist page", () => {
-    const { getWrapper } = setupTestWrapper<ArtistBackLink_Test_Query>({
-      Component: props => {
-        return (
-          <MockBoot>
-            <ArtistBackLinkFragmentContainer artist={props.artist!} />
-          </MockBoot>
-        )
-      },
-      query: QUERY,
+  it("renders correctly", () => {
+    const wrapper = getWrapper({
+      Artist: () => ({ name: "Example Artist" }),
     })
 
-    it("renders correctly", () => {
-      const wrapper = getWrapper({
-        Artist: () => ({
-          name: "artistName",
-        }),
-      })
-
-      expect(wrapper.text()).toContain("Back to artistName")
-    })
-
-    it("tracks correctly", () => {
-      const wrapper = getWrapper({
-        Artist: () => ({
-          href: "/artist/artistSlug",
-        }),
-      })
-      wrapper.simulate("click")
-      expect(trackingSpy).toHaveBeenCalledWith({
-        action_type: "Click",
-        destination_path: "/artist/artistSlug",
-        subject: "Back to artist link",
-      })
-    })
+    expect(wrapper.text()).toContain("Back to Example Artist")
   })
 
-  describe("The articles page was opened from the My Collection Artwork page", () => {
-    const artworkId = "artwork-id"
-    const { getWrapper } = setupTestWrapper<ArtistBackLink_Test_Query>({
-      Component: props => {
-        return (
-          <MockBoot>
-            <ArtistBackLinkFragmentContainer artist={props.artist!} />
-          </MockBoot>
-        )
-      },
-      query: QUERY,
-    })
-    it("renders correctly", () => {
-      const wrapper = getWrapper({
-        Artist: () => ({
-          name: "artistName",
-        }),
-      })
-
-      expect(wrapper.text()).toContain("Back to My Collection")
+  it("tracks correctly", () => {
+    const wrapper = getWrapper({
+      Artist: () => ({ href: "/artist/example-artist" }),
     })
 
-    it("redirects correctly", () => {
-      const wrapper = getWrapper({
-        Artist: () => ({
-          href: "/artist/artistSlug",
-        }),
-      })
+    wrapper.simulate("click")
 
-      wrapper.simulate("click")
-      expect(mockRouterReplace).toHaveBeenCalledWith({
-        pathname: `/collector-profile/my-collection/artwork/${artworkId}`,
-      })
+    expect(trackEvent).toHaveBeenCalledWith({
+      action_type: "Click",
+      destination_path: "/artist/example-artist",
+      subject: "Back to artist link",
     })
   })
 })

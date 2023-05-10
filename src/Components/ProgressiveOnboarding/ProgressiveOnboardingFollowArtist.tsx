@@ -32,11 +32,10 @@ const ProgressiveOnboardingFollowArtist: FC<ProgressiveOnboardingFollowArtistPro
     !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST).status &&
     // Hasn't followed an artist yet.
     counts.followedArtists === 0 &&
-    // If you've already dismissed the alerts onboarding OR you're not on the works-for-sale page.
+    // FIXME: Spot check
+    // If you've already dismissed the alerts onboarding OR you're not on the artist page.
     (PROGRESSIVE_ONBOARDING_ALERT_CHAIN.every(key => isDismissed(key).status) ||
-      !pathToRegexp("/artist/:artistID/works-for-sale").test(
-        router.match.location.pathname
-      ))
+      !pathToRegexp("/artist/:artistID").test(router.match.location.pathname))
 
   const handleClose = useCallback(() => {
     dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)

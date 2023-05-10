@@ -217,7 +217,6 @@ export const artistRoutes: AppRouteConfig[] = [
     children: [
       {
         path: "articles/:artworkId?",
-        hideNavigationTabs: true,
         getComponent: () => ArticlesRoute,
         onClientSideRender: () => {
           ArticlesRoute.preload()
@@ -232,7 +231,6 @@ export const artistRoutes: AppRouteConfig[] = [
       },
       {
         path: "consign",
-        hideNavigationTabs: true,
         getComponent: () => ConsignRoute,
         onClientSideRender: () => {
           ConsignRoute.preload()
@@ -265,7 +263,6 @@ export const artistRoutes: AppRouteConfig[] = [
       },
       {
         path: "cv",
-        hideNavigationTabs: true,
         getComponent: () => CVRoute,
         onClientSideRender: () => {
           CVRoute.preload()
@@ -280,7 +277,6 @@ export const artistRoutes: AppRouteConfig[] = [
       },
       {
         path: "shows",
-        hideNavigationTabs: true,
         getComponent: () => ShowsRoute,
         onClientSideRender: () => {
           ShowsRoute.preload()
@@ -304,7 +300,6 @@ export const artistRoutes: AppRouteConfig[] = [
   },
   {
     path: "/auction-result/:auctionResultId",
-    hideNavigationTabs: true,
     getComponent: () => AuctionResultRoute,
     onServerSideRender: enableArtistPageCTA,
     onClientSideRender: () => {

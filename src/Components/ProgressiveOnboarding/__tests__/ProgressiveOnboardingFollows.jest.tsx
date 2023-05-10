@@ -38,7 +38,7 @@ jest.mock("System/Router/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {
-        pathname: "/artist/example",
+        pathname: "/artist/example/about",
       },
     },
   }),

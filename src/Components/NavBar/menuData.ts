@@ -108,31 +108,31 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           links: [
             {
               text: "Barbara Kruger",
-              href: "/artist/barbara-kruger/works-for-sale",
+              href: "/artist/barbara-kruger",
             },
             {
               text: "Carrie Mae Weems",
-              href: "/artist/carrie-mae-weems/works-for-sale",
+              href: "/artist/carrie-mae-weems",
             },
             {
               text: "Daniel Arsham",
-              href: "/artist/daniel-arsham/works-for-sale",
+              href: "/artist/daniel-arsham",
             },
             {
               text: "Sam Gilliam",
-              href: "/artist/sam-gilliam/works-for-sale",
+              href: "/artist/sam-gilliam",
             },
             {
               text: "Takashi Murakami",
-              href: "/artist/takashi-murakami/works-for-sale",
+              href: "/artist/takashi-murakami",
             },
             {
               text: "Tracey Emin",
-              href: "/artist/tracey-emin/works-for-sale",
+              href: "/artist/tracey-emin",
             },
             {
               text: "Yinka Shonibare",
-              href: "/artist/yinka-shonibare/works-for-sale",
+              href: "/artist/yinka-shonibare",
             },
           ],
         },
