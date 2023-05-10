@@ -33,6 +33,8 @@
     "jest": "node_modules/.bin/jest --config jest.config.js",
     "jest:debug": "node --inspect node_modules/.bin/jest --runInBand",
     "lint": "eslint --cache --cache-location '.cache/eslint/' --ext ts,tsx --ignore-pattern 'src/__generated__'",
+    "local-palette-dev": "./scripts/yalc-link-local-palette",
+    "local-palette-dev:stop": "./scripts/yalc-unlink-local-palette",
     "open-consent-modal": "open http://localhost:5000?otreset=false&otpreview=true&otgeo=gb",
     "prepare": "patch-package",
     "prettier-project": "yarn run prettier-write 'src/**/*.{ts,tsx,js,jsx}'",
