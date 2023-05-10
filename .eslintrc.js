@@ -84,7 +84,6 @@ module.exports = {
     "no-useless-escape": 0,
     "prefer-const": 0,
     "prefer-rest-params": 0,
-    "react/jsx-key": 0,
     "react/jsx-no-target-blank": 0,
     "react/no-direct-mutation-state": 0,
     "react/no-find-dom-node": 0,
