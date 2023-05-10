@@ -29,7 +29,7 @@ import { renderServerApp } from "System/Router/renderServerApp"
 import { ErrorPage } from "Components/ErrorPage"
 import { renderToString } from "react-dom/server"
 import { ServerStyleSheet } from "styled-components"
-import { injectGlobalStyles, ThemeProviderV3 } from "@artsy/palette"
+import { injectGlobalStyles, Theme } from "@artsy/palette"
 import createLogger from "Utils/logger"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 
@@ -78,7 +78,7 @@ Time: ${new Date().toUTCString()}`
 
     const bodyHTML = renderToString(
       sheet.collectStyles(
-        <ThemeProviderV3>
+        <Theme>
           <GlobalStyles />
 
           <LayoutLogoOnly>
@@ -88,7 +88,7 @@ Time: ${new Date().toUTCString()}`
               detail={displayStackTrace ? detail : undefined}
             />
           </LayoutLogoOnly>
-        </ThemeProviderV3>
+        </Theme>
       )
     )
 

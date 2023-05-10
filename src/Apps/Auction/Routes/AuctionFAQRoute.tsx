@@ -1,10 +1,4 @@
-import {
-  Box,
-  Text,
-  THEME_V3 as THEME,
-  Spacer,
-  Expandable,
-} from "@artsy/palette"
+import { Box, Text, THEME, Spacer, Expandable } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { FC } from "react"
 import styled from "styled-components"

@@ -5,14 +5,14 @@ import { buildClientAppContext } from "System/Router/buildClientAppContext"
 import { ClientContext } from "System/Router/buildClientAppContext"
 import { createMockEnvironment } from "relay-test-utils"
 
-export const MockBoot: React.SFC<{
+export const MockBoot: React.FC<{
   breakpoint?: Breakpoint
   headTags?: JSX.Element[]
   user?: User
   context?: object
   relayEnvironment?: ReturnType<typeof createMockEnvironment>
 }> = ({
-  breakpoint = "xl",
+  breakpoint = "xl" as Breakpoint,
   headTags,
   children,
   user = null,

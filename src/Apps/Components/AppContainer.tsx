@@ -1,5 +1,5 @@
 import { Box, BoxProps, useTheme } from "@artsy/palette"
-import { ThemeV3 } from "@artsy/palette/dist/themes"
+import { Theme } from "@artsy/palette"
 import { FC, ElementType, HTMLAttributes } from "react"
 
 interface AppContainerProps extends BoxProps, HTMLAttributes<HTMLElement> {
@@ -14,7 +14,7 @@ export const AppContainer: FC<AppContainerProps> = ({
   maxWidth,
   ...rest
 }) => {
-  const { theme: { breakpoints = { lg: null } } = {} } = useTheme<ThemeV3>()
+  const { theme: { breakpoints = { lg: null } } = {} } = useTheme<Theme>()
 
   const appShellMaxWidth = maxWidth ?? breakpoints.lg
 
