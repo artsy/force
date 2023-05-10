@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c47e80cfd40a6a14f94fe6263e009830>>
+ * @generated SignedSource<<2e62dca694187d1c41ff33128031b06e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -369,7 +369,8 @@ return {
                 "plural": true,
                 "selections": (v7/*: any*/),
                 "storageKey": "artistInsights(kind:\"SOLO_SHOW\")"
-              }
+              },
+              (v6/*: any*/)
             ],
             "storageKey": null
           },
@@ -380,12 +381,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fc57b06c40dd83066844b40d511110d5",
+    "cacheID": "13a54d6ce931cec8447729f5b20c9e09",
     "id": null,
     "metadata": {},
     "name": "CareerHighlightsStepsQuery",
     "operationKind": "query",
-    "text": "query CareerHighlightsStepsQuery {\n  me {\n    myCollectionInfo {\n      BIENNIAL: artistInsights(kind: BIENNIAL) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      COLLECTED: artistInsights(kind: COLLECTED) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      GROUP_SHOW: artistInsights(kind: GROUP_SHOW) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      REVIEWED: artistInsights(kind: REVIEWED) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      SOLO_SHOW: artistInsights(kind: SOLO_SHOW) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n    }\n    id\n  }\n}\n\nfragment CareerHighlightModalStep_careerHighlight on ArtistInsight {\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CareerHighlightsStepsQuery {\n  me {\n    myCollectionInfo {\n      BIENNIAL: artistInsights(kind: BIENNIAL) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      COLLECTED: artistInsights(kind: COLLECTED) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      GROUP_SHOW: artistInsights(kind: GROUP_SHOW) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      REVIEWED: artistInsights(kind: REVIEWED) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      SOLO_SHOW: artistInsights(kind: SOLO_SHOW) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment CareerHighlightModalStep_careerHighlight on ArtistInsight {\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

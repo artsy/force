@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd7d828ccb7cc06d6659fcedab97a3c1>>
+ * @generated SignedSource<<f2c83e6e3edea8a1e7459e22006d7928>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -271,7 +271,8 @@ return {
                   }
                 ],
                 "storageKey": "artistInsights(kind:\"BIENNIAL\")"
-              }
+              },
+              (v1/*: any*/)
             ],
             "storageKey": null
           },
@@ -282,7 +283,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4736ee3f2ba27cd49be1d30907d6fe30",
+    "cacheID": "b68eab0844ccf0e14d6019022df0447b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -339,12 +340,13 @@ return {
         "me.myCollectionInfo.BIENNIAL.artist.initials": (v5/*: any*/),
         "me.myCollectionInfo.BIENNIAL.artist.internalID": (v2/*: any*/),
         "me.myCollectionInfo.BIENNIAL.artist.name": (v5/*: any*/),
-        "me.myCollectionInfo.BIENNIAL.artist.slug": (v2/*: any*/)
+        "me.myCollectionInfo.BIENNIAL.artist.slug": (v2/*: any*/),
+        "me.myCollectionInfo.id": (v2/*: any*/)
       }
     },
     "name": "CareerHighlightModalStepTestQuery",
     "operationKind": "query",
-    "text": "query CareerHighlightModalStepTestQuery {\n  me {\n    myCollectionInfo {\n      BIENNIAL: artistInsights(kind: BIENNIAL) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n    }\n    id\n  }\n}\n\nfragment CareerHighlightModalStep_careerHighlight on ArtistInsight {\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CareerHighlightModalStepTestQuery {\n  me {\n    myCollectionInfo {\n      BIENNIAL: artistInsights(kind: BIENNIAL) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment CareerHighlightModalStep_careerHighlight on ArtistInsight {\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
