@@ -20,14 +20,9 @@ const logger = createLogger("Components/Search/NewSearchBar")
 export interface NewSearchBarInputProps extends SystemContextProps {
   relay: RelayRefetchProp
   viewer: NewSearchBarInput_viewer$data
-  isXs: boolean
 }
 
-const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
-  isXs,
-  relay,
-  viewer,
-}) => {
+const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   const { t } = useTranslation()
   const [value, setValue] = useState("")
 
@@ -68,7 +63,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
 
   return (
     <AutocompleteInput
-      placeholder={isXs ? t`navbar.searchArtsy` : t`navbar.searchBy`}
+      placeholder={t`navbar.searchBy`}
       spellCheck={false}
       options={value.length < 2 ? [] : formattedOptions}
       value={value}
@@ -143,15 +138,11 @@ export const NewSearchBarInputRefetchContainer = createRefetchContainer(
   `
 )
 
-interface NewSearchBarInputQueryRendererProps extends BoxProps {
-  isXs: boolean
-}
-
-export const NewSearchBarInputQueryRenderer: FC<NewSearchBarInputQueryRendererProps> = props => {
+export const NewSearchBarInputQueryRenderer: FC = () => {
   const { relayEnvironment, searchQuery = "" } = useSystemContext()
 
   if (isServer) {
-    return <StaticSearchContainer searchQuery={searchQuery} {...props} />
+    return <StaticSearchContainer searchQuery={searchQuery} />
   }
 
   return (
@@ -172,14 +163,9 @@ export const NewSearchBarInputQueryRenderer: FC<NewSearchBarInputQueryRendererPr
         hasTerm: false,
         term: "",
       }}
-      render={({ props: relayProps }) => {
-        if (relayProps && relayProps.viewer) {
-          return (
-            <NewSearchBarInputRefetchContainer
-              viewer={relayProps.viewer}
-              isXs={props.isXs}
-            />
-          )
+      render={({ props }) => {
+        if (props && props.viewer) {
+          return <NewSearchBarInputRefetchContainer viewer={props.viewer} />
           // SSR render pass. Since we don't have access to `<Boot>` context
           // from within the NavBar (it's not a part of any app) we need to lean
           // on styled-system for showing / hiding depending upon breakpoint.

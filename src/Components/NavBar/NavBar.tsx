@@ -137,6 +137,10 @@ export const NavBar: React.FC = track(
     })
   }
 
+  const handleMobileSearchBarClose = () => {
+    setSearchFocused(false)
+  }
+
   if (isEigen) {
     return null
   }
@@ -205,7 +209,7 @@ export const NavBar: React.FC = track(
                 zIndex={9}
               >
                 {isSearchDropDownImprovementsEnabled ? (
-                  <NewSearchBar />
+                  <NewSearchBar onClose={handleMobileSearchBarClose} />
                 ) : (
                   <SearchBarQueryRenderer width="100%" />
                 )}
