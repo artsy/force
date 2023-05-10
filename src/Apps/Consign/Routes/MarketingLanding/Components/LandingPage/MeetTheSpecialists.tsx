@@ -99,6 +99,7 @@ export const MeetTheSpecialists: React.FC = () => {
       <HorizontalOverflow>
         {filteredPills.map(pill => (
           <Pill
+            key={`pill-${pill.type}`}
             mr={1}
             selected={selectedSpecialty === pill.type}
             onClick={() => {
@@ -122,6 +123,7 @@ export const MeetTheSpecialists: React.FC = () => {
               maxWidth={CARD_WIDTH}
               minHeight={[CARD_HEIGHT_MOBILE, CARD_HEIGHT_MD, CARD_HEIGHT]}
               backgroundColor="black60"
+              key={`specialist-${i.firstName}`}
             >
               <Box
                 width="100%"
