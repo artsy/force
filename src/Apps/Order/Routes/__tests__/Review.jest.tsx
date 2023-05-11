@@ -676,16 +676,16 @@ describe("Review", () => {
   })
 
   describe("in-review offers", () => {
-    const OfferOrderInReview = {
+    const OfferOrderToSubmit = {
       ...OfferOrderWithShippingDetails,
-      state: "IN_REVIEW",
+      state: "PENDING",
       internalID: "offer-order-id",
       impulseConversationId: null,
     }
 
     describe("from an artwork page", () => {
       const OfferOrderInReviewFromArtworkPage = {
-        ...OfferOrderInReview,
+        ...OfferOrderToSubmit,
         source: "artwork_page",
       }
 
@@ -704,7 +704,7 @@ describe("Review", () => {
 
     describe("from an inquiry", () => {
       const OfferOrderInReviewFromInquiry = {
-        ...OfferOrderInReview,
+        ...OfferOrderToSubmit,
         source: "inquiry",
         impulseConversationId: "impulse-conversation-id",
       }
@@ -731,7 +731,7 @@ describe("Review", () => {
 
       describe("from an artwork page", () => {
         const OfferOrderInReviewFromArtworkPage = {
-          ...OfferOrderInReview,
+          ...OfferOrderToSubmit,
           source: "artwork_page",
         }
 
@@ -760,7 +760,7 @@ describe("Review", () => {
 
       describe("from an inquiry", () => {
         const OfferOrderInReviewFromInquiry = {
-          ...OfferOrderInReview,
+          ...OfferOrderToSubmit,
           source: "inquiry",
         }
 
