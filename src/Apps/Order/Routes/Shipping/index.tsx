@@ -629,6 +629,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               </>
             )}
 
+            {/* SAVED ADDRESSES */}
             <Collapse
               data-test="savedAddressesCollapse"
               open={!!showSavedAddresses}
@@ -650,6 +651,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 onAddressEdit={handleAddressEdit}
               />
             </Collapse>
+
+            {/* ADD NEW ADDRESS */}
             <Collapse data-test="addressFormCollapse" open={showAddressForm}>
               {isArtsyShipping &&
                 shippingQuotes &&
@@ -685,6 +688,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               </Checkbox>
               <Spacer y={4} />
             </Collapse>
+
+            {/* PHONE NUMBER */}
             <Collapse
               data-test="phoneNumberCollapse"
               open={shippingOption === "PICKUP"}
@@ -700,6 +705,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               />
               <Spacer y={4} />
             </Collapse>
+
+            {/* SHIPPING OPTIONS */}
             <Collapse open={showArtsyShipping}>
               <Text variant="sm">Artsy shipping options</Text>
               <Text variant="xs" mb="1" color="black60">
