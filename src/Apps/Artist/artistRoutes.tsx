@@ -8,6 +8,7 @@ import { initialAuctionResultsFilterState } from "./Routes/AuctionResults/Auctio
 import { renderOrRedirect } from "./Routes/Overview/Utils/renderOrRedirect"
 import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
+import { redirectWithCanonicalParams } from "./Server/redirect"
 import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters"
 
 const ArtistApp = loadable(
@@ -144,6 +145,7 @@ export const artistRoutes: AppRouteConfig[] = [
       {
         path: "works-for-sale",
         getComponent: () => WorksForSaleRoute,
+        onServerSideRender: redirectWithCanonicalParams,
         onClientSideRender: () => {
           WorksForSaleRoute.preload()
         },
@@ -331,7 +333,7 @@ export const artistRoutes: AppRouteConfig[] = [
     },
     query: graphql`
       query artistRoutes_AuctionResultQuery($auctionResultId: String!) {
-        auctionResult(id: $auctionResultId) {
+        auctionResult(id: $auctionResultId) @principalField {
           ...AuctionResult_auctionResult
         }
       }

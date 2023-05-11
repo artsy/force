@@ -1,16 +1,10 @@
-import {
-  Clickable,
-  Flex,
-  InfoCircleIcon,
-  Spacer,
-  Text,
-  Tooltip,
-} from "@artsy/palette"
+import { Clickable, Flex, Spacer, Text, Tooltip } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { Media } from "Utils/Responsive"
 import { MyCollectionArtworkDemandIndex_marketPriceInsights$data } from "__generated__/MyCollectionArtworkDemandIndex_marketPriceInsights.graphql"
 import { DemandIndexBar } from "./DemandIndexBar"
 import { HighDemandIcon } from "./HighDemandIcon"
+import InfoIcon from "@artsy/icons/InfoIcon"
 
 interface MyCollectionArtworkDemandIndexProps {
   marketPriceInsights: MyCollectionArtworkDemandIndex_marketPriceInsights$data
@@ -54,7 +48,7 @@ const MyCollectionArtworkDemandIndex: React.FC<MyCollectionArtworkDemandIndexPro
 
           <Tooltip placement="top-start" content={DemandIndexExplanation}>
             <Clickable ml={0.5} style={{ lineHeight: 0 }}>
-              <InfoCircleIcon />
+              <InfoIcon />
             </Clickable>
           </Tooltip>
         </Flex>

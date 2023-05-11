@@ -1,6 +1,7 @@
-import { HeartFillIcon, HeartIcon } from "@artsy/palette"
 import { UtilButton } from "Apps/Artwork/Components/ArtworkImageBrowser/UtilButton"
 import { FC } from "react"
+import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
+import HeartFillIcon from "@artsy/icons/HeartFillIcon"
 
 interface SaveUtilButtonProps {
   isSaved: boolean
@@ -14,7 +15,7 @@ export const SaveUtilButton: FC<SaveUtilButtonProps> = ({
   return (
     <UtilButton
       name="heart"
-      Icon={isSaved ? FilledIcon : UnfilledIcon}
+      Icon={isSaved ? FilledIcon : HeartStrokeIcon}
       label={isSaved ? "Saved" : "Save"}
       longestLabel="Saved"
       onClick={onClick}
@@ -22,5 +23,4 @@ export const SaveUtilButton: FC<SaveUtilButtonProps> = ({
   )
 }
 
-const UnfilledIcon = () => <HeartIcon title="Save icon" />
 const FilledIcon = () => <HeartFillIcon title="Unsave icon" fill="blue100" />

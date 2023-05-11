@@ -2,20 +2,14 @@ import { ArtworkSidebarCurrentBidInfo_artwork$data } from "__generated__/Artwork
 import { createFragmentContainer, graphql } from "react-relay"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
-import {
-  Box,
-  Clickable,
-  Flex,
-  LosingBidIcon,
-  Spacer,
-  Text,
-  WinningBidIcon,
-} from "@artsy/palette"
+import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { useDialog } from "Utils/Hooks/useDialog"
 import { AuctionBuyersPremiumDialogQueryRenderer } from "Components/AuctionBuyersPremiumDialog"
 import styled, { keyframes } from "styled-components"
 import { ArtworkSidebarBiddingClosedMessageFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarBiddingClosedMessage"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
+import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
+import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
 
 export interface ArtworkSidebarCurrentBidInfoProps {
   artwork: ArtworkSidebarCurrentBidInfo_artwork$data
@@ -141,9 +135,9 @@ export const ArtworkSidebarCurrentBidInfo: React.FC<ArtworkSidebarCurrentBidInfo
           {myBidPresent && (
             <Box pt={0.5}>
               {myBidWinning ? (
-                <WinningBidIcon fill="green100" title="Winning Bid" />
+                <CheckmarkStrokeIcon fill="green100" title="Winning Bid" />
               ) : (
-                <LosingBidIcon fill="red100" title="Losing Bid" />
+                <CloseStrokeIcon fill="red100" title="Losing Bid" />
               )}
             </Box>
           )}

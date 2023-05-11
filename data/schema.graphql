@@ -11286,6 +11286,7 @@ type Me implements Node {
     before: String
     biddableSale: Boolean
     estimateRange: String
+    excludeClosedLots: Boolean
     first: Int
     geneIDs: [String]
 
@@ -11516,6 +11517,22 @@ type Me implements Node {
     before: String
     first: Int
     last: Int
+    sort: ShowSorts
+
+    # Filter shows by chronological event status
+    status: EventStatus
+  ): ShowConnection
+
+  # A list of shows for the user (pagination logic might be broken)
+  showsConnection(
+    after: String
+    before: String
+    first: Int
+
+    # An IP address, will be used to lookup location
+    ip: String
+    last: Int
+    near: Near
     sort: ShowSorts
 
     # Filter shows by chronological event status
@@ -12602,6 +12619,7 @@ type NotificationEdge {
 }
 
 type NotificationPreference {
+  # email | push
   channel: String!
   id: String!
   name: String!
@@ -12609,6 +12627,8 @@ type NotificationPreference {
 }
 
 input NotificationPreferenceInput {
+  # email | push
+  channel: String
   name: String!
   status: SubGroupInputStatus!
 }
@@ -14252,6 +14272,7 @@ type Query {
     first: Int
     includeBackfill: Boolean!
     last: Int
+    marketable: Boolean
     maxWorksPerArtist: Int
     page: Int
     userId: String
@@ -14926,6 +14947,7 @@ type Query {
     before: String
     biddableSale: Boolean
     estimateRange: String
+    excludeClosedLots: Boolean
     first: Int
     geneIDs: [String]
 
@@ -18695,6 +18717,7 @@ type Viewer {
     first: Int
     includeBackfill: Boolean!
     last: Int
+    marketable: Boolean
     maxWorksPerArtist: Int
     page: Int
     userId: String
@@ -19190,6 +19213,7 @@ type Viewer {
     before: String
     biddableSale: Boolean
     estimateRange: String
+    excludeClosedLots: Boolean
     first: Int
     geneIDs: [String]
 

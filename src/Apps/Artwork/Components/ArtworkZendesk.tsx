@@ -5,6 +5,7 @@ import { exceedsChatSupportThreshold } from "Utils/exceedsChatSupportThreshold"
 import { ArtworkZendesk_artwork$data } from "__generated__/ArtworkZendesk_artwork.graphql"
 import { getENV } from "Utils/getENV"
 import { SalesforceWrapper } from "Components/SalesforceWrapper"
+import { Media } from "Utils/Responsive"
 
 interface ArtworkZendeskProps {
   artwork: ArtworkZendesk_artwork$data
@@ -40,7 +41,9 @@ const ArtworkZendesk: FC<ArtworkZendeskProps> = ({ artwork }) => {
   }
 
   return getENV("SALESFORCE_CHAT_ENABLED") ? (
-    <SalesforceWrapper />
+    <Media greaterThan="xs">
+      <SalesforceWrapper />
+    </Media>
   ) : (
     <ZendeskWrapper mode={isInAuction ? "auction" : "default"} />
   )

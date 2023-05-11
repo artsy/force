@@ -5,11 +5,11 @@ import {
   Button,
   ResponsiveBox,
   Image,
-  ArtsyLogoBlackIcon,
 } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { cropped } from "Utils/resized"
 import { Media } from "Utils/Responsive"
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
 const CareerHighlightModalPromoStepDesktop = () => {
   const { src: dSrc, srcSet: dSrcSet } = cropped(
@@ -22,7 +22,7 @@ const CareerHighlightModalPromoStepDesktop = () => {
 
   return (
     <Flex flex={1} flexDirection="column">
-      <ArtsyLogoBlackIcon />
+      <ArtsyLogoIcon />
 
       <Flex mt={2}>
         <ResponsiveBox

@@ -1,4 +1,3 @@
-import { LosingBidIcon, WinningBidIcon } from "@artsy/palette"
 import { ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse } from "__generated__/ArtworkSidebarCurrentBidInfo_Test_Query.graphql"
 import {
   AuctionPreview,
@@ -19,6 +18,8 @@ import { ArtworkSidebarCurrentBidInfoFragmentContainer } from "Apps/Artwork/Comp
 import { renderRelayTree } from "DevTools/renderRelayTree"
 import { graphql } from "react-relay"
 import { mockTracking } from "DevTools/mockTracking"
+import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
+import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
 
 jest.unmock("react-relay")
 jest.unmock("react-tracking")
@@ -162,7 +163,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
       const wrapper = await getWrapper(OpenAuctionReserveMetWithMyWinningBid)
 
       expect(wrapper.text()).toContain("Your max: $15,000")
-      expect(wrapper.find(WinningBidIcon).length).toBe(1)
+      expect(wrapper.find(CheckmarkStrokeIcon).length).toBe(1)
     })
 
     it("displays buyer's premium information", async () => {
@@ -180,7 +181,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
       const wrapper = await getWrapper(OpenAuctionReserveMetWithMyLosingBid)
 
       expect(wrapper.text()).toContain("Your max: $400")
-      expect(wrapper.find(LosingBidIcon).length).toBe(1)
+      expect(wrapper.find(CloseStrokeIcon).length).toBe(1)
     })
   })
 
@@ -189,7 +190,7 @@ describe("ArtworkSidebarCurrentBidInfo", () => {
       const wrapper = await getWrapper(OpenAuctionReserveNotMetIncreasingOwnBid)
 
       expect(wrapper.text()).toContain("Your max: $15,000")
-      expect(wrapper.find(WinningBidIcon).length).toBe(1)
+      expect(wrapper.find(CheckmarkStrokeIcon).length).toBe(1)
     })
   })
 })

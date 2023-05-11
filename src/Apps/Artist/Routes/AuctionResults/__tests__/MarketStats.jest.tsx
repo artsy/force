@@ -60,7 +60,7 @@ describe("MarketStats", () => {
       PriceInsightConnection: () => priceInsightsConnectionFixture,
     })
 
-    wrapper.find("InfoCircleIcon").simulate("click")
+    wrapper.find("InfoIcon").simulate("click")
     expect(trackingSpy).toHaveBeenCalledWith({
       action_type: "Click",
       context_module: "marketInsights",

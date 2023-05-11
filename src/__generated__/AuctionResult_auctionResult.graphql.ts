@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5fe8246cd90934933a5f322176467531>>
+ * @generated SignedSource<<9f5eab6fe03359b553cce9fc4506087f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResult_auctionResult$data = {
   readonly artist: {
+    readonly href: string | null;
     readonly name: string | null;
   } | null;
   readonly comparableAuctionResults: {
@@ -22,6 +23,7 @@ export type AuctionResult_auctionResult$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly internalID: string;
   readonly title: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"AuctionResultImage_auctionResult" | "AuctionResultMetaData_auctionResult" | "AuctionResultPrice_auctionResult" | "AuctionResultTitleInfo_auctionResult">;
   readonly " $fragmentType": "AuctionResult_auctionResult";
@@ -40,6 +42,13 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Artist",
       "kind": "LinkedField",
       "name": "artist",
@@ -50,6 +59,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "name",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "href",
           "storageKey": null
         }
       ],
@@ -138,6 +154,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "77474a33395b14e99df6ca230075357c";
+(node as any).hash = "5baccfec80bd4c2f62daeca23da3c38e";
 
 export default node;

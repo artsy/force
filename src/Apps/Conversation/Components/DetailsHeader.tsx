@@ -1,16 +1,10 @@
 import { FC } from "react"
 import * as React from "react"
-import {
-  Flex,
-  Text,
-  StackableBorderBox,
-  Box,
-  InfoCircleIcon,
-  Clickable,
-} from "@artsy/palette"
+import { Flex, Text, StackableBorderBox, Box, Clickable } from "@artsy/palette"
 import { LARGE_SCREEN_HEADER_HEIGHT } from "./ConversationHeader"
 import { Media } from "Utils/Responsive"
 import CloseIcon from "@artsy/icons/CloseIcon"
+import InfoIcon from "@artsy/icons/InfoIcon"
 
 export interface DetailsProps {
   showDetails: boolean
@@ -56,7 +50,7 @@ export const DetailIcon: React.FC<DetailsProps> = props => {
   return (
     <Box>
       <Flex flexDirection="row" alignItems="center" pr={1}>
-        <InfoCircleIcon />
+        <InfoIcon />
         <Clickable
           textDecoration="underline"
           onClick={() => {

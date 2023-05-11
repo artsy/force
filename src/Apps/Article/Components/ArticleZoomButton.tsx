@@ -1,6 +1,7 @@
-import { Box, Clickable, ClickableProps, ExpandIcon } from "@artsy/palette"
+import { Box, Clickable, ClickableProps } from "@artsy/palette"
 import { FC } from "react"
 import styled from "styled-components"
+import ExpandIcon from "@artsy/icons/ExpandIcon"
 
 export const ArticleZoomButton: FC<ClickableProps> = ({
   children,

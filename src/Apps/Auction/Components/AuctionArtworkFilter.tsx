@@ -107,6 +107,5 @@ export const getArtworkFilterInputArgs = (user?: User) => {
   return {
     aggregations,
     first: 39,
-    sort: "sale_position",
   }
 }

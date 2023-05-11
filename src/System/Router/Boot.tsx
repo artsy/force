@@ -1,7 +1,7 @@
 import {
   Theme,
   injectGlobalStyles,
-  themeProps,
+  THEME,
   ToastsProvider,
 } from "@artsy/palette"
 import { SystemContextProvider } from "System/SystemContext"
@@ -75,7 +75,7 @@ export const Boot = track(undefined, {
   }
 
   return (
-    <Theme theme="v3">
+    <Theme>
       <GlobalStyles />
 
       <HeadProvider headTags={headTags}>
@@ -85,7 +85,7 @@ export const Boot = track(undefined, {
               <ErrorBoundary>
                 <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
                   <ResponsiveProvider
-                    mediaQueries={themeProps.mediaQueries}
+                    mediaQueries={THEME.mediaQueries}
                     initialMatchingMediaQueries={onlyMatchMediaQueries as any}
                   >
                     <ToastsProvider>

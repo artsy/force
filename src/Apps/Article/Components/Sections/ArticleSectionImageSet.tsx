@@ -9,10 +9,10 @@ import {
   Sup,
   DROP_SHADOW,
   Clickable,
-  ImageSetIcon,
   Flex,
 } from "@artsy/palette"
 import { useArticleZoomGallery } from "Apps/Article/Components/ArticleZoomGallery/ArticleZoomGallery"
+import ImageSetIcon from "@artsy/icons/ImageSetIcon"
 
 interface ArticleSectionImageSetProps {
   section: ArticleSectionImageSet_section$data
@@ -151,7 +151,7 @@ const ArticleSectionImageSet: FC<ArticleSectionImageSetProps> = ({
                         </Text>
                       </Box>
 
-                      <ImageSetIcon width={20} height={20} ml={2} />
+                      <ImageSetIcon width={18} height={18} ml={2} />
                     </Box>
                   </Box>
                 </Clickable>

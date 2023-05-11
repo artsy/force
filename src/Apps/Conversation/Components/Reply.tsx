@@ -1,14 +1,7 @@
 import { RelayRefetchProp } from "react-relay"
 import { useRef, useState } from "react"
 import * as React from "react"
-import {
-  Button,
-  Dialog,
-  Flex,
-  FlexProps,
-  media,
-  themeProps,
-} from "@artsy/palette"
+import { Button, Dialog, Flex, FlexProps, media, THEME } from "@artsy/palette"
 import {
   focusedOnConversationMessageInput,
   sentConversationMessage,
@@ -45,7 +38,7 @@ const StyledTextArea = styled.textarea<{ height?: string }>`
   resize: none;
   min-height: 40px;
   font-size: 16px;
-  font-family: ${themeProps.fontFamily.sans.regular as string};
+  font-family: ${THEME.fonts.sans};
   padding-top: ${themeGet("space.0.5")}px;
   padding-left: ${themeGet("space.1")}px;
   padding-right: ${themeGet("space.1")}px;

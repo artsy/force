@@ -1,7 +1,8 @@
-import { GridColumns, Column, Text, CheckIcon } from "@artsy/palette"
+import { GridColumns, Column, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { FC } from "react"
 import styled from "styled-components"
+import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 
 export const BuyerGuaranteeTableDesktop: FC = () => {
   return (
@@ -48,11 +49,11 @@ export const BuyerGuaranteeTableDesktop: FC = () => {
         </Td>
 
         <Td span={2}>
-          <CheckIcon width={40} height={40} />
+          <CheckmarkIcon width={40} height={40} />
         </Td>
 
         <Td span={2}>
-          <CheckIcon width={40} height={40} />
+          <CheckmarkIcon width={40} height={40} />
         </Td>
 
         <Td span={2}></Td>
@@ -70,23 +71,23 @@ export const BuyerGuaranteeTableDesktop: FC = () => {
         </Td>
 
         <Td span={2}>
-          <CheckIcon width={40} height={40} />
+          <CheckmarkIcon width={40} height={40} />
         </Td>
 
         <Td span={2}>
-          <CheckIcon width={40} height={40} />
+          <CheckmarkIcon width={40} height={40} />
         </Td>
 
         <Td span={2}>
-          <CheckIcon width={40} height={40} />
+          <CheckmarkIcon width={40} height={40} />
         </Td>
 
         <Td span={2}>
-          <CheckIcon width={40} height={40} />
+          <CheckmarkIcon width={40} height={40} />
         </Td>
 
         <Td span={2}>
-          <CheckIcon width={40} height={40} />
+          <CheckmarkIcon width={40} height={40} />
         </Td>
       </Row>
     </>
@@ -120,11 +121,11 @@ export const BuyerGuaranteeTableMobile: FC = () => {
         </Td>
 
         <Td span={[4]}>
-          <CheckIcon width={40} height={40} />
+          <CheckmarkIcon width={40} height={40} />
         </Td>
 
         <Td span={[4]} bg="white100">
-          <CheckIcon width={40} height={40} />
+          <CheckmarkIcon width={40} height={40} />
         </Td>
       </Row>
 
@@ -136,11 +137,11 @@ export const BuyerGuaranteeTableMobile: FC = () => {
         </Td>
 
         <Td span={[4]}>
-          <CheckIcon width={40} height={40} />
+          <CheckmarkIcon width={40} height={40} />
         </Td>
 
         <Td span={[4]} bg="white100">
-          <CheckIcon width={40} height={40} />
+          <CheckmarkIcon width={40} height={40} />
         </Td>
       </Row>
 
@@ -154,7 +155,7 @@ export const BuyerGuaranteeTableMobile: FC = () => {
         <Td span={[4]}></Td>
 
         <Td span={[4]} bg="white100">
-          <CheckIcon width={40} height={40} />
+          <CheckmarkIcon width={40} height={40} />
         </Td>
       </Row>
 
@@ -168,7 +169,7 @@ export const BuyerGuaranteeTableMobile: FC = () => {
         <Td span={[4]}></Td>
 
         <Td span={[4]} bg="white100">
-          <CheckIcon width={40} height={40} />
+          <CheckmarkIcon width={40} height={40} />
         </Td>
       </Row>
 
@@ -182,7 +183,7 @@ export const BuyerGuaranteeTableMobile: FC = () => {
         <Td span={[4]}></Td>
 
         <Td span={[4]} bg="white100">
-          <CheckIcon width={40} height={40} />
+          <CheckmarkIcon width={40} height={40} />
         </Td>
       </Row>
     </>

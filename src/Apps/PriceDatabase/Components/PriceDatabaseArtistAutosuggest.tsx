@@ -1,9 +1,10 @@
+// FIXME: Do not use this library
+// eslint-disable-next-line no-restricted-imports
 import Autosuggest from "react-autosuggest"
 import { graphql } from "react-relay"
 import { Ref, useEffect, useState } from "react"
 import * as React from "react"
 import {
-  MagnifyingGlassIcon,
   usePosition,
   Text,
   Clickable,
@@ -17,6 +18,7 @@ import {
   PriceDatabaseArtistAutosuggest_SearchConnection_Query$data,
 } from "__generated__/PriceDatabaseArtistAutosuggest_SearchConnection_Query.graphql"
 import { useSystemContext } from "System/useSystemContext"
+import SearchIcon from "@artsy/icons/SearchIcon"
 
 const MAX_SUGGESTIONS = 10
 
@@ -58,6 +60,8 @@ export const PriceDatabaseArtistAutosuggest: React.FC<ArtistAutosuggestProps> = 
 
   useEffect(() => {
     updateSuggestions()
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [searchQuery])
 
   const [width, setWidth] = useState(0)
@@ -75,6 +79,8 @@ export const PriceDatabaseArtistAutosuggest: React.FC<ArtistAutosuggestProps> = 
     return () => {
       window.removeEventListener("resize", handleResize)
     }
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const { anchorRef, tooltipRef } = usePosition({
@@ -92,7 +98,7 @@ export const PriceDatabaseArtistAutosuggest: React.FC<ArtistAutosuggestProps> = 
         width="100%"
         spellCheck={false}
         type="text"
-        label={<MagnifyingGlassIcon />}
+        label={<SearchIcon />}
         {...props}
         ref={anchorRef as Ref<HTMLInputElement>}
       />

@@ -54,7 +54,7 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
     <>
       <MetaTags
         title="My Collection | Artsy"
-        pathname={"/collector-profile/my-collection"}
+        pathname="/collector-profile/my-collection"
       />
 
       {total > 0 ? (

@@ -1,8 +1,9 @@
-import { CreditCardIcon, Text } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsCreditCard_creditCard$data } from "__generated__/SettingsCreditCard_creditCard.graphql"
-import { useDeleteCreditCard } from "../useDeleteCreditCard"
+import { useDeleteCreditCard } from "Apps/Settings/Routes/Payments/useDeleteCreditCard"
 import { SettingsPaymentsMethod } from "./SettingsPaymentsMethod"
+import { Brand, BrandCreditCardIcon } from "Components/BrandCreditCardIcon"
 
 interface SettingsCreditCardProps {
   creditCard: SettingsCreditCard_creditCard$data
@@ -34,8 +35,8 @@ const SettingsCreditCard: React.FC<SettingsCreditCardProps> = ({
       successDeleteMessage="Successfully deleted credit card."
       onDelete={handleDelete}
     >
-      <CreditCardIcon
-        type={brand}
+      <BrandCreditCardIcon
+        type={brand as Brand}
         width={24}
         height={24}
         aria-label={brand}

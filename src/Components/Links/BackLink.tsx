@@ -1,14 +1,9 @@
 import * as React from "react"
-import {
-  BoxProps,
-  ChevronIcon,
-  Text,
-  boxMixin,
-  TextProps,
-} from "@artsy/palette"
+import { BoxProps, Text, boxMixin, TextProps } from "@artsy/palette"
 import { StyledLink } from "./StyledLink"
 import { RouterLinkProps } from "System/Router/RouterLink"
 import styled from "styled-components"
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 
 type BackLinkProps = RouterLinkProps &
   BoxProps & { fontWeight?: TextProps["fontWeight"] }
@@ -32,13 +27,7 @@ export const BackLink: React.FC<BackLinkProps> = ({
     // These props are infact valid.
     // @ts-ignore
     <Container to={to} {...rest}>
-      <ChevronIcon
-        direction="left"
-        color="black100"
-        height={14}
-        width={18}
-        mr={0.5}
-      />
+      <ChevronLeftIcon color="black100" height={14} width={18} mr={0.5} />
 
       <Text
         variant="sm"

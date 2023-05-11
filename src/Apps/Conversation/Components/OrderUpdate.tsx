@@ -1,20 +1,11 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import {
-  AlertCircleFillIcon,
-  Clickable,
-  Color,
-  Flex,
-  IconProps,
-  MoneyFillIcon,
-  Spacer,
-  Text,
-  THEME_V3,
-} from "@artsy/palette"
-
+import { Clickable, Color, Flex, Spacer, Text, THEME } from "@artsy/palette"
 import { TimeSince } from "./TimeSince"
+import { OrderUpdate_event$data } from "__generated__/OrderUpdate_event.graphql"
+import AlertFillIcon from "@artsy/icons/AlertFillIcon"
+import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
 
-import { OrderUpdate_event$data } from "../../../__generated__/OrderUpdate_event.graphql"
 export interface OrderUpdateProps {
   event: OrderUpdate_event$data
   setShowDetails: (showDetails: boolean) => void
@@ -27,7 +18,7 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
   let color: Color
   let textColor: Color | null = null
   let message: string
-  let Icon: React.FC<IconProps> = MoneyFillIcon
+  let Icon: React.FC<any> = MoneyFillIcon
   let action: { label?: string; onClick?: () => void } = {}
 
   if (event.__typename === "CommerceOfferSubmittedEvent") {
@@ -44,7 +35,7 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
     } else if (offer.fromParticipant === "SELLER") {
       // @ts-ignore
       color = "orange150" // FIXME: Needs v3 typing
-      Icon = AlertCircleFillIcon
+      Icon = AlertFillIcon
       if (offer.offerAmountChanged) {
         message = `You received ${
           isCounter ? "a counteroffer" : "an offer"
@@ -61,8 +52,8 @@ export const OrderUpdate: React.FC<OrderUpdateProps> = ({
     const reasonLapsed = stateReason?.includes("_lapsed")
     const reasonRejected = stateReason?.includes("_rejected")
     if (state === "PROCESSING_APPROVAL") {
-      Icon = AlertCircleFillIcon
-      color = THEME_V3.colors.yellow100 as Color
+      Icon = AlertFillIcon
+      color = THEME.colors.yellow100 as Color
       textColor = "black100"
       message = "Offer accepted. Payment processing"
     } else if (state === "APPROVED") {

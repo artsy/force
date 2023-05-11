@@ -1,4 +1,4 @@
-import { Box, Button, Flex, SettingsIcon, Spacer, Text } from "@artsy/palette"
+import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
 import { CollectorProfileHeaderAvatarFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/Components/CollectorProfileHeaderAvatar"
 import { CollectorProfileHeaderInfoFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/Components/CollectorProfileHeaderInfo"
 import { LocalImagePreview } from "Apps/Settings/Routes/EditProfile/Components/SettingsEditProfileImage/Components/LocalImagePreview"
@@ -10,6 +10,7 @@ import {
 } from "Utils/localImageHelpers"
 import { Media } from "Utils/Responsive"
 import { CollectorProfileHeader_me$data } from "__generated__/CollectorProfileHeader_me.graphql"
+import SettingsIcon from "@artsy/icons/SettingsIcon"
 
 interface CollectorProfileHeaderProps {
   me: CollectorProfileHeader_me$data
@@ -42,7 +43,7 @@ const CollectorProfileHeader: React.FC<CollectorProfileHeaderProps> = ({
         </Flex>
 
         <Media lessThan="sm">
-          <RouterLink to="/settings/edit-profile">
+          <RouterLink to="/settings/edit-profile" aria-label="Settings">
             <SettingsIcon height={24} width={24} />
           </RouterLink>
         </Media>

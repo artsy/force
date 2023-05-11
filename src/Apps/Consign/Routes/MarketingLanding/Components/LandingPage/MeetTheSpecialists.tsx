@@ -2,7 +2,7 @@ import { ActionType, ContextModule } from "@artsy/cohesion"
 import {
   Box,
   Button,
-  Flex,
+  HorizontalOverflow,
   Image,
   Pill,
   ReadMore,
@@ -21,6 +21,7 @@ import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { RouterLink } from "System/Router/RouterLink"
 import { useSystemContext } from "System/SystemContext"
+import { resized } from "Utils/resized"
 import { useState } from "react"
 import { useTracking } from "react-tracking"
 
@@ -43,6 +44,10 @@ const pills: PillData[] = [
     title: "Collector Services",
   },
 ]
+
+const filteredPills = pills.filter(pill =>
+  SPECIALISTS.some(specialist => specialist.specialty === pill.type)
+) as PillData[]
 
 export const MeetTheSpecialists: React.FC = () => {
   const { user } = useSystemContext()
@@ -91,33 +96,22 @@ export const MeetTheSpecialists: React.FC = () => {
       <Text mb={2} variant={["xs", "sm"]}>
         Our specialists span today’s most popular collecting categories.
       </Text>
-      <Flex overflowY="scroll">
-        {pills.map(pill => (
+      <HorizontalOverflow>
+        {filteredPills.map(pill => (
           <Pill
             mr={1}
-            hover={false}
             selected={selectedSpecialty === pill.type}
-            variant="default"
             onClick={() => {
               setSelectedSpecialty(pill.type)
               setSpecialistsTooDisplay(
                 SPECIALISTS.filter(i => i.specialty === pill.type)
               )
             }}
-            style={
-              selectedSpecialty === pill.type
-                ? {
-                    color: "white",
-                    backgroundColor: "black",
-                    borderColor: "black",
-                  }
-                : undefined
-            }
           >
             {pill.title}
           </Pill>
         ))}
-      </Flex>
+      </HorizontalOverflow>
       <Rail
         title=""
         getItems={() => {
@@ -140,8 +134,10 @@ export const MeetTheSpecialists: React.FC = () => {
                   <Image
                     width="100%"
                     height="100%"
-                    src={i.image.src}
-                    srcSet={i.image.srcSet}
+                    {...resized(i.imageUrl, {
+                      width: CARD_WIDTH,
+                      height: CARD_HEIGHT,
+                    })}
                     lazyLoad
                     alt={`specialist ${i.firstName}`}
                   />
@@ -155,7 +151,7 @@ export const MeetTheSpecialists: React.FC = () => {
                     {i.jobTitle}
                   </Text>
                   <Text mb={2} variant={["xs", "sm"]} color="white100">
-                    <ReadMore content={i.bio} maxChars={100} />
+                    <ReadMore content={i.bio} maxChars={88} />
                   </Text>
                   <Button
                     // @ts-ignore
