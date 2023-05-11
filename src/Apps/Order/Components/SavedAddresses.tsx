@@ -16,7 +16,7 @@ import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import styled from "styled-components"
 import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
-import { AddressModal, ModalDetails } from "Apps/Order/Components/AddressModal"
+import { AddressModal } from "Apps/Order/Components/AddressModal"
 import { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import createLogger from "Utils/logger"
 import { SavedAddressItem } from "Apps/Order/Components/SavedAddressItem"
@@ -49,6 +49,7 @@ interface SavedAddressesProps {
   ) => void
   selectedAddress?: string
   onShowToast?: (isShow: boolean, action: string) => void
+  setHideContinueButton: (arg: boolean) => void
 }
 
 type Address = NonNullable<
@@ -73,9 +74,12 @@ const defaultAddressIndex = (addressList: Address[]) => {
 
 const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const { trackEvent } = useTracking()
-  const [modalDetails, setModalDetails] = useState<ModalDetails | undefined>()
-  const [showAddressModal, setShowAddressModal] = useState<boolean>(false)
   const [address, setAddress] = useState<Address | undefined | null>(null)
+
+  const [showAddressForm, setShowAddressForm] = useState(false)
+  const [formTitle, setFormTitle] = useState("")
+  const [addressAction, setAddressAction] = useState("createUserAddress")
+
   const logger = createLogger("SavedAddresses.tsx")
   const {
     onSelect,
@@ -88,6 +92,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     selectedAddress,
     onShowToast,
     onAddressEdit,
+    setHideContinueButton,
   } = props
 
   useEffect(() => {
@@ -138,11 +143,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const handleEditAddress = (address: Address, index: number) => {
-    setShowAddressModal(true)
-    setModalDetails({
-      addressModalTitle: "Edit address",
-      addressModalAction: "editUserAddress",
-    })
+    setFormTitle("Edit address")
+    setAddressAction("editUserAddress")
     setAddress(address)
   }
 
@@ -245,13 +247,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           mt={[2, 4]}
           data-test="profileButton"
           variant="secondaryBlack"
-          onClick={() => {
-            setShowAddressModal(true),
-              setModalDetails({
-                addressModalTitle: "Add new address",
-                addressModalAction: "createUserAddress",
-              })
-          }}
+          onClick={() => setShowAddressForm(true)}
         >
           Add a new address
         </Button>
@@ -264,11 +260,10 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
             variant="secondaryBlack"
             onClick={() => {
               trackAddAddressClick()
-              setShowAddressModal(true),
-                setModalDetails({
-                  addressModalTitle: "Add address",
-                  addressModalAction: "createUserAddress",
-                })
+              setFormTitle("Add address")
+              setAddressAction("createUserAddress")
+              setShowAddressForm(true)
+              setHideContinueButton(true)
             }}
           >
             Add a new address
@@ -276,9 +271,13 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         )
       )}
       <AddressModal
-        show={showAddressModal}
-        modalDetails={modalDetails}
-        closeModal={() => setShowAddressModal(false)}
+        show={showAddressForm}
+        title={formTitle}
+        addressAction={addressAction}
+        cancelForm={() => {
+          setHideContinueButton(false)
+          setShowAddressForm(false)
+        }}
         address={address || undefined}
         onSuccess={createOrUpdateAddressSuccess}
         onDeleteAddress={handleDeleteAddress}

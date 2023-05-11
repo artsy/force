@@ -139,6 +139,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     undefined
   )
 
+  const [hideContinueButton, setHideContinueButton] = useState(false)
+
   useEffect(() => {
     const isAddressRemoved = !addressList.find(
       address => address.internalID === deletedAddressID
@@ -649,6 +651,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 onAddressDelete={handleAddressDelete}
                 onAddressCreate={handleAddressCreate}
                 onAddressEdit={handleAddressEdit}
+                setHideContinueButton={setHideContinueButton}
               />
             </Collapse>
 
@@ -722,17 +725,20 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               />
               <Spacer y={4} />
             </Collapse>
-            <Media greaterThan="xs">
-              <Button
-                onClick={onContinueButtonPressed}
-                loading={isCommittingMutation}
-                variant="primaryBlack"
-                width="50%"
-                disabled={isSaveAndContinueAllowed()}
-              >
-                Save and Continue
-              </Button>
-            </Media>
+
+            {!hideContinueButton && (
+              <Media greaterThan="xs">
+                <Button
+                  onClick={onContinueButtonPressed}
+                  loading={isCommittingMutation}
+                  variant="primaryBlack"
+                  width="50%"
+                  disabled={isSaveAndContinueAllowed()}
+                >
+                  Save and Continue
+                </Button>
+              </Media>
+            )}
           </Flex>
         }
         sidebar={

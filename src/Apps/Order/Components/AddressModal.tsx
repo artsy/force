@@ -12,7 +12,6 @@ import {
   Banner,
   Select,
   Box,
-  ModalWidth,
 } from "@artsy/palette"
 import {
   SavedAddressType,
@@ -35,21 +34,17 @@ import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressM
 import { countries } from "Utils/countries"
 import { userHasLabFeature } from "Utils/user"
 
-export interface ModalDetails {
-  addressModalTitle: string
-  addressModalAction: AddressModalAction
-}
-
 export interface Props {
   show: boolean
-  closeModal: () => void
+  title: string
+  addressAction: string
+  cancelForm: () => void
   address?: SavedAddressType
   onSuccess: (
     address?: UpdateUserAddressMutation$data & CreateUserAddressMutation$data
   ) => void
   onDeleteAddress: (addressID: string) => void
   onError: (message: string) => void
-  modalDetails?: ModalDetails
   me: SavedAddresses_me$data
 }
 
@@ -71,19 +66,18 @@ export type AddressModalAction = "editUserAddress" | "createUserAddress"
 
 export const AddressModal: React.FC<Props> = ({
   show,
-  closeModal,
+  title,
+  addressAction,
+  cancelForm,
   address,
   onSuccess,
   onDeleteAddress,
   onError,
-  modalDetails,
   me,
 }) => {
-  const [_countryCode, setCountryCode] = useState<string>("us")
+  const [_countryCode, setCountryCode] = useState("us")
 
-  const title = modalDetails?.addressModalTitle
-  const createMutation =
-    modalDetails?.addressModalAction === "createUserAddress"
+  const createMutation = addressAction === "createUserAddress"
   const validator = (values: any) => {
     const validationResult = validateAddress(values)
     const phoneValidation = validatePhoneNumber(values.phoneNumber)
@@ -98,23 +92,20 @@ export const AddressModal: React.FC<Props> = ({
   const [createUpdateError, setCreateUpdateError] = useState<string | null>(
     null
   )
-  const [showDialog, setShowDialog] = useState<boolean>(false)
+  const [showDialog, setShowDialog] = useState(false)
 
   if (!relayEnvironment) return null
 
-  const handleModalClose = () => {
-    closeModal()
+  const handleCancelClick = () => {
+    cancelForm()
     setCreateUpdateError(null)
   }
 
   return (
     <>
       {show && (
-        <ModalDialog
-          title={title}
-          onClose={handleModalClose}
-          width={ModalWidth.Wide}
-        >
+        <>
+          <Text variant="lg-display">{title}</Text>
           <Formik
             validateOnMount
             initialValues={createMutation ? { country: "US" } : { ...address }}
@@ -166,7 +157,7 @@ export const AddressModal: React.FC<Props> = ({
                   handleSuccess,
                   handleError,
                   me,
-                  closeModal
+                  cancelForm
                 )
               } else {
                 if (address?.internalID) {
@@ -174,7 +165,7 @@ export const AddressModal: React.FC<Props> = ({
                     relayEnvironment,
                     address.internalID,
                     addressInput,
-                    closeModal,
+                    cancelForm,
                     handleSuccess,
                     handleError
                   )
@@ -276,21 +267,30 @@ export const AddressModal: React.FC<Props> = ({
                     </Clickable>
                   </Flex>
                 )}
-                <Button
-                  data-test="saveButton"
-                  type="submit"
-                  variant="primaryBlack"
-                  loading={formik.isSubmitting}
-                  disabled={Object.keys(formik.errors).length > 0}
-                  width="100%"
-                  mt={2}
-                >
-                  Save
-                </Button>
+                <Flex justifyContent="space-between" mt={2}>
+                  <Button
+                    onClick={handleCancelClick}
+                    variant="secondaryBlack"
+                    width="50%"
+                    mr={1}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    data-test="saveButton"
+                    type="submit"
+                    variant="primaryBlack"
+                    loading={formik.isSubmitting}
+                    disabled={Object.keys(formik.errors).length > 0}
+                    width="50%"
+                  >
+                    Save and Continue
+                  </Button>
+                </Flex>
               </form>
             )}
           </Formik>
-        </ModalDialog>
+        </>
       )}
       {showDialog && (
         <ModalDialog
@@ -316,7 +316,7 @@ export const AddressModal: React.FC<Props> = ({
               size="small"
               onClick={() => {
                 setShowDialog(false)
-                closeModal()
+                cancelForm()
                 if (address?.internalID) {
                   onDeleteAddress(address.internalID)
                 }
