@@ -12,8 +12,6 @@ interface RouteConfigProps extends RouteConfig {
   cacheConfig?: CacheConfig
   children?: AppRouteConfig[]
   fetchIndicator?: FetchIndicator
-  /** FIXME: Remove. Avoid poluting global route config with application specific concerns */
-  hideNavigationTabs?: boolean
   ignoreScrollBehavior?: boolean
   ignoreScrollBehaviorBetweenChildren?: boolean
   layout?: LayoutVariant

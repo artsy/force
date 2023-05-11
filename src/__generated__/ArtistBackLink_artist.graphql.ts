@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8919fe753fdc69dc837f93a091e9c3ba>>
+ * @generated SignedSource<<671c4991313172e2143133ae1ce0f1f5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,21 +10,21 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type BackLink_artist$data = {
+export type ArtistBackLink_artist$data = {
   readonly href: string | null;
   readonly name: string | null;
-  readonly " $fragmentType": "BackLink_artist";
+  readonly " $fragmentType": "ArtistBackLink_artist";
 };
-export type BackLink_artist$key = {
-  readonly " $data"?: BackLink_artist$data;
-  readonly " $fragmentSpreads": FragmentRefs<"BackLink_artist">;
+export type ArtistBackLink_artist$key = {
+  readonly " $data"?: ArtistBackLink_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistBackLink_artist">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "BackLink_artist",
+  "name": "ArtistBackLink_artist",
   "selections": [
     {
       "alias": null,
@@ -45,6 +45,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "05d2d72ae348ed85752b8fee5b1f39ae";
+(node as any).hash = "56e2f9e7fd3479fecafe0222750855ac";
 
 export default node;
