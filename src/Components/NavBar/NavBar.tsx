@@ -20,12 +20,10 @@ import {
   NavBarMobileMenu,
   NavBarMobileMenuIcon,
 } from "./NavBarMobileMenu/NavBarMobileMenu"
-
 import {
   ARTISTS_SUBMENU_DATA,
   ARTWORKS_SUBMENU_DATA,
 } from "Components/NavBar/menuData"
-
 import { ActionType } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { AppContainer } from "Apps/Components/AppContainer"
@@ -35,7 +33,6 @@ import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import Events from "Utils/Events"
-import { useJump } from "Utils/Hooks/useJump"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { useTranslation } from "react-i18next"
 import { track, useTracking } from "react-tracking"
@@ -72,7 +69,6 @@ export const NavBar: React.FC = track(
 )(() => {
   const { user, isEigen } = useSystemContext()
 
-  const { jumpTo } = useJump({ behavior: "smooth" })
   const { trackEvent } = useTracking()
   const { t } = useTranslation()
   const { router } = useRouter()
@@ -486,19 +482,6 @@ export const NavBar: React.FC = track(
                 >
                   {t`navbar.museums`}
                 </NavBarItemLink>
-              </Flex>
-
-              <Flex alignItems="stretch" display={["none", "none", "flex"]}>
-                <NavBarItemButton
-                  display={["none", "none", "flex", "flex"]}
-                  px={0}
-                  pl={1}
-                  onClick={() => {
-                    jumpTo("download-app-banner")
-                  }}
-                >
-                  {t`navbar.downloadApp`}
-                </NavBarItemButton>
               </Flex>
             </Text>
           </HorizontalPadding>

@@ -18,7 +18,6 @@ import {
   FullBleedHeader,
   FullBleedHeaderOverlay,
 } from "Components/FullBleedHeader/FullBleedHeader"
-import { useJump } from "Utils/Hooks/useJump"
 
 export const AboutApp: React.FC = () => {
   return (
@@ -72,7 +71,7 @@ export const AboutApp: React.FC = () => {
       <GridColumns gridRowGap={4}>
         {SECTION_DATA.map((section, index) => {
           return (
-            <Column span={6}>
+            <Column key={section.title} span={6}>
               <Section {...section} key={index} />
             </Column>
           )
@@ -104,25 +103,8 @@ const Section: React.FC<SectionProps & BoxProps> = ({
 }) => {
   const image = resized(imageUrl, { width: 640 })
 
-  const { jumpTo } = useJump()
-
-  const handleClick = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
-    if (title !== "Manage your collection") return
-
-    event.preventDefault()
-
-    jumpTo("download-app-banner")
-  }
-
   return (
-    <RouterLink
-      to={href}
-      textDecoration="none"
-      display="block"
-      onClick={handleClick}
-    >
+    <RouterLink to={href} textDecoration="none" display="block">
       <Box {...rest}>
         <ResponsiveBox
           aspectWidth={640}
@@ -214,7 +196,7 @@ const SECTION_DATA: SectionProps[] = [
     description:
       "Get insight into the market value of artworks in your collection.",
     caption: "John Baldessari, Marina Abramovic, 2018.",
-    href: "#",
+    href: "/meet-your-new-art-advisor",
     imageUrl: "https://files.artsy.net/images/05_CVP_About_Manage.png",
   },
   {
