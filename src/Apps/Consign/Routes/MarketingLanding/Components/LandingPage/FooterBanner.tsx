@@ -8,8 +8,8 @@ export const FooterBanner: React.FC = () => {
       <FullBleedBanner dismissable={false} variant="defaultLight">
         Gallery or art dealer?{" "}
         <RouterLink inline to="https://partners.artsy.net">
-          Become a partner
-        </RouterLink>{" "}
+          Become a partner{" "}
+        </RouterLink>
         to access the world’s largest online marketplace.
       </FullBleedBanner>
     </Box>
