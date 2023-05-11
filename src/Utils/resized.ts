@@ -100,5 +100,25 @@ export const maxWidthByArea = ({
   height: number
   area: number
 }) => {
-  return Math.round(width * Math.sqrt(area / (width * height)))
+  // return Math.round(width * Math.sqrt(area / (width * height)))
+  return maxDimensionsByArea({ width, height, area }).width
+}
+
+export const maxDimensionsByArea = ({
+  width,
+  height,
+  area,
+}: {
+  width: number
+  height: number
+  area: number
+}) => {
+  const aspectRatio = width / height
+  const newHeight = Math.sqrt(area / aspectRatio)
+  const newWidth = aspectRatio * newHeight
+
+  return {
+    width: Math.round(newWidth),
+    height: Math.round(newHeight),
+  }
 }
