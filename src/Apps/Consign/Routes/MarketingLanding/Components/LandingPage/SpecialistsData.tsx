@@ -1,6 +1,6 @@
 export type Specialty =
   | "auctions"
-  | "priveteSalesAndAdvisory"
+  | "privateSalesAndAdvisory"
   | "collectorServices"
 
 export interface SpecialistsData {
@@ -30,7 +30,7 @@ export const SPECIALISTS: SpecialistsData[] = [
     email: "shlomi.rabi@artsy.net",
   },
   {
-    specialty: "priveteSalesAndAdvisory",
+    specialty: "privateSalesAndAdvisory",
     name: "Akanksha Ballaney",
     firstName: "Akanksha",
     jobTitle: "Director, Private Sales",
@@ -40,7 +40,7 @@ export const SPECIALISTS: SpecialistsData[] = [
     email: "akanksha@artsy.net",
   },
   // {
-  //   specialty: "priveteSalesAndAdvisory",
+  //   specialty: "privateSalesAndAdvisory",
   //   name: "Adriana Almeida",
   //   firstName: "Adriana",
   //   jobTitle: "Senior Private Sales Director",
@@ -99,7 +99,7 @@ export const SPECIALISTS: SpecialistsData[] = [
     email: "adam.mccoy@artsy.net",
   },
   {
-    specialty: "priveteSalesAndAdvisory",
+    specialty: "privateSalesAndAdvisory",
     name: "Caroline Perkins",
     firstName: "Caroline",
     jobTitle: "Advisor",
@@ -109,7 +109,7 @@ export const SPECIALISTS: SpecialistsData[] = [
     email: "caroline.perkins@artsy.net",
   },
   {
-    specialty: "priveteSalesAndAdvisory",
+    specialty: "privateSalesAndAdvisory",
     name: "Robin Roche",
     firstName: "Robin",
     jobTitle: "Senior Private Sales Director",
@@ -129,12 +129,12 @@ export const SPECIALISTS: SpecialistsData[] = [
     email: "alan@artsy.net",
   },
   // {
-  //   specialty: "priveteSalesAndAdvisory",
+  //   specialty: "privateSalesAndAdvisory",
   //   name: "Meave Hamill",
   //   firstName: "Meave",
   //   jobTitle: "Senior Advisor, Private Sales",
   //   bio: "SOME BIO",
-  //   image: TEST_imagePriveteSalesAndAdvisory,
+  //   image: TEST_imageprivateSalesAndAdvisory,
   //   email: "meave@artsy.net",
   // },
   // {
@@ -146,59 +146,59 @@ export const SPECIALISTS: SpecialistsData[] = [
   //   image: TEST_imageAuctions,
   //   email: "laura.martin@artsy.net",
   // },
-  //   specialty: "priveteSalesAndAdvisory",
+  //   specialty: "privateSalesAndAdvisory",
   //   name: "George King",
   //   firstName: "George",
   //   jobTitle: "Senior Advisor, Private Sales",
   //   bio: "SOME BIO",
-  //   image: TEST_imagePriveteSalesAndAdvisory,
+  //   image: TEST_imageprivateSalesAndAdvisory,
   //   email: "george.king@artsy.net",
   // },
   // {
-  //   specialty: "priveteSalesAndAdvisory",
+  //   specialty: "privateSalesAndAdvisory",
   //   name: "Alexander Forbes",
   //   firstName: "Alexander",
   //   jobTitle: "Head of Collector Services & Private Sales",
   //   bio: "SOME BIO",
-  //   image: TEST_imagePriveteSalesAndAdvisory,
+  //   image: TEST_imageprivateSalesAndAdvisory,
   //   email: "alexander.forbes@artsy.net",
   // },
   // {
 
   // {
-  //   specialty: "priveteSalesAndAdvisory",
+  //   specialty: "privateSalesAndAdvisory",
   //   name: "Daniela Bianco-Duppen",
   //   firstName: "Daniela",
   //   jobTitle: "Advisor",
   //   bio: "SOME BIO",
-  //   image: TEST_imagePriveteSalesAndAdvisory,
+  //   image: TEST_imageprivateSalesAndAdvisory,
   //   email: "daniela.bianco-duppen@artsy.net",
   // },
   // {
-  //   specialty: "priveteSalesAndAdvisory",
+  //   specialty: "privateSalesAndAdvisory",
   //   name: "Itziar Ramos Ricoy",
   //   firstName: "Meave",
   //   jobTitle: "Advisor",
   //   bio: "SOME BIO",
-  //   image: TEST_imagePriveteSalesAndAdvisory,
+  //   image: TEST_imageprivateSalesAndAdvisory,
   //   email: "itziar.ramos@artsy.net",
   // },
   // {
-  //   specialty: "priveteSalesAndAdvisory",
+  //   specialty: "privateSalesAndAdvisory",
   //   name: "Akilah Chandler",
   //   firstName: "Akilah",
   //   jobTitle: "Private Sales & Advisory Business Associate",
   //   bio: "SOME BIO",
-  //   image: TEST_imagePriveteSalesAndAdvisory,
+  //   image: TEST_imageprivateSalesAndAdvisory,
   //   email: "akilah.chandler@artsymail.com",
   // },
   // {
-  //   specialty: "priveteSalesAndAdvisory",
+  //   specialty: "privateSalesAndAdvisory",
   //   name: "Sarah Punzel",
   //   firstName: "Sarah",
   //   jobTitle: "Private Sales Business Associate",
   //   bio: "SOME BIO",
-  //   image: TEST_imagePriveteSalesAndAdvisory,
+  //   image: TEST_imageprivateSalesAndAdvisory,
   //   email: "sarah.punzel@artsy.net",
   // },
 

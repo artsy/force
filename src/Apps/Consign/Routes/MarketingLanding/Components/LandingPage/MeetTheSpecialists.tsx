@@ -39,7 +39,7 @@ const pills: PillData[] = [
     title: "Auctions",
   },
   {
-    type: "priveteSalesAndAdvisory",
+    type: "privateSalesAndAdvisory",
     title: "Private Sales & Advisory",
   },
   {
