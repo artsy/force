@@ -1,6 +1,5 @@
-import { AutocompleteInput, Box, BoxProps } from "@artsy/palette"
-import { SearchInputContainer } from "Components/Search/SearchInputContainer"
-import { ChangeEvent, FC, useState } from "react"
+import { AutocompleteInput, useUpdateEffect } from "@artsy/palette"
+import { ChangeEvent, FC, useCallback, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -10,87 +9,227 @@ import { NewSearchBarInput_viewer$data } from "__generated__/NewSearchBarInput_v
 import { NewSearchBarInputSuggestQuery } from "__generated__/NewSearchBarInputSuggestQuery.graphql"
 import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
-import { SuggestionItem } from "Components/Search/Suggestions/SuggestionItem"
 import { NewSearchBarFooter } from "Components/Search/NewSearch/NewSearchBarFooter"
 import { getLabel } from "./utils/getLabel"
+import { getSearchTerm } from "./utils/getSearchTerm"
 import { isServer } from "Server/isServer"
+import { PillType, TOP_PILL } from "Components/Search/NewSearch/constants"
+import {
+  NewSuggestionItem,
+  SuggionItemOptionProps,
+} from "./SuggestionItem/NewSuggestionItem"
+import { useTracking } from "react-tracking"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { getENV } from "Utils/getENV"
+import { StaticSearchContainer } from "./StaticSearchContainer"
+import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
+import { useRouter } from "System/Router/useRouter"
+import { useDebounce } from "Utils/Hooks/useDebounce"
 
 const logger = createLogger("Components/Search/NewSearchBar")
+const SEARCH_DEBOUNCE_DELAY = 150
 
 export interface NewSearchBarInputProps extends SystemContextProps {
   relay: RelayRefetchProp
   viewer: NewSearchBarInput_viewer$data
 }
 
+const reportPerformanceMeasurement = performanceStart => {
+  const duration = performance.now() - performanceStart
+  const deviceType = getENV("IS_MOBILE") ? "mobile" : "desktop"
+
+  const metricPayload = {
+    name: "autocomplete-search-response",
+    tags: [`device-type:${deviceType}`, "design:rich"],
+    timing: duration,
+    type: "timing",
+  }
+
+  fetch(getENV("VOLLEY_ENDPOINT"), {
+    method: "POST",
+    body: JSON.stringify({
+      metrics: [metricPayload],
+      serviceName: "force",
+    }),
+  })
+}
+
+const shouldStartSearching = (value: string) => {
+  return value.length > 1
+}
+
 const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
+  const tracking = useTracking()
   const { t } = useTranslation()
-  const [value, setValue] = useState("")
+  const [value, setValue] = useState(getSearchTerm(window.location))
+  const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
+  // We use fetchCounter together with useUpdateEffect to track typing
+  const [fetchCounter, setFetchCounter] = useState(0)
+  const { router } = useRouter()
+  const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
   const options = extractNodes(viewer.searchConnection)
-  const formattedOptions = options.map(option => {
-    return {
-      text: option.displayLabel!,
-      value: option.displayLabel!,
-      subtitle: getLabel({
-        displayType: option.displayType ?? "",
+  const formattedOptions: SuggionItemOptionProps[] = options.map(
+    (option, index) => {
+      return {
+        text: option.displayLabel!,
+        value: option.displayLabel!,
+        subtitle:
+          getLabel({
+            displayType: option.displayType ?? "",
+            typename: option.__typename,
+          }) ?? "",
+        imageUrl: option.imageUrl!,
+        showArtworksButton: !!option.statuses?.artworks,
+        showAuctionResultsButton: !!option.statuses?.auctionLots,
+        href: option.href!,
         typename: option.__typename,
-      }),
-      imageUrl: option.imageUrl!,
-      showArtworksButton: !!option.statuses?.artworks,
-      showAuctionResultsButton: !!option.statuses?.auctionLots,
-      href: option.href!,
+        item_number: index,
+        item_type: option.displayType!,
+      }
     }
+  )
+
+  // Clear the search term once you navigate away from search results
+  useMemo(() => {
+    router.addNavigationListener(location => {
+      if (!location.pathname.startsWith("/search")) {
+        setValue("")
+      }
+
+      return true
+    })
+  }, [router])
+
+  useUpdateEffect(() => {
+    tracking.trackEvent({
+      action_type:
+        options.length > 0
+          ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
+          : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
+      query: value,
+    })
+  }, [fetchCounter])
+
+  const refetch = useCallback(
+    (value: string, entity?: string) => {
+      const entities = entity ? [entity] : []
+      const performanceStart = performance && performance.now()
+
+      relay.refetch(
+        {
+          hasTerm: true,
+          term: value,
+          entities: entities,
+        },
+        null,
+        error => {
+          if (error) {
+            logger.error(error)
+            return
+          }
+
+          if (performanceStart && getENV("VOLLEY_ENDPOINT")) {
+            reportPerformanceMeasurement(performanceStart)
+          }
+
+          setFetchCounter(prevCounter => prevCounter + 1)
+        }
+      )
+    },
+    [relay]
+  )
+
+  const debouncedSearchRequest = useDebounce({
+    callback: refetch,
+    delay: SEARCH_DEBOUNCE_DELAY,
   })
+
+  const clearSearchInput = () => {
+    setValue("")
+  }
+
+  const redirect = (to: string) => {
+    router.push(to)
+  }
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setValue(event.target.value)
 
-    //TODO: Add throttle
-    relay.refetch(
-      {
-        hasTerm: true,
-        term: event.target.value,
-      },
-      null,
-      error => {
-        if (error) {
-          logger.error(error)
-          return
-        }
-      }
-    )
+    if (shouldStartSearching(event.target.value))
+      debouncedSearchRequest(event.target.value, selectedPill.searchEntityName)
+  }
+
+  const handlePillClick = (pill: PillType) => {
+    setSelectedPill(pill)
+    refetch(value, pill.searchEntityName)
+  }
+
+  const handleRedirect = () => {
+    clearSearchInput()
+  }
+
+  const handleSubmit = () => {
+    if (value) {
+      redirect(encodedSearchURL)
+    }
+  }
+
+  const handleSelect = (option: SuggionItemOptionProps) => {
+    tracking.trackEvent({
+      action_type: DeprecatedSchema.ActionType.SelectedItemFromSearch,
+      destination_path:
+        option.typename === "Artist"
+          ? `${option.href}/works-for-sale`
+          : option.href,
+      item_number: option.item_number,
+      item_type: option.item_type,
+      query: value,
+    })
+
+    clearSearchInput()
+    redirect(option.href)
+  }
+
+  const handleFocus = () => {
+    tracking.trackEvent({
+      action_type: DeprecatedSchema.ActionType.FocusedOnAutosuggestInput,
+    })
   }
 
   return (
     <AutocompleteInput
       placeholder={t`navbar.searchBy`}
       spellCheck={false}
-      options={value.length < 2 ? [] : formattedOptions}
+      options={shouldStartSearching(value) ? formattedOptions : []}
       value={value}
       onChange={handleChange}
-      onClear={() => setValue("")}
-      header={<NewSearchInputPillsFragmentContainer viewer={viewer} />}
+      onClear={clearSearchInput}
+      onSubmit={handleSubmit}
+      onFocus={handleFocus}
+      onSelect={handleSelect}
+      header={
+        <NewSearchInputPillsFragmentContainer
+          viewer={viewer}
+          selectedPill={selectedPill}
+          onPillClick={handlePillClick}
+        />
+      }
       renderOption={option => (
-        <SuggestionItem
-          display={option.text}
-          href={option.href}
-          isHighlighted={false} // TODO: change
-          label={option.subtitle ?? ""}
-          imageUrl={option.imageUrl}
+        <NewSuggestionItem
           query={value}
-          showArtworksButton={option.showArtworksButton}
-          showAuctionResultsButton={option.showAuctionResultsButton}
+          option={option}
+          onRedirect={handleRedirect}
         />
       )}
       footer={
         <NewSearchBarFooter
-          display={value}
-          href={`/search?term=${encodeURIComponent(value)}`}
-          isHighlighted={false}
-          label={value}
           query={value}
+          href={encodedSearchURL}
+          index={options.length}
         />
       }
+      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 10px)`}
     />
   )
 }
@@ -103,9 +242,14 @@ export const NewSearchBarInputRefetchContainer = createRefetchContainer(
         @argumentDefinitions(
           term: { type: "String!", defaultValue: "" }
           hasTerm: { type: "Boolean!", defaultValue: false }
+          entities: { type: "[SearchEntity]" }
         ) {
-        searchConnection(query: $term, mode: AUTOSUGGEST, first: 7)
-          @include(if: $hasTerm) {
+        searchConnection(
+          query: $term
+          entities: $entities
+          mode: AUTOSUGGEST
+          first: 7
+        ) @include(if: $hasTerm) {
           edges {
             node {
               displayLabel
@@ -130,9 +274,14 @@ export const NewSearchBarInputRefetchContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query NewSearchBarInputRefetchQuery($term: String!, $hasTerm: Boolean!) {
+    query NewSearchBarInputRefetchQuery(
+      $term: String!
+      $hasTerm: Boolean!
+      $entities: [SearchEntity]
+    ) {
       viewer {
-        ...NewSearchBarInput_viewer @arguments(term: $term, hasTerm: $hasTerm)
+        ...NewSearchBarInput_viewer
+          @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
       }
     }
   `
@@ -152,16 +301,18 @@ export const NewSearchBarInputQueryRenderer: FC = () => {
         query NewSearchBarInputSuggestQuery(
           $term: String!
           $hasTerm: Boolean!
+          $entities: [SearchEntity]
         ) {
           viewer {
             ...NewSearchBarInput_viewer
-              @arguments(term: $term, hasTerm: $hasTerm)
+              @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
           }
         }
       `}
       variables={{
         hasTerm: false,
         term: "",
+        entities: [],
       }}
       render={({ props }) => {
         if (props?.viewer) {
@@ -174,33 +325,5 @@ export const NewSearchBarInputQueryRenderer: FC = () => {
         }
       }}
     />
-  )
-}
-
-/**
- * Displays during SSR render, but once mounted is swapped out with
- * QueryRenderer below.
- */
-const StaticSearchContainer: FC<{ searchQuery: string } & BoxProps> = ({
-  searchQuery,
-  ...rest
-}) => {
-  const { t } = useTranslation()
-  return (
-    <>
-      <Box display={["block", "none"]} {...rest}>
-        <SearchInputContainer
-          placeholder={searchQuery || t`navbar.searchArtsy`}
-          defaultValue={searchQuery}
-        />
-      </Box>
-
-      <Box display={["none", "block"]} {...rest}>
-        <SearchInputContainer
-          placeholder={searchQuery || t`navbar.searchBy`}
-          defaultValue={searchQuery}
-        />
-      </Box>
-    </>
   )
 }
