@@ -665,7 +665,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 Delivery address
               </Text>
               {isAddressVerificationEnabled ? (
-                <CheckoutAddress />
+                <CheckoutAddress
+                  userCountry={props.me.location?.country || "United States"}
+                />
               ) : (
                 <AddressForm
                   tabIndex={showAddressForm ? 0 : -1}
@@ -851,6 +853,9 @@ export const ShippingFragmentContainer = createFragmentContainer(
         name
         email
         id
+        location {
+          country
+        }
         ...SavedAddresses_me
         addressConnection(
           first: $first

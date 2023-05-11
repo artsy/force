@@ -2,12 +2,15 @@ import * as Yup from "yup"
 import { Column, GridColumns, Input, Message } from "@artsy/palette"
 import { Formik, Form } from "formik"
 import { FC } from "react"
-import { CountrySelect } from "Components/CountrySelect"
+import {
+  CountrySelect,
+  ALL_COUNTRY_SELECT_OPTIONS,
+} from "Components/CountrySelect"
 import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
 
 export const INITIAL_ADDRESS = {
   name: "",
-  country: "US",
+  country: "",
   addressLine1: "",
   addressLine2: "",
   city: "",
@@ -30,14 +33,29 @@ const VALIDATION_SCHEMA = Yup.object().shape({
   }),
 })
 
-export const CheckoutAddress: FC = () => {
+const getDefaultCountry = (userCountry: string): string => {
+  const countryCode = ALL_COUNTRY_SELECT_OPTIONS.find(
+    country => country.text === userCountry
+  )?.value
+  return countryCode || "US"
+}
+
+export const CheckoutAddress: FC<{ userCountry: string }> = ({
+  userCountry,
+}) => {
   const { submitMutation: submitAddAddress } = useAddAddress()
+  const userDefaultCountry = getDefaultCountry(userCountry)
 
   return (
     <Formik
       validateOnMount
       validationSchema={VALIDATION_SCHEMA}
-      initialValues={INITIAL_VALUES}
+      initialValues={{
+        attributes: {
+          ...INITIAL_VALUES.attributes,
+          country: userDefaultCountry,
+        },
+      }}
       onSubmit={async ({ attributes }, { setStatus, resetForm }) => {
         try {
           await submitAddAddress({
@@ -63,6 +81,11 @@ export const CheckoutAddress: FC = () => {
         isSubmitting,
         submitForm,
       }) => {
+        // if (!values.attributes.country) {
+        //   console.log({ XXXX: values })
+        //   setFieldValue("country", userDefaultCountry)
+        // }
+
         return (
           <Form>
             <GridColumns>
