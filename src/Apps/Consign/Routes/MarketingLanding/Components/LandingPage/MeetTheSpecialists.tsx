@@ -4,9 +4,11 @@ import {
   Button,
   HorizontalOverflow,
   Image,
+  Join,
   Pill,
   ReadMore,
   ResponsiveBox,
+  Spacer,
   Text,
 } from "@artsy/palette"
 import {
@@ -54,14 +56,11 @@ export const MeetTheSpecialists: React.FC = () => {
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
 
-  const [selectedSpecialty, setSelectedSpecialty] = useState<Specialty>(
-    "auctions"
-  )
-  const [specialistsTooDisplay, setSpecialistsTooDisplay] = useState(
-    SPECIALISTS.filter(i => i.specialty === "auctions")
-  )
+  const [specialityFilter, setSpecialityFilter] = useState<Specialty | null>()
 
-  const getInTouchRoute = "/sell/inquiry"
+  const specialistsTooDisplay = specialityFilter
+    ? SPECIALISTS.filter(i => i.specialty === specialityFilter)
+    : SPECIALISTS
 
   const trackContactTheSpecialistClick = () => {
     trackEvent({
@@ -97,21 +96,21 @@ export const MeetTheSpecialists: React.FC = () => {
         Our specialists span today’s most popular collecting categories.
       </Text>
       <HorizontalOverflow>
-        {filteredPills.map(pill => (
-          <Pill
-            key={`pill-${pill.type}`}
-            mr={1}
-            selected={selectedSpecialty === pill.type}
-            onClick={() => {
-              setSelectedSpecialty(pill.type)
-              setSpecialistsTooDisplay(
-                SPECIALISTS.filter(i => i.specialty === pill.type)
-              )
-            }}
-          >
-            {pill.title}
-          </Pill>
-        ))}
+        <Join separator={<Spacer x={1} />}>
+          {filteredPills.map(pill => (
+            <Pill
+              key={`pill-${pill.type}`}
+              selected={specialityFilter === pill.type}
+              onClick={() => {
+                setSpecialityFilter(
+                  specialityFilter === pill.type ? null : pill.type
+                )
+              }}
+            >
+              {pill.title}
+            </Pill>
+          ))}
+        </Join>
       </HorizontalOverflow>
       <Rail
         title=""
@@ -185,7 +184,7 @@ export const MeetTheSpecialists: React.FC = () => {
         variant="primaryBlack"
         onClick={trackGetInTouchClick}
         data-testid="get-in-touch-button"
-        to={getInTouchRoute}
+        to={"/sell/inquiry"}
       >
         Get in Touch
       </Button>
