@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8c30575f3bb1cd66dac62c3119836af1>>
+ * @generated SignedSource<<765220d6fc61129fbc69f62a7a0ecf0d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -76,6 +76,7 @@ export type ArtistMeta_artist$data = {
   readonly name: string | null;
   readonly nationality: string | null;
   readonly slug: string;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistMetaCanonicalLink_artist">;
   readonly " $fragmentType": "ArtistMeta_artist";
 };
 export type ArtistMeta_artist$key = {
@@ -443,6 +444,11 @@ return {
         }
       ],
       "storageKey": "artworksConnection(filter:\"IS_FOR_SALE\",first:10,published:true)"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistMetaCanonicalLink_artist"
     }
   ],
   "type": "Artist",
@@ -450,6 +456,6 @@ return {
 };
 })();
 
-(node as any).hash = "d90ff393a50025dcca4a29defb3512a7";
+(node as any).hash = "a16a38b3bce624e4b8e514d8fadd4416";
 
 export default node;

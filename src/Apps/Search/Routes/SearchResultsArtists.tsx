@@ -105,6 +105,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
     return (
       <>
         {artists?.map((artist, index) => {
+          const worksForSaleHref = artist!.href + "/works-for-sale"
           const { name, bio, imageUrl, internalID } = artist || {}
 
           if (!name || !internalID) {
@@ -118,7 +119,7 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
                 description={bio ?? ""}
                 imageUrl={imageUrl ?? ""}
                 entityType="Artist"
-                href={artist?.href!}
+                href={worksForSaleHref}
                 index={index}
                 term={term}
                 id={internalID}

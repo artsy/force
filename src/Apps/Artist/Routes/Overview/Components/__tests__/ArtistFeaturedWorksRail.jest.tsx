@@ -50,7 +50,7 @@ describe("ArtistFeaturedWorksRail", () => {
     expect(wrapper.text()).toContain("Featured Works")
     expect(wrapper.find("RouterLink").length).toBe(3)
     expect(wrapper.find("RouterLink").first().props().to).toContain(
-      "/artist/artistSlug"
+      "/artist/artistSlug/works-for-sale"
     )
     expect(wrapper.text()).toContain("View All Works")
     expect(wrapper.find("Shelf").length).toBe(1)

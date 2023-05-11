@@ -28,6 +28,7 @@ const WorksForYouArtistFeed: React.FC<WorksForYouArtistFeedProps> = ({
 
   const avatarImage = artist?.image?.resized
   const meta = artist?.counts?.forSaleArtworks?.toLocaleString()
+  const worksForSaleHref = artist.href + "/works-for-sale"
 
   const handleLoadMore = () => {
     if (!relay.hasMore() || relay.isLoading()) return
@@ -49,7 +50,7 @@ const WorksForYouArtistFeed: React.FC<WorksForYouArtistFeedProps> = ({
           ...avatarImage,
           lazyLoad: true,
         }}
-        href={artist.href!}
+        href={worksForSaleHref}
       />
 
       <Spacer y={4} />

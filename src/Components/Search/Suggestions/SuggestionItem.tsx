@@ -134,7 +134,7 @@ const QuickNavigation: React.FC<{
   const handleArtworksItemClicked = () => {
     trackEvent(
       tracks.quickNavigationItemClicked({
-        destinationPath: href,
+        destinationPath: `${href}/works-for-sale`,
         label: "Artworks",
       })
     )
@@ -156,7 +156,7 @@ const QuickNavigation: React.FC<{
       {!!showArtworksButton && (
         <QuickNavigationItem
           onClick={handleArtworksItemClicked}
-          to={href}
+          to={`${href}/works-for-sale`}
           Icon={ArtworkIcon}
         >
           Artworks
