@@ -6,15 +6,14 @@ import styled from "styled-components"
 import SearchIcon from "@artsy/icons/SearchIcon"
 
 const SearchButton = styled(Clickable)`
-  width: 24px;
-  height: 24px;
+  width: 18px;
+  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
   border-radius: 50%;
 
   &:focus {
-    background: ${themeGet("colors.purple100")};
     outline: none;
 
     svg > path {
@@ -30,19 +29,20 @@ export const SearchInputContainer: React.ForwardRefExoticComponent<
     <LabeledInput
       ref={ref}
       width="100%"
-      height={40}
+      height={50}
       label={
         <SearchButton
           type="submit"
           onClick={event => {
-            ;(event.target as HTMLElement)?.parentElement?.blur()
+            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+            ;(event.target as HTMLElement).parentElement.blur()
 
             if (isEmpty(props.value)) {
               event.preventDefault()
             }
           }}
         >
-          <SearchIcon height={22} width={22} />
+          <SearchIcon fill={"black60"} />
         </SearchButton>
       }
       {...props}
