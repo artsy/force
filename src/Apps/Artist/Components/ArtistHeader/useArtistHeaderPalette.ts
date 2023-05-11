@@ -1,4 +1,3 @@
-import { ButtonVariant } from "@artsy/palette"
 import {
   adjustAlpha,
   compareColors,
@@ -17,10 +16,6 @@ export const useArtistHeaderPalette = (dominantColor: string) => {
   const foregroundRgba = getContrastTIQ(backgroundRgba)
   const secondaryRgba = adjustAlpha(foregroundRgba, 0.6)
 
-  const buttonVariant: ButtonVariant = compareColors(foregroundRgba, WHITE)
-    ? "secondaryWhite"
-    : "secondaryBlack"
-
   const contrastRatio = getContrastRatio(backgroundRgba, secondaryRgba)
   const inverseRgba = compareColors(foregroundRgba, WHITE) ? BLACK : WHITE
   const meetsContrastRatio = contrastRatio >= TARGET_CONTRAST_RATIO
@@ -33,6 +28,6 @@ export const useArtistHeaderPalette = (dominantColor: string) => {
     overlayColor: meetsContrastRatio
       ? "transparent"
       : stringifyRgba(overlayRgba),
-    buttonVariant,
+    invert: compareColors(foregroundRgba, WHITE),
   }
 }

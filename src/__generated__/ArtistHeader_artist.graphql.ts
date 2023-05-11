@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9199c2ad0c21827131dd45f98c16b9cd>>
+ * @generated SignedSource<<781db4e046dc08f12951089e8c8a1e35>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,31 +9,34 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "ARTSY_VANGUARD_YEAR" | "AWARDS" | "BIENNIAL" | "COLLECTED" | "CRITICALLY_ACCLAIMED" | "GROUP_SHOW" | "HIGH_AUCTION_RECORD" | "PRIVATE_COLLECTIONS" | "RESIDENCIES" | "REVIEWED" | "SOLO_SHOW" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistHeader_artist$data = {
-  readonly auctionResultsConnection: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly organization: string | null;
-        readonly price_realized: {
-          readonly display: string | null;
-        } | null;
-        readonly sale_date: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
   readonly biographyBlurb: {
-    readonly credit: string | null;
     readonly text: string | null;
   } | null;
   readonly counts: {
     readonly follows: any | null;
-    readonly forSaleArtworks: any | null;
   } | null;
   readonly formattedNationalityAndBirthday: string | null;
-  readonly image: {
-    readonly url: string | null;
+  readonly iconicArtworks: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly dominantColors: ReadonlyArray<string>;
+        readonly image: {
+          readonly height: number | null;
+          readonly src: string | null;
+          readonly width: number | null;
+        } | null;
+      } | null;
+    } | null> | null;
   } | null;
+  readonly insights: ReadonlyArray<{
+    readonly description: string | null;
+    readonly entities: ReadonlyArray<string>;
+    readonly kind: ArtistInsightKind | null;
+    readonly label: string;
+  }>;
   readonly internalID: string;
   readonly name: string | null;
   readonly slug: string;
@@ -50,127 +53,6 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtistHeader_artist",
   "selections": [
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 1
-        },
-        {
-          "kind": "Literal",
-          "name": "recordsTrusted",
-          "value": true
-        },
-        {
-          "kind": "Literal",
-          "name": "sort",
-          "value": "PRICE_AND_DATE_DESC"
-        }
-      ],
-      "concreteType": "AuctionResultConnection",
-      "kind": "LinkedField",
-      "name": "auctionResultsConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "AuctionResultEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "AuctionResult",
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                {
-                  "alias": "price_realized",
-                  "args": null,
-                  "concreteType": "AuctionResultPriceRealized",
-                  "kind": "LinkedField",
-                  "name": "priceRealized",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "format",
-                          "value": "0.0a"
-                        }
-                      ],
-                      "kind": "ScalarField",
-                      "name": "display",
-                      "storageKey": "display(format:\"0.0a\")"
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "organization",
-                  "storageKey": null
-                },
-                {
-                  "alias": "sale_date",
-                  "args": [
-                    {
-                      "kind": "Literal",
-                      "name": "format",
-                      "value": "YYYY"
-                    }
-                  ],
-                  "kind": "ScalarField",
-                  "name": "saleDate",
-                  "storageKey": "saleDate(format:\"YYYY\")"
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "auctionResultsConnection(first:1,recordsTrusted:true,sort:\"PRICE_AND_DATE_DESC\")"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Image",
-      "kind": "LinkedField",
-      "name": "image",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": [
-                "large",
-                "tall",
-                "square"
-              ]
-            }
-          ],
-          "kind": "ScalarField",
-          "name": "url",
-          "storageKey": "url(version:[\"large\",\"tall\",\"square\"])"
-        }
-      ],
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -213,13 +95,6 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "follows",
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "forSaleArtworks",
-          "storageKey": null
         }
       ],
       "storageKey": null
@@ -247,24 +122,148 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "credit",
+          "name": "text",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtistInsight",
+      "kind": "LinkedField",
+      "name": "insights",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "kind",
           "storageKey": null
         },
         {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "text",
+          "name": "label",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "description",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "entities",
           "storageKey": null
         }
       ],
-      "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
+      "storageKey": null
+    },
+    {
+      "alias": "iconicArtworks",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 1
+        },
+        {
+          "kind": "Literal",
+          "name": "sort",
+          "value": "ICONICITY_DESC"
+        }
+      ],
+      "concreteType": "ArtworkConnection",
+      "kind": "LinkedField",
+      "name": "artworksConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtworkEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Artwork",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "dominantColors",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Image",
+                  "kind": "LinkedField",
+                  "name": "image",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": "src",
+                      "args": [
+                        {
+                          "kind": "Literal",
+                          "name": "version",
+                          "value": [
+                            "larger",
+                            "larger"
+                          ]
+                        }
+                      ],
+                      "kind": "ScalarField",
+                      "name": "url",
+                      "storageKey": "url(version:[\"larger\",\"larger\"])"
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "width",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "height",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "artworksConnection(first:1,sort:\"ICONICITY_DESC\")"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "73f280603fbf84938166618d99359baa";
+(node as any).hash = "f62b582518f0eccf7ab5b0ed466c6362";
 
 export default node;

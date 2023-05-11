@@ -5,11 +5,11 @@ import {
   AnalyticsContext,
   useAnalyticsContext,
 } from "System/Analytics/AnalyticsContext"
-import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta/ArtistMeta"
 import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
 import { Jump } from "Utils/Hooks/useJump"
+import { ArtistHeaderFragmentContainer } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 
 interface ArtistAppProps {
   artist: ArtistApp_artist$data
@@ -31,15 +31,13 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children }) => {
           contextPageOwnerType,
         }}
       >
-        <Spacer y={[2, 4]} />
-
         <ArtistHeaderFragmentContainer artist={artist} />
 
-        <Spacer y={[4, 12]} />
+        <Spacer y={[2, 4]} />
 
         <Jump id="artistContentArea" />
 
-        <RouteTabs fill data-test="navigationTabs">
+        <RouteTabs data-test="navigationTabs">
           <RouteTab exact to={`/artist/${artist.slug}`}>
             Artworks
           </RouteTab>
