@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a4900e6de81f05acb7ad9d13cc948fee>>
+ * @generated SignedSource<<ab960b4f91437585249991b05fbc0f31>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AboutArtworksRail_viewer$data = {
+export type AboutArtworksRail_marketingCollection$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -21,18 +21,18 @@ export type AboutArtworksRail_viewer$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly " $fragmentType": "AboutArtworksRail_viewer";
+  readonly " $fragmentType": "AboutArtworksRail_marketingCollection";
 };
-export type AboutArtworksRail_viewer$key = {
-  readonly " $data"?: AboutArtworksRail_viewer$data;
-  readonly " $fragmentSpreads": FragmentRefs<"AboutArtworksRail_viewer">;
+export type AboutArtworksRail_marketingCollection$key = {
+  readonly " $data"?: AboutArtworksRail_marketingCollection$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AboutArtworksRail_marketingCollection">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "AboutArtworksRail_viewer",
+  "name": "AboutArtworksRail_marketingCollection",
   "selections": [
     {
       "alias": null,
@@ -41,11 +41,6 @@ const node: ReaderFragment = {
           "kind": "Literal",
           "name": "first",
           "value": 50
-        },
-        {
-          "kind": "Literal",
-          "name": "geneIDs",
-          "value": "trending-this-week"
         }
       ],
       "concreteType": "FilterArtworksConnection",
@@ -102,13 +97,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "artworksConnection(first:50,geneIDs:\"trending-this-week\")"
+      "storageKey": "artworksConnection(first:50)"
     }
   ],
-  "type": "Viewer",
+  "type": "MarketingCollection",
   "abstractKey": null
 };
 
-(node as any).hash = "3bf221d89a60f3c43509868c6ad1e23b";
+(node as any).hash = "09a9add9928552029e1782e8a548fb59";
 
 export default node;
