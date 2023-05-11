@@ -1,11 +1,9 @@
 import loadable from "@loadable/component"
 import { paramsToCamelCase } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { Redirect, RedirectException } from "found"
+import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
-
 import { initialAuctionResultsFilterState } from "./Routes/AuctionResults/AuctionResultsFilterContext"
-import { renderOrRedirect } from "./Routes/Overview/Utils/renderOrRedirect"
 import { getWorksForSaleRouteVariables } from "./Routes/WorksForSale/Utils/getWorksForSaleRouteVariables"
 import { enableArtistPageCTA } from "./Server/enableArtistPageCTA"
 import { redirectWithCanonicalParams } from "./Server/redirect"
@@ -13,10 +11,14 @@ import { allowedAuctionResultFilters } from "./Utils/allowedAuctionResultFilters
 
 const ArtistApp = loadable(
   () => import(/* webpackChunkName: "artistBundle" */ "./ArtistApp"),
-  {
-    resolveComponent: component => component.ArtistAppFragmentContainer,
-  }
+  { resolveComponent: component => component.ArtistAppFragmentContainer }
 )
+
+const ArtistSubApp = loadable(
+  () => import(/* webpackChunkName: "artistBundle" */ "./ArtistSubApp"),
+  { resolveComponent: component => component.ArtistSubAppFragmentContainer }
+)
+
 const OverviewRoute = loadable(
   () =>
     import(
@@ -27,6 +29,7 @@ const OverviewRoute = loadable(
       component.ArtistOverviewRouteFragmentContainer,
   }
 )
+
 const WorksForSaleRoute = loadable(
   () =>
     import(
@@ -37,13 +40,13 @@ const WorksForSaleRoute = loadable(
       component.ArtistWorksForSaleRouteFragmentContainer,
   }
 )
+
 const CVRoute = loadable(
   () =>
     import(/* webpackChunkName: "artistBundle" */ "./Routes/CV/ArtistCVRoute"),
-  {
-    resolveComponent: component => component.ArtistCVRouteFragmentContainer,
-  }
+  { resolveComponent: component => component.ArtistCVRouteFragmentContainer }
 )
+
 const ArticlesRoute = loadable(
   () =>
     import(
@@ -54,15 +57,15 @@ const ArticlesRoute = loadable(
       component.ArtistArticlesRouteFragmentContainer,
   }
 )
+
 const ShowsRoute = loadable(
   () =>
     import(
       /* webpackChunkName: "artistBundle" */ "./Routes/Shows/ArtistShowsRoute"
     ),
-  {
-    resolveComponent: component => component.ArtistShowsRouteFragmentContainer,
-  }
+  { resolveComponent: component => component.ArtistShowsRouteFragmentContainer }
 )
+
 const AuctionResultsRoute = loadable(
   () =>
     import(
@@ -73,6 +76,7 @@ const AuctionResultsRoute = loadable(
       component.AuctionResultsRouteFragmentContainer,
   }
 )
+
 const ConsignRoute = loadable(
   () =>
     import(
@@ -89,20 +93,7 @@ const AuctionResultRoute = loadable(
     import(
       /* webpackChunkName: "artistBundle" */ "./Routes/AuctionResults/SingleAuctionResultPage/AuctionResult"
     ),
-  {
-    resolveComponent: component => component.AuctionResultFragmentContainer,
-  }
-)
-
-const ArtistHeader2Route = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "artistBundle" */ "./Routes/ArtistHeader2Route"
-    ),
-  {
-    resolveComponent: component =>
-      component.ArtistHeader2RouteFragmentContainer,
-  }
+  { resolveComponent: component => component.AuctionResultFragmentContainer }
 )
 
 export const artistRoutes: AppRouteConfig[] = [
@@ -117,33 +108,15 @@ export const artistRoutes: AppRouteConfig[] = [
       WorksForSaleRoute.preload()
     },
     query: graphql`
-      query artistRoutes_TopLevelQuery($artistID: String!) {
+      query artistRoutes_ArtistAppQuery($artistID: String!) {
         artist(id: $artistID) @principalField {
           ...ArtistApp_artist
-          ...ArtistApp_sharedMetadata @relay(mask: false) # used to determine redirects and renderability
         }
       }
     `,
-    render: renderOrRedirect,
-
     children: [
       {
-        path: "/",
-        getComponent: () => OverviewRoute,
-        onServerSideRender: enableArtistPageCTA,
-        onClientSideRender: () => {
-          OverviewRoute.preload()
-        },
-        query: graphql`
-          query artistRoutes_OverviewQuery($artistID: String!) {
-            artist(id: $artistID) {
-              ...ArtistOverviewRoute_artist
-            }
-          }
-        `,
-      },
-      {
-        path: "works-for-sale",
+        path: "",
         getComponent: () => WorksForSaleRoute,
         onServerSideRender: redirectWithCanonicalParams,
         onClientSideRender: () => {
@@ -213,11 +186,37 @@ export const artistRoutes: AppRouteConfig[] = [
           }
         `,
       },
-
-      // Routes not in tabs
+      {
+        path: "about",
+        getComponent: () => OverviewRoute,
+        onServerSideRender: enableArtistPageCTA,
+        onClientSideRender: () => {
+          OverviewRoute.preload()
+        },
+        query: graphql`
+          query artistRoutes_OverviewQuery($artistID: String!) {
+            artist(id: $artistID) {
+              ...ArtistOverviewRoute_artist
+            }
+          }
+        `,
+      },
+    ],
+  },
+  {
+    path: "/artist/:artistID",
+    ignoreScrollBehaviorBetweenChildren: true,
+    getComponent: () => ArtistSubApp,
+    query: graphql`
+      query artistRoutes_ArtistSubAppQuery($artistID: String!) {
+        artist(id: $artistID) {
+          ...ArtistSubApp_artist
+        }
+      }
+    `,
+    children: [
       {
         path: "articles/:artworkId?",
-        hideNavigationTabs: true,
         getComponent: () => ArticlesRoute,
         onClientSideRender: () => {
           ArticlesRoute.preload()
@@ -230,10 +229,8 @@ export const artistRoutes: AppRouteConfig[] = [
           }
         `,
       },
-
       {
         path: "consign",
-        hideNavigationTabs: true,
         getComponent: () => ConsignRoute,
         onClientSideRender: () => {
           ConsignRoute.preload()
@@ -266,7 +263,6 @@ export const artistRoutes: AppRouteConfig[] = [
       },
       {
         path: "cv",
-        hideNavigationTabs: true,
         getComponent: () => CVRoute,
         onClientSideRender: () => {
           CVRoute.preload()
@@ -281,7 +277,6 @@ export const artistRoutes: AppRouteConfig[] = [
       },
       {
         path: "shows",
-        hideNavigationTabs: true,
         getComponent: () => ShowsRoute,
         onClientSideRender: () => {
           ShowsRoute.preload()
@@ -294,38 +289,17 @@ export const artistRoutes: AppRouteConfig[] = [
           }
         `,
       },
-
       {
-        path: "artist-header-2",
-        getComponent: () => ArtistHeader2Route,
-        onClientSideRender: () => {
-          ArtistHeader2Route.preload()
+        // Redirect all unhandled tabs to the artist page.
+        path: ":tab?",
+        render: ({ match }) => {
+          throw new RedirectException(`/artist/${match.params.artistID}`, 301)
         },
-        query: graphql`
-          query artistRoutes_ArtistHeader2Query($artistID: String!) {
-            artist(id: $artistID) {
-              ...ArtistHeader2Route_artist
-            }
-          }
-        `,
       },
-
-      /**
-       * Redirect all unhandled tabs to the artist page.
-       *
-       * Note: there is a deep-linked standalone auction-lot page in Force,
-       * under /artist/:artistID/auction-result/:id. That app needs to be
-       * mounted before this app for that to work and not get caught here.
-       */
-      new Redirect({
-        from: "*",
-        to: "/artist/:artistID",
-      }) as any,
     ],
   },
   {
     path: "/auction-result/:auctionResultId",
-    hideNavigationTabs: true,
     getComponent: () => AuctionResultRoute,
     onServerSideRender: enableArtistPageCTA,
     onClientSideRender: () => {
