@@ -1,22 +1,9 @@
 import * as Yup from "yup"
-import {
-  Button,
-  Checkbox,
-  Column,
-  GridColumns,
-  Input,
-  Message,
-  VisuallyHidden,
-} from "@artsy/palette"
+import { Column, GridColumns, Input, Message } from "@artsy/palette"
 import { Formik, Form } from "formik"
 import { FC } from "react"
 import { CountrySelect } from "Components/CountrySelect"
 import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
-import { useSetDefaultAddress } from "Apps/Settings/Routes/Shipping/useSetDefaultAddress"
-import {
-  PhoneNumberInput,
-  validatePhoneNumber,
-} from "Components/PhoneNumberInput"
 
 export const INITIAL_ADDRESS = {
   name: "",
@@ -24,18 +11,13 @@ export const INITIAL_ADDRESS = {
   addressLine1: "",
   addressLine2: "",
   city: "",
-  phoneNumber: "",
-  phoneNumberCountryCode: "us",
   postalCode: "",
   region: "",
 }
 
 const INITIAL_VALUES = {
   attributes: INITIAL_ADDRESS,
-  isDefault: false,
 }
-
-type Address = typeof INITIAL_ADDRESS
 
 const VALIDATION_SCHEMA = Yup.object().shape({
   attributes: Yup.object().shape({
@@ -45,49 +27,22 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     city: Yup.string().required("City is required"),
     region: Yup.string().required("Region is required"),
     postalCode: Yup.string().required("Postal Code is required"),
-    phoneNumber: Yup.string()
-      .required("Phone Number is required")
-      .test({
-        name: "phone-number-is-valid",
-        message: "Please enter a valid phone number",
-        test: (national, context) => {
-          return validatePhoneNumber({
-            national: `${national}`,
-            regionCode: `${context.parent.phoneNumberCountryCode}`,
-          })
-        },
-      }),
-    phoneNumberCountryCode: Yup.string().required(
-      "Phone Number Country Code is required"
-    ),
   }),
-  isDefault: Yup.boolean().optional(),
 })
 
-interface CheckoutAddressProps {}
-
-export const CheckoutAddress: FC<CheckoutAddressProps> = () => {
+export const CheckoutAddress: FC = () => {
   const { submitMutation: submitAddAddress } = useAddAddress()
-  const { submitMutation: submitSetDefaultAddress } = useSetDefaultAddress()
 
   return (
     <Formik
       validateOnMount
       validationSchema={VALIDATION_SCHEMA}
       initialValues={INITIAL_VALUES}
-      onSubmit={async ({ isDefault, attributes }, { setStatus, resetForm }) => {
+      onSubmit={async ({ attributes }, { setStatus, resetForm }) => {
         try {
-          const response = await submitAddAddress({
+          await submitAddAddress({
             variables: { input: { attributes } },
           })
-          const id = response.createUserAddress?.userAddressOrErrors.internalID
-
-          if (isDefault && id) {
-            await submitSetDefaultAddress({
-              variables: { input: { userAddressID: id } },
-            })
-          }
-
           resetForm()
         } catch (err) {
           console.error(err)
@@ -114,7 +69,7 @@ export const CheckoutAddress: FC<CheckoutAddressProps> = () => {
               <Column span={12}>
                 <Input
                   name="attributes.name"
-                  title="Full Name"
+                  title="Add full name"
                   placeholder="Enter name"
                   autoComplete="name"
                   autoFocus
@@ -126,12 +81,10 @@ export const CheckoutAddress: FC<CheckoutAddressProps> = () => {
                 />
               </Column>
 
-              <Column span={6}>
+              <Column span={12}>
                 <CountrySelect
                   title="Country"
                   name="attributes.country"
-                  // TODO: Accept a value prop in Select
-                  // @ts-ignore
                   value={values.attributes.country}
                   onChange={handleChange}
                   onBlur={handleBlur}
@@ -142,7 +95,40 @@ export const CheckoutAddress: FC<CheckoutAddressProps> = () => {
                 />
               </Column>
 
-              <Column span={6}>
+              <Column span={12}>
+                <Input
+                  name="attributes.addressLine1"
+                  title="Address line 1"
+                  placeholder="Add street address"
+                  autoComplete="address-line1"
+                  value={values.attributes.addressLine1}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={
+                    touched.attributes?.addressLine1 &&
+                    errors.attributes?.addressLine1
+                  }
+                  required
+                />
+              </Column>
+
+              <Column span={12}>
+                <Input
+                  name="attributes.addressLine2"
+                  title="Address line 2 (optional)"
+                  placeholder="Add apt, floor, suite, etc."
+                  autoComplete="address-line2"
+                  value={values.attributes.addressLine2}
+                  onChange={handleChange}
+                  onBlur={handleBlur}
+                  error={
+                    touched.attributes?.addressLine2 &&
+                    errors.attributes?.addressLine2
+                  }
+                />
+              </Column>
+
+              <Column span={12}>
                 <Input
                   name="attributes.postalCode"
                   title="Postal Code"
@@ -159,44 +145,11 @@ export const CheckoutAddress: FC<CheckoutAddressProps> = () => {
                 />
               </Column>
 
-              <Column span={6}>
-                <Input
-                  name="attributes.addressLine1"
-                  title="Address Line 1"
-                  placeholder="Add address"
-                  autoComplete="address-line1"
-                  value={values.attributes.addressLine1}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={
-                    touched.attributes?.addressLine1 &&
-                    errors.attributes?.addressLine1
-                  }
-                  required
-                />
-              </Column>
-
-              <Column span={6}>
-                <Input
-                  name="attributes.addressLine2"
-                  title="Address Line 2"
-                  placeholder="Add address line 2"
-                  autoComplete="address-line2"
-                  value={values.attributes.addressLine2}
-                  onChange={handleChange}
-                  onBlur={handleBlur}
-                  error={
-                    touched.attributes?.addressLine2 &&
-                    errors.attributes?.addressLine2
-                  }
-                />
-              </Column>
-
-              <Column span={6}>
+              <Column span={12}>
                 <Input
                   name="attributes.city"
                   title="City"
-                  placeholder="Enter city"
+                  placeholder="Add city"
                   autoComplete="address-level2"
                   value={values.attributes.city}
                   onChange={handleChange}
@@ -206,7 +159,7 @@ export const CheckoutAddress: FC<CheckoutAddressProps> = () => {
                 />
               </Column>
 
-              <Column span={6}>
+              <Column span={12}>
                 <Input
                   name="attributes.region"
                   title="State, Province, or Region"
@@ -222,44 +175,6 @@ export const CheckoutAddress: FC<CheckoutAddressProps> = () => {
                 />
               </Column>
 
-              <Column span={12}>
-                <PhoneNumberInput
-                  inputProps={{
-                    name: "attributes.phoneNumber",
-                    onBlur: handleBlur,
-                    onChange: handleChange,
-                    placeholder: "(000) 000 0000",
-                    value: values.attributes.phoneNumber,
-                  }}
-                  selectProps={{
-                    name: "attributes.phoneNumberCountryCode",
-                    onBlur: handleBlur,
-                    selected: values.attributes.phoneNumberCountryCode,
-                    onSelect: value => {
-                      setFieldValue("attributes.phoneNumberCountryCode", value)
-                    },
-                  }}
-                  required
-                  error={
-                    (touched.attributes?.phoneNumberCountryCode &&
-                      errors.attributes?.phoneNumberCountryCode) ||
-                    (touched.attributes?.phoneNumber &&
-                      errors.attributes?.phoneNumber)
-                  }
-                />
-              </Column>
-
-              <Column span={12}>
-                <Checkbox
-                  selected={values.isDefault}
-                  onSelect={value => {
-                    setFieldValue("isDefault", value)
-                  }}
-                >
-                  Set as Default
-                </Checkbox>
-              </Column>
-
               {status?.error && (
                 <Column span={12}>
                   <Message variant="error">
@@ -268,13 +183,6 @@ export const CheckoutAddress: FC<CheckoutAddressProps> = () => {
                   </Message>
                 </Column>
               )}
-
-              {/* Modal footer button is outside the form element. Hidden button supports <enter> */}
-              <VisuallyHidden>
-                <button type="submit" tabIndex={-1} disabled={!isValid}>
-                  Save
-                </button>
-              </VisuallyHidden>
             </GridColumns>
           </Form>
         )
