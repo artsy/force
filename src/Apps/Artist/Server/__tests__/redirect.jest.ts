@@ -4,7 +4,7 @@ describe("redirectWithCanonicalParams", () => {
   describe("with an invalid sort", () => {
     it("301 redirects to url without the invalid sort param", () => {
       const req = {
-        path: "/artist/sam-king",
+        path: "/artist/sam-king/works-for-sale",
         query: {
           sort: "-default_trending_score",
           foo: "bar",
@@ -16,14 +16,17 @@ describe("redirectWithCanonicalParams", () => {
       }
 
       redirectWithCanonicalParams({ req, res })
-      expect(res.redirect).toHaveBeenCalledWith(301, "/artist/sam-king?foo=bar")
+      expect(res.redirect).toHaveBeenCalledWith(
+        301,
+        "/artist/sam-king/works-for-sale?foo=bar"
+      )
     })
   })
 
   describe("with a valid sort", () => {
     it("does nothing", () => {
       const req = {
-        path: "/artist/sam-king",
+        path: "/artist/sam-king/works-for-sale",
         query: {
           sort: "-anything_else",
           foo: "bar",

@@ -150,7 +150,9 @@ describe("SearchBar", () => {
     const quickNavigationItems = wrapper.find("QuickNavigationItem")
 
     quickNavigationItems.at(0).simulate("click")
-    expect(window.location.assign).toHaveBeenCalledWith("/artist/banksy")
+    expect(window.location.assign).toHaveBeenCalledWith(
+      "/artist/banksy/works-for-sale"
+    )
 
     quickNavigationItems.at(1).simulate("click")
     expect(window.location.assign).toHaveBeenCalledWith(

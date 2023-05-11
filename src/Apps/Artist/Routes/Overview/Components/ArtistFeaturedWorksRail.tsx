@@ -44,7 +44,7 @@ const ArtistFeaturedWorksRail: React.FC<ArtistFeaturedWorksRailProps> = ({
     <Rail
       title={t("rails.artistFeaturedWorks.title")}
       viewAllLabel={t("rails.artistFeaturedWorks.viewAllWorks")}
-      viewAllHref={`/artist/${artist.slug}`}
+      viewAllHref={`/artist/${artist.slug}/works-for-sale`}
       viewAllOnClick={() => {
         jumpTo("artistContentArea")
 

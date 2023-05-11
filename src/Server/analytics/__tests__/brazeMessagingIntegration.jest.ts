@@ -27,7 +27,7 @@ describe("isMatchingRoute", () => {
   })
 
   const invalidRoutes = [
-    "/artist/andy-warhol",
+    "/artist/andy-warhol/works-for-sale",
     "/auction/fancy-prints-2022",
     "/categories",
     "/collections",

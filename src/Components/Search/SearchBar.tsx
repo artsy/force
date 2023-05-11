@@ -263,7 +263,8 @@ export class SearchBar extends Component<Props, State> {
       ]
     ) => ({
       action_type: DeprecatedSchema.ActionType.SelectedItemFromSearch,
-      destination_path: href,
+      destination_path:
+        __typename === "Artist" ? `${href}/works-for-sale` : href,
       item_id: id,
       item_number: suggestionIndex,
       item_type: displayType,

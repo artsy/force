@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d23df6d8f725f202823c004f09ede5a6>>
+ * @generated SignedSource<<7190165febbd525f921feb449f85870f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistApp_artist$data = {
+export type ArtistApp_sharedMetadata$data = {
   readonly biographyBlurb: {
     readonly text: string | null;
   } | null;
@@ -31,7 +31,6 @@ export type ArtistApp_artist$data = {
   readonly insights: ReadonlyArray<{
     readonly type: string;
   }>;
-  readonly internalID: string;
   readonly related: {
     readonly genes: {
       readonly edges: ReadonlyArray<{
@@ -44,17 +43,15 @@ export type ArtistApp_artist$data = {
   readonly slug: string;
   readonly statuses: {
     readonly articles: boolean | null;
-    readonly artworks: boolean | null;
     readonly auctionLots: boolean | null;
     readonly cv: boolean | null;
     readonly shows: boolean | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader_artist" | "ArtistMeta_artist" | "BackLink_artist">;
-  readonly " $fragmentType": "ArtistApp_artist";
+  readonly " $fragmentType": "ArtistApp_sharedMetadata";
 };
-export type ArtistApp_artist$key = {
-  readonly " $data"?: ArtistApp_artist$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistApp_artist">;
+export type ArtistApp_sharedMetadata$key = {
+  readonly " $data"?: ArtistApp_sharedMetadata$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistApp_sharedMetadata">;
 };
 
 const node: ReaderFragment = (function(){
@@ -72,7 +69,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtistApp_artist",
+  "name": "ArtistApp_sharedMetadata",
   "selections": [
     (v0/*: any*/),
     {
@@ -115,13 +112,6 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "auctionLots",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "artworks",
           "storageKey": null
         }
       ],
@@ -313,28 +303,6 @@ return {
         }
       ],
       "storageKey": "biographyBlurb(format:\"HTML\",partnerBio:false)"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistMeta_artist"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistHeader_artist"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "BackLink_artist"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
     }
   ],
   "type": "Artist",
@@ -342,6 +310,6 @@ return {
 };
 })();
 
-(node as any).hash = "15ea6f062bc9019018ed873a040de7d0";
+(node as any).hash = "cbcf43546b894fa452d1fc26dfa4e6d1";
 
 export default node;

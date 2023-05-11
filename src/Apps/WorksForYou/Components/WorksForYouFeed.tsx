@@ -45,6 +45,7 @@ export const WorksForYouFeed: React.FC<WorksForYouFeedProps> = ({
       {artworks.map((artwork, index) => {
         const avatarImage = artwork.image?.resized
         const meta = `${artwork.summary}, ${artwork.publishedAt}`
+        const worksForSaleHref = artwork.href + "/works-for-sale"
 
         return (
           <Box mb={4} key={index}>
@@ -55,7 +56,7 @@ export const WorksForYouFeed: React.FC<WorksForYouFeedProps> = ({
                 ...avatarImage,
                 lazyLoad: true,
               }}
-              href={artwork.href!}
+              href={worksForSaleHref}
             />
 
             <Spacer y={4} />

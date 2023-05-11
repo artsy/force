@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9e0489764b840dd0abc59f6062769552>>
+ * @generated SignedSource<<e6153173bc3f7a21b19a8d741fb7703b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistBackLink_Test_Query$variables = {};
-export type ArtistBackLink_Test_Query$data = {
+export type BackLink_Test_Query$variables = {};
+export type BackLink_Test_Query$data = {
   readonly artist: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistBackLink_artist">;
+    readonly " $fragmentSpreads": FragmentRefs<"BackLink_artist">;
   } | null;
 };
-export type ArtistBackLink_Test_Query = {
-  response: ArtistBackLink_Test_Query$data;
-  variables: ArtistBackLink_Test_Query$variables;
+export type BackLink_Test_Query = {
+  response: BackLink_Test_Query$data;
+  variables: BackLink_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -40,7 +40,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtistBackLink_Test_Query",
+    "name": "BackLink_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -53,7 +53,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtistBackLink_artist"
+            "name": "BackLink_artist"
           }
         ],
         "storageKey": "artist(id:\"example\")"
@@ -66,7 +66,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ArtistBackLink_Test_Query",
+    "name": "BackLink_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -103,7 +103,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5ade48a7aa33e616a8376819974ac54d",
+    "cacheID": "ed9989e4feec2fb66669c2baee7581c7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -123,13 +123,13 @@ return {
         "artist.name": (v1/*: any*/)
       }
     },
-    "name": "ArtistBackLink_Test_Query",
+    "name": "BackLink_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistBackLink_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistBackLink_artist\n    id\n  }\n}\n\nfragment ArtistBackLink_artist on Artist {\n  name\n  href\n}\n"
+    "text": "query BackLink_Test_Query {\n  artist(id: \"example\") {\n    ...BackLink_artist\n    id\n  }\n}\n\nfragment BackLink_artist on Artist {\n  name\n  href\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1beef9eca30fe0c2750e64507f70a0cf";
+(node as any).hash = "857fa2bb422c485fa6892edd4832e014";
 
 export default node;

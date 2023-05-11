@@ -42,7 +42,7 @@ const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
     <Rail
       title="Works For Sale"
       viewAllLabel="View All Works"
-      viewAllHref={`/artist/${artist.slug}`}
+      viewAllHref={`/artist/${artist.slug}/works-for-sale`}
       viewAllOnClick={() => {
         jumpTo("artistContentArea")
 
@@ -62,10 +62,11 @@ const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
       getItems={() => {
         return nodes.map((node, index) => {
           return (
-            <Box key={node.internalID} data-test="worksForSaleRail">
+            <Box data-test="worksForSaleRail">
               <ShelfArtworkFragmentContainer
                 artwork={node}
                 contextModule={ContextModule.worksForSaleRail}
+                key={index}
                 lazyLoad
                 onClick={() => {
                   tracking.trackEvent(

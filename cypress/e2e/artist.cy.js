@@ -6,7 +6,7 @@ describe("/artist/:id", () => {
 
   it("renders metadata", () => {
     cy.title().should("contain", "Pablo Picasso")
-    cy.title().should("contain", "Artworks for Sale on Artsy")
+    cy.title().should("contain", "Artworks, Bio & Shows on Artsy")
     cy.get("meta[name='description']")
       .should("have.attr", "content")
       .and(
