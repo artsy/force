@@ -26,6 +26,7 @@ import { useSystemContext } from "System/SystemContext"
 import { resized } from "Utils/resized"
 import { useState } from "react"
 import { useTracking } from "react-tracking"
+import styled from "styled-components"
 
 interface PillData {
   type: Specialty
@@ -132,6 +133,7 @@ export const MeetTheSpecialists: React.FC = () => {
                 flexDirection="column"
               >
                 <Box position="absolute" width="100%" height="100%">
+                  <LinearGradient />
                   <Image
                     width="100%"
                     height="100%"
@@ -191,3 +193,18 @@ export const MeetTheSpecialists: React.FC = () => {
     </>
   )
 }
+
+const LinearGradient = styled(Box)`
+  position: "absolute";
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  position: absolute;
+  transition: background-color 200ms;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 1) 100%
+  );
+`
