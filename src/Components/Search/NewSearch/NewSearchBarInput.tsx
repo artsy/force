@@ -1,4 +1,4 @@
-import { AutocompleteInput, BoxProps, useUpdateEffect } from "@artsy/palette"
+import { AutocompleteInput, useUpdateEffect } from "@artsy/palette"
 import { ChangeEvent, FC, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
@@ -58,10 +58,7 @@ const shouldStartSearching = (value: string) => {
   return value.length > 1
 }
 
-const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
-  relay,
-  viewer,
-}) => {
+const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   const tracking = useTracking()
   const { t } = useTranslation()
   const [value, setValue] = useState(getSearchTerm(window.location))
