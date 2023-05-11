@@ -43,7 +43,7 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
 
       <Spacer y={[4, 6]} />
 
-      <RouteTabs my={SETTINGS_ROUTE_TABS_MARGIN}>
+      <RouteTabs fill my={SETTINGS_ROUTE_TABS_MARGIN}>
         <RouteTab to="/settings/edit-profile">Edit Profile</RouteTab>
 
         <ProgressiveOnboardingAlertHighlight position="center">
