@@ -51,7 +51,6 @@ export const ArtistMeta: React.FC<Props> = ({ artist }) => {
         <Meta name="skos:prefLabel" content={alternateNames.join("; ")} />
       )}
 
-      {/* FIXME: */}
       <SeoDataForArtist data={structuredDataAttributes(artist)} />
     </>
   )

@@ -32,7 +32,6 @@ const ProgressiveOnboardingFollowArtist: FC<ProgressiveOnboardingFollowArtistPro
     !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST).status &&
     // Hasn't followed an artist yet.
     counts.followedArtists === 0 &&
-    // FIXME: Spot check
     // If you've already dismissed the alerts onboarding OR you're not on the artist page.
     (PROGRESSIVE_ONBOARDING_ALERT_CHAIN.every(key => isDismissed(key).status) ||
       !pathToRegexp("/artist/:artistID").test(router.match.location.pathname))
