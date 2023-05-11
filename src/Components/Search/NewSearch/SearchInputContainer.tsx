@@ -14,7 +14,6 @@ const SearchButton = styled(Clickable)`
   border-radius: 50%;
 
   &:focus {
-    background: ${themeGet("colors.purple100")};
     outline: none;
 
     svg > path {

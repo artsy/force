@@ -1,5 +1,5 @@
 import { AutocompleteInput, useUpdateEffect } from "@artsy/palette"
-import { ChangeEvent, FC, useMemo, useState } from "react"
+import { ChangeEvent, FC, useCallback, useMemo, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -18,16 +18,16 @@ import {
   NewSuggestionItem,
   SuggionItemOptionProps,
 } from "./SuggestionItem/NewSuggestionItem"
-import { debounce } from "lodash"
 import { useTracking } from "react-tracking"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { getENV } from "Utils/getENV"
 import { StaticSearchContainer } from "./StaticSearchContainer"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useRouter } from "System/Router/useRouter"
+import { useDebounce } from "Utils/Hooks/useDebounce"
 
 const logger = createLogger("Components/Search/NewSearchBar")
-const SEARCH_DEBOUNCE_DELAY = 250
+const SEARCH_DEBOUNCE_DELAY = 150
 
 export interface NewSearchBarInputProps extends SystemContextProps {
   relay: RelayRefetchProp
@@ -111,37 +111,39 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
     })
   }, [fetchCounter])
 
-  const refetch = (value: string, entity?: string) => {
-    const entities = entity ? [entity] : []
-    const performanceStart = performance && performance.now()
+  const refetch = useCallback(
+    (value: string, entity?: string) => {
+      const entities = entity ? [entity] : []
+      const performanceStart = performance && performance.now()
 
-    relay.refetch(
-      {
-        hasTerm: true,
-        term: value,
-        entities: entities,
-      },
-      null,
-      error => {
-        if (error) {
-          logger.error(error)
-          return
+      relay.refetch(
+        {
+          hasTerm: true,
+          term: value,
+          entities: entities,
+        },
+        null,
+        error => {
+          if (error) {
+            logger.error(error)
+            return
+          }
+
+          if (performanceStart && getENV("VOLLEY_ENDPOINT")) {
+            reportPerformanceMeasurement(performanceStart)
+          }
+
+          setFetchCounter(prevCounter => prevCounter + 1)
         }
-
-        if (performanceStart && getENV("VOLLEY_ENDPOINT")) {
-          reportPerformanceMeasurement(performanceStart)
-        }
-
-        setFetchCounter(prevCounter => prevCounter + 1)
-      }
-    )
-  }
-
-  const debouncedSearchRequest = useMemo(
-    () => debounce(refetch, SEARCH_DEBOUNCE_DELAY),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
+      )
+    },
+    [relay]
   )
+
+  const debouncedSearchRequest = useDebounce({
+    callback: refetch,
+    delay: SEARCH_DEBOUNCE_DELAY,
+  })
 
   const clearSearchInput = () => {
     setValue("")
