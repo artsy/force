@@ -22,8 +22,6 @@ import { debounce } from "lodash"
 import { useTracking } from "react-tracking"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { getENV } from "Utils/getENV"
-// eslint-disable-next-line no-restricted-imports
-import request from "superagent"
 import { StaticSearchContainer } from "./StaticSearchContainer"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useRouter } from "System/Router/useRouter"
@@ -48,13 +46,13 @@ const reportPerformanceMeasurement = performanceStart => {
     type: "timing",
   }
 
-  request
-    .post(getENV("VOLLEY_ENDPOINT"))
-    .send({
+  fetch(getENV("VOLLEY_ENDPOINT"), {
+    method: "POST",
+    body: JSON.stringify({
       metrics: [metricPayload],
       serviceName: "force",
-    })
-    .end()
+    }),
+  })
 }
 
 const shouldStartSearching = (value: string) => {
@@ -106,8 +104,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
 
       return true
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [router])
 
   useUpdateEffect(() => {
     tracking.trackEvent({
@@ -117,7 +114,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
           : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
       query: value,
     })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchCounter])
 
   const refetch = (value: string, entity?: string) => {
