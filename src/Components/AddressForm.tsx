@@ -1,7 +1,6 @@
-import { Flex, Join, Text, Spacer, Input } from "@artsy/palette"
+import { Column, GridColumns, Text, Spacer, Input } from "@artsy/palette"
 import { CountrySelect } from "Components/CountrySelect"
 import * as React from "react"
-import { TwoColumnSplit } from "Apps/Order/Components/TwoColumnLayout"
 import { CreateTokenCardData } from "@stripe/stripe-js"
 
 export interface Address {
@@ -116,8 +115,8 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const lockCountriesToEU = onlyLocalShipping && euOrigin
 
   return (
-    <Join separator={<Spacer y={2} />}>
-      <Flex flexDirection="column">
+    <GridColumns>
+      <Column span={12}>
         <Input
           tabIndex={tabIndex}
           id="AddressForm_name"
@@ -129,106 +128,101 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           error={getError("name")}
           data-test="AddressForm_name"
         />
-      </Flex>
-      <TwoColumnSplit>
-        <Flex flexDirection="column" pb={1}>
-          <Text mb={0.5} variant="xs" color="black100">
-            Country
-          </Text>
-          <CountrySelect
-            tabIndex={tabIndex}
-            selected={
-              lockCountryToOrigin || (lockCountriesToEU && !address.country)
-                ? shippingCountry
-                : address.country
-            }
-            onSelect={changeValueHandler("country")}
-            disabled={lockCountryToOrigin}
-            euShippingOnly={lockCountriesToEU}
-            data-test="AddressForm_country"
-          />
-          {(lockCountryToOrigin || lockCountriesToEU) && (
-            <>
-              <Spacer x={0.5} y={0.5} />
-              <Text variant="xs" color="black60">
-                {lockCountriesToEU
-                  ? "Continental Europe shipping only."
-                  : "Domestic shipping only."}
-              </Text>
-            </>
-          )}
-        </Flex>
-        <Flex flexDirection="column">
-          <Input
-            tabIndex={tabIndex}
-            id="AddressForm_postalCode"
-            placeholder="Add postal code"
-            title="Postal code"
-            autoCapitalize="characters"
-            autoCorrect="off"
-            value={address.postalCode}
-            onChange={changeEventHandler("postalCode")}
-            error={getError("postalCode")}
-            data-test="AddressForm_postalCode"
-          />
-        </Flex>
-      </TwoColumnSplit>
-      <TwoColumnSplit>
-        <Flex flexDirection="column">
-          <Input
-            tabIndex={tabIndex}
-            id="AddressForm_addressLine1"
-            placeholder="Add street address"
-            title="Address line 1"
-            value={address.addressLine1}
-            onChange={changeEventHandler("addressLine1")}
-            error={getError("addressLine1")}
-            data-test="AddressForm_addressLine1"
-          />
-        </Flex>
-        <Flex flexDirection="column">
-          <Input
-            tabIndex={tabIndex}
-            id="AddressForm_addressLine2"
-            placeholder="Add apt, floor, suite, etc."
-            title="Address line 2 (optional)"
-            value={address.addressLine2}
-            onChange={changeEventHandler("addressLine2")}
-            error={getError("addressLine2")}
-            data-test="AddressForm_addressLine2"
-          />
-        </Flex>
-      </TwoColumnSplit>
-      <TwoColumnSplit>
-        <Flex flexDirection="column">
-          <Input
-            tabIndex={tabIndex}
-            id="AddressForm_city"
-            placeholder="Add city"
-            title="City"
-            value={address.city}
-            onChange={changeEventHandler("city")}
-            error={getError("city")}
-            data-test="AddressForm_city"
-          />
-        </Flex>
-        <Flex flexDirection="column">
-          <Input
-            tabIndex={tabIndex}
-            id="AddressForm_region"
-            placeholder="Add State, province, or region"
-            title="State, province, or region"
-            autoCorrect="off"
-            value={address.region}
-            onChange={changeEventHandler("region")}
-            error={getError("region")}
-            data-test="AddressForm_region"
-          />
-        </Flex>
-      </TwoColumnSplit>
+      </Column>
+
+      <Column span={12}>
+        <Text mb={0.5} variant="xs" color="black100">
+          Country
+        </Text>
+        <CountrySelect
+          tabIndex={tabIndex}
+          selected={
+            lockCountryToOrigin || (lockCountriesToEU && !address.country)
+              ? shippingCountry
+              : address.country
+          }
+          onSelect={changeValueHandler("country")}
+          disabled={lockCountryToOrigin}
+          euShippingOnly={lockCountriesToEU}
+          data-test="AddressForm_country"
+        />
+        {(lockCountryToOrigin || lockCountriesToEU) && (
+          <>
+            <Spacer x={0.5} y={0.5} />
+            <Text variant="xs" color="black60">
+              {lockCountriesToEU
+                ? "Continental Europe shipping only."
+                : "Domestic shipping only."}
+            </Text>
+          </>
+        )}
+      </Column>
+      <Column span={12}>
+        <Input
+          tabIndex={tabIndex}
+          id="AddressForm_addressLine1"
+          placeholder="Add street address"
+          title="Address line 1"
+          value={address.addressLine1}
+          onChange={changeEventHandler("addressLine1")}
+          error={getError("addressLine1")}
+          data-test="AddressForm_addressLine1"
+        />
+      </Column>
+      <Column span={12}>
+        <Input
+          tabIndex={tabIndex}
+          id="AddressForm_addressLine2"
+          placeholder="Add apt, floor, suite, etc."
+          title="Address line 2 (optional)"
+          value={address.addressLine2}
+          onChange={changeEventHandler("addressLine2")}
+          error={getError("addressLine2")}
+          data-test="AddressForm_addressLine2"
+        />
+      </Column>
+      <Column span={12}>
+        <Input
+          tabIndex={tabIndex}
+          id="AddressForm_postalCode"
+          placeholder="Add postal code"
+          title="Postal code"
+          autoCapitalize="characters"
+          autoCorrect="off"
+          value={address.postalCode}
+          onChange={changeEventHandler("postalCode")}
+          error={getError("postalCode")}
+          data-test="AddressForm_postalCode"
+        />
+      </Column>
+      <Column span={12}>
+        <Input
+          tabIndex={tabIndex}
+          id="AddressForm_city"
+          placeholder="Add city"
+          title="City"
+          value={address.city}
+          onChange={changeEventHandler("city")}
+          error={getError("city")}
+          data-test="AddressForm_city"
+        />
+      </Column>
+      <Column span={12}>
+        <Input
+          tabIndex={tabIndex}
+          id="AddressForm_region"
+          placeholder="Add State, province, or region"
+          title="State, province, or region"
+          autoCorrect="off"
+          value={address.region}
+          onChange={changeEventHandler("region")}
+          error={getError("region")}
+          data-test="AddressForm_region"
+        />
+      </Column>
       {showPhoneNumberInput && (
         <>
-          <Flex flexDirection="column">
+          <Column span={12}>
             <Input
               tabIndex={tabIndex}
               id="AddressForm_phoneNumber"
@@ -242,10 +236,10 @@ export const AddressForm: React.FC<AddressFormProps> = ({
               error={getError("phoneNumber")}
               data-test="AddressForm_phoneNumber"
             />
-          </Flex>
+          </Column>
           <Spacer y={2} />
         </>
       )}
-    </Join>
+    </GridColumns>
   )
 }
