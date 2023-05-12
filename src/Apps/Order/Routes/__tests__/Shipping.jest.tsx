@@ -1686,9 +1686,9 @@ describe("Shipping", () => {
         ).toMatchInlineSnapshot(`
           [
             "Test Name",
-            "28001",
             "1 Main St",
             "",
+            "28001",
             "Madrid",
             "",
           ]
