@@ -293,7 +293,10 @@ export const artistRoutes: AppRouteConfig[] = [
         // Redirect all unhandled tabs to the artist page.
         path: ":tab?",
         render: ({ match }) => {
-          throw new RedirectException(`/artist/${match.params.artistID}`, 301)
+          throw new RedirectException(
+            `/artist/${match.params.artistID}${match.location.search}`,
+            301
+          )
         },
       },
     ],
