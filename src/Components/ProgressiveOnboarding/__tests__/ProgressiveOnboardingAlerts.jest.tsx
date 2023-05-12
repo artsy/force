@@ -11,10 +11,6 @@ import { ProgressiveOnboardingCountsQueryRenderer } from "Components/Progressive
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { FC, useState } from "react"
 
-jest.mock("System/useFeatureFlag", () => ({
-  useFeatureFlag: () => true,
-}))
-
 jest.mock("Components/ArtworkFilter/ArtworkFilterContext", () => ({
   useArtworkFilterContext: jest.fn(),
 }))

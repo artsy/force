@@ -29,10 +29,9 @@ const ProgressiveOnboardingAlertCreate: FC<ProgressiveOnboardingAlertCreateProps
   children,
   counts,
 }) => {
-  const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useProgressiveOnboarding()
 
   const isDisplayable =
-    isEnabledFor("alerts") &&
     !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE).status &&
     counts.savedSearches === 0
 
