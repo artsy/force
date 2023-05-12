@@ -19,10 +19,9 @@ const ProgressiveOnboardingFollowFind: FC<ProgressiveOnboardingFollowFindProps> 
   children,
   counts,
 }) => {
-  const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useProgressiveOnboarding()
 
   const isDisplayable =
-    isEnabledFor("follows") &&
     counts.followedArtists === 1 &&
     !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_FIND).status
 

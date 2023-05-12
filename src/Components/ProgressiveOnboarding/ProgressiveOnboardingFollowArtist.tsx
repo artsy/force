@@ -23,11 +23,9 @@ const ProgressiveOnboardingFollowArtist: FC<ProgressiveOnboardingFollowArtistPro
 }) => {
   const router = useRouter()
 
-  const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useProgressiveOnboarding()
 
   const isDisplayable =
-    // Is enabled for follows.
-    isEnabledFor("follows") &&
     // Hasn't dismissed the follow artist onboarding.
     !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST).status &&
     // Hasn't followed an artist yet.

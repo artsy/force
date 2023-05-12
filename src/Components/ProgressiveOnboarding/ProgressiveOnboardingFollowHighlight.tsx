@@ -17,12 +17,10 @@ export const ProgressiveOnboardingFollowHighlight: FC<ProgressiveOnboardingFollo
   children,
   position,
 }) => {
-  const { isDismissed, dismiss, isEnabledFor } = useProgressiveOnboarding()
+  const { isDismissed, dismiss } = useProgressiveOnboarding()
 
   const isDisplayable =
-    // If the feature is enabled
-    isEnabledFor("follows") &&
-    // And you haven't already dismissed this
+    // You haven't already dismissed this
     !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT).status &&
     // And you've previously dismissed the previous onboarding tip
     isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_FIND).status &&

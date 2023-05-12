@@ -17,12 +17,10 @@ export const ProgressiveOnboardingSaveHighlight: FC<ProgressiveOnboardingSaveHig
   children,
   position,
 }) => {
-  const { isDismissed, dismiss, isEnabledFor } = useProgressiveOnboarding()
+  const { isDismissed, dismiss } = useProgressiveOnboarding()
 
   const isDisplayable =
-    // If the feature is enabled
-    isEnabledFor("saves") &&
-    // And you haven't already dismissed this
+    // You haven't already dismissed this
     !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT).status &&
     // And you've previously dismissed the previous onboarding tip
     isDismissed(PROGRESSIVE_ONBOARDING_SAVE_FIND).status &&
