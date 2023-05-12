@@ -1,6 +1,6 @@
 export type Specialty =
   | "auctions"
-  | "privateSalesAndAdvisory"
+  | "priveteSalesAndAdvisory"
   | "collectorServices"
 
 export interface SpecialistsData {
@@ -30,7 +30,7 @@ export const SPECIALISTS: SpecialistsData[] = [
     email: "shlomi.rabi@artsy.net",
   },
   {
-    specialty: "privateSalesAndAdvisory",
+    specialty: "priveteSalesAndAdvisory",
     name: "Akanksha Ballaney",
     firstName: "Akanksha",
     jobTitle: "Director, Private Sales",
@@ -90,7 +90,7 @@ export const SPECIALISTS: SpecialistsData[] = [
     email: "adam.mccoy@artsy.net",
   },
   {
-    specialty: "privateSalesAndAdvisory",
+    specialty: "priveteSalesAndAdvisory",
     name: "Caroline Perkins",
     firstName: "Caroline",
     jobTitle: "Advisor",
@@ -100,7 +100,7 @@ export const SPECIALISTS: SpecialistsData[] = [
     email: "caroline.perkins@artsy.net",
   },
   {
-    specialty: "privateSalesAndAdvisory",
+    specialty: "priveteSalesAndAdvisory",
     name: "Robin Roche",
     firstName: "Robin",
     jobTitle: "Senior Private Sales Director",
