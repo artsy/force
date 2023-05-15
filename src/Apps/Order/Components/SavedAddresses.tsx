@@ -1,4 +1,4 @@
-import { Button, RadioGroup, BorderedRadio, Spacer } from "@artsy/palette"
+import { RadioGroup, BorderedRadio, Spacer, Clickable } from "@artsy/palette"
 import { useEffect, useState } from "react"
 import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
@@ -15,6 +15,8 @@ import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressM
 import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
 import { useTracking } from "react-tracking"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import styled from "styled-components"
+import { themeGet } from "@styled-system/theme-get"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
@@ -156,11 +158,9 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const addAddressButton = (
     <>
       {addressList.length > 0 && (
-        <Button
-          mt={[2, 4]}
-          mb={2}
+        <AddAddressButton
+          mt={2}
           data-test="shippingButton"
-          variant="secondaryBlack"
           onClick={() => {
             trackAddAddressClick()
             setShowAddressModal(true),
@@ -171,7 +171,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           }}
         >
           Add a new address
-        </Button>
+        </AddAddressButton>
       )}
       <AddressModal
         show={showAddressModal}
@@ -211,7 +211,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       >
         {addressItems}
       </RadioGroup>
-      <Spacer y={14} />
       {addAddressButton}
       <Spacer y={4} />
     </>
@@ -265,3 +264,10 @@ export const SavedAddressesFragmentContainer = createRefetchContainer(
     }
   `
 )
+
+const AddAddressButton = styled(Clickable)`
+  text-decoration: underline;
+  &:hover {
+    color: ${themeGet("colors.blue100")};
+  }
+`

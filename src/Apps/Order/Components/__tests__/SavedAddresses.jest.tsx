@@ -61,7 +61,7 @@ describe("Saved Addresses", () => {
           addressConnection: mockAddressConnection,
         }),
       })
-      const button = wrapper.find("Button[data-test='shippingButton']")
+      const button = wrapper.find("[data-test='shippingButton']").first()
       const modal = wrapper.find(AddressModal)
       expect(modal.props().show).toBe(false)
       button.simulate("click")
@@ -75,7 +75,7 @@ describe("Saved Addresses", () => {
           addressConnection: mockAddressConnection,
         }),
       })
-      const button = wrapper.find("Button[data-test='shippingButton']")
+      const button = wrapper.find("[data-test='shippingButton']").first()
       expect(wrapper.find(AddressModal).props().show).toBe(false)
       button.simulate("click")
 
@@ -93,7 +93,9 @@ describe("Saved Addresses", () => {
           addressConnection: mockAddressConnection,
         }),
       })
-      expect(wrapper.find("Button[data-test='shippingButton']")).toHaveLength(1)
+      expect(wrapper.find("[data-test='shippingButton']").first()).toHaveLength(
+        1
+      )
     })
 
     describe("when clicking on the add address button", () => {
@@ -104,7 +106,7 @@ describe("Saved Addresses", () => {
           }),
         })
 
-        wrapper.find("Button[data-test='shippingButton']").simulate("click")
+        wrapper.find("[data-test='shippingButton']").first().simulate("click")
 
         expect(trackEvent).toHaveBeenCalled()
         expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
