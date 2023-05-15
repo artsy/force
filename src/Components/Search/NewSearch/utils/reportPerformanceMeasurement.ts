@@ -15,6 +15,9 @@ export const reportPerformanceMeasurement = performanceStart => {
 
   fetch(getENV("VOLLEY_ENDPOINT"), {
     method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
     body: JSON.stringify({
       metrics: [metricPayload],
       serviceName: "force",
