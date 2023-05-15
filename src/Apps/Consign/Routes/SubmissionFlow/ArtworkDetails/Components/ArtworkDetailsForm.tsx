@@ -139,7 +139,7 @@ const rarityOptions = checkboxValues.map(({ name, value }) => ({
   value,
 }))
 
-rarityOptions.unshift({ text: "Select a Сlassification", value: "default" })
+rarityOptions.unshift({ text: "Select a Сlassification", value: "" })
 
 export interface ArtworkDetailsFormModel {
   artistName: string
@@ -284,10 +284,7 @@ export const ArtworkDetailsForm: React.FC = () => {
       </GridColumns>
       <GridColumns mt={[4, 2]}>
         <Column span={6}>
-          <Flex justifyContent="space-between">
-            <Text variant="xs" mb={0.5}>
-              Rarity
-            </Text>
+          <Flex justifyContent="flex-end">
             <Clickable
               onClick={() => setIsRarityModalOpen(true)}
               data-test-id="open-rarity-modal"
@@ -298,6 +295,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             </Clickable>
           </Flex>
           <Select
+            title="Rarity"
             name="rarity"
             options={rarityOptions}
             selected={values.rarity}

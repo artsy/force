@@ -1,7 +1,7 @@
 import { SystemContextProvider } from "System"
 import { ReactWrapper, mount } from "enzyme"
 import { ExtractProps } from "Utils/ExtractProps"
-import { OfferNote } from "../OfferNote"
+import { OfferNote } from "Apps/Order/Components/OfferNote"
 import { mediator } from "Server/mediator"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 
@@ -70,6 +70,6 @@ describe("OfferNote", () => {
     expect(text).toContain(
       "For your own safety, please do not share personal information."
     )
-    expect(text).toContain("1000 characters remaining")
+    expect(text).toContain("0/1000")
   })
 })
