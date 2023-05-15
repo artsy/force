@@ -1,4 +1,5 @@
 import { Flex, Text, Button, GridColumns, Column } from "@artsy/palette"
+import { RouterLink } from "System/Router/RouterLink"
 
 export const EmptyArtistAuctionResults: React.FC = () => {
   return (
@@ -18,9 +19,11 @@ export const EmptyArtistAuctionResults: React.FC = () => {
         </Column>
         <Column span={12} alignItems="center">
           <Flex>
-            <Button variant="secondaryNeutral">
-              View Artsy’s Price Database
-            </Button>
+            <RouterLink to="/price-database">
+              <Button variant="secondaryNeutral">
+                View Artsy’s Price Database
+              </Button>
+            </RouterLink>
           </Flex>
         </Column>
       </GridColumns>
