@@ -25,7 +25,7 @@ import {
   PhoneNumberForm,
   PhoneNumberTouched,
 } from "Apps/Order/Components/PhoneNumberForm"
-import { CheckoutAddress } from "Apps/Order/Components/Address"
+import { CheckoutAddress } from "Apps/Order/Components/CheckoutAddress"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
