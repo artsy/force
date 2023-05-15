@@ -8,6 +8,21 @@ import {
 } from "Components/CountrySelect"
 import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
 
+export interface Address {
+  name: string
+  country: string
+  addressLine1: string
+  city: string
+  region: string
+  postalCode: string
+  addressLine2: string
+}
+
+export type AddressChangeHandler = (
+  address: Address,
+  key: keyof Address
+) => void
+
 export const INITIAL_ADDRESS = {
   name: "",
   country: "",
@@ -40,9 +55,10 @@ const getDefaultCountry = (userCountry: string): string => {
   return countryCode || "US"
 }
 
-export const CheckoutAddress: FC<{ userCountry: string }> = ({
-  userCountry,
-}) => {
+export const CheckoutAddress: FC<{
+  userCountry: string
+  onChange: AddressChangeHandler
+}> = ({ userCountry, onChange }) => {
   const { submitMutation: submitAddAddress } = useAddAddress()
   const userDefaultCountry = getDefaultCountry(userCountry)
 
@@ -69,23 +85,20 @@ export const CheckoutAddress: FC<{ userCountry: string }> = ({
         }
       }}
     >
-      {({
-        values,
-        errors,
-        touched,
-        status,
-        handleChange,
-        handleBlur,
-        setFieldValue,
-        isValid,
-        isSubmitting,
-        submitForm,
-      }) => {
-        // if (!values.attributes.country) {
-        //   console.log({ XXXX: values })
-        //   setFieldValue("country", userDefaultCountry)
-        // }
-
+      {({ values, errors, touched, status, handleChange, handleBlur }) => {
+        const changeEventHandler = (
+          e: React.FormEvent<HTMLInputElement | HTMLSelectElement>,
+          key: keyof Address
+        ) => {
+          handleChange(e)
+          onChange(
+            {
+              ...values.attributes,
+              [key]: e.currentTarget.value,
+            },
+            key
+          )
+        }
         return (
           <Form>
             <GridColumns>
@@ -97,7 +110,7 @@ export const CheckoutAddress: FC<{ userCountry: string }> = ({
                   autoComplete="name"
                   autoFocus
                   value={values.attributes.name}
-                  onChange={handleChange}
+                  onChange={e => changeEventHandler(e, "name")}
                   onBlur={handleBlur}
                   error={touched.attributes?.name && errors.attributes?.name}
                   required
@@ -109,7 +122,7 @@ export const CheckoutAddress: FC<{ userCountry: string }> = ({
                   title="Country"
                   name="attributes.country"
                   value={values.attributes.country}
-                  onChange={handleChange}
+                  onChange={e => changeEventHandler(e, "country")}
                   onBlur={handleBlur}
                   error={
                     touched.attributes?.country && errors.attributes?.country
@@ -125,7 +138,7 @@ export const CheckoutAddress: FC<{ userCountry: string }> = ({
                   placeholder="Add street address"
                   autoComplete="address-line1"
                   value={values.attributes.addressLine1}
-                  onChange={handleChange}
+                  onChange={e => changeEventHandler(e, "addressLine1")}
                   onBlur={handleBlur}
                   error={
                     touched.attributes?.addressLine1 &&
@@ -142,7 +155,7 @@ export const CheckoutAddress: FC<{ userCountry: string }> = ({
                   placeholder="Add apt, floor, suite, etc."
                   autoComplete="address-line2"
                   value={values.attributes.addressLine2}
-                  onChange={handleChange}
+                  onChange={e => changeEventHandler(e, "addressLine2")}
                   onBlur={handleBlur}
                   error={
                     touched.attributes?.addressLine2 &&
@@ -158,7 +171,7 @@ export const CheckoutAddress: FC<{ userCountry: string }> = ({
                   placeholder="Add postal code"
                   autoComplete="postal-code"
                   value={values.attributes.postalCode}
-                  onChange={handleChange}
+                  onChange={e => changeEventHandler(e, "postalCode")}
                   onBlur={handleBlur}
                   error={
                     touched.attributes?.postalCode &&
@@ -175,7 +188,7 @@ export const CheckoutAddress: FC<{ userCountry: string }> = ({
                   placeholder="Add city"
                   autoComplete="address-level2"
                   value={values.attributes.city}
-                  onChange={handleChange}
+                  onChange={e => changeEventHandler(e, "city")}
                   onBlur={handleBlur}
                   error={touched.attributes?.city && errors.attributes?.city}
                   required
@@ -189,7 +202,7 @@ export const CheckoutAddress: FC<{ userCountry: string }> = ({
                   placeholder="Add state, province, or region"
                   autoComplete="address-level1"
                   value={values.attributes.region}
-                  onChange={handleChange}
+                  onChange={e => changeEventHandler(e, "region")}
                   onBlur={handleBlur}
                   error={
                     touched.attributes?.region && errors.attributes?.region

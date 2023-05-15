@@ -667,6 +667,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               {isAddressVerificationEnabled ? (
                 <CheckoutAddress
                   userCountry={props.me.location?.country || "United States"}
+                  onChange={onAddressChange}
                 />
               ) : (
                 <AddressForm
