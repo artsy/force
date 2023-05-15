@@ -140,10 +140,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
 
       <GridColumns mt={[4, 2]}>
         <Column span={6} mt={[2, 0]}>
-          <Flex justifyContent="space-between">
-            <Text variant="xs" mb={0.5}>
-              Rarity
-            </Text>
+          <Flex justifyContent="flex-end">
             <Clickable
               onClick={() => setIsRarityModalOpen(true)}
               data-test-id="open-rarity-modal"
@@ -154,6 +151,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             </Clickable>
           </Flex>
           <Select
+            title="Rarity"
             name="attributionClass"
             options={rarityOptions}
             selected={values.attributionClass}
