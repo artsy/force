@@ -26,7 +26,7 @@ const CascadingEndTimesBanner: React.FC<CascadingEndTimesBannerProps> = ({
       {!!helpArticleLink && (
         <>
           &nbsp;
-          <RouterLink inline target="_blank" to={helpArticleLink}>
+          <RouterLink target="_blank" to={helpArticleLink}>
             Learn More
           </RouterLink>
         </>
