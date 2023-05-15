@@ -644,7 +644,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 me={props.me}
                 selectedAddress={selectedAddressID}
                 onSelect={selectSavedAddressWithTracking}
-                inCollectorProfile={false}
                 onAddressDelete={handleAddressDelete}
                 onAddressCreate={handleAddressCreate}
                 onAddressEdit={handleAddressEdit}
