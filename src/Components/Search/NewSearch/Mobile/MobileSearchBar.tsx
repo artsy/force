@@ -55,15 +55,26 @@ export const MobileSearchBarRefetchContainer = createRefetchContainer(
   {
     viewer: graphql`
       fragment MobileSearchBar_viewer on Viewer
-        @argumentDefinitions(term: { type: "String!", defaultValue: "" }) {
+        @argumentDefinitions(
+          term: { type: "String!", defaultValue: "" }
+          hasTerm: { type: "Boolean!", defaultValue: false }
+          entities: { type: "[SearchEntity]" }
+        ) {
+        ...SearchResultsList_viewer
+          @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
         ...NewSearchInputPills_viewer @arguments(term: $term)
       }
     `,
   },
   graphql`
-    query MobileSearchBarRefetchQuery($term: String!) {
+    query MobileSearchBarRefetchQuery(
+      $term: String!
+      $hasTerm: Boolean!
+      $entities: [SearchEntity]
+    ) {
       viewer {
-        ...MobileSearchBar_viewer @arguments(term: $term)
+        ...MobileSearchBar_viewer
+          @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
       }
     }
   `
@@ -84,9 +95,14 @@ export const MobileSearchBarQueryRenderer: FC<MobileSearchBarQueryRendererProps>
     <SystemQueryRenderer<MobileSearchBarSuggestQuery>
       environment={relayEnvironment}
       query={graphql`
-        query MobileSearchBarSuggestQuery($term: String!) {
+        query MobileSearchBarSuggestQuery(
+          $term: String!
+          $hasTerm: Boolean!
+          $entities: [SearchEntity]
+        ) {
           viewer {
-            ...MobileSearchBar_viewer @arguments(term: $term)
+            ...MobileSearchBar_viewer
+              @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
           }
         }
       `}

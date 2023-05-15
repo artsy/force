@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<82ff9544f7d413e4398bbd1dc986f3ba>>
+ * @generated SignedSource<<cb8b72f530add7ac7b8ac6deb9bd9454>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,72 +11,91 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchEntity = "ARTICLE" | "ARTIST" | "ARTIST_SERIES" | "ARTWORK" | "CITY" | "COLLECTION" | "FAIR" | "FEATURE" | "GALLERY" | "GENE" | "INSTITUTION" | "PAGE" | "PROFILE" | "SALE" | "SHOW" | "TAG" | "VIEWING_ROOM" | "%future added value";
-export type MobileSearchBarSuggestQuery$variables = {
+export type SearchResultsListPaginationQuery$variables = {
+  after?: string | null;
   entities?: ReadonlyArray<SearchEntity | null> | null;
+  first: number;
   hasTerm: boolean;
   term: string;
 };
-export type MobileSearchBarSuggestQuery$data = {
+export type SearchResultsListPaginationQuery$data = {
   readonly viewer: {
-    readonly " $fragmentSpreads": FragmentRefs<"MobileSearchBar_viewer">;
+    readonly " $fragmentSpreads": FragmentRefs<"SearchResultsList_viewer">;
   } | null;
 };
-export type MobileSearchBarSuggestQuery = {
-  response: MobileSearchBarSuggestQuery$data;
-  variables: MobileSearchBarSuggestQuery$variables;
+export type SearchResultsListPaginationQuery = {
+  response: SearchResultsListPaginationQuery$data;
+  variables: SearchResultsListPaginationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "entities"
+  "name": "after"
 },
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "hasTerm"
+  "name": "entities"
 },
 v2 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "term"
+  "name": "first"
 },
 v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "hasTerm"
+},
+v4 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "term"
+},
+v5 = {
+  "kind": "Variable",
+  "name": "after",
+  "variableName": "after"
+},
+v6 = {
   "kind": "Variable",
   "name": "entities",
   "variableName": "entities"
 },
-v4 = {
-  "kind": "Literal",
-  "name": "mode",
-  "value": "AUTOSUGGEST"
-},
-v5 = {
+v7 = {
   "kind": "Variable",
-  "name": "query",
-  "variableName": "term"
+  "name": "first",
+  "variableName": "first"
 },
-v6 = [
-  (v3/*: any*/),
+v8 = [
+  (v5/*: any*/),
+  (v6/*: any*/),
+  (v7/*: any*/),
   {
     "kind": "Literal",
-    "name": "first",
-    "value": 10
+    "name": "mode",
+    "value": "AUTOSUGGEST"
   },
-  (v4/*: any*/),
-  (v5/*: any*/)
+  {
+    "kind": "Variable",
+    "name": "query",
+    "variableName": "term"
+  }
 ];
 return {
   "fragment": {
     "argumentDefinitions": [
       (v0/*: any*/),
       (v1/*: any*/),
-      (v2/*: any*/)
+      (v2/*: any*/),
+      (v3/*: any*/),
+      (v4/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "MobileSearchBarSuggestQuery",
+    "name": "SearchResultsListPaginationQuery",
     "selections": [
       {
         "alias": null,
@@ -88,7 +107,9 @@ return {
         "selections": [
           {
             "args": [
-              (v3/*: any*/),
+              (v5/*: any*/),
+              (v6/*: any*/),
+              (v7/*: any*/),
               {
                 "kind": "Variable",
                 "name": "hasTerm",
@@ -101,7 +122,7 @@ return {
               }
             ],
             "kind": "FragmentSpread",
-            "name": "MobileSearchBar_viewer"
+            "name": "SearchResultsList_viewer"
           }
         ],
         "storageKey": null
@@ -113,12 +134,14 @@ return {
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
+      (v0/*: any*/),
       (v2/*: any*/),
-      (v1/*: any*/),
-      (v0/*: any*/)
+      (v4/*: any*/),
+      (v3/*: any*/),
+      (v1/*: any*/)
     ],
     "kind": "Operation",
-    "name": "MobileSearchBarSuggestQuery",
+    "name": "SearchResultsListPaginationQuery",
     "selections": [
       {
         "alias": null,
@@ -135,7 +158,7 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": (v6/*: any*/),
+                "args": (v8/*: any*/),
                 "concreteType": "SearchableConnection",
                 "kind": "LinkedField",
                 "name": "searchConnection",
@@ -295,7 +318,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v6/*: any*/),
+                "args": (v8/*: any*/),
                 "filters": [
                   "query",
                   "entities",
@@ -307,68 +330,6 @@ return {
                 "name": "searchConnection"
               }
             ]
-          },
-          {
-            "alias": "searchConnectionAggregation",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "aggregations",
-                "value": [
-                  "TYPE"
-                ]
-              },
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 0
-              },
-              (v4/*: any*/),
-              (v5/*: any*/)
-            ],
-            "concreteType": "SearchableConnection",
-            "kind": "LinkedField",
-            "name": "searchConnection",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "SearchAggregationResults",
-                "kind": "LinkedField",
-                "name": "aggregations",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "AggregationCount",
-                    "kind": "LinkedField",
-                    "name": "counts",
-                    "plural": true,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "count",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "name",
-                        "storageKey": null
-                      }
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
           }
         ],
         "storageKey": null
@@ -376,16 +337,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "409fd0fa477a7990bec89fca97329cfb",
+    "cacheID": "0aa45b5d7d1bf6216ba0df9c391168e1",
     "id": null,
     "metadata": {},
-    "name": "MobileSearchBarSuggestQuery",
+    "name": "SearchResultsListPaginationQuery",
     "operationKind": "query",
-    "text": "query MobileSearchBarSuggestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...MobileSearchBar_viewer_1B9obU\n  }\n}\n\nfragment MobileSearchBar_viewer_1B9obU on Viewer {\n  ...SearchResultsList_viewer_1B9obU\n  ...NewSearchInputPills_viewer_4hh6ED\n}\n\nfragment NewSearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n\nfragment SearchResultsList_viewer_1B9obU on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 10) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SearchResultsListPaginationQuery(\n  $after: String\n  $first: Int!\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...SearchResultsList_viewer_3byI4h\n  }\n}\n\nfragment SearchResultsList_viewer_3byI4h on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: $first, after: $after) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c8f6dc9b0bd15f1b8f70d9e9ca4abf85";
+(node as any).hash = "8edbf489f315674f92bd81bab09c4a9e";
 
 export default node;

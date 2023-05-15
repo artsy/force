@@ -2,7 +2,6 @@ import SearchIcon from "@artsy/icons/SearchIcon"
 import { Box, LabeledInput, useUpdateEffect } from "@artsy/palette"
 import { FC, useCallback, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { OverlayBase } from "./OverlayBase"
 import {
   PillType,
   TOP_PILL,
@@ -17,6 +16,8 @@ import { useDebounce } from "Utils/Hooks/useDebounce"
 import { useTracking } from "react-tracking"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { MobileSearchBar_viewer$data } from "__generated__/MobileSearchBar_viewer.graphql"
+import { OverlayBase } from "Components/Search/NewSearch/Mobile/OverlayBase"
+import { SearchResultsListPaginationContainer } from "Components/Search/NewSearch/Mobile/SearchResultsList"
 
 const logger = createLogger("Components/Search/NewSearch/Mobile")
 
@@ -99,24 +100,36 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
   }
 
   return (
-    <OverlayBase onClose={onClose}>
-      <Box mt={-15}>
-        <LabeledInput
-          ref={inputRef}
-          value={value}
-          placeholder={t`navbar.searchArtsy`}
-          label={<SearchIcon fill="black60" aria-hidden mr={-10} size={18} />}
-          onChange={handleValueChange}
-          // px={2}
-        />
-      </Box>
+    <OverlayBase
+      onClose={onClose}
+      header={
+        <>
+          <Box mt={-15}>
+            <LabeledInput
+              mx={2}
+              ref={inputRef}
+              value={value}
+              placeholder={t`navbar.searchArtsy`}
+              label={
+                <SearchIcon fill="black60" aria-hidden mr={-10} size={18} />
+              }
+              onChange={handleValueChange}
+            />
+          </Box>
 
-      <NewSearchInputPillsFragmentContainer
-        onPillClick={handlePillClick}
+          <NewSearchInputPillsFragmentContainer
+            onPillClick={handlePillClick}
+            viewer={viewer}
+            selectedPill={selectedPill}
+            enableChevronNavigation={false}
+            forceDisabled={disablePills}
+          />
+        </>
+      }
+    >
+      <SearchResultsListPaginationContainer
         viewer={viewer}
-        selectedPill={selectedPill}
-        enableChevronNavigation={false}
-        forceDisabled={disablePills}
+        query={inputRef.current?.value ?? ""}
       />
     </OverlayBase>
   )
