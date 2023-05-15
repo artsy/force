@@ -13,49 +13,29 @@ import { NewSearchBarFooter } from "Components/Search/NewSearch/NewSearchBarFoot
 import { getLabel } from "./utils/getLabel"
 import { getSearchTerm } from "./utils/getSearchTerm"
 import { isServer } from "Server/isServer"
-import { PillType, TOP_PILL } from "Components/Search/NewSearch/constants"
+import {
+  PillType,
+  TOP_PILL,
+  SEARCH_DEBOUNCE_DELAY,
+} from "Components/Search/NewSearch/constants"
 import {
   NewSuggestionItem,
   SuggionItemOptionProps,
 } from "./SuggestionItem/NewSuggestionItem"
 import { useTracking } from "react-tracking"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { getENV } from "Utils/getENV"
 import { StaticSearchContainer } from "./StaticSearchContainer"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useRouter } from "System/Router/useRouter"
 import { useDebounce } from "Utils/Hooks/useDebounce"
+import { reportPerformanceMeasurement } from "./utils/reportPerformanceMeasurement"
+import { shouldStartSearching } from "./utils/shouldStartSearching"
 
 const logger = createLogger("Components/Search/NewSearchBar")
-const SEARCH_DEBOUNCE_DELAY = 150
 
 export interface NewSearchBarInputProps extends SystemContextProps {
   relay: RelayRefetchProp
   viewer: NewSearchBarInput_viewer$data
-}
-
-const reportPerformanceMeasurement = performanceStart => {
-  const duration = performance.now() - performanceStart
-  const deviceType = getENV("IS_MOBILE") ? "mobile" : "desktop"
-
-  const metricPayload = {
-    name: "autocomplete-search-response",
-    tags: [`device-type:${deviceType}`, "design:rich"],
-    timing: duration,
-    type: "timing",
-  }
-
-  fetch(getENV("VOLLEY_ENDPOINT"), {
-    method: "POST",
-    body: JSON.stringify({
-      metrics: [metricPayload],
-      serviceName: "force",
-    }),
-  })
-}
-
-const shouldStartSearching = (value: string) => {
-  return value.length > 1
 }
 
 const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
@@ -129,10 +109,11 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
             return
           }
 
-          if (performanceStart && getENV("VOLLEY_ENDPOINT")) {
+          if (performance) {
             reportPerformanceMeasurement(performanceStart)
           }
 
+          // trigger useEffect to send tracking event
           setFetchCounter(prevCounter => prevCounter + 1)
         }
       )

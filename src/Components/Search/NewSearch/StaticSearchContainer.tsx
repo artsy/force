@@ -17,6 +17,7 @@ export const StaticSearchContainer: FC<{ searchQuery: string } & BoxProps> = ({
         <SearchInputContainer
           placeholder={searchQuery || t`navbar.searchArtsy`}
           defaultValue={searchQuery}
+          height={40}
         />
       </Box>
 

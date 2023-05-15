@@ -4,10 +4,9 @@ import { isEmpty } from "lodash"
 import * as React from "react"
 import styled from "styled-components"
 import SearchIcon from "@artsy/icons/SearchIcon"
+import { Media } from "Utils/Responsive"
 
 const SearchButton = styled(Clickable)`
-  width: 18px;
-  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,7 +28,7 @@ export const SearchInputContainer: React.ForwardRefExoticComponent<
     <LabeledInput
       ref={ref}
       width="100%"
-      height={50}
+      height={props.height ?? 50}
       label={
         <SearchButton
           type="submit"
@@ -42,7 +41,13 @@ export const SearchInputContainer: React.ForwardRefExoticComponent<
             }
           }}
         >
-          <SearchIcon fill={"black60"} />
+          <Media greaterThan="xs">
+            <SearchIcon fill={"black60"} width="18px" height="18px" />
+          </Media>
+
+          <Media at="xs">
+            <SearchIcon fill={"black60"} width="22px" height="22px" />
+          </Media>
         </SearchButton>
       }
       {...props}
