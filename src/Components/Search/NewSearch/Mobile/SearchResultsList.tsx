@@ -13,6 +13,7 @@ import {
 import { getLabel } from "Components/Search/NewSearch/utils/getLabel"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { Box } from "@artsy/palette"
+import { shouldStartSearching } from "Components/Search/NewSearch/utils/shouldStartSearching"
 
 interface SearchResultsListProps {
   relay: RelayPaginationProp
@@ -27,6 +28,8 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
   viewer,
   query,
 }) => {
+  if (!shouldStartSearching(query)) return null
+
   const options = extractNodes(viewer.searchConnection)
 
   // TODO: refactor

@@ -12,7 +12,7 @@ import { FC } from "react"
 import styled from "styled-components"
 
 interface OverlayBaseProps {
-  header: any // TODO: fix
+  header: JSX.Element
   onClose: () => void
 }
 
@@ -57,6 +57,7 @@ export const OverlayBase: FC<OverlayBaseProps> = ({
         </Flex>
 
         <Box
+          id="MobileSearchOverlayContent"
           flex={1}
           overflow="auto"
           style={{ WebkitOverflowScrolling: "touch" }}

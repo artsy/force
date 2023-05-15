@@ -38,7 +38,10 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
   const disablePills = !shouldStartSearching(value)
 
   useEffect(() => {
+    // TODO: another query renderer for content
+    // refetch(value)
     inputRef.current?.focus()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useUpdateEffect(() => {
@@ -53,6 +56,7 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
 
   const refetch = useCallback(
     (value: string, entity?: string) => {
+      console.log("[Debug] Refetch", value, entity)
       const entities = entity ? [entity] : []
       const performanceStart = performance && performance.now()
 
@@ -89,6 +93,9 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
   const handlePillClick = (pill: PillType) => {
     setSelectedPill(pill)
     refetch(value, pill.searchEntityName)
+
+    // TODO: querySelector
+    document.getElementById("MobileSearchOverlayContent")?.scrollTo(0, 0)
   }
 
   const handleValueChange = event => {
@@ -127,10 +134,7 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
         </>
       }
     >
-      <SearchResultsListPaginationContainer
-        viewer={viewer}
-        query={inputRef.current?.value ?? ""}
-      />
+      <SearchResultsListPaginationContainer viewer={viewer} query={value} />
     </OverlayBase>
   )
 }
