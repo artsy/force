@@ -14,7 +14,6 @@ import { FooterBanner } from "Apps/Consign/Routes/MarketingLanding/Components/La
 import { SpeakToTheTeam } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpeakToTheTeam"
 import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
 import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
-import { Reviews } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Reviews"
 
 export const MarketingLandingApp = () => {
   const {
@@ -51,7 +50,7 @@ export const MarketingLandingApp = () => {
         <MeetTheSpecialists />
         <CollectorsOverview />
         <PreviouslySoldOnArtsyRailQueryRenderer />
-        <Reviews />
+        {/* <Reviews /> */}
         <FAQSWA />
         <Footer />
         <FooterBanner />
