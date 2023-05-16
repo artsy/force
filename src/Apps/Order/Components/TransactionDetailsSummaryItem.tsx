@@ -15,7 +15,6 @@ import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { shippingQuoteDisplayNames } from "Apps/Order/Components/ShippingQuotes"
 import { withSystemContext } from "System/SystemContext"
 import { RouterLink } from "System/Router/RouterLink"
-// import { lineHeight } from "styled-system"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
