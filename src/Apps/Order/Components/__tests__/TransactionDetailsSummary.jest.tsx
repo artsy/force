@@ -6,7 +6,7 @@ import {
   UntouchedBuyOrder,
 } from "Apps/__tests__/Fixtures/Order"
 import { graphql } from "react-relay"
-import { TransactionDetailsSummaryItemFragmentContainer } from "../TransactionDetailsSummaryItem"
+import { TransactionDetailsSummaryItemFragmentContainer } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { Text } from "@artsy/palette"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
@@ -114,8 +114,8 @@ describe("TransactionDetailsSummaryItem", () => {
 
       const text = wrapper.text()
 
-      expect(text).toMatch("ShippingCalculated in next steps")
-      expect(text).toMatch("Tax*Calculated in next steps")
+      expect(text).toMatch("Shipping*Calculated in next steps")
+      expect(text).toMatch("Tax †Calculated in next steps")
     })
 
     it("shows the shipping and tax price as 'Waiting for final costs' when null after shipping address was added", async () => {
@@ -132,7 +132,7 @@ describe("TransactionDetailsSummaryItem", () => {
       const text = wrapper.text()
 
       expect(text).toMatch("Shipping**Waiting for final costs")
-      expect(text).toMatch("Tax*Waiting for final costs")
+      expect(text).toMatch("Tax †Waiting for final costs")
     })
 
     it("shows tax import reminder", async () => {
@@ -142,8 +142,8 @@ describe("TransactionDetailsSummaryItem", () => {
 
       const text = wrapper.text()
 
-      expect(text).toMatch("Tax*")
-      expect(text).toMatch("*Additional duties and taxes may apply at import")
+      expect(text).toMatch("Tax †")
+      expect(text).toMatch("† Additional duties and taxes may apply at import")
     })
 
     it("shows shipping confirmation note when shipping cannot be calculated after shipping address was added", async () => {
@@ -195,8 +195,8 @@ describe("TransactionDetailsSummaryItem", () => {
       const entry = wrapper.find("Entry")
 
       expect(entry.at(0).text()).toMatch("PriceUS$200.00")
-      expect(entry.at(1).text()).toMatch("ShippingUS$12.00")
-      expect(entry.at(2).text()).toMatch("Tax*US$3.25")
+      expect(entry.at(1).text()).toMatch("Shipping*US$12.00")
+      expect(entry.at(2).text()).toMatch("Tax †US$3.25")
       expect(entry.at(3).text()).toMatch("TotalUS$215.25")
     })
 
@@ -208,8 +208,8 @@ describe("TransactionDetailsSummaryItem", () => {
       const text = wrapper.text()
 
       expect(text).toMatch("PriceUS$200.00")
-      expect(text).toMatch("ShippingUS$12.00")
-      expect(text).toMatch("Tax*US$3.25")
+      expect(text).toMatch("Shipping*US$12.00")
+      expect(text).toMatch("Tax †US$3.25")
       expect(text).toMatch("TotalUS$215.25")
     })
 
@@ -250,8 +250,8 @@ describe("TransactionDetailsSummaryItem", () => {
       const text = wrapper.text()
 
       expect(text).toMatch("Your offerUS$14,000")
-      expect(text).toMatch("ShippingUS$200")
-      expect(text).toMatch("Tax*US$120")
+      expect(text).toMatch("Shipping*US$200")
+      expect(text).toMatch("Tax †US$120")
       expect(text).toMatch("TotalUS$14,320")
     })
 

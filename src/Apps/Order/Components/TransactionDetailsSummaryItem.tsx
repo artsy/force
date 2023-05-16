@@ -15,6 +15,7 @@ import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { shippingQuoteDisplayNames } from "Apps/Order/Components/ShippingQuotes"
 import { withSystemContext } from "System/SystemContext"
 import { RouterLink } from "System/Router/RouterLink"
+// import { lineHeight } from "styled-system"
 
 export interface TransactionDetailsSummaryItemProps
   extends Omit<StepSummaryItemProps, "order"> {
@@ -104,7 +105,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
       }
     }
 
-    return "Shipping"
+    return "Shipping*"
   }
 
   const shippingNotCalculated = () => {
@@ -207,12 +208,12 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
         value={shippingDisplayAmount()}
         data-test="shippingDisplayAmount"
       />
-
       <Entry
-        label="Tax†"
+        label="Tax †"
         value={taxDisplayAmount()}
         data-test="taxDisplayAmount"
       />
+
       <Spacer y={2} />
       <Entry
         label="Total"
@@ -227,7 +228,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
         </Text>
       ) : null}
       <Text variant="sm" color="black60">
-        †Additional duties and taxes{" "}
+        † Additional duties and taxes{" "}
         <RouterLink
           inline
           to="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
