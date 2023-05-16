@@ -10,24 +10,18 @@ import {
   NewSuggestionItem,
   SuggionItemOptionProps,
 } from "Components/Search/NewSearch/SuggestionItem/NewSuggestionItem"
-import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
-import {
-  Box,
-  Flex,
-  SkeletonBox,
-  SkeletonText,
-  Spacer,
-  Spinner,
-} from "@artsy/palette"
+import { Flex, Spinner } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { SearchResultsListQuery } from "__generated__/SearchResultsListQuery.graphql"
 import { useTracking } from "react-tracking"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { SuggestionItemLink } from "Components/Search/NewSearch/SuggestionItem/SuggestionItemLink"
 import {
   SearchNodeOption,
   formatOptions,
 } from "Components/Search/NewSearch/utils/formatOptions"
+import { SeeFullResults } from "Components/Search/NewSearch/Mobile/SearchResultsList/SeeFullResults"
+import { InfiniteScrollSentinel } from "Components/Search/NewSearch/Mobile/SearchResultsList/InfiniteScrollSentinel"
+import { ContentPlaceholder } from "Components/Search/NewSearch/Mobile/SearchResultsList/ContentPlaceholder"
 
 interface SearchResultsListProps {
   relay: RelayPaginationProp
@@ -95,6 +89,10 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
       })}
 
       {relay.hasMore() && <InfiniteScrollSentinel onNext={handleLoadMore} />}
+
+      {!relay.hasMore() && (
+        <SeeFullResults query={query} onClick={handleOnRedirect} />
+      )}
 
       {isLoading && (
         <Flex width="100%" minHeight="60px" alignItems="center">
@@ -240,44 +238,5 @@ export const SearchResultsListQueryRenderer: FC<SearchResultsListQueryRendererPr
         )
       }}
     />
-  )
-}
-
-interface InfiniteScrollSentinelProps {
-  onNext: () => void
-}
-
-const InfiniteScrollSentinel: FC<InfiniteScrollSentinelProps> = ({
-  onNext,
-}) => {
-  const { ref } = useIntersectionObserver({
-    onIntersection: onNext,
-    once: false,
-  })
-
-  return <Box ref={ref as any} height={0} />
-}
-
-const ContentPlaceholder: FC = () => {
-  return (
-    <>
-      {[...Array(10)].map((_, index) => {
-        return (
-          <SuggestionItemLink key={index} onClick={() => {}} to="">
-            <Flex alignItems="center">
-              <SkeletonBox height={50} width={50} />
-              <Spacer x={1} />
-              <Flex flexDirection="column" flex={1} overflow="hidden">
-                <SkeletonText variant="sm-display">
-                  Banksy: Happy Choppers
-                </SkeletonText>
-
-                <SkeletonText variant="xs">Artist Series</SkeletonText>
-              </Flex>
-            </Flex>
-          </SuggestionItemLink>
-        )
-      })}
-    </>
   )
 }
