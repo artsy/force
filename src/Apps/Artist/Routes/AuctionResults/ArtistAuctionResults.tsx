@@ -216,7 +216,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     )
   }
   if (results.length == 0) {
-    return <EmptyArtistAuctionResults></EmptyArtistAuctionResults>
+    return <EmptyArtistAuctionResults />
   } else {
     return (
       <>
