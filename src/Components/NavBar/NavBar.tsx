@@ -46,9 +46,9 @@ import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMob
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
 import { useNavBarHeight } from "./useNavBarHeight"
-import { ProgressiveOnboardingFollowFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
-import { ProgressiveOnboardingSaveFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
-import { ProgressiveOnboardingAlertFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
+import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
+import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
+import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { NewSearchBar } from "Components/Search/NewSearch/NewSearchBar"
 
@@ -302,8 +302,8 @@ export const NavBar: React.FC = track(
                       )}
                     </NavBarItemButton>
 
-                    <ProgressiveOnboardingFollowFindQueryRenderer>
-                      <ProgressiveOnboardingSaveFindQueryRenderer>
+                    <ProgressiveOnboardingFollowFind>
+                      <ProgressiveOnboardingSaveFind>
                         <NavBarItemButton
                           display="flex"
                           alignItems="center"
@@ -319,12 +319,12 @@ export const NavBar: React.FC = track(
                             width={22}
                           />
                         </NavBarItemButton>
-                      </ProgressiveOnboardingSaveFindQueryRenderer>
-                    </ProgressiveOnboardingFollowFindQueryRenderer>
+                      </ProgressiveOnboardingSaveFind>
+                    </ProgressiveOnboardingFollowFind>
                   </>
                 )}
 
-                <ProgressiveOnboardingAlertFindQueryRenderer>
+                <ProgressiveOnboardingAlertFind>
                   <NavBarItemButton
                     mr={-1}
                     width={40}
@@ -354,7 +354,7 @@ export const NavBar: React.FC = track(
                   >
                     <NavBarMobileMenuIcon open={showMobileMenu} />
                   </NavBarItemButton>
-                </ProgressiveOnboardingAlertFindQueryRenderer>
+                </ProgressiveOnboardingAlertFind>
               </Flex>
             </Flex>
 

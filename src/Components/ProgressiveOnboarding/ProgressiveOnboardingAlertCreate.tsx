@@ -16,22 +16,26 @@ import {
 } from "@artsy/palette"
 import { resized } from "Utils/resized"
 import {
-  ProgressiveOnboardingCountsQueryRenderer,
   WithProgressiveOnboardingCountsProps,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingCounts"
+  withProgressiveOnboardingCounts,
+} from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
+import { useSystemContext } from "System/SystemContext"
 
 interface ProgressiveOnboardingAlertCreateProps
   extends WithProgressiveOnboardingCountsProps {
   children: (actions: { onSkip(): void }) => ReactNode
 }
 
-const ProgressiveOnboardingAlertCreate: FC<ProgressiveOnboardingAlertCreateProps> = ({
+export const __ProgressiveOnboardingAlertCreate__: FC<ProgressiveOnboardingAlertCreateProps> = ({
   children,
   counts,
 }) => {
+  const { isLoggedIn } = useSystemContext()
+
   const { dismiss, isDismissed } = useProgressiveOnboarding()
 
   const isDisplayable =
+    isLoggedIn &&
     !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE).status &&
     counts.savedSearches === 0
 
@@ -122,17 +126,9 @@ const ProgressiveOnboardingAlertCreate: FC<ProgressiveOnboardingAlertCreateProps
   )
 }
 
-export const ProgressiveOnboardingAlertCreateQueryRenderer: FC = ({
-  children,
-}) => {
-  return (
-    <ProgressiveOnboardingCountsQueryRenderer
-      Component={ProgressiveOnboardingAlertCreate}
-    >
-      {children}
-    </ProgressiveOnboardingCountsQueryRenderer>
-  )
-}
+export const ProgressiveOnboardingAlertCreate = withProgressiveOnboardingCounts(
+  __ProgressiveOnboardingAlertCreate__
+)
 
 const IMAGE = {
   src: "https://files.artsy.net/images/ProgOnboard.jpg",

@@ -6,16 +6,16 @@ import {
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import {
-  ProgressiveOnboardingCountsQueryRenderer,
+  withProgressiveOnboardingCounts,
   WithProgressiveOnboardingCountsProps,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingCounts"
+} from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { FC } from "react"
 
 interface ProgressiveOnboardingSaveFindProps
   extends WithProgressiveOnboardingCountsProps {}
 
-const ProgressiveOnboardingSaveFind: FC<ProgressiveOnboardingSaveFindProps> = ({
+export const __ProgressiveOnboardingSaveFind__: FC<ProgressiveOnboardingSaveFindProps> = ({
   children,
   counts,
 }) => {
@@ -53,14 +53,6 @@ const ProgressiveOnboardingSaveFind: FC<ProgressiveOnboardingSaveFindProps> = ({
   )
 }
 
-export const ProgressiveOnboardingSaveFindQueryRenderer: FC = ({
-  children,
-}) => {
-  return (
-    <ProgressiveOnboardingCountsQueryRenderer
-      Component={ProgressiveOnboardingSaveFind}
-    >
-      {children}
-    </ProgressiveOnboardingCountsQueryRenderer>
-  )
-}
+export const ProgressiveOnboardingSaveFind = withProgressiveOnboardingCounts(
+  __ProgressiveOnboardingSaveFind__
+)
