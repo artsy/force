@@ -8,7 +8,7 @@ import {
   Tab,
   Tabs,
 } from "@artsy/palette"
-import { ArtistCurrentArticlesRailQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
+import { ArtistCurrentArticlesRailQueryRenderer } from "Components/ArtistCurrentArticlesRail"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"

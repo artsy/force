@@ -1,18 +1,13 @@
-import { Column, GridColumns, HTML, Spacer, Text } from "@artsy/palette"
+import { Column, Expandable, GridColumns, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCareerHighlights_artist$data } from "__generated__/ArtistCareerHighlights_artist.graphql"
 import { ArtistCareerHighlightsQuery } from "__generated__/ArtistCareerHighlightsQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "System/useSystemContext"
-import { ArtistInsightBadgesFragmentContainer } from "Apps/Artist/Components/ArtistInsights"
-import { ArtistInsightAchievementsFragmentContainer } from "Apps/Artist/Components/ArtistInsights"
 import { ArtistInsightAchievementsPlaceholder } from "Apps/Artist/Components/ArtistInsights/ArtistInsightAchievements"
-import { ArtistInsightBadgesPlaceholder } from "Apps/Artist/Components/ArtistInsights/ArtistInsightBadges"
 import { RouterLink } from "System/Router/RouterLink"
-import { getENV } from "Utils/getENV"
-import { useTranslation } from "react-i18next"
-import { Jump } from "Utils/Hooks/useJump"
+// import { useTranslation } from "react-i18next"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist$data
@@ -21,63 +16,46 @@ interface ArtistCareerHighlightsProps {
 const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
   artist,
 }) => {
-  const { t } = useTranslation()
+  // const { t } = useTranslation()
 
-  const { credit, partner, text } = artist.biographyBlurb!
+  const insights = artist.insights
+  const hasCareerHighlights = insights.length > 0
 
-  const showPartnerBio =
-    Boolean(credit) && Boolean(text) && partner?.profile?.href
-
-  const partnerHref = `${getENV("APP_URL")}/partner${partner?.profile?.href}`
-
-  const displayInsightAchievements = artist.insightAchievements.length > 0
-  const displayInsightBadges = artist.insightBadges.length > 0
-
-  if (!displayInsightAchievements && !displayInsightBadges) {
+  if (!hasCareerHighlights) {
     return null
   }
 
   return (
     <>
-      {showPartnerBio && (
-        <>
-          <Text variant="xs" mb={1}>
-            Bio
+      <GridColumns gridRowGap={2} gridColumnGap={[0, 4]}>
+        <Column span={6}>
+          <Text variant="lg" color="black100">
+            Highlights and Achievements Continued
           </Text>
-
-          <Text mb={1} variant="sm">
-            <RouterLink inline to={partnerHref}>
-              {credit}
+        </Column>
+        {hasCareerHighlights && (
+          <Column span={4} start={8}>
+            {insights.slice(0, 6).map((insight, index) => {
+              return (
+                <Expandable
+                  key={insight.kind ?? index}
+                  label={insight.label}
+                  pb={1}
+                >
+                  <Text variant="xs">
+                    {insight.entities.length > 0
+                      ? insight.entities.join(", ")
+                      : insight.description}
+                  </Text>
+                </Expandable>
+              )
+            })}
+            <RouterLink inline to={`/artist/${artist.slug}/cv`}>
+              View {artist.name}'s CV
             </RouterLink>
-          </Text>
-
-          <HTML html={text!} variant="sm" />
-
-          <Spacer y={2} />
-
-          <RouterLink inline to={`/artist/${artist.slug}/cv`}>
-            {t("artistPage.overview.cvLink")}
-          </RouterLink>
-
-          <Spacer y={4} />
-        </>
-      )}
-
-      <Jump id="ArtistCareerHighlights">
-        <GridColumns gridRowGap={4}>
-          {displayInsightAchievements && (
-            <Column span={6}>
-              <ArtistInsightAchievementsFragmentContainer artist={artist} />
-            </Column>
-          )}
-
-          {displayInsightBadges && (
-            <Column span={6}>
-              <ArtistInsightBadgesFragmentContainer artist={artist} />
-            </Column>
-          )}
-        </GridColumns>
-      </Jump>
+          </Column>
+        )}
+      </GridColumns>
     </>
   )
 }
@@ -87,50 +65,14 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistCareerHighlights_artist on Artist {
-        ...ArtistInsightBadges_artist
-        ...ArtistInsightAchievements_artist
-        insightAchievements: insights(
-          kind: [
-            SOLO_SHOW
-            GROUP_SHOW
-            COLLECTED
-            REVIEWED
-            BIENNIAL
-            AWARDS
-            PRIVATE_COLLECTIONS
-            RESIDENCIES
-          ]
-        ) {
-          __typename
+        insights {
+          entities
+          description
+          label
+          kind
         }
-        insightBadges: insights(
-          kind: [
-            ACTIVE_SECONDARY_MARKET
-            HIGH_AUCTION_RECORD
-            ARTSY_VANGUARD_YEAR
-            CRITICALLY_ACCLAIMED
-          ]
-        ) {
-          __typename
-        }
-        artistHighlights: highlights {
-          partnersConnection(first: 1, partnerCategory: ["blue-chip"]) {
-            edges {
-              node {
-                __typename
-              }
-            }
-          }
-        }
-        biographyBlurb(format: HTML, partnerBio: false) {
-          partner {
-            profile {
-              href
-            }
-          }
-          credit
-          text
-        }
+        internalID
+        name
         slug
       }
     `,
@@ -141,9 +83,6 @@ const PLACEHOLDER = (
   <GridColumns gridRowGap={4}>
     <Column span={6}>
       <ArtistInsightAchievementsPlaceholder />
-    </Column>
-    <Column span={6}>
-      <ArtistInsightBadgesPlaceholder />
     </Column>
   </GridColumns>
 )

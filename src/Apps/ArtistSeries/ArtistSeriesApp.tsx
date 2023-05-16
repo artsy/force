@@ -52,7 +52,6 @@ const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
               artist={(railArtist ?? [])[0]!}
               title="Series by this artist"
               contextModule={ContextModule.moreSeriesByThisArtist}
-              showProgress={false}
             />
           </>
         )}

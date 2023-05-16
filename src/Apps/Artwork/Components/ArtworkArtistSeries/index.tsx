@@ -45,7 +45,6 @@ const ArtworkArtistSeries: React.FC<ArtworkArtistSeriesProps> = ({
               artist={artwork.seriesArtist}
               title="Series by this artist"
               contextModule={ContextModule.moreSeriesByThisArtist}
-              showProgress
             />
           )}
         </>

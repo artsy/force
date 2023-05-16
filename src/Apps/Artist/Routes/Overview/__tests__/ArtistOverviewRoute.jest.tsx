@@ -1,74 +1,107 @@
 import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { screen } from "@testing-library/react"
 import { ArtistOverviewRouteFragmentContainer } from "Apps/Artist/Routes/Overview/ArtistOverviewRoute"
-import { ArtistOverviewRoute_Test_Query } from "__generated__/ArtistOverviewRoute_Test_Query.graphql"
 
 jest.unmock("react-relay")
 jest.mock("react-head", () => ({
   Title: () => null,
 }))
-jest.mock(
-  "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlights",
-  () => ({
-    ArtistCareerHighlightsQueryRenderer: () => null,
-  })
-)
-jest.mock(
-  "Apps/Artist/Routes/Overview/Components/ArtistIconicCollectionsRail",
-  () => ({
-    ArtistIconicCollectionsRailQueryRenderer: () => null,
-  })
-)
-jest.mock(
-  "Apps/Artist/Routes/Overview/Components/ArtistWorksForSaleRail",
-  () => ({
-    ArtistWorksForSaleRailQueryRenderer: () => null,
-  })
-)
-jest.mock(
-  "Apps/Artist/Routes/Overview/Components/ArtistCurrentShowsRail",
-  () => ({
-    ArtistCurrentShowsRailQueryRenderer: () => null,
-  })
-)
-jest.mock(
-  "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail",
-  () => ({
-    ArtistCurrentArticlesRailQueryRenderer: () => null,
-  })
-)
 
-jest.mock(
-  "Apps/Artist/Routes/Overview/Components/ArtistRelatedArtistsRail",
-  () => ({
-    ArtistRelatedArtistsRailQueryRenderer: () => null,
-  })
-)
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: ArtistOverviewRouteFragmentContainer,
+  query: graphql`
+    query ArtistOverviewRoute_Test_Query {
+      artist(id: "test") {
+        ...ArtistOverviewRoute_artist
+      }
+    }
+  `,
+})
+
+jest.mock("../Components/ArtistCareerHighlights", () => ({
+  ArtistCareerHighlightsQueryRenderer: () => <div>ArtistCareerHighlights</div>,
+}))
+
+jest.mock("Components/ArtistSeriesRail/ArtistSeriesRail", () => ({
+  ArtistSeriesRailQueryRenderer: () => <div>ArtistSeriesRail</div>,
+}))
+
+jest.mock("../Components/ArtistEditorialNewsGrid", () => ({
+  ArtistEditorialNewsGridQueryRenderer: () => (
+    <div>ArtistEditorialNewsGrid</div>
+  ),
+}))
+
+jest.mock("../Components/ArtistCurrentShowsRail", () => ({
+  ArtistCurrentShowsRailQueryRenderer: () => <div>ArtistCurrentShowsRail</div>,
+}))
+
+jest.mock("../Components/ArtistRelatedArtistsRail", () => ({
+  ArtistRelatedArtistsRailQueryRenderer: () => (
+    <div>ArtistRelatedArtistsRail</div>
+  ),
+}))
+
+jest.mock("../Components/ArtistRelatedGeneCategories", () => ({
+  ArtistRelatedGeneCategoriesQueryRenderer: () => (
+    <div>ArtistRelatedGeneCategories</div>
+  ),
+}))
 
 describe("ArtistOverviewRoute", () => {
-  const { getWrapper } = setupTestWrapper<ArtistOverviewRoute_Test_Query>({
-    Component: ArtistOverviewRouteFragmentContainer,
-    query: graphql`
-      query ArtistOverviewRoute_Test_Query @relay_test_operation {
-        artist(id: "test") {
-          ...ArtistOverviewRoute_artist
-        }
-      }
-    `,
+  it("renders correctly", () => {
+    renderWithRelay({
+      Artist: () => ({
+        name: "artistName",
+        slug: "artistSlug",
+        filterArtworksConnection: {
+          edges: [
+            {
+              node: {
+                internalID: "1234",
+              },
+            },
+          ],
+        },
+        insights: [
+          {
+            entities: ["example"],
+            description: "Description",
+            label: "Label",
+            kind: "KIND",
+          },
+        ],
+        artistSeriesConnection: { totalCount: 1 },
+        articlesConnection: { totalCount: 1 },
+        showsConnection: { totalCount: 1 },
+      }),
+    })
+
+    expect(screen.getByText("ArtistCareerHighlights")).toBeInTheDocument()
+    expect(screen.getByText("ArtistSeriesRail")).toBeInTheDocument()
+    expect(screen.getByText("ArtistEditorialNewsGrid")).toBeInTheDocument()
+    expect(screen.getByText("ArtistCurrentShowsRail")).toBeInTheDocument()
+    expect(screen.getByText("ArtistRelatedArtistsRail")).toBeInTheDocument()
+    expect(screen.getByText("ArtistRelatedGeneCategories")).toBeInTheDocument()
   })
 
-  // FIXME: SWC_COMPILER_MIGRATION
-  it.skip("renders correctly", () => {
-    const wrapper = getWrapper()
-    expect(wrapper.find("ArtistCareerHighlightsQueryRenderer").length).toBe(1)
+  it("renders empty state", () => {
+    renderWithRelay({
+      Artist: () => ({
+        name: "artistName",
+        slug: "artistSlug",
+        meta: { title: "title", description: "description" },
+        filterArtworksConnection: { edges: [] },
+        insights: [],
+        artistSeriesConnection: { totalCount: 0 },
+        articlesConnection: { totalCount: 0 },
+        showsConnection: { totalCount: 0 },
+      }),
+    })
+
     expect(
-      wrapper.find("ArtistIconicCollectionsRailQueryRenderer").length
-    ).toBe(1)
-    expect(wrapper.find("ArtistWorksForSaleRailQueryRenderer").length).toBe(1)
-    expect(wrapper.find("ArtistCurrentShowsRailQueryRenderer").length).toBe(1)
-    expect(wrapper.find("ArtistCurrentArticlesRailQueryRenderer").length).toBe(
-      1
-    )
-    expect(wrapper.find("ArtistRelatedArtistsRailQueryRenderer").length).toBe(1)
+      screen.getByText("There is no overview for this artist at this time.")
+    ).toBeInTheDocument()
   })
 })

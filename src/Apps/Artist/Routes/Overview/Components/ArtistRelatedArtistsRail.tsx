@@ -46,6 +46,7 @@ const ArtistRelatedArtistsRail: React.FC<ArtistRelatedArtistsRailProps> = ({
           return artists.map((artist, index) => {
             return (
               <CellArtistFragmentContainer
+                key={artist.slug}
                 artist={artist}
                 onClick={() => {
                   tracking.trackEvent({

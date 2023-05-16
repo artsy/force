@@ -42,7 +42,6 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
       <ArtistSeriesRailFragmentContainer
         artist={artist}
         contextModule={ContextModule.artistSeriesRail}
-        showProgress
         mb={6}
       />
       <ArtistArtworkFilterRefetchContainer
