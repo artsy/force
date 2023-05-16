@@ -1,5 +1,5 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
-import { Box, LabeledInput, useUpdateEffect } from "@artsy/palette"
+import { Box, LabeledInput } from "@artsy/palette"
 import { FC, useCallback, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
 import {
@@ -12,14 +12,16 @@ import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
 import { reportPerformanceMeasurement } from "Components/Search/NewSearch/utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "Components/Search/NewSearch/utils/shouldStartSearching"
-import { useDebounce } from "Utils/Hooks/useDebounce"
-import { useTracking } from "react-tracking"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { useDebounce, useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { MobileSearchBar_viewer$data } from "__generated__/MobileSearchBar_viewer.graphql"
 import { OverlayBase } from "Components/Search/NewSearch/Mobile/OverlayBase"
-import { SearchResultsListPaginationContainer } from "Components/Search/NewSearch/Mobile/SearchResultsList"
+import { SearchResultsListQueryRenderer } from "Components/Search/NewSearch/Mobile/SearchResultsList"
 
 const logger = createLogger("Components/Search/NewSearch/Mobile")
+
+const scrollToTop = () => {
+  document.querySelector("#MobileSearchOverlayContent")?.scrollTo(0, 0)
+}
 
 interface OverlayProps {
   viewer: MobileSearchBar_viewer$data
@@ -29,34 +31,26 @@ interface OverlayProps {
 
 export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
   const { t } = useTranslation()
-  const tracking = useTracking()
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
-  const [fetchCounter, setFetchCounter] = useState(0)
-  const [value, setValue] = useState("")
-  const options = [] // temporary
-  const disablePills = !shouldStartSearching(value)
+  const [inputValue, setInputValue] = useState("")
+  const disablePills = !shouldStartSearching(inputValue)
 
   useEffect(() => {
-    // TODO: another query renderer for content
-    // refetch(value)
     inputRef.current?.focus()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  useUpdateEffect(() => {
-    tracking.trackEvent({
-      action_type:
-        options.length > 0
-          ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
-          : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
-      query: value,
-    })
-  }, [fetchCounter])
+  const { debouncedValue } = useDebouncedValue({
+    value: inputValue,
+    delay: SEARCH_DEBOUNCE_DELAY,
+  })
+
+  useEffect(() => {
+    scrollToTop()
+  }, [debouncedValue])
 
   const refetch = useCallback(
     (value: string, entity?: string) => {
-      console.log("[Debug] Refetch", value, entity)
       const entities = entity ? [entity] : []
       const performanceStart = performance && performance.now()
 
@@ -76,9 +70,6 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
           if (performance) {
             reportPerformanceMeasurement(performanceStart)
           }
-
-          // trigger useEffect to send tracking event
-          setFetchCounter(prevCounter => prevCounter + 1)
         }
       )
     },
@@ -92,18 +83,17 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
 
   const handlePillClick = (pill: PillType) => {
     setSelectedPill(pill)
-    refetch(value, pill.searchEntityName)
+    refetch(inputValue, pill.searchEntityName)
 
-    // TODO: querySelector
-    document.getElementById("MobileSearchOverlayContent")?.scrollTo(0, 0)
+    scrollToTop()
   }
 
   const handleValueChange = event => {
-    const inputValue = event.target.value
-    setValue(inputValue)
+    const value = event.target.value
+    setInputValue(value)
 
-    if (shouldStartSearching(inputValue))
-      debouncedSearchRequest(inputValue, selectedPill.searchEntityName)
+    if (shouldStartSearching(value))
+      debouncedSearchRequest(value, selectedPill.searchEntityName)
   }
 
   return (
@@ -115,7 +105,7 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
             <LabeledInput
               mx={2}
               ref={inputRef}
-              value={value}
+              value={inputValue}
               placeholder={t`navbar.searchArtsy`}
               label={
                 <SearchIcon fill="black60" aria-hidden mr={-10} size={18} />
@@ -134,7 +124,16 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
         </>
       }
     >
-      <SearchResultsListPaginationContainer viewer={viewer} query={value} />
+      {shouldStartSearching(inputValue) && (
+        <SearchResultsListQueryRenderer
+          term={debouncedValue}
+          hasTerm={!!debouncedValue}
+          entities={
+            selectedPill.searchEntityName ? [selectedPill.searchEntityName] : []
+          }
+          onClose={onClose}
+        />
+      )}
     </OverlayBase>
   )
 }

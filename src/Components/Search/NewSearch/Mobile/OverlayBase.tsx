@@ -31,7 +31,6 @@ export const OverlayBase: FC<OverlayBaseProps> = ({
       dialogProps={{
         width: "100%",
         height: "100%",
-        background: "black100",
         justifyContent: "center",
         backgroundColor: "white100",
       }}

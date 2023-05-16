@@ -33,7 +33,7 @@ export const NewSuggestionItem: FC<SuggestionItemProps> = props => {
   return (
     <SuggestionItemLink onClick={handleClick} to={option.href}>
       <DefaultSuggestion {...props} />
-      <QuickNavigation option={option} />
+      <QuickNavigation option={option} onClick={onRedirect} />
     </SuggestionItemLink>
   )
 }

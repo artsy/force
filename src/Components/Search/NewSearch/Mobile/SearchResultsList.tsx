@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useState } from "react"
 import {
   RelayPaginationProp,
   createPaginationContainer,
@@ -12,13 +12,25 @@ import {
 } from "Components/Search/NewSearch/SuggestionItem/NewSuggestionItem"
 import { getLabel } from "Components/Search/NewSearch/utils/getLabel"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
-import { Box } from "@artsy/palette"
-import { shouldStartSearching } from "Components/Search/NewSearch/utils/shouldStartSearching"
+import {
+  Box,
+  Flex,
+  SkeletonBox,
+  SkeletonText,
+  Spacer,
+  Spinner,
+} from "@artsy/palette"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { SearchResultsListQuery } from "__generated__/SearchResultsListQuery.graphql"
+import { useTracking } from "react-tracking"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { SuggestionItemLink } from "Components/Search/NewSearch/SuggestionItem/SuggestionItemLink"
 
 interface SearchResultsListProps {
   relay: RelayPaginationProp
   viewer: SearchResultsList_viewer$data
   query: string
+  onClose: () => void
 }
 
 const ENTITIES_PER_SCROLL = 10
@@ -27,10 +39,20 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
   relay,
   viewer,
   query,
+  onClose,
 }) => {
-  if (!shouldStartSearching(query)) return null
+  const tracking = useTracking()
+  const [isLoading, setIsLoading] = useState(false)
 
   const options = extractNodes(viewer.searchConnection)
+
+  tracking.trackEvent({
+    action_type:
+      options.length > 0
+        ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
+        : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
+    query: query,
+  })
 
   // TODO: refactor
   const formattedOptions: SuggionItemOptionProps[] = options.map(
@@ -54,17 +76,24 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
     }
   )
 
-  // TODO: loading state
   const handleLoadMore = () => {
     if (!relay.hasMore() || relay.isLoading()) {
       return
     }
 
+    setIsLoading(true)
+
     relay.loadMore(ENTITIES_PER_SCROLL, err => {
       if (err) {
         console.error(err)
       }
+
+      setIsLoading(false)
     })
+  }
+
+  const handleOnRedirect = () => {
+    onClose()
   }
 
   return (
@@ -74,18 +103,24 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
           <NewSuggestionItem
             query={query}
             option={option}
-            onRedirect={() => {}}
+            onRedirect={handleOnRedirect}
             key={index}
           />
         )
       })}
 
       {relay.hasMore() && <InfiniteScrollSentinel onNext={handleLoadMore} />}
+
+      {isLoading && (
+        <Flex width="100%" minHeight="60px" alignItems="center">
+          <Spinner position="relative" />
+        </Flex>
+      )}
     </>
   )
 }
 
-export const SearchResultsListPaginationContainer = createPaginationContainer(
+const SearchResultsListPaginationContainer = createPaginationContainer(
   SearchResultsList,
   {
     viewer: graphql`
@@ -168,6 +203,61 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
   }
 )
 
+interface SearchResultsListQueryRendererProps {
+  term: string
+  hasTerm: boolean
+  entities: string[]
+  onClose: () => void
+}
+
+export const SearchResultsListQueryRenderer: FC<SearchResultsListQueryRendererProps> = ({
+  term,
+  hasTerm,
+  entities,
+  ...rest
+}) => {
+  return (
+    <SystemQueryRenderer<SearchResultsListQuery>
+      placeholder={<ContentPlaceholder />}
+      query={graphql`
+        query SearchResultsListQuery(
+          $term: String!
+          $hasTerm: Boolean!
+          $entities: [SearchEntity]
+        ) {
+          viewer {
+            ...SearchResultsList_viewer
+              @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
+          }
+        }
+      `}
+      variables={{
+        hasTerm: hasTerm,
+        term: term,
+        entities: entities,
+      }}
+      render={({ props: relayProps, error }) => {
+        if (error) {
+          console.error(error)
+          return null
+        }
+
+        if (!relayProps?.viewer) {
+          return <ContentPlaceholder />
+        }
+
+        return (
+          <SearchResultsListPaginationContainer
+            viewer={relayProps.viewer}
+            query={term}
+            {...rest}
+          />
+        )
+      }}
+    />
+  )
+}
+
 interface InfiniteScrollSentinelProps {
   onNext: () => void
 }
@@ -181,4 +271,28 @@ const InfiniteScrollSentinel: FC<InfiniteScrollSentinelProps> = ({
   })
 
   return <Box ref={ref as any} height={0} />
+}
+
+const ContentPlaceholder: FC = () => {
+  return (
+    <>
+      {[...Array(10)].map((_, index) => {
+        return (
+          <SuggestionItemLink key={index} onClick={() => {}} to="">
+            <Flex alignItems="center">
+              <SkeletonBox height={50} width={50} />
+              <Spacer x={1} />
+              <Flex flexDirection="column" flex={1} overflow="hidden">
+                <SkeletonText variant="sm-display">
+                  Banksy: Happy Choppers
+                </SkeletonText>
+
+                <SkeletonText variant="xs">Artist Series</SkeletonText>
+              </Flex>
+            </Flex>
+          </SuggestionItemLink>
+        )
+      })}
+    </>
+  )
 }
