@@ -2,7 +2,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 import { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActionsSaveButton_artwork.graphql"
-import { ProgressiveOnboardingSaveArtworkQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
+import { ProgressiveOnboardingSaveArtwork } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
 import { SaveUtilButton } from "Apps/Artwork/Components/ArtworkImageBrowser/SaveUtilButton"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { ArtworkActionsWatchLotButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsWatchLotButton"
@@ -46,9 +46,9 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   }
 
   return (
-    <ProgressiveOnboardingSaveArtworkQueryRenderer>
+    <ProgressiveOnboardingSaveArtwork>
       <SaveUtilButton isSaved={isSaved} onClick={handleSave} />
-    </ProgressiveOnboardingSaveArtworkQueryRenderer>
+    </ProgressiveOnboardingSaveArtwork>
   )
 }
 

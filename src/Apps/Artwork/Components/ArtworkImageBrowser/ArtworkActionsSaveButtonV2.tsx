@@ -2,7 +2,7 @@ import { ContextModule } from "@artsy/cohesion"
 import { ArtworkActionsWatchLotButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsWatchLotButton"
 import { SaveUtilButton } from "Apps/Artwork/Components/ArtworkImageBrowser/SaveUtilButton"
 import { useArtworkLists } from "Components/Artwork/useArtworkLists"
-import { ProgressiveOnboardingSaveArtworkQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
+import { ProgressiveOnboardingSaveArtwork } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
@@ -57,9 +57,9 @@ export const ArtworkActionsSaveButtonV2: FC<ArtworkActionsSaveButtonV2Props> = (
   }
 
   return (
-    <ProgressiveOnboardingSaveArtworkQueryRenderer>
+    <ProgressiveOnboardingSaveArtwork>
       <SaveUtilButton isSaved={isSaved} onClick={handleSave} />
-    </ProgressiveOnboardingSaveArtworkQueryRenderer>
+    </ProgressiveOnboardingSaveArtwork>
   )
 }
 

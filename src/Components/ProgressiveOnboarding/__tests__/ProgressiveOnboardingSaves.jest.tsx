@@ -5,9 +5,9 @@ import {
   reset,
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
-import { ProgressiveOnboardingCountsQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingCounts"
-import { ProgressiveOnboardingSaveArtworkQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
-import { ProgressiveOnboardingSaveFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
+import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
+import { __ProgressiveOnboardingSaveArtwork__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
+import { __ProgressiveOnboardingSaveFind__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { FC, useEffect } from "react"
@@ -28,28 +28,35 @@ jest.mock(
   })
 )
 
-jest.mock("Components/ProgressiveOnboarding/ProgressiveOnboardingCounts")
+jest.mock("Components/ProgressiveOnboarding/withProgressiveOnboardingCounts")
 
 const Example: FC = () => {
+  const ProgressiveOnboardingSaveFind = withProgressiveOnboardingCounts(
+    __ProgressiveOnboardingSaveFind__
+  )
+  const ProgressiveOnboardingSaveArtwork = withProgressiveOnboardingCounts(
+    __ProgressiveOnboardingSaveArtwork__
+  )
+
   return (
     <ProgressiveOnboardingProvider>
-      <ProgressiveOnboardingSaveFindQueryRenderer>
+      <ProgressiveOnboardingSaveFind>
         <button>Profile</button>
-      </ProgressiveOnboardingSaveFindQueryRenderer>
+      </ProgressiveOnboardingSaveFind>
 
       <ProgressiveOnboardingSaveHighlight position="center">
         <button>Saves</button>
       </ProgressiveOnboardingSaveHighlight>
 
-      <ProgressiveOnboardingSaveArtworkQueryRenderer>
+      <ProgressiveOnboardingSaveArtwork>
         <button>Save</button>
-      </ProgressiveOnboardingSaveArtworkQueryRenderer>
+      </ProgressiveOnboardingSaveArtwork>
     </ProgressiveOnboardingProvider>
   )
 }
 
 describe("ProgressiveOnboarding: Saves", () => {
-  const MockProgressiveOnboardingCountsQueryRenderer = ProgressiveOnboardingCountsQueryRenderer as jest.Mock
+  const mockWithProgressiveOnboardingCounts = withProgressiveOnboardingCounts as jest.Mock
 
   const saveArtworkText = "Like what you see?"
   const saveFindText = "Find and edit all your Saves here."
@@ -60,11 +67,9 @@ describe("ProgressiveOnboarding: Saves", () => {
   })
 
   it("renders the chain of tips correctly", async () => {
-    MockProgressiveOnboardingCountsQueryRenderer.mockImplementation(
-      ({ Component, children }) => {
-        return <Component counts={{ savedArtworks: 0 }}>{children}</Component>
-      }
-    )
+    mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
+      return props => <Component {...props} counts={{ savedArtworks: 0 }} />
+    })
 
     const wrapper = render(<Example />)
 
@@ -74,11 +79,10 @@ describe("ProgressiveOnboarding: Saves", () => {
     expect(screen.queryByText(saveHiglightedText)).not.toBeInTheDocument()
 
     // Simulate saveing the artwork
-    MockProgressiveOnboardingCountsQueryRenderer.mockImplementation(
-      ({ Component, children }) => {
-        return <Component counts={{ savedArtworks: 1 }}>{children}</Component>
-      }
-    )
+    mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
+      return props => <Component {...props} counts={{ savedArtworks: 1 }} />
+    })
+
     wrapper.rerender(<Example />)
 
     // See the second tip
@@ -98,11 +102,9 @@ describe("ProgressiveOnboarding: Saves", () => {
   })
 
   it("does not render any tips if user has saved more than 1 artwork", async () => {
-    MockProgressiveOnboardingCountsQueryRenderer.mockImplementation(
-      ({ Component, children }) => {
-        return <Component counts={{ savedArtworks: 2 }}>{children}</Component>
-      }
-    )
+    mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
+      return props => <Component {...props} counts={{ savedArtworks: 2 }} />
+    })
 
     render(<Example />)
 

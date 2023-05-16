@@ -16,7 +16,7 @@ import {
 jest.mock(
   "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate",
   () => ({
-    ProgressiveOnboardingAlertCreateQueryRenderer: ({ children }) =>
+    ProgressiveOnboardingAlertCreate: ({ children }) =>
       children({ onSkip: jest.fn() }),
   })
 )

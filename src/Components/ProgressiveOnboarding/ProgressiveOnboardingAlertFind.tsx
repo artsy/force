@@ -5,16 +5,16 @@ import {
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import {
-  ProgressiveOnboardingCountsQueryRenderer,
+  withProgressiveOnboardingCounts,
   WithProgressiveOnboardingCountsProps,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingCounts"
+} from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { FC } from "react"
 
 interface ProgressiveOnboardingAlertFindProps
   extends WithProgressiveOnboardingCountsProps {}
 
-const ProgressiveOnboardingAlertFind: FC<ProgressiveOnboardingAlertFindProps> = ({
+export const __ProgressiveOnboardingAlertFind__: FC<ProgressiveOnboardingAlertFindProps> = ({
   children,
   counts,
 }) => {
@@ -51,14 +51,6 @@ const ProgressiveOnboardingAlertFind: FC<ProgressiveOnboardingAlertFindProps> = 
   )
 }
 
-export const ProgressiveOnboardingAlertFindQueryRenderer: FC = ({
-  children,
-}) => {
-  return (
-    <ProgressiveOnboardingCountsQueryRenderer
-      Component={ProgressiveOnboardingAlertFind}
-    >
-      {children}
-    </ProgressiveOnboardingCountsQueryRenderer>
-  )
-}
+export const ProgressiveOnboardingAlertFind = withProgressiveOnboardingCounts(
+  __ProgressiveOnboardingAlertFind__
+)

@@ -19,9 +19,9 @@ import { NavBarNewNotifications } from "./Menus/NavBarNewNotifications"
 import { NavBarNotificationIndicator } from "./NavBarNotificationIndicator"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
-import { ProgressiveOnboardingFollowFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
-import { ProgressiveOnboardingSaveFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
-import { ProgressiveOnboardingAlertFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
+import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
+import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
+import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
@@ -109,9 +109,9 @@ export const NavBarLoggedInActions: React.FC<Partial<
         {({ anchorRef, anchorProps, visible }) => (
           // Offset to accomodate hit area padding on right side of icon
           <Flex mr={-1}>
-            <ProgressiveOnboardingSaveFindQueryRenderer>
-              <ProgressiveOnboardingFollowFindQueryRenderer>
-                <ProgressiveOnboardingAlertFindQueryRenderer>
+            <ProgressiveOnboardingSaveFind>
+              <ProgressiveOnboardingFollowFind>
+                <ProgressiveOnboardingAlertFind>
                   <NavBarItemButton
                     ref={anchorRef as any}
                     active={visible}
@@ -120,9 +120,9 @@ export const NavBarLoggedInActions: React.FC<Partial<
                   >
                     <PersonIcon fill="currentColor" />
                   </NavBarItemButton>
-                </ProgressiveOnboardingAlertFindQueryRenderer>
-              </ProgressiveOnboardingFollowFindQueryRenderer>
-            </ProgressiveOnboardingSaveFindQueryRenderer>
+                </ProgressiveOnboardingAlertFind>
+              </ProgressiveOnboardingFollowFind>
+            </ProgressiveOnboardingSaveFind>
           </Flex>
         )}
       </Dropdown>
