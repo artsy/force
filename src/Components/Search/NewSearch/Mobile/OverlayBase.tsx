@@ -11,16 +11,19 @@ export const OverlayBase: FC<OverlayBaseProps> = ({ children, onClose }) => {
       dialogProps={{
         width: "100%",
         height: "100%",
-        background: "black",
+        background: "black100",
         justifyContent: "center",
-        backgroundColor: "white",
+        backgroundColor: "white100",
       }}
     >
       <ModalDialogContent
         onClose={onClose}
         width="100%"
         height="100%"
-        margin={0} // TODO: ignored, fix it in palette
+        m={0}
+        // contentProps={{
+        //   px: 2,
+        // }}
       >
         {children}
       </ModalDialogContent>

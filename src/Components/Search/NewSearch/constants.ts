@@ -75,3 +75,5 @@ export const PILLS: PillType[] = [
   SHOW_PILL,
   GALLERY_PILL,
 ]
+
+export const SEARCH_DEBOUNCE_DELAY = 150

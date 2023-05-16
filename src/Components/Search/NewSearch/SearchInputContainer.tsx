@@ -6,8 +6,6 @@ import styled from "styled-components"
 import SearchIcon from "@artsy/icons/SearchIcon"
 
 const SearchButton = styled(Clickable)`
-  width: 18px;
-  height: 18px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -29,7 +27,7 @@ export const SearchInputContainer: React.ForwardRefExoticComponent<
     <LabeledInput
       ref={ref}
       width="100%"
-      height={50}
+      height={[40, 50]}
       label={
         <SearchButton
           type="submit"
@@ -42,7 +40,7 @@ export const SearchInputContainer: React.ForwardRefExoticComponent<
             }
           }}
         >
-          <SearchIcon fill={"black60"} />
+          <SearchIcon fill="black60" width={[22, 18]} height={[22, 18]} />
         </SearchButton>
       }
       {...props}

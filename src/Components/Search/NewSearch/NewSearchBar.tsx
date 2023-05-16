@@ -1,7 +1,7 @@
 import { Box } from "@artsy/palette"
 import { NewSearchBarInputQueryRenderer } from "Components/Search/NewSearch/NewSearchBarInput"
 import { Media } from "Utils/Responsive"
-import { SearchBar } from "./Mobile/SearchBar"
+import { MobileSearchBarQueryRenderer } from "./Mobile/MobileSearchBar"
 import { FC } from "react"
 
 interface NewSearchBarProps {
@@ -12,7 +12,7 @@ export const NewSearchBar: FC<NewSearchBarProps> = ({ onClose }) => {
   return (
     <Box flex={1}>
       <Media at="xs">
-        <SearchBar onClose={onClose} />
+        <MobileSearchBarQueryRenderer onClose={onClose} />
       </Media>
       <Media greaterThan="xs">
         <NewSearchBarInputQueryRenderer />

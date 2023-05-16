@@ -194,7 +194,8 @@ export const NavBar: React.FC = track(
                 flex={1}
                 alignItems="center"
                 onFocus={() => {
-                  setSearchFocused(true)
+                  if (!isSearchDropDownImprovementsEnabled)
+                    setSearchFocused(true)
                 }}
                 // Update only on mobile
                 position={[
