@@ -46,7 +46,7 @@ import { KeywordFilter } from "./Components/KeywordFilter"
 import { MarketStatsQueryRenderer } from "./Components/MarketStats"
 import { SortSelect } from "./Components/SortSelect"
 import { TableSidebar } from "./Components/TableSidebar"
-import { EmptyArtistAuctionResults } from "./Components/EmptyArtistAuctionResults"
+import { ArtistAuctionResultsEmptyState } from "./Components/ArtistAuctionResultsEmptyState"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -216,7 +216,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     )
   }
   if (results.length == 0) {
-    return <EmptyArtistAuctionResults />
+    return <ArtistAuctionResultsEmptyState />
   } else {
     return (
       <>
