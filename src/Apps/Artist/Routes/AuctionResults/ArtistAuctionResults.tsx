@@ -217,141 +217,140 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   }
   if (results.length == 0) {
     return <ArtistAuctionResultsEmptyState />
-  } else {
-    return (
-      <>
-        <Title>{titleString}</Title>
+  }
+  return (
+    <>
+      <Title>{titleString}</Title>
 
-        <Jump id="marketSignalsTop" />
+      <Jump id="marketSignalsTop" />
 
-        <MarketStatsQueryRenderer
-          artistInternalID={artist.internalID}
-          environment={relay.environment}
-          onRendered={handleMarketStatsRendered}
-        />
+      <MarketStatsQueryRenderer
+        artistInternalID={artist.internalID}
+        environment={relay.environment}
+        onRendered={handleMarketStatsRendered}
+      />
 
-        <Spacer y={6} />
+      <Spacer y={6} />
 
-        <Jump id="artistAuctionResultsTop" />
+      <Jump id="artistAuctionResultsTop" />
 
-        <Text variant={["sm-display", "lg-display"]}>Auction Results</Text>
+      <Text variant={["sm-display", "lg-display"]}>Auction Results</Text>
 
-        <Spacer y={2} />
+      <Spacer y={2} />
 
-        {showMobileActionSheet && (
-          <AuctionFilterMobileActionSheet
-            onClose={() => toggleMobileActionSheet(false)}
-          >
-            <AuctionFilters
-              showUpcomingAuctionResults={showUpcomingAuctionResults}
-            />
-          </AuctionFilterMobileActionSheet>
-        )}
+      {showMobileActionSheet && (
+        <AuctionFilterMobileActionSheet
+          onClose={() => toggleMobileActionSheet(false)}
+        >
+          <AuctionFilters
+            showUpcomingAuctionResults={showUpcomingAuctionResults}
+          />
+        </AuctionFilterMobileActionSheet>
+      )}
 
-        <Media greaterThan="xs">
-          <GridColumns>
-            <Column span={3}>
-              <Text variant="xs">Filter by</Text>
-            </Column>
-
-            <Column span={6}>
-              <KeywordFilter />
-            </Column>
-
-            <Column span={3}>
-              <SortSelect />
-            </Column>
-          </GridColumns>
-
-          <Spacer y={4} />
-        </Media>
-
+      <Media greaterThan="xs">
         <GridColumns>
           <Column span={3}>
-            <Media greaterThan="xs">
-              <TableSidebar
-                showUpcomingAuctionResults={showUpcomingAuctionResults}
-              />
-            </Media>
+            <Text variant="xs">Filter by</Text>
           </Column>
 
-          <Column span={9} data-test={ContextModule.auctionResults}>
-            <AuctionResultsControls
-              toggleMobileActionSheet={toggleMobileActionSheet}
-            />
+          <Column span={6}>
+            <KeywordFilter />
+          </Column>
 
-            <Spacer y={[2, 0]} />
-            {results.length > 0 ? (
-              <LoadingArea isLoading={isLoading}>
-                {
-                  <>
-                    {upcomingAuctionResults.length > 0 && (
-                      <Box mb={4}>
-                        <Text variant="md">Upcoming Auctions</Text>
-                        <Text variant="xs" mb={2} color="black60">
-                          {upcomingAuctionResultsCount}{" "}
-                          {upcomingAuctionResultsCount === 1
-                            ? "result"
-                            : "results"}
-                        </Text>
-
-                        <Join separator={<Spacer y={2} />}>
-                          {upcomingAuctionResults.map((result, index) => {
-                            return (
-                              <ArtistAuctionResultItemFragmentContainer
-                                key={index}
-                                auctionResult={result}
-                                filtersAtDefault={filtersAtDefault}
-                              />
-                            )
-                          })}
-                        </Join>
-                      </Box>
-                    )}
-
-                    {pastAuctionResults.length > 0 && (
-                      <Box mb={4}>
-                        <Text variant="md">Past Auctions</Text>
-                        <Text variant="xs" mb={2} color="black60">
-                          {pastAuctionResultsCount}{" "}
-                          {pastAuctionResultsCount === 1 ? "result" : "results"}
-                        </Text>
-
-                        <Join separator={<Spacer y={2} />}>
-                          {pastAuctionResults.map((result, index) => {
-                            return (
-                              <ArtistAuctionResultItemFragmentContainer
-                                key={index}
-                                auctionResult={result}
-                                filtersAtDefault={filtersAtDefault}
-                              />
-                            )
-                          })}
-                        </Join>
-                      </Box>
-                    )}
-                  </>
-                }
-              </LoadingArea>
-            ) : (
-              <Message>
-                There aren’t any auction results available by the artist at this
-                time.
-              </Message>
-            )}
-
-            <Pagination
-              getHref={() => ""}
-              hasNextPage={Boolean(pageInfo?.hasNextPage)}
-              pageCursors={artist.auctionResultsConnection?.pageCursors}
-              onClick={(_cursor, page) => loadPage(_cursor, page)}
-              onNext={() => loadNext()}
-            />
+          <Column span={3}>
+            <SortSelect />
           </Column>
         </GridColumns>
-      </>
-    )
-  }
+
+        <Spacer y={4} />
+      </Media>
+
+      <GridColumns>
+        <Column span={3}>
+          <Media greaterThan="xs">
+            <TableSidebar
+              showUpcomingAuctionResults={showUpcomingAuctionResults}
+            />
+          </Media>
+        </Column>
+
+        <Column span={9} data-test={ContextModule.auctionResults}>
+          <AuctionResultsControls
+            toggleMobileActionSheet={toggleMobileActionSheet}
+          />
+
+          <Spacer y={[2, 0]} />
+          {results.length > 0 ? (
+            <LoadingArea isLoading={isLoading}>
+              {
+                <>
+                  {upcomingAuctionResults.length > 0 && (
+                    <Box mb={4}>
+                      <Text variant="md">Upcoming Auctions</Text>
+                      <Text variant="xs" mb={2} color="black60">
+                        {upcomingAuctionResultsCount}{" "}
+                        {upcomingAuctionResultsCount === 1
+                          ? "result"
+                          : "results"}
+                      </Text>
+
+                      <Join separator={<Spacer y={2} />}>
+                        {upcomingAuctionResults.map((result, index) => {
+                          return (
+                            <ArtistAuctionResultItemFragmentContainer
+                              key={index}
+                              auctionResult={result}
+                              filtersAtDefault={filtersAtDefault}
+                            />
+                          )
+                        })}
+                      </Join>
+                    </Box>
+                  )}
+
+                  {pastAuctionResults.length > 0 && (
+                    <Box mb={4}>
+                      <Text variant="md">Past Auctions</Text>
+                      <Text variant="xs" mb={2} color="black60">
+                        {pastAuctionResultsCount}{" "}
+                        {pastAuctionResultsCount === 1 ? "result" : "results"}
+                      </Text>
+
+                      <Join separator={<Spacer y={2} />}>
+                        {pastAuctionResults.map((result, index) => {
+                          return (
+                            <ArtistAuctionResultItemFragmentContainer
+                              key={index}
+                              auctionResult={result}
+                              filtersAtDefault={filtersAtDefault}
+                            />
+                          )
+                        })}
+                      </Join>
+                    </Box>
+                  )}
+                </>
+              }
+            </LoadingArea>
+          ) : (
+            <Message>
+              There aren’t any auction results available by the artist at this
+              time.
+            </Message>
+          )}
+
+          <Pagination
+            getHref={() => ""}
+            hasNextPage={Boolean(pageInfo?.hasNextPage)}
+            pageCursors={artist.auctionResultsConnection?.pageCursors}
+            onClick={(_cursor, page) => loadPage(_cursor, page)}
+            onNext={() => loadNext()}
+          />
+        </Column>
+      </GridColumns>
+    </>
+  )
 }
 
 export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
