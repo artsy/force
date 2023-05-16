@@ -22,6 +22,7 @@ import {
 import { SeeFullResults } from "Components/Search/NewSearch/Mobile/SearchResultsList/SeeFullResults"
 import { InfiniteScrollSentinel } from "Components/Search/NewSearch/Mobile/SearchResultsList/InfiniteScrollSentinel"
 import { ContentPlaceholder } from "Components/Search/NewSearch/Mobile/SearchResultsList/ContentPlaceholder"
+import { NoResults } from "Components/Search/NewSearch/Mobile/SearchResultsList/NoResults"
 
 interface SearchResultsListProps {
   relay: RelayPaginationProp
@@ -42,6 +43,10 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
   const [isLoading, setIsLoading] = useState(false)
 
   const options = extractNodes(viewer.searchConnection)
+
+  if (!relay.isLoading() && options.length === 0) {
+    return <NoResults query={query} mt={50} mx={20} />
+  }
 
   tracking.trackEvent({
     action_type:
