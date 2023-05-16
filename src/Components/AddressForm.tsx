@@ -120,7 +120,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         <Input
           tabIndex={tabIndex}
           id="AddressForm_name"
-          placeholder="Add full name"
+          placeholder="Full name"
           title={billing ? "Name on card" : "Full name"}
           autoCorrect="off"
           value={address.name}
@@ -161,7 +161,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         <Input
           tabIndex={tabIndex}
           id="AddressForm_addressLine1"
-          placeholder="Add street address"
+          placeholder="Street address"
           title="Address line 1"
           value={address.addressLine1}
           onChange={changeEventHandler("addressLine1")}
@@ -173,8 +173,8 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         <Input
           tabIndex={tabIndex}
           id="AddressForm_addressLine2"
-          placeholder="Add apt, floor, suite, etc."
-          title="Address line 2 (optional)"
+          placeholder="Apt, floor, suite, etc. (optional)"
+          title="Address line 2"
           value={address.addressLine2}
           onChange={changeEventHandler("addressLine2")}
           error={getError("addressLine2")}
@@ -184,8 +184,33 @@ export const AddressForm: React.FC<AddressFormProps> = ({
       <Column span={12}>
         <Input
           tabIndex={tabIndex}
+          id="AddressForm_city"
+          placeholder="City"
+          title="City"
+          value={address.city}
+          onChange={changeEventHandler("city")}
+          error={getError("city")}
+          data-test="AddressForm_city"
+        />
+      </Column>
+      <Column span={6}>
+        <Input
+          tabIndex={tabIndex}
+          id="AddressForm_region"
+          placeholder="State, province, or region"
+          title="State, province, or region"
+          autoCorrect="off"
+          value={address.region}
+          onChange={changeEventHandler("region")}
+          error={getError("region")}
+          data-test="AddressForm_region"
+        />
+      </Column>
+      <Column span={6}>
+        <Input
+          tabIndex={tabIndex}
           id="AddressForm_postalCode"
-          placeholder="Add postal code"
+          placeholder="ZIP/Postal code"
           title="Postal code"
           autoCapitalize="characters"
           autoCorrect="off"
@@ -195,31 +220,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           data-test="AddressForm_postalCode"
         />
       </Column>
-      <Column span={12}>
-        <Input
-          tabIndex={tabIndex}
-          id="AddressForm_city"
-          placeholder="Add city"
-          title="City"
-          value={address.city}
-          onChange={changeEventHandler("city")}
-          error={getError("city")}
-          data-test="AddressForm_city"
-        />
-      </Column>
-      <Column span={12}>
-        <Input
-          tabIndex={tabIndex}
-          id="AddressForm_region"
-          placeholder="Add State, province, or region"
-          title="State, province, or region"
-          autoCorrect="off"
-          value={address.region}
-          onChange={changeEventHandler("region")}
-          error={getError("region")}
-          data-test="AddressForm_region"
-        />
-      </Column>
+
       {showPhoneNumberInput && (
         <>
           <Column span={12}>

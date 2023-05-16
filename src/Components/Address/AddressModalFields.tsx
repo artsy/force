@@ -19,7 +19,7 @@ export const AddressModalFields: React.FC = () => {
       <Column span={12}>
         <Input
           title="Full name"
-          placeholder="Add full name"
+          placeholder="Full name"
           id="name"
           name="name"
           type="text"
@@ -44,7 +44,7 @@ export const AddressModalFields: React.FC = () => {
       <Column span={12}>
         <Input
           title="Address Line 1"
-          placeholder="Add street address"
+          placeholder="Street address"
           name="addressLine1"
           onChange={handleChange}
           onBlur={handleBlur}
@@ -54,8 +54,8 @@ export const AddressModalFields: React.FC = () => {
       </Column>
       <Column span={12}>
         <Input
-          title="Address Line 2 (optional)"
-          placeholder="Add apt, floor, suite, etc."
+          title="Address Line 2"
+          placeholder="Apt, floor, suite, etc. (optional)"
           name="addressLine2"
           onChange={handleChange}
           onBlur={handleBlur}
@@ -65,19 +65,8 @@ export const AddressModalFields: React.FC = () => {
       </Column>
       <Column span={12}>
         <Input
-          title="Postal Code"
-          placeholder="Add postal code"
-          name="postalCode"
-          onChange={handleChange}
-          onBlur={handleBlur}
-          error={touched.postalCode && errors.postalCode}
-          value={values?.postalCode || ""}
-        />
-      </Column>
-      <Column span={12}>
-        <Input
           title="City"
-          placeholder="Enter city"
+          placeholder="City"
           name="city"
           onChange={handleChange}
           onBlur={handleBlur}
@@ -85,15 +74,26 @@ export const AddressModalFields: React.FC = () => {
           value={values?.city}
         />
       </Column>
-      <Column span={12}>
+      <Column span={6}>
         <Input
           title="State, province, or region"
-          placeholder="Add state, province, or region"
+          placeholder="State, province, or region"
           name="region"
           onChange={handleChange}
           onBlur={handleBlur}
           error={touched.region && errors.region}
           value={values?.region || ""}
+        />
+      </Column>
+      <Column span={6}>
+        <Input
+          title="Postal Code"
+          placeholder="Postal code"
+          name="postalCode"
+          onChange={handleChange}
+          onBlur={handleBlur}
+          error={touched.postalCode && errors.postalCode}
+          value={values?.postalCode || ""}
         />
       </Column>
     </GridColumns>
