@@ -10,7 +10,6 @@ import { NewSearchBarInputSuggestQuery } from "__generated__/NewSearchBarInputSu
 import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
 import { NewSearchBarFooter } from "Components/Search/NewSearch/NewSearchBarFooter"
-import { getLabel } from "./utils/getLabel"
 import { getSearchTerm } from "./utils/getSearchTerm"
 import { isServer } from "Server/isServer"
 import {
@@ -30,6 +29,7 @@ import { useRouter } from "System/Router/useRouter"
 import { useDebounce } from "Utils/Hooks/useDebounce"
 import { reportPerformanceMeasurement } from "./utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
+import { SearchNodeOption, formatOptions } from "./utils/formatOptions"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 
@@ -49,25 +49,8 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
   const options = extractNodes(viewer.searchConnection)
-  const formattedOptions: SuggionItemOptionProps[] = options.map(
-    (option, index) => {
-      return {
-        text: option.displayLabel!,
-        value: option.displayLabel!,
-        subtitle:
-          getLabel({
-            displayType: option.displayType ?? "",
-            typename: option.__typename,
-          }) ?? "",
-        imageUrl: option.imageUrl!,
-        showArtworksButton: !!option.statuses?.artworks,
-        showAuctionResultsButton: !!option.statuses?.auctionLots,
-        href: option.href!,
-        typename: option.__typename,
-        item_number: index,
-        item_type: option.displayType!,
-      }
-    }
+  const formattedOptions: SuggionItemOptionProps[] = formatOptions(
+    options as SearchNodeOption[]
   )
 
   // Clear the search term once you navigate away from search results

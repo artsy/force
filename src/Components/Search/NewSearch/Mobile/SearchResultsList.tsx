@@ -10,7 +10,6 @@ import {
   NewSuggestionItem,
   SuggionItemOptionProps,
 } from "Components/Search/NewSearch/SuggestionItem/NewSuggestionItem"
-import { getLabel } from "Components/Search/NewSearch/utils/getLabel"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import {
   Box,
@@ -25,6 +24,10 @@ import { SearchResultsListQuery } from "__generated__/SearchResultsListQuery.gra
 import { useTracking } from "react-tracking"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { SuggestionItemLink } from "Components/Search/NewSearch/SuggestionItem/SuggestionItemLink"
+import {
+  SearchNodeOption,
+  formatOptions,
+} from "Components/Search/NewSearch/utils/formatOptions"
 
 interface SearchResultsListProps {
   relay: RelayPaginationProp
@@ -54,26 +57,8 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
     query: query,
   })
 
-  // TODO: refactor
-  const formattedOptions: SuggionItemOptionProps[] = options.map(
-    (option, index) => {
-      return {
-        text: option.displayLabel!,
-        value: option.displayLabel!,
-        subtitle:
-          getLabel({
-            displayType: option.displayType ?? "",
-            typename: option.__typename,
-          }) ?? "",
-        imageUrl: option.imageUrl!,
-        showArtworksButton: !!option.statuses?.artworks,
-        showAuctionResultsButton: !!option.statuses?.auctionLots,
-        href: option.href!,
-        typename: option.__typename,
-        item_number: index,
-        item_type: option.displayType!,
-      }
-    }
+  const formattedOptions: SuggionItemOptionProps[] = formatOptions(
+    options as SearchNodeOption[]
   )
 
   const handleLoadMore = () => {
