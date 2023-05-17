@@ -16,7 +16,7 @@ export const AddressModalFields: React.FC = () => {
 
   return (
     <>
-      <Flex flexDirection="column" pt={2}>
+      <Flex flexDirection="column" pt={1}>
         <Input
           title="Full name"
           placeholder="Enter name"

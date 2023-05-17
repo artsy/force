@@ -115,7 +115,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
 
   return (
     <Join separator={<Spacer y={2} />}>
-      <Flex flexDirection="column">
+      <Flex flexDirection="column" pt={1}>
         <Input
           id="AddressForm_name"
           placeholder="Add full name"
