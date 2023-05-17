@@ -68,7 +68,9 @@ describe("ProgressiveOnboarding: Saves", () => {
 
   it("renders the chain of tips correctly", async () => {
     mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
-      return props => <Component {...props} counts={{ savedArtworks: 0 }} />
+      return props => (
+        <Component {...props} counts={{ isReady: true, savedArtworks: 0 }} />
+      )
     })
 
     const wrapper = render(<Example />)
@@ -80,7 +82,9 @@ describe("ProgressiveOnboarding: Saves", () => {
 
     // Simulate saveing the artwork
     mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
-      return props => <Component {...props} counts={{ savedArtworks: 1 }} />
+      return props => (
+        <Component {...props} counts={{ isReady: true, savedArtworks: 1 }} />
+      )
     })
 
     wrapper.rerender(<Example />)
@@ -103,7 +107,9 @@ describe("ProgressiveOnboarding: Saves", () => {
 
   it("does not render any tips if user has saved more than 1 artwork", async () => {
     mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
-      return props => <Component {...props} counts={{ savedArtworks: 2 }} />
+      return props => (
+        <Component {...props} counts={{ isReady: true, savedArtworks: 2 }} />
+      )
     })
 
     render(<Example />)

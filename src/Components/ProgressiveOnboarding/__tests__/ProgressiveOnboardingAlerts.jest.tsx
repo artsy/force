@@ -79,7 +79,12 @@ describe("ProgressiveOnboarding: Alerts", () => {
     ;(withProgressiveOnboardingCounts as jest.Mock).mockImplementation(
       Component => {
         return props => {
-          return <Component {...props} counts={{ savedSearches: 0 }} />
+          return (
+            <Component
+              {...props}
+              counts={{ isReady: true, savedSearches: 0 }}
+            />
+          )
         }
       }
     )
@@ -119,7 +124,9 @@ describe("ProgressiveOnboarding: Alerts", () => {
 
   it("dismisses the chain of tips correctly", async () => {
     mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
-      return props => <Component {...props} counts={{ savedSearches: 0 }} />
+      return props => (
+        <Component {...props} counts={{ isReady: true, savedSearches: 0 }} />
+      )
     })
 
     mockUseArtworkFilterContext.mockImplementation(() => ({
@@ -145,7 +152,9 @@ describe("ProgressiveOnboarding: Alerts", () => {
 
   it("gets dismissed completely when you go to create an alert", async () => {
     mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
-      return props => <Component {...props} counts={{ savedSearches: 0 }} />
+      return props => (
+        <Component {...props} counts={{ isReady: true, savedSearches: 0 }} />
+      )
     })
 
     mockUseArtworkFilterContext.mockImplementation(() => ({
@@ -171,7 +180,9 @@ describe("ProgressiveOnboarding: Alerts", () => {
 
   it("does not display if you have already saved an alert", async () => {
     mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
-      return props => <Component {...props} counts={{ savedSearches: 1 }} />
+      return props => (
+        <Component {...props} counts={{ isReady: true, savedSearches: 1 }} />
+      )
     })
 
     mockUseArtworkFilterContext.mockImplementation(() => ({
