@@ -1,8 +1,8 @@
 import * as React from "react"
-import { Box, Column, Flex, GridColumns, Input, Text } from "@artsy/palette"
+import { Column, Flex, GridColumns, Input } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
-import { CountrySelect } from "../CountrySelect"
+import { CountrySelect } from "Components/CountrySelect"
 
 export const AddressModalFields: React.FC = () => {
   const {
@@ -16,7 +16,7 @@ export const AddressModalFields: React.FC = () => {
 
   return (
     <>
-      <Flex flexDirection="column">
+      <Flex flexDirection="column" pt={2}>
         <Input
           title="Full name"
           placeholder="Enter name"
@@ -31,18 +31,14 @@ export const AddressModalFields: React.FC = () => {
       </Flex>
       <GridColumns mt={[1, 2]}>
         <Column span={6}>
-          <Box>
-            <Text variant="xs" mb={0.5}>
-              Country
-            </Text>
-            <CountrySelect
-              selected={values?.country}
-              onSelect={countryCode => {
-                setFieldValue("country", countryCode)
-              }}
-              error={touched.country && errors.country ? errors.country : ""}
-            />
-          </Box>
+          <CountrySelect
+            title="Country"
+            selected={values?.country}
+            onSelect={countryCode => {
+              setFieldValue("country", countryCode)
+            }}
+            error={touched.country && errors.country ? errors.country : ""}
+          />
         </Column>
         <Column span={6}>
           <Input
