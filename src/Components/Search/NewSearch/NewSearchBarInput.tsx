@@ -208,7 +208,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
           query={value}
           href={encodedSearchURL}
           index={options.length}
-          onPress={onClose}
+          onFooterClick={onClose}
         />
       )}
       dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 10px)`}

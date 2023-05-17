@@ -10,19 +10,19 @@ interface SuggestionItemProps {
   href: string
   query: string
   index: number
-  onPress: () => void
+  onFooterClick: () => void
 }
 
 export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
   href,
   query,
   index,
-  onPress,
+  onFooterClick,
 }) => {
   const tracking = useTracking()
 
   const handleClick = () => {
-    onPress()
+    onFooterClick()
     tracking.trackEvent({
       action_type: DeprecatedSchema.ActionType.SelectedItemFromSearch,
       destination_path: href,
