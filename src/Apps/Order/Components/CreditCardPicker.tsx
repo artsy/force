@@ -316,7 +316,6 @@ export class CreditCardPicker extends React.Component<
           {userHasExistingCards && <Spacer y={2} />}
           <Flex flexDirection="column">
             <CreditCardInput
-              title="Credit card"
               error={stripeError?.message}
               onChange={response => {
                 this.setState({ stripeError: response.error! })

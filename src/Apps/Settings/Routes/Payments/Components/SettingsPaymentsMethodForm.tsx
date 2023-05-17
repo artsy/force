@@ -14,7 +14,7 @@ import { FC } from "react"
 import { CountrySelect } from "Components/CountrySelect"
 import { CreditCardInput } from "Components/CreditCardInput"
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
-import { useAddCreditCard } from "../useAddCreditCard"
+import { useAddCreditCard } from "Apps/Settings/Routes/Payments/useAddCreditCard"
 
 export const INITIAL_VALUES = {
   addressLine1: "",
@@ -140,7 +140,7 @@ export const SettingsPaymentsMethodForm: FC<SettingsPaymentsMethodFormProps> = (
             <Form>
               <GridColumns>
                 <Column span={12}>
-                  <CreditCardInput title="Credit Card" required />
+                  <CreditCardInput required />
                 </Column>
 
                 <Column span={12}>
