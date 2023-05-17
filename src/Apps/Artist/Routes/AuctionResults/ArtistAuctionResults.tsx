@@ -1,14 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import {
-  Box,
-  Column,
-  GridColumns,
-  Join,
-  Message,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import { allowedAuctionResultFilters } from "Apps/Artist/Utils/allowedAuctionResultFilters"
 import {
   paramsToCamelCase,
@@ -281,7 +273,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           />
 
           <Spacer y={[2, 0]} />
-          {results.length > 0 ? (
+          {
             <LoadingArea isLoading={isLoading}>
               {
                 <>
@@ -333,12 +325,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
                 </>
               }
             </LoadingArea>
-          ) : (
-            <Message>
-              There aren’t any auction results available by the artist at this
-              time.
-            </Message>
-          )}
+          }
 
           <Pagination
             getHref={() => ""}
