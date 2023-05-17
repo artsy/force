@@ -1,7 +1,6 @@
 import { graphql } from "react-relay"
 import { SavedAddressesFragmentContainer } from "./../SavedAddresses"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { BorderBox } from "@artsy/palette"
 import { AddressModal } from "Apps/Order/Components/AddressModal"
 import { RootTestPage } from "DevTools/RootTestPage"
 import { userAddressMutation } from "Apps/__tests__/Fixtures/Order/MutationResults"
@@ -16,29 +15,24 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 
 class SavedAddressesTestPage extends RootTestPage {
   async selectEdit() {
-    this.find(`[data-test="addressModal"]`).simulate("click")
+    this.find(`[data-test="editAddressInShipping"]`)
+      .first()
+      .simulate("click", { preventDefault: () => {} })
     await this.update()
   }
 }
 
 describe("Saved Addresses", () => {
   const trackEvent = jest.fn()
-  let inCollectorProfile
 
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent,
     }))
-    inCollectorProfile = true
   })
 
   const { getWrapper } = setupTestWrapper({
-    Component: (props: any) => (
-      <SavedAddressesFragmentContainer
-        inCollectorProfile={inCollectorProfile}
-        {...props}
-      />
-    ),
+    Component: (props: any) => <SavedAddressesFragmentContainer {...props} />,
     query: graphql`
       query SavedAddressesMutation_Test_Query @relay_test_operation {
         me {
@@ -52,120 +46,22 @@ describe("Saved Addresses", () => {
     it("edits the saved addresses after calling edit address mutation", async () => {
       const wrapper = getWrapper({ Me: () => userAddressMutation.me })
       const page = new SavedAddressesTestPage(wrapper)
-      const editButton = page
-        .find(`[data-test="editAddressInProfileClick"]`)
-        .first()
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      editButton
-        .props()
-        .onClick(userAddressMutation.me.addressConnection.edges[0].node as any)
+      page.selectEdit()
       const addresses = page.find(SavedAddressItem).first().text()
-
       expect(addresses).toBe(
         "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit"
       )
     })
   })
 
-  describe("SavedAddresses in collector profile", () => {
+  describe("Saved Addresses", () => {
     it("renders modal when button is clicked", () => {
       const wrapper = getWrapper({
         Me: () => ({
           addressConnection: mockAddressConnection,
         }),
       })
-      const button = wrapper.find("Button[data-test='profileButton']")
-      const modal = wrapper.find(AddressModal)
-      expect(modal.props().show).toBe(false)
-      button.simulate("click")
-
-      expect(modal).toHaveLength(1)
-    })
-
-    it("add address modal with expected props", async () => {
-      const wrapper = getWrapper({
-        Me: () => ({
-          addressConnection: mockAddressConnection,
-        }),
-      })
-
-      const button = wrapper.find("Button[data-test='profileButton']")
-      expect(wrapper.find(AddressModal).props().show).toBe(false)
-      button.simulate("click")
-
-      expect(wrapper.find(AddressModal).props().modalDetails).toEqual({
-        addressModalTitle: "Add new address",
-        addressModalAction: "createUserAddress",
-      })
-    })
-
-    it("edit address modal with expected props", () => {
-      const wrapper = getWrapper({
-        Me: () => ({
-          addressConnection: mockAddressConnection,
-        }),
-      })
-      const button = wrapper.find({ "data-test": "editAddressInProfile" }).at(0)
-      expect(wrapper.find(AddressModal).props().show).toBe(false)
-      button.simulate("click")
-
-      expect(wrapper.find(AddressModal).props().modalDetails).toEqual({
-        addressModalTitle: "Edit address",
-        addressModalAction: "editUserAddress",
-      })
-    })
-
-    it("render an add address button", () => {
-      const wrapper = getWrapper({
-        Me: () => ({
-          addressConnection: mockAddressConnection,
-        }),
-      })
-      expect(wrapper.find("Button[data-test='profileButton']")).toHaveLength(1)
-    })
-
-    describe("when clicking on the add address button", () => {
-      it("does not track an analytics event", () => {
-        const wrapper = getWrapper({
-          Me: () => ({
-            addressConnection: mockAddressConnection,
-          }),
-        })
-
-        wrapper.find("Button[data-test='profileButton']").simulate("click")
-
-        expect(trackEvent).not.toHaveBeenCalled()
-      })
-    })
-
-    it("renders addresses", () => {
-      const wrapper = getWrapper({
-        Me: () => ({
-          addressConnection: mockAddressConnection,
-        }),
-      })
-      const addresses = wrapper.find(BorderBox)
-
-      expect(addresses).toHaveLength(2)
-      expect(addresses.map(address => address.text())).toEqual([
-        "Test Name1 Main StMadrid, Spain, 28001555-555-5555EditEditDelete",
-        "Test Name401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242EditDefault AddressEditDelete",
-      ])
-    })
-  })
-
-  describe("SavedAddresses outside collector profile", () => {
-    beforeEach(() => {
-      inCollectorProfile = false
-    })
-
-    it("renders modal when button is clicked", () => {
-      const wrapper = getWrapper({
-        Me: () => ({
-          addressConnection: mockAddressConnection,
-        }),
-      })
-      const button = wrapper.find("Button[data-test='shippingButton']")
+      const button = wrapper.find("[data-test='shippingButton']").first()
       const modal = wrapper.find(AddressModal)
       expect(modal.props().show).toBe(false)
       button.simulate("click")
@@ -179,7 +75,7 @@ describe("Saved Addresses", () => {
           addressConnection: mockAddressConnection,
         }),
       })
-      const button = wrapper.find("Button[data-test='shippingButton']")
+      const button = wrapper.find("[data-test='shippingButton']").first()
       expect(wrapper.find(AddressModal).props().show).toBe(false)
       button.simulate("click")
 
@@ -197,7 +93,9 @@ describe("Saved Addresses", () => {
           addressConnection: mockAddressConnection,
         }),
       })
-      expect(wrapper.find("Button[data-test='shippingButton']")).toHaveLength(1)
+      expect(wrapper.find("[data-test='shippingButton']").first()).toHaveLength(
+        1
+      )
     })
 
     describe("when clicking on the add address button", () => {
@@ -208,7 +106,7 @@ describe("Saved Addresses", () => {
           }),
         })
 
-        wrapper.find("Button[data-test='shippingButton']").simulate("click")
+        wrapper.find("[data-test='shippingButton']").first().simulate("click")
 
         expect(trackEvent).toHaveBeenCalled()
         expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
