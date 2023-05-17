@@ -19,7 +19,7 @@ export const AddressModalFields: React.FC = () => {
       <Column span={12}>
         <Input
           title="Full name"
-          placeholder="Full name"
+          placeholder="Add full name"
           id="name"
           name="name"
           type="text"
@@ -44,7 +44,7 @@ export const AddressModalFields: React.FC = () => {
       <Column span={12}>
         <Input
           title="Address Line 1"
-          placeholder="Street address"
+          placeholder="Add street address"
           name="addressLine1"
           onChange={handleChange}
           onBlur={handleBlur}
@@ -54,8 +54,8 @@ export const AddressModalFields: React.FC = () => {
       </Column>
       <Column span={12}>
         <Input
-          title="Address Line 2"
-          placeholder="Apt, floor, suite, etc. (optional)"
+          title="Address Line 2 (optional)"
+          placeholder="Add apt, floor, suite, etc."
           name="addressLine2"
           onChange={handleChange}
           onBlur={handleBlur}
@@ -66,7 +66,7 @@ export const AddressModalFields: React.FC = () => {
       <Column span={12}>
         <Input
           title="City"
-          placeholder="City"
+          placeholder="Enter city"
           name="city"
           onChange={handleChange}
           onBlur={handleBlur}
@@ -77,7 +77,7 @@ export const AddressModalFields: React.FC = () => {
       <Column span={6}>
         <Input
           title="State, province, or region"
-          placeholder="State, province, or region"
+          placeholder="Add state, province, or region"
           name="region"
           onChange={handleChange}
           onBlur={handleBlur}
@@ -88,7 +88,7 @@ export const AddressModalFields: React.FC = () => {
       <Column span={6}>
         <Input
           title="Postal Code"
-          placeholder="Postal code"
+          placeholder="Add postal code"
           name="postalCode"
           onChange={handleChange}
           onBlur={handleBlur}

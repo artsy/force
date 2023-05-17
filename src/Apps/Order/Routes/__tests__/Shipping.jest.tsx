@@ -1688,9 +1688,9 @@ describe("Shipping", () => {
             "Test Name",
             "1 Main St",
             "",
-            "28001",
             "Madrid",
             "",
+            "28001",
           ]
         `)
       })
