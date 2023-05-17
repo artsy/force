@@ -11,6 +11,8 @@ import { themeGet } from "@styled-system/theme-get"
 import { FC } from "react"
 import styled from "styled-components"
 
+export const OVERLAY_CONTENT_ID = "MobileSearchOverlayContent"
+
 interface OverlayBaseProps {
   header: JSX.Element
   onClose: () => void
@@ -56,7 +58,7 @@ export const OverlayBase: FC<OverlayBaseProps> = ({
         </Flex>
 
         <Box
-          id="MobileSearchOverlayContent"
+          id={OVERLAY_CONTENT_ID}
           flex={1}
           overflow="auto"
           style={{ WebkitOverflowScrolling: "touch" }}

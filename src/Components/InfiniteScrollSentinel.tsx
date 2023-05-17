@@ -4,14 +4,16 @@ import { FC } from "react"
 
 interface InfiniteScrollSentinelProps {
   onNext: () => void
+  once?: boolean
 }
 
 export const InfiniteScrollSentinel: FC<InfiniteScrollSentinelProps> = ({
   onNext,
+  once = true,
 }) => {
   const { ref } = useIntersectionObserver({
     onIntersection: onNext,
-    once: false,
+    once: once,
   })
 
   return <Box ref={ref as any} height={0} />

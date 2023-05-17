@@ -14,13 +14,16 @@ import { reportPerformanceMeasurement } from "Components/Search/NewSearch/utils/
 import { shouldStartSearching } from "Components/Search/NewSearch/utils/shouldStartSearching"
 import { useDebounce, useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { MobileSearchBar_viewer$data } from "__generated__/MobileSearchBar_viewer.graphql"
-import { OverlayBase } from "Components/Search/NewSearch/Mobile/OverlayBase"
+import {
+  OVERLAY_CONTENT_ID,
+  OverlayBase,
+} from "Components/Search/NewSearch/Mobile/OverlayBase"
 import { SearchResultsListQueryRenderer } from "Components/Search/NewSearch/Mobile/SearchResultsList"
 
 const logger = createLogger("Components/Search/NewSearch/Mobile")
 
 const scrollToTop = () => {
-  document.querySelector("#MobileSearchOverlayContent")?.scrollTo(0, 0)
+  document.querySelector(OVERLAY_CONTENT_ID)?.scrollTo(0, 0)
 }
 
 interface OverlayProps {

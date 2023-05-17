@@ -15,7 +15,7 @@ export const NoResults: FC<NoResultsProps> = ({ query, ...rest }) => {
       <Text alignContent="center" textAlign="center">
         {t("searchApp.noResults.sorryMessage")} “<Highlight>{query}</Highlight>”
       </Text>
-      <Text color="black60" textAlign="center" mt={10}>
+      <Text color="black60" textAlign="center" mt={1}>
         {t("searchApp.noResults.trySearchingAgain")}
       </Text>
     </Flex>

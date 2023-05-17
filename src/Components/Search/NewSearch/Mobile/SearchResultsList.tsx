@@ -13,14 +13,11 @@ import {
 import { Flex, Spinner } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { SearchResultsListQuery } from "__generated__/SearchResultsListQuery.graphql"
-import { useTracking } from "react-tracking"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import {
   SearchNodeOption,
   formatOptions,
 } from "Components/Search/NewSearch/utils/formatOptions"
-import { SeeFullResults } from "Components/Search/NewSearch/Mobile/SearchResultsList/SeeFullResults"
-import { InfiniteScrollSentinel } from "Components/Search/NewSearch/Mobile/SearchResultsList/InfiniteScrollSentinel"
+import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 import { ContentPlaceholder } from "Components/Search/NewSearch/Mobile/SearchResultsList/ContentPlaceholder"
 import { NoResults } from "Components/Search/NewSearch/Mobile/SearchResultsList/NoResults"
 
@@ -39,7 +36,6 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
   query,
   onClose,
 }) => {
-  const tracking = useTracking()
   const [isLoading, setIsLoading] = useState(false)
 
   const options = extractNodes(viewer.searchConnection)
@@ -47,14 +43,6 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
   if (!relay.isLoading() && options.length === 0) {
     return <NoResults query={query} mt={50} mx={20} />
   }
-
-  tracking.trackEvent({
-    action_type:
-      options.length > 0
-        ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
-        : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
-    query: query,
-  })
 
   const formattedOptions: SuggionItemOptionProps[] = formatOptions(
     options as SearchNodeOption[]
@@ -93,14 +81,12 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
         )
       })}
 
-      {relay.hasMore() && <InfiniteScrollSentinel onNext={handleLoadMore} />}
-
-      {!relay.hasMore() && (
-        <SeeFullResults query={query} onClick={handleOnRedirect} />
+      {relay.hasMore() && (
+        <InfiniteScrollSentinel onNext={handleLoadMore} once={false} />
       )}
 
       {isLoading && (
-        <Flex width="100%" minHeight="60px" alignItems="center">
+        <Flex width="100%" my={4} alignItems="center">
           <Spinner position="relative" />
         </Flex>
       )}

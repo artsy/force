@@ -20,7 +20,7 @@ import {
 import { AddArtworksModalContentQuery } from "__generated__/AddArtworksModalContentQuery.graphql"
 import { AddArtworksModalContent_me$data } from "__generated__/AddArtworksModalContent_me.graphql"
 import { MetadataPlaceholder } from "Components/Artwork/Metadata"
-import { ArtworksInfiniteScrollSentinel } from "./ArtworksInfiniteScrollSentinel"
+import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 
 interface AddArtworksModalContentQueryRenderProps {
   selectedArtworkIds: string[]
@@ -120,7 +120,7 @@ export const AddArtworksModalContent: FC<AddArtworksModalContentProps> = ({
       />
 
       {relay.hasMore() && (
-        <ArtworksInfiniteScrollSentinel onNext={handleLoadMore} />
+        <InfiniteScrollSentinel onNext={handleLoadMore} once={false} />
       )}
 
       {isLoadingNextPage && <ArtworksGridPlaceholder />}
