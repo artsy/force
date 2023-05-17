@@ -1,15 +1,13 @@
-import { Text, THEME, Box, Spacer, BoxProps } from "@artsy/palette"
+import { Text, THEME, Box, BoxProps } from "@artsy/palette"
 import type { StripeCardElementChangeEvent } from "@stripe/stripe-js"
 import { CardElement } from "@stripe/react-stripe-js"
 import styled, { css } from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 
 interface CreditCardInputProps extends BoxProps {
-  description?: string
   error?: string | boolean
   onChange?: (response: StripeCardElementChangeEvent) => void
   required?: boolean
-  title?: string
 }
 
 /**
@@ -17,40 +15,13 @@ interface CreditCardInputProps extends BoxProps {
  * Parent element must be wrapped with `CreditaCardInputProvider`.
  */
 export const CreditCardInput: React.FC<CreditCardInputProps> = ({
-  description,
   error,
   onChange,
   required,
-  title,
   ...rest
 }) => {
   return (
     <Box data-test="creditCardInput" {...rest}>
-      {(title || description) && (
-        <>
-          <div>
-            {title && (
-              <Text variant="xs">
-                {title}
-                {required && (
-                  <Box as="span" color="brand">
-                    *
-                  </Box>
-                )}
-              </Text>
-            )}
-
-            {description && (
-              <Text variant="xs" color="black60">
-                {description}
-              </Text>
-            )}
-          </div>
-
-          <Spacer x={0.5} y={0.5} />
-        </>
-      )}
-
       <FauxInput error={!!error}>
         <CardElement
           onChange={onChange}
@@ -62,7 +33,7 @@ export const CreditCardInput: React.FC<CreditCardInputProps> = ({
                 backgroundColor: THEME.colors.white100,
                 color: THEME.colors.black100,
                 fontFamily: THEME.fonts.sans,
-                fontSize: THEME.textVariants.sm.fontSize,
+                fontSize: THEME.textVariants["sm-display"].fontSize,
                 fontSmoothing: "antialiased",
                 letterSpacing: THEME.textVariants.sm.letterSpacing,
                 lineHeight: THEME.textVariants.sm.lineHeight,
@@ -88,10 +59,8 @@ const FauxInput = styled(Box)<{ error: boolean }>`
     justify-content: center;
     height: 50px;
     padding: 0 ${themeGet("space.1")};
-    border-top: none;
-    border-left: none;
-    border-right: none;
-    border-bottom: 1px solid;
+    border: 1px solid;
+    border-radius: 3px;
     border-color: ${themeGet("colors.black30")};
     transition: border-color 0.25s;
     ::placeholder {
@@ -114,9 +83,9 @@ const FauxInput = styled(Box)<{ error: boolean }>`
 
     &--focus {
       color: ${themeGet("colors.black100")};
-      border-color: ${themeGet("colors.black60")};
+      border-color: ${themeGet("colors.blue100")};
       ::placeholder {
-        color: ${themeGet("colors.black100")};
+        color: ${themeGet("colors.black60")};
       }
     }
 
