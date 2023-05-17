@@ -79,7 +79,12 @@ describe("ProgressiveOnboarding: Follows", () => {
   it("renders the chain of tips correctly", async () => {
     mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
       return props => {
-        return <Component counts={{ followedArtists: 0 }} {...props} />
+        return (
+          <Component
+            counts={{ isReady: true, followedArtists: 0 }}
+            {...props}
+          />
+        )
       }
     })
 
@@ -93,7 +98,12 @@ describe("ProgressiveOnboarding: Follows", () => {
     // Simulate following the artist
     mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
       return props => {
-        return <Component counts={{ followedArtists: 1 }} {...props} />
+        return (
+          <Component
+            counts={{ isReady: true, followedArtists: 1 }}
+            {...props}
+          />
+        )
       }
     })
     wrapper.rerender(<Example />)
@@ -117,7 +127,12 @@ describe("ProgressiveOnboarding: Follows", () => {
   it("does not render any tips if user has followed more than 1 artist", async () => {
     mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
       return props => {
-        return <Component counts={{ followedArtists: 2 }} {...props} />
+        return (
+          <Component
+            counts={{ isReady: true, followedArtists: 2 }}
+            {...props}
+          />
+        )
       }
     })
 

@@ -37,6 +37,7 @@ export const __ProgressiveOnboardingAlertCreate__: FC<ProgressiveOnboardingAlert
   const isDisplayable =
     isLoggedIn &&
     !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE).status &&
+    counts.isReady &&
     counts.savedSearches === 0
 
   const image = resized(IMAGE.src, { width: 230 })

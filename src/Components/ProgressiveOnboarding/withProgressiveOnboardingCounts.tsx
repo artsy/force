@@ -6,6 +6,7 @@ import { withProgressiveOnboardingCountsQuery } from "__generated__/withProgress
 
 export interface WithProgressiveOnboardingCountsProps {
   counts: {
+    isReady: boolean
     followedArtists: number
     savedArtworks: number
     savedSearches: number
@@ -13,13 +14,10 @@ export interface WithProgressiveOnboardingCountsProps {
 }
 
 const INITIAL_COUNTS = {
+  isReady: false,
   followedArtists: 0,
   savedArtworks: 0,
   savedSearches: 0,
-}
-
-export const foo = () => {
-  return "bar"
 }
 
 export const withProgressiveOnboardingCounts = <
@@ -55,22 +53,9 @@ export const withProgressiveOnboardingCounts = <
             return <Component {...props} counts={INITIAL_COUNTS} />
           }
 
-          const counts = renderProps.me.counts || {
-            savedArtworks: 0,
-            followedArtists: 0,
-            savedSearches: 0,
-          }
+          const counts = renderProps.me.counts || INITIAL_COUNTS
 
-          return (
-            <Component
-              {...props}
-              counts={{
-                followedArtists: counts.followedArtists,
-                savedArtworks: counts.savedArtworks,
-                savedSearches: counts.savedSearches,
-              }}
-            />
-          )
+          return <Component {...props} counts={{ isReady: true, ...counts }} />
         }}
       />
     )

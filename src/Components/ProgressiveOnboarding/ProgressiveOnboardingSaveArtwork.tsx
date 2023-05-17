@@ -27,6 +27,7 @@ export const __ProgressiveOnboardingSaveArtwork__: FC<ProgressiveOnboardingSaveA
   const isDisplayble =
     isLoggedIn &&
     !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK).status &&
+    counts.isReady &&
     counts.savedArtworks === 0
 
   const handleClose = useCallback(() => {
