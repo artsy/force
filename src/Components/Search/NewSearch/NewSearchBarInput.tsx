@@ -203,13 +203,14 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
           onRedirect={handleRedirect}
         />
       )}
-      footer={
+      footer={({ onClose }) => (
         <NewSearchBarFooter
           query={value}
           href={encodedSearchURL}
           index={options.length}
+          onPress={onClose}
         />
-      }
+      )}
       dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 10px)`}
     />
   )
