@@ -352,7 +352,6 @@ export class ArtworkSidebarBidAction extends React.Component<
             <Spacer y={1} />
 
             <Select
-              variant="default"
               options={selectOptions as Option[]}
               onSelect={this.setMaxBid}
             />
