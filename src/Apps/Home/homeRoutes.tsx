@@ -19,6 +19,9 @@ export const homeRoutes: AppRouteConfig[] = [
         featuredEventsOrderedSet: orderedSet(id: "529939e2275b245e290004a0") {
           ...HomeApp_featuredEventsOrderedSet
         }
+        heroUnitsConnection(first: 10) {
+          ...HomeApp_heroUnitsConnection
+        }
       }
     `,
   },
