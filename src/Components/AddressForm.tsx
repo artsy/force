@@ -120,7 +120,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         <Input
           tabIndex={tabIndex}
           id="AddressForm_name"
-          placeholder="Add full name"
+          placeholder="Full name"
           title={billing ? "Name on card" : "Full name"}
           autoCorrect="off"
           value={address.name}
@@ -161,7 +161,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         <Input
           tabIndex={tabIndex}
           id="AddressForm_addressLine1"
-          placeholder="Add street address"
+          placeholder="Street address"
           title="Address line 1"
           value={address.addressLine1}
           onChange={changeEventHandler("addressLine1")}
@@ -173,7 +173,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         <Input
           tabIndex={tabIndex}
           id="AddressForm_addressLine2"
-          placeholder="Add apt, floor, suite, etc."
+          placeholder="Apt, floor, suite, etc."
           title="Address line 2 (optional)"
           value={address.addressLine2}
           onChange={changeEventHandler("addressLine2")}
@@ -185,7 +185,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         <Input
           tabIndex={tabIndex}
           id="AddressForm_city"
-          placeholder="Add city"
+          placeholder="City"
           title="City"
           value={address.city}
           onChange={changeEventHandler("city")}
@@ -197,7 +197,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         <Input
           tabIndex={tabIndex}
           id="AddressForm_region"
-          placeholder="Add state, province, or region"
+          placeholder="State, province, or region"
           title="State, province, or region"
           autoCorrect="off"
           value={address.region}
@@ -210,7 +210,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         <Input
           tabIndex={tabIndex}
           id="AddressForm_postalCode"
-          placeholder="Add postal code"
+          placeholder="ZIP/postal code"
           title="Postal code"
           autoCapitalize="characters"
           autoCorrect="off"
