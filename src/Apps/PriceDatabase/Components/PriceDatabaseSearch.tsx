@@ -16,7 +16,7 @@ import { sizeMap } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFil
 import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { useRouter } from "System/Router/useRouter"
 import { Media } from "Utils/Responsive"
-import { filterSearchFilters } from "../Utils/filterSearchFilters"
+import { filterSearchFilters } from "Apps/PriceDatabase/Utils/filterSearchFilters"
 import { PriceDatabaseArtistAutosuggest } from "./PriceDatabaseArtistAutosuggest"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
@@ -100,6 +100,7 @@ export const PriceDatabaseSearch: React.FC = () => {
           </Text>
         </Column>
       </GridColumns>
+
       <Flex
         alignItems="center"
         justifyContent="center"
@@ -116,6 +117,7 @@ export const PriceDatabaseSearch: React.FC = () => {
               }}
             />
           </Column>
+
           <Column span={4} start={3} pb={[0, 4]}>
             <MultiSelect
               options={categoryOptions}
@@ -123,6 +125,7 @@ export const PriceDatabaseSearch: React.FC = () => {
               name="Medium"
             />
           </Column>
+
           <Column span={4} pb={[0, 4]}>
             <MultiSelect
               options={sizeOptions}
@@ -131,6 +134,7 @@ export const PriceDatabaseSearch: React.FC = () => {
             />
           </Column>
         </GridColumns>
+
         <Button
           disabled={!artistSlug}
           width="100%"

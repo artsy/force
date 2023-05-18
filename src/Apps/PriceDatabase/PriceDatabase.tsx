@@ -17,7 +17,7 @@ export const PriceDatabase = () => {
       context_module: ContextModule.priceDatabaseLanding,
       context_screen_owner_type: OwnerType.priceDatabase,
     })
-  }, [])
+  }, [trackEvent])
 
   return (
     <AuctionResultsFilterContextProvider>
