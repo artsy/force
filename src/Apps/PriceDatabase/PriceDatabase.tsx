@@ -1,4 +1,4 @@
-import { Flex, Separator, Spacer } from "@artsy/palette"
+import { Separator, Spacer } from "@artsy/palette"
 import { useEffect } from "react"
 import { useTracking } from "react-tracking"
 import { PriceDatabaseBenefits } from "./Components/PriceDatabaseBenefits"
@@ -20,21 +20,24 @@ export const PriceDatabase = () => {
   }, [trackEvent])
 
   return (
-    <AuctionResultsFilterContextProvider>
-      <Flex flexDirection="column" mx="auto" py={[0, 4]}>
-        <PriceDatabaseMeta />
+    <>
+      <PriceDatabaseMeta />
+
+      <AuctionResultsFilterContextProvider>
+        <Spacer y={4} />
 
         <PriceDatabaseSearch />
 
         <Media lessThan="sm">
           <Spacer y={4} />
         </Media>
+
         <Media greaterThanOrEqual="sm">
-          <Separator mt={4} />
+          <Separator my={6} />
         </Media>
 
         <PriceDatabaseBenefits />
-      </Flex>
-    </AuctionResultsFilterContextProvider>
+      </AuctionResultsFilterContextProvider>
+    </>
   )
 }
