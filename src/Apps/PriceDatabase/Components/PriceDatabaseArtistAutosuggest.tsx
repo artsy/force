@@ -1,218 +1,65 @@
-// FIXME: Do not use this library
-// eslint-disable-next-line no-restricted-imports
-import Autosuggest from "react-autosuggest"
 import { graphql } from "react-relay"
-import { Ref, useEffect, useState } from "react"
-import * as React from "react"
-import {
-  usePosition,
-  Text,
-  Clickable,
-  LabeledInput,
-  DROP_SHADOW,
-  Box,
-} from "@artsy/palette"
-import { fetchQuery } from "relay-runtime"
-import {
-  PriceDatabaseArtistAutosuggest_SearchConnection_Query,
-  PriceDatabaseArtistAutosuggest_SearchConnection_Query$data,
-} from "__generated__/PriceDatabaseArtistAutosuggest_SearchConnection_Query.graphql"
-import { useSystemContext } from "System/useSystemContext"
-import SearchIcon from "@artsy/icons/SearchIcon"
-
-const MAX_SUGGESTIONS = 10
-
-type Suggestion =
-  | NonNullable<
-      NonNullable<
-        NonNullable<
-          PriceDatabaseArtistAutosuggest_SearchConnection_Query$data["searchConnection"]
-        >["edges"]
-      >[number]
-    >
-  | null
-  | undefined
-
-type Suggestions = readonly Suggestion[] | undefined | null
+import { useState } from "react"
+import { AutocompleteInput } from "@artsy/palette"
+import { useClientQuery } from "Utils/Hooks/useClientQuery"
+import { PriceDatabaseArtistAutosuggestQuery } from "__generated__/PriceDatabaseArtistAutosuggestQuery.graphql"
+import { extractNodes } from "Utils/extractNodes"
+import { compact } from "lodash"
 
 interface ArtistAutosuggestProps {
-  onChange?: (artustSlug: string) => void
+  onChange: (slug: string) => void
 }
 
 export const PriceDatabaseArtistAutosuggest: React.FC<ArtistAutosuggestProps> = ({
   onChange,
 }) => {
-  const { relayEnvironment } = useSystemContext()
+  const [query, setQuery] = useState("")
 
-  const [suggestions, setSuggestions] = useState<Suggestions>([])
-  const [searchQuery, setSearchQuery] = useState("")
+  const { data, loading } = useClientQuery<PriceDatabaseArtistAutosuggestQuery>(
+    { query: QUERY, variables: { query } }
+  )
 
-  const updateSuggestions = async () => {
-    const suggestions = await fetchSuggestions(searchQuery, relayEnvironment)
+  const options = compact(
+    extractNodes(data?.searchConnection).map(node => {
+      if (!node.value || !node.text) return null
+      return { text: node.text, value: node.value }
+    })
+  )
 
-    const filteredSuggestions = filterSuggestions(suggestions)?.slice(
-      0,
-      MAX_SUGGESTIONS
-    )
-
-    setSuggestions(filteredSuggestions)
-  }
-
-  useEffect(() => {
-    updateSuggestions()
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchQuery])
-
-  const [width, setWidth] = useState(0)
-
-  useEffect(() => {
-    if (!anchorRef.current) return
-
-    const handleResize = () => {
-      setWidth(anchorRef.current?.offsetWidth ?? 0)
-    }
-
-    handleResize()
-
-    window.addEventListener("resize", handleResize)
-    return () => {
-      window.removeEventListener("resize", handleResize)
-    }
-    // FIXME:
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  const { anchorRef, tooltipRef } = usePosition({
-    position: "bottom",
-    offset: 10,
-  })
-
-  const selectSuggestion = async selectedSuggestion => {
-    onChange?.(selectedSuggestion?.node?.slug)
-  }
-
-  const AutosuggestInput: React.FC = props => {
-    return (
-      <LabeledInput
-        width="100%"
-        spellCheck={false}
-        type="text"
-        label={<SearchIcon />}
-        {...props}
-        ref={anchorRef as Ref<HTMLInputElement>}
-      />
-    )
-  }
-
-  const Suggestion: React.FC<{ node: NonNullable<Suggestion>["node"] }> = (
-    { node },
-    { isHighlighted }
-  ) => {
-    return (
-      <Box
-        height={50}
-        background={"white"}
-        display="flex"
-        alignItems="center"
-        ref={tooltipRef as any}
-        color={isHighlighted ? "blue100" : "black100"}
-        z-index={1}
-        left={0}
-        right={0}
-      >
-        <Text width="100%" paddingLeft={1}>
-          <Clickable
-            textDecoration={isHighlighted ? "underline" : "none"}
-            color={isHighlighted ? "blue100" : "black100"}
-          >
-            {node?.displayLabel}
-          </Clickable>
-        </Text>
-      </Box>
-    )
+  const handleChange = ({
+    target: { value },
+  }: React.ChangeEvent<HTMLInputElement>) => {
+    setQuery(value)
   }
 
   return (
-    <Autosuggest
-      suggestions={suggestions ?? []}
-      onSuggestionsClearRequested={x => {
-        return x
-      }}
-      onSuggestionsFetchRequested={x => {
-        return x
-      }}
-      onSuggestionSelected={(_, { suggestion }) => {
-        selectSuggestion(suggestion)
-      }}
-      getSuggestionValue={suggestion => {
-        return suggestion.node.displayLabel
-      }}
-      renderInputComponent={AutosuggestInput}
-      renderSuggestion={Suggestion}
-      inputProps={{
-        onChange: (_, { newValue }) => {
-          setSearchQuery(newValue)
-        },
-        placeholder: "Search by Artist Name",
-        value: searchQuery,
-      }}
-      theme={{
-        container: {
-          width: "100%",
-          position: "relative",
-        },
-        suggestionsContainer: {
-          boxShadow: DROP_SHADOW,
-          marginTop: "10px",
-          position: "absolute",
-          zIndex: 2,
-          width,
-        },
-      }}
+    <AutocompleteInput
+      placeholder="Search by Artist Name"
+      options={options}
+      onChange={handleChange}
+      onSelect={option => onChange(option.value)}
+      loading={loading}
     />
   )
 }
 
-const filterSuggestions = (suggestions: Suggestions): Suggestions => {
-  return suggestions?.filter(suggestion => {
-    return suggestion?.node?.counts?.auctionResults
-  })
-}
-
-const fetchSuggestions = async (searchQuery, relayEnvironment) => {
-  const response = await fetchQuery<
-    PriceDatabaseArtistAutosuggest_SearchConnection_Query
-  >(
-    relayEnvironment,
-    graphql`
-      query PriceDatabaseArtistAutosuggest_SearchConnection_Query(
-        $searchQuery: String!
-      ) {
-        searchConnection(
-          query: $searchQuery
-          entities: ARTIST
-          mode: AUTOSUGGEST
-          first: 20
-        ) {
-          edges {
-            node {
-              displayLabel
-              ... on Artist {
-                slug
-                internalID
-                imageUrl
-                counts {
-                  auctionResults
-                }
-              }
-            }
+const QUERY = graphql`
+  query PriceDatabaseArtistAutosuggestQuery($query: String!) {
+    searchConnection(
+      query: $query
+      entities: ARTIST
+      mode: AUTOSUGGEST
+      first: 10
+    ) {
+      edges {
+        node {
+          text: displayLabel
+          ... on Artist {
+            internalID
+            value: slug
           }
         }
       }
-    `,
-    { searchQuery }
-  ).toPromise()
-
-  return response?.searchConnection?.edges
-}
+    }
+  }
+`
