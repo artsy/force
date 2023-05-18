@@ -1,14 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import {
-  Box,
-  Column,
-  GridColumns,
-  Join,
-  Message,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import { allowedAuctionResultFilters } from "Apps/Artist/Utils/allowedAuctionResultFilters"
 import {
   paramsToCamelCase,
@@ -281,64 +273,56 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           />
 
           <Spacer y={[2, 0]} />
-          {results.length > 0 ? (
-            <LoadingArea isLoading={isLoading}>
-              {
-                <>
-                  {upcomingAuctionResults.length > 0 && (
-                    <Box mb={4}>
-                      <Text variant="md">Upcoming Auctions</Text>
-                      <Text variant="xs" mb={2} color="black60">
-                        {upcomingAuctionResultsCount}{" "}
-                        {upcomingAuctionResultsCount === 1
-                          ? "result"
-                          : "results"}
-                      </Text>
 
-                      <Join separator={<Spacer y={2} />}>
-                        {upcomingAuctionResults.map((result, index) => {
-                          return (
-                            <ArtistAuctionResultItemFragmentContainer
-                              key={index}
-                              auctionResult={result}
-                              filtersAtDefault={filtersAtDefault}
-                            />
-                          )
-                        })}
-                      </Join>
-                    </Box>
-                  )}
+          <LoadingArea isLoading={isLoading}>
+            {
+              <>
+                {upcomingAuctionResults.length > 0 && (
+                  <Box mb={4}>
+                    <Text variant="md">Upcoming Auctions</Text>
+                    <Text variant="xs" mb={2} color="black60">
+                      {upcomingAuctionResultsCount}{" "}
+                      {upcomingAuctionResultsCount === 1 ? "result" : "results"}
+                    </Text>
 
-                  {pastAuctionResults.length > 0 && (
-                    <Box mb={4}>
-                      <Text variant="md">Past Auctions</Text>
-                      <Text variant="xs" mb={2} color="black60">
-                        {pastAuctionResultsCount}{" "}
-                        {pastAuctionResultsCount === 1 ? "result" : "results"}
-                      </Text>
+                    <Join separator={<Spacer y={2} />}>
+                      {upcomingAuctionResults.map((result, index) => {
+                        return (
+                          <ArtistAuctionResultItemFragmentContainer
+                            key={index}
+                            auctionResult={result}
+                            filtersAtDefault={filtersAtDefault}
+                          />
+                        )
+                      })}
+                    </Join>
+                  </Box>
+                )}
 
-                      <Join separator={<Spacer y={2} />}>
-                        {pastAuctionResults.map((result, index) => {
-                          return (
-                            <ArtistAuctionResultItemFragmentContainer
-                              key={index}
-                              auctionResult={result}
-                              filtersAtDefault={filtersAtDefault}
-                            />
-                          )
-                        })}
-                      </Join>
-                    </Box>
-                  )}
-                </>
-              }
-            </LoadingArea>
-          ) : (
-            <Message>
-              There aren’t any auction results available by the artist at this
-              time.
-            </Message>
-          )}
+                {pastAuctionResults.length > 0 && (
+                  <Box mb={4}>
+                    <Text variant="md">Past Auctions</Text>
+                    <Text variant="xs" mb={2} color="black60">
+                      {pastAuctionResultsCount}{" "}
+                      {pastAuctionResultsCount === 1 ? "result" : "results"}
+                    </Text>
+
+                    <Join separator={<Spacer y={2} />}>
+                      {pastAuctionResults.map((result, index) => {
+                        return (
+                          <ArtistAuctionResultItemFragmentContainer
+                            key={index}
+                            auctionResult={result}
+                            filtersAtDefault={filtersAtDefault}
+                          />
+                        )
+                      })}
+                    </Join>
+                  </Box>
+                )}
+              </>
+            }
+          </LoadingArea>
 
           <Pagination
             getHref={() => ""}
