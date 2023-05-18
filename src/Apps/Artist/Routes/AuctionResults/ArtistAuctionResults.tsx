@@ -273,59 +273,56 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           />
 
           <Spacer y={[2, 0]} />
-          {
-            <LoadingArea isLoading={isLoading}>
-              {
-                <>
-                  {upcomingAuctionResults.length > 0 && (
-                    <Box mb={4}>
-                      <Text variant="md">Upcoming Auctions</Text>
-                      <Text variant="xs" mb={2} color="black60">
-                        {upcomingAuctionResultsCount}{" "}
-                        {upcomingAuctionResultsCount === 1
-                          ? "result"
-                          : "results"}
-                      </Text>
 
-                      <Join separator={<Spacer y={2} />}>
-                        {upcomingAuctionResults.map((result, index) => {
-                          return (
-                            <ArtistAuctionResultItemFragmentContainer
-                              key={index}
-                              auctionResult={result}
-                              filtersAtDefault={filtersAtDefault}
-                            />
-                          )
-                        })}
-                      </Join>
-                    </Box>
-                  )}
+          <LoadingArea isLoading={isLoading}>
+            {
+              <>
+                {upcomingAuctionResults.length > 0 && (
+                  <Box mb={4}>
+                    <Text variant="md">Upcoming Auctions</Text>
+                    <Text variant="xs" mb={2} color="black60">
+                      {upcomingAuctionResultsCount}{" "}
+                      {upcomingAuctionResultsCount === 1 ? "result" : "results"}
+                    </Text>
 
-                  {pastAuctionResults.length > 0 && (
-                    <Box mb={4}>
-                      <Text variant="md">Past Auctions</Text>
-                      <Text variant="xs" mb={2} color="black60">
-                        {pastAuctionResultsCount}{" "}
-                        {pastAuctionResultsCount === 1 ? "result" : "results"}
-                      </Text>
+                    <Join separator={<Spacer y={2} />}>
+                      {upcomingAuctionResults.map((result, index) => {
+                        return (
+                          <ArtistAuctionResultItemFragmentContainer
+                            key={index}
+                            auctionResult={result}
+                            filtersAtDefault={filtersAtDefault}
+                          />
+                        )
+                      })}
+                    </Join>
+                  </Box>
+                )}
 
-                      <Join separator={<Spacer y={2} />}>
-                        {pastAuctionResults.map((result, index) => {
-                          return (
-                            <ArtistAuctionResultItemFragmentContainer
-                              key={index}
-                              auctionResult={result}
-                              filtersAtDefault={filtersAtDefault}
-                            />
-                          )
-                        })}
-                      </Join>
-                    </Box>
-                  )}
-                </>
-              }
-            </LoadingArea>
-          }
+                {pastAuctionResults.length > 0 && (
+                  <Box mb={4}>
+                    <Text variant="md">Past Auctions</Text>
+                    <Text variant="xs" mb={2} color="black60">
+                      {pastAuctionResultsCount}{" "}
+                      {pastAuctionResultsCount === 1 ? "result" : "results"}
+                    </Text>
+
+                    <Join separator={<Spacer y={2} />}>
+                      {pastAuctionResults.map((result, index) => {
+                        return (
+                          <ArtistAuctionResultItemFragmentContainer
+                            key={index}
+                            auctionResult={result}
+                            filtersAtDefault={filtersAtDefault}
+                          />
+                        )
+                      })}
+                    </Join>
+                  </Box>
+                )}
+              </>
+            }
+          </LoadingArea>
 
           <Pagination
             getHref={() => ""}
