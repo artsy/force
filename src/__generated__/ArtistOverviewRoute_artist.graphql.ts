@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<99fec71c24946d316af8989b9112fec8>>
+ * @generated SignedSource<<608fedbf85bc86d7ad845dc2c3f13050>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,10 @@ export type ArtistOverviewRoute_artist$data = {
     readonly artworks: any | null;
   } | null;
   readonly internalID: string;
+  readonly meta: {
+    readonly description: string | null;
+    readonly title: string | null;
+  } | null;
   readonly name: string | null;
   readonly slug: string;
   readonly " $fragmentType": "ArtistOverviewRoute_artist";
@@ -47,6 +51,31 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "ArtistMeta",
+      "kind": "LinkedField",
+      "name": "meta",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "description",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "title",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "ArtistCounts",
       "kind": "LinkedField",
       "name": "counts",
@@ -74,6 +103,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "8406e33d38f3f4802a073421c8463b10";
+(node as any).hash = "29a575aad4af93314e779328ffb2e654";
 
 export default node;

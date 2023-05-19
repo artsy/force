@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a90ae3c4df34a33325c0900bd6697035>>
+ * @generated SignedSource<<28645fb09ce6dda6ca088db004860aa6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,12 @@ v1 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -93,6 +99,31 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "ArtistMeta",
+            "kind": "LinkedField",
+            "name": "meta",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "description",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "ArtistCounts",
             "kind": "LinkedField",
             "name": "counts",
@@ -128,7 +159,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b773ebca58c63c99ff9d379ce2c05939",
+    "cacheID": "4e74c9e6a5b5ca9e2188078d8d3d5ab7",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -152,18 +183,21 @@ return {
         },
         "artist.id": (v1/*: any*/),
         "artist.internalID": (v1/*: any*/),
-        "artist.name": {
+        "artist.meta": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "String"
+          "type": "ArtistMeta"
         },
+        "artist.meta.description": (v2/*: any*/),
+        "artist.meta.title": (v2/*: any*/),
+        "artist.name": (v2/*: any*/),
         "artist.slug": (v1/*: any*/)
       }
     },
     "name": "ArtistOverviewRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistOverviewRoute_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  slug\n  name\n  counts {\n    artworks\n  }\n  internalID\n}\n"
+    "text": "query ArtistOverviewRoute_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  slug\n  name\n  meta {\n    description\n    title\n  }\n  counts {\n    artworks\n  }\n  internalID\n}\n"
   }
 };
 })();

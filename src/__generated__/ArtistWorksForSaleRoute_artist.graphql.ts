@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<996d9e122d573c587f782dae68ae4a82>>
+ * @generated SignedSource<<eee61f7366337e51e037f490a389ad6c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,10 @@ export type ArtistWorksForSaleRoute_artist$data = {
   } | null;
   readonly id: string;
   readonly internalID: string;
+  readonly meta: {
+    readonly artworksDescription: string | null;
+    readonly artworksTitle: string | null;
+  } | null;
   readonly name: string | null;
   readonly sidebarAggregations: {
     readonly aggregations: ReadonlyArray<{
@@ -162,6 +166,31 @@ return {
       ],
       "storageKey": null
     },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtistMeta",
+      "kind": "LinkedField",
+      "name": "meta",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "artworksDescription",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "artworksTitle",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -190,6 +219,6 @@ return {
 };
 })();
 
-(node as any).hash = "1caba76af2e780b916149edcbf4e9b64";
+(node as any).hash = "2bf44d6b3e9ed2f669ba6242bab62e63";
 
 export default node;

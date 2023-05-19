@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9b9d89c6bc2396b7326dcc420f6e52aa>>
+ * @generated SignedSource<<7f5463ed3e049e5b63b3ce44932048b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -96,6 +96,31 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "ArtistMeta",
+            "kind": "LinkedField",
+            "name": "meta",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "description",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "ArtistCounts",
             "kind": "LinkedField",
             "name": "counts",
@@ -131,12 +156,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c44ad9aede2e04c471de2b973b2f96ef",
+    "cacheID": "d78f061b609c2dfc695d71bad36f359c",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_OverviewQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_OverviewQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  slug\n  name\n  counts {\n    artworks\n  }\n  internalID\n}\n"
+    "text": "query artistRoutes_OverviewQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  slug\n  name\n  meta {\n    description\n    title\n  }\n  counts {\n    artworks\n  }\n  internalID\n}\n"
   }
 };
 })();
