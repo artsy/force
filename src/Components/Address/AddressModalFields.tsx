@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Column, GridColumns, Input, Text } from "@artsy/palette"
+import { Column, GridColumns, Input } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
 import { CountrySelect } from "Components/CountrySelect"
