@@ -1758,6 +1758,10 @@ type ArtistInsightsCount {
 }
 
 type ArtistMeta {
+  artworksTitle: String
+  artworksDescription: String
+  auctionTitle: String
+  auctionDescription: String
   description: String
   title: String
 }
