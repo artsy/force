@@ -29,7 +29,8 @@ export const AddressModalFields: React.FC = () => {
           value={values?.name || undefined}
         />
       </Flex>
-      <GridColumns mt={[1, 2]}>
+
+      <GridColumns gridRowGap={2} mt={2}>
         <Column span={6}>
           <CountrySelect
             title="Country"
@@ -40,6 +41,7 @@ export const AddressModalFields: React.FC = () => {
             error={touched.country && errors.country ? errors.country : ""}
           />
         </Column>
+
         <Column span={6}>
           <Input
             title="Postal Code"
@@ -51,9 +53,7 @@ export const AddressModalFields: React.FC = () => {
             value={values?.postalCode || ""}
           />
         </Column>
-      </GridColumns>
 
-      <GridColumns mt={[1, 2]}>
         <Column span={6}>
           <Input
             title="Address Line 1"
@@ -65,6 +65,7 @@ export const AddressModalFields: React.FC = () => {
             value={values?.addressLine1}
           />
         </Column>
+
         <Column span={6}>
           <Input
             title="Address Line 2 (optional)"
@@ -76,8 +77,7 @@ export const AddressModalFields: React.FC = () => {
             value={values?.addressLine2 || ""}
           />
         </Column>
-      </GridColumns>
-      <GridColumns mt={[1, 2]}>
+
         <Column span={6}>
           <Input
             title="City"
@@ -89,6 +89,7 @@ export const AddressModalFields: React.FC = () => {
             value={values?.city}
           />
         </Column>
+
         <Column span={6}>
           <Input
             title="State, province, or region"
