@@ -28,7 +28,7 @@ import { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionRes
 import { isEqual } from "lodash"
 import * as React from "react"
 import { useContext, useState } from "react"
-import { Title } from "react-head"
+import { Title, Meta } from "react-head"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
@@ -62,6 +62,8 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   relay,
 }) => {
   const { user } = useContext(SystemContext)
+  const title = artist.meta?.auctionTitle
+  const description = artist.meta?.auctionDescription
 
   const { filters, setFilter } = useAuctionResultsFilterContext()
 
@@ -203,8 +205,6 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     })
   }
 
-  const titleString = `${artistName} - Auction Results on Artsy`
-
   const handleMarketStatsRendered = (visible: boolean) => {
     // Scroll to auction results if param flag is present
     if (!scrollToMarketSignals) return
@@ -215,12 +215,15 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
       0
     )
   }
+
   if (results.length == 0) {
     return <ArtistAuctionResultsEmptyState />
   }
   return (
     <>
-      <Title>{titleString}</Title>
+      <Title>{title}</Title>
+      <Meta name="title" content={title} />
+      <Meta name="description" content={description} />
 
       <Jump id="marketSignalsTop" />
 
@@ -398,6 +401,10 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         slug
         internalID
         name
+        meta {
+          auctionDescription
+          auctionTitle
+        }
         auctionResultsConnection(
           first: $first
           page: $page
