@@ -3,8 +3,6 @@ import "Server/webpackPublicPath"
 import ReactDOM from "react-dom"
 import { getAppRoutes } from "routes"
 import { loadableReady } from "@loadable/component"
-import { logoutEventHandler } from "Server/logoutHandler"
-import { mediator } from "Server/mediator"
 import {
   beforeAnalyticsReady,
   onAnalyticsReady,
@@ -12,7 +10,6 @@ import {
 import { getClientParam } from "Utils/getClientParam"
 import { buildClientApp } from "System/Router/buildClientApp"
 import { loadSegment } from "Server/analytics/segmentOneTrustIntegration/segmentOneTrustIntegration"
-import { initAuthModalContainer } from "Utils/initAuthModalContainer"
 
 async function setupClient() {
   // Attach analytics
@@ -24,10 +21,6 @@ async function setupClient() {
   }
 
   loadSegment()
-  initAuthModalContainer()
-
-  // Logout handler
-  mediator.on("auth:logout", logoutEventHandler)
 
   const { ClientApp } = await buildClientApp({
     routes: getAppRoutes(),

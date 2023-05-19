@@ -1,5 +1,6 @@
 import { Box, BoxProps, Flex, Text } from "@artsy/palette"
 import * as React from "react"
+import { RouterLink } from "System/Router/RouterLink"
 
 export const ContentHeaderExample: React.FC<BoxProps> = props => {
   return (
@@ -8,7 +9,7 @@ export const ContentHeaderExample: React.FC<BoxProps> = props => {
         <Text variant="lg-display">Headline Text</Text>
 
         <Text variant="sm">
-          <a href="#example">Text Link</a>
+          <RouterLink to="#example">Text Link</RouterLink>
         </Text>
       </Flex>
 

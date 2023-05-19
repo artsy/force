@@ -60,7 +60,7 @@ export const ArtistSeriesEntity: React.FC<ArtistSeriesEntityProps> = ({
       <RouterLink
         to={`/collection/${slug}`}
         onClick={handleLinkClick}
-        noUnderline
+        textDecoration="none"
       >
         <Flex alignItems="flex-end" mb={1}>
           {artworks.every(artwork => !!artwork.image) ? (

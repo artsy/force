@@ -1,11 +1,11 @@
 import { Router } from "found"
 import { createContext, FC, useState } from "react"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { Environment } from "relay-runtime"
 
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { getUser } from "Utils/user"
-import { Mediator, mediator } from "Server/mediator"
 import { FeatureFlags } from "./useFeatureFlag"
 import { UserPreferences } from "Server/middleware/userPreferencesMiddleware"
 
@@ -46,16 +46,6 @@ export interface SystemContextProps extends SystemContextState {
    * Is the user opening a Reaction page from the mobile app
    */
   isEigen?: boolean
-
-  /**
-   * A PubSub hub, which should only be used for communicating with Force.
-   */
-  mediator?: Mediator
-
-  /**
-   * FIXME: Ask alloy how to pass one-off props like this in from force
-   */
-  notificationCount?: number
 
   /**
    * A configured environment object that can be used for any Relay operations
@@ -108,7 +98,6 @@ export const SystemContextProvider: FC<SystemContextProps> = ({
   const providerValues = {
     ...props,
     isFetching,
-    mediator: props.mediator || mediator,
     setFetching,
     router,
     setRouter,

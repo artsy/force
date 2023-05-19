@@ -1,4 +1,4 @@
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { ArtistSeriesArtworksFilterRefetchContainer } from "Apps/ArtistSeries/Components/ArtistSeriesArtworksFilter"
 import { graphql } from "react-relay"
 import { ArtistSeriesArtworksFilter_Query } from "__generated__/ArtistSeriesArtworksFilter_Query.graphql"
@@ -75,6 +75,10 @@ describe("ArtistSeriesArtworksFilter", () => {
     })
     const filterWrappers = wrapper.find("FilterExpandable")
     const filters = [
+      {
+        label: "Keyword Search",
+        expanded: true,
+      },
       {
         label: "Rarity",
         expanded: true,

@@ -1,15 +1,17 @@
 import { act, fireEvent, screen, within } from "@testing-library/react"
 import { AuctionResultsRouteFragmentContainer as AuctionResultsRoute } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultsRoute"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { openAuthModal } from "Utils/openAuthModal"
 import { ArtistAuctionResults_Test_Query$rawResponse } from "__generated__/ArtistAuctionResults_Test_Query.graphql"
+import { MockPayloadGenerator } from "relay-test-utils"
+import { useSystemContext } from "System/useSystemContext"
+import { useRouter } from "System/Router/useRouter"
+import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("Utils/openAuthModal")
 jest.mock("Components/Pagination/useComputeHref")
 jest.mock("System/Router/Utils/catchLinks", () => ({
   userIsForcingNavigation: () => false,
@@ -21,16 +23,13 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(),
 }))
-
-import { MockPayloadGenerator } from "relay-test-utils"
-import { useSystemContext } from "System"
-import { useRouter } from "System/Router/useRouter"
+jest.mock("Components/AuthDialog/useAuthDialog", () => ({
+  useAuthDialog: jest.fn().mockReturnValue({ showAuthDialog: jest.fn() }),
+}))
 
 describe("AuctionResults", () => {
-  // @ts-ignore
   let breakpoint
   const trackEvent = jest.fn()
-  const mockOpenAuthModal = openAuthModal as jest.Mock
   const mockedResolver = {
     Artist: () => ({
       ...AuctionResultsFixture.artist,
@@ -50,15 +49,7 @@ describe("AuctionResults", () => {
         trackEvent,
       }
     })
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      featureFlags: {
-        "cx-upcoming-auctions-filter": { flagEnabled: true },
-      },
-    }))
-
-    mockOpenAuthModal.mockImplementation(() => {
-      return
-    })
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({}))
   })
 
   afterEach(() => {
@@ -89,23 +80,27 @@ describe("AuctionResults", () => {
   })
 
   describe("trigger auth modal for filtering and pagination", () => {
-    afterEach(() => {
-      mockOpenAuthModal.mockReset()
-    })
+    const mockUseAuthDialog = useAuthDialog as jest.Mock
 
     it("calls auth modal for 1st pagination but not for 2nd", () => {
+      const showAuthDialog = jest.fn()
+      mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
+
       renderWithRelay(mockedResolver)
       const navigation = screen.getByRole("navigation")
       const links = within(navigation).getAllByRole("link")
       expect(links).toHaveLength(6)
 
       fireEvent.click(links[2])
-      expect(mockOpenAuthModal).toHaveBeenCalledTimes(1)
+      expect(showAuthDialog).toHaveBeenCalledTimes(1)
       fireEvent.click(links[3])
-      expect(mockOpenAuthModal).toHaveBeenCalledTimes(1)
+      expect(showAuthDialog).toHaveBeenCalledTimes(1)
     })
 
     it("calls auth modal for 1st category selection but not for 2nd", () => {
+      const showAuthDialog = jest.fn()
+      mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
+
       let operationVariables
       const { env } = renderWithRelay(mockedResolver, true)
 
@@ -125,7 +120,7 @@ describe("AuctionResults", () => {
       })
 
       expect(operationVariables.categories).toContain("Work on Paper")
-      expect(openAuthModal).toHaveBeenCalledTimes(1)
+      expect(showAuthDialog).toHaveBeenCalledTimes(1)
 
       fireEvent.click(checkboxes[3])
       act(() => {
@@ -135,7 +130,7 @@ describe("AuctionResults", () => {
         })
       })
 
-      expect(openAuthModal).toHaveBeenCalledTimes(1)
+      expect(showAuthDialog).toHaveBeenCalledTimes(1)
       expect(operationVariables.categories).toContain("Sculpture")
     })
   })
@@ -165,9 +160,6 @@ describe("AuctionResults", () => {
     describe("For Logged in users", () => {
       beforeEach(() => {
         ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-          featureFlags: {
-            "cx-upcoming-auctions-filter": { flagEnabled: true },
-          },
           user: { name: "Logged In", email: "loggedin@example.com" },
         }))
       })
@@ -195,9 +187,6 @@ describe("AuctionResults", () => {
     describe("For Logged Out users", () => {
       beforeEach(() => {
         ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-          featureFlags: {
-            "cx-upcoming-auctions-filter": { flagEnabled: true },
-          },
           user: null,
         }))
       })
@@ -217,7 +206,7 @@ describe("AuctionResults", () => {
                 hide_upcoming: true,
                 categories: ["Painting"],
                 sizes: ["SMALL", "LARGE"],
-                organizations: ["Phillips", "Bonhams"],
+                organizations: ["Phillips", "Bonhams", "Artsy Auction"],
               },
             },
           },
@@ -241,22 +230,17 @@ describe("AuctionResults", () => {
           checked: true,
         })
 
-        expect(checkedCheckboxes).toHaveLength(7)
-        expect(checkedCheckboxes[0]).toHaveTextContent(
-          "CheckHide upcoming auctions"
-        )
-        expect(checkedCheckboxes[1]).toHaveTextContent("CheckPainting")
-        expect(checkedCheckboxes[2]).toHaveTextContent(
-          "CheckSmall (under 40cm)"
-        )
-        expect(checkedCheckboxes[3]).toHaveTextContent(
-          "CheckLarge (over 100cm)"
-        )
+        expect(checkedCheckboxes).toHaveLength(8)
+        expect(checkedCheckboxes[0]).toHaveTextContent("Hide upcoming auctions")
+        expect(checkedCheckboxes[1]).toHaveTextContent("Painting")
+        expect(checkedCheckboxes[2]).toHaveTextContent("Small (under 40cm)")
+        expect(checkedCheckboxes[3]).toHaveTextContent("Large (over 100cm)")
         expect(checkedCheckboxes[4]).toHaveTextContent(
-          "CheckInclude unspecified dates"
+          "Include unspecified dates"
         )
-        expect(checkedCheckboxes[5]).toHaveTextContent("CheckPhillips")
-        expect(checkedCheckboxes[6]).toHaveTextContent("CheckBonhams")
+        expect(checkedCheckboxes[5]).toHaveTextContent("Phillips")
+        expect(checkedCheckboxes[6]).toHaveTextContent("Bonhams")
+        expect(checkedCheckboxes[7]).toHaveTextContent("Artsy Auction")
       })
     })
 
@@ -341,7 +325,7 @@ describe("AuctionResults", () => {
               categories: ["Work on Paper"],
               organizations: [],
               sizes: [],
-              pageAndCursor: { page: 1, cursor: null },
+              page: 1,
               sort: "DATE_DESC",
               allowEmptyCreatedDates: true,
               createdAfterYear: 1880,
@@ -567,6 +551,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
       edges: [
         {
           node: {
+            internalID: "123",
             artist: null,
             title: "Oiseau fantastique",
             dimension_text: "27.2 x 21.1 cm",
@@ -605,6 +590,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "124",
             artist: null,
             title: "Mandoline sur une table",
             dimension_text: "82.2 x 100.4 cm",
@@ -643,6 +629,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "125",
             artist: null,
             title: "Tête d'homme",
             dimension_text: "51.2 x 34.2 cm",
@@ -681,6 +668,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "126",
             artist: null,
             title: "Picador et taureau (A.R. 197)",
             dimension_text: "23.5 cm.",
@@ -719,6 +707,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "127",
             artist: null,
             title: "Colombe à la lucarne (A.R. 78)",
             dimension_text: "15 3/8 in.",
@@ -757,6 +746,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "128",
             artist: null,
             title: "Scène de plage (A.R. 391)",
             dimension_text: "10 in.",
@@ -795,6 +785,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "129",
             artist: null,
             title: "Tête de femme couronnée de fleurs (A.R. 236)",
             dimension_text: "9 1/8 in.",
@@ -833,6 +824,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "130",
             artist: null,
             title: "Femme (A.R. 297)",
             dimension_text: "13 in.",
@@ -871,6 +863,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "131",
             artist: null,
             title: "Taureau dans l'arène (A.R. 80)",
             dimension_text: "37.6 cm.",
@@ -909,6 +902,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           node: {
+            internalID: "132",
             artist: null,
             title: "Visage de femme (A.R. 192)",
             dimension_text: "13 3/8 in.",

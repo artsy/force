@@ -1,5 +1,7 @@
-import { CheckIcon, Clickable, ClickableProps, CloseIcon } from "@artsy/palette"
+import { Clickable, ClickableProps } from "@artsy/palette"
 import { FC, useState } from "react"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 
 export const SettingsEditProfileArtistsYouCollectRemoveButton: FC<ClickableProps> = props => {
   const [hovered, setHovered] = useState(false)
@@ -14,7 +16,7 @@ export const SettingsEditProfileArtistsYouCollectRemoveButton: FC<ClickableProps
       {hovered ? (
         <CloseIcon display="block" fill="red100" />
       ) : (
-        <CheckIcon display="block" fill="black60" />
+        <CheckmarkIcon display="block" fill="black60" />
       )}
     </Clickable>
   )

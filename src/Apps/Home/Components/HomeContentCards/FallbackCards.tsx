@@ -43,18 +43,17 @@ const makeContentCard = ({
   }
 }
 
-const fallbackData = [
+const FALLBACK_DATA = [
   {
-    credit:
-      "Yuan Yuan, The Unstable Fibonacci Sequence, 2022. Molly Green, Unfix, 2022. Tidawhitney Lek, Broken Glasses, 2022. Jacopo Pagin, Hide Me! with Transparency, 2022.",
+    credit: null,
     description:
-      "The best works by rising talents on Artsy, all available now.",
+      "See what you can do on Artsy—the best tool for art collectors.",
     id: 1,
-    imageUrl: "https://files.artsy.net/images/Content+Card-CPE-Jan12.jpg",
-    label: "Featured Collection",
-    linkText: "Browse Works",
-    title: "Curators’ Picks: Emerging",
-    url: "/collection/curators-picks-emerging",
+    imageUrl: "https://files.artsy.net/images/01_Overarching-CC_Launch.png",
+    label: null,
+    linkText: "Discover Artsy",
+    title: "Meet your new art advisor",
+    url: "/meet-your-new-art-advisor",
   },
   {
     credit:
@@ -71,7 +70,7 @@ const fallbackData = [
 ]
 
 export const FallbackCards = () => {
-  const cards = fallbackData.map(data => makeContentCard(data))
+  const cards = FALLBACK_DATA.map(data => makeContentCard(data))
 
   return (
     <HeroCarousel>

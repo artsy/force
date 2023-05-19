@@ -26,6 +26,7 @@ import { homeRoutes } from "Apps/Home/homeRoutes"
 import { identityVerificationRoutes } from "Apps/IdentityVerification/identityVerificationRoutes"
 import { institutionPartnershipsRoutes } from "Apps/InstitutionPartnerships/institutionPartnershipsRoutes"
 import { jobsRoutes } from "Apps/Jobs/jobsRoutes"
+import { marketingRoutes } from "Apps/Marketing/marketingRoutes"
 import { meetTheSpecialistsRoutes } from "Apps/MeetTheSpecialists/meetTheSpecialistsRoutes"
 import { myCollectionRoutes } from "Apps/MyCollection/myCollectionRoutes"
 import { myCollectionInsightsRoutes } from "Apps/MyCollectionInsights/myCollectionInsightsRoutes"
@@ -55,6 +56,7 @@ import { priceDatabaseRoutes } from "./Apps/PriceDatabase/priceDatabaseRoutes"
 import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
 import { myCollectionInsightsCollectorProfileRoutes } from "Apps/MyCollectionInsights/myCollectionInsightsCollectorProfileRoutes"
+import { endingSoonAuctionsRoutes } from "Apps/Auctions/EndingSoonAuctions/endingSoonAuctionsRoutes"
 
 export const getAppRoutes = (): AppRouteConfig[] => {
   return buildAppRoutes([
@@ -81,6 +83,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: contactRoutes },
     { routes: conversationRoutes },
     { routes: exampleRoutes },
+    { routes: endingSoonAuctionsRoutes },
     { routes: fairOrganizerRoutes },
     { routes: fairRoutes },
     { routes: fairsRoutes },
@@ -90,6 +93,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: identityVerificationRoutes },
     { routes: institutionPartnershipsRoutes },
     { routes: jobsRoutes },
+    { routes: marketingRoutes },
     { routes: meetTheSpecialistsRoutes },
     { routes: myCollectionRoutes },
     { routes: myCollectionInsightsRoutes },

@@ -24,7 +24,7 @@ import createLogger from "Utils/logger"
 import { extractNodes } from "Utils/extractNodes"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkRelatedArtistsQuery } from "__generated__/ArtworkRelatedArtistsQuery.graphql"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import track, { useTracking } from "react-tracking"
 

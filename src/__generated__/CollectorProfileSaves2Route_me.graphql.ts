@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c5f9f62fa6128bc259d7366bffa92d2>>
+ * @generated SignedSource<<f9a2e8230a619e172e90c32f72703877>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,18 +11,21 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileSaves2Route_me$data = {
-  readonly defaultSaves: {
-    readonly internalID: string;
-    readonly " $fragmentSpreads": FragmentRefs<"SavesItem_item">;
-  } | null;
-  readonly otherSaves: {
+  readonly customArtworkLists: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly default: boolean;
         readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"SavesItem_item">;
+        readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
       } | null;
     } | null> | null;
+  } | null;
+  readonly savedArtworksArtworkList: {
+    readonly artworksConnection: {
+      readonly totalCount: number | null;
+    } | null;
+    readonly internalID: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
   } | null;
   readonly " $fragmentType": "CollectorProfileSaves2Route_me";
 };
@@ -42,16 +45,27 @@ var v0 = {
 v1 = {
   "args": null,
   "kind": "FragmentSpread",
-  "name": "SavesItem_item"
+  "name": "ArtworkListItem_item"
 };
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
-  "metadata": null,
+  "metadata": {
+    "connection": [
+      {
+        "count": null,
+        "cursor": null,
+        "direction": "forward",
+        "path": [
+          "customArtworkLists"
+        ]
+      }
+    ]
+  },
   "name": "CollectorProfileSaves2Route_me",
   "selections": [
     {
-      "alias": "defaultSaves",
+      "alias": "savedArtworksArtworkList",
       "args": [
         {
           "kind": "Literal",
@@ -65,32 +79,40 @@ return {
       "plural": false,
       "selections": [
         (v0/*: any*/),
-        (v1/*: any*/)
+        (v1/*: any*/),
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "first",
+              "value": 4
+            }
+          ],
+          "concreteType": "ArtworkConnection",
+          "kind": "LinkedField",
+          "name": "artworksConnection",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "totalCount",
+              "storageKey": null
+            }
+          ],
+          "storageKey": "artworksConnection(first:4)"
+        }
       ],
       "storageKey": "collection(id:\"saved-artwork\")"
     },
     {
-      "alias": "otherSaves",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "default",
-          "value": false
-        },
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 30
-        },
-        {
-          "kind": "Literal",
-          "name": "saves",
-          "value": true
-        }
-      ],
+      "alias": "customArtworkLists",
+      "args": null,
       "concreteType": "CollectionsConnection",
       "kind": "LinkedField",
-      "name": "collectionsConnection",
+      "name": "__CollectorProfileSaves2Route_customArtworkLists_connection",
       "plural": false,
       "selections": [
         {
@@ -117,15 +139,54 @@ return {
                   "name": "default",
                   "storageKey": null
                 },
-                (v1/*: any*/)
+                (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
+                }
               ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
               "storageKey": null
             }
           ],
           "storageKey": null
         }
       ],
-      "storageKey": "collectionsConnection(default:false,first:30,saves:true)"
+      "storageKey": null
     }
   ],
   "type": "Me",
@@ -133,6 +194,6 @@ return {
 };
 })();
 
-(node as any).hash = "5c3ef77024cb69947341378af7658e8e";
+(node as any).hash = "cdee1f27a302d03d7a6befb8f80359ef";
 
 export default node;

@@ -22,7 +22,6 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
   const isMedianSalePriceEnabled = useFeatureFlag(
     "my-collection-web-phase-7-median-sale-price"
   )
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
 
   if (!me.myCollectionInfo?.artworksCount) {
     return <InsightsLandingPage />
@@ -31,10 +30,8 @@ const InsightsRoute: React.FC<InsightsRouteProps> = ({ me }) => {
   return (
     <>
       <MetaTags
-        title="My Collection Insights | Artsy"
-        pathname={
-          isCollectorProfileEnabled ? "collector-profile/insights" : "/insights"
-        }
+        title="Insights | Artsy"
+        pathname={"collector-profile/insights"}
       />
 
       <>

@@ -66,6 +66,44 @@ describe("MyCollectionArtworkSidebar", () => {
       expect(screen.getByText("Berlin")).toBeInTheDocument()
     })
 
+    it("includes Notes when notes are present", () => {
+      renderWithRelay(
+        {
+          Artwork: () => ({
+            ...mockResolversWithData,
+            confidentialNotes: "A short text",
+          }),
+        },
+        false
+      )
+      expect(screen.getByText("A short text")).toBeInTheDocument()
+    })
+
+    describe("when the artwork is part of limited edition", () => {
+      beforeEach(() => {
+        renderWithRelay(
+          {
+            Artwork: () => ({
+              ...mockResolversWithData,
+              attributionClass: {
+                shortDescription: "Part of a limited edition set",
+              },
+              editionOf: "Edition 7/11",
+            }),
+          },
+          false
+        )
+      })
+
+      it("displays edition info", () => {
+        expect(
+          screen.getByText("Part of a limited edition set Edition 7/11", {
+            collapseWhitespace: true,
+          })
+        ).toBeInTheDocument()
+      })
+    })
+
     describe("when metric is set to 'cm'", () => {
       beforeEach(() => {
         renderWithRelay(
@@ -144,6 +182,7 @@ const mockResolversWithData = {
   attributionClass: {
     shortDescription: "Unique work",
   },
+  editionOf: null,
   pricePaid: {
     display: "€25,300",
   },
@@ -163,6 +202,7 @@ const emptyMockResolvers = {
   dimensions: null,
   provenance: null,
   attributionClass: null,
+  editionOf: null,
   pricePaid: null,
   artworkLocation: null,
 }

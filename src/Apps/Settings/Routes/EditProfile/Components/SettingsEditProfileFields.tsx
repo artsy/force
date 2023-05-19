@@ -1,8 +1,6 @@
 import {
   Box,
   Button,
-  CheckCircleFillIcon,
-  CheckCircleIcon,
   Clickable,
   Flex,
   Input,
@@ -13,10 +11,6 @@ import {
   useToasts,
 } from "@artsy/palette"
 import { editProfileVerificationSchema } from "Apps/CollectorProfile/Utils/ValidationSchemas"
-import {
-  useHandleEmailVerification,
-  useHandleIDVerification,
-} from "Apps/Settings/Routes/EditProfile/helpers/useHandleVerification"
 import {
   SettingsEditProfileImageFragmentContainer,
   SettingsEditProfileImageRef,
@@ -32,13 +26,27 @@ import {
   uploadPhotoToS3,
 } from "Components/PhotoUpload/Utils/fileUtils"
 import { Form, Formik } from "formik"
-import { useEffect, useRef } from "react"
+import { useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserProfile"
 import { SettingsEditProfileFields_me$data } from "__generated__/SettingsEditProfileFields_me.graphql"
 import { EditableLocation } from "__generated__/useUpdateMyUserProfileMutation.graphql"
 import { RouterLink } from "System/Router/RouterLink"
+import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
+import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
+import createLogger from "Utils/logger"
+import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
+import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
+import { useTracking } from "react-tracking"
+import {
+  ActionType,
+  ClickedVerifyIdentity,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+
+const logger = createLogger("SettingsEditProfileFields")
 
 interface EditableLocationProps extends EditableLocation {
   display: string | null
@@ -64,38 +72,18 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
   const imageContainerRef = useRef<SettingsEditProfileImageRef | null>(null)
   const { sendToast } = useToasts()
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile()
+  const { submitMutation: submitVerifyIDMutation } = useVerifyID()
+  const { submitMutation: submitVerifyEmailMutation } = useVerifyEmail()
   const { relayEnvironment } = useSystemContext()
   const { editedUserProfile: trackEditProfile } = useEditProfileTracking()
+  const { trackEvent } = useTracking()
 
-  const {
-    showVerificationBanner: showVerificationBannerForID,
-    handleVerification: handleIDVerification,
-  } = useHandleIDVerification()
-
-  const {
-    showVerificationBanner: showVerificationBannerForEmail,
-    handleVerification: handleEmailVerification,
-  } = useHandleEmailVerification()
-
-  useEffect(() => {
-    if (!!showVerificationBannerForID) {
-      sendToast({
-        variant: "success",
-        message: `ID verification link sent to ${me?.email ?? ""}.`,
-      })
-    }
-    if (!!showVerificationBannerForEmail) {
-      sendToast({
-        variant: "success",
-        message: `Email sent to ${me?.email ?? ""}`,
-      })
-    }
-  }, [
-    me.email,
-    sendToast,
-    showVerificationBannerForID,
-    showVerificationBannerForEmail,
-  ])
+  const clickedIdVerificationEvent: ClickedVerifyIdentity = {
+    action: ActionType.clickedVerifyIdentity,
+    context_module: ContextModule.collectorProfile,
+    context_page_owner_type: OwnerType.editProfile,
+    subject: "Clicked ID Verification Link",
+  }
 
   const isEmailConfirmed = me?.isEmailConfirmed
   const isIdentityVerified = me?.isIdentityVerified
@@ -249,15 +237,42 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
               {isIdentityVerified ? (
                 <Box>
                   <Flex alignItems="center">
-                    <CheckCircleFillIcon fill="green100" mr={0.5} />
+                    <CheckmarkFillIcon fill="green100" mr={0.5} />
                     <Text variant="sm-display">ID Verified</Text>
                   </Flex>
                 </Box>
               ) : (
                 <Flex alignItems="center">
-                  <CheckCircleIcon fill="black60" mr={0.5} />
+                  <CheckmarkStrokeIcon fill="black60" mr={0.5} />
                   <Clickable
-                    onClick={handleIDVerification}
+                    onClick={async () => {
+                      trackEvent(clickedIdVerificationEvent)
+
+                      try {
+                        // no input, user is derived from the authenticated MP loader context
+                        await submitVerifyIDMutation({
+                          variables: { input: {} },
+                          rejectIf: res => {
+                            return res.sendIdentityVerificationEmail
+                              ?.confirmationOrError?.mutationError
+                          },
+                        })
+
+                        sendToast({
+                          variant: "success",
+                          message: `ID verification link sent to ${me.email}.`,
+                          ttl: 6000,
+                        })
+                      } catch (error) {
+                        logger.error(error)
+
+                        sendToast({
+                          variant: "error",
+                          message: "There was a problem",
+                          description: error.message || "Something went wrong",
+                        })
+                      }
+                    }}
                     textDecoration="underline"
                   >
                     <Text variant="sm-display">Verify Your ID</Text>
@@ -266,14 +281,15 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
               )}
               <Text variant="sm" mt={1} color="black60">
                 For details, see{" "}
-                <a
-                  href="https://www.artsy.net/identity-verification-faq"
+                <RouterLink
+                  inline
+                  to="/identity-verification-faq"
                   target="_blank"
                 >
                   FAQs
-                </a>{" "}
+                </RouterLink>{" "}
                 or contact{" "}
-                <RouterLink to={"mailto:verification@artsy.net"}>
+                <RouterLink inline to={"mailto:verification@artsy.net"}>
                   verification@artsy.net
                 </RouterLink>
                 .
@@ -286,7 +302,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
             {isEmailConfirmed ? (
               <Box>
                 <Flex alignItems="center">
-                  <CheckCircleFillIcon fill="green100" mr={0.5} />
+                  <CheckmarkFillIcon fill="green100" mr={0.5} />
                   <Text variant="sm-display">Email Address Verified</Text>
                 </Flex>
 
@@ -298,10 +314,36 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
             ) : (
               <Box>
                 <Flex alignItems="center">
-                  <CheckCircleIcon fill="black60" mr={0.5} />
+                  <CheckmarkStrokeIcon fill="black60" mr={0.5} />
                   {canRequestEmailConfirmation ? (
                     <Clickable
-                      onClick={handleEmailVerification}
+                      onClick={async () => {
+                        try {
+                          // no input, user is derived from the authenticated MP loader context
+                          await submitVerifyEmailMutation({
+                            variables: { input: {} },
+                            rejectIf: res => {
+                              return res.sendConfirmationEmail
+                                ?.confirmationOrError?.mutationError
+                            },
+                          })
+
+                          sendToast({
+                            variant: "success",
+                            message: `Email verification link sent to ${me.email}.`,
+                            ttl: 6000,
+                          })
+                        } catch (error) {
+                          logger.error(error)
+
+                          sendToast({
+                            variant: "error",
+                            message: "There was a problem",
+                            description:
+                              error.message || "Something went wrong",
+                          })
+                        }
+                      }}
                       textDecoration="underline"
                     >
                       <Text variant="sm-display">Verify Your Email</Text>

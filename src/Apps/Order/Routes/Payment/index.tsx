@@ -99,6 +99,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     useFeatureFlag("bank_account_balance_check") &&
     selectedPaymentMethod === "US_BANK_ACCOUNT"
 
+  const artworkVersion = extractNodes(order.lineItems)[0]?.artworkVersion
+
   useEffect(() => {
     if (!bankAccountSelection && selectedPaymentMethod) {
       const bankAccountsArray =
@@ -364,6 +366,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   return (
     <Box data-test="orderPayment">
       <OrderRouteContainer
+        order={order}
         currentStep="Payment"
         steps={routeSteps}
         content={
@@ -407,9 +410,12 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
                 transactionStep="payment"
                 order={order}
               />
-              {order.source === "private_sale" && order.artworkDetails && (
-                <AdditionalArtworkDetails order={order} />
-              )}
+              {order.source === "private_sale" &&
+                (order.artworkDetails ||
+                  artworkVersion?.provenance ||
+                  artworkVersion?.condition_description) && (
+                  <AdditionalArtworkDetails order={order} />
+                )}
               <BuyerGuarantee
                 contextModule={ContextModule.ordersPayment}
                 contextPageOwnerType={OwnerType.ordersPayment}
@@ -490,6 +496,10 @@ export const PaymentFragmentContainer = createFragmentContainer(
               artwork {
                 slug
               }
+              artworkVersion {
+                provenance
+                condition_description
+              }
             }
           }
         }
@@ -499,6 +509,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
         ...ArtworkSummaryItem_order
         ...AdditionalArtworkDetails_order
         ...TransactionDetailsSummaryItem_order
+        ...OrderStepper_order
       }
     `,
   }

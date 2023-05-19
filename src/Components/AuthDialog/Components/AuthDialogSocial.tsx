@@ -1,20 +1,20 @@
-import {
-  Button,
-  Join,
-  Spacer,
-  AppleIcon,
-  GoogleIcon,
-  FacebookIcon,
-} from "@artsy/palette"
+import { Button, Join, Spacer } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 import { setSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
 import { stringify } from "qs"
 import { FC } from "react"
 import { getENV } from "Utils/getENV"
+import FacebookIcon from "@artsy/icons/FacebookIcon"
+import AppleIcon from "@artsy/icons/AppleIcon"
+import GoogleIcon from "@artsy/icons/GoogleIcon"
 
 export const AuthDialogSocial: FC = () => {
-  const { applePath, facebookPath, googlePath } = getENV("AP")
+  const { applePath, facebookPath, googlePath } = getENV("AP") ?? {
+    applePath: "/users/auth/apple",
+    facebookPath: "/users/auth/facebook",
+    googlePath: "/users/auth/google",
+  }
 
   const {
     state: { options, analytics, mode },
@@ -49,7 +49,7 @@ export const AuthDialogSocial: FC = () => {
       <Button
         variant="secondaryBlack"
         width="100%"
-        Icon={AppleIcon}
+        Icon={AppleIcon as any}
         // @ts-ignore
         as="a"
         href={`${applePath}?${query}`}
@@ -62,7 +62,7 @@ export const AuthDialogSocial: FC = () => {
       <Button
         variant="secondaryBlack"
         width="100%"
-        Icon={GoogleIcon}
+        Icon={GoogleIcon as any}
         // @ts-ignore
         as="a"
         href={`${googlePath}?${query}`}

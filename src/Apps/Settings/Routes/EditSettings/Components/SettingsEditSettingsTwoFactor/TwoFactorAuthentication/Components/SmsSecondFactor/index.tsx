@@ -15,7 +15,7 @@ import { afterUpdateRedirect } from "Apps/Settings/Routes/EditSettings/Component
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 // eslint-disable-next-line no-restricted-imports
 import request from "superagent"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { CreateSmsSecondFactorInput } from "__generated__/CreateSmsSecondFactorMutation.graphql"
 import { SmsSecondFactor_me$data } from "__generated__/SmsSecondFactor_me.graphql"
 import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
@@ -23,6 +23,7 @@ import { DisableFactorConfirmation } from "Apps/Settings/Routes/EditSettings/Com
 import { isArtsyEmail } from "./isArtsyEmail"
 import { OnCompleteRedirectModal, SmsSecondFactorModal } from "./Modal"
 import { CreateSmsSecondFactor } from "./Mutation/CreateSmsSecondFactor"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface SmsSecondFactorProps {
   me: SmsSecondFactor_me$data
@@ -172,9 +173,12 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
           method via 1Password (or your preferred password manager)."
           >
             You may find a detailed walkthrough{" "}
-            <a href="https://artsy.net/employees-mfa-instructions">
+            <RouterLink
+              inline
+              to="https://artsy.net/employees-mfa-instructions"
+            >
               here in Notion
-            </a>
+            </RouterLink>
             .
           </Message>
         )}

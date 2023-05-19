@@ -6,7 +6,7 @@ import { ArtistSeriesItemFragmentContainer as ArtistSeriesItem } from "./ArtistS
 import { ContextModule } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import { SpaceProps } from "styled-system"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 
 interface Props extends SpaceProps {
   artist: ArtistSeriesRail_artist$data

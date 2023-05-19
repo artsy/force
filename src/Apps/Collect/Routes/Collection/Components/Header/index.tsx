@@ -15,7 +15,7 @@ import { Link } from "found"
 import { compact, filter, take } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FullBleedHeader } from "Components/FullBleedHeader"
+import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { slugify } from "underscore.string"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 

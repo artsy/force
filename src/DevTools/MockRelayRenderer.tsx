@@ -1,6 +1,6 @@
 /* eslint-disable jest/no-commented-out-tests */
-import { SystemContextProvider } from "System"
-import { SystemContextConsumer } from "System"
+import { SystemContextProvider } from "System/SystemContext"
+import { SystemContextConsumer } from "System/SystemContext"
 import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { IMocks } from "graphql-tools/dist/Interfaces"
@@ -48,7 +48,7 @@ export interface MockRelayRendererProps<T extends OperationType> {
   mockNetwork?: INetwork
 }
 
-export interface MockRelayRendererState {
+interface MockRelayRendererState {
   caughtError: {
     error: any
     errorInfo: any

@@ -1,5 +1,5 @@
 import { FC, useCallback, useEffect } from "react"
-import { themeProps } from "@artsy/palette-tokens"
+import { THEME } from "@artsy/palette-tokens"
 import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { getOffsetTopForSticky, useSticky } from "Components/Sticky"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
@@ -16,7 +16,7 @@ const NAMESPACE = "JUMP"
  * based on the nav and the current state of the sticky component.
  */
 export const useJump = ({ behavior = "smooth", offset = 0 }: UseJump = {}) => {
-  const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
+  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
 
   const { mobile, desktop } = useNavBarHeight()
 

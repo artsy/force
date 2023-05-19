@@ -1,5 +1,5 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { Button, Text, useToasts } from "@artsy/palette"
+import { Button, Spacer, Text, useToasts } from "@artsy/palette"
 import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
 import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 import { createOrUpdateConsignSubmission } from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
@@ -8,12 +8,11 @@ import {
   validate,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
 import { COUNTRY_CODES } from "Utils/countries"
-import { BackLink } from "Components/Links/BackLink"
 import { Form, Formik } from "formik"
 import { LocationDescriptor } from "found"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useRouter } from "System/Router/useRouter"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
@@ -24,7 +23,7 @@ import {
   ContactInformationFormFragmentContainer,
   ContactInformationFormModel,
 } from "./Components/ContactInformationForm"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { TopContextBar } from "Components/TopContextBar"
 
 const logger = createLogger("SubmissionFlow/ContactInformation.tsx")
 
@@ -55,7 +54,6 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   me,
   submission,
 }) => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { trackEvent } = useTracking()
   const { router, match } = useRouter()
   const { sendToast } = useToasts()
@@ -97,7 +95,7 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
           relayEnvironment,
           {
             externalId: submission?.externalId,
-            artistID: stepIndex === 0 ? "" : undefined,
+            artistID: isFirstStep ? "" : undefined,
             userName: name.trim(),
             userEmail: submissionEmail,
             userPhone: phoneNumberInternational,
@@ -129,18 +127,10 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
           user_email: submissionEmail ?? me?.email,
         })
 
-        router.replace(
-          artworkId
-            ? isCollectorProfileEnabled
-              ? "/collector-profile/my-collection"
-              : "/settings/my-collection"
-            : "/sell"
-        )
+        router.replace(artworkId ? "/collector-profile/my-collection" : "/sell")
 
         const consignPath = artworkId
-          ? isCollectorProfileEnabled
-            ? "/collector-profile/my-collection/submission"
-            : "/my-collection/submission"
+          ? "/collector-profile/my-collection/submission"
           : "/sell/submission"
 
         const nextStepIndex = isLastStep ? null : stepIndex + 1
@@ -181,13 +171,11 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
 
   const deriveBackLinkTo = () => {
     const defaultBackLink = artworkId
-      ? isCollectorProfileEnabled
-        ? "/collector-profile/my-collection"
-        : "/my-collection"
+      ? "/collector-profile/my-collection"
       : "/sell"
 
     let backTo = defaultBackLink
-    if (stepIndex === 0 && artworkId) {
+    if (isFirstStep && artworkId) {
       return backTo + `/artwork/${artworkId}`
     }
     let prevStep = ""
@@ -219,9 +207,22 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
 
   return (
     <>
-      <BackLink py={2} mb={6} width="min-content" to={backTo}>
-        Back
-      </BackLink>
+      {isFirstStep && !artworkId ? (
+        <TopContextBar
+          displayBackArrow
+          hideSeparator
+          onClick={() => router.go(-1)}
+          redirectTo="/sell"
+        >
+          Back
+        </TopContextBar>
+      ) : (
+        <TopContextBar displayBackArrow hideSeparator href={backTo}>
+          Back
+        </TopContextBar>
+      )}
+
+      <Spacer y={6} />
 
       <SubmissionStepper currentStep="Contact Information" />
 

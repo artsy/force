@@ -1,21 +1,17 @@
 import {
   Box,
   Clickable,
-  CloseIcon,
   DROP_SHADOW,
   HTML,
-  ModalBase,
-  Spinner,
   Tab,
   Tabs,
   Text,
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { RouterLink } from "System/Router/RouterLink"
 import { AuctionFAQsDialog_viewer$data } from "__generated__/AuctionFAQsDialog_viewer.graphql"
-import { AuctionFAQsDialogQuery } from "__generated__/AuctionFAQsDialogQuery.graphql"
+import CloseIcon from "@artsy/icons/CloseIcon"
 
 interface AuctionFAQsDialogProps {
   onClose(): void
@@ -56,7 +52,10 @@ const AuctionFAQsDialog: React.FC<AuctionFAQsDialogProps> = ({
       <Text variant="sm" mb={2}>
         How can we help you? Below are a few general categories to help you find
         the answers you’re looking for. Need more immediate assistance? Please{" "}
-        <a href="mailto:specialist@artsy.net">contact us</a>.
+        <RouterLink inline to="mailto:specialist@artsy.net">
+          contact us
+        </RouterLink>
+        .
       </Text>
 
       <Tabs>
@@ -113,46 +112,3 @@ export const AuctionFAQsDialogFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-interface AuctionFAQsDialogQueryRendererProps {
-  onClose(): void
-}
-
-export const AuctionFAQsDialogQueryRenderer: React.FC<AuctionFAQsDialogQueryRendererProps> = ({
-  onClose,
-}) => {
-  const { relayEnvironment } = useSystemContext()
-
-  return (
-    <ModalBase bg="rgba(0,0,0,0.8)" onClose={onClose}>
-      <SystemQueryRenderer<AuctionFAQsDialogQuery>
-        environment={relayEnvironment}
-        placeholder={<Spinner color="white100" />}
-        query={graphql`
-          query AuctionFAQsDialogQuery {
-            viewer {
-              ...AuctionFAQsDialog_viewer
-            }
-          }
-        `}
-        render={({ props, error }) => {
-          if (!props) {
-            return <Spinner color="white100" />
-          }
-
-          if (error ?? !props.viewer) {
-            onClose()
-            return
-          }
-
-          return (
-            <AuctionFAQsDialogFragmentContainer
-              onClose={onClose}
-              viewer={props.viewer}
-            />
-          )
-        }}
-      />
-    </ModalBase>
-  )
-}

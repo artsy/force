@@ -1,10 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { Footer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Footer"
 
 jest.mock("react-tracking")
-// TODO: Remove feature flag mock when feature flag is removed
 jest.mock("System/useSystemContext")
 jest.mock("System/Analytics/AnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
@@ -23,9 +22,6 @@ describe("Footer", () => {
     })
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       user: { id: "user-id", email: "user-email@artsy.net" },
-      featureFlags: {
-        "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-      },
     }))
   })
 
@@ -33,9 +29,7 @@ describe("Footer", () => {
     render(<Footer />)
 
     expect(
-      screen.getByText(
-        "Sell with Artsy is the simple, contemporary way to sell art from your collection."
-      )
+      screen.getByText("Meet your new art advisor. It’s Artsy.")
     ).toBeInTheDocument()
     expect(screen.getByText("Start Selling")).toBeInTheDocument()
   })
@@ -58,7 +52,7 @@ describe("Footer", () => {
 
       expect(trackEvent).toHaveBeenCalled()
       expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedStartSelling",
+        action: "tappedConsign",
         context_module: "Footer",
         context_page_owner_type: "sell",
         label: "Start Selling",

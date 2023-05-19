@@ -27,4 +27,5 @@ module.exports = {
       ? ["@swc/jest", swcConfig]
       : "babel-jest",
   },
+  workerIdleMemoryLimit: "500MB",
 }

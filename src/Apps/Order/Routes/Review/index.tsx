@@ -30,7 +30,7 @@ import { OfferSummaryItemFragmentContainer as OfferSummaryItem } from "Apps/Orde
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import type { Stripe, StripeElements } from "@stripe/stripe-js"
-import { SystemContextProps, withSystemContext } from "System"
+import { SystemContextProps, withSystemContext } from "System/SystemContext"
 import { ShippingArtaSummaryItemFragmentContainer } from "Apps/Order/Components/ShippingArtaSummaryItem"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
@@ -56,6 +56,7 @@ const OrdersReviewOwnerType = OwnerType.ordersReview
 export const ReviewRoute: FC<ReviewProps> = props => {
   const { trackEvent } = useTracking()
   const productId = extractNodes(props.order.lineItems)[0].artwork?.internalID
+  const artworkVersion = extractNodes(props.order.lineItems)[0]?.artworkVersion
 
   const onSubmit = async (setupIntentId?: any) => {
     const submitEvent = {
@@ -129,14 +130,12 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
 
-        // TODO: replace usage with order.state === "IN_REVIEW" once buyerStatus
-        // is implemented in Exchange.
-        // See https://www.notion.so/artsy/2023-02-09-Platform-Practice-Meeting-Notes-87f4cc9987a7436c9c4b207847e318db?pvs=4
-        const orderInReviewFacsimile = order.paymentMethod === "WIRE_TRANSFER"
-
         if (isEigen) {
           if (order.mode === "OFFER") {
-            if (orderInReviewFacsimile) {
+            if (
+              orderOrError?.order?.state === "IN_REVIEW" &&
+              order.source === "artwork_page"
+            ) {
               window?.ReactNativeWebView?.postMessage(
                 JSON.stringify({
                   key: "orderSuccessful",
@@ -167,8 +166,18 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           }
         }
 
-        // Eigen redirects to the status page for non-Offer orders (must keep the user inside the webview)
-        if (isEigen || (order.mode === "OFFER" && orderInReviewFacsimile)) {
+        // Eigen redirects to the status page for non-Offer orders (must keep
+        // the user inside the webview)
+        // For in-review offers, we also want to override the default "go to
+        // artwork page and display modal linking to conversation" behavior
+        // because we hold off on creating a conversation until the offer passes
+        // review
+        if (
+          isEigen ||
+          (order.mode === "OFFER" &&
+            orderOrError?.order?.state === "IN_REVIEW" &&
+            order.source === "artwork_page")
+        ) {
           return router.push(`/orders/${orderId}/status`)
         }
         // Make offer and Purchase in inquiry redirects to the conversation page
@@ -408,6 +417,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
   return (
     <Box data-test="orderReview">
       <OrderRouteContainer
+        order={order}
         currentStep="Review"
         steps={routeSteps}
         content={
@@ -461,9 +471,12 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                 order={order}
                 transactionStep="review"
               />
-              {order.source === "private_sale" && order.artworkDetails && (
-                <AdditionalArtworkDetails order={order} />
-              )}
+              {order.source === "private_sale" &&
+                (order.artworkDetails ||
+                  artworkVersion?.provenance ||
+                  artworkVersion?.condition_description) && (
+                  <AdditionalArtworkDetails order={order} />
+                )}
               <BuyerGuarantee
                 contextModule={ContextModule.ordersReview}
                 contextPageOwnerType={OwnerType.ordersReview}
@@ -515,6 +528,10 @@ export const ReviewFragmentContainer = createFragmentContainer(
                   slug
                 }
               }
+              artworkVersion {
+                provenance
+                condition_description
+              }
             }
           }
         }
@@ -531,6 +548,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
         ...PaymentMethodSummaryItem_order
         ...ShippingArtaSummaryItem_order
         ...OfferSummaryItem_order
+        ...OrderStepper_order
       }
     `,
   }

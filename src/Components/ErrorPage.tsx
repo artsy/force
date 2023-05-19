@@ -4,15 +4,14 @@ import {
   GridColumns,
   Column,
   Box,
-  Separator,
-  FullBleed,
   BoxProps,
 } from "@artsy/palette"
 import * as React from "react"
 import styled from "styled-components"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface ErrorPageProps extends BoxProps {
-  code: number
+  code: number | string
   message?: string
   detail?: string
 }
@@ -24,7 +23,9 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({
   children,
   ...rest
 }) => {
-  const headline = ERROR_MESSAGES[code] || "Internal Server Error"
+  // We assume string codes are client exceptions
+  const headline =
+    typeof code === "number" ? ERROR_MESSAGES[code] : "Internal Error"
 
   return (
     <Box {...rest}>
@@ -40,37 +41,31 @@ export const ErrorPage: React.FC<ErrorPageProps> = ({
 
           <Text variant="sm-display" color="black60">
             Please contact{" "}
-            <a href="mailto:support@artsy.net">support@artsy.net</a> with any
-            questions.
+            <RouterLink inline to="mailto:support@artsy.net">
+              support@artsy.net
+            </RouterLink>{" "}
+            with any questions.
           </Text>
 
           {children ?? (
             <Text variant="sm-display" color="black60">
-              <a href="/">Go to Artsy Homepage</a>
+              <RouterLink to="/">Go to Artsy Homepage</RouterLink>
             </Text>
           )}
         </Column>
       </GridColumns>
 
-      {code >= 500 && (detail || message) && (
+      {(code >= 500 || typeof code === "string") && (detail || message) && (
         <>
-          <FullBleed>
-            <Separator my={4} />
-          </FullBleed>
+          <Spacer y={4} />
 
-          <Code
-            as="pre"
-            border="1px solid"
-            borderColor="black10"
-            color="black100"
-            px={1}
-            py={0.5}
-            mx={-1}
-            maxHeight={600}
-          >
-            {message}
-            {detail}
-          </Code>
+          {message && (
+            <Message color={detail ? "black100" : "black60"}>{message}</Message>
+          )}
+
+          {detail && (
+            <Detail {...(message ? { mt: "-1px" } : {})}>{detail}</Detail>
+          )}
         </>
       )}
     </Box>
@@ -86,9 +81,30 @@ const Code = styled(Box)`
   text-align: left;
   word-break: break-word;
   overflow-x: auto;
+  white-space: pre;
 `
 
-const ERROR_MESSAGES = {
+const Message = styled(Code).attrs({
+  border: "1px solid",
+  borderColor: "black10",
+  px: 1,
+  py: 0.5,
+  mx: -1,
+})``
+
+const Detail = styled(Code).attrs({
+  border: "1px solid",
+  borderColor: "black10",
+  px: 1,
+  py: 0.5,
+  mx: -1,
+  maxHeight: 600,
+})`
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+`
+
+const ERROR_MESSAGES: Record<number, string> = {
   // 4×× Client Error
   400: "Bad Request",
   401: "Unauthorized",
@@ -108,7 +124,6 @@ const ERROR_MESSAGES = {
   415: "Unsupported Media Type",
   416: "Requested Range Not Satisfiable",
   417: "Expectation Failed",
-  418: "I'm a teapot",
   421: "Misdirected Request",
   422: "Unprocessable Entity",
   423: "Locked",

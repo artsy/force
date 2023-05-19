@@ -27,7 +27,11 @@ export const ContactApp: React.FC = () => {
 
           <Text variant="sm">
             For general questions and feedback, please visit our Help Center or
-            contact <a href="mailto:support@artsy.net">support@artsy.net</a>.
+            contact{" "}
+            <RouterLink inline to="mailto:support@artsy.net">
+              support@artsy.net
+            </RouterLink>
+            .
           </Text>
         </Column>
 
@@ -39,9 +43,15 @@ export const ContactApp: React.FC = () => {
           <Text variant="sm">
             For questions about bidding on artworks in auctions through Artsy,
             contact{" "}
-            <a href="mailto:specialist@artsy.net">specialist@artsy.net</a>. For
-            questions about buying artworks through galleries on Artsy, contact{" "}
-            <a href="mailto:inquiries@artsy.net">inquiries@artsy.net</a>.
+            <RouterLink inline to="mailto:specialist@artsy.net">
+              specialist@artsy.net
+            </RouterLink>
+            . For questions about buying artworks through galleries on Artsy,
+            contact{" "}
+            <RouterLink inline to="mailto:inquiries@artsy.net">
+              inquiries@artsy.net
+            </RouterLink>
+            .
           </Text>
         </Column>
 
@@ -53,7 +63,10 @@ export const ContactApp: React.FC = () => {
           <Text variant="sm">
             For members of the media interested in reaching Artsy's
             communications team, contact{" "}
-            <a href="mailto:press@artsy.net">press@artsy.net</a>.
+            <RouterLink inline to="mailto:press@artsy.net">
+              press@artsy.net
+            </RouterLink>
+            .
           </Text>
         </Column>
 
@@ -64,7 +77,10 @@ export const ContactApp: React.FC = () => {
 
           <Text variant="sm">
             For questions about images published on the site, contact{" "}
-            <a href="mailto:images@artsy.net">images@artsy.net</a>.
+            <RouterLink inline to="mailto:images@artsy.net">
+              images@artsy.net
+            </RouterLink>
+            .
           </Text>
         </Column>
 
@@ -75,7 +91,10 @@ export const ContactApp: React.FC = () => {
 
           <Text variant="sm">
             For job or internship openings, explore our{" "}
-            <RouterLink to="/jobs">Jobs page</RouterLink>.
+            <RouterLink inline to="/jobs">
+              Jobs page
+            </RouterLink>
+            .
           </Text>
         </Column>
 
@@ -86,11 +105,20 @@ export const ContactApp: React.FC = () => {
 
           <Text variant="sm">
             For pitches and story ideas, contact{" "}
-            <a href="mailto:pitches@artsy.net">pitches@artsy.net</a>.<br />
+            <RouterLink inline to="mailto:pitches@artsy.net">
+              pitches@artsy.net
+            </RouterLink>
+            .<br />
             For comments and questions, contact{" "}
-            <a href="mailto:comments@artsy.net">comments@artsy.net</a>.<br />
+            <RouterLink inline to="mailto:comments@artsy.net">
+              comments@artsy.net
+            </RouterLink>
+            .<br />
             For questions about The Artsy Podcast, contact{" "}
-            <a href="mailto:podcast@artsy.net">podcast@artsy.net</a>.
+            <RouterLink inline to="mailto:podcast@artsy.net">
+              podcast@artsy.net
+            </RouterLink>
+            .
           </Text>
         </Column>
 
@@ -101,7 +129,10 @@ export const ContactApp: React.FC = () => {
 
           <Text variant="sm">
             For personal data requests, contact{" "}
-            <a href="mailto:privacy@artsy.net">privacy@artsy.net</a>.
+            <RouterLink inline to="mailto:privacy@artsy.net">
+              privacy@artsy.net
+            </RouterLink>
+            .
           </Text>
         </Column>
       </GridColumns>
@@ -125,10 +156,10 @@ export const ContactApp: React.FC = () => {
 
         <Column span={2}>
           <Text as="h3" variant="xs">
-            Contemporary Art Editor
+            Art Market Editor
           </Text>
 
-          <Text variant="sm">Harley Wong</Text>
+          <Text variant="sm">Arun Kakar</Text>
         </Column>
 
         <Column span={2}>

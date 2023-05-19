@@ -9,13 +9,8 @@ interface ArtQuizResultsProps {
 }
 
 const ArtQuizResults: FC<ArtQuizResultsProps> = ({ me }) => {
-  const savedQuizArtworksCount = me.quiz.savedArtworks.length
-  const hasSavedArtworks = savedQuizArtworksCount > 0
-
-  if (hasSavedArtworks) {
-    return (
-      <ArtQuizResultsTabs savedQuizArtworksCount={savedQuizArtworksCount} />
-    )
+  if (me.quiz.savedArtworks.length > 0) {
+    return <ArtQuizResultsTabs />
   }
 
   return <ArtQuizResultsEmpty />

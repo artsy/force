@@ -1,7 +1,19 @@
 import { Children, useEffect, useState } from "react"
 import * as React from "react"
-import { Carousel, Clickable, CarouselRail, CarouselCell } from "@artsy/palette"
-import { CarouselProps } from "Components/Carousel"
+import {
+  Carousel,
+  Clickable,
+  CarouselRail,
+  CarouselCell,
+  BoxProps,
+} from "@artsy/palette"
+
+export interface CarouselProps extends BoxProps {
+  children: JSX.Element | JSX.Element[]
+  arrowHeight?: number
+  onChange?(index: number): void
+  onPageCountChange?(count: number): void
+}
 
 interface FairsPromoCarouselProps {
   children: CarouselProps["children"]

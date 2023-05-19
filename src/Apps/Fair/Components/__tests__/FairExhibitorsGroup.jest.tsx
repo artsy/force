@@ -1,4 +1,4 @@
-import { FairExhibitorsGroupFragmentContainer } from "../FairExhibitors"
+import { FairExhibitorsGroupFragmentContainer } from "Apps/Fair/Components/FairExhibitors/FairExhibitorsGroup"
 import { mount } from "enzyme"
 
 jest.mock("System/Router/useRouter", () => ({

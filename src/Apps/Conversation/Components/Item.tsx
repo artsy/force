@@ -1,7 +1,8 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Flex, Image, Link, Text } from "@artsy/palette"
+import { Flex, Image, Text } from "@artsy/palette"
 import { Item_item$data } from "__generated__/Item_item.graphql"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface ItemProps {
   item: Item_item$data
@@ -58,9 +59,9 @@ export const Item: React.FC<ItemProps> = props => {
     const imageName =
       (item.__typename === "Artwork" ? item.title : item.name) || undefined
     return (
-      <Link
-        href={item.href || undefined}
-        underlineBehavior="none"
+      <RouterLink
+        to={item.href || null}
+        textDecoration="none"
         style={{ alignSelf: "flex-end", maxWidth: "100%" }}
         mb={1}
       >
@@ -82,7 +83,7 @@ export const Item: React.FC<ItemProps> = props => {
             {itemDetails(item)}
           </Flex>
         </Flex>
-      </Link>
+      </RouterLink>
     )
   } else {
     return null

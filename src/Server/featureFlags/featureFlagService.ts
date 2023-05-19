@@ -1,6 +1,5 @@
-import { Variant } from 'unleash-client'
+import { Variant } from "unleash-client"
 
-export type FeatureFlag = string
 export type FeatureFlags = Array<string>
 
 export type FeatureFlagContext = Record<string, any>

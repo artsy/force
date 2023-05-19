@@ -42,8 +42,12 @@ export const getSaleOrLotTimerInfo = (
   // Sale has not yet started
   if (!hasStarted) {
     if (parsedDays < 1) {
-      copy = "Bidding Starts Today"
       // Entered extended bidding
+      if (parsedHours >= 1) {
+        copy = `${parsedHours}h ${parsedMinutes}m Until Bidding Starts`
+      } else {
+        copy = `${parsedMinutes}m ${parsedSeconds}s Until Bidding Starts`
+      }
     } else {
       copy = `${parsedDays} Day${
         parsedDays > 1 ? "s" : ""

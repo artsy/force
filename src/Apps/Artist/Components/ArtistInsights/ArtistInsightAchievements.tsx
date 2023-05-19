@@ -51,7 +51,16 @@ export const ArtistInsightAchievementsFragmentContainer = createFragmentContaine
       fragment ArtistInsightAchievements_artist on Artist {
         slug
         insightAchievements: insights(
-          kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]
+          kind: [
+            SOLO_SHOW
+            GROUP_SHOW
+            COLLECTED
+            REVIEWED
+            BIENNIAL
+            AWARDS
+            PRIVATE_COLLECTIONS
+            RESIDENCIES
+          ]
         ) {
           label
           entities

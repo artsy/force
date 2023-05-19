@@ -31,8 +31,8 @@ describe("BuyerGuarantee", () => {
 
         expect(trackEvent).toHaveBeenCalledTimes(1)
         expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-          Array [
-            Object {
+          [
+            {
               "action": "clickedBuyerProtection",
               "context_module": "ordersShipping",
               "context_page_owner_type": "test-owner",
@@ -72,16 +72,26 @@ describe("with private sale orders", () => {
     )
   })
 
-  it("renders correct conditions of sale", () => {
+  it("renders conditions of sale", () => {
     expect(screen.getByText("This purchase is subject to")).toBeInTheDocument()
     expect(
       screen.getByText("Artsy Private Sales LLC Conditions of Sale")
     ).toBeInTheDocument()
   })
 
+  it("renders correct conditions of sale page", () => {
+    const conditionsPage = screen.getByText(
+      "Artsy Private Sales LLC Conditions of Sale"
+    )
+    expect(conditionsPage).toHaveAttribute(
+      "href",
+      "/private-sales-conditions-of-sale"
+    )
+  })
+
   it("renders extra conditions of sale title", () => {
     expect(
-      screen.getByText("Additional conditions of sale")
+      screen.getByText("Additional Conditions of Sale")
     ).toBeInTheDocument()
   })
 

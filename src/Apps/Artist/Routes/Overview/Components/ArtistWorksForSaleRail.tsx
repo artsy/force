@@ -2,7 +2,8 @@ import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext, useSystemContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useSystemContext } from "System/SystemContext"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
@@ -10,7 +11,7 @@ import {
 import { extractNodes } from "Utils/extractNodes"
 import { ArtistWorksForSaleRail_artist$data } from "__generated__/ArtistWorksForSaleRail_artist.graphql"
 import { ArtistWorksForSaleRailQuery } from "__generated__/ArtistWorksForSaleRailQuery.graphql"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 import { Box, Skeleton } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useJump } from "Utils/Hooks/useJump"
@@ -41,7 +42,7 @@ const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
     <Rail
       title="Works For Sale"
       viewAllLabel="View All Works"
-      viewAllHref={`/artist/${artist.slug}/works-for-sale`}
+      viewAllHref={`/artist/${artist.slug}`}
       viewAllOnClick={() => {
         jumpTo("artistContentArea")
 
@@ -61,11 +62,10 @@ const ArtistWorksForSaleRail: React.FC<ArtistWorksForSaleRailProps> = ({
       getItems={() => {
         return nodes.map((node, index) => {
           return (
-            <Box data-test="worksForSaleRail">
+            <Box key={node.internalID} data-test="worksForSaleRail">
               <ShelfArtworkFragmentContainer
                 artwork={node}
                 contextModule={ContextModule.worksForSaleRail}
-                key={index}
                 lazyLoad
                 onClick={() => {
                   tracking.trackEvent(

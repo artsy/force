@@ -26,7 +26,11 @@ export const MyCollectionArtworkSWASectionMobileLayout: React.FC<Props> = ({
       <Text mb={2} color="black60" variant="xs">
         Let our experts find the best sales option for you.
       </Text>
-      <RouterLink noUnderline to={route} data-testid="submit-for-sale-link">
+      <RouterLink
+        textDecoration="none"
+        to={route}
+        data-testid="submit-for-sale-link"
+      >
         <Button
           variant="primaryBlack"
           width="100%"
@@ -91,7 +95,7 @@ export const MyCollectionArtworkSWASectionDesktopLayout: React.FC<Props> = ({
         Let our experts find the best sales option for you.
       </Text>
       <RouterLink
-        noUnderline
+        textDecoration="none"
         to={route}
         data-testid="submit-for-sale-link"
         onClick={() => {

@@ -1,4 +1,4 @@
-import { SystemContextProvider } from "System"
+import { SystemContextProvider } from "System/SystemContext"
 import { buildAppRoutes } from "System/Router/buildAppRoutes"
 import { buildClientApp } from "System/Router/buildClientApp"
 import { render, screen } from "@testing-library/react"
@@ -17,15 +17,10 @@ jest.mock("react-tracking", () => ({
   }),
 }))
 
-// jest.mock(
-//   "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl",
-//   () => ({
-//     useAfterAuthenticationRedirectUrl: () => ({}),
-//   })
-// )
+jest.mock("Utils/Hooks/useAuthValidation")
 
 describe("AppShell", () => {
-  it("renders a NavBar", async () => {
+  it("renders a Footer", async () => {
     const { ClientApp } = await buildClientApp({
       history: {
         protocol: "memory",
@@ -48,7 +43,8 @@ describe("AppShell", () => {
         <ClientApp />
       </SystemContextProvider>
     )
-    expect(screen.getByText("Get the Artsy app")).toBeInTheDocument()
+
+    expect(screen.getByText("Meet your new art advisor.")).toBeInTheDocument()
   })
 
   it("calls the matched routes `prepare` function if found", async () => {

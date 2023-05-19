@@ -18,7 +18,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { useTracking } from "react-tracking"
 import { ActionType, ClickedTooltip } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 interface EntityTooltipArtistProps {
   artist: EntityTooltipArtist_artist$data

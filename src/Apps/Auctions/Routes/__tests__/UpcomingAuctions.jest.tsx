@@ -1,8 +1,8 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { useTracking as baseUseTracking } from "react-tracking"
-import { UpcomingAuctionsPaginationContainer } from "../UpcomingAuctions"
+import { UpcomingAuctionsPaginationContainer } from "Apps/Auctions/Routes/UpcomingAuctions"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")

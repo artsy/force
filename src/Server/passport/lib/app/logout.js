@@ -4,17 +4,17 @@
 const request = require("superagent")
 const opts = require("../options")
 const { parse } = require("url")
-const redirectBack = require("./redirectback")
+const redirectBack = require("./redirectBack")
 const forwardedFor = require("./forwarded_for")
 
-module.exports.denyBadLogoutLinks = function (req, res, next) {
+module.exports.denyBadLogoutLinks = function (req, _res, next) {
   if (parse(req.get("Referrer")).hostname.match("artsy.net")) {
     return next()
   }
   next(new Error("Malicious logout link."))
 }
 
-module.exports.logout = function (req, res, next) {
+module.exports.logout = function (req, res, _next) {
   const accessToken = req.user != null ? req.user.accessToken : undefined
   req.logout()
   req.session = null

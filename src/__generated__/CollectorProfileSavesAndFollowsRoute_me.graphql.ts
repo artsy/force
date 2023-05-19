@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5fdf99768b4a67e915b91e4610b3382e>>
+ * @generated SignedSource<<38216ee1aa6581e607da11ffab32960f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileSavesAndFollowsRoute_me$data = {
-  readonly name: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileSaves2Route_me">;
   readonly " $fragmentType": "CollectorProfileSavesAndFollowsRoute_me";
 };
 export type CollectorProfileSavesAndFollowsRoute_me$key = {
@@ -20,23 +20,34 @@ export type CollectorProfileSavesAndFollowsRoute_me$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [],
+  "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "shouldFetchArtworkListsData"
+    }
+  ],
   "kind": "Fragment",
   "metadata": null,
   "name": "CollectorProfileSavesAndFollowsRoute_me",
   "selections": [
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
+      "condition": "shouldFetchArtworkListsData",
+      "kind": "Condition",
+      "passingValue": true,
+      "selections": [
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "CollectorProfileSaves2Route_me"
+        }
+      ]
     }
   ],
   "type": "Me",
   "abstractKey": null
 };
 
-(node as any).hash = "97c8a50cf95502644e4213758343c691";
+(node as any).hash = "df84f18dc3f0d68178bd40473394a42a";
 
 export default node;

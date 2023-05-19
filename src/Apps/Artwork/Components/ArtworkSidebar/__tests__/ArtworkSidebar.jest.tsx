@@ -162,8 +162,8 @@ describe("ArtworkSidebarArtists", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(1)
       expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "action": "toggledAccordion",
             "context_module": "artworkSidebar",
             "context_owner_type": "artwork",
@@ -177,8 +177,8 @@ describe("ArtworkSidebarArtists", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
       expect(trackEvent.mock.calls[1]).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "action": "toggledAccordion",
             "context_module": "artworkSidebar",
             "context_owner_type": "artwork",
@@ -205,8 +205,8 @@ describe("ArtworkSidebarArtists", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(1)
       expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "action": "toggledAccordion",
             "context_module": "artworkSidebar",
             "context_owner_type": "artwork",
@@ -220,8 +220,8 @@ describe("ArtworkSidebarArtists", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
       expect(trackEvent.mock.calls[1]).toMatchInlineSnapshot(`
-        Array [
-          Object {
+        [
+          {
             "action": "toggledAccordion",
             "context_module": "artworkSidebar",
             "context_owner_type": "artwork",

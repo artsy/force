@@ -1,5 +1,4 @@
 import { getENV } from "Utils/getENV"
-import { mediator } from "Server/mediator"
 import { useEffect } from "react"
 import Cookies from "cookies-js"
 import { useAuthDialog, ShowAuthDialog } from "Components/AuthDialog"
@@ -30,11 +29,9 @@ export const useScrollToOpenAuthModal = ({
       setTimeout(() => {
         const payload = merge(
           {
-            current: {
-              options: {
-                onClose: dismiss,
-                onSuccess: dismiss,
-              },
+            options: {
+              onClose: dismiss,
+              onSuccess: dismiss,
             },
           },
           options
@@ -45,13 +42,9 @@ export const useScrollToOpenAuthModal = ({
     }
 
     window.addEventListener("scroll", handleScroll, { once: true })
-    mediator.once("modal:closed", dismiss)
-    mediator.once("auth:sign_up:success", dismiss)
 
     return () => {
       window.removeEventListener("scroll", handleScroll)
-      mediator.off("modal:closed", dismiss)
-      mediator.off("auth:sign_up:success", dismiss)
     }
   }, [key, options, showAuthDialog])
 }

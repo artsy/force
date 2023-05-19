@@ -1,8 +1,11 @@
 import { useContext } from "react"
 import * as React from "react"
 import { NavBarUserMenu } from "./Menus"
-import { SystemContext } from "System"
-import { BellIcon, Dropdown, EnvelopeIcon, SoloIcon } from "@artsy/palette"
+import { SystemContext } from "System/SystemContext"
+import { Dropdown, Flex } from "@artsy/palette"
+import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
+import PersonIcon from "@artsy/icons/PersonIcon"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import { graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
@@ -16,6 +19,9 @@ import { NavBarNewNotifications } from "./Menus/NavBarNewNotifications"
 import { NavBarNotificationIndicator } from "./NavBarNotificationIndicator"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
+import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
+import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
+import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
@@ -61,7 +67,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
               }
             }}
           >
-            <BellIcon title="Notifications" fill="currentColor" />
+            <BellStrokeIcon fill="currentColor" />
 
             {shouldDisplayBlueDot && (
               <NavBarNotificationIndicator
@@ -82,7 +88,7 @@ export const NavBarLoggedInActions: React.FC<Partial<
             : "Conversations"
         }
       >
-        <EnvelopeIcon title="Inbox" fill="currentColor" />
+        <EnvelopeIcon fill="currentColor" />
 
         {hasConversations && (
           <NavBarNotificationIndicator
@@ -101,15 +107,23 @@ export const NavBarLoggedInActions: React.FC<Partial<
         openDropdownByClick
       >
         {({ anchorRef, anchorProps, visible }) => (
-          <NavBarItemButton
-            ref={anchorRef as any}
-            px={0}
-            pl={1}
-            active={visible}
-            {...anchorProps}
-          >
-            <SoloIcon title="Your account" fill="currentColor" />
-          </NavBarItemButton>
+          // Offset to accomodate hit area padding on right side of icon
+          <Flex mr={-1}>
+            <ProgressiveOnboardingSaveFind>
+              <ProgressiveOnboardingFollowFind>
+                <ProgressiveOnboardingAlertFind>
+                  <NavBarItemButton
+                    ref={anchorRef as any}
+                    active={visible}
+                    aria-label="Your account"
+                    {...anchorProps}
+                  >
+                    <PersonIcon fill="currentColor" />
+                  </NavBarItemButton>
+                </ProgressiveOnboardingAlertFind>
+              </ProgressiveOnboardingFollowFind>
+            </ProgressiveOnboardingSaveFind>
+          </Flex>
         )}
       </Dropdown>
     </>

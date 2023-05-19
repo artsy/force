@@ -1,10 +1,10 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FeatureMetaFragmentContainer as FeatureMeta } from "./Components/FeatureMeta"
-import { FeatureHeaderFragmentContainer as FeatureHeader } from "./Components/FeatureHeader"
+import { FeatureHeaderFragmentContainer as FeatureHeader } from "./Components/FeatureHeader/FeatureHeader"
 import { FeatureApp_feature$data } from "__generated__/FeatureApp_feature.graphql"
 import { Join, Spacer, HTML } from "@artsy/palette"
-import { FeatureSetFragmentContainer as FeatureSet } from "./Components/FeatureSet"
+import { FeatureSetFragmentContainer as FeatureSet } from "./Components/FeatureSet/FeatureSet"
 
 interface FeatureAppProps {
   feature: FeatureApp_feature$data

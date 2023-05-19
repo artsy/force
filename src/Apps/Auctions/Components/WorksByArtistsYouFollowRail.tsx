@@ -1,5 +1,5 @@
 import { createFragmentContainer, graphql } from "react-relay"
-import { useAnalyticsContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { WorksByArtistsYouFollowRail_viewer$data } from "__generated__/WorksByArtistsYouFollowRail_viewer.graphql"
 import { useTracking } from "react-tracking"
 import { AuthContextModule } from "@artsy/cohesion"
@@ -8,7 +8,7 @@ import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { extractNodes } from "Utils/extractNodes"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { CuratorialRailsZeroState } from "./CuritorialRailsTabBar"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 
 export interface WorksByArtistsYouFollowRailProps {
   viewer: WorksByArtistsYouFollowRail_viewer$data
@@ -29,8 +29,9 @@ const WorksByArtistsYouFollowRail: React.FC<WorksByArtistsYouFollowRailProps> = 
 
   return (
     <Rail
-      title="Works for you"
-      subTitle="Works at auction by artists you follow"
+      title="Auction Lots for You Ending Soon"
+      viewAllLabel="View all"
+      viewAllHref="/auctions/lots-for-you-ending-soon"
       getItems={() => {
         return nodes.map((node, index) => {
           return (
@@ -69,6 +70,7 @@ export const WorksByArtistsYouFollowRailFragmentContainer = createFragmentContai
           liveSale: true
           first: 50
         ) {
+          totalCount
           edges {
             node {
               internalID

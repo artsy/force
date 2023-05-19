@@ -2,11 +2,13 @@ import { AuthContextModule } from "@artsy/cohesion"
 import { SaveButton_artwork$data } from "__generated__/SaveButton_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { HeartIcon, Clickable, HeartFillIcon } from "@artsy/palette"
+import { Clickable } from "@artsy/palette"
 import { useSaveArtwork } from "./useSaveArtwork"
 import { useTracking } from "react-tracking"
 import { useState } from "react"
 import { isTouch } from "Utils/device"
+import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
+import HeartFillIcon from "@artsy/icons/HeartFillIcon"
 
 export interface SaveButtonProps {
   artwork: SaveButton_artwork$data
@@ -42,6 +44,7 @@ export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
 
   return (
     <Clickable
+      aria-label={isSaved ? "Unsave" : "Save"}
       data-test="saveButton"
       height={BTN_HEIGHT}
       width={BTN_WIDTH}
@@ -57,7 +60,7 @@ export const SaveButtonBase: React.FC<SaveButtonBaseProps> = ({
           height={BTN_HEIGHT}
         />
       ) : (
-        <HeartIcon
+        <HeartStrokeIcon
           title={title}
           fill="black100"
           width={BTN_WIDTH}
@@ -73,7 +76,7 @@ export const SaveButton: React.FC<SaveButtonProps> = ({
   contextModule,
 }) => {
   const tracking = useTracking()
-  const isSaved = !!artwork.is_saved
+  const isSaved = !!artwork.isSaved
 
   const { handleSave } = useSaveArtwork({
     isSaved,
@@ -105,7 +108,7 @@ export const SaveButtonFragmentContainer = createFragmentContainer(SaveButton, {
       id
       internalID
       slug
-      is_saved: isSaved
+      isSaved
       title
     }
   `,

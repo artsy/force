@@ -3,7 +3,10 @@ import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSub
 import { useBidderPosition } from "Apps/Auction/Queries/useBidderPosition"
 import { useCreateBidderPosition } from "Apps/Auction/Queries/useCreateBidderPosition"
 import { useRouter } from "System/Router/useRouter"
-import { useSubmitBid, UseSubmitBidProps } from "../useSubmitBid"
+import {
+  useSubmitBid,
+  UseSubmitBidProps,
+} from "Apps/Auction/Routes/Bid/useSubmitBid"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useToasts } from "@artsy/palette"
 
@@ -13,7 +16,7 @@ jest.mock("Apps/Auction/Hooks/useCreateTokenAndSubmit")
 jest.mock("Apps/Auction/Queries/useCreateBidderPosition")
 jest.mock("Apps/Auction/Queries/useBidderPosition")
 jest.mock("System/Router/useRouter")
-jest.mock("Apps/Auction/Components/Form/Utils", () => ({
+jest.mock("Apps/Auction/Components/Form/Utils/errorMessages", () => ({
   errorMessageForBidding: x => x,
 }))
 

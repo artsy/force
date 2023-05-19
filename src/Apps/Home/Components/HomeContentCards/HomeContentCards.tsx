@@ -31,6 +31,7 @@ export const HomeContentCards: React.FC = () => {
 
   useEffect(() => {
     const overallTimeout = setTimeout(() => {
+      console.log(`HCC A - cardsLengthRef.current: ${cardsLengthRef.current}`)
       if (cardsLengthRef.current > 0) return
 
       setRenderFallback(true)
@@ -60,15 +61,19 @@ export const HomeContentCards: React.FC = () => {
     if (!braze) return
 
     const subscriptionId = braze.subscribeToContentCardsUpdates(() => {
+      console.log(`HCC B - cardsLengthRef.current: ${cardsLengthRef.current}`)
       if (cardsLengthRef.current > 0) return
 
       const response = braze.getCachedContentCards()
       const sortedCards = response.cards.sort(sortCards)
+      console.log({ response, sortedCards })
+      console.log(`HCC C - cardsLengthRef.current: ${cardsLengthRef.current}`)
       cardsLengthRef.current = sortedCards.length
       setCards(sortedCards as Braze.CaptionedImage[])
     })
 
     const brazeTimeout = setTimeout(() => {
+      console.log(`HCC D - cardsLengthRef.current: ${cardsLengthRef.current}`)
       if (cardsLengthRef.current > 0) return
 
       braze.removeSubscription(subscriptionId)
@@ -85,10 +90,16 @@ export const HomeContentCards: React.FC = () => {
 
   const hasBrazeCards = braze && cardsLengthRef.current > 0
 
-  if (renderFallback) return <FallbackCards />
-  if (!hasBrazeCards) return <PlaceholderCards />
+  console.log({
+    cardsLengthRef,
+    hasBrazeCards,
+    renderFallback,
+  })
 
-  return <BrazeCards braze={braze} cards={cards} />
+  if (hasBrazeCards) return <BrazeCards braze={braze} cards={cards} />
+  if (renderFallback) return <FallbackCards />
+
+  return <PlaceholderCards />
 }
 
 export const SafeHomeContentCards = () => {

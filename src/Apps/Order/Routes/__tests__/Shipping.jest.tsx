@@ -19,14 +19,6 @@ import {
 import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
 import { graphql } from "react-relay"
-import {
-  selectShippingQuoteSuccess,
-  settingOrderArtaShipmentSuccess,
-  settingOrderShipmentFailure,
-  settingOrderShipmentMissingCountryFailure,
-  settingOrderShipmentMissingRegionFailure,
-  settingOrderShipmentSuccess,
-} from "Apps/Order/Routes/__fixtures__/MutationResults"
 import { ShippingFragmentContainer } from "Apps/Order/Routes/Shipping"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import {
@@ -34,10 +26,19 @@ import {
   updateAddressSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
 import { useTracking } from "react-tracking"
-import { flushPromiseQueue, MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import * as updateUserAddress from "Apps/Order/Mutations/UpdateUserAddress"
 import * as deleteUserAddress from "Apps/Order/Mutations/DeleteUserAddress"
+import {
+  settingOrderShipmentSuccess,
+  settingOrderShipmentFailure,
+  settingOrderShipmentMissingCountryFailure,
+  settingOrderShipmentMissingRegionFailure,
+  settingOrderArtaShipmentSuccess,
+  selectShippingQuoteSuccess,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -1041,7 +1042,7 @@ describe("Shipping", () => {
         const page = new ShippingTestPage(wrapper)
 
         expect(page.orderStepper.text()).toMatchInlineSnapshot(
-          `"OfferCheckNavigate rightShippingNavigate rightPaymentNavigate rightReviewNavigate right"`
+          `"OfferShippingPaymentReview"`
         )
         expect(page.orderStepperCurrentStep).toBe("Shipping")
       })
@@ -1683,13 +1684,13 @@ describe("Shipping", () => {
             .find(Input)
             .map(input => input.props().value)
         ).toMatchInlineSnapshot(`
-          Array [
+          [
             "Test Name",
-            "28001",
             "1 Main St",
             "",
             "Madrid",
             "",
+            "28001",
           ]
         `)
       })

@@ -3,7 +3,7 @@ import { MockRelayRendererFixtures_artist$data } from "__generated__/MockRelayRe
 import { MockRelayRendererFixtures_artwork$data } from "__generated__/MockRelayRendererFixtures_artwork.graphql"
 import { MockRelayRendererFixtures_artworkMetadata$data } from "__generated__/MockRelayRendererFixtures_artworkMetadata.graphql"
 import { MockRelayRendererFixturesArtistQuery } from "__generated__/MockRelayRendererFixturesArtistQuery.graphql"
-import { SystemContextConsumer } from "System"
+import { SystemContextConsumer } from "System/SystemContext"
 import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import cheerio from "cheerio"

@@ -5,7 +5,7 @@ export const MyCollectionArtworkSWAHowItWorksModal: React.FC<{
   onClose: () => void
 }> = ({ onClose }) => {
   const article =
-    "https://support.artsy.net/hc/en-us/sections/360008311913-Sell-with-Artsy"
+    "https://support.artsy.net/s/topic/0TO3b000000UevOGAS/sell-with-artsy"
 
   return (
     <ModalDialog
@@ -49,6 +49,7 @@ export const MyCollectionArtworkSWAHowItWorksModal: React.FC<{
       <Text mb={2}>
         For more information, see our{" "}
         <RouterLink
+          inline
           to={article}
           target="_blank"
           data-testid="collector-help-center-link"
@@ -58,7 +59,9 @@ export const MyCollectionArtworkSWAHowItWorksModal: React.FC<{
       </Text>
       <Text>
         Or get in touch with one of our specialists at{" "}
-        <RouterLink to={"mailto:sell@artsy.net"}>sell@artsy.net</RouterLink>
+        <RouterLink inline to={"mailto:sell@artsy.net"}>
+          sell@artsy.net
+        </RouterLink>
         {"."}
       </Text>
     </ModalDialog>

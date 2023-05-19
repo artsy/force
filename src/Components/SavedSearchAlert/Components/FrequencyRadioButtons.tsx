@@ -1,9 +1,9 @@
 import { BorderedRadio, Box, RadioGroup, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import styled from "styled-components"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { userIsTeam } from "Utils/user"
-import { SavedSearchFrequency } from "../types"
+import { SavedSearchFrequency } from "Components/SavedSearchAlert/types"
 
 interface FrequenceRadioButtonsProps {
   defaultFrequence: SavedSearchFrequency

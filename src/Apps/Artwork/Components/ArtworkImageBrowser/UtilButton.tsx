@@ -1,22 +1,18 @@
 import * as React from "react"
 import styled, { css } from "styled-components"
-import {
-  BellIcon,
-  Box,
-  Clickable,
-  DownloadIcon,
-  EditIcon,
-  Flex,
-  GenomeIcon,
-  HeartIcon,
-  Link,
-  MoreIcon,
-  OpenEyeIcon,
-  ShareIcon,
-  Text,
-  TextProps,
-} from "@artsy/palette"
+import { Box, Clickable, Flex, Link, Text, TextProps } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
+import { getENV } from "Utils/getENV"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import DownloadIcon from "@artsy/icons/DownloadIcon"
+import EditIcon from "@artsy/icons/EditIcon"
+import GenomeIcon from "@artsy/icons/GenomeIcon"
+import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
+import MoreIcon from "@artsy/icons/MoreIcon"
+import ShareIcon from "@artsy/icons/ShareIcon"
+import ShowIcon from "@artsy/icons/ShowIcon"
+
+const isTest = getENV("NODE_ENV") === "test"
 
 interface UtilButtonProps {
   name:
@@ -66,7 +62,7 @@ export const UtilButton: React.ForwardRefExoticComponent<
     const getIcon = () => {
       switch (name) {
         case "bell":
-          return BellIcon
+          return BellStrokeIcon
         case "download":
           return DownloadIcon
         case "edit":
@@ -74,13 +70,13 @@ export const UtilButton: React.ForwardRefExoticComponent<
         case "genome":
           return GenomeIcon
         case "heart":
-          return HeartIcon
+          return HeartStrokeIcon
         case "more":
           return MoreIcon
         case "share":
           return ShareIcon
         case "viewInRoom":
-          return OpenEyeIcon
+          return ShowIcon
       }
     }
 
@@ -126,7 +122,12 @@ const UtilButtonInnerText: React.FC<UtilButtonInnerTextProps> = ({
     return null
   }
 
-  if (longestLabel) {
+  /**
+   * We ignore this, since this functionality is not needed for tests and will add some problems
+   * e.g. `screen.getByText("Label")` will return error,
+   * since there will be 2 elements with "Label" text on the page.
+   */
+  if (longestLabel && !isTest) {
     return (
       <Box position="relative">
         <VisibleText {...rest}>{label}</VisibleText>
@@ -142,9 +143,11 @@ const UtilButtonInnerText: React.FC<UtilButtonInnerTextProps> = ({
 
 const VisibleText = styled(Text)`
   position: absolute;
+  width: 100%;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
+  text-align: center;
 `
 
 const HiddenText = styled(Text)`

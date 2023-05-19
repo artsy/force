@@ -6,9 +6,9 @@ import {
   useDidMount,
   Box,
   DROP_SHADOW,
-  CloseIcon,
   Clickable,
 } from "@artsy/palette"
+import CloseIcon from "@artsy/icons/CloseIcon"
 
 export type OnboardingModalProps = ModalBaseProps
 

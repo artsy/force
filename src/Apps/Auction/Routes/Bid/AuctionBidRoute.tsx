@@ -21,15 +21,13 @@ import { useEffect } from "react"
 import { useSubmitBid } from "./useSubmitBid"
 import { AddressFormWithCreditCard } from "Apps/Auction/Components/Form/AddressFormWithCreditCard"
 import { ConditionsOfSaleCheckbox } from "Apps/Auction/Components/Form/ConditionsOfSaleCheckbox"
-import {
-  biddingValidationSchemas,
-  getSelectedBid,
-  initialValuesForBidding,
-} from "Apps/Auction/Components/Form/Utils"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { CreditCardInputProvider } from "Components/CreditCardInput"
 import { ErrorStatus } from "Apps/Auction/Components/Form/ErrorStatus"
 import { ArtworkSidebarAuctionTimerFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarAuctionTimer"
+import { biddingValidationSchemas } from "Apps/Auction/Components/Form/Utils/validationSchemas"
+import { getSelectedBid } from "Apps/Auction/Components/Form/Utils/getSelectedBid"
+import { initialValuesForBidding } from "Apps/Auction/Components/Form/Utils/initialValues"
 
 interface AuctionBidRouteProps {
   artwork: AuctionBidRoute_artwork$data

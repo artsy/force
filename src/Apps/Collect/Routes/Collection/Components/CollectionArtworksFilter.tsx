@@ -24,7 +24,7 @@ import { PartnersFilter } from "Components/ArtworkFilter/ArtworkFilters/Partners
 import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { Join, Spacer } from "@artsy/palette"
 
 interface CollectionArtworksFilterProps {

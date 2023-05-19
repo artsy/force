@@ -41,9 +41,6 @@ describe("WorksByArtistsYouFollowRail", () => {
       }),
     })
 
-    expect(
-      screen.queryByText("Works at auction by artists you follow")
-    ).not.toBeInTheDocument()
     expect(screen.getByText("No Works To Show")).toBeInTheDocument()
     expect(screen.queryByTestId("ShelfArtwork")).not.toBeInTheDocument()
   })
@@ -55,23 +52,17 @@ describe("WorksByArtistsYouFollowRail", () => {
       }),
     })
 
-    expect(
-      screen.queryByText("Works at auction by artists you follow")
-    ).not.toBeInTheDocument()
     expect(screen.getByText("No Works To Show")).toBeInTheDocument()
     expect(screen.queryByTestId("ShelfArtwork")).not.toBeInTheDocument()
   })
 
-  it('renders "Works at auction by artists you follow" and a carousel', () => {
+  it("renders carousel", () => {
     renderWithRelay({
       SaleArtworksConnection: () => ({
         edges: [{ node: { sale: { isClosed: false } } }],
       }),
     })
 
-    expect(
-      screen.queryByText("Works at auction by artists you follow")
-    ).toBeInTheDocument()
     expect(screen.queryByText("No Works To Show")).not.toBeInTheDocument()
     expect(screen.queryByTestId("ShelfArtwork")).toBeInTheDocument()
   })
@@ -82,7 +73,7 @@ describe("WorksByArtistsYouFollowRail", () => {
         edges: [{ node: { sale: { isClosed: false } } }],
       }),
     })
-    const link = (await screen.findAllByRole("link"))[0]
+    const link = (await screen.findAllByRole("link"))[2]
 
     fireEvent(
       link,
@@ -93,8 +84,8 @@ describe("WorksByArtistsYouFollowRail", () => {
     )
 
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action": "clickedArtworkGroup",
           "context_module": "worksByArtistsYouFollowRail",
           "context_page_owner_type": undefined,

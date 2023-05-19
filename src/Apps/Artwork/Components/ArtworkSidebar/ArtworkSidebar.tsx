@@ -96,11 +96,15 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
       <Spacer y={2} />
 
       <ArtworkSidebarDetailsFragmentContainer artwork={artwork} />
+
       {isInAuction ? (
         <>
           <Separator />
+
           <Spacer y={2} />
+
           <ArtworkSidebarEstimatedValueFragmentContainer artwork={artwork} />
+
           <Join separator={<Spacer y={2} />}>
             {hasEnded ? (
               <ArtworkSidebarBiddingClosedMessageFragmentContainer
@@ -113,9 +117,11 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
               />
             )}
           </Join>
+
           {!hasEnded && (
             <ArtworkSidebarAuctionTimerFragmentContainer artwork={artwork} />
           )}
+
           <Spacer y={2} />
         </>
       ) : (
@@ -124,7 +130,6 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
       {!isSold && artworkEcommerceAvailable && (
         <>
-          <Separator />
           <SidebarExpandable
             label={t`artworkPage.sidebar.shippingAndTaxes.expandableLabel`}
           >
@@ -132,32 +137,38 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
               artwork={artwork}
             />
           </SidebarExpandable>
+
+          <Spacer y={1} />
         </>
       )}
 
       {!!isEligibleForArtsyGuarantee && (
         <>
-          <Separator />
           <SidebarExpandable
             label={t`artworkPage.sidebar.artsyGuarantee.expandableLabel`}
           >
             <ArtworkSidebarArtsyGuarantee />
           </SidebarExpandable>
+
+          <Spacer y={1} />
         </>
       )}
+
       <Separator />
+
       <Spacer y={2} />
 
       <ArtworkSidebarPartnerInfoFragmentContainer artwork={artwork} />
 
       <Spacer y={2} />
+
       {(!shouldHideDetailsCreateAlertCTA ||
         checkIfArtworkIsOnLoanOrPermanentCollection(artwork.saleMessage)) && (
         <ArtworkSidebarCreateArtworkAlertFragmentContainer artwork={artwork} />
       )}
+
       <Separator />
 
-      {/* @ts-ignore RELAY_UPGRADE 13  */}
       <ArtworkSidebarLinksFragmentContainer artwork={artwork} />
     </Flex>
   )

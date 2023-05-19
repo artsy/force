@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6fea37c0f962a27f8dad0e494f07da65>>
+ * @generated SignedSource<<075f577464f81d99f3d8d36520e3169c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -94,7 +94,10 @@ return {
                   "GROUP_SHOW",
                   "COLLECTED",
                   "REVIEWED",
-                  "BIENNIAL"
+                  "BIENNIAL",
+                  "AWARDS",
+                  "PRIVATE_COLLECTIONS",
+                  "RESIDENCIES"
                 ]
               }
             ],
@@ -118,7 +121,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "insights(kind:[\"SOLO_SHOW\",\"GROUP_SHOW\",\"COLLECTED\",\"REVIEWED\",\"BIENNIAL\"])"
+            "storageKey": "insights(kind:[\"SOLO_SHOW\",\"GROUP_SHOW\",\"COLLECTED\",\"REVIEWED\",\"BIENNIAL\",\"AWARDS\",\"PRIVATE_COLLECTIONS\",\"RESIDENCIES\"])"
           },
           {
             "alias": null,
@@ -133,7 +136,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c04bdcf009ee74459be4ee7fe6f0094f",
+    "cacheID": "116be5afd583175c5fba0960359b0948",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -167,7 +170,7 @@ return {
     },
     "name": "ArtistInsightAchievements_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistInsightAchievements_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistInsightAchievements_artist\n    id\n  }\n}\n\nfragment ArtistInsightAchievements_artist on Artist {\n  slug\n  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]) {\n    label\n    entities\n  }\n}\n"
+    "text": "query ArtistInsightAchievements_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistInsightAchievements_artist\n    id\n  }\n}\n\nfragment ArtistInsightAchievements_artist on Artist {\n  slug\n  insightAchievements: insights(kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL, AWARDS, PRIVATE_COLLECTIONS, RESIDENCIES]) {\n    label\n    entities\n  }\n}\n"
   }
 };
 })();

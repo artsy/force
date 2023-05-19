@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<32e2efc3e05177857fbfc562ec52d395>>
+ * @generated SignedSource<<8c2282b6cd5921cb206a7f9ade104c79>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type CreateConsignmentInquiryMutationInput = {
   message: string;
   name: string;
   phoneNumber?: string | null;
+  recipientEmail?: string | null;
   userId?: string | null;
 };
 export type useCreateConsignmentInquiryMutation$variables = {

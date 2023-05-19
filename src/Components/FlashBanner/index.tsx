@@ -1,6 +1,6 @@
 import { FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { EmailConfirmationCTA } from "Components/FlashBanner/EmailConfirmationCTA"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { EmailConfirmationLinkExpired } from "./EmailConfirmationLinkExpired"

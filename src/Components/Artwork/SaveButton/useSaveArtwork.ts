@@ -1,14 +1,12 @@
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { AuthContextModule, Intent } from "@artsy/cohesion"
 import { SaveArtwork } from "./SaveArtworkMutation"
 import { useAuthDialog } from "Components/AuthDialog"
-import { ModalType } from "Components/Authentication/Types"
 
 type Artwork = {
   internalID: string
   id: string | null
   slug: string | null
-  title: string | null
 }
 
 interface UseSaveArtwork {
@@ -39,14 +37,29 @@ export const useSaveArtwork = ({
               artwork: {
                 id: artwork.id!,
                 slug: artwork.slug!,
-                is_saved: !isSaved,
+                isSaved: !isSaved,
+              },
+              /**
+               * TODO: We don't _really_ need an optimistic response and
+               * it's too painful to alter all the consumers of this to pass
+               * in the `me` object.
+               *
+               * This hook shouldn't have to accept a stub `artwork` object either.
+               * Given just the artwork `id` we could fetch everything else.
+               */
+              me: {
+                id: "me",
+                counts: {
+                  savedArtworks: 0,
+                },
               },
             },
           }
         )
 
         onSave?.({
-          action: !!saveArtwork?.artwork?.is_saved
+          // TODO: Pass "saved" or "removed" value
+          action: !!saveArtwork?.artwork?.isSaved
             ? "Saved Artwork"
             : "Removed Artwork",
           artwork,
@@ -56,35 +69,21 @@ export const useSaveArtwork = ({
       }
     } else {
       showAuthDialog({
-        current: {
-          mode: "SignUp",
-          options: {
-            title: mode => {
-              const action = mode === "SignUp" ? "Sign up" : "Log in"
-              return `${action} to save artworks`
-            },
-            afterAuthAction: {
-              action: "save",
-              kind: "artworks",
-              objectId: artwork.internalID,
-            },
+        mode: "SignUp",
+        options: {
+          title: mode => {
+            const action = mode === "SignUp" ? "Sign up" : "Log in"
+            return `${action} to save artworks`
           },
-          analytics: {
-            intent: Intent.saveArtwork,
-            contextModule,
-          },
-        },
-        legacy: {
-          afterSignUpAction: {
+          afterAuthAction: {
             action: "save",
             kind: "artworks",
-            objectId: artwork.slug!,
+            objectId: artwork.internalID,
           },
-          contextModule,
-          copy: `Sign up to save artworks`,
+        },
+        analytics: {
           intent: Intent.saveArtwork,
-          mode: ModalType.signup,
-          redirectTo: window.location.href,
+          contextModule,
         },
       })
     }

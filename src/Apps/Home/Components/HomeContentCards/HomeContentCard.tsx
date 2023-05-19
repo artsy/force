@@ -21,119 +21,157 @@ interface HomeContentCardProps {
   onClick?: () => void
 }
 
-export const HomeContentCard: React.FC<HomeContentCardProps> = ({
+export const HomeContentCard: React.FC<HomeContentCardProps> = props => {
+  return (
+    <Box width="100%" height="100%">
+      <Media at="xs">
+        <HomeContentCardSmall {...props} />
+      </Media>
+
+      <Media greaterThan="xs">
+        <HomeContentCardLarge {...props} />
+      </Media>
+    </Box>
+  )
+}
+
+const HomeContentCardSmall: React.FC<HomeContentCardProps> = ({
   card,
   index,
   onClick,
 }) => {
-  const extras = card.extras || {}
-
-  const image = cropped(card.imageUrl!, {
-    width: 1270,
-    height: 500,
-  })
-
-  const cardLink = card.url ?? ""
+  const image = card.imageUrl
+    ? cropped(card.imageUrl, {
+        // 3:2
+        width: 500,
+        height: 333,
+      })
+    : null
 
   return (
-    <GridColumns bg="black5" width="100%">
-      <Column span={6} bg="white100">
-        <RouterLink
-          onClick={onClick}
-          style={{ display: "block", height: "100%", width: "100%" }}
-          tabIndex={-1}
-          to={cardLink}
-        >
-          <Media at="xs">
-            <ResponsiveBox
-              aspectWidth={3}
-              aspectHeight={2}
-              maxWidth="100%"
-              bg="black10"
-            >
+    <RouterLink
+      onClick={onClick}
+      display="block"
+      width="100%"
+      height="100%"
+      to={card.url!}
+      bg="black5"
+      textDecoration="none"
+      aria-label={`${card.title} - ${card.description}`}
+    >
+      <ResponsiveBox
+        aspectWidth={3}
+        aspectHeight={2}
+        maxWidth="100%"
+        bg="black30"
+      >
+        {image && (
+          <Image
+            src={image.src}
+            srcSet={image.srcSet}
+            width="100%"
+            height="100%"
+            lazyLoad={index > 0}
+            alt=""
+          />
+        )}
+      </ResponsiveBox>
+
+      <Box p={4}>
+        <Text as={index === 0 ? "h1" : "h2"} variant="lg-display" lineClamp={3}>
+          {card.title}
+        </Text>
+
+        <Spacer y={1} />
+
+        <Text variant="xs" color="black60" lineClamp={4}>
+          {card.description}
+        </Text>
+
+        <Spacer y={1} />
+
+        <Text variant="xs">{card.linkText}</Text>
+      </Box>
+    </RouterLink>
+  )
+}
+
+const HomeContentCardLarge: React.FC<HomeContentCardProps> = ({
+  card,
+  index,
+  onClick,
+}) => {
+  const image = card.imageUrl
+    ? cropped(card.imageUrl, { width: 1270, height: 500 })
+    : null
+
+  return (
+    <RouterLink
+      onClick={onClick}
+      display="block"
+      textDecoration="none"
+      to={card.url!}
+      aria-label={`${card.title} - ${card.description}`}
+    >
+      <GridColumns bg="black5">
+        <Column span={6}>
+          <Box height={[300, 400, 500]} position="relative" bg="black30">
+            {image && (
               <Image
-                height="100%"
-                lazyLoad={index > 0}
                 src={image.src}
                 srcSet={image.srcSet}
                 width="100%"
+                height="100%"
+                style={{ objectFit: "cover" }}
+                lazyLoad={index > 0}
+                alt=""
               />
-            </ResponsiveBox>
-          </Media>
+            )}
 
-          <Media greaterThan="xs">
-            {className => (
+            {card.extras?.credit && (
               <Box
-                className={className}
-                height={[300, 400, 500]}
-                position="relative"
+                position="absolute"
+                bottom={0}
+                left={0}
+                width="100%"
+                px={2}
+                pb={1}
+                pt={6}
+                background="linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);"
               >
-                <Image
-                  src={image.src}
-                  srcSet={image.srcSet}
-                  width="100%"
-                  height="100%"
-                  style={{ objectFit: "cover" }}
-                  lazyLoad={index > 0}
-                />
-
-                {extras.credit && (
-                  <Box
-                    position="absolute"
-                    px={2}
-                    pb={1}
-                    pt={6}
-                    width="100%"
-                    bottom={0}
-                    background="linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);"
-                    left={0}
-                  >
-                    <HomeHeroUnitCredit>{extras.credit}</HomeHeroUnitCredit>
-                  </Box>
-                )}
+                <HomeHeroUnitCredit>{card.extras.credit}</HomeHeroUnitCredit>
               </Box>
             )}
-          </Media>
-        </RouterLink>
-      </Column>
-      <Column span={6}>
-        <GridColumns height="100%">
-          <Column
-            start={[2, 3]}
-            span={[10, 8]}
-            display="flex"
-            justifyContent="center"
-            flexDirection="column"
-            py={4}
-          >
-            <RouterLink
-              onClick={onClick}
-              style={{ display: "block", textDecoration: "none" }}
-              tabIndex={-1}
-              to={cardLink}
-            >
-              <Media greaterThan="xs">
-                {extras.label && (
-                  <>
-                    <Text variant="xs" color="black100">
-                      {extras.label}
-                    </Text>
+          </Box>
+        </Column>
 
-                    <Spacer y={2} />
-                  </>
-                )}
-              </Media>
+        <Column span={6}>
+          <GridColumns height="100%">
+            <Column
+              start={3}
+              span={8}
+              display="flex"
+              justifyContent="center"
+              flexDirection="column"
+              py={4}
+            >
+              {card.extras?.label && (
+                <>
+                  <Text variant="xs">{card.extras.label}</Text>
+
+                  <Spacer y={1} />
+                </>
+              )}
 
               <Text
                 as={index === 0 ? "h1" : "h2"}
                 variant={["lg-display", "xl", "xl"]}
-                color="black100"
                 lineClamp={3}
               >
                 {card.title}
               </Text>
 
-              <Spacer y={[1, 2]} />
+              <Spacer y={2} />
 
               <Text
                 variant={["xs", "sm-display", "lg-display"]}
@@ -142,42 +180,20 @@ export const HomeContentCard: React.FC<HomeContentCardProps> = ({
               >
                 {card.description}
               </Text>
-            </RouterLink>
 
-            <Media greaterThan="xs">
-              <Spacer
-                // Unconventional value here to keep visual rhythm
-                y="30px"
-              />
+              <Spacer y={[2, 2, 4]} />
 
               <GridColumns>
                 <Column span={[12, 12, 6]}>
-                  <Button
-                    // @ts-ignore
-                    as={RouterLink}
-                    onClick={onClick}
-                    to={cardLink}
-                    variant="secondaryBlack"
-                    width="100%"
-                  >
+                  <Button variant="secondaryBlack" width="100%" tabIndex={-1}>
                     {card.linkText}
                   </Button>
                 </Column>
               </GridColumns>
-            </Media>
-
-            <Media at="xs">
-              <Spacer y={1} />
-
-              <RouterLink noUnderline onClick={onClick} to={cardLink}>
-                <Text variant="xs" color="black100">
-                  {card.linkText}
-                </Text>
-              </RouterLink>
-            </Media>
-          </Column>
-        </GridColumns>
-      </Column>
-    </GridColumns>
+            </Column>
+          </GridColumns>
+        </Column>
+      </GridColumns>
+    </RouterLink>
   )
 }

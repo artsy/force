@@ -1,10 +1,4 @@
-import {
-  Clickable,
-  ClickableProps,
-  CloseIcon,
-  HeartFillIcon,
-  HeartIcon,
-} from "@artsy/palette"
+import { Clickable, ClickableProps } from "@artsy/palette"
 import React, {
   forwardRef,
   Ref,
@@ -13,6 +7,9 @@ import React, {
   useRef,
 } from "react"
 import { useMode } from "Utils/Hooks/useMode"
+import HeartFillIcon from "@artsy/icons/HeartFillIcon"
+import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
+import CloseIcon from "@artsy/icons/CloseIcon"
 
 type Mode = "Pending" | "Animating" | "Done"
 
@@ -101,7 +98,7 @@ export const ArtQuizButton = forwardRef(
         )}
 
         {variant === "Like" && mode !== "Animating" && (
-          <HeartIcon width={40} height={40} title="" />
+          <HeartStrokeIcon width={40} height={40} title="" />
         )}
       </Clickable>
     )

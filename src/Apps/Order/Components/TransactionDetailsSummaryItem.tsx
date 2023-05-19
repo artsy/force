@@ -13,7 +13,7 @@ import { DownloadAppBadges } from "Components/DownloadAppBadges/DownloadAppBadge
 import { ContextModule } from "@artsy/cohesion"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { shippingQuoteDisplayNames } from "Apps/Order/Components/ShippingQuotes"
-import { withSystemContext } from "System"
+import { withSystemContext } from "System/SystemContext"
 import { RouterLink } from "System/Router/RouterLink"
 
 export interface TransactionDetailsSummaryItemProps
@@ -222,13 +222,14 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
       <Spacer y={2} />
       <Text variant="sm" color="black60">
         *Additional duties and taxes{" "}
-        <a
-          href="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
+        <RouterLink
+          inline
+          to="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
           target="_blank"
           rel="noopener noreferrer"
         >
           may apply at import.
-        </a>
+        </RouterLink>
       </Text>
       {shippingNotCalculated() && (
         <>
@@ -260,7 +261,11 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
             <Text variant="sm">
               View and manage all artworks in your Collection{" "}
               {!isEigen ? "on the Artsy app." : "through your "}
-              {isEigen && <RouterLink to={"/my-profile"}>profile.</RouterLink>}
+              {isEigen && (
+                <RouterLink inline to={"/my-profile"}>
+                  profile.
+                </RouterLink>
+              )}
             </Text>
           </Flex>
           <Flex pt={1}>

@@ -6,9 +6,9 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { RecentlyViewed } from "Components/RecentlyViewed"
 import { RouterLink } from "System/Router/RouterLink"
 import { RouteTabs, RouteTab } from "Components/RouteTabs"
-import { ChevronButton } from "Components/ChevronButton"
 import { getENV } from "Utils/getENV"
 import { CuritorialRailsTabBarFragmentContainer } from "./Components/CuritorialRailsTabBar"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 
 export interface AuctionsAppProps {
   viewer: AuctionsApp_viewer$data
@@ -44,11 +44,13 @@ const AuctionsApp: React.FC<AuctionsAppProps> = props => {
           <Spacer y={2} />
 
           <RouterLink
-            to="https://support.artsy.net/hc/en-us/sections/360008298773-Bid-at-Auction"
+            to="https://support.artsy.net/s/article/How-do-I-place-a-bid-in-an-auction"
             textDecoration="none"
-            display="block"
+            display="flex"
+            alignItems="center"
           >
-            <ChevronButton>Learn more about bidding on Artsy</ChevronButton>
+            Learn more about bidding on Artsy
+            <ChevronRightIcon ml={0.5} height={15} width={15} />
           </RouterLink>
         </Column>
       </GridColumns>

@@ -48,7 +48,11 @@ export const OtherCollectionEntity: React.FC<CollectionProps> = ({
   })
 
   return (
-    <RouterLink to={`/collection/${slug}`} onClick={handleClick} noUnderline>
+    <RouterLink
+      to={`/collection/${slug}`}
+      onClick={handleClick}
+      textDecoration="none"
+    >
       <Image
         src={src}
         srcSet={srcSet}

@@ -1,4 +1,4 @@
-import { filterSearchFilters } from "../filterSearchFilters"
+import { filterSearchFilters } from "./../filterSearchFilters"
 
 describe("filterSearchFilters", () => {
   it("filters correctly", () => {
@@ -11,11 +11,11 @@ describe("filterSearchFilters", () => {
     const allowedFilters = ["organizations", "sizes", "somethingelse"]
 
     expect(filterSearchFilters(filters, allowedFilters)).toMatchInlineSnapshot(`
-      Object {
-        "organizations": Array [
+      {
+        "organizations": [
           "Phillips",
         ],
-        "sizes": Array [
+        "sizes": [
           "SMALL",
         ],
       }

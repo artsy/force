@@ -11,10 +11,10 @@ import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/Materia
 import { PartnersFilter } from "Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { Join, Spacer } from "@artsy/palette"
+import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
 
 interface ArtistArtworkFiltersProps {
   relayEnvironment?: RelayModernEnvironment
@@ -24,13 +24,13 @@ export const ArtistArtworkFilters: React.FC<ArtistArtworkFiltersProps> = props =
   const { relayEnvironment } = props
   const { user } = useSystemContext()
 
-  const showKeywordFilter = useFeatureFlag("artist-artwork-grid-keyword-search")
-
   return (
     <Join separator={<Spacer y={4} />}>
-      {showKeywordFilter && <KeywordFilter />}
+      <KeywordFilter />
       <ArtistsFilter relayEnvironment={relayEnvironment} user={user} expanded />
-      <AttributionClassFilter expanded />
+      <ProgressiveOnboardingAlertSelectFilter>
+        <AttributionClassFilter expanded />
+      </ProgressiveOnboardingAlertSelectFilter>
       <MediumFilter expanded />
       <PriceRangeFilter expanded />
       <SizeFilter expanded />

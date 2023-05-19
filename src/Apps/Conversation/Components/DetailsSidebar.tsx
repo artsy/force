@@ -2,11 +2,9 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import {
   Box,
-  DocumentIcon,
   Flex,
   FlexProps,
   Join,
-  QuestionCircleIcon,
   Text,
   Spacer,
   breakpoints,
@@ -14,7 +12,6 @@ import {
 } from "@artsy/palette"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
-
 import ArtworkDetails from "Components/Artwork/Metadata"
 import { DetailsHeader } from "./DetailsHeader"
 import { DetailsSidebar_conversation$data } from "__generated__/DetailsSidebar_conversation.graphql"
@@ -25,6 +22,8 @@ import { getStatusCopy } from "Apps/Order/Utils/getStatusCopy"
 import { ShippingSummaryItemFragmentContainer } from "Apps/Order/Components/ShippingSummaryItem"
 import { PaymentMethodSummaryItemFragmentContainer } from "Apps/Order/Components/PaymentMethodSummaryItem"
 import { SMALL_SCREEN_HEADER_HEIGHT } from "./ConversationHeader"
+import HelpIcon from "@artsy/icons/HelpIcon"
+import DocumentIcon from "@artsy/icons/DocumentIcon"
 
 const DETAIL_BOX_WIDTH = "376px"
 
@@ -58,7 +57,7 @@ const DetailsContainer = styled(Flex)<{
       showDetails ? "translateX(0)" : `translateX(${DETAIL_BOX_WIDTH})`};
   }
 
-  @media (min-width: ${breakpoints.xl}) {
+  @media (min-width: ${breakpoints.lg}) {
     transform: initial;
     position: static;
     z-index: 0;
@@ -102,7 +101,7 @@ export const DetailsSidebar: FC<DetailsProps> = ({
           key={attachment!.id}
           to={attachment!.downloadURL}
           target="_blank"
-          noUnderline
+          textDecoration="none"
         >
           <Flex alignItems="center">
             <DocumentIcon mr={0.5} />
@@ -199,12 +198,12 @@ export const DetailsSidebar: FC<DetailsProps> = ({
             Support
           </Text>
           <RouterLink
-            to={`https://support.artsy.net/hc/en-us/sections/360008203054-Contact-a-gallery`}
+            to="https://support.artsy.net/s/topic/0TO3b000000UevEGAS/contacting-a-gallery"
             target="_blank"
-            noUnderline
+            textDecoration="none"
           >
             <Flex alignItems="center" mb={1}>
-              <QuestionCircleIcon mr={1} />
+              <HelpIcon mr={1} />
               <Text variant="xs">Inquiries FAQ</Text>
             </Flex>
           </RouterLink>

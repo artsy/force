@@ -1,12 +1,12 @@
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { graphql } from "react-relay"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { SavedSearchAlertEditForm_Test_Query } from "__generated__/SavedSearchAlertEditForm_Test_Query.graphql"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { SavedSearchAlertEditFormFragmentContainer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 const mockEditSavedSearchAlert = jest.fn()
 
@@ -77,8 +77,7 @@ describe("SavedSearchAlertEditForm", () => {
           ...SavedSearchAlertEditForm_viewer
         }
         me {
-          ...SavedSearchAlertEditForm_me
-            @arguments(savedSearchId: "id", withAggregations: true)
+          ...SavedSearchAlertEditForm_me @arguments(savedSearchId: "id")
         }
         artistsConnection(slugs: $artistIDs) {
           ...SavedSearchAlertEditForm_artistsConnection
@@ -198,11 +197,11 @@ describe("SavedSearchAlertEditForm", () => {
     await waitFor(() => expect(mockOnCompleted).toBeCalled())
 
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action": "editedSavedSearch",
-          "changed": "{\\"name\\":\\"Updated Name\\",\\"push\\":false,\\"email\\":true,\\"frequency\\":\\"daily\\"}",
-          "current": "{\\"name\\":\\"Alert #1\\",\\"email\\":true,\\"push\\":false,\\"frequency\\":\\"daily\\"}",
+          "changed": "{"name":"Updated Name","push":false,"email":true,"frequency":"daily"}",
+          "current": "{"name":"Alert #1","email":true,"push":false,"frequency":"daily"}",
           "saved_search_id": "alert-id",
         },
       ]
@@ -409,49 +408,6 @@ const artistsConnectionMocked = {
   ],
 }
 
-const savedSearchAlertLabelsMocked = [
-  {
-    field: "artistIDs",
-    value: "artist-id",
-    displayValue: "Banksy",
-  },
-  {
-    field: "artistIDs",
-    value: "artist-two-id",
-    displayValue: "KAWS",
-  },
-  {
-    field: "artistIDs",
-    value: "artist-three-id",
-    displayValue: "David Shrigley",
-  },
-  {
-    field: "sizes",
-    value: "SMALL",
-    displayValue: "Small (under 40cm)",
-  },
-  {
-    field: "acquireable",
-    value: "true",
-    displayValue: "Purchase",
-  },
-  {
-    field: "atAuction",
-    value: "true",
-    displayValue: "Bid",
-  },
-  {
-    field: "inquireableOnly",
-    value: "true",
-    displayValue: "Contact Gallery",
-  },
-  {
-    field: "offerable",
-    value: "true",
-    displayValue: "Make Offer",
-  },
-]
-
 const savedSearchAlertMocked = {
   internalID: "alert-id",
   acquireable: true,
@@ -477,7 +433,6 @@ const savedSearchAlertMocked = {
     frequency: "daily",
   },
   width: null,
-  labels: savedSearchAlertLabelsMocked,
 }
 
 const filterArtworksConnectionMocked = {

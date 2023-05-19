@@ -1,5 +1,5 @@
-import { BuyerGuaranteeIndex } from "../BuyerGuaranteeIndex"
-import { MockBoot } from "DevTools"
+import { BuyerGuaranteeIndex } from "Apps/BuyerGuarantee/Routes/BuyerGuaranteeIndex"
+import { MockBoot } from "DevTools/MockBoot"
 import { mount } from "enzyme"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({

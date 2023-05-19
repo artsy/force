@@ -1,37 +1,3 @@
-export const mockResolver = (
-  orderDetails: any = BuyOrderWithShippingDetails
-) => ({
-  CommerceBuyOrder: (_, { id, ...others }) => {
-    return {
-      ...orderDetails,
-      id,
-      ...others,
-    }
-  },
-  CommerceOfferOrder: (_, { id, ...others }) => {
-    return {
-      ...orderDetails,
-      id,
-      ...others,
-    }
-  },
-  CommerceOrder: (_, { id, ...others }) => {
-    return {
-      ...orderDetails,
-      id,
-      ...others,
-      __resolveType(obj, _context, _info) {
-        return obj.mode === "BUY" ? "CommerceBuyOrder" : "CommerceOfferOrder"
-      },
-    }
-  },
-  Query: () => ({
-    me: {
-      name: "Alice Jane",
-    },
-  }),
-})
-
 const OrderArtworkNodeWithoutShipping = {
   artistNames: "Lisa Breslow",
   artists: [
@@ -102,6 +68,8 @@ const OrderArtworkVersionNode = {
     id: "02393",
     artistNames: "Lisa Breslow",
     title: "Gramercy Park South",
+    provenance: "",
+    condition_description: "",
     image: {
       resized_ArtworkSummaryItem: {
         url:
@@ -369,6 +337,18 @@ export const UntouchedPrivateSaleOrder = {
   source: "private_sale",
   conditionsOfSale: "conditions of sale provided by admin",
   artworkDetails: "additional artwork details provided by admin",
+  lineItems: {
+    edges: [
+      {
+        node: {
+          artworkVersion: {
+            provenance: "Artwork acquired via an auction in 2000",
+            condition_description: "Artwork is in perfect condition",
+          },
+        },
+      },
+    ],
+  },
 } as const
 
 export const UntouchedBuyOrderWithArtsyShippingDomesticFromUS = {
@@ -1089,12 +1069,6 @@ export const Buyer = {
   __typename: "User",
   id: "buyer-node-id",
   internalID: "buyer",
-} as const
-
-export const Seller = {
-  __typename: "Partner",
-  id: "seller-node-id",
-  internalID: "seller",
 } as const
 
 export const Offers = [

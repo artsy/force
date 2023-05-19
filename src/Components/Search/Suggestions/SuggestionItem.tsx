@@ -1,20 +1,25 @@
 import {
-  ArtworkIcon,
-  AuctionIcon,
-  Flex,
-  Pill,
-  PillProps,
-  Text,
-} from "@artsy/palette"
+  ActionType,
+  ContextModule,
+  SelectedSearchSuggestionQuickNavigationItem,
+} from "@artsy/cohesion"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
+import { Flex, Pill, PillProps, Spacer, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
+import { SuggestionItemPreview } from "Components/Search/Suggestions/SuggestionItemPreview"
 import * as React from "react"
+import { useTracking } from "react-tracking"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
+import GavelIcon from "@artsy/icons/GavelIcon"
+import ArtworkIcon from "@artsy/icons/ArtworkIcon"
 
 interface SuggestionItemProps {
   display: string
   href: string
+  imageUrl?: string
   isHighlighted: boolean
   label: string
   query: string
@@ -34,12 +39,18 @@ export const FirstSuggestionItem: React.FC<SuggestionItemProps> = ({
   return (
     <SuggestionItemLink
       bg={isHighlighted ? "black5" : "white100"}
-      borderBottom="1px solid"
-      borderBottomColor="black10"
+      mt={1}
+      borderTop="1px solid"
+      borderTopColor="black10"
       onClick={handleClick}
       to={href}
     >
-      <Text variant="sm">See full results for &ldquo;{query}&rdquo;</Text>
+      <Flex alignItems="center">
+        <Text variant="sm" mr={1}>
+          See full results for <Highlight>{query}</Highlight>
+        </Text>
+        <ChevronRightIcon />
+      </Flex>
     </SuggestionItemLink>
   )
 }
@@ -88,23 +99,28 @@ const DefaultSuggestion: React.FC<SuggestionItemProps> = ({
   display,
   label,
   query,
+  imageUrl,
 }) => {
   const matches = match(display, query)
   const parts = parse(display, matches)
   const partTags = parts.map(({ highlight, text }, index) =>
-    highlight ? <strong key={index}>{text}</strong> : text
+    highlight ? <Highlight key={index}>{text}</Highlight> : text
   )
 
   return (
-    <>
-      <Text variant="sm" overflowEllipsis>
-        {partTags}
-      </Text>
+    <Flex alignItems="center">
+      <SuggestionItemPreview imageUrl={imageUrl} label={label} />
+      <Spacer x={1} />
+      <Flex flexDirection="column" flex={1} overflow="hidden">
+        <Text variant="sm-display" overflowEllipsis>
+          {partTags}
+        </Text>
 
-      <Text color="black60" variant="xs" overflowEllipsis>
-        {label}
-      </Text>
-    </>
+        <Text color="black60" variant="xs" overflowEllipsis>
+          {label}
+        </Text>
+      </Flex>
+    </Flex>
   )
 }
 
@@ -113,17 +129,45 @@ const QuickNavigation: React.FC<{
   showArtworksButton: boolean
   showAuctionResultsButton: boolean
 }> = ({ href, showArtworksButton, showAuctionResultsButton }) => {
+  const { trackEvent } = useTracking()
+
+  const handleArtworksItemClicked = () => {
+    trackEvent(
+      tracks.quickNavigationItemClicked({
+        destinationPath: href,
+        label: "Artworks",
+      })
+    )
+  }
+
+  const handleAuctionResultsItemClicked = () => {
+    trackEvent(
+      tracks.quickNavigationItemClicked({
+        destinationPath: `${href}/auction-results`,
+        label: "Auction Results",
+      })
+    )
+  }
+
   if (!showArtworksButton && !showAuctionResultsButton) return null
 
   return (
     <Flex flexWrap="wrap">
       {!!showArtworksButton && (
-        <QuickNavigationItem to={`${href}/works-for-sale`} Icon={ArtworkIcon}>
+        <QuickNavigationItem
+          onClick={handleArtworksItemClicked}
+          to={href}
+          Icon={ArtworkIcon}
+        >
           Artworks
         </QuickNavigationItem>
       )}
       {!!showAuctionResultsButton && (
-        <QuickNavigationItem to={`${href}/auction-results`} Icon={AuctionIcon}>
+        <QuickNavigationItem
+          onClick={handleAuctionResultsItemClicked}
+          to={`${href}/auction-results`}
+          Icon={GavelIcon}
+        >
           Auction Results
         </QuickNavigationItem>
       )}
@@ -131,18 +175,44 @@ const QuickNavigation: React.FC<{
   )
 }
 
-const QuickNavigationItem: React.FC<{ to: string } & PillProps> = ({
+interface QuickNavigationItemProps {
+  to: string
+  onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
+}
+
+const QuickNavigationItem: React.FC<QuickNavigationItemProps & PillProps> = ({
   to,
+  onClick,
   ...rest
 }) => {
-  const onClick = event => {
+  const handleClick = event => {
     // Stopping the event from propagating to prevent SearchBar from navigation to the main suggestion item url.
     event.stopPropagation()
     event.preventDefault()
+    onClick?.(event)
 
     // FIXME: Using `window.location.assign(to)` instead of `router.push(to)` to prevent a bug where the search bar won't hide anymore.
     window.location.assign(to)
   }
 
-  return <Pill onClick={onClick} mt={1} mr={1} {...rest} />
+  return <Pill onClick={handleClick} mt={1} mr={1} {...rest} />
 }
+
+const tracks = {
+  quickNavigationItemClicked: ({
+    destinationPath,
+    label,
+  }: {
+    destinationPath: string
+    label: "Auction Results" | "Artworks"
+  }): SelectedSearchSuggestionQuickNavigationItem => ({
+    context_module: ContextModule.header,
+    destination_path: destinationPath,
+    action: ActionType.selectedSearchSuggestionQuickNavigationItem,
+    label,
+  }),
+}
+
+export const Highlight = styled.strong`
+  color: ${themeGet("colors.blue100")};
+`

@@ -5,7 +5,7 @@ import {
   Place,
 } from "Components/LocationAutocompleteInput"
 import { Input } from "@artsy/palette"
-import { flushPromiseQueue } from "DevTools"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 const mockGetPlacePredictions = jest.fn().mockResolvedValue({
   predictions: [

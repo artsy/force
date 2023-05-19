@@ -3,9 +3,10 @@ import {
   ArtistBioTestQuery$data,
 } from "__generated__/ArtistBioTestQuery.graphql"
 
-import { MockBoot, renderRelayTree } from "DevTools"
+import { renderRelayTree } from "DevTools/renderRelayTree"
+import { MockBoot } from "DevTools/MockBoot"
 import { graphql } from "react-relay"
-import { ArtistBioFragmentContainer as ArtistBio } from "../ArtistBio"
+import { ArtistBioFragmentContainer as ArtistBio } from "Components/ArtistBio"
 
 jest.unmock("react-relay")
 
@@ -19,7 +20,7 @@ describe("ArtistBio", () => {
   const getWrapper = () => {
     return renderRelayTree({
       Component: ({ bio }: ArtistBioTestQuery$data) => (
-        <MockBoot breakpoint="xl">
+        <MockBoot breakpoint="lg">
           {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <ArtistBio bio={bio} />
         </MockBoot>

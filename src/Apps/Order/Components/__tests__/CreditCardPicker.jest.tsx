@@ -7,7 +7,6 @@ import {
   OfferOrderWithShippingDetails,
   ShippingDetails,
 } from "Apps/__tests__/Fixtures/Order"
-import { creatingCreditCardSuccess } from "Apps/Order/Routes/__fixtures__/MutationResults"
 import {
   fillCountrySelect,
   fillIn,
@@ -22,8 +21,9 @@ import {
 } from "Apps/Order/Components/CreditCardPicker"
 import type { Token, StripeError } from "@stripe/stripe-js"
 import { mockStripe } from "DevTools/mockStripe"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { creatingCreditCardSuccess } from "Apps/Order/Routes/__fixtures__/MutationResults/createCreditCard"
 
 jest.mock("sharify", () => ({
   data: {
@@ -461,7 +461,7 @@ describe("CreditCardPickerFragmentContainer", () => {
           `"/user/payments"`
         )
         expect(page.radios.at(0).text()).toMatchInlineSnapshot(
-          `"mastercard•••• 1234   Exp 01/18"`
+          `"•••• 1234   Exp 01/18"`
         )
         expect(page.radios.at(1).text()).toMatchInlineSnapshot(
           `"Add another card."`
@@ -538,10 +538,10 @@ describe("CreditCardPickerFragmentContainer", () => {
           `"/user/payments"`
         )
         expect(page.radios.at(0).text()).toMatchInlineSnapshot(
-          `"mastercard•••• 1234   Exp 01/18"`
+          `"•••• 1234   Exp 01/18"`
         )
         expect(page.radios.at(1).text()).toMatchInlineSnapshot(
-          `"visa•••• 2345   Exp 01/19"`
+          `"•••• 2345   Exp 01/19"`
         )
         expect(page.radios.at(2).text()).toMatchInlineSnapshot(
           `"Add another card."`
@@ -640,7 +640,7 @@ describe("CreditCardPickerFragmentContainer", () => {
 
           expect(page.radios).toHaveLength(4)
           expect(page.radios.at(0).text()).toMatchInlineSnapshot(
-            `"visa•••• 6789   Exp 12/22"`
+            `"•••• 6789   Exp 12/22"`
           )
           expect(page.radios.at(0).props().selected).toBeTruthy()
           expect(page.radios.at(1).props().selected).toBeFalsy()

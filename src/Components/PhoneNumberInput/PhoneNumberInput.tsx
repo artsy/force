@@ -10,7 +10,7 @@ import {
 } from "@artsy/palette"
 import { countries } from "Utils/countries"
 
-export interface PhoneNumberInputProps extends BoxProps {
+interface PhoneNumberInputProps extends BoxProps {
   title?: string
   required?: boolean
   error?: string | boolean

@@ -1,4 +1,4 @@
-import { createContext, useContext } from "react";
+import { createContext, useContext } from "react"
 import { PageOwnerType } from "@artsy/cohesion"
 
 export interface AnalyticsContextProps {
@@ -17,16 +17,4 @@ export const AnalyticsContext = createContext<{
 export const useAnalyticsContext = () => {
   const analyticsContext = useContext(AnalyticsContext)
   return analyticsContext
-}
-
-export const withAnalyticsContext = Component => {
-  return props => {
-    return (
-      <AnalyticsContext.Consumer>
-        {contextValues => {
-          return <Component {...contextValues} {...props} />
-        }}
-      </AnalyticsContext.Consumer>
-    )
-  }
 }

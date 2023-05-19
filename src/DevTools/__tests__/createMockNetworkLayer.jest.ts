@@ -13,7 +13,7 @@ import {
   Store,
   fetchQuery,
 } from "relay-runtime"
-import { createMockNetworkLayer2 } from "DevTools/index"
+import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
 jest.unmock("react-relay")
 
 describe("createMockNetworkLayer", () => {

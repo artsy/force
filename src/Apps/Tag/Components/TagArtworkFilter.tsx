@@ -10,7 +10,7 @@ import {
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { TagArtworkFilter_tag$data } from "__generated__/TagArtworkFilter_tag.graphql"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 interface TagArtworkFilterProps {
   tag: TagArtworkFilter_tag$data

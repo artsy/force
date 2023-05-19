@@ -1,7 +1,7 @@
 import { Skeleton } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { HomeAuctionLotsRail_viewer$data } from "__generated__/HomeAuctionLotsRail_viewer.graphql"
 import { HomeAuctionLotsRailQuery } from "__generated__/HomeAuctionLotsRailQuery.graphql"
@@ -17,7 +17,7 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 
 interface HomeAuctionLotsRailProps {
   viewer: HomeAuctionLotsRail_viewer$data

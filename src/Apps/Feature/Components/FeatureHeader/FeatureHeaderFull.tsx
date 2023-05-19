@@ -13,7 +13,7 @@ import { FeatureHeaderFull_feature$data } from "__generated__/FeatureHeaderFull_
 import {
   FullBleedHeader,
   FullBleedHeaderOverlay,
-} from "Components/FullBleedHeader"
+} from "Components/FullBleedHeader/FullBleedHeader"
 
 export interface FeatureHeaderFullProps extends BoxProps {
   feature: FeatureHeaderFull_feature$data

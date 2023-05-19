@@ -15,6 +15,7 @@ const PastAuctionsPaginationContainer = loadable(
     resolveComponent: component => component.PastAuctionsPaginationContainer,
   }
 )
+
 const UpcomingAuctionsPaginationContainer = loadable(
   () =>
     import(/* webpackChunkName: "auctionBundle" */ "./Routes/UpcomingAuctions"),

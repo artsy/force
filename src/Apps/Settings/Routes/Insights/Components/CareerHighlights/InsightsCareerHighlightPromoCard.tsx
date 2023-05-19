@@ -5,21 +5,17 @@ import {
   Flex,
   Image,
   ResponsiveBox,
-  splitBoxProps,
   Text,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 
 export const InsightsCareerHighlightPromoCard: React.FC<{
   onClick?(): void
 }> = ({ onClick }) => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   const { src: dSrc, srcSet: dSrcSet } = resized(
     "https://files.artsy.net/images/CareerHighlightPromoImage.png",
     {
@@ -55,11 +51,7 @@ export const InsightsCareerHighlightPromoCard: React.FC<{
           as={RouterLink}
           variant="primaryBlack"
           size="small"
-          to={
-            isCollectorProfileEnabled
-              ? "/collector-profile/my-collection/artworks/new"
-              : "/my-collection/artworks/new"
-          }
+          to={"/collector-profile/my-collection/artworks/new"}
           px={[1, 2]}
         >
           Upload Artwork
@@ -120,26 +112,12 @@ const CardWrapper: React.FC<CardWrapperProps> = ({
   children,
   ...rest
 }) => {
-  const [boxProps] = splitBoxProps(rest)
-  const isCareerHighlightModalEnabled = useFeatureFlag(
-    "my-collection-web-phase-7-career-highlights-modal"
+  return (
+    <ClickableCard onClick={onClick} {...rest}>
+      {children}
+    </ClickableCard>
   )
-
-  if (isCareerHighlightModalEnabled) {
-    return (
-      <ClickableCard onClick={onClick} {...rest}>
-        {children}
-      </ClickableCard>
-    )
-  }
-
-  return <Card {...boxProps}>{children}</Card>
 }
-
-const Card = styled(Flex)`
-  background: white;
-  border: 1px solid ${themeGet("colors.black10")};
-`
 
 const ClickableCard = styled(Clickable)`
   background: white;

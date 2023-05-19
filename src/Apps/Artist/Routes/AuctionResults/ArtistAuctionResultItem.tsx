@@ -6,19 +6,19 @@ import {
   Flex,
   GridColumns,
   Image,
-  NoArtworkIcon,
   ResponsiveBox,
   Spacer,
   Text,
-  TimerIcon,
 } from "@artsy/palette"
 import { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
-import { SystemContextProps, useSystemContext } from "System"
-import { ModalType } from "Components/Authentication/Types"
+import { SystemContextProps, useSystemContext } from "System/SystemContext"
 import { DateTime, LocaleOptions } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
 import { useAuthDialog } from "Components/AuthDialog"
+import { RouterLink } from "System/Router/RouterLink"
+import StopwatchIcon from "@artsy/icons/StopwatchIcon"
+import NoArtIcon from "@artsy/icons/NoArtIcon"
 
 export interface Props extends SystemContextProps {
   auctionResult: ArtistAuctionResultItem_auctionResult$data
@@ -27,9 +27,13 @@ export interface Props extends SystemContextProps {
 }
 
 export const ArtistAuctionResultItem: React.FC<Props> = props => {
+  const { user } = useSystemContext()
+  const { showAuthDialog } = useAuthDialog()
+
   const {
     showArtistName,
     auctionResult: {
+      internalID,
       images,
       date_text,
       organization,
@@ -48,8 +52,33 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
   const image = images?.thumbnail?.cropped
   const artistName = artist?.name
 
+  const onAuctionResultClick = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
+    if (!user) {
+      event.preventDefault()
+      showAuthDialog({
+        mode: "SignUp",
+        options: {
+          title: mode => {
+            const action = mode === "SignUp" ? "Sign up" : "Log in"
+            return `${action} to see full auction records — for free`
+          },
+        },
+        analytics: {
+          contextModule: ContextModule.auctionResult,
+        },
+      })
+    }
+  }
+
   return (
-    <Box width="100%">
+    <RouterLink
+      to={`/auction-result/${internalID}`}
+      textDecoration="none"
+      display="block"
+      onClick={onAuctionResultClick}
+    >
       <GridColumns>
         <Column span={[4, 2]}>
           <ResponsiveBox
@@ -74,7 +103,7 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
                 alignItems="center"
                 height="100%"
               >
-                <NoArtworkIcon height={24} width={24} fill="black60" />
+                <NoArtIcon height={24} width={24} fill="black60" />
               </Box>
             )}
           </ResponsiveBox>
@@ -154,7 +183,7 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
           <ArtistAuctionResultItemPrice {...props} />
         </Column>
       </GridColumns>
-    </Box>
+    </RouterLink>
   )
 }
 
@@ -163,6 +192,7 @@ export const ArtistAuctionResultItemFragmentContainer = createFragmentContainer(
   {
     auctionResult: graphql`
       fragment ArtistAuctionResultItem_auctionResult on AuctionResult {
+        internalID
         title
         dimension_text: dimensionText
         organization
@@ -228,22 +258,14 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
         textDecoration="underline"
         onClick={() => {
           showAuthDialog({
-            current: {
-              mode: "SignUp",
-              options: {
-                title: mode => {
-                  const action = mode === "SignUp" ? "Sign up" : "Log in"
-                  return `${action} to see full auction records — for free`
-                },
-              },
-              analytics: {
-                contextModule: ContextModule.auctionResults,
-                intent,
+            mode: "SignUp",
+            options: {
+              title: mode => {
+                const action = mode === "SignUp" ? "Sign up" : "Log in"
+                return `${action} to see full auction records — for free`
               },
             },
-            legacy: {
-              mode: ModalType.signup,
-              copy: "Sign up to see full auction records — for free",
+            analytics: {
               contextModule: ContextModule.auctionResults,
               intent,
             },
@@ -300,9 +322,9 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
         </Text>
       )}
 
-      {!salePrice && awaitingResults && (
+      {!salePrice && !boughtIn && awaitingResults && (
         <Flex flexDirection="row" justifyContent="flex-end" alignItems="center">
-          <TimerIcon fill="black100" width={16} height={16} />
+          <StopwatchIcon fill="black100" width={16} height={16} />
 
           <Spacer x="4px" />
 

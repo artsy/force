@@ -22,6 +22,7 @@ export interface ArtworkModel {
   provenance: string
   artworkLocation: string
   postalCode?: string
+  confidentialNotes: string
 }
 
 export interface MyCollectionPhoto {
@@ -35,6 +36,9 @@ export interface MyCollectionPhoto {
 export interface Artist {
   formattedNationalityAndBirthday?: string | null
   initials?: string | null
+  targetSupply: {
+    isP1: boolean | null
+  } | null
   image?: {
     cropped: {
       src: string

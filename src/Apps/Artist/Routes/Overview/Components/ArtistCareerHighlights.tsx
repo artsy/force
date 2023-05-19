@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCareerHighlights_artist$data } from "__generated__/ArtistCareerHighlights_artist.graphql"
 import { ArtistCareerHighlightsQuery } from "__generated__/ArtistCareerHighlightsQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { ArtistInsightBadgesFragmentContainer } from "Apps/Artist/Components/ArtistInsights"
 import { ArtistInsightAchievementsFragmentContainer } from "Apps/Artist/Components/ArtistInsights"
 import { ArtistInsightAchievementsPlaceholder } from "Apps/Artist/Components/ArtistInsights/ArtistInsightAchievements"
@@ -46,14 +46,16 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
           </Text>
 
           <Text mb={1} variant="sm">
-            <RouterLink to={partnerHref}>{credit}</RouterLink>
+            <RouterLink inline to={partnerHref}>
+              {credit}
+            </RouterLink>
           </Text>
 
           <HTML html={text!} variant="sm" />
 
           <Spacer y={2} />
 
-          <RouterLink to={`/artist/${artist.slug}/cv`}>
+          <RouterLink inline to={`/artist/${artist.slug}/cv`}>
             {t("artistPage.overview.cvLink")}
           </RouterLink>
 
@@ -88,7 +90,16 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
         ...ArtistInsightBadges_artist
         ...ArtistInsightAchievements_artist
         insightAchievements: insights(
-          kind: [SOLO_SHOW, GROUP_SHOW, COLLECTED, REVIEWED, BIENNIAL]
+          kind: [
+            SOLO_SHOW
+            GROUP_SHOW
+            COLLECTED
+            REVIEWED
+            BIENNIAL
+            AWARDS
+            PRIVATE_COLLECTIONS
+            RESIDENCIES
+          ]
         ) {
           __typename
         }

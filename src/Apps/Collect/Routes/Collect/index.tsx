@@ -9,7 +9,7 @@ import { SeoProductsForArtworks } from "Apps/Collect/Components/SeoProductsForAr
 import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
 
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
-import { BreadCrumbList } from "Components/Seo"
+import { BreadCrumbList } from "Components/Seo/BreadCrumbList"
 
 import { getMetadata, Medium, Color } from "./Utils/getMetadata"
 
@@ -25,7 +25,7 @@ import {
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { FilterPill } from "Components/SavedSearchAlert/types"
 import { hardcodedMediums } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 export interface CollectAppProps {
   match: Match

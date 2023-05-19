@@ -56,7 +56,7 @@
 # ---------------------------------------------------------
 # Base build dependencies
 # ---------------------------------------------------------
-FROM node:14.17.5-alpine3.11 as builder-base
+FROM node:18.15.0-alpine3.17 as builder-base
 
 WORKDIR /app
 
@@ -65,8 +65,7 @@ RUN apk --no-cache --quiet add \
   bash \
   build-base \
   curl \
-  git \
-  python
+  git
 
 # ---------------------------------------------------------
 # Yarn base
@@ -158,7 +157,7 @@ COPY --from=builder-server /app/server.dist.js.map .
 # ---------------------------------------------------------
 # Image with xvfb to run Electron with a virtual display
 # ---------------------------------------------------------
-FROM node:14.17.5-stretch-slim as electron-runner
+FROM node:18.15.0-bullseye-slim as electron-runner
 
 WORKDIR /app
 
@@ -187,7 +186,7 @@ COPY --from=builder /app /app
 # Release stage. This stage creates the final docker iamge that will be
 # released. It contains only production dependencies and artifacts.
 #
-FROM node:14.17.5-alpine3.11 as production
+FROM node:18.15.0-alpine3.17 as production
 
 RUN apk --no-cache --quiet add \
   bash \
@@ -221,4 +220,4 @@ COPY --chown=deploy:deploy --from=builder /app/server.dist.js.map .
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
 # TODO: Reduce production memory, this is not a concern
-CMD ["node", "--max_old_space_size=3072", "--heapsnapshot-signal=SIGUSR2", "./server.dist.js"]
+CMD ["node", "--max_old_space_size=2048", "--heapsnapshot-signal=SIGUSR2", "./server.dist.js"]

@@ -1,7 +1,7 @@
 import { ActionType, ClickedPlayVideo, OwnerType } from "@artsy/cohesion"
 import { ViewedVideo } from "@artsy/cohesion/dist/Schema/Events/Video"
 import { BoxProps, Flex, ResponsiveBox } from "@artsy/palette"
-import { MAX_DIMENSION } from "Apps/Artwork/Components/ArtworkImageBrowser"
+import { MAX_DIMENSION } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowser"
 import { FC, useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"

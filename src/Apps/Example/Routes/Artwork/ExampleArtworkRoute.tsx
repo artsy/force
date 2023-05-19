@@ -1,9 +1,13 @@
-import { Box, Flex, Image, Text, Title } from "@artsy/palette"
+import { Box, Flex, Image, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AnalyticsContext, useAnalyticsContext } from "System"
+import {
+  AnalyticsContext,
+  useAnalyticsContext,
+} from "System/Analytics/AnalyticsContext"
 import { ExampleArtworkRoute_artwork$data } from "__generated__/ExampleArtworkRoute_artwork.graphql"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import { MetaTags } from "Components/MetaTags"
 
 export interface ExampleArtworkRouteProps {
   artwork: ExampleArtworkRoute_artwork$data
@@ -14,7 +18,8 @@ const ExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = ({
 }) => {
   return (
     <Box>
-      <Title>{artwork.title} | Artsy</Title>
+      <MetaTags title={`${artwork.title} | Artsy`} />
+
       <Box mb={4}>
         <Text variant="lg-display" mb={2}>
           {artwork.title}

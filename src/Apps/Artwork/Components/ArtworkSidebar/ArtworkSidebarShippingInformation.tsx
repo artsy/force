@@ -2,6 +2,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { Text } from "@artsy/palette"
 import { ArtworkSidebarShippingInformation_artwork$data } from "__generated__/ArtworkSidebarShippingInformation_artwork.graphql"
 import { useTranslation } from "react-i18next"
+import { RouterLink } from "System/Router/RouterLink"
 
 export interface ShippingInformationProps {
   artwork: ArtworkSidebarShippingInformation_artwork$data
@@ -16,13 +17,14 @@ const ArtworkSidebarShippingInformation: React.FC<ShippingInformationProps> = ({
     <>
       <Text variant="sm" color="black60">
         {t`artworkPage.sidebar.shippingAndTaxes.taxInformation`}{" "}
-        <a
-          href="https://support.artsy.net/hc/en-us/articles/360047294733-How-is-sales-tax-and-VAT-handled-on-works-listed-with-secure-checkout-"
+        <RouterLink
+          inline
+          to="https://support.artsy.net/s/article/How-are-taxes-customs-VAT-and-import-fees-handled-on-works-listed-with-secure-checkout"
           target="_blank"
           rel="noopener noreferrer"
         >
           {t`artworkPage.sidebar.shippingAndTaxes.taxInformationLearnMore`}
-        </a>
+        </RouterLink>
       </Text>
       {shippingOrigin && (
         <Text variant="sm" color="black60">

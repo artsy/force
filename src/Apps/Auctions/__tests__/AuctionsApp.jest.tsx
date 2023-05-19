@@ -1,5 +1,5 @@
-import { MockBoot } from "DevTools"
-import { AuctionsAppFragmentContainer } from "../AuctionsApp"
+import { MockBoot } from "DevTools/MockBoot"
+import { AuctionsAppFragmentContainer } from "Apps/Auctions/AuctionsApp"
 import { graphql } from "react-relay"
 import { AuctionsApp_Test_Query } from "__generated__/AuctionsApp_Test_Query.graphql"
 import { useTracking as baseUseTracking } from "react-tracking"
@@ -39,12 +39,7 @@ describe("AuctionsApp", () => {
       }
     })
     useSystemContext.mockImplementation(() => {
-      return {
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-        },
-      }
+      return {}
     })
   })
 
@@ -82,17 +77,13 @@ describe("AuctionsApp", () => {
     const wrapper = getWrapper()
     expect(wrapper.find("RouterLink")).toBeDefined()
     expect(wrapper.find("RouterLink").first().props().to).toBe(
-      "https://support.artsy.net/hc/en-us/sections/360008298773-Bid-at-Auction"
+      "https://support.artsy.net/s/article/How-do-I-place-a-bid-in-an-auction"
     )
   })
 
   it("renders TrendingLots even if user is logged out", () => {
     useSystemContext.mockImplementation(() => ({
       user: null,
-      mediator: {
-        on: jest.fn(),
-        off: jest.fn(),
-      },
     }))
 
     const wrapper = getWrapper()
@@ -103,10 +94,6 @@ describe("AuctionsApp", () => {
   it("renders StandoutLots even if user is logged out", () => {
     useSystemContext.mockImplementation(() => ({
       user: null,
-      mediator: {
-        on: jest.fn(),
-        off: jest.fn(),
-      },
     }))
 
     const wrapper = getWrapper()
@@ -130,10 +117,6 @@ describe("AuctionsApp", () => {
   it("does not render MyBids or WorksByFollowedArtists if user logged out", () => {
     useSystemContext.mockImplementation(() => ({
       user: null,
-      mediator: {
-        on: jest.fn(),
-        off: jest.fn(),
-      },
     }))
 
     const wrapper = getWrapper()

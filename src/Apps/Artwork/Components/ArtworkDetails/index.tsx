@@ -21,7 +21,7 @@ import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import Events from "Utils/Events"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkDetailsQuery } from "__generated__/ArtworkDetailsQuery.graphql"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import track from "react-tracking"
 
 export interface ArtworkDetailsProps {

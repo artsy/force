@@ -1,21 +1,13 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { ModalType } from "Components/Authentication/Types"
-import { compact } from "lodash"
-import * as React from "react"
-import { useSystemContext } from "System"
-import { getMobileAuthLink } from "Utils/openAuthModal"
-import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
-import { NavBarMobileSubMenu } from "./NavBarMobileSubMenu"
-import { Separator } from "@artsy/palette"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { NavBarMobileMenuNotificationsQueryRenderer } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNotifications"
 import { trackEvent } from "Server/analytics/helpers"
+import { useSystemContext } from "System/useSystemContext"
+import * as React from "react"
+import { NavBarMobileMenuItemLink } from "./NavBarMobileMenuItem"
+import { ProgressiveOnboardingAlertHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertHighlight"
 
 export const NavBarMobileMenuLoggedIn: React.FC = () => {
-  const { mediator } = useSystemContext()
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   const handleClick = (
     event: React.MouseEvent<HTMLAnchorElement | HTMLButtonElement, MouseEvent>
   ) => {
@@ -32,80 +24,24 @@ export const NavBarMobileMenuLoggedIn: React.FC = () => {
     })
   }
 
-  const menu = {
-    title: "Account",
-    links: compact([
-      {
-        text: "Order history",
-        href: "/settings/purchases",
-      },
-      {
-        text: "Alerts",
-        href: "/settings/alerts",
-      },
-      {
-        text: "Saves & Follows",
-        href: "/settings/saves",
-      },
-      {
-        text: "Auctions",
-        href: "/settings/auctions",
-      },
-      {
-        text: "Collector Profile",
-        href: "/settings/edit-profile",
-      },
-      {
-        text: "My Collection",
-        href: "/settings/my-collection",
-      },
-      {
-        text: "Insights",
-        href: "/settings/insights",
-      },
-      {
-        text: "Settings",
-        href: "/settings/edit-settings",
-      },
-      {
-        text: "Payments",
-        href: "/settings/payments",
-      },
-      {
-        text: "Shipping",
-        href: "/settings/shipping",
-      },
-      {
-        // TODO: Should be a button
-        text: "Log out",
-        href: "#logout",
-        onClick: event => {
-          event.preventDefault()
-          mediator?.trigger("auth:logout")
-        },
-      },
-    ]),
-  }
-
   return (
     <>
-      {isCollectorProfileEnabled ? (
-        <>
-          <NavBarMobileMenuNotificationsQueryRenderer />
-          <NavBarMobileMenuItemLink
-            to="/settings/edit-profile"
-            color="black60"
-            onClick={handleClick}
-          >
-            Settings
-          </NavBarMobileMenuItemLink>
-        </>
-      ) : (
-        <>
-          <NavBarMobileSubMenu menu={menu}>{menu.title}</NavBarMobileSubMenu>
-          <Separator my={1} />
-        </>
-      )}
+      <NavBarMobileMenuNotificationsQueryRenderer />
+
+      <ProgressiveOnboardingAlertHighlight
+        position={{ top: "2.5px", left: "23px" }}
+      >
+        <NavBarMobileMenuItemLink to="/settings/alerts">
+          Alerts
+        </NavBarMobileMenuItemLink>
+      </ProgressiveOnboardingAlertHighlight>
+
+      <NavBarMobileMenuItemLink
+        to="/settings/edit-profile"
+        onClick={handleClick}
+      >
+        Settings
+      </NavBarMobileMenuItemLink>
 
       <NavBarMobileMenuItemLink to="/works-for-you">
         Works for you
@@ -115,20 +51,17 @@ export const NavBarMobileMenuLoggedIn: React.FC = () => {
 }
 
 const NavBarMobileMenuLoggedOut: React.FC = () => {
-  const authLink = (type: ModalType) => {
-    return getMobileAuthLink(type, {
-      intent: Intent[type],
-      contextModule: ContextModule.header,
-    })
-  }
-
   return (
     <>
-      <NavBarMobileMenuItemLink to={authLink(ModalType.signup)}>
+      <NavBarMobileMenuItemLink
+        to={`/signup?intent=${Intent.signup}&contextModule=${ContextModule.header}`}
+      >
         Sign Up
       </NavBarMobileMenuItemLink>
 
-      <NavBarMobileMenuItemLink to={authLink(ModalType.login)}>
+      <NavBarMobileMenuItemLink
+        to={`/login?intent=${Intent.login}&contextModule=${ContextModule.header}`}
+      >
         Log In
       </NavBarMobileMenuItemLink>
     </>

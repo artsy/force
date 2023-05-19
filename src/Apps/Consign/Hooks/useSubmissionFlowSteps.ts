@@ -1,4 +1,4 @@
-import { themeProps } from "@artsy/palette"
+import { THEME } from "@artsy/palette"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 type MobileSteps = "Artwork" | "Photos" | "Contact"
@@ -18,7 +18,7 @@ export const submissionFlowStepsMobile: MobileSteps[] = [
 ]
 
 export const useSubmissionFlowSteps = (): DesktopSteps[] | MobileSteps[] => {
-  const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
+  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
   if (isMobile) {
     return ["Contact", "Artwork", "Photos"]
   }

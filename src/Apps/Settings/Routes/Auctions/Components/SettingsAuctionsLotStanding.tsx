@@ -1,19 +1,12 @@
 import { FC, Fragment } from "react"
-import {
-  ArrowDownCircleIcon,
-  ArrowUpCircleIcon,
-  Button,
-  Column,
-  Image,
-  Flex,
-  Text,
-  Box,
-} from "@artsy/palette"
+import { Button, Column, Image, Flex, Text, Box } from "@artsy/palette"
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { DetailsFragmentContainer } from "Components/Artwork/Details"
 import { SettingsAuctionsLotStanding_lotStanding$data } from "__generated__/SettingsAuctionsLotStanding_lotStanding.graphql"
+import ChevronCircleUpIcon from "@artsy/icons/ChevronCircleUpIcon"
+import ChevronCircleDownIcon from "@artsy/icons/ChevronCircleDownIcon"
 
 interface SettingsAuctionsLotStandingProps {
   lotStanding: SettingsAuctionsLotStanding_lotStanding$data
@@ -80,7 +73,7 @@ const SettingsAuctionsLotStanding: FC<SettingsAuctionsLotStandingProps> = ({
               display="flex"
               alignItems="center"
             >
-              <ArrowUpCircleIcon height={15} width={15} fill="green100" />
+              <ChevronCircleUpIcon height={15} width={15} fill="green100" />
               &nbsp; Highest Bid
             </Text>
           ) : (
@@ -91,7 +84,7 @@ const SettingsAuctionsLotStanding: FC<SettingsAuctionsLotStandingProps> = ({
               display="flex"
               alignItems="center"
             >
-              <ArrowDownCircleIcon height={15} width={15} fill="red100" />
+              <ChevronCircleDownIcon height={15} width={15} fill="red100" />
               &nbsp; Outbid
             </Text>
           )}

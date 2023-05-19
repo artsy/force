@@ -14,7 +14,7 @@ import { ArtworkImageBrowserSmallFragmentContainer } from "./ArtworkImageBrowser
 // Dimension used to scale both images and videos
 export const MAX_DIMENSION = 800
 
-export interface ArtworkImageBrowserProps {
+interface ArtworkImageBrowserProps {
   artwork: ArtworkImageBrowser_artwork$data
   isMyCollectionArtwork?: boolean
 }

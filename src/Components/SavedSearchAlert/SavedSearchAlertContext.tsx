@@ -1,6 +1,6 @@
+import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useContext, useState } from "react"
 import { createContext } from "react"
-import { Aggregations } from "../ArtworkFilter/ArtworkFilterContext"
 import { Metric } from "Utils/metrics"
 import {
   FilterPill,
@@ -28,7 +28,6 @@ interface SavedSearchAlertContextProviderProps {
   aggregations?: Aggregations
   criteria: SearchCriteriaAttributes
   metric?: Metric
-  initialPills?: FilterPill[]
 }
 
 const SavedSearchAlertContext = createContext<SavedSearchAlertContextProps>({
@@ -45,12 +44,16 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
   aggregations,
   criteria: criteriaFromArgument,
   metric,
-  initialPills,
   children,
 }) => {
   const [criteria, setCriteria] = useState(criteriaFromArgument)
   const [isCriteriaChanged, setIsCriteriaChanged] = useState(false)
-  const [pills, setPills] = useState(initialPills)
+  const pills = extractPills({
+    criteria,
+    aggregations,
+    entity,
+    metric,
+  })
 
   const removeCriteriaValue = (
     key: SearchCriteriaAttributeKeys,
@@ -76,31 +79,15 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
   }
 
   const removePill = (pill: FilterPill) => {
-    if (!initialPills) {
-      throw new Error("Use it only when `initialPills` prop is passed")
-    }
-
     if (pill.isDefault) {
       return
     }
 
-    const updatedPills = pills?.filter(
-      currentPill => currentPill.value !== pill.value
-    )
-
-    setPills(updatedPills)
     removeCriteriaValue(pill.field as SearchCriteriaAttributeKeys, pill.value)
   }
 
   const contextValue: SavedSearchAlertContextProps = {
-    pills:
-      pills ??
-      extractPills({
-        criteria,
-        aggregations,
-        entity,
-        metric,
-      }),
+    pills,
     entity,
     criteria,
     isCriteriaChanged,

@@ -83,29 +83,15 @@ describe("FollowGeneButton", () => {
       fireEvent.click(button)
 
       expect(showAuthDialog).toBeCalledWith({
-        current: {
-          analytics: { contextModule: "geneHeader", intent: "followGene" },
-          mode: "SignUp",
-          options: {
-            afterAuthAction: {
-              action: "follow",
-              kind: "gene",
-              objectId: "example",
-            },
-            title: expect.any(Function),
-          },
-        },
-        legacy: {
-          afterSignUpAction: {
+        analytics: { contextModule: "geneHeader", intent: "followGene" },
+        mode: "SignUp",
+        options: {
+          afterAuthAction: {
             action: "follow",
             kind: "gene",
             objectId: "example",
           },
-          contextModule: "geneHeader",
-          copy: "Sign up to follow Example",
-          intent: "followArtist",
-          mode: "signup",
-          redirectTo: "http://localhost/",
+          title: expect.any(Function),
         },
       })
     })

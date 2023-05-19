@@ -1,7 +1,9 @@
 import { Button, Text, Box } from "@artsy/palette"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext, useSystemContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useSystemContext } from "System/SystemContext"
 import { RouterLink } from "System/Router/RouterLink"
+import { ActionType } from "@artsy/cohesion"
 
 export const Footer: React.FC = () => {
   const { user } = useSystemContext()
@@ -10,8 +12,10 @@ export const Footer: React.FC = () => {
 
   const trackStartSellingClick = () => {
     trackEvent({
-      action: "clickedStartSelling",
-      context_module: "Footer",
+      action: ActionType.tappedConsign,
+      context_module: "Footer", // not importing the name from cohesion as a exeption, should NOT be done in other places
+      // the reason is that in cohesion the modult is maned "footer"
+      // we use "Footer" with capital letter for analyticks already and we do not want to intrpduce another name
       context_page_owner_type: contextPageOwnerType,
       label: "Start Selling",
       destination_path: "/sell/submission",
@@ -21,15 +25,11 @@ export const Footer: React.FC = () => {
 
   return (
     <>
-      <Box px={[2, 4, 12]} mb={[2, 6]}>
-        <Text
-          variant={["lg-display", "xl", "xxl"]}
-          mb={[2, 4]}
-          pr={0}
-          textAlign="center"
-        >
-          Sell with Artsy is the simple, contemporary way to sell art from your
-          collection.
+      <Box px={[2, 4, 12]} mb={[4, 6, 6]}>
+        <Text variant={["lg-display", "xl", "xxl"]} pr={0} textAlign="center">
+          Meet your new art advisor.{" "}
+          <Text display={["block", "none"]}>{"\n"}</Text>
+          It’s Artsy.
         </Text>
       </Box>
       <Box display="flex" justifyContent="center">

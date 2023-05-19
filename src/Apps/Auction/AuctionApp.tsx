@@ -1,7 +1,10 @@
 import { Box, Join, Message, Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { FullBleedHeader } from "Components/FullBleedHeader"
-import { AnalyticsContext, useAnalyticsContext } from "System"
+import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
+import {
+  AnalyticsContext,
+  useAnalyticsContext,
+} from "System/Analytics/AnalyticsContext"
 import { AuctionApp_me$data } from "__generated__/AuctionApp_me.graphql"
 import { AuctionApp_sale$data } from "__generated__/AuctionApp_sale.graphql"
 import { AuctionApp_viewer$data } from "__generated__/AuctionApp_viewer.graphql"
@@ -18,6 +21,9 @@ import { useAuctionTracking } from "./Hooks/useAuctionTracking"
 import { AuctionCurrentAuctionsRailFragmentContainer } from "./Components/AuctionCurrentAuctionsRail"
 import { WebsocketContextProvider } from "System/WebsocketContext"
 import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEndTimesBanner"
+import { getENV } from "Utils/getENV"
+import { SalesforceWrapper } from "Components/SalesforceWrapper"
+import { Media } from "Utils/Responsive"
 
 export interface AuctionAppProps {
   me: AuctionApp_me$data
@@ -153,7 +159,13 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
         </WebsocketContextProvider>
       </AnalyticsContext.Provider>
 
-      <ZendeskWrapper mode="auction" />
+      {getENV("SALESFORCE_CHAT_ENABLED") ? (
+        <Media greaterThan="xs">
+          <SalesforceWrapper />
+        </Media>
+      ) : (
+        <ZendeskWrapper mode="auction" />
+      )}
     </>
   )
 }

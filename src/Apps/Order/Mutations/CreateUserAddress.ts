@@ -5,13 +5,13 @@ import {
   UserAddressAttributes,
 } from "__generated__/CreateUserAddressMutation.graphql"
 import {
+  commitMutation,
+  Environment,
   RecordSourceSelectorProxy,
   ConnectionHandler,
-  Environment,
 } from "relay-runtime"
 import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
 import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
-import { commitMutation } from "relay-runtime"
 
 const onAddressAdded = (
   me: SavedAddresses_me$data | Shipping_me$data,
@@ -39,7 +39,7 @@ export const createUserAddress = async (
   environment: Environment,
   address: UserAddressAttributes,
   onSuccess: (address: CreateUserAddressMutation$data | null) => void,
-  onError: (message: string | null) => void,
+  onError: (message: string) => void,
   me: SavedAddresses_me$data | Shipping_me$data,
   closeModal: () => void
 ) => {

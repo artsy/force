@@ -6,10 +6,10 @@ import { extractNodes } from "Utils/extractNodes"
 import { ShelfArtworkFragmentContainer } from "Components/Artwork/ShelfArtwork"
 import { tabTypeToContextModuleMap } from "Apps/Auctions/Utils/tabTypeToContextModuleMap"
 import { TrendingLotsRail_viewer$data } from "__generated__/TrendingLotsRail_viewer.graphql"
-import { useAnalyticsContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { trackHelpers } from "Utils/cohesionHelpers"
 import { CuratorialRailsZeroState } from "./CuritorialRailsTabBar"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 export interface TrendingLotsRailProps {
   viewer: TrendingLotsRail_viewer$data
 }

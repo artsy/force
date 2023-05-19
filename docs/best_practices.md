@@ -192,7 +192,7 @@ const Foo = ({ title }) => <Text variant="lg-display">{title}</Text>
 
 The reasoning -- and this should be some kind of "Programmers Law" -- is that code is always returned to, either in the form of additions or for debugging. With implicit returns one can't `console.log` intermediate variables or easily add debugger statements, and if one needed to expand the code with a hook or some other piece of functionality the implicit return would need to be unwound.
 
-### Avoid inner spacing margins
+### Avoid external margins
 
 Avoid:
 
@@ -210,7 +210,7 @@ const Hello = () => {
   return (
     <>
       <Box>Hello!</>
-      <Spacer y={2} />
+      <Spacer mb={2} />
     </>
   )
 }
@@ -238,20 +238,7 @@ const Hello = () => {
 }
 ```
 
-Also OK:
-
-```tsx
-const App = () => {
-  return (
-    <>
-      <Hello my={2} />
-      <World />
-    </>
-  )
-}
-```
-
-The reasoning is components without inner margins are portable, and layouts should always be defined from the parent.
+Components without external margins are portable: they can be used in other contexts that might have different layout requirements. They are easier to reason about: when placing a component in your layout you know it won't modify the layout. Layouts should always be defined in the parent component.
 
 ## Testing
 
@@ -271,7 +258,7 @@ Some top-level notes:
 Here are some great examples of what tests and test coverage should look like.
 
 - [RegisterButton.jest.tsx](https://github.com/artsy/force/blob/main/src/Apps/Auction/Components/__tests__/RegisterButton.jest.tsx)
-- [ResetPasswordRoute.jest.tsx](https://github.com/artsy/force/blob/main/src/Apps/Authentication/Legacy/Routes/__tests__/ResetPasswordRoute.jest.tsx#L8)
+- [ResetPasswordRoute.jest.tsx](https://github.com/artsy/force/blob/main/src/Apps/Authentication/Routes/__tests__/ResetPasswordRoute.jest.tsx#L8)
 - [SettingsPaymentsRoute.jest.tsx](https://github.com/artsy/force/blob/main/src/Apps/Settings/Routes/__tests__/SettingsPaymentsRoute.jest.tsx)
 
 #### Manipulating time in unit tests

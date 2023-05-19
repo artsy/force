@@ -1,9 +1,9 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { mount } from "enzyme"
-import { SystemContextProvider } from "System"
+import { SystemContextProvider } from "System/SystemContext"
 import { useTracking } from "react-tracking"
-import { NavBarUserMenu } from "../Menus"
-import { NavBar } from "../NavBar"
+import { NavBarUserMenu } from "Components/NavBar/Menus"
+import { NavBar } from "Components/NavBar/NavBar"
 
 jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
@@ -47,7 +47,7 @@ describe("NavBarTracking", () => {
         action_type: DeprecatedAnalyticsSchema.ActionType.Click,
         context_module:
           DeprecatedAnalyticsSchema.ContextModule.HeaderUserDropdown,
-        destination_path: "/settings/purchases",
+        destination_path: "/collector-profile/my-collection",
       })
     })
   })
@@ -92,11 +92,7 @@ describe("NavBarTracking", () => {
         </Wrapper>
       )
 
-      wrapper
-        .find("button")
-        .findWhere(node => node.text() === "Menu")
-        .first()
-        .simulate("click")
+      wrapper.find('[aria-label="Menu"]').first().simulate("click")
 
       expect(trackEvent).toBeCalledWith({
         action_type: DeprecatedAnalyticsSchema.ActionType.Click,

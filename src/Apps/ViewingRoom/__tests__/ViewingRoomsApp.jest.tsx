@@ -1,5 +1,6 @@
-import { MockBoot, renderRelayTree } from "DevTools"
-import { ViewingRoomsAppFragmentContainer } from "../ViewingRoomsApp"
+import { renderRelayTree } from "DevTools/renderRelayTree"
+import { MockBoot } from "DevTools/MockBoot"
+import { ViewingRoomsAppFragmentContainer } from "Apps/ViewingRoom/ViewingRoomsApp"
 import { graphql } from "react-relay"
 import { ViewingRoomsApp_Test_Query$rawResponse } from "__generated__/ViewingRoomsApp_Test_Query.graphql"
 import { Breakpoint } from "@artsy/palette"

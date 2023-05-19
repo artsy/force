@@ -2,11 +2,15 @@ import { CollectorProfileHeaderFragmentContainer } from "Apps/CollectorProfile/C
 import { EmptyMyCollectionPage } from "Apps/Settings/Routes/MyCollection/Components/EmptyMyCollectionPage"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
-import { compact } from "lodash"
-import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useSystemContext } from "System/useSystemContext"
 import { CollectorProfileApp_me$data } from "__generated__/CollectorProfileApp_me.graphql"
+import { createFragmentContainer, graphql } from "react-relay"
+import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
+import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
+import styled from "styled-components"
+import { Spacer } from "@artsy/palette"
+import { useIsRouteActive } from "System/Router/useRouter"
+import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 
 interface CollectorProfileAppProps {
   me: CollectorProfileApp_me$data
@@ -17,13 +21,9 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
   children,
 }) => {
   const { isLoggedIn } = useSystemContext()
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-  const isSeparateSavesAndFollowsEnabled = useFeatureFlag(
-    "collector-profile-separating-saves-and-follows"
-  )
-  if (!isCollectorProfileEnabled) {
-    return null
-  }
+  const isSavesPathActive = useIsRouteActive(BASE_SAVES_PATH, {
+    exact: false,
+  })
 
   if (!isLoggedIn) {
     return (
@@ -35,39 +35,54 @@ const CollectorProfileApp: React.FC<CollectorProfileAppProps> = ({
     )
   }
 
-  const tabs = compact([
-    { name: "My Collection", url: "/collector-profile/my-collection" },
-    { name: "Insights", url: "/collector-profile/insights" },
-    {
-      name: isSeparateSavesAndFollowsEnabled ? "Saves" : "Saves & Follows",
-      url: "/collector-profile/saves",
-    },
-    isSeparateSavesAndFollowsEnabled && {
-      name: "Follows",
-      url: "/collector-profile/follows",
-    },
-  ])
-
   return (
     <>
       <MetaTags title="Collector Profile | Artsy" />
 
       <CollectorProfileHeaderFragmentContainer me={me} />
 
-      <RouteTabs fill my={[2, 4]}>
-        {tabs.map(tab => {
-          return (
-            <RouteTab key={tab.url} to={tab.url} variant={["xs", "sm"]}>
-              {tab.name}
-            </RouteTab>
-          )
-        })}
+      <Spacer y={[0, 2]} />
+
+      <RouteTabs fill>
+        <Tab to="/collector-profile/my-collection" variant={["xs", "sm"]}>
+          My Collection
+        </Tab>
+
+        <Tab to="/collector-profile/insights" variant={["xs", "sm"]}>
+          Insights
+        </Tab>
+
+        <ProgressiveOnboardingSaveHighlight position="center">
+          <Tab
+            to={BASE_SAVES_PATH}
+            active={isSavesPathActive}
+            variant={["xs", "sm"]}
+          >
+            Saves
+          </Tab>
+        </ProgressiveOnboardingSaveHighlight>
+
+        <ProgressiveOnboardingFollowHighlight position="center">
+          <Tab to="/collector-profile/follows" variant={["xs", "sm"]}>
+            Follows
+          </Tab>
+        </ProgressiveOnboardingFollowHighlight>
       </RouteTabs>
+
+      <Spacer y={[2, 4]} />
 
       {children}
     </>
   )
 }
+
+const Tab = styled(RouteTab).attrs({
+  // Can remove these style override when progressive onboarding is removed.
+  // Here we're padding out the tab to accomodate the highlight.
+  height: 53, // Default is 40px
+  display: "flex",
+  alignItems: "center",
+})``
 
 export const CollectorProfileAppFragmentContainer = createFragmentContainer(
   CollectorProfileApp,

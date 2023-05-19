@@ -1,11 +1,11 @@
 import { graphql } from "react-relay"
-import { IdentityVerificationAppFragmentContainer } from "../IdentityVerificationApp"
+import { IdentityVerificationAppFragmentContainer } from "Apps/IdentityVerification/IdentityVerificationApp"
 import { IdentityVerificationAppTestPage } from "./Utils/IdentityVerificationAppTestPage"
 import { mockLocation } from "DevTools/mockLocation"
 import { HttpError } from "found"
 import { Toasts, ToastsProvider } from "@artsy/palette"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { useTracking } from "react-tracking"
 import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 
@@ -105,7 +105,7 @@ describe("IdentityVerification route", () => {
       const wrapper = getWrapper()
       const page = new IdentityVerificationAppTestPage(wrapper)
 
-      expect(page.text()).toContain("Artsy identity verification")
+      expect(page.text()).toContain("Artsy Identity Verification")
     })
 
     describe("user enters verification flow", () => {

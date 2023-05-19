@@ -1,9 +1,7 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtQuizArtworks_me$data } from "__generated__/ArtQuizArtworks_me.graphql"
 import {
-  ArrowLeftIcon,
   Clickable,
-  Image,
   Flex,
   FullBleed,
   Text,
@@ -14,18 +12,12 @@ import {
   ArtQuizButton,
   ArtQuizButtonRef,
 } from "Apps/ArtQuiz/Components/ArtQuizButton"
-import {
-  ArtQuizCard,
-  Mode,
-  useArtQuizCards,
-} from "Apps/ArtQuiz/Components/ArtQuizCard"
+import { Mode, useArtQuizCards } from "Apps/ArtQuiz/Components/ArtQuizCard"
 import { useSwipe } from "Apps/ArtQuiz/Hooks/useSwipe"
 import { useDislikeArtwork } from "Apps/ArtQuiz/Hooks/useDislikeArtwork"
-
-import { FC, useCallback, useMemo, useRef, useState } from "react"
+import { FC, useCallback, useRef, useState } from "react"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
-import { FullscreenBox } from "Components/FullscreenBox"
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 import { useUpdateQuiz } from "Apps/ArtQuiz/Hooks/useUpdateQuiz"
 import { useSaveArtwork } from "Apps/ArtQuiz/Hooks/useSaveArtwork"
@@ -33,6 +25,9 @@ import { ArtQuizResultsLoader } from "Apps/ArtQuiz/Components/ArtQuizResultsLoad
 import { useTracking } from "react-tracking"
 import { ContextModule } from "@artsy/cohesion"
 import { useTranslation } from "react-i18next"
+import { compact } from "lodash"
+import { ArtQuizArtworksCardFragmentContainer } from "Apps/ArtQuiz/Components/ArtQuizArtworksCard"
+import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 
 interface ArtQuizArtworksProps {
   me: ArtQuizArtworks_me$data
@@ -47,34 +42,21 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
   const { t } = useTranslation()
   const [showLoader, setShowLoader] = useState(false)
 
-  // clone to make the array writable for sorting
-  const edges = me.quiz.quizArtworkConnection?.edges
-    ? [...me.quiz.quizArtworkConnection?.edges]
-    : []
+  const edges = me.quiz?.quizArtworkConnection?.edges || []
 
-  // sort the artworks by position, ascending
-  const sortedEdges = useMemo(() => {
-    return edges.sort((a, b) => {
-      return a && b ? a.position - b.position : 0
-    })
-  }, [edges])
-
-  // check to see if the user has already started the quiz
-  const startingIndex = sortedEdges.findIndex(edge => {
+  // Check to see if the user has already started the quiz
+  const startingIndex = edges.findIndex(edge => {
     return edge?.interactedAt === null
   })
 
   const { cards, activeIndex, dispatch } = useArtQuizCards({
-    cards: sortedEdges.map(edge => ({
-      ...edge?.node,
-      interactedAt: edge?.interactedAt,
-    })),
+    cards: compact(edges),
     startingIndex,
   })
 
   const handlePrevious = useCallback(() => {
     const previousArtwork =
-      activeIndex > 0 ? sortedEdges[activeIndex - 1]?.node : null
+      activeIndex > 0 ? edges[activeIndex - 1]?.node : null
 
     if (previousArtwork) {
       const { isSaved, isDisliked } = previousArtwork
@@ -122,7 +104,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
     dispatch,
     me.id,
     router,
-    sortedEdges,
+    edges,
     submitDislike,
     submitSave,
     submitUpdate,
@@ -131,7 +113,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
   const handleNext = useCallback(
     (action: "Like" | "Dislike") => () => {
       const currentArtwork =
-        activeIndex < sortedEdges.length ? sortedEdges[activeIndex]?.node : null
+        activeIndex < edges.length ? edges[activeIndex]?.node : null
 
       if (currentArtwork) {
         if (action === "Like") {
@@ -179,7 +161,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
     },
     [
       activeIndex,
-      sortedEdges,
+      edges,
       dispatch,
       cards.length,
       submitUpdate,
@@ -235,7 +217,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
             alignItems="center"
             justifyContent="center"
           >
-            <ArrowLeftIcon />
+            <ChevronLeftIcon />
           </Clickable>
 
           <Text
@@ -244,6 +226,7 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
             display="flex"
             alignItems="center"
             justifyContent="center"
+            data-testid="artworks-count"
           >
             {positionDisplay} / {cards.length}
           </Text>
@@ -270,40 +253,28 @@ export const ArtQuizArtworks: FC<ArtQuizArtworksProps> = ({ me }) => {
         >
           {cards.map((card, i) => {
             const mode = i === activeIndex ? Mode.Active : card.mode
-            const image = card.image?.resized
+            const artwork = card.node
 
-            if (!image) return null
+            if (!artwork) return null
 
             return (
-              <ArtQuizCard
-                key={card.slug}
+              <ArtQuizArtworksCardFragmentContainer
+                key={artwork.internalID}
                 mode={mode}
-                position="absolute"
-                width="100%"
-                height="100%"
-              >
-                <FullscreenBox
-                  aspectWidth={image.width ?? 1}
-                  aspectHeight={image.height ?? 1}
-                  bg="black10"
-                >
-                  <Image
-                    width="100%"
-                    height="100%"
-                    src={image.src}
-                    srcSet={image.srcSet}
-                    lazyLoad
-                  />
-                </FullscreenBox>
-              </ArtQuizCard>
+                artwork={artwork}
+              />
             )
           })}
         </Flex>
 
         <Tooltip
-          content={tooltipText.map(text => (
-            <Text variant="xs">{text}</Text>
-          ))}
+          content={
+            <Text variant="xs">
+              {tooltipText.map((text, i) => {
+                return <div key={i}>{text}</div>
+              })}
+            </Text>
+          }
           variant="defaultDark"
           offset={-10}
           pointer
@@ -340,25 +311,12 @@ export const ArtQuizArtworksFragmentContainer = createFragmentContainer(
           quizArtworkConnection(first: 16) {
             edges {
               interactedAt
-              position
               node {
+                ...ArtQuizArtworksCard_artwork
                 internalID
-                image {
-                  resized(
-                    width: 900
-                    height: 900
-                    version: ["normalized", "larger", "large"]
-                  ) {
-                    src
-                    srcSet
-                    width
-                    height
-                  }
-                }
+                slug
                 isDisliked
                 isSaved
-                slug
-                title
               }
             }
           }

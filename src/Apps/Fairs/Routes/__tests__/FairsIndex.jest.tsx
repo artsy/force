@@ -1,8 +1,8 @@
-import { FairsIndexFragmentContainer } from "../FairsIndex"
+import { FairsIndexFragmentContainer } from "Apps/Fairs/Routes/FairsIndex"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { FairsIndex_Test_Query } from "__generated__/FairsIndex_Test_Query.graphql"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.unmock("react-relay")
 

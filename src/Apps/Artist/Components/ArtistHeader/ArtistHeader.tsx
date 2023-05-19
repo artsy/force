@@ -17,6 +17,7 @@ import { ArtistInsightPillsFragmentContainer } from "Apps/Artist/Components/Arti
 import { RouterLink } from "System/Router/RouterLink"
 import { useTranslation } from "react-i18next"
 import { HeaderIcon } from "Components/HeaderIcon"
+import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist$data
@@ -63,12 +64,14 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
               </Column>
 
               <Column start={avatar ? 3 : undefined} span={4}>
-                <FollowArtistButtonQueryRenderer
-                  id={artist.internalID}
-                  contextModule={ContextModule.artistHeader}
-                  size="large"
-                  width="100%"
-                />
+                <ProgressiveOnboardingFollowArtist>
+                  <FollowArtistButtonQueryRenderer
+                    id={artist.internalID}
+                    contextModule={ContextModule.artistHeader}
+                    size="large"
+                    width="100%"
+                  />
+                </ProgressiveOnboardingFollowArtist>
               </Column>
 
               {!!artist.counts?.follows && (
@@ -112,7 +115,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
             )}
             {!hideBioInHeaderIfPartnerSupplied && (
               <>
-                <RouterLink to={`/artist/${artist.slug}/cv`}>
+                <RouterLink inline to={`/artist/${artist.slug}/cv`}>
                   {t("artistPage.overview.cvLink")}
                 </RouterLink>
               </>

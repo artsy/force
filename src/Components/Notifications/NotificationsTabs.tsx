@@ -3,12 +3,11 @@ import {
   BaseTabs,
   Box,
   Clickable,
-  CloseIcon,
   Flex,
   useTabs,
 } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
-import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar"
+import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { Sticky } from "Components/Sticky"
 import styled from "styled-components"
 import {
@@ -18,6 +17,7 @@ import {
 } from "./MarkAllAsReadPanel"
 import { ActionType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
+import CloseIcon from "@artsy/icons/CloseIcon"
 
 const TABS_CONTAINER_HEIGHT = 60
 const DROPDOWN_HEADER_HEIGHT =

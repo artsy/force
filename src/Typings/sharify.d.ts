@@ -60,12 +60,9 @@ declare module "sharify" {
       GOOGLE_ADWORDS_ID: string
       GRAVITY_WEBSOCKET_URL: string
       IP_ADDRESS: string
-      IMGIX_URL: string
-      IMGIX_TOKEN: string
       IS_GOOGLEBOT: boolean
       IS_MOBILE: boolean
       JSON_PAGE_DATA: any
-      LAMBDA_IMAGE_RESIZING_URL: string
       METAPHYSICS_ENDPOINT: string
       NETWORK_CACHE_SIZE: string
       NETWORK_CACHE_TTL: string
@@ -84,6 +81,16 @@ declare module "sharify" {
       REQUEST_ID?: string
       RESET_PASSWORD_REDIRECT_TO: string
       RESET_PASSWORD_TOKEN: string
+      SALESFORCE_CHAT_ENABLED: boolean
+      SALESFORCE_CHAT_INSTANCE_URL: string
+      SALESFORCE_CHAT_HELP_URL: string
+      SALESFORCE_CHAT_ORG_ID: string
+      SALESFORCE_CHAT_EMBEDDED_SERVICE_NAME: string
+      SALESFORCE_CHAT_DEPLOYMENT_ID: string
+      SALESFORCE_CHAT_BUTTON_ID: string
+      SALESFORCE_CHAT_ESW_LIVE_AGENT_DEV_NAME: string
+      SALESFORCE_CHAT_LIVE_AGENT_URL: string
+      SALESFORCE_CHAT_LIVE_AGENT_CONTENT_URL: string
       SECTION?: { slug?: string } // FIXME: used only for /venice-biennale-2015
       SEGMENT_WRITE_KEY: string
       SENTRY_PUBLIC_DSN: string

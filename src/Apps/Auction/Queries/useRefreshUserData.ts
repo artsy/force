@@ -1,5 +1,5 @@
 import { Environment, fetchQuery, graphql } from "relay-runtime"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 /**
  * After certain operations (like adding a credit card during a bid), we need

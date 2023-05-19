@@ -3,7 +3,11 @@ import * as React from "react"
 import { Box, BoxProps } from "@artsy/palette"
 import { SearchBar_viewer$data } from "__generated__/SearchBar_viewer.graphql"
 import { SearchBarSuggestQuery } from "__generated__/SearchBarSuggestQuery.graphql"
-import { SystemContext, SystemContextProps, withSystemContext } from "System"
+import {
+  SystemContext,
+  SystemContextProps,
+  withSystemContext,
+} from "System/SystemContext"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
@@ -14,10 +18,11 @@ import { Router } from "found"
 import { isEmpty } from "lodash"
 import { throttle } from "lodash"
 import qs from "qs"
+// eslint-disable-next-line no-restricted-imports
 import Autosuggest from "react-autosuggest"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
 import styled from "styled-components"
+// eslint-disable-next-line no-restricted-imports
 import request from "superagent"
 import Events from "Utils/Events"
 import { get } from "Utils/get"
@@ -28,6 +33,7 @@ import { SearchInputContainer } from "./SearchInputContainer"
 import { useTranslation } from "react-i18next"
 import { ClassI18n } from "System/i18n/ClassI18n"
 import track from "react-tracking"
+import { getENV } from "Utils/getENV"
 
 const logger = createLogger("Components/Search/SearchBar")
 
@@ -141,7 +147,7 @@ export class SearchBar extends Component<Props, State> {
         if (error) {
           logger.error(error)
           return
-        } else if (performanceStart && sd.VOLLEY_ENDPOINT) {
+        } else if (performanceStart && getENV("VOLLEY_ENDPOINT")) {
           this.reportPerformanceMeasurement(performanceStart)
         }
         const { viewer } = this.props
@@ -184,7 +190,7 @@ export class SearchBar extends Component<Props, State> {
 
   reportPerformanceMeasurement = performanceStart => {
     const duration = performance.now() - performanceStart
-    const deviceType = sd.IS_MOBILE ? "mobile" : "desktop"
+    const deviceType = getENV("IS_MOBILE") ? "mobile" : "desktop"
 
     const metricPayload = {
       name: "autocomplete-search-response",
@@ -194,7 +200,7 @@ export class SearchBar extends Component<Props, State> {
     }
 
     request
-      .post(sd.VOLLEY_ENDPOINT)
+      .post(getENV("VOLLEY_ENDPOINT"))
       .send({
         metrics: [metricPayload],
         serviceName: "force",
@@ -257,8 +263,7 @@ export class SearchBar extends Component<Props, State> {
       ]
     ) => ({
       action_type: DeprecatedSchema.ActionType.SelectedItemFromSearch,
-      destination_path:
-        __typename === "Artist" ? `${href}/works-for-sale` : href,
+      destination_path: href,
       item_id: id,
       item_number: suggestionIndex,
       item_type: displayType,
@@ -349,7 +354,7 @@ export class SearchBar extends Component<Props, State> {
   }
 
   renderDefaultSuggestion = (edge, { query, isHighlighted }) => {
-    const { displayLabel, href, statuses } = edge.node
+    const { displayLabel, href, statuses, imageUrl } = edge.node
 
     const label = this.getLabel(edge.node)
 
@@ -362,6 +367,7 @@ export class SearchBar extends Component<Props, State> {
         href={href}
         isHighlighted={isHighlighted}
         label={label}
+        imageUrl={imageUrl}
         query={query}
         showArtworksButton={showArtworksButton}
         showAuctionResultsButton={showAuctionResultsButton}
@@ -406,7 +412,7 @@ export class SearchBar extends Component<Props, State> {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const edges = get(viewer, v => v.searchConnection.edges, [])
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    const suggestions = [firstSuggestionPlaceholder, ...edges]
+    const suggestions = [...edges, firstSuggestionPlaceholder]
 
     return (
       <Autosuggest
@@ -485,6 +491,7 @@ export const SearchBarRefetchContainer = createRefetchContainer(
             node {
               displayLabel
               href
+              imageUrl
               __typename
               ... on SearchableItem {
                 displayType

@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ArtworkImageBrowserSmallFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkImageBrowserSmall"
 import { ArtworkImageBrowserSmall_Test_Query } from "__generated__/ArtworkImageBrowserSmall_Test_Query.graphql"

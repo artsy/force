@@ -6,7 +6,7 @@ import {
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { extractNodes } from "Utils/extractNodes"
 import { ShowsCurrentShowsQuery } from "__generated__/ShowsCurrentShowsQuery.graphql"

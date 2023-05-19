@@ -18,7 +18,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import Events from "Utils/Events"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtistInfoQuery } from "__generated__/ArtistInfoQuery.graphql"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import track from "react-tracking"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { compact } from "lodash"
@@ -90,7 +90,9 @@ export class ArtistInfo extends Component<ArtistInfoProps> {
           totalExhibitions={artist.counts?.partnerShows ?? 0}
           exhibitions={compact(artist.exhibitionHighlights)}
           ViewAllLink={
-            <RouterLink to={`/artist/${artist.slug}/cv`}>View all</RouterLink>
+            <RouterLink inline to={`/artist/${artist.slug}/cv`}>
+              View all
+            </RouterLink>
           }
           Container={Container}
         />

@@ -13,6 +13,7 @@ import { MetaTags } from "Components/MetaTags"
 import { FC } from "react"
 import { cropped } from "Utils/resized"
 import { useTranslation } from "react-i18next"
+import { RouterLink } from "System/Router/RouterLink"
 
 export const MeetTheSpecialistsIndex: FC = () => {
   const { t } = useTranslation()
@@ -43,14 +44,26 @@ export const MeetTheSpecialistsIndex: FC = () => {
 
           <Text variant="xs">
             Have a question about Artsy? Check out our{" "}
-            <a href="https://support.artsy.net">help center</a> or email{" "}
-            <a href="mailto:support@artsy.net">support@artsy.net</a>.
+            <RouterLink inline to="https://support.artsy.net">
+              help center
+            </RouterLink>{" "}
+            or email{" "}
+            <RouterLink inline to="mailto:support@artsy.net">
+              support@artsy.net
+            </RouterLink>
+            .
             <br />
             Have a question about bidding on Artsy? Email{" "}
-            <a href="mailto:specialist@artsy.net">specialist@artsy.net</a>.
+            <RouterLink inline to="mailto:specialist@artsy.net">
+              specialist@artsy.net
+            </RouterLink>
+            .
             <br />
             Have a question about an existing order or offer? Email{" "}
-            <a href="mailto:specialist@artsy.net">orders@artsy.net</a>.
+            <RouterLink inline to="mailto:specialist@artsy.net">
+              orders@artsy.net
+            </RouterLink>
+            .
           </Text>
         </Column>
       </GridColumns>
@@ -139,7 +152,7 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
   },
   {
     name: "Akanksha Ballaney",
-    title: "Associate Director, Private Sales",
+    title: "Director, Private Sales",
     location: "New York",
     email: "akanksha@artsy.net",
     image: "https://files.artsy.net/images/akanksha.jpeg",
@@ -157,7 +170,7 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     title: "Senior Private Sales Director",
     location: "London",
     email: "adriana.almeida@artsy.net",
-    image: "https://files.artsy.net/images/Adriana.jpg",
+    image: "https://files.artsy.net/images/photo_adriana.jpg",
   },
   {
     name: "Meave Hamill",
@@ -206,7 +219,7 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
   },
   {
     name: "Sarah Punzel",
-    title: "Private Sales Coordinator",
+    title: "Private Sales Business Associate",
     location: "New York",
     email: "sarah.punzel@artsy.net",
     image: "https://files.artsy.net/images/Sarah_Punzel.png",

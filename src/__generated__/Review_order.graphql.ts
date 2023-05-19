@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f1586cf5e52a6dea82b200db7a33dc6c>>
+ * @generated SignedSource<<52404741f80e81fed54116e4e48a3e9a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,10 @@ export type Review_order$data = {
           readonly internalID: string;
           readonly slug: string;
         } | null;
+        readonly artworkVersion: {
+          readonly condition_description: string | null;
+          readonly provenance: string | null;
+        } | null;
         readonly " $fragmentSpreads": FragmentRefs<"ItemReview_lineItem">;
       } | null;
     } | null> | null;
@@ -44,7 +48,7 @@ export type Review_order$data = {
   readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
   readonly stateExpiresAt: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "OfferSummaryItem_order" | "PaymentMethodSummaryItem_order" | "ShippingArtaSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "OfferSummaryItem_order" | "OrderStepper_order" | "PaymentMethodSummaryItem_order" | "ShippingArtaSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Review_order";
 };
 export type Review_order$key = {
@@ -209,6 +213,31 @@ return {
                     }
                   ],
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "ArtworkVersion",
+                  "kind": "LinkedField",
+                  "name": "artworkVersion",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "provenance",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "condition_description",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -279,6 +308,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "OfferSummaryItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "OrderStepper_order"
     }
   ],
   "type": "CommerceOrder",
@@ -286,6 +320,6 @@ return {
 };
 })();
 
-(node as any).hash = "8e57e03a900d4f0df50a6aa6fc427f90";
+(node as any).hash = "bef72db09da81130a96281294fc82958";
 
 export default node;

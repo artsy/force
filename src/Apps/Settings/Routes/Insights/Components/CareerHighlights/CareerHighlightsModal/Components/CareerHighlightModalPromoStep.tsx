@@ -5,16 +5,13 @@ import {
   Button,
   ResponsiveBox,
   Image,
-  ArtsyLogoBlackIcon,
 } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { cropped } from "Utils/resized"
 import { Media } from "Utils/Responsive"
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
 const CareerHighlightModalPromoStepDesktop = () => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   const { src: dSrc, srcSet: dSrcSet } = cropped(
     "https://files.artsy.net/images/CareerHighlightModalPromoImage.png",
     {
@@ -25,7 +22,7 @@ const CareerHighlightModalPromoStepDesktop = () => {
 
   return (
     <Flex flex={1} flexDirection="column">
-      <ArtsyLogoBlackIcon />
+      <ArtsyLogoIcon />
 
       <Flex mt={2}>
         <ResponsiveBox
@@ -63,11 +60,7 @@ const CareerHighlightModalPromoStepDesktop = () => {
             width="100%"
             variant="primaryBlack"
             size="large"
-            to={
-              isCollectorProfileEnabled
-                ? "/collector-profile/my-collection/artworks/new"
-                : "/my-collection/artworks/new"
-            }
+            to={"/collector-profile/my-collection/artworks/new"}
             py={1}
           >
             Upload Artwork
@@ -79,8 +72,6 @@ const CareerHighlightModalPromoStepDesktop = () => {
 }
 
 const CareerHighlightModalPromoStepMobile = () => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   const { src: mSrc, srcSet: mSrcSet } = cropped(
     "https://files.artsy.net/images/CareerHighlightModalPromoImageMobile.png",
     {
@@ -103,11 +94,7 @@ const CareerHighlightModalPromoStepMobile = () => {
         width="100%"
         variant="primaryBlack"
         size="large"
-        to={
-          isCollectorProfileEnabled
-            ? "/collector-profile/my-collection/artworks/new"
-            : "/my-collection/artworks/new"
-        }
+        to={"/collector-profile/my-collection/artworks/new"}
         py={1}
       >
         Upload Artwork

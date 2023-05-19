@@ -1,5 +1,5 @@
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { Box, Button, Text } from "@artsy/palette"
+import { Box, Button, Spacer, Text } from "@artsy/palette"
 import { SubmissionStepper } from "Apps/Consign/Components/SubmissionStepper"
 import { useSubmissionFlowSteps } from "Apps/Consign/Hooks/useSubmissionFlowSteps"
 import {
@@ -11,13 +11,13 @@ import {
   uploadPhotosValidationSchema,
   validate,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/validation"
-import { BackLink } from "Components/Links/BackLink"
 import { PhotoThumbnail } from "Components/PhotoUpload/Components/PhotoThumbnail"
 import {
   AUTOMATICALLY_ADDED_PHOTO_NAME,
   normalizePhoto,
   Photo,
 } from "Components/PhotoUpload/Utils/fileUtils"
+import { TopContextBar } from "Components/TopContextBar"
 import { Form, Formik } from "formik"
 import { LocationDescriptor } from "found"
 import { findLast } from "lodash"
@@ -30,9 +30,8 @@ import {
 } from "react-relay"
 import { trackEvent } from "Server/analytics/helpers"
 import { isServer } from "Server/isServer"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useRouter } from "System/Router/useRouter"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import createLogger from "Utils/logger"
 import { redirects_submission$data } from "__generated__/redirects_submission.graphql"
@@ -101,7 +100,6 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
   submission,
   myCollectionArtwork,
 }) => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { router } = useRouter()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const [isPhotosRefetchStarted, setIsPhotosRefetchStarted] = useState(false)
@@ -159,18 +157,10 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
         user_email: submission.userEmail,
       })
 
-      router.replace(
-        artworkId
-          ? isCollectorProfileEnabled
-            ? "/collector-profile/my-collection"
-            : "/settings/my-collection"
-          : "/sell"
-      )
+      router.replace(artworkId ? "/collector-profile/my-collection" : "/sell")
 
       const consignPath = artworkId
-        ? isCollectorProfileEnabled
-          ? "/collector-profile/my-collection/submission"
-          : "/my-collection/submission"
+        ? "/collector-profile/my-collection/submission"
         : "/sell/submission"
 
       const nextStepIndex = isLastStep ? null : stepIndex + 1
@@ -200,13 +190,11 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
 
   const deriveBackLinkTo = () => {
     const defaultBackLink = artworkId
-      ? isCollectorProfileEnabled
-        ? "/collector-profile/my-collection"
-        : "/my-collection"
+      ? "/collector-profile/my-collection"
       : "/sell"
 
     let backTo = defaultBackLink
-    if (stepIndex === 0 && artworkId) {
+    if (isFirstStep && artworkId) {
       return backTo + `/artwork/${artworkId}`
     }
     let prevStep = ""
@@ -238,9 +226,11 @@ export const UploadPhotos: React.FC<UploadPhotosProps> = ({
 
   return (
     <>
-      <BackLink py={2} mb={6} width="min-content" to={backTo}>
+      <TopContextBar displayBackArrow hideSeparator href={backTo}>
         Back
-      </BackLink>
+      </TopContextBar>
+
+      <Spacer y={6} />
 
       <SubmissionStepper currentStep="Upload Photos" />
 

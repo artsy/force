@@ -7,14 +7,13 @@ export type PhoneNumberError = Partial<PhoneNumber>
 export type PhoneNumberTouched = boolean
 export type PhoneNumberChangeHandler = (phoneNumber: string) => void
 
-export const emptyPhoneNumber: string = ""
-
 export interface PhoneNumberFormProps {
   onChange: PhoneNumberChangeHandler
   value?: string
   errors: PhoneNumberError
   touched: PhoneNumberTouched
   label: string
+  tabIndex?: number
 }
 
 export const PhoneNumberForm: FC<PhoneNumberFormProps> = ({
@@ -23,6 +22,7 @@ export const PhoneNumberForm: FC<PhoneNumberFormProps> = ({
   errors,
   label,
   value,
+  tabIndex,
 }) => {
   const changeEventHandler = () => (ev: React.FormEvent<HTMLInputElement>) => {
     onChange(ev.currentTarget.value)
@@ -35,6 +35,7 @@ export const PhoneNumberForm: FC<PhoneNumberFormProps> = ({
   return (
     <Flex flexDirection="column" mb={2}>
       <Input
+        tabIndex={tabIndex}
         id="PhoneNumberForm_phoneNumber"
         title="Phone number"
         type="tel"

@@ -11,18 +11,18 @@ import { LayoutMain } from "Apps/Components/Layouts/Components/LayoutMain"
 export const LayoutLogoOnly: FC<BaseLayoutProps> = ({ children }) => {
   return (
     <>
-      <AppToasts accomodateNav={false} />
+      <AppToasts />
 
       <LayoutMain>
         <AppContainer>
           <HorizontalPadding>
-            <Spacer y={4} />
+            <Spacer y={[2, 4]} />
 
             <RouterLink to="/" display="block">
               <ArtsyLogoIcon />
             </RouterLink>
 
-            <Spacer y={4} />
+            <Spacer y={[2, 4]} />
 
             {children}
           </HorizontalPadding>

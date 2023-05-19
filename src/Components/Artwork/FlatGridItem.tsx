@@ -5,7 +5,7 @@ import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { userIsTeam } from "Utils/user"
@@ -25,7 +25,7 @@ const FlatGridItem: React.FC<FlatGridItemProps> = ({ artwork, onClick }) => {
   const { user } = useSystemContext()
   const isTeam = userIsTeam(user)
   const { containerProps, isSaveButtonVisible } = useSaveButton({
-    isSaved: !!artwork.is_saved,
+    isSaved: !!artwork.isSaved,
   })
 
   const image = artwork.image?.resized
@@ -151,7 +151,7 @@ export const FlatGridItemFragmentContainer = createFragmentContainer(
         }
         artistNames
         href
-        is_saved: isSaved
+        isSaved
       }
     `,
   }

@@ -2,20 +2,23 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { screen, fireEvent } from "@testing-library/react"
 import { ArtworkSidebarCommercialButtons_Test_Query } from "__generated__/ArtworkSidebarCommercialButtons_Test_Query.graphql"
-
-import { mediator } from "Server/mediator"
 import { Toasts, ToastsProvider } from "@artsy/palette"
 import { createMockEnvironment } from "relay-test-utils"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { ArtworkSidebarCommercialButtonsFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCommercialButtons"
+import { useAuthDialog } from "Components/AuthDialog"
+import { useRouter } from "System/Router/useRouter"
 
 jest.unmock("react-relay")
 
+jest.mock("System/Router/useRouter")
+
+jest.mock("Components/AuthDialog/useAuthDialog", () => ({
+  useAuthDialog: jest.fn().mockReturnValue({ showAuthDialog: jest.fn() }),
+}))
+
 describe("ArtworkSidebarCommercialButtons", () => {
   let user
-  beforeAll(() => {
-    mediator.on("open:auth", () => {})
-  })
 
   let mockEnvironment = createMockEnvironment()
 
@@ -42,7 +45,6 @@ describe("ArtworkSidebarCommercialButtons", () => {
   })
 
   beforeEach(() => {
-    jest.spyOn(mediator, "trigger")
     user = { id: "123", name: "User" }
     window.history.pushState({}, "Artwork Title", "/artwork/the-id")
   })
@@ -243,46 +245,96 @@ describe("ArtworkSidebarCommercialButtons", () => {
   })
 
   describe("authentication", () => {
+    const mockUseRouter = useRouter as jest.Mock
+    const mockUseAuthDialog = useAuthDialog as jest.Mock
+    mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog: jest.fn() }))
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        location: {
+          pathname: "/artwork/artwork-1",
+        },
+      },
+    }))
+
     beforeEach(() => {
       user = undefined
     })
 
     it("opens auth modal with expected args when clicking 'buy now' button", () => {
+      const showAuthDialog = jest.fn()
+      mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
+
       renderWithRelay({
         Artwork: () => ({
+          internalID: "artwork-1",
           isAcquireable: true,
           isInquireable: false,
           isOfferable: false,
-          editionSets: [],
+          editionSets: [
+            {
+              internalID: "edition-set-id",
+              isAcquireable: true,
+            },
+          ],
         }),
       })
 
       fireEvent.click(screen.getByText("Purchase"))
 
-      expect(mediator.trigger).toBeCalledWith("open:auth", {
-        mode: "signup",
-        redirectTo: "http://localhost/artwork/the-id",
-        contextModule: "artworkSidebar",
-        intent: "buyNow",
-        copy: "Sign up to buy art with ease",
+      expect(showAuthDialog).toBeCalledWith({
+        mode: "SignUp",
+        options: {
+          title: expect.any(Function),
+          afterAuthAction: {
+            action: "buyNow",
+            kind: "artworks",
+            objectId: "artwork-1",
+            secondaryObjectId: "edition-set-id",
+          },
+          redirectTo: `/artwork/artwork-1?creating_order=true`,
+        },
+        analytics: {
+          contextModule: "artworkSidebar",
+          intent: "buyNow",
+        },
       })
     })
 
     it("opens auth modal with expected args when clicking 'make offer' button", () => {
+      const showAuthDialog = jest.fn()
+      mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
+
       renderWithRelay({
         Artwork: () => ({
+          internalID: "artwork-1",
           isOfferable: true,
+          editionSets: [
+            {
+              internalID: "edition-set-id",
+              isOfferable: true,
+            },
+          ],
         }),
       })
 
       fireEvent.click(screen.getByText("Make an Offer"))
 
-      expect(mediator.trigger).toBeCalledWith("open:auth", {
-        mode: "signup",
-        redirectTo: "http://localhost/artwork/the-id",
-        contextModule: "artworkSidebar",
-        intent: "buyNow",
-        copy: "Sign up to buy art with ease",
+      expect(showAuthDialog).toBeCalledWith({
+        mode: "SignUp",
+        options: {
+          title: expect.any(Function),
+          afterAuthAction: {
+            action: "makeOffer",
+            kind: "artworks",
+            objectId: "artwork-1",
+            secondaryObjectId: "edition-set-id",
+          },
+          redirectTo: `/artwork/artwork-1?creating_order=true`,
+        },
+        analytics: {
+          contextModule: "artworkSidebar",
+          intent: "makeOffer",
+        },
       })
     })
   })

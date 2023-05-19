@@ -7,7 +7,7 @@ import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
 import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
@@ -31,7 +31,7 @@ describe("Deprecated Save artwork", () => {
     id: "foo",
     internalID: "abcd1234",
     slug: "andy-warhol-skull",
-    is_saved: false,
+    isSaved: false,
     title: "Skull",
   }
 
@@ -58,7 +58,7 @@ describe("Deprecated Save artwork", () => {
       saveArtwork: {
         artwork: {
           ...artwork,
-          is_saved: true,
+          isSaved: true,
         },
       },
     }
@@ -97,9 +97,9 @@ describe("Deprecated Save artwork", () => {
   })
 
   it("can remove a saved artwork", async () => {
-    defaultMutationResults.saveArtwork.artwork.is_saved = false
+    defaultMutationResults.saveArtwork.artwork.isSaved = false
     const wrapper = getWrapper({
-      Artwork: () => ({ ...artwork, is_saved: true }),
+      Artwork: () => ({ ...artwork, isSaved: true }),
     })
     const page = new DeprecatedSaveButtonTestPage(wrapper)
 
@@ -131,29 +131,15 @@ describe("Deprecated Save artwork", () => {
     await page.clickSaveButton()
 
     expect(showAuthDialog).toBeCalledWith({
-      current: {
-        analytics: { contextModule: "worksForSaleRail", intent: "saveArtwork" },
-        mode: "SignUp",
-        options: {
-          afterAuthAction: {
-            action: "save",
-            kind: "artworks",
-            objectId: "abcd1234",
-          },
-          title: expect.any(Function),
-        },
-      },
-      legacy: {
-        afterSignUpAction: {
+      analytics: { contextModule: "worksForSaleRail", intent: "saveArtwork" },
+      mode: "SignUp",
+      options: {
+        afterAuthAction: {
           action: "save",
           kind: "artworks",
-          objectId: "andy-warhol-skull",
+          objectId: "abcd1234",
         },
-        contextModule: "worksForSaleRail",
-        copy: "Sign up to save artworks",
-        intent: "saveArtwork",
-        mode: "signup",
-        redirectTo: undefined,
+        title: expect.any(Function),
       },
     })
   })

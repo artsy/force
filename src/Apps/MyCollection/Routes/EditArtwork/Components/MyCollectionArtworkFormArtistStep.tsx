@@ -9,20 +9,22 @@ import {
   Text,
 } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
-import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
+import {
+  ArtistAutoComplete,
+  AutocompleteArtist,
+} from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtistAutocomplete"
 import { useMyCollectionArtworkFormContext } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormContext"
 import { MyCollectionArtworkFormHeader } from "Apps/MyCollection/Routes/EditArtwork/Components/MyCollectionArtworkFormHeader"
 import { getMyCollectionArtworkFormInitialValues } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkFormHelpers"
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
+import { extractNodes } from "Utils/extractNodes"
+import { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
 import { useFormikContext } from "formik"
 import { debounce, sortBy } from "lodash"
 import { useEffect, useMemo, useState } from "react"
 import { graphql, useFragment } from "react-relay"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { extractNodes } from "Utils/extractNodes"
-import { MyCollectionArtworkFormArtistStep_me$key } from "__generated__/MyCollectionArtworkFormArtistStep_me.graphql"
 
 interface MyCollectionArtworkFormArtistStepProps {
   me: MyCollectionArtworkFormArtistStep_me$key
@@ -39,9 +41,6 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
     trackSelectArtist,
     trackSkipArtistSelection,
   } = useMyCollectionTracking()
-  const enablePersonalArtists = useFeatureFlag(
-    "cx-my-collection-personal-artists-for-web"
-  )
 
   const collectedArtists = sortBy(
     extractNodes(me?.myCollectionInfo?.collectedArtistsConnection),
@@ -52,21 +51,21 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
   const [query, setQuery] = useState("")
   const trimmedQuery = query?.trimStart()
 
-  const onSelect = artist => {
+  const onSelect = (artist: AutocompleteArtist) => {
     trackSelectArtist()
 
-    setFieldValue("artistId", artist.internalID)
-    setFieldValue("artistName", artist.name || "")
+    setFieldValue("artistId", artist?.internalID)
+    setFieldValue("artistName", artist?.name || "")
     setFieldValue("artist", artist)
 
-    if (!artist.internalID) {
+    if (!artist?.internalID) {
       setQuery("")
 
       return
     }
 
     // Skip the artwork step if the artist has no public artworks on Artsy or is a personal artist
-    const skipNext = artist.isPersonalArtist || artist.counts.artworks === 0
+    const skipNext = artist?.isPersonalArtist || artist?.counts?.artworks === 0
 
     onNext?.({ skipNext })
   }
@@ -126,38 +125,32 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
             >
               {query}
             </Text>
-            “ on Artsy.{" "}
-            {!!enablePersonalArtists &&
-              "You can add their name in the artwork details."}
+            “ on Artsy. You can add their name in the artwork details.
           </Text>
 
           <Spacer y={4} />
 
-          {!!enablePersonalArtists && (
-            <Button width={300} variant="secondaryNeutral" onClick={handleSkip}>
-              Add Artist
-            </Button>
-          )}
+          <Button width={300} variant="secondaryNeutral" onClick={handleSkip}>
+            Add Artist
+          </Button>
         </Box>
       ) : (
         <>
-          {!!enablePersonalArtists && (
-            <Flex flexDirection="row">
-              <Text variant={["xs", "sm-display"]}>
-                Can't find the artist?&nbsp;
-                <Clickable
-                  onClick={handleSkip}
-                  textDecoration="underline"
-                  data-testid="artist-select-skip-button"
-                >
-                  <Text variant={["xs", "sm-display"]} color="black100">
-                    Add their name
-                  </Text>
-                </Clickable>
-                .
-              </Text>
-            </Flex>
-          )}
+          <Flex flexDirection="row">
+            <Text variant={["xs", "sm-display"]}>
+              Can't find the artist?&nbsp;
+              <Clickable
+                onClick={handleSkip}
+                textDecoration="underline"
+                data-testid="artist-select-skip-button"
+              >
+                <Text variant={["xs", "sm-display"]} color="black100">
+                  Add their name
+                </Text>
+              </Clickable>
+              .
+            </Text>
+          </Flex>
 
           <Spacer y={4} />
 
@@ -169,7 +162,7 @@ export const MyCollectionArtworkFormArtistStep: React.FC<MyCollectionArtworkForm
                 {collectedArtists.map(artist => (
                   <Column span={[12, 4]} key={artist.internalID} mt={1}>
                     <Clickable
-                      onClick={() => onSelect(artist)}
+                      onClick={() => onSelect(artist as AutocompleteArtist)}
                       data-testid={`artist-${artist.internalID}`}
                     >
                       <EntityHeaderArtistFragmentContainer
@@ -215,6 +208,9 @@ const MyCollectionArtworkFormArtistStepFragment = graphql`
             isPersonalArtist
             name
             slug
+            targetSupply {
+              isP1
+            }
           }
         }
       }

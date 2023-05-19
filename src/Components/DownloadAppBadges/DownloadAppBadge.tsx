@@ -1,8 +1,7 @@
 import * as React from "react"
-import track, { useTracking } from "react-tracking"
+import { useTracking } from "react-tracking"
 import { ActionType, ClickedAppDownload, ContextModule } from "@artsy/cohesion"
-import { useAnalyticsContext } from "System"
-import Events from "Utils/Events"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { Link, LinkProps } from "@artsy/palette"
 import { Device } from "Utils/Hooks/useDeviceDetection"
 
@@ -11,12 +10,9 @@ import { Device } from "Utils/Hooks/useDeviceDetection"
 // - Avoids adding ~15kb to every page load
 // - Can be cached
 // - Can be lazyloaded
-
-const DOWNLOAD_IOS_APP_BADGE =
-  "https://files.artsy.net/images/App Download_iOS-1656079682156.png"
-
+const DOWNLOAD_IOS_APP_BADGE = "https://files.artsy.net/images/download-ios.svg"
 const DOWNLOAD_ANDROID_APP_BADGE =
-  "https://files.artsy.net/images/App Download_Google Play-1656079682114.png"
+  "https://files.artsy.net/images/download-google-play.svg"
 
 interface DownloadAppBadgeProps extends LinkProps {
   contextModule: ContextModule
@@ -24,10 +20,12 @@ interface DownloadAppBadgeProps extends LinkProps {
   downloadAppUrl: string
 }
 
-// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = track(null, {
-  dispatch: data => Events.postEvent(data),
-})(({ contextModule, device, downloadAppUrl, ...rest }) => {
+export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = ({
+  contextModule,
+  device,
+  downloadAppUrl,
+  ...rest
+}) => {
   const tracking = useTracking()
 
   const {
@@ -56,7 +54,9 @@ export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = track(null, {
 
   return (
     <Link
-      display="block"
+      display="flex"
+      justifyContent="center"
+      alignItems="center"
       href={downloadAppUrl}
       onClick={handleClick}
       title="Download on the App Store"
@@ -83,4 +83,4 @@ export const DownloadAppBadge: React.FC<DownloadAppBadgeProps> = track(null, {
       )}
     </Link>
   )
-})
+}

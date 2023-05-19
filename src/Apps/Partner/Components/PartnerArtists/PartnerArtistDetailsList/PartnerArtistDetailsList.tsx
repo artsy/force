@@ -9,8 +9,8 @@ import {
 import { PartnerArtistDetailsList_partner$data } from "__generated__/PartnerArtistDetailsList_partner.graphql"
 import { PartnerArtistDetailsListQuery } from "__generated__/PartnerArtistDetailsListQuery.graphql"
 import { PartnerArtistDetailsListPlaceholder } from "./PartnerArtistDetailsListPlaceholder"
-import { PartnerArtistDetailsFragmentContainer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistDetails"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { PartnerArtistDetailsFragmentContainer } from "Apps/Partner/Components/PartnerArtists/PartnerArtistDetails/PartnerArtistDetails"
 
 export interface PartnerArtistDetailsListProps {
   partner: PartnerArtistDetailsList_partner$data

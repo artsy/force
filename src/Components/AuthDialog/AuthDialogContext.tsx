@@ -10,7 +10,7 @@ import { useToasts } from "@artsy/palette"
 import { AuthDialog, AuthDialogProps } from "Components/AuthDialog/AuthDialog"
 import { merge } from "lodash"
 import { createContext, FC, useContext, useReducer } from "react"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { AfterAuthAction } from "Utils/Hooks/useAuthIntent"
 
 export const AUTH_DIALOG_MODES = ["Login", "SignUp", "ForgotPassword"] as const
@@ -66,16 +66,18 @@ export const INITIAL_STATE: State = {
   options: {},
 }
 
+export interface ShowAuthDialogOptions {
+  /** Values passed to analytics for tracking */
+  analytics: AuthDialogAnalytics
+  /** View mode to open dialog in */
+  mode: AuthDialogMode
+  options?: AuthDialogOptions
+}
+
 export const AuthDialogContext = createContext<{
   dispatch: React.Dispatch<Action>
   hideAuthDialog(): void
-  showAuthDialog(options: {
-    /** Values passed to analytics for tracking */
-    analytics: AuthDialogAnalytics
-    /** View mode to open dialog in */
-    mode: AuthDialogMode
-    options?: AuthDialogOptions
-  }): void
+  showAuthDialog(options: ShowAuthDialogOptions): void
   state: State
 }>({
   dispatch: () => null,

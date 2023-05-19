@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d11b71d5072f6542f505f499aa885723>>
+ * @generated SignedSource<<241a8ee200ced9f0609e57e09db3f11f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,7 +30,7 @@ export type Accept_order$data = {
     } | null> | null;
   } | null;
   readonly stateExpiresAt: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "PaymentMethodSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order" | "PaymentMethodSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Accept_order";
 };
 export type Accept_order$key = {
@@ -176,6 +176,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "PaymentMethodSummaryItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "OrderStepper_order"
     }
   ],
   "type": "CommerceOrder",
@@ -183,6 +188,6 @@ return {
 };
 })();
 
-(node as any).hash = "e24b3b62b12a9ee09c1ef6803d2fae78";
+(node as any).hash = "35b6163a6de496400d239187d3804132";
 
 export default node;

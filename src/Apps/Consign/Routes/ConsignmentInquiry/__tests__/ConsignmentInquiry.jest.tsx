@@ -2,7 +2,7 @@ import { ConsignmentInquiryFragmentContainer } from "Apps/Consign/Routes/Consign
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { SystemContextProvider } from "System"
+import { SystemContextProvider } from "System/SystemContext"
 import { fireEvent, screen, waitFor } from "@testing-library/react"
 import { useMutation } from "Utils/Hooks/useMutation"
 
@@ -14,8 +14,11 @@ const mockRouterReplace = jest.fn()
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: jest.fn(() => ({
-    router: { push: mockRouterPush, replace: mockRouterReplace },
-    match: { params: { artworkId: undefined } },
+    router: {
+      push: mockRouterPush,
+      replace: mockRouterReplace,
+    },
+    match: { params: { artworkId: undefined, recipientEmail: null } },
   })),
 }))
 

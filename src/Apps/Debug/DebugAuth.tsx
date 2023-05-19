@@ -12,13 +12,13 @@ import {
   AuthDialogMode,
   AUTH_DIALOG_MODES,
 } from "Components/AuthDialog/AuthDialogContext"
-import { __useAuthDialog__ } from "Components/AuthDialog"
+import { useAuthDialog } from "Components/AuthDialog"
 import { FC, useState } from "react"
 import { Title } from "react-head"
 import { merge } from "lodash"
 
 export const DebugAuth: FC = () => {
-  const { showAuthDialog } = __useAuthDialog__()
+  const { showAuthDialog } = useAuthDialog()
 
   const [state, setState] = useState<
     Required<Parameters<typeof showAuthDialog>[0]>

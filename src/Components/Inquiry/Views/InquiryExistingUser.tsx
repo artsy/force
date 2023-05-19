@@ -1,10 +1,10 @@
 import { Box, Spinner } from "@artsy/palette"
 import * as React from "react"
 import { graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { InquiryExistingUserQuery } from "__generated__/InquiryExistingUserQuery.graphql"
-import { useInquiryContext } from "../Hooks/useInquiryContext"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { Screen, useInquiryAccountContext } from "./InquiryAccount"
 
 const InquiryExistingUserPlaceholder: React.FC = () => {

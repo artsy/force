@@ -1,5 +1,5 @@
 import { orderRoutes } from "Apps/Order/orderRoutes"
-import { SystemContextProvider } from "System"
+import { SystemContextProvider } from "System/SystemContext"
 import { ErrorPage } from "Components/ErrorPage"
 import { mount } from "enzyme"
 import { Resolver } from "found-relay"
@@ -19,13 +19,16 @@ import {
   UntouchedBuyOrderWithShippingQuotes,
   UntouchedOfferOrder,
 } from "Apps/__tests__/Fixtures/Order"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { FarceRedirectResult } from "found/server"
 import { DateTime } from "luxon"
 // eslint-disable-next-line no-restricted-imports
 import { GlobalData } from "sharify"
 import { mockStripe } from "DevTools/mockStripe"
 import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
+import { getENV } from "Utils/getENV"
+
+jest.mock("Utils/getENV")
 
 jest.mock(
   "Components/BankDebitForm/BankDebitProvider",
@@ -108,6 +111,7 @@ describe("OrderApp routing redirects", () => {
       mockResolver({
         ...BuyOrderPickup,
         state: "SUBMITTED",
+        displayState: "SUBMITTED",
       })
     )
 
@@ -378,6 +382,7 @@ describe("OrderApp routing redirects", () => {
 
         awaitingResponseFrom: "BUYER",
         state: "PENDING",
+        displayState: "PENDING",
       })
     )
     expect(redirect.url).toBe("/orders/2939023/status")
@@ -484,6 +489,7 @@ describe("OrderApp routing redirects", () => {
         mockResolver({
           ...counterOfferOrder,
           state: "PENDING",
+          displayState: "PENDING",
         })
       )
       expect(redirect.url).toBe("/orders/2939023/status")
@@ -553,6 +559,7 @@ describe("OrderApp routing redirects", () => {
         mockResolver({
           ...counterOfferOrder,
           state: "PENDING",
+          displayState: "PENDING",
         })
       )
       expect(redirect.url).toBe("/orders/2939023/status")
@@ -572,9 +579,11 @@ describe("OrderApp routing redirects", () => {
 })
 
 describe("OrderApp", () => {
-  const getWrapper = ({ props, context }: any) => {
+  const mockGetENV = getENV as jest.Mock
+
+  const getWrapper = ({ props, context, breakpoint = "lg" }: any) => {
     return mount(
-      <MockBoot>
+      <MockBoot breakpoint={breakpoint}>
         <HeadProvider>
           <SystemContextProvider {...context}>
             <OrderAppFragmentContainer {...props} />
@@ -636,21 +645,6 @@ describe("OrderApp", () => {
     )
   })
 
-  it("shows the Zendesk chat integration button", () => {
-    const props = getProps() as any
-    const subject = getWrapper({ props }) as any
-    expect(subject.find("ZendeskWrapper")).toHaveLength(1)
-  })
-
-  it("does not show the Zendesk chat integration button if in a modal", () => {
-    const props = getProps()
-    const subject = getWrapper({
-      props: { ...props, location: { query: { isModal: true } } },
-    })
-
-    expect(subject.find("ZendeskWrapper")).toHaveLength(1)
-  })
-
   it("shows an error page if the order is missing", () => {
     const props = getProps()
     const subject = getWrapper({
@@ -665,18 +659,44 @@ describe("OrderApp", () => {
     )
   })
 
-  it("redirects user to home page when Artsy logo is clicked", () => {
-    const props = getProps({
-      location: "/order/123/review",
-    })
-    const page = getWrapper({
-      context: { isEigen: false },
-      props: { ...props, order: UntouchedBuyOrder },
+  describe("chat bubble", () => {
+    it("shows the Zendesk chat integration button", () => {
+      const props = getProps() as any
+      const subject = getWrapper({ props }) as any
+      expect(subject.find("ZendeskWrapper")).toHaveLength(1)
     })
 
-    const logo = page.find(`[data-test="logoLink"]`).first()
-    logo.simulate("click")
+    it("does not show the Zendesk chat integration button if in a modal", () => {
+      const props = getProps()
+      const subject = getWrapper({
+        props: { ...props, location: { query: { isModal: true } } },
+      })
 
-    expect(window.location.pathname).toBe("/")
+      expect(subject.find("ZendeskWrapper")).toHaveLength(1)
+    })
+
+    it("shows the Salesforce chat integration button", () => {
+      mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+      const props = getProps() as any
+      const subject = getWrapper({ props }) as any
+      expect(subject.find("SalesforceWrapper")).toHaveLength(1)
+    })
+
+    it("does not show the Salesforce chat integration button on mobile", () => {
+      mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+      const props = getProps() as any
+      const subject = getWrapper({ props, breakpoint: "xs" }) as any
+      expect(subject.find("SalesforceWrapper")).toHaveLength(0)
+    })
+
+    it("does not show the Salesforce chat integration button if in a modal", () => {
+      mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+      const props = getProps()
+      const subject = getWrapper({
+        props: { ...props, location: { query: { isModal: true } } },
+      })
+
+      expect(subject.find("SalesforceWrapper")).toHaveLength(0)
+    })
   })
 })

@@ -9,7 +9,7 @@ interface BrazeCardsProps {
 }
 
 export const BrazeCards: React.FC<BrazeCardsProps> = ({ braze, cards }) => {
-  const handleChange = index => {
+  const handleChange = (index: number) => {
     const card = cards[index]
     braze.logCardImpressions([card])
   }
@@ -23,9 +23,9 @@ export const BrazeCards: React.FC<BrazeCardsProps> = ({ braze, cards }) => {
 
         return (
           <HomeContentCard
+            key={card.id}
             card={card}
             index={index}
-            key={card.id}
             onClick={handleClick}
           />
         )

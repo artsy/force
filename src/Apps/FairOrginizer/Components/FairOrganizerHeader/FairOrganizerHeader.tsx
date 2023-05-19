@@ -30,7 +30,7 @@ export const FairOrganizerHeader: React.FC<FairOrganizerHeaderProps> = ({
 
   return (
     <>
-      <RouterLink to={href} noUnderline display="block">
+      <RouterLink to={href} textDecoration="none" display="block">
         <GridColumns>
           {avatar && (
             <Column span={[12, 12, 1]}>

@@ -8,7 +8,15 @@ export const SaveAndContinueButton: FC<{
   media?: { [key: string]: string }
   loading?: boolean
   disabled?: boolean
-}> = ({ testId, onClick, media, loading = false, disabled = false }) => {
+  tabIndex?: number
+}> = ({
+  testId,
+  onClick,
+  media,
+  loading = false,
+  disabled = false,
+  tabIndex,
+}) => {
   return (
     <>
       {media ? (
@@ -20,6 +28,7 @@ export const SaveAndContinueButton: FC<{
             width={["100%", "50%"]}
             loading={loading}
             disabled={disabled}
+            tabIndex={tabIndex}
           >
             Save and Continue
           </Button>
@@ -32,6 +41,7 @@ export const SaveAndContinueButton: FC<{
           width={["100%", "50%"]}
           loading={loading}
           disabled={disabled}
+          tabIndex={tabIndex}
         >
           Save and Continue
         </Button>

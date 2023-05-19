@@ -1,17 +1,10 @@
 import { FC } from "react"
 import * as React from "react"
-import {
-  CloseIcon,
-  Flex,
-  Text,
-  StackableBorderBox,
-  Box,
-  InfoCircleIcon,
-  Clickable,
-} from "@artsy/palette"
-
+import { Flex, Text, StackableBorderBox, Box, Clickable } from "@artsy/palette"
 import { LARGE_SCREEN_HEADER_HEIGHT } from "./ConversationHeader"
 import { Media } from "Utils/Responsive"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import InfoIcon from "@artsy/icons/InfoIcon"
 
 export interface DetailsProps {
   showDetails: boolean
@@ -42,12 +35,10 @@ export const DetailsHeader: FC<DetailsHeaderProps> = props => {
           <Text variant="sm-display" ml={2}>
             Details
           </Text>
-          <CloseIcon
-            mr={1}
-            mt={0.5}
-            cursor="pointer"
-            onClick={() => setShowDetails(false)}
-          />
+
+          <Clickable onClick={() => setShowDetails(false)}>
+            <CloseIcon mr={1} mt={0.5} />
+          </Clickable>
         </Flex>
       </StackableBorderBox>
     </Media>
@@ -59,15 +50,14 @@ export const DetailIcon: React.FC<DetailsProps> = props => {
   return (
     <Box>
       <Flex flexDirection="row" alignItems="center" pr={1}>
-        <InfoCircleIcon />
-        <Clickable cursor="pointer" textDecoration="underline">
-          <Text
-            ml={1}
-            variant="sm"
-            onClick={() => {
-              setShowDetails(!showDetails)
-            }}
-          >
+        <InfoIcon />
+        <Clickable
+          textDecoration="underline"
+          onClick={() => {
+            setShowDetails(!showDetails)
+          }}
+        >
+          <Text ml={1} variant="sm">
             Details
           </Text>
         </Clickable>

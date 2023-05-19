@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { FairOrganizerPastEventRailCellFragmentContainer as FairOrganizerPastEventRailCell } from "./FairOrganizerPastEventRailCell"
 import { FairOrganizerPastEventsRail_fairOrganizer$data } from "__generated__/FairOrganizerPastEventsRail_fairOrganizer.graphql"
 import { extractNodes } from "Utils/extractNodes"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 
 interface FairOrganizerPastEventsRailProps {
   fairOrganizer: FairOrganizerPastEventsRail_fairOrganizer$data

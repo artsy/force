@@ -18,16 +18,16 @@ import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "./ArtworkSideb
 import { useInquiry } from "Components/Inquiry/useInquiry"
 import { ErrorWithMetadata } from "Utils/errors"
 import { logger } from "@sentry/utils"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { ArtworkSidebarCommercialButtons_artwork$data } from "__generated__/ArtworkSidebarCommercialButtons_artwork.graphql"
 import { ArtworkSidebarCommercialButtonsOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOrderMutation.graphql"
 import { ArtworkSidebarCommercialButtonsOfferOrderMutation } from "__generated__/ArtworkSidebarCommercialButtonsOfferOrderMutation.graphql"
 import { useTracking } from "react-tracking"
-import { ModalType } from "Components/Authentication/Types"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import currency from "currency.js"
 import { useTranslation } from "react-i18next"
 import { useAuthDialog } from "Components/AuthDialog"
+import { useRouter } from "System/Router/useRouter"
 
 interface SaleMessageProps {
   saleMessage: string | null
@@ -53,6 +53,7 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
   artwork,
 }) => {
   const { relayEnvironment, router, user } = useSystemContext()
+  const { match } = useRouter()
 
   const { t } = useTranslation()
 
@@ -172,25 +173,23 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
       )
     } else {
       showAuthDialog({
-        current: {
-          mode: "SignUp",
-          options: {
-            title: mode => {
-              const action = mode === "SignUp" ? "Sign up" : "Log in"
-              return `${action} to buy art with ease`
-            },
+        mode: "SignUp",
+        options: {
+          title: mode => {
+            const action = mode === "SignUp" ? "Sign up" : "Log in"
+            return `${action} to buy art with ease`
           },
-          analytics: {
-            contextModule: ContextModule.artworkSidebar,
-            intent: Intent.buyNow,
+          afterAuthAction: {
+            action: "buyNow",
+            kind: "artworks",
+            objectId: artwork.internalID,
+            secondaryObjectId: selectedEditionSet?.internalID,
           },
+          redirectTo: `${match?.location?.pathname}?creating_order=true`,
         },
-        legacy: {
-          mode: ModalType.signup,
-          redirectTo: location.href,
+        analytics: {
           contextModule: ContextModule.artworkSidebar,
           intent: Intent.buyNow,
-          copy: "Sign up to buy art with ease",
         },
       })
     }
@@ -264,25 +263,23 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
       )
     } else {
       showAuthDialog({
-        current: {
-          mode: "SignUp",
-          options: {
-            title: mode => {
-              const action = mode === "SignUp" ? "Sign up" : "Log in"
-              return `${action} to make an offer`
-            },
+        mode: "SignUp",
+        options: {
+          title: mode => {
+            const action = mode === "SignUp" ? "Sign up" : "Log in"
+            return `${action} to make an offer`
           },
-          analytics: {
-            contextModule: ContextModule.artworkSidebar,
-            intent: Intent.makeOffer,
+          afterAuthAction: {
+            action: "makeOffer",
+            kind: "artworks",
+            objectId: artwork.internalID,
+            secondaryObjectId: selectedEditionSet?.internalID,
           },
+          redirectTo: `${match?.location?.pathname}?creating_order=true`,
         },
-        legacy: {
-          mode: ModalType.signup,
-          redirectTo: location.href,
+        analytics: {
           contextModule: ContextModule.artworkSidebar,
           intent: Intent.makeOffer,
-          copy: "Sign up to make an offer",
         },
       })
     }

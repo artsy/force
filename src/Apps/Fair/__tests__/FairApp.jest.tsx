@@ -1,4 +1,4 @@
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { FairAppFragmentContainer } from "Apps/Fair/FairApp"
 import { graphql } from "react-relay"
 import { FairApp_Test_Query } from "__generated__/FairApp_Test_Query.graphql"

@@ -7,7 +7,7 @@ const { capitalize } = require("underscore.string")
 const forwardedFor = require("./forwarded_for")
 const opts = require("../options")
 const passport = require("passport")
-const redirectBack = require("./redirectback")
+const redirectBack = require("./redirectBack")
 const request = require("superagent")
 const artsyXapp = require("@artsy/xapp")
 const { parse, resolve } = require("url")
@@ -101,6 +101,7 @@ module.exports.onLocalSignup = function (req, res, next) {
 module.exports.beforeSocialAuth = provider =>
   function (req, res, next) {
     let options
+
     req.session.redirectTo = req.query["redirect-to"]
     req.session.skipOnboarding = req.query["skip-onboarding"]
     req.session.sign_up_intent = req.query["signup-intent"]
@@ -188,7 +189,7 @@ module.exports.ensureLoggedInOnAfterSignupPage = function (req, res, next) {
 
 module.exports.onError = (err, req, res, next) => next(err)
 
-module.exports.ssoAndRedirectBack = function (req, res, next) {
+module.exports.ssoAndRedirectBack = function (req, res, _next) {
   if (req.xhr) {
     return res.send({
       success: true,
@@ -197,6 +198,7 @@ module.exports.ssoAndRedirectBack = function (req, res, next) {
   }
 
   let parsed = parse(redirectBack(req))
+
   if (!parsed.hostname) {
     parsed = parse(resolve(opts.APP_URL, parsed.path))
   }
@@ -205,9 +207,14 @@ module.exports.ssoAndRedirectBack = function (req, res, next) {
     parsed.hostname != null
       ? parsed.hostname.split(".").slice(1).join(".")
       : undefined
+
   if (domain !== "artsy.net") {
     return redirectBack(req, res)
   }
+
+  delete req.session.redirectTo
+  delete req.session.skipOnboarding
+
   request
     .post(`${opts.ARTSY_URL}/api/v1/me/trust_token`)
     .set({

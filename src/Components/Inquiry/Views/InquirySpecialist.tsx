@@ -10,10 +10,14 @@ import {
 import * as React from "react"
 import { useSystemContext } from "System/useSystemContext"
 import { wait } from "Utils/wait"
-import { useArtworkInquiryRequest } from "../Hooks/useArtworkInquiryRequest"
-import { InquiryState, useInquiryContext } from "../Hooks/useInquiryContext"
-import { logger } from "../util"
+import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
+import {
+  InquiryState,
+  useInquiryContext,
+} from "Components/Inquiry/Hooks/useInquiryContext"
+import { logger } from "Components/Inquiry/util"
 import { useMode } from "Utils/Hooks/useMode"
+import { RouterLink } from "System/Router/RouterLink"
 
 type Mode = "Pending" | "Sending" | "Error" | "Success"
 
@@ -129,9 +133,9 @@ export const InquirySpecialist: React.FC = () => {
 
           <Text variant="xs">
             By clicking send, you accept our{" "}
-            <a href="/privacy" target="_blank">
+            <RouterLink inline to="/privacy" target="_blank">
               Privacy Policy.
-            </a>
+            </RouterLink>
           </Text>
         </>
       )}

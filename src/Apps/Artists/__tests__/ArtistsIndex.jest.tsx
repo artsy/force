@@ -1,8 +1,8 @@
 import { graphql } from "react-relay"
-import { ArtistsIndexFragmentContainer } from "../Routes/ArtistsIndex"
+import { ArtistsIndexFragmentContainer } from "Apps/Artists/Routes/ArtistsIndex"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { ArtistsIndexFragmentContainer_Test_Query } from "__generated__/ArtistsIndexFragmentContainer_Test_Query.graphql"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.unmock("react-relay")
 

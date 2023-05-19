@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7b85b499728e54c7421baefcca550944>>
+ * @generated SignedSource<<2ffd4de74ff2ac2deecc5b008e092952>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,9 @@ export type FollowArtistButtonQuery$variables = {
 export type FollowArtistButtonQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
+  } | null;
+  readonly me: {
+    readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_me">;
   } | null;
 };
 export type FollowArtistButtonQuery = {
@@ -37,7 +40,14 @@ v1 = [
     "name": "id",
     "variableName": "id"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -45,6 +55,22 @@ return {
     "metadata": null,
     "name": "FollowArtistButtonQuery",
     "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "FollowArtistButton_me"
+          }
+        ],
+        "storageKey": null
+      },
       {
         "alias": null,
         "args": (v1/*: any*/),
@@ -73,19 +99,43 @@ return {
     "selections": [
       {
         "alias": null,
+        "args": null,
+        "concreteType": "Me",
+        "kind": "LinkedField",
+        "name": "me",
+        "plural": false,
+        "selections": [
+          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "MeCounts",
+            "kind": "LinkedField",
+            "name": "counts",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "followedArtists",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
         "args": (v1/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          },
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -138,16 +188,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "05ee5c7910d4e7b26ea0eac0ca80c334",
+    "cacheID": "a8cf4bd76be27816c3b1d09e2493ea7c",
     "id": null,
     "metadata": {},
     "name": "FollowArtistButtonQuery",
     "operationKind": "query",
-    "text": "query FollowArtistButtonQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...FollowArtistButton_artist\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n"
+    "text": "query FollowArtistButtonQuery(\n  $id: String!\n) {\n  me {\n    ...FollowArtistButton_me\n    id\n  }\n  artist(id: $id) {\n    ...FollowArtistButton_artist\n    id\n  }\n}\n\nfragment FollowArtistButton_artist on Artist {\n  id\n  slug\n  name\n  internalID\n  isFollowed\n  counts {\n    follows\n  }\n}\n\nfragment FollowArtistButton_me on Me {\n  id\n  counts {\n    followedArtists\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ee43e11ac6bdf463ccdb4945e8bb663f";
+(node as any).hash = "6307e67d5beaf9a7034ca0330b193e26";
 
 export default node;

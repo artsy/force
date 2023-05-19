@@ -1,16 +1,9 @@
-import {
-  Flex,
-  Text,
-  Spacer,
-  ArtsyMarkBlackIcon,
-  FullBleed,
-  Spinner,
-  Box,
-} from "@artsy/palette"
+import { Flex, Text, Spacer, FullBleed, Spinner, Box } from "@artsy/palette"
 import { ArtQuizFullScreen } from "Apps/ArtQuiz/Components/ArtQuizFullscreen"
 import { SplitLayout } from "Components/SplitLayout"
 import { useState, useEffect, FC } from "react"
 import { useTranslation } from "react-i18next"
+import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 
 interface ArtQuizResultsLoaderProps {
   onReady(): void
@@ -46,7 +39,7 @@ export const ArtQuizResultsLoader: FC<ArtQuizResultsLoaderProps> = ({
           hideLogo
           left={
             <Flex height="100%" alignItems="center" justifyContent="center">
-              <ArtsyMarkBlackIcon height={65} width={65} fill="white100" />
+              <ArtsyMarkIcon height={65} width={65} fill="white100" />
             </Flex>
           }
           right={
@@ -63,7 +56,11 @@ export const ArtQuizResultsLoader: FC<ArtQuizResultsLoaderProps> = ({
 
               <Spacer y={2} />
 
-              <Text variant={["lg", "xl"]}> {t("artQuizPage.title")}</Text>
+              <Text variant={["lg", "xl"]}>
+                {loading
+                  ? t("artQuizPage.loadingScreen.findingArt")
+                  : t("artQuizPage.loadingScreen.resultsReady")}
+              </Text>
 
               <Spacer y={2} />
 

@@ -3,14 +3,17 @@ import { FC } from "react"
 
 export interface CountrySelectProps extends Omit<SelectProps, "options"> {
   euShippingOnly?: boolean
+  tabIndex?: number
 }
 
 export const CountrySelect: FC<CountrySelectProps> = ({
   euShippingOnly,
+  tabIndex,
   ...rest
 }) => {
   return (
     <Select
+      tabIndex={tabIndex}
       options={
         euShippingOnly ? EU_COUNTRY_SELECT_OPTIONS : COUNTRY_SELECT_OPTIONS
       }

@@ -2,33 +2,20 @@ import { useEffect } from "react"
 import { useRouter } from "System/Router/useRouter"
 import { UtmParams } from "Apps/Consign/Routes/SubmissionFlow/Utils/types"
 import { Join, Spacer } from "@artsy/palette"
-import {
-  SellMeta,
-  CtaBanner,
-  CtaSection,
-  FAQ,
-  Header,
-  HowItWorks,
-  PromoSpace,
-  SoldRecentlyOnArtsyQueryRenderer,
-  WhySellWithArtsy,
-} from "./Components"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HeaderSWA"
 import { Highlights } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Highlights"
 import { WaysWeSell } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/WaysWeSell"
 import { HowItWorksSteps } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HowItWorksSteps"
-import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
 import { FAQSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FAQSWA"
 import { Footer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Footer"
-import { Reviews } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/Reviews"
 import { CollectorsOverview } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/CollectorsOverview"
+import { PreviouslySoldOnArtsyRailQueryRenderer } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/PreviouslySoldOnArtsyRail"
+import { FooterBanner } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/FooterBanner"
+import { SpeakToTheTeam } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpeakToTheTeam"
+import { SellMeta } from "Apps/Consign/Routes/MarketingLanding/Components/SellMeta"
+import { MeetTheSpecialists } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/MeetTheSpecialists"
 
 export const MarketingLandingApp = () => {
-  const enableNewSWALandingPage = useFeatureFlag(
-    "cx-swa-landing-page-redesign-2023"
-  )
-
   const {
     match: {
       location: { query },
@@ -50,47 +37,25 @@ export const MarketingLandingApp = () => {
     }
   }, [query.utm_medium, query.utm_source, query.utm_term])
 
-  if (enableNewSWALandingPage) {
-    return (
-      <>
-        <SellMeta />
-
-        <Join separator={<Spacer y={[6, 12]} />}>
-          <HeaderSWA />
-          <Highlights />
-          <WaysWeSell />
-          <HowItWorksSteps />
-          <MeetTheSpecialists />
-          <CollectorsOverview />
-          <Reviews />
-          <FAQSWA />
-          <Footer />
-        </Join>
-      </>
-    )
-  }
-
   return (
     <>
       <SellMeta />
 
-      <Header />
-
-      <CtaBanner />
-
       <Join separator={<Spacer y={[6, 12]} />}>
-        <PromoSpace />
-
-        <WhySellWithArtsy />
-
-        <HowItWorks />
-
-        <SoldRecentlyOnArtsyQueryRenderer />
-
-        <CtaSection />
-
-        <FAQ />
+        <HeaderSWA />
+        <Highlights />
+        <WaysWeSell />
+        <HowItWorksSteps />
+        <SpeakToTheTeam />
+        <MeetTheSpecialists />
+        <CollectorsOverview />
+        <PreviouslySoldOnArtsyRailQueryRenderer />
+        {/* <Reviews /> */}
+        <FAQSWA />
+        <Footer />
+        <FooterBanner />
       </Join>
+      <Spacer y={-4} />
     </>
   )
 }

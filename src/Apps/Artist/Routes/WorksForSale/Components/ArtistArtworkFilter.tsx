@@ -16,7 +16,7 @@ import { OwnerType } from "@artsy/cohesion"
 import { ZeroState } from "./ZeroState"
 import { ArtistArtworkFilters } from "./ArtistArtworkFilters"
 import { ActiveFilterPillsAndCreateAlert } from "Components/SavedSearchAlert/Components/ActiveFilterPillsAndCreateAlert"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]

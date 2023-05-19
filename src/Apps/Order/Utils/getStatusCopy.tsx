@@ -147,8 +147,10 @@ export const getStatusCopy = (order, logger?): StatusPageConfig => {
             <>
               Please allow 5–7 business days for the refund to appear on your
               bank statement. Contact{" "}
-              <a href="mailto:orders@artsy.net">orders@artsy.net</a> with any
-              questions.
+              <RouterLink inline to="mailto:orders@artsy.net">
+                orders@artsy.net
+              </RouterLink>{" "}
+              with any questions.
             </>
           ),
         }
@@ -183,8 +185,10 @@ export const canceledOfferOrderCopy = (order, logger?): StatusPageConfig => {
             decision to end the negotiation process.
             <Spacer y={2} />
             We’d love to get your feedback. Contact{" "}
-            <a href="mailto:orders@artsy.net">orders@artsy.net</a> with any
-            comments you have.
+            <RouterLink inline to="mailto:orders@artsy.net">
+              orders@artsy.net
+            </RouterLink>{" "}
+            with any comments you have.
           </>
         ),
         showTransactionSummary: false,
@@ -334,7 +338,7 @@ export const approvedDescription = (
       <Text color="black100">
         You will receive an email from our team with next steps. If you have any
         questions about your purchase, email us at{" "}
-        <RouterLink to="privatesales@artsy.net">
+        <RouterLink inline to="privatesales@artsy.net">
           privatesales@artsy.net.
         </RouterLink>
       </Text>
@@ -386,7 +390,7 @@ export const processingApprovalDescription = (
       <Text color="black100">
         You will receive an email from our team with next steps. If you have any
         questions about your purchase, email us at{" "}
-        <RouterLink to="privatesales@artsy.net">
+        <RouterLink inline to="privatesales@artsy.net">
           privatesales@artsy.net.
         </RouterLink>
       </Text>
@@ -413,9 +417,9 @@ export const wireTransferArtsyBankDetails = order => {
           </Text>
           <Spacer y={1} />
           <Text>Account name: Art.sy Inc.</Text>
-          <Text>Account Number: 88005417</Text>
+          <Text>Account number: 88005417</Text>
           <Text>IBAN: GB30PNBP16567188005417</Text>
-          <Text>SWIFT: PNBPGB2L</Text>
+          <Text>International SWIFT: PNBPGB2L</Text>
           <Text>Sort Code: 16-56-71</Text>
           <Spacer y={2} />
           <Text
@@ -427,13 +431,16 @@ export const wireTransferArtsyBankDetails = order => {
           </Text>
           <Spacer y={1} />
           <Text>Wells Fargo Bank, N.A. London Branch</Text>
-          <Text>1 Planation Place</Text>
+          <Text>1 Plantation Place</Text>
           <Text>30 Fenchurch Street</Text>
           <Text>London, United Kingdom, EC3M 3BD</Text>
           <Spacer y={2} />
           <Text color="#1023D7">
             Add order number #{order.code} to the notes section in your wire
-            transfer.
+            transfer. If your bank account is not in GBP, please reference
+            Artsy's intermediary bank ING Brussels (Intermediary Bank BIC/SWIFT:
+            NWBKGB2LXXX) along with Artsy's international SWIFT (PNBPGB2L) when
+            making payment. Ask your bank for further instructions.
           </Text>
         </>
       )
@@ -449,8 +456,9 @@ export const wireTransferArtsyBankDetails = order => {
           </Text>
           <Spacer y={1} />
           <Text>Account name: Art.sy Inc.</Text>
+          <Text>Account number: 88005419</Text>
           <Text>IBAN: GB73PNBP16567188005419</Text>
-          <Text>BIC: PNBPGB2LXXX</Text>
+          <Text>International SWIFT: PNBPGB2L</Text>
           <Spacer y={2} />
           <Text
             variant={["xs", "sm-display"]}
@@ -461,13 +469,16 @@ export const wireTransferArtsyBankDetails = order => {
           </Text>
           <Spacer y={1} />
           <Text>Wells Fargo Bank, N.A. London Branch</Text>
-          <Text>1 Planation Place</Text>
+          <Text>1 Plantation Place</Text>
           <Text>30 Fenchurch Street</Text>
           <Text>London, United Kingdom, EC3M 3BD</Text>
           <Spacer y={2} />
           <Text color="#1023D7">
             Add order number #{order.code} to the notes section in your wire
-            transfer.
+            transfer. If your bank account is not in EUR, please reference
+            Artsy's intermediary bank ING Brussels (Intermediary Bank BIC/SWIFT:
+            BBRUBEBB010) along with Artsy's international SWIFT (PNBPGB2L) when
+            making payment. Ask your bank for further instructions.
           </Text>
         </>
       )
@@ -497,11 +508,14 @@ export const wireTransferArtsyBankDetails = order => {
           <Spacer y={1} />
           <Text>Wells Fargo Bank, N.A.</Text>
           <Text>420 Montgomery Street</Text>
-          <Text>San Francisco, CA 9410</Text>
+          <Text>San Francisco, CA 94104</Text>
           <Spacer y={2} />
           <Text color="#1023D7">
             Add order number #{order.code} to the notes section in your wire
-            transfer.
+            transfer. If your bank account is not in USD, please reference
+            Artsy's intermediary bank ING Brussels (Intermediary Bank BIC/SWIFT:
+            PNBPUS3NNYC) along with Artsy's international SWIFT (WFBIUS6S) when
+            making payment. Ask your bank for further instructions.
           </Text>
         </>
       )

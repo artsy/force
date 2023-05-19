@@ -6,7 +6,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SettingsEditSettingsTwoFactor_me$data } from "__generated__/SettingsEditSettingsTwoFactor_me.graphql"
 import { SettingsEditSettingsTwoFactorBackupCodesFragmentContainer } from "./SettingsEditSettingsTwoFactorBackupCodes"
 
-export interface SettingsEditSettingsTwoFactorProps {
+interface SettingsEditSettingsTwoFactorProps {
   me: SettingsEditSettingsTwoFactor_me$data
 }
 

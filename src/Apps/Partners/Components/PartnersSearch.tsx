@@ -6,7 +6,7 @@ import {
 import { compact } from "lodash"
 import React, { FC, useState } from "react"
 import { graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useRouter } from "System/Router/useRouter"
 import { PartnersSearchQuery } from "__generated__/PartnersSearchQuery.graphql"

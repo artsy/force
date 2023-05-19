@@ -8,7 +8,7 @@ import { FeatureSetItemFragmentContainer as FeatureSetItem } from "./FeatureSetI
 import { extractNodes } from "Utils/extractNodes"
 import { useMemo } from "react"
 
-export interface FeatureSetProps extends Omit<BoxProps, "color"> {
+interface FeatureSetProps extends Omit<BoxProps, "color"> {
   set: FeatureSet_set$data
 }
 

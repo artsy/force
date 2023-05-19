@@ -1,34 +1,28 @@
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import {
-  ArtworkIcon,
-  BellIcon,
-  GraphIcon,
-  GroupIcon,
-  HeartIcon,
-  PowerIcon,
-  ReceiptIcon,
-  Separator,
-  SettingsIcon,
-  SoloIcon,
-  Text,
-} from "@artsy/palette"
+import { Separator, Text } from "@artsy/palette"
+import { SystemContext } from "System/SystemContext"
+import { logout } from "Utils/auth"
+import { getENV } from "Utils/getENV"
+import { userIsAdmin } from "Utils/user"
 import * as React from "react"
 import { useContext } from "react"
 import { useTracking } from "react-tracking"
-import { SystemContext } from "System"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { getENV } from "Utils/getENV"
-import { userIsAdmin } from "Utils/user"
 import { NavBarMenuItemButton, NavBarMenuItemLink } from "./NavBarMenuItem"
+import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
+import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
+import { ProgressiveOnboardingAlertHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertHighlight"
+import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import ArtworkIcon from "@artsy/icons/ArtworkIcon"
+import GraphIcon from "@artsy/icons/GraphIcon"
+import GroupIcon from "@artsy/icons/GroupIcon"
+import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
+import LogoutIcon from "@artsy/icons/LogoutIcon"
+import SettingsIcon from "@artsy/icons/SettingsIcon"
 
 export const NavBarUserMenu: React.FC = () => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-  const isSeparateSavesAndFollowsEnabled = useFeatureFlag(
-    "collector-profile-separating-saves-and-follows"
-  )
-
   const { trackEvent } = useTracking()
-  const { mediator, user } = useContext(SystemContext)
+  const { user } = useContext(SystemContext)
 
   const trackClick = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
     const link = event.currentTarget
@@ -50,6 +44,11 @@ export const NavBarUserMenu: React.FC = () => {
 
   const isAdmin = userIsAdmin(user)
   const hasPartnerAccess = Boolean(user?.has_partner_access)
+
+  const handleLogout = async () => {
+    await logout()
+    window.location.reload()
+  }
 
   return (
     <Text variant="sm" py={1} width={230}>
@@ -77,136 +76,72 @@ export const NavBarUserMenu: React.FC = () => {
         </>
       )}
 
-      {isCollectorProfileEnabled ? (
-        <>
-          <NavBarMenuItemLink
-            aria-label="View your Collection"
-            to="/collector-profile/my-collection"
-            onClick={trackClick}
-          >
-            <ArtworkIcon mr={1} aria-hidden="true" /> My Collection
-          </NavBarMenuItemLink>
+      <NavBarMenuItemLink
+        aria-label="View your Collection"
+        to="/collector-profile/my-collection"
+        onClick={trackClick}
+      >
+        <ArtworkIcon mr={1} aria-hidden="true" /> My Collection
+      </NavBarMenuItemLink>
 
-          <NavBarMenuItemLink
-            aria-label="View your Collection's Insights"
-            to="/collector-profile/insights"
-            onClick={trackClick}
-          >
-            <GraphIcon mr={1} aria-hidden="true" /> Insights
-          </NavBarMenuItemLink>
+      <NavBarMenuItemLink
+        aria-label="View your Collection's Insights"
+        to="/collector-profile/insights"
+        onClick={trackClick}
+      >
+        <GraphIcon mr={1} aria-hidden="true" /> Insights
+      </NavBarMenuItemLink>
 
-          {!isSeparateSavesAndFollowsEnabled ? (
-            <NavBarMenuItemLink
-              aria-label="View your Saves &amp; Follows"
-              to="/collector-profile/saves"
-              onClick={trackClick}
-            >
-              <HeartIcon mr={1} aria-hidden="true" /> Saves &amp; Follows
-            </NavBarMenuItemLink>
-          ) : (
-            <>
-              <NavBarMenuItemLink
-                aria-label="View your Saves"
-                to="/collector-profile/saves"
-                onClick={trackClick}
-              >
-                <HeartIcon mr={1} aria-hidden="true" /> Saves
-              </NavBarMenuItemLink>
-              <NavBarMenuItemLink
-                aria-label="View your Follows"
-                to="/collector-profile/follows"
-                onClick={trackClick}
-              >
-                <GroupIcon mr={1} aria-hidden="true" /> Follows
-              </NavBarMenuItemLink>
-            </>
-          )}
+      <ProgressiveOnboardingSaveHighlight
+        position={{ top: "3.5px", left: "9.5px" }}
+      >
+        <NavBarMenuItemLink
+          aria-label="View your Saves"
+          to={BASE_SAVES_PATH}
+          onClick={trackClick}
+        >
+          <HeartStrokeIcon mr={1} aria-hidden="true" /> Saves
+        </NavBarMenuItemLink>
+      </ProgressiveOnboardingSaveHighlight>
 
-          <NavBarMenuItemLink
-            aria-label="Edit your settings"
-            to="/settings/edit-profile"
-            onClick={trackClick}
-          >
-            <SettingsIcon mr={1} aria-hidden="true" /> Settings
-          </NavBarMenuItemLink>
+      <ProgressiveOnboardingFollowHighlight
+        position={{ top: "3.5px", left: "9.5px" }}
+      >
+        <NavBarMenuItemLink
+          aria-label="View your Follows"
+          to="/collector-profile/follows"
+          onClick={trackClick}
+        >
+          <GroupIcon mr={1} aria-hidden="true" /> Follows
+        </NavBarMenuItemLink>
+      </ProgressiveOnboardingFollowHighlight>
 
-          <NavBarMenuItemButton
-            aria-label="Log out of your account"
-            onClick={() => {
-              mediator?.trigger("auth:logout")
-            }}
-          >
-            <PowerIcon mr={1} aria-hidden="true" /> Log out
-          </NavBarMenuItemButton>
-        </>
-      ) : (
-        <>
-          <NavBarMenuItemLink
-            aria-label="View your purchases"
-            to="/settings/purchases"
-            onClick={trackClick}
-          >
-            <ReceiptIcon mr={1} aria-hidden="true" /> Order History
-          </NavBarMenuItemLink>
+      <ProgressiveOnboardingAlertHighlight
+        position={{ top: "3.5px", left: "9.5px" }}
+      >
+        <NavBarMenuItemLink
+          aria-label="View your saved alerts"
+          to="/settings/alerts"
+          onClick={trackClick}
+        >
+          <BellStrokeIcon mr={1} aria-hidden="true" /> Alerts
+        </NavBarMenuItemLink>
+      </ProgressiveOnboardingAlertHighlight>
 
-          <NavBarMenuItemLink
-            aria-label="View your alerts"
-            to="/settings/alerts"
-            onClick={trackClick}
-          >
-            <BellIcon mr={1} aria-hidden="true" /> Alerts
-          </NavBarMenuItemLink>
+      <NavBarMenuItemLink
+        aria-label="Edit your settings"
+        to="/settings/edit-profile"
+        onClick={trackClick}
+      >
+        <SettingsIcon mr={1} aria-hidden="true" /> Settings
+      </NavBarMenuItemLink>
 
-          <NavBarMenuItemLink
-            aria-label="View your Saves &amp; Follows"
-            to="/settings/saves"
-            onClick={trackClick}
-          >
-            <HeartIcon mr={1} aria-hidden="true" /> Saves &amp; Follows
-          </NavBarMenuItemLink>
-
-          <NavBarMenuItemLink
-            aria-label="View your Collector Profile"
-            to="/settings/edit-profile"
-            onClick={trackClick}
-          >
-            <SoloIcon mr={1} aria-hidden="true" /> Collector Profile
-          </NavBarMenuItemLink>
-
-          <NavBarMenuItemLink
-            aria-label="View your Collection"
-            to="/settings/my-collection"
-            onClick={trackClick}
-          >
-            <ArtworkIcon mr={1} aria-hidden="true" /> My Collection
-          </NavBarMenuItemLink>
-
-          <NavBarMenuItemLink
-            aria-label="View your Collection's Insights"
-            to="/settings/insights"
-            onClick={trackClick}
-          >
-            <GraphIcon mr={1} aria-hidden="true" /> Insights
-          </NavBarMenuItemLink>
-
-          <NavBarMenuItemLink
-            aria-label="Edit your settings"
-            to="/settings/edit-settings"
-            onClick={trackClick}
-          >
-            <SettingsIcon mr={1} aria-hidden="true" /> Settings
-          </NavBarMenuItemLink>
-
-          <NavBarMenuItemButton
-            aria-label="Log out of your account"
-            onClick={() => {
-              mediator?.trigger("auth:logout")
-            }}
-          >
-            <PowerIcon mr={1} aria-hidden="true" /> Log out
-          </NavBarMenuItemButton>
-        </>
-      )}
+      <NavBarMenuItemButton
+        aria-label="Log out of your account"
+        onClick={handleLogout}
+      >
+        <LogoutIcon mr={1} aria-hidden="true" /> Log out
+      </NavBarMenuItemButton>
     </Text>
   )
 }

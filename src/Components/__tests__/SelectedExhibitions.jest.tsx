@@ -1,7 +1,7 @@
 import { exhibitions } from "Apps/__tests__/Fixtures/SelectedExhibitions"
 import { MockBoot } from "DevTools/MockBoot"
 import { mount } from "enzyme"
-import { SelectedExhibitions } from "../SelectedExhibitions"
+import { SelectedExhibitions } from "Components/SelectedExhibitions"
 
 describe("SelectedExhibitions", () => {
   const props = {

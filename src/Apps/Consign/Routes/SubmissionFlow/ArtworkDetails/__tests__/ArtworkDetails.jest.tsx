@@ -1,6 +1,6 @@
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { Breakpoint } from "Utils/Responsive"
-import { flushPromiseQueue } from "DevTools"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
@@ -218,7 +218,7 @@ describe("ArtworkDetails", () => {
       expect(learnMoreLink).toBeInTheDocument()
       expect(learnMoreLink).toHaveAttribute(
         "href",
-        "https://support.artsy.net/hc/en-us/articles/360046646374-I-m-an-artist-Can-I-submit-my-own-work-to-sell-"
+        "https://support.artsy.net/s/article/Im-an-artist-Can-I-submit-my-own-work-to-sell"
       )
     })
 

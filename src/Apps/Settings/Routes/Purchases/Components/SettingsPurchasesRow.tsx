@@ -1,19 +1,15 @@
 import {
   Box,
-  CheckCircleFillIcon,
   Column,
   EntityHeader,
   Flex,
   GridColumns,
-  HelpIcon,
   Image,
-  PendingCircleIcon,
   Separator,
   Skeleton,
   SkeletonBox,
   SkeletonText,
   Text,
-  XCircleIcon,
 } from "@artsy/palette"
 import { DateTime } from "luxon"
 import { FC } from "react"
@@ -24,6 +20,10 @@ import { LocaleOptions } from "luxon"
 import { extractNodes } from "Utils/extractNodes"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
+import CloseStrokeIcon from "@artsy/icons/CloseStrokeIcon"
+import HelpIcon from "@artsy/icons/HelpIcon"
+import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
+import PendingIcon from "@artsy/icons/PendingIcon"
 
 const ORDER_LABELS = {
   APPROVED: "Confirmed",
@@ -37,14 +37,14 @@ const ORDER_LABELS = {
 } as const
 
 const ORDER_ICONS = {
-  APPROVED: <PendingCircleIcon fill="black100" />,
-  CANCELED: <XCircleIcon fill="red100" />,
-  FULFILLED: <CheckCircleFillIcon fill="green100" />,
-  IN_TRANSIT: <PendingCircleIcon fill="black60" />,
-  PROCESSING: <PendingCircleIcon fill="black60" />,
-  REFUNDED: <XCircleIcon fill="red100" />,
-  SUBMITTED: <PendingCircleIcon fill="black60" />,
-  PROCESSING_APPROVAL: <PendingCircleIcon fill="black60" />,
+  APPROVED: <PendingIcon fill="black100" />,
+  CANCELED: <CloseStrokeIcon fill="red100" />,
+  FULFILLED: <CheckmarkFillIcon fill="green100" />,
+  IN_TRANSIT: <PendingIcon fill="black60" />,
+  PROCESSING: <PendingIcon fill="black60" />,
+  REFUNDED: <CloseStrokeIcon fill="red100" />,
+  SUBMITTED: <PendingIcon fill="black60" />,
+  PROCESSING_APPROVAL: <PendingIcon fill="black60" />,
 } as const
 
 const ORDER_COLORS = {
@@ -196,7 +196,7 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
 
           <Text variant="sm-display" color="black60">
             {isOrderActive ? (
-              <RouterLink to={`/orders/${order.internalID}/status`}>
+              <RouterLink inline to={`/orders/${order.internalID}/status`}>
                 {order.code}
               </RouterLink>
             ) : (
@@ -238,11 +238,13 @@ const SettingsPurchasesRow: FC<SettingsPurchasesRowProps> = ({ order }) => {
         <Text variant="xs" color="black60">
           Need Help?{" "}
           {isPrivateSale ? (
-            <RouterLink to="mailto:privatesales@artsy.net">
+            <RouterLink inline to="mailto:privatesales@artsy.net">
               privatesales@artsy.net
             </RouterLink>
           ) : (
-            <RouterLink to="mailto:support@artsy.net">Contact Us.</RouterLink>
+            <RouterLink inline to="mailto:support@artsy.net">
+              Contact Us.
+            </RouterLink>
           )}
         </Text>
       </Flex>

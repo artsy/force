@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<40c1ae68f47cf2de48f6ab43265eef6b>>
+ * @generated SignedSource<<14f6098c7bb943476ecd87052ac0ebc6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -152,6 +152,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "confidentialNotes",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "medium",
             "storageKey": null
           },
@@ -216,6 +223,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "editionOf",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Money",
             "kind": "LinkedField",
             "name": "pricePaid",
@@ -245,7 +259,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "aaf4a1b37902156ba9761adabbd11081",
+    "cacheID": "0ad78f5cba07e0d797e668229769e466",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -280,6 +294,7 @@ return {
         "artwork.attributionClass.id": (v3/*: any*/),
         "artwork.attributionClass.shortDescription": (v2/*: any*/),
         "artwork.category": (v2/*: any*/),
+        "artwork.confidentialNotes": (v2/*: any*/),
         "artwork.date": (v2/*: any*/),
         "artwork.dimensions": {
           "enumValues": null,
@@ -289,6 +304,7 @@ return {
         },
         "artwork.dimensions.cm": (v2/*: any*/),
         "artwork.dimensions.in": (v2/*: any*/),
+        "artwork.editionOf": (v2/*: any*/),
         "artwork.id": (v3/*: any*/),
         "artwork.medium": (v2/*: any*/),
         "artwork.metric": (v2/*: any*/),
@@ -305,7 +321,7 @@ return {
     },
     "name": "MyCollectionArtworkSidebarTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkSidebarTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    isPersonalArtist\n    id\n  }\n}\n"
+    "text": "query MyCollectionArtworkSidebarTestQuery {\n  artwork(id: \"foo\") {\n    ...MyCollectionArtworkSidebarTitleInfo_artwork\n    ...MyCollectionArtworkSidebarMetadata_artwork\n    id\n  }\n}\n\nfragment MyCollectionArtworkSidebarMetadata_artwork on Artwork {\n  category\n  confidentialNotes\n  medium\n  metric\n  dimensions {\n    in\n    cm\n  }\n  provenance\n  attributionClass {\n    shortDescription\n    id\n  }\n  editionOf\n  pricePaid {\n    display\n  }\n  artworkLocation\n}\n\nfragment MyCollectionArtworkSidebarTitleInfo_artwork on Artwork {\n  artistNames\n  title\n  date\n  artist {\n    href\n    isPersonalArtist\n    id\n  }\n}\n"
   }
 };
 })();

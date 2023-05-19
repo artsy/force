@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2c774501ea0760fc5e10a50d098ba9f3>>
+ * @generated SignedSource<<f6b9dd9c3709e637eac639d8e5bc188e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type MyCollectionEditArtwork_artwork$data = {
     } | null;
     readonly initials: string | null;
     readonly internalID: string;
+    readonly isPersonalArtist: boolean | null;
     readonly name: string | null;
     readonly targetSupply: {
       readonly isP1: boolean | null;
@@ -34,6 +35,7 @@ export type MyCollectionEditArtwork_artwork$data = {
     readonly name: string | null;
   } | null;
   readonly category: string | null;
+  readonly confidentialNotes: string | null;
   readonly consignmentSubmission: {
     readonly inProgress: boolean | null;
   } | null;
@@ -150,6 +152,13 @@ return {
               "storageKey": null
             }
           ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isPersonalArtist",
           "storageKey": null
         },
         {
@@ -421,6 +430,13 @@ return {
     },
     (v3/*: any*/),
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "confidentialNotes",
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "MyCollectionArtworkFormMain_artwork"
@@ -431,6 +447,6 @@ return {
 };
 })();
 
-(node as any).hash = "e2f8cf7f6b424c415a82f63130ecb056";
+(node as any).hash = "203c396e79abcd0668b691bf8b8a0af4";
 
 export default node;

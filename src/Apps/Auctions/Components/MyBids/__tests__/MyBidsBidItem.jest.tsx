@@ -155,8 +155,8 @@ describe("MyBidsBidItem", () => {
     const wrapper = getWrapper()
     wrapper.find("RouterLink").first().simulate("click")
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action": "clickedArtworkGroup",
           "context_module": "yourActiveBids",
           "context_page_owner_type": undefined,

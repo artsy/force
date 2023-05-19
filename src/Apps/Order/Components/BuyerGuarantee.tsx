@@ -1,17 +1,12 @@
 import { ActionType, ContextModule } from "@artsy/cohesion"
-import {
-  CircleBlackCheckIcon,
-  Flex,
-  Link,
-  Text,
-  StackableBorderBox,
-  Spacer,
-} from "@artsy/palette"
+import { Flex, Text, StackableBorderBox, Spacer } from "@artsy/palette"
 import * as React from "react"
 import { useTracking } from "react-tracking"
+import { RouterLink } from "System/Router/RouterLink"
+import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
 
 export const BUYER_GUARANTEE_URL =
-  "https://support.artsy.net/hc/en-us/articles/360048946973-How-does-Artsy-protect-me"
+  "https://support.artsy.net/s/article/The-Artsy-Guarantee"
 
 interface BuyerGuaranteeProps {
   contextModule: ContextModule
@@ -49,14 +44,15 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
         {renderArtsyPrivateSaleConditions && (
           <Text variant="sm" color="black60">
             This purchase is subject to{" "}
-            <a
+            <RouterLink
+              inline
               style={{ textDecoration: "underline", color: "#000" }}
-              href="https://www.artsy.net/partner/artsy-private-sales"
+              to="/private-sales-conditions-of-sale"
               target="_blank"
               rel="noopener noreferrer"
             >
               Artsy Private Sales LLC Conditions of Sale
-            </a>
+            </RouterLink>
           </Text>
         )}
 
@@ -65,7 +61,7 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
         {privateSaleConditions?.length && (
           <>
             <Text fontWeight="bold" variant="xs">
-              Additional conditions of sale
+              Additional Conditions of Sale
             </Text>
             <Spacer y={2} />
             <Text variant="xs" color="black60">
@@ -80,21 +76,22 @@ export const BuyerGuarantee: React.FC<BuyerGuaranteeProps> = ({
   if (orderSource !== "private_sale") {
     return (
       <Flex p={2} my={1} backgroundColor="black10">
-        <CircleBlackCheckIcon mr={1} />
+        <CheckmarkFillIcon mr={1} />
         <Flex flexDirection="column">
           <Text fontWeight="bold" variant="sm-display">
             Your purchase is protected.
           </Text>
           <Text variant="xs" color="black60">
             Learn more about{" "}
-            <Link
+            <RouterLink
+              inline
               target="_blank"
               rel="noopener noreferrer"
-              href={BUYER_GUARANTEE_URL}
+              to={BUYER_GUARANTEE_URL}
               onClick={handleClick}
             >
               Artsy’s buyer protection.
-            </Link>
+            </RouterLink>
           </Text>
         </Flex>
       </Flex>

@@ -8,7 +8,7 @@ import { ArticleInfiniteScrollQueryRenderer } from "./Components/ArticleInfinite
 import { ArticleSeriesFragmentContainer } from "./Components/ArticleSeries"
 import { ArticleVerticalRelatedArticlesQueryRenderer } from "./Components/ArticleVerticalRelatedArticles"
 import { ArticleVideoFragmentContainer } from "./Components/ArticleVideo"
-import { ArticleAdProvider } from "./Components/ArticleAd"
+import { ArticleAdProvider } from "./Components/ArticleAd/ArticleAd"
 import { ArticleVisibilityMetadataFragmentContainer } from "./Components/ArticleVisibilityMetadata"
 import { ArticleMetaTagsFragmentContainer } from "./Components/ArticleMetaTags"
 import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"

@@ -3,7 +3,7 @@ import * as React from "react"
 import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
-} from "../../AuctionResultsFilterContext"
+} from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 
@@ -12,6 +12,7 @@ export const auctionHouseMap = [
   { displayName: "Christie's", name: "Christie's" },
   { displayName: "Phillips", name: "Phillips" },
   { displayName: "Bonhams", name: "Bonhams" },
+  { displayName: "Artsy Auction", name: "Artsy Auction" },
 ]
 
 export const AuctionHouseFilter: React.FC = () => {

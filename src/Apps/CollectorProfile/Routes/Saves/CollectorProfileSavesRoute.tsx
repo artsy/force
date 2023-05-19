@@ -1,6 +1,6 @@
 import { Skeleton, SkeletonText, Spacer, Sup, Text } from "@artsy/palette"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
-import { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
+import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
 import { Masonry } from "Components/Masonry"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { FC, Fragment, useState } from "react"
@@ -10,6 +10,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { Jump, useJump } from "Utils/Hooks/useJump"
 import { CollectorProfileSavesRouteQuery } from "__generated__/CollectorProfileSavesRouteQuery.graphql"
 import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
+import { MetaTags } from "Components/MetaTags"
 
 interface CollectorProfileSavesProps {
   me: CollectorProfileSavesRoute_me$data
@@ -51,6 +52,8 @@ const SavesRoute: FC<CollectorProfileSavesProps> = ({ me, relay }) => {
 
   return (
     <>
+      <MetaTags title="Saves | Artsy" pathname="collector-profile/saves" />
+
       <Text variant={["md", "lg"]} mb={4}>
         Saved Artworks {total > 0 && <Sup color="brand">{total}</Sup>}
       </Text>

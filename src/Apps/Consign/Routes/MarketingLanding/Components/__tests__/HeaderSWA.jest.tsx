@@ -1,10 +1,9 @@
 import { fireEvent, render, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { HeaderSWA } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/HeaderSWA"
 
 jest.mock("react-tracking")
-// TODO: Remove feature flag mock when feature flag is removed
 jest.mock("System/useSystemContext")
 jest.mock("System/Analytics/AnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
@@ -28,10 +27,6 @@ describe("HeaderSWA", () => {
     })
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       user: { id: "user-id", email: "user-email@artsy.net" },
-      featureFlags: {
-        "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-        "swa-inquiry-flow": { flagEnabled: true },
-      },
     }))
   })
 
@@ -63,7 +58,7 @@ describe("HeaderSWA", () => {
 
       expect(trackEvent).toHaveBeenCalled()
       expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedStartSelling",
+        action: "tappedConsign",
         context_module: "Header",
         context_page_owner_type: "sell",
         label: "Start Selling",
@@ -81,7 +76,7 @@ describe("HeaderSWA", () => {
 
       expect(trackEvent).toHaveBeenCalled()
       expect(trackEvent).toHaveBeenCalledWith({
-        action: "clickedGetInTouch",
+        action: "tappedConsignmentInquiry",
         context_module: "Header",
         context_page_owner_type: "sell",
         label: "Get in Touch",
@@ -93,10 +88,6 @@ describe("HeaderSWA", () => {
     it("links out to email provider", () => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => ({
         user: { id: "user-id", email: "user-email@artsy.net" },
-        featureFlags: {
-          "cx-swa-landing-page-redesign-2023": { flagEnabled: true },
-          "swa-inquiry-flow": { flagEnabled: false },
-        },
       }))
 
       render(<HeaderSWA />)
@@ -105,10 +96,7 @@ describe("HeaderSWA", () => {
 
       expect(link).toBeInTheDocument()
       expect(link).toHaveTextContent("Get in Touch")
-      expect(link).toHaveAttribute(
-        "href",
-        "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
-      )
+      expect(link).toHaveAttribute("href", "/sell/inquiry")
     })
   })
 })

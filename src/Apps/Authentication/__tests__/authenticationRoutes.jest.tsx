@@ -1,37 +1,33 @@
-import { render, waitFor, screen } from "@testing-library/react"
-import { setCookies } from "Apps/Authentication/Legacy/Utils/helpers"
-import { MockBoot, MockRouter } from "DevTools"
+import { render, screen, waitFor } from "@testing-library/react"
+import { MockRouter } from "DevTools/MockRouter"
+import { MockBoot } from "DevTools/MockBoot"
 import { NextFunction } from "express"
 import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 import qs from "qs"
 import { authenticationRoutes } from "Apps/Authentication/authenticationRoutes"
-import { checkForRedirect } from "Apps/Authentication/Legacy/Server/checkForRedirect"
-import { setReferer } from "Apps/Authentication/Legacy/Server/setReferer"
-import { redirectIfLoggedIn } from "Apps/Authentication/Legacy/Server/redirectIfLoggedIn"
+import { checkForRedirect } from "Apps/Authentication/Middleware/checkForRedirect"
+import { setReferer } from "Apps/Authentication/Middleware/setReferer"
+import { redirectIfLoggedIn } from "Apps/Authentication/Middleware/redirectIfLoggedIn"
 import { getENV } from "Utils/getENV"
 
-jest.mock("Apps/Authentication/Legacy/Server/checkForRedirect", () => ({
+jest.mock("Apps/Authentication/Middleware/checkForRedirect", () => ({
   checkForRedirect: jest.fn(),
 }))
 
-jest.mock("Apps/Authentication/Legacy/Server/setReferer", () => ({
+jest.mock("Apps/Authentication/Middleware/setReferer", () => ({
   setReferer: jest.fn(),
 }))
 
-jest.mock("Apps/Authentication/Legacy/Server/redirectIfLoggedIn", () => ({
+jest.mock("Apps/Authentication/Middleware/redirectIfLoggedIn", () => ({
   redirectIfLoggedIn: jest.fn(),
 }))
 
 jest.mock("Utils/EnableRecaptcha", () => ({
-  EnableRecaptcha: () => "EnableRecaptcha",
-}))
-
-jest.mock("Apps/Authentication/Legacy/Utils/helpers", () => ({
-  ...jest.requireActual("Apps/Authentication/Legacy/Utils/helpers"),
-  setCookies: jest.fn(),
+  useRecaptcha: jest.fn(),
 }))
 
 jest.mock("Utils/Hooks/useAuthValidation")
+jest.mock("Components/AuthDialog/Hooks/useAuthDialogTracking")
 
 jest.mock("Utils/getENV", () => ({
   getENV: jest.fn(),
@@ -84,39 +80,32 @@ describe("authenticationRoutes", () => {
   }
 
   afterEach(() => {
-    jest.restoreAllMocks()
-    mockRedirectIfLoggedIn.mockReset()
+    jest.resetAllMocks()
   })
 
   describe("/forgot", () => {
     describe("client", () => {
       it("shows reset password title by default", async () => {
         renderClientRoute("/forgot")
-        expect((await screen.findAllByText("Reset your password")).length).toBe(
-          2
-        )
-      })
 
-      it("shows set password title if `set_password` param passed", async () => {
-        renderClientRoute("/forgot?set_password=true")
-        expect((await screen.findAllByText("Set your password")).length).toBe(2)
+        await waitFor(() => {
+          expect(screen.getByText("Reset your password")).toBeInTheDocument()
+        })
       })
     })
 
     describe("server", () => {
       describe("onServerSideRender", () => {
-        it("sets RESET_PASSWORD_REDIRECT_TO and SET_PASSWORD", () => {
+        it("sets RESET_PASSWORD_REDIRECT_TO", () => {
           const { onServerSideRender, req, res } = renderServerRoute("/forgot")
           req.query = {
             reset_password_redirect_to: "foo", // pragma: allowlist secret
-            set_password: "bar", // pragma: allowlist secret
           }
           onServerSideRender()
 
           expect(res.locals.sd.RESET_PASSWORD_REDIRECT_TO).toEqual(
             req.query.reset_password_redirect_to
           )
-          expect(res.locals.sd.SET_PASSWORD).toEqual(req.query.set_password)
         })
 
         it("runs middleware", () => {
@@ -132,23 +121,13 @@ describe("authenticationRoutes", () => {
     describe("client", () => {
       it("renders login by default", async () => {
         renderClientRoute("/login")
-        expect((await screen.findAllByText("EnableRecaptcha")).length).toBe(1)
-        expect((await screen.findAllByText("Log in to Artsy")).length).toBe(2)
-      })
-
-      it("sets cookie with passed login params on mount", async () => {
-        const queryParams = {
-          action: "follow",
-          kind: "artist",
-          objectId: 123,
-          redirectTo: "/bar",
-          signupReferer: "referrer",
-        }
-
-        renderClientRoute(`/login?${qs.stringify(queryParams)}`)
 
         await waitFor(() => {
-          expect(setCookies).toHaveBeenCalledWith(queryParams)
+          expect(
+            screen.getByText(
+              "Log in to collect art by the world’s leading artists"
+            )
+          ).toBeInTheDocument()
         })
       })
     })
@@ -176,11 +155,11 @@ describe("authenticationRoutes", () => {
     describe("server", () => {
       describe("onServerSideRender", () => {
         it("runs middleware if query param found", () => {
-          renderServerRoute(
+          const { res, onServerSideRender } = renderServerRoute(
             "/reset_password?reset_password_token=foo&set_password=bar&reset_password_redirect_to=/home"
           )
-          expect(mockCheckForRedirect).toHaveBeenCalled()
-          expect(mockSetReferer).toHaveBeenCalled()
+          onServerSideRender()
+          expect(res.redirect).toHaveBeenCalled()
         })
 
         it("redirects if no reset_password_token is found", () => {
@@ -199,23 +178,13 @@ describe("authenticationRoutes", () => {
     describe("client", () => {
       it("renders signup", async () => {
         renderClientRoute(`/signup`)
-        expect((await screen.findAllByText("EnableRecaptcha")).length).toBe(1)
-        expect((await screen.findAllByText("Sign up for Artsy")).length).toBe(2)
-      })
-
-      it("sets cookie with passed login params on mount", async () => {
-        const queryParams = {
-          action: "follow",
-          kind: "artist",
-          objectId: 123,
-          redirectTo: "/bar",
-          signupReferer: "referrer",
-        }
-
-        renderClientRoute(`/signup?${qs.stringify(queryParams)}`)
 
         await waitFor(() => {
-          expect(setCookies).toHaveBeenCalledWith(queryParams)
+          expect(
+            screen.getByText(
+              "Sign up to collect art by the world’s leading artists"
+            )
+          ).toBeInTheDocument()
         })
       })
     })
@@ -240,17 +209,17 @@ describe("authenticationRoutes", () => {
   })
 
   describe("/auth-redirect", () => {
-    mockGetENV.mockImplementation(key => {
-      switch (key) {
-        case "APP_URL":
-          return "https://artsy.net"
-        case "ALLOWED_REDIRECT_HOSTS":
-          return "off.artsy.net"
-      }
-    })
-
     describe("server", () => {
       it("redirects to redirectTo", () => {
+        mockGetENV.mockImplementation(key => {
+          switch (key) {
+            case "APP_URL":
+              return "https://artsy.net"
+            case "ALLOWED_REDIRECT_HOSTS":
+              return "off.artsy.net"
+          }
+        })
+
         const { res, onServerSideRender } = renderServerRoute(
           "/auth-redirect?redirectTo=https://off.artsy.net/blah"
         )

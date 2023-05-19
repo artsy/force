@@ -1,4 +1,5 @@
-import { MockBoot, renderRelayTree } from "DevTools"
+import { renderRelayTree } from "DevTools/renderRelayTree"
+import { MockBoot } from "DevTools/MockBoot"
 import { graphql } from "react-relay"
 
 import { SeoDataForArtwork_Test_Query$rawResponse } from "__generated__/SeoDataForArtwork_Test_Query.graphql"
@@ -7,7 +8,7 @@ import { Product } from "Components/Seo/Product"
 import {
   AVAILABILITY,
   SeoDataForArtworkFragmentContainer,
-} from "../SeoDataForArtwork"
+} from "Apps/Artwork/Components/Seo/SeoDataForArtwork"
 import { SeoDataForArtworkFixture } from "./SeoDataForArtwork.fixture"
 
 jest.unmock("react-relay")

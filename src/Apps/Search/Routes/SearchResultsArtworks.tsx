@@ -10,7 +10,7 @@ import {
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { SearchResultsArtworksFilters } from "Apps/Search/Components/SearchResultsArtworksFilters"
 
 interface SearchResultsRouteProps {

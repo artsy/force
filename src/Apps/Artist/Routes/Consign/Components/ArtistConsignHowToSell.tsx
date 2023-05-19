@@ -1,14 +1,5 @@
 import * as React from "react"
-import {
-  AuctionIcon,
-  Button,
-  EditIcon,
-  EnvelopeIcon,
-  Text,
-  Spacer,
-  GridColumns,
-  Column,
-} from "@artsy/palette"
+import { Button, Text, Spacer, GridColumns, Column } from "@artsy/palette"
 import { ArtistConsignHowToSell_artist$data } from "__generated__/ArtistConsignHowToSell_artist.graphql"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
@@ -17,6 +8,9 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SectionContainer } from "./SectionContainer"
 import { Subheader } from "./Subheader"
 import { getConsignSubmissionUrl } from "./Utils/getConsignSubmissionUrl"
+import GavelIcon from "@artsy/icons/GavelIcon"
+import EditIcon from "@artsy/icons/EditIcon"
+import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
 
 interface ArtistConsignHowtoSellProps {
   artist: ArtistConsignHowToSell_artist$data
@@ -49,7 +43,7 @@ const ArtistConsignHowtoSell: React.FC<ArtistConsignHowtoSellProps> = ({
         />
 
         <Section
-          icon={<AuctionIcon width={30} height={30} />}
+          icon={<GavelIcon width={30} height={30} />}
           text="Match &amp; sell"
           description="With our specialists’ expert guidance and advisement, evaluate
             your offers, choose the best offer for you and sell your work."

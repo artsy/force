@@ -20,7 +20,7 @@ const InsightsAuctionResults: React.FC<InsightsAuctionResultsProps> = ({
   return (
     <>
       <Text variant={["sm-display", "md"]} textAlign="left">
-        Recently Sold at Auctions
+        Recently Sold at Auction
       </Text>
 
       <Spacer y={2} />
@@ -50,7 +50,7 @@ export const InsightsAuctionResultsFragmentContainer = createFragmentContainer(
   {
     me: graphql`
       fragment InsightsAuctionResults_me on Me {
-        myCollectionAuctionResults(first: 6) {
+        myCollectionAuctionResults(first: 6, state: PAST) {
           edges {
             node {
               ...ArtistAuctionResultItem_auctionResult

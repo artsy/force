@@ -5,7 +5,7 @@ import { EntityTooltipArtistQueryRenderer } from "./EntityTooltipArtist"
 import { EntityTooltipGeneQueryRenderer } from "./EntityTooltipGene"
 import { EntityTooltipPartnerQueryRenderer } from "./EntityTooltipPartner"
 
-export const SUPPORTED_ENTITIES = ["artist", "partner", "gene"] as const
+const SUPPORTED_ENTITIES = ["artist", "partner", "gene"] as const
 export type Entity = typeof SUPPORTED_ENTITIES[number]
 
 interface EntityTooltipProps {

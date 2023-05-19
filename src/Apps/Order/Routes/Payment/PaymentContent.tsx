@@ -5,13 +5,10 @@ import {
   Clickable,
   Spacer,
   BorderedRadio,
-  InstitutionIcon,
-  CreditCardIcon,
   RadioGroup,
   Text,
   Collapse,
   RadioProps,
-  InfoCircleIcon,
   Tooltip,
   Flex,
 } from "@artsy/palette"
@@ -20,7 +17,6 @@ import {
   Payment_order$data,
   CommercePaymentMethodEnum,
 } from "__generated__/Payment_order.graphql"
-
 import { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import {
   CreditCardPicker,
@@ -29,6 +25,9 @@ import {
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
+import InfoIcon from "@artsy/icons/InfoIcon"
+import InstitutionIcon from "@artsy/icons/InstitutionIcon"
+import UnknownCardIcon from "@artsy/icons/UnknownCardIcon"
 
 export interface Props {
   order: Payment_order$data
@@ -93,44 +92,73 @@ export const PaymentContent: FC<Props> = props => {
 
       {/* Credit card */}
       <Collapse open={selectedPaymentMethod === "CREDIT_CARD"}>
-        <CreditCardPickerFragmentContainer
-          commitMutation={commitMutation}
-          me={me}
-          order={order}
-          innerRef={CreditCardPicker}
-        />
+        <Flex
+          style={{
+            display:
+              selectedPaymentMethod === "CREDIT_CARD" ? "inline" : "none",
+          }}
+        >
+          <CreditCardPickerFragmentContainer
+            commitMutation={commitMutation}
+            me={me}
+            order={order}
+            innerRef={CreditCardPicker}
+          />
+        </Flex>
         <Spacer y={4} />
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={onSetPayment}
+          tabIndex={selectedPaymentMethod === "CREDIT_CARD" ? 0 : -1}
         />
         <Spacer y={2} />
       </Collapse>
 
       {/* US Bank transfer */}
       <Collapse open={selectedPaymentMethod === "US_BANK_ACCOUNT"}>
-        {getPaymentMethodInfo(selectedPaymentMethod)}
+        {getPaymentMethodInfo(
+          selectedPaymentMethod,
+          order.source,
+          order.availablePaymentMethods
+        )}
         <Spacer y={2} />
         {selectedPaymentMethod === "US_BANK_ACCOUNT" && (
-          <BankAccountPickerFragmentContainer
-            me={me}
-            order={order}
-            onError={props.onError}
-          />
+          <Flex
+            style={{
+              display:
+                selectedPaymentMethod === "US_BANK_ACCOUNT" ? "inline" : "none",
+            }}
+          >
+            <BankAccountPickerFragmentContainer
+              me={me}
+              order={order}
+              onError={props.onError}
+            />
+          </Flex>
         )}
       </Collapse>
 
       {/* SEPA bank transfer */}
       <Collapse open={selectedPaymentMethod === "SEPA_DEBIT"}>
-        {getPaymentMethodInfo(selectedPaymentMethod)}
-        <Spacer y={2} />
-        {selectedPaymentMethod === "SEPA_DEBIT" && (
-          <BankAccountPickerFragmentContainer
-            me={me}
-            order={order}
-            onError={props.onError}
-          />
+        {getPaymentMethodInfo(
+          selectedPaymentMethod,
+          order.source,
+          order.availablePaymentMethods
         )}
+        <Spacer y={2} />
+        <Flex
+          style={{
+            display: selectedPaymentMethod === "SEPA_DEBIT" ? "inline" : "none",
+          }}
+        >
+          {selectedPaymentMethod === "SEPA_DEBIT" && (
+            <BankAccountPickerFragmentContainer
+              me={me}
+              order={order}
+              onError={props.onError}
+            />
+          )}
+        </Flex>
       </Collapse>
 
       {/* Wire transfer */}
@@ -144,6 +172,7 @@ export const PaymentContent: FC<Props> = props => {
         <SaveAndContinueButton
           media={{ greaterThan: "xs" }}
           onClick={onSetPayment}
+          tabIndex={selectedPaymentMethod === "WIRE_TRANSFER" ? 0 : -1}
         />
         <Spacer y={2} />
       </Collapse>
@@ -169,7 +198,7 @@ const getAvailablePaymentMethods = (
         value={paymentMethod}
         label={
           <>
-            <CreditCardIcon type="Unknown" fill="black100" />
+            <UnknownCardIcon fill="black100" />
             <Text variant="sm-display" ml={0.5}>
               Credit card
             </Text>
@@ -296,6 +325,9 @@ const getPaymentMethodInfo = (
     case "US_BANK_ACCOUNT":
       return (
         <>
+          {availablePaymentMethods?.length === 1 && (
+            <Text variant="lg-display">Bank transfer payment details</Text>
+          )}
           <Text color="black60" variant="sm">
             • Search for your bank institution or select from the options below.
           </Text>
@@ -315,6 +347,9 @@ const getPaymentMethodInfo = (
     case "SEPA_DEBIT":
       return (
         <>
+          {availablePaymentMethods?.length === 1 && (
+            <Text variant="lg-display">SEPA bank transfer payment details</Text>
+          )}
           <Flex>
             <Text color="black60" variant="sm">
               • Your bank account must be located in one of the SEPA countries.
@@ -325,7 +360,7 @@ const getPaymentMethodInfo = (
               content="SEPA countries: Austria, Belgium, Britain, Bulgaria, Croatia, Cyprus, Czech Republic, Denmark, Estonia, Finland, France, Germany, Greece, Hungary, Iceland, Ireland, Italy, Latvia, Liechtenstein, Lithuania, Luxembourg, Malta, Monaco, Netherlands, Norway, Poland, Portugal, Romania, Slovakia, Slovenia, Spain, Sweden, and Switzerland."
             >
               <Clickable ml={0.5} style={{ lineHeight: 0 }}>
-                <InfoCircleIcon />
+                <InfoIcon />
               </Clickable>
             </Tooltip>
           </Flex>

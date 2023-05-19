@@ -1,5 +1,5 @@
 import { mount } from "enzyme"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { ArtworkMeta } from "Apps/Artwork/Components/ArtworkMeta"
 import { ArtworkMeta_artwork$data } from "__generated__/ArtworkMeta_artwork.graphql"
 

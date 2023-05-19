@@ -5,8 +5,8 @@ import {
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import ArtworkGrid from "Components/ArtworkGrid"
-import { useSystemContext } from "System"
+import ArtworkGrid from "Components/ArtworkGrid/ArtworkGrid"
+import { useSystemContext } from "System/useSystemContext"
 import { WorksForYouArtistFeed_viewer$data } from "__generated__/WorksForYouArtistFeed_viewer.graphql"
 
 interface WorksForYouArtistFeedProps {
@@ -28,7 +28,6 @@ const WorksForYouArtistFeed: React.FC<WorksForYouArtistFeedProps> = ({
 
   const avatarImage = artist?.image?.resized
   const meta = artist?.counts?.forSaleArtworks?.toLocaleString()
-  const worksForSaleHref = artist.href + "/works-for-sale"
 
   const handleLoadMore = () => {
     if (!relay.hasMore() || relay.isLoading()) return
@@ -50,7 +49,7 @@ const WorksForYouArtistFeed: React.FC<WorksForYouArtistFeedProps> = ({
           ...avatarImage,
           lazyLoad: true,
         }}
-        href={worksForSaleHref}
+        href={artist.href!}
       />
 
       <Spacer y={4} />

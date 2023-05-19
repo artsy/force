@@ -2,11 +2,10 @@ import * as React from "react"
 import { Button } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairOrganizerFollowButton_fairOrganizer$data } from "__generated__/FairOrganizerFollowButton_fairOrganizer.graphql"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { fairOrganizerFollowMutation } from "Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation"
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { useAuthDialog } from "Components/AuthDialog"
-import { ModalType } from "Components/Authentication/Types"
 
 interface FairOrganizerFollowButtonProps {
   fairOrganizer: FairOrganizerFollowButton_fairOrganizer$data
@@ -31,35 +30,21 @@ export const FairOrganizerFollowButton: React.FC<FairOrganizerFollowButtonProps>
       }
 
       showAuthDialog({
-        current: {
-          mode: "SignUp",
-          options: {
-            title: mode => {
-              const action = mode === "SignUp" ? "Sign up" : "Log in"
-              return `${action} to follow ${fairOrganizer.name}`
-            },
-            afterAuthAction: {
-              kind: "profile",
-              action: "follow",
-              objectId: fairOrganizer.slug,
-            },
+        mode: "SignUp",
+        options: {
+          title: mode => {
+            const action = mode === "SignUp" ? "Sign up" : "Log in"
+            return `${action} to follow ${fairOrganizer.name}`
           },
-          analytics: {
-            intent: Intent.followPartner,
-            contextModule: ContextModule.fairOrganizerHeader,
-          },
-        },
-        legacy: {
-          afterSignUpAction: {
-            action: "follow",
+          afterAuthAction: {
             kind: "profile",
+            action: "follow",
             objectId: fairOrganizer.slug,
           },
-          contextModule: ContextModule.fairOrganizerHeader,
-          copy: `Sign up to follow ${fairOrganizer.name}`,
+        },
+        analytics: {
           intent: Intent.followPartner,
-          mode: ModalType.signup,
-          redirectTo: window.location.href,
+          contextModule: ContextModule.fairOrganizerHeader,
         },
       })
     }

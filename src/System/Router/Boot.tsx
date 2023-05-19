@@ -1,10 +1,10 @@
 import {
   Theme,
   injectGlobalStyles,
-  themeProps,
+  THEME,
   ToastsProvider,
 } from "@artsy/palette"
-import { SystemContextProvider } from "System"
+import { SystemContextProvider } from "System/SystemContext"
 import { AppRouteConfig } from "System/Router/Route"
 import { useEffect } from "react"
 import * as React from "react"
@@ -32,6 +32,7 @@ import track from "react-tracking"
 import { StickyProvider } from "Components/Sticky"
 import { AuthIntentProvider } from "Utils/Hooks/useAuthIntent"
 import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
+import { ProgressiveOnboardingProvider } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 
 export interface BootProps {
   children: React.ReactNode
@@ -74,7 +75,7 @@ export const Boot = track(undefined, {
   }
 
   return (
-    <Theme theme="v3">
+    <Theme>
       <GlobalStyles />
 
       <HeadProvider headTags={headTags}>
@@ -84,16 +85,18 @@ export const Boot = track(undefined, {
               <ErrorBoundary>
                 <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
                   <ResponsiveProvider
-                    mediaQueries={themeProps.mediaQueries}
+                    mediaQueries={THEME.mediaQueries}
                     initialMatchingMediaQueries={onlyMatchMediaQueries as any}
                   >
                     <ToastsProvider>
                       <StickyProvider>
                         <AuthIntentProvider>
                           <AuthDialogProvider>
-                            <FocusVisible />
-                            <SiftContainer />
-                            {children}
+                            <ProgressiveOnboardingProvider>
+                              <FocusVisible />
+                              <SiftContainer />
+                              {children}
+                            </ProgressiveOnboardingProvider>
                           </AuthDialogProvider>
                         </AuthIntentProvider>
                       </StickyProvider>

@@ -7,7 +7,6 @@ import { fairOrganizerFollowMutation } from "Apps/FairOrginizer/Mutations/FairOr
 import { useAuthDialog } from "Components/AuthDialog"
 
 jest.unmock("react-relay")
-jest.mock("Utils/openAuthModal")
 jest.mock("System/useSystemContext")
 jest.mock("Apps/FairOrginizer/Mutations/FairOrganizerFollowMutation")
 jest.mock("Components/AuthDialog/useAuthDialog")
@@ -34,7 +33,6 @@ describe("FairOrganizerFollowButton", () => {
 
   beforeAll(() => {
     mockUseSystemContext.mockImplementation(() => ({
-      mediator: jest.fn(),
       user: jest.fn(),
     }))
 
@@ -80,39 +78,24 @@ describe("FairOrganizerFollowButton", () => {
     wrapper.simulate("click")
 
     expect(showAuthDialog).toHaveBeenCalledWith({
-      current: {
-        analytics: {
-          contextModule: "fairOrganizerHeader",
-          intent: "followPartner",
-        },
-        mode: "SignUp",
-        options: {
-          afterAuthAction: {
-            action: "follow",
-            kind: "profile",
-            objectId: "faiOrganizerSlug",
-          },
-          title: expect.any(Function),
-        },
+      analytics: {
+        contextModule: "fairOrganizerHeader",
+        intent: "followPartner",
       },
-      legacy: {
-        afterSignUpAction: {
+      mode: "SignUp",
+      options: {
+        afterAuthAction: {
           action: "follow",
           kind: "profile",
           objectId: "faiOrganizerSlug",
         },
-        contextModule: "fairOrganizerHeader",
-        copy: "Sign up to follow fairOrganizerName",
-        intent: "followPartner",
-        mode: "signup",
-        redirectTo: "http://localhost/",
+        title: expect.any(Function),
       },
     })
   })
 
   it("authenticated users trigger follow mutation on click", () => {
     mockUseSystemContext.mockImplementation(() => ({
-      mediator: "mediator",
       relayEnvironment: "relayEnvironment",
       user: "user",
     }))

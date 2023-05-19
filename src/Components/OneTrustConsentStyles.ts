@@ -29,7 +29,7 @@
  * Consider this write once, read never.
  */
 import { createGlobalStyle, css } from "styled-components"
-import { THEME_V3 as THEME } from "@artsy/palette-tokens"
+import { THEME } from "@artsy/palette-tokens"
 import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,
@@ -100,6 +100,7 @@ const modalDialogHeaderHeight = `calc(26px + (${THEME.space[2]} * 2))` // Logo i
 const modalDialogFooterHeight = `calc(${BUTTON_SIZES.large.height} + (${THEME.space[2]} * 2))`
 const modalDialogFooterMobileHeight = `calc((${BUTTON_SIZES.large.height} * 2) + (${THEME.space[2]} * 2) + ${THEME.space[1]})`
 
+// ts-prune-ignore-next
 export const OneTrustConsentStyles = createGlobalStyle`
   #onetrust-consent-sdk {
     ${toStyle({

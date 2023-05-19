@@ -9,7 +9,7 @@ import {
   TextArea,
   useToasts,
 } from "@artsy/palette"
-import { password } from "Components/Authentication/Validators"
+import { passwordValidator } from "Components/AuthDialog/Views/AuthDialogSignUp"
 import { Form, Formik } from "formik"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -48,7 +48,7 @@ export const DeleteAccountRoute: FC<DeleteAccountRouteProps> = ({
             explanation: Yup.string().min(1).required(),
             confirmation: Yup.boolean().oneOf([true]),
             hasPassword: Yup.boolean(),
-            password: password.when("hasPassword", {
+            password: passwordValidator.when("hasPassword", {
               is: true,
               otherwise: field => field.notRequired(),
             }),

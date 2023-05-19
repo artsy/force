@@ -13,7 +13,7 @@ import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { ConfirmPasswordModal } from "Components/ConfirmPasswordModal"
 // eslint-disable-next-line no-restricted-imports
 import request from "superagent"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { AppSecondFactor_me$data } from "__generated__/AppSecondFactor_me.graphql"
 import { CreateAppSecondFactorInput } from "__generated__/CreateAppSecondFactorMutation.graphql"
 import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
@@ -22,6 +22,7 @@ import { AppSecondFactorModal, OnCompleteRedirectModal } from "./Modal"
 import { CreateAppSecondFactor } from "./Mutation/CreateAppSecondFactor"
 
 import { afterUpdateRedirect } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/helpers"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface AppSecondFactorProps {
   me: AppSecondFactor_me$data
@@ -178,21 +179,23 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
 
           <Text variant="sm" color="black60">
             Generate secure authentication codes using an application such as{" "}
-            <a
-              href="https://support.1password.com/one-time-passwords"
+            <RouterLink
+              inline
+              to="https://support.1password.com/one-time-passwords"
               target="_blank"
               rel="noopener noreferrer"
             >
               1Password
-            </a>{" "}
+            </RouterLink>{" "}
             or{" "}
-            <a
-              href="https://support.google.com/accounts/answer/1066447"
+            <RouterLink
+              inline
+              to="https://support.google.com/accounts/answer/1066447"
               target="_blank"
               rel="noopener noreferrer"
             >
               Google Authenticator
-            </a>
+            </RouterLink>
             .
           </Text>
         </Box>

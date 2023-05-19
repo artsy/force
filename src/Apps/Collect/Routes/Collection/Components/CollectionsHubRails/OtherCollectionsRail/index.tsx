@@ -2,7 +2,7 @@ import { OtherCollectionsRail_collectionGroup$data } from "__generated__/OtherCo
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { OtherCollectionsRailsContainer as OtherCollectionEntity } from "./OtherCollectionEntity"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 
 interface OtherCollectionsRailProps {
   collectionGroup: OtherCollectionsRail_collectionGroup$data

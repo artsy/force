@@ -5,11 +5,11 @@ import {
   BaseArtworkFilter,
   getTotalCountLabel,
 } from "Components/ArtworkFilter"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { renderToString } from "DevTools/__tests__/MockRelayRendererFixtures"
-import { ArtworkQueryFilter } from "../ArtworkQueryFilter"
+import { ArtworkQueryFilter } from "Components/ArtworkFilter/ArtworkQueryFilter"
 import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
-import { initialArtworkFilterState } from "../ArtworkFilterContext"
+import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { omit } from "lodash"
 import { Text } from "@artsy/palette"
@@ -56,7 +56,6 @@ describe("ArtworkFilter", () => {
   const trackEvent = jest.fn()
 
   beforeEach(() => {
-    jest.resetAllMocks()
     ;(useTracking as jest.Mock).mockImplementation(() => {
       return {
         trackEvent,
@@ -71,6 +70,10 @@ describe("ArtworkFilter", () => {
       { value: "sortTest1", text: "Sort Test 1" },
       { value: "sortTest2", text: "Sort Test 2" },
     ]
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
   })
 
   it("renders content above artworks when FilterPillsSection prop is passed", () => {

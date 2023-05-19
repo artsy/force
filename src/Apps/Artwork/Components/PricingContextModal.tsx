@@ -2,7 +2,6 @@ import {
   Button,
   Clickable,
   ModalDialog,
-  QuestionCircleIcon,
   Spacer,
   Text,
   Tooltip,
@@ -12,6 +11,7 @@ import { Component } from "react"
 import Events from "Utils/Events"
 import track from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
+import HelpIcon from "@artsy/icons/HelpIcon"
 
 interface State {
   isModalOpen?: boolean
@@ -51,8 +51,9 @@ export class PricingContextModal extends Component<State> {
             onClick={this.openModal.bind(this)}
             ml={1}
             style={{ lineHeight: 0 }}
+            aria-label="Learn more"
           >
-            <QuestionCircleIcon aria-hidden title="" />
+            <HelpIcon aria-hidden title="" />
           </Clickable>
         </Tooltip>
 
@@ -87,7 +88,7 @@ export class PricingContextModal extends Component<State> {
 
             <Text variant="sm">
               Artwork prices are affected by{" "}
-              <RouterLink to="/article/artsy-editorial-artworks-prices">
+              <RouterLink inline to="/article/artsy-editorial-artworks-prices">
                 a variety of objective and subjective factors
               </RouterLink>{" "}
               including the artist's relative position in the art market and the
@@ -95,7 +96,10 @@ export class PricingContextModal extends Component<State> {
               factors are unique to every artwork. As such, this feature is not
               intended to provide pricing guidance for the artwork being viewed.
               If you have feedback or questions{" "}
-              <a href="mailto:support@artsy.net">let us know</a>.
+              <RouterLink inline to="mailto:support@artsy.net">
+                let us know
+              </RouterLink>
+              .
             </Text>
           </ModalDialog>
         )}

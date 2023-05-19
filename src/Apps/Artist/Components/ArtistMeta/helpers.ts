@@ -3,6 +3,7 @@ import { ArtistMeta_artist$data } from "__generated__/ArtistMeta_artist.graphql"
 import { getENV } from "Utils/getENV"
 import { identity, pickBy } from "lodash"
 
+// FIXME:
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 type ArtworkNode = ArtistMeta_artist["artworks_connection"]["edges"][0]["node"]
 

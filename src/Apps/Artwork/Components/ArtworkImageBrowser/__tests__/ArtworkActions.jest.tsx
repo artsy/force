@@ -1,38 +1,40 @@
 import { ArtworkActionsFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActions"
-import {
-  BellIcon,
-  DownloadIcon,
-  EditIcon,
-  GenomeIcon,
-  HeartIcon,
-  MoreIcon,
-  OpenEyeIcon,
-  ShareIcon,
-} from "@artsy/palette"
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { userIsAdmin, userIsTeam } from "Utils/user"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { Breakpoint } from "@artsy/palette/dist/themes/types"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import DownloadIcon from "@artsy/icons/DownloadIcon"
+import EditIcon from "@artsy/icons/EditIcon"
+import GenomeIcon from "@artsy/icons/GenomeIcon"
+import HeartStrokeIcon from "@artsy/icons/HeartStrokeIcon"
+import MoreIcon from "@artsy/icons/MoreIcon"
+import ShareIcon from "@artsy/icons/ShareIcon"
+import ShowIcon from "@artsy/icons/ShowIcon"
 
 jest.unmock("react-relay")
-jest.mock("System", () => ({
+
+jest.mock("System/SystemContext", () => ({
   SystemContextProvider: ({ children }) => children,
-  track: jest.fn().mockReturnValue(jest.fn),
   useSystemContext: jest.fn().mockReturnValue({ user: {} }),
+}))
+
+jest.mock("System/Analytics/AnalyticsContext", () => ({
+  AnalyticsContext: { Provider: ({ children }) => children },
+  track: jest.fn().mockReturnValue(jest.fn),
   useTracking: jest.fn().mockReturnValue({ trackEvent: jest.fn() }),
 }))
+
 jest.mock("System/useSystemContext", () => ({
-  useSystemContext: jest.fn().mockReturnValue({ mediator: { on: jest.fn() } }),
+  useSystemContext: jest.fn().mockReturnValue({}),
 }))
-jest.mock("System/Analytics", () => ({
-  AnalyticsSchema: {},
-  useTracking: () => ({}),
-}))
+
 jest.mock("Utils/user", () => ({
   userIsAdmin: jest.fn(),
   userIsTeam: jest.fn(),
 }))
+
 jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => null,
 }))
@@ -82,9 +84,9 @@ describe("ArtworkActions", () => {
         Artwork: () => ({ isHangable: true, isDownloadable: true }),
       })
 
-      expect(wrapper.find(HeartIcon).length).toBe(1)
+      expect(wrapper.find(HeartStrokeIcon).length).toBe(1)
       expect(wrapper.find(ShareIcon).length).toBe(1)
-      expect(wrapper.find(OpenEyeIcon).length).toBe(1)
+      expect(wrapper.find(ShowIcon).length).toBe(1)
       expect(wrapper.find(DownloadIcon).length).toBe(1)
       expect(wrapper.find(EditIcon).length).toBe(0)
       expect(wrapper.find(GenomeIcon).length).toBe(0)
@@ -95,15 +97,15 @@ describe("ArtworkActions", () => {
       it("renders heart icon when not sale", () => {
         const wrapper = getWrapper({ Artwork: () => ({ sale: null }) })
 
-        expect(wrapper.find(HeartIcon).length).toBe(1)
-        expect(wrapper.find(BellIcon).length).toBe(0)
+        expect(wrapper.find(HeartStrokeIcon).length).toBe(1)
+        expect(wrapper.find(BellStrokeIcon).length).toBe(0)
       })
 
       it("renders heart icon when sale is closed", () => {
         const wrapper = getWrapper({ Sale: () => ({ isClosed: true }) })
 
-        expect(wrapper.find(HeartIcon).length).toBe(1)
-        expect(wrapper.find(BellIcon).length).toBe(0)
+        expect(wrapper.find(HeartStrokeIcon).length).toBe(1)
+        expect(wrapper.find(BellStrokeIcon).length).toBe(0)
       })
 
       it("renders bell icon when sale is open", () => {
@@ -114,8 +116,8 @@ describe("ArtworkActions", () => {
           }),
         })
 
-        expect(wrapper.find(HeartIcon).length).toBe(0)
-        expect(wrapper.find(BellIcon).length).toBe(1)
+        expect(wrapper.find(HeartStrokeIcon).length).toBe(0)
+        expect(wrapper.find(BellStrokeIcon).length).toBe(1)
       })
     })
 
@@ -123,13 +125,13 @@ describe("ArtworkActions", () => {
       it("available for artworks that are hangable", () => {
         const wrapper = getWrapper({ Artwork: () => ({ isHangable: true }) })
 
-        expect(wrapper.find(OpenEyeIcon).length).toBe(1)
+        expect(wrapper.find(ShowIcon).length).toBe(1)
       })
 
       it("is not available for non hangable artworks", () => {
         const wrapper = getWrapper({ Artwork: () => ({ isHangable: false }) })
 
-        expect(wrapper.find(OpenEyeIcon).length).toBe(0)
+        expect(wrapper.find(ShowIcon).length).toBe(0)
       })
     })
 
@@ -176,9 +178,9 @@ describe("ArtworkActions", () => {
         Artwork: () => ({ isHangable: true, isDownloadable: true }),
       })
 
-      expect(wrapper.find(HeartIcon).length).toBe(1)
+      expect(wrapper.find(HeartStrokeIcon).length).toBe(1)
       expect(wrapper.find(ShareIcon).length).toBe(1)
-      expect(wrapper.find(OpenEyeIcon).length).toBe(1)
+      expect(wrapper.find(ShowIcon).length).toBe(1)
       expect(wrapper.find(MoreIcon).length).toBe(1)
       expect(wrapper.find(DownloadIcon).length).toBe(0)
       expect(wrapper.find(EditIcon).length).toBe(0)
@@ -192,9 +194,9 @@ describe("ArtworkActions", () => {
         Artwork: () => ({ isDownloadable: false, isHangable: true }),
       })
 
-      expect(wrapper.find(HeartIcon).length).toBe(1)
+      expect(wrapper.find(HeartStrokeIcon).length).toBe(1)
       expect(wrapper.find(ShareIcon).length).toBe(1)
-      expect(wrapper.find(OpenEyeIcon).length).toBe(1)
+      expect(wrapper.find(ShowIcon).length).toBe(1)
       expect(wrapper.find(DownloadIcon).length).toBe(0)
       expect(wrapper.find(EditIcon).length).toBe(0)
       expect(wrapper.find(GenomeIcon).length).toBe(0)

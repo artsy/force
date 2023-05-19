@@ -1,15 +1,9 @@
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
 
-export function getWorksForSaleRouteVariables(
-  { artistID },
-  { location, context }
-) {
-  const { featureFlags = {} } = context
-
+export function getWorksForSaleRouteVariables({ artistID }, { location }) {
   // FIXME: The initial render includes `location` in props, but subsequent
   // renders (such as tabbing back to this route in your browser) will not.
   const initialFilterState = getInitialFilterState(location?.query ?? {})
-  const newPriceFilterFlag = featureFlags["new_price_filter"]
 
   const filterParams = {
     sort: "-decayed_merch",
@@ -23,12 +17,8 @@ export function getWorksForSaleRouteVariables(
     "PARTNER",
     "LOCATION_CITY",
     "MATERIALS_TERMS",
+    "SIMPLE_PRICE_HISTOGRAM",
   ]
-
-  // Fetch histogram data for price filter
-  if (newPriceFilterFlag?.flagEnabled) {
-    aggregations.push("SIMPLE_PRICE_HISTOGRAM")
-  }
 
   return {
     input: filterParams,

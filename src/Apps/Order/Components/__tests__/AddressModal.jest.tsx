@@ -6,12 +6,12 @@ import {
 } from "Apps/Order/Components/AddressModal"
 import { mount } from "enzyme"
 import { validAddress } from "Components/__tests__/Utils/addressForm"
-import {
-  updateAddressSuccess,
-  updateAddressFailure,
-} from "Apps/Order/Routes/__fixtures__/MutationResults"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
 import { useSystemContext } from "System/useSystemContext"
+import {
+  updateAddressFailure,
+  updateAddressSuccess,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
 jest.mock("System/useSystemContext")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
@@ -71,12 +71,6 @@ describe("AddressModal", () => {
         user: { lab_features: [] },
         isLoggedIn: true,
         relayEnvironment: {},
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-          ready: jest.fn(),
-          trigger: jest.fn(),
-        },
       }
     })
   })
@@ -249,43 +243,43 @@ describe("AddressModal", () => {
 
       expect(wrapper.find(errorBoxQuery).text()).toContain(GENERIC_FAIL_MESSAGE)
     })
-  })
 
-  it("sets formik error when mutation returns phone validation error", async () => {
-    let wrapper = getWrapper(testAddressModalProps)
+    it("sets formik error when address mutation returns phone validation error", async () => {
+      let wrapper = getWrapper(testAddressModalProps)
 
-    commitMutation.mockImplementationOnce((_, { onCompleted }) =>
-      onCompleted({
-        updateUserAddress: {
-          userAddressOrErrors: {
-            errors: [
-              {
-                message:
-                  "Validation failed for phone: not a valid phone number",
-              },
-            ],
+      commitMutation.mockImplementationOnce((_, { onCompleted }) =>
+        onCompleted({
+          updateUserAddress: {
+            userAddressOrErrors: {
+              errors: [
+                {
+                  message:
+                    "Validation failed for phone: not a valid phone number",
+                },
+              ],
+            },
           },
-        },
+        })
+      )
+
+      const formik = wrapper.find("Formik").first()
+      const setFieldError = jest.fn()
+
+      const onSubmit = formik.props().onSubmit as any
+      onSubmit(validAddress as any, {
+        setFieldError: setFieldError,
+        setSubmitting: jest.fn(),
       })
-    )
 
-    const formik = wrapper.find("Formik").first()
-    const setFieldError = jest.fn()
+      await wrapper.update()
 
-    const onSubmit = formik.props().onSubmit as any
-    onSubmit(validAddress as any, {
-      setFieldError: setFieldError,
-      setSubmitting: jest.fn(),
+      await tick()
+
+      expect(setFieldError).toHaveBeenCalledWith(
+        "phoneNumber",
+        "Please enter a valid phone number"
+      )
     })
-
-    await wrapper.update()
-
-    await tick()
-
-    expect(setFieldError).toHaveBeenCalledWith(
-      "phoneNumber",
-      "Please enter a valid phone number"
-    )
   })
 })
 
@@ -318,12 +312,6 @@ describe("AddressModal feature flag", () => {
         user: { lab_features: ["Phone Number Validation"] },
         isLoggedIn: true,
         relayEnvironment: {},
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-          ready: jest.fn(),
-          trigger: jest.fn(),
-        },
       }
     })
   })

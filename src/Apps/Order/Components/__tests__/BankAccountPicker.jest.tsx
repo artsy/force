@@ -7,7 +7,7 @@ import {
 import { expectOne, RootTestPage } from "DevTools/RootTestPage"
 import { graphql } from "react-relay"
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { BankAccountPicker_me$data } from "__generated__/BankAccountPicker_me.graphql"
 import { BankDebitProvider } from "Components/BankDebitForm/BankDebitProvider"
@@ -185,10 +185,10 @@ describe("BankAccountFragmentContainer", () => {
       const page = new BankAccountPickerTestPage(wrapper)
       expect(page.radios).toHaveLength(3)
       expect(page.radios.at(0).text()).toMatchInlineSnapshot(
-        `"InstitutionBank transfer •••• 1234"`
+        `"Bank transfer •••• 1234"`
       )
       expect(page.radios.at(1).text()).toMatchInlineSnapshot(
-        `"InstitutionBank transfer •••• 2345"`
+        `"Bank transfer •••• 2345"`
       )
       expect(page.radios.at(2).text()).toMatchInlineSnapshot(
         `"Add another bank account."`
@@ -205,7 +205,7 @@ describe("BankAccountFragmentContainer", () => {
         }),
       })
       const page = new BankAccountPickerTestPage(wrapper)
-      page.clickRadio(3)
+      page.clickRadio(2)
       expect(page.find(Collapse).at(0).props().open).toBeTruthy()
     })
 

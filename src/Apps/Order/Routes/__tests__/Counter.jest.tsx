@@ -10,12 +10,12 @@ import {
   insufficientInventoryResponse,
   submitPendingOfferFailed,
   submitPendingOfferSuccess,
-} from "../__fixtures__/MutationResults/submitPendingOffer"
-import { CounterFragmentContainer } from "../Counter"
+} from "Apps/Order/Routes/__fixtures__/MutationResults/submitPendingOffer"
+import { CounterFragmentContainer } from "Apps/Order/Routes/Counter"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { useTracking } from "react-tracking"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.mock("Utils/getCurrentTimeAsIsoString")
 const NOW = "2018-12-05T13:47:16.446Z"
@@ -71,15 +71,20 @@ describe("Submit Pending Counter Offer", () => {
       .toString(),
   }
 
-  beforeAll(() => {
+  beforeEach(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent: jest.fn(),
     }))
-    jest.restoreAllMocks()
   })
 
   beforeEach(() => {
     isCommittingMutation = false
+  })
+
+  afterEach(() => {
+    mockCommitMutation.mockReset()
+    mockShowErrorDialog.mockReset()
+    pushMock.mockReset()
   })
 
   const { getWrapper } = setupTestWrapper({
@@ -118,9 +123,7 @@ describe("Submit Pending Counter Offer", () => {
       let page = new OrderAppTestPage(wrapper)
 
       expect(page.countdownTimer.text()).toContain("01d 04h 22m 59s left")
-      expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"RespondCheckNavigate rightReviewNavigate right"`
-      )
+      expect(page.orderStepper.text()).toMatchInlineSnapshot(`"RespondReview"`)
       expect(page.orderStepperCurrentStep).toBe("Review")
       expect(
         page.transactionSummary.find("Entry").find("[data-test='offer']").text()
@@ -135,10 +138,10 @@ describe("Submit Pending Counter Offer", () => {
         "Lisa BreslowGramercy Park South"
       )
       expect(page.shippingSummary.text()).toMatch(
-        "Ship toLockedJoelle Van Dyne401 Broadway"
+        "Ship toJoelle Van Dyne401 Broadway"
       )
       expect(page.paymentSummary.text()).toMatchInlineSnapshot(
-        `"Lockedvisa•••• 4444   Exp 03/21"`
+        `"•••• 4444   Exp 03/21"`
       )
       expect(page.buyerGuarantee.length).toBe(1)
       expect(page.submitButton.text()).toBe("Submit")

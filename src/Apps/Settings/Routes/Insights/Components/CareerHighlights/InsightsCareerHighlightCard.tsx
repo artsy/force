@@ -1,17 +1,10 @@
-import {
-  Clickable,
-  ClickableProps,
-  Flex,
-  splitBoxProps,
-  Text,
-} from "@artsy/palette"
+import { Clickable, ClickableProps, Flex, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import {
   CareerHighlightKind,
   getCareerHighlight,
 } from "Apps/Settings/Routes/Insights/Utils/getCareerHighlight"
 import styled from "styled-components"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface InsightsCareerHighlightCardProps {
   kind: CareerHighlightKind
@@ -67,27 +60,12 @@ const CardWrapper: React.FC<CardWrapperProps> = ({
   children,
   ...rest
 }) => {
-  const [boxProps] = splitBoxProps(rest)
-  const isCareerHighlightModalEnabled = useFeatureFlag(
-    "my-collection-web-phase-7-career-highlights-modal"
+  return (
+    <ClickableCard onClick={onClick} {...rest}>
+      {children}
+    </ClickableCard>
   )
-
-  if (isCareerHighlightModalEnabled) {
-    return (
-      <ClickableCard onClick={onClick} {...rest}>
-        {children}
-      </ClickableCard>
-    )
-  }
-
-  return <Card {...boxProps}>{children}</Card>
 }
-
-const Card = styled(Flex)`
-  background: white;
-  flex-direction: column;
-  border: 1px solid ${themeGet("colors.black10")};
-`
 
 const ClickableCard = styled(Clickable)`
   background: white;

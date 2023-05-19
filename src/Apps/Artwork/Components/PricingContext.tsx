@@ -22,7 +22,7 @@ import { createCollectUrl } from "./../Utils/createCollectUrl"
 import { PricingContextModal } from "./PricingContextModal"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { PricingContextQuery } from "__generated__/PricingContextQuery.graphql"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import track from "react-tracking"
 
 interface PricingContextProps {

@@ -22,6 +22,7 @@ const { renderWithRelay } = setupTestWrapperTL<FollowArtistButton_Test_Query>({
   Component: props => {
     return (
       <FollowArtistButtonFragmentContainer
+        me={props.me!}
         artist={props.artist!}
         onFollow={onFollow}
       />
@@ -29,6 +30,9 @@ const { renderWithRelay } = setupTestWrapperTL<FollowArtistButton_Test_Query>({
   },
   query: graphql`
     query FollowArtistButton_Test_Query @relay_test_operation {
+      me {
+        ...FollowArtistButton_me
+      }
       artist(id: "example") {
         ...FollowArtistButton_artist
       }
@@ -83,29 +87,15 @@ describe("FollowArtistButton", () => {
       fireEvent.click(button)
 
       expect(showAuthDialog).toBeCalledWith({
-        current: {
-          analytics: { contextModule: "artistHeader", intent: "followArtist" },
-          mode: "SignUp",
-          options: {
-            afterAuthAction: {
-              action: "follow",
-              kind: "artist",
-              objectId: "example",
-            },
-            title: expect.any(Function),
-          },
-        },
-        legacy: {
-          afterSignUpAction: {
+        analytics: { contextModule: "artistHeader", intent: "followArtist" },
+        mode: "SignUp",
+        options: {
+          afterAuthAction: {
             action: "follow",
             kind: "artist",
             objectId: "example",
           },
-          contextModule: "artistHeader",
-          copy: "Sign up to follow Example",
-          intent: "followArtist",
-          mode: "signup",
-          redirectTo: "http://localhost/",
+          title: expect.any(Function),
         },
       })
     })

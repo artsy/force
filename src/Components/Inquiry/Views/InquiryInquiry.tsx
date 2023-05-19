@@ -13,7 +13,7 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -28,6 +28,7 @@ import {
 } from "Components/Inquiry/Hooks/useInquiryContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { logger } from "Components/Inquiry/util"
+import { RouterLink } from "System/Router/RouterLink"
 
 type Mode = "Pending" | "Confirm" | "Sending" | "Error" | "Success"
 
@@ -180,9 +181,9 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
 
           <Text variant="xs">
             By clicking send, you accept our{" "}
-            <a href="/privacy" target="_blank">
+            <RouterLink inline to="/privacy" target="_blank">
               Privacy Policy.
-            </a>
+            </RouterLink>
           </Text>
         </>
       )}

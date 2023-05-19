@@ -4,7 +4,7 @@ import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 
 interface Props {
   context?: Record<string, any>
@@ -66,28 +66,6 @@ describe("ArtistArtworkFilter", () => {
 
   it("renders component", () => {
     const { renderWithRelay } = getWrapper()
-
-    renderWithRelay()
-    const option = screen.getByRole("option", { name: "Recommended" })
-
-    expect(option).toBeInTheDocument()
-    expect(option).toHaveValue("-decayed_merch")
-  })
-
-  it("should display trending sort for experiment variant", () => {
-    const { renderWithRelay } = getWrapper({
-      context: {
-        featureFlags: {
-          "trending-sort-for-artist-artwork-grids": {
-            flagEnabled: true,
-            variant: {
-              enabled: true,
-              name: "experiment",
-            },
-          },
-        },
-      },
-    })
 
     renderWithRelay()
     const option = screen.getByRole("option", { name: "Recommended" })

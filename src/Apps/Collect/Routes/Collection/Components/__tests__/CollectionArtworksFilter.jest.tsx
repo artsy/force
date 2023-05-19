@@ -1,4 +1,4 @@
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { CollectionArtworksFilterRefetchContainer as CollectionArtworksFilter } from "Apps/Collect/Routes/Collection/Components/CollectionArtworksFilter"
 import { graphql } from "react-relay"
 import { CollectionArtworksFilter_Query } from "__generated__/CollectionArtworksFilter_Query.graphql"

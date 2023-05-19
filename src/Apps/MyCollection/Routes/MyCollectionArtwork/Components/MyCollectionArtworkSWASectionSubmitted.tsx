@@ -1,16 +1,8 @@
-import {
-  Button,
-  Clickable,
-  Flex,
-  ModalDialog,
-  Text,
-  WinningBidIcon,
-} from "@artsy/palette"
+import { Button, Clickable, Flex, ModalDialog, Text } from "@artsy/palette"
 import { toTitleCase } from "@artsy/to-title-case"
 
 import { useState } from "react"
 import { RouterLink } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { Media } from "Utils/Responsive"
 
 // TODO:- We are using displayText for Statuses for now. Consider changing the logic when proper statuses are made available on Metaphysics.
@@ -45,16 +37,12 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
     setIsSubmissionStatusModalOpen,
   ] = useState(false)
 
-  const isMyCollectionPhase8Enabled = useFeatureFlag(
-    "my-collection-web-phase-8-submission-status"
-  )
-
   if (!Boolean(displayText)) {
     return null
   }
 
   const article =
-    "https://support.artsy.net/hc/en-us/sections/360008311913-Sell-with-Artsy"
+    "https://support.artsy.net/s/topic/0TO3b000000UevOGAS/sell-with-artsy"
 
   const approvedDisplayText = STATUSES[displayText!.toLowerCase()]?.text
   const statusDescription =
@@ -64,88 +52,65 @@ export const MyCollectionArtworkSWASectionSubmitted: React.FC<Props> = ({
     return null
   }
 
-  if (isMyCollectionPhase8Enabled) {
-    return (
-      <>
-        <SubmissionStatusModal
-          show={isSubmissionStatusModalOpen}
-          onClose={() => setIsSubmissionStatusModalOpen(false)}
-        />
-
-        <Flex
-          flexDirection={["column", "row"]}
-          alignItems={["normal", "stretch"]}
-          my={2}
-        >
-          <Flex alignItems={["center", "flex-start"]} flex={[1, 0]}>
-            <Text
-              variant={["xs", "sm"]}
-              minWidth={[100, 100, 190]}
-              mr={2}
-              flex={1}
-            >
-              Submission Status
-            </Text>
-            <Media lessThan="sm">
-              <Clickable
-                onClick={() => setIsSubmissionStatusModalOpen(true)}
-                data-test-id="open-rarity-modal"
-              >
-                <Text variant="xs" color="black60">
-                  <u>What is this?</u>
-                </Text>
-              </Clickable>
-            </Media>
-          </Flex>
-
-          <Flex flex={1} flexDirection="column">
-            <Text
-              variant="sm"
-              color={STATUSES[displayText!.toLowerCase()]?.color ?? "black100"}
-            >
-              {toTitleCase(approvedDisplayText)}
-            </Text>
-          </Flex>
-        </Flex>
-
-        <Media greaterThanOrEqual="sm">
-          <Text mb={2} color="black60" variant="xs">
-            {statusDescription}
-          </Text>
-
-          <Text mb={2} color="black60" variant="xs">
-            Have a question? Visit our{" "}
-            <RouterLink to={article} target="_blank" color="black100">
-              help center
-            </RouterLink>{" "}
-            or get in touch with one of our specialists at{" "}
-            <RouterLink to={"mailto:sell@artsy.net"} color="black100">
-              sell@artsy.net
-            </RouterLink>
-          </Text>
-        </Media>
-      </>
-    )
-  }
   return (
     <>
-      <Flex alignItems="center" flexDirection="row" mb={1} mt={2}>
-        <WinningBidIcon />
-        <Text variant="sm" ml={0.5}>
-          Artwork has been submitted for sale
-        </Text>
+      <SubmissionStatusModal
+        show={isSubmissionStatusModalOpen}
+        onClose={() => setIsSubmissionStatusModalOpen(false)}
+      />
+
+      <Flex
+        flexDirection={["column", "row"]}
+        alignItems={["normal", "stretch"]}
+        my={2}
+      >
+        <Flex alignItems={["center", "flex-start"]} flex={[1, 0]}>
+          <Text
+            variant={["xs", "sm"]}
+            minWidth={[100, 100, 190]}
+            mr={2}
+            flex={1}
+          >
+            Submission Status
+          </Text>
+          <Media lessThan="sm">
+            <Clickable
+              onClick={() => setIsSubmissionStatusModalOpen(true)}
+              data-test-id="open-rarity-modal"
+            >
+              <Text variant="xs" color="black60">
+                <u>What is this?</u>
+              </Text>
+            </Clickable>
+          </Media>
+        </Flex>
+
+        <Flex flex={1} flexDirection="column">
+          <Text
+            variant="sm"
+            color={STATUSES[displayText!.toLowerCase()]?.color ?? "black100"}
+          >
+            {toTitleCase(approvedDisplayText)}
+          </Text>
+        </Flex>
       </Flex>
 
-      <Text mb={2} color="black60" variant="xs">
-        Have a question? Visit our{" "}
-        <RouterLink to={article} target="_blank" color="black100">
-          help center
-        </RouterLink>{" "}
-        or get in touch with one of our specialists at{" "}
-        <RouterLink to={"mailto:sell@artsy.net"} color="black100">
-          sell@artsy.net
-        </RouterLink>
-      </Text>
+      <Media greaterThanOrEqual="sm">
+        <Text mb={2} color="black60" variant="xs">
+          {statusDescription}
+        </Text>
+
+        <Text mb={2} color="black60" variant="xs">
+          Have a question? Visit our{" "}
+          <RouterLink to={article} target="_blank" color="black100">
+            help center
+          </RouterLink>{" "}
+          or get in touch with one of our specialists at{" "}
+          <RouterLink to={"mailto:sell@artsy.net"} color="black100">
+            sell@artsy.net
+          </RouterLink>
+        </Text>
+      </Media>
     </>
   )
 }
@@ -160,8 +125,7 @@ const SubmissionStatusModal: React.FC<SubmissionStatusModalProps> = ({
   onClose,
 }) => {
   if (!show) return null
-  const article =
-    "https://support.artsy.net/hc/en-us/articles/360046646494-What-items-do-you-accept-"
+  const article = "https://support.artsy.net/s/article/What-items-do-you-accept"
 
   return (
     <ModalDialog
@@ -194,11 +158,16 @@ const SubmissionStatusModal: React.FC<SubmissionStatusModalProps> = ({
       </Text>
       <Text variant="sm-display" mb={2}>
         For more information, see our Collector Help Center article{" "}
-        <RouterLink to={article}>What items do you accept?</RouterLink>
+        <RouterLink inline to={article}>
+          What items do you accept?
+        </RouterLink>
       </Text>
       <Text variant="sm-display">
         Or get in touch with one of our specialists at{" "}
-        <RouterLink to={"mailto:sell@artsy.net"}>sell@artsy.net</RouterLink>.
+        <RouterLink inline to={"mailto:sell@artsy.net"}>
+          sell@artsy.net
+        </RouterLink>
+        .
       </Text>
     </ModalDialog>
   )

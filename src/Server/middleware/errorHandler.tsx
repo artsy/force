@@ -27,16 +27,11 @@ import { IpDeniedError } from "express-ipfilter"
 import { NODE_ENV, VERBOSE_LOGGING } from "Server/config"
 import { renderServerApp } from "System/Router/renderServerApp"
 import { ErrorPage } from "Components/ErrorPage"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { renderToString } from "react-dom/server"
 import { ServerStyleSheet } from "styled-components"
-import {
-  ArtsyLogoBlackIcon,
-  injectGlobalStyles,
-  ThemeProviderV3,
-} from "@artsy/palette"
+import { injectGlobalStyles, Theme } from "@artsy/palette"
 import createLogger from "Utils/logger"
+import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 
 const { GlobalStyles } = injectGlobalStyles()
 const logger = createLogger("Server/middleware/errorHandlerMiddleware")
@@ -65,7 +60,10 @@ export const errorHandlerMiddleware = async (
     }
   })()
 
-  const message = err.message || err.text || "Internal Server Error"
+  const message = `${err.message || err.text || "Internal Server Error"}
+Current URL: ${`${req.protocol}://${req.get("host")}${req.originalUrl}`}
+Time: ${new Date().toUTCString()}`
+
   const detail = err.stack
 
   if (enableLogging && err.status !== 404) {
@@ -80,24 +78,17 @@ export const errorHandlerMiddleware = async (
 
     const bodyHTML = renderToString(
       sheet.collectStyles(
-        <ThemeProviderV3>
+        <Theme>
           <GlobalStyles />
 
-          <AppContainer my={4}>
-            <HorizontalPadding>
-              <a href="/" style={{ display: "block" }}>
-                <ArtsyLogoBlackIcon />
-              </a>
-
-              <ErrorPage
-                mt={4}
-                code={code}
-                message={displayStackTrace ? message : undefined}
-                detail={displayStackTrace ? detail : undefined}
-              />
-            </HorizontalPadding>
-          </AppContainer>
-        </ThemeProviderV3>
+          <LayoutLogoOnly>
+            <ErrorPage
+              code={code}
+              message={message}
+              detail={displayStackTrace ? detail : undefined}
+            />
+          </LayoutLogoOnly>
+        </Theme>
       )
     )
 

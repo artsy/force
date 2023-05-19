@@ -12,15 +12,11 @@ import {
 } from "@artsy/palette"
 import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCollectionTracking"
 import { useAuthDialog } from "Components/AuthDialog"
-import { ModalType } from "Components/Authentication/Types"
 import { RouterLink } from "System/Router/RouterLink"
 import { useSystemContext } from "System/SystemContext"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { resized } from "Utils/resized"
 
 export const MyCollectionEmptyState: React.FC = () => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
-
   const { isLoggedIn } = useSystemContext()
 
   const {
@@ -37,15 +33,12 @@ export const MyCollectionEmptyState: React.FC = () => {
   return (
     <GridColumns gridRowGap={4} alignItems="center">
       <Column span={6} order={[1, 0]} py={[0, 2]}>
-        <Text variant={["xl", "xl", "xxl"]}>
-          Manage Your Art Collection Online
-        </Text>
+        <Text variant={["xl", "xl", "xxl"]}>Know Your Collection Better</Text>
 
         <Spacer y={[0, 2]} />
 
         <Text variant="sm">
-          Access price and market insights and build an online record of your
-          collection.
+          Manage your collection online and get free market insights.
         </Text>
 
         <Spacer y={[2, 4, 6]} />
@@ -57,34 +50,22 @@ export const MyCollectionEmptyState: React.FC = () => {
               // @ts-ignore
               as={RouterLink}
               variant="primaryBlack"
-              to={
-                isCollectorProfileEnabled
-                  ? "/collector-profile/my-collection/artworks/new"
-                  : "/my-collection/artworks/new"
-              }
+              to={"/collector-profile/my-collection/artworks/new"}
               onClick={event => {
                 if (!isLoggedIn) {
                   event.preventDefault()
 
                   showAuthDialog({
-                    current: {
-                      mode: "Login",
-                      options: {
-                        title: mode => {
-                          const action = mode === "Login" ? "Log in" : "Sign up"
-                          return `${action} to upload works to My Collection`
-                        },
-                      },
-                      analytics: {
-                        contextModule: ContextModule.myCollectionHome,
-                        intent: Intent.login,
+                    mode: "Login",
+                    options: {
+                      title: mode => {
+                        const action = mode === "Login" ? "Log in" : "Sign up"
+                        return `${action} to upload works to My Collection`
                       },
                     },
-                    legacy: {
-                      mode: ModalType.login,
-                      intent: Intent.login,
+                    analytics: {
                       contextModule: ContextModule.myCollectionHome,
-                      copy: "Log in to upload works to My Collection",
+                      intent: Intent.login,
                     },
                   })
 
@@ -109,24 +90,16 @@ export const MyCollectionEmptyState: React.FC = () => {
                 textDecoration="underline"
                 onClick={() => {
                   showAuthDialog({
-                    current: {
-                      mode: "Login",
-                      options: {
-                        title: mode => {
-                          const action = mode === "Login" ? "Log in" : "Sign up"
-                          return `${action} to view My Collection`
-                        },
-                      },
-                      analytics: {
-                        contextModule: ContextModule.myCollectionHome,
-                        intent: Intent.login,
+                    mode: "Login",
+                    options: {
+                      title: mode => {
+                        const action = mode === "Login" ? "Log in" : "Sign up"
+                        return `${action} to view My Collection`
                       },
                     },
-                    legacy: {
-                      mode: ModalType.login,
-                      intent: Intent.login,
+                    analytics: {
                       contextModule: ContextModule.myCollectionHome,
-                      copy: "Log in to view My Collection",
+                      intent: Intent.login,
                     },
                   })
                 }}

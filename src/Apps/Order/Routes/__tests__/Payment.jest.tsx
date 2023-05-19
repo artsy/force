@@ -8,18 +8,19 @@ import {
 } from "Apps/__tests__/Fixtures/Order"
 import { AddressForm } from "Components/AddressForm"
 import { graphql } from "react-relay"
-import { settingOrderPaymentFailed } from "Apps/Order/Routes/__fixtures__/MutationResults"
 import { PaymentFragmentContainer } from "Apps/Order/Routes/Payment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
 import { CreditCardPickerFragmentContainer } from "Apps/Order/Components/CreditCardPicker"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
-import { flushPromiseQueue, MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
+import { settingOrderPaymentFailed } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderPayment"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
@@ -159,14 +160,7 @@ describe("Payment", () => {
 
   beforeAll(() => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => {
-      return {
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-          ready: jest.fn(),
-          trigger: jest.fn(),
-        },
-      }
+      return {}
     })
   })
 
@@ -302,13 +296,13 @@ describe("Payment", () => {
 
     it("shows an active offer stepper if the order is an Offer Order", () => {
       expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"OfferCheckNavigate rightShippingCheckNavigate rightPaymentNavigate rightReviewNavigate right"`
+        `"OfferShippingPaymentReview"`
       )
       expect(page.orderStepperCurrentStep).toBe("Payment")
     })
   })
 
-  describe("stripe ACH enabled", () => {
+  describe("bank transfer enabled", () => {
     let page: PaymentTestPage
 
     const achOrder = {
@@ -403,7 +397,29 @@ describe("Payment", () => {
     })
   })
 
-  describe("stripe SEPA enabled", () => {
+  describe("only bank transfer enabled", () => {
+    let page: PaymentTestPage
+
+    const bankOrder = {
+      ...testOrder,
+      availablePaymentMethods: [
+        "US_BANK_ACCOUNT",
+      ] as CommercePaymentMethodEnum[],
+    }
+
+    beforeEach(() => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => bankOrder,
+      })
+      page = new PaymentTestPage(wrapper)
+    })
+
+    it("renders bank transfer title", () => {
+      expect(page.text()).toContain("Bank transfer payment details")
+    })
+  })
+
+  describe("SEPA bank transfer enabled", () => {
     let page: PaymentTestPage
 
     const sepaOrder = {
@@ -476,6 +492,26 @@ describe("Payment", () => {
         payment_method: "SEPA_DEBIT",
         subject: "click_payment_method",
       })
+    })
+  })
+
+  describe("only SEPA bank transfer enabled", () => {
+    let page: PaymentTestPage
+
+    const sepaOrder = {
+      ...testOrder,
+      availablePaymentMethods: ["SEPA_DEBIT"] as CommercePaymentMethodEnum[],
+    }
+
+    beforeEach(() => {
+      const wrapper = getWrapper({
+        CommerceOrder: () => sepaOrder,
+      })
+      page = new PaymentTestPage(wrapper)
+    })
+
+    it("renders sepa transfer title", () => {
+      expect(page.text()).toContain("SEPA bank transfer payment details")
     })
   })
 
@@ -579,8 +615,6 @@ describe("Payment", () => {
     }
 
     beforeEach(() => {
-      jest.clearAllMocks()
-
       const wrapper = getWrapper({
         CommerceOrder: () => wireOrder,
       })
@@ -659,9 +693,7 @@ describe("Payment", () => {
     })
 
     it("shows private sale stepper if the order source is private sale", () => {
-      expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"PaymentNavigate rightReviewNavigate right"`
-      )
+      expect(page.orderStepper.text()).toMatchInlineSnapshot(`"PaymentReview"`)
       expect(page.orderStepperCurrentStep).toBe("Payment")
     })
 
@@ -669,6 +701,20 @@ describe("Payment", () => {
       expect(page.text()).toContain("Artwork Description")
       expect(page.text()).toContain(
         "additional artwork details provided by admin"
+      )
+    })
+
+    it("displays artwork provenance", () => {
+      expect(page.text()).toContain("Artwork Description")
+      expect(page.text()).toContain(
+        "Provenance: Artwork acquired via an auction in 2000"
+      )
+    })
+
+    it("displays artwork condition description", () => {
+      expect(page.text()).toContain("Artwork Description")
+      expect(page.text()).toContain(
+        "Condition: Artwork is in perfect condition"
       )
     })
 

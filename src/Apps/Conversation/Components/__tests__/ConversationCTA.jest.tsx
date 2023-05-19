@@ -41,12 +41,7 @@ describe("ConversationCTA", () => {
     }))
 
     useSystemContext.mockImplementation(() => {
-      return {
-        mediator: {
-          on: jest.fn(),
-          off: jest.fn(),
-        },
-      }
+      return {}
     })
   })
 

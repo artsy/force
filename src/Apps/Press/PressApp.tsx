@@ -4,7 +4,8 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { PressApp_page$data } from "__generated__/PressApp_page.graphql"
-import { PageHTML } from "../Page/Components/PageHTML"
+import { PageHTML } from "Apps/Page/Components/PageHTML"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface PressAppProps {
   page: PressApp_page$data
@@ -23,9 +24,9 @@ const PressApp: FC<PressAppProps> = ({ page }) => {
 
       <Text variant="xl" color="black60">
         Contact{" "}
-        <a href="mailto:press@artsy.net" style={{ textDecoration: "none" }}>
+        <RouterLink inline to="mailto:press@artsy.net" textDecoration={"none"}>
           press@artsy.net
-        </a>
+        </RouterLink>
       </Text>
 
       <Spacer y={4} />

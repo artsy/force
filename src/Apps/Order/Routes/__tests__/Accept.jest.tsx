@@ -6,23 +6,23 @@ import {
 } from "Apps/__tests__/Fixtures/Order"
 import { DateTime } from "luxon"
 import { graphql, commitMutation as _commitMutation } from "react-relay"
-import {
-  acceptOfferFailed,
-  acceptOfferInsufficientInventoryFailure,
-  acceptOfferPaymentFailed,
-  acceptOfferPaymentFailedInsufficientFunds,
-  acceptOfferPaymentRequiresAction,
-  acceptOfferSuccess,
-} from "../__fixtures__/MutationResults"
-import { AcceptFragmentContainer } from "../Accept"
+import { AcceptFragmentContainer } from "Apps/Order/Routes/Accept"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { mockLocation } from "DevTools/mockLocation"
 import { useTracking } from "react-tracking"
 import { mockStripe } from "DevTools/mockStripe"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { Router } from "found"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { ConnectedModalDialog } from "Apps/Order/Dialogs"
+import {
+  acceptOfferSuccess,
+  acceptOfferFailed,
+  acceptOfferPaymentRequiresAction,
+  acceptOfferPaymentFailed,
+  acceptOfferPaymentFailedInsufficientFunds,
+  acceptOfferInsufficientInventoryFailure,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/acceptOffer"
 
 jest.unmock("react-relay")
 
@@ -142,9 +142,7 @@ describe("Accept seller offer", () => {
       let page = new OrderAppTestPage(wrapper)
 
       expect(page.countdownTimer.text()).toContain("01d 04h 22m 59s left")
-      expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"RespondCheckNavigate rightReviewNavigate right"`
-      )
+      expect(page.orderStepper.text()).toMatchInlineSnapshot(`"RespondReview"`)
       expect(page.orderStepperCurrentStep).toBe(`Review`)
       expect(page.transactionSummary.text()).toMatch(
         "Accept seller's offerChange"
@@ -156,10 +154,10 @@ describe("Accept seller offer", () => {
         "Lisa BreslowGramercy Park South"
       )
       expect(page.shippingSummary.text()).toMatch(
-        "Ship toLockedJoelle Van Dyne401 Broadway"
+        "Ship toJoelle Van Dyne401 Broadway"
       )
       expect(page.paymentSummary.text()).toMatchInlineSnapshot(
-        `"Lockedvisa•••• 4444   Exp 03/21"`
+        `"•••• 4444   Exp 03/21"`
       )
       expect(page.buyerGuarantee.length).toBe(1)
       expect(page.submitButton.text()).toBe("Submit")

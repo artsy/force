@@ -8,15 +8,15 @@ import {
 } from "Apps/__tests__/Fixtures/Order"
 import { OfferHistoryItemFragmentContainer } from "Apps/Order/Components/OfferHistoryItem"
 import { DateTime } from "luxon"
-import { RespondFragmentContainer } from "../Respond"
+import { RespondFragmentContainer } from "Apps/Order/Routes/Respond"
 import { expectOne } from "DevTools/RootTestPage"
 import { graphql } from "react-relay"
 import {
   buyerCounterOfferFailed,
   buyerCounterOfferSuccess,
-} from "../__fixtures__/MutationResults/buyerCounterOffer"
+} from "Apps/Order/Routes/__fixtures__/MutationResults/buyerCounterOffer"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
 // Need to mock Utils/Events instead of using mockTracking because
@@ -146,9 +146,7 @@ describe("The respond page", () => {
 
       expect(page.countdownTimer.text()).toContain("01d 04h 22m 59s left")
       expect(page.offerInput.text()).toContain("Your offer")
-      expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"RespondNavigate rightReviewNavigate right"`
-      )
+      expect(page.orderStepper.text()).toMatchInlineSnapshot(`"RespondReview"`)
       expect(page.orderStepperCurrentStep).toBe("Respond")
       expect(page.text()).not.toContain("Your note")
       expect(page.transactionSummary.text()).toMatch("Seller's offerUS$14,000")
@@ -156,10 +154,10 @@ describe("The respond page", () => {
         "Lisa BreslowGramercy Park South"
       )
       expect(page.shippingSummary.text()).toMatch(
-        "Ship toLockedJoelle Van Dyne401 Broadway"
+        "Ship toJoelle Van Dyne401 Broadway"
       )
       expect(page.paymentSummary.text()).toMatchInlineSnapshot(
-        `"Lockedvisa•••• 4444   Exp 03/21"`
+        `"•••• 4444   Exp 03/21"`
       )
       expect(page.buyerGuarantee.length).toBe(1)
       expect(page.submitButton.text()).toBe("Continue")

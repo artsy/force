@@ -1,15 +1,18 @@
 import { commitMutationTest1Mutation } from "__generated__/commitMutationTest1Mutation.graphql"
-import { settingOrderPaymentFailed } from "Apps/Order/Routes/__fixtures__/MutationResults"
-import { SystemContextProvider } from "System"
-import { createMockNetworkLayer2 } from "DevTools"
+import { SystemContextProvider } from "System/SystemContext"
+import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
 import { mount } from "enzyme"
 import { graphql } from "react-relay"
 import { Environment, RecordSource, Store } from "relay-runtime"
-import { flushPromiseQueue } from "DevTools"
-import { CommitMutation, injectCommitMutation } from "../commitMutation"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import {
+  CommitMutation,
+  injectCommitMutation,
+} from "Apps/Order/Utils/commitMutation"
+import { settingOrderPaymentFailed } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderPayment"
 jest.unmock("react-relay")
 
-describe(injectCommitMutation, () => {
+describe("injectCommitMutation", () => {
   const network = createMockNetworkLayer2({
     mockMutationResults: {
       ...settingOrderPaymentFailed,

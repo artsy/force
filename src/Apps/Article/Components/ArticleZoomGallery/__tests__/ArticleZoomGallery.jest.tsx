@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { ArticleZoomGalleryFragmentContainer } from "../ArticleZoomGallery"
+import { ArticleZoomGalleryFragmentContainer } from "Apps/Article/Components/ArticleZoomGallery/ArticleZoomGallery"
 
 jest.unmock("react-relay")
 

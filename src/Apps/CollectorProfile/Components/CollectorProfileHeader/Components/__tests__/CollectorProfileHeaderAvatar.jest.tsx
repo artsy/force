@@ -1,6 +1,6 @@
 import { screen } from "@testing-library/react"
 import { CollectorProfileHeaderAvatarFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/Components/CollectorProfileHeaderAvatar"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 
@@ -28,11 +28,10 @@ describe("CollectorProfileHeaderAvatar", () => {
     expect(screen.getByRole("img")).toBeInTheDocument()
   })
 
-  it("renders the icon when there is no picture", () => {
+  it("does not render the image when there is no picture", () => {
     renderWithRelay({ Me: () => ({ icon: null }) }, false)
 
     expect(screen.queryByRole("img")).not.toBeInTheDocument()
-    expect(screen.getByTitle("User")).toBeInTheDocument()
   })
 })
 

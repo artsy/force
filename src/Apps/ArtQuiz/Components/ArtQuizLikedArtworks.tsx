@@ -6,7 +6,7 @@ import { ArtQuizLikedArtworksQuery } from "__generated__/ArtQuizLikedArtworksQue
 import { Masonry } from "Components/Masonry"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { Spacer } from "@artsy/palette"
-import { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
+import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
 
 interface ArtQuizLikedArtworksProps {
   me: ArtQuizLikedArtworks_me$data

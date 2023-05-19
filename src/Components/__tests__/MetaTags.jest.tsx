@@ -1,6 +1,6 @@
 import { mount } from "enzyme"
 import { MetaTags } from "Components/MetaTags"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.mock("Utils/getENV", () => ({
   getENV: (name: string) => {

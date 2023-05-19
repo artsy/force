@@ -1,9 +1,11 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { AuctionAppFragmentContainer } from "../AuctionApp"
+import { AuctionAppFragmentContainer } from "Apps/Auction/AuctionApp"
 import { AuctionAppTestQuery } from "__generated__/AuctionAppTestQuery.graphql"
-import { useAuctionTracking } from "../Hooks/useAuctionTracking"
-import { flushPromiseQueue } from "DevTools"
+import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { getENV } from "Utils/getENV"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.unmock("react-relay")
 jest.mock("Apps/Auction/Hooks/useAuctionTracking")
@@ -16,7 +18,11 @@ jest.mock("Components/ZendeskWrapper", () => ({
   ZendeskWrapper: () => null,
 }))
 
-jest.mock("Components/FullBleedHeader", () => ({
+jest.mock("Components/SalesforceWrapper", () => ({
+  SalesforceWrapper: () => null,
+}))
+
+jest.mock("Components/FullBleedHeader/FullBleedHeader", () => ({
   FullBleedHeader: () => null,
 }))
 
@@ -44,18 +50,20 @@ jest.mock("Apps/Auction/Components/AuctionArtworkFilter", () => ({
   AuctionArtworkFilterRefetchContainer: () => null,
 }))
 
-jest.mock("Utils/getENV", () => ({
-  getENV: () => ({
-    AUCTION_ZENDESK_KEY: "foo",
-  }),
-}))
+jest.mock("Utils/getENV")
 
 describe("AuctionApp", () => {
   const mockUseAuctionTracking = useAuctionTracking as jest.Mock
+  const mockGetENV = getENV as jest.Mock
+  let breakpoint
 
   const { getWrapper } = setupTestWrapper<AuctionAppTestQuery>({
     Component: (props: any) => {
-      return <AuctionAppFragmentContainer {...props} />
+      return (
+        <MockBoot breakpoint={breakpoint}>
+          <AuctionAppFragmentContainer {...props} />
+        </MockBoot>
+      )
     },
     query: graphql`
       query AuctionAppTestQuery($input: FilterArtworksInput, $slug: String!) {
@@ -77,6 +85,7 @@ describe("AuctionApp", () => {
   })
 
   beforeAll(() => {
+    breakpoint = "lg"
     mockUseAuctionTracking.mockImplementation(() => ({
       tracking: {
         auctionPageView: jest.fn(),
@@ -102,6 +111,22 @@ describe("AuctionApp", () => {
   it("embeds ZenDesk widget", () => {
     const wrapper = getWrapper()
     expect(wrapper.find("ZendeskWrapper").exists()).toBeTruthy()
+    expect(wrapper.find("SalesforceWrapper").exists()).toBeFalsy()
+  })
+
+  it("embeds Salesforce widget", () => {
+    mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+    const wrapper = getWrapper()
+    expect(wrapper.find("SalesforceWrapper").exists()).toBeTruthy()
+    expect(wrapper.find("ZendeskWrapper").exists()).toBeFalsy()
+  })
+
+  it("does not embed Salesforce widget on mobile", () => {
+    breakpoint = "xs"
+    mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
+    const wrapper = getWrapper()
+    expect(wrapper.find("SalesforceWrapper").exists()).toBeFalsy()
+    expect(wrapper.find("ZendeskWrapper").exists()).toBeFalsy()
   })
 
   it("shows header if coverImage", () => {

@@ -1,5 +1,4 @@
 import {
-  CertificateIcon,
   Flex,
   Text,
   Spacer,
@@ -11,6 +10,8 @@ import { ArtworkSidebarAuthenticityCertificate_artwork$data } from "__generated_
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTranslation } from "react-i18next"
+import { RouterLink } from "System/Router/RouterLink"
+import CertificateIcon from "@artsy/icons/CertificateIcon"
 
 interface ArtworkSidebarAuthenticityCertificateProps {
   artwork: ArtworkSidebarAuthenticityCertificate_artwork$data
@@ -86,15 +87,16 @@ export const ArtworkSidebarAuthenticityCertificate: React.FC<ArtworkSidebarAuthe
               {t(
                 "artworkPage.sidebar.details.AuthenticityCertificateModal.readMore"
               )}
-              <a
-                href="https://support.artsy.net/hc/en-us/articles/360058123933-What-Counts-as-an-Artwork-s-Proof-of-Authenticity-"
+              <RouterLink
+                inline
+                to="https://support.artsy.net/s/article/What-Counts-as-an-Artworks-Proof-of-Authenticity"
                 target="_blank"
                 rel="noopener noreferrer"
               >
                 {t(
                   "artworkPage.sidebar.details.AuthenticityCertificateModal.helpCenterLink"
                 )}
-              </a>
+              </RouterLink>
             </Text>
           </Flex>
         </ModalDialog>

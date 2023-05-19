@@ -1,7 +1,7 @@
 import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import { Collections_marketingCategories$data } from "__generated__/Collections_marketingCategories.graphql"
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
-import { BreadCrumbList } from "Components/Seo"
+import { BreadCrumbList } from "Components/Seo/BreadCrumbList"
 import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CollectionsCategoryFragmentContainer } from "./Components/CollectionsCategory"

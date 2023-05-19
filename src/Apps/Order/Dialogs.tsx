@@ -1,6 +1,7 @@
 import { Button, Text } from "@artsy/palette"
 import { ModalDialog } from "@artsy/palette"
 import * as React from "react"
+import { RouterLink } from "System/Router/RouterLink"
 // TODO: Replace with normal React state
 // eslint-disable-next-line no-restricted-imports
 import { Container, Subscribe } from "unstated"
@@ -124,7 +125,10 @@ export class DialogContainer extends Container<DialogState> {
     message = (
       <>
         Something went wrong. Please try again or contact{" "}
-        <a href={`mailto:${supportEmail}}`}>{supportEmail}</a>.
+        <RouterLink inline to={`mailto:${supportEmail}}`}>
+          {supportEmail}
+        </RouterLink>
+        .
       </>
     ),
     continueButtonText = "Continue",

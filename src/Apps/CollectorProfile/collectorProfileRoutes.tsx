@@ -46,17 +46,6 @@ const SavesAndFollowsRoute = loadable(
   }
 )
 
-const Saves2 = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "collectorProfileBundle" */ "./Routes/Saves2/CollectorProfileSaves2Route"
-    ),
-  {
-    resolveComponent: component =>
-      component.CollectorProfileSaves2RouteFragmentContainer,
-  }
-)
-
 const FollowsRoute = loadable(
   () =>
     import(
@@ -173,31 +162,31 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
         `,
       },
       {
-        path: "saves",
+        path: "saves/:id?",
+        ignoreScrollBehavior: true,
         getComponent: () => SavesAndFollowsRoute,
         onClientSideRender: () => {
           SavesAndFollowsRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
-        query: graphql`
-          query collectorProfileRoutes_SavesAndFollowsRouteQuery {
-            me {
-              ...CollectorProfileSavesAndFollowsRoute_me
-            }
+        prepareVariables: (_, { context }) => {
+          const featureFlags = context?.featureFlags ?? {}
+          const featureFlag = featureFlags["force-enable-artworks-list"]
+          const isArtworkListsFlagEnabled = featureFlag?.flagEnabled ?? false
+
+          return {
+            shouldFetchArtworkListsData: isArtworkListsFlagEnabled,
           }
-        `,
-      },
-      {
-        path: "saves2/:id?",
-        ignoreScrollBehavior: true,
-        getComponent: () => Saves2,
-        onClientSideRender: () => {
-          Saves2.preload()
         },
         query: graphql`
-          query collectorProfileRoutes_Saves2Query {
+          query collectorProfileRoutes_SavesAndFollowsRouteQuery(
+            $shouldFetchArtworkListsData: Boolean!
+          ) {
             me {
-              ...CollectorProfileSaves2Route_me
+              ...CollectorProfileSavesAndFollowsRoute_me
+                @arguments(
+                  shouldFetchArtworkListsData: $shouldFetchArtworkListsData
+                )
             }
           }
         `,

@@ -1,4 +1,4 @@
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { GeneArtworkFilterRefetchContainer } from "Apps/Gene/Components/GeneArtworkFilter"
 import { graphql } from "react-relay"
 import { GeneArtworkFilter_Query } from "__generated__/GeneArtworkFilter_Query.graphql"
@@ -77,6 +77,10 @@ describe("GeneArtworkFilter", () => {
     })
     const filterWrappers = wrapper.find("FilterExpandable")
     const filters = [
+      {
+        label: "Keyword Search",
+        expanded: true,
+      },
       {
         label: "Artists",
         expanded: true,

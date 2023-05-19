@@ -245,6 +245,7 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
 
   return (
     <OrderRouteContainer
+      order={order}
       currentStep="Payment"
       steps={["Payment"]}
       content={
@@ -337,6 +338,7 @@ export const NewPaymentFragmentContainer = createFragmentContainer(
         ...CreditCardPicker_order
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
+        ...OrderStepper_order
       }
     `,
   }

@@ -1,11 +1,11 @@
-import { Link, QuestionCircleIcon } from "@artsy/palette"
+import { Link } from "@artsy/palette"
 import { BarChart } from "@artsy/palette-charts"
 import {
   PricingContextTestQuery$rawResponse,
   PricingContextTestQuery$data,
 } from "__generated__/PricingContextTestQuery.graphql"
 import { mockTracking } from "DevTools/mockTracking"
-import { renderRelayTree } from "DevTools"
+import { renderRelayTree } from "DevTools/renderRelayTree"
 import { mount } from "enzyme"
 import { graphql } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
@@ -14,7 +14,8 @@ import {
   PricingContext,
   PricingContextFragmentContainer,
 } from "Apps/Artwork/Components/PricingContext"
-import { flushPromiseQueue } from "DevTools"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import HelpIcon from "@artsy/icons/HelpIcon"
 
 jest.unmock("react-tracking")
 jest.unmock("react-relay")
@@ -124,8 +125,8 @@ describe("PricingContext", () => {
 
   it("renders pricing context question mark icon and informational modal", async () => {
     const wrapper = await getWrapper()
-    expect(wrapper.find(QuestionCircleIcon).length).toEqual(1)
-    wrapper.find(QuestionCircleIcon).at(0).simulate("click")
+    expect(wrapper.find(HelpIcon).length).toEqual(1)
+    wrapper.find(HelpIcon).at(0).simulate("click")
 
     await flushPromiseQueue()
 
@@ -216,11 +217,11 @@ describe("PricingContext", () => {
     })
 
     expect(wrapper.find(BarChart).props().bars[0].label).toMatchInlineSnapshot(`
-Object {
-  "description": "1 work",
-  "title": "$0–$247",
-}
-`)
+      {
+        "description": "1 work",
+        "title": "$0–$247",
+      }
+    `)
   })
 
   it("Puts the artwork in the last bin when the price is larger than the last bin's max price", async () => {
@@ -260,11 +261,11 @@ Object {
     })
 
     expect(wrapper.find(BarChart).props().bars[1].label).toMatchInlineSnapshot(`
-Object {
-  "description": "1 work",
-  "title": "$247+",
-}
-`)
+      {
+        "description": "1 work",
+        "title": "$247+",
+      }
+    `)
   })
 
   describe("Analytics", () => {

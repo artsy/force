@@ -21,30 +21,31 @@
     },
     "loadingScreen": {
       "calculatingResults": "Calculating Results…",
-      "resultsComplete": "Results Complete"
+      "findingArt": "Finding art for you...",
+      "resultsComplete": "Results Complete",
+      "resultsReady": "Your results are ready"
     },
-    "title": "Art Taste Quiz",
+    "title": "What’s your art taste?",
     "results": {
-      "emailButton": "Email My Results",   
+      "emailButton": "Email My Results",
       "emailSuccess": "Results sent to {{email}}",
-      "emailError": "Something went wrong. Please try again.",
       "empty": {
         "title": "Explore Trending Collections and Artists",
         "subtitle": "There are almost 2 million artworks on Artsy—keep exploring to find something you love."
       },
-      "title": "Explore Your Quiz Results",
-      "subtitle": "We think you’ll enjoy these works and artists based on your likes. To tailor your recommendations to your art tastes, follow artists and save works you love.",
+      "title": "Explore Art We Think You’ll Love",
+      "subtitle": "Based on your responses, we think you’ll enjoy these artworks and artists. Keep saving and following to continue tailoring Artsy to you.",
       "tabs": {
         "worksYouLiked": "Works You Liked",
         "recommendedCollections": "Explore Collections",
-        "recommendedArtworks": "Explore Artworks",
-        "recommendedArtists": "Explore Artists"
+        "recommendedArtworks": "Works for You",
+        "recommendedArtists": "Artists for You"
       }
     },
     "welcomeScreen": {
-      "subtitle1": "See more of what you love.",
-      "subtitle2": "Rate artworks and get recommendations tailored to your art taste.",
-      "getStartedButton": "Start the Quiz",
+      "subtitle1": "Let us be your art advisor.",
+      "subtitle2": "Rate artworks and get recommendations tailored to you.",
+      "getStartedButton": "Get Started",
       "skipButton": "Skip"
     }
   },
@@ -103,13 +104,110 @@
       "save": {
         "registerToBidWithDeadline": "Register ahead of time to bid in this auction and get notifications for this lot.",
         "registerToBidWithoutDeadline": "Register to bid in this auction and get notifications for this lot."
-      }
+      },
+      "watchLot": "Watch lot",
+      "watchingLot": "Watching lot"
     }
   },
   "collectorSaves": {
+    "addArtworksModal": {
+      "modalTitle": "{{value}} created. Add saved works to the list.",
+      "artworksSelected_one": "{{count}} artwork selected",
+      "artworksSelected_other": "{{count}} artworks selected",
+      "artworksCount_one": "{{count}} Artwork:",
+      "artworksCount_other": "{{count}} Artworks"
+    },
     "artworkLists": {
       "artworkWithCount_one": "{{count}} Artwork",
       "artworkWithCount_other": "{{count}} Artworks"
+    },
+    "artworkListsHeader": {
+      "listCreated": "{{listName}} Created",
+      "savedArtworks": "Saves",
+      "curateYourList": "Curate your own lists of the works you love",
+      "createNewListButton": "Create New List"
+    },
+    "createNewListModal": {
+      "title": "Create a new list"
+    },
+    "manageArtworkForSaves": {
+      "toasts": {
+        "addedArtworkToList": "Added to {{name}} list",
+        "addedArtworkToLists": "Added to {{count}} lists",
+        "removedArtworkFromList": "Removed from {{name}}",
+        "removedArtworkFromLists": "Removed from {{count}} lists",
+        "changesSaved": "Changes saved",
+        "viewListButton": "View List",
+        "viewSavesButton": "View Saves"
+      }
+    },
+    "saveArtworkToLists": {
+      "toast": {
+        "artworkSaved": {
+          "message": "Artwork saved",
+          "button": "Add to a List"
+        },
+        "artworkRemoved": {
+          "message": "Removed from Saved Artworks"
+        }
+      }
+    },
+    "selectArtworkLists": {
+      "header": {
+        "createNewListButton": "Create New List",
+        "recentlyAddedList": {
+          "title": "List created",
+          "message": "Artwork will be added to \"{{name}}\""
+        }
+      },
+      "footer": {
+        "listsCount_one": "{{count}} list selected",
+        "listsCount_other": "{{count}} lists selected",
+        "saveButton": "Save"
+      }
+    },
+    "contextualMenu": {
+      "edit": "Edit List",
+      "delete": "Delete List"
+    },
+    "deleteListModal": {
+      "title": "Delete {{name}} list?",
+      "message": "You’ll lose any works that are only saved on this list.",
+      "delete": "Yes, Delete List",
+      "success": "Changes saved"
+    },
+    "editListModal": {
+      "title": "Edit your list",
+      "success": "Changes saved"
+    },
+    "artworkListForm": {
+      "fields": {
+        "name": {
+          "label": {
+            "create": "Name your list",
+            "edit": "List Name"
+          },
+          "placeholder": "E.g. Photography, Warhol, etc.",
+          "required": "Name is required",
+          "remainingCharactersCount_one": "{{count}} character remaining",
+          "remainingCharactersCount_other": "{{count}} characters remaining"
+
+        }
+      },
+      "buttons": {
+        "create": "Create List",
+        "edit": "Save Changes"
+      }
+    }
+  },
+  "common": {
+    "buttons": {
+      "save": "Save",
+      "back": "Back",
+      "cancel": "Cancel"
+    },
+    "errors": {
+      "somethingWentWrong": "Something went wrong. Please try again."
     }
   },
   "navbar": {
@@ -129,7 +227,6 @@
     "sell": "Sell",
     "priceDatabase": "Price Database",
     "editorial": "Editorial",
-    "downloadApp": "Download App",
     "searchBy": "Search by artist, gallery, style, theme, tag, etc.",
     "searchArtsy": "Search Artsy"
   },
@@ -158,7 +255,7 @@
     "meetTheSpecialists": "Meet the Specialists",
     "ourTeamIsReady": "Whether you’re seeking a specific work for your growing collection or wish to sell, our globe-spanning team is ready to source, sell, advise, and research on your behalf.",
     "privateSales": "Private Sales & Advisory"
-  }, 
+  },
   "searchApp": {
     "noResultsFound": "No results found.",
     "resultsCount_zero": "No results found for",

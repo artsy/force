@@ -5,13 +5,13 @@ orbs:
   aws-s3: circleci/aws-s3@2.0.0
   hokusai: artsy/hokusai@volatile
   horizon: artsy/release@volatile
-  slack: circleci/slack@4.12.1
-  yarn: artsy/yarn@6.4.0
+  slack: circleci/slack@4.12.5
+  yarn: artsy/yarn@6.5.0
 
 jobs:
   validate_production_schema:
     docker:
-      - image: cimg/node:14.21
+      - image: cimg/node:18.16.0
     parameters:
       # find channel ID at the botton of channel details view (slack app) or by right clicking on channel, and copying the link. The ID will be visible at the end of that URL.
       dev:
@@ -109,9 +109,12 @@ jobs:
       - run:
           name: "Create or update review app"
           command: |
+            set -x
             review_app_name=$(echo $CIRCLE_BRANCH | sed 's/review-app-//')
             kubectl config use-context staging
-            if $(kubectl get namespace | grep -qi $review_app_name); then
+            namespaces=$(kubectl get namespace)
+            echo
+            if echo "$namespaces" | grep -qi "$review_app_name"; then
               ./scripts/update_review_app.sh $review_app_name
             else
               ./scripts/build_review_app.sh $review_app_name
@@ -211,7 +214,7 @@ jobs:
 
   smoke-test-on-live-env:
     docker:
-      - image: cypress/included:10.11.0
+      - image: cypress/included:12.12.0
         environment:
           TERM: xterm
     working_directory: ~/app

@@ -12,9 +12,10 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { FullBleedHeader } from "Components/FullBleedHeader"
+import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { cropped, resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
+import { RouterLink } from "System/Router/RouterLink"
 
 export const ArtAppraisalsApp: React.FC = () => {
   return (
@@ -189,9 +190,9 @@ const MeetOurSpecialists: React.FC = () => {
             <Text variant="lg-display">Simon Wills</Text>
             <Text variant="sm-display">Senior Manager, Trusts & Estates</Text>
             <Text variant="sm-display" color="black60" mb={2}>
-              <a href="mailto:appraisals@artsymail.com">
+              <RouterLink inline to="mailto:appraisals@artsymail.com">
                 appraisals@artsymail.com
-              </a>
+              </RouterLink>
             </Text>
           </Flex>
         </Flex>

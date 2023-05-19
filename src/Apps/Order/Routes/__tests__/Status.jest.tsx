@@ -17,7 +17,7 @@ import { graphql } from "react-relay"
 import { StatusFragmentContainer } from "Apps/Order/Routes/Status"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { Title } from "react-head"
 
 jest.unmock("react-relay")
@@ -131,6 +131,59 @@ describe("Status", () => {
       })
     })
 
+    describe("in review", () => {
+      it("should say order submitted and have message box", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...testOrder,
+            state: "IN_REVIEW",
+            displayState: "SUBMITTED",
+          }),
+        })
+        const page = new StatusTestPage(wrapper)
+
+        expect(page.text()).toContain(
+          "Thank you, your offer has been submitted"
+        )
+        expect(page.text()).toContain(
+          "The seller will respond to your offer by Jan 15"
+        )
+        expect(page.text()).not.toContain(
+          "Negotiation with the gallery will continue in the Inbox."
+        )
+        expect(page.getMessageLength()).toBe(1)
+        expect(page.text()).toContain("Kathryn Markel Fine Arts")
+        expect(page.text()).toContain("List price")
+        expect(page.text()).toContain("Your noteAnother note!")
+        expect(page.getMessageLength()).toBe(1)
+      })
+
+      it("should say order submitted and have message to continue to inbox on Eigen", async () => {
+        isEigen = true
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...testOrder,
+            state: "IN_REVIEW",
+            displayState: "SUBMITTED",
+          }),
+        })
+        const page = new StatusTestPage(wrapper)
+
+        expect(page.text()).toContain(
+          "Thank you, your offer has been submitted"
+        )
+        expect(page.text()).toContain(
+          "The seller will respond to your offer by Jan 15"
+        )
+        expect(page.text()).toContain(
+          "Negotiation with the gallery will continue in the Inbox."
+        )
+        expect(page.getMessageLength()).toBe(1)
+        expect(page.text()).not.toContain("Kathryn Markel Fine Arts")
+        expect(page.text()).not.toContain("List price")
+      })
+    })
+
     describe("approved", () => {
       it("should say confirmed and have message box", async () => {
         const wrapper = getWrapper({
@@ -236,7 +289,7 @@ describe("Status", () => {
           expect(page.text()).toContain("Bank address")
           expect(page.text()).toContain("Wells Fargo Bank, N.A.")
           expect(page.text()).toContain("420 Montgomery Street")
-          expect(page.text()).toContain("San Francisco, CA 9410")
+          expect(page.text()).toContain("San Francisco, CA 94104")
         })
       })
 
@@ -681,7 +734,7 @@ describe("Status", () => {
           expect(page.text()).toContain("Bank address")
           expect(page.text()).toContain("Wells Fargo Bank, N.A.")
           expect(page.text()).toContain("420 Montgomery Street")
-          expect(page.text()).toContain("San Francisco, CA 9410")
+          expect(page.text()).toContain("San Francisco, CA 94104")
         })
 
         it("renders correct Artsy bank details for orders in GBP", async () => {
@@ -697,13 +750,13 @@ describe("Status", () => {
 
           expect(page.text()).toContain("Send wire transfer to")
           expect(page.text()).toContain("Account name: Art.sy Inc.")
-          expect(page.text()).toContain("Account Number: 88005417")
+          expect(page.text()).toContain("Account number: 88005417")
           expect(page.text()).toContain("IBAN: GB30PNBP16567188005417")
-          expect(page.text()).toContain("SWIFT: PNBPGB2L")
+          expect(page.text()).toContain("International SWIFT: PNBPGB2L")
           expect(page.text()).toContain("Sort Code: 16-56-71")
           expect(page.text()).toContain("Bank address")
           expect(page.text()).toContain("Wells Fargo Bank, N.A. London Branch")
-          expect(page.text()).toContain("1 Planation Place")
+          expect(page.text()).toContain("1 Plantation Place")
           expect(page.text()).toContain("30 Fenchurch Street")
           expect(page.text()).toContain("London, United Kingdom, EC3M 3BD")
         })
@@ -721,11 +774,12 @@ describe("Status", () => {
 
           expect(page.text()).toContain("Send wire transfer to")
           expect(page.text()).toContain("Account name: Art.sy Inc.")
+          expect(page.text()).toContain("Account number: 88005419")
           expect(page.text()).toContain("IBAN: GB73PNBP16567188005419")
-          expect(page.text()).toContain("BIC: PNBPGB2LXXX")
+          expect(page.text()).toContain("International SWIFT: PNBPGB2L")
           expect(page.text()).toContain("Bank address")
           expect(page.text()).toContain("Wells Fargo Bank, N.A. London Branch")
-          expect(page.text()).toContain("1 Planation Place")
+          expect(page.text()).toContain("1 Plantation Place")
           expect(page.text()).toContain("30 Fenchurch Street")
           expect(page.text()).toContain("London, United Kingdom, EC3M 3BD")
         })

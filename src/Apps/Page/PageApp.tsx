@@ -1,17 +1,27 @@
 import { Column, GridColumns, Spacer } from "@artsy/palette"
-import { FC, useMemo } from "react"
+import { FC, useMemo, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { useSystemContext } from "System/useSystemContext"
+import { ContextModule } from "@artsy/cohesion"
+import { useAuthDialog } from "Components/AuthDialog"
 import { MetaTags } from "Components/MetaTags"
 import { useRouter } from "System/Router/useRouter"
 import { PageApp_page$data } from "__generated__/PageApp_page.graphql"
 import { PageHTML } from "./Components/PageHTML"
-import { TOP_LEVEL_PAGE_SLUG_ALLOWLIST } from "./pageRoutes"
+import {
+  TOP_LEVEL_PAGE_SLUG_ALLOWLIST,
+  PAGE_SLUGS_WITH_AUTH_REQUIRED,
+} from "./pageRoutes"
 
 interface PageAppProps {
   page: PageApp_page$data
 }
 
 const PageApp: FC<PageAppProps> = ({ page }) => {
+  const { user } = useSystemContext()
+  const { showAuthDialog } = useAuthDialog()
+  const { match } = useRouter()
+
   const description = useMemo(() => {
     switch (page.internalID) {
       case "terms":
@@ -25,13 +35,33 @@ const PageApp: FC<PageAppProps> = ({ page }) => {
     }
   }, [page.internalID])
 
-  const { match } = useRouter()
+  useEffect(() => {
+    if (PAGE_SLUGS_WITH_AUTH_REQUIRED.includes(page.internalID) && !user?.id) {
+      showAuthDialog({
+        mode: "SignUp",
+        options: {
+          title: mode => {
+            const action = mode === "SignUp" ? "Sign up" : "Log in"
+            return `${action} to view ${page.name}`
+          },
+          redirectTo: match.location.pathname,
+        },
+        analytics: {
+          contextModule: ContextModule.header,
+        },
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page, user])
 
   const canonical = TOP_LEVEL_PAGE_SLUG_ALLOWLIST.includes(match.params.id)
     ? `/${match.params.id}`
     : `/page/${match.params.id}`
 
   if (!page.content) return null
+
+  if (PAGE_SLUGS_WITH_AUTH_REQUIRED.includes(page.internalID) && !user?.id)
+    return null
 
   return (
     <>

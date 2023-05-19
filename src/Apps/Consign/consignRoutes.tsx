@@ -48,7 +48,7 @@ const MarketingLandingApp = loadable(
 const FAQApp = loadable(
   () =>
     import(
-      /* webpackChunkName: "consignBundle" */ "./Routes/MarketingLanding/FAQApp"
+      /* webpackChunkName: "consignBundle" */ "./Routes/SubmissionFlow/FAQ/FAQApp"
     ),
   {
     resolveComponent: component => component.FAQApp,
@@ -233,6 +233,36 @@ export const consignRoutes: AppRouteConfig[] = [
         },
         query: graphql`
           query consignRoutes_ConsignmentInquiryAppQuery {
+            me {
+              ...ConsignmentInquiry_me
+            }
+          }
+        `,
+        render: renderConsignmentInquiry,
+      },
+      {
+        path: "sent",
+        layout: "ContainerOnly",
+        getComponent: () => ConsignmentInquiryConfirmationApp,
+        onClientSideRender: () => {
+          ConsignmentInquiryConfirmationApp.preload()
+        },
+      },
+    ],
+  },
+  {
+    path: "/sell/inquiry/:recipientEmail?",
+    getComponent: () => ConsignmentInquiryContainer,
+    children: [
+      {
+        path: "/",
+        getComponent: () => ConsignmentInquiryApp,
+        layout: "ContainerOnly",
+        onClientSideRender: () => {
+          ConsignmentInquiryApp.preload()
+        },
+        query: graphql`
+          query consignRoutes_ConsignmentInquiryWithRecipientEmailAppQuery {
             me {
               ...ConsignmentInquiry_me
             }

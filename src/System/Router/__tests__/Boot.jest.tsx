@@ -1,5 +1,5 @@
-import { SystemContextConsumer } from "System"
-import { Boot } from "System/Router"
+import { SystemContextConsumer } from "System/SystemContext"
+import { Boot } from "System/Router/Boot"
 import { mount } from "enzyme"
 
 describe("Boot", () => {

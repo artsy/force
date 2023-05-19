@@ -1,56 +1,56 @@
-import { useEffect, useState } from "react"
-import * as React from "react"
 import {
-  Button,
-  Flex,
-  themeProps,
-  Text,
-  Dropdown,
   Box,
-  BellIcon,
-  SoloIcon,
+  Button,
   Clickable,
-  CloseIcon,
+  Dropdown,
+  Flex,
   Spacer,
+  Text,
+  THEME,
 } from "@artsy/palette"
-import { useSystemContext } from "System/SystemContext"
+import CloseIcon from "@artsy/icons/CloseIcon"
+import PersonIcon from "@artsy/icons/PersonIcon"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import { SearchBarQueryRenderer } from "Components/Search/SearchBar"
+import { useSystemContext } from "System/SystemContext"
+import * as React from "react"
+import { useEffect, useState } from "react"
 import { NavBarSubMenu } from "./Menus"
 import {
   NavBarMobileMenu,
   NavBarMobileMenuIcon,
 } from "./NavBarMobileMenu/NavBarMobileMenu"
-
 import {
   ARTISTS_SUBMENU_DATA,
   ARTWORKS_SUBMENU_DATA,
 } from "Components/NavBar/menuData"
-
+import { ActionType } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { track } from "react-tracking"
+import { AppContainer } from "Apps/Components/AppContainer"
+import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
+import { Z } from "Apps/Components/constants"
+import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
+import { RouterLink } from "System/Router/RouterLink"
+import { useRouter } from "System/Router/useRouter"
 import Events from "Utils/Events"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
-import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
-import { NavBarSkipLink } from "./NavBarSkipLink"
-import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
+import { useTranslation } from "react-i18next"
+import { track, useTracking } from "react-tracking"
 import {
   NavBarItemButton,
   NavBarItemLink,
   NavBarItemUnfocusableAnchor,
 } from "./NavBarItem"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { useNavBarHeight } from "./useNavBarHeight"
-import { RouterLink } from "System/Router/RouterLink"
-import { useTracking } from "react-tracking"
-import { Z } from "Apps/Components/constants"
-import { useTranslation } from "react-i18next"
+import { NavBarLoggedInActionsQueryRenderer } from "./NavBarLoggedInActions"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
-import { useJump } from "Utils/Hooks/useJump"
+import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
+import { NavBarSkipLink } from "./NavBarSkipLink"
+import { useNavBarHeight } from "./useNavBarHeight"
+import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
+import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
+import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { useRouter } from "System/Router/useRouter"
-import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions"
-import { ActionType } from "@artsy/cohesion"
+import { NewSearchBar } from "Components/Search/NewSearch/NewSearchBar"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -67,20 +67,22 @@ export const NavBar: React.FC = track(
     dispatch: data => Events.postEvent(data),
   }
 )(() => {
-  const isCollectorProfileEnabled = useFeatureFlag("cx-collector-profile")
   const { user, isEigen } = useSystemContext()
 
-  const { jumpTo } = useJump({ behavior: "smooth" })
   const { trackEvent } = useTracking()
   const { t } = useTranslation()
   const { router } = useRouter()
   const [showMobileMenu, toggleMobileNav] = useState(false)
   const [searchFocused, setSearchFocused] = useState(false)
-  const xs = __internal__useMatchMedia(themeProps.mediaQueries.xs)
-  const sm = __internal__useMatchMedia(themeProps.mediaQueries.sm)
+  const xs = __internal__useMatchMedia(THEME.mediaQueries.xs)
+  const sm = __internal__useMatchMedia(THEME.mediaQueries.sm)
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
   const showNotificationCount = isLoggedIn && !showMobileMenu
+
+  const isSearchDropDownImprovementsEnabled = useFeatureFlag(
+    "fx-force-search-dropdown-improvements"
+  )
 
   // Close mobile menu if dragging window from small size to desktop
   useEffect(() => {
@@ -123,20 +125,16 @@ export const NavBar: React.FC = track(
 
   const { height } = useNavBarHeight()
 
-  const renderNotificationsIndicator = () => {
-    if (!showNotificationCount) {
-      return null
-    }
-
-    return <NavBarMobileMenuNotificationsIndicatorQueryRenderer />
-  }
-
   const handleNotificationsClick = () => {
     router.push("/notifications")
 
     trackEvent({
       action: ActionType.clickedNotificationsBell,
     })
+  }
+
+  const handleMobileSearchBarClose = () => {
+    setSearchFocused(false)
   }
 
   if (isEigen) {
@@ -196,9 +194,10 @@ export const NavBar: React.FC = track(
                 flex={1}
                 alignItems="center"
                 onFocus={() => {
-                  setSearchFocused(true)
+                  if (!isSearchDropDownImprovementsEnabled)
+                    setSearchFocused(true)
                 }}
-                // update only on mobile
+                // Update only on mobile
                 position={[
                   `${searchFocused ? "absolute" : "relative"}`,
                   "relative",
@@ -206,14 +205,18 @@ export const NavBar: React.FC = track(
                 width={[`${searchFocused ? "90%" : "auto"}`, "auto"]}
                 zIndex={9}
               >
-                <SearchBarQueryRenderer width="100%" />
+                {isSearchDropDownImprovementsEnabled ? (
+                  <NewSearchBar onClose={handleMobileSearchBarClose} />
+                ) : (
+                  <SearchBarQueryRenderer width="100%" />
+                )}
 
                 {searchFocused && (
                   <Clickable
                     onClick={() => {
                       setSearchFocused(false)
                     }}
-                    // show only on mobile
+                    // Show only on mobile
                     display={["flex", "none"]}
                     alignItems="center"
                     justifyContent="center"
@@ -280,57 +283,79 @@ export const NavBar: React.FC = track(
 
               {/* Mobile. Triggers at the `xs` breakpoint. */}
               <Flex display={["flex", "none"]}>
-                {isLoggedIn && isCollectorProfileEnabled && (
+                {isLoggedIn && (
                   <>
                     <NavBarItemButton
                       display="flex"
                       alignItems="center"
                       justifyContent="center"
                       onClick={handleNotificationsClick}
+                      aria-label="Notifications"
                     >
-                      <BellIcon aria-hidden="true" height={22} width={22} />
-                      {renderNotificationsIndicator()}
+                      <BellStrokeIcon
+                        aria-hidden="true"
+                        height={22}
+                        width={22}
+                      />
+
+                      {showNotificationCount && (
+                        <NavBarMobileMenuNotificationsIndicatorQueryRenderer />
+                      )}
                     </NavBarItemButton>
 
-                    <NavBarItemButton
-                      display="flex"
-                      alignItems="center"
-                      justifyContent="center"
-                      onClick={() =>
-                        router.push("/collector-profile/my-collection")
-                      }
-                    >
-                      <SoloIcon aria-hidden="true" height={22} width={22} />
-                    </NavBarItemButton>
+                    <ProgressiveOnboardingFollowFind>
+                      <ProgressiveOnboardingSaveFind>
+                        <NavBarItemButton
+                          display="flex"
+                          alignItems="center"
+                          justifyContent="center"
+                          aria-label="My Collection"
+                          onClick={() =>
+                            router.push("/collector-profile/my-collection")
+                          }
+                        >
+                          <PersonIcon
+                            aria-hidden="true"
+                            height={22}
+                            width={22}
+                          />
+                        </NavBarItemButton>
+                      </ProgressiveOnboardingSaveFind>
+                    </ProgressiveOnboardingFollowFind>
                   </>
                 )}
-                <NavBarItemButton
-                  mr={-1}
-                  width={40}
-                  height={40}
-                  display="flex"
-                  alignItems="center"
-                  justifyContent="center"
-                  onClick={event => {
-                    event.preventDefault()
 
-                    const showMenu = !showMobileMenu
+                <ProgressiveOnboardingAlertFind>
+                  <NavBarItemButton
+                    mr={-1}
+                    width={40}
+                    height={40}
+                    display="flex"
+                    alignItems="center"
+                    justifyContent="center"
+                    aria-label="Menu"
+                    aria-expanded={showMobileMenu}
+                    onClick={event => {
+                      event.preventDefault()
 
-                    toggleMobileNav(showMenu)
+                      toggleMobileNav(prevShowMenu => {
+                        if (!prevShowMenu) {
+                          trackEvent({
+                            action_type:
+                              DeprecatedAnalyticsSchema.ActionType.Click,
+                            subject:
+                              DeprecatedAnalyticsSchema.Subject
+                                .SmallScreenMenuSandwichIcon,
+                          })
+                        }
 
-                    if (showMenu) {
-                      trackEvent({
-                        action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-                        subject:
-                          DeprecatedAnalyticsSchema.Subject
-                            .SmallScreenMenuSandwichIcon,
+                        return !prevShowMenu
                       })
-                    }
-                  }}
-                >
-                  <NavBarMobileMenuIcon open={showMobileMenu} />
-                  {!isCollectorProfileEnabled && renderNotificationsIndicator()}
-                </NavBarItemButton>
+                    }}
+                  >
+                    <NavBarMobileMenuIcon open={showMobileMenu} />
+                  </NavBarItemButton>
+                </ProgressiveOnboardingAlertFind>
               </Flex>
             </Flex>
 
@@ -459,32 +484,17 @@ export const NavBar: React.FC = track(
                   {t`navbar.museums`}
                 </NavBarItemLink>
               </Flex>
-
-              <Flex alignItems="stretch" display={["none", "none", "flex"]}>
-                <NavBarItemButton
-                  display={["none", "none", "flex", "flex"]}
-                  px={0}
-                  pl={1}
-                  onClick={() => {
-                    jumpTo("download-app-banner")
-                  }}
-                >
-                  {t`navbar.downloadApp`}
-                </NavBarItemButton>
-              </Flex>
             </Text>
           </HorizontalPadding>
         </AppContainer>
       </Box>
 
       {showMobileMenu && (
-        <>
-          <NavBarMobileMenu
-            onClose={() => toggleMobileNav(false)}
-            isOpen={showMobileMenu}
-            onNavButtonClick={handleMobileNavClick}
-          />
-        </>
+        <NavBarMobileMenu
+          onClose={() => toggleMobileNav(false)}
+          isOpen={showMobileMenu}
+          onNavButtonClick={handleMobileNavClick}
+        />
       )}
     </>
   )

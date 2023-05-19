@@ -11,6 +11,7 @@ import {
   RadioGroup,
   Select,
   Text,
+  TextArea,
   useToasts,
 } from "@artsy/palette"
 import { ArtworkSidebarClassificationsModalQueryRenderer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
@@ -18,7 +19,7 @@ import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDe
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { categoryOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/categoryOptions"
 import { rarityOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/rarityOptions"
-import { NumericInput } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilterNew"
+import { NumericInput } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { useFormikContext } from "formik"
 import { useState } from "react"
 import { ProvenanceModal } from "./ProvenanceModal"
@@ -76,7 +77,11 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
           <Column span={6} mt={[2, 0]}>
             <ArtistAutoComplete
               onError={() => handleAutosuggestError(true)}
-              onSelect={artist => setFieldValue("artistId", artist?.internalID)}
+              onSelect={artist => {
+                setFieldValue("artistId", artist?.internalID)
+                setFieldValue("artistName", artist?.name || "")
+                setFieldValue("artist", artist)
+              }}
               required
               title="Artist"
             />
@@ -297,7 +302,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             title="Provenance"
             name="provenance"
             placeholder="Describe how you acquired the work"
-            maxLength={256}
+            maxLength={500}
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.provenance}
@@ -312,6 +317,21 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             onBlur={handleBlur}
             onChange={handleChange}
             value={values.artworkLocation}
+          />
+        </Column>
+      </GridColumns>
+
+      <GridColumns mt={4} mb={[0, 2]}>
+        <Column span={12}>
+          <TextArea
+            title="Notes"
+            name="confidentialNotes"
+            maxLength={500}
+            onBlur={handleBlur}
+            onChange={({ value }) => {
+              setFieldValue("confidentialNotes", value)
+            }}
+            value={values.confidentialNotes}
           />
         </Column>
       </GridColumns>

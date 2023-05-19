@@ -1,4 +1,3 @@
-import { mediator } from "Server/mediator"
 import type {
   ArtsyRequest,
   ArtsyResponse,
@@ -23,7 +22,6 @@ export const buildServerAppContext = (
     initialMatchingMediaQueries: res.locals.sd.IS_MOBILE ? ["xs"] : undefined,
     user: req.user,
     isEigen: req.header("User-Agent")?.match("Artsy-Mobile") != null,
-    mediator,
     analytics: {
       contextPageOwnerType: pageType,
       contextPageOwnerSlug: pageSlug,

@@ -4,7 +4,7 @@ import { CreateArtworkAlertSectionFragmentContainer } from "Apps/Artwork/Compone
 import { CreateArtworkAlertSection_Test_Query } from "__generated__/CreateArtworkAlertSection_Test_Query.graphql"
 import { fireEvent, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")

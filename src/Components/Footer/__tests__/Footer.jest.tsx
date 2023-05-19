@@ -1,8 +1,14 @@
 import { MockBoot } from "DevTools/MockBoot"
 import { mount } from "enzyme"
-import { Footer } from "../Footer"
-import { DownloadAppBadge } from "Components/DownloadAppBadges/DownloadAppBadge"
+import { Footer } from "Components/Footer/Footer"
 import { Breakpoint } from "@artsy/palette/dist/themes/types"
+import { useRouter } from "System/Router/useRouter"
+
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: jest.fn().mockReturnValue({
+    match: { location: { pathname: "/" } },
+  }),
+}))
 
 describe("Footer", () => {
   const getWrapper = (breakpoint: Breakpoint) =>
@@ -16,7 +22,6 @@ describe("Footer", () => {
     it("renders prompts to download the app", () => {
       const wrapper = getWrapper("lg")
       expect(wrapper.find("FooterDownloadAppBanner").length).toEqual(1)
-      expect(wrapper.find(DownloadAppBadge).length).toEqual(2)
     })
 
     it("renders correct routes to partnerships", () => {
@@ -55,13 +60,26 @@ describe("Footer", () => {
       const wrapper = getWrapper("xs")
       expect(wrapper.find("button").length).toEqual(1)
     })
+
+    it("renders the app download banner", () => {
+      const wrapper = getWrapper("lg")
+      expect(wrapper.text()).toContain("Meet your new art advisor.")
+    })
+
+    it("hides the app download banner if we are on an ignored route", () => {
+      ;(useRouter as jest.Mock).mockImplementationOnce(() => ({
+        match: { location: { pathname: "/meet-your-new-art-advisor" } },
+      }))
+
+      const wrapper = getWrapper("lg")
+      expect(wrapper.text()).not.toContain("Meet your new art advisor.")
+    })
   })
 
   describe("small screen size", () => {
-    it("renders a download banner with a badge and a separate badge", () => {
+    it("renders a download banner", () => {
       const wrapper = getWrapper("xs")
       expect(wrapper.find("FooterDownloadAppBanner").length).toEqual(1)
-      expect(wrapper.find(DownloadAppBadge).length).toEqual(2)
     })
 
     it("renders the CCPA request button", () => {

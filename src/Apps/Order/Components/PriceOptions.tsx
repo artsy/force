@@ -5,7 +5,7 @@ import { OfferInput } from "Apps/Order/Components/OfferInput"
 import { MinPriceWarning } from "./MinPriceWarning"
 import { compact } from "lodash"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useAnalyticsContext } from "System/Analytics"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { ActionType, ClickedOfferOption, PageOwnerType } from "@artsy/cohesion"
 import { PriceOptions_artwork$data } from "__generated__/PriceOptions_artwork.graphql"
 import { PriceOptions_order$data } from "__generated__/PriceOptions_order.graphql"
@@ -30,14 +30,22 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 }) => {
   const tracking = useTracking()
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
-
   const [customValue, setCustomValue] = useState<number>()
   const [toggle, setToggle] = useState(false)
   const [selectedRadio, setSelectedRadio] = useState<string>()
   const listPrice = artwork?.listPrice
 
   useEffect(() => {
+    if (listPrice && !toggle && !customValue) {
+      onChange(listPrice.major ?? listPrice.maxPrice?.major!)
+      setSelectedRadio("price-option-0")
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [listPrice, toggle, customValue])
+
+  useEffect(() => {
     if (!!customValue) onChange(customValue)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [customValue])
 
   useEffect(() => {
@@ -49,6 +57,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 
   useEffect(() => {
     if (toggle) trackClick("Different amount", 0)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [toggle])
 
   const trackClick = (offer: string, amount: number) => {
@@ -143,7 +152,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
             label="Different amount"
             error={showError}
             onSelect={() => {
-              customValue && onChange(customValue)
+              onChange(customValue || 0)
               !toggle && setToggle(true)
             }}
           >

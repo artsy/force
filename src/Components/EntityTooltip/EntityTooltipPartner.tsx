@@ -14,7 +14,7 @@ import { EntityTooltipPartner_partner$data } from "__generated__/EntityTooltipPa
 import { RouterLink } from "System/Router/RouterLink"
 import { EntityHeaderPartnerFragmentContainer } from "Components/EntityHeaders/EntityHeaderPartner"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { ActionType, ClickedTooltip } from "@artsy/cohesion"
 
 interface EntityTooltipPartnerProps {

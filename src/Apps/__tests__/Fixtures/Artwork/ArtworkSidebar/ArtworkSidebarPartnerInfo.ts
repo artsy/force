@@ -29,17 +29,6 @@ const PartnerWithoutLocations = {
   locations: [],
 }
 
-export const ArtworkFromPartnerWithoutLocations = {
-  id: "artwork_from_partner_without_locations",
-  collecting_institution: null,
-  partner: PartnerWithoutLocations,
-}
-
-export const ArtworkWithCollectingInstitution = {
-  collecting_institution: "National Gallery of Art, Washington D.C.",
-  partner: PartnerWithLocations,
-}
-
 export const ArtworkInNonAuctionSale = {
   id: "artwork_from_partner_without_locations",
   collecting_institution: null,

@@ -11,13 +11,15 @@ import {
 import { useSystemContext } from "System/useSystemContext"
 import { Form, Formik } from "formik"
 import * as Yup from "yup"
-import { email, name } from "Components/Authentication/Validators"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { graphql } from "react-relay"
 import { SendFeedbackSearchResultsMutation } from "__generated__/SendFeedbackSearchResultsMutation.graphql"
+import { useRouter } from "System/Router/useRouter"
+import { getENV } from "Utils/getENV"
 
 export const SendFeedback: FC = () => {
   const { isLoggedIn, user } = useSystemContext()
+  const { match } = useRouter()
 
   const { sendToast } = useToasts()
 
@@ -43,19 +45,19 @@ export const SendFeedback: FC = () => {
         email: user?.email ?? "",
         message: "",
       }}
-      validationSchema={Yup.object().shape({
-        email,
-        name,
-        message: Yup.string().required("Please enter a message"),
-      })}
+      validationSchema={VALIDATION_SCHEMA}
       onSubmit={async ({ name, email, message }, { resetForm }) => {
         try {
+          const { pathname, search } = match.location
+          const url = `${getENV("APP_URL")}${pathname}${search}`
+
           await submitMutation({
             variables: {
               input: {
-                ...(isLoggedIn
-                  ? { message, test: "1" }
-                  : { name, email, message }),
+                name,
+                email,
+                message,
+                url,
               },
             },
             rejectIf: res => {
@@ -173,3 +175,11 @@ export const SendFeedback: FC = () => {
     </Formik>
   )
 }
+
+const VALIDATION_SCHEMA = Yup.object().shape({
+  email: Yup.string()
+    .email("Please enter a valid email.")
+    .required("Please enter a valid email."),
+  name: Yup.string().trim().required("Name is required."),
+  message: Yup.string().required("Please enter a message"),
+})

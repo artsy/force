@@ -16,10 +16,6 @@ export class ErrorWithMetadata extends Error {
   }
 }
 
-export const reportError = (error: Error | ErrorWithMetadata) => {
-  captureException(error)
-}
-
 export const reportErrorWithScope = (
   error: Error | ErrorWithMetadata
 ) => scope => {

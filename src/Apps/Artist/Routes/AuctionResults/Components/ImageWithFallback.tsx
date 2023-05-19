@@ -1,12 +1,13 @@
-import { Box, Flex, NoArtworkIcon } from "@artsy/palette"
-import { useState } from "react";
+import { Box, Flex } from "@artsy/palette"
+import { useState } from "react"
+import NoArtIcon from "@artsy/icons/NoArtIcon"
 
 export const ImageWithFallback = ({ Fallback, ...props }) => {
   const [useFallback, setFallback] = useState(false)
   if (useFallback) {
     return <Fallback />
   } else {
-    return <img onError={() => setFallback(true)} {...props} />
+    return <img onError={() => setFallback(true)} alt="" {...props} />
   }
 }
 
@@ -19,7 +20,7 @@ export const renderFallbackImage = () => {
         width="100%"
         height="100%"
       >
-        <NoArtworkIcon width="28px" height="28px" fill="black30" />
+        <NoArtIcon width="28px" height="28px" fill="black30" />
       </Flex>
     </Box>
   )

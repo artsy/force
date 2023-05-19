@@ -1,5 +1,5 @@
 import { SearchMeta } from "Apps/Search/Components/SearchMeta"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { mount } from "enzyme"
 import { Link, Title } from "react-head"
 

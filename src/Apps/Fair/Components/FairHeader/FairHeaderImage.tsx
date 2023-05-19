@@ -1,7 +1,7 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FairHeaderImage_fair$data } from "__generated__/FairHeaderImage_fair.graphql"
-import { FullBleedHeader } from "Components/FullBleedHeader"
+import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 
 interface FairHeaderImageProps {
   fair: FairHeaderImage_fair$data

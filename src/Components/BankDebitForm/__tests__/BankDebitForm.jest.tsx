@@ -1,6 +1,6 @@
 import { render } from "@testing-library/react"
 import { BuyOrderWithShippingDetails } from "Apps/__tests__/Fixtures/Order"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
 import { PaymentTestQuery$rawResponse } from "__generated__/PaymentTestQuery.graphql"
 import { BankDebitForm } from "Components/BankDebitForm/BankDebitForm"

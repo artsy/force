@@ -1,8 +1,11 @@
 import { FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ZendeskWrapper } from "Components/ZendeskWrapper"
-import { isExceededZendeskThreshold } from "Utils/isExceededZendeskThreshold"
+import { exceedsChatSupportThreshold } from "Utils/exceedsChatSupportThreshold"
 import { ArtworkZendesk_artwork$data } from "__generated__/ArtworkZendesk_artwork.graphql"
+import { getENV } from "Utils/getENV"
+import { SalesforceWrapper } from "Components/SalesforceWrapper"
+import { Media } from "Utils/Responsive"
 
 interface ArtworkZendeskProps {
   artwork: ArtworkZendesk_artwork$data
@@ -33,11 +36,17 @@ const ArtworkZendesk: FC<ArtworkZendeskProps> = ({ artwork }) => {
   // Don't display on inquiry artworks
   if (isInquireable && !isAcquireable && !isOfferable) return null
 
-  if (!price || !isExceededZendeskThreshold(price.major, price.currencyCode)) {
+  if (!price || !exceedsChatSupportThreshold(price.major, price.currencyCode)) {
     return null
   }
 
-  return <ZendeskWrapper mode={isInAuction ? "auction" : "default"} />
+  return getENV("SALESFORCE_CHAT_ENABLED") ? (
+    <Media greaterThan="xs">
+      <SalesforceWrapper />
+    </Media>
+  ) : (
+    <ZendeskWrapper mode={isInAuction ? "auction" : "default"} />
+  )
 }
 
 export const ArtworkZendeskFragmentContainer = createFragmentContainer(

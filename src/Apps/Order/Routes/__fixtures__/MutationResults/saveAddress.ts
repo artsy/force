@@ -1,6 +1,5 @@
 import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
 import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
-import { DeleteUserAddressMutation$data } from "__generated__/DeleteUserAddressMutation.graphql"
 
 export const saveAddressSuccess: CreateUserAddressMutation$data = {
   createUserAddress: {
@@ -35,24 +34,6 @@ export const updateAddressSuccess: UpdateUserAddressMutation$data = {
       region: "NY",
       postalCode: "10012",
       country: "USA",
-    },
-  },
-}
-
-export const deleteAddressSuccess: DeleteUserAddressMutation$data = {
-  deleteUserAddress: {
-    userAddressOrErrors: {
-      internalID: "1",
-      addressLine1: "1 Main St",
-      addressLine2: "",
-      city: "New York",
-      country: "US",
-      isDefault: false,
-      name: "Test Name",
-      phoneNumber: "555-555-5555",
-      postalCode: "28001",
-      region: "",
-      id: "addressID1",
     },
   },
 }

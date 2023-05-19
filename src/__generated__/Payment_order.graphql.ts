@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eff89f1c12262b1ccef7aa14aa64badf>>
+ * @generated SignedSource<<244299c9d82b0cbf1a4984f2804b76cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,6 +28,10 @@ export type Payment_order$data = {
         readonly artwork: {
           readonly slug: string;
         } | null;
+        readonly artworkVersion: {
+          readonly condition_description: string | null;
+          readonly provenance: string | null;
+        } | null;
       } | null;
     } | null> | null;
   } | null;
@@ -48,7 +52,7 @@ export type Payment_order$data = {
     readonly __typename: "%other";
   } | null;
   readonly source: CommerceOrderSourceEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "BankAccountPicker_order" | "CreditCardPicker_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "BankAccountPicker_order" | "CreditCardPicker_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Payment_order";
 };
 export type Payment_order$key = {
@@ -189,6 +193,31 @@ return {
                     }
                   ],
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "ArtworkVersion",
+                  "kind": "LinkedField",
+                  "name": "artworkVersion",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "provenance",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "condition_description",
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -274,6 +303,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "TransactionDetailsSummaryItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "OrderStepper_order"
     }
   ],
   "type": "CommerceOrder",
@@ -281,6 +315,6 @@ return {
 };
 })();
 
-(node as any).hash = "2d3df89931377ab122173a0d48131178";
+(node as any).hash = "591a8efd8831f1d5a68397e1d0c2c599";
 
 export default node;

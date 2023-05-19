@@ -1,9 +1,9 @@
 import { mount } from "enzyme"
-import { InquirySpecialist } from "../../Views/InquirySpecialist"
-import { useArtworkInquiryRequest } from "../../Hooks/useArtworkInquiryRequest"
-import { useInquiryContext } from "../../Hooks/useInquiryContext"
-import { fill } from "../util"
-import { flushPromiseQueue } from "DevTools"
+import { InquirySpecialist } from "Components/Inquiry/Views/InquirySpecialist"
+import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInquiryRequest"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
+import { fill } from "Components/Inquiry/__tests__/util"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useSystemContext } from "System/useSystemContext"
 
 jest.mock("../../Hooks/useArtworkInquiryRequest")

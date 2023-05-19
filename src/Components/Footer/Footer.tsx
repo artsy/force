@@ -2,7 +2,6 @@ import * as React from "react"
 import styled from "styled-components"
 import { Media } from "Utils/Responsive"
 import {
-  ArtsyMarkIcon,
   Box,
   boxMixin,
   BoxProps,
@@ -10,6 +9,7 @@ import {
   Column,
   Dropdown,
   Flex,
+  FullBleed,
   GridColumns,
   Image,
   Join,
@@ -20,40 +20,35 @@ import {
 import { useCCPARequest } from "Components/CCPARequest"
 import { FooterDownloadAppBanner } from "./FooterDownloadAppBanner"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
-import { Jump } from "Utils/Hooks/useJump"
 import TwitterIcon from "@artsy/icons/TwitterIcon"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
 import WeChatIcon from "@artsy/icons/WeChatIcon"
 import InstagramIcon from "@artsy/icons/InstagramIcon"
 import TikTokIcon from "@artsy/icons/TikTokIcon"
 import SpotifyIcon from "@artsy/icons/SpotifyIcon"
-import { useSystemContext } from "System"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useSystemContext } from "System/useSystemContext"
+import ArtsyMarkIcon from "@artsy/icons/ArtsyMarkIcon"
 
 interface FooterProps extends BoxProps {}
 
 export const Footer: React.FC<FooterProps> = props => {
   const { isEigen } = useSystemContext()
-  const enableNewSWALandingPage = useFeatureFlag(
-    "cx-swa-landing-page-redesign-2023"
-  )
 
   if (isEigen) {
     return null
   }
 
   return (
-    <Box
-      id="download-app-banner"
-      borderTop="1px solid"
-      borderColor="black10"
-      {...props}
-    >
-      <Jump id="download-app-banner" />
-
+    <Box {...props}>
       <FooterDownloadAppBanner />
 
-      <footer>
+      <Spacer y={2} />
+
+      <FullBleed>
+        <Separator />
+      </FullBleed>
+
+      <Box as="footer">
         <GridColumns pt={4} pb={6} gridRowGap={[4, 0]}>
           <Column span={3}>
             <Text variant="sm-display" fontWeight="bold" mb={2}>
@@ -135,18 +130,17 @@ export const Footer: React.FC<FooterProps> = props => {
             </Text>
 
             <Text variant="sm">
-              {!enableNewSWALandingPage && (
-                <FooterLink my={2} to="/meet-the-specialists">
-                  Talk to a Specialist
-                </FooterLink>
-              )}
+              <FooterLink my={2} to="/meet-the-specialists">
+                Talk to a Specialist
+              </FooterLink>
+
               <FooterLink my={2} to="https://support.artsy.net">
                 Visit our Help Center
               </FooterLink>
 
               <FooterLink
                 mt={2}
-                to="https://support.artsy.net/hc/en-us/categories/360003689513-Buy"
+                to="https://support.artsy.net/s/topic/0TO3b000000UessGAC/buy"
               >
                 Buying on Artsy
               </FooterLink>
@@ -279,7 +273,7 @@ export const Footer: React.FC<FooterProps> = props => {
             </Join>
           </Flex>
         </Flex>
-      </footer>
+      </Box>
     </Box>
   )
 }

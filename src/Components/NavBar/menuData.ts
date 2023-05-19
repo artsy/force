@@ -108,31 +108,31 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           links: [
             {
               text: "Barbara Kruger",
-              href: "/artist/barbara-kruger/works-for-sale",
+              href: "/artist/barbara-kruger",
             },
             {
               text: "Carrie Mae Weems",
-              href: "/artist/carrie-mae-weems/works-for-sale",
+              href: "/artist/carrie-mae-weems",
             },
             {
               text: "Daniel Arsham",
-              href: "/artist/daniel-arsham/works-for-sale",
+              href: "/artist/daniel-arsham",
             },
             {
               text: "Sam Gilliam",
-              href: "/artist/sam-gilliam/works-for-sale",
+              href: "/artist/sam-gilliam",
             },
             {
               text: "Takashi Murakami",
-              href: "/artist/takashi-murakami/works-for-sale",
+              href: "/artist/takashi-murakami",
             },
             {
               text: "Tracey Emin",
-              href: "/artist/tracey-emin/works-for-sale",
+              href: "/artist/tracey-emin",
             },
             {
               text: "Yinka Shonibare",
-              href: "/artist/yinka-shonibare/works-for-sale",
+              href: "/artist/yinka-shonibare",
             },
           ],
         },
@@ -270,50 +270,4 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
       { text: "View All Artworks", href: "/collect" },
     ],
   },
-}
-
-export const MENU_DATA: MenuData = {
-  title: "", // root menu, so no title
-  links: [
-    { ...ARTISTS_SUBMENU_DATA },
-    { ...ARTWORKS_SUBMENU_DATA },
-    {
-      text: "Auctions",
-      href: "/auctions",
-    },
-    {
-      text: "Viewing Rooms",
-      href: "/viewing-rooms",
-    },
-    {
-      text: "Editorial",
-      href: "/articles",
-    },
-    {
-      text: "Galleries",
-      href: "/galleries",
-    },
-    {
-      text: "Fairs",
-      href: "/fairs",
-    },
-    {
-      text: "Shows",
-      href: "/shows",
-    },
-    {
-      text: "Museums",
-      href: "/institutions",
-    },
-    {
-      text: "Consign",
-      href: "/consign",
-    },
-    {
-      text: "Artsy for Galleries",
-      href: "/gallery-partnerships",
-    },
-    // NB. that desktop and mobile currently handle logged-in/out state links
-    // such as "log in" or "account" separately
-  ],
 }

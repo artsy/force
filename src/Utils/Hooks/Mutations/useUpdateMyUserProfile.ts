@@ -1,7 +1,7 @@
 import { Environment } from "react-relay"
 import { commitMutation, graphql } from "relay-runtime"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import {
   useUpdateMyUserProfileMutation,
   UpdateMyProfileInput,

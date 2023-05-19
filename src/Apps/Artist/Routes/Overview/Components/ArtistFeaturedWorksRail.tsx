@@ -2,7 +2,8 @@ import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext, useSystemContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useSystemContext } from "System/SystemContext"
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
@@ -10,7 +11,7 @@ import {
 import { extractNodes } from "Utils/extractNodes"
 import { ArtistFeaturedWorksRail_artist$data } from "__generated__/ArtistFeaturedWorksRail_artist.graphql"
 import { ArtistFeaturedWorksRailQuery } from "__generated__/ArtistFeaturedWorksRailQuery.graphql"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { Box, Skeleton } from "@artsy/palette"
 import { useJump } from "Utils/Hooks/useJump"
@@ -43,7 +44,7 @@ const ArtistFeaturedWorksRail: React.FC<ArtistFeaturedWorksRailProps> = ({
     <Rail
       title={t("rails.artistFeaturedWorks.title")}
       viewAllLabel={t("rails.artistFeaturedWorks.viewAllWorks")}
-      viewAllHref={`/artist/${artist.slug}/works-for-sale`}
+      viewAllHref={`/artist/${artist.slug}`}
       viewAllOnClick={() => {
         jumpTo("artistContentArea")
 

@@ -15,7 +15,8 @@ import {
 } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext, useSystemContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useSystemContext } from "System/SystemContext"
 import { clickedEntityGroup, ContextModule, OwnerType } from "@artsy/cohesion"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { MyBidsQuery } from "__generated__/MyBidsQuery.graphql"
@@ -81,7 +82,7 @@ const MyBids: React.FC<MyBidsProps> = props => {
                     <Box py={1} px={2}>
                       <RouterLink
                         to={auctionURL}
-                        noUnderline
+                        textDecoration="none"
                         data-test="registeredOnlyButton"
                         onClick={() => {
                           trackEvent(

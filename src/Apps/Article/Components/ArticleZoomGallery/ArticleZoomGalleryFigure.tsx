@@ -1,5 +1,5 @@
 import { Link } from "react-head"
-import { CloseIcon, Spinner } from "@artsy/palette"
+import { Spinner } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { FC, ImgHTMLAttributes, useEffect, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -8,6 +8,7 @@ import { useMode } from "Utils/Hooks/useMode"
 import { resized } from "Utils/resized"
 import { ArticleZoomGalleryFigure_figure$data } from "__generated__/ArticleZoomGalleryFigure_figure.graphql"
 import { FullscreenBox } from "Components/FullscreenBox"
+import CloseIcon from "@artsy/icons/CloseIcon"
 
 interface ArticleZoomGalleryFigureProps {
   figure: ArticleZoomGalleryFigure_figure$data

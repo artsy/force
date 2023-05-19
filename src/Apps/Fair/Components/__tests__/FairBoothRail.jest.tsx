@@ -4,7 +4,7 @@ import { graphql } from "react-relay"
 import { FairBoothRail_Test_Query } from "__generated__/FairBoothRail_Test_Query.graphql"
 import { BoothFilterContextProvider } from "Apps/Fair/Components/BoothFilterContext"
 import { fireEvent, screen } from "@testing-library/react"
-import { AnalyticsContext } from "System"
+import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { useRouter } from "System/Router/useRouter"
@@ -103,8 +103,8 @@ describe("FairBoothRail", () => {
     fireEvent.click(link)
 
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action": "clickedArtworkGroup",
           "context_module": "galleryBoothRail",
           "context_page_owner_id": "context-page-owner-id",

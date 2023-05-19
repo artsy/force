@@ -2,7 +2,7 @@ import { Box, Column, GridColumns, Text, Spacer, Button } from "@artsy/palette"
 import { FC } from "react"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { FullBleedHeaderFader } from "Components/FullBleedHeader"
+import { FullBleedHeaderFader } from "Components/FullBleedHeader/FullBleedHeaderFader"
 
 export const InstitutionPartnershipsHero: FC = () => {
   return (

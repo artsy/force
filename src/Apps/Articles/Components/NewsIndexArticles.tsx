@@ -5,7 +5,7 @@ import {
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { ArticleAd } from "Apps/Article/Components/ArticleAd"
+import { ArticleAd } from "Apps/Article/Components/ArticleAd/ArticleAd"
 import { ArticleBodyFragmentContainer } from "Apps/Article/Components/ArticleBody"
 import { extractNodes } from "Utils/extractNodes"
 import { NewsIndexArticles_viewer$data } from "__generated__/NewsIndexArticles_viewer.graphql"

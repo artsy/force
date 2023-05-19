@@ -6,13 +6,15 @@ import { ContextModule } from "@artsy/cohesion"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Box, Skeleton, Spacer } from "@artsy/palette"
 
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import {
   Header,
   HeaderPlaceholder,
 } from "Apps/Artwork/Components/OtherWorks/Header"
-import ArtworkGrid, { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
+import ArtworkGrid, {
+  ArtworkGridPlaceholder,
+} from "Components/ArtworkGrid/ArtworkGrid"
 import { RelatedWorksQuery } from "__generated__/RelatedWorksQuery.graphql"
 import { RelatedWorks_artwork$data } from "__generated__/RelatedWorks_artwork.graphql"
 

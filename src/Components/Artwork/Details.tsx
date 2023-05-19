@@ -1,21 +1,16 @@
 import { AuthContextModule } from "@artsy/cohesion"
-import {
-  Box,
-  Flex,
-  Join,
-  Link,
-  LinkProps,
-  SkeletonText,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Box, Flex, Join, SkeletonText, Spacer, Text } from "@artsy/palette"
+import { themeGet } from "@styled-system/theme-get"
 import { HighDemandIcon } from "Apps/MyCollection/Routes/MyCollectionArtwork/Components/MyCollectionArtworkDemandIndex/HighDemandIcon"
+import { SaveArtworkToListsButtonFragmentContainer } from "Components/Artwork/SaveButton/SaveArtworkToListsButton"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
 import { isFunction } from "lodash"
 import * as React from "react"
 import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import styled from "styled-components"
+import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 import { useTimer } from "Utils/Hooks/useTimer"
@@ -37,12 +32,22 @@ interface DetailsProps {
   renderSaveButton?: (artworkId: string) => React.ReactNode
 }
 
+const StyledConditionalLink = styled(RouterLink)`
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  color: ${themeGet("colors.black100")};
+  text-decoration: none;
+  &:hover {
+    text-decoration: underline;
+  }
+`
+
 const ConditionalLink: React.FC<
   Pick<DetailsProps, "includeLinks"> &
-    LinkProps &
+    RouterLinkProps &
     React.AnchorHTMLAttributes<HTMLAnchorElement>
 > = ({ includeLinks, children, ...rest }) => {
-  return includeLinks ? <Link {...rest}>{children}</Link> : <>{children}</>
+  const LinkComponent = includeLinks ? StyledConditionalLink : "span"
+  return <LinkComponent {...rest}>{children}</LinkComponent>
 }
 
 const ArtistLine: React.FC<DetailsProps> = ({
@@ -76,11 +81,7 @@ const ArtistLine: React.FC<DetailsProps> = ({
         if (!artist || !artist.href || !artist.name) return null
 
         return (
-          <ConditionalLink
-            includeLinks={includeLinks}
-            href={artist.href}
-            key={i}
-          >
+          <ConditionalLink includeLinks={includeLinks} to={artist.href} key={i}>
             {artist.name}
             {i !== artists.length - 1 && ", "}
           </ConditionalLink>
@@ -95,7 +96,7 @@ const TitleLine: React.FC<DetailsProps> = ({
   artwork: { title, date, href },
 }) => {
   return (
-    <ConditionalLink includeLinks={includeLinks} href={href!}>
+    <ConditionalLink includeLinks={includeLinks} to={href!}>
       <Text variant="sm-display" color="black60" overflowEllipsis>
         <i>{title}</i>
         {date && `, ${date}`}
@@ -118,7 +119,7 @@ const PartnerLine: React.FC<DetailsProps> = ({
 
   if (partner) {
     return (
-      <ConditionalLink includeLinks={includeLinks} href={partner?.href!}>
+      <ConditionalLink includeLinks={includeLinks} to={partner?.href!}>
         <Text variant="xs" color="black60" overflowEllipsis>
           {partner.name}
         </Text>
@@ -212,12 +213,8 @@ export const Details: React.FC<DetailsProps> = ({
   const isHighDemand =
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
 
-  const showDemandIndexHints = useFeatureFlag(
-    "show-my-collection-demand-index-hints"
-  )
-
-  const showHighDemandInfo =
-    !!isP1Artist && isHighDemand && !!showDemandIndexHints && showHighDemandIcon
+  const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
+  const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
 
   const renderSaveButtonComponent = () => {
     if (!showSaveButton) {
@@ -226,6 +223,15 @@ export const Details: React.FC<DetailsProps> = ({
 
     if (isFunction(renderSaveButton)) {
       return renderSaveButton(rest.artwork.internalID)
+    }
+
+    if (isArtworksListEnabled) {
+      return (
+        <SaveArtworkToListsButtonFragmentContainer
+          contextModule={contextModule!}
+          artwork={rest.artwork}
+        />
+      )
     }
 
     return (
@@ -407,6 +413,7 @@ export const DetailsFragmentContainer = createFragmentContainer(Details, {
         }
       }
       ...SaveButton_artwork
+      ...SaveArtworkToListsButton_artwork
       ...HoverDetails_artwork
     }
   `,

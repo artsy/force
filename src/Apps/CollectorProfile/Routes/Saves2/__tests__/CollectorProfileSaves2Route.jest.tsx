@@ -1,12 +1,20 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { CollectorProfileSaves2Route_Test_Query } from "__generated__/CollectorProfileSaves2Route_Test_Query.graphql"
 import { CollectorProfileSaves2RouteFragmentContainer } from "Apps/CollectorProfile/Routes/Saves2/CollectorProfileSaves2Route"
 import { useRouter } from "System/Router/useRouter"
+import { useTracking } from "react-tracking"
+import { HttpError } from "found"
 
 jest.unmock("react-relay")
 jest.mock("System/Router/useRouter")
+jest.mock("found")
+jest.mock("react-head", () => ({
+  Title: ({ children }) => <title>{children}</title>,
+  Meta: () => null,
+  Link: () => null,
+}))
 
 const { renderWithRelay } = setupTestWrapperTL<
   CollectorProfileSaves2Route_Test_Query
@@ -23,8 +31,15 @@ const { renderWithRelay } = setupTestWrapperTL<
 
 describe("CollectorProfileSaves2Route", () => {
   const mockUseRouter = useRouter as jest.Mock
+  const mockUseTracking = useTracking as jest.Mock
+  const mockHttpError = HttpError as jest.Mock
+  const trackEvent = jest.fn()
 
   beforeEach(() => {
+    mockUseTracking.mockImplementation(() => ({
+      trackEvent,
+    }))
+
     mockUseRouter.mockImplementation(() => ({
       match: {
         params: {},
@@ -36,14 +51,14 @@ describe("CollectorProfileSaves2Route", () => {
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
+    jest.restoreAllMocks()
   })
 
   it("should render collections", () => {
     renderWithRelay({
       Me: () => ({
-        defaultSaves: savedArtworksCollection,
-        otherSaves: collectionsConnection,
+        savedArtworksArtworkList,
+        customArtworkLists,
       }),
     })
 
@@ -57,8 +72,8 @@ describe("CollectorProfileSaves2Route", () => {
     it("should render the first collection as selected when collection id is NOT passed in url", () => {
       renderWithRelay({
         Me: () => ({
-          defaultSaves: savedArtworksCollection,
-          otherSaves: collectionsConnection,
+          savedArtworksArtworkList,
+          customArtworkLists,
         }),
       })
 
@@ -80,8 +95,8 @@ describe("CollectorProfileSaves2Route", () => {
 
       renderWithRelay({
         Me: () => ({
-          defaultSaves: savedArtworksCollection,
-          otherSaves: collectionsConnection,
+          savedArtworksArtworkList,
+          customArtworkLists,
         }),
       })
 
@@ -104,8 +119,8 @@ describe("CollectorProfileSaves2Route", () => {
 
     renderWithRelay({
       Me: () => ({
-        defaultSaves: savedArtworksCollection,
-        otherSaves: collectionsConnection,
+        savedArtworksArtworkList,
+        customArtworkLists,
       }),
     })
 
@@ -115,6 +130,56 @@ describe("CollectorProfileSaves2Route", () => {
     // Check the second slot
     expect(lockedElement).toHaveTextContent("Collection Three")
     expect(isAriaCurrentAttributeSetToTrue(lockedElement)).toBe(true)
+  })
+
+  it("should track event on mount", async () => {
+    renderWithRelay({
+      Me: () => ({
+        savedArtworksArtworkList,
+        customArtworkLists,
+      }),
+    })
+
+    await waitFor(() =>
+      expect(trackEvent).toHaveBeenLastCalledWith({
+        action: "viewedArtworkList",
+        context_owner_type: "saves",
+        owner_id: "saved-artwork",
+      })
+    )
+  })
+
+  it("should set title tag", async () => {
+    renderWithRelay({
+      Me: () => ({
+        savedArtworksArtworkList,
+        customArtworkLists,
+      }),
+    })
+
+    await waitFor(() => expect(document.title).toBe("Saves | Artsy"))
+  })
+
+  it("should render 404 for non-existent list", async () => {
+    mockUseRouter.mockImplementation(() => ({
+      match: {
+        params: {
+          id: "non-existent-list-id",
+        },
+        location: {
+          query: {},
+        },
+      },
+    }))
+
+    renderWithRelay({
+      Me: () => ({
+        savedArtworksArtworkList,
+        customArtworkLists,
+      }),
+    })
+
+    expect(mockHttpError).toHaveBeenCalledWith(404)
   })
 })
 
@@ -130,12 +195,12 @@ const getCurrentCollectionElement = () => {
   })
 }
 
-const savedArtworksCollection = {
+const savedArtworksArtworkList = {
   internalID: "saved-artwork",
   name: "Saved Artworks",
 }
 
-const collectionsConnection = {
+const customArtworkLists = {
   edges: [
     {
       node: {

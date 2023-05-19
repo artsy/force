@@ -9,11 +9,10 @@ import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFi
 import { MediumFilter } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { AuctionArtworkFilter_viewer$data } from "__generated__/AuctionArtworkFilter_viewer.graphql"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { Join, Spacer } from "@artsy/palette"
 
 interface AuctionArtworkFilterProps {
@@ -26,7 +25,6 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
 }) => {
   const { user } = useSystemContext()
   const { match } = useRouter()
-  const showKeywordFilter = useFeatureFlag("artist-artwork-grid-keyword-search")
 
   if (!viewer.sidebarAggregations) return null
 
@@ -53,7 +51,7 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
         viewer={viewer}
         Filters={
           <Join separator={<Spacer y={4} />}>
-            {showKeywordFilter && <KeywordFilter />}
+            <KeywordFilter />
             <ArtistsFilter expanded />
             <PriceRangeFilter expanded />
             <MediumFilter expanded />
@@ -109,6 +107,5 @@ export const getArtworkFilterInputArgs = (user?: User) => {
   return {
     aggregations,
     first: 39,
-    sort: "sale_position",
   }
 }

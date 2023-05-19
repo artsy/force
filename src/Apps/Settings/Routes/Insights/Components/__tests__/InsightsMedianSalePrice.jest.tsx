@@ -69,9 +69,6 @@ describe("InsightsMedianSalePrice", () => {
           "my-collection-web-phase-7-median-sale-price-graph": {
             flagEnabled: true,
           },
-          "cx-collector-profile": {
-            flagEnabled: false,
-          },
         },
       }))
 
@@ -82,7 +79,7 @@ describe("InsightsMedianSalePrice", () => {
       fireEvent.click(artistRow)
 
       expect(mockPush).toHaveBeenCalledWith(
-        "/my-collection/median-sale-price-at-auction/takashi-murakami-id?medium=Print"
+        "/collector-profile/my-collection/median-sale-price-at-auction/takashi-murakami-id?medium=Print"
       )
     })
 
@@ -90,9 +87,6 @@ describe("InsightsMedianSalePrice", () => {
       ;(useSystemContext as jest.Mock).mockImplementation(() => ({
         featureFlags: {
           "my-collection-web-phase-7-median-sale-price-graph": {
-            flagEnabled: true,
-          },
-          "cx-collector-profile": {
             flagEnabled: true,
           },
         },

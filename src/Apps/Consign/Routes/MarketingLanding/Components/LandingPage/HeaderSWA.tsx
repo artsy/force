@@ -1,32 +1,33 @@
+import { ActionType } from "@artsy/cohesion"
 import {
   Button,
   Column,
   GridColumns,
+  Image,
   ResponsiveBox,
   Spacer,
   Text,
-  Image,
 } from "@artsy/palette"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { RouterLink } from "System/Router/RouterLink"
+import { useSystemContext } from "System/SystemContext"
+import { Media } from "Utils/Responsive"
 import { resized } from "Utils/resized"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { useAnalyticsContext, useSystemContext } from "System"
 import { useTracking } from "react-tracking"
 
 export const HeaderSWA = () => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
-  const enableSWAInquiryFlow = useFeatureFlag("swa-inquiry-flow")
 
-  const getInTouchRoute = enableSWAInquiryFlow
-    ? "/sell/inquiry"
-    : "mailto:sell@artsy.net?subject=Inquiry about selling with Artsy"
+  const getInTouchRoute = "/sell/inquiry"
 
   const trackStartSellingClick = () => {
     trackEvent({
-      action: "clickedStartSelling",
-      context_module: "Header",
+      action: ActionType.tappedConsign,
+      context_module: "Header", // not importing the name from cohesion as a exeption, should NOT be done in other places
+      // the reason is that in cohesion the modult is maned "header"
+      // we use "Header" with capital letter for analyticks already and we do not want to intrpduce another name
       context_page_owner_type: contextPageOwnerType,
       label: "Start Selling",
       destination_path: "/sell/submission",
@@ -36,8 +37,10 @@ export const HeaderSWA = () => {
 
   const trackGetInTouchClick = () => {
     trackEvent({
-      action: "clickedGetInTouch",
-      context_module: "Header",
+      action: ActionType.tappedConsignmentInquiry,
+      context_module: "Header", // not importing the name from cohesion as a exeption, should NOT be done in other places
+      // the reason is that in cohesion the modult is maned "header"
+      // we use "Header" with capital letter for analyticks already and we do not want to intrpduce another name
       context_page_owner_type: contextPageOwnerType,
       label: "Get in Touch",
       user_id: user?.id,
@@ -46,32 +49,32 @@ export const HeaderSWA = () => {
   }
 
   const image = resized(
-    "https://files.artsy.net/images/content-card-swa-landing-page.png",
-    { width: 1104, height: 833 } // TODO: Source image should be 4:3, ideally
+    "https://files.artsy.net/images/content-card-swa-landing-page.jpg",
+    { width: 1104, height: 833 }
   )
 
   return (
-    <GridColumns gridRowGap={4} alignItems="center">
+    <GridColumns gridRowGap={[2, 4]} alignItems="center">
       <Column span={5} order={[1, 0]} py={[0, 2]} pr={[0, 2]}>
-        <Text as="h1" variant={["xl", "xl", "xxxl"]}>
+        <Text as="h1" variant={["xl", "xxl", "xxxl"]}>
           Sell art from your collection
         </Text>
 
-        <Spacer y={[0.5, 2]} />
+        <Spacer y={[0.5, 2, 4]} />
 
-        <Text variant={["xs", "lg"]}>
-          Our experts find the best sales opportunity for your work, through our
-          vast global network of buyers.
+        <Text variant={["xs", "sm", "lg"]}>
+          With our global reach and art market expertise, our specialists will
+          find the right buyer for your work.
         </Text>
 
-        <Spacer y={[4, 6]} />
+        <Spacer y={[2, 4]} />
 
         <GridColumns>
-          <Column span={4}>
+          <Column span={[12, 6, 5]}>
             <Button
               // @ts-ignore
               as={RouterLink}
-              width={"100%"}
+              width="100%"
               variant="primaryBlack"
               to="/sell/submission"
               onClick={trackStartSellingClick}
@@ -81,9 +84,9 @@ export const HeaderSWA = () => {
               Start Selling
             </Button>
           </Column>
-          <Column span={4}>
+          <Column span={[12, 6, 5]}>
             <Button
-              width={"100%"}
+              width="100%"
               // @ts-ignore
               as={RouterLink}
               variant="secondaryBlack"
@@ -97,8 +100,22 @@ export const HeaderSWA = () => {
         </GridColumns>
       </Column>
 
-      <Column span={7}>
+      <Column span={7} ml={[-2, 0]} mr={[-2, -4]}>
         <ResponsiveBox aspectWidth={1104} aspectHeight={833} maxWidth="100%">
+          <Media greaterThan="xs">
+            <Text
+              position="absolute"
+              bottom={0}
+              ml={1}
+              variant="xs"
+              color="black15"
+            >
+              <i>
+                Hunt Slonem, Lily White, 2020. Alex Katz, Large Birch, 2005.
+                Andy Warhol, Queen Margrethe II of Denmark (FS II.345), 1985
+              </i>
+            </Text>
+          </Media>
           <Image
             width="100%"
             height="100%"

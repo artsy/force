@@ -15,7 +15,6 @@ import { useFollowButtonTracking } from "./useFollowButtonTracking"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { FollowProfileButtonQuery } from "__generated__/FollowProfileButtonQuery.graphql"
 import { useAuthDialog } from "Components/AuthDialog"
-import { ModalType } from "Components/Authentication/Types"
 
 interface FollowProfileButtonProps extends Omit<ButtonProps, "variant"> {
   profile: FollowProfileButton_profile$data
@@ -68,35 +67,21 @@ const FollowProfileButton: React.FC<FollowProfileButtonProps> = ({
 
     if (!isLoggedIn) {
       showAuthDialog({
-        current: {
-          mode: "SignUp",
-          options: {
-            title: mode => {
-              const action = mode === "SignUp" ? "Sign up" : "Log in"
-              return `${action} to follow ${profile.name}`
-            },
-            afterAuthAction: {
-              action: "follow",
-              kind: "profile",
-              objectId: profile.slug,
-            },
+        mode: "SignUp",
+        options: {
+          title: mode => {
+            const action = mode === "SignUp" ? "Sign up" : "Log in"
+            return `${action} to follow ${profile.name}`
           },
-          analytics: {
-            intent: Intent.followPartner,
-            contextModule,
-          },
-        },
-        legacy: {
-          afterSignUpAction: {
+          afterAuthAction: {
             action: "follow",
             kind: "profile",
             objectId: profile.slug,
           },
-          contextModule,
-          copy: `Sign up to follow ${profile.name}`,
+        },
+        analytics: {
           intent: Intent.followPartner,
-          mode: ModalType.signup,
-          redirectTo: window.location.href,
+          contextModule,
         },
       })
 

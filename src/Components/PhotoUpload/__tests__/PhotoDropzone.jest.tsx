@@ -1,8 +1,8 @@
-import { flushPromiseQueue } from "DevTools"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { mount } from "enzyme"
 import { Formik } from "formik"
-import { PhotoDropzone } from "../Components/PhotoDropzone"
-import { MBSize } from "../Utils/fileUtils"
+import { PhotoDropzone } from "Components/PhotoUpload/Components/PhotoDropzone"
+import { MBSize } from "Components/PhotoUpload/Utils/fileUtils"
 
 const validImage = {
   name: "foo.png",

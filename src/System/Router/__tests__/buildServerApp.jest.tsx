@@ -2,7 +2,7 @@
  * @jest-environment node
  */
 
-import { SystemContextConsumer } from "System"
+import { SystemContextConsumer } from "System/SystemContext"
 import {
   __TEST_INTERNAL_SERVER_APP__,
   buildServerApp,
@@ -173,7 +173,6 @@ describe("buildServerApp", () => {
               "isEigen",
               "isFetching",
               "isLoggedIn",
-              "mediator",
               "relayEnvironment",
               "router",
               "routes",

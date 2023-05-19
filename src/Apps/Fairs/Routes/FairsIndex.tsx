@@ -15,7 +15,6 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
-import { ModalType } from "Components/Authentication/Types"
 import { Media } from "Utils/Responsive"
 import { FairsIndex_featuredFairs$data } from "__generated__/FairsIndex_featuredFairs.graphql"
 import { FairsIndex_viewer$data } from "__generated__/FairsIndex_viewer.graphql"
@@ -25,7 +24,7 @@ import { FairsPhonePromo } from "Apps/Fairs/Components/FairsPhonePromo"
 import { FairsPromoCarousel } from "Apps/Fairs/Components/FairsPromoCarousel"
 import { FairsMeta } from "Apps/Fairs/Components/FairsMeta"
 import { FairsPastFairsPaginationContainer } from "Apps/Fairs/Components/FairsPastFairs"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { compact } from "lodash"
 import { cropped } from "Utils/resized"
 import { useAuthDialog } from "Components/AuthDialog"
@@ -194,17 +193,10 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
                     variant="secondaryBlack"
                     onClick={() => {
                       showAuthDialog({
-                        current: {
-                          mode: "SignUp",
-                          analytics: {
-                            contextModule: ContextModule.fairsHeader,
-                            intent: Intent.signup,
-                          },
-                        },
-                        legacy: {
-                          mode: ModalType.signup,
-                          intent: Intent.signup,
+                        mode: "SignUp",
+                        analytics: {
                           contextModule: ContextModule.fairsHeader,
+                          intent: Intent.signup,
                         },
                       })
                     }}
@@ -306,7 +298,7 @@ export const FairsIndex: React.FC<FairsIndexProps> = ({
               return (
                 <Text key={fair.internalID} my={2} variant="sm">
                   {fair.organizer?.profile?.href ? (
-                    <RouterLink to={fair.organizer.profile.href}>
+                    <RouterLink inline to={fair.organizer.profile.href}>
                       {fair.name}
                     </RouterLink>
                   ) : (

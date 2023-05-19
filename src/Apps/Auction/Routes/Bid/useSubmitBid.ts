@@ -4,12 +4,6 @@ import { useRouter } from "System/Router/useRouter"
 import createLogger from "Utils/logger"
 import { useBidderPosition } from "Apps/Auction/Queries/useBidderPosition"
 import { useCreateBidderPosition } from "Apps/Auction/Queries/useCreateBidderPosition"
-import {
-  AuctionFormHelpers,
-  AuctionFormValues,
-  BiddingStatus,
-  errorMessageForBidding,
-} from "Apps/Auction/Components/Form/Utils"
 import { useCreateTokenAndSubmit } from "Apps/Auction/Hooks/useCreateTokenAndSubmit"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { AuctionBidRoute_sale$data } from "__generated__/AuctionBidRoute_sale.graphql"
@@ -17,6 +11,14 @@ import { AuctionBidRoute_artwork$data } from "__generated__/AuctionBidRoute_artw
 import { AuctionBidRoute_me$data } from "__generated__/AuctionBidRoute_me.graphql"
 import { RelayRefetchProp } from "react-relay"
 import { useToasts } from "@artsy/palette"
+import {
+  AuctionFormHelpers,
+  AuctionFormValues,
+} from "Apps/Auction/Components/Form/Utils/initialValues"
+import {
+  BiddingStatus,
+  errorMessageForBidding,
+} from "Apps/Auction/Components/Form/Utils/errorMessages"
 
 const logger = createLogger("useSubmitBid")
 

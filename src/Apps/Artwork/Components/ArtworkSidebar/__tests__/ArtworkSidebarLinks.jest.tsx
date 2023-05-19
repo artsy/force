@@ -54,8 +54,8 @@ describe("ArtworkSidebarLinks", () => {
 
     expect(trackEvent).toHaveBeenCalledTimes(1)
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-      Array [
-        Object {
+      [
+        {
           "action_type": "Click",
           "subject": "sell with artsy",
           "type": "Link",
@@ -95,14 +95,14 @@ describe("ArtworkSidebarLinks", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(1)
       expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-          Array [
-            Object {
-              "action_type": "Click",
-              "subject": "sell with artsy",
-              "type": "Link",
-            },
-          ]
-        `)
+        [
+          {
+            "action_type": "Click",
+            "subject": "sell with artsy",
+            "type": "Link",
+          },
+        ]
+      `)
     })
   })
 

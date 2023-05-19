@@ -22,8 +22,9 @@ export const ConditionsOfSaleCheckbox: React.FC = () => {
     <>
       <Checkbox selected={values.agreeToTerms} onSelect={handleCheckboxSelect}>
         <Text variant="sm-display" ml={0.5}>
-          Agree to{" "}
+          I agree to the{" "}
           <RouterLink
+            inline
             display="inline"
             color="black100"
             to="/conditions-of-sale"
@@ -31,6 +32,7 @@ export const ConditionsOfSaleCheckbox: React.FC = () => {
           >
             Conditions of Sale
           </RouterLink>
+          . I understand that all bids are binding and may not be retracted.
         </Text>
       </Checkbox>
 

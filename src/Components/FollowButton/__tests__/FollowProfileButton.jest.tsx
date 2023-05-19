@@ -85,32 +85,18 @@ describe("FollowProfileButton", () => {
       fireEvent.click(button)
 
       expect(showAuthDialog).toBeCalledWith({
-        current: {
-          analytics: {
-            contextModule: "partnerHeader",
-            intent: "followPartner",
-          },
-          mode: "SignUp",
-          options: {
-            afterAuthAction: {
-              action: "follow",
-              kind: "profile",
-              objectId: "example",
-            },
-            title: expect.any(Function),
-          },
+        analytics: {
+          contextModule: "partnerHeader",
+          intent: "followPartner",
         },
-        legacy: {
-          afterSignUpAction: {
+        mode: "SignUp",
+        options: {
+          afterAuthAction: {
             action: "follow",
             kind: "profile",
             objectId: "example",
           },
-          contextModule: "partnerHeader",
-          copy: "Sign up to follow Example",
-          intent: "followPartner",
-          mode: "signup",
-          redirectTo: "http://localhost/",
+          title: expect.any(Function),
         },
       })
     })

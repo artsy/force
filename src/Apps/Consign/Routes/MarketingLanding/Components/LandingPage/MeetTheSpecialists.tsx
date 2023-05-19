@@ -1,23 +1,32 @@
+import { ActionType, ContextModule } from "@artsy/cohesion"
 import {
   Box,
   Button,
-  Column,
-  Flex,
-  GridColumns,
-  Pill,
-  ResponsiveBox,
-  Text,
+  HorizontalOverflow,
   Image,
+  Join,
+  Pill,
+  ReadMore,
+  ResponsiveBox,
+  Spacer,
+  Text,
 } from "@artsy/palette"
 import {
+  CARD_HEIGHT,
+  CARD_HEIGHT_MD,
+  CARD_HEIGHT_MOBILE,
+  CARD_WIDTH,
   SPECIALISTS,
   Specialty,
 } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/SpecialistsData"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { RouterLink } from "System/Router/RouterLink"
+import { useSystemContext } from "System/SystemContext"
+import { resized } from "Utils/resized"
 import { useState } from "react"
 import { useTracking } from "react-tracking"
-import { RouterLink } from "System/Router/RouterLink"
-import { useAnalyticsContext, useSystemContext } from "System"
+import styled from "styled-components"
 
 interface PillData {
   type: Specialty
@@ -39,22 +48,25 @@ const pills: PillData[] = [
   },
 ]
 
+const filteredPills = pills.filter(pill =>
+  SPECIALISTS.some(specialist => specialist.specialty === pill.type)
+) as PillData[]
+
 export const MeetTheSpecialists: React.FC = () => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
 
-  const [selectedSpecialty, setSelectedSpecialty] = useState<Specialty>(
-    "auctions"
-  )
-  const [specialistsTooDisplay, setSpecialistsTooDisplay] = useState(
-    SPECIALISTS.filter(i => i.specialty === "auctions")
-  )
+  const [specialityFilter, setSpecialityFilter] = useState<Specialty | null>()
+
+  const specialistsTooDisplay = specialityFilter
+    ? SPECIALISTS.filter(i => i.specialty === specialityFilter)
+    : SPECIALISTS
 
   const trackContactTheSpecialistClick = () => {
     trackEvent({
-      action: "clickedGetInTouch",
-      context_module: "MeetTheSpecialists",
+      action: ActionType.tappedConsignmentInquiry,
+      context_module: ContextModule.sellMeetTheSpecialists,
       context_page_owner_type: contextPageOwnerType,
       label: "Contact specialist_name",
       user_id: user?.id,
@@ -62,54 +74,56 @@ export const MeetTheSpecialists: React.FC = () => {
     })
   }
 
-  const trackStartSellingClick = () => {
+  const trackGetInTouchClick = () => {
     trackEvent({
-      action: "clickedStartSelling",
-      context_module: "MeetTheSpecialists",
+      action: ActionType.tappedConsignmentInquiry,
+      context_module: ContextModule.sellMeetTheSpecialists,
       context_page_owner_type: contextPageOwnerType,
-      label: "Start Selling",
-      destination_path: "/sell/submission",
+      label: "Get in Touch",
       user_id: user?.id,
+      user_email: user?.email,
     })
   }
 
+  const clickContactSpecialist = () => {
+    trackContactTheSpecialistClick()
+  }
   return (
     <>
       <Text mb={[0.5, 1]} variant={["lg-display", "xl", "xxl"]}>
         Meet the specialists
       </Text>
-      <Text mb={[2, 4]} variant={["xs", "sm"]}>
-        Our in-house experts cover Post-War and Contemporary Art, Prints and
-        Multiples, Street Art and Photographs.
+      <Text mb={2} variant={["xs", "sm"]}>
+        Our specialists span today’s most popular collecting categories.
       </Text>
-      <Flex overflowY="scroll">
-        {pills.map(pill => (
-          <Pill
-            mr={[1, 2]}
-            hover={false}
-            selected={selectedSpecialty === pill.type}
-            variant="default"
-            onClick={() => {
-              setSelectedSpecialty(pill.type)
-              setSpecialistsTooDisplay(
-                SPECIALISTS.filter(i => i.specialty === pill.type)
-              )
-            }}
-          >
-            {pill.title}
-          </Pill>
-        ))}
-      </Flex>
+      <HorizontalOverflow>
+        <Join separator={<Spacer x={1} />}>
+          {filteredPills.map(pill => (
+            <Pill
+              key={`pill-${pill.type}`}
+              selected={specialityFilter === pill.type}
+              onClick={() => {
+                setSpecialityFilter(
+                  specialityFilter === pill.type ? null : pill.type
+                )
+              }}
+            >
+              {pill.title}
+            </Pill>
+          ))}
+        </Join>
+      </HorizontalOverflow>
       <Rail
         title=""
         getItems={() => {
           return specialistsTooDisplay.map(i => (
             <ResponsiveBox
-              aspectWidth={445}
-              aspectHeight={644}
-              maxWidth={445}
-              minHeight={[461, 644]}
+              aspectWidth={CARD_WIDTH}
+              aspectHeight={CARD_HEIGHT}
+              maxWidth={CARD_WIDTH}
+              minHeight={[CARD_HEIGHT_MOBILE, CARD_HEIGHT_MD, CARD_HEIGHT]}
               backgroundColor="black60"
+              key={`specialist-${i.firstName}`}
             >
               <Box
                 width="100%"
@@ -119,11 +133,14 @@ export const MeetTheSpecialists: React.FC = () => {
                 flexDirection="column"
               >
                 <Box position="absolute" width="100%" height="100%">
+                  <LinearGradient />
                   <Image
                     width="100%"
                     height="100%"
-                    src={i.image.src}
-                    srcSet={i.image.srcSet}
+                    {...resized(i.imageUrl, {
+                      width: CARD_WIDTH,
+                      height: CARD_HEIGHT,
+                    })}
                     lazyLoad
                     alt={`specialist ${i.firstName}`}
                   />
@@ -137,16 +154,17 @@ export const MeetTheSpecialists: React.FC = () => {
                     {i.jobTitle}
                   </Text>
                   <Text mb={2} variant={["xs", "sm"]} color="white100">
-                    {i.bio}
+                    <ReadMore content={i.bio} maxChars={88} />
                   </Text>
                   <Button
                     // @ts-ignore
                     as={RouterLink}
                     variant="secondaryWhite"
+                    size="small"
                     mb={2}
-                    onClick={trackContactTheSpecialistClick}
+                    onClick={clickContactSpecialist}
                     data-testid={`get-in-touch-button-${i.firstName}`}
-                    to={`mailto:${i.email}`}
+                    to={`/sell/inquiry/${i.email}`}
                   >
                     Contact {i.firstName}
                   </Button>
@@ -158,24 +176,35 @@ export const MeetTheSpecialists: React.FC = () => {
         showProgress={false}
       />
       <Text mb={[2, 4]} variant={["md", "lg-display"]}>
-        Not sure which of our experts is the right fit for your work? Get in
-        touch and we'll connect you.
+        Not sure who’s the right fit for your collection? Get in touch and we’ll
+        connect you.
       </Text>
-      <GridColumns>
-        <Column span={[12, 3, 2]}>
-          <Button
-            width={"100%"}
-            // @ts-ignore
-            as={RouterLink}
-            variant="primaryBlack"
-            onClick={trackStartSellingClick}
-            data-testid="start-selling-button"
-            to="/sell/submission"
-          >
-            Start Selling
-          </Button>
-        </Column>
-      </GridColumns>
+      <Button
+        width={["100%", 300]}
+        // @ts-ignore
+        as={RouterLink}
+        variant="primaryBlack"
+        onClick={trackGetInTouchClick}
+        data-testid="get-in-touch-button"
+        to={"/sell/inquiry"}
+      >
+        Get in Touch
+      </Button>
     </>
   )
 }
+
+const LinearGradient = styled(Box)`
+  position: "absolute";
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  position: absolute;
+  transition: background-color 200ms;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 1) 100%
+  );
+`

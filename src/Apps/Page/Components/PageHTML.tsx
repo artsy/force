@@ -1,4 +1,4 @@
-import { Box, THEME_V3 as THEME } from "@artsy/palette"
+import { Box, THEME } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import styled from "styled-components"
 import { toStyle } from "Utils/toStyle"

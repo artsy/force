@@ -1,28 +1,19 @@
 import { FC } from "react"
 import {
   Button,
-  CertificateIcon,
-  ChevronIcon,
   Column,
   Flex,
   FullBleed,
   GridColumns,
   Image,
-  LockIcon,
   ResponsiveBox,
   Spacer,
   Text,
-  VerifiedIcon,
 } from "@artsy/palette"
 import {
   FullBleedHeader,
   FullBleedHeaderOverlay,
-} from "Components/FullBleedHeader"
-import {
-  ChatIcon,
-  MoneyBackIcon,
-  PoweredByStripeIcon,
-} from "Apps/BuyerGuarantee/Components/BuyerGuaranteeIcons"
+} from "Components/FullBleedHeader/FullBleedHeader"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { MetaTags } from "Components/MetaTags"
 import { cropped } from "Utils/resized"
@@ -34,6 +25,12 @@ import {
 } from "Apps/BuyerGuarantee/Components/BuyerGuaranteeTables"
 import { Media } from "Utils/Responsive"
 import { Jump, useJump } from "Utils/Hooks/useJump"
+import LockIcon from "@artsy/icons/LockIcon"
+import VerifiedIcon from "@artsy/icons/VerifiedIcon"
+import CertificateIcon from "@artsy/icons/CertificateIcon"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
+import MoneyBackIcon from "@artsy/icons/MoneyBackIcon"
+import MessageIcon from "@artsy/icons/MessageIcon"
 
 const SUPPORT_ARTICLE_URL =
   "https://support.artsy.net/hc/en-us/articles/360048946973"
@@ -87,7 +84,7 @@ export const BuyerGuaranteeIndex: FC = () => {
         </Column>
 
         <Column span={4} start={3} textAlign="center">
-          <VerifiedIcon width={60} height={60} />
+          <VerifiedIcon width={60} height={60} mx="auto" />
 
           <Text variant="sm-display" fontWeight="bold" mt={2}>
             Vetted Sellers
@@ -100,7 +97,7 @@ export const BuyerGuaranteeIndex: FC = () => {
         </Column>
 
         <Column span={4} textAlign="center" wrap>
-          <ChatIcon width={60} height={60} />
+          <MessageIcon width={60} height={60} mx="auto" />
 
           <Text variant="sm-display" fontWeight="bold" mt={2}>
             Dedicated Support
@@ -113,7 +110,7 @@ export const BuyerGuaranteeIndex: FC = () => {
         </Column>
 
         <Column span={4} textAlign="center">
-          <CertificateIcon width={60} height={60} />
+          <CertificateIcon width={60} height={60} mx="auto" />
 
           <Text variant="sm-display" fontWeight="bold" mt={2}>
             Authenticity Guarantee
@@ -132,12 +129,17 @@ export const BuyerGuaranteeIndex: FC = () => {
             }}
           >
             Learn More
-            <ChevronIcon ml={0.5} width={12} height={12} fill="currentColor" />
+            <ChevronRightIcon
+              ml={0.5}
+              width={12}
+              height={12}
+              fill="currentColor"
+            />
           </Button>
         </Column>
 
         <Column span={4} textAlign="center">
-          <MoneyBackIcon width={60} height={60} />
+          <MoneyBackIcon width={60} height={60} mx="auto" />
 
           <Text variant="sm-display" fontWeight="bold" mt={2}>
             Money-Back Guarantee
@@ -156,12 +158,17 @@ export const BuyerGuaranteeIndex: FC = () => {
             }}
           >
             Learn More
-            <ChevronIcon ml={0.5} width={12} height={12} fill="currentColor" />
+            <ChevronRightIcon
+              ml={0.5}
+              width={12}
+              height={12}
+              fill="currentColor"
+            />
           </Button>
         </Column>
 
         <Column span={4} textAlign="center">
-          <LockIcon width={60} height={60} />
+          <LockIcon width={60} height={60} mx="auto" />
 
           <Text variant="sm-display" fontWeight="bold" mt={2}>
             Secure Payment
@@ -180,7 +187,12 @@ export const BuyerGuaranteeIndex: FC = () => {
             }}
           >
             Learn More
-            <ChevronIcon ml={0.5} width={12} height={12} fill="currentColor" />
+            <ChevronRightIcon
+              ml={0.5}
+              width={12}
+              height={12}
+              fill="currentColor"
+            />
           </Button>
         </Column>
       </GridColumns>
@@ -295,7 +307,15 @@ export const BuyerGuaranteeIndex: FC = () => {
             millions of global businesses.
           </Text>
 
-          <PoweredByStripeIcon width={150} height={34} mt={2} />
+          <Spacer y={2} />
+
+          <img
+            src="https://files.artsy.net/images/PoweredByStripe_1.svg"
+            alt="Powered by Stripe"
+            width={150}
+            height={34}
+            loading="lazy"
+          />
         </Column>
       </GridColumns>
 

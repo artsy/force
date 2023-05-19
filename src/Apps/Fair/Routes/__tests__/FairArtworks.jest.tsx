@@ -1,5 +1,5 @@
 import { FairArtworksRefetchContainer } from "Apps/Fair/Routes/FairArtworks"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -66,7 +66,7 @@ describe("FairArtworks", () => {
     const artistFilter = wrapper.find("ArtistsFilter")
     expect(artistFilter.length).toBe(1)
 
-    artistFilter.find("ChevronIcon").simulate("click")
+    artistFilter.find("button").simulate("click")
     expect(artistFilter.find("Checkbox").at(0).text()).toMatch(
       "Artists You Follow (10)"
     )
@@ -180,7 +180,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
               formattedEndDateTime: "Mar 12 • 12:33pm GMT",
               extendedBiddingEndAt: null,
             },
-            is_saved: false,
+            isSaved: false,
             is_biddable: true,
             attributionClass: null,
             mediumType: null,
@@ -228,7 +228,7 @@ const FAIR_ARTWORKS_FIXTURE: FairArtworks_Query$rawResponse = {
             sale: null,
             sale_artwork: null,
             saleArtwork: null,
-            is_saved: false,
+            isSaved: false,
             is_biddable: false,
             attributionClass: null,
             mediumType: null,

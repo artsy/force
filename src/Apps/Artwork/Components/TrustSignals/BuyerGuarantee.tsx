@@ -1,11 +1,11 @@
-import { CheckCircleIcon, Link } from "@artsy/palette"
+import { Link } from "@artsy/palette"
 import * as React from "react"
 import { BuyerGuarantee_artwork$data } from "__generated__/BuyerGuarantee_artwork.graphql"
-
 import { createFragmentContainer, graphql } from "react-relay"
 import { TrustSignal } from "./TrustSignal"
 import { BUYER_GUARANTEE_URL } from "Apps/Order/Components/BuyerGuarantee"
 import { shouldRenderBuyerGuaranteeAndSecurePayment } from "Apps/Artwork/Utils/badges"
+import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 
 interface Props {
   artwork: BuyerGuarantee_artwork$data
@@ -17,7 +17,7 @@ const BuyerGuarantee: React.FC<Props> = props => {
   if (shouldRenderBuyerGuaranteeAndSecurePayment(artwork)) {
     return (
       <TrustSignal
-        Icon={<CheckCircleIcon />}
+        Icon={<CheckmarkStrokeIcon />}
         label="Your purchase is protected"
         description={
           <>

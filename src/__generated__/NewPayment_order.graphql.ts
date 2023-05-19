@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d3b4884f4776c003950c578a7122d10c>>
+ * @generated SignedSource<<49352116c629c396eb3a95a1e15c0d6c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,7 +32,7 @@ export type NewPayment_order$data = {
   } | null;
   readonly mode: CommerceOrderModeEnum | null;
   readonly stateExpiresAt: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "CreditCardPicker_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "CreditCardPicker_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "NewPayment_order";
 };
 export type NewPayment_order$key = {
@@ -180,6 +180,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "TransactionDetailsSummaryItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "OrderStepper_order"
     }
   ],
   "type": "CommerceOrder",
@@ -187,6 +192,6 @@ return {
 };
 })();
 
-(node as any).hash = "c5fc85efa7df4310ef663017e1ec2ec7";
+(node as any).hash = "b19f055525d25bcddf91017a30141e00";
 
 export default node;

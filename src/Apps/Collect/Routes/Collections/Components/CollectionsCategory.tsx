@@ -10,7 +10,10 @@ import {
 import { crop } from "Utils/resizer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { CollectionsCategory_category$data } from "__generated__/CollectionsCategory_category.graphql"
-import { MOBILE_NAV_HEIGHT, DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar"
+import {
+  MOBILE_NAV_HEIGHT,
+  DESKTOP_NAV_BAR_HEIGHT,
+} from "Components/NavBar/constants"
 import { slugify } from "underscore.string"
 
 interface CollectionsCategoryProps {

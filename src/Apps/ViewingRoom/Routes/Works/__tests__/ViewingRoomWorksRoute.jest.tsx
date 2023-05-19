@@ -1,5 +1,6 @@
 import { useTracking } from "react-tracking"
-import { MockBoot, renderRelayTree } from "DevTools"
+import { renderRelayTree } from "DevTools/renderRelayTree"
+import { MockBoot } from "DevTools/MockBoot"
 import { graphql } from "react-relay"
 import { ViewingRoomWorksRoute_Test_Query$rawResponse } from "__generated__/ViewingRoomWorksRoute_Test_Query.graphql"
 import { Breakpoint } from "@artsy/palette"
@@ -84,7 +85,7 @@ describe("ViewingRoomWorksRoute", () => {
     })
 
     it("tracks clicks", () => {
-      wrapper.find("RouterLink").simulate("click")
+      wrapper.find("Button").simulate("click")
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "clickedBuyViewingRoom",
         context_module: "viewingRoomArtworkRail",
@@ -166,6 +167,7 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
             date: "2015",
             additionalInformation: "some description",
             href: "/artwork/bill-miles-beep-beep",
+            artistNames: "Artist Name",
             artist: {
               id: "artist-id",
               targetSupply: {
@@ -183,7 +185,7 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
               },
             ],
             slug: "bill-miles-tulips-p17-14",
-            is_saved: false,
+            isSaved: false,
             sale_message: "$500",
             cultural_maker: null,
             collecting_institution: "This Really Great Gallery",
@@ -221,6 +223,10 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
                 id: "gene-id",
                 name: "Prints",
               },
+            },
+            preview: null,
+            customCollections: {
+              totalCount: 0,
             },
           },
         },
@@ -310,6 +316,7 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
             date: "2018",
             additionalInformation: "some description",
             href: "/artwork/emma-johnson-please-do-not-touch",
+            artistNames: "Artist Name",
             artist: {
               id: "artist-id",
               targetSupply: {
@@ -327,7 +334,7 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
               },
             ],
             slug: "bill-miles-tulips-p17-14",
-            is_saved: false,
+            isSaved: false,
             sale_message: "$450",
             cultural_maker: null,
             collecting_institution: "This Really Great Gallery",
@@ -365,6 +372,10 @@ const ViewingRoomWorksRouteFixture: ViewingRoomWorksRoute_Test_Query$rawResponse
                 id: "gene-id",
                 name: "Prints",
               },
+            },
+            preview: null,
+            customCollections: {
+              totalCount: 0,
             },
           },
         },

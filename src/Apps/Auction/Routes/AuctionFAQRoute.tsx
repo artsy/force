@@ -1,10 +1,4 @@
-import {
-  Box,
-  Text,
-  THEME_V3 as THEME,
-  Spacer,
-  Expandable,
-} from "@artsy/palette"
+import { Box, Text, THEME, Spacer, Expandable } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { FC } from "react"
 import styled from "styled-components"
@@ -12,6 +6,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionFAQRoute_viewer$data } from "__generated__/AuctionFAQRoute_viewer.graphql"
 import { MetaTags } from "Components/MetaTags"
 import { toStyle } from "Utils/toStyle"
+import { RouterLink } from "System/Router/RouterLink"
 
 interface AuctionFAQRouteProps {
   viewer: AuctionFAQRoute_viewer$data
@@ -41,7 +36,10 @@ const AuctionFAQRoute: React.FC<AuctionFAQRouteProps> = ({ viewer }) => {
         questions from collectors.
         <br />
         Need more immediate assistance? Please{" "}
-        <a href="mailto:support@artsy.net">contact us</a>.
+        <RouterLink inline to="mailto:support@artsy.net">
+          contact us
+        </RouterLink>
+        .
       </Text>
 
       <Spacer y={2} />

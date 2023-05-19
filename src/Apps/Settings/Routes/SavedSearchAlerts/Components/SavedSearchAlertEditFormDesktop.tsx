@@ -1,6 +1,7 @@
-import { Box, Clickable, CloseIcon, Flex, Spacer, Text } from "@artsy/palette"
-import { EditAlertFormBase } from "../types"
+import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
+import { EditAlertFormBase } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { SavedSearchAlertEditFormQueryRenderer } from "./SavedSearchAlertEditForm"
+import CloseIcon from "@artsy/icons/CloseIcon"
 
 export const SavedSearchAlertEditFormDesktop: React.FC<EditAlertFormBase> = ({
   editAlertEntity,

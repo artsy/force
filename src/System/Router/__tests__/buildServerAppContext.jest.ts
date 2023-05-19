@@ -1,4 +1,4 @@
-import { buildServerAppContext } from "../buildServerAppContext"
+import { buildServerAppContext } from "System/Router/buildServerAppContext"
 
 describe("buildServerAppContext", () => {
   let req, res
@@ -18,10 +18,6 @@ describe("buildServerAppContext", () => {
       },
     }
   })
-  it("includes a mediator", () => {
-    const subject = buildServerAppContext(req, res)
-    expect(subject.mediator).toBeDefined()
-  })
 
   it("includes xs media query for mobile", () => {
     res.locals.sd.IS_MOBILE = true
@@ -31,7 +27,7 @@ describe("buildServerAppContext", () => {
 
   it("includes a user", () => {
     const subject = buildServerAppContext(req, res)
-    expect(subject.mediator).toBeDefined()
+    expect(subject.user).toBeDefined()
   })
 
   it("includes featureFlags", () => {

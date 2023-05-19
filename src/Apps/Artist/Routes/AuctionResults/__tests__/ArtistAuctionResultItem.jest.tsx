@@ -1,16 +1,12 @@
+import { screen } from "@testing-library/react"
+import { ArtistAuctionResultItemTestQuery } from "__generated__/ArtistAuctionResultItemTestQuery.graphql"
+import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
-import { ArtistAuctionResultItemTestQuery } from "__generated__/ArtistAuctionResultItemTestQuery.graphql"
-import { screen } from "@testing-library/react"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 jest.unmock("react-relay")
-
 jest.mock("System/useSystemContext")
-jest.mock("System/Router/useRouter", () => ({
-  useRouter: () => ({ match: { location: { pathname: "anything" } } }),
-}))
 
 describe("ArtistAuctionResultItem", () => {
   const { renderWithRelay } = setupTestWrapperTL<
@@ -66,6 +62,21 @@ describe("ArtistAuctionResultItem", () => {
     expect(screen.queryByText("Andy Warhol")).not.toBeInTheDocument()
   })
 
+  it("navigates to the single auction result page", () => {
+    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+      user: { name: "Logged In", email: "loggedin@example.com" },
+    }))
+
+    renderWithRelay(mockResolver, false)
+
+    const auctioResultLink = screen.getByRole("link")
+
+    expect(auctioResultLink).toHaveAttribute(
+      "href",
+      "/auction-result/auction-result-id"
+    )
+  })
+
   describe("when showArtistName is true", () => {
     it("renders artist name with the auction result data", () => {
       renderWithRelay(mockResolver, false, { showArtistName: true })
@@ -107,6 +118,25 @@ describe("ArtistAuctionResultItem", () => {
       expect(screen.getAllByText("Awaiting results")).toHaveLength(2)
     })
 
+    it("renders bought in when the auction result was bought in by the auction house", () => {
+      const lastMonth = new Date().setDate(new Date().getDate() - 1)
+      const lastMonthISO = new Date(lastMonth).toISOString()
+
+      renderWithRelay(
+        {
+          AuctionResult: () => ({
+            ...auctionResult,
+            saleDate: lastMonthISO,
+            boughtIn: true,
+          }),
+        },
+        false
+      )
+
+      expect(screen.getAllByText("Bought In")).toHaveLength(2)
+      expect(screen.queryByText("Awaiting results")).not.toBeInTheDocument()
+    })
+
     it("renders price not available when the auction result is over a month with no price", () => {
       renderWithRelay(mockResolver, false)
 
@@ -116,6 +146,7 @@ describe("ArtistAuctionResultItem", () => {
 })
 
 const auctionResult = {
+  internalID: "auction-result-id",
   title: "Neuschwanstein (Feldmann & Schellmann 372)",
   dimension_text: "62.0 x 91.0 cm",
   organization: "Bonhams",

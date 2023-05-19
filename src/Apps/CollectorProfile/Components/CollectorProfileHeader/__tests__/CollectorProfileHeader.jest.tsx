@@ -1,7 +1,7 @@
 import { Breakpoint } from "@artsy/palette"
 import { screen } from "@testing-library/react"
 import { CollectorProfileHeaderFragmentContainer } from "Apps/CollectorProfile/Components/CollectorProfileHeader/CollectorProfileHeader"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 
@@ -60,17 +60,17 @@ describe("CollectorProfileHeader", () => {
 
       renderWithRelay(mockResolvers, false)
 
-      expect(screen.getByTitle("Settings")).toBeInTheDocument()
+      expect(screen.getByLabelText("Settings")).toBeInTheDocument()
     })
+
     it("navigates when the the settings icon in Mobile is pressed", () => {
       const { renderWithRelay } = getWrapper("xs")
       renderWithRelay(mockResolvers, false)
 
-      expect(
-        screen
-          .getAllByRole("link")
-          .find(c => c.textContent?.includes("Settings"))
-      ).toHaveAttribute("href", `/settings/edit-profile`)
+      expect(screen.getByLabelText("Settings")).toHaveAttribute(
+        "href",
+        `/settings/edit-profile`
+      )
     })
   })
 })

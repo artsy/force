@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7356bbbf853e09241fe415a94743a62c>>
+ * @generated SignedSource<<c6e67de1fed6ec671cc0f67a000f9e84>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,7 +47,10 @@ const node: ReaderFragment = {
             "GROUP_SHOW",
             "COLLECTED",
             "REVIEWED",
-            "BIENNIAL"
+            "BIENNIAL",
+            "AWARDS",
+            "PRIVATE_COLLECTIONS",
+            "RESIDENCIES"
           ]
         }
       ],
@@ -71,13 +74,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "insights(kind:[\"SOLO_SHOW\",\"GROUP_SHOW\",\"COLLECTED\",\"REVIEWED\",\"BIENNIAL\"])"
+      "storageKey": "insights(kind:[\"SOLO_SHOW\",\"GROUP_SHOW\",\"COLLECTED\",\"REVIEWED\",\"BIENNIAL\",\"AWARDS\",\"PRIVATE_COLLECTIONS\",\"RESIDENCIES\"])"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "bf060451a4d8351860174c98ea9322d0";
+(node as any).hash = "5c9bb50ff959c7b6df088c3dd2b50b10";
 
 export default node;

@@ -10,7 +10,7 @@ import {
 } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtistIconicCollectionsRail_marketingCollections$data } from "__generated__/ArtistIconicCollectionsRail_marketingCollections.graphql"
 import currency from "currency.js"
@@ -20,7 +20,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { data as sd } from "sharify"
 import { useTracking } from "react-tracking"
 import { ArtistIconicCollectionsRailQuery } from "__generated__/ArtistIconicCollectionsRailQuery.graphql"
-import { Rail } from "Components/Rail"
+import { Rail } from "Components/Rail/Rail"
 
 interface ArtistIconicCollectionsRailProps {
   marketingCollections: ArtistIconicCollectionsRail_marketingCollections$data
@@ -59,7 +59,7 @@ const ArtistIconicCollectionsRail: React.FC<ArtistIconicCollectionsRailProps> = 
             <RouterLink
               to={`/collection/${marketingCollection.slug}`}
               key={index}
-              noUnderline
+              textDecoration="none"
               onClick={() => {
                 tracking.trackEvent({
                   action_type: DeprecatedAnalyticsSchema.ActionType.Click,

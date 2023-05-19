@@ -20,21 +20,23 @@ describe("errorHandler", () => {
       res.status(code).send(bodyHTML)
     })
 
-    testContext = {}
-
-    testContext.renderStub = { send: jest.fn() }
-
-    testContext.next = jest.fn()
-
-    testContext.res = {
-      status: jest.fn().mockImplementation(() => testContext.renderStub),
-      locals: { sharify: { data: {} } },
-    }
-
-    testContext.err = {
-      status: 500,
-      message: "Example message",
-      stack: "Example stack",
+    testContext = {
+      renderStub: { send: jest.fn() },
+      next: jest.fn(),
+      res: {
+        status: jest.fn().mockImplementation(() => testContext.renderStub),
+        locals: { sharify: { data: {} } },
+      },
+      err: {
+        status: 500,
+        message: "Example message",
+        stack: "Example stack",
+      },
+      req: {
+        protocol: "https",
+        get: jest.fn().mockImplementation(() => "artsy.net"),
+        originalUrl: "/some-path",
+      },
     }
   })
 
@@ -47,7 +49,7 @@ describe("errorHandler", () => {
 
     errorHandlerMiddleware(
       testContext.err,
-      {} as any,
+      testContext.req,
       testContext.res,
       testContext.next
     )
@@ -64,7 +66,7 @@ describe("errorHandler", () => {
 
     errorHandlerMiddleware(
       testContext.err,
-      {} as any,
+      testContext.req,
       testContext.res,
       testContext.next
     )
@@ -72,14 +74,19 @@ describe("errorHandler", () => {
     expect(testContext.res.status).toBeCalledWith(500)
     const renderArgs = testContext.renderStub.send.mock.calls[0]
     expect(renderArgs[0]).toContain("500")
-    expect(renderArgs[0]).not.toContain("Example message")
+    expect(renderArgs[0]).toContain("Example message")
     expect(renderArgs[0]).not.toContain("Example stack")
   })
 
   it("returns a 401 when an IP is denied", () => {
     const err = new IpDeniedError("You've been blocked")
 
-    errorHandlerMiddleware(err, {} as any, testContext.res, testContext.next)
+    errorHandlerMiddleware(
+      err,
+      testContext.req,
+      testContext.res,
+      testContext.next
+    )
 
     expect(testContext.res.status).toBeCalledWith(401)
     const renderArgs = testContext.renderStub.send.mock.calls[0]

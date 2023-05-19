@@ -13,7 +13,7 @@ import { EntityTooltipGeneQuery } from "__generated__/EntityTooltipGeneQuery.gra
 import { EntityTooltipGene_gene$data } from "__generated__/EntityTooltipGene_gene.graphql"
 import { RouterLink } from "System/Router/RouterLink"
 import { EntityHeaderGeneFragmentContainer } from "Components/EntityHeaders/EntityHeaderGene"
-import { useAnalyticsContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useTracking } from "react-tracking"
 import { ActionType, ClickedTooltip } from "@artsy/cohesion"
 

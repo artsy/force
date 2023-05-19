@@ -1,8 +1,8 @@
-import { Text, THEME_V3 as THEME, Box, BoxProps } from "@artsy/palette"
-import type { StripeCardElementChangeEvent } from "@stripe/stripe-js"
+import { Box, BoxProps, THEME, Text } from "@artsy/palette"
 import { CardElement } from "@stripe/react-stripe-js"
-import styled, { css } from "styled-components"
+import type { StripeCardElementChangeEvent } from "@stripe/stripe-js"
 import { themeGet } from "@styled-system/theme-get"
+import styled, { css } from "styled-components"
 
 interface CreditCardInputProps extends BoxProps {
   error?: string | boolean

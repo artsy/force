@@ -9,7 +9,7 @@ import { Match, RouterState, withRouter } from "found"
 import * as React from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 
 interface ArtistSeriesArtworksFilterProps {
   artistSeries: ArtistSeriesArtworksFilter_artistSeries$data

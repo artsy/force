@@ -1,6 +1,6 @@
 import { Skeleton, SkeletonText, Spacer, Sup, Text } from "@artsy/palette"
 import { ArtworkGridItemFragmentContainer } from "Components/Artwork/GridItem"
-import { ArtworkGridPlaceholder } from "Components/ArtworkGrid"
+import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
 import { Masonry } from "Components/Masonry"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { FC, Fragment, useState } from "react"

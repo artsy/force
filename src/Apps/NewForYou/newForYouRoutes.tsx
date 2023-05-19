@@ -6,6 +6,8 @@ const NewForYouApp = loadable(() => import("./NewForYouApp"), {
   resolveComponent: component => component.NewForYouAppFragmentContainer,
 })
 
+export const DEFAULT_NWFY_RECS_MODEL = "C"
+
 export const newForYouRoutes: AppRouteConfig[] = [
   {
     path: "/new-for-you",
@@ -16,7 +18,8 @@ export const newForYouRoutes: AppRouteConfig[] = [
     prepareVariables: (params, props) => {
       const first = parseInt(props.location.query.first, 10) || 40
       const includeBackfill = props.location.query.includeBackfill ?? true
-      const version = props.location.query.version?.toUpperCase()
+      const version =
+        props.location.query.version?.toUpperCase() || DEFAULT_NWFY_RECS_MODEL
       const maxWorksPerArtist = props.location.query.maxWorksPerArtist ?? 3
 
       return {

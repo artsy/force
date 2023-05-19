@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c4bb729fa1e98bccda36c17b1feb1f36>>
+ * @generated SignedSource<<e0a5300cc78c7db9e93920f70a413e80>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,6 +47,11 @@ export type createSavedSearchAlertMutation$variables = {
 };
 export type createSavedSearchAlertMutation$data = {
   readonly createSavedSearch: {
+    readonly me: {
+      readonly counts: {
+        readonly savedSearches: number;
+      } | null;
+    } | null;
     readonly savedSearchOrErrors: {
       readonly internalID?: string;
     };
@@ -73,6 +78,24 @@ v1 = [
   }
 ],
 v2 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "MeCounts",
+  "kind": "LinkedField",
+  "name": "counts",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "savedSearches",
+      "storageKey": null
+    }
+  ],
+  "storageKey": null
+},
+v3 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -104,12 +127,24 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Me",
+            "kind": "LinkedField",
+            "name": "me",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": null,
             "kind": "LinkedField",
             "name": "savedSearchOrErrors",
             "plural": false,
             "selections": [
-              (v2/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -137,6 +172,25 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "Me",
+            "kind": "LinkedField",
+            "name": "me",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "id",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": null,
             "kind": "LinkedField",
             "name": "savedSearchOrErrors",
@@ -149,7 +203,7 @@ return {
                 "name": "__typename",
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -159,16 +213,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8da0f987b20732772166f198dbc586b0",
+    "cacheID": "2ea239fcc6f294f5693f16f8b5e277d6",
     "id": null,
     "metadata": {},
     "name": "createSavedSearchAlertMutation",
     "operationKind": "mutation",
-    "text": "mutation createSavedSearchAlertMutation(\n  $input: CreateSavedSearchInput!\n) {\n  createSavedSearch(input: $input) {\n    savedSearchOrErrors {\n      __typename\n      ... on SearchCriteria {\n        internalID\n      }\n    }\n  }\n}\n"
+    "text": "mutation createSavedSearchAlertMutation(\n  $input: CreateSavedSearchInput!\n) {\n  createSavedSearch(input: $input) {\n    me {\n      counts {\n        savedSearches\n      }\n      id\n    }\n    savedSearchOrErrors {\n      __typename\n      ... on SearchCriteria {\n        internalID\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "5dc7cf49cf14f0328a9f6c5ef66e72c9";
+(node as any).hash = "74f44c8dfeb76e1a769a2c194c4d00c6";
 
 export default node;

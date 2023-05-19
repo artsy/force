@@ -1,5 +1,5 @@
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext } from "System/Analytics"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import {
   Impression,
   ActionType,

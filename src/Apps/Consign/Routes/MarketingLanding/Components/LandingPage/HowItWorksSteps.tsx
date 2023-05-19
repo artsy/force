@@ -1,32 +1,34 @@
 import { Button, Column, GridColumns, Text } from "@artsy/palette"
 import { useTracking } from "react-tracking"
-import { useAnalyticsContext, useSystemContext } from "System"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useSystemContext } from "System/SystemContext"
 import { RouterLink } from "System/Router/RouterLink"
+import { ActionType, ContextModule } from "@artsy/cohesion"
 
 const reasons = [
   {
     index: "01",
     title: "Submit your artwork",
     text:
-      "Upload artwork images and details through our online tool. Our specialists will let you know if we currently have market demand.",
+      "Enter the artist’s name on the submission page. If the artist is in our database, you’ll be able to upload images and artwork details.",
   },
   {
     index: "02",
     title: "Meet your expert",
     text:
-      "If your artwork is accepted, you’re matched with a specialist to guide you on pricing, sales options, and vetting potential buyers.",
+      "One of our specialists will review your submission and determine the best sales option.",
   },
   {
     index: "03",
     title: "Get a sales option",
     text:
-      "You’ll get a tailored sales strategy with a price estimate and we select the best sales option for your work, either auction, private sale or direct listing on Artsy.",
+      "Review your tailored sales strategy and price estimate. We’ll select the best way to sell your work—either at auction, through private sale, or a direct listing on Artsy.",
   },
   {
     index: "04",
     title: "Sell your work",
     text:
-      "Your artwork stays with you until it sells. Meanwhile, our logistics team handles everything, from organizing shipping to getting your payment to you.",
+      "Keep your work until it sells, then let our team handle the logistics. No costly presale insurance, shipping, or handling fees.",
   },
 ]
 
@@ -37,10 +39,10 @@ export const HowItWorksSteps: React.FC = () => {
 
   const trackStartSellingClick = () => {
     trackEvent({
-      action: "clickedStartSelling",
-      context_module: "HowItWorks",
+      action: ActionType.tappedConsign,
+      context_module: ContextModule.sellHowItWorks,
       context_page_owner_type: contextPageOwnerType,
-      label: "Start Selling",
+      label: "Get Started",
       destination_path: "/sell/submission",
       user_id: user?.id,
     })
@@ -48,30 +50,26 @@ export const HowItWorksSteps: React.FC = () => {
 
   return (
     <>
-      <Text mb={[2, 6]} variant={["lg-display", "xl", "xxl"]}>
+      <Text mb={[2, 4, 6]} variant={["lg-display", "xl", "xxl"]}>
         How it works
       </Text>
-      <GridColumns gridColumnGap={[0, 6]} alignItems="flex-start">
+      <GridColumns gridColumnGap={[0, 2]} alignItems="flex-start">
         {reasons.map(i => (
           <RowItem index={i.index} title={i.title} text={i.text} />
         ))}
       </GridColumns>
-      <GridColumns>
-        <Column span={[12, 3, 2]}>
-          <Button
-            // @ts-ignore
-            as={RouterLink}
-            mt={[2, 6]}
-            width="100%"
-            variant="primaryBlack"
-            to="/sell/submission"
-            onClick={trackStartSellingClick}
-            data-testid="start-selling-button"
-          >
-            Start Selling
-          </Button>
-        </Column>
-      </GridColumns>
+      <Button
+        // @ts-ignore
+        as={RouterLink}
+        mt={[2, 4]}
+        width={["100%", 300]}
+        variant="primaryBlack"
+        to="/sell/submission"
+        onClick={trackStartSellingClick}
+        data-testid="start-selling-button"
+      >
+        Get Started
+      </Button>
     </>
   )
 }
@@ -84,10 +82,10 @@ interface RowItemProps {
 const RowItem: React.FC<RowItemProps> = ({ index, title, text }) => {
   return (
     <Column span={3} mb={[2, 0]}>
-      <Text mt={[0.5, 2]} variant={["lg-display", "xxl"]}>
+      <Text mt={[0.5, 0]} variant={["lg-display", "xl", "xxl"]}>
         {index}
       </Text>
-      <Text mt={[0.5, 2]} variant={["md", "xl"]}>
+      <Text mt={[0.5, 2]} variant={["md", "lg-display", "xl"]}>
         {title}
       </Text>
       <Text mt={1} variant={["xs", "sm"]}>

@@ -4,7 +4,6 @@ import { OrderApp_order$data } from "__generated__/OrderApp_order.graphql"
 import { StickyFooterWithInquiry } from "Apps/Order/Components/StickyFooter"
 import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 import { ErrorPage } from "Components/ErrorPage"
-import { MinimalNavBar } from "Components/NavBar/MinimalNavBar"
 import { RouterState } from "found"
 import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -13,13 +12,14 @@ import { Elements } from "@stripe/react-stripe-js"
 import styled from "styled-components"
 import { ConnectedModalDialog } from "./Dialogs"
 import { ZendeskWrapper } from "Components/ZendeskWrapper"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { AppContainer } from "Apps/Components/AppContainer"
-import { isExceededZendeskThreshold } from "Utils/isExceededZendeskThreshold"
+import { exceedsChatSupportThreshold } from "Utils/exceedsChatSupportThreshold"
 import { getENV } from "Utils/getENV"
 import { extractNodes } from "Utils/extractNodes"
-import { useSystemContext } from "System"
+import { useSystemContext } from "System/useSystemContext"
 import { OrderPaymentContextProvider } from "./Routes/Payment/PaymentContext/OrderPaymentContext"
+import { SalesforceWrapper } from "Components/SalesforceWrapper"
+import { Media } from "Utils/Responsive"
 
 export interface OrderAppProps extends RouterState {
   params: {
@@ -54,7 +54,8 @@ const OrderApp: FC<OrderAppProps> = props => {
     window.addEventListener("beforeunload", preventHardReload)
 
     return () => {
-      if (removeNavigationListenerRef) {
+      if (removeNavigationListenerRef.current) {
+        removeNavigationListenerRef.current()
         removeNavigationListenerRef.current = null
       }
       window.removeEventListener("beforeunload", preventHardReload)
@@ -84,15 +85,21 @@ const OrderApp: FC<OrderAppProps> = props => {
     return <ErrorPage code={404} />
   }
 
-  const renderZendeskScript = () => {
+  const renderChatSupportScript = () => {
     const { itemsTotalCents, currencyCode } = order
     const price = itemsTotalCents! / 100
 
-    if (!price || !isExceededZendeskThreshold(price, currencyCode)) {
+    if (!price || !exceedsChatSupportThreshold(price, currencyCode)) {
       return null
     }
 
-    return <ZendeskWrapper />
+    return getENV("SALESFORCE_CHAT_ENABLED") ? (
+      <Media greaterThan="xs">
+        <SalesforceWrapper />
+      </Media>
+    ) : (
+      <ZendeskWrapper />
+    )
   }
 
   const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
@@ -101,35 +108,31 @@ const OrderApp: FC<OrderAppProps> = props => {
 
   return (
     <Box>
-      <MinimalNavBar to="/" isBlank={isModal}>
-        <Title>Checkout | Artsy</Title>
-        <Meta
-          name="viewport"
-          content={
-            isEigen
-              ? "width=device-width, user-scalable=no"
-              : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
-          }
+      <Title>Checkout | Artsy</Title>
+      <Meta
+        name="viewport"
+        content={
+          isEigen
+            ? "width=device-width, user-scalable=no"
+            : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
+        }
+      />
+      {!isEigen && !isModal && renderChatSupportScript()}
+      <SafeAreaContainer>
+        <OrderPaymentContextProvider>
+          <Elements stripe={stripePromise}>
+            <AppContainer>{children}</AppContainer>
+          </Elements>
+        </OrderPaymentContextProvider>
+      </SafeAreaContainer>
+      {!isModal && (
+        <StickyFooterWithInquiry
+          orderType={order.mode}
+          orderSource={order.source}
+          artworkID={artwork?.slug!}
         />
-        {!isEigen && !isModal && renderZendeskScript()}
-        <SafeAreaContainer>
-          <OrderPaymentContextProvider>
-            <Elements stripe={stripePromise}>
-              <AppContainer>
-                <HorizontalPadding>{children}</HorizontalPadding>
-              </AppContainer>
-            </Elements>
-          </OrderPaymentContextProvider>
-        </SafeAreaContainer>
-        {!isModal && (
-          <StickyFooterWithInquiry
-            orderType={order.mode}
-            orderSource={order.source}
-            artworkID={artwork?.slug!}
-          />
-        )}
-        <ConnectedModalDialog />
-      </MinimalNavBar>
+      )}
+      <ConnectedModalDialog />
     </Box>
   )
 }

@@ -10,7 +10,7 @@ import { MockRelayRenderer, MockRelayRendererProps } from "./MockRelayRenderer"
  * need to use `renderUntil` directly, such as after making updates to a Relay
  * tree.
  */
-export const RelayFinishedLoading: RenderUntilPredicate<any, any, any> = tree =>
+const RelayFinishedLoading: RenderUntilPredicate<any, any, any> = tree =>
   !tree.find(`.${LoadingClassName}`).length
 
 /**

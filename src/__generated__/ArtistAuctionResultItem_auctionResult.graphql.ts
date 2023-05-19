@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2d56c5465f9a5d19e85381750a76daa>>
+ * @generated SignedSource<<d23478daa8166edef0b2ea9367c8f61f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,6 +32,7 @@ export type ArtistAuctionResultItem_auctionResult$data = {
       } | null;
     } | null;
   } | null;
+  readonly internalID: string;
   readonly isUpcoming: boolean | null;
   readonly location: string | null;
   readonly lotNumber: string | null;
@@ -69,6 +70,13 @@ return {
   "metadata": null,
   "name": "ArtistAuctionResultItem_auctionResult",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -319,6 +327,6 @@ return {
 };
 })();
 
-(node as any).hash = "5def034c0c4d4d8cd1918584a4d3b797";
+(node as any).hash = "99807385dccfd1e701d0ba531b448a29";
 
 export default node;

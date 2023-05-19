@@ -1,10 +1,10 @@
-import { VerifiedIcon } from "@artsy/palette"
 import { VerifiedSeller_artwork$data } from "__generated__/VerifiedSeller_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "react-relay"
 import { TrustSignal, TrustSignalProps } from "./TrustSignal"
 import { shouldRenderVerifiedSeller } from "Apps/Artwork/Utils/badges"
+import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 
 interface VerifiedSellerProps
   extends Omit<TrustSignalProps, "Icon" | "label" | "description"> {

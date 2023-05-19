@@ -1,6 +1,6 @@
 import { FollowArtistPopoverRow_artist$data } from "__generated__/FollowArtistPopoverRow_artist.graphql"
 import { FollowArtistPopoverRowMutation } from "__generated__/FollowArtistPopoverRowMutation.graphql"
-import { SystemContextProps } from "System"
+import { SystemContextProps } from "System/SystemContext"
 import { Component } from "react"
 import {
   RelayProp,

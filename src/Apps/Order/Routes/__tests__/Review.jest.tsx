@@ -12,23 +12,6 @@ import {
 import { OfferSummaryItemFragmentContainer } from "Apps/Order/Components/OfferSummaryItem"
 import { expectOne } from "DevTools/RootTestPage"
 import { graphql } from "react-relay"
-import {
-  submitOfferOrderFailedConfirmation,
-  submitOfferOrderSuccess,
-  submitOfferOrderSuccessInReview,
-  submitOfferOrderWithActionRequired,
-  submitOfferOrderWithFailure,
-  submitOfferOrderWithNoInventoryFailure,
-  submitOfferOrderWithVersionMismatchFailure,
-  submitOrderSuccess,
-  submitOrderWithActionRequired,
-  submitOrderWithFailure,
-  submitOrderWithFailureCardDeclined,
-  submitOrderWithFailureInsufficientFunds,
-  submitOrderWithMissingInfo,
-  submitOrderWithNoInventoryFailure,
-  submitOrderWithVersionMismatchFailure,
-} from "Apps/Order/Routes/__fixtures__/MutationResults"
 import { ReviewFragmentContainer } from "Apps/Order/Routes/Review"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
 import { mockLocation } from "DevTools/mockLocation"
@@ -39,7 +22,27 @@ import { cloneDeep } from "lodash"
 import { useTracking } from "react-tracking"
 import { waitFor } from "@testing-library/react"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { MockBoot } from "DevTools"
+import { MockBoot } from "DevTools/MockBoot"
+import {
+  submitOfferOrderSuccess,
+  submitOfferOrderWithFailure,
+  submitOfferOrderWithVersionMismatchFailure,
+  submitOfferOrderFailedConfirmation,
+  submitOfferOrderWithNoInventoryFailure,
+  submitOfferOrderWithActionRequired,
+  submitOfferOrderSuccessInReview,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/submitOfferOrder"
+import {
+  submitOrderSuccess,
+  submitOrderWithFailure,
+  submitOrderWithVersionMismatchFailure,
+  submitOrderWithMissingInfo,
+  submitOrderWithFailureCardDeclined,
+  submitOrderWithFailureInsufficientFunds,
+  submitOrderWithNoInventoryFailure,
+  submitOrderWithActionRequired,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/submitOrder"
+import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 
 jest.unmock("react-relay")
 
@@ -79,12 +82,6 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
 
 const testOrder: ReviewTestQuery$rawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
-  internalID: "1234",
-  impulseConversationId: null,
-}
-
-const privateSaleTestOrder: ReviewTestQuery$rawResponse["order"] = {
-  ...PrivateSaleOrderWithShippingDetails,
   internalID: "1234",
   impulseConversationId: null,
 }
@@ -315,7 +312,7 @@ describe("Review", () => {
       const page = new ReviewTestPage(wrapper)
 
       expect(page.orderStepper.text()).toMatchInlineSnapshot(
-        `"OfferCheckNavigate rightShippingCheckNavigate rightPaymentCheckNavigate rightReviewNavigate right"`
+        `"OfferShippingPaymentReview"`
       )
       expect(page.orderStepperCurrentStep).toBe("Review")
       expect(page.offerSummary.text()).not.toMatch("Your note")
@@ -623,9 +620,14 @@ describe("Review", () => {
   describe("private sale orders", () => {
     let page
 
+    const privateSaleOrderWithWire = {
+      ...PrivateSaleOrderWithShippingDetails,
+      availablePaymentMethods: ["WIRE_TRANSFER"] as CommercePaymentMethodEnum[],
+    }
+
     beforeEach(() => {
       const wrapper = getWrapper({
-        CommerceOrder: () => privateSaleTestOrder,
+        CommerceOrder: () => privateSaleOrderWithWire,
       })
       page = new ReviewTestPage(wrapper)
     })
@@ -647,7 +649,7 @@ describe("Review", () => {
         "Artsy Private Sales LLC Conditions of Sale"
       )
       expect(page.text()).toContain(
-        "and any Additional Terms specified on this page and in the order confirmation email."
+        "and any Additional Conditions of Sale specified on this page and in the order confirmation email."
       )
     })
 
@@ -657,66 +659,127 @@ describe("Review", () => {
         "additional artwork details provided by admin"
       )
     })
+
+    it("displays artwork provenance", () => {
+      expect(page.text()).toContain("Artwork Description")
+      expect(page.text()).toContain(
+        "Provenance: Artwork acquired via an auction in 2000"
+      )
+    })
+
+    it("displays artwork condition description", () => {
+      expect(page.text()).toContain("Artwork Description")
+      expect(page.text()).toContain(
+        "Condition: Artwork is in perfect condition"
+      )
+    })
   })
 
   describe("in-review offers", () => {
-    const testOffer = {
+    const OfferOrderToSubmit = {
       ...OfferOrderWithShippingDetails,
-      // TODO: uncomment state & remove payment method once buyerStatus
-      // is implemented in Exchange.
-      // See https://www.notion.so/artsy/2023-02-09-Platform-Practice-Meeting-Notes-87f4cc9987a7436c9c4b207847e318db?pvs=4
-      // state: "IN_REVIEW",
-      paymentMethod: "WIRE_TRANSFER",
+      state: "PENDING",
       internalID: "offer-order-id",
       impulseConversationId: null,
     }
 
-    it("enables the button and routes to the status page", async () => {
-      mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
-      const wrapper = getWrapper({
-        CommerceOrder: () => testOffer,
-      })
-      const page = new ReviewTestPage(wrapper)
-      await page.clickSubmit()
-
-      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-      expect(pushMock).toBeCalledWith("/orders/offer-order-id/status")
-    })
-
-    describe("isEigen", () => {
-      const testOffer = {
-        ...OfferOrderWithShippingDetails,
-        // TODO: uncomment state & remove payment method once buyerStatus
-        // is implemented in Exchange.
-        // See https://www.notion.so/artsy/2023-02-09-Platform-Practice-Meeting-Notes-87f4cc9987a7436c9c4b207847e318db?pvs=4
-        // state: "IN_REVIEW",
-        paymentMethod: "WIRE_TRANSFER",
-        internalID: "offer-order-id",
-        impulseConversationId: null,
+    describe("from an artwork page", () => {
+      const OfferOrderInReviewFromArtworkPage = {
+        ...OfferOrderToSubmit,
+        source: "artwork_page",
       }
 
-      beforeEach(async () => {
-        isEigen = true
-      })
-
-      it("dispatches message and routes to status page", async () => {
+      it("routes to the status page", async () => {
         mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
         const wrapper = getWrapper({
-          CommerceOrder: () => testOffer,
+          CommerceOrder: () => OfferOrderInReviewFromArtworkPage,
         })
         const page = new ReviewTestPage(wrapper)
         await page.clickSubmit()
 
-        expect(window.ReactNativeWebView?.postMessage).toHaveBeenCalledWith(
-          JSON.stringify({
-            key: "orderSuccessful",
-            orderCode: "abcdefg",
-          })
-        )
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+        expect(pushMock).toBeCalledWith("/orders/offer-order-id/status")
+      })
+    })
 
-        await waitFor(() =>
-          expect(pushMock).toHaveBeenCalledWith("/orders/offer-order-id/status")
+    describe("from an inquiry", () => {
+      const OfferOrderInReviewFromInquiry = {
+        ...OfferOrderToSubmit,
+        source: "inquiry",
+        impulseConversationId: "impulse-conversation-id",
+      }
+
+      it("routes to the conversation", async () => {
+        mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
+        const wrapper = getWrapper({
+          CommerceOrder: () => OfferOrderInReviewFromInquiry,
+        })
+        const page = new ReviewTestPage(wrapper)
+        await page.clickSubmit()
+
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+        expect(pushMock).toBeCalledWith(
+          "/user/conversations/impulse-conversation-id"
         )
+      })
+    })
+
+    describe("isEigen", () => {
+      beforeEach(async () => {
+        isEigen = true
+      })
+
+      describe("from an artwork page", () => {
+        const OfferOrderInReviewFromArtworkPage = {
+          ...OfferOrderToSubmit,
+          source: "artwork_page",
+        }
+
+        it("dispatches message and routes to status page", async () => {
+          mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
+          const wrapper = getWrapper({
+            CommerceOrder: () => OfferOrderInReviewFromArtworkPage,
+          })
+          const page = new ReviewTestPage(wrapper)
+          await page.clickSubmit()
+
+          expect(window.ReactNativeWebView?.postMessage).toHaveBeenCalledWith(
+            JSON.stringify({
+              key: "orderSuccessful",
+              orderCode: "abcdefg",
+            })
+          )
+
+          await waitFor(() =>
+            expect(pushMock).toHaveBeenCalledWith(
+              "/orders/offer-order-id/status"
+            )
+          )
+        })
+      })
+
+      describe("from an inquiry", () => {
+        const OfferOrderInReviewFromInquiry = {
+          ...OfferOrderToSubmit,
+          source: "inquiry",
+        }
+
+        it("doesn't dispatch a message and routes to status page", async () => {
+          mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
+          const wrapper = getWrapper({
+            CommerceOrder: () => OfferOrderInReviewFromInquiry,
+          })
+          const page = new ReviewTestPage(wrapper)
+          await page.clickSubmit()
+
+          expect(window.ReactNativeWebView?.postMessage).not.toHaveBeenCalled()
+
+          await waitFor(() =>
+            expect(pushMock).toHaveBeenCalledWith(
+              "/orders/offer-order-id/status"
+            )
+          )
+        })
       })
     })
   })

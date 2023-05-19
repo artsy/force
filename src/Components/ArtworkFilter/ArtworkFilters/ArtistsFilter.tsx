@@ -6,12 +6,12 @@ import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
-} from "../ArtworkFilterContext"
-import { fetchFollowedArtists } from "../Utils/fetchFollowedArtists"
+} from "Components/ArtworkFilter/ArtworkFilterContext"
+import { fetchFollowedArtists } from "Components/ArtworkFilter/Utils/fetchFollowedArtists"
 import { FilterExpandable } from "./FilterExpandable"
 import { ShowMore } from "./ShowMore"
-import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
-import { useSystemContext } from "System"
+import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
+import { useSystemContext } from "System/useSystemContext"
 
 export interface ArtistsFilterProps {
   expanded?: boolean
