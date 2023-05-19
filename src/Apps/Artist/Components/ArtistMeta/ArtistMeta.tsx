@@ -5,7 +5,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
 import { structuredDataAttributes } from "./helpers"
 import { MetaTags } from "Components/MetaTags"
-import { computeTitle } from "Apps/Artist/Utils/computeTitle"
 
 interface Props {
   artist: ArtistMeta_artist$data
@@ -17,10 +16,7 @@ export const ArtistMeta: React.FC<Props> = ({ artist }) => {
   return (
     <>
       <MetaTags
-        title={computeTitle(
-          artist.name ?? "Unknown",
-          artist.counts?.artworks ?? 0
-        )}
+        title={artist.meta?.title}
         description={artist.meta?.description}
         imageURL={artist.image?.large}
         pathname={artist.href}
@@ -68,6 +64,7 @@ export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
       href
       meta {
         description
+        title
       }
       alternate_names: alternateNames
       image {
