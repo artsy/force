@@ -1,5 +1,5 @@
 import { mount } from "enzyme"
-import { SortFilter } from "../SortFilter"
+import { SortFilter } from "Components/SortFilter"
 
 describe("SortFilter", () => {
   const mockedOnSort = jest.fn()
@@ -31,7 +31,7 @@ describe("SortFilter", () => {
     const wrapper = getWrapper()
     expect(wrapper.find("Select").prop("selected")).toEqual("foo")
     const text = wrapper.find("Select").text()
-    expect(text).toContain("Sort:")
+    expect(text).toContain("Sort")
     expect(text).toContain("bar")
     expect(text).toContain("foo")
   })

@@ -6,7 +6,7 @@ export const AddressForm = () => {
   const { handleChange, handleBlur, errors, values, touched } = useFormContext()
 
   return (
-    <GridColumns>
+    <GridColumns gridRowGap={2}>
       <Column span={12}>
         <Input
           name="address.name"
