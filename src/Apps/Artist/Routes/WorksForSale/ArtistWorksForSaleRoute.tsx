@@ -17,8 +17,8 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
   artist,
 }) => {
   const { match } = useRouter()
-  const title = artist.meta?.artworksTitle
-  const description = artist.meta?.artworksDescription
+  const title = artist.meta.title
+  const description = artist.meta.description
 
   const { jumpTo } = useJump({ behavior: "smooth", offset: 10 })
 
@@ -84,9 +84,9 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
         counts {
           forSaleArtworks
         }
-        meta {
-          artworksDescription
-          artworksTitle
+        meta(tab: ARTWORKS) {
+          description
+          title
         }
         name
         internalID

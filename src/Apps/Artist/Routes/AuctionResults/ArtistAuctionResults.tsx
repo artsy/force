@@ -57,13 +57,30 @@ interface AuctionResultsProps {
   artist: ArtistAuctionResults_artist$data
 }
 
+interface AuctionMetaTagsProps {
+  meta: {
+    title: string
+    description: string
+  }
+}
+
+const AuctionMetaTags: React.FC<AuctionMetaTagsProps> = ({ meta }) => {
+  const { title, description } = meta
+
+  return (
+    <>
+      <Title>{title}</Title>
+      <Meta name="title" content={title} />
+      <Meta name="description" content={description} />
+    </>
+  )
+}
+
 const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   artist,
   relay,
 }) => {
   const { user } = useContext(SystemContext)
-  const title = artist.meta?.auctionTitle
-  const description = artist.meta?.auctionDescription
 
   const { filters, setFilter } = useAuctionResultsFilterContext()
 
@@ -217,13 +234,16 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   }
 
   if (results.length == 0) {
-    return <ArtistAuctionResultsEmptyState />
+    return (
+      <>
+        <AuctionMetaTags meta={artist.meta} />
+        <ArtistAuctionResultsEmptyState />
+      </>
+    )
   }
   return (
     <>
-      <Title>{title}</Title>
-      <Meta name="title" content={title} />
-      <Meta name="description" content={description} />
+      <AuctionMetaTags meta={artist.meta} />
 
       <Jump id="marketSignalsTop" />
 
@@ -401,9 +421,9 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         slug
         internalID
         name
-        meta {
-          auctionDescription
-          auctionTitle
+        meta(tab: AUCTION_RESULTS) {
+          description
+          title
         }
         auctionResultsConnection(
           first: $first

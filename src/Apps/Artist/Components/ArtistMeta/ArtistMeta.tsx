@@ -16,8 +16,8 @@ export const ArtistMeta: React.FC<Props> = ({ artist }) => {
   return (
     <>
       <MetaTags
-        title={artist.meta?.title}
-        description={artist.meta?.description}
+        title={artist.meta.title}
+        description={artist.meta.description}
         imageURL={artist.image?.large}
         pathname={artist.href}
       />
@@ -62,7 +62,7 @@ export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
       deathday
       gender
       href
-      meta {
+      meta(tab: ABOUT) {
         description
         title
       }

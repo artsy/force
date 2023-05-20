@@ -68,8 +68,8 @@ interface ArtistOverviewRouteProps {
 const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
   artist,
 }) => {
-  const title = artist.meta?.title
-  const description = artist.meta?.description
+  const title = artist.meta.title
+  const description = artist.meta.description
 
   return (
     <>
@@ -101,7 +101,7 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
       fragment ArtistOverviewRoute_artist on Artist {
         slug
         name
-        meta {
+        meta(tab: ABOUT) {
           description
           title
         }
