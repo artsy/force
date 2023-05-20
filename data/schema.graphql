@@ -1544,7 +1544,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     size: Int
     slugs: [String!]
   ): [MarketingCollection]
-  meta: ArtistMeta
+  meta(tab: ArtistTab): ArtistMeta!
   middle: String
   name: String
   nationality: String
@@ -1758,8 +1758,8 @@ type ArtistInsightsCount {
 }
 
 type ArtistMeta {
-  description: String
-  title: String
+  description: String!
+  title: String!
 }
 
 # A connection to a list of items.
@@ -1964,6 +1964,12 @@ type ArtistStatuses {
     minShowCount: Int = 15
   ): Boolean
   shows: Boolean
+}
+
+enum ArtistTab {
+  ABOUT
+  ARTWORKS
+  AUCTION_RESULTS
 }
 
 type ArtistTargetSupply {
