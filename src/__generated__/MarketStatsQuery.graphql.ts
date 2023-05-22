@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<15bdc0c7f2084a4986f965f5c3df540b>>
+ * @generated SignedSource<<43cb603de6fdb187f569794df70937bb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MarketStatsQuery$variables = {
-  artistInternalID: string;
+  id: string;
 };
 export type MarketStatsQuery$data = {
   readonly priceInsightsConnection: {
@@ -28,14 +28,14 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistInternalID"
+    "name": "id"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
     "name": "artistId",
-    "variableName": "artistInternalID"
+    "variableName": "id"
   },
   {
     "kind": "Literal",
@@ -154,16 +154,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "493670ff35fcfa2c2a856f7060338013",
+    "cacheID": "fafc456832280ec06ded8fbd9f8eb129",
     "id": null,
     "metadata": {},
     "name": "MarketStatsQuery",
     "operationKind": "query",
-    "text": "query MarketStatsQuery(\n  $artistInternalID: ID!\n) {\n  priceInsightsConnection: priceInsights(artistId: $artistInternalID, sort: ANNUAL_VALUE_SOLD_CENTS_DESC) {\n    ...MarketStats_priceInsightsConnection\n  }\n}\n\nfragment MarketStats_priceInsightsConnection on PriceInsightConnection {\n  edges {\n    node {\n      medium\n      annualLotsSold\n      annualValueSoldCents\n      sellThroughRate\n      medianSaleOverEstimatePercentage\n      id\n    }\n  }\n}\n"
+    "text": "query MarketStatsQuery(\n  $id: ID!\n) {\n  priceInsightsConnection: priceInsights(artistId: $id, sort: ANNUAL_VALUE_SOLD_CENTS_DESC) {\n    ...MarketStats_priceInsightsConnection\n  }\n}\n\nfragment MarketStats_priceInsightsConnection on PriceInsightConnection {\n  edges {\n    node {\n      medium\n      annualLotsSold\n      annualValueSoldCents\n      sellThroughRate\n      medianSaleOverEstimatePercentage\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b8c04641b23e82c0ad5fb0e068f340a0";
+(node as any).hash = "73ab657b171c61e7b674706ecb1c58dc";
 
 export default node;

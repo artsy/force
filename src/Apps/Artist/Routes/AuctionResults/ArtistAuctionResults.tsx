@@ -217,8 +217,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
       <Jump id="marketSignalsTop" />
 
       <MarketStatsQueryRenderer
-        artistInternalID={artist.internalID}
-        environment={relay.environment}
+        id={artist.internalID}
         onRendered={handleMarketStatsRendered}
       />
 
