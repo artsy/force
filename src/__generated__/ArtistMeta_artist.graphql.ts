@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d9d7e54179c372c8a7bacf52fc5d94e5>>
+ * @generated SignedSource<<8ee9fc0c7b85d0a60606913c5e1b7b70>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -216,7 +216,7 @@ return {
       "args": [
         {
           "kind": "Literal",
-          "name": "tab",
+          "name": "page",
           "value": "ABOUT"
         }
       ],
@@ -228,7 +228,7 @@ return {
         (v2/*: any*/),
         (v3/*: any*/)
       ],
-      "storageKey": "meta(tab:\"ABOUT\")"
+      "storageKey": "meta(page:\"ABOUT\")"
     },
     {
       "alias": "alternate_names",
@@ -459,6 +459,6 @@ return {
 };
 })();
 
-(node as any).hash = "4be5b62e83f639ff27ac19bbba536264";
+(node as any).hash = "d6640e0fe3cda5eff7e06b3e35a12723";
 
 export default node;

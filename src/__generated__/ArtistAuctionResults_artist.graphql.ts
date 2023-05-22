@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<55959ae058daad874209dc37f37c0073>>
+ * @generated SignedSource<<a0d99dcd718b0d58a20bdf0c1e057b1c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -200,7 +200,7 @@ return {
       "args": [
         {
           "kind": "Literal",
-          "name": "tab",
+          "name": "page",
           "value": "AUCTION_RESULTS"
         }
       ],
@@ -224,7 +224,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "meta(tab:\"AUCTION_RESULTS\")"
+      "storageKey": "meta(page:\"AUCTION_RESULTS\")"
     },
     {
       "alias": null,
@@ -433,6 +433,6 @@ return {
 };
 })();
 
-(node as any).hash = "ea5fff2979736d47a73ae0aa7547dbb7";
+(node as any).hash = "4bcf954b9785371f3df81dc4947c656f";
 
 export default node;

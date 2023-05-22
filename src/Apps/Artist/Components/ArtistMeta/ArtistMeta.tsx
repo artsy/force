@@ -62,7 +62,7 @@ export const ArtistMetaFragmentContainer = createFragmentContainer(ArtistMeta, {
       deathday
       gender
       href
-      meta(tab: ABOUT) {
+      meta(page: ABOUT) {
         description
         title
       }

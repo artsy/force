@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c56fdd382f805df1cf877cfd889fbb18>>
+ * @generated SignedSource<<beab591c0c80d6e3093c8048f02d808c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -171,7 +171,7 @@ return {
       "args": [
         {
           "kind": "Literal",
-          "name": "tab",
+          "name": "page",
           "value": "ARTWORKS"
         }
       ],
@@ -195,7 +195,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "meta(tab:\"ARTWORKS\")"
+      "storageKey": "meta(page:\"ARTWORKS\")"
     },
     (v0/*: any*/),
     {
@@ -225,6 +225,6 @@ return {
 };
 })();
 
-(node as any).hash = "679c2723e1465f143f485fd519ef1388";
+(node as any).hash = "5bada67b9f5bd3c64345c30a0de97c74";
 
 export default node;

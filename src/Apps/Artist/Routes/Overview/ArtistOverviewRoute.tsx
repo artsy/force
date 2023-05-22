@@ -101,7 +101,7 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
       fragment ArtistOverviewRoute_artist on Artist {
         slug
         name
-        meta(tab: ABOUT) {
+        meta(page: ABOUT) {
           description
           title
         }

@@ -84,7 +84,7 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
         counts {
           forSaleArtworks
         }
-        meta(tab: ARTWORKS) {
+        meta(page: ARTWORKS) {
           description
           title
         }

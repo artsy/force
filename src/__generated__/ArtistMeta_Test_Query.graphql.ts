@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b5144b3fe5c5b6ebf034f3dbea7a27c1>>
+ * @generated SignedSource<<7727baf6b8114d943312b800799521ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -244,7 +244,7 @@ return {
             "args": [
               {
                 "kind": "Literal",
-                "name": "tab",
+                "name": "page",
                 "value": "ABOUT"
               }
             ],
@@ -256,7 +256,7 @@ return {
               (v3/*: any*/),
               (v4/*: any*/)
             ],
-            "storageKey": "meta(tab:\"ABOUT\")"
+            "storageKey": "meta(page:\"ABOUT\")"
           },
           {
             "alias": "alternate_names",
@@ -491,7 +491,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "526b573818d948975c2cda3b5c472b6a",
+    "cacheID": "eb72c630bfca9cfecf5893707eea7d4c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -601,7 +601,7 @@ return {
     },
     "name": "ArtistMeta_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistMeta_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistMeta_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  gender\n  href\n  meta(tab: ABOUT) {\n    description\n    title\n  }\n  alternate_names: alternateNames\n  image {\n    versions\n    large: url(version: \"large\")\n    square: url(version: \"square\")\n  }\n  counts {\n    artworks\n  }\n  blurb\n  artworks_connection: artworksConnection(first: 10, filter: IS_FOR_SALE, published: true) {\n    edges {\n      node {\n        title\n        date\n        description\n        category\n        price_currency: priceCurrency\n        listPrice {\n          __typename\n          ... on PriceRange {\n            minPrice {\n              major\n              currencyCode\n            }\n            maxPrice {\n              major\n            }\n          }\n          ... on Money {\n            major\n            currencyCode\n          }\n        }\n        availability\n        href\n        image {\n          small: url(version: \"small\")\n          large: url(version: \"large\")\n        }\n        partner {\n          name\n          href\n          profile {\n            image {\n              small: url(version: \"small\")\n              large: url(version: \"large\")\n            }\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistMeta_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistMeta_artist\n    id\n  }\n}\n\nfragment ArtistMeta_artist on Artist {\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  gender\n  href\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  alternate_names: alternateNames\n  image {\n    versions\n    large: url(version: \"large\")\n    square: url(version: \"square\")\n  }\n  counts {\n    artworks\n  }\n  blurb\n  artworks_connection: artworksConnection(first: 10, filter: IS_FOR_SALE, published: true) {\n    edges {\n      node {\n        title\n        date\n        description\n        category\n        price_currency: priceCurrency\n        listPrice {\n          __typename\n          ... on PriceRange {\n            minPrice {\n              major\n              currencyCode\n            }\n            maxPrice {\n              major\n            }\n          }\n          ... on Money {\n            major\n            currencyCode\n          }\n        }\n        availability\n        href\n        image {\n          small: url(version: \"small\")\n          large: url(version: \"large\")\n        }\n        partner {\n          name\n          href\n          profile {\n            image {\n              small: url(version: \"small\")\n              large: url(version: \"large\")\n            }\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

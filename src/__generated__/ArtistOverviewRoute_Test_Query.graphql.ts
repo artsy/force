@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<36506faab775d80b6f55df1b6fa8607c>>
+ * @generated SignedSource<<7757173971dbad30443379da8a0772b5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -101,7 +101,7 @@ return {
             "args": [
               {
                 "kind": "Literal",
-                "name": "tab",
+                "name": "page",
                 "value": "ABOUT"
               }
             ],
@@ -125,7 +125,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "meta(tab:\"ABOUT\")"
+            "storageKey": "meta(page:\"ABOUT\")"
           },
           {
             "alias": null,
@@ -165,7 +165,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d02aa26c5171fc00fa681cb2d60f8abb",
+    "cacheID": "9e858c5a691758248177e5a94eeede20",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -208,7 +208,7 @@ return {
     },
     "name": "ArtistOverviewRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistOverviewRoute_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  slug\n  name\n  meta(tab: ABOUT) {\n    description\n    title\n  }\n  counts {\n    artworks\n  }\n  internalID\n}\n"
+    "text": "query ArtistOverviewRoute_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  slug\n  name\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  counts {\n    artworks\n  }\n  internalID\n}\n"
   }
 };
 })();

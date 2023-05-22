@@ -421,7 +421,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         slug
         internalID
         name
-        meta(tab: AUCTION_RESULTS) {
+        meta(page: AUCTION_RESULTS) {
           description
           title
         }

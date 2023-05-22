@@ -1544,7 +1544,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     size: Int
     slugs: [String!]
   ): [MarketingCollection]
-  meta(tab: ArtistTab): ArtistMeta!
+  meta(page: ArtistPage): ArtistMeta!
   middle: String
   name: String
   nationality: String
@@ -1966,7 +1966,7 @@ type ArtistStatuses {
   shows: Boolean
 }
 
-enum ArtistTab {
+enum ArtistPage {
   ABOUT
   ARTWORKS
   AUCTION_RESULTS

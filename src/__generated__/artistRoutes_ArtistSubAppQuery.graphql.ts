@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dbabeeb57d0a34a040db2b325102df0d>>
+ * @generated SignedSource<<44e52850b581e74b3454a8023e948da0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -211,7 +211,7 @@ return {
             "args": [
               {
                 "kind": "Literal",
-                "name": "tab",
+                "name": "page",
                 "value": "ABOUT"
               }
             ],
@@ -223,7 +223,7 @@ return {
               (v4/*: any*/),
               (v5/*: any*/)
             ],
-            "storageKey": "meta(tab:\"ABOUT\")"
+            "storageKey": "meta(page:\"ABOUT\")"
           },
           {
             "alias": "alternate_names",
@@ -465,12 +465,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "89caccb65846e5fec49a274772690933",
+    "cacheID": "eab2986c173e52cecd17081ca0f15a91",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ArtistSubAppQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArtistSubAppQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistSubApp_artist\n    id\n  }\n}\n\nfragment ArtistBackLink_artist on Artist {\n  name\n  href\n}\n\nfragment ArtistMeta_artist on Artist {\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  gender\n  href\n  meta(tab: ABOUT) {\n    description\n    title\n  }\n  alternate_names: alternateNames\n  image {\n    versions\n    large: url(version: \"large\")\n    square: url(version: \"square\")\n  }\n  counts {\n    artworks\n  }\n  blurb\n  artworks_connection: artworksConnection(first: 10, filter: IS_FOR_SALE, published: true) {\n    edges {\n      node {\n        title\n        date\n        description\n        category\n        price_currency: priceCurrency\n        listPrice {\n          __typename\n          ... on PriceRange {\n            minPrice {\n              major\n              currencyCode\n            }\n            maxPrice {\n              major\n            }\n          }\n          ... on Money {\n            major\n            currencyCode\n          }\n        }\n        availability\n        href\n        image {\n          small: url(version: \"small\")\n          large: url(version: \"large\")\n        }\n        partner {\n          name\n          href\n          profile {\n            image {\n              small: url(version: \"small\")\n              large: url(version: \"large\")\n            }\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistSubApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistBackLink_artist\n  internalID\n}\n"
+    "text": "query artistRoutes_ArtistSubAppQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistSubApp_artist\n    id\n  }\n}\n\nfragment ArtistBackLink_artist on Artist {\n  name\n  href\n}\n\nfragment ArtistMeta_artist on Artist {\n  slug\n  name\n  nationality\n  birthday\n  deathday\n  gender\n  href\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  alternate_names: alternateNames\n  image {\n    versions\n    large: url(version: \"large\")\n    square: url(version: \"square\")\n  }\n  counts {\n    artworks\n  }\n  blurb\n  artworks_connection: artworksConnection(first: 10, filter: IS_FOR_SALE, published: true) {\n    edges {\n      node {\n        title\n        date\n        description\n        category\n        price_currency: priceCurrency\n        listPrice {\n          __typename\n          ... on PriceRange {\n            minPrice {\n              major\n              currencyCode\n            }\n            maxPrice {\n              major\n            }\n          }\n          ... on Money {\n            major\n            currencyCode\n          }\n        }\n        availability\n        href\n        image {\n          small: url(version: \"small\")\n          large: url(version: \"large\")\n        }\n        partner {\n          name\n          href\n          profile {\n            image {\n              small: url(version: \"small\")\n              large: url(version: \"large\")\n            }\n            id\n          }\n          id\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ArtistSubApp_artist on Artist {\n  ...ArtistMeta_artist\n  ...ArtistBackLink_artist\n  internalID\n}\n"
   }
 };
 })();
