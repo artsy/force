@@ -161,4 +161,28 @@ describe("CreateNewListModal", () => {
       })
     )
   })
+
+  it("trims extra whitespace", async () => {
+    render(<TestComponent />)
+
+    fireEvent.change(screen.getByRole("textbox"), {
+      target: {
+        value: "  Foo Bar  ",
+      },
+    })
+
+    fireEvent.click(screen.getByText("Create List"))
+
+    await waitFor(() =>
+      expect(submitMutation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          variables: {
+            input: {
+              name: "Foo Bar",
+            },
+          },
+        })
+      )
+    )
+  })
 })
