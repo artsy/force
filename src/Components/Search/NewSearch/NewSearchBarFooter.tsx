@@ -37,6 +37,7 @@ export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
       borderTop="1px solid"
       borderTopColor="black10"
       onClick={handleClick}
+      backgroundColor="white100"
       to={href}
     >
       <Flex alignItems="center">
