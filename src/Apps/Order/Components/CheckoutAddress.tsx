@@ -74,7 +74,7 @@ export const CheckoutAddress: FC<{
   userCountry: string
   onChange: AddressChangeHandler
 }> = ({ userCountry, onChange }) => {
-  const userDefaultCountry = getDefaultCountry(userCountry, true)
+  const userDefaultCountry = getCountryNameOrCode(userCountry, true)
   const [displayModal, setDisplayModal] = useState(false)
   const [modalTitle, setModalTitle] = useState<ErrorModalTitle>(
     ErrorModalTitle.general
@@ -102,6 +102,7 @@ export const CheckoutAddress: FC<{
     setAddressLines([firstLine, secondLine])
 
     const res = await mockRequest()
+
     switch (res) {
       case 0:
         setModalTitle(ErrorModalTitle.general)
@@ -373,7 +374,7 @@ export const CheckoutAddress: FC<{
 }
 
 // get country code or name by code or name
-const getDefaultCountry = (userCountry: string, code: boolean): string => {
+const getCountryNameOrCode = (userCountry: string, code: boolean): string => {
   if (code) {
     const countryCode = ALL_COUNTRY_SELECT_OPTIONS.find(
       country => country.text === userCountry
@@ -402,7 +403,7 @@ const formatAddress = (
     secondLine = `${secondLine}, ${address.region}`
   }
 
-  secondLine = `${secondLine}, ${address.postalCode}, ${getDefaultCountry(
+  secondLine = `${secondLine}, ${address.postalCode}, ${getCountryNameOrCode(
     address.country,
     false
   )}`
