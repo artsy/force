@@ -40,6 +40,11 @@ enum ErrorModalTitle {
   suggested = "Confirm your delivery address",
 }
 
+enum AddressSuggestionRadioButton {
+  recommended = "Recommended",
+  user_address = "What you entered",
+}
+
 const MODAL_WIDTH = 549
 
 export const INITIAL_ADDRESS = {
@@ -77,6 +82,9 @@ export const CheckoutAddress: FC<{
     ErrorModalTitle.general
   )
   const [modalContent, setModalContent] = useState<ReactElement>()
+  const [selectedAddress, setSelectedAddress] = useState<
+    AddressSuggestionRadioButton
+  >(AddressSuggestionRadioButton.recommended)
 
   const handleKeepAddressClick = () => {}
 
@@ -135,19 +143,29 @@ export const CheckoutAddress: FC<{
             </Text>
             <Spacer y={2} />
             <RadioGroup
-              onSelect={() => console.log("selected")}
-              defaultValue="recommended"
+              onSelect={selected =>
+                setSelectedAddress(selected as AddressSuggestionRadioButton)
+              }
+              defaultValue={selectedAddress}
             >
-              <BorderedRadio value="recommended">
+              <BorderedRadio
+                value={AddressSuggestionRadioButton.recommended}
+                label={AddressSuggestionRadioButton.recommended}
+                position="relative"
+              >
                 <Flex flexDirection="column">
-                  <Text fontWeight={800}>Recommended</Text>
-                  <Text variant="xs">Some address</Text>
+                  <Text variant="xs">{firstLine}</Text>
+                  <Text variant="xs">{secondLine}</Text>
                 </Flex>
               </BorderedRadio>
-              <BorderedRadio value="entered">
+              <BorderedRadio
+                value={AddressSuggestionRadioButton.user_address}
+                label={AddressSuggestionRadioButton.user_address}
+                position="relative"
+              >
                 <Flex flexDirection="column">
-                  <Text fontWeight={800}>What you entered</Text>
-                  <Text variant="xs">Some address</Text>
+                  <Text variant="xs">{firstLine}</Text>
+                  <Text variant="xs">{secondLine}</Text>
                 </Flex>
               </BorderedRadio>
             </RadioGroup>
