@@ -14,7 +14,9 @@ export const MAX_NAME_LENGTH = 40
 export const validationSchema = Yup.object().shape({
   name: Yup.string()
     .required(i18n.t("collectorSaves.artworkListForm.fields.name.required"))
-    .matches(/\S+/, { message: "name cannot be empty" })
+    .matches(/\S+/, {
+      message: i18n.t("collectorSaves.artworkListForm.fields.name.nonempty"),
+    })
     .max(MAX_NAME_LENGTH),
 })
 

@@ -142,7 +142,7 @@ describe("EditArtworkListModal", () => {
     fireEvent.click(saveButton)
 
     await waitFor(() => {
-      expect(screen.getByText("name cannot be empty")).toBeInTheDocument()
+      expect(screen.getByText("Name cannot be empty")).toBeInTheDocument()
     })
   })
 
