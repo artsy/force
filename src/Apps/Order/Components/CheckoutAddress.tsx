@@ -10,6 +10,8 @@ import {
   ModalDialog,
   Text,
   Spacer,
+  RadioGroup,
+  BorderedRadio,
 } from "@artsy/palette"
 import { Formik, Form } from "formik"
 import { useState, FC, ReactElement } from "react"
@@ -17,14 +19,6 @@ import {
   CountrySelect,
   ALL_COUNTRY_SELECT_OPTIONS,
 } from "Components/CountrySelect"
-
-function mockRequest(): Promise<any> {
-  return new Promise(resolve =>
-    setTimeout(() => {
-      resolve(Math.floor(Math.random() * 3))
-    }, 300)
-  )
-}
 
 export interface Address {
   name: string
@@ -73,45 +67,6 @@ const VALIDATION_SCHEMA = Yup.object().shape({
   }),
 })
 
-const getDefaultCountry = (userCountry: string, code: boolean): string => {
-  if (code) {
-    const countryCode = ALL_COUNTRY_SELECT_OPTIONS.find(
-      country => country.text === userCountry
-    )?.value
-    return countryCode || "US"
-  }
-
-  const countryName = ALL_COUNTRY_SELECT_OPTIONS.find(
-    country => country.value === userCountry
-  )?.text
-  return countryName || "United States"
-}
-
-const formatAddress = (
-  address: Address
-): { firstLine: string; secondLine: string } => {
-  let firstLine = address.addressLine1
-  let secondLine = address.city
-
-  if (address.addressLine2) {
-    firstLine = `${firstLine}, ${address.addressLine2}`
-  }
-
-  if (address.region) {
-    secondLine = `${secondLine}, ${address.region}`
-  }
-
-  secondLine = `${secondLine}, ${address.postalCode}, ${getDefaultCountry(
-    address.country,
-    false
-  )}`
-
-  return {
-    firstLine,
-    secondLine,
-  }
-}
-
 export const CheckoutAddress: FC<{
   userCountry: string
   onChange: AddressChangeHandler
@@ -123,8 +78,13 @@ export const CheckoutAddress: FC<{
   )
   const [modalContent, setModalContent] = useState<ReactElement>()
 
-  const handleUseThisAddressClick = () => {}
-  const handleEditAddressClick = () => {}
+  const handleKeepAddressClick = () => {}
+
+  const handleEditAddressClick = () => {
+    setDisplayModal(false)
+  }
+
+  const handleUseSuggestedAddressClick = () => {}
 
   const handleFormSubmit = async (address: Address) => {
     const { firstLine, secondLine } = formatAddress(address)
@@ -135,21 +95,22 @@ export const CheckoutAddress: FC<{
         setModalTitle(ErrorModalTitle.general)
         setModalContent(
           <>
+            <Spacer y={2} />
             <Text>
               The address you entered may be incorrect or incomplete. Please
               check it and make any changes necessary.
             </Text>
-            <Spacer y={2} />
+            <Spacer y={4} />
             <Text fontWeight={600}>What you entered</Text>
             <Spacer y={1} />
             <Box border="1px solid #C2C2C2" p={20}>
               <Text>{firstLine}</Text>
               <Text>{secondLine}</Text>
             </Box>
-            <Spacer y={2} />
+            <Spacer y={4} />
             <Flex width="100%" justifyContent="space-between">
               <Button
-                onClick={handleUseThisAddressClick}
+                onClick={handleKeepAddressClick}
                 variant="secondaryBlack"
                 width="49%"
               >
@@ -164,16 +125,54 @@ export const CheckoutAddress: FC<{
         setDisplayModal(true)
         break
       case 1:
+        setModalTitle(ErrorModalTitle.suggested)
+        setModalContent(
+          <>
+            <Spacer y={2} />
+            <Text>
+              To ensure prompt and accurate delivery, we suggest a modified
+              shipping address.
+            </Text>
+            <Spacer y={2} />
+            <RadioGroup
+              onSelect={() => console.log("selected")}
+              defaultValue="recommended"
+            >
+              <BorderedRadio value="recommended">
+                <Flex flexDirection="column">
+                  <Text fontWeight={800}>Recommended</Text>
+                  <Text variant="xs">Some address</Text>
+                </Flex>
+              </BorderedRadio>
+              <BorderedRadio value="entered">
+                <Flex flexDirection="column">
+                  <Text fontWeight={800}>What you entered</Text>
+                  <Text variant="xs">Some address</Text>
+                </Flex>
+              </BorderedRadio>
+            </RadioGroup>
+            <Spacer y={4} />
+            <Flex width="100%" justifyContent="space-between">
+              <Button
+                onClick={handleEditAddressClick}
+                variant="secondaryBlack"
+                width="49%"
+              >
+                Back to Edit
+              </Button>
+              <Button onClick={handleUseSuggestedAddressClick} width="49%">
+                Use This Address
+              </Button>
+            </Flex>
+          </>
+        )
+        setDisplayModal(true)
         break
       case 2:
         break
       default:
         break
     }
-  }
-
-  const handleModalClose = () => {
-    setDisplayModal(false)
   }
 
   return (
@@ -207,7 +206,7 @@ export const CheckoutAddress: FC<{
             {displayModal && (
               <ModalDialog
                 title={modalTitle}
-                onClose={handleModalClose}
+                onClose={() => setDisplayModal(false)}
                 width={MODAL_WIDTH}
               >
                 {modalContent}
@@ -345,5 +344,52 @@ export const CheckoutAddress: FC<{
         )
       }}
     </Formik>
+  )
+}
+
+const getDefaultCountry = (userCountry: string, code: boolean): string => {
+  if (code) {
+    const countryCode = ALL_COUNTRY_SELECT_OPTIONS.find(
+      country => country.text === userCountry
+    )?.value
+    return countryCode || "US"
+  }
+
+  const countryName = ALL_COUNTRY_SELECT_OPTIONS.find(
+    country => country.value === userCountry
+  )?.text
+  return countryName || "United States"
+}
+
+const formatAddress = (
+  address: Address
+): { firstLine: string; secondLine: string } => {
+  let firstLine = address.addressLine1
+  let secondLine = address.city
+
+  if (address.addressLine2) {
+    firstLine = `${firstLine}, ${address.addressLine2}`
+  }
+
+  if (address.region) {
+    secondLine = `${secondLine}, ${address.region}`
+  }
+
+  secondLine = `${secondLine}, ${address.postalCode}, ${getDefaultCountry(
+    address.country,
+    false
+  )}`
+
+  return {
+    firstLine,
+    secondLine,
+  }
+}
+
+function mockRequest(): Promise<any> {
+  return new Promise(resolve =>
+    setTimeout(() => {
+      resolve(Math.floor(Math.random() * 3))
+    }, 300)
   )
 }
