@@ -2,7 +2,7 @@ import { TransactionDetailsSummaryItem_order$data } from "__generated__/Transact
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { Flex, Text, Spacer, Column } from "@artsy/palette"
+import { Flex, Text, Spacer, Column, Sup } from "@artsy/palette"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -27,6 +27,7 @@ export interface TransactionDetailsSummaryItemProps
   showCongratulationMessage?: boolean
   isEigen?: boolean
   showOrderNumberHeader?: boolean
+  displayState?: string | null
 }
 
 export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProps> = ({
@@ -38,6 +39,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
   showCongratulationMessage = false,
   offerContextPrice = "LIST_PRICE",
   useLastSubmittedOffer,
+  displayState,
   ...others
 }) => {
   const renderPriceEntry = () => {
@@ -97,14 +99,21 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
       const selectedShippingQuote = extractNodes(order.lineItems)?.[0]
         .selectedShippingQuote
 
-      if (selectedShippingQuote) {
+      if (order.displayState === "PROCESSING" && order.mode === "OFFER") {
+        return `${
+          shippingQuoteDisplayNames[selectedShippingQuote.typeName]
+        } delivery`
+      } else if (
+        selectedShippingQuote &&
+        order.displayState !== "PROCESSING_APPROVAL"
+      ) {
         return `${
           shippingQuoteDisplayNames[selectedShippingQuote.typeName]
         } delivery*`
       }
     }
 
-    return "Shipping*"
+    return "Shipping"
   }
 
   const shippingNotCalculated = () => {
@@ -197,7 +206,10 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
     }
   }
   const offer = getOffer()
-
+  console.log("Offer:", offer)
+  console.log("transactionStep:", transactionStep)
+  console.log("Order:", order)
+  console.log("displayState:", displayState)
   return (
     <StepSummaryItem {...others}>
       {renderPriceEntry()}
@@ -208,11 +220,14 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
         data-test="shippingDisplayAmount"
       />
       <Entry
-        label="Tax †"
+        label={
+          <>
+            Tax <Sup>†</Sup>
+          </>
+        }
         value={taxDisplayAmount()}
         data-test="taxDisplayAmount"
       />
-
       <Spacer y={2} />
       <Entry
         label="Total"
@@ -221,13 +236,16 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
         data-test="buyerTotalDisplayAmount"
       />
       <Spacer y={2} />
-      {offer?.shippingTotal ? (
+      {offer?.shippingTotalCents &&
+      order.requestedFulfillment?.__typename === "CommerceShipArta" &&
+      order.mode === "OFFER" &&
+      order.displayState !== "PROCESSING" ? (
         <Text variant="sm" color="black60">
           *Estimate Only. Price may vary once offer is finalized.
         </Text>
       ) : null}
       <Text variant="sm" color="black60">
-        † Additional duties and taxes{" "}
+        <Sup>†</Sup> Additional duties and taxes{" "}
         <RouterLink
           inline
           to="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
@@ -371,6 +389,7 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
           }
         }
         mode
+        displayState
         shippingTotal(precision: 2)
         shippingTotalCents
         taxTotal(precision: 2)
