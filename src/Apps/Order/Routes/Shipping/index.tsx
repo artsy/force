@@ -25,6 +25,7 @@ import {
   PhoneNumberForm,
   PhoneNumberTouched,
 } from "Apps/Order/Components/PhoneNumberForm"
+import { CheckoutAddress } from "Apps/Order/Components/CheckoutAddress"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
@@ -86,6 +87,7 @@ import {
 import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { extractNodes } from "Utils/extractNodes"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -102,6 +104,8 @@ export interface ShippingProps {
 export const ShippingRoute: FC<ShippingProps> = props => {
   const { trackEvent } = useTracking()
   const { relayEnvironment } = useSystemContext()
+
+  const isAddressVerificationEnabled = useFeatureFlag("address_verification")
 
   const [shippingOption, setShippingOption] = useState<
     CommerceOrderFulfillmentTypeEnum
@@ -660,17 +664,24 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <Text variant="lg-display" mb="2">
                 Delivery address
               </Text>
-              <AddressForm
-                tabIndex={showAddressForm ? 0 : -1}
-                value={address}
-                errors={addressErrors}
-                touched={addressTouched}
-                onChange={onAddressChange}
-                domesticOnly={artwork?.onlyShipsDomestically!}
-                euOrigin={artwork?.euShippingOrigin!}
-                shippingCountry={artwork?.shippingCountry!}
-                showPhoneNumberInput={false}
-              />
+              {isAddressVerificationEnabled ? (
+                <CheckoutAddress
+                  userCountry={props.me.location?.country || "United States"}
+                  onChange={onAddressChange}
+                />
+              ) : (
+                <AddressForm
+                  tabIndex={showAddressForm ? 0 : -1}
+                  value={address}
+                  errors={addressErrors}
+                  touched={addressTouched}
+                  onChange={onAddressChange}
+                  domesticOnly={artwork?.onlyShipsDomestically!}
+                  euOrigin={artwork?.euShippingOrigin!}
+                  shippingCountry={artwork?.shippingCountry!}
+                  showPhoneNumberInput={false}
+                />
+              )}
               <Spacer y={2} />
               <PhoneNumberForm
                 tabIndex={showAddressForm ? 0 : -1}
@@ -843,6 +854,9 @@ export const ShippingFragmentContainer = createFragmentContainer(
         name
         email
         id
+        location {
+          country
+        }
         ...SavedAddresses_me
         addressConnection(
           first: $first
