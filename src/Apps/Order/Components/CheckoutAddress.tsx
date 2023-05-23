@@ -1,12 +1,30 @@
 import * as Yup from "yup"
-import { Column, GridColumns, Input, Message } from "@artsy/palette"
+import {
+  Box,
+  Button,
+  Column,
+  GridColumns,
+  Input,
+  Flex,
+  Message,
+  ModalDialog,
+  Text,
+  Spacer,
+} from "@artsy/palette"
 import { Formik, Form } from "formik"
-import { FC } from "react"
+import { useState, FC, ReactElement } from "react"
 import {
   CountrySelect,
   ALL_COUNTRY_SELECT_OPTIONS,
 } from "Components/CountrySelect"
-import { useAddAddress } from "Apps/Settings/Routes/Shipping/useAddAddress"
+
+function mockRequest(): Promise<any> {
+  return new Promise(resolve =>
+    setTimeout(() => {
+      resolve(Math.floor(Math.random() * 3))
+    }, 300)
+  )
+}
 
 export interface Address {
   name: string
@@ -22,6 +40,13 @@ export type AddressChangeHandler = (
   address: Address,
   key: keyof Address
 ) => void
+
+enum ErrorModalTitle {
+  general = "Check your delivery address",
+  suggested = "Confirm your delivery address",
+}
+
+const MODAL_WIDTH = 549
 
 export const INITIAL_ADDRESS = {
   name: "",
@@ -59,8 +84,62 @@ export const CheckoutAddress: FC<{
   userCountry: string
   onChange: AddressChangeHandler
 }> = ({ userCountry, onChange }) => {
-  const { submitMutation: submitAddAddress } = useAddAddress()
   const userDefaultCountry = getDefaultCountry(userCountry)
+  const [displayModal, setDisplayModal] = useState(false)
+  const [modalTitle, setModalTitle] = useState<ErrorModalTitle>(
+    ErrorModalTitle.general
+  )
+  const [modalContent, setModalContent] = useState<ReactElement>()
+
+  const handleUseThisAddressClick = () => {}
+  const handleEditAddressClick = () => {}
+
+  const handleFormSubmit = async () => {
+    const res = await mockRequest()
+    switch (res) {
+      case 0:
+        setModalTitle(ErrorModalTitle.general)
+        setModalContent(
+          <>
+            <Text>
+              The address you entered may be incorrect or incomplete. Please
+              check it and make any changes necessary.
+            </Text>
+            <Spacer y={2} />
+            <Text fontWeight={600}>What you entered</Text>
+            <Spacer y={1} />
+            <Box border="1px solid #C2C2C2" p={20}>
+              <Text>Some address...</Text>
+            </Box>
+            <Spacer y={2} />
+            <Flex width="100%" justifyContent="space-between">
+              <Button
+                onClick={handleUseThisAddressClick}
+                variant="secondaryBlack"
+                width="49%"
+              >
+                Use This Address
+              </Button>
+              <Button onClick={handleEditAddressClick} width="49%">
+                Edit Address
+              </Button>
+            </Flex>
+          </>
+        )
+        setDisplayModal(true)
+        break
+      case 1:
+        break
+      case 2:
+        break
+      default:
+        break
+    }
+  }
+
+  const handleModalClose = () => {
+    setDisplayModal(false)
+  }
 
   return (
     <Formik
@@ -72,18 +151,7 @@ export const CheckoutAddress: FC<{
           country: userDefaultCountry,
         },
       }}
-      onSubmit={async ({ attributes }, { setStatus, resetForm }) => {
-        try {
-          await submitAddAddress({
-            variables: { input: { attributes } },
-          })
-          resetForm()
-        } catch (err) {
-          console.error(err)
-          const error = Array.isArray(err) ? err[0] : err
-          setStatus({ error: true, message: error.message })
-        }
-      }}
+      onSubmit={handleFormSubmit}
     >
       {({ values, errors, touched, status, handleChange, handleBlur }) => {
         const changeEventHandler = (
@@ -101,6 +169,15 @@ export const CheckoutAddress: FC<{
         }
         return (
           <Form>
+            {displayModal && (
+              <ModalDialog
+                title={modalTitle}
+                onClose={handleModalClose}
+                width={MODAL_WIDTH}
+              >
+                {modalContent}
+              </ModalDialog>
+            )}
             <GridColumns>
               <Column span={12}>
                 <Input
@@ -219,6 +296,15 @@ export const CheckoutAddress: FC<{
                   </Message>
                 </Column>
               )}
+              <Column span={12}>
+                <Button
+                  onClick={handleFormSubmit}
+                  variant="primaryBlack"
+                  width="50%"
+                >
+                  Save and Continue
+                </Button>
+              </Column>
             </GridColumns>
           </Form>
         )
