@@ -185,4 +185,20 @@ describe("CreateNewListModal", () => {
       )
     )
   })
+
+  it("prevents empty names", async () => {
+    render(<TestComponent />)
+
+    fireEvent.change(screen.getByRole("textbox"), {
+      target: {
+        value: "   ",
+      },
+    })
+
+    fireEvent.click(screen.getByText("Create List"))
+
+    await waitFor(() => {
+      expect(screen.getByText("name cannot be empty")).toBeInTheDocument()
+    })
+  })
 })
