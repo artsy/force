@@ -45,8 +45,6 @@ enum AddressSuggestionRadioButton {
   user_address = "What you entered",
 }
 
-const MODAL_WIDTH = 549
-
 export const INITIAL_ADDRESS = {
   name: "",
   country: "",
@@ -152,7 +150,7 @@ export const CheckoutAddress: FC<{
               <ModalDialog
                 title={modalTitle}
                 onClose={() => setDisplayModal(false)}
-                width={MODAL_WIDTH}
+                width={["100%", 550]}
               >
                 {modalTitle === ErrorModalTitle.general && (
                   <>
