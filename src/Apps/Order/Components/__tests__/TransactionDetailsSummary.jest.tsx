@@ -114,7 +114,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
       const text = wrapper.text()
 
-      expect(text).toMatch("Shipping*Calculated in next steps")
+      expect(text).toMatch("ShippingCalculated in next steps")
       expect(text).toMatch("Tax †Calculated in next steps")
     })
 
@@ -195,7 +195,7 @@ describe("TransactionDetailsSummaryItem", () => {
       const entry = wrapper.find("Entry")
 
       expect(entry.at(0).text()).toMatch("PriceUS$200.00")
-      expect(entry.at(1).text()).toMatch("Shipping*US$12.00")
+      expect(entry.at(1).text()).toMatch("ShippingUS$12.00")
       expect(entry.at(2).text()).toMatch("Tax †US$3.25")
       expect(entry.at(3).text()).toMatch("TotalUS$215.25")
     })
@@ -208,7 +208,7 @@ describe("TransactionDetailsSummaryItem", () => {
       const text = wrapper.text()
 
       expect(text).toMatch("PriceUS$200.00")
-      expect(text).toMatch("Shipping*US$12.00")
+      expect(text).toMatch("ShippingUS$12.00")
       expect(text).toMatch("Tax †US$3.25")
       expect(text).toMatch("TotalUS$215.25")
     })
@@ -250,7 +250,7 @@ describe("TransactionDetailsSummaryItem", () => {
       const text = wrapper.text()
 
       expect(text).toMatch("Your offerUS$14,000")
-      expect(text).toMatch("Shipping*US$200")
+      expect(text).toMatch("ShippingUS$200")
       expect(text).toMatch("Tax †US$120")
       expect(text).toMatch("TotalUS$14,320")
     })
