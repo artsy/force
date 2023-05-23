@@ -11171,6 +11171,7 @@ type Me implements Node {
     before: String
     default: Boolean
     first: Int
+    includesArtworkID: String
     last: Int
     page: Int
     saves: Boolean
@@ -11194,6 +11195,7 @@ type Me implements Node {
     before: String
     dismissed: Boolean
     first: Int
+    fromId: String
     hasMessage: Boolean
     hasReply: Boolean
     last: Int
@@ -14449,6 +14451,7 @@ type Query {
     before: String
     dismissed: Boolean
     first: Int
+    fromId: String
     hasMessage: Boolean
     hasReply: Boolean
     last: Int
@@ -18776,6 +18779,7 @@ type Viewer {
     before: String
     dismissed: Boolean
     first: Int
+    fromId: String
     hasMessage: Boolean
     hasReply: Boolean
     last: Int
