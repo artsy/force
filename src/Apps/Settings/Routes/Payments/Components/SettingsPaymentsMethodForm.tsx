@@ -13,7 +13,13 @@ import { Formik, Form } from "formik"
 import { FC } from "react"
 import { CountrySelect } from "Components/CountrySelect"
 import { CreditCardInput } from "Components/CreditCardInput"
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
+import {
+  CardCvcElement,
+  CardExpiryElement,
+  CardNumberElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js"
 import { useAddCreditCard } from "Apps/Settings/Routes/Payments/useAddCreditCard"
 
 export const INITIAL_VALUES = {
@@ -60,16 +66,18 @@ export const SettingsPaymentsMethodForm: FC<SettingsPaymentsMethodFormProps> = (
         }
 
         try {
-          const cardElement = elements.getElement(CardElement)
+          const cardNumberElement = elements.getElement(CardNumberElement)
+          const cardExpiryElement = elements.getElement(CardExpiryElement)
+          const cardCvcElement = elements.getElement(CardCvcElement)
 
-          if (!cardElement) {
+          if (!cardNumberElement || !cardExpiryElement || !cardCvcElement) {
             return setStatus({
               error: true,
-              message: "Unable to locate card element.",
+              message: "Unable to locate card elements.",
             })
           }
 
-          const { token, error } = await stripe.createToken(cardElement, {
+          const { token, error } = await stripe.createToken(cardNumberElement, {
             name: values.name,
             address_line1: values.addressLine1,
             address_line2: values.addressLine2,

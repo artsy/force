@@ -1,4 +1,10 @@
-import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js"
+import {
+  CardCvcElement,
+  CardExpiryElement,
+  CardNumberElement,
+  useElements,
+  useStripe,
+} from "@stripe/react-stripe-js"
 import { useAddCreditCardAndUpdateProfile } from "Apps/Auction/Queries/useAddCreditCardAndUpdateProfile"
 import { useCreateBidder } from "Apps/Auction/Queries/useCreateBidder"
 import createLogger from "Utils/logger"
@@ -62,9 +68,11 @@ export const useCreateTokenAndSubmit = ({
       return
     }
 
-    const element = elements.getElement(CardElement)
+    const cardNumberElement = elements.getElement(CardNumberElement)
+    const cardExpiryElement = elements.getElement(CardExpiryElement)
+    const cardCvcElement = elements.getElement(CardCvcElement)
 
-    if (!element) {
+    if (!cardNumberElement || !cardExpiryElement || !cardCvcElement) {
       logger.error(stripeCardElementNotFound)
       helpers.setStatus("SUBMISSION_FAILED")
       return
@@ -74,7 +82,7 @@ export const useCreateTokenAndSubmit = ({
 
     try {
       const { error, token } = await stripe.createToken(
-        element,
+        cardNumberElement,
         toStripeAddress(values.address!)
       )!
 

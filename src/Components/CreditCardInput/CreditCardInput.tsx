@@ -1,13 +1,38 @@
-import { Box, BoxProps, THEME, Text } from "@artsy/palette"
-import { CardElement } from "@stripe/react-stripe-js"
-import type { StripeCardElementChangeEvent } from "@stripe/stripe-js"
+import { Box, BoxProps, Flex, Join, Spacer, THEME, Text } from "@artsy/palette"
+import {
+  CardNumberElement,
+  CardExpiryElement,
+  CardCvcElement,
+} from "@stripe/react-stripe-js"
+import type {
+  StripeCardExpiryElementChangeEvent,
+  StripeCardNumberElementChangeEvent,
+  StripeElementStyleVariant,
+} from "@stripe/stripe-js"
+import { StripeCardCvcElementChangeEvent } from "@stripe/stripe-js"
 import { themeGet } from "@styled-system/theme-get"
 import styled, { css } from "styled-components"
 
 interface CreditCardInputProps extends BoxProps {
   error?: string | boolean
-  onChange?: (response: StripeCardElementChangeEvent) => void
+  onChange?: (
+    response:
+      | StripeCardCvcElementChangeEvent
+      | StripeCardNumberElementChangeEvent
+      | StripeCardExpiryElementChangeEvent
+  ) => void
   required?: boolean
+}
+
+const stripeBaseStyle: StripeElementStyleVariant = {
+  "::placeholder": { color: THEME.colors.black60 },
+  backgroundColor: THEME.colors.white100,
+  color: THEME.colors.black100,
+  fontFamily: THEME.fonts.sans,
+  fontSize: THEME.textVariants["sm-display"].fontSize,
+  fontSmoothing: "antialiased",
+  letterSpacing: THEME.textVariants["sm-display"].letterSpacing,
+  lineHeight: THEME.textVariants["sm-display"].lineHeight,
 }
 
 /**
@@ -22,26 +47,30 @@ export const CreditCardInput: React.FC<CreditCardInputProps> = ({
 }) => {
   return (
     <Box data-test="creditCardInput" {...rest}>
-      <FauxInput error={!!error}>
-        <CardElement
-          onChange={onChange}
-          options={{
-            hidePostalCode: true,
-            style: {
-              base: {
-                "::placeholder": { color: THEME.colors.black60 },
-                backgroundColor: THEME.colors.white100,
-                color: THEME.colors.black100,
-                fontFamily: THEME.fonts.sans,
-                fontSize: THEME.textVariants["sm-display"].fontSize,
-                fontSmoothing: "antialiased",
-                letterSpacing: THEME.textVariants.sm.letterSpacing,
-                lineHeight: THEME.textVariants.sm.lineHeight,
-              },
-            },
-          }}
-        />
-      </FauxInput>
+      <Flex flex={1}>
+        <Join separator={<Spacer x={2} />}>
+          <CardElementContainer flex={3} error={!!error}>
+            <CardNumberElement
+              onChange={onChange}
+              options={{ showIcon: true, style: { base: stripeBaseStyle } }}
+            />
+          </CardElementContainer>
+
+          <CardElementContainer flex={1} error={!!error}>
+            <CardExpiryElement
+              onChange={onChange}
+              options={{ style: { base: stripeBaseStyle } }}
+            />
+          </CardElementContainer>
+
+          <CardElementContainer flex={1} error={!!error}>
+            <CardCvcElement
+              onChange={onChange}
+              options={{ style: { base: stripeBaseStyle } }}
+            />
+          </CardElementContainer>
+        </Join>
+      </Flex>
 
       {error && typeof error === "string" && (
         <Text variant="xs" color="red100" mt={0.5}>
@@ -52,9 +81,10 @@ export const CreditCardInput: React.FC<CreditCardInputProps> = ({
   )
 }
 
-const FauxInput = styled(Box)<{ error: boolean }>`
+const CardElementContainer = styled(Flex)<{ error: boolean }>`
   > .StripeElement {
     display: flex;
+    flex: 1;
     align-items: center;
     justify-content: center;
     height: 50px;
