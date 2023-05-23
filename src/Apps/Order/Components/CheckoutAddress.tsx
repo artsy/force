@@ -73,18 +73,50 @@ const VALIDATION_SCHEMA = Yup.object().shape({
   }),
 })
 
-const getDefaultCountry = (userCountry: string): string => {
-  const countryCode = ALL_COUNTRY_SELECT_OPTIONS.find(
-    country => country.text === userCountry
-  )?.value
-  return countryCode || "US"
+const getDefaultCountry = (userCountry: string, code: boolean): string => {
+  if (code) {
+    const countryCode = ALL_COUNTRY_SELECT_OPTIONS.find(
+      country => country.text === userCountry
+    )?.value
+    return countryCode || "US"
+  }
+
+  const countryName = ALL_COUNTRY_SELECT_OPTIONS.find(
+    country => country.value === userCountry
+  )?.text
+  return countryName || "United States"
+}
+
+const formatAddress = (
+  address: Address
+): { firstLine: string; secondLine: string } => {
+  let firstLine = address.addressLine1
+  let secondLine = address.city
+
+  if (address.addressLine2) {
+    firstLine = `${firstLine}, ${address.addressLine2}`
+  }
+
+  if (address.region) {
+    secondLine = `${secondLine}, ${address.region}`
+  }
+
+  secondLine = `${secondLine}, ${address.postalCode}, ${getDefaultCountry(
+    address.country,
+    false
+  )}`
+
+  return {
+    firstLine,
+    secondLine,
+  }
 }
 
 export const CheckoutAddress: FC<{
   userCountry: string
   onChange: AddressChangeHandler
 }> = ({ userCountry, onChange }) => {
-  const userDefaultCountry = getDefaultCountry(userCountry)
+  const userDefaultCountry = getDefaultCountry(userCountry, true)
   const [displayModal, setDisplayModal] = useState(false)
   const [modalTitle, setModalTitle] = useState<ErrorModalTitle>(
     ErrorModalTitle.general
@@ -94,7 +126,9 @@ export const CheckoutAddress: FC<{
   const handleUseThisAddressClick = () => {}
   const handleEditAddressClick = () => {}
 
-  const handleFormSubmit = async () => {
+  const handleFormSubmit = async (address: Address) => {
+    const { firstLine, secondLine } = formatAddress(address)
+
     const res = await mockRequest()
     switch (res) {
       case 0:
@@ -109,7 +143,8 @@ export const CheckoutAddress: FC<{
             <Text fontWeight={600}>What you entered</Text>
             <Spacer y={1} />
             <Box border="1px solid #C2C2C2" p={20}>
-              <Text>Some address...</Text>
+              <Text>{firstLine}</Text>
+              <Text>{secondLine}</Text>
             </Box>
             <Spacer y={2} />
             <Flex width="100%" justifyContent="space-between">
@@ -151,7 +186,7 @@ export const CheckoutAddress: FC<{
           country: userDefaultCountry,
         },
       }}
-      onSubmit={handleFormSubmit}
+      onSubmit={({ attributes }) => handleFormSubmit(attributes)}
     >
       {({ values, errors, touched, status, handleChange, handleBlur }) => {
         const changeEventHandler = (
@@ -298,7 +333,7 @@ export const CheckoutAddress: FC<{
               )}
               <Column span={12}>
                 <Button
-                  onClick={handleFormSubmit}
+                  // onClick={() => handleFormSubmit()}
                   variant="primaryBlack"
                   width="50%"
                 >
