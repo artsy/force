@@ -27,7 +27,6 @@ export interface TransactionDetailsSummaryItemProps
   showCongratulationMessage?: boolean
   isEigen?: boolean
   showOrderNumberHeader?: boolean
-  displayState?: string | null
 }
 
 export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProps> = ({
@@ -39,7 +38,6 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
   showCongratulationMessage = false,
   offerContextPrice = "LIST_PRICE",
   useLastSubmittedOffer,
-  displayState,
   ...others
 }) => {
   const renderPriceEntry = () => {
