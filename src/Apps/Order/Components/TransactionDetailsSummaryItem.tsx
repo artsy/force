@@ -206,10 +206,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
     }
   }
   const offer = getOffer()
-  // console.log("Offer:", offer)
-  // console.log("transactionStep:", transactionStep)
-  // console.log("Order:", order)
-  // console.log("displayState:", displayState)
+
   return (
     <StepSummaryItem {...others}>
       {renderPriceEntry()}
