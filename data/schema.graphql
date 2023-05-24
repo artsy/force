@@ -11192,6 +11192,7 @@ type Me implements Node {
   # Conversations, usually between a user and partner.
   conversationsConnection(
     after: String
+    artistId: String
     before: String
     dismissed: Boolean
     first: Int
@@ -14503,6 +14504,7 @@ type Query {
   # Conversations, usually between a user and partner.
   conversationsConnection(
     after: String
+    artistId: String
     before: String
     dismissed: Boolean
     first: Int
@@ -18831,6 +18833,7 @@ type Viewer {
   # Conversations, usually between a user and partner.
   conversationsConnection(
     after: String
+    artistId: String
     before: String
     dismissed: Boolean
     first: Int
