@@ -58,25 +58,6 @@ interface AuctionResultsProps {
   artist: ArtistAuctionResults_artist$data
 }
 
-interface AuctionMetaTagsProps {
-  meta: {
-    title: string
-    description: string
-  }
-}
-
-const AuctionMetaTags: React.FC<AuctionMetaTagsProps> = ({ meta }) => {
-  const { title, description } = meta
-
-  return (
-    <>
-      <Title>{title}</Title>
-      <Meta name="title" content={title} />
-      <Meta name="description" content={description} />
-    </>
-  )
-}
-
 const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   artist,
   relay,
@@ -231,6 +212,18 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     setTimeout(
       visible ? scrollToMarketSignalsTop : scrollToAuctionResultsTop,
       0
+    )
+  }
+
+  const AuctionMetaTags = ({ meta }) => {
+    const { title, description } = meta
+
+    return (
+      <>
+        <Title>{title}</Title>
+        <Meta name="title" content={title} />
+        <Meta name="description" content={description} />
+      </>
     )
   }
 
