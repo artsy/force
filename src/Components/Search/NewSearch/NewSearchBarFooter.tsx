@@ -10,19 +10,16 @@ interface SuggestionItemProps {
   href: string
   query: string
   index: number
-  onFooterClick: () => void
 }
 
 export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
   href,
   query,
   index,
-  onFooterClick,
 }) => {
   const tracking = useTracking()
 
   const handleClick = () => {
-    onFooterClick()
     tracking.trackEvent({
       action_type: DeprecatedSchema.ActionType.SelectedItemFromSearch,
       destination_path: href,
@@ -37,7 +34,6 @@ export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
       borderTop="1px solid"
       borderTopColor="black10"
       onClick={handleClick}
-      backgroundColor="white100"
       to={href}
     >
       <Flex alignItems="center">
