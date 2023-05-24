@@ -304,9 +304,15 @@ export const ArtworkDetailsForm: React.FC = () => {
             onSelect={selected => setFieldValue("rarity", selected)}
           />
         </Column>
-        <Column span={6}>
+        <Column display="flex" span={6}>
           {limitedEditionRarity && (
-            <Flex alignItems="center" mt={[30, 0]} mb={[1, 0]}>
+            <Flex
+              flex={1}
+              alignSelf="flex-end"
+              alignItems="center"
+              mt={[30, 0]}
+              mb={[1, 0]}
+            >
               <Input
                 title="Edition Number"
                 placeholder="Your work's #"
@@ -409,8 +415,9 @@ export const ArtworkDetailsForm: React.FC = () => {
             value={values.provenance}
           />
         </Column>
-        <Column span={6} mt={[4, 0]}>
+        <Column display="flex" alignItems="flex-end" span={6} mt={[4, 0]}>
           <LocationAutocompleteInput
+            flex={1}
             name="location"
             title="City"
             placeholder="Enter city where artwork is located"
