@@ -1,4 +1,4 @@
-import { ModalDialog, Image, Box } from "@artsy/palette"
+import { ModalDialog, Image, Box, Spacer } from "@artsy/palette"
 import {
   AuthDialogMode,
   useAuthDialogContext,
@@ -51,6 +51,8 @@ export const AuthDialog: FC<AuthDialogProps> = ({ onClose }) => {
           }
         : { width: ["100%", 450] })}
     >
+      <Spacer y={1} />
+
       <AuthDialogView />
     </ModalDialog>
   )
