@@ -160,9 +160,15 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             onSelect={selected => setFieldValue("attributionClass", selected)}
           />
         </Column>
-        <Column span={6} mt={[2, 0]}>
+        <Column display="flex" span={6} mt={[2, 0]}>
           {isLimitedEdition && (
-            <Flex alignItems="center" mt={[30, 0]} mb={[1, 0]}>
+            <Flex
+              flex={1}
+              alignSelf="flex-end"
+              alignItems="center"
+              mt={[30, 0]}
+              mb={[1, 0]}
+            >
               <NumericInput
                 label=""
                 title="Edition Number"
@@ -308,7 +314,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             value={values.provenance}
           />
         </Column>
-        <Column span={6} mt={[4, 0]}>
+        <Column alignItems="flex-end" display="flex" span={6} mt={[4, 0]}>
           <Input
             title="City"
             name="artworkLocation"
