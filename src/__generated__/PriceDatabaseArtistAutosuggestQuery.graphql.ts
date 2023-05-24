@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<60c129fa253fa77696b8c6daa1201dfc>>
+ * @generated SignedSource<<515511805f87cdc16f7a7167ee80a75a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,27 +9,23 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type PriceDatabaseArtistAutosuggest_SearchConnection_Query$variables = {
-  searchQuery: string;
+export type PriceDatabaseArtistAutosuggestQuery$variables = {
+  query: string;
 };
-export type PriceDatabaseArtistAutosuggest_SearchConnection_Query$data = {
+export type PriceDatabaseArtistAutosuggestQuery$data = {
   readonly searchConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly counts?: {
-          readonly auctionResults: number | null;
-        } | null;
-        readonly displayLabel: string | null;
-        readonly imageUrl?: string | null;
         readonly internalID?: string;
-        readonly slug?: string;
+        readonly text: string | null;
+        readonly value?: string;
       } | null;
     } | null> | null;
   } | null;
 };
-export type PriceDatabaseArtistAutosuggest_SearchConnection_Query = {
-  response: PriceDatabaseArtistAutosuggest_SearchConnection_Query$data;
-  variables: PriceDatabaseArtistAutosuggest_SearchConnection_Query$variables;
+export type PriceDatabaseArtistAutosuggestQuery = {
+  response: PriceDatabaseArtistAutosuggestQuery$data;
+  variables: PriceDatabaseArtistAutosuggestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -37,7 +33,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "searchQuery"
+    "name": "query"
   }
 ],
 v1 = [
@@ -49,7 +45,7 @@ v1 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 20
+    "value": 10
   },
   {
     "kind": "Literal",
@@ -59,11 +55,11 @@ v1 = [
   {
     "kind": "Variable",
     "name": "query",
-    "variableName": "searchQuery"
+    "variableName": "query"
   }
 ],
 v2 = {
-  "alias": null,
+  "alias": "text",
   "args": null,
   "kind": "ScalarField",
   "name": "displayLabel",
@@ -76,39 +72,14 @@ v3 = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "value",
       "args": null,
       "kind": "ScalarField",
-      "name": "imageUrl",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArtistCounts",
-      "kind": "LinkedField",
-      "name": "counts",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "auctionResults",
-          "storageKey": null
-        }
-      ],
+      "name": "slug",
       "storageKey": null
     }
   ],
@@ -120,7 +91,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PriceDatabaseArtistAutosuggest_SearchConnection_Query",
+    "name": "PriceDatabaseArtistAutosuggestQuery",
     "selections": [
       {
         "alias": null,
@@ -165,7 +136,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PriceDatabaseArtistAutosuggest_SearchConnection_Query",
+    "name": "PriceDatabaseArtistAutosuggestQuery",
     "selections": [
       {
         "alias": null,
@@ -226,16 +197,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a134c24d1b579578eb293a56d2bc45f0",
+    "cacheID": "d57f8912c64568d9b07f7496d26463c7",
     "id": null,
     "metadata": {},
-    "name": "PriceDatabaseArtistAutosuggest_SearchConnection_Query",
+    "name": "PriceDatabaseArtistAutosuggestQuery",
     "operationKind": "query",
-    "text": "query PriceDatabaseArtistAutosuggest_SearchConnection_Query(\n  $searchQuery: String!\n) {\n  searchConnection(query: $searchQuery, entities: ARTIST, mode: AUTOSUGGEST, first: 20) {\n    edges {\n      node {\n        __typename\n        displayLabel\n        ... on Artist {\n          slug\n          internalID\n          imageUrl\n          counts {\n            auctionResults\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query PriceDatabaseArtistAutosuggestQuery(\n  $query: String!\n) {\n  searchConnection(query: $query, entities: ARTIST, mode: AUTOSUGGEST, first: 10) {\n    edges {\n      node {\n        __typename\n        text: displayLabel\n        ... on Artist {\n          internalID\n          value: slug\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "8a851530fab5a0af6e9a488810593843";
+(node as any).hash = "cbf721689dbfbd1367e5affaf07edb68";
 
 export default node;

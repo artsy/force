@@ -3,9 +3,9 @@ import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchem
 import {
   Box,
   Column,
+  Flex,
   GridColumns,
   Join,
-  Message,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -47,6 +47,7 @@ import { MarketStatsQueryRenderer } from "./Components/MarketStats"
 import { SortSelect } from "./Components/SortSelect"
 import { TableSidebar } from "./Components/TableSidebar"
 import { ArtistAuctionResultsEmptyState } from "./Components/ArtistAuctionResultsEmptyState"
+import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -82,13 +83,12 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 }) => {
   const { user } = useContext(SystemContext)
 
-  const { filters, setFilter } = useAuctionResultsFilterContext()
+  const { filters, setFilter, resetFilters } = useAuctionResultsFilterContext()
 
   const selectedFilters = useCurrentlySelectedFiltersForAuctionResults()
 
   const { pageInfo } = artist.auctionResultsConnection ?? {}
   const { hasNextPage, endCursor } = pageInfo ?? {}
-  const artistName = artist.name
 
   const results = extractNodes(artist.auctionResultsConnection)
   const upcomingAuctionResults = results.filter(result => result.isUpcoming)
@@ -117,12 +117,13 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   const loadNext = () => {
     const currentPageNumber = filters?.page ?? 0
     const nextPageNum = currentPageNumber + 1
+
     if (hasNextPage) {
       loadPage(endCursor, nextPageNum)
     }
   }
 
-  const loadPage = (cursor, pageNum) => {
+  const loadPage = (_cursor: string | null | undefined, pageNum: number) => {
     scrollToAuctionResultsTop()
     setFilter?.("page", pageNum)
   }
@@ -166,7 +167,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
             options: {
               title: mode => {
                 const action = mode === "SignUp" ? "Sign up" : "Log in"
-                return `${action} to see auction results for ${artistName}`
+                return `${action} to see auction results for ${artist.name}`
               },
             },
             analytics: {
@@ -233,7 +234,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     )
   }
 
-  if (results.length == 0) {
+  if (artist.counts?.auctionResults == 0) {
     return (
       <>
         <AuctionMetaTags meta={artist.meta} />
@@ -241,6 +242,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
       </>
     )
   }
+
   return (
     <>
       <AuctionMetaTags meta={artist.meta} />
@@ -248,8 +250,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
       <Jump id="marketSignalsTop" />
 
       <MarketStatsQueryRenderer
-        artistInternalID={artist.internalID}
-        environment={relay.environment}
+        id={artist.internalID}
         onRendered={handleMarketStatsRendered}
       />
 
@@ -304,71 +305,71 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           />
 
           <Spacer y={[2, 0]} />
-          {results.length > 0 ? (
-            <LoadingArea isLoading={isLoading}>
-              {
-                <>
-                  {upcomingAuctionResults.length > 0 && (
-                    <Box mb={4}>
-                      <Text variant="md">Upcoming Auctions</Text>
-                      <Text variant="xs" mb={2} color="black60">
-                        {upcomingAuctionResultsCount}{" "}
-                        {upcomingAuctionResultsCount === 1
-                          ? "result"
-                          : "results"}
-                      </Text>
 
-                      <Join separator={<Spacer y={2} />}>
-                        {upcomingAuctionResults.map((result, index) => {
-                          return (
-                            <ArtistAuctionResultItemFragmentContainer
-                              key={index}
-                              auctionResult={result}
-                              filtersAtDefault={filtersAtDefault}
-                            />
-                          )
-                        })}
-                      </Join>
-                    </Box>
-                  )}
-
-                  {pastAuctionResults.length > 0 && (
-                    <Box mb={4}>
-                      <Text variant="md">Past Auctions</Text>
-                      <Text variant="xs" mb={2} color="black60">
-                        {pastAuctionResultsCount}{" "}
-                        {pastAuctionResultsCount === 1 ? "result" : "results"}
-                      </Text>
-
-                      <Join separator={<Spacer y={2} />}>
-                        {pastAuctionResults.map((result, index) => {
-                          return (
-                            <ArtistAuctionResultItemFragmentContainer
-                              key={index}
-                              auctionResult={result}
-                              filtersAtDefault={filtersAtDefault}
-                            />
-                          )
-                        })}
-                      </Join>
-                    </Box>
-                  )}
-                </>
-              }
-            </LoadingArea>
-          ) : (
-            <Message>
-              There aren’t any auction results available by the artist at this
-              time.
-            </Message>
+          {results.length === 0 && (
+            <ArtworkGridEmptyState
+              onClearFilters={() => {
+                resetFilters?.()
+              }}
+            />
           )}
+
+          <LoadingArea isLoading={isLoading}>
+            <Flex flexDirection="column" gap={4}>
+              {upcomingAuctionResults.length > 0 && (
+                <Box>
+                  <Text variant="md">Upcoming Auctions</Text>
+
+                  <Text variant="xs" mb={2} color="black60">
+                    {upcomingAuctionResultsCount}{" "}
+                    {upcomingAuctionResultsCount === 1 ? "result" : "results"}
+                  </Text>
+
+                  <Join separator={<Spacer y={2} />}>
+                    {upcomingAuctionResults.map((result, index) => {
+                      return (
+                        <ArtistAuctionResultItemFragmentContainer
+                          key={index}
+                          auctionResult={result}
+                          filtersAtDefault={filtersAtDefault}
+                        />
+                      )
+                    })}
+                  </Join>
+                </Box>
+              )}
+
+              {pastAuctionResults.length > 0 && (
+                <Box>
+                  <Text variant="md">Past Auctions</Text>
+
+                  <Text variant="xs" mb={2} color="black60">
+                    {pastAuctionResultsCount}{" "}
+                    {pastAuctionResultsCount === 1 ? "result" : "results"}
+                  </Text>
+
+                  <Join separator={<Spacer y={2} />}>
+                    {pastAuctionResults.map((result, index) => {
+                      return (
+                        <ArtistAuctionResultItemFragmentContainer
+                          key={index}
+                          auctionResult={result}
+                          filtersAtDefault={filtersAtDefault}
+                        />
+                      )
+                    })}
+                  </Join>
+                </Box>
+              )}
+            </Flex>
+          </LoadingArea>
 
           <Pagination
             getHref={() => ""}
             hasNextPage={Boolean(pageInfo?.hasNextPage)}
             pageCursors={artist.auctionResultsConnection?.pageCursors}
-            onClick={(_cursor, page) => loadPage(_cursor, page)}
-            onNext={() => loadNext()}
+            onClick={loadPage}
+            onNext={loadNext}
           />
         </Column>
       </GridColumns>
@@ -424,6 +425,9 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         meta(page: AUCTION_RESULTS) {
           description
           title
+        }
+        counts {
+          auctionResults
         }
         auctionResultsConnection(
           first: $first

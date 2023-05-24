@@ -1,22 +1,20 @@
 import {
   Button,
   Column,
-  Flex,
   GridColumns,
   MultiSelect,
+  Spacer,
   Text,
 } from "@artsy/palette"
 import qs from "qs"
-import { useState } from "react"
-import * as React from "react"
+import { FC, useState } from "react"
 import { useTracking } from "react-tracking"
 import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { categoryMap } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/MediumFilter"
 import { sizeMap } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/SizeFilter"
 import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { useRouter } from "System/Router/useRouter"
-import { Media } from "Utils/Responsive"
-import { filterSearchFilters } from "../Utils/filterSearchFilters"
+import { filterSearchFilters } from "Apps/PriceDatabase/Utils/filterSearchFilters"
 import { PriceDatabaseArtistAutosuggest } from "./PriceDatabaseArtistAutosuggest"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 
@@ -31,7 +29,7 @@ const mapMapToOptions = map => {
 const categoryOptions = mapMapToOptions(categoryMap)
 const sizeOptions = mapMapToOptions(sizeMap)
 
-export const PriceDatabaseSearch: React.FC = () => {
+export const PriceDatabaseSearch: FC = () => {
   const { router } = useRouter()
   const { filters, setFilter } = useAuctionResultsFilterContext()
   const { trackEvent } = useTracking()
@@ -84,62 +82,52 @@ export const PriceDatabaseSearch: React.FC = () => {
 
   return (
     <>
-      <GridColumns my={4} gridRowGap={[2, 0]}>
+      <GridColumns gridRowGap={[2, 0]}>
         <Column span={12}>
           <Text as="h1" variant={["xl", "xxl"]}>
-            <Media lessThan="sm">
-              Artsy
-              <br />
-              Price Database
-            </Media>
-            <Media greaterThanOrEqual="sm">Artsy Price Database</Media>
+            Artsy Price Database
           </Text>
-          <Text variant={["sm-display", "lg-display"]} mb={[0, 2]}>
+
+          <Text variant={["sm-display", "lg-display"]}>
             Unlimited access to millions of auction results and art market
             data—for free.
           </Text>
         </Column>
       </GridColumns>
-      <Flex
-        alignItems="center"
-        justifyContent="center"
-        width="100%"
-        mx="auto"
-        flexDirection="column"
-        pb={[0, 4]}
-      >
-        <GridColumns pb={[4, 0]} gridRowGap={[2, 0]} width="100%" mx="auto">
-          <Column span={12} pb={[0, 4]}>
-            <PriceDatabaseArtistAutosuggest
-              onChange={artist => {
-                return setArtistSlug(artist)
-              }}
-            />
-          </Column>
-          <Column span={4} start={3} pb={[0, 4]}>
-            <MultiSelect
-              options={categoryOptions}
-              onSelect={handleFilterSelect("categories")}
-              name="Medium"
-            />
-          </Column>
-          <Column span={4} pb={[0, 4]}>
-            <MultiSelect
-              options={sizeOptions}
-              name="Size"
-              onSelect={handleFilterSelect("sizes")}
-            />
-          </Column>
-        </GridColumns>
-        <Button
-          disabled={!artistSlug}
-          width="100%"
-          maxWidth="440px"
-          onClick={handleSearch}
-        >
-          Search
-        </Button>
-      </Flex>
+
+      <Spacer y={4} />
+
+      <GridColumns gridRowGap={[2, 0]} width="100%" mx="auto">
+        <Column span={12} pb={[0, 4]}>
+          <PriceDatabaseArtistAutosuggest
+            onChange={artist => {
+              return setArtistSlug(artist)
+            }}
+          />
+        </Column>
+
+        <Column span={4} start={3} pb={[0, 4]}>
+          <MultiSelect
+            options={categoryOptions}
+            onSelect={handleFilterSelect("categories")}
+            name="Medium"
+          />
+        </Column>
+
+        <Column span={4} pb={[0, 4]}>
+          <MultiSelect
+            options={sizeOptions}
+            name="Size"
+            onSelect={handleFilterSelect("sizes")}
+          />
+        </Column>
+
+        <Column span={4} start={5}>
+          <Button disabled={!artistSlug} width="100%" onClick={handleSearch}>
+            Search
+          </Button>
+        </Column>
+      </GridColumns>
     </>
   )
 }

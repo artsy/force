@@ -69,7 +69,7 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
     try {
       const { createCollection } = await submitMutation({
         variables: {
-          input: { name: values.name },
+          input: { name: values.name.trim() },
         },
         rejectIf: response => {
           const result = response.createCollection?.responseOrError

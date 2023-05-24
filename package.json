@@ -76,7 +76,7 @@
     "superagent": "3.8.3"
   },
   "dependencies": {
-    "@artsy/cohesion": "4.125.1",
+    "@artsy/cohesion": "4.126.0",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.1.0",
     "@artsy/eigen-web-association": "^1.6.0",
@@ -85,8 +85,8 @@
     "@artsy/icons": "3.8.1",
     "@artsy/img": "1.0.3",
     "@artsy/multienv": "^1.2.0",
-    "@artsy/palette": "33.0.0",
-    "@artsy/palette-charts": "32.0.0",
+    "@artsy/palette": "33.1.2",
+    "@artsy/palette-charts": "32.1.2",
     "@artsy/react-html-parser": "^3.0.2",
     "@artsy/to-title-case": "^1.1.0",
     "@artsy/xapp": "1.0.6",
