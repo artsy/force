@@ -92,7 +92,7 @@ describe("FairBooths", () => {
       const wrapper = getWrapper()
       const text = wrapper.find(FairBoothSortFilter).text()
       expect(wrapper.find(FairBoothSortFilter).length).toBe(1)
-      expect(text).toContain("Sort:")
+      expect(text).toContain("Sort")
       expect(text).toContain("Relevance")
       expect(text).toContain("Alphabetical (A-Z)")
     })
