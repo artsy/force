@@ -131,6 +131,9 @@ export const BankDebitProvider: FC<Props> = ({ order, onError }) => {
         color: THEME.colors.black100,
         boxShadow: "none",
       },
+      ".Input:autofill": {
+        backgroundColor: THEME.colors.white100,
+      },
       ".TermsText": {
         fontSize: THEME.textVariants.xs.fontSize, // "13px",
         lineHeight: THEME.textVariants.xs.lineHeight, // "20px",

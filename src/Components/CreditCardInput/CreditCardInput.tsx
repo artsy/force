@@ -33,6 +33,9 @@ const stripeBaseStyle: StripeElementStyleVariant = {
   fontSmoothing: "antialiased",
   letterSpacing: THEME.textVariants["sm-display"].letterSpacing,
   lineHeight: THEME.textVariants["sm-display"].lineHeight,
+  ":-webkit-autofill": {
+    backgroundColor: THEME.colors.white100,
+  },
 }
 
 /**
