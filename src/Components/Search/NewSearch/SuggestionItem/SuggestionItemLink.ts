@@ -12,7 +12,6 @@ export const SuggestionItemLink = styled(RouterLink).attrs({
   justify-content: center;
   text-decoration: none;
   min-height: 60px;
-  background-color: ${themeGet("colors.white100")};
 
   &:hover {
     background-color: ${themeGet("colors.black5")};
