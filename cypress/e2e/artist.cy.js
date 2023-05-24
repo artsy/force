@@ -11,7 +11,7 @@ describe("/artist/:id", () => {
       .should("have.attr", "content")
       .and(
         "contain",
-        "Find the latest shows, biography, and artworks for sale by Pablo Picasso."
+        "Pablo Picasso - Biography, Shows, Articles & More | Artsy."
       )
   })
 

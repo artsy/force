@@ -76,7 +76,7 @@ describe("Meta", () => {
     meta: {
       title: "Claes Oldenburg - Biography, Shows, Articles & More | Artsy",
       description:
-        "`Explore  Claes Oldenburg's biography, achievements, artworks, auction results, and shows on Artsy. “I am for an art that is political-erotical-mystical, that does something more th…",
+        "Explore  Claes Oldenburg's biography, achievements, artworks, auction results, and shows on Artsy. “I am for an art that is political-erotical-mystical, that does something more th…",
     },
     nationality: "Swedish",
   }
