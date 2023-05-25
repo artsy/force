@@ -1,13 +1,12 @@
 import { RelatedCollectionsRail_collections$data } from "__generated__/RelatedCollectionsRail_collections.graphql"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { once } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import Waypoint from "react-waypoint"
 import { RelatedCollectionEntityFragmentContainer as RelatedCollectionEntity } from "./RelatedCollectionEntity"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { Rail } from "Components/Rail/Rail"
 import { useTracking } from "react-tracking"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 
 interface RelatedCollectionsRailProps {
   collections: RelatedCollectionsRail_collections$data
@@ -15,35 +14,39 @@ interface RelatedCollectionsRailProps {
   lazyLoadImages?: boolean
 }
 
-export const RelatedCollectionsRail: React.FC<RelatedCollectionsRailProps> = props => {
+export const RelatedCollectionsRail: React.FC<RelatedCollectionsRailProps> = ({
+  title,
+  lazyLoadImages,
+  collections,
+}) => {
   const { trackEvent } = useTracking()
-  const { collections } = props
-  const { title, lazyLoadImages } = props
+
   const collectionsWithArtworks = collections.filter(collection =>
     Boolean(collection.artworksConnection)
   )
   const { contextPageOwnerId, contextPageOwnerSlug } = useAnalyticsContext()
 
-  const trackImpression = () => {
-    // FIXME: old schema
-    trackEvent({
-      action_type: DeprecatedSchema.ActionType.Impression,
-      context_module: DeprecatedSchema.ContextModule.CollectionsRail,
-      context_page_owner_id: contextPageOwnerId,
-      context_page_owner_slug: contextPageOwnerSlug,
-      context_page_owner_type: DeprecatedSchema.OwnerType.Collection,
-    })
-  }
+  const { ref } = useIntersectionObserver({
+    once: true,
+    onIntersection: () => {
+      // FIXME: old schema
+      trackEvent({
+        action_type: DeprecatedSchema.ActionType.Impression,
+        context_module: DeprecatedSchema.ContextModule.CollectionsRail,
+        context_page_owner_id: contextPageOwnerId,
+        context_page_owner_slug: contextPageOwnerSlug,
+        context_page_owner_type: DeprecatedSchema.OwnerType.Collection,
+      })
+    },
+  })
 
   if (collectionsWithArtworks.length > 3) {
     return (
       <>
-        {/* FIXME: Must remove this dependency */}
-        <Waypoint onEnter={once(trackImpression)} />
+        <span ref={ref as any} />
 
         <Rail
           title={`More like ${title}`}
-          showProgress={false}
           getItems={() => {
             return collectionsWithArtworks.map((slide, i) => {
               return (
@@ -59,9 +62,9 @@ export const RelatedCollectionsRail: React.FC<RelatedCollectionsRailProps> = pro
         />
       </>
     )
-  } else {
-    return null
   }
+
+  return null
 }
 
 export const RelatedCollectionsRailFragmentContainer = createFragmentContainer(
