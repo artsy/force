@@ -2,9 +2,16 @@ import * as React from "react"
 import { QueryRenderer } from "react-relay"
 import { OperationType } from "relay-runtime"
 import { useDidMount } from "Utils/Hooks/useDidMount"
-import { useLazyLoadComponent } from "Utils/Hooks/useLazyLoadComponent"
 import { useSystemContext } from "System/useSystemContext"
 import createLogger from "Utils/logger"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
+import {
+  JSXElementConstructor,
+  ReactElement,
+  cloneElement,
+  useState,
+} from "react"
+import { isForwardRef } from "react-is"
 
 type QueryRendererProps = React.ComponentProps<typeof QueryRenderer>
 
@@ -15,7 +22,7 @@ export type SystemQueryRendererProps<T extends OperationType> = Omit<
   debugPlaceholder?: boolean
   lazyLoad?: boolean
   lazyLoadThreshold?: number
-  placeholder?: React.ReactNode
+  placeholder?: ReactElement<any, string | JSXElementConstructor<any>>
   environment?: QueryRendererProps["environment"]
   variables?: QueryRendererProps["variables"]
   render(renderProps: {
@@ -37,8 +44,17 @@ export function SystemQueryRenderer<T extends OperationType>({
 }: SystemQueryRendererProps<T>): JSX.Element {
   const isMounted = useDidMount()
 
-  const { isEnteredView, Waypoint } = useLazyLoadComponent({
-    threshold: lazyLoadThreshold,
+  const [isEnteredView, setIsEnteredView] = useState(false)
+
+  const { ref } = useIntersectionObserver({
+    once: true,
+    options: {
+      threshold: 0,
+      rootMargin: `${lazyLoadThreshold}px`,
+    },
+    onIntersection: () => {
+      setIsEnteredView(true)
+    },
   })
 
   const showPlaceholder =
@@ -53,23 +69,18 @@ export function SystemQueryRenderer<T extends OperationType>({
     return <></>
   }
 
-  if (showPlaceholder) {
-    return (
-      <>
-        {lazyLoad && <Waypoint />}
-        {placeholder ? <>{placeholder}</> : <></>}
-      </>
-    )
+  if (lazyLoad && showPlaceholder && isForwardRef(placeholder)) {
+    return cloneElement(placeholder, { ref: ref as any })
   }
 
-  if (lazyLoad && isEnteredView) {
+  if (showPlaceholder) {
+    // NOTE: If your placeholder does not forwardRef we have to insert a span.
+    // It's possible that this alters the layout slightly. For instance in certain flex or grid contexts.
     return (
-      <QueryRenderer<T>
-        environment={environment}
-        variables={variables}
-        render={render}
-        {...rest}
-      />
+      <>
+        {lazyLoad && <span ref={ref as any} />}
+        {placeholder}
+      </>
     )
   }
 
