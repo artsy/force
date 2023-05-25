@@ -33,7 +33,7 @@ export const LocationFilter: React.FC = () => {
   }
 
   return (
-    <FilterExpandable label="Location" expanded>
+    <FilterExpandable label="Sale Location" expanded>
       <Flex flexDirection="column" alignItems="left">
         <ShowMore>
           {locationMap.map((checkbox, index) => {

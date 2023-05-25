@@ -19,7 +19,7 @@ export interface AuctionResultsFilters {
   createdBeforeYear?: number | null
   allowEmptyCreatedDates?: boolean
   metric?: Metric
-  locations: string[]
+  locations?: string[]
 }
 
 interface AuctionResultsFiltersState extends AuctionResultsFilters {
