@@ -4,6 +4,7 @@ import {
   OfferOrderWithOffers,
   OfferWithTotals,
   UntouchedBuyOrder,
+  UntouchedMakeOfferWithArtsyShippingDomesticFromUS,
 } from "Apps/__tests__/Fixtures/Order"
 import { graphql } from "react-relay"
 import { TransactionDetailsSummaryItemFragmentContainer } from "Apps/Order/Components/TransactionDetailsSummaryItem"
@@ -115,7 +116,7 @@ describe("TransactionDetailsSummaryItem", () => {
       const text = wrapper.text()
 
       expect(text).toMatch("ShippingCalculated in next steps")
-      expect(text).toMatch("Tax †Calculated in next steps")
+      expect(text).toMatch("Tax*Calculated in next steps")
     })
 
     it("shows the shipping and tax price as 'Waiting for final costs' when null after shipping address was added", async () => {
@@ -132,7 +133,7 @@ describe("TransactionDetailsSummaryItem", () => {
       const text = wrapper.text()
 
       expect(text).toMatch("Shipping**Waiting for final costs")
-      expect(text).toMatch("Tax †Waiting for final costs")
+      expect(text).toMatch("Tax*Waiting for final costs")
     })
 
     it("shows tax import reminder", async () => {
@@ -142,8 +143,8 @@ describe("TransactionDetailsSummaryItem", () => {
 
       const text = wrapper.text()
 
-      expect(text).toMatch("Tax †")
-      expect(text).toMatch("† Additional duties and taxes may apply at import")
+      expect(text).toMatch("Tax*")
+      expect(text).toMatch("*Additional duties and taxes may apply at import")
     })
 
     it("shows shipping confirmation note when shipping cannot be calculated after shipping address was added", async () => {
@@ -196,7 +197,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
       expect(entry.at(0).text()).toMatch("PriceUS$200.00")
       expect(entry.at(1).text()).toMatch("ShippingUS$12.00")
-      expect(entry.at(2).text()).toMatch("Tax †US$3.25")
+      expect(entry.at(2).text()).toMatch("Tax*US$3.25")
       expect(entry.at(3).text()).toMatch("TotalUS$215.25")
     })
 
@@ -209,19 +210,78 @@ describe("TransactionDetailsSummaryItem", () => {
 
       expect(text).toMatch("PriceUS$200.00")
       expect(text).toMatch("ShippingUS$12.00")
-      expect(text).toMatch("Tax †US$3.25")
+      expect(text).toMatch("Tax*US$3.25")
       expect(text).toMatch("TotalUS$215.25")
     })
 
-    it("shows the shipping quote name if shipping by Arta", async () => {
-      const wrapper = getWrapper({
-        CommerceOrder: () =>
-          transactionSummaryBuyOrderWithSelectedShippingQuote,
+    describe("artsy shipping specific", () => {
+      it("shows the shipping quote name if shipping by Arta", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () =>
+            transactionSummaryBuyOrderWithSelectedShippingQuote,
+        })
+
+        const text = wrapper.text()
+
+        expect(text).toMatch("Premium delivery")
       })
 
-      const text = wrapper.text()
+      it("NO selection made shows the correct footnotes for offers if shipping by Arta", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () =>
+            UntouchedMakeOfferWithArtsyShippingDomesticFromUS,
+        })
 
-      expect(text).toMatch("Premium delivery")
+        const text = wrapper.text()
+
+        expect(text).toMatch("ShippingWaiting for final costs")
+        expect(text).toMatch("Tax*Waiting for final costs")
+        expect(text).toMatch(
+          "*Additional duties and taxes may apply at import."
+        )
+      })
+
+      it("when selecting is made shows the correct footnotes for offers if shipping by Arta", async () => {
+        const wrapper = getWrapper({
+          CommerceOrder: () => ({
+            ...transactionSummaryOfferOrder,
+            requestedFulfillment: {
+              __typename: "CommerceShipArta",
+            },
+            lineItems: {
+              edges: [
+                {
+                  node: {
+                    editionSetId: null,
+                    id: "line-item-node-id",
+                    selectedShippingQuote: {
+                      id: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+                      tier: "premium",
+                      name: "",
+                      isSelected: true,
+                      priceCents: 400,
+                      priceCurrency: "USD",
+                      price: "$4.00",
+                      typeName: "select",
+                    },
+                  },
+                },
+              ],
+            },
+          }),
+        })
+
+        const text = wrapper.text()
+
+        expect(text).toMatch("Premium delivery*")
+        expect(text).toMatch("Tax†US$120")
+        expect(text).toMatch(
+          "*Estimate Only. Price may vary once offer is finalized."
+        )
+        expect(text).toMatch(
+          "†Additional duties and taxes may apply at import."
+        )
+      })
     })
 
     it("shows the congratulations message when order gets submmited", async () => {
@@ -251,7 +311,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
       expect(text).toMatch("Your offerUS$14,000")
       expect(text).toMatch("ShippingUS$200")
-      expect(text).toMatch("Tax †US$120")
+      expect(text).toMatch("Tax*US$120")
       expect(text).toMatch("TotalUS$14,320")
     })
 

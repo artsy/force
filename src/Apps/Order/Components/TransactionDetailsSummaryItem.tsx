@@ -88,26 +88,26 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
     return useLastSubmittedOffer ? order.lastOffer : order.myLastOffer
   }
 
+  const getShippingLabel = shippingQuoteType => {
+    const artsyShippingLabel =
+      shippingQuoteDisplayNames[shippingQuoteType] + " delivery"
+    const suffix = shippingCostSubjectToChange() ? "*" : ""
+    return artsyShippingLabel + suffix
+  }
+
   const shippingDisplayLabel = shippingNotCalculated => {
     if (shippingNotCalculated()) {
       return "Shipping**"
     }
 
-    if (order.requestedFulfillment?.__typename === "CommerceShipArta") {
-      const selectedShippingQuote = extractNodes(order.lineItems)?.[0]
-        .selectedShippingQuote
+    const requestedFulfillment = order.requestedFulfillment
 
-      if (order.displayState === "PROCESSING" && order.mode === "OFFER") {
-        return `${
-          shippingQuoteDisplayNames[selectedShippingQuote.typeName]
-        } delivery`
-      } else if (
-        selectedShippingQuote &&
-        order.displayState !== "PROCESSING_APPROVAL"
-      ) {
-        return `${
-          shippingQuoteDisplayNames[selectedShippingQuote.typeName]
-        } delivery*`
+    if (requestedFulfillment?.__typename === "CommerceShipArta") {
+      const selectedShippingQuote = extractNodes(order.lineItems)?.[0]
+        ?.selectedShippingQuote
+      console.log("selected", selectedShippingQuote)
+      if (selectedShippingQuote) {
+        return getShippingLabel(selectedShippingQuote.typeName)
       }
     }
 
@@ -169,6 +169,37 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
     }
   }
 
+  const taxPrefix = () => {
+    let prefix
+    if (shippingCostSubjectToChange()) {
+      prefix = <Sup>†</Sup>
+    } else {
+      prefix = "*"
+    }
+    return <>{prefix}Additional duties and taxes </>
+  }
+
+  const taxLabel = () => {
+    let suffix
+    if (shippingCostSubjectToChange()) {
+      suffix = <Sup>†</Sup>
+    } else {
+      suffix = "*"
+    }
+    return <>Tax{suffix}</>
+  }
+
+  const shippingCostSubjectToChange = () => {
+    const offer = getOffer()
+
+    return (
+      offer?.shippingTotalCents &&
+      order.requestedFulfillment?.__typename === "CommerceShipArta" &&
+      order.mode === "OFFER" &&
+      order.displayState !== "PROCESSING"
+    )
+  }
+
   const buyerTotalDisplayAmount = () => {
     const currency = order.currencyCode
     const totalPlaceholder = "Waiting for final costs"
@@ -203,7 +234,6 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
       )
     }
   }
-  const offer = getOffer()
 
   return (
     <StepSummaryItem {...others}>
@@ -215,11 +245,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
         data-test="shippingDisplayAmount"
       />
       <Entry
-        label={
-          <>
-            Tax <Sup>†</Sup>
-          </>
-        }
+        label={taxLabel()}
         value={taxDisplayAmount()}
         data-test="taxDisplayAmount"
       />
@@ -231,16 +257,13 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
         data-test="buyerTotalDisplayAmount"
       />
       <Spacer y={2} />
-      {offer?.shippingTotalCents &&
-      order.requestedFulfillment?.__typename === "CommerceShipArta" &&
-      order.mode === "OFFER" &&
-      order.displayState !== "PROCESSING" ? (
+      {shippingCostSubjectToChange() && (
         <Text variant="sm" color="black60">
           *Estimate Only. Price may vary once offer is finalized.
         </Text>
-      ) : null}
+      )}
       <Text variant="sm" color="black60">
-        <Sup>†</Sup> Additional duties and taxes{" "}
+        {taxPrefix()}
         <RouterLink
           inline
           to="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
