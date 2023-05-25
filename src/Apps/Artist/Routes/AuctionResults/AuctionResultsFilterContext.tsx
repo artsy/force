@@ -19,6 +19,7 @@ export interface AuctionResultsFilters {
   createdBeforeYear?: number | null
   allowEmptyCreatedDates?: boolean
   metric?: Metric
+  locations: string[]
 }
 
 interface AuctionResultsFiltersState extends AuctionResultsFilters {
@@ -47,6 +48,7 @@ export const initialAuctionResultsFilterState = ({
   createdBeforeYear: typeof endDate === "number" ? endDate : MAX_END_DATE,
   allowEmptyCreatedDates: true,
   metric,
+  locations: [],
 })
 
 /**
@@ -266,6 +268,7 @@ const AuctionResultsFilterReducer = (
     "organizations",
     "categories",
     "sizes",
+    "locations",
   ]
 
   switch (action.type) {
