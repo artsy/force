@@ -302,6 +302,18 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       }
     } catch (error) {
       logger.error(error)
+
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "An error occurred",
+        message:
+          "Something went wrong. Please try again or contact orders@artsy.net.",
+        error_code: null,
+        flow: "user selects a shipping option",
+      })
+
       props.dialog.showErrorDialog()
     }
   }
@@ -330,6 +342,18 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         props.router.push(`/orders/${props.order.internalID}/payment`)
       } catch (error) {
         logger.error(error)
+
+        trackEvent({
+          action: ActionType.errorMessageViewed,
+          context_owner_type: OwnerType.ordersShipping,
+          context_owner_id: props.order.internalID,
+          title: "An error occurred",
+          message:
+            "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
+          error_code: null,
+          flow: "user sets a shipping quote",
+        })
+
         props.dialog.showErrorDialog({
           message: getArtaErrorMessage(),
         })
@@ -404,6 +428,17 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       error.code === "missing_country" ||
       error.code === "missing_postal_code"
     ) {
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "Invalid address",
+        message:
+          "There was an error processing your address. Please review and try again.",
+        error_code: error.code,
+        flow: "user submits a shipping option",
+      })
+
       props.dialog.showErrorDialog({
         title: "Invalid address",
         message:
@@ -413,15 +448,47 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       error.code === "unsupported_shipping_location" &&
       parsedData.failure_code === "domestic_shipping_only"
     ) {
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "Can't ship to that address",
+        message: "This work can only be shipped domestically.",
+        error_code: error.code,
+        flow: "user submits a shipping option",
+      })
+
       props.dialog.showErrorDialog({
         title: "Can't ship to that address",
         message: "This work can only be shipped domestically.",
       })
     } else if (checkIfArtsyShipping() && shippingQuoteId) {
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "An error occurred",
+        message:
+          "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
+        error_code: null,
+        flow: "user submits a shipping option",
+      })
+
       props.dialog.showErrorDialog({
         message: getArtaErrorMessage(),
       })
     } else {
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "An error occurred",
+        message:
+          "Something went wrong. Please try again or contact orders@artsy.net.",
+        error_code: null,
+        flow: "user submits a shipping option",
+      })
+
       props.dialog.showErrorDialog()
     }
   }
