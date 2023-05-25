@@ -23,7 +23,6 @@ import { useArtworkInquiryRequest } from "Components/Inquiry/Hooks/useArtworkInq
 import { wait } from "Utils/wait"
 import {
   useInquiryContext,
-  DEFAULT_MESSAGE,
   InquiryState,
 } from "Components/Inquiry/Hooks/useInquiryContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -46,7 +45,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
-    if (mode === "Confirm" && value !== DEFAULT_MESSAGE) {
+    if (mode === "Confirm" && value !== inquiry.message) {
       setMode("Pending")
     }
 
@@ -62,7 +61,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
   const handleSubmit = async (event: React.FormEvent<HTMLElement>) => {
     event.preventDefault()
 
-    if (inquiry.message === DEFAULT_MESSAGE && mode !== "Confirm") {
+    if (inquiry.message && mode !== "Confirm") {
       setMode("Confirm")
       return
     }
@@ -153,7 +152,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
       <TextArea
         placeholder="Provide the gallery with some details about your interest in this work."
         title="Your message"
-        defaultValue={DEFAULT_MESSAGE}
+        defaultValue={inquiry.message}
         onChange={handleTextAreaChange}
         required
       />
