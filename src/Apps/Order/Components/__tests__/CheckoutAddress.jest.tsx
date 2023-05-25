@@ -1,4 +1,4 @@
-import { screen, render, fireEvent } from "@testing-library/react"
+import { screen, render } from "@testing-library/react"
 import { Formik } from "formik"
 import {
   CheckoutAddress,
@@ -11,16 +11,6 @@ jest.mock("formik", () => ({
   Form: ({ children }) => children,
   Formik: jest.fn(),
 }))
-
-const mockAddress = {
-  name: "Home",
-  country: "Germany",
-  addressLine1: "Weserstr. 175",
-  addressLine2: "",
-  city: "Berlin",
-  postalCode: "12045",
-  region: "Berlin",
-}
 
 const defaultFormikProps = {
   errors: {},
