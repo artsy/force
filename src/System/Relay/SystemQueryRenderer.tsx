@@ -47,18 +47,19 @@ export function SystemQueryRenderer<T extends OperationType>({
   const [isEnteredView, setIsEnteredView] = useState(false)
 
   const { ref } = useIntersectionObserver({
+    onIntersection: () => {
+      setIsEnteredView(true)
+    },
     once: true,
     options: {
       threshold: 0,
       rootMargin: `${lazyLoadThreshold}px`,
     },
-    onIntersection: () => {
-      setIsEnteredView(true)
-    },
   })
 
   const showPlaceholder =
-    debugPlaceholder || !isMounted || (lazyLoad && !isEnteredView)
+    (debugPlaceholder || !isMounted || (lazyLoad && !isEnteredView)) &&
+    placeholder
 
   const { relayEnvironment } = useSystemContext()
 
