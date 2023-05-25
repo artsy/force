@@ -246,6 +246,7 @@ export const CheckoutAddress: FC<{
               <Column span={12}>
                 <Input
                   name="attributes.name"
+                  aria-label="address-name-input"
                   title="Add full name"
                   placeholder="Enter name"
                   autoComplete="name"
@@ -261,6 +262,7 @@ export const CheckoutAddress: FC<{
               <Column span={12}>
                 <CountrySelect
                   title="Country"
+                  aria-label="address-country-select"
                   name="attributes.country"
                   value={values.attributes.country}
                   onChange={e => changeEventHandler(e, "country")}
@@ -275,6 +277,7 @@ export const CheckoutAddress: FC<{
               <Column span={12}>
                 <Input
                   name="attributes.addressLine1"
+                  aria-label="address-street-input"
                   title="Address line 1"
                   placeholder="Add street address"
                   autoComplete="address-line1"
@@ -292,6 +295,7 @@ export const CheckoutAddress: FC<{
               <Column span={12}>
                 <Input
                   name="attributes.addressLine2"
+                  aria-label="address-optional-second-line-input"
                   title="Address line 2 (optional)"
                   placeholder="Add apt, floor, suite, etc."
                   autoComplete="address-line2"
@@ -308,6 +312,7 @@ export const CheckoutAddress: FC<{
               <Column span={12}>
                 <Input
                   name="attributes.postalCode"
+                  aria-label="address-postal-code-input"
                   title="Postal Code"
                   placeholder="Add postal code"
                   autoComplete="postal-code"
@@ -325,6 +330,7 @@ export const CheckoutAddress: FC<{
               <Column span={12}>
                 <Input
                   name="attributes.city"
+                  aria-label="address-city-input"
                   title="City"
                   placeholder="Add city"
                   autoComplete="address-level2"
@@ -339,6 +345,7 @@ export const CheckoutAddress: FC<{
               <Column span={12}>
                 <Input
                   name="attributes.region"
+                  aria-label="address-state-or-region-input"
                   title="State, Province, or Region"
                   placeholder="Add state, province, or region"
                   autoComplete="address-level1"

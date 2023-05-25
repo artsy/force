@@ -1,10 +1,10 @@
+import { screen, render, fireEvent } from "@testing-library/react"
 import { Formik } from "formik"
 import {
   CheckoutAddress,
   Address,
   INITIAL_ADDRESS,
 } from "Apps/Order/Components/CheckoutAddress"
-import { screen, render } from "@testing-library/react"
 
 jest.mock("formik", () => ({
   ...jest.requireActual("formik"),
@@ -12,19 +12,32 @@ jest.mock("formik", () => ({
   Formik: jest.fn(),
 }))
 
+const mockAddress = {
+  name: "Home",
+  country: "Germany",
+  addressLine1: "Weserstr. 175",
+  addressLine2: "",
+  city: "Berlin",
+  postalCode: "12045",
+  region: "Berlin",
+}
+
 const defaultFormikProps = {
   errors: {},
   touched: {},
   isSubmitting: false,
   isValid: false,
+  handleChange: e => null,
   values: {
     attributes: INITIAL_ADDRESS,
   },
 }
 
+const mockOnChange = jest.fn((address: Address, key: keyof Address) => null)
+
 const checkoutAddressProps = {
   userCountry: "",
-  onChange: (address: Address, key: keyof Address) => null,
+  onChange: mockOnChange,
 }
 
 describe("CheckoutAddress form", () => {
