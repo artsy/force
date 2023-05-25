@@ -16,7 +16,7 @@ import { DateTime, LocaleOptions } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
 import { useAuthDialog } from "Components/AuthDialog"
-import { useRouter } from "System/Router/useRouter"
+import { RouterLink } from "System/Router/RouterLink"
 import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
 
@@ -27,7 +27,6 @@ export interface Props extends SystemContextProps {
 }
 
 export const ArtistAuctionResultItem: React.FC<Props> = props => {
-  const { router } = useRouter()
   const { user } = useSystemContext()
   const { showAuthDialog } = useAuthDialog()
 
@@ -53,8 +52,11 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
   const image = images?.thumbnail?.cropped
   const artistName = artist?.name
 
-  const onAuctionResultClick = () => {
+  const onAuctionResultClick = (
+    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
+  ) => {
     if (!user) {
+      event.preventDefault()
       showAuthDialog({
         mode: "SignUp",
         options: {
@@ -67,15 +69,14 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
           contextModule: ContextModule.auctionResult,
         },
       })
-    } else {
-      router.push(`/auction-result/${internalID}`)
     }
   }
 
   return (
-    <Box
-      style={{ cursor: "pointer" }}
-      width="100%"
+    <RouterLink
+      to={`/auction-result/${internalID}`}
+      textDecoration="none"
+      display="block"
       onClick={onAuctionResultClick}
     >
       <GridColumns>
@@ -182,7 +183,7 @@ export const ArtistAuctionResultItem: React.FC<Props> = props => {
           <ArtistAuctionResultItemPrice {...props} />
         </Column>
       </GridColumns>
-    </Box>
+    </RouterLink>
   )
 }
 

@@ -1,90 +1,116 @@
-import { ContextModule } from "@artsy/cohesion"
-import { Column, GridColumns, Image, Spacer, Text } from "@artsy/palette"
+import {
+  Button,
+  Column,
+  GridColumns,
+  Image,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
-import { DownloadAppBadges } from "Components/DownloadAppBadges/DownloadAppBadges"
-import { FooterDownloadAppBanner2 } from "Components/Footer/FooterDownloadAppBanner2"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { RouterLink } from "System/Router/RouterLink"
+import {
+  DOWNLOAD_APP_URLS,
+  Device,
+  useDeviceDetection,
+} from "Utils/Hooks/useDeviceDetection"
+import { DownloadAppBadge } from "Components/DownloadAppBadges/DownloadAppBadge"
+import { ContextModule } from "@artsy/cohesion"
 import { useRouter } from "System/Router/useRouter"
 
 const IGNORE_PATHS = ["/meet-your-new-art-advisor"]
 
 const APP_BANNER_SRC =
-  "https://files.artsy.net/images/App_Download_Banner_1200x2440_2x-1656078840527.jpg"
+  "https://files.artsy.net/images/universal-footer_april-14.jpg"
 
 export const FooterDownloadAppBanner = () => {
   const { match } = useRouter()
 
-  const isNewFooterEnabled = useFeatureFlag("grow_universal-footer")
+  const { device, downloadAppUrl } = useDeviceDetection()
 
   if (IGNORE_PATHS.includes(match.location.pathname)) {
     return null
   }
 
-  if (isNewFooterEnabled) {
-    return <FooterDownloadAppBanner2 />
-  }
-
-  const desktopCoverImage = resized(APP_BANNER_SRC, {
-    width: 1220,
-    quality: 50,
-  })
-
-  const mobileCoverImage = resized(APP_BANNER_SRC, { width: 725, quality: 50 })
+  const desktopCoverImage = resized(APP_BANNER_SRC, { width: 1220 })
+  const mobileCoverImage = resized(APP_BANNER_SRC, { width: 725 })
 
   return (
-    <GridColumns gridRowGap={1} borderTop="1px solid" borderColor="black10">
-      <Column
-        span={4}
-        display="flex"
-        flexDirection="column"
-        alignItems="center"
-        justifyContent="center"
-        order={[2, 1]}
-        px={2}
-        py={[6, 2]}
-      >
-        <Text variant="xl" textAlign="center" mb={1}>
-          Get the Artsy app
-        </Text>
+    <>
+      <GridColumns gridColumnGap={0} gridRowGap={0} bg="black5">
+        <Column
+          span={4}
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          justifyContent="center"
+          order={[2, 1]}
+          px={[2, 4]}
+          py={[6, 2]}
+        >
+          <Text variant="xl" textAlign="center">
+            Meet your new art advisor.
+          </Text>
 
-        <Spacer y={2} />
+          <Media at="xs">
+            <Spacer y={1} />
 
-        <DownloadAppBadges contextModule={ContextModule.footer} />
-      </Column>
+            <Text variant="sm-display" textAlign="center">
+              Get the app. Get the art.
+            </Text>
 
-      <Column span={8} position="relative" order={[1, 2]}>
-        <Media at="xs">
-          <Image
-            src={mobileCoverImage.src}
-            srcSet={mobileCoverImage.srcSet}
-            height={320}
-            width="100%"
-            lazyLoad
-            alt=""
-            style={{ objectFit: "cover", objectPosition: "center top" }}
-          />
-        </Media>
+            <Spacer y={2} />
 
-        <Media greaterThan="xs">
-          <Image
-            src={desktopCoverImage.src}
-            srcSet={desktopCoverImage.srcSet}
-            height={320}
-            width="100%"
-            lazyLoad
-            alt=""
-            style={{ objectFit: "cover", objectPosition: "center top" }}
-          />
-        </Media>
-      </Column>
-      <Column span={12} order={[1, 2]}>
-        <Text variant="xs" fontStyle="italic" textAlign="right">
-          Jenna Gribbon, Luncheon on the grass, a recurring dream, 2020. Jenna
-          Gribbon, April studio, parting glance, 2021. Jenna Gribbon, Silver
-          Tongue, 2019
-        </Text>
-      </Column>
-    </GridColumns>
+            <DownloadAppBadge
+              contextModule={ContextModule.footer}
+              device={device ?? Device.iPhone}
+              downloadAppUrl={
+                downloadAppUrl ?? DOWNLOAD_APP_URLS[Device.iPhone]
+              }
+            />
+          </Media>
+
+          <Media greaterThan="xs">
+            <Spacer y={2} />
+
+            <Button
+              variant="secondaryBlack"
+              // @ts-ignore
+              as={RouterLink}
+              to="/meet-your-new-art-advisor"
+              minWidth={[0, 0, 200, 250]}
+            >
+              Discover Artsy
+            </Button>
+          </Media>
+        </Column>
+
+        <Column span={8} position="relative" order={[1, 2]}>
+          <Media at="xs">
+            <Image
+              src={mobileCoverImage.src}
+              srcSet={mobileCoverImage.srcSet}
+              height={325}
+              width="100%"
+              lazyLoad
+              alt=""
+              style={{ objectFit: "cover" }}
+            />
+          </Media>
+
+          <Media greaterThan="xs">
+            <Image
+              src={desktopCoverImage.src}
+              srcSet={desktopCoverImage.srcSet}
+              height={350}
+              width="100%"
+              lazyLoad
+              alt=""
+              style={{ objectFit: "cover" }}
+            />
+          </Media>
+        </Column>
+      </GridColumns>
+    </>
   )
 }

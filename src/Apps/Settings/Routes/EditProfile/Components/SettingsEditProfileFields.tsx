@@ -38,6 +38,13 @@ import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVe
 import createLogger from "Utils/logger"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
 import CheckmarkFillIcon from "@artsy/icons/CheckmarkFillIcon"
+import { useTracking } from "react-tracking"
+import {
+  ActionType,
+  ClickedVerifyIdentity,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 
 const logger = createLogger("SettingsEditProfileFields")
 
@@ -69,6 +76,14 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
   const { submitMutation: submitVerifyEmailMutation } = useVerifyEmail()
   const { relayEnvironment } = useSystemContext()
   const { editedUserProfile: trackEditProfile } = useEditProfileTracking()
+  const { trackEvent } = useTracking()
+
+  const clickedIdVerificationEvent: ClickedVerifyIdentity = {
+    action: ActionType.clickedVerifyIdentity,
+    context_module: ContextModule.collectorProfile,
+    context_page_owner_type: OwnerType.editProfile,
+    subject: "Clicked ID Verification Link",
+  }
 
   const isEmailConfirmed = me?.isEmailConfirmed
   const isIdentityVerified = me?.isIdentityVerified
@@ -231,6 +246,8 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
                   <CheckmarkStrokeIcon fill="black60" mr={0.5} />
                   <Clickable
                     onClick={async () => {
+                      trackEvent(clickedIdVerificationEvent)
+
                       try {
                         // no input, user is derived from the authenticated MP loader context
                         await submitVerifyIDMutation({

@@ -1,7 +1,7 @@
-import { collectionToArtistSeriesSlugMap } from "../Utils/collectionToArtistSeriesSlugMap"
+import { collectionToArtistSeriesSlugMap } from "Apps/Collect/Utils/collectionToArtistSeriesSlugMap"
 
 export function redirectCollectionToArtistSeries({ req, res }) {
-  const collectionSlug: string = req.params.collectionSlug
+  const collectionSlug: string = req.params.slug
   const seriesSlug: string = collectionToArtistSeriesSlugMap[collectionSlug]
 
   if (seriesSlug) {

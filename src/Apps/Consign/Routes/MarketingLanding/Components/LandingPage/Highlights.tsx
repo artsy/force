@@ -1,22 +1,17 @@
-import { Column, GridColumns, Text } from "@artsy/palette"
-import { DollarCircleIcon } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/DollarCircleIcon"
-import { StarCircleIcon } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/StarCircleIcon"
-import { GlobeNetworkCircleIcon } from "Apps/Consign/Routes/MarketingLanding/Components/LandingPage/GlobeNetworkCircleIcon"
-
+import { Box, Column, GridColumns, Text } from "@artsy/palette"
 import { ReactElement } from "react"
-import { Media } from "Utils/Responsive"
 
 const reasons = [
   {
     icon: (
-      <>
-        <Media greaterThan="xs">
-          <DollarCircleIcon height={50} width={50} />
-        </Media>
-        <Media at="xs">
-          <DollarCircleIcon height={30} width={30} />
-        </Media>
-      </>
+      <Box width={[30, 50]} height={[30, 50]}>
+        <img
+          src="https://files.artsy.net/images/DollarCircleIcon_1.svg"
+          width="100%"
+          height="100%"
+          alt=""
+        />
+      </Box>
     ),
     title: "Earn more from your sale",
     text:
@@ -24,14 +19,14 @@ const reasons = [
   },
   {
     icon: (
-      <>
-        <Media greaterThan="xs">
-          <StarCircleIcon height={50} width={50} />
-        </Media>
-        <Media at="xs">
-          <StarCircleIcon height={30} width={30} />
-        </Media>
-      </>
+      <Box width={[30, 50]} height={[30, 50]}>
+        <img
+          src="https://files.artsy.net/images/StarCircleIcon_1.svg"
+          width="100%"
+          height="100%"
+          alt=""
+        />
+      </Box>
     ),
     title: "Tap into our expertise",
     text:
@@ -39,14 +34,14 @@ const reasons = [
   },
   {
     icon: (
-      <>
-        <Media greaterThan="xs">
-          <GlobeNetworkCircleIcon height={50} width={50} />
-        </Media>
-        <Media at="xs">
-          <GlobeNetworkCircleIcon height={30} width={30} />
-        </Media>
-      </>
+      <Box width={[30, 50]} height={[30, 50]}>
+        <img
+          src="https://files.artsy.net/images/GlobeNetworkCircleIcon_1.svg"
+          width="100%"
+          height="100%"
+          alt=""
+        />
+      </Box>
     ),
     title: "Reach a global network",
     text:
@@ -71,6 +66,7 @@ interface RowItemProps {
 }
 const RowItem: React.FC<RowItemProps> = ({ icon, title, text }) => {
   return (
+    // FIXME: Remove external margins
     <Column span={4} mb={[2, 0]}>
       {icon}
       <Text mt={[0.5, 2]} variant={["md", "lg-display", "xl"]}>

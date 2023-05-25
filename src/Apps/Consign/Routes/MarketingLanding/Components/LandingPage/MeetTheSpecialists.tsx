@@ -2,11 +2,13 @@ import { ActionType, ContextModule } from "@artsy/cohesion"
 import {
   Box,
   Button,
-  Flex,
+  HorizontalOverflow,
   Image,
+  Join,
   Pill,
   ReadMore,
   ResponsiveBox,
+  Spacer,
   Text,
 } from "@artsy/palette"
 import {
@@ -21,8 +23,10 @@ import { Rail } from "Components/Rail/Rail"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { RouterLink } from "System/Router/RouterLink"
 import { useSystemContext } from "System/SystemContext"
+import { resized } from "Utils/resized"
 import { useState } from "react"
 import { useTracking } from "react-tracking"
+import styled from "styled-components"
 
 interface PillData {
   type: Specialty
@@ -44,19 +48,20 @@ const pills: PillData[] = [
   },
 ]
 
+const filteredPills = pills.filter(pill =>
+  SPECIALISTS.some(specialist => specialist.specialty === pill.type)
+) as PillData[]
+
 export const MeetTheSpecialists: React.FC = () => {
   const { user } = useSystemContext()
   const { contextPageOwnerType } = useAnalyticsContext()
   const { trackEvent } = useTracking()
 
-  const [selectedSpecialty, setSelectedSpecialty] = useState<Specialty>(
-    "auctions"
-  )
-  const [specialistsTooDisplay, setSpecialistsTooDisplay] = useState(
-    SPECIALISTS.filter(i => i.specialty === "auctions")
-  )
+  const [specialityFilter, setSpecialityFilter] = useState<Specialty | null>()
 
-  const getInTouchRoute = "/sell/inquiry"
+  const specialistsTooDisplay = specialityFilter
+    ? SPECIALISTS.filter(i => i.specialty === specialityFilter)
+    : SPECIALISTS
 
   const trackContactTheSpecialistClick = () => {
     trackEvent({
@@ -91,33 +96,23 @@ export const MeetTheSpecialists: React.FC = () => {
       <Text mb={2} variant={["xs", "sm"]}>
         Our specialists span today’s most popular collecting categories.
       </Text>
-      <Flex overflowY="scroll">
-        {pills.map(pill => (
-          <Pill
-            mr={1}
-            hover={false}
-            selected={selectedSpecialty === pill.type}
-            variant="default"
-            onClick={() => {
-              setSelectedSpecialty(pill.type)
-              setSpecialistsTooDisplay(
-                SPECIALISTS.filter(i => i.specialty === pill.type)
-              )
-            }}
-            style={
-              selectedSpecialty === pill.type
-                ? {
-                    color: "white",
-                    backgroundColor: "black",
-                    borderColor: "black",
-                  }
-                : undefined
-            }
-          >
-            {pill.title}
-          </Pill>
-        ))}
-      </Flex>
+      <HorizontalOverflow>
+        <Join separator={<Spacer x={1} />}>
+          {filteredPills.map(pill => (
+            <Pill
+              key={`pill-${pill.type}`}
+              selected={specialityFilter === pill.type}
+              onClick={() => {
+                setSpecialityFilter(
+                  specialityFilter === pill.type ? null : pill.type
+                )
+              }}
+            >
+              {pill.title}
+            </Pill>
+          ))}
+        </Join>
+      </HorizontalOverflow>
       <Rail
         title=""
         getItems={() => {
@@ -128,6 +123,7 @@ export const MeetTheSpecialists: React.FC = () => {
               maxWidth={CARD_WIDTH}
               minHeight={[CARD_HEIGHT_MOBILE, CARD_HEIGHT_MD, CARD_HEIGHT]}
               backgroundColor="black60"
+              key={`specialist-${i.firstName}`}
             >
               <Box
                 width="100%"
@@ -137,11 +133,14 @@ export const MeetTheSpecialists: React.FC = () => {
                 flexDirection="column"
               >
                 <Box position="absolute" width="100%" height="100%">
+                  <LinearGradient />
                   <Image
                     width="100%"
                     height="100%"
-                    src={i.image.src}
-                    srcSet={i.image.srcSet}
+                    {...resized(i.imageUrl, {
+                      width: CARD_WIDTH,
+                      height: CARD_HEIGHT,
+                    })}
                     lazyLoad
                     alt={`specialist ${i.firstName}`}
                   />
@@ -155,7 +154,7 @@ export const MeetTheSpecialists: React.FC = () => {
                     {i.jobTitle}
                   </Text>
                   <Text mb={2} variant={["xs", "sm"]} color="white100">
-                    <ReadMore content={i.bio} maxChars={100} />
+                    <ReadMore content={i.bio} maxChars={88} />
                   </Text>
                   <Button
                     // @ts-ignore
@@ -187,10 +186,25 @@ export const MeetTheSpecialists: React.FC = () => {
         variant="primaryBlack"
         onClick={trackGetInTouchClick}
         data-testid="get-in-touch-button"
-        to={getInTouchRoute}
+        to={"/sell/inquiry"}
       >
         Get in Touch
       </Button>
     </>
   )
 }
+
+const LinearGradient = styled(Box)`
+  position: "absolute";
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  position: absolute;
+  transition: background-color 200ms;
+  background-image: linear-gradient(
+    to bottom,
+    rgba(0, 0, 0, 0) 50%,
+    rgba(0, 0, 0, 1) 100%
+  );
+`

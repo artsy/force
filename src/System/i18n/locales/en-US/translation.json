@@ -189,6 +189,7 @@
           },
           "placeholder": "E.g. Photography, Warhol, etc.",
           "required": "Name is required",
+          "nonempty": "Name cannot be empty",
           "remainingCharactersCount_one": "{{count}} character remaining",
           "remainingCharactersCount_other": "{{count}} characters remaining"
 
@@ -227,7 +228,6 @@
     "sell": "Sell",
     "priceDatabase": "Price Database",
     "editorial": "Editorial",
-    "downloadApp": "Download App",
     "searchBy": "Search by artist, gallery, style, theme, tag, etc.",
     "searchArtsy": "Search Artsy"
   },

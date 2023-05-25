@@ -17,7 +17,7 @@ export const ProgressiveOnboardingAlertSelectFilter: FC<ProgressiveOnboardingAle
   children,
   placement = "left-start",
 }) => {
-  const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useProgressiveOnboarding()
 
   const { currentlySelectedFilters } = useArtworkFilterContext()
   const initialFilterState = useRef(
@@ -25,7 +25,6 @@ export const ProgressiveOnboardingAlertSelectFilter: FC<ProgressiveOnboardingAle
   )
 
   const isDisplayable =
-    isEnabledFor("alerts") &&
     isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE).status &&
     !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER).status
 
@@ -43,13 +42,12 @@ export const ProgressiveOnboardingAlertSelectFilter: FC<ProgressiveOnboardingAle
       JSON.stringify(currentlySelectedFilters?.())
 
     if (
-      isEnabledFor("alerts") &&
       isFilterStateChanged &&
       !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER).status
     ) {
       dismiss(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER)
     }
-  }, [dismiss, isEnabledFor, currentlySelectedFilters, isDismissed])
+  }, [dismiss, currentlySelectedFilters, isDismissed])
 
   if (!isDisplayable) {
     return <>{children}</>

@@ -1,8 +1,9 @@
 import { AppContainer } from "Apps/Components/AppContainer"
 import { MetaTags } from "Components/MetaTags"
 import { EnableRecaptcha } from "Utils/EnableRecaptcha"
-import { ArtsyLogoBlackIcon, Spacer } from "@artsy/palette"
+import { Spacer } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
+import ArtsyLogoIcon from "@artsy/icons/ArtsyLogoIcon"
 
 export const SubmissionLayout: React.FC = ({ children }) => {
   return (
@@ -19,7 +20,7 @@ export const SubmissionLayout: React.FC = ({ children }) => {
 
       <AppContainer>
         <RouterLink to="/sell" display="block">
-          <ArtsyLogoBlackIcon display="block" />
+          <ArtsyLogoIcon display="block" />
         </RouterLink>
 
         {children}

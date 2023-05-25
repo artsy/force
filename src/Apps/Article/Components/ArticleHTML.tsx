@@ -1,4 +1,4 @@
-import { Box, BoxProps, THEME_V3 as THEME, useDidMount } from "@artsy/palette"
+import { Box, BoxProps, THEME, useDidMount } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { FC } from "react"
 import styled from "styled-components"

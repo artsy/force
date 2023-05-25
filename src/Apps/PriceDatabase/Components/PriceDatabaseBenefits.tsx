@@ -15,8 +15,8 @@ import { Media } from "Utils/Responsive"
 
 export const PriceDatabaseBenefits: React.FC = () => {
   return (
-    <Flex py={[1, 4]} flexDirection="column">
-      <GridColumns mt={4} gridRowGap={[2, 0]}>
+    <Flex flexDirection="column">
+      <GridColumns gridRowGap={[2, 0]}>
         <Column span={12}>
           <Text as="h1" variant={["xl", "xxl"]}>
             Auction records from 300,000

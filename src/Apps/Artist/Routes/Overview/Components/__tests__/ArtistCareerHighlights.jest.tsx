@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { ArtistCareerHighlightsFragmentContainer } from "../ArtistCareerHighlights"
+import { ArtistCareerHighlightsFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlights"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 

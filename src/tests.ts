@@ -58,6 +58,14 @@ if (typeof window !== "undefined") {
   window.scrollTo = jest.fn()
   HTMLMediaElement.prototype.pause = jest.fn()
   HTMLMediaElement.prototype.play = jest.fn()
+
+  window.IntersectionObserver = jest.fn().mockImplementation(() => ({
+    observe: jest.fn(),
+    unobserve: jest.fn(),
+    disconnect: jest.fn(),
+  }))
+
+  window.IntersectionObserverEntry = jest.fn()
 }
 
 if (process.env.ALLOW_CONSOLE_LOGS !== "true") {

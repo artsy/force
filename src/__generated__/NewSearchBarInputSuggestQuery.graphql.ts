@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c49f82f9c47ac3a4b7d09b1387cf4cf2>>
+ * @generated SignedSource<<0a7d71b6cf972859c47e08532d12c4ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,9 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type SearchEntity = "ARTICLE" | "ARTIST" | "ARTIST_SERIES" | "ARTWORK" | "CITY" | "COLLECTION" | "FAIR" | "FEATURE" | "GALLERY" | "GENE" | "INSTITUTION" | "PAGE" | "PROFILE" | "SALE" | "SHOW" | "TAG" | "VIEWING_ROOM" | "%future added value";
 export type NewSearchBarInputSuggestQuery$variables = {
+  entities?: ReadonlyArray<SearchEntity | null> | null;
   hasTerm: boolean;
   term: string;
 };
@@ -28,19 +30,29 @@ const node: ConcreteRequest = (function(){
 var v0 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "hasTerm"
+  "name": "entities"
 },
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "term"
+  "name": "hasTerm"
 },
 v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "term"
+},
+v3 = {
+  "kind": "Variable",
+  "name": "entities",
+  "variableName": "entities"
+},
+v4 = {
   "kind": "Literal",
   "name": "mode",
   "value": "AUTOSUGGEST"
 },
-v3 = {
+v5 = {
   "kind": "Variable",
   "name": "query",
   "variableName": "term"
@@ -49,7 +61,8 @@ return {
   "fragment": {
     "argumentDefinitions": [
       (v0/*: any*/),
-      (v1/*: any*/)
+      (v1/*: any*/),
+      (v2/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
@@ -65,6 +78,7 @@ return {
         "selections": [
           {
             "args": [
+              (v3/*: any*/),
               {
                 "kind": "Variable",
                 "name": "hasTerm",
@@ -89,6 +103,7 @@ return {
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
+      (v2/*: any*/),
       (v1/*: any*/),
       (v0/*: any*/)
     ],
@@ -111,13 +126,14 @@ return {
               {
                 "alias": null,
                 "args": [
+                  (v3/*: any*/),
                   {
                     "kind": "Literal",
                     "name": "first",
                     "value": 7
                   },
-                  (v2/*: any*/),
-                  (v3/*: any*/)
+                  (v4/*: any*/),
+                  (v5/*: any*/)
                 ],
                 "concreteType": "SearchableConnection",
                 "kind": "LinkedField",
@@ -261,8 +277,8 @@ return {
                 "name": "first",
                 "value": 0
               },
-              (v2/*: any*/),
-              (v3/*: any*/)
+              (v4/*: any*/),
+              (v5/*: any*/)
             ],
             "concreteType": "SearchableConnection",
             "kind": "LinkedField",
@@ -314,16 +330,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1361d8e0cd021b60af6224e857da809f",
+    "cacheID": "9ff549e24c95f84a3e17698c475546a1",
     "id": null,
     "metadata": {},
     "name": "NewSearchBarInputSuggestQuery",
     "operationKind": "query",
-    "text": "query NewSearchBarInputSuggestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n) {\n  viewer {\n    ...NewSearchBarInput_viewer_2Mejjw\n  }\n}\n\nfragment NewSearchBarInput_viewer_2Mejjw on Viewer {\n  searchConnection(query: $term, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n  ...NewSearchInputPills_viewer_4hh6ED\n}\n\nfragment NewSearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n"
+    "text": "query NewSearchBarInputSuggestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...NewSearchBarInput_viewer_1B9obU\n  }\n}\n\nfragment NewSearchBarInput_viewer_1B9obU on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n  ...NewSearchInputPills_viewer_4hh6ED\n}\n\nfragment NewSearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "bc0ecee0c74d26c35ddd5849571e69d1";
+(node as any).hash = "0b33749814c53ba2a5ebd532ce2a6660";
 
 export default node;

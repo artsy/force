@@ -1,4 +1,4 @@
-import { AppleIcon, Button, GoogleIcon, Join, Spacer } from "@artsy/palette"
+import { Button, Join, Spacer } from "@artsy/palette"
 import { useAuthDialogContext } from "Components/AuthDialog/AuthDialogContext"
 import { useAfterAuthenticationRedirectUrl } from "Components/AuthDialog/Hooks/useAfterAuthenticationRedirectUrl"
 import { setSocialAuthTracking } from "Components/AuthDialog/Hooks/useSocialAuthTracking"
@@ -6,6 +6,8 @@ import { stringify } from "qs"
 import { FC } from "react"
 import { getENV } from "Utils/getENV"
 import FacebookIcon from "@artsy/icons/FacebookIcon"
+import AppleIcon from "@artsy/icons/AppleIcon"
+import GoogleIcon from "@artsy/icons/GoogleIcon"
 
 export const AuthDialogSocial: FC = () => {
   const { applePath, facebookPath, googlePath } = getENV("AP") ?? {

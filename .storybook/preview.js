@@ -1,4 +1,4 @@
-import { injectGlobalStyles, ThemeProviderV3 } from "@artsy/palette"
+import { injectGlobalStyles, Theme } from "@artsy/palette"
 import { MediaContextProvider } from "Utils/Responsive"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { SystemContextProvider } from "System/SystemContext"
@@ -18,10 +18,10 @@ export const decorators = [
     return (
       <SystemContextProvider relayEnvironment={relayEnvironment}>
         <MediaContextProvider>
-          <ThemeProviderV3>
+          <Theme>
             <GlobalStyles />
             <Tracked />
-          </ThemeProviderV3>
+          </Theme>
         </MediaContextProvider>
       </SystemContextProvider>
     )

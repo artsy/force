@@ -1,35 +1,36 @@
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { Flex, Text } from "@artsy/palette"
-import { themeGet } from "@styled-system/theme-get"
-import { RouterLink } from "System/Router/RouterLink"
 import { FC } from "react"
-import styled from "styled-components"
+import { useTracking } from "react-tracking"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { SuggestionItemLink } from "./SuggestionItem/SuggestionItemLink"
+import { Highlight } from "./SuggestionItem/Highlight"
 
 interface SuggestionItemProps {
-  display: string
   href: string
-  imageUrl?: string
-  isHighlighted: boolean
-  label: string
   query: string
-  showArtworksButton?: boolean
-  showAuctionResultsButton?: boolean
+  index: number
 }
 
 export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
   href,
-  isHighlighted,
   query,
+  index,
 }) => {
-  const handleClick = (
-    event: React.MouseEvent<HTMLAnchorElement, MouseEvent>
-  ) => {
-    event.preventDefault()
+  const tracking = useTracking()
+
+  const handleClick = () => {
+    tracking.trackEvent({
+      action_type: DeprecatedSchema.ActionType.SelectedItemFromSearch,
+      destination_path: href,
+      item_number: index,
+      item_type: "FirstItem",
+      query: query,
+    })
   }
 
   return (
     <SuggestionItemLink
-      bg={isHighlighted ? "black5" : "white100"}
       borderTop="1px solid"
       borderTopColor="black10"
       onClick={handleClick}
@@ -44,19 +45,3 @@ export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
     </SuggestionItemLink>
   )
 }
-
-const SuggestionItemLink = styled(RouterLink).attrs({
-  color: "black100",
-  px: 2,
-  py: 1,
-})`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  text-decoration: none;
-  min-height: 60px;
-`
-
-const Highlight = styled.strong`
-  color: ${themeGet("colors.blue100")};
-`

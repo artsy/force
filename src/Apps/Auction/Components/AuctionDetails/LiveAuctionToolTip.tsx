@@ -1,4 +1,5 @@
-import { Box, QuestionCircleIcon, Spacer, Text, Tooltip } from "@artsy/palette"
+import { Box, Spacer, Text, Tooltip } from "@artsy/palette"
+import HelpIcon from "@artsy/icons/HelpIcon"
 
 interface LiveAuctionToolTipProps {
   show: boolean
@@ -29,7 +30,7 @@ export const LiveAuctionToolTip: React.FC<LiveAuctionToolTipProps> = ({
         >
           {/* Icons don't forwardRefs so we have to wrap in a span */}
           <Box as="span" style={{ lineHeight: 0 }}>
-            <QuestionCircleIcon width={25} height={25} />
+            <HelpIcon width={25} height={25} />
           </Box>
         </Tooltip>
       </Text>

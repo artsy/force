@@ -17,6 +17,7 @@ export const AuctionFilters: React.FC<{
           <Spacer y={2} />
         </>
       )}
+
       <Join separator={<Spacer y={4} />}>
         <MediumFilter />
         <SizeFilter />

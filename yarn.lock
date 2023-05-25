@@ -31,10 +31,10 @@
     lodash "^4.17.21"
     prettier "^1.19.1"
 
-"@artsy/cohesion@4.125.1":
-  version "4.125.1"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.125.1.tgz#608045420e1c71a5c2f360b1fcdb0627cccbf72c"
-  integrity sha512-1XeSfZYNQ+x/wcJkXCgi1wBHbyO8IlV3FBPuNPse5VIlzw1JmQqF6K35MOd3omEVPU/eH5rA8QIa8Zw+BZyZKw==
+"@artsy/cohesion@4.127.0":
+  version "4.127.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.127.0.tgz#3c69923db08dbef79f7d7c83c70463578b86d3da"
+  integrity sha512-8FS/2v2Y6/BCxs56supfzLB0LOXH5CB417moUJ3jWKnZXStzfT+ecXvr6+hw8eBnkrrrW1FzsMZISDZ7oZvwdw==
   dependencies:
     core-js "3"
 
@@ -68,10 +68,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/fresnel/-/fresnel-3.5.0.tgz#a87ca1caca1f56d1c6d5b720581b9b6e3af1611b"
   integrity sha512-pqdQj4sbrgELlEKk+vR8vpmjgmSxk96PW7M+pWUT/UpHKD43YKCVTfe72z2WOqQru3ohobFvsnybQg/UbeSVtA==
 
-"@artsy/icons@3.5.1":
-  version "3.5.1"
-  resolved "https://registry.yarnpkg.com/@artsy/icons/-/icons-3.5.1.tgz#7afd6d6466d7e3cd0467c6670883cf0437246484"
-  integrity sha512-3PBF1VSsJoRC4fDjN8kGAVoK2dd6gjoAebR66BTojk1e+wIrXcE/hPDpZV2SiGJ7ZPq0zLon0mf654chLVhq/Q==
+"@artsy/icons@3.8.1":
+  version "3.8.1"
+  resolved "https://registry.yarnpkg.com/@artsy/icons/-/icons-3.8.1.tgz#21e23d9de7bdfdc3a01e88ba94f127329d43ad8e"
+  integrity sha512-o2aRQuAGdbmKQQw06gM13/SanGS4Ep8bB8KlnjQ0GQm7SwkNffWG1HSVMgVpfbQHQJzYoPY6g7F84ABOLQ9K8A==
 
 "@artsy/icons@^3.2.2":
   version "3.2.2"
@@ -92,30 +92,30 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@30.6.1":
-  version "30.6.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-30.6.1.tgz#9e29cbf76032885aaccfc3a4ed6d9c9e9aae1f6d"
-  integrity sha512-F3B9x/3KKNO1c5T4/BrmLo8DtVfpy0kRrdFtUucsAt9ctWgxgbyd1pegcGwz/pjYFys+n37RpdvhLgNro7a9hQ==
+"@artsy/palette-charts@32.1.2":
+  version "32.1.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-32.1.2.tgz#d151900b9141095a72ed69a30c51e1a53c7ed815"
+  integrity sha512-/MpuFDk2kghcjb66T6xtTkf8MAXf1QJa1ML2X5bhkzeonO+zQLnN5+5CGxtFJnCsS3c0ylrbDuQQ4hMrQH/4cQ==
   dependencies:
-    "@artsy/palette" "^31.6.1"
+    "@artsy/palette" "^33.1.2"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
     d3-shape "^1.3.5"
     styled-system "^5.1.5"
 
-"@artsy/palette-tokens@^4.0.1":
-  version "4.0.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-4.0.1.tgz#ef171c0449f3c0a1c0765253a06beec160b0eed1"
-  integrity sha512-JQ4t6eCAL3LpYnwyIMJCKc3UiVWY17IvKadNXRXfplo+GFZUqZs61nFGlchNWZvtNESpHkGKOksA5dZq3G1wiw==
+"@artsy/palette-tokens@^5.0.0":
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-5.0.0.tgz#d1e1917d8163d88e7a9f877cf06b609fa8c8178c"
+  integrity sha512-nloC0ubH5XDVNiplehwTtDLEgY0vjeE3l8QUYppEIHFCgadntXm6aVlmEC79inO7L3lDYN7JckYlIYRrTJg3vw==
 
-"@artsy/palette@31.6.1", "@artsy/palette@^31.6.1":
-  version "31.6.1"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-31.6.1.tgz#61a68e6473623d2af10ce7067d7be9b96858e0c8"
-  integrity sha512-4XiZnSyV0z1TqOiiIl1vmYzggYct6oGCz4przKGT4MEG54JxowzrDkp2g7ScZmX2Fhpjz5N4EsgqjmTJolqvCQ==
+"@artsy/palette@33.1.2", "@artsy/palette@^33.1.2":
+  version "33.1.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-33.1.2.tgz#a8dfaa210fca737502c21a71ed61ab7ecd26d8ec"
+  integrity sha512-N1W4ZWaJGQS3ziIdzwZeFV18xbSfzrDIoFjmj+Vi/MGhj9qX7ws1rf6HLnrCbJGn8tYQ9vsSNIEkUF4d33nRNw==
   dependencies:
     "@artsy/icons" "^3.2.2"
-    "@artsy/palette-tokens" "^4.0.1"
+    "@artsy/palette-tokens" "^5.0.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     lodash "^4.17.21"
@@ -4747,6 +4747,13 @@
   version "16.8.4"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-16.8.4.tgz#7fb7ba368857c7aa0f4e4511c4710ca2c5a12a88"
   integrity sha512-eIRpEW73DCzPIMaNBDP5pPIpK1KXyZwNgfxiVagb5iGiz6da+9A5hslSX6GAQKdO7SayVCS/Fr2kjqprgAvkfA==
+  dependencies:
+    "@types/react" "*"
+
+"@types/react-is@^18.2.0":
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/@types/react-is/-/react-is-18.2.0.tgz#2f5137853a46017b3d56447940fb3eb92bbf24a5"
+  integrity sha512-1vz2yObaQkLL7YFe/pme2cpvDsCwI1WXIfL+5eLz0MI9gFG24Re16RzUsI8t9XZn9ZWvgLNDrJBmrqXJO7GNQQ==
   dependencies:
     "@types/react" "*"
 
@@ -18173,6 +18180,11 @@ react-is@16.8.3, react-is@17.0.2, react-is@^16.12.0, "react-is@^16.12.0 || ^17.0
   version "16.8.3"
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-16.8.3.tgz#4ad8b029c2a718fc0cfc746c8d4e1b7221e5387d"
   integrity sha512-Y4rC1ZJmsxxkkPuMLwvKvlL1Zfpbcu+Bf4ZigkHup3v9EfdYhAlWAaVyA19olXq2o2mGn0w+dFKvk3pVVlYcIA==
+
+react-is@^18.2.0:
+  version "18.2.0"
+  resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.2.0.tgz#199431eeaaa2e09f86427efbb4f1473edb47609b"
+  integrity sha512-xWGDIW6x921xtzPkhiULtthJHoJvBbF3q26fzloPCK0hsvxtPVelvftw3zjbHWSkR2km9Z+4uxbDDK/6Zw9B8w==
 
 react-lazy-load-image-component@1.5.5:
   version "1.5.5"

@@ -141,7 +141,7 @@ describe("Submit Pending Counter Offer", () => {
         "Ship toJoelle Van Dyne401 Broadway"
       )
       expect(page.paymentSummary.text()).toMatchInlineSnapshot(
-        `"visa•••• 4444   Exp 03/21"`
+        `"•••• 4444   Exp 03/21"`
       )
       expect(page.buyerGuarantee.length).toBe(1)
       expect(page.submitButton.text()).toBe("Submit")

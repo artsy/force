@@ -15,10 +15,9 @@ interface ProgressiveOnboardingAlertReadyProps {
 export const ProgressiveOnboardingAlertReady: FC<ProgressiveOnboardingAlertReadyProps> = ({
   children,
 }) => {
-  const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useProgressiveOnboarding()
 
   const isDisplayable =
-    isEnabledFor("alerts") &&
     isDismissed(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER).status &&
     isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE).status &&
     !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_READY).status

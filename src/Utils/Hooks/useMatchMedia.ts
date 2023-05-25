@@ -15,11 +15,11 @@ import { useEffect, useState } from "react"
  *
  * @example
 
-    import { themeProps } from '@artsy/palette'
+    import { THEME } from '@artsy/palette'
     import { __internal__useMatchMedia } from 'Utils/Hooks/useMatchMedia'
 
     const App = () => {
-      const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.sm)
+      const isMobile = __internal__useMatchMedia(THEME.mediaQueries.sm)
 
       return (
         <div>Mobile view? {isMobile}</div>

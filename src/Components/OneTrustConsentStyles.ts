@@ -29,7 +29,7 @@
  * Consider this write once, read never.
  */
 import { createGlobalStyle, css } from "styled-components"
-import { THEME_V3 as THEME } from "@artsy/palette-tokens"
+import { THEME } from "@artsy/palette-tokens"
 import {
   BUTTON_SIZES,
   BUTTON_VARIANTS,

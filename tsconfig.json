@@ -16,6 +16,7 @@
     "noUnusedLocals": true,
     "outDir": ".cache/tsc", // Need output directory for incremental type-checking
     "pretty": true,
+    "noErrorTruncation": true,
     "skipLibCheck": true,
     "sourceMap": true,
     "target": "es2016",

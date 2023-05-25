@@ -6,23 +6,22 @@ import {
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import {
-  ProgressiveOnboardingCountsQueryRenderer,
+  withProgressiveOnboardingCounts,
   WithProgressiveOnboardingCountsProps,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingCounts"
+} from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { FC } from "react"
 
 interface ProgressiveOnboardingFollowFindProps
   extends WithProgressiveOnboardingCountsProps {}
 
-const ProgressiveOnboardingFollowFind: FC<ProgressiveOnboardingFollowFindProps> = ({
+export const __ProgressiveOnboardingFollowFind__: FC<ProgressiveOnboardingFollowFindProps> = ({
   children,
   counts,
 }) => {
-  const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useProgressiveOnboarding()
 
   const isDisplayable =
-    isEnabledFor("follows") &&
     counts.followedArtists === 1 &&
     !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_FIND).status
 
@@ -54,14 +53,6 @@ const ProgressiveOnboardingFollowFind: FC<ProgressiveOnboardingFollowFindProps> 
   )
 }
 
-export const ProgressiveOnboardingFollowFindQueryRenderer: FC = ({
-  children,
-}) => {
-  return (
-    <ProgressiveOnboardingCountsQueryRenderer
-      Component={ProgressiveOnboardingFollowFind}
-    >
-      {children}
-    </ProgressiveOnboardingCountsQueryRenderer>
-  )
-}
+export const ProgressiveOnboardingFollowFind = withProgressiveOnboardingCounts(
+  __ProgressiveOnboardingFollowFind__
+)

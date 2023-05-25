@@ -48,6 +48,7 @@ export const EndingSoonAuctionsGrid: FC<EndingSoonAuctionsGridProps> = ({
       <ArtworkGrid
         artworks={viewer.saleArtworksConnection}
         onLoadMore={handleLoadMore}
+        columnCount={[2, 3, 4]}
       />
       {relay.hasMore() && (
         <Box textAlign="center" mt={4}>

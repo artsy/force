@@ -237,6 +237,17 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       if (result?.type === "invalid_form") return
 
       if (result?.type === "error") {
+        trackEvent({
+          action: ActionType.errorMessageViewed,
+          context_owner_type: OwnerType.ordersPayment,
+          context_owner_id: props.order.internalID,
+          title: result.error,
+          message:
+            "Please enter another payment method or contact your bank for more information.",
+          error_code: null,
+          flow: "user sets credit card as payment method",
+        })
+
         props.dialog.showErrorDialog({
           title: result.error,
           message:
@@ -246,6 +257,17 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       }
 
       if (result?.type === "internal_error") {
+        trackEvent({
+          action: ActionType.errorMessageViewed,
+          context_owner_type: OwnerType.ordersPayment,
+          context_owner_id: props.order.internalID,
+          title: "An internal error occurred",
+          message:
+            "Something went wrong. Please try again or contact order@artsy.net",
+          error_code: null,
+          flow: "user sets credit card as payment method",
+        })
+
         props.dialog.showErrorDialog({
           title: "An internal error occurred",
         })
@@ -274,6 +296,18 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     } catch (error) {
       setIsSavingPayment(false)
       handlePaymentError(error)
+
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersPayment,
+        context_owner_id: props.order.internalID,
+        title: "An error occurred",
+        message:
+          "Something went wrong. Please try again or contact order@artsy.net",
+        error_code: null,
+        flow: "user sets credit card as payment method",
+      })
+
       props.dialog.showErrorDialog()
     }
   }
@@ -299,6 +333,18 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     } catch (error) {
       handlePaymentError(error)
       setIsSavingPayment(false)
+
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersPayment,
+        context_owner_id: props.order.internalID,
+        title: "An error occurred",
+        message:
+          "Something went wrong. Please try again or contact order@artsy.net",
+        error_code: null,
+        flow: "user sets wire transfer as payment method",
+      })
+
       props.dialog.showErrorDialog()
     }
   }

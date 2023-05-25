@@ -6,7 +6,6 @@ import {
   Box,
   BoxProps,
   Color,
-  DownloadIcon,
   Flex,
   FlexProps,
   Image,
@@ -16,6 +15,7 @@ import styled from "styled-components"
 import { AlignSelfProps, BackgroundProps, alignSelf } from "styled-system"
 import { TimeSince } from "./TimeSince"
 import { Message_message$data } from "__generated__/Message_message.graphql"
+import DownloadIcon from "@artsy/icons/DownloadIcon"
 
 const AttachmentLink = styled.a<{ isImage: boolean } & AlignSelfProps>`
   ${alignSelf};
@@ -82,12 +82,7 @@ export const Attachment: React.FC<AttachmentProps> = props => {
               {attachment.fileName}
             </Text>
             <Flex flexShrink={0}>
-              <DownloadIcon
-                fill={textColor}
-                width="24px"
-                height="24px"
-                viewBox="0 0 24 24"
-              />
+              <DownloadIcon fill={textColor} width="24px" height="24px" />
             </Flex>
           </>
         )}

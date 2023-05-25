@@ -1,22 +1,21 @@
 import { useState, useEffect } from "react"
 import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { ArrowDownIcon, Flex, Text } from "@artsy/palette"
+import { Flex, Text } from "@artsy/palette"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
-
 import { useRouter } from "System/Router/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import { useSystemContext } from "System/useSystemContext"
 import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { usePoll } from "Utils/Hooks/usePoll"
-
 import {
   UnreadMessagesToastQuery,
   UnreadMessagesToastQuery$data,
 } from "__generated__/UnreadMessagesToastQuery.graphql"
 import { UnreadMessagesToast_conversation$data } from "__generated__/UnreadMessagesToast_conversation.graphql"
+import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
 
 // TODO: refactor into one of the newer components when ready
 const Container = styled(Flex)<{ bottom?: number }>`
@@ -64,10 +63,18 @@ export const UnreadMessagesToast: React.FC<UnreadMessagesToastProps> = ({
     if (!hasScrolled && newMessages && !visible) refreshCallback()
 
     setVisible(hasScrolled && newMessages)
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     hasScrolled,
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     conversation?.lastMessageID,
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     conversation?.fromLastViewedMessageID,
+    // FIXME:
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     conversation?.activeOrders,
   ])
 
@@ -105,7 +112,7 @@ export const UnreadMessagesToast: React.FC<UnreadMessagesToastProps> = ({
         {...rest}
       >
         <Text color="white100">Unread Messages</Text>
-        <ArrowDownIcon ml={1} height="16px" fill="white100" />
+        <ChevronDownIcon ml={1} height="16px" fill="white100" />
       </Container>
     </Flex>
   )

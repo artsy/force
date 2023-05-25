@@ -1,5 +1,5 @@
 import { useEffect } from "react"
-import { Box, Join, Separator, Spacer, Text, themeProps } from "@artsy/palette"
+import { Box, Join, Separator, Spacer, Text, THEME } from "@artsy/palette"
 import { Match } from "found"
 import { ArtistsRoute_partner$data } from "__generated__/ArtistsRoute_partner.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -19,7 +19,7 @@ export const ArtistsRoute: React.FC<ArtistsRouteProps> = ({
   partner,
   match,
 }) => {
-  const isMobile = __internal__useMatchMedia(themeProps.mediaQueries.xs)
+  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
 
   const { isLoaded } = usePartnerArtistsLoadingContext()
 

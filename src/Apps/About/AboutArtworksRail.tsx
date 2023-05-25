@@ -1,7 +1,7 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { AboutArtworksRailQuery } from "__generated__/AboutArtworksRailQuery.graphql"
-import { AboutArtworksRail_viewer$data } from "__generated__/AboutArtworksRail_viewer.graphql"
+import { AboutArtworksRail_marketingCollection$data } from "__generated__/AboutArtworksRail_marketingCollection.graphql"
 import { Rail } from "Components/Rail/Rail"
 import { extractNodes } from "Utils/extractNodes"
 import {
@@ -11,11 +11,16 @@ import {
 import { Skeleton } from "@artsy/palette"
 
 interface AboutArtworksRailProps {
-  viewer: AboutArtworksRail_viewer$data
+  marketingCollection: AboutArtworksRail_marketingCollection$data
 }
 
 export const AboutArtworksRail: React.FC<AboutArtworksRailProps> = props => {
-  const artworks = extractNodes(props.viewer.artworksConnection)
+  const artworks = extractNodes(props.marketingCollection.artworksConnection)
+
+  if (artworks.length === 0) {
+    return null
+  }
+
   return (
     <Rail
       title="Trending Now"
@@ -36,9 +41,9 @@ export const AboutArtworksRail: React.FC<AboutArtworksRailProps> = props => {
 export const AboutArtworksRailFragmentContainer = createFragmentContainer(
   AboutArtworksRail,
   {
-    viewer: graphql`
-      fragment AboutArtworksRail_viewer on Viewer {
-        artworksConnection(first: 50, geneIDs: "trending-this-week") {
+    marketingCollection: graphql`
+      fragment AboutArtworksRail_marketingCollection on MarketingCollection {
+        artworksConnection(first: 50) {
           edges {
             node {
               ...ShelfArtwork_artwork
@@ -56,11 +61,12 @@ export const AboutArtworksRailFragmentContainer = createFragmentContainer(
 export const AboutArtworksRailQueryRenderer: React.FC = () => {
   return (
     <SystemQueryRenderer<AboutArtworksRailQuery>
+      lazyLoad
       placeholder={PLACEHOLDER}
       query={graphql`
         query AboutArtworksRailQuery {
-          viewer {
-            ...AboutArtworksRail_viewer
+          marketingCollection(slug: "trending-this-week") {
+            ...AboutArtworksRail_marketingCollection
           }
         }
       `}
@@ -70,11 +76,15 @@ export const AboutArtworksRailQueryRenderer: React.FC = () => {
           return null
         }
 
-        if (!props?.viewer) {
+        if (!props?.marketingCollection) {
           return PLACEHOLDER
         }
 
-        return <AboutArtworksRailFragmentContainer viewer={props.viewer} />
+        return (
+          <AboutArtworksRailFragmentContainer
+            marketingCollection={props.marketingCollection}
+          />
+        )
       }}
     />
   )

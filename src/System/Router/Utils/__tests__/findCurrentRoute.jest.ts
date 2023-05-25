@@ -1,4 +1,4 @@
-import { findCurrentRoute } from "../findCurrentRoute"
+import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
 import { Location, Match, Router } from "found"
 
 describe("findCurrentRoute", () => {
@@ -40,7 +40,7 @@ describe("findCurrentRoute", () => {
               path: "/",
             },
             {
-              path: "/works-for-sale",
+              path: "/about",
             },
             {
               path: "/cv",
@@ -63,7 +63,7 @@ describe("findCurrentRoute", () => {
               path: "/",
             },
             {
-              path: "/works-for-sale",
+              path: "/about",
             },
             {
               path: "/cv",

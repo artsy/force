@@ -5,16 +5,12 @@ import {
   reset,
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
-import { ProgressiveOnboardingCountsQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingCounts"
-import { ProgressiveOnboardingFollowArtistQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
-import { ProgressiveOnboardingFollowFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
+import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
+import { __ProgressiveOnboardingFollowArtist__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
+import { __ProgressiveOnboardingFollowFind__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { FC, useEffect } from "react"
-
-jest.mock("System/useFeatureFlag", () => ({
-  useFeatureFlag: () => true,
-}))
 
 jest.mock("System/useSystemContext", () => ({
   useSystemContext: jest.fn().mockReturnValue({ isLoggedIn: true }),
@@ -32,38 +28,45 @@ jest.mock(
   })
 )
 
-jest.mock("Components/ProgressiveOnboarding/ProgressiveOnboardingCounts")
+jest.mock("Components/ProgressiveOnboarding/withProgressiveOnboardingCounts")
 
 jest.mock("System/Router/useRouter", () => ({
   useRouter: () => ({
     match: {
       location: {
-        pathname: "/artist/example",
+        pathname: "/artist/example/about",
       },
     },
   }),
 }))
 
 const Example: FC = () => {
+  const ProgressiveOnboardingFollowFind = withProgressiveOnboardingCounts(
+    __ProgressiveOnboardingFollowFind__
+  )
+  const ProgressiveOnboardingFollowArtist = withProgressiveOnboardingCounts(
+    __ProgressiveOnboardingFollowArtist__
+  )
+
   return (
     <ProgressiveOnboardingProvider>
-      <ProgressiveOnboardingFollowFindQueryRenderer>
+      <ProgressiveOnboardingFollowFind>
         <button>Profile</button>
-      </ProgressiveOnboardingFollowFindQueryRenderer>
+      </ProgressiveOnboardingFollowFind>
 
       <ProgressiveOnboardingFollowHighlight position="center">
         <button>Follows</button>
       </ProgressiveOnboardingFollowHighlight>
 
-      <ProgressiveOnboardingFollowArtistQueryRenderer>
+      <ProgressiveOnboardingFollowArtist>
         <button>Follow</button>
-      </ProgressiveOnboardingFollowArtistQueryRenderer>
+      </ProgressiveOnboardingFollowArtist>
     </ProgressiveOnboardingProvider>
   )
 }
 
 describe("ProgressiveOnboarding: Follows", () => {
-  const MockProgressiveOnboardingCountsQueryRenderer = ProgressiveOnboardingCountsQueryRenderer as jest.Mock
+  const mockWithProgressiveOnboardingCounts = withProgressiveOnboardingCounts as jest.Mock
 
   const followArtistText = "Interested in this artist?"
   const followFindText = "Find and edit all your Follows here."
@@ -74,11 +77,16 @@ describe("ProgressiveOnboarding: Follows", () => {
   })
 
   it("renders the chain of tips correctly", async () => {
-    MockProgressiveOnboardingCountsQueryRenderer.mockImplementation(
-      ({ Component, children }) => {
-        return <Component counts={{ followedArtists: 0 }}>{children}</Component>
+    mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
+      return props => {
+        return (
+          <Component
+            counts={{ isReady: true, followedArtists: 0 }}
+            {...props}
+          />
+        )
       }
-    )
+    })
 
     const wrapper = render(<Example />)
 
@@ -88,11 +96,16 @@ describe("ProgressiveOnboarding: Follows", () => {
     expect(screen.queryByText(followHiglightedText)).not.toBeInTheDocument()
 
     // Simulate following the artist
-    MockProgressiveOnboardingCountsQueryRenderer.mockImplementation(
-      ({ Component, children }) => {
-        return <Component counts={{ followedArtists: 1 }}>{children}</Component>
+    mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
+      return props => {
+        return (
+          <Component
+            counts={{ isReady: true, followedArtists: 1 }}
+            {...props}
+          />
+        )
       }
-    )
+    })
     wrapper.rerender(<Example />)
 
     // See the second tip
@@ -112,11 +125,16 @@ describe("ProgressiveOnboarding: Follows", () => {
   })
 
   it("does not render any tips if user has followed more than 1 artist", async () => {
-    MockProgressiveOnboardingCountsQueryRenderer.mockImplementation(
-      ({ Component, children }) => {
-        return <Component counts={{ followedArtists: 2 }}>{children}</Component>
+    mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
+      return props => {
+        return (
+          <Component
+            counts={{ isReady: true, followedArtists: 2 }}
+            {...props}
+          />
+        )
       }
-    )
+    })
 
     render(<Example />)
 

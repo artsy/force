@@ -8,35 +8,36 @@ import {
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import {
-  ProgressiveOnboardingCountsQueryRenderer,
+  withProgressiveOnboardingCounts,
   WithProgressiveOnboardingCountsProps,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingCounts"
+} from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useRouter } from "System/Router/useRouter"
 import { pathToRegexp } from "path-to-regexp"
+import { useSystemContext } from "System/SystemContext"
 
 interface ProgressiveOnboardingFollowArtistProps
   extends WithProgressiveOnboardingCountsProps {}
 
-const ProgressiveOnboardingFollowArtist: FC<ProgressiveOnboardingFollowArtistProps> = ({
+export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFollowArtistProps> = ({
   counts,
   children,
 }) => {
+  const { isLoggedIn } = useSystemContext()
+
   const router = useRouter()
 
-  const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useProgressiveOnboarding()
 
   const isDisplayable =
-    // Is enabled for follows.
-    isEnabledFor("follows") &&
+    isLoggedIn &&
     // Hasn't dismissed the follow artist onboarding.
     !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST).status &&
     // Hasn't followed an artist yet.
+    counts.isReady &&
     counts.followedArtists === 0 &&
-    // If you've already dismissed the alerts onboarding OR you're not on the works-for-sale page.
+    // If you've already dismissed the alerts onboarding OR you're not on the artist page.
     (PROGRESSIVE_ONBOARDING_ALERT_CHAIN.every(key => isDismissed(key).status) ||
-      !pathToRegexp("/artist/:artistID/works-for-sale").test(
-        router.match.location.pathname
-      ))
+      !pathToRegexp("/artist/:artistID").test(router.match.location.pathname))
 
   const handleClose = useCallback(() => {
     dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
@@ -83,14 +84,6 @@ const ProgressiveOnboardingFollowArtist: FC<ProgressiveOnboardingFollowArtistPro
   )
 }
 
-export const ProgressiveOnboardingFollowArtistQueryRenderer: FC = ({
-  children,
-}) => {
-  return (
-    <ProgressiveOnboardingCountsQueryRenderer
-      Component={ProgressiveOnboardingFollowArtist}
-    >
-      {children}
-    </ProgressiveOnboardingCountsQueryRenderer>
-  )
-}
+export const ProgressiveOnboardingFollowArtist = withProgressiveOnboardingCounts(
+  __ProgressiveOnboardingFollowArtist__
+)

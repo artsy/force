@@ -1,10 +1,11 @@
-import { Link, LockIcon } from "@artsy/palette"
+import { Link } from "@artsy/palette"
 import { SecurePayment_artwork$data } from "__generated__/SecurePayment_artwork.graphql"
 import * as React from "react"
 import { createFragmentContainer } from "react-relay"
 import { graphql } from "react-relay"
 import { TrustSignal, TrustSignalProps } from "./TrustSignal"
 import { shouldRenderBuyerGuaranteeAndSecurePayment } from "Apps/Artwork/Utils/badges"
+import LockIcon from "@artsy/icons/LockIcon"
 
 interface SecurePaymentProps
   extends Omit<TrustSignalProps, "Icon" | "label" | "description"> {

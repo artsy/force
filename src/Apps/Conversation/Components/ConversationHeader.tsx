@@ -1,11 +1,11 @@
 import { FC } from "react"
-import { ArrowLeftIcon, Box, Flex, Text, Separator } from "@artsy/palette"
+import { Box, Flex, Text, Separator } from "@artsy/palette"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
-
 import { RouterLink } from "System/Router/RouterLink"
 import { DetailIcon, DetailsProps } from "./DetailsHeader"
 import { Media } from "Utils/Responsive"
+import ChevronCircleLeftIcon from "@artsy/icons/ChevronCircleLeftIcon"
 
 export const LARGE_SCREEN_HEADER_HEIGHT = "85px"
 export const SMALL_SCREEN_HEADER_HEIGHT = "55px"
@@ -58,7 +58,7 @@ const SmallConversationHeader: FC<ConversationHeaderProps> = props => {
       width="100%"
     >
       <RouterLink to={`/user/conversations`}>
-        <ArrowLeftIcon />
+        <ChevronCircleLeftIcon />
       </RouterLink>
       <Text variant="sm-display" display={["none", "none", "auto"]}>
         Conversation with {partnerName}

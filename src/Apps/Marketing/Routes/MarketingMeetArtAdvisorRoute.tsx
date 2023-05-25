@@ -11,9 +11,12 @@ import { MarketingAlternatingStack } from "Apps/Marketing/Components/MarketingAl
 import { MarketingHeader } from "Apps/Marketing/Components/MarketingHeader"
 import { BRAND_PALETTE } from "Apps/Marketing/Utils/brandPalette"
 import { MetaTags } from "Components/MetaTags"
+import { useSystemContext } from "System/SystemContext"
 import { FC } from "react"
 
 export const MarketingMeetArtAdvisorRoute: FC = () => {
+  const { isEigen } = useSystemContext()
+
   return (
     <>
       <MetaTags
@@ -78,26 +81,28 @@ export const MarketingMeetArtAdvisorRoute: FC = () => {
           ]}
         />
 
-        <FullBleed bg={["black5", "transparent"]} py={[4, 0]} px={[2, 4]}>
-          <GridColumns gridRowGap={4}>
-            <Column span={12} textAlign="center">
-              <Text variant="xl">Meet your new art advisor. It’s Artsy.</Text>
-            </Column>
+        {!isEigen && (
+          <FullBleed bg={["black5", "transparent"]} py={[4, 0]} px={[2, 4]}>
+            <GridColumns gridRowGap={4}>
+              <Column span={12} textAlign="center">
+                <Text variant="xl">Meet your new art advisor. It’s Artsy.</Text>
+              </Column>
 
-            <Column span={4} start={5}>
-              <Button
-                width="100%"
-                // @ts-ignore
-                as="a"
-                href="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Get the App
-              </Button>
-            </Column>
-          </GridColumns>
-        </FullBleed>
+              <Column span={4} start={5}>
+                <Button
+                  width="100%"
+                  // @ts-ignore
+                  as="a"
+                  href="https://apps.apple.com/us/app/artsy-buy-sell-original-art/id703796080"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  Get the App
+                </Button>
+              </Column>
+            </GridColumns>
+          </FullBleed>
+        )}
       </Join>
     </>
   )

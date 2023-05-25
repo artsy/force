@@ -5,7 +5,6 @@ import {
   Clickable,
   Spacer,
   BorderedRadio,
-  CreditCardIcon,
   RadioGroup,
   Text,
   Collapse,
@@ -28,6 +27,7 @@ import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButt
 import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
+import UnknownCardIcon from "@artsy/icons/UnknownCardIcon"
 
 export interface Props {
   order: Payment_order$data
@@ -198,7 +198,7 @@ const getAvailablePaymentMethods = (
         value={paymentMethod}
         label={
           <>
-            <CreditCardIcon type="Unknown" fill="black100" />
+            <UnknownCardIcon fill="black100" />
             <Text variant="sm-display" ml={0.5}>
               Credit card
             </Text>

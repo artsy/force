@@ -6,7 +6,7 @@ import {
   Flex,
   Spacer,
   Text,
-  themeProps,
+  THEME,
 } from "@artsy/palette"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
@@ -20,12 +20,10 @@ import {
   NavBarMobileMenu,
   NavBarMobileMenuIcon,
 } from "./NavBarMobileMenu/NavBarMobileMenu"
-
 import {
   ARTISTS_SUBMENU_DATA,
   ARTWORKS_SUBMENU_DATA,
 } from "Components/NavBar/menuData"
-
 import { ActionType } from "@artsy/cohesion"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { AppContainer } from "Apps/Components/AppContainer"
@@ -35,7 +33,6 @@ import { NavBarLoggedOutActions } from "Components/NavBar/NavBarLoggedOutActions
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import Events from "Utils/Events"
-import { useJump } from "Utils/Hooks/useJump"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 import { useTranslation } from "react-i18next"
 import { track, useTracking } from "react-tracking"
@@ -49,9 +46,9 @@ import { NavBarMobileMenuNotificationsIndicatorQueryRenderer } from "./NavBarMob
 import { NavBarPrimaryLogo } from "./NavBarPrimaryLogo"
 import { NavBarSkipLink } from "./NavBarSkipLink"
 import { useNavBarHeight } from "./useNavBarHeight"
-import { ProgressiveOnboardingFollowFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
-import { ProgressiveOnboardingSaveFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
-import { ProgressiveOnboardingAlertFindQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
+import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
+import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
+import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { NewSearchBar } from "Components/Search/NewSearch/NewSearchBar"
 
@@ -72,14 +69,13 @@ export const NavBar: React.FC = track(
 )(() => {
   const { user, isEigen } = useSystemContext()
 
-  const { jumpTo } = useJump({ behavior: "smooth" })
   const { trackEvent } = useTracking()
   const { t } = useTranslation()
   const { router } = useRouter()
   const [showMobileMenu, toggleMobileNav] = useState(false)
   const [searchFocused, setSearchFocused] = useState(false)
-  const xs = __internal__useMatchMedia(themeProps.mediaQueries.xs)
-  const sm = __internal__useMatchMedia(themeProps.mediaQueries.sm)
+  const xs = __internal__useMatchMedia(THEME.mediaQueries.xs)
+  const sm = __internal__useMatchMedia(THEME.mediaQueries.sm)
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
   const showNotificationCount = isLoggedIn && !showMobileMenu
@@ -135,6 +131,10 @@ export const NavBar: React.FC = track(
     trackEvent({
       action: ActionType.clickedNotificationsBell,
     })
+  }
+
+  const handleMobileSearchBarClose = () => {
+    setSearchFocused(false)
   }
 
   if (isEigen) {
@@ -194,7 +194,8 @@ export const NavBar: React.FC = track(
                 flex={1}
                 alignItems="center"
                 onFocus={() => {
-                  setSearchFocused(true)
+                  if (!isSearchDropDownImprovementsEnabled)
+                    setSearchFocused(true)
                 }}
                 // Update only on mobile
                 position={[
@@ -205,7 +206,7 @@ export const NavBar: React.FC = track(
                 zIndex={9}
               >
                 {isSearchDropDownImprovementsEnabled ? (
-                  <NewSearchBar />
+                  <NewSearchBar onClose={handleMobileSearchBarClose} />
                 ) : (
                   <SearchBarQueryRenderer width="100%" />
                 )}
@@ -302,8 +303,8 @@ export const NavBar: React.FC = track(
                       )}
                     </NavBarItemButton>
 
-                    <ProgressiveOnboardingFollowFindQueryRenderer>
-                      <ProgressiveOnboardingSaveFindQueryRenderer>
+                    <ProgressiveOnboardingFollowFind>
+                      <ProgressiveOnboardingSaveFind>
                         <NavBarItemButton
                           display="flex"
                           alignItems="center"
@@ -319,12 +320,12 @@ export const NavBar: React.FC = track(
                             width={22}
                           />
                         </NavBarItemButton>
-                      </ProgressiveOnboardingSaveFindQueryRenderer>
-                    </ProgressiveOnboardingFollowFindQueryRenderer>
+                      </ProgressiveOnboardingSaveFind>
+                    </ProgressiveOnboardingFollowFind>
                   </>
                 )}
 
-                <ProgressiveOnboardingAlertFindQueryRenderer>
+                <ProgressiveOnboardingAlertFind>
                   <NavBarItemButton
                     mr={-1}
                     width={40}
@@ -354,7 +355,7 @@ export const NavBar: React.FC = track(
                   >
                     <NavBarMobileMenuIcon open={showMobileMenu} />
                   </NavBarItemButton>
-                </ProgressiveOnboardingAlertFindQueryRenderer>
+                </ProgressiveOnboardingAlertFind>
               </Flex>
             </Flex>
 
@@ -482,19 +483,6 @@ export const NavBar: React.FC = track(
                 >
                   {t`navbar.museums`}
                 </NavBarItemLink>
-              </Flex>
-
-              <Flex alignItems="stretch" display={["none", "none", "flex"]}>
-                <NavBarItemButton
-                  display={["none", "none", "flex", "flex"]}
-                  px={0}
-                  pl={1}
-                  onClick={() => {
-                    jumpTo("download-app-banner")
-                  }}
-                >
-                  {t`navbar.downloadApp`}
-                </NavBarItemButton>
               </Flex>
             </Text>
           </HorizontalPadding>

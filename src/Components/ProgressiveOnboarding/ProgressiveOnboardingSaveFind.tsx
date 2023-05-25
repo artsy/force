@@ -6,23 +6,22 @@ import {
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import {
-  ProgressiveOnboardingCountsQueryRenderer,
+  withProgressiveOnboardingCounts,
   WithProgressiveOnboardingCountsProps,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingCounts"
+} from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { FC } from "react"
 
 interface ProgressiveOnboardingSaveFindProps
   extends WithProgressiveOnboardingCountsProps {}
 
-const ProgressiveOnboardingSaveFind: FC<ProgressiveOnboardingSaveFindProps> = ({
+export const __ProgressiveOnboardingSaveFind__: FC<ProgressiveOnboardingSaveFindProps> = ({
   children,
   counts,
 }) => {
-  const { dismiss, isDismissed, isEnabledFor } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useProgressiveOnboarding()
 
   const isDisplayable =
-    isEnabledFor("saves") &&
     counts.savedArtworks === 1 &&
     !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_FIND).status
 
@@ -54,14 +53,6 @@ const ProgressiveOnboardingSaveFind: FC<ProgressiveOnboardingSaveFindProps> = ({
   )
 }
 
-export const ProgressiveOnboardingSaveFindQueryRenderer: FC = ({
-  children,
-}) => {
-  return (
-    <ProgressiveOnboardingCountsQueryRenderer
-      Component={ProgressiveOnboardingSaveFind}
-    >
-      {children}
-    </ProgressiveOnboardingCountsQueryRenderer>
-  )
-}
+export const ProgressiveOnboardingSaveFind = withProgressiveOnboardingCounts(
+  __ProgressiveOnboardingSaveFind__
+)
