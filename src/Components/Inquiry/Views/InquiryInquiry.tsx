@@ -46,7 +46,7 @@ const InquiryInquiry: React.FC<InquiryInquiryProps> = ({ artwork }) => {
   const { submitArtworkInquiryRequest } = useArtworkInquiryRequest()
 
   const handleTextAreaChange = ({ value }: { value: string }) => {
-    if (mode === "Confirm" && !AUTOMATED_MESSAGES.includes(inquiry.message)) {
+    if (mode === "Confirm" && !AUTOMATED_MESSAGES.includes(value)) {
       setMode("Pending")
     }
 
