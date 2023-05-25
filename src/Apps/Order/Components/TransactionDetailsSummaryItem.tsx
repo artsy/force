@@ -200,7 +200,10 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
   }
 
   const offerStillInNegotiation = () => {
-    return order.mode === "OFFER" && order.displayState !== "PROCESSING"
+    return (
+      order.mode === "OFFER" &&
+      ["PENDING", "SUBMITTED"].includes(order.displayState)
+    )
   }
 
   const buyerTotalDisplayAmount = () => {
