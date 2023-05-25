@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c956de3fe651d96f0204e4418552d0f4>>
+ * @generated SignedSource<<5e65b245edd6db3e0376d8a3e07030a5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type TransactionDetailsSummaryItemTestQuery$variables = {};
@@ -25,6 +26,7 @@ export type TransactionDetailsSummaryItemTestQuery$rawResponse = {
     readonly buyerTotal: string | null;
     readonly code: string;
     readonly currencyCode: string;
+    readonly displayState: CommerceOrderDisplayStateEnum;
     readonly id: string;
     readonly itemsTotal: string | null;
     readonly lastOffer: {
@@ -95,6 +97,7 @@ export type TransactionDetailsSummaryItemTestQuery$rawResponse = {
     readonly buyerTotal: string | null;
     readonly code: string;
     readonly currencyCode: string;
+    readonly displayState: CommerceOrderDisplayStateEnum;
     readonly id: string;
     readonly itemsTotal: string | null;
     readonly lineItems: {
@@ -467,6 +470,13 @@ return {
             "name": "mode",
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "displayState",
+            "storageKey": null
+          },
           (v5/*: any*/),
           (v6/*: any*/),
           (v7/*: any*/),
@@ -520,7 +530,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1ff86a9b685bcc8e6395a286440edbf3",
+    "cacheID": "5562e1aab9299ec7b6028a3f58c96e5c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -535,6 +545,23 @@ return {
         "order.buyerTotal": (v12/*: any*/),
         "order.code": (v11/*: any*/),
         "order.currencyCode": (v11/*: any*/),
+        "order.displayState": {
+          "enumValues": [
+            "ABANDONED",
+            "APPROVED",
+            "CANCELED",
+            "FULFILLED",
+            "IN_TRANSIT",
+            "PENDING",
+            "PROCESSING",
+            "PROCESSING_APPROVAL",
+            "REFUNDED",
+            "SUBMITTED"
+          ],
+          "nullable": false,
+          "plural": false,
+          "type": "CommerceOrderDisplayStateEnum"
+        },
         "order.id": (v13/*: any*/),
         "order.itemsTotal": (v12/*: any*/),
         "order.lastOffer": (v14/*: any*/),
@@ -624,7 +651,7 @@ return {
     },
     "name": "TransactionDetailsSummaryItemTestQuery",
     "operationKind": "query",
-    "text": "query TransactionDetailsSummaryItemTestQuery {\n  order: commerceOrder(id: \"whatevs\") {\n    __typename\n    ...TransactionDetailsSummaryItem_order\n    id\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          typeName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
+    "text": "query TransactionDetailsSummaryItemTestQuery {\n  order: commerceOrder(id: \"whatevs\") {\n    __typename\n    ...TransactionDetailsSummaryItem_order\n    id\n  }\n}\n\nfragment TransactionDetailsSummaryItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  __typename\n  requestedFulfillment {\n    __typename\n  }\n  code\n  lineItems {\n    edges {\n      node {\n        artworkOrEditionSet {\n          __typename\n          ... on Artwork {\n            price\n          }\n          ... on EditionSet {\n            price\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n        }\n        selectedShippingQuote {\n          typeName\n          id\n        }\n        id\n      }\n    }\n  }\n  mode\n  displayState\n  shippingTotal(precision: 2)\n  shippingTotalCents\n  taxTotal(precision: 2)\n  taxTotalCents\n  itemsTotal(precision: 2)\n  buyerTotal(precision: 2)\n  currencyCode\n  ... on CommerceOfferOrder {\n    lastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n    myLastOffer {\n      internalID\n      amount(precision: 2)\n      amountCents\n      shippingTotal(precision: 2)\n      shippingTotalCents\n      taxTotal(precision: 2)\n      taxTotalCents\n      buyerTotal(precision: 2)\n      buyerTotalCents\n      fromParticipant\n      note\n      id\n    }\n  }\n}\n"
   }
 };
 })();

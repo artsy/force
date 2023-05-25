@@ -91,7 +91,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
   const getShippingLabel = shippingQuoteType => {
     const artsyShippingLabel =
       shippingQuoteDisplayNames[shippingQuoteType] + " delivery"
-    const suffix = shippingCostSubjectToChange() ? "*" : ""
+    const suffix = offerShippingCostSubjectToChange() ? "*" : ""
     return artsyShippingLabel + suffix
   }
 
@@ -105,7 +105,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
     if (requestedFulfillment?.__typename === "CommerceShipArta") {
       const selectedShippingQuote = extractNodes(order.lineItems)?.[0]
         ?.selectedShippingQuote
-      console.log("selected", selectedShippingQuote)
+
       if (selectedShippingQuote) {
         return getShippingLabel(selectedShippingQuote.typeName)
       }
@@ -171,7 +171,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
 
   const taxPrefix = () => {
     let prefix
-    if (shippingCostSubjectToChange()) {
+    if (offerShippingCostSubjectToChange()) {
       prefix = <Sup>†</Sup>
     } else {
       prefix = "*"
@@ -181,7 +181,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
 
   const taxLabel = () => {
     let suffix
-    if (shippingCostSubjectToChange()) {
+    if (offerShippingCostSubjectToChange()) {
       suffix = <Sup>†</Sup>
     } else {
       suffix = "*"
@@ -189,15 +189,18 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
     return <>Tax{suffix}</>
   }
 
-  const shippingCostSubjectToChange = () => {
+  const offerShippingCostSubjectToChange = () => {
     const offer = getOffer()
 
     return (
       offer?.shippingTotalCents &&
       order.requestedFulfillment?.__typename === "CommerceShipArta" &&
-      order.mode === "OFFER" &&
-      order.displayState !== "PROCESSING"
+      offerStillInNegotiation()
     )
+  }
+
+  const offerStillInNegotiation = () => {
+    return order.mode === "OFFER" && order.displayState !== "PROCESSING"
   }
 
   const buyerTotalDisplayAmount = () => {
@@ -257,7 +260,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
         data-test="buyerTotalDisplayAmount"
       />
       <Spacer y={2} />
-      {shippingCostSubjectToChange() && (
+      {offerShippingCostSubjectToChange() && (
         <Text variant="sm" color="black60">
           *Estimate Only. Price may vary once offer is finalized.
         </Text>
@@ -407,6 +410,7 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
           }
         }
         mode
+        displayState
         shippingTotal(precision: 2)
         shippingTotalCents
         taxTotal(precision: 2)
