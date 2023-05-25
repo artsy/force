@@ -407,7 +407,6 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
           }
         }
         mode
-        displayState
         shippingTotal(precision: 2)
         shippingTotalCents
         taxTotal(precision: 2)
