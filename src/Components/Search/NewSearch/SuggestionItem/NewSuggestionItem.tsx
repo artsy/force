@@ -3,7 +3,6 @@ import { FC } from "react"
 import { SuggestionItemLink } from "./SuggestionItemLink"
 import { DefaultSuggestion } from "./DefaultSuggestion"
 import { QuickNavigation } from "./QuickNavigation"
-import { PillType } from "Components/Search/NewSearch/constants"
 
 export interface SuggionItemOptionProps {
   text: string
@@ -22,11 +21,10 @@ interface SuggestionItemProps {
   query: string
   option: SuggionItemOptionProps
   onRedirect: () => void
-  selectedPill: PillType
 }
 
 export const NewSuggestionItem: FC<SuggestionItemProps> = props => {
-  const { option, onRedirect, selectedPill } = props
+  const { option, onRedirect } = props
 
   const handleClick = () => {
     onRedirect()

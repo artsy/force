@@ -233,7 +233,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
             query={value}
             option={option}
             onRedirect={handleRedirect}
-            selectedPill={selectedPill}
           />
         )
       }}
