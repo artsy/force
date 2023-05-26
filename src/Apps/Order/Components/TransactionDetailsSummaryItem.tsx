@@ -97,7 +97,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
 
   const shippingDisplayLabel = shippingNotCalculated => {
     if (shippingNotCalculated()) {
-      return "Shipping**"
+      return "Shipping*"
     }
 
     const requestedFulfillment = order.requestedFulfillment
@@ -171,7 +171,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
 
   const taxPrefix = () => {
     let prefix
-    if (offerShippingCostSubjectToChange()) {
+    if (shippingNotCalculated() || offerShippingCostSubjectToChange()) {
       prefix = <Sup>†</Sup>
     } else {
       prefix = "*"
@@ -181,7 +181,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
 
   const taxLabel = () => {
     let suffix
-    if (offerShippingCostSubjectToChange()) {
+    if (shippingNotCalculated() || offerShippingCostSubjectToChange()) {
       suffix = <Sup>†</Sup>
     } else {
       suffix = "*"
@@ -268,6 +268,15 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
           *Estimate Only. Price may vary once offer is finalized.
         </Text>
       )}
+      {shippingNotCalculated() && (
+        <>
+          <Spacer y={2} />
+          <Text variant="sm" color="black60">
+            *Shipping costs to be confirmed by gallery. You will be able to
+            review the total price before payment.
+          </Text>
+        </>
+      )}
       <Text variant="sm" color="black60">
         {taxPrefix()}
         <RouterLink
@@ -279,15 +288,6 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
           may apply at import.
         </RouterLink>
       </Text>
-      {shippingNotCalculated() && (
-        <>
-          <Spacer y={2} />
-          <Text variant="xs" color="black60">
-            **Shipping costs to be confirmed by gallery. You will be able to
-            review the total price before payment.
-          </Text>
-        </>
-      )}
       {showOfferNote && order.mode === "OFFER" && renderNoteEntry()}
       {showCongratulationMessage && (
         <Column

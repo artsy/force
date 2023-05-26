@@ -132,8 +132,8 @@ describe("TransactionDetailsSummaryItem", () => {
 
       const text = wrapper.text()
 
-      expect(text).toMatch("Shipping**Waiting for final costs")
-      expect(text).toMatch("Tax*Waiting for final costs")
+      expect(text).toMatch("Shipping*Waiting for final costs")
+      expect(text).toMatch("Tax†Waiting for final costs")
     })
 
     it("shows tax import reminder", async () => {
@@ -159,7 +159,7 @@ describe("TransactionDetailsSummaryItem", () => {
       const text = wrapper.text()
 
       expect(text).toMatch(
-        "**Shipping costs to be confirmed by gallery. You will be able to review the total price before payment."
+        "*Shipping costs to be confirmed by gallery. You will be able to review the total price before payment."
       )
     })
 
@@ -226,7 +226,7 @@ describe("TransactionDetailsSummaryItem", () => {
         expect(text).toMatch("Premium delivery")
       })
 
-      it("NO selection made shows the correct footnotes for offers if shipping by Arta", async () => {
+      it("shows the correct footnotes for offers when user has not made selection yet", async () => {
         const wrapper = getWrapper({
           CommerceOrder: () =>
             UntouchedMakeOfferWithArtsyShippingDomesticFromUS,
@@ -241,7 +241,7 @@ describe("TransactionDetailsSummaryItem", () => {
         )
       })
 
-      it("when selecting is made shows the correct footnotes for offers if shipping by Arta", async () => {
+      it("shows the correct footnotes for offers when user selects a shipping quote", async () => {
         const wrapper = getWrapper({
           CommerceOrder: () => ({
             ...transactionSummaryOfferOrder,
