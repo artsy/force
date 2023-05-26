@@ -15,7 +15,7 @@ import { reportPerformanceMeasurement } from "Components/Search/NewSearch/utils/
 import { shouldStartSearching } from "Components/Search/NewSearch/utils/shouldStartSearching"
 import { useDebounce } from "Utils/Hooks/useDebounce"
 import { useTracking } from "react-tracking"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { ActionType } from "@artsy/cohesion"
 import { MobileSearchBar_viewer$data } from "__generated__/MobileSearchBar_viewer.graphql"
 
 const logger = createLogger("Components/Search/NewSearch/Mobile")
@@ -44,11 +44,12 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
     tracking.trackEvent({
       action_type:
         options.length > 0
-          ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
-          : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
+          ? ActionType.selectedSearchSuggestionQuickNavigationItem
+          : ActionType.searchedWithNoResults,
+      context_module: selectedPill.analyticsContextModule,
       query: value,
     })
-  }, [fetchCounter])
+  }, [fetchCounter, options])
 
   const refetch = useCallback(
     (value: string, entity?: string) => {
