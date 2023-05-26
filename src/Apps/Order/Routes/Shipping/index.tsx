@@ -633,6 +633,17 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     )
   }
 
+  const renderArtsyShippingOptionText = () => {
+    let text
+    if (isOffer) {
+      text =
+        "Please note that these are estimates and may change once offer is finalized. "
+    } else {
+      text = ""
+    }
+    return `${text}All options are eligible for Artsy’s Buyer Protection policy, which protects against damage and loss.`
+  }
+
   const { order, isCommittingMutation } = props
   const artwork = getOrderArtwork()
   const shippingSelected =
@@ -644,6 +655,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const isArtsyShipping = checkIfArtsyShipping()
   const showArtsyShipping =
     isArtsyShipping && !!shippingQuotes && shippingQuotes.length > 0
+  const isOffer = order.mode === "OFFER"
 
   const useDefaultArtsyShippingQuote =
     isArtsyShipping &&
@@ -663,7 +675,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       <OrderRouteContainer
         order={order}
         currentStep="Shipping"
-        steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
+        steps={isOffer ? offerFlowSteps : buyNowFlowSteps}
         content={
           <Flex
             flexDirection="column"
@@ -790,11 +802,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             <Collapse open={showArtsyShipping}>
               <Text variant="sm">Artsy shipping options</Text>
               <Text variant="xs" mb="1" color="black60">
-                Please note that these are estimates and may change once offer
-                is finalized. All options are eligible for Artsy’s Buyer
-                Protection policy, which protects against damage and loss.
+                {renderArtsyShippingOptionText()}
               </Text>
-
               <ShippingQuotesFragmentContainer
                 mb={3}
                 selectedShippingQuoteId={shippingQuoteId}
