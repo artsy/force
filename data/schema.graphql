@@ -1544,7 +1544,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     size: Int
     slugs: [String!]
   ): [MarketingCollection]
-  meta: ArtistMeta
+  meta(page: ArtistPage = ABOUT): ArtistMeta
   middle: String
   name: String
   nationality: String
@@ -1760,6 +1760,12 @@ type ArtistInsightsCount {
 type ArtistMeta {
   description: String
   title: String
+}
+
+enum ArtistPage {
+  ABOUT
+  ARTWORKS
+  AUCTION_RESULTS
 }
 
 # A connection to a list of items.
@@ -7286,6 +7292,43 @@ type CreateGeminiEntryForAssetPayload {
   clientMutationId: String
 }
 
+type createHeroUnitFailure {
+  mutationError: GravityMutationError
+}
+
+input CreateHeroUnitLinkInput {
+  text: String!
+  url: String!
+}
+
+input CreateHeroUnitMutationInput {
+  body: String!
+  clientMutationId: String
+  credit: String
+  endAt: String
+  imageUrl: String
+  label: String
+  link: CreateHeroUnitLinkInput!
+  position: Int
+  startAt: String
+  title: String!
+}
+
+type CreateHeroUnitMutationPayload {
+  clientMutationId: String
+
+  # On success: the hero unit created.
+  heroUnitOrError: createHeroUnitResponseOrError
+}
+
+union createHeroUnitResponseOrError =
+    createHeroUnitFailure
+  | createHeroUnitSuccess
+
+type createHeroUnitSuccess {
+  heroUnit: HeroUnit
+}
+
 input CreateIdentityVerificationOverrideMutationInput {
   clientMutationId: String
 
@@ -7986,6 +8029,30 @@ union DeleteFeatureResponseOrError = DeleteFeatureFailure | DeleteFeatureSuccess
 
 type DeleteFeatureSuccess {
   feature: Feature
+}
+
+type deleteHeroUnitFailure {
+  mutationError: GravityMutationError
+}
+
+input deleteHeroUnitMutationInput {
+  clientMutationId: String
+  id: String!
+}
+
+type deleteHeroUnitMutationPayload {
+  clientMutationId: String
+
+  # On success: the deleted hero unit.
+  heroUnitOrError: deleteHeroUnitResponseOrError
+}
+
+union deleteHeroUnitResponseOrError =
+    deleteHeroUnitFailure
+  | deleteHeroUnitSuccess
+
+type deleteHeroUnitSuccess {
+  heroUnit: HeroUnit
 }
 
 type deleteOrderedSetFailure {
@@ -9821,6 +9888,86 @@ type GravityMutationError {
   type: String
 }
 
+# A Hero Unit
+type HeroUnit {
+  # Main Hero Unit content.
+  body: String!
+  createdAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+
+  # Optional image credit line.
+  credit: String
+  endAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+
+  # A globally unique ID.
+  id: ID!
+
+  # The main image for the Hero Unit.
+  image: Image
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+
+  # Optional label for above the title.
+  label: String
+  link: HeroUnitLink!
+
+  # Dictates the order of the Hero Units.
+  position: Int
+  startAt(
+    format: String
+
+    # A tz database time zone, otherwise falls back to "X-TIMEZONE" header. See
+    # http://www.iana.org/time-zones,
+    # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones
+    timezone: String
+  ): String
+
+  # The main headline for the Hero Unit.
+  title: String!
+}
+
+# A connection to a list of items.
+type HeroUnitConnection {
+  # A list of edges.
+  edges: [HeroUnitEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type HeroUnitEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: HeroUnit
+}
+
+type HeroUnitLink {
+  # Text for the CTA of the Hero Unit.
+  text: String!
+
+  # URL for the CTA of the Hero Unit.
+  url: String!
+}
+
 type HighestBid {
   # A formatted price with various currency formatting options.
   amount(
@@ -11302,6 +11449,7 @@ type Me implements Node {
     isAuction: Boolean
     last: Int
     liveSale: Boolean
+    marketable: Boolean
     page: Int
     saleID: ID
 
@@ -12017,6 +12165,11 @@ type Mutation {
     input: CreateGeminiEntryForAssetInput!
   ): CreateGeminiEntryForAssetPayload
 
+  # Creates a hero unit.
+  createHeroUnit(
+    input: CreateHeroUnitMutationInput!
+  ): CreateHeroUnitMutationPayload
+
   # Create an identity verification override
   createIdentityVerificationOverride(
     input: CreateIdentityVerificationOverrideMutationInput!
@@ -12091,6 +12244,11 @@ type Mutation {
   deleteFeaturedLink(
     input: DeleteFeaturedLinkMutationInput!
   ): DeleteFeaturedLinkMutationPayload
+
+  # deletes a hero unit.
+  deleteHeroUnit(
+    input: deleteHeroUnitMutationInput!
+  ): deleteHeroUnitMutationPayload
 
   # Delete User Artsy Account
   deleteMyAccountMutation(input: DeleteAccountInput!): DeleteAccountPayload
@@ -12317,6 +12475,11 @@ type Mutation {
   updateFeaturedLink(
     input: UpdateFeaturedLinkMutationInput!
   ): UpdateFeaturedLinkMutationPayload
+
+  # updates a hero unit.
+  updateHeroUnit(
+    input: UpdateHeroUnitMutationInput!
+  ): UpdateHeroUnitMutationPayload
 
   # Update a message.
   updateMessage(
@@ -14672,6 +14835,21 @@ type Query {
     #
     slugs: [String]
   ): [Gene]
+
+  # A Hero Unit.
+  heroUnit(
+    # The ID of the Hero Unit
+    id: String!
+  ): HeroUnit
+  heroUnitsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    # If present, will search by term
+    term: String
+  ): HeroUnitConnection
   highlights: Highlights
 
   # Home screen content
@@ -15021,6 +15199,7 @@ type Query {
     isAuction: Boolean
     last: Int
     liveSale: Boolean
+    marketable: Boolean
     page: Int
     saleID: ID
 
@@ -17524,6 +17703,44 @@ type UpdateFeatureSuccess {
   feature: Feature
 }
 
+type updateHeroUnitFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateHeroUnitLinkInput {
+  text: String!
+  url: String!
+}
+
+input UpdateHeroUnitMutationInput {
+  body: String!
+  clientMutationId: String
+  credit: String
+  endAt: String
+  id: String!
+  imageUrl: String
+  label: String
+  link: UpdateHeroUnitLinkInput!
+  position: Int
+  startAt: String
+  title: String!
+}
+
+type UpdateHeroUnitMutationPayload {
+  clientMutationId: String
+
+  # On success: the hero unit updated.
+  heroUnitOrError: updateHeroUnitResponseOrError
+}
+
+union updateHeroUnitResponseOrError =
+    updateHeroUnitFailure
+  | updateHeroUnitSuccess
+
+type updateHeroUnitSuccess {
+  heroUnit: HeroUnit
+}
+
 type UpdateMessageFailure {
   mutationError: GravityMutationError
 }
@@ -19000,6 +19217,21 @@ type Viewer {
     #
     slugs: [String]
   ): [Gene]
+
+  # A Hero Unit.
+  heroUnit(
+    # The ID of the Hero Unit
+    id: String!
+  ): HeroUnit
+  heroUnitsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+
+    # If present, will search by term
+    term: String
+  ): HeroUnitConnection
   highlights: Highlights
 
   # Home screen content
@@ -19290,6 +19522,7 @@ type Viewer {
     isAuction: Boolean
     last: Int
     liveSale: Boolean
+    marketable: Boolean
     page: Int
     saleID: ID
 

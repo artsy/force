@@ -27,7 +27,15 @@ describe("InquirySpecialist", () => {
 
       setInqirySpy = jest.spyOn(actual, "setInquiry")
 
-      return { ...actual, next, artworkID: "example" }
+      return {
+        ...actual,
+        next,
+        artworkID: "example",
+        inquiry: {
+          message:
+            "Hello, I'm interested in this artwork. Could you provide more details about it?",
+        },
+      }
     })
   })
 
@@ -114,7 +122,7 @@ describe("InquirySpecialist", () => {
         // TODO: Figure out why this state doesn't update within text (works in dev)
         // message: "Hello world.",
         message:
-          "Hi, I’m interested in purchasing this work. Could you please provide more information about the piece?",
+          "Hello, I'm interested in this artwork. Could you provide more details about it?",
       })
 
       // Calls next

@@ -1,10 +1,12 @@
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { mount } from "enzyme"
-import { SystemQueryRenderer } from "../SystemQueryRenderer"
+import { createRef } from "react"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useDidMount } from "Utils/Hooks/useDidMount"
-import { useLazyLoadComponent } from "Utils/Hooks/useLazyLoadComponent"
+import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 
 jest.mock("Utils/Hooks/useDidMount")
-jest.mock("Utils/Hooks/useLazyLoadComponent")
+jest.mock("Utils/Hooks/useIntersectionObserver")
 
 describe("SystemQueryRenderer", () => {
   const getWrapper = (props = {}) => {
@@ -19,12 +21,11 @@ describe("SystemQueryRenderer", () => {
   }
 
   let mockuseDidMount = useDidMount as jest.Mock
-  let mockuseLazyLoadComponent = useLazyLoadComponent as jest.Mock
+  let mockUseIntersectionObserver = useIntersectionObserver as jest.Mock
 
   beforeAll(() => {
-    mockuseLazyLoadComponent.mockImplementation(() => ({
-      Waypoint: () => <div />,
-      isEnteredView: false,
+    mockUseIntersectionObserver.mockImplementation(() => ({
+      ref: createRef(),
     }))
   })
 
@@ -60,25 +61,35 @@ describe("SystemQueryRenderer", () => {
   })
 
   describe("lazyLoad = true", () => {
-    it("injects a <Waypoint />", () => {
+    it("inserts a sentinel if the placeholder does not forward ref", () => {
       const wrapper = getWrapper({
         placeholder: <>lazyload placeholder</>,
         lazyLoad: true,
       })
-      expect(wrapper.find("Waypoint").length).toBe(1)
+      expect(wrapper.find("span").length).toBe(1)
       expect(wrapper.text()).toContain("lazyload placeholder")
       expect(wrapper.find("QueryRenderer").length).toBe(0)
     })
 
-    it("renders if isEnteredView is true", () => {
-      mockuseLazyLoadComponent.mockImplementation(() => ({
-        Waypoint: () => <div />,
-        isEnteredView: true,
-      }))
+    it("renders if isEnteredView is true", async () => {
+      mockuseDidMount.mockImplementation(() => true)
+
+      let called = false
+      mockUseIntersectionObserver.mockImplementation(({ onIntersection }) => {
+        if (!called) {
+          onIntersection()
+          called = true
+        }
+        return { ref: createRef() }
+      })
+
       const wrapper = getWrapper({
         placeholder: <>lazyload placeholder</>,
         lazyLoad: true,
       })
+
+      await flushPromiseQueue()
+
       expect(wrapper.find("QueryRenderer").length).toBe(1)
     })
   })
