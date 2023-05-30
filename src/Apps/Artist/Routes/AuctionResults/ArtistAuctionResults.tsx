@@ -215,22 +215,14 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     )
   }
 
-  const AuctionMetaTags = ({ meta }) => {
-    const { title, description } = meta
+  const { title, description } = artist.meta
 
+  if (artist.counts?.auctionResults == 0) {
     return (
       <>
         <Title>{title}</Title>
         <Meta name="title" content={title} />
         <Meta name="description" content={description} />
-      </>
-    )
-  }
-
-  if (artist.counts?.auctionResults == 0) {
-    return (
-      <>
-        <AuctionMetaTags meta={artist.meta} />
         <ArtistAuctionResultsEmptyState />
       </>
     )
@@ -238,7 +230,9 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   return (
     <>
-      <AuctionMetaTags meta={artist.meta} />
+      <Title>{title}</Title>
+      <Meta name="title" content={title} />
+      <Meta name="description" content={description} />
 
       <Jump id="marketSignalsTop" />
 
