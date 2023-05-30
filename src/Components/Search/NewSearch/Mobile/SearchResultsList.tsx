@@ -41,7 +41,7 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
   const options = extractNodes(viewer.searchConnection)
 
   if (!relay.isLoading() && options.length === 0) {
-    return <NoResults query={query} mt={50} mx={20} />
+    return <NoResults query={query} mt={4} mx={2} />
   }
 
   const formattedOptions: SuggionItemOptionProps[] = formatOptions(
