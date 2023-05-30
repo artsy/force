@@ -30,6 +30,7 @@ import { useDebounce } from "Utils/Hooks/useDebounce"
 import { reportPerformanceMeasurement } from "./utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 import { ActionType } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 
@@ -97,12 +98,12 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
     tracking.trackEvent({
       action_type:
         options.length > 0
-          ? ActionType.selectedSearchSuggestionQuickNavigationItem
-          : ActionType.searchedWithNoResults,
+          ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
+          : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
       context_module: selectedPill.analyticsContextModule,
       query: value,
     })
-  }, [fetchCounter, options])
+  }, [fetchCounter])
 
   const refetch = useCallback(
     (value: string, entity?: string) => {
