@@ -126,6 +126,26 @@ describe("EditArtworkListModal", () => {
     )
   })
 
+  it("prevents empty names", async () => {
+    render(
+      <EditArtworkListModal
+        artworkList={artworkList}
+        onClose={closeEditModal}
+      />
+    )
+    const { nameInputField, saveButton } = setup()
+
+    fireEvent.change(nameInputField, {
+      target: { value: "   " },
+    })
+
+    fireEvent.click(saveButton)
+
+    await waitFor(() => {
+      expect(screen.getByText("Name cannot be empty")).toBeInTheDocument()
+    })
+  })
+
   it("disables Save button until form is dirty", async () => {
     render(
       <EditArtworkListModal

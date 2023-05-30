@@ -62,6 +62,10 @@ jest.mock("@artsy/palette", () => {
   }
 })
 
+jest.mock("System/useFeatureFlag", () => ({
+  useFeatureFlag: () => false,
+}))
+
 const mockShowErrorDialog = jest.fn()
 jest.mock("Apps/Order/Dialogs", () => ({
   ...jest.requireActual("../../Dialogs"),
@@ -131,6 +135,10 @@ const emptyTestMe: ShippingTestQuery$rawResponse["me"] = {
   name: "Test Name",
   email: "test@gmail.com",
   id: "4321",
+  location: {
+    id: "123",
+    country: "United States",
+  },
   addressConnection: {
     totalCount: 0,
     edges: [],
@@ -142,6 +150,10 @@ const testMe: ShippingTestQuery$rawResponse["me"] = {
   name: "Test Name",
   email: "test@gmail.com",
   id: "4321",
+  location: {
+    id: "123",
+    country: "United States",
+  },
   addressConnection: {
     totalCount: 0,
     edges: [
@@ -1686,11 +1698,11 @@ describe("Shipping", () => {
         ).toMatchInlineSnapshot(`
           [
             "Test Name",
-            "28001",
             "1 Main St",
             "",
             "Madrid",
             "",
+            "28001",
           ]
         `)
       })

@@ -52,7 +52,7 @@ describe("MarketStats", () => {
     expect(wrapper.text()).toContain("Yearly lots sold6")
     expect(wrapper.text()).toContain("Sell-through rate90.9%")
     expect(wrapper.text()).toContain("Sale price$492K")
-    expect(wrapper.text()).toContain("Price over estimate↑ 400%")
+    expect(wrapper.text()).toContain("Price over estimate400%")
   })
 
   it("tracks correctly", () => {

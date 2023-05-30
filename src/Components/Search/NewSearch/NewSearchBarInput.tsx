@@ -49,9 +49,38 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
   const options = extractNodes(viewer.searchConnection)
-  const formattedOptions: SuggionItemOptionProps[] = formatOptions(
-    options as SearchNodeOption[]
-  )
+  const formattedOptions: SuggionItemOptionProps[] = [
+    ...options.map((option, index) => {
+      return {
+        text: option.displayLabel!,
+        value: option.displayLabel!,
+        subtitle:
+          getLabel({
+            displayType: option.displayType ?? "",
+            typename: option.__typename,
+          }) ?? "",
+        imageUrl: option.imageUrl!,
+        showArtworksButton: !!option.statuses?.artworks,
+        showAuctionResultsButton: !!option.statuses?.auctionLots,
+        href: option.href!,
+        typename: option.__typename,
+        item_number: index,
+        item_type: option.displayType!,
+      }
+    }),
+    {
+      text: value,
+      value: value,
+      subtitle: "",
+      imageUrl: "",
+      showArtworksButton: false,
+      showAuctionResultsButton: false,
+      href: encodedSearchURL,
+      typename: "Footer",
+      item_number: options.length,
+      item_type: "Footer",
+    },
+  ]
 
   // Clear the search term once you navigate away from search results
   useEffect(() => {
@@ -181,20 +210,24 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
           onPillClick={handlePillClick}
         />
       }
-      renderOption={option => (
-        <NewSuggestionItem
-          query={value}
-          option={option}
-          onRedirect={handleRedirect}
-        />
-      )}
-      footer={
-        <NewSearchBarFooter
-          query={value}
-          href={encodedSearchURL}
-          index={options.length}
-        />
-      }
+      renderOption={option => {
+        if (option.item_type === "Footer") {
+          return (
+            <NewSearchBarFooter
+              query={value}
+              href={encodedSearchURL}
+              index={options.length}
+            />
+          )
+        }
+        return (
+          <NewSuggestionItem
+            query={value}
+            option={option}
+            onRedirect={handleRedirect}
+          />
+        )
+      }}
       dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 10px)`}
     />
   )

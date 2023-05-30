@@ -8,21 +8,26 @@ import {
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import {
-  ProgressiveOnboardingCountsQueryRenderer,
+  withProgressiveOnboardingCounts,
   WithProgressiveOnboardingCountsProps,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingCounts"
+} from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
+import { useSystemContext } from "System/SystemContext"
 
 interface ProgressiveOnboardingSaveArtworkProps
   extends WithProgressiveOnboardingCountsProps {}
 
-export const ProgressiveOnboardingSaveArtwork: FC<ProgressiveOnboardingSaveArtworkProps> = ({
+export const __ProgressiveOnboardingSaveArtwork__: FC<ProgressiveOnboardingSaveArtworkProps> = ({
   counts,
   children,
 }) => {
+  const { isLoggedIn } = useSystemContext()
+
   const { dismiss, isDismissed } = useProgressiveOnboarding()
 
   const isDisplayble =
+    isLoggedIn &&
     !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK).status &&
+    counts.isReady &&
     counts.savedArtworks === 0
 
   const handleClose = useCallback(() => {
@@ -70,14 +75,6 @@ export const ProgressiveOnboardingSaveArtwork: FC<ProgressiveOnboardingSaveArtwo
   )
 }
 
-export const ProgressiveOnboardingSaveArtworkQueryRenderer: FC = ({
-  children,
-}) => {
-  return (
-    <ProgressiveOnboardingCountsQueryRenderer
-      Component={ProgressiveOnboardingSaveArtwork}
-    >
-      {children}
-    </ProgressiveOnboardingCountsQueryRenderer>
-  )
-}
+export const ProgressiveOnboardingSaveArtwork = withProgressiveOnboardingCounts(
+  __ProgressiveOnboardingSaveArtwork__
+)

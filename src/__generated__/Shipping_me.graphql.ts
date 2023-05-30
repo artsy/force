@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4a36125efceb040b027da09caf9ef219>>
+ * @generated SignedSource<<d2bb290d6cbde4fa109c495ca9bb2d18>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,9 @@ export type Shipping_me$data = {
   } | null;
   readonly email: string | null;
   readonly id: string;
+  readonly location: {
+    readonly country: string | null;
+  } | null;
   readonly name: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses_me">;
   readonly " $fragmentType": "Shipping_me";
@@ -53,6 +56,13 @@ v1 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "country",
   "storageKey": null
 };
 return {
@@ -91,6 +101,18 @@ return {
       "storageKey": null
     },
     (v1/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "MyLocation",
+      "kind": "LinkedField",
+      "name": "location",
+      "plural": false,
+      "selections": [
+        (v2/*: any*/)
+      ],
+      "storageKey": null
+    },
     {
       "args": null,
       "kind": "FragmentSpread",
@@ -177,13 +199,7 @@ return {
                   "name": "city",
                   "storageKey": null
                 },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "country",
-                  "storageKey": null
-                },
+                (v2/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -228,6 +244,6 @@ return {
 };
 })();
 
-(node as any).hash = "96b6c7e43b19453cb277783ef53e311c";
+(node as any).hash = "e31c45b18a2f038be369d1101419baaa";
 
 export default node;

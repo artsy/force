@@ -11,7 +11,7 @@ import { usePrepareFiltersForPills } from "Components/ArtworkFilter/Utils/usePre
 import { getSearchCriteriaFromFilters } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { DEFAULT_METRIC } from "Utils/metrics"
 import { ContextModule, Intent } from "@artsy/cohesion"
-import { ProgressiveOnboardingAlertCreateQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
+import { ProgressiveOnboardingAlertCreate } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
 import { SavedSearchCreateAlertButtonContainer } from "Components/SavedSearchAlert/Components/SavedSearchCreateAlertButtonContainer"
 import { ProgressiveOnboardingAlertReady } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertReady"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
@@ -63,7 +63,7 @@ export const ActiveFilterPillsAndCreateAlert: React.FC<ActiveFilterPillsAndCreat
           },
         }}
         renderButton={({ onClick }) => (
-          <ProgressiveOnboardingAlertCreateQueryRenderer>
+          <ProgressiveOnboardingAlertCreate>
             {({ onSkip: createSkip }) => (
               <ProgressiveOnboardingAlertReady>
                 {({ onSkip: readySkip }) => (
@@ -82,7 +82,7 @@ export const ActiveFilterPillsAndCreateAlert: React.FC<ActiveFilterPillsAndCreat
                 )}
               </ProgressiveOnboardingAlertReady>
             )}
-          </ProgressiveOnboardingAlertCreateQueryRenderer>
+          </ProgressiveOnboardingAlertCreate>
         )}
       />
     </Flex>

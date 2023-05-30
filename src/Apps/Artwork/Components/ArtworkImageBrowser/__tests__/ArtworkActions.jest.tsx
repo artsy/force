@@ -14,22 +14,27 @@ import ShareIcon from "@artsy/icons/ShareIcon"
 import ShowIcon from "@artsy/icons/ShowIcon"
 
 jest.unmock("react-relay")
+
 jest.mock("System/SystemContext", () => ({
   SystemContextProvider: ({ children }) => children,
   useSystemContext: jest.fn().mockReturnValue({ user: {} }),
 }))
+
 jest.mock("System/Analytics/AnalyticsContext", () => ({
   AnalyticsContext: { Provider: ({ children }) => children },
   track: jest.fn().mockReturnValue(jest.fn),
   useTracking: jest.fn().mockReturnValue({ trackEvent: jest.fn() }),
 }))
+
 jest.mock("System/useSystemContext", () => ({
   useSystemContext: jest.fn().mockReturnValue({}),
 }))
+
 jest.mock("Utils/user", () => ({
   userIsAdmin: jest.fn(),
   userIsTeam: jest.fn(),
 }))
+
 jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => null,
 }))

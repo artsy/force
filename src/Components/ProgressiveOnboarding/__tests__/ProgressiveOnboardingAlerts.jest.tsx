@@ -1,13 +1,13 @@
 import { render, screen } from "@testing-library/react"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { ProgressiveOnboardingAlertCreateQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
+import { __ProgressiveOnboardingAlertCreate__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
 import { ProgressiveOnboardingAlertReady } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertReady"
 import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
 import {
   ProgressiveOnboardingProvider,
   reset,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
-import { ProgressiveOnboardingCountsQueryRenderer } from "Components/ProgressiveOnboarding/ProgressiveOnboardingCounts"
+import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { FC, useState } from "react"
 
@@ -15,10 +15,19 @@ jest.mock("Components/ArtworkFilter/ArtworkFilterContext", () => ({
   useArtworkFilterContext: jest.fn(),
 }))
 
-jest.mock("Components/ProgressiveOnboarding/ProgressiveOnboardingCounts")
+jest.mock("Components/ProgressiveOnboarding/withProgressiveOnboardingCounts")
+
+jest.mock("System/SystemContext", () => ({
+  useSystemContext: () => ({ isLoggedIn: true }),
+}))
 
 const Example: FC = () => {
   const [renders, setRerender] = useState(0)
+
+  const ProgressiveOnboardingAlertCreate = withProgressiveOnboardingCounts(
+    __ProgressiveOnboardingAlertCreate__
+  )
+
   return (
     <ProgressiveOnboardingProvider>
       <div>{renders}</div>
@@ -33,7 +42,7 @@ const Example: FC = () => {
         </button>
       </ProgressiveOnboardingAlertSelectFilter>
 
-      <ProgressiveOnboardingAlertCreateQueryRenderer>
+      <ProgressiveOnboardingAlertCreate>
         {({ onSkip: createOnSkip }) => (
           <ProgressiveOnboardingAlertReady>
             {({ onSkip: readyOnSkip }) => (
@@ -48,27 +57,35 @@ const Example: FC = () => {
             )}
           </ProgressiveOnboardingAlertReady>
         )}
-      </ProgressiveOnboardingAlertCreateQueryRenderer>
+      </ProgressiveOnboardingAlertCreate>
     </ProgressiveOnboardingProvider>
   )
 }
 
 describe("ProgressiveOnboarding: Alerts", () => {
-  const MockProgressiveOnboardingCountsQueryRenderer = ProgressiveOnboardingCountsQueryRenderer as jest.Mock
-
+  const mockWithProgressiveOnboardingCounts = withProgressiveOnboardingCounts as jest.Mock
   const mockUseArtworkFilterContext = useArtworkFilterContext as jest.Mock
+
   const alertCreateText = "Hunting for a particular artwork?"
   const alertSelectFilterText = "First, select the relevant filters."
   const alertReadyText = "When you’re ready, click Create Alert."
 
   beforeEach(() => {
     reset("user")
+    ;(withProgressiveOnboardingCounts as jest.Mock).mockClear()
   })
 
   it("renders the chain of tips correctly", async () => {
-    MockProgressiveOnboardingCountsQueryRenderer.mockImplementation(
-      ({ Component, children }) => {
-        return <Component counts={{ savedSearches: 0 }}>{children}</Component>
+    ;(withProgressiveOnboardingCounts as jest.Mock).mockImplementation(
+      Component => {
+        return props => {
+          return (
+            <Component
+              {...props}
+              counts={{ isReady: true, savedSearches: 0 }}
+            />
+          )
+        }
       }
     )
 
@@ -106,11 +123,11 @@ describe("ProgressiveOnboarding: Alerts", () => {
   })
 
   it("dismisses the chain of tips correctly", async () => {
-    MockProgressiveOnboardingCountsQueryRenderer.mockImplementation(
-      ({ Component, children }) => {
-        return <Component counts={{ savedSearches: 0 }}>{children}</Component>
-      }
-    )
+    mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
+      return props => (
+        <Component {...props} counts={{ isReady: true, savedSearches: 0 }} />
+      )
+    })
 
     mockUseArtworkFilterContext.mockImplementation(() => ({
       currentlySelectedFilters: () => ({}),
@@ -134,11 +151,11 @@ describe("ProgressiveOnboarding: Alerts", () => {
   })
 
   it("gets dismissed completely when you go to create an alert", async () => {
-    MockProgressiveOnboardingCountsQueryRenderer.mockImplementation(
-      ({ Component, children }) => {
-        return <Component counts={{ savedSearches: 0 }}>{children}</Component>
-      }
-    )
+    mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
+      return props => (
+        <Component {...props} counts={{ isReady: true, savedSearches: 0 }} />
+      )
+    })
 
     mockUseArtworkFilterContext.mockImplementation(() => ({
       currentlySelectedFilters: () => ({}),
@@ -162,11 +179,11 @@ describe("ProgressiveOnboarding: Alerts", () => {
   })
 
   it("does not display if you have already saved an alert", async () => {
-    MockProgressiveOnboardingCountsQueryRenderer.mockImplementation(
-      ({ Component, children }) => {
-        return <Component counts={{ savedSearches: 1 }}>{children}</Component>
-      }
-    )
+    mockWithProgressiveOnboardingCounts.mockImplementation(Component => {
+      return props => (
+        <Component {...props} counts={{ isReady: true, savedSearches: 1 }} />
+      )
+    })
 
     mockUseArtworkFilterContext.mockImplementation(() => ({
       currentlySelectedFilters: () => ({}),
