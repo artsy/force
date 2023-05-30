@@ -29,7 +29,7 @@ import { useRouter } from "System/Router/useRouter"
 import { useDebounce } from "Utils/Hooks/useDebounce"
 import { reportPerformanceMeasurement } from "./utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
-import { SearchNodeOption, formatOptions } from "./utils/formatOptions"
+import { getLabel } from "./utils/getLabel"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 
