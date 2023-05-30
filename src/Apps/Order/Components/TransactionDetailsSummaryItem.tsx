@@ -193,7 +193,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
     const offer = getOffer()
 
     return (
-      offer?.shippingTotalCents &&
+      !!offer?.shippingTotalCents &&
       order.requestedFulfillment?.__typename === "CommerceShipArta" &&
       offerStillInNegotiation()
     )
