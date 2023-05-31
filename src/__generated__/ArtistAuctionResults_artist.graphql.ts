@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1eccac3e9660c99dc967c7fcad09fc57>>
+ * @generated SignedSource<<3efa400a2d791ca9ad993348e359dda0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,6 +35,10 @@ export type ArtistAuctionResults_artist$data = {
     readonly auctionResults: number | null;
   } | null;
   readonly internalID: string;
+  readonly meta: {
+    readonly description: string;
+    readonly title: string;
+  };
   readonly name: string | null;
   readonly pastAuctionResults: {
     readonly totalCount: number | null;
@@ -193,6 +197,37 @@ return {
       "kind": "ScalarField",
       "name": "name",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "page",
+          "value": "AUCTION_RESULTS"
+        }
+      ],
+      "concreteType": "ArtistMeta",
+      "kind": "LinkedField",
+      "name": "meta",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "description",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "title",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "meta(page:\"AUCTION_RESULTS\")"
     },
     {
       "alias": null,
@@ -419,6 +454,6 @@ return {
 };
 })();
 
-(node as any).hash = "50cb974958f4b206059fa49726c9fecd";
+(node as any).hash = "41c747ed572b862cf5b1539ee45199cf";
 
 export default node;
