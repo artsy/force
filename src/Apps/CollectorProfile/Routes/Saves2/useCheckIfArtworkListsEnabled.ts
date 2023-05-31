@@ -7,5 +7,5 @@ export const useCheckIfArtworkListsEnabled = () => {
   const { user } = useSystemContext()
   const isArtsyEmployee = isArtsyEmail(user?.email ?? "")
 
-  return isFeatureFlagEnabled || isArtsyEmployee
+  return isFeatureFlagEnabled && isArtsyEmployee
 }

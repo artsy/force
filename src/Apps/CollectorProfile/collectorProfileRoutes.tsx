@@ -176,7 +176,7 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
           const isFeatureFlagEnabled = featureFlag?.flagEnabled ?? false
           const isArtsyEmployee = isArtsyEmail(context?.user?.email ?? "")
           const isArtworkListsFlagEnabled =
-            isFeatureFlagEnabled || isArtsyEmployee
+            isFeatureFlagEnabled && isArtsyEmployee
 
           return {
             shouldFetchArtworkListsData: isArtworkListsFlagEnabled,
