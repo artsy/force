@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6db57de839b07d7c7393a9e033c984c0>>
+ * @generated SignedSource<<d7f71ec3e4434d16522a67814e0385ed>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -859,11 +859,11 @@ return {
         "artist.internalID": (v11/*: any*/),
         "artist.meta": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "ArtistMeta"
         },
-        "artist.meta.description": (v10/*: any*/),
+        "artist.meta.description": (v13/*: any*/),
         "artist.name": (v10/*: any*/),
         "artist.nationality": (v10/*: any*/),
         "artist.slug": (v11/*: any*/)

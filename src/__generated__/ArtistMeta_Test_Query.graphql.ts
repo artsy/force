@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<971cee0702754ac76519b4ce571bee89>>
+ * @generated SignedSource<<400b5a3fdb1a9df69131dccdfffca2db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -580,11 +580,11 @@ return {
         "artist.image.versions": (v9/*: any*/),
         "artist.meta": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "ArtistMeta"
         },
-        "artist.meta.description": (v10/*: any*/),
+        "artist.meta.description": (v13/*: any*/),
         "artist.name": (v10/*: any*/),
         "artist.nationality": (v10/*: any*/),
         "artist.slug": (v11/*: any*/)
