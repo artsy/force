@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8c30575f3bb1cd66dac62c3119836af1>>
+ * @generated SignedSource<<194d6ef01dea63abe6874757745f3f86>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -71,8 +71,8 @@ export type ArtistMeta_artist$data = {
     readonly versions: ReadonlyArray<string | null> | null;
   } | null;
   readonly meta: {
-    readonly description: string | null;
-  } | null;
+    readonly description: string;
+  };
   readonly name: string | null;
   readonly nationality: string | null;
   readonly slug: string;
