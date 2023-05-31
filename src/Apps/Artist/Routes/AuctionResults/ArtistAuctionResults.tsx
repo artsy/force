@@ -28,7 +28,7 @@ import { ArtistAuctionResults_artist$data } from "__generated__/ArtistAuctionRes
 import { isEqual } from "lodash"
 import * as React from "react"
 import { useContext, useState } from "react"
-import { Title, Meta } from "react-head"
+import { Title } from "react-head"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
@@ -215,24 +215,13 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
     )
   }
 
-  const { title, description } = artist.meta
-
   if (artist.counts?.auctionResults == 0) {
-    return (
-      <>
-        <Title>{title}</Title>
-        <Meta name="title" content={title} />
-        <Meta name="description" content={description} />
-        <ArtistAuctionResultsEmptyState />
-      </>
-    )
+    return <ArtistAuctionResultsEmptyState />
   }
 
   return (
     <>
-      <Title>{title}</Title>
-      <Meta name="title" content={title} />
-      <Meta name="description" content={description} />
+      <Title>{artist.name} - Auction Results on Artsy</Title>
 
       <Jump id="marketSignalsTop" />
 
@@ -409,10 +398,6 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         slug
         internalID
         name
-        meta(page: AUCTION_RESULTS) {
-          description
-          title
-        }
         counts {
           auctionResults
         }
