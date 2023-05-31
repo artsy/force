@@ -20,10 +20,10 @@ import { CreateSmsSecondFactorInput } from "__generated__/CreateSmsSecondFactorM
 import { SmsSecondFactor_me$data } from "__generated__/SmsSecondFactor_me.graphql"
 import { ApiError } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/ApiError"
 import { DisableFactorConfirmation } from "Apps/Settings/Routes/EditSettings/Components/SettingsEditSettingsTwoFactor/TwoFactorAuthentication/Components/DisableFactorConfirmation"
-import { isArtsyEmail } from "./isArtsyEmail"
 import { OnCompleteRedirectModal, SmsSecondFactorModal } from "./Modal"
 import { CreateSmsSecondFactor } from "./Mutation/CreateSmsSecondFactor"
 import { RouterLink } from "System/Router/RouterLink"
+import { isArtsyEmail } from "Utils/isArtsyEmail"
 
 interface SmsSecondFactorProps {
   me: SmsSecondFactor_me$data
