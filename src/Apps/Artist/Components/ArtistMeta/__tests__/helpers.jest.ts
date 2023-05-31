@@ -74,9 +74,9 @@ describe("Meta", () => {
     },
     slug: "claes-oldenburg",
     meta: {
-      title: "Claes Oldenburg - Biography, Shows, Articles & More | Artsy",
+      title: "Claes Oldenburg - Artworks for Sale & More | Artsy",
       description:
-        "Explore  Claes Oldenburg's biography, achievements, artworks, auction results, and shows on Artsy. “I am for an art that is political-erotical-mystical, that does something more th…",
+        "Discover and purchase Claes Oldenburg’s artworks, available for sale. Browse our selection of paintings, prints, and sculptures by the artist, and find art you love.",
     },
     nationality: "Swedish",
   }
@@ -111,7 +111,7 @@ describe("Meta", () => {
         additionalType: "Artist",
         birthDate: "1929",
         description:
-          "Find the latest shows, biography, and artworks for sale by Claes Oldenburg. “I am for an art that is political-erotical-mystical, that does something more th…",
+          "Discover and purchase Claes Oldenburg’s artworks, available for sale. Browse our selection of paintings, prints, and sculptures by the artist, and find art you love.",
         gender: "male",
         image:
           "https://d32dm0rphc51dk.cloudfront.net/6q6LeyKvA_vpT5YzHRSNUA/large.jpg",

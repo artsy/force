@@ -5,13 +5,15 @@ describe("/artist/:id", () => {
   })
 
   it("renders metadata", () => {
-    cy.title().should("contain", "Pablo Picasso")
-    cy.title().should("contain", "Artworks for Sale on Artsy")
+    cy.title().should(
+      "contain",
+      "Pablo Picasso - Artworks for Sale & More | Artsy"
+    )
     cy.get("meta[name='description']")
       .should("have.attr", "content")
       .and(
         "contain",
-        "Explore Pablo Picasso’s biography, achievements, artworks, auction results, and shows on Artsy."
+        "Discover and purchase Pablo Picasso’s artworks, available for sale. Browse our selection of paintings, prints, and sculptures by the artist, and find art you love."
       )
   })
 
