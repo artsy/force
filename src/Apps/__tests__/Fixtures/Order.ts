@@ -694,6 +694,31 @@ export const UntouchedOfferOrder = {
   totalListPriceCents: 1600000,
 } as const
 
+export const UntouchedMakeOfferWithArtsyShippingDomesticFromUS = {
+  ...UntouchedOfferOrder,
+  requestedFulfillment: {
+    __typename: "CommerceShipArta",
+  },
+  __typename: "CommerceOfferOrder",
+  lineItems: {
+    edges: [
+      {
+        node: {
+          editionSetId: null,
+          id: "line-item-node-id",
+          selectedShippingQuote: null,
+          shippingQuoteOptions: null,
+          ...ArtsyShippingDomesticFromUSArtworkNode,
+          ...OrderArtworkVersionNode,
+          ...OrderArtworkOrEditionSetkNode_Artwork,
+          ...EmptyFulfillmentsNode,
+          ...ArtaShipmentNode,
+        },
+      },
+    ],
+  },
+} as const
+
 export const UntouchedOfferOrderSingleEditionSet = {
   ...UntouchedOfferOrder,
   lineItems: {

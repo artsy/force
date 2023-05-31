@@ -11,7 +11,6 @@ import * as React from "react"
 import { RelayRefetchProp, graphql, createFragmentContainer } from "react-relay"
 import { truncate } from "lodash"
 import { CollectionsHubRailsContainer as CollectionsHubRails } from "./Components/CollectionsHubRails"
-import { LazyLoadComponent } from "react-lazy-load-image-component"
 import {
   AnalyticsContext,
   AnalyticsContextProps,
@@ -123,23 +122,17 @@ export const CollectionApp: React.FC<CollectionAppProps> = props => {
           counts={collection.artworksConnection?.counts as Counts}
         />
 
-        {/* HOTFIX FIXME: This rail was causing an error if included in SSR render
-              pass and so it was deferred to the client.
+        {collection.linkedCollections.length === 0 && (
+          <>
+            <Spacer y={6} />
 
-              See: https://github.com/artsy/force/pull/6137
-          */}
-        {collection.linkedCollections.length === 0 &&
-          typeof window !== "undefined" && (
-            <LazyLoadComponent threshold={1000}>
-              <Spacer y={6} />
-
-              <RelatedCollectionsRail
-                collections={collection.relatedCollections}
-                title={collection.title}
-                lazyLoadImages
-              />
-            </LazyLoadComponent>
-          )}
+            <RelatedCollectionsRail
+              collections={collection.relatedCollections}
+              title={collection.title}
+              lazyLoadImages
+            />
+          </>
+        )}
       </FrameWithRecentlyViewed>
     </>
   )

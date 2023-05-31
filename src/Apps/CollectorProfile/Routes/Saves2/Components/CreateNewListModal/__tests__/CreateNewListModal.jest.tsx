@@ -161,4 +161,44 @@ describe("CreateNewListModal", () => {
       })
     )
   })
+
+  it("trims extra whitespace", async () => {
+    render(<TestComponent />)
+
+    fireEvent.change(screen.getByRole("textbox"), {
+      target: {
+        value: "  Foo Bar  ",
+      },
+    })
+
+    fireEvent.click(screen.getByText("Create List"))
+
+    await waitFor(() =>
+      expect(submitMutation).toHaveBeenCalledWith(
+        expect.objectContaining({
+          variables: {
+            input: {
+              name: "Foo Bar",
+            },
+          },
+        })
+      )
+    )
+  })
+
+  it("prevents empty names", async () => {
+    render(<TestComponent />)
+
+    fireEvent.change(screen.getByRole("textbox"), {
+      target: {
+        value: "   ",
+      },
+    })
+
+    fireEvent.click(screen.getByText("Create List"))
+
+    await waitFor(() => {
+      expect(screen.getByText("Name cannot be empty")).toBeInTheDocument()
+    })
+  })
 })

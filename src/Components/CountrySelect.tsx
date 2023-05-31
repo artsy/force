@@ -317,6 +317,11 @@ const EU_COUNTRY_SELECT_OPTIONS = [
   { text: "Vatican City", value: "VA" },
 ]
 
+export const ALL_COUNTRY_SELECT_OPTIONS = [
+  ...COUNTRY_SELECT_OPTIONS,
+  ...EU_COUNTRY_SELECT_OPTIONS,
+]
+
 export const COUNTRY_CODE_TO_COUNTRY_NAME = COUNTRY_SELECT_OPTIONS.reduce(
   (acc, option) => Object.assign(acc, { [option.value]: option.text }),
   {}

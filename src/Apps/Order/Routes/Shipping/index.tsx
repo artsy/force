@@ -25,6 +25,7 @@ import {
   PhoneNumberForm,
   PhoneNumberTouched,
 } from "Apps/Order/Components/PhoneNumberForm"
+import { CheckoutAddress } from "Apps/Order/Components/CheckoutAddress"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
@@ -86,6 +87,7 @@ import {
 import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { extractNodes } from "Utils/extractNodes"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -102,6 +104,8 @@ export interface ShippingProps {
 export const ShippingRoute: FC<ShippingProps> = props => {
   const { trackEvent } = useTracking()
   const { relayEnvironment } = useSystemContext()
+
+  const isAddressVerificationEnabled = useFeatureFlag("address_verification")
 
   const [shippingOption, setShippingOption] = useState<
     CommerceOrderFulfillmentTypeEnum
@@ -298,6 +302,18 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       }
     } catch (error) {
       logger.error(error)
+
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "An error occurred",
+        message:
+          "Something went wrong. Please try again or contact orders@artsy.net.",
+        error_code: null,
+        flow: "user selects a shipping option",
+      })
+
       props.dialog.showErrorDialog()
     }
   }
@@ -326,6 +342,18 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         props.router.push(`/orders/${props.order.internalID}/payment`)
       } catch (error) {
         logger.error(error)
+
+        trackEvent({
+          action: ActionType.errorMessageViewed,
+          context_owner_type: OwnerType.ordersShipping,
+          context_owner_id: props.order.internalID,
+          title: "An error occurred",
+          message:
+            "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
+          error_code: null,
+          flow: "user sets a shipping quote",
+        })
+
         props.dialog.showErrorDialog({
           message: getArtaErrorMessage(),
         })
@@ -400,6 +428,17 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       error.code === "missing_country" ||
       error.code === "missing_postal_code"
     ) {
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "Invalid address",
+        message:
+          "There was an error processing your address. Please review and try again.",
+        error_code: error.code,
+        flow: "user submits a shipping option",
+      })
+
       props.dialog.showErrorDialog({
         title: "Invalid address",
         message:
@@ -409,15 +448,47 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       error.code === "unsupported_shipping_location" &&
       parsedData.failure_code === "domestic_shipping_only"
     ) {
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "Can't ship to that address",
+        message: "This work can only be shipped domestically.",
+        error_code: error.code,
+        flow: "user submits a shipping option",
+      })
+
       props.dialog.showErrorDialog({
         title: "Can't ship to that address",
         message: "This work can only be shipped domestically.",
       })
     } else if (checkIfArtsyShipping() && shippingQuoteId) {
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "An error occurred",
+        message:
+          "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
+        error_code: null,
+        flow: "user submits a shipping option",
+      })
+
       props.dialog.showErrorDialog({
         message: getArtaErrorMessage(),
       })
     } else {
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "An error occurred",
+        message:
+          "Something went wrong. Please try again or contact orders@artsy.net.",
+        error_code: null,
+        flow: "user submits a shipping option",
+      })
+
       props.dialog.showErrorDialog()
     }
   }
@@ -562,6 +633,17 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     )
   }
 
+  const renderArtsyShippingOptionText = () => {
+    let text
+    if (isOffer) {
+      text =
+        "Please note that these are estimates and may change once offer is finalized. "
+    } else {
+      text = ""
+    }
+    return `${text}All options are eligible for Artsy’s Buyer Protection policy, which protects against damage and loss.`
+  }
+
   const { order, isCommittingMutation } = props
   const artwork = getOrderArtwork()
   const shippingSelected =
@@ -573,6 +655,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const isArtsyShipping = checkIfArtsyShipping()
   const showArtsyShipping =
     isArtsyShipping && !!shippingQuotes && shippingQuotes.length > 0
+  const isOffer = order.mode === "OFFER"
 
   const useDefaultArtsyShippingQuote =
     isArtsyShipping &&
@@ -592,7 +675,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       <OrderRouteContainer
         order={order}
         currentStep="Shipping"
-        steps={order.mode === "OFFER" ? offerFlowSteps : buyNowFlowSteps}
+        steps={isOffer ? offerFlowSteps : buyNowFlowSteps}
         content={
           <Flex
             flexDirection="column"
@@ -660,17 +743,24 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <Text variant="lg-display" mb="2">
                 Delivery address
               </Text>
-              <AddressForm
-                tabIndex={showAddressForm ? 0 : -1}
-                value={address}
-                errors={addressErrors}
-                touched={addressTouched}
-                onChange={onAddressChange}
-                domesticOnly={artwork?.onlyShipsDomestically!}
-                euOrigin={artwork?.euShippingOrigin!}
-                shippingCountry={artwork?.shippingCountry!}
-                showPhoneNumberInput={false}
-              />
+              {isAddressVerificationEnabled ? (
+                <CheckoutAddress
+                  userCountry={props.me.location?.country || "United States"}
+                  onChange={onAddressChange}
+                />
+              ) : (
+                <AddressForm
+                  tabIndex={showAddressForm ? 0 : -1}
+                  value={address}
+                  errors={addressErrors}
+                  touched={addressTouched}
+                  onChange={onAddressChange}
+                  domesticOnly={artwork?.onlyShipsDomestically!}
+                  euOrigin={artwork?.euShippingOrigin!}
+                  shippingCountry={artwork?.shippingCountry!}
+                  showPhoneNumberInput={false}
+                />
+              )}
               <Spacer y={2} />
               <PhoneNumberForm
                 tabIndex={showAddressForm ? 0 : -1}
@@ -712,10 +802,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             <Collapse open={showArtsyShipping}>
               <Text variant="sm">Artsy shipping options</Text>
               <Text variant="xs" mb="1" color="black60">
-                All options are eligible for Artsy’s Buyer Protection policy,
-                which protects against damage and loss.
+                {renderArtsyShippingOptionText()}
               </Text>
-
               <ShippingQuotesFragmentContainer
                 mb={3}
                 selectedShippingQuoteId={shippingQuoteId}
@@ -843,6 +931,9 @@ export const ShippingFragmentContainer = createFragmentContainer(
         name
         email
         id
+        location {
+          country
+        }
         ...SavedAddresses_me
         addressConnection(
           first: $first

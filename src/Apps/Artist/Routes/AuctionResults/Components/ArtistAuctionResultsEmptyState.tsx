@@ -8,12 +8,14 @@ export const ArtistAuctionResultsEmptyState: React.FC = () => {
         <Text variant="md" textAlign="center">
           There are no auction results for this artist at this time.
         </Text>
+
         <Text variant="md" color="black60" textAlign="center">
           The page will be updated once auction results are added. In the
           meantime, check out the millions of auction results and art market
           data.
         </Text>
       </Column>
+
       <Column span={12} alignItems="center" display="flex">
         <Button
           variant="secondaryNeutral"
