@@ -23,13 +23,14 @@ import {
   SuggionItemOptionProps,
 } from "./SuggestionItem/NewSuggestionItem"
 import { useTracking } from "react-tracking"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { StaticSearchContainer } from "./StaticSearchContainer"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useRouter } from "System/Router/useRouter"
 import { useDebounce } from "Utils/Hooks/useDebounce"
 import { reportPerformanceMeasurement } from "./utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
+import { ActionType } from "@artsy/cohesion"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 
@@ -99,6 +100,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
         options.length > 0
           ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
           : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
+      context_module: selectedPill.analyticsContextModule,
       query: value,
     })
   }, [fetchCounter])
@@ -156,6 +158,12 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   const handlePillClick = (pill: PillType) => {
     setSelectedPill(pill)
     refetch(value, pill.searchEntityName)
+
+    tracking.trackEvent({
+      action_type: ActionType.tappedNavigationTab,
+      context_module: selectedPill.analyticsContextModule,
+      query: value,
+    })
   }
 
   const handleRedirect = () => {
@@ -170,7 +178,8 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
 
   const handleSelect = (option: SuggionItemOptionProps) => {
     tracking.trackEvent({
-      action_type: DeprecatedSchema.ActionType.SelectedItemFromSearch,
+      action_type: ActionType.selectedItemFromSearch,
+      context_module: selectedPill.analyticsContextModule,
       destination_path:
         option.typename === "Artist"
           ? `${option.href}/works-for-sale`
@@ -186,7 +195,8 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
 
   const handleFocus = () => {
     tracking.trackEvent({
-      action_type: DeprecatedSchema.ActionType.FocusedOnAutosuggestInput,
+      action_type: ActionType.focusedOnSearchInput,
+      context_module: selectedPill.analyticsContextModule,
     })
   }
 
@@ -215,6 +225,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
               query={value}
               href={encodedSearchURL}
               index={options.length}
+              selectedPill={selectedPill}
             />
           )
         }
