@@ -1,8 +1,7 @@
 import { Join, Spacer } from "@artsy/palette"
 import * as React from "react"
-import { Title } from "react-head"
+import { Title, Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
-import { computeTitle } from "Apps/Artist/Utils/computeTitle"
 import loadable from "@loadable/component"
 import { ArtistRelatedGeneCategoriesQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistRelatedGeneCategories"
 
@@ -69,11 +68,14 @@ interface ArtistOverviewRouteProps {
 const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
   artist,
 }) => {
-  const title = computeTitle(artist.name, artist.counts.artworks)
+  const title = artist.meta.title
+  const description = artist.meta.description
 
   return (
     <>
       <Title>{title}</Title>
+      <Meta name="title" content={title} />
+      <Meta name="description" content={description} />
 
       <Join separator={<Spacer y={6} />}>
         <ArtistFeaturedWorksRailQueryRenderer slug={artist.slug} />
@@ -99,6 +101,10 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
       fragment ArtistOverviewRoute_artist on Artist {
         slug
         name
+        meta(page: ABOUT) {
+          description
+          title
+        }
         counts {
           artworks
         }

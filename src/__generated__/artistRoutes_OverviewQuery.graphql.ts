@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9b9d89c6bc2396b7326dcc420f6e52aa>>
+ * @generated SignedSource<<2147873ba39ad35305a5a4662ffd0f6f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -95,6 +95,37 @@ return {
           },
           {
             "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "page",
+                "value": "ABOUT"
+              }
+            ],
+            "concreteType": "ArtistMeta",
+            "kind": "LinkedField",
+            "name": "meta",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "description",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              }
+            ],
+            "storageKey": "meta(page:\"ABOUT\")"
+          },
+          {
+            "alias": null,
             "args": null,
             "concreteType": "ArtistCounts",
             "kind": "LinkedField",
@@ -131,12 +162,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c44ad9aede2e04c471de2b973b2f96ef",
+    "cacheID": "ed89ed26231a33a1a98b86678bf26d0f",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_OverviewQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_OverviewQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  slug\n  name\n  counts {\n    artworks\n  }\n  internalID\n}\n"
+    "text": "query artistRoutes_OverviewQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  slug\n  name\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  counts {\n    artworks\n  }\n  internalID\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<996d9e122d573c587f782dae68ae4a82>>
+ * @generated SignedSource<<beab591c0c80d6e3093c8048f02d808c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,6 +17,10 @@ export type ArtistWorksForSaleRoute_artist$data = {
   } | null;
   readonly id: string;
   readonly internalID: string;
+  readonly meta: {
+    readonly description: string;
+    readonly title: string;
+  };
   readonly name: string | null;
   readonly sidebarAggregations: {
     readonly aggregations: ReadonlyArray<{
@@ -162,6 +166,37 @@ return {
       ],
       "storageKey": null
     },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "page",
+          "value": "ARTWORKS"
+        }
+      ],
+      "concreteType": "ArtistMeta",
+      "kind": "LinkedField",
+      "name": "meta",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "description",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "title",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "meta(page:\"ARTWORKS\")"
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -190,6 +225,6 @@ return {
 };
 })();
 
-(node as any).hash = "1caba76af2e780b916149edcbf4e9b64";
+(node as any).hash = "5bada67b9f5bd3c64345c30a0de97c74";
 
 export default node;
