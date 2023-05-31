@@ -28,7 +28,7 @@ export interface ArtworkSidebarProps {
   me: ArtworkSidebar_me$data
 }
 
-const checkIfArtworkIsOnLoanOrPermanentCollection = (
+export const checkIfArtworkIsOnLoanOrPermanentCollection = (
   saleMessage: string | null
 ) => {
   switch (saleMessage) {

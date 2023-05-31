@@ -26,7 +26,7 @@ export const Inquiry: React.FC<InquiryProps> = ({
       onClose={onClose}
     >
       <InquiryBackdrop>
-        <InquiryContextContextQueryRenderer>
+        <InquiryContextContextQueryRenderer artworkID={artworkID}>
           <InquiryDialog />
         </InquiryContextContextQueryRenderer>
       </InquiryBackdrop>

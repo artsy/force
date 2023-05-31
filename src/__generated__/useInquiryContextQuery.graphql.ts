@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<39d588da108410944641340fe2c8f12c>>
+ * @generated SignedSource<<3d332447afd4d7662f339afdc3171784>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,8 +10,13 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type useInquiryContextQuery$variables = {};
+export type useInquiryContextQuery$variables = {
+  id: string;
+};
 export type useInquiryContextQuery$data = {
+  readonly artwork: {
+    readonly " $fragmentSpreads": FragmentRefs<"useInquiryContext_artwork">;
+  } | null;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"useInquiryContext_me">;
   } | null;
@@ -22,7 +27,21 @@ export type useInquiryContextQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id"
+  }
+],
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
+  }
+],
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -31,7 +50,7 @@ var v0 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "useInquiryContextQuery",
@@ -51,6 +70,22 @@ return {
           }
         ],
         "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "Artwork",
+        "kind": "LinkedField",
+        "name": "artwork",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "useInquiryContext_artwork"
+          }
+        ],
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -58,7 +93,7 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "useInquiryContextQuery",
     "selections": [
@@ -92,7 +127,7 @@ return {
                 "name": "city",
                 "storageKey": null
               },
-              (v0/*: any*/)
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
@@ -117,23 +152,148 @@ return {
             "name": "shareFollows",
             "storageKey": null
           },
-          (v0/*: any*/)
+          (v2/*: any*/)
+        ],
+        "storageKey": null
+      },
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "Artwork",
+        "kind": "LinkedField",
+        "name": "artwork",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Artist",
+            "kind": "LinkedField",
+            "name": "artist",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "name",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "slug",
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isSold",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isInAuction",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "saleMessage",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Sale",
+            "kind": "LinkedField",
+            "name": "sale",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "startAt",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isClosed",
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "SaleArtwork",
+            "kind": "LinkedField",
+            "name": "saleArtwork",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "lotID",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "extendedBiddingEndAt",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "endAt",
+                "storageKey": null
+              },
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "2524a8c8fad5a6418555dc39fd08ff59",
+    "cacheID": "2377473f2e8db1b039920e9aab6bf32c",
     "id": null,
     "metadata": {},
     "name": "useInquiryContextQuery",
     "operationKind": "query",
-    "text": "query useInquiryContextQuery {\n  me {\n    ...useInquiryContext_me\n    id\n  }\n}\n\nfragment useInquiryContext_me on Me {\n  collectorLevel\n  location {\n    city\n    id\n  }\n  otherRelevantPositions\n  profession\n  shareFollows\n}\n"
+    "text": "query useInquiryContextQuery(\n  $id: String!\n) {\n  me {\n    ...useInquiryContext_me\n    id\n  }\n  artwork(id: $id) {\n    ...useInquiryContext_artwork\n    id\n  }\n}\n\nfragment useInquiryContext_artwork on Artwork {\n  artist {\n    internalID\n    name\n    slug\n    id\n  }\n  isSold\n  isInAuction\n  saleMessage\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    lotID\n    extendedBiddingEndAt\n    endAt\n    id\n  }\n}\n\nfragment useInquiryContext_me on Me {\n  collectorLevel\n  location {\n    city\n    id\n  }\n  otherRelevantPositions\n  profession\n  shareFollows\n}\n"
   }
 };
 })();
 
-(node as any).hash = "abdeb51f6987f798b5afaae059bfdd57";
+(node as any).hash = "f17c133d23c50d98e126b8727520d3b7";
 
 export default node;

@@ -30,6 +30,7 @@ export interface SavedSearchCreateAlertButtonContainerProps {
 
 interface Props extends SavedSearchCreateAlertButtonContainerProps {
   renderButton: (props: RenderButtonProps) => JSX.Element
+  onClose?: () => void
 }
 
 export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
@@ -39,6 +40,7 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
   aggregations,
   authDialogOptions,
   renderButton,
+  onClose,
 }) => {
   const tracking = useTracking()
   const { isLoggedIn } = useSystemContext()
@@ -91,6 +93,8 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
       saved_search_id: result.id,
     }
     tracking.trackEvent(trackInfo)
+
+    onClose?.()
 
     sendToast({
       message: "Your Alert has been saved.",

@@ -11,6 +11,7 @@ import { WorkflowEngine } from "Utils/WorkflowEngine"
 import { useEngine } from "Components/Inquiry/config"
 import { createFragmentContainer, graphql, Environment } from "react-relay"
 import { useInquiryContext_me$data } from "__generated__/useInquiryContext_me.graphql"
+import { useInquiryContext_artwork$data } from "__generated__/useInquiryContext_artwork.graphql"
 import { useInquiryContextQuery } from "__generated__/useInquiryContextQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "System/useSystemContext"
@@ -29,6 +30,7 @@ export type Context = {
   profession?: string | null
   requiresReload: boolean
   shareFollows: boolean
+  artwork: useInquiryContext_artwork$data | null
 }
 
 export const DEFAULT_CONTEXT: Context = {
@@ -40,6 +42,7 @@ export const DEFAULT_CONTEXT: Context = {
   profession: null,
   requiresReload: false,
   shareFollows: false,
+  artwork: null,
 }
 
 export const AUTOMATED_MESSAGES = [
@@ -225,10 +228,12 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
 
 interface InquiryContextContextProps {
   me: useInquiryContext_me$data | null
+  artwork: useInquiryContext_artwork$data | null
 }
 
 const InquiryContextContext: React.FC<InquiryContextContextProps> = ({
   me,
+  artwork,
   children,
 }) => {
   const { setContext } = useInquiryContext()
@@ -241,8 +246,9 @@ const InquiryContextContext: React.FC<InquiryContextContextProps> = ({
       otherRelevantPositions: me?.otherRelevantPositions,
       profession: me?.profession,
       shareFollows: !!me?.shareFollows,
+      artwork: artwork ?? null,
     })
-  }, [me, setContext])
+  }, [me, artwork, setContext])
 
   return <>{children}</>
 }
@@ -261,10 +267,38 @@ const InquiryContextContextFragmentContainer = createFragmentContainer(
         shareFollows
       }
     `,
+    artwork: graphql`
+      fragment useInquiryContext_artwork on Artwork {
+        artist {
+          internalID
+          name
+          slug
+        }
+        isSold
+        isInAuction
+        saleMessage
+        sale {
+          startAt
+          isClosed
+        }
+        saleArtwork {
+          lotID
+          extendedBiddingEndAt
+          endAt
+        }
+      }
+    `,
   }
 )
 
-export const InquiryContextContextQueryRenderer: React.FC = ({ children }) => {
+interface InquiryContextContextQueryRendererProps {
+  artworkID: string
+}
+
+export const InquiryContextContextQueryRenderer: React.FC<InquiryContextContextQueryRendererProps> = ({
+  children,
+  artworkID,
+}) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
@@ -272,12 +306,16 @@ export const InquiryContextContextQueryRenderer: React.FC = ({ children }) => {
       environment={relayEnvironment}
       placeholder={<Spinner color="white100" />}
       query={graphql`
-        query useInquiryContextQuery {
+        query useInquiryContextQuery($id: String!) {
           me {
             ...useInquiryContext_me
           }
+          artwork(id: $id) {
+            ...useInquiryContext_artwork
+          }
         }
       `}
+      variables={{ id: artworkID }}
       render={({ props, error }) => {
         if (error) {
           logger.error(error)
@@ -289,7 +327,10 @@ export const InquiryContextContextQueryRenderer: React.FC = ({ children }) => {
         }
 
         return (
-          <InquiryContextContextFragmentContainer me={props.me}>
+          <InquiryContextContextFragmentContainer
+            me={props.me}
+            artwork={props.artwork}
+          >
             {children}
           </InquiryContextContextFragmentContainer>
         )
