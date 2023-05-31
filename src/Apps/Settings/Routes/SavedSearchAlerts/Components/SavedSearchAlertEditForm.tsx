@@ -6,6 +6,7 @@ import {
   Input,
   Join,
   Message,
+  Separator,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -33,6 +34,7 @@ import {
   SavedSearchEntity,
   SavedSearchEntityCriteria,
   SavedSearchFrequency,
+  FilterPill,
 } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { SavedSearchAlertPills } from "Components/SavedSearchAlert/Components/SavedSearchAlertPills"
@@ -42,6 +44,12 @@ import { extractNodes } from "Utils/extractNodes"
 import { RouterLink } from "System/Router/RouterLink"
 import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
+import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
+import { useState } from "react"
+import {
+  CustomRange,
+  DEFAULT_PRICE_RANGE,
+} from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 
 const logger = createLogger(
   "Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -80,7 +88,11 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     criteria,
     isCriteriaChanged,
     removePill,
+    addCriteriaValue,
   } = useSavedSearchAlertContext()
+  const [priceRange, setPriceRange] = useState(
+    criteria.priceRange ?? DEFAULT_PRICE_RANGE
+  )
 
   const initialValues: SavedSearchAleftFormValues = {
     name: userAlertSettings.name ?? "",
@@ -131,6 +143,16 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     }
   }
 
+  const handleRemovePillPress = (pill: FilterPill) => {
+    removePill(pill)
+    setPriceRange("*-*")
+  }
+
+  const updatePriceRange = (range: CustomRange) => {
+    addCriteriaValue("priceRange", range.join("-"))
+    setPriceRange(range.join("-"))
+  }
+
   return (
     <Formik initialValues={{ ...initialValues }} onSubmit={handleSubmit}>
       {({
@@ -172,9 +194,18 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                 <Flex flexWrap="wrap" mx={-0.5}>
                   <SavedSearchAlertPills
                     items={pills}
-                    onDeletePress={removePill}
+                    onDeletePress={handleRemovePillPress}
                   />
                 </Flex>
+
+                <Separator my={1} />
+
+                <PriceRangeFilter
+                  onChange={updatePriceRange}
+                  priceRange={priceRange}
+                />
+
+                <Separator my={2} />
               </Box>
 
               <Box>

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { FC, useState } from "react"
 import { Formik } from "formik"
 import {
   Box,
@@ -8,6 +8,7 @@ import {
   Input,
   Join,
   ModalDialog,
+  Separator,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -31,6 +32,11 @@ import { SavedSearchAlertPills } from "./Components/SavedSearchAlertPills"
 import { Metric } from "Utils/metrics"
 import { DEFAULT_FREQUENCY } from "./constants"
 import { FrequenceRadioButtons } from "./Components/FrequencyRadioButtons"
+import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
+import {
+  CustomRange,
+  DEFAULT_PRICE_RANGE,
+} from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -49,18 +55,28 @@ export interface SavedSearchAlertFormContainerProps
 
 const logger = createLogger("Components/SavedSearchAlert/SavedSearchAlertModal")
 
-export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
+export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
   entity,
   initialValues,
   onClose,
   onComplete,
 }) => {
   const { relayEnvironment } = useSystemContext()
-  const { pills, criteria, removeCriteriaValue } = useSavedSearchAlertContext()
+  const {
+    pills,
+    criteria,
+    removeCriteriaValue,
+    addCriteriaValue,
+  } = useSavedSearchAlertContext()
+  const [priceRange, setPriceRange] = useState(DEFAULT_PRICE_RANGE)
 
   const handleRemovePillPress = (pill: FilterPill) => {
     if (pill.isDefault) {
       return
+    }
+
+    if (pill.field === "priceRange") {
+      setPriceRange(DEFAULT_PRICE_RANGE)
     }
 
     removeCriteriaValue(pill.field as SearchCriteriaAttributeKeys, pill.value)
@@ -84,7 +100,6 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
         userAlertSettings,
         criteria
       )
-
       const result = {
         id: response.createSavedSearch?.savedSearchOrErrors.internalID!,
       }
@@ -92,6 +107,11 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
     } catch (error) {
       logger.error(error)
     }
+  }
+
+  const updatePriceRange = (range: CustomRange) => {
+    addCriteriaValue("priceRange", range.join("-"))
+    setPriceRange(range.join("-"))
   }
 
   return (
@@ -126,7 +146,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
               </Button>
             }
           >
-            <Join separator={<Spacer y={4} />}>
+            <Join separator={<Spacer y={2} />}>
               <Input
                 title="Alert Name"
                 name="name"
@@ -147,6 +167,15 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                     onDeletePress={handleRemovePillPress}
                   />
                 </Flex>
+
+                <Separator my={1} />
+
+                <PriceRangeFilter
+                  onChange={updatePriceRange}
+                  priceRange={priceRange}
+                />
+
+                <Separator my={2} />
               </Box>
 
               <Box>
@@ -173,7 +202,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                   />
                 </Box>
 
-                <Spacer y={4} />
+                <Spacer y={2} />
 
                 {values.push && (
                   <FrequenceRadioButtons

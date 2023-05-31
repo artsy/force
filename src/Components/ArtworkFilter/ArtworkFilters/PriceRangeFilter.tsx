@@ -13,13 +13,13 @@ import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { debounce, sortBy } from "lodash"
 import { Histogram, HistogramBarEntity } from "./Histogram"
 
-type CustomRange = (number | "*")[]
+export type CustomRange = (number | "*")[]
 
 // Constants
 const DEBOUNCE_DELAY = 300
-const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
-const DEFAULT_PRICE_RANGE = "*-*"
-const DEFAULT_RANGE = [0, 50000]
+export const DEFAULT_CUSTOM_RANGE: CustomRange = ["*", "*"]
+export const DEFAULT_PRICE_RANGE = "*-*"
+export const DEFAULT_RANGE = [0, 50000]
 
 export interface PriceRangeFilterProps {
   expanded?: boolean
