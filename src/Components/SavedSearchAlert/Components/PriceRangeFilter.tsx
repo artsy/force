@@ -1,22 +1,17 @@
-import { Expandable } from "@artsy/palette"
+import { Expandable, Spacer } from "@artsy/palette"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import {
   CustomRange,
   DEFAULT_PRICE_RANGE,
 } from "Components/PriceRange/constants"
+import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { FC } from "react"
 
-interface PriceFilterProps {
-  priceRange?: string
-  onChange: (range: string) => void
-}
+export const PriceRangeFilter: FC = () => {
+  const { criteria, setCriteriaValue } = useSavedSearchAlertContext()
 
-export const PriceRangeFilter: FC<PriceFilterProps> = ({
-  onChange,
-  priceRange = DEFAULT_PRICE_RANGE,
-}) => {
   const handlePriceRangeUpdate = (updatedRange: CustomRange) => {
-    onChange(updatedRange.join("-"))
+    setCriteriaValue("priceRange", updatedRange.join("-"))
   }
 
   return (
@@ -25,8 +20,10 @@ export const PriceRangeFilter: FC<PriceFilterProps> = ({
       expanded
       borderColor="white100"
     >
+      <Spacer y={2} />
+
       <PriceRange
-        priceRange={priceRange}
+        priceRange={criteria.priceRange ?? DEFAULT_PRICE_RANGE}
         onPriceRangeUpdate={handlePriceRangeUpdate}
       />
     </Expandable>

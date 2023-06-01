@@ -1,12 +1,17 @@
 import { FC, useState, FormEvent, useEffect } from "react"
 import { Flex, Spacer, Box, Text, Range } from "@artsy/palette"
 import { Histogram, HistogramBarEntity } from "./Histogram"
-import { CustomRange, DEFAULT_RANGE } from "Components/PriceRange/constants"
-import { NumericInput } from "Components/PriceRange/NumericInput"
-import { parseRange } from "Components/PriceRange/utils/parseRange"
-import { parseSliderRange } from "Components/PriceRange/utils/parseSliderRange"
-import { convertToFilterFormatRange } from "Components/PriceRange/utils/convertToFilterFormatRange"
-import { getValue } from "Components/PriceRange/utils/getValue"
+import {
+  CustomRange,
+  DEFAULT_CUSTOM_RANGE,
+  DEFAULT_PRICE_RANGE,
+  DEFAULT_RANGE,
+} from "Components/PriceRange/constants"
+import { NumericInput } from "Components/NumericInput"
+import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
+import { parseSliderPriceRange } from "Components/PriceRange/Utils/parseSliderPriceRange"
+import { convertToFilterFormatRange } from "Components/PriceRange/Utils/convertToFilterFormatRange"
+import { getPriceValue } from "Components/PriceRange/Utils/getPriceValue"
 
 interface PriceRangeProps {
   priceRange: string
@@ -19,14 +24,14 @@ export const PriceRange: FC<PriceRangeProps> = ({
   onPriceRangeUpdate,
   bars,
 }) => {
-  const [range, setRange] = useState(parseRange(priceRange))
-  const sliderRange = parseSliderRange(range)
+  const [range, setRange] = useState(parsePriceRange(priceRange))
+  const sliderRange = parseSliderPriceRange(range)
   const [minValue, maxValue] = range
   const [defaultMinValue, defaultMaxValue] = DEFAULT_RANGE
 
   useEffect(() => {
-    if (priceRange === "*-*") {
-      setRange(parseRange(priceRange))
+    if (priceRange === DEFAULT_PRICE_RANGE) {
+      setRange(DEFAULT_CUSTOM_RANGE)
     }
   }, [priceRange])
 
@@ -74,7 +79,7 @@ export const PriceRange: FC<PriceRangeProps> = ({
             min="0"
             step="100"
             aria-label="Min price"
-            value={getValue(minValue)}
+            value={getPriceValue(minValue)}
             onChange={handleInputValueChange(0)}
           />
         </Box>
@@ -92,7 +97,7 @@ export const PriceRange: FC<PriceRangeProps> = ({
             min="0"
             step="100"
             aria-label="Max price"
-            value={getValue(maxValue)}
+            value={getPriceValue(maxValue)}
             onChange={handleInputValueChange(1)}
           />
         </Box>

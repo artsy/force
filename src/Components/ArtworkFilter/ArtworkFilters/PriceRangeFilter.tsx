@@ -11,13 +11,12 @@ import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { debounce, sortBy } from "lodash"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import {
+  CustomRange,
   DEFAULT_CUSTOM_RANGE,
   DEFAULT_PRICE_RANGE,
 } from "Components/PriceRange/constants"
-import { parseRange } from "Components/PriceRange/utils/parseRange"
+import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
 import { HistogramBarEntity } from "Components/PriceRange/Histogram"
-
-export type CustomRange = (number | "*")[]
 
 const DEBOUNCE_DELAY = 300
 
@@ -32,7 +31,7 @@ export const PriceRangeFilter: FC<PriceRangeFilterProps> = ({ expanded }) => {
     setFilter,
   } = useArtworkFilterContext()
   const { priceRange, reset } = useCurrentlySelectedFilters()
-  const [range, setRange] = useState(parseRange(priceRange))
+  const [range, setRange] = useState(parsePriceRange(priceRange))
   const bars = getBarsFromAggregations(aggregations)
 
   const filtersCount = useFilterLabelCountByKey(

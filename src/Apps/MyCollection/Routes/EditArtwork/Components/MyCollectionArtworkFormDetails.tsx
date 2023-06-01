@@ -22,7 +22,7 @@ import { rarityOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/rarity
 import { useFormikContext } from "formik"
 import { useState } from "react"
 import { ProvenanceModal } from "./ProvenanceModal"
-import { NumericInput } from "Components/PriceRange/NumericInput"
+import { NumericInput } from "Components/NumericInput"
 
 export const MyCollectionArtworkFormDetails: React.FC = () => {
   const { sendToast } = useToasts()

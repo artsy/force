@@ -33,7 +33,6 @@ import { Metric } from "Utils/metrics"
 import { DEFAULT_FREQUENCY } from "./constants"
 import { FrequenceRadioButtons } from "./Components/FrequencyRadioButtons"
 import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
-import { DEFAULT_PRICE_RANGE } from "Components/PriceRange/constants"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -59,12 +58,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
   onComplete,
 }) => {
   const { relayEnvironment } = useSystemContext()
-  const {
-    pills,
-    criteria,
-    removeCriteriaValue,
-    addCriteriaValue,
-  } = useSavedSearchAlertContext()
+  const { pills, criteria, removeCriteriaValue } = useSavedSearchAlertContext()
 
   const handleRemovePillPress = (pill: FilterPill) => {
     if (pill.isDefault) {
@@ -99,10 +93,6 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
     } catch (error) {
       logger.error(error)
     }
-  }
-
-  const updatePriceRange = (updatedRange: string) => {
-    addCriteriaValue("priceRange", updatedRange)
   }
 
   return (
@@ -161,10 +151,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
 
                 <Separator my={1} />
 
-                <PriceRangeFilter
-                  onChange={updatePriceRange}
-                  priceRange={criteria.priceRange ?? DEFAULT_PRICE_RANGE}
-                />
+                <PriceRangeFilter />
 
                 <Separator my={2} />
               </Box>

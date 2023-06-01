@@ -1,5 +1,5 @@
 import { CustomRange } from "Components/PriceRange/constants"
 
-export const getValue = (value: CustomRange[number]) => {
+export const getPriceValue = (value: CustomRange[number]) => {
   return value === "*" || value === 0 ? "" : value
 }

@@ -1,4 +1,4 @@
-import { convertToFilterFormatRange } from "Components/PriceRange/utils/convertToFilterFormatRange"
+import { convertToFilterFormatRange } from "Components/PriceRange/Utils/convertToFilterFormatRange"
 
 describe("convertToFilterFormatRange", () => {
   it("should return passed values", () => {

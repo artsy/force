@@ -23,7 +23,7 @@ import { isCustomValue } from "./Utils/isCustomValue"
 import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 import { useMode } from "Utils/Hooks/useMode"
 import { DEFAULT_METRIC, Metric } from "Utils/metrics"
-import { NumericInput } from "Components/PriceRange/NumericInput"
+import { NumericInput } from "Components/NumericInput"
 
 type Numeric = number | "*"
 type CustomRange = Numeric[]
