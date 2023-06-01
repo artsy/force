@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react"
+import React, { FC } from "react"
 import { Formik } from "formik"
 import {
   Box,
@@ -65,15 +65,10 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
     removeCriteriaValue,
     addCriteriaValue,
   } = useSavedSearchAlertContext()
-  const [priceRange, setPriceRange] = useState(DEFAULT_PRICE_RANGE)
 
   const handleRemovePillPress = (pill: FilterPill) => {
     if (pill.isDefault) {
       return
-    }
-
-    if (pill.field === "priceRange") {
-      setPriceRange(DEFAULT_PRICE_RANGE)
     }
 
     removeCriteriaValue(pill.field as SearchCriteriaAttributeKeys, pill.value)
@@ -108,7 +103,6 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
 
   const updatePriceRange = (updatedRange: string) => {
     addCriteriaValue("priceRange", updatedRange)
-    setPriceRange(updatedRange)
   }
 
   return (
@@ -169,7 +163,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
 
                 <PriceRangeFilter
                   onChange={updatePriceRange}
-                  priceRange={priceRange}
+                  priceRange={criteria.priceRange ?? DEFAULT_PRICE_RANGE}
                 />
 
                 <Separator my={2} />

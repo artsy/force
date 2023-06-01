@@ -45,7 +45,6 @@ import { RouterLink } from "System/Router/RouterLink"
 import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
 import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
-import { useState } from "react"
 import { DEFAULT_PRICE_RANGE } from "Components/PriceRange/constants"
 
 const logger = createLogger(
@@ -87,9 +86,6 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     removePill,
     addCriteriaValue,
   } = useSavedSearchAlertContext()
-  const [priceRange, setPriceRange] = useState(
-    criteria.priceRange ?? DEFAULT_PRICE_RANGE
-  )
 
   const initialValues: SavedSearchAleftFormValues = {
     name: userAlertSettings.name ?? "",
@@ -142,12 +138,10 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
   const handleRemovePillPress = (pill: FilterPill) => {
     removePill(pill)
-    setPriceRange("*-*")
   }
 
   const updatePriceRange = (range: string) => {
     addCriteriaValue("priceRange", range)
-    setPriceRange(range)
   }
 
   return (
@@ -199,7 +193,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
                 <PriceRangeFilter
                   onChange={updatePriceRange}
-                  priceRange={priceRange}
+                  priceRange={criteria.priceRange ?? DEFAULT_PRICE_RANGE}
                 />
 
                 <Separator my={2} />

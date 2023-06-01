@@ -1,4 +1,4 @@
-import { FC, useState, FormEvent } from "react"
+import { FC, useState, FormEvent, useEffect } from "react"
 import { Flex, Spacer, Box, Text, Range } from "@artsy/palette"
 import { Histogram, HistogramBarEntity } from "./Histogram"
 import { CustomRange, DEFAULT_RANGE } from "Components/PriceRange/constants"
@@ -23,6 +23,12 @@ export const PriceRange: FC<PriceRangeProps> = ({
   const sliderRange = parseSliderRange(range)
   const [minValue, maxValue] = range
   const [defaultMinValue, defaultMaxValue] = DEFAULT_RANGE
+
+  useEffect(() => {
+    if (priceRange === "*-*") {
+      setRange(parseRange(priceRange))
+    }
+  }, [priceRange])
 
   const updateRange = (updatedRange: CustomRange) => {
     setRange(updatedRange)
