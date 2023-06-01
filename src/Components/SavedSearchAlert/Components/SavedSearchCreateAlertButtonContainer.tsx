@@ -15,6 +15,7 @@ import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { useAuthDialog } from "Components/AuthDialog"
 import { ShowAuthDialogOptions } from "Components/AuthDialog/AuthDialogContext"
+import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 
 interface RenderButtonProps {
   onClick: () => void
@@ -25,7 +26,7 @@ export interface SavedSearchCreateAlertButtonContainerProps {
   criteria: SearchCriteriaAttributes
   metric?: Metric
   aggregations?: Aggregations
-  authDialogOptions: Omit<ShowAuthDialogOptions, "mode">
+  authDialogOptions?: Omit<ShowAuthDialogOptions, "mode">
 }
 
 interface Props extends SavedSearchCreateAlertButtonContainerProps {
@@ -44,6 +45,7 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
 }) => {
   const tracking = useTracking()
   const { isLoggedIn } = useSystemContext()
+  const inquiryContext = useInquiryContext()
   const [visibleForm, setVisibleForm] = useState(false)
   const { sendToast } = useToasts()
 
@@ -75,12 +77,14 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
       context_page_owner_slug: entity.owner.slug,
     })
 
-    if (isLoggedIn) {
+    if (isLoggedIn || inquiryContext.context.current?.isLoggedIn) {
       handleOpenForm()
       return
     }
 
-    showAuthDialog({ mode: "SignUp", ...authDialogOptions })
+    if (authDialogOptions) {
+      showAuthDialog({ mode: "SignUp", ...authDialogOptions })
+    }
   }
 
   const handleComplete = (result: SavedSearchAlertMutationResult) => {

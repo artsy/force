@@ -7,32 +7,32 @@ import {
   SavedSearchEntity,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
-import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
+import { OwnerType } from "@artsy/cohesion"
 
 export const InquiryConfirmation: React.FC = () => {
-  const { next, artworkID, context } = useInquiryContext()
-  const { artist } = context.current?.artwork || {}
+  const { next, context } = useInquiryContext()
+  const { artwork } = context.current || {}
 
   const entity: SavedSearchEntity = {
-    placeholder: artist?.name ?? "",
+    placeholder: artwork?.artist?.name ?? "",
     owner: {
       type: OwnerType.artist,
-      id: artist?.internalID ?? "",
-      name: artist?.name ?? "",
-      slug: artist?.slug ?? "",
+      id: artwork?.artist?.internalID ?? "",
+      name: artwork?.artist?.name ?? "",
+      slug: artwork?.artist?.slug ?? "",
     },
     defaultCriteria: {
       artistIDs: [
         {
-          displayValue: artist?.name ?? "",
-          value: artist?.internalID ?? "",
+          displayValue: artwork?.artist?.name ?? "",
+          value: artwork?.artist?.internalID ?? "",
         },
       ],
     },
   }
 
   const criteria: SearchCriteriaAttributes = {
-    artistID: artist?.internalID,
+    artistID: artwork?.artist?.internalID,
   }
 
   return (
@@ -76,20 +76,6 @@ export const InquiryConfirmation: React.FC = () => {
         entity={entity}
         criteria={criteria}
         onClose={next}
-        authDialogOptions={{
-          options: {
-            title: "Sign up to create your alert",
-            afterAuthAction: {
-              action: "createAlert",
-              kind: "artworks",
-              objectId: artworkID,
-            },
-          },
-          analytics: {
-            contextModule: ContextModule.artworkSidebar,
-            intent: Intent.createAlert,
-          },
-        }}
       />
     </Box>
   )
