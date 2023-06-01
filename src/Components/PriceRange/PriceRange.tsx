@@ -1,12 +1,12 @@
 import { FC, useState, FormEvent } from "react"
 import { Flex, Spacer, Box, Text, Range } from "@artsy/palette"
 import { Histogram, HistogramBarEntity } from "./Histogram"
-import {
-  CustomRange,
-  DEFAULT_PRICE_RANGE,
-  DEFAULT_RANGE,
-} from "Components/PriceRange/constants"
+import { CustomRange, DEFAULT_RANGE } from "Components/PriceRange/constants"
 import { NumericInput } from "Components/PriceRange/NumericInput"
+import { parseRange } from "Components/PriceRange/utils/parseRange"
+import { parseSliderRange } from "Components/PriceRange/utils/parseSliderRange"
+import { convertToFilterFormatRange } from "Components/PriceRange/utils/convertToFilterFormatRange"
+import { getValue } from "Components/PriceRange/utils/getValue"
 
 interface PriceRangeProps {
   priceRange: string
@@ -124,37 +124,6 @@ export const PriceRange: FC<PriceRangeProps> = ({
       </Flex>
     </>
   )
-}
-
-const parseRange = (range: string = DEFAULT_PRICE_RANGE) => {
-  return range.split("-").map(s => {
-    if (s === "*") return s
-    return parseInt(s, 10)
-  })
-}
-
-const parseSliderRange = (range: CustomRange) => {
-  return range.map((value, index) => {
-    if (value === "*") {
-      return DEFAULT_RANGE[index]
-    }
-
-    return value as number
-  })
-}
-
-const convertToFilterFormatRange = (range: number[]) => {
-  return range.map((value, index) => {
-    if (value === DEFAULT_RANGE[index]) {
-      return "*"
-    }
-
-    return value
-  })
-}
-
-export const getValue = (value: CustomRange[number]) => {
-  return value === "*" || value === 0 ? "" : value
 }
 
 const isAllBarsEmpty = (bars: HistogramBarEntity[]) => {

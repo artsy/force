@@ -46,7 +46,7 @@ import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
 import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
 import { useState } from "react"
-import { DEFAULT_PRICE_RANGE } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { DEFAULT_PRICE_RANGE } from "Components/PriceRange/constants"
 
 const logger = createLogger(
   "Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"

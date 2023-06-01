@@ -19,10 +19,10 @@ import { ArtistAutoComplete } from "Apps/Consign/Routes/SubmissionFlow/ArtworkDe
 import { ArtworkModel } from "Apps/MyCollection/Routes/EditArtwork/Utils/artworkModel"
 import { categoryOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/categoryOptions"
 import { rarityOptions } from "Apps/MyCollection/Routes/EditArtwork/Utils/rarityOptions"
-import { NumericInput } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { useFormikContext } from "formik"
 import { useState } from "react"
 import { ProvenanceModal } from "./ProvenanceModal"
+import { NumericInput } from "Components/PriceRange/NumericInput"
 
 export const MyCollectionArtworkFormDetails: React.FC = () => {
   const { sendToast } = useToasts()

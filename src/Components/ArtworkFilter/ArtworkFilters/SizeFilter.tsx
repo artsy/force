@@ -16,14 +16,14 @@ import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
-} from "../ArtworkFilterContext"
-import { NumericInput } from "./PriceRangeFilter"
+} from "Components/ArtworkFilter/ArtworkFilterContext"
 import { Media } from "Utils/Responsive"
 import { FilterExpandable } from "./FilterExpandable"
 import { isCustomValue } from "./Utils/isCustomValue"
-import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
+import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 import { useMode } from "Utils/Hooks/useMode"
 import { DEFAULT_METRIC, Metric } from "Utils/metrics"
+import { NumericInput } from "Components/PriceRange/NumericInput"
 
 type Numeric = number | "*"
 type CustomRange = Numeric[]
