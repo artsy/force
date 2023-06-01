@@ -1,4 +1,4 @@
-import { isArtsyEmail } from "../isArtsyEmail"
+import { isArtsyEmail } from "Utils/isArtsyEmail"
 
 describe("isArtsyEmail", () => {
   it("returns true when emails ends with @artsymail.com", () => {
