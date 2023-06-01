@@ -22,7 +22,7 @@ interface SavedSearchAlertContextProps {
   ) => void
   setCriteriaValue: (
     key: SearchCriteriaAttributeKeys,
-    value: string | number | boolean
+    value: string | string[] | number | boolean | null
   ) => void
   removePill: (pill: FilterPill) => void
 }
