@@ -6,9 +6,11 @@ import {
 } from "Components/PriceRange/constants"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { FC } from "react"
+import { useTranslation } from "react-i18next"
 
 export const PriceRangeFilter: FC = () => {
   const { criteria, setCriteriaValue } = useSavedSearchAlertContext()
+  const { t } = useTranslation()
 
   const handlePriceRangeUpdate = (updatedRange: CustomRange) => {
     setCriteriaValue("priceRange", updatedRange.join("-"))
@@ -16,7 +18,7 @@ export const PriceRangeFilter: FC = () => {
 
   return (
     <Expandable
-      label="Set price range you are interested in"
+      label={t("createAlertModal.setPriceRange")}
       expanded
       borderColor="white100"
     >

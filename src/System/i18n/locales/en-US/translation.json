@@ -262,5 +262,8 @@
     "resultsCount_zero": "No results found for",
     "resultsCount_one": "1 result for",
     "resultsCount_other": "{{count}} results for"
+  },
+  "createAlertModal": {
+    "setPriceRange": "Set price range you are interested in"
   }
 }
