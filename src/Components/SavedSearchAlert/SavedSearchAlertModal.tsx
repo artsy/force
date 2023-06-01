@@ -33,10 +33,7 @@ import { Metric } from "Utils/metrics"
 import { DEFAULT_FREQUENCY } from "./constants"
 import { FrequenceRadioButtons } from "./Components/FrequencyRadioButtons"
 import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
-import {
-  CustomRange,
-  DEFAULT_PRICE_RANGE,
-} from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { DEFAULT_PRICE_RANGE } from "Components/PriceRange/constants"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -109,9 +106,9 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
     }
   }
 
-  const updatePriceRange = (range: CustomRange) => {
-    addCriteriaValue("priceRange", range.join("-"))
-    setPriceRange(range.join("-"))
+  const updatePriceRange = (updatedRange: string) => {
+    addCriteriaValue("priceRange", updatedRange)
+    setPriceRange(updatedRange)
   }
 
   return (

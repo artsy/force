@@ -46,10 +46,7 @@ import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
 import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
 import { useState } from "react"
-import {
-  CustomRange,
-  DEFAULT_PRICE_RANGE,
-} from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { DEFAULT_PRICE_RANGE } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 
 const logger = createLogger(
   "Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -148,9 +145,9 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     setPriceRange("*-*")
   }
 
-  const updatePriceRange = (range: CustomRange) => {
-    addCriteriaValue("priceRange", range.join("-"))
-    setPriceRange(range.join("-"))
+  const updatePriceRange = (range: string) => {
+    addCriteriaValue("priceRange", range)
+    setPriceRange(range)
   }
 
   return (
