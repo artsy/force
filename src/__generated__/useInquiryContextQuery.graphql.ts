@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3d332447afd4d7662f339afdc3171784>>
+ * @generated SignedSource<<b3837a9548f0cf222d06bcbcec58a757>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -197,86 +197,6 @@ return {
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isSold",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "isInAuction",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "saleMessage",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Sale",
-            "kind": "LinkedField",
-            "name": "sale",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "startAt",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "isClosed",
-                "storageKey": null
-              },
-              (v2/*: any*/)
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "SaleArtwork",
-            "kind": "LinkedField",
-            "name": "saleArtwork",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "lotID",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "extendedBiddingEndAt",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "endAt",
-                "storageKey": null
-              },
-              (v2/*: any*/)
-            ],
-            "storageKey": null
-          },
           (v2/*: any*/)
         ],
         "storageKey": null
@@ -284,12 +204,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2377473f2e8db1b039920e9aab6bf32c",
+    "cacheID": "9edadc147ac9b5b0533f29ffb22aed2c",
     "id": null,
     "metadata": {},
     "name": "useInquiryContextQuery",
     "operationKind": "query",
-    "text": "query useInquiryContextQuery(\n  $id: String!\n) {\n  me {\n    ...useInquiryContext_me\n    id\n  }\n  artwork(id: $id) {\n    ...useInquiryContext_artwork\n    id\n  }\n}\n\nfragment useInquiryContext_artwork on Artwork {\n  artist {\n    internalID\n    name\n    slug\n    id\n  }\n  isSold\n  isInAuction\n  saleMessage\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    lotID\n    extendedBiddingEndAt\n    endAt\n    id\n  }\n}\n\nfragment useInquiryContext_me on Me {\n  collectorLevel\n  location {\n    city\n    id\n  }\n  otherRelevantPositions\n  profession\n  shareFollows\n}\n"
+    "text": "query useInquiryContextQuery(\n  $id: String!\n) {\n  me {\n    ...useInquiryContext_me\n    id\n  }\n  artwork(id: $id) {\n    ...useInquiryContext_artwork\n    id\n  }\n}\n\nfragment useInquiryContext_artwork on Artwork {\n  artist {\n    internalID\n    name\n    slug\n    id\n  }\n}\n\nfragment useInquiryContext_me on Me {\n  collectorLevel\n  location {\n    city\n    id\n  }\n  otherRelevantPositions\n  profession\n  shareFollows\n}\n"
   }
 };
 })();

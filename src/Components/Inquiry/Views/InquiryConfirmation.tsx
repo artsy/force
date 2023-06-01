@@ -8,44 +8,10 @@ import {
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
 import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
-import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
-import { useTimer } from "Utils/Hooks/useTimer"
-import { useState } from "react"
-import { useAuctionWebsocket } from "Components/useAuctionWebsocket"
-import { checkIfArtworkIsOnLoanOrPermanentCollection } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebar"
-import { useInquiryContext_artwork$data } from "__generated__/useInquiryContext_artwork.graphql"
 
 export const InquiryConfirmation: React.FC = () => {
   const { next, artworkID, context } = useInquiryContext()
-  const {
-    isSold,
-    isInAuction,
-    saleArtwork,
-    sale,
-    saleMessage,
-    artist,
-  } = context.current?.artwork as useInquiryContext_artwork$data
-
-  const startAt = sale?.startAt
-  const endAt = saleArtwork?.endAt
-  const extendedBiddingEndAt = saleArtwork?.extendedBiddingEndAt
-  const biddingEndAt = extendedBiddingEndAt ?? endAt
-
-  const [updatedBiddingEndAt, setUpdatedBiddingEndAt] = useState(biddingEndAt)
-
-  useAuctionWebsocket({
-    lotID: saleArtwork?.lotID!,
-    onChange: ({ extended_bidding_end_at }) => {
-      setUpdatedBiddingEndAt(extended_bidding_end_at)
-    },
-  })
-
-  const { hasEnded } = useTimer(updatedBiddingEndAt!, startAt!)
-
-  const shouldHideDetailsCreateAlertCTA =
-    (isInAuction && hasEnded) ||
-    (isInAuction && lotIsClosed(sale, saleArtwork)) ||
-    isSold
+  const { artist } = context.current?.artwork || {}
 
   const entity: SavedSearchEntity = {
     placeholder: artist?.name ?? "",
@@ -94,40 +60,37 @@ export const InquiryConfirmation: React.FC = () => {
         Continue Browsing
       </Button>
 
-      {(!shouldHideDetailsCreateAlertCTA ||
-        checkIfArtworkIsOnLoanOrPermanentCollection(saleMessage)) && (
-        <SavedSearchCreateAlertButtonContainer
-          renderButton={({ onClick }) => (
-            <Button
-              variant="secondaryBlack"
-              onClick={() => {
-                onClick()
-              }}
-              width="100%"
-              my={1}
-            >
-              Create Alert
-            </Button>
-          )}
-          entity={entity}
-          criteria={criteria}
-          onClose={next}
-          authDialogOptions={{
-            options: {
-              title: "Sign up to create your alert",
-              afterAuthAction: {
-                action: "createAlert",
-                kind: "artworks",
-                objectId: artworkID,
-              },
+      <SavedSearchCreateAlertButtonContainer
+        renderButton={({ onClick }) => (
+          <Button
+            variant="secondaryBlack"
+            onClick={() => {
+              onClick()
+            }}
+            width="100%"
+            my={1}
+          >
+            Create Alert
+          </Button>
+        )}
+        entity={entity}
+        criteria={criteria}
+        onClose={next}
+        authDialogOptions={{
+          options: {
+            title: "Sign up to create your alert",
+            afterAuthAction: {
+              action: "createAlert",
+              kind: "artworks",
+              objectId: artworkID,
             },
-            analytics: {
-              contextModule: ContextModule.artworkSidebar,
-              intent: Intent.createAlert,
-            },
-          }}
-        />
-      )}
+          },
+          analytics: {
+            contextModule: ContextModule.artworkSidebar,
+            intent: Intent.createAlert,
+          },
+        }}
+      />
     </Box>
   )
 }

@@ -274,18 +274,6 @@ const InquiryContextContextFragmentContainer = createFragmentContainer(
           name
           slug
         }
-        isSold
-        isInAuction
-        saleMessage
-        sale {
-          startAt
-          isClosed
-        }
-        saleArtwork {
-          lotID
-          extendedBiddingEndAt
-          endAt
-        }
       }
     `,
   }

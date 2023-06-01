@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<98cbe043dce7665fbd58f3ea2042f0e4>>
+ * @generated SignedSource<<54cef09bfb37d6d520e980dc0b4245b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,18 +16,6 @@ export type useInquiryContext_artwork$data = {
     readonly name: string | null;
     readonly slug: string;
   } | null;
-  readonly isInAuction: boolean | null;
-  readonly isSold: boolean | null;
-  readonly sale: {
-    readonly isClosed: boolean | null;
-    readonly startAt: string | null;
-  } | null;
-  readonly saleArtwork: {
-    readonly endAt: string | null;
-    readonly extendedBiddingEndAt: string | null;
-    readonly lotID: string | null;
-  } | null;
-  readonly saleMessage: string | null;
   readonly " $fragmentType": "useInquiryContext_artwork";
 };
 export type useInquiryContext_artwork$key = {
@@ -72,90 +60,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isSold",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isInAuction",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "saleMessage",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Sale",
-      "kind": "LinkedField",
-      "name": "sale",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "startAt",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isClosed",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "SaleArtwork",
-      "kind": "LinkedField",
-      "name": "saleArtwork",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "lotID",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "extendedBiddingEndAt",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "endAt",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "4ae6fe72e585bb025fd9d973437e8642";
+(node as any).hash = "424db4e1025a542fc2649dbb6c31de4d";
 
 export default node;
