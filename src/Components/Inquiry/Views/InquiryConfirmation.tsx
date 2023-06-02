@@ -2,38 +2,9 @@ import { Box, Button, Spacer, Text } from "@artsy/palette"
 import * as React from "react"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { RouterLink } from "System/Router/RouterLink"
-import { SavedSearchCreateAlertButtonContainer } from "Components/SavedSearchAlert/Components/SavedSearchCreateAlertButtonContainer"
-import {
-  SavedSearchEntity,
-  SearchCriteriaAttributes,
-} from "Components/SavedSearchAlert/types"
-import { OwnerType } from "@artsy/cohesion"
 
 export const InquiryConfirmation: React.FC = () => {
-  const { next, context } = useInquiryContext()
-  const { artwork } = context.current || {}
-
-  const entity: SavedSearchEntity = {
-    placeholder: artwork?.artist?.name ?? "",
-    owner: {
-      type: OwnerType.artist,
-      id: artwork?.artist?.internalID ?? "",
-      name: artwork?.artist?.name ?? "",
-      slug: artwork?.artist?.slug ?? "",
-    },
-    defaultCriteria: {
-      artistIDs: [
-        {
-          displayValue: artwork?.artist?.name ?? "",
-          value: artwork?.artist?.internalID ?? "",
-        },
-      ],
-    },
-  }
-
-  const criteria: SearchCriteriaAttributes = {
-    artistID: artwork?.artist?.internalID,
-  }
+  const { next, dispatchCreateAlert } = useInquiryContext()
 
   return (
     <Box>
@@ -60,23 +31,14 @@ export const InquiryConfirmation: React.FC = () => {
         Continue Browsing
       </Button>
 
-      <SavedSearchCreateAlertButtonContainer
-        renderButton={({ onClick }) => (
-          <Button
-            variant="secondaryBlack"
-            onClick={() => {
-              onClick()
-            }}
-            width="100%"
-            my={1}
-          >
-            Create Alert
-          </Button>
-        )}
-        entity={entity}
-        criteria={criteria}
-        onClose={next}
-      />
+      <Button
+        onClick={dispatchCreateAlert}
+        width="100%"
+        my={1}
+        variant="secondaryBlack"
+      >
+        Create Alert
+      </Button>
     </Box>
   )
 }

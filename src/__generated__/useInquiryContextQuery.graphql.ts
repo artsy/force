@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b3837a9548f0cf222d06bcbcec58a757>>
+ * @generated SignedSource<<39d588da108410944641340fe2c8f12c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,13 +10,8 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type useInquiryContextQuery$variables = {
-  id: string;
-};
+export type useInquiryContextQuery$variables = {};
 export type useInquiryContextQuery$data = {
-  readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"useInquiryContext_artwork">;
-  } | null;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"useInquiryContext_me">;
   } | null;
@@ -27,21 +22,7 @@ export type useInquiryContextQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "id"
-  }
-],
-v1 = [
-  {
-    "kind": "Variable",
-    "name": "id",
-    "variableName": "id"
-  }
-],
-v2 = {
+var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -50,7 +31,7 @@ v2 = {
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "useInquiryContextQuery",
@@ -70,22 +51,6 @@ return {
           }
         ],
         "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "useInquiryContext_artwork"
-          }
-        ],
-        "storageKey": null
       }
     ],
     "type": "Query",
@@ -93,7 +58,7 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "useInquiryContextQuery",
     "selections": [
@@ -127,7 +92,7 @@ return {
                 "name": "city",
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v0/*: any*/)
             ],
             "storageKey": null
           },
@@ -152,68 +117,23 @@ return {
             "name": "shareFollows",
             "storageKey": null
           },
-          (v2/*: any*/)
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v1/*: any*/),
-        "concreteType": "Artwork",
-        "kind": "LinkedField",
-        "name": "artwork",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "Artist",
-            "kind": "LinkedField",
-            "name": "artist",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "internalID",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "name",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "slug",
-                "storageKey": null
-              },
-              (v2/*: any*/)
-            ],
-            "storageKey": null
-          },
-          (v2/*: any*/)
+          (v0/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "9edadc147ac9b5b0533f29ffb22aed2c",
+    "cacheID": "2524a8c8fad5a6418555dc39fd08ff59",
     "id": null,
     "metadata": {},
     "name": "useInquiryContextQuery",
     "operationKind": "query",
-    "text": "query useInquiryContextQuery(\n  $id: String!\n) {\n  me {\n    ...useInquiryContext_me\n    id\n  }\n  artwork(id: $id) {\n    ...useInquiryContext_artwork\n    id\n  }\n}\n\nfragment useInquiryContext_artwork on Artwork {\n  artist {\n    internalID\n    name\n    slug\n    id\n  }\n}\n\nfragment useInquiryContext_me on Me {\n  collectorLevel\n  location {\n    city\n    id\n  }\n  otherRelevantPositions\n  profession\n  shareFollows\n}\n"
+    "text": "query useInquiryContextQuery {\n  me {\n    ...useInquiryContext_me\n    id\n  }\n}\n\nfragment useInquiryContext_me on Me {\n  collectorLevel\n  location {\n    city\n    id\n  }\n  otherRelevantPositions\n  profession\n  shareFollows\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f17c133d23c50d98e126b8727520d3b7";
+(node as any).hash = "abdeb51f6987f798b5afaae059bfdd57";
 
 export default node;

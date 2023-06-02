@@ -11,7 +11,6 @@ import { WorkflowEngine } from "Utils/WorkflowEngine"
 import { useEngine } from "Components/Inquiry/config"
 import { createFragmentContainer, graphql, Environment } from "react-relay"
 import { useInquiryContext_me$data } from "__generated__/useInquiryContext_me.graphql"
-import { useInquiryContext_artwork$data } from "__generated__/useInquiryContext_artwork.graphql"
 import { useInquiryContextQuery } from "__generated__/useInquiryContextQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useSystemContext } from "System/useSystemContext"
@@ -20,6 +19,7 @@ import { logger } from "Components/Inquiry/util"
 import { Location } from "Components/LocationAutocompleteInput"
 import { Spinner } from "@artsy/palette"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import { setAfterAuthAction } from "Utils/Hooks/useAuthIntent"
 
 export type Context = {
   askSpecialist: boolean
@@ -30,7 +30,6 @@ export type Context = {
   profession?: string | null
   requiresReload: boolean
   shareFollows: boolean
-  artwork: useInquiryContext_artwork$data | null
 }
 
 export const DEFAULT_CONTEXT: Context = {
@@ -42,7 +41,6 @@ export const DEFAULT_CONTEXT: Context = {
   profession: null,
   requiresReload: false,
   shareFollows: false,
-  artwork: null,
 }
 
 export const AUTOMATED_MESSAGES = [
@@ -109,6 +107,7 @@ const InquiryContext = createContext<{
   engine: WorkflowEngine
   inquiry: InquiryState
   next(): void
+  dispatchCreateAlert(): void
   onClose(): void
   relayEnvironment: React.RefObject<Environment>
   setContext: (updatedContext: Partial<Context>) => React.RefObject<Context>
@@ -126,6 +125,7 @@ const InquiryContext = createContext<{
   engine: new WorkflowEngine({ workflow: [] }),
   inquiry: { message: getAutomatedMessages() },
   next: () => {},
+  dispatchCreateAlert: () => {},
   onClose: () => {},
   relayEnvironment: React.createRef<Environment>(),
   setContext: () => React.createRef<Context>(),
@@ -186,6 +186,22 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
     onDone: handleClose,
   })
 
+  const dispatchCreateAlert = () => {
+    // Set this "after auth action", even if we're authenticated, so that the
+    // "Create Alert" modal is dispatched upon page reload.
+    //
+    // TODO: Support "Create Alert" modal dispatch via refactored context
+    // provider so we don't need a full page reload when authenticated.
+
+    setAfterAuthAction({
+      action: "createAlert",
+      kind: "artworks",
+      objectId: artworkID,
+    })
+
+    window.location.reload()
+  }
+
   const { relayEnvironment: defaultRelayEnvironment } = useSystemContext()
 
   const relayEnvironment = useRef(defaultRelayEnvironment!)
@@ -212,6 +228,7 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
         engine,
         inquiry,
         next,
+        dispatchCreateAlert,
         onClose: handleClose,
         relayEnvironment,
         setContext,
@@ -228,12 +245,10 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
 
 interface InquiryContextContextProps {
   me: useInquiryContext_me$data | null
-  artwork: useInquiryContext_artwork$data | null
 }
 
 const InquiryContextContext: React.FC<InquiryContextContextProps> = ({
   me,
-  artwork,
   children,
 }) => {
   const { setContext } = useInquiryContext()
@@ -246,9 +261,8 @@ const InquiryContextContext: React.FC<InquiryContextContextProps> = ({
       otherRelevantPositions: me?.otherRelevantPositions,
       profession: me?.profession,
       shareFollows: !!me?.shareFollows,
-      artwork: artwork ?? null,
     })
-  }, [me, artwork, setContext])
+  }, [me, setContext])
 
   return <>{children}</>
 }
@@ -267,26 +281,10 @@ const InquiryContextContextFragmentContainer = createFragmentContainer(
         shareFollows
       }
     `,
-    artwork: graphql`
-      fragment useInquiryContext_artwork on Artwork {
-        artist {
-          internalID
-          name
-          slug
-        }
-      }
-    `,
   }
 )
 
-interface InquiryContextContextQueryRendererProps {
-  artworkID: string
-}
-
-export const InquiryContextContextQueryRenderer: React.FC<InquiryContextContextQueryRendererProps> = ({
-  children,
-  artworkID,
-}) => {
+export const InquiryContextContextQueryRenderer: React.FC = ({ children }) => {
   const { relayEnvironment } = useSystemContext()
 
   return (
@@ -294,16 +292,12 @@ export const InquiryContextContextQueryRenderer: React.FC<InquiryContextContextQ
       environment={relayEnvironment}
       placeholder={<Spinner color="white100" />}
       query={graphql`
-        query useInquiryContextQuery($id: String!) {
+        query useInquiryContextQuery {
           me {
             ...useInquiryContext_me
           }
-          artwork(id: $id) {
-            ...useInquiryContext_artwork
-          }
         }
       `}
-      variables={{ id: artworkID }}
       render={({ props, error }) => {
         if (error) {
           logger.error(error)
@@ -315,10 +309,7 @@ export const InquiryContextContextQueryRenderer: React.FC<InquiryContextContextQ
         }
 
         return (
-          <InquiryContextContextFragmentContainer
-            me={props.me}
-            artwork={props.artwork}
-          >
+          <InquiryContextContextFragmentContainer me={props.me}>
             {children}
           </InquiryContextContextFragmentContainer>
         )
