@@ -265,7 +265,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
       <Spacer y={2} />
       {offerShippingCostSubjectToChange() && (
         <Text variant="sm" color="black60">
-          *Estimate Only. Price may vary once offer is finalized.
+          *Estimate only. Price may vary once offer is finalized.
         </Text>
       )}
       {shippingNotCalculated() && (
