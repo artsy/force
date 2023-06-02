@@ -1,4 +1,5 @@
 import {
+  useDidMount,
   useIsomorphicLayoutEffect,
   useMutationObserver,
   useResizeObserver,
@@ -60,6 +61,19 @@ export const useSizeAndPosition = ({
           handleUpdate()
         }
       })
+    },
+  })
+
+  // Ensures that if the node is mounted after the hook is called,
+  // we still update the geometry.
+  const isMounted = useDidMount()
+  useMutationObserver({
+    element: isMounted ? document.body : null,
+    onMutate: (_mutations, observer) => {
+      if (document.contains(ref.current)) {
+        handleUpdate()
+        observer.disconnect()
+      }
     },
   })
 
