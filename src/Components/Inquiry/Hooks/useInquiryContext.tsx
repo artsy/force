@@ -24,6 +24,7 @@ import { setAfterAuthAction } from "Utils/Hooks/useAuthIntent"
 export type Context = {
   askSpecialist: boolean
   collectorLevel?: number | null
+  enableCreateAlert: boolean
   isLoggedIn: boolean
   location?: Location | null
   otherRelevantPositions?: string | null
@@ -35,6 +36,7 @@ export type Context = {
 export const DEFAULT_CONTEXT: Context = {
   askSpecialist: false,
   collectorLevel: null,
+  enableCreateAlert: false,
   isLoggedIn: false,
   location: null,
   otherRelevantPositions: null,
@@ -138,6 +140,7 @@ const InquiryContext = createContext<{
 interface InquiryProviderProps {
   artworkID: string
   askSpecialist?: boolean
+  enableCreateAlert?: boolean
   onClose(): void
 }
 
@@ -145,6 +148,7 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
   artworkID,
   askSpecialist,
   children,
+  enableCreateAlert,
   onClose,
 }) => {
   /**
@@ -155,6 +159,7 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
   const context = useRef<Context>({
     ...DEFAULT_CONTEXT,
     askSpecialist: !!askSpecialist,
+    enableCreateAlert: !!enableCreateAlert,
   })
 
   // Mutate the decision context directly

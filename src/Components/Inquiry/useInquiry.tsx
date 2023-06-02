@@ -9,14 +9,19 @@ export interface UseInquiryProps {
 export const useInquiry = ({ artworkID }: UseInquiryProps) => {
   const [isInquiryVisible, setIsInquiryVisible] = useState(false)
   const [askSpecialist, setAskSpecialist] = useState(false)
+  const [enableCreateAlert, setEnableCreateAlert] = useState(false)
 
-  const showInquiry = (options: { askSpecialist?: boolean } = {}) => {
+  const showInquiry = (
+    options: { askSpecialist?: boolean; enableCreateAlert?: boolean } = {}
+  ) => {
     if (options.askSpecialist) setAskSpecialist(true)
+    if (options.enableCreateAlert) setEnableCreateAlert(true)
     setIsInquiryVisible(true)
   }
 
   const hideInquiry = () => {
     setAskSpecialist(false)
+    setEnableCreateAlert(false)
     setIsInquiryVisible(false)
   }
 
@@ -28,6 +33,7 @@ export const useInquiry = ({ artworkID }: UseInquiryProps) => {
             artworkID={artworkID}
             onClose={hideInquiry}
             askSpecialist={askSpecialist}
+            enableCreateAlert={enableCreateAlert}
           />
         </>
       )}

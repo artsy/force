@@ -55,7 +55,7 @@ const ArtworkSidebarPartnerInfo: React.FC<ArtworkSidebarPartnerInfoProps> = ({
       artwork_id: internalID,
       artwork_slug: slug,
     })
-    showInquiry()
+    showInquiry({ enableCreateAlert: true })
   }
 
   const hasCities = partner?.cities && partner.cities.length > 0
