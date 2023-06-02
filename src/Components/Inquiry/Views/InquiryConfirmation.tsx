@@ -35,7 +35,7 @@ export const InquiryConfirmation: React.FC = () => {
         <Button
           onClick={dispatchCreateAlert}
           width="100%"
-          my={1}
+          mt={1}
           variant="secondaryBlack"
         >
           Create Alert
