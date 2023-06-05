@@ -1,9 +1,11 @@
+import { useMutationObserver, useResizeObserver } from "@artsy/palette"
 import {
-  useIsomorphicLayoutEffect,
-  useMutationObserver,
-  useResizeObserver,
-} from "@artsy/palette"
-import { MutableRefObject, useCallback, useRef, useState } from "react"
+  MutableRefObject,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 
 interface Geometry {
   top: number
@@ -63,10 +65,25 @@ export const useSizeAndPosition = ({
     },
   })
 
-  useIsomorphicLayoutEffect(() => {
-    if (!ref.current) return
-    requestAnimationFrame(handleUpdate)
-  }, [ref])
+  // Ensures that if the node is mounted after the hook is called,
+  // we still update the geometry.
+  useEffect(() => {
+    if (typeof MutationObserver === "undefined") {
+      requestAnimationFrame(handleUpdate)
+      return
+    }
+
+    const observer = new MutationObserver((_, self) => {
+      handleUpdate()
+      self.disconnect()
+    })
+
+    observer.observe(document.body, { childList: true, subtree: true })
+
+    return () => {
+      observer.disconnect()
+    }
+  }, [handleUpdate])
 
   useResizeObserver({
     target: ref,
