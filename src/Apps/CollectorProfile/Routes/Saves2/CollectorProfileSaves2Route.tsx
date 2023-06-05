@@ -88,7 +88,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
 
       <Spacer y={4} />
 
-      <Shelf showProgress={false}>
+      <Shelf showProgress={false} data-testid="artwork-list-rail">
         {artworkLists.map(artworkList => {
           const isDefaultArtworkList =
             artworkList.internalID === savedArtworksArtworkList.internalID

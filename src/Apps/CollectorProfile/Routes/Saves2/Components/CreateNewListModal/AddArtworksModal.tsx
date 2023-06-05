@@ -110,7 +110,11 @@ export const AddArtworksModal: FC<AddArtworksModalProps> = ({
             })}
           </Text>
 
-          <Button onClick={handleSave} loading={isSaving}>
+          <Button
+            onClick={handleSave}
+            loading={isSaving}
+            data-testid="artwork-list-modal-save"
+          >
             {t("common.buttons.save")}
           </Button>
         </Flex>

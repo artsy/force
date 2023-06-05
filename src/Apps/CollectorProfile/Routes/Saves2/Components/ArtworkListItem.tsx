@@ -36,6 +36,7 @@ const ArtworkListItem: FC<ArtworkListItemProps> = props => {
       textDecoration="none"
       aria-current={!!isSelected}
       isSelected={!!isSelected}
+      data-testid="artwork-list-card"
     >
       <Flex
         p={1}
