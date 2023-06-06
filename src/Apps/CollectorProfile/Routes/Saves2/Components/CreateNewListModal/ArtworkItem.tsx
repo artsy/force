@@ -19,7 +19,11 @@ export const ArtworkItem: FC<ArtworkItemProps> = ({
   }
 
   return (
-    <Clickable width="100%" onClick={onClick}>
+    <Clickable
+      width="100%"
+      onClick={onClick}
+      data-testid="artwork-list-modal-item"
+    >
       <ArtworkGridItemFragmentContainer
         disableRouterLinking
         artwork={item}
