@@ -6,6 +6,7 @@ import {
   Input,
   Join,
   Message,
+  Separator,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -42,6 +43,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { RouterLink } from "System/Router/RouterLink"
 import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
+import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
 
 const logger = createLogger(
   "Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -175,6 +177,12 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                     onDeletePress={removePill}
                   />
                 </Flex>
+
+                <Separator my={1} />
+
+                <PriceRangeFilter />
+
+                <Separator my={2} />
               </Box>
 
               <Box>

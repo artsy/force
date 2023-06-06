@@ -19,10 +19,12 @@ import { logger } from "Components/Inquiry/util"
 import { Location } from "Components/LocationAutocompleteInput"
 import { Spinner } from "@artsy/palette"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import { setAfterAuthAction } from "Utils/Hooks/useAuthIntent"
 
 export type Context = {
   askSpecialist: boolean
   collectorLevel?: number | null
+  enableCreateAlert: boolean
   isLoggedIn: boolean
   location?: Location | null
   otherRelevantPositions?: string | null
@@ -34,6 +36,7 @@ export type Context = {
 export const DEFAULT_CONTEXT: Context = {
   askSpecialist: false,
   collectorLevel: null,
+  enableCreateAlert: false,
   isLoggedIn: false,
   location: null,
   otherRelevantPositions: null,
@@ -64,17 +67,17 @@ export const AUTOMATED_MESSAGES = [
   "Hi there! I'd like to know more about this piece. Could you tell me about it?",
   "I'm very interested in this artwork. Would you mind providing me with more information about it?",
   "I'd like to know more about this work. Could you share some additional information with me?",
-  "Hello! This artwork is intriguing. Could you please provide me with more details about it?",
+  "Hello! I was intrigued by this artwork. Could you please provide me with more details about it?",
   "I'm very interested in this artwork. Can you give me more information about it?",
-  "Hi there! This piece is captivating. Could you tell me more about it?",
+  "Hi there! I saw this artwork and thought it was captivating. Could you tell me more about it?",
   "I'm intrigued by this artwork. Could you please tell me more about it?",
   "Hello, I'm interested in learning more about this artwork. Could you provide me with additional details?",
   "Hi there! This artwork is stunning. Can you tell me more about it?",
   "I'm very interested in this artwork. Would you mind giving me more details about it?",
   "Hello! Could you please provide me with more details about this artwork? I'm quite interested in it.",
-  "This artwork is incredible! Could you share some additional information with me about it?",
+  "Hello, I'm interested in this work. Could you share some additional information with me about it?",
   "I'm interested in learning more about this piece. Can you tell me more about it?",
-  "Hi there! This artwork is breathtaking. Could you please provide me with more information about it?",
+  "Hi there. I came across this artwork today. Could you please provide me with more information about it?",
   "Hello, I'm interested in this artwork and would love to know more about it.",
   "Hi, I collect art and was intrigued by this artwork. Can you provide additional information?",
   "Hello, I'm a collector and would like to inquire about this artwork. Could you please share more details?",
@@ -106,6 +109,7 @@ const InquiryContext = createContext<{
   engine: WorkflowEngine
   inquiry: InquiryState
   next(): void
+  dispatchCreateAlert(): void
   onClose(): void
   relayEnvironment: React.RefObject<Environment>
   setContext: (updatedContext: Partial<Context>) => React.RefObject<Context>
@@ -123,6 +127,7 @@ const InquiryContext = createContext<{
   engine: new WorkflowEngine({ workflow: [] }),
   inquiry: { message: getAutomatedMessages() },
   next: () => {},
+  dispatchCreateAlert: () => {},
   onClose: () => {},
   relayEnvironment: React.createRef<Environment>(),
   setContext: () => React.createRef<Context>(),
@@ -135,6 +140,7 @@ const InquiryContext = createContext<{
 interface InquiryProviderProps {
   artworkID: string
   askSpecialist?: boolean
+  enableCreateAlert?: boolean
   onClose(): void
 }
 
@@ -142,6 +148,7 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
   artworkID,
   askSpecialist,
   children,
+  enableCreateAlert,
   onClose,
 }) => {
   /**
@@ -152,6 +159,7 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
   const context = useRef<Context>({
     ...DEFAULT_CONTEXT,
     askSpecialist: !!askSpecialist,
+    enableCreateAlert: !!enableCreateAlert,
   })
 
   // Mutate the decision context directly
@@ -183,6 +191,22 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
     onDone: handleClose,
   })
 
+  const dispatchCreateAlert = () => {
+    // Set this "after auth action", even if we're authenticated, so that the
+    // "Create Alert" modal is dispatched upon page reload.
+    //
+    // TODO: Support "Create Alert" modal dispatch via refactored context
+    // provider so we don't need a full page reload when authenticated.
+
+    setAfterAuthAction({
+      action: "createAlert",
+      kind: "artworks",
+      objectId: artworkID,
+    })
+
+    window.location.reload()
+  }
+
   const { relayEnvironment: defaultRelayEnvironment } = useSystemContext()
 
   const relayEnvironment = useRef(defaultRelayEnvironment!)
@@ -209,6 +233,7 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
         engine,
         inquiry,
         next,
+        dispatchCreateAlert,
         onClose: handleClose,
         relayEnvironment,
         setContext,

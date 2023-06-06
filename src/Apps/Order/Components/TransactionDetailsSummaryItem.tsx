@@ -2,7 +2,7 @@ import { TransactionDetailsSummaryItem_order$data } from "__generated__/Transact
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { Flex, Text, Spacer, Column } from "@artsy/palette"
+import { Flex, Text, Spacer, Column, Sup } from "@artsy/palette"
 import {
   StepSummaryItem,
   StepSummaryItemProps,
@@ -88,19 +88,26 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
     return useLastSubmittedOffer ? order.lastOffer : order.myLastOffer
   }
 
+  const getShippingLabel = shippingQuoteType => {
+    const artsyShippingLabel =
+      shippingQuoteDisplayNames[shippingQuoteType] + " delivery"
+    const suffix = offerShippingCostSubjectToChange() ? "*" : ""
+    return artsyShippingLabel + suffix
+  }
+
   const shippingDisplayLabel = shippingNotCalculated => {
     if (shippingNotCalculated()) {
-      return "Shipping**"
+      return "Shipping*"
     }
 
-    if (order.requestedFulfillment?.__typename === "CommerceShipArta") {
+    const requestedFulfillment = order.requestedFulfillment
+
+    if (requestedFulfillment?.__typename === "CommerceShipArta") {
       const selectedShippingQuote = extractNodes(order.lineItems)?.[0]
-        .selectedShippingQuote
+        ?.selectedShippingQuote
 
       if (selectedShippingQuote) {
-        return `${
-          shippingQuoteDisplayNames[selectedShippingQuote.typeName]
-        } delivery`
+        return getShippingLabel(selectedShippingQuote.typeName)
       }
     }
 
@@ -162,6 +169,43 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
     }
   }
 
+  const taxPrefix = () => {
+    let prefix
+    if (shippingNotCalculated() || offerShippingCostSubjectToChange()) {
+      prefix = <Sup>†</Sup>
+    } else {
+      prefix = "*"
+    }
+    return <>{prefix}Additional duties and taxes </>
+  }
+
+  const taxLabel = () => {
+    let suffix
+    if (shippingNotCalculated() || offerShippingCostSubjectToChange()) {
+      suffix = <Sup>†</Sup>
+    } else {
+      suffix = "*"
+    }
+    return <>Tax{suffix}</>
+  }
+
+  const offerShippingCostSubjectToChange = () => {
+    const offer = getOffer()
+
+    return (
+      !!offer?.shippingTotalCents &&
+      order.requestedFulfillment?.__typename === "CommerceShipArta" &&
+      offerStillInNegotiation()
+    )
+  }
+
+  const offerStillInNegotiation = () => {
+    return (
+      order.mode === "OFFER" &&
+      ["PENDING", "SUBMITTED"].includes(order.displayState)
+    )
+  }
+
   const buyerTotalDisplayAmount = () => {
     const currency = order.currencyCode
     const totalPlaceholder = "Waiting for final costs"
@@ -206,9 +250,8 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
         value={shippingDisplayAmount()}
         data-test="shippingDisplayAmount"
       />
-
       <Entry
-        label="Tax*"
+        label={taxLabel()}
         value={taxDisplayAmount()}
         data-test="taxDisplayAmount"
       />
@@ -220,8 +263,22 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
         data-test="buyerTotalDisplayAmount"
       />
       <Spacer y={2} />
+      {offerShippingCostSubjectToChange() && (
+        <Text variant="sm" color="black60">
+          *Estimate only. Price may vary once offer is finalized.
+        </Text>
+      )}
+      {shippingNotCalculated() && (
+        <>
+          <Spacer y={2} />
+          <Text variant="sm" color="black60">
+            *Shipping costs to be confirmed by gallery. You will be able to
+            review the total price before payment.
+          </Text>
+        </>
+      )}
       <Text variant="sm" color="black60">
-        *Additional duties and taxes{" "}
+        {taxPrefix()}
         <RouterLink
           inline
           to="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
@@ -231,15 +288,6 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
           may apply at import.
         </RouterLink>
       </Text>
-      {shippingNotCalculated() && (
-        <>
-          <Spacer y={2} />
-          <Text variant="xs" color="black60">
-            **Shipping costs to be confirmed by gallery. You will be able to
-            review the total price before payment.
-          </Text>
-        </>
-      )}
       {showOfferNote && order.mode === "OFFER" && renderNoteEntry()}
       {showCongratulationMessage && (
         <Column
@@ -365,6 +413,7 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
           }
         }
         mode
+        displayState
         shippingTotal(precision: 2)
         shippingTotalCents
         taxTotal(precision: 2)

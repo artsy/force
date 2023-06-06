@@ -33,7 +33,7 @@ import MoneyBackIcon from "@artsy/icons/MoneyBackIcon"
 import MessageIcon from "@artsy/icons/MessageIcon"
 
 const SUPPORT_ARTICLE_URL =
-  "https://support.artsy.net/hc/en-us/articles/360048946973"
+  "https://support.artsy.net/s/article/The-Artsy-Guarantee"
 
 export const BuyerGuaranteeIndex: FC = () => {
   const { jumpTo } = useJump({ behavior: "smooth" })

@@ -266,5 +266,8 @@
       "sorryMessage": "Sorry, we couldn’t find anything for",
       "trySearchingAgain": "Please try searching again with a different spelling."
     }
+  },
+  "createAlertModal": {
+    "setPriceRange": "Set price range you are interested in"
   }
 }

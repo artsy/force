@@ -13,5 +13,5 @@ if [ "${NODE_ENV}" != "production" ]; then
 
   yarn concurrently 'yarn relay --watch' 'node --max_old_space_size=3072 ./src/dev.js'
 else
-  exec node "${OPT[@]}" ./server.dist.js
+  exec node "${OPT[@]}" --no-experimental-fetch ./server.dist.js
 fi
