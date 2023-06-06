@@ -1,4 +1,14 @@
-import { Box, BoxProps, Flex, Join, Spacer, THEME, Text } from "@artsy/palette"
+import {
+  Box,
+  BoxProps,
+  Column,
+  Flex,
+  GridColumns,
+  Join,
+  Spacer,
+  THEME,
+  Text,
+} from "@artsy/palette"
 import {
   CardCvcElement,
   CardExpiryElement,
@@ -11,6 +21,7 @@ import type {
 } from "@stripe/stripe-js"
 import { StripeCardCvcElementChangeEvent } from "@stripe/stripe-js"
 import { themeGet } from "@styled-system/theme-get"
+import { Media } from "Utils/Responsive"
 import styled, { css } from "styled-components"
 
 interface CreditCardInputProps extends BoxProps {
@@ -50,30 +61,74 @@ export const CreditCardInput: React.FC<CreditCardInputProps> = ({
 }) => {
   return (
     <Box data-test="creditCardInput" {...rest}>
-      <Flex flex={1}>
-        <Join separator={<Spacer x={2} />}>
-          <CardElementContainer flex={3} error={!!error}>
-            <CardNumberElement
-              onChange={onChange}
-              options={{ showIcon: true, style: { base: stripeBaseStyle } }}
-            />
-          </CardElementContainer>
+      <Media greaterThanOrEqual="md">
+        <GridColumns>
+          <Column span={12}>
+            <Flex flex={1}>
+              <Join separator={<Spacer x={2} />}>
+                <CardElementContainer flex={3} error={!!error}>
+                  <CardNumberElement
+                    onChange={onChange}
+                    options={{
+                      showIcon: true,
+                      style: { base: stripeBaseStyle },
+                    }}
+                  />
+                </CardElementContainer>
 
-          <CardElementContainer flex={1} error={!!error}>
-            <CardExpiryElement
-              onChange={onChange}
-              options={{ style: { base: stripeBaseStyle } }}
-            />
-          </CardElementContainer>
+                <CardElementContainer flex={1} error={!!error}>
+                  <CardExpiryElement
+                    onChange={onChange}
+                    options={{ style: { base: stripeBaseStyle } }}
+                  />
+                </CardElementContainer>
 
-          <CardElementContainer flex={1} error={!!error}>
-            <CardCvcElement
-              onChange={onChange}
-              options={{ style: { base: stripeBaseStyle } }}
-            />
-          </CardElementContainer>
-        </Join>
-      </Flex>
+                <CardElementContainer flex={1} error={!!error}>
+                  <CardCvcElement
+                    onChange={onChange}
+                    options={{ style: { base: stripeBaseStyle } }}
+                  />
+                </CardElementContainer>
+              </Join>
+            </Flex>
+          </Column>
+        </GridColumns>
+      </Media>
+
+      <Media lessThan="md">
+        <GridColumns gridRowGap={2}>
+          <Column span={12}>
+            <CardElementContainer error={!!error}>
+              <CardNumberElement
+                onChange={onChange}
+                options={{
+                  showIcon: true,
+                  style: { base: stripeBaseStyle },
+                }}
+              />
+            </CardElementContainer>
+          </Column>
+
+          <Column span={12}>
+            <Flex flex={1}>
+              <Join separator={<Spacer x={2} />}>
+                <CardElementContainer flex={1} error={!!error}>
+                  <CardExpiryElement
+                    onChange={onChange}
+                    options={{ style: { base: stripeBaseStyle } }}
+                  />
+                </CardElementContainer>
+                <CardElementContainer flex={1} error={!!error}>
+                  <CardCvcElement
+                    onChange={onChange}
+                    options={{ style: { base: stripeBaseStyle } }}
+                  />
+                </CardElementContainer>
+              </Join>
+            </Flex>
+          </Column>
+        </GridColumns>
+      </Media>
 
       {error && typeof error === "string" && (
         <Text variant="xs" color="red100" mt={0.5}>
