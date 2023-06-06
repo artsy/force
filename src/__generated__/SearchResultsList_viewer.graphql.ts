@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3d69a19f2ca8ec2630e1722fb88dba38>>
+ * @generated SignedSource<<bbe1f8e3653baacfec535af3f5b34993>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchResultsList_viewer$data = {
-  readonly searchConnection?: {
+  readonly searchConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly __typename: string;
@@ -52,11 +52,6 @@ const node: ReaderFragment = {
       "name": "first"
     },
     {
-      "defaultValue": false,
-      "kind": "LocalArgument",
-      "name": "hasTerm"
-    },
-    {
       "defaultValue": "",
       "kind": "LocalArgument",
       "name": "term"
@@ -78,179 +73,172 @@ const node: ReaderFragment = {
   "name": "SearchResultsList_viewer",
   "selections": [
     {
-      "condition": "hasTerm",
-      "kind": "Condition",
-      "passingValue": true,
+      "alias": "searchConnection",
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "entities",
+          "variableName": "entities"
+        },
+        {
+          "kind": "Literal",
+          "name": "mode",
+          "value": "AUTOSUGGEST"
+        },
+        {
+          "kind": "Variable",
+          "name": "query",
+          "variableName": "term"
+        }
+      ],
+      "concreteType": "SearchableConnection",
+      "kind": "LinkedField",
+      "name": "__SearchResultsList_searchConnection_connection",
+      "plural": false,
       "selections": [
         {
-          "alias": "searchConnection",
-          "args": [
-            {
-              "kind": "Variable",
-              "name": "entities",
-              "variableName": "entities"
-            },
-            {
-              "kind": "Literal",
-              "name": "mode",
-              "value": "AUTOSUGGEST"
-            },
-            {
-              "kind": "Variable",
-              "name": "query",
-              "variableName": "term"
-            }
-          ],
-          "concreteType": "SearchableConnection",
+          "alias": null,
+          "args": null,
+          "concreteType": "SearchableEdge",
           "kind": "LinkedField",
-          "name": "__SearchResultsList_searchConnection_connection",
-          "plural": false,
+          "name": "edges",
+          "plural": true,
           "selections": [
             {
               "alias": null,
               "args": null,
-              "concreteType": "SearchableEdge",
+              "concreteType": null,
               "kind": "LinkedField",
-              "name": "edges",
-              "plural": true,
-              "selections": [
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": null,
-                  "kind": "LinkedField",
-                  "name": "node",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "displayLabel",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "href",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "imageUrl",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "__typename",
-                      "storageKey": null
-                    },
-                    {
-                      "kind": "InlineFragment",
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "displayType",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "slug",
-                          "storageKey": null
-                        }
-                      ],
-                      "type": "SearchableItem",
-                      "abstractKey": null
-                    },
-                    {
-                      "kind": "InlineFragment",
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "concreteType": "ArtistStatuses",
-                          "kind": "LinkedField",
-                          "name": "statuses",
-                          "plural": false,
-                          "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "artworks",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "auctionLots",
-                              "storageKey": null
-                            }
-                          ],
-                          "storageKey": null
-                        }
-                      ],
-                      "type": "Artist",
-                      "abstractKey": null
-                    }
-                  ],
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "cursor",
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": "PageInfo",
-              "kind": "LinkedField",
-              "name": "pageInfo",
+              "name": "node",
               "plural": false,
               "selections": [
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "endCursor",
+                  "name": "displayLabel",
                   "storageKey": null
                 },
                 {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
-                  "name": "hasNextPage",
+                  "name": "href",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "imageUrl",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
+                },
+                {
+                  "kind": "InlineFragment",
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "displayType",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "slug",
+                      "storageKey": null
+                    }
+                  ],
+                  "type": "SearchableItem",
+                  "abstractKey": null
+                },
+                {
+                  "kind": "InlineFragment",
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "ArtistStatuses",
+                      "kind": "LinkedField",
+                      "name": "statuses",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "artworks",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "auctionLots",
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "type": "Artist",
+                  "abstractKey": null
                 }
               ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
               "storageKey": null
             }
           ],
           "storageKey": null
         }
-      ]
+      ],
+      "storageKey": null
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "b63ee5a7c9e12129118df65a688333a8";
+(node as any).hash = "6d35cdcc07fad9feee082d440b665d7c";
 
 export default node;

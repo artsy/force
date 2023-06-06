@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7548acaccced7ba0af2bcc6338c72882>>
+ * @generated SignedSource<<cfce191c80b22a3c32c59f8b5d62d345>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,19 +11,19 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchEntity = "ARTICLE" | "ARTIST" | "ARTIST_SERIES" | "ARTWORK" | "CITY" | "COLLECTION" | "FAIR" | "FEATURE" | "GALLERY" | "GENE" | "INSTITUTION" | "PAGE" | "PROFILE" | "SALE" | "SHOW" | "TAG" | "VIEWING_ROOM" | "%future added value";
-export type SearchResultsListQuery$variables = {
+export type OverlayRefetchQuery$variables = {
   entities?: ReadonlyArray<SearchEntity | null> | null;
   hasTerm: boolean;
   term: string;
 };
-export type SearchResultsListQuery$data = {
+export type OverlayRefetchQuery$data = {
   readonly viewer: {
-    readonly " $fragmentSpreads": FragmentRefs<"SearchResultsList_viewer">;
+    readonly " $fragmentSpreads": FragmentRefs<"Overlay_viewer">;
   } | null;
 };
-export type SearchResultsListQuery = {
-  response: SearchResultsListQuery$data;
-  variables: SearchResultsListQuery$variables;
+export type OverlayRefetchQuery = {
+  response: OverlayRefetchQuery$data;
+  variables: OverlayRefetchQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -47,23 +47,25 @@ v3 = {
   "name": "entities",
   "variableName": "entities"
 },
-v4 = [
+v4 = {
+  "kind": "Literal",
+  "name": "mode",
+  "value": "AUTOSUGGEST"
+},
+v5 = {
+  "kind": "Variable",
+  "name": "query",
+  "variableName": "term"
+},
+v6 = [
   (v3/*: any*/),
   {
     "kind": "Literal",
     "name": "first",
     "value": 10
   },
-  {
-    "kind": "Literal",
-    "name": "mode",
-    "value": "AUTOSUGGEST"
-  },
-  {
-    "kind": "Variable",
-    "name": "query",
-    "variableName": "term"
-  }
+  (v4/*: any*/),
+  (v5/*: any*/)
 ];
 return {
   "fragment": {
@@ -74,7 +76,7 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "SearchResultsListQuery",
+    "name": "OverlayRefetchQuery",
     "selections": [
       {
         "alias": null,
@@ -99,7 +101,7 @@ return {
               }
             ],
             "kind": "FragmentSpread",
-            "name": "SearchResultsList_viewer"
+            "name": "Overlay_viewer"
           }
         ],
         "storageKey": null
@@ -116,7 +118,7 @@ return {
       (v0/*: any*/)
     ],
     "kind": "Operation",
-    "name": "SearchResultsListQuery",
+    "name": "OverlayRefetchQuery",
     "selections": [
       {
         "alias": null,
@@ -127,13 +129,75 @@ return {
         "plural": false,
         "selections": [
           {
+            "alias": "searchConnectionAggregation",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "aggregations",
+                "value": [
+                  "TYPE"
+                ]
+              },
+              {
+                "kind": "Literal",
+                "name": "first",
+                "value": 0
+              },
+              (v4/*: any*/),
+              (v5/*: any*/)
+            ],
+            "concreteType": "SearchableConnection",
+            "kind": "LinkedField",
+            "name": "searchConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "SearchAggregationResults",
+                "kind": "LinkedField",
+                "name": "aggregations",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "AggregationCount",
+                    "kind": "LinkedField",
+                    "name": "counts",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "count",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "name",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
+          {
             "condition": "hasTerm",
             "kind": "Condition",
             "passingValue": true,
             "selections": [
               {
                 "alias": null,
-                "args": (v4/*: any*/),
+                "args": (v6/*: any*/),
                 "concreteType": "SearchableConnection",
                 "kind": "LinkedField",
                 "name": "searchConnection",
@@ -293,7 +357,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v4/*: any*/),
+                "args": (v6/*: any*/),
                 "filters": [
                   "query",
                   "entities",
@@ -312,16 +376,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "96ff88cda8009c2c4272b77d7d746e05",
+    "cacheID": "38c71420b1c854b3f7041f491e226c9d",
     "id": null,
     "metadata": {},
-    "name": "SearchResultsListQuery",
+    "name": "OverlayRefetchQuery",
     "operationKind": "query",
-    "text": "query SearchResultsListQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...SearchResultsList_viewer_1B9obU\n  }\n}\n\nfragment SearchResultsList_viewer_1B9obU on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 10) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query OverlayRefetchQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...Overlay_viewer_1B9obU\n  }\n}\n\nfragment NewSearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n\nfragment Overlay_viewer_1B9obU on Viewer {\n  ...NewSearchInputPills_viewer_4hh6ED\n  ...SearchResultsList_viewer_plJt2 @include(if: $hasTerm)\n}\n\nfragment SearchResultsList_viewer_plJt2 on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 10) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "6de6862fb6774d1579fb7d3dc1c1512b";
+(node as any).hash = "86cd4d7171dd1d61feb7167f768cda14";
 
 export default node;

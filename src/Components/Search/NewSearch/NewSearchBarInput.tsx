@@ -23,7 +23,7 @@ import {
 } from "./SuggestionItem/NewSuggestionItem"
 import { useTracking } from "react-tracking"
 import { StaticSearchContainer } from "./StaticSearchContainer"
-import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
+// import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
 import { useRouter } from "System/Router/useRouter"
 import { useDebounce } from "Utils/Hooks/useDebounce"
 import { reportPerformanceMeasurement } from "./utils/reportPerformanceMeasurement"
@@ -239,7 +239,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
           />
         )
       }}
-      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 10px)`}
+      // dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 10px)`}
     />
   )
 }

@@ -7,18 +7,18 @@ import {
   TOP_PILL,
   SEARCH_DEBOUNCE_DELAY,
 } from "Components/Search/NewSearch/constants"
-import { RelayRefetchProp } from "react-relay"
+import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
 import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
 import { reportPerformanceMeasurement } from "Components/Search/NewSearch/utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "Components/Search/NewSearch/utils/shouldStartSearching"
 import { useDebounce, useDebouncedValue } from "Utils/Hooks/useDebounce"
-import { MobileSearchBar_viewer$data } from "__generated__/MobileSearchBar_viewer.graphql"
+import { Overlay_viewer$data } from "__generated__/Overlay_viewer.graphql"
 import {
   OVERLAY_CONTENT_ID,
   OverlayBase,
 } from "Components/Search/NewSearch/Mobile/OverlayBase"
-import { SearchResultsListQueryRenderer } from "Components/Search/NewSearch/Mobile/SearchResultsList"
+import { SearchResultsListPaginationContainer } from "Components/Search/NewSearch/Mobile/SearchResultsList"
 
 const logger = createLogger("Components/Search/NewSearch/Mobile")
 
@@ -27,7 +27,7 @@ const scrollToTop = () => {
 }
 
 interface OverlayProps {
-  viewer: MobileSearchBar_viewer$data
+  viewer: Overlay_viewer$data
   relay: RelayRefetchProp
   onClose: () => void
 }
@@ -128,15 +128,43 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
       }
     >
       {shouldStartSearching(inputValue) && (
-        <SearchResultsListQueryRenderer
-          term={debouncedValue}
-          hasTerm={!!debouncedValue}
-          entities={
-            selectedPill.searchEntityName ? [selectedPill.searchEntityName] : []
-          }
+        <SearchResultsListPaginationContainer
+          viewer={viewer}
+          query={debouncedValue}
           onClose={onClose}
         />
       )}
     </OverlayBase>
   )
 }
+
+export const OverlayRefetchContainer = createRefetchContainer(
+  Overlay,
+  {
+    viewer: graphql`
+      fragment Overlay_viewer on Viewer
+        @argumentDefinitions(
+          term: { type: "String!", defaultValue: "" }
+          hasTerm: { type: "Boolean!", defaultValue: false }
+          entities: { type: "[SearchEntity]" }
+        ) {
+        ...NewSearchInputPills_viewer @arguments(term: $term)
+        ...SearchResultsList_viewer
+          @arguments(term: $term, entities: $entities)
+          @include(if: $hasTerm)
+      }
+    `,
+  },
+  graphql`
+    query OverlayRefetchQuery(
+      $term: String!
+      $hasTerm: Boolean!
+      $entities: [SearchEntity]
+    ) {
+      viewer {
+        ...Overlay_viewer
+          @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
+      }
+    }
+  `
+)
