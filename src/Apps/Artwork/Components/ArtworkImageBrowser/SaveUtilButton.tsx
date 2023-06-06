@@ -24,7 +24,7 @@ export const SaveUtilButton: FC<SaveUtilButtonProps> = ({
 }
 
 const SaveIcon = () => (
-  <HeartStrokeIcon data-testid="save-icon" title="Save icon" fill="blue100" />
+  <HeartStrokeIcon data-testid="save-icon" title="Save icon" />
 )
 const UnsaveIcon = () => (
   <HeartFillIcon data-testid="unsave-icon" title="Unsave icon" fill="blue100" />
