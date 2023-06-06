@@ -12,7 +12,7 @@ import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
 import { reportPerformanceMeasurement } from "Components/Search/NewSearch/utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "Components/Search/NewSearch/utils/shouldStartSearching"
-import { useDebounce, useDebouncedValue } from "Utils/Hooks/useDebounce"
+import { useDebounce } from "Utils/Hooks/useDebounce"
 import { Overlay_viewer$data } from "__generated__/Overlay_viewer.graphql"
 import {
   OVERLAY_CONTENT_ID,
@@ -36,6 +36,7 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
   const { t } = useTranslation()
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
+  // TODO: Parse value from url
   const [inputValue, setInputValue] = useState("")
   const disablePills = !shouldStartSearching(inputValue)
 
@@ -43,19 +44,14 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
     inputRef.current?.focus()
   }, [])
 
-  const { debouncedValue } = useDebouncedValue({
-    value: inputValue,
-    delay: SEARCH_DEBOUNCE_DELAY,
-  })
-
   useEffect(() => {
     scrollToTop()
-  }, [debouncedValue])
+  }, [inputValue, selectedPill])
 
   const refetch = useCallback(
     (value: string, entity?: string) => {
       const entities = entity ? [entity] : []
-      const performanceStart = performance && performance.now()
+      const performanceStart = performance?.now()
 
       relay.refetch(
         {
@@ -87,16 +83,15 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
   const handlePillClick = (pill: PillType) => {
     setSelectedPill(pill)
     refetch(inputValue, pill.searchEntityName)
-
-    scrollToTop()
   }
 
   const handleValueChange = event => {
     const value = event.target.value
     setInputValue(value)
 
-    if (shouldStartSearching(value))
+    if (shouldStartSearching(value)) {
       debouncedSearchRequest(value, selectedPill.searchEntityName)
+    }
   }
 
   return (
@@ -130,7 +125,7 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
       {shouldStartSearching(inputValue) && (
         <SearchResultsListPaginationContainer
           viewer={viewer}
-          query={debouncedValue}
+          query={inputValue}
           onClose={onClose}
         />
       )}
