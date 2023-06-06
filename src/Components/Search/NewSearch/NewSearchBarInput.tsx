@@ -1,5 +1,5 @@
 import { AutocompleteInput, useUpdateEffect } from "@artsy/palette"
-import { ChangeEvent, FC, useCallback, useEffect, useState } from "react"
+import { ChangeEvent, FC, useCallback, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -82,19 +82,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
       item_type: "Footer",
     },
   ]
-
-  // Clear the search term once you navigate away from search results
-  useEffect(() => {
-    const remove = router.addNavigationListener(location => {
-      if (!location.pathname.startsWith("/search")) {
-        setValue("")
-      }
-
-      return true
-    })
-
-    return remove
-  }, [router])
 
   useUpdateEffect(() => {
     tracking.trackEvent({
