@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { FC } from "react"
 import {
   RelayPaginationProp,
   createPaginationContainer,
@@ -34,7 +34,6 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
   query,
   onClose,
 }) => {
-  const [isLoading, setIsLoading] = useState(false)
   const options = extractNodes(viewer.searchConnection)
   const formattedOptions: SuggionItemOptionProps[] = formatOptions(
     options as SearchNodeOption[]
@@ -53,14 +52,10 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
       return
     }
 
-    setIsLoading(true)
-
     relay.loadMore(ENTITIES_PER_SCROLL, err => {
       if (err) {
         console.error(err)
       }
-
-      setIsLoading(false)
     })
   }
 
