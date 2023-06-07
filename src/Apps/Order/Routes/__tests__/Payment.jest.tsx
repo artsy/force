@@ -477,6 +477,9 @@ describe("Payment", () => {
       expect(page.text()).toContain(
         "• Payment processing will take 4-7 business days once the gallery accepts the order."
       )
+      expect(page.text()).toContain(
+        "• UK bank accounts will be charged in GBP once the gallery accepts the order."
+      )
     })
 
     it("tracks when the user selects SEPA payment method", async () => {
