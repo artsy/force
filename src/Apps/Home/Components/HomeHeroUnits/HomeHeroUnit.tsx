@@ -1,4 +1,3 @@
-import Braze from "@braze/web-sdk"
 import * as React from "react"
 import {
   Box,
@@ -13,122 +12,118 @@ import {
 import { cropped } from "Utils/resized"
 import { RouterLink } from "System/Router/RouterLink"
 import { Media } from "Utils/Responsive"
-import { HomeHeroUnitCredit } from "Apps/Home/Components/HomeHeroUnits/HomeHeroUnitCredit"
+import { HomeHeroUnitCredit } from "./HomeHeroUnitCredit"
+import { createFragmentContainer, graphql } from "react-relay"
+import { HomeHeroUnit_heroUnit$data } from "__generated__/HomeHeroUnit_heroUnit.graphql"
 
-interface HomeContentCardProps {
-  card: Braze.CaptionedImage
+interface HomeHeroUnitProps {
+  heroUnit: HomeHeroUnit_heroUnit$data
   index: number
   onClick?: () => void
 }
 
-export const HomeContentCard: React.FC<HomeContentCardProps> = props => {
+export const HomeHeroUnit: React.FC<HomeHeroUnitProps> = props => {
   return (
     <Box width="100%" height="100%">
       <Media at="xs">
-        <HomeContentCardSmall {...props} />
+        <HomeHeroUnitSmall {...props} />
       </Media>
 
       <Media greaterThan="xs">
-        <HomeContentCardLarge {...props} />
+        <HomeHeroUnitLarge {...props} />
       </Media>
     </Box>
   )
 }
 
-const HomeContentCardSmall: React.FC<HomeContentCardProps> = ({
-  card,
+const HomeHeroUnitSmall: React.FC<HomeHeroUnitProps> = ({
+  heroUnit,
   index,
   onClick,
 }) => {
-  const image = card.imageUrl
-    ? cropped(card.imageUrl, {
-        // 3:2
-        width: 500,
-        height: 333,
-      })
-    : null
+  const imageUrl = heroUnit.image?.imageURL
+  const image = imageUrl && cropped(imageUrl, { width: 500, height: 333 })
 
   return (
     <RouterLink
-      onClick={onClick}
-      display="block"
-      width="100%"
-      height="100%"
-      to={card.url!}
+      aria-label={`${heroUnit.title} - ${heroUnit.body}`}
       bg="black5"
+      display="block"
+      height="100%"
+      onClick={onClick}
       textDecoration="none"
-      aria-label={`${card.title} - ${card.description}`}
+      to={heroUnit.link.url}
+      width="100%"
     >
       <ResponsiveBox
-        aspectWidth={3}
         aspectHeight={2}
-        maxWidth="100%"
+        aspectWidth={3}
         bg="black30"
+        maxWidth="100%"
       >
         {image && (
           <Image
+            alt=""
+            height="100%"
+            lazyLoad={index > 0}
             src={image.src}
             srcSet={image.srcSet}
             width="100%"
-            height="100%"
-            lazyLoad={index > 0}
-            alt=""
           />
         )}
       </ResponsiveBox>
 
       <Box p={4}>
         <Text as={index === 0 ? "h1" : "h2"} variant="lg-display" lineClamp={3}>
-          {card.title}
+          {heroUnit.title}
         </Text>
 
         <Spacer y={1} />
 
         <Text variant="xs" color="black60" lineClamp={4}>
-          {card.description}
+          {heroUnit.body}
         </Text>
 
         <Spacer y={1} />
 
-        <Text variant="xs">{card.linkText}</Text>
+        <Text variant="xs">{heroUnit.link.text}</Text>
       </Box>
     </RouterLink>
   )
 }
 
-const HomeContentCardLarge: React.FC<HomeContentCardProps> = ({
-  card,
+const HomeHeroUnitLarge: React.FC<HomeHeroUnitProps> = ({
+  heroUnit,
   index,
   onClick,
 }) => {
-  const image = card.imageUrl
-    ? cropped(card.imageUrl, { width: 1270, height: 500 })
-    : null
+  const imageUrl = heroUnit.image?.imageURL
+  const image = imageUrl && cropped(imageUrl, { width: 1270, height: 500 })
 
   return (
     <RouterLink
-      onClick={onClick}
+      aria-label={`${heroUnit.title} - ${heroUnit.body}`}
       display="block"
+      onClick={onClick}
       textDecoration="none"
-      to={card.url!}
-      aria-label={`${card.title} - ${card.description}`}
+      to={heroUnit.link.url}
     >
       <GridColumns bg="black5">
         <Column span={6}>
           <Box height={[300, 400, 500]} position="relative" bg="black30">
             {image && (
               <Image
+                alt=""
+                height="100%"
+                lazyLoad={index > 0}
                 src={image.src}
                 srcSet={image.srcSet}
-                width="100%"
-                height="100%"
                 style={{ objectFit: "cover" }}
-                lazyLoad={index > 0}
-                alt=""
+                width="100%"
               />
             )}
 
-            {card.extras?.credit && (
+            {heroUnit.credit && (
               <Box
                 position="absolute"
                 bottom={0}
@@ -139,7 +134,7 @@ const HomeContentCardLarge: React.FC<HomeContentCardProps> = ({
                 pt={6}
                 background="linear-gradient(rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.1) 100%);"
               >
-                <HomeHeroUnitCredit>{card.extras.credit}</HomeHeroUnitCredit>
+                <HomeHeroUnitCredit>{heroUnit.credit}</HomeHeroUnitCredit>
               </Box>
             )}
           </Box>
@@ -148,16 +143,16 @@ const HomeContentCardLarge: React.FC<HomeContentCardProps> = ({
         <Column span={6}>
           <GridColumns height="100%">
             <Column
-              start={3}
-              span={8}
               display="flex"
-              justifyContent="center"
               flexDirection="column"
+              justifyContent="center"
               py={4}
+              span={8}
+              start={3}
             >
-              {card.extras?.label && (
+              {heroUnit.label && (
                 <>
-                  <Text variant="xs">{card.extras.label}</Text>
+                  <Text variant="xs">{heroUnit.label}</Text>
 
                   <Spacer y={1} />
                 </>
@@ -165,20 +160,20 @@ const HomeContentCardLarge: React.FC<HomeContentCardProps> = ({
 
               <Text
                 as={index === 0 ? "h1" : "h2"}
-                variant={["lg-display", "xl", "xl"]}
                 lineClamp={3}
+                variant={["lg-display", "xl", "xl"]}
               >
-                {card.title}
+                {heroUnit.title}
               </Text>
 
               <Spacer y={2} />
 
               <Text
-                variant={["xs", "sm-display", "lg-display"]}
                 color="black60"
                 lineClamp={4}
+                variant={["xs", "sm-display", "lg-display"]}
               >
-                {card.description}
+                {heroUnit.body}
               </Text>
 
               <Spacer y={[2, 2, 4]} />
@@ -186,7 +181,7 @@ const HomeContentCardLarge: React.FC<HomeContentCardProps> = ({
               <GridColumns>
                 <Column span={[12, 12, 6]}>
                   <Button variant="secondaryBlack" width="100%" tabIndex={-1}>
-                    {card.linkText}
+                    {heroUnit.link.text}
                   </Button>
                 </Column>
               </GridColumns>
@@ -197,3 +192,24 @@ const HomeContentCardLarge: React.FC<HomeContentCardProps> = ({
     </RouterLink>
   )
 }
+
+export const HomeHeroUnitFragmentContainer = createFragmentContainer(
+  HomeHeroUnit,
+  {
+    heroUnit: graphql`
+      fragment HomeHeroUnit_heroUnit on HeroUnit {
+        body
+        credit
+        image {
+          imageURL
+        }
+        label
+        link {
+          text
+          url
+        }
+        title
+      }
+    `,
+  }
+)

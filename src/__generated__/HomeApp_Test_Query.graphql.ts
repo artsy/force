@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8cd929810928163e140d9156151002bd>>
+ * @generated SignedSource<<e695a1f6e460176314b2be4a045f129d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,9 @@ export type HomeApp_Test_Query$data = {
   readonly featuredEventsOrderedSet: {
     readonly " $fragmentSpreads": FragmentRefs<"HomeApp_featuredEventsOrderedSet">;
   } | null;
+  readonly heroUnitsConnection: {
+    readonly " $fragmentSpreads": FragmentRefs<"HomeApp_heroUnitsConnection">;
+  } | null;
 };
 export type HomeApp_Test_Query = {
   response: HomeApp_Test_Query$data;
@@ -29,7 +32,21 @@ var v0 = [
     "value": "example"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 10
+  }
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "title",
+  "storageKey": null
+},
+v3 = {
   "kind": "Literal",
   "name": "version",
   "value": [
@@ -38,55 +55,61 @@ v1 = {
     "large_rectangle"
   ]
 },
-v2 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v3 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "srcSet",
   "storageKey": null
 },
-v4 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = [
-  (v4/*: any*/)
+v7 = [
+  (v6/*: any*/)
 ],
-v6 = {
+v8 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v7 = {
+v9 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
 },
-v8 = {
+v10 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v9 = {
+v11 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Image"
+},
+v12 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "CroppedImageUrl"
 },
-v10 = {
+v13 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -114,6 +137,22 @@ return {
           }
         ],
         "storageKey": "orderedSet(id:\"example\")"
+      },
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "HeroUnitConnection",
+        "kind": "LinkedField",
+        "name": "heroUnitsConnection",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "HomeApp_heroUnitsConnection"
+          }
+        ],
+        "storageKey": "heroUnitsConnection(first:10)"
       }
     ],
     "type": "Query",
@@ -158,13 +197,7 @@ return {
                     "name": "internalID",
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "title",
-                    "storageKey": null
-                  },
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -195,7 +228,7 @@ return {
                             "name": "height",
                             "value": 63
                           },
-                          (v1/*: any*/),
+                          (v3/*: any*/),
                           {
                             "kind": "Literal",
                             "name": "width",
@@ -207,8 +240,8 @@ return {
                         "name": "cropped",
                         "plural": false,
                         "selections": [
-                          (v2/*: any*/),
-                          (v3/*: any*/),
+                          (v4/*: any*/),
+                          (v5/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -234,7 +267,7 @@ return {
                             "name": "height",
                             "value": 297
                           },
-                          (v1/*: any*/),
+                          (v3/*: any*/),
                           {
                             "kind": "Literal",
                             "name": "width",
@@ -246,42 +279,141 @@ return {
                         "name": "cropped",
                         "plural": false,
                         "selections": [
-                          (v2/*: any*/),
-                          (v3/*: any*/)
+                          (v4/*: any*/),
+                          (v5/*: any*/)
                         ],
                         "storageKey": "cropped(height:297,version:[\"main\",\"wide\",\"large_rectangle\"],width:445)"
                       }
                     ],
                     "storageKey": null
                   },
-                  (v4/*: any*/)
+                  (v6/*: any*/)
                 ],
                 "type": "FeaturedLink",
                 "abstractKey": null
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v5/*: any*/),
+                "selections": (v7/*: any*/),
                 "type": "Node",
                 "abstractKey": "__isNode"
               },
               {
                 "kind": "InlineFragment",
-                "selections": (v5/*: any*/),
+                "selections": (v7/*: any*/),
                 "type": "Profile",
                 "abstractKey": null
               }
             ],
             "storageKey": null
           },
-          (v4/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": "orderedSet(id:\"example\")"
+      },
+      {
+        "alias": null,
+        "args": (v1/*: any*/),
+        "concreteType": "HeroUnitConnection",
+        "kind": "LinkedField",
+        "name": "heroUnitsConnection",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "HeroUnitEdge",
+            "kind": "LinkedField",
+            "name": "edges",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "HeroUnit",
+                "kind": "LinkedField",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "body",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "credit",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "Image",
+                    "kind": "LinkedField",
+                    "name": "image",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "imageURL",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "label",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "HeroUnitLink",
+                    "kind": "LinkedField",
+                    "name": "link",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "text",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "url",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  (v2/*: any*/),
+                  (v6/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": "heroUnitsConnection(first:10)"
       }
     ]
   },
   "params": {
-    "cacheID": "9ce6e024b610bf8d52cdcdf08809fd23",
+    "cacheID": "e913e48788a1b3e34c8c6e5a6f5bac23",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -291,43 +423,71 @@ return {
           "plural": false,
           "type": "OrderedSet"
         },
-        "featuredEventsOrderedSet.id": (v6/*: any*/),
+        "featuredEventsOrderedSet.id": (v8/*: any*/),
         "featuredEventsOrderedSet.items": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "OrderedSetItem"
         },
-        "featuredEventsOrderedSet.items.__isNode": (v7/*: any*/),
-        "featuredEventsOrderedSet.items.__typename": (v7/*: any*/),
-        "featuredEventsOrderedSet.items.href": (v8/*: any*/),
-        "featuredEventsOrderedSet.items.id": (v6/*: any*/),
-        "featuredEventsOrderedSet.items.image": {
+        "featuredEventsOrderedSet.items.__isNode": (v9/*: any*/),
+        "featuredEventsOrderedSet.items.__typename": (v9/*: any*/),
+        "featuredEventsOrderedSet.items.href": (v10/*: any*/),
+        "featuredEventsOrderedSet.items.id": (v8/*: any*/),
+        "featuredEventsOrderedSet.items.image": (v11/*: any*/),
+        "featuredEventsOrderedSet.items.image.large": (v12/*: any*/),
+        "featuredEventsOrderedSet.items.image.large.src": (v9/*: any*/),
+        "featuredEventsOrderedSet.items.image.large.srcSet": (v9/*: any*/),
+        "featuredEventsOrderedSet.items.image.small": (v12/*: any*/),
+        "featuredEventsOrderedSet.items.image.small.height": (v13/*: any*/),
+        "featuredEventsOrderedSet.items.image.small.src": (v9/*: any*/),
+        "featuredEventsOrderedSet.items.image.small.srcSet": (v9/*: any*/),
+        "featuredEventsOrderedSet.items.image.small.width": (v13/*: any*/),
+        "featuredEventsOrderedSet.items.internalID": (v8/*: any*/),
+        "featuredEventsOrderedSet.items.subtitle": (v10/*: any*/),
+        "featuredEventsOrderedSet.items.title": (v10/*: any*/),
+        "heroUnitsConnection": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
-          "type": "Image"
+          "type": "HeroUnitConnection"
         },
-        "featuredEventsOrderedSet.items.image.large": (v9/*: any*/),
-        "featuredEventsOrderedSet.items.image.large.src": (v7/*: any*/),
-        "featuredEventsOrderedSet.items.image.large.srcSet": (v7/*: any*/),
-        "featuredEventsOrderedSet.items.image.small": (v9/*: any*/),
-        "featuredEventsOrderedSet.items.image.small.height": (v10/*: any*/),
-        "featuredEventsOrderedSet.items.image.small.src": (v7/*: any*/),
-        "featuredEventsOrderedSet.items.image.small.srcSet": (v7/*: any*/),
-        "featuredEventsOrderedSet.items.image.small.width": (v10/*: any*/),
-        "featuredEventsOrderedSet.items.internalID": (v6/*: any*/),
-        "featuredEventsOrderedSet.items.subtitle": (v8/*: any*/),
-        "featuredEventsOrderedSet.items.title": (v8/*: any*/)
+        "heroUnitsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "HeroUnitEdge"
+        },
+        "heroUnitsConnection.edges.node": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "HeroUnit"
+        },
+        "heroUnitsConnection.edges.node.body": (v9/*: any*/),
+        "heroUnitsConnection.edges.node.credit": (v10/*: any*/),
+        "heroUnitsConnection.edges.node.id": (v8/*: any*/),
+        "heroUnitsConnection.edges.node.image": (v11/*: any*/),
+        "heroUnitsConnection.edges.node.image.imageURL": (v10/*: any*/),
+        "heroUnitsConnection.edges.node.label": (v10/*: any*/),
+        "heroUnitsConnection.edges.node.link": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "HeroUnitLink"
+        },
+        "heroUnitsConnection.edges.node.link.text": (v9/*: any*/),
+        "heroUnitsConnection.edges.node.link.url": (v9/*: any*/),
+        "heroUnitsConnection.edges.node.title": (v9/*: any*/)
       }
     },
     "name": "HomeApp_Test_Query",
     "operationKind": "query",
-    "text": "query HomeApp_Test_Query {\n  featuredEventsOrderedSet: orderedSet(id: \"example\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n"
+    "text": "query HomeApp_Test_Query {\n  featuredEventsOrderedSet: orderedSet(id: \"example\") {\n    ...HomeApp_featuredEventsOrderedSet\n    id\n  }\n  heroUnitsConnection(first: 10) {\n    ...HomeApp_heroUnitsConnection\n  }\n}\n\nfragment HomeApp_featuredEventsOrderedSet on OrderedSet {\n  ...HomeFeaturedEventsRail_orderedSet\n}\n\nfragment HomeApp_heroUnitsConnection on HeroUnitConnection {\n  ...HomeHeroUnits_heroUnits\n}\n\nfragment HomeFeaturedEventsRail_orderedSet on OrderedSet {\n  items {\n    __typename\n    ... on FeaturedLink {\n      internalID\n      title\n      subtitle\n      href\n      image {\n        small: cropped(width: 95, height: 63, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n          width\n          height\n        }\n        large: cropped(width: 445, height: 297, version: [\"main\", \"wide\", \"large_rectangle\"]) {\n          src\n          srcSet\n        }\n      }\n      id\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on Profile {\n      id\n    }\n  }\n}\n\nfragment HomeHeroUnit_heroUnit on HeroUnit {\n  body\n  credit\n  image {\n    imageURL\n  }\n  label\n  link {\n    text\n    url\n  }\n  title\n}\n\nfragment HomeHeroUnits_heroUnits on HeroUnitConnection {\n  edges {\n    node {\n      ...HomeHeroUnit_heroUnit\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "659b364266caf7b1a5df59d3b4d2033a";
+(node as any).hash = "fcc85b86fb1b767b9c94712579db1172";
 
 export default node;
