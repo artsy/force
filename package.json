@@ -93,7 +93,6 @@
     "@babel/runtime": "7.13.10",
     "@loadable/component": "5.15.2",
     "@loadable/server": "5.15.2",
-    "@segment/consent-manager": "5.7.0",
     "@sentry/browser": "6.7.1",
     "@sentry/integrations": "^6.7.2",
     "@sentry/node": "^6.7.1",
