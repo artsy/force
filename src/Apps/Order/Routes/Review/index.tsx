@@ -1,5 +1,6 @@
 import { Box, Button, Flex, Join, Spacer } from "@artsy/palette"
 import { Review_order$data } from "__generated__/Review_order.graphql"
+import { Review_me$data } from "__generated__/Review_me.graphql"
 import { ReviewSubmitOfferOrderWithConversationMutation } from "__generated__/ReviewSubmitOfferOrderWithConversationMutation.graphql"
 import { ReviewSubmitOrderMutation } from "__generated__/ReviewSubmitOrderMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
@@ -36,10 +37,13 @@ import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
+import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
+
 export interface ReviewProps extends SystemContextProps {
   stripe: Stripe
   elements: StripeElements
   order: Review_order$data
+  me: Review_me$data
   relay?: RelayProp
   router: Router
   route: RouteConfig
@@ -55,6 +59,7 @@ const OrdersReviewOwnerType = OwnerType.ordersReview
 
 export const ReviewRoute: FC<ReviewProps> = props => {
   const { trackEvent } = useTracking()
+  const { submitMutation: submitVerifyIDMutation } = useVerifyID()
   const productId = extractNodes(props.order.lineItems)[0].artwork?.internalID
   const artworkVersion = extractNodes(props.order.lineItems)[0]?.artworkVersion
 
@@ -129,6 +134,8 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           order,
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
+
+        requestIdentityVerificationIfNecessary(order)
 
         if (isEigen) {
           if (order.mode === "OFFER") {
@@ -387,6 +394,36 @@ export const ReviewRoute: FC<ReviewProps> = props => {
     props.router.push(`/orders/${props.order.internalID}/shipping`)
   }
 
+  const requestIdentityVerificationIfNecessary = async order => {
+    if (
+      order.buyerTotalCents &&
+      order.buyerTotalCents > 1000000 &&
+      ["USD", "GBP", "EUR"].includes(order.currencyCode) &&
+      !props.me?.isIdentityVerified
+    ) {
+      try {
+        await submitVerifyIDMutation({
+          variables: { input: {} },
+          rejectIf: res => {
+            return res.sendIdentityVerificationEmail?.confirmationOrError
+              ?.mutationError
+          },
+        })
+
+        return true
+      } catch (error) {
+        logger.error({
+          ...error,
+          orderId: props.order.internalID!,
+          paymentMethod: props.order?.paymentMethod,
+          shouldLogErrorToSentry: true,
+        })
+      }
+
+      return false
+    }
+  }
+
   const { order, isCommittingMutation, isEigen, stripe } = props
   const submittable = !!stripe
 
@@ -508,6 +545,8 @@ export const ReviewFragmentContainer = createFragmentContainer(
       fragment Review_order on CommerceOrder {
         state
         artworkDetails
+        buyerTotalCents
+        currencyCode
         internalID
         paymentMethod
         mode
@@ -549,6 +588,11 @@ export const ReviewFragmentContainer = createFragmentContainer(
         ...ShippingArtaSummaryItem_order
         ...OfferSummaryItem_order
         ...OrderStepper_order
+      }
+    `,
+    me: graphql`
+      fragment Review_me on Me {
+        isIdentityVerified
       }
     `,
   }
