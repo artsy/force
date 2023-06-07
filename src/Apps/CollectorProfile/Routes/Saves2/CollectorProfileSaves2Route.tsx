@@ -104,8 +104,6 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
         })}
       </Shelf>
 
-      <Spacer y={4} />
-
       <ArtworkListContentQueryRenderer
         listID={selectedArtworkListId}
         initialPage={(page as unknown) as number}
