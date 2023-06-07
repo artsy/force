@@ -15,6 +15,7 @@ import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { ArtworkListArtworksGridPlaceholder } from "./ArtworkListPlaceholders"
 import { ArtworkListContextualMenu } from "./Actions/ArtworkListContextualMenu"
 import { useJump } from "Utils/Hooks/useJump"
+import { useArtworkListVisibilityContext } from "Apps/CollectorProfile/Routes/Saves2/Utils/useArtworkListVisibility"
 
 interface ArtworkListContentQueryRendererProps {
   listID: string
@@ -46,7 +47,9 @@ function isContentOutOfView() {
 
 const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
   const { match } = useRouter()
+
   const { jumpTo } = useJump()
+  const { artworkListItemHasBeenTouched } = useArtworkListVisibilityContext()
 
   const artworkList = me.artworkList!
   const counts: Counts = {
@@ -54,10 +57,12 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
   }
 
   useEffect(() => {
-    if (isContentOutOfView()) {
+    const shouldScroll = isContentOutOfView() && artworkListItemHasBeenTouched
+
+    if (shouldScroll) {
       jumpTo("AboveArtworkListShelf")
     }
-  }, [jumpTo])
+  }, [jumpTo, artworkListItemHasBeenTouched])
 
   return (
     <ArtworkFilterContextProvider

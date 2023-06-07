@@ -13,6 +13,7 @@ import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { HttpError } from "found"
 import { MetaTags } from "Components/MetaTags"
 import { Jump } from "Utils/Hooks/useJump"
+import { ArtworkListVisibilityProvider } from "Apps/CollectorProfile/Routes/Saves2/Utils/useArtworkListVisibility"
 
 interface CollectorProfileSaves2RouteProps {
   me: CollectorProfileSaves2Route_me$data
@@ -78,7 +79,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   }
 
   return (
-    <>
+    <ArtworkListVisibilityProvider>
       <MetaTags title="Saves | Artsy" pathname="collector-profile/saves" />
 
       <ArtworkListsHeader
@@ -112,7 +113,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
         initialPage={(page as unknown) as number}
         initialSort={sort}
       />
-    </>
+    </ArtworkListVisibilityProvider>
   )
 }
 
