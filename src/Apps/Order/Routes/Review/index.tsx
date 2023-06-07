@@ -58,6 +58,22 @@ export const ReviewRoute: FC<ReviewProps> = props => {
   const productId = extractNodes(props.order.lineItems)[0].artwork?.internalID
   const artworkVersion = extractNodes(props.order.lineItems)[0]?.artworkVersion
 
+  const trackErrorMessageEvent = (
+    title: string,
+    message: string | undefined,
+    code?: string
+  ) => {
+    return trackEvent({
+      action: ActionType.errorMessageViewed,
+      context_owner_type: OwnerType.ordersReview,
+      context_owner_id: props.order.internalID,
+      title: title,
+      message: message,
+      error_code: code || null,
+      flow: "user submits order",
+    })
+  }
+
   const onSubmit = async (setupIntentId?: any) => {
     const submitEvent = {
       action_type:
@@ -93,6 +109,8 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           .handleCardAction(orderOrError.actionData.clientSecret)
           .then(result => {
             if (result.error) {
+              trackErrorMessageEvent("An error occurred", result.error.message)
+
               props.dialog.showErrorDialog({
                 title: "An error occurred",
                 message: result.error.message,
@@ -111,6 +129,8 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           .confirmCardSetup(orderOrError.actionData.clientSecret)
           .then(result => {
             if (result.error) {
+              trackErrorMessageEvent("An error occurred", result.error.message)
+
               props.dialog.showErrorDialog({
                 title: "An error occurred",
                 message: result.error.message,
@@ -260,17 +280,27 @@ export const ReviewRoute: FC<ReviewProps> = props => {
 
     switch (error.code) {
       case "missing_required_info": {
+        const title = "Missing information"
+        const message =
+          "Please review and update your shipping and/or payment details and try again."
+
+        trackErrorMessageEvent(title, message, error.code)
+
         props.dialog.showErrorDialog({
-          title: "Missing information",
-          message:
-            "Please review and update your shipping and/or payment details and try again.",
+          title: title,
+          message: message,
         })
         break
       }
       case "insufficient_inventory": {
+        const title = "Not available"
+        const message = "Sorry, the work is no longer available."
+
+        trackErrorMessageEvent(title, message, error.code)
+
         await props.dialog.showErrorDialog({
-          title: "Not available",
-          message: "Sorry, the work is no longer available.",
+          title: title,
+          message: message,
         })
         const artistId = getArtistId()
         if (artistId) {
@@ -280,9 +310,14 @@ export const ReviewRoute: FC<ReviewProps> = props => {
       }
       case "failed_charge_authorize": {
         const parsedData = JSON.parse(error.data!)
+        const title = "An error occurred"
+        const message = parsedData.failure_message
+
+        trackErrorMessageEvent(title, message, error.code)
+
         props.dialog.showErrorDialog({
-          title: "An error occurred",
-          message: parsedData.failure_message,
+          title: title,
+          message: message,
         })
         break
       }
@@ -293,38 +328,64 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         }
 
         if (data.decline_code === "insufficient_funds") {
+          const title = "Insufficient funds"
+          const message =
+            "There aren't enough funds available on the payment methods you provided. Please contact your card provider or try another card."
+
+          trackErrorMessageEvent(title, message, data.decline_code)
+
           await props.dialog.showErrorDialog({
-            title: "Insufficient funds",
-            message:
-              "There aren't enough funds available on the payment methods you provided. Please contact your card provider or try another card.",
+            title: title,
+            message: message,
           })
         } else {
+          const title = "Charge failed"
+          const message =
+            "Payment has been declined. Please contact your card provider or bank institution, then press “Submit” again. Alternatively, use another payment method."
+
+          trackErrorMessageEvent(title, message, data.decline_code)
+
           await props.dialog.showErrorDialog({
-            title: "Charge failed",
-            message:
-              "Payment has been declined. Please contact your card provider or bank institution, then press “Submit” again. Alternatively, use another payment method.",
+            title: title,
+            message: message,
           })
         }
         break
       }
       case "payment_method_confirmation_failed": {
+        const title = "Your card was declined"
+        const message =
+          "We couldn't authorize your credit card. Please enter another payment method or contact your bank for more information."
+
+        trackErrorMessageEvent(title, message, error.code)
+
         await props.dialog.showErrorDialog({
-          title: "Your card was declined",
-          message:
-            "We couldn't authorize your credit card. Please enter another payment method or contact your bank for more information.",
+          title: title,
+          message: message,
         })
         break
       }
       case "artwork_version_mismatch": {
+        const title = "Work has been updated"
+        const message =
+          "Something about the work changed since you started checkout. Please review the work before submitting your order."
+
+        trackErrorMessageEvent(title, message, error.code)
+
         await props.dialog.showErrorDialog({
-          title: "Work has been updated",
-          message:
-            "Something about the work changed since you started checkout. Please review the work before submitting your order.",
+          title: title,
+          message: message,
         })
         routeToArtworkPage()
         break
       }
       default: {
+        const title = "An error occurred"
+        const message =
+          "Something went wrong. Please try again or contact orders@artsy.net"
+
+        trackErrorMessageEvent(title, message)
+
         props.dialog.showErrorDialog()
         break
       }
