@@ -53,6 +53,7 @@ export const renderServerApp = ({
     },
     disable: {
       analytics: getServerParam(req, "disableAnalytics") === "true",
+      onetrust: getServerParam(req, "disableOneTrust") === "true",
       segment: getServerParam(req, "disableSegment") === "true",
       stripe: getServerParam(req, "disableStripe") === "true",
       scripts: !mount,

@@ -1,24 +1,17 @@
 import { FC } from "react"
 import { ArticleSectionVideo_section$data } from "__generated__/ArticleSectionVideo_section.graphql"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Clickable, Image, ResponsiveBox, Text } from "@artsy/palette"
+import { Clickable, Image, ResponsiveBox } from "@artsy/palette"
 import styled from "styled-components"
 import { useMode } from "Utils/Hooks/useMode"
 import { themeGet } from "@styled-system/theme-get"
-import { useArticleTracking } from "Apps/Article/useArticleTracking"
-import { useCookieConsentManager } from "Components/CookieConsentManager/CookieConsentManagerContext"
+import { useArticleTracking } from "../../useArticleTracking"
 
 interface ArticleSectionVideoProps {
   section: ArticleSectionVideo_section$data
 }
 
 const ArticleSectionVideo: FC<ArticleSectionVideoProps> = ({ section }) => {
-  const {
-    isDestinationAllowed,
-    openConsentManager,
-    ready,
-  } = useCookieConsentManager()
-
   const { clickedPlayVideo } = useArticleTracking()
 
   const [mode, setMode] = useMode<"Pending" | "Playing">("Pending")
@@ -41,51 +34,30 @@ const ArticleSectionVideo: FC<ArticleSectionVideoProps> = ({ section }) => {
       bg="black10"
       data-testid="ArticleSectionVideo"
     >
-      {ready && (
-        <>
-          {isDestinationAllowed("YouTube") ? (
-            <>
-              {mode === "Pending" && image ? (
-                <Cover
-                  onClick={handleClick}
-                  width="100%"
-                  height="100%"
-                  position="relative"
-                  bg="black10"
-                >
-                  <Image
-                    src={image.src}
-                    srcSet={image.srcSet}
-                    width="100%"
-                    height="100%"
-                    lazyLoad
-                  />
+      {mode === "Pending" && image ? (
+        <Cover
+          onClick={handleClick}
+          width="100%"
+          height="100%"
+          position="relative"
+          bg="black10"
+        >
+          <Image
+            src={image.src}
+            srcSet={image.srcSet}
+            width="100%"
+            height="100%"
+            lazyLoad
+          />
 
-                  <Play />
-                </Cover>
-              ) : (
-                <Video
-                  dangerouslySetInnerHTML={{
-                    __html: image ? section.embed : section.fallbackEmbed,
-                  }}
-                />
-              )}
-            </>
-          ) : (
-            <Clickable
-              width="100%"
-              height="100%"
-              display="flex"
-              alignItems="center"
-              justifyContent="center"
-              p={2}
-              color="black60"
-              onClick={openConsentManager}
-            >
-              <Text variant="xs">Manage Cookies</Text>
-            </Clickable>
-          )}
-        </>
+          <Play />
+        </Cover>
+      ) : (
+        <Video
+          dangerouslySetInnerHTML={{
+            __html: image ? section.embed : section.fallbackEmbed,
+          }}
+        />
       )}
     </ResponsiveBox>
   )

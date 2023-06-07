@@ -33,7 +33,6 @@ import { StickyProvider } from "Components/Sticky"
 import { AuthIntentProvider } from "Utils/Hooks/useAuthIntent"
 import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
 import { ProgressiveOnboardingProvider } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
-import { CookieConsentManager } from "Components/CookieConsentManager/CookieConsentManager"
 
 export interface BootProps {
   children: React.ReactNode
@@ -94,12 +93,9 @@ export const Boot = track(undefined, {
                         <AuthIntentProvider>
                           <AuthDialogProvider>
                             <ProgressiveOnboardingProvider>
-                              <CookieConsentManager>
-                                <FocusVisible />
-                                <SiftContainer />
-
-                                {children}
-                              </CookieConsentManager>
+                              <FocusVisible />
+                              <SiftContainer />
+                              {children}
                             </ProgressiveOnboardingProvider>
                           </AuthDialogProvider>
                         </AuthIntentProvider>

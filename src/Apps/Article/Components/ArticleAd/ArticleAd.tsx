@@ -1,9 +1,9 @@
 import { FC, memo } from "react"
-import { DFPSlotsProvider } from "react-dfp"
-import { Box, BoxProps, Clickable, ResponsiveBox, Text } from "@artsy/palette"
+import { AdSlot, DFPSlotsProvider } from "react-dfp"
+import { Box, BoxProps, ResponsiveBox, Text } from "@artsy/palette"
 import { AdUnit, AdSize } from "./types"
-import { useCookieConsentManager } from "Components/CookieConsentManager/CookieConsentManagerContext"
-import { ArticleAdBaner } from "Apps/Article/Components/ArticleAd/ArticleAdBanner"
+import { useSizeAndPosition } from "Utils/Hooks/useSizeAndPosition"
+import { useArticleTracking } from "Apps/Article/useArticleTracking"
 
 export interface ArticleAdProps extends BoxProps {
   unit: AdUnit
@@ -11,13 +11,14 @@ export interface ArticleAdProps extends BoxProps {
 }
 
 export const ArticleAd: FC<ArticleAdProps> = memo(({ unit, size, ...rest }) => {
-  const {
-    isDestinationAllowed,
-    openConsentManager,
-    ready,
-  } = useCookieConsentManager()
+  const { displayedAd } = useArticleTracking()
 
   const [width, height] = size.split("x").map(n => parseInt(n, 10))
+
+  // Since ads are iframed we have to calculate a value to use to scale them via transform.
+  // We track the geometry of a responsive box and keep the value in sync with it.
+  const { ref, ...geometry } = useSizeAndPosition()
+  const scale = geometry.width / width
 
   return (
     <Box {...rest}>
@@ -29,26 +30,21 @@ export const ArticleAd: FC<ArticleAdProps> = memo(({ unit, size, ...rest }) => {
         mx="auto"
         bg="black10"
       >
-        {ready && (
-          <>
-            {isDestinationAllowed("Google Ads") ? (
-              <ArticleAdBaner unit={unit} width={width} height={height} />
-            ) : (
-              <Clickable
-                width="100%"
-                height="100%"
-                display="flex"
-                alignItems="center"
-                justifyContent="center"
-                p={2}
-                color="black60"
-                onClick={openConsentManager}
-              >
-                <Text variant="xs">Manage Cookies</Text>
-              </Clickable>
-            )}
-          </>
-        )}
+        <Box
+          ref={ref as any}
+          width="100%"
+          height="100%"
+          style={{
+            transformOrigin: "top left",
+            transform: `scale(${scale})`,
+          }}
+        >
+          <AdSlot
+            adUnit={unit}
+            sizes={[[width, height]]}
+            onSlotIsViewable={displayedAd}
+          />
+        </Box>
       </ResponsiveBox>
 
       <Text variant="xs" textAlign="center" mx="auto" mt={1} color="black30">
