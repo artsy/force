@@ -145,6 +145,9 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
 
   return (
     <>
+      {/* Note: this <Jump> element is also used as a sentinel by the
+      shouldScroll() helper in the ArtworkListContent component  */}
+
       <Jump id="artworksGrid" />
 
       <ArtworkListArtworksGridHeader />

@@ -12,6 +12,7 @@ import { ActionType, OwnerType, ViewedArtworkList } from "@artsy/cohesion"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { HttpError } from "found"
 import { MetaTags } from "Components/MetaTags"
+import { Jump } from "Utils/Hooks/useJump"
 
 interface CollectorProfileSaves2RouteProps {
   me: CollectorProfileSaves2Route_me$data
@@ -85,6 +86,8 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
           me?.savedArtworksArtworkList?.artworksConnection?.totalCount ?? 0
         }
       />
+
+      <Jump id="AboveArtworkListShelf" />
 
       <Spacer y={4} />
 

@@ -6,7 +6,7 @@ import {
   Counts,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { SortOptions } from "Components/SortFilter"
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -14,6 +14,7 @@ import { Flex, Join, Spacer, Text } from "@artsy/palette"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { ArtworkListArtworksGridPlaceholder } from "./ArtworkListPlaceholders"
 import { ArtworkListContextualMenu } from "./Actions/ArtworkListContextualMenu"
+import { useJump } from "Utils/Hooks/useJump"
 
 interface ArtworkListContentQueryRendererProps {
   listID: string
@@ -34,13 +35,29 @@ const sortOptions: SortOptions = [
 ]
 const defaultSort = sortOptions[0].value
 
+function isContentOutOfView() {
+  const element = document.querySelector("#JUMP--artworksGrid")
+  if (element === null) return false
+
+  let { top } = element.getBoundingClientRect()
+  let viewportH = window.innerHeight || document.documentElement.clientHeight
+  return top >= viewportH
+}
+
 const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
   const { match } = useRouter()
+  const { jumpTo } = useJump()
 
   const artworkList = me.artworkList!
   const counts: Counts = {
     artworks: artworkList.artworks?.totalCount ?? 0,
   }
+
+  useEffect(() => {
+    if (isContentOutOfView()) {
+      jumpTo("AboveArtworkListShelf")
+    }
+  }, [jumpTo])
 
   return (
     <ArtworkFilterContextProvider
