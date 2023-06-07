@@ -7271,7 +7271,7 @@ type CreateFeaturedLinkFailure {
 
 input CreateFeaturedLinkMutationInput {
   clientMutationId: String
-  description: String!
+  description: String
   href: String!
   sourceBucket: String
   sourceKey: String
