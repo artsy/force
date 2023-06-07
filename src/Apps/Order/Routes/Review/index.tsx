@@ -135,7 +135,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
 
-        requestIdentityVerificationIfNecessary(order)
+        await requestIdentityVerificationIfNecessary(order)
 
         if (isEigen) {
           if (order.mode === "OFFER") {
