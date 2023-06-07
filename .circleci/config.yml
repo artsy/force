@@ -214,7 +214,7 @@ jobs:
 
   smoke-test-on-live-env:
     docker:
-      - image: cypress/included:12.13.0
+      - image: cypress/included:12.14.0
         environment:
           TERM: xterm
     working_directory: ~/app
