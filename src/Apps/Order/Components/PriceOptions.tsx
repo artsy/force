@@ -96,6 +96,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
       { value: midPriceRange, description: "Midpoint" },
       { value: minPriceRange, description: "Low-end of range" },
     ]
+
     return getRangeDetails.map((rangePrice, idx) => ({
       key: `price-option-${idx}`,
       value: rangePrice.value!,
@@ -104,15 +105,25 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   }
 
   const getPercentageOptions = () => {
-    return [0, 0.1, 0.2].map((pricePercentage, idx) => {
+    const percentageOptions = [
+      { percentage: 0, description: "List price (high chance of acceptance)" },
+      {
+        percentage: 0.1,
+        description: "10% below the list price (good chance of acceptance)",
+      },
+      {
+        percentage: 0.2,
+        description:
+          "20% below the list price (substantial reduction, lower chance of acceptance)",
+      },
+    ]
+
+    return percentageOptions.map((option, idx) => {
       if (listPrice?.major) {
         return {
           key: `price-option-${idx}`,
-          value: Math.round(listPrice.major * (1 - pricePercentage)),
-          description:
-            pricePercentage !== 0
-              ? `${pricePercentage * 100}% below the list price`
-              : "List price",
+          value: Math.round(listPrice.major * (1 - option.percentage)),
+          description: option.description,
         }
       }
       return
