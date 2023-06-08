@@ -18,8 +18,8 @@ const ArtworkListVisibilityContext = createContext<ArtworkListVisibility>({
 })
 
 export const ArtworkListVisibilityProvider: React.FC = ({ children }) => {
-  const [touched, setTouched] = useState<boolean>(false)
-  const [scrolled, setScrolled] = useState<boolean>(false)
+  const [touched, setTouched] = useState(false)
+  const [scrolled, setScrolled] = useState(false)
 
   return (
     <ArtworkListVisibilityContext.Provider
