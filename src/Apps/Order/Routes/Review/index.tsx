@@ -109,7 +109,11 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           .handleCardAction(orderOrError.actionData.clientSecret)
           .then(result => {
             if (result.error) {
-              trackErrorMessageEvent("An error occurred", result.error.message)
+              trackErrorMessageEvent(
+                "An error occurred",
+                result.error.message,
+                result.error.code
+              )
 
               props.dialog.showErrorDialog({
                 title: "An error occurred",
@@ -129,7 +133,11 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           .confirmCardSetup(orderOrError.actionData.clientSecret)
           .then(result => {
             if (result.error) {
-              trackErrorMessageEvent("An error occurred", result.error.message)
+              trackErrorMessageEvent(
+                "An error occurred",
+                result.error.message,
+                result.error.code
+              )
 
               props.dialog.showErrorDialog({
                 title: "An error occurred",
