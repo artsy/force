@@ -33,7 +33,10 @@ import { useUpdateMyUserProfile } from "Utils/Hooks/Mutations/useUpdateMyUserPro
 import { SettingsEditProfileFields_me$data } from "__generated__/SettingsEditProfileFields_me.graphql"
 import { EditableLocation } from "__generated__/useUpdateMyUserProfileMutation.graphql"
 import { RouterLink } from "System/Router/RouterLink"
-import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
+import {
+  defaultVerifyIDMutationProps,
+  useVerifyID,
+} from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
 import { useVerifyEmail } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyEmail"
 import createLogger from "Utils/logger"
 import CheckmarkStrokeIcon from "@artsy/icons/CheckmarkStrokeIcon"
@@ -250,13 +253,9 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
 
                       try {
                         // no input, user is derived from the authenticated MP loader context
-                        await submitVerifyIDMutation({
-                          variables: { input: {} },
-                          rejectIf: res => {
-                            return res.sendIdentityVerificationEmail
-                              ?.confirmationOrError?.mutationError
-                          },
-                        })
+                        await submitVerifyIDMutation(
+                          defaultVerifyIDMutationProps
+                        )
 
                         sendToast({
                           variant: "success",

@@ -1,4 +1,8 @@
-import { getInitialPaymentMethodValue, isPaymentSet } from "./../orderUtils"
+import {
+  getInitialPaymentMethodValue,
+  isIdentityVerificationRequired,
+  isPaymentSet,
+} from "./../orderUtils"
 import {
   CommercePaymentMethodEnum,
   Payment_order$data,
@@ -95,5 +99,39 @@ describe("order utils", () => {
         ).toEqual("WIRE_TRANSFER")
       })
     })
+  })
+})
+
+describe("isIdentityVerificationRequired", () => {
+  it("returns false if isIdentityVerified is true", () => {
+    expect(isIdentityVerificationRequired(true, "USD", 1000000)).toEqual(false)
+  })
+
+  it("returns false if currencyCode is not USD, GBP, or EUR", () => {
+    expect(isIdentityVerificationRequired(false, "JPY", null)).toEqual(false)
+  })
+
+  it("returns false if buyerTotalCents is null", () => {
+    expect(isIdentityVerificationRequired(false, "USD", null)).toEqual(false)
+  })
+
+  it("returns false if buyerTotalCents is below 1000000", () => {
+    expect(isIdentityVerificationRequired(false, "USD", 900000)).toEqual(false)
+  })
+
+  it("returns true if buyerTotalCents equals 1000000", () => {
+    expect(isIdentityVerificationRequired(false, "USD", 1000000)).toEqual(true)
+  })
+
+  it("returns true if buyerTotalCents is above USD 1000000", () => {
+    expect(isIdentityVerificationRequired(false, "USD", 10000000)).toEqual(true)
+  })
+
+  it("returns true if buyerTotalCents is above GBP 1000000", () => {
+    expect(isIdentityVerificationRequired(false, "GBP", 10000000)).toEqual(true)
+  })
+
+  it("returns true if buyerTotalCents is above EUR 1000000", () => {
+    expect(isIdentityVerificationRequired(false, "EUR", 10000000)).toEqual(true)
   })
 })

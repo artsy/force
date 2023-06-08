@@ -37,7 +37,11 @@ import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
-import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
+import {
+  defaultVerifyIDMutationProps,
+  useVerifyID,
+} from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
+import { isIdentityVerificationRequired } from "Apps/Order/Utils/orderUtils"
 
 export interface ReviewProps extends SystemContextProps {
   stripe: Stripe
@@ -126,8 +130,10 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             }
           })
       } else {
-        const { order, router, isEigen } = props
-        const orderId = order.internalID
+        const { order, router, isEigen, me } = props
+        const { isIdentityVerified } = me
+        const { buyerTotalCents, currencyCode, internalID: orderId } = order
+
         const conversationId = order.impulseConversationId
 
         const artworkId = get(
@@ -135,7 +141,15 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
         )
 
-        await requestIdentityVerificationIfNecessary(order)
+        if (
+          isIdentityVerificationRequired(
+            isIdentityVerified,
+            currencyCode,
+            buyerTotalCents
+          )
+        ) {
+          await requestIdentityVerification(orderId)
+        }
 
         if (isEigen) {
           if (order.mode === "OFFER") {
@@ -394,33 +408,15 @@ export const ReviewRoute: FC<ReviewProps> = props => {
     props.router.push(`/orders/${props.order.internalID}/shipping`)
   }
 
-  const requestIdentityVerificationIfNecessary = async order => {
-    if (
-      order.buyerTotalCents &&
-      order.buyerTotalCents > 1000000 &&
-      ["USD", "GBP", "EUR"].includes(order.currencyCode) &&
-      !props.me?.isIdentityVerified
-    ) {
-      try {
-        await submitVerifyIDMutation({
-          variables: { input: {} },
-          rejectIf: res => {
-            return res.sendIdentityVerificationEmail?.confirmationOrError
-              ?.mutationError
-          },
-        })
-
-        return true
-      } catch (error) {
-        logger.error({
-          ...error,
-          orderId: props.order.internalID!,
-          paymentMethod: props.order?.paymentMethod,
-          shouldLogErrorToSentry: true,
-        })
-      }
-
-      return false
+  const requestIdentityVerification = async orderId => {
+    try {
+      await submitVerifyIDMutation(defaultVerifyIDMutationProps)
+    } catch (error) {
+      logger.error({
+        ...error,
+        orderId,
+        shouldLogErrorToSentry: true,
+      })
     }
   }
 

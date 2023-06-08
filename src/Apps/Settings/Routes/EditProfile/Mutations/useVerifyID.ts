@@ -29,3 +29,10 @@ export const useVerifyID = () => {
     `,
   })
 }
+
+export const defaultVerifyIDMutationProps = {
+  variables: { input: {} },
+  rejectIf: res => {
+    return res.sendIdentityVerificationEmail?.confirmationOrError?.mutationError
+  },
+}

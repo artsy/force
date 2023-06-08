@@ -55,3 +55,16 @@ export const getInitialBankAccountSelection = (
       : { type: "new" }
   }
 }
+
+export const isIdentityVerificationRequired = (
+  isIdentityVerified: boolean | null,
+  currencyCode: string,
+  buyerTotalCents: number | null
+): boolean => {
+  return (
+    !isIdentityVerified &&
+    !!buyerTotalCents &&
+    buyerTotalCents >= 1000000 &&
+    ["USD", "GBP", "EUR"].includes(currencyCode)
+  )
+}

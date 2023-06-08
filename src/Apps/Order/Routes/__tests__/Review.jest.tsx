@@ -43,6 +43,7 @@ import {
   submitOrderWithActionRequired,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/submitOrder"
 import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
+import { useVerifyID } from "Apps/Settings/Routes/EditProfile/Mutations/useVerifyID"
 
 jest.unmock("react-relay")
 
@@ -80,10 +81,22 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
   ),
 }))
 
+jest.mock("Apps/Settings/Routes/EditProfile/Mutations/useVerifyID")
+
 const testOrder: ReviewTestQuery$rawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
   internalID: "1234",
   impulseConversationId: null,
+}
+
+const unverifiedMe: ReviewTestQuery$rawResponse["me"] = {
+  id: "user-id",
+  isIdentityVerified: false,
+}
+
+const verifiedMe: ReviewTestQuery$rawResponse["me"] = {
+  id: "user-id",
+  isIdentityVerified: true,
 }
 
 class ReviewTestPage extends OrderAppTestPage {
@@ -95,6 +108,9 @@ class ReviewTestPage extends OrderAppTestPage {
 describe("Review", () => {
   let isEigen
   const pushMock = jest.fn()
+
+  const mockUseVerifyID = useVerifyID as jest.Mock
+  const mockSubmitVerifyIDMutation = jest.fn()
 
   beforeAll(() => {
     window.sd = { STRIPE_PUBLISHABLE_KEY: "" }
@@ -108,6 +124,14 @@ describe("Review", () => {
     isEigen = false
     jest.clearAllMocks()
     mockLocation()
+
+    mockUseVerifyID.mockImplementation(() => ({
+      submitMutation: mockSubmitVerifyIDMutation,
+    }))
+  })
+
+  afterEach(() => {
+    mockUseVerifyID.mockReset()
   })
 
   const { getWrapper } = setupTestWrapper({
@@ -140,6 +164,32 @@ describe("Review", () => {
 
       expect(mockCommitMutation).toHaveBeenCalledTimes(1)
       expect(pushMock).toBeCalledWith("/orders/1234/status")
+    })
+
+    describe("requesting identity verification", () => {
+      it("sends an identity verification request if necessary", async () => {
+        mockCommitMutation.mockResolvedValue(submitOrderSuccess)
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+          Me: () => unverifiedMe,
+        })
+        const page = new ReviewTestPage(wrapper)
+        await page.clickSubmit()
+
+        expect(mockSubmitVerifyIDMutation).toHaveBeenCalled()
+      })
+
+      it("doesn't send an identity verification request if not necessary", async () => {
+        mockCommitMutation.mockResolvedValue(submitOrderSuccess)
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+          Me: () => verifiedMe,
+        })
+        const page = new ReviewTestPage(wrapper)
+        await page.clickSubmit()
+
+        expect(mockSubmitVerifyIDMutation).not.toHaveBeenCalled()
+      })
     })
 
     it("disables the submit button when props.stripe is not present", () => {
