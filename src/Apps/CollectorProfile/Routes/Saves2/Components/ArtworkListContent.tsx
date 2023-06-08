@@ -46,9 +46,10 @@ function isContentOutOfView() {
   )
   if (element === null) return false
 
-  let { top } = element.getBoundingClientRect()
-  let viewportH = window.innerHeight || document.documentElement.clientHeight
-  return top >= viewportH
+  const { top } = element.getBoundingClientRect()
+  const viewportHeight =
+    window.innerHeight || document.documentElement.clientHeight
+  return top >= viewportHeight
 }
 
 const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
