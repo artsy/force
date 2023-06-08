@@ -1,4 +1,7 @@
-import { ArtworkListArtworksGridFragmentContainer } from "./ArtworkListArtworksGrid"
+import {
+  ARTWORK_LIST_ARTWORK_GRID_ID,
+  ArtworkListArtworksGridFragmentContainer,
+} from "./ArtworkListArtworksGrid"
 import { ArtworkListContent_me$data } from "__generated__/ArtworkListContent_me.graphql"
 import { ArtworkListContentQuery } from "__generated__/ArtworkListContentQuery.graphql"
 import {
@@ -16,6 +19,7 @@ import { ArtworkListArtworksGridPlaceholder } from "./ArtworkListPlaceholders"
 import { ArtworkListContextualMenu } from "./Actions/ArtworkListContextualMenu"
 import { useJump } from "Utils/Hooks/useJump"
 import { useArtworkListVisibilityContext } from "Apps/CollectorProfile/Routes/Saves2/Utils/useArtworkListVisibility"
+import { ARTWORK_LIST_SCROLL_TARGET_ID } from "Apps/CollectorProfile/Routes/Saves2/CollectorProfileSaves2Route"
 
 interface ArtworkListContentQueryRendererProps {
   listID: string
@@ -37,7 +41,9 @@ const sortOptions: SortOptions = [
 const defaultSort = sortOptions[0].value
 
 function isContentOutOfView() {
-  const element = document.querySelector("#JUMP--artworksGrid")
+  const element = document.querySelector(
+    `#JUMP--${ARTWORK_LIST_ARTWORK_GRID_ID}`
+  )
   if (element === null) return false
 
   let { top } = element.getBoundingClientRect()
@@ -67,7 +73,7 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
       !artworkListHasBeenScrolled
 
     if (shouldScroll) {
-      jumpTo("AboveArtworkListShelf")
+      jumpTo(ARTWORK_LIST_SCROLL_TARGET_ID)
       setArtworkListHasBeenScrolled()
     }
   }, [
