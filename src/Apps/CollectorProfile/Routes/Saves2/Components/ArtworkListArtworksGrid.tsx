@@ -147,7 +147,7 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
 
   return (
     <>
-      export <Jump id={ARTWORK_LIST_ARTWORK_GRID_ID} />
+      <Jump id={ARTWORK_LIST_ARTWORK_GRID_ID} />
       <ArtworkListArtworksGridHeader />
       <Spacer y={2} />
       <LoadingArea isLoading={fetching}>
