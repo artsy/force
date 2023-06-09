@@ -20,7 +20,9 @@ export const AppToasts: React.FC = () => {
       <AppContainer px={[2, 4]} py={4}>
         <GridColumns>
           <Column span={4} start={5}>
-            <Toasts />
+            <Box style={{ pointerEvents: "auto" }}>
+              <Toasts />
+            </Box>
           </Column>
         </GridColumns>
       </AppContainer>
