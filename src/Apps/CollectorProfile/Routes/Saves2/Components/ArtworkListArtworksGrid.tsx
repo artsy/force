@@ -23,6 +23,8 @@ import { Jump } from "Utils/Hooks/useJump"
 import { allowedFilters } from "Components/ArtworkFilter/Utils/allowedFilters"
 import { ArtworkListEmptyStateFragmentContainer } from "./ArtworkListEmptyState"
 
+export const ARTWORK_LIST_ARTWORK_GRID_ID = "artworksGrid"
+
 interface ArtworkListArtworksGridProps {
   relayRefetch: RelayRefetchProp["refetch"]
   me: ArtworkListArtworksGrid_me$data
@@ -145,12 +147,9 @@ const ArtworkListArtworksGrid: FC<ArtworkListArtworksGridProps> = ({
 
   return (
     <>
-      <Jump id="artworksGrid" />
-
+      export <Jump id={ARTWORK_LIST_ARTWORK_GRID_ID} />
       <ArtworkListArtworksGridHeader />
-
       <Spacer y={2} />
-
       <LoadingArea isLoading={fetching}>
         <ArtworkGrid
           artworks={artworks}

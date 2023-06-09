@@ -1,4 +1,7 @@
-import { ArtworkListArtworksGridFragmentContainer } from "./ArtworkListArtworksGrid"
+import {
+  ARTWORK_LIST_ARTWORK_GRID_ID,
+  ArtworkListArtworksGridFragmentContainer,
+} from "./ArtworkListArtworksGrid"
 import { ArtworkListContent_me$data } from "__generated__/ArtworkListContent_me.graphql"
 import { ArtworkListContentQuery } from "__generated__/ArtworkListContentQuery.graphql"
 import {
@@ -6,7 +9,7 @@ import {
   Counts,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { SortOptions } from "Components/SortFilter"
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -14,6 +17,9 @@ import { Flex, Join, Spacer, Text } from "@artsy/palette"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { ArtworkListArtworksGridPlaceholder } from "./ArtworkListPlaceholders"
 import { ArtworkListContextualMenu } from "./Actions/ArtworkListContextualMenu"
+import { useJump } from "Utils/Hooks/useJump"
+import { useArtworkListVisibilityContext } from "Apps/CollectorProfile/Routes/Saves2/Utils/useArtworkListVisibility"
+import { ARTWORK_LIST_SCROLL_TARGET_ID } from "Apps/CollectorProfile/Routes/Saves2/CollectorProfileSaves2Route"
 
 interface ArtworkListContentQueryRendererProps {
   listID: string
@@ -34,13 +40,49 @@ const sortOptions: SortOptions = [
 ]
 const defaultSort = sortOptions[0].value
 
+function isContentOutOfView() {
+  const element = document.querySelector(
+    `#JUMP--${ARTWORK_LIST_ARTWORK_GRID_ID}`
+  )
+  if (element === null) return false
+
+  const { top } = element.getBoundingClientRect()
+  const viewportHeight =
+    window.innerHeight || document.documentElement.clientHeight
+  return top >= viewportHeight
+}
+
 const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
   const { match } = useRouter()
+
+  const { jumpTo } = useJump()
+  const {
+    artworkListItemHasBeenTouched,
+    artworkListHasBeenScrolled,
+    setArtworkListHasBeenScrolled,
+  } = useArtworkListVisibilityContext()
 
   const artworkList = me.artworkList!
   const counts: Counts = {
     artworks: artworkList.artworks?.totalCount ?? 0,
   }
+
+  useEffect(() => {
+    const shouldScroll =
+      isContentOutOfView() &&
+      artworkListItemHasBeenTouched &&
+      !artworkListHasBeenScrolled
+
+    if (shouldScroll) {
+      jumpTo(ARTWORK_LIST_SCROLL_TARGET_ID)
+      setArtworkListHasBeenScrolled()
+    }
+  }, [
+    jumpTo,
+    artworkListItemHasBeenTouched,
+    artworkListHasBeenScrolled,
+    setArtworkListHasBeenScrolled,
+  ])
 
   return (
     <ArtworkFilterContextProvider
