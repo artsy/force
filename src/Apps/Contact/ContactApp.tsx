@@ -148,7 +148,7 @@ export const ContactApp: React.FC = () => {
 
         <Column span={2}>
           <Text as="h3" variant="xs">
-            Associate Director of Content
+            Director of Content
           </Text>
 
           <Text variant="sm">Casey Lesser</Text>
@@ -176,6 +176,22 @@ export const ContactApp: React.FC = () => {
           </Text>
 
           <Text variant="sm">Olivia Horn</Text>
+        </Column>
+      </GridColumns>
+
+      <Spacer y={6} />
+
+      <GridColumns gridRowGap={4}>
+        <Column span={4}>
+          <Text as="h2" variant="lg-display"></Text>
+        </Column>
+
+        <Column span={2}>
+          <Text as="h3" variant="xs">
+            Editor
+          </Text>
+
+          <Text variant="sm">Josie Thaddeus-Johns</Text>
         </Column>
       </GridColumns>
 
