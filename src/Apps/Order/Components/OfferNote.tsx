@@ -16,10 +16,10 @@ export const OfferNote: React.FC<{
       {inquiryComponent}
 
       <TextArea
-        title="Note (optional)"
+        title="Note (recommended)"
         characterLimit={1000}
-        description="For your own safety, please do not share personal information."
-        placeholder="Add any additional information regarding your offer."
+        description="Add additional information to help the gallery to evaluate your offer."
+        placeholder="E.g. memberships of art institutions, artists or genres you collect, interest in the artist, etc."
         onChange={onChange}
       />
     </>
