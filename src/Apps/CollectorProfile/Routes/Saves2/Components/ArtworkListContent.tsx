@@ -56,11 +56,7 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
   const { match } = useRouter()
 
   const { jumpTo } = useJump()
-  const {
-    artworkListItemHasBeenTouched,
-    artworkListHasBeenScrolled,
-    setArtworkListHasBeenScrolled,
-  } = useArtworkListVisibilityContext()
+  const { artworkListItemHasBeenTouched } = useArtworkListVisibilityContext()
 
   const artworkList = me.artworkList!
   const counts: Counts = {
@@ -68,21 +64,12 @@ const ArtworkListContent: FC<ArtworkListContentProps> = ({ me, relay }) => {
   }
 
   useEffect(() => {
-    const shouldScroll =
-      isContentOutOfView() &&
-      artworkListItemHasBeenTouched &&
-      !artworkListHasBeenScrolled
+    const shouldScroll = isContentOutOfView() && artworkListItemHasBeenTouched
 
     if (shouldScroll) {
       jumpTo(ARTWORK_LIST_SCROLL_TARGET_ID)
-      setArtworkListHasBeenScrolled()
     }
-  }, [
-    jumpTo,
-    artworkListItemHasBeenTouched,
-    artworkListHasBeenScrolled,
-    setArtworkListHasBeenScrolled,
-  ])
+  }, [jumpTo, artworkListItemHasBeenTouched])
 
   return (
     <ArtworkFilterContextProvider
