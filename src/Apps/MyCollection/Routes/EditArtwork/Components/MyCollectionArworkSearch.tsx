@@ -43,6 +43,7 @@ export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> =
                   isDefault
                   imageURL
                   width
+                  imageVersions
                 }
                 id
                 internalID
