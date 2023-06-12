@@ -9,11 +9,20 @@ export const AppToasts: React.FC = () => {
   if (toasts.length === 0) return null
 
   return (
-    <Box position="fixed" zIndex={Z.toasts} bottom={0} left={0} width="100%">
+    <Box
+      position="fixed"
+      zIndex={Z.toasts}
+      bottom={0}
+      left={0}
+      width="100%"
+      style={{ pointerEvents: "none" }}
+    >
       <AppContainer px={[2, 4]} py={4}>
         <GridColumns>
           <Column span={4} start={5}>
-            <Toasts />
+            <Box style={{ pointerEvents: "auto" }}>
+              <Toasts />
+            </Box>
           </Column>
         </GridColumns>
       </AppContainer>
