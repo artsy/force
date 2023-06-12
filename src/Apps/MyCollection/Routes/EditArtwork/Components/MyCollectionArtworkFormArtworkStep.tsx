@@ -58,24 +58,9 @@ export const MyCollectionArtworkFormArtworkStep: React.FC<MyCollectionArtworkFor
     // Initialize photos with artwork images
 
     const photos = artwork.images?.map(image => {
-      const imageVersionsSortedBySize = [
-        "main",
-        "normalized",
-        "larger",
-        "large",
-        "medium",
-        "small",
-      ]
-
-      const imageVersion = imageVersionsSortedBySize.find(version =>
-        image?.imageVersions?.includes(version)
-      )
-
       return {
         name: "Automatically added",
-        url: !!imageVersion
-          ? image?.imageURL?.replace(":version", imageVersion)
-          : null,
+        url: image.url,
         id: image?.internalID,
         size: image?.width,
       }

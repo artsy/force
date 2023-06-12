@@ -41,9 +41,17 @@ export const MyCollectionArworkSearch: React.FC<MyCollectionArworkSearchProps> =
                   height
                   internalID
                   isDefault
-                  imageURL
+                  url: url(
+                    version: [
+                      "main"
+                      "normalized"
+                      "larger"
+                      "large"
+                      "medium"
+                      "small"
+                    ]
+                  )
                   width
-                  imageVersions
                 }
                 id
                 internalID
