@@ -13577,11 +13577,11 @@ type PartnerCategory {
     hasFullProfile: Boolean
     ids: [String]
 
+    # If true, will only return partners that are located near the user's location based on the IP address.
+    includePartnersNearIpBasedLocation: Boolean = false
+
     # If true, will only return partners that list artists that the user follows
     includePartnersWithFollowedArtists: Boolean
-
-    # An IP address, will be used to lookup location
-    ip: String
 
     # Coordinates to find partners closest to
     near: String
@@ -14897,11 +14897,11 @@ type Query {
     hasFullProfile: Boolean
     ids: [String]
 
+    # If true, will only return partners that are located near the user's location based on the IP address.
+    includePartnersNearIpBasedLocation: Boolean = false
+
     # If true, will only return partners that list artists that the user follows
     includePartnersWithFollowedArtists: Boolean
-
-    # An IP address, will be used to lookup location
-    ip: String
 
     # Coordinates to find partners closest to
     near: String
@@ -15201,11 +15201,11 @@ type Query {
     first: Int
     ids: [String]
 
+    # If true, will only return partners that are located near the user's location based on the IP address.
+    includePartnersNearIpBasedLocation: Boolean = false
+
     # If true, will only return partners that list artists that the user follows
     includePartnersWithFollowedArtists: Boolean
-
-    # An IP address, will be used to lookup location
-    ip: String
     last: Int
 
     # Coordinates to find partners closest to
@@ -19330,11 +19330,11 @@ type Viewer {
     hasFullProfile: Boolean
     ids: [String]
 
+    # If true, will only return partners that are located near the user's location based on the IP address.
+    includePartnersNearIpBasedLocation: Boolean = false
+
     # If true, will only return partners that list artists that the user follows
     includePartnersWithFollowedArtists: Boolean
-
-    # An IP address, will be used to lookup location
-    ip: String
 
     # Coordinates to find partners closest to
     near: String
@@ -19594,11 +19594,11 @@ type Viewer {
     first: Int
     ids: [String]
 
+    # If true, will only return partners that are located near the user's location based on the IP address.
+    includePartnersNearIpBasedLocation: Boolean = false
+
     # If true, will only return partners that list artists that the user follows
     includePartnersWithFollowedArtists: Boolean
-
-    # An IP address, will be used to lookup location
-    ip: String
     last: Int
 
     # Coordinates to find partners closest to
