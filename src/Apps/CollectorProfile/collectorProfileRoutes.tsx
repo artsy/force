@@ -172,8 +172,7 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
         prepareVariables: (_, { context }) => {
           const featureFlags = context?.featureFlags ?? {}
           const featureFlag = featureFlags["force-enable-artworks-list"]
-          const isFeatureFlagEnabled = featureFlag?.flagEnabled ?? false
-          const isArtworkListsFlagEnabled = isFeatureFlagEnabled
+          const isArtworkListsFlagEnabled = featureFlag?.flagEnabled ?? false
 
           return {
             shouldFetchArtworkListsData: isArtworkListsFlagEnabled,
