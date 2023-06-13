@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react"
-import { useToasts } from "@artsy/palette"
+// import { useToasts } from "@artsy/palette"
 import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
@@ -43,7 +43,7 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
   const tracking = useTracking()
   const { isLoggedIn } = useSystemContext()
   const [visibleForm, setVisibleForm] = useState(false)
-  const { sendToast } = useToasts()
+  // const { sendToast } = useToasts()
 
   const openModal = () => {
     setVisibleForm(true)
@@ -81,8 +81,7 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
     showAuthDialog({ mode: "SignUp", ...authDialogOptions })
   }
 
-  const handleComplete = (result: SavedSearchAlertMutationResult) => {
-    setVisibleForm(false)
+  const handleCreateAlert = (result: SavedSearchAlertMutationResult) => {
     const trackInfo = {
       action_type: ActionType.toggledSavedSearch,
       context_page_owner_type: entity.owner.type,
@@ -91,10 +90,13 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
       saved_search_id: result.id,
     }
     tracking.trackEvent(trackInfo)
+  }
 
-    sendToast({
-      message: "Your Alert has been saved.",
-    })
+  const handleComplete = () => {
+    setVisibleForm(false)
+    // sendToast({
+    //   message: "Your Alert has been saved.",
+    // })
   }
 
   return (
@@ -114,6 +116,7 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
         metric={metric}
         aggregations={aggregations}
         onClose={() => setVisibleForm(false)}
+        onCreateAlert={handleCreateAlert}
         onComplete={handleComplete}
       />
     </>
