@@ -1,7 +1,7 @@
 /* eslint-disable jest/expect-expect */
 describe("/artist/:id", () => {
   before(() => {
-    cy.visit("/artist/pablo-picasso")
+    cy.visit("/artist/pablo-picasso", { timeout: 5000 })
   })
 
   it("renders metadata", () => {
