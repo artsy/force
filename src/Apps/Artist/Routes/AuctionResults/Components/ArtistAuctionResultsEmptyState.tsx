@@ -6,13 +6,13 @@ export const ArtistAuctionResultsEmptyState: React.FC = () => {
     <GridColumns gridRowGap={2}>
       <Column span={6} start={4}>
         <Text variant="md" textAlign="center">
-          There are no auction results for this artist at this time.
+          There are currently no auction results for this artist.
         </Text>
 
         <Text variant="md" color="black60" textAlign="center">
-          The page will be updated once auction results are added. In the
-          meantime, check out the millions of auction results and art market
-          data.
+          We'll update this page when results become available. Meanwhile, you
+          can check out free auction results and art market data for over
+          300,000 artists.
         </Text>
       </Column>
 
@@ -24,7 +24,7 @@ export const ArtistAuctionResultsEmptyState: React.FC = () => {
           to="/price-database"
           mx="auto"
         >
-          View Artsy’s Price Database
+          View the Artsy Price Database
         </Button>
       </Column>
     </GridColumns>
