@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0921b22f08f1f753064c96c3a9a34b6f>>
+ * @generated SignedSource<<5102aacb4695ccb6734d3ff244873c17>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,8 +22,10 @@ export type useUpdateArtworkListMutation$data = {
     readonly responseOrError: {
       readonly __typename: "UpdateCollectionFailure";
       readonly mutationError: {
-        readonly message: string;
-        readonly statusCode: number | null;
+        readonly fieldErrors: ReadonlyArray<{
+          readonly message: string;
+          readonly name: string;
+        } | null> | null;
       } | null;
     } | {
       readonly __typename: "UpdateCollectionSuccess";
@@ -93,15 +95,20 @@ v5 = {
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "message",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "statusCode",
+          "concreteType": "FieldErrorResults",
+          "kind": "LinkedField",
+          "name": "fieldErrors",
+          "plural": true,
+          "selections": [
+            (v4/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "message",
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         }
       ],
@@ -226,16 +233,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3d41a7050aee3245de65a62294f4ae5b",
+    "cacheID": "4e58febdcef8e30dc56e02e9069a2d88",
     "id": null,
     "metadata": {},
     "name": "useUpdateArtworkListMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateArtworkListMutation(\n  $input: updateCollectionInput!\n) {\n  updateCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on UpdateCollectionSuccess {\n        artworkList: collection {\n          internalID\n          name\n          id\n        }\n      }\n      ... on UpdateCollectionFailure {\n        mutationError {\n          message\n          statusCode\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useUpdateArtworkListMutation(\n  $input: updateCollectionInput!\n) {\n  updateCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on UpdateCollectionSuccess {\n        artworkList: collection {\n          internalID\n          name\n          id\n        }\n      }\n      ... on UpdateCollectionFailure {\n        mutationError {\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "08d28a986fc3b93d6451bfb1be7c42b0";
+(node as any).hash = "2d42b67ffb12c951ea2b9fd29ee5905c";
 
 export default node;

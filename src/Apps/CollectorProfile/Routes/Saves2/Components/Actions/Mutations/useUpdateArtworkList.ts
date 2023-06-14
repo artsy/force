@@ -17,8 +17,10 @@ export const useUpdateArtworkList = () => {
             }
             ... on UpdateCollectionFailure {
               mutationError {
-                message
-                statusCode
+                fieldErrors {
+                  name
+                  message
+                }
               }
             }
           }
