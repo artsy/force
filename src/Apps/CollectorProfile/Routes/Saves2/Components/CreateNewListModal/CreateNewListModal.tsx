@@ -73,9 +73,9 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
         },
         rejectIf: response => {
           const result = response.createCollection?.responseOrError
-          const errorMessage = result?.mutationError?.message
+          const error = result?.mutationError
 
-          return !!errorMessage
+          return error
         },
       })
 
@@ -90,10 +90,19 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       trackAnalyticEvent(artworkListId)
     } catch (error) {
       logger.error(error)
-      helpers.setFieldError(
-        "name",
-        error.message ?? t("common.errors.somethingWentWrong")
+
+      // use generic error message by default
+      let errorMessage = t("common.errors.somethingWentWrong")
+
+      // if there is a specific error message for the name field, use that instead
+      const nameErrorMessage = error?.fieldErrors?.find(
+        ({ name }) => name === "name"
       )
+      if (nameErrorMessage) {
+        errorMessage = nameErrorMessage.message
+      }
+
+      helpers.setFieldError("name", errorMessage)
     }
   }
 

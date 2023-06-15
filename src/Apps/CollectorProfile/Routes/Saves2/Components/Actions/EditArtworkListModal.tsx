@@ -1,6 +1,6 @@
 import { ModalDialog, useToasts } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
-import { Formik } from "formik"
+import { Formik, FormikHelpers } from "formik"
 import { useUpdateArtworkList } from "./Mutations/useUpdateArtworkList"
 import createLogger from "Utils/logger"
 import { useTracking } from "react-tracking"
@@ -48,7 +48,10 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
     trackEvent(event)
   }
 
-  const handleSubmit = async (formikValues: ArtworkListFormikValues) => {
+  const handleSubmit = async (
+    formikValues: ArtworkListFormikValues,
+    helpers: FormikHelpers<ArtworkListFormikValues>
+  ) => {
     try {
       await submitMutation({
         variables: {
@@ -72,14 +75,22 @@ export const EditArtworkListModal: React.FC<EditArtworkListModalProps> = ({
       })
 
       trackAnalyticEvent()
+      onClose()
     } catch (error) {
       logger.error(error)
-      sendToast({
-        variant: "error",
-        message: error.message ?? t("common.errors.somethingWentWrong"),
-      })
-    } finally {
-      onClose()
+
+      // use generic error message by default
+      let errorMessage = t("common.errors.somethingWentWrong")
+
+      // if there is a specific error message for the name field, use that instead
+      const nameErrorMessage = error?.fieldErrors?.find(
+        ({ name }) => name === "name"
+      )
+      if (nameErrorMessage) {
+        errorMessage = nameErrorMessage.message
+      }
+
+      helpers.setFieldError("name", errorMessage)
     }
   }
 
