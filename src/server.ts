@@ -11,7 +11,7 @@ import { adminServerRoutes } from "Apps/Admin/adminServerRoutes"
 import { sitemapsServerApp } from "Apps/Sitemaps/sitemapsServerApp"
 import { rssServerApp } from "Apps/RSS/rssServerApp"
 import { redirectsServerRoutes } from "Apps/Redirects/redirectsServerRoutes"
-import { setTrackingPreferences } from "Server/analytics/segmentOneTrustIntegration/setTrackingPreferences"
+import { cookieConsentManagerServerRoutes } from "Components/CookieConsentManager/cookieConsentManagerServerRoutes"
 
 const app = express()
 const { routes, routePaths } = getRouteConfig()
@@ -51,7 +51,7 @@ app.get(
  */
 
 app
-  .get("/set-tracking-preferences", setTrackingPreferences)
+  .use(cookieConsentManagerServerRoutes)
   .use(adminServerRoutes)
   .use(sitemapsServerApp)
   .use(rssServerApp)
