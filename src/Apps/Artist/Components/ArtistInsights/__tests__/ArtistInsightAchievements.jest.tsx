@@ -1,5 +1,5 @@
 import { fireEvent, screen } from "@testing-library/react"
-import { ArtistInsightAchievementsFragmentContainer } from "../ArtistInsightAchievements"
+import { ArtistInsightAchievementsFragmentContainer } from "Apps/Artist/Components/ArtistInsights/ArtistInsightAchievements"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -64,7 +64,7 @@ describe("ArtistInsightAchievements", () => {
     fireEvent.click(button)
 
     expect(
-      screen.getByText("FooBarforum, and Foofrieze, The New FooBar, FooBar Art")
+      screen.getByText("FooBarforum, Foofrieze, The New FooBar, and FooBar Art")
     ).toBeInTheDocument()
   })
 
@@ -107,7 +107,7 @@ describe("ArtistInsightAchievements", () => {
     const button = screen.getByText("3 more", { selector: "button" })
     fireEvent.click(button)
     expect(
-      screen.getByText("FooBarforum, and Foofrieze, The New FooBar, FooBar Art")
+      screen.getByText("FooBarforum, Foofrieze, The New FooBar, and FooBar Art")
     ).toBeInTheDocument()
     expect(spy).toHaveBeenCalledWith({
       action_type: "Click",
