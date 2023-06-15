@@ -128,28 +128,30 @@ const ArtistAchievement: FC<ArtistAchievementProps> = ({ label, entities }) => {
       </Text>
 
       <Text variant="sm" color="black60" data-testid="expandable-dropdownlist">
-        {entities.length > 1 ? `${first}, and ` : `${first}`}
-
-        {remaining.length > 0 && (
+        {expanded ? (
+          entities.join(", ").replace(/,\s([^,]+)$/, ", and $1")
+        ) : (
           <>
-            {expanded ? (
-              `${remaining.join(", ")}`
-            ) : (
-              <Clickable
-                onClick={() => {
-                  setExpanded(true)
+            {first}
+            {remaining.length > 0 && (
+              <>
+                {`, and `}
+                <Clickable
+                  onClick={() => {
+                    setExpanded(true)
 
-                  trackEvent({
-                    action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-                    subject: "Read more",
-                    type: "Link",
-                  })
-                }}
-                color="black100"
-                textDecoration="underline"
-              >
-                {remaining.length} more
-              </Clickable>
+                    trackEvent({
+                      action_type: DeprecatedAnalyticsSchema.ActionType.Click,
+                      subject: "Read more",
+                      type: "Link",
+                    })
+                  }}
+                  color="black100"
+                  textDecoration="underline"
+                >
+                  {remaining.length} more
+                </Clickable>
+              </>
             )}
           </>
         )}
