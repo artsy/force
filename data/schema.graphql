@@ -13583,6 +13583,9 @@ type PartnerCategory {
     # If true, will only return partners that list artists that the user follows
     includePartnersWithFollowedArtists: Boolean
 
+    # Max distance to use when geo-locating partners, defaults to 75km.
+    maxDistance: Int
+
     # Coordinates to find partners closest to
     near: String
     page: Int
@@ -14903,6 +14906,9 @@ type Query {
     # If true, will only return partners that list artists that the user follows
     includePartnersWithFollowedArtists: Boolean
 
+    # Max distance to use when geo-locating partners, defaults to 75km.
+    maxDistance: Int
+
     # Coordinates to find partners closest to
     near: String
     page: Int
@@ -15207,6 +15213,9 @@ type Query {
     # If true, will only return partners that list artists that the user follows
     includePartnersWithFollowedArtists: Boolean
     last: Int
+
+    # Max distance to use when geo-locating partners, defaults to 75km.
+    maxDistance: Int
 
     # Coordinates to find partners closest to
     near: String
@@ -19336,6 +19345,9 @@ type Viewer {
     # If true, will only return partners that list artists that the user follows
     includePartnersWithFollowedArtists: Boolean
 
+    # Max distance to use when geo-locating partners, defaults to 75km.
+    maxDistance: Int
+
     # Coordinates to find partners closest to
     near: String
     page: Int
@@ -19600,6 +19612,9 @@ type Viewer {
     # If true, will only return partners that list artists that the user follows
     includePartnersWithFollowedArtists: Boolean
     last: Int
+
+    # Max distance to use when geo-locating partners, defaults to 75km.
+    maxDistance: Int
 
     # Coordinates to find partners closest to
     near: String
