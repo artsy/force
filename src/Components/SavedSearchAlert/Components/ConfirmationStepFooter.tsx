@@ -16,10 +16,11 @@ const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({ me }) => {
   const savedSearch = me?.savedSearch
 
   return (
-    <Flex flexDirection="row">
+    <Flex flexDirection={["column", "row"]}>
       <Button
         width="100%"
-        mr={1}
+        mr={[0, 1]}
+        mb={[1, 0]}
         // @ts-ignore
         as={RouterLink}
         to={savedSearch?.href!}
@@ -29,7 +30,7 @@ const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({ me }) => {
 
       <Button
         width="100%"
-        ml={1}
+        ml={[0, 1]}
         variant="secondaryBlack"
         // @ts-ignore
         as={RouterLink}
@@ -69,7 +70,6 @@ export const ConfirmationStepFooterQueryRenderer: FC<ConfirmationStepFooterQuery
         }
 
         if (!relayProps?.me?.savedSearch) {
-          console.log("[Debug] ???", relayProps?.me, props.searchCriteriaId)
           return <ContentPlaceholder />
         }
 
@@ -81,9 +81,9 @@ export const ConfirmationStepFooterQueryRenderer: FC<ConfirmationStepFooterQuery
 
 const ContentPlaceholder: FC = () => {
   return (
-    <Flex flexDirection="row">
-      <SkeletonBox height={50} width="100%" mr={1} />
-      <SkeletonBox height={50} width="100%" mr={1} />
+    <Flex flexDirection={["column", "row"]}>
+      <SkeletonBox height={50} width="100%" mr={[0, 1]} />
+      <SkeletonBox height={50} width="100%" ml={[0, 1]} />
     </Flex>
   )
 }

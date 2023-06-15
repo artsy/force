@@ -14,29 +14,44 @@ interface ConfirmationArtworksProps {
   artworksConnection: ConfirmationArtworksGridQuery$data["artworksConnection"]
 }
 
-// TODO: Text to a separate component
 const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
   artworksConnection,
 }) => {
-  // TODO: placeholder if connection is empty
+  const artworksCount = artworksConnection?.counts?.total
 
   return (
     <Flex flexDirection="column">
       <Text variant="sm-display" color="black60">
-        300 works currently on Artsy match your criteria.
+        {artworksCount} works currently on Artsy match your criteria.
       </Text>
       <Text variant="sm-display" color="black60">
         See our top picks for you:
       </Text>
+
       <Spacer y={2} />
 
-      <ArtworkGrid artworks={artworksConnection!} columnCount={2} />
+      <ArtworkGrid width="90%" artworks={artworksConnection!} columnCount={2} />
     </Flex>
   )
 }
 
 interface ConfirmationArtworksGridQueryRendererProps {
-  searchCriteriaId: string
+  artistIDs?: string[] | null
+  locationCities?: string[] | null
+  colors?: string[] | null
+  partnerIDs?: string[] | null
+  additionalGeneIDs?: string[] | null
+  attributionClass?: string[] | null
+  majorPeriods?: string[] | null
+  acquireable?: boolean | null
+  atAuction?: boolean | null
+  inquireableOnly?: boolean | null
+  offerable?: boolean | null
+  materialsTerms?: string[] | null
+  priceRange?: string | null
+  sizes?: string[] | null
+  height?: string | null
+  width?: string | null
 }
 
 export const ConfirmationArtworksGridQueryRenderer: FC<ConfirmationArtworksGridQueryRendererProps> = props => {
@@ -44,12 +59,22 @@ export const ConfirmationArtworksGridQueryRenderer: FC<ConfirmationArtworksGridQ
     <SystemQueryRenderer<ConfirmationArtworksGridQuery>
       placeholder={<ContentPlaceholder />}
       query={graphql`
-        query ConfirmationArtworksGridQuery {
-          artworksConnection(first: 20) {
+        query ConfirmationArtworksGridQuery($input: FilterArtworksInput) {
+          artworksConnection(input: $input) {
+            counts {
+              total
+            }
             ...ArtworkGrid_artworks
           }
         }
       `}
+      variables={{
+        input: {
+          first: 20,
+          sort: "-published_at",
+          ...props,
+        },
+      }}
       render={({ props: relayProps, error }) => {
         if (error) {
           console.error(error)
@@ -78,6 +103,8 @@ const ContentPlaceholder: FC = () => {
         300 works currently on Artsy match your criteria.
       </SkeletonText>
       <SkeletonText>See our top picks for you:</SkeletonText>
+
+      <Spacer y={2} />
 
       <ArtworkGridPlaceholder columnCount={2} amount={20} />
     </Flex>
