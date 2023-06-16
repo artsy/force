@@ -391,8 +391,9 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         const title = "An error occurred"
         const message =
           "Something went wrong. Please try again or contact orders@artsy.net"
+        const errorCode = error.code || ""
 
-        trackErrorMessageEvent(title, message)
+        trackErrorMessageEvent(title, message, errorCode)
 
         props.dialog.showErrorDialog()
         break
