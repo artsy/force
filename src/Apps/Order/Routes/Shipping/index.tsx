@@ -182,7 +182,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   useEffect(() => {
-    if (checkIfArtsyShipping() && !isCreateNewAddress() && !shippingQuoteId) {
+    if (checkIfArtsyShipping() && !isCreateNewAddress()) {
       selectShipping()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -530,6 +530,18 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     setShippingQuoteId(undefined)
   }
 
+  useEffect(() => {
+    if (
+      addressList &&
+      addressList.length > 0 &&
+      checkIfArtsyShipping() &&
+      !shippingQuoteId
+    ) {
+      selectShipping()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shippingOption])
+
   const onSelectShippingOption = (
     newShippingOption: CommerceOrderFulfillmentTypeEnum
   ) => {
@@ -545,12 +557,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
     if (shippingOption !== newShippingOption) {
       setShippingOption(newShippingOption)
-      setShippingQuotes(null)
-      setShippingQuoteId(undefined)
-
-      if (addressList && addressList.length > 0 && checkIfArtsyShipping()) {
-        selectShipping()
-      }
     }
   }
 
