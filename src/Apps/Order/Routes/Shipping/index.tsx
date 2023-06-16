@@ -181,12 +181,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     setDeletedAddressID(deletedAddressID)
   }
 
-  useEffect(() => {
-    if (checkIfArtsyShipping() && !isCreateNewAddress()) {
-      selectShipping()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedAddressID])
 
   const getOrderArtwork = () => props.order.lineItems?.edges?.[0]?.node?.artwork
   const isCreateNewAddress = () => selectedAddressID === NEW_ADDRESS
@@ -535,12 +529,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       addressList &&
       addressList.length > 0 &&
       checkIfArtsyShipping() &&
-      !shippingQuoteId
+      !isCreateNewAddress()
     ) {
       selectShipping()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shippingOption])
+  }, [shippingOption, selectedAddressID])
 
   const onSelectShippingOption = (
     newShippingOption: CommerceOrderFulfillmentTypeEnum

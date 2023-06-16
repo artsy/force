@@ -1406,6 +1406,7 @@ describe("Shipping", () => {
               Me: () => testMe,
             })
             const page = new ShippingTestPage(wrapper)
+            await page.update()
 
             expect(page.submitButton.props().disabled).toBeFalsy()
 
@@ -1442,12 +1443,15 @@ describe("Shipping", () => {
               Me: () => testMe,
             })
             const page = new ShippingTestPage(wrapper)
+            await page.update()
 
             page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
 
             await page.clickSubmit()
 
-            expect(mockCommitMutation).toHaveBeenLastCalledWith(
+            expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+            expect(mockCommitMutation).toHaveBeenNthCalledWith(
+              2,
               expect.objectContaining({
                 variables: {
                   input: {
@@ -1559,11 +1563,11 @@ describe("Shipping", () => {
               expect.anything(),
               expect.anything()
             )
-            expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+            expect(mockCommitMutation).toHaveBeenCalledTimes(3)
             // the intention here is to trigger the commitMutation again with the same value of the first
             // call once the selected adddress is edited
             expect(mockCommitMutation).toHaveBeenNthCalledWith(
-              2,
+              3,
               expect.objectContaining({
                 variables: {
                   input: {
