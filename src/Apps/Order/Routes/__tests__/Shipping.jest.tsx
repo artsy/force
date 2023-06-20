@@ -1437,7 +1437,7 @@ describe("Shipping", () => {
             expect(page.submitButton.props().disabled).toBeFalsy()
           })
 
-          it("commits selectShippingOption mutation with correct input", async () => {
+          it("commits selectShippingOption mutation twice with correct input", async () => {
             const wrapper = getWrapper({
               CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
               Me: () => testMe,
@@ -1450,6 +1450,30 @@ describe("Shipping", () => {
             await page.clickSubmit()
 
             expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+            // refreshing quotes
+            expect(mockCommitMutation).toHaveBeenNthCalledWith(
+              1,
+              expect.objectContaining({
+                variables: {
+                  input: {
+                    fulfillmentType: "SHIP_ARTA",
+                    id: "2939023",
+                    phoneNumber: "422-424-4242",
+                    shipping: {
+                      addressLine1: "401 Broadway",
+                      addressLine2: "Floor 25",
+                      city: "New York",
+                      country: "US",
+                      name: "Test Name",
+                      phoneNumber: "422-424-4242",
+                      postalCode: "10013",
+                      region: "NY",
+                    },
+                  },
+                },
+              })
+            )
+            // saving the selected quote and continuing
             expect(mockCommitMutation).toHaveBeenNthCalledWith(
               2,
               expect.objectContaining({
