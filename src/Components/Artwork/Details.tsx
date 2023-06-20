@@ -30,6 +30,7 @@ interface DetailsProps {
   showHoverDetails?: boolean
   showSaveButton?: boolean
   renderSaveButton?: (artworkId: string) => React.ReactNode
+  saveOnlyToDefaultList?: boolean
 }
 
 const StyledConditionalLink = styled(RouterLink)`
@@ -205,6 +206,7 @@ export const Details: React.FC<DetailsProps> = ({
   showHoverDetails = true,
   showSaveButton,
   renderSaveButton,
+  saveOnlyToDefaultList = false,
   ...rest
 }) => {
   const { isAuctionArtwork, hideLotLabel } = useArtworkGridContext()
@@ -225,7 +227,7 @@ export const Details: React.FC<DetailsProps> = ({
       return renderSaveButton(rest.artwork.internalID)
     }
 
-    if (isArtworksListEnabled) {
+    if (isArtworksListEnabled && !saveOnlyToDefaultList) {
       return (
         <SaveArtworkToListsButtonFragmentContainer
           contextModule={contextModule!}

@@ -35,7 +35,11 @@ const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
 
       <Spacer y={2} />
 
-      <ArtworkGrid artworks={artworksConnection!} columnCount={2} />
+      <ArtworkGrid
+        artworks={artworksConnection!}
+        columnCount={2}
+        saveOnlyToDefaultList={true}
+      />
     </Flex>
   )
 }

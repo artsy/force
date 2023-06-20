@@ -25,6 +25,7 @@ export interface MetadataProps
   showSaveButton?: boolean
   to?: string | null
   renderSaveButton?: (artworkId: string) => React.ReactNode
+  saveOnlyToDefaultList?: boolean
 }
 
 export const Metadata: React.FC<MetadataProps> = ({
@@ -40,6 +41,7 @@ export const Metadata: React.FC<MetadataProps> = ({
   showHoverDetails,
   showSaveButton,
   renderSaveButton,
+  saveOnlyToDefaultList,
   ...rest
 }) => {
   return (
@@ -61,6 +63,7 @@ export const Metadata: React.FC<MetadataProps> = ({
         showSaveButton={showSaveButton}
         contextModule={contextModule}
         renderSaveButton={renderSaveButton}
+        saveOnlyToDefaultList={saveOnlyToDefaultList}
       />
     </LinkContainer>
   )

@@ -6,16 +6,26 @@ import {
   ConfirmationStepFooterQuery,
   ConfirmationStepFooterQuery$data,
 } from "__generated__/ConfirmationStepFooterQuery.graphql"
-import { RouterLink } from "System/Router/RouterLink"
 import { useTranslation } from "react-i18next"
+import { useRouter } from "System/Router/useRouter"
 
 interface ConfirmationStepFooterProps {
   me: ConfirmationStepFooterQuery$data["me"]
+  onClose: () => void
 }
 
-const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({ me }) => {
+const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({
+  me,
+  onClose,
+}) => {
   const { t } = useTranslation()
+  const { router } = useRouter()
   const savedSearch = me?.savedSearch
+
+  const redirect = (to: string) => {
+    onClose()
+    router.push(to)
+  }
 
   return (
     <Flex flexDirection={["column", "row"]}>
@@ -23,9 +33,7 @@ const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({ me }) => {
         width="100%"
         mr={[0, 1]}
         mb={[1, 0]}
-        // @ts-ignore
-        as={RouterLink}
-        to={savedSearch?.href!}
+        onClick={() => redirect(savedSearch?.href!)}
       >
         {t("createAlertModal.confirmationStep.seeAllMatchingWorks")}
       </Button>
@@ -34,9 +42,7 @@ const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({ me }) => {
         width="100%"
         ml={[0, 1]}
         variant="secondaryBlack"
-        // @ts-ignore
-        as={RouterLink}
-        to="/settings/alerts"
+        onClick={() => redirect("/settings/alerts")}
       >
         {t("createAlertModal.confirmationStep.manageYourAlerts")}
       </Button>
@@ -46,6 +52,7 @@ const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({ me }) => {
 
 interface ConfirmationStepFooterQueryRendererProps {
   searchCriteriaId: string
+  onClose: () => void
 }
 
 export const ConfirmationStepFooterQueryRenderer: FC<ConfirmationStepFooterQueryRendererProps> = props => {

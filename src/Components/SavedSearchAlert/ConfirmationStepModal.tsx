@@ -29,6 +29,7 @@ export const ConfirmationStepModal: FC<ConfirmationStepModalProps> = ({
         <ConfirmationArtworksGridQueryRenderer {...criteria} />
         <ConfirmationStepFooterQueryRenderer
           searchCriteriaId={searchCriteriaId}
+          onClose={onClose}
         />
       </Join>
     </ModalDialog>
