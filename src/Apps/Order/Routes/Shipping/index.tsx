@@ -181,7 +181,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     setDeletedAddressID(deletedAddressID)
   }
 
-
   const getOrderArtwork = () => props.order.lineItems?.edges?.[0]?.node?.artwork
   const isCreateNewAddress = () => selectedAddressID === NEW_ADDRESS
 
@@ -526,8 +525,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   useEffect(() => {
     if (
-      addressList &&
-      addressList.length > 0 &&
+      addressList?.length > 0 &&
       checkIfArtsyShipping() &&
       !isCreateNewAddress()
     ) {
