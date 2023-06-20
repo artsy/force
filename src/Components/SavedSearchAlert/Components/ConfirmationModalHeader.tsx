@@ -1,12 +1,11 @@
-import { Text, Flex, Join, Separator, Spacer } from "@artsy/palette"
-import { SavedSearchAlertPills } from "Components/SavedSearchAlert/Components/SavedSearchAlertPills"
+import { Text, Flex, Join, Separator, Spacer, Pill } from "@artsy/palette"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
 
 export const ConfirmationModalHeader: FC = () => {
-  const { pills } = useSavedSearchAlertContext()
   const { t } = useTranslation()
+  const { pills } = useSavedSearchAlertContext()
 
   return (
     <Flex flexDirection="column" mt={-2}>
@@ -14,8 +13,21 @@ export const ConfirmationModalHeader: FC = () => {
         <Text variant="sm-display" color="black60">
           {t("createAlertModal.confirmationStep.weWillNotifyYou")}
         </Text>
-        <Flex flexWrap="wrap" mx={-0.5}>
-          <SavedSearchAlertPills items={pills} onDeletePress={() => {}} />
+
+        <Flex flexWrap="wrap">
+          {pills.map(pill => {
+            return (
+              <Pill
+                key={`filter-label-${pill.field}-${pill.value}`}
+                variant="filter"
+                mb={1}
+                mr={1}
+                disabled
+              >
+                {pill.displayValue}
+              </Pill>
+            )
+          })}
         </Flex>
         <Separator />
       </Join>

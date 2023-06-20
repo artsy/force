@@ -98,7 +98,7 @@ const ContentPlaceholder: FC = () => {
 
       <Spacer y={2} />
 
-      <ArtworkGridPlaceholder columnCount={2} amount={20} />
+      <ArtworkGridPlaceholder columnCount={2} amount={10} />
     </Flex>
   )
 }

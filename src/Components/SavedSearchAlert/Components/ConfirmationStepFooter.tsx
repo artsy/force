@@ -52,10 +52,12 @@ export const ConfirmationStepFooterQueryRenderer: FC<ConfirmationStepFooterQuery
   return (
     <SystemQueryRenderer<ConfirmationStepFooterQuery>
       placeholder={<ContentPlaceholder />}
+      // Temporary workaround internalID is requested because there is a bug in Metaphysics. If a user's field is not requested, the
+      // query returns null for savedSearch.
       query={graphql`
         query ConfirmationStepFooterQuery($searchCriteriaId: ID!) {
           me {
-            email
+            internalID
             savedSearch(id: $searchCriteriaId) {
               href
             }

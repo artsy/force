@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4fca1fcc7ed3e31a49a8c7e9319bf95e>>
+ * @generated SignedSource<<c5bdb6c568ee4c99d7464f716ac593a7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type ConfirmationStepFooterQuery$variables = {
 };
 export type ConfirmationStepFooterQuery$data = {
   readonly me: {
-    readonly email: string | null;
+    readonly internalID: string;
     readonly savedSearch: {
       readonly href: string;
     } | null;
@@ -37,7 +37,7 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "email",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = {
@@ -117,16 +117,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3d37f93d64711cf5d65cccf5ed56c8a8",
+    "cacheID": "6861f60956c2f6c1431a5ce45ac0efeb",
     "id": null,
     "metadata": {},
     "name": "ConfirmationStepFooterQuery",
     "operationKind": "query",
-    "text": "query ConfirmationStepFooterQuery(\n  $searchCriteriaId: ID!\n) {\n  me {\n    email\n    savedSearch(id: $searchCriteriaId) {\n      href\n    }\n    id\n  }\n}\n"
+    "text": "query ConfirmationStepFooterQuery(\n  $searchCriteriaId: ID!\n) {\n  me {\n    internalID\n    savedSearch(id: $searchCriteriaId) {\n      href\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b7709b060fe5d722f74c72fb570f1cb3";
+(node as any).hash = "6ba6f21d75ca480342f28f2ce551833d";
 
 export default node;
