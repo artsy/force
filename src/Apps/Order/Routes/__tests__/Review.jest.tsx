@@ -286,6 +286,31 @@ describe("Review", () => {
       expect(window.location.assign).toBeCalledWith("/artist/artistId")
     })
 
+    it("shows a modal when the seller's Stripe Connect account is inactive", async () => {
+      mockCommitMutation.mockResolvedValue({
+        commerceSubmitOrder: {
+          orderOrError: {
+            error: {
+              code: "stripe_account_inactive",
+            },
+          },
+        },
+      })
+
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+
+      const page = new ReviewTestPage(wrapper)
+      await page.clickSubmit()
+
+      expect(mockShowErrorDialog).toHaveBeenCalledWith({
+        title: "An error occurred",
+        message:
+          "Your payment could not be processed. Please contact orders@artsy.net for assistance.",
+      })
+    })
+
     it("shows SCA modal when required", async () => {
       mockCommitMutation.mockResolvedValue(submitOrderWithActionRequired)
       const wrapper = getWrapper({

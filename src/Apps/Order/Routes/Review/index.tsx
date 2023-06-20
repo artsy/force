@@ -387,6 +387,19 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         routeToArtworkPage()
         break
       }
+      case "stripe_account_inactive": {
+        const title = "An error occurred"
+        const message =
+          "Your payment could not be processed. Please contact orders@artsy.net for assistance."
+
+        trackErrorMessageEvent(title, message, error.code)
+
+        await props.dialog.showErrorDialog({
+          title: title,
+          message: message,
+        })
+        break
+      }
       default: {
         const title = "An error occurred"
         const message =
