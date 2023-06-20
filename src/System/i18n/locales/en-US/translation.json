@@ -264,6 +264,14 @@
     "resultsCount_other": "{{count}} results for"
   },
   "createAlertModal": {
-    "setPriceRange": "Set price range you are interested in"
+    "setPriceRange": "Set price range you are interested in",
+    "confirmationStep": {
+      "saved": "Your alert has been saved.",
+      "weWillNotifyYou": "We will notify you when new works get added to Artsy.",
+      "artworksMatchCriteria": "{{artworksCount}} works currently on Artsy match your criteria.",
+      "seeOurTopPicks": "See our top picks for you:",
+      "seeAllMatchingWorks": "See all matching works",
+      "manageYourAlerts": "Manage your alerts"
+    }
   }
 }

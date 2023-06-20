@@ -9,6 +9,8 @@ import {
 import ArtworkGrid, {
   ArtworkGridPlaceholder,
 } from "Components/ArtworkGrid/ArtworkGrid"
+import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import { useTranslation } from "react-i18next"
 
 interface ConfirmationArtworksProps {
   artworksConnection: ConfirmationArtworksGridQuery$data["artworksConnection"]
@@ -17,44 +19,28 @@ interface ConfirmationArtworksProps {
 const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
   artworksConnection,
 }) => {
+  const { t } = useTranslation()
   const artworksCount = artworksConnection?.counts?.total
 
   return (
     <Flex flexDirection="column">
       <Text variant="sm-display" color="black60">
-        {artworksCount} works currently on Artsy match your criteria.
+        {t("createAlertModal.confirmationStep.artworksMatchCriteria", {
+          artworksCount,
+        })}
       </Text>
       <Text variant="sm-display" color="black60">
-        See our top picks for you:
+        {t("createAlertModal.confirmationStep.seeOurTopPicks")}
       </Text>
 
       <Spacer y={2} />
 
-      <ArtworkGrid width="90%" artworks={artworksConnection!} columnCount={2} />
+      <ArtworkGrid artworks={artworksConnection!} columnCount={2} />
     </Flex>
   )
 }
 
-interface ConfirmationArtworksGridQueryRendererProps {
-  artistIDs?: string[] | null
-  locationCities?: string[] | null
-  colors?: string[] | null
-  partnerIDs?: string[] | null
-  additionalGeneIDs?: string[] | null
-  attributionClass?: string[] | null
-  majorPeriods?: string[] | null
-  acquireable?: boolean | null
-  atAuction?: boolean | null
-  inquireableOnly?: boolean | null
-  offerable?: boolean | null
-  materialsTerms?: string[] | null
-  priceRange?: string | null
-  sizes?: string[] | null
-  height?: string | null
-  width?: string | null
-}
-
-export const ConfirmationArtworksGridQueryRenderer: FC<ConfirmationArtworksGridQueryRendererProps> = props => {
+export const ConfirmationArtworksGridQueryRenderer: FC<SearchCriteriaAttributes> = props => {
   return (
     <SystemQueryRenderer<ConfirmationArtworksGridQuery>
       placeholder={<ContentPlaceholder />}
@@ -70,7 +56,7 @@ export const ConfirmationArtworksGridQueryRenderer: FC<ConfirmationArtworksGridQ
       `}
       variables={{
         input: {
-          first: 20,
+          first: 10,
           sort: "-published_at",
           ...props,
         },
@@ -97,12 +83,18 @@ export const ConfirmationArtworksGridQueryRenderer: FC<ConfirmationArtworksGridQ
 }
 
 const ContentPlaceholder: FC = () => {
+  const { t } = useTranslation()
+
   return (
     <Flex flexDirection="column">
       <SkeletonText>
-        300 works currently on Artsy match your criteria.
+        {t("createAlertModal.confirmationStep.artworksMatchCriteria", {
+          artworksCount: 300,
+        })}
       </SkeletonText>
-      <SkeletonText>See our top picks for you:</SkeletonText>
+      <SkeletonText>
+        {t("createAlertModal.confirmationStep.seeOurTopPicks")}
+      </SkeletonText>
 
       <Spacer y={2} />
 

@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react"
-// import { useToasts } from "@artsy/palette"
 import { useSystemContext } from "System/useSystemContext"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
@@ -43,7 +42,6 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
   const tracking = useTracking()
   const { isLoggedIn } = useSystemContext()
   const [visibleForm, setVisibleForm] = useState(false)
-  // const { sendToast } = useToasts()
 
   const openModal = () => {
     setVisibleForm(true)
@@ -94,9 +92,6 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
 
   const handleComplete = () => {
     setVisibleForm(false)
-    // sendToast({
-    //   message: "Your Alert has been saved.",
-    // })
   }
 
   return (

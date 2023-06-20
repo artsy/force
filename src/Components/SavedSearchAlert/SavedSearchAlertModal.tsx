@@ -201,8 +201,6 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
   )
 }
 
-// TODO: types for props
-// TODO: type for form steps
 export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContainerProps> = props => {
   const {
     visible,
@@ -213,6 +211,7 @@ export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContai
     onCreateAlert,
     onComplete,
   } = props
+
   const [searchCriteriaId, setSearchCriteriaId] = useState("")
   const [step, setStep] = useState<"CREATE_ALERT" | "CONFIRMATION">(
     "CREATE_ALERT"
@@ -252,7 +251,7 @@ export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContai
           metric={metric}
         >
           <ConfirmationStepModal
-            onComplete={handleComplete}
+            onClose={handleComplete}
             searchCriteriaId={searchCriteriaId}
           />
         </SavedSearchAlertContextProvider>

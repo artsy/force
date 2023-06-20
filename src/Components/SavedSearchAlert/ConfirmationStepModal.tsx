@@ -4,24 +4,25 @@ import { ConfirmationStepFooterQueryRenderer } from "Components/SavedSearchAlert
 import { ConfirmationArtworksGridQueryRenderer } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { FC } from "react"
+import { useTranslation } from "react-i18next"
 
 interface ConfirmationStepModalProps {
   searchCriteriaId: string
-  onComplete: () => void
+  onClose: () => void
 }
 
-// TODO: onComplete => onClose
-// TODO: translations
-// TODO: width 500 or 700
-export const ConfirmationStepModal: FC<ConfirmationStepModalProps> = props => {
-  const { searchCriteriaId, onComplete } = props
+export const ConfirmationStepModal: FC<ConfirmationStepModalProps> = ({
+  searchCriteriaId,
+  onClose,
+}) => {
   const { criteria } = useSavedSearchAlertContext()
+  const { t } = useTranslation()
 
   return (
     <ModalDialog
       width={["100%", 700]}
-      onClose={onComplete}
-      title="Your alert has been saved."
+      onClose={onClose}
+      title={t("createAlertModal.confirmationStep.saved")}
       header={<ConfirmationModalHeader />}
     >
       <Join separator={<Spacer y={2} />}>

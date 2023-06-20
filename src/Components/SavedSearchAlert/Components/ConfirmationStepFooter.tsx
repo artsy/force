@@ -7,12 +7,14 @@ import {
   ConfirmationStepFooterQuery$data,
 } from "__generated__/ConfirmationStepFooterQuery.graphql"
 import { RouterLink } from "System/Router/RouterLink"
+import { useTranslation } from "react-i18next"
 
 interface ConfirmationStepFooterProps {
   me: ConfirmationStepFooterQuery$data["me"]
 }
 
 const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({ me }) => {
+  const { t } = useTranslation()
   const savedSearch = me?.savedSearch
 
   return (
@@ -25,7 +27,7 @@ const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({ me }) => {
         as={RouterLink}
         to={savedSearch?.href!}
       >
-        See all matching works
+        {t("createAlertModal.confirmationStep.seeAllMatchingWorks")}
       </Button>
 
       <Button
@@ -36,7 +38,7 @@ const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({ me }) => {
         as={RouterLink}
         to="/settings/alerts"
       >
-        Manage your alerts
+        {t("createAlertModal.confirmationStep.manageYourAlerts")}
       </Button>
     </Flex>
   )
