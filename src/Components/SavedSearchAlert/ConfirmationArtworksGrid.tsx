@@ -58,6 +58,7 @@ export const ConfirmationArtworksGridQueryRenderer: FC<SearchCriteriaAttributes>
         input: {
           first: 10,
           sort: "-published_at",
+          forSale: true,
           ...props,
         },
       }}
