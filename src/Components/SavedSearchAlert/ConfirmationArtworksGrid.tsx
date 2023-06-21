@@ -1,4 +1,11 @@
-import { Flex, SkeletonText, Spacer, Text } from "@artsy/palette"
+import {
+  Column,
+  Flex,
+  GridColumns,
+  SkeletonText,
+  Spacer,
+  Text,
+} from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { FC } from "react"
 import { graphql } from "react-relay"
@@ -6,11 +13,11 @@ import {
   ConfirmationArtworksGridQuery,
   ConfirmationArtworksGridQuery$data,
 } from "__generated__/ConfirmationArtworksGridQuery.graphql"
-import ArtworkGrid, {
-  ArtworkGridPlaceholder,
-} from "Components/ArtworkGrid/ArtworkGrid"
+import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { useTranslation } from "react-i18next"
+import { extractNodes } from "Utils/extractNodes"
+import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 
 interface ConfirmationArtworksProps {
   artworksConnection: ConfirmationArtworksGridQuery$data["artworksConnection"]
@@ -21,6 +28,7 @@ const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
 }) => {
   const { t } = useTranslation()
   const artworksCount = artworksConnection?.counts?.total
+  const artworks = extractNodes(artworksConnection!)
 
   return (
     <Flex flexDirection="column">
@@ -35,11 +43,22 @@ const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
 
       <Spacer y={2} />
 
-      <ArtworkGrid
-        artworks={artworksConnection!}
-        columnCount={2}
-        saveOnlyToDefaultList={true}
-      />
+      <GridColumns alignItems="flex-end">
+        {artworks.map((artwork, index) => {
+          return (
+            <Column
+              span={[6]}
+              key={`artwork-${index}`}
+              // Fix for issue in Firefox where contents overflow container.
+            >
+              <ArtworkGridItemFragmentContainer
+                artwork={artwork}
+                saveOnlyToDefaultList={true}
+              />
+            </Column>
+          )
+        })}
+      </GridColumns>
     </Flex>
   )
 }
@@ -54,7 +73,12 @@ export const ConfirmationArtworksGridQueryRenderer: FC<SearchCriteriaAttributes>
             counts {
               total
             }
-            ...ArtworkGrid_artworks
+
+            edges {
+              node {
+                ...GridItem_artwork
+              }
+            }
           }
         }
       `}
