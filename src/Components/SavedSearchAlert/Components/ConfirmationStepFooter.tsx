@@ -1,4 +1,4 @@
-import { Button, Flex, SkeletonBox } from "@artsy/palette"
+import { Button, Flex } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { FC } from "react"
 import { graphql } from "react-relay"
@@ -28,19 +28,13 @@ const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({
   }
 
   return (
-    <Flex flexDirection={["column", "row"]}>
-      <Button
-        width="100%"
-        mr={[0, 1]}
-        mb={[1, 0]}
-        onClick={() => redirect(savedSearch?.href!)}
-      >
+    <Flex flexDirection={["column", "row"]} gap={1}>
+      <Button width="100%" onClick={() => redirect(savedSearch?.href!)}>
         {t("createAlertModal.confirmationStep.seeAllMatchingWorks")}
       </Button>
 
       <Button
         width="100%"
-        ml={[0, 1]}
         variant="secondaryBlack"
         onClick={() => redirect("/settings/alerts")}
       >
@@ -91,10 +85,17 @@ export const ConfirmationStepFooterQueryRenderer: FC<ConfirmationStepFooterQuery
 }
 
 const ContentPlaceholder: FC = () => {
+  const { t } = useTranslation()
+
   return (
-    <Flex flexDirection={["column", "row"]}>
-      <SkeletonBox height={50} width="100%" mr={[0, 1]} />
-      <SkeletonBox height={50} width="100%" ml={[0, 1]} />
+    <Flex flexDirection={["column", "row"]} gap={1}>
+      <Button width="100%" disabled>
+        {t("createAlertModal.confirmationStep.seeAllMatchingWorks")}
+      </Button>
+
+      <Button width="100%" variant="secondaryBlack" disabled>
+        {t("createAlertModal.confirmationStep.manageYourAlerts")}
+      </Button>
     </Flex>
   )
 }

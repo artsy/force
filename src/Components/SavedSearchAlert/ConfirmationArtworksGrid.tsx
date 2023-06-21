@@ -26,7 +26,7 @@ const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
     <Flex flexDirection="column">
       <Text variant="sm-display" color="black60">
         {t("createAlertModal.confirmationStep.artworksMatchCriteria", {
-          artworksCount,
+          count: artworksCount,
         })}
       </Text>
       <Text variant="sm-display" color="black60">
@@ -94,7 +94,7 @@ const ContentPlaceholder: FC = () => {
     <Flex flexDirection="column">
       <SkeletonText>
         {t("createAlertModal.confirmationStep.artworksMatchCriteria", {
-          artworksCount: 300,
+          count: 300,
         })}
       </SkeletonText>
       <SkeletonText>

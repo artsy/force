@@ -8,7 +8,7 @@ export const ConfirmationModalHeader: FC = () => {
   const { pills } = useSavedSearchAlertContext()
 
   return (
-    <Flex flexDirection="column" mt={-2}>
+    <Flex flexDirection="column">
       <Join separator={<Spacer y={2} />}>
         <Text variant="sm-display" color="black60">
           {t("createAlertModal.confirmationStep.weWillNotifyYou")}
