@@ -26,7 +26,7 @@ export const ArtworkModalHeaderInfo: FC<ArtworkModalHeaderInfoProps> = ({
   const artistNames = getArtistNames()
   const titleElements = [
     `${artistNames}, `,
-    <i>{artwork.title}</i>,
+    <i key="italic">{artwork.title}</i>,
     artwork.year && `, ${artwork.year}`,
   ]
 

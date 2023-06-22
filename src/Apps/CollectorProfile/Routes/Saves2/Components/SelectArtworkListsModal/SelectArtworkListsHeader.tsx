@@ -38,23 +38,22 @@ export const SelectArtworkListsHeader: FC = () => {
         </Button>
       </Flex>
 
-      <Spacer y={2} />
-
       {state.recentlyAddedList && (
-        <Message
-          variant="success"
-          title={t(
-            "collectorSaves.selectArtworkLists.header.recentlyAddedList.title"
-          )}
-          mx={-2}
-        >
-          {t(
-            "collectorSaves.selectArtworkLists.header.recentlyAddedList.message",
-            {
-              name: state.recentlyAddedList.name,
-            }
-          )}
-        </Message>
+        <>
+          <Spacer y={2} />
+
+          <Message
+            variant="success"
+            title={t(
+              "collectorSaves.selectArtworkLists.header.recentlyAddedList.title"
+            )}
+          >
+            {t(
+              "collectorSaves.selectArtworkLists.header.recentlyAddedList.message",
+              { name: state.recentlyAddedList.name }
+            )}
+          </Message>
+        </>
       )}
     </>
   )
