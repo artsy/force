@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a83297a4333df5b7c97c83a22d0fb996>>
+ * @generated SignedSource<<95981cfa16e11eec933c2ffd00b1c8d2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,10 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SendIdentityVerificationEmailMutationInput = {
   clientMutationId?: string | null;
   email?: string | null;
+  initiatorID?: string | null;
   name?: string | null;
+  orderID?: string | null;
+  saleID?: string | null;
   sendEmail?: boolean | null;
   userID?: string | null;
 };
