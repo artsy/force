@@ -9,6 +9,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { ArtworkListItem_item$data } from "__generated__/ArtworkListItem_item.graphql"
 import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
 import styled from "styled-components"
+import { useArtworkListVisibilityContext } from "Apps/CollectorProfile/Routes/Saves2/Utils/useArtworkListVisibility"
 
 interface ArtworkListItemProps {
   isSelected?: boolean
@@ -21,6 +22,7 @@ const ArtworkListItem: FC<ArtworkListItemProps> = props => {
   const { t } = useTranslation()
   const artworkNodes = extractNodes(item.artworksConnection)
   const imageURLs = artworkNodes.map(node => node.image?.url ?? null)
+  const { setArtworkListItemHasBeenTouched } = useArtworkListVisibilityContext()
 
   const getLink = () => {
     if (item.default) {
@@ -36,6 +38,7 @@ const ArtworkListItem: FC<ArtworkListItemProps> = props => {
       textDecoration="none"
       aria-current={!!isSelected}
       isSelected={!!isSelected}
+      onClick={setArtworkListItemHasBeenTouched}
     >
       <Flex
         p={1}

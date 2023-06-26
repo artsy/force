@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e00b3ccc4528ad892ba9b38d03661dee>>
+ * @generated SignedSource<<46be6a767e0eebcd9daf4172db4f318f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,10 @@ export type useCreateCollectionMutation$data = {
         readonly name: string;
       } | null;
       readonly mutationError?: {
-        readonly message: string;
+        readonly fieldErrors: ReadonlyArray<{
+          readonly message: string;
+          readonly name: string;
+        } | null> | null;
       } | null;
     } | null;
   } | null;
@@ -91,8 +94,20 @@ v5 = {
         {
           "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "message",
+          "concreteType": "FieldErrorResults",
+          "kind": "LinkedField",
+          "name": "fieldErrors",
+          "plural": true,
+          "selections": [
+            (v3/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "message",
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         }
       ],
@@ -224,16 +239,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6aa55b3508b7a34139240081f1edd951",
+    "cacheID": "4cd61d0ff560a8f7a56f939f29468a4a",
     "id": null,
     "metadata": {},
     "name": "useCreateCollectionMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateCollectionMutation(\n  $input: createCollectionInput!\n) {\n  createCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateCollectionSuccess {\n        collection {\n          internalID\n          name\n          artworksCount(onlyVisible: true)\n          id\n        }\n      }\n      ... on CreateCollectionFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useCreateCollectionMutation(\n  $input: createCollectionInput!\n) {\n  createCollection(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateCollectionSuccess {\n        collection {\n          internalID\n          name\n          artworksCount(onlyVisible: true)\n          id\n        }\n      }\n      ... on CreateCollectionFailure {\n        mutationError {\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c0bb16726fed5499e888571e86d9c43b";
+(node as any).hash = "5bb03b60934cc8261b089eba863075dc";
 
 export default node;

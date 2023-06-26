@@ -2,6 +2,7 @@ import { Spacer, Join } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { HomeApp_featuredEventsOrderedSet$data } from "__generated__/HomeApp_featuredEventsOrderedSet.graphql"
+import { HomeApp_heroUnitsConnection$data } from "__generated__/HomeApp_heroUnitsConnection.graphql"
 import { HomeFeaturedMarketNewsQueryRenderer } from "./Components/HomeFeaturedMarketNews"
 import { HomeFeaturedEventsRailFragmentContainer } from "./Components/HomeFeaturedEventsRail"
 import { HomeMeta } from "./Components/HomeMeta"
@@ -14,14 +15,16 @@ import { HomeAuctionLotsRailQueryRenderer } from "./Components/HomeAuctionLotsRa
 import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
 import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { HomeEmergingPicksArtworksRailQueryRenderer } from "./Components/HomeEmergingPicksArtworksRail"
-import { SafeHomeContentCards } from "./Components/HomeContentCards"
+import { HomeHeroUnitsFragmentContainer } from "./Components/HomeHeroUnits"
 
 interface HomeAppProps {
   featuredEventsOrderedSet: HomeApp_featuredEventsOrderedSet$data | null
+  heroUnitsConnection: HomeApp_heroUnitsConnection$data
 }
 
 export const HomeApp: React.FC<HomeAppProps> = ({
   featuredEventsOrderedSet,
+  heroUnitsConnection,
 }) => {
   return (
     <>
@@ -31,7 +34,7 @@ export const HomeApp: React.FC<HomeAppProps> = ({
 
       <Spacer y={[2, 0]} />
 
-      <SafeHomeContentCards />
+      <HomeHeroUnitsFragmentContainer heroUnits={heroUnitsConnection} />
 
       <Spacer y={[4, 6]} />
 
@@ -70,6 +73,11 @@ export const HomeAppFragmentContainer = createFragmentContainer(HomeApp, {
   featuredEventsOrderedSet: graphql`
     fragment HomeApp_featuredEventsOrderedSet on OrderedSet {
       ...HomeFeaturedEventsRail_orderedSet
+    }
+  `,
+  heroUnitsConnection: graphql`
+    fragment HomeApp_heroUnitsConnection on HeroUnitConnection {
+      ...HomeHeroUnits_heroUnits
     }
   `,
 })

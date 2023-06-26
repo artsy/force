@@ -26,6 +26,7 @@ describe("HomeApp", () => {
   const { getWrapper } = setupTestWrapper<HomeApp_Test_Query>({
     Component: props => (
       <MockBoot>
+        {/* @ts-ignore */}
         <HomeAppFragmentContainer {...props} />
       </MockBoot>
     ),
@@ -33,6 +34,9 @@ describe("HomeApp", () => {
       query HomeApp_Test_Query @relay_test_operation {
         featuredEventsOrderedSet: orderedSet(id: "example") {
           ...HomeApp_featuredEventsOrderedSet
+        }
+        heroUnitsConnection(first: 10) {
+          ...HomeApp_heroUnitsConnection
         }
       }
     `,

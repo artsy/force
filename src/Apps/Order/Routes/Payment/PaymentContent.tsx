@@ -368,6 +368,10 @@ const getPaymentMethodInfo = (
             • Enter your billing address in the form below.
           </Text>
           <Text color="black60" variant="sm">
+            • UK bank accounts will be charged in GBP once the gallery accepts
+            the order.
+          </Text>
+          <Text color="black60" variant="sm">
             • Payment processing will take 4-7 business days once the gallery
             accepts the order.
           </Text>

@@ -5,6 +5,7 @@ import { SelectArtworkListsPlaceholder } from "./SelectArtworkListsPlaceholders"
 import { SelectArtworkListsModal_me$data } from "__generated__/SelectArtworkListsModal_me.graphql"
 import { FC } from "react"
 
+// FIXME: Do not do this. Use a fragment container instead.
 type ArtworkListEntity = ExtractNodeType<
   | SelectArtworkListsModal_me$data["savedArtworksArtworkList"]
   | SelectArtworkListsModal_me$data["customArtworkLists"]
@@ -33,6 +34,7 @@ export const SelectArtworkListsContent: FC<SelectArtworkListsContentProps> = ({
         {artworkLists.map(artworkList => {
           return (
             <SelectArtworkListItemFragmentContainer
+              key={artworkList.internalID}
               item={artworkList}
               isSelected={checkIsArtworkListSelected(artworkList)}
               onClick={() => onArtworkListPress(artworkList)}

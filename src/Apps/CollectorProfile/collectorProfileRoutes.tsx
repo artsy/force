@@ -175,8 +175,10 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
           const featureFlag = featureFlags["force-enable-artworks-list"]
           const isFeatureFlagEnabled = featureFlag?.flagEnabled ?? false
           const isArtsyEmployee = isArtsyEmail(context?.user?.email ?? "")
+          const isIntegrityUser =
+            context?.user?.email === "cypress+test@example.com"
           const isArtworkListsFlagEnabled =
-            isFeatureFlagEnabled && isArtsyEmployee
+            isFeatureFlagEnabled && (isArtsyEmployee || isIntegrityUser)
 
           return {
             shouldFetchArtworkListsData: isArtworkListsFlagEnabled,

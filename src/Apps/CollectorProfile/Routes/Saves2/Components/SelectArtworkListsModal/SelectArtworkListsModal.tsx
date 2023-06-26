@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react"
-import { Box, ModalDialog, useToasts } from "@artsy/palette"
+import { ModalDialog, useToasts } from "@artsy/palette"
 import { SelectArtworkListsHeader } from "./SelectArtworkListsHeader"
 import { SelectArtworkListsFooter } from "./SelectArtworkListsFooter"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -189,12 +189,7 @@ export const SelectArtworkListsModal: React.FC<SelectArtworkListsModalProps> = (
         height: ["100%", "auto"],
         maxHeight: [null, 800],
       }}
-      m={[0, 2]}
-      header={
-        <Box mt={[-2, 0]} mb={-2}>
-          <SelectArtworkListsHeader />
-        </Box>
-      }
+      header={<SelectArtworkListsHeader />}
       footer={
         <SelectArtworkListsFooter
           selectedArtworkListsCount={selectedArtworkListIds.length}
@@ -204,14 +199,12 @@ export const SelectArtworkListsModal: React.FC<SelectArtworkListsModalProps> = (
         />
       }
     >
-      <Box mt={1}>
-        <SelectArtworkListsContent
-          isFetching={me === null}
-          artworkLists={artworkLists}
-          checkIsArtworkListSelected={checkIsArtworkListSelected}
-          onArtworkListPress={handleArtworkListPress}
-        />
-      </Box>
+      <SelectArtworkListsContent
+        isFetching={me === null}
+        artworkLists={artworkLists}
+        checkIsArtworkListSelected={checkIsArtworkListSelected}
+        onArtworkListPress={handleArtworkListPress}
+      />
     </ModalDialog>
   )
 }

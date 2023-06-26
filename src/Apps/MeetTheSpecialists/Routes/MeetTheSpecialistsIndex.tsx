@@ -136,21 +136,6 @@ interface Specialist {
 
 const ADVISORY_SPECIALISTS: Specialist[] = [
   {
-    name: "Alexander Forbes",
-    title: "Head of Collector Services & Private Sales",
-    location: "New York",
-    email: "alexander.forbes@artsy.net",
-    image:
-      "https://files.artsy.net/images/alexander-forbes-artsy-headshot-2019.jpg",
-  },
-  {
-    name: "Christine Aschwald",
-    title: "Head of Advisory and Senior Private Sales Director",
-    location: "New York",
-    email: "christine.aschwald@artsy.net",
-    image: "https://files.artsy.net/images/unnamed-1660146854025.jpg",
-  },
-  {
     name: "Akanksha Ballaney",
     title: "Director, Private Sales",
     location: "New York",
@@ -235,6 +220,13 @@ const AUCTION_SPECIALISTS: Specialist[] = [
     image: "https://files.artsy.net/images/shlomi2.jpg",
   },
   {
+    name: "Christine Aschwald",
+    title: "Senior Director, Auctions & Private Sales",
+    location: "New York",
+    email: "christine.aschwald@artsy.net",
+    image: "https://files.artsy.net/images/unnamed-1660146854025.jpg",
+  },
+  {
     name: "Lauren Carpinelli",
     title: "Specialist, Prints and Contemporary",
     location: "New York",
@@ -311,12 +303,6 @@ const COLLECTOR_SERVICES_SPECIALISTS: Specialist[] = [
     title: "Senior Manager, Collector Services",
     email: "vanessa.zingale@artsy.net",
     image: "https://files.artsy.net/images/vanessa_zingale.png",
-  },
-  {
-    name: "Caroline Targgart",
-    title: "Client Development Manager",
-    email: "caroline.targgart@artsy.net",
-    image: "https://files.artsy.net/images/CarolineTarggart.jpg",
   },
   {
     name: "Dana Rodriguez",
