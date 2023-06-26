@@ -251,7 +251,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
                       try {
                         // no input, user is derived from the authenticated MP loader context
                         await submitVerifyIDMutation({
-                          variables: { input: {} },
+                          variables: { input: { initiatorID: me.internalID } },
                           rejectIf: res => {
                             return res.sendIdentityVerificationEmail
                               ?.confirmationOrError?.mutationError
@@ -390,6 +390,7 @@ export const SettingsEditProfileFieldsFragmentContainer = createFragmentContaine
     me: graphql`
       fragment SettingsEditProfileFields_me on Me {
         ...SettingsEditProfileImage_me
+        internalID
         name
         profession
         otherRelevantPositions
