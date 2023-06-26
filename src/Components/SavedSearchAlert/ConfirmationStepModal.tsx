@@ -23,9 +23,9 @@ export const ConfirmationStepModal: FC<ConfirmationStepModalProps> = ({
       width={["100%", 700]}
       onClose={onClose}
       title={t("createAlertModal.confirmationStep.saved")}
-      header={<ConfirmationModalHeader />}
     >
       <Join separator={<Spacer y={2} />}>
+        <ConfirmationModalHeader />
         <ConfirmationArtworksGridQueryRenderer {...criteria} />
         <ConfirmationStepFooterQueryRenderer
           searchCriteriaId={searchCriteriaId}
