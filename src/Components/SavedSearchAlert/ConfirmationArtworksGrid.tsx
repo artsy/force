@@ -23,7 +23,7 @@ interface ConfirmationArtworksProps {
   artworksConnection: ConfirmationArtworksGridQuery$data["artworksConnection"]
 }
 
-const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
+export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
   artworksConnection,
 }) => {
   const { t } = useTranslation()
