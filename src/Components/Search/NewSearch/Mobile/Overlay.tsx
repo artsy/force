@@ -23,7 +23,7 @@ import { SearchResultsListPaginationContainer } from "Components/Search/NewSearc
 const logger = createLogger("Components/Search/NewSearch/Mobile")
 
 const scrollToTop = () => {
-  document.querySelector(OVERLAY_CONTENT_ID)?.scrollTo(0, 0)
+  document.querySelector(`#${OVERLAY_CONTENT_ID}`)?.scrollTo(0, 0)
 }
 
 interface OverlayProps {
@@ -43,10 +43,6 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
   useEffect(() => {
     inputRef.current?.focus()
   }, [])
-
-  useEffect(() => {
-    scrollToTop()
-  }, [inputValue, selectedPill])
 
   const refetch = useCallback(
     (value: string, entity?: string) => {
@@ -69,6 +65,8 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
           if (performance) {
             reportPerformanceMeasurement(performanceStart)
           }
+
+          scrollToTop()
         }
       )
     },
