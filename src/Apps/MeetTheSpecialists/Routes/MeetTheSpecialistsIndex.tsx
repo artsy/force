@@ -143,21 +143,6 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     image: "https://files.artsy.net/images/akanksha.jpeg",
   },
   {
-    name: "Robin Roche",
-    title: "Senior Private Sales Director",
-    location: "New York",
-    email: "robin.roche@artsy.net",
-    phone: "+1 646 707 9450",
-    image: "https://files.artsy.net/images/robin.jpeg",
-  },
-  {
-    name: "Adriana Almeida",
-    title: "Senior Private Sales Director",
-    location: "London",
-    email: "adriana.almeida@artsy.net",
-    image: "https://files.artsy.net/images/photo_adriana.jpg",
-  },
-  {
     name: "Meave Hamill",
     title: "Senior Advisor, Private Sales",
     location: "London",
@@ -254,20 +239,12 @@ const AUCTION_SPECIALISTS: Specialist[] = [
     email: "adam.mccoy@artsy.net",
     image: "https://files.artsy.net/images/adam2.jpg",
   },
-
   {
     name: "Alan Zeng",
     title: "Senior Specialist & Head of Street Art",
     location: "New York",
     email: "alan@artsy.net",
     image: "https://files.artsy.net/images/alan.png",
-  },
-  {
-    name: "Celine Cunha",
-    title: "Specialist in Post-War & Contemporary Art",
-    location: "New York",
-    email: "celine.cunha@artsymail.com",
-    image: "https://files.artsy.net/images/Celine_Cunha_Krieger.png",
   },
 ]
 
@@ -277,14 +254,6 @@ const COLLECTOR_SERVICES_SPECIALISTS: Specialist[] = [
     title: "Collector Services Lead",
     email: "wendy.wiberg@artsy.net",
     image: "https://files.artsy.net/images/wendy_wiberg.png",
-  },
-  {
-    name: "Alexandra Freedman",
-    title: "Senior Manager, Collector Development",
-    location: "New York",
-    email: "alexandra.freedman@artsy.net",
-    phone: "+1 610 405 7151",
-    image: "https://files.artsy.net/images/alexandra.jpeg",
   },
   {
     name: "Eleonora Leo",
