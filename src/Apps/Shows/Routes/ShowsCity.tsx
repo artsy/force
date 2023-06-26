@@ -281,7 +281,11 @@ export const ShowsCityRefetchContainer = createRefetchContainer(
             }
           }
         }
-        pastShows: showsConnection(first: 18, status: CLOSED) {
+        pastShows: showsConnection(
+          first: 18
+          status: CLOSED
+          sort: END_AT_DESC
+        ) {
           edges {
             node {
               internalID
