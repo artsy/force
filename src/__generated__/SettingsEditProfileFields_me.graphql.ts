@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c1a48f3fd6308ed90cd52a3a6e5acf5f>>
+ * @generated SignedSource<<c9c13160cf6354bcdd2994c00048c6e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type SettingsEditProfileFields_me$data = {
   readonly bio: string | null;
   readonly canRequestEmailConfirmation: boolean;
   readonly email: string | null;
+  readonly internalID: string;
   readonly isEmailConfirmed: boolean;
   readonly isIdentityVerified: boolean | null;
   readonly location: {
@@ -43,6 +44,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "SettingsEditProfileImage_me"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -144,6 +152,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "4fcc4e9709143366625fa50f03b4fad2";
+(node as any).hash = "276fb1db62fab2b13830211f53301dc4";
 
 export default node;

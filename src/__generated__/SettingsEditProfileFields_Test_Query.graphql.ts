@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7c0f9c2f4d810410c5a4336e9c1d6c0f>>
+ * @generated SignedSource<<412bd1cc13ccc8e09342c722a46804f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -150,6 +150,13 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "name",
             "storageKey": null
           },
@@ -249,7 +256,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7c858d9ac80576c0070d9b4dfa321800",
+    "cacheID": "71d1213182a242e5d8f0c65768ca586d",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -277,6 +284,7 @@ return {
         "me.icon.resized.src": (v3/*: any*/),
         "me.icon.resized.srcSet": (v3/*: any*/),
         "me.id": (v4/*: any*/),
+        "me.internalID": (v4/*: any*/),
         "me.isEmailConfirmed": (v2/*: any*/),
         "me.isIdentityVerified": {
           "enumValues": null,
@@ -302,7 +310,7 @@ return {
     },
     "name": "SettingsEditProfileFields_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  icon {\n    resized(height: 200, width: 200, version: \"large_square\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...SettingsEditProfileImage_me\n  name\n  profession\n  otherRelevantPositions\n  bio\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  isEmailConfirmed\n  isIdentityVerified\n  canRequestEmailConfirmation\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n}\n"
+    "text": "query SettingsEditProfileFields_Test_Query {\n  me {\n    ...SettingsEditProfileFields_me\n    id\n  }\n}\n\nfragment CollectorProfileHeaderAvatar_me on Me {\n  icon {\n    resized(height: 200, width: 200, version: \"large_square\") {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment SettingsEditProfileFields_me on Me {\n  ...SettingsEditProfileImage_me\n  internalID\n  name\n  profession\n  otherRelevantPositions\n  bio\n  location {\n    display\n    city\n    state\n    country\n    id\n  }\n  email\n  isEmailConfirmed\n  isIdentityVerified\n  canRequestEmailConfirmation\n}\n\nfragment SettingsEditProfileImage_me on Me {\n  ...CollectorProfileHeaderAvatar_me\n}\n"
   }
 };
 })();
