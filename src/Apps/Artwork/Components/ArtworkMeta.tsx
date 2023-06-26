@@ -6,7 +6,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { data as sd } from "sharify"
 import { get } from "Utils/get"
 import { SeoDataForArtworkFragmentContainer as SeoDataForArtwork } from "./Seo/SeoDataForArtwork"
-import { ArtworkZendeskFragmentContainer } from "./ArtworkZendesk"
+import { ArtworkChatBubbleFragmentContainer } from "./ArtworkChatBubble"
 
 interface ArtworkMetaProps {
   artwork: ArtworkMeta_artwork$data
@@ -71,7 +71,7 @@ export class ArtworkMeta extends Component<ArtworkMetaProps> {
         {this.renderImageMetaTags()}
         {addNoIndex && <Meta name="robots" content="noindex, follow" />}
 
-        <ArtworkZendeskFragmentContainer artwork={artwork} />
+        <ArtworkChatBubbleFragmentContainer artwork={artwork} />
       </>
     )
   }
@@ -83,7 +83,7 @@ export const ArtworkMetaFragmentContainer = createFragmentContainer(
     artwork: graphql`
       fragment ArtworkMeta_artwork on Artwork {
         ...SeoDataForArtwork_artwork
-        ...ArtworkZendesk_artwork
+        ...ArtworkChatBubble_artwork
         href
         isShareable
         visibilityLevel

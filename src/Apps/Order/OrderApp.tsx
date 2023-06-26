@@ -11,7 +11,6 @@ import { loadStripe } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
 import styled from "styled-components"
 import { ConnectedModalDialog } from "./Dialogs"
-import { ZendeskWrapper } from "Components/ZendeskWrapper"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { exceedsChatSupportThreshold } from "Utils/exceedsChatSupportThreshold"
 import { getENV } from "Utils/getENV"
@@ -97,9 +96,7 @@ const OrderApp: FC<OrderAppProps> = props => {
       <Media greaterThan="xs">
         <SalesforceWrapper />
       </Media>
-    ) : (
-      <ZendeskWrapper />
-    )
+    ) : null
   }
 
   const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
