@@ -1,5 +1,5 @@
 import { getLabel } from "./getLabel"
-import { SuggionItemOptionProps } from "Components/Search/NewSearch/SuggestionItem/NewSuggestionItem"
+import { SuggestionItemOptionProps } from "Components/Search/NewSearch/SuggestionItem/NewSuggestionItem"
 
 export interface SearchNodeOption {
   __typename: string
@@ -15,7 +15,7 @@ export interface SearchNodeOption {
 
 export const formatOptions = (
   options: SearchNodeOption[]
-): SuggionItemOptionProps[] => {
+): SuggestionItemOptionProps[] => {
   return options.map((option, index) => {
     return {
       text: option.displayLabel!,

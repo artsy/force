@@ -4,7 +4,7 @@ import { SuggestionItemLink } from "./SuggestionItemLink"
 import { DefaultSuggestion } from "./DefaultSuggestion"
 import { QuickNavigation } from "./QuickNavigation"
 
-export interface SuggionItemOptionProps {
+export interface SuggestionItemOptionProps {
   text: string
   value: string
   subtitle: string
@@ -19,7 +19,7 @@ export interface SuggionItemOptionProps {
 
 interface SuggestionItemProps {
   query: string
-  option: SuggionItemOptionProps
+  option: SuggestionItemOptionProps
   onRedirect: () => void
 }
 

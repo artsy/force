@@ -19,7 +19,7 @@ import {
 } from "Components/Search/NewSearch/constants"
 import {
   NewSuggestionItem,
-  SuggionItemOptionProps,
+  SuggestionItemOptionProps,
 } from "./SuggestionItem/NewSuggestionItem"
 import { useTracking } from "react-tracking"
 import { StaticSearchContainer } from "./StaticSearchContainer"
@@ -50,7 +50,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
   const options = extractNodes(viewer.searchConnection)
-  const formattedOptions: SuggionItemOptionProps[] = [
+  const formattedOptions: SuggestionItemOptionProps[] = [
     ...options.map((option, index) => {
       return {
         text: option.displayLabel!,
@@ -165,7 +165,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
     }
   }
 
-  const handleSelect = (option: SuggionItemOptionProps) => {
+  const handleSelect = (option: SuggestionItemOptionProps) => {
     tracking.trackEvent({
       action_type: ActionType.selectedItemFromSearch,
       context_module: selectedPill.analyticsContextModule,

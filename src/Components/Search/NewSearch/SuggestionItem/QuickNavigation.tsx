@@ -1,12 +1,12 @@
 import { FC } from "react"
-import { SuggionItemOptionProps } from "./NewSuggestionItem"
+import { SuggestionItemOptionProps } from "./NewSuggestionItem"
 import { Flex } from "@artsy/palette"
 import GavelIcon from "@artsy/icons/GavelIcon"
 import ArtworkIcon from "@artsy/icons/ArtworkIcon"
 import { QuickNavigationItem } from "./QuickNavigationItem"
 
 interface QuickNavigationProps {
-  option: SuggionItemOptionProps
+  option: SuggestionItemOptionProps
   onClick?: () => void
 }
 

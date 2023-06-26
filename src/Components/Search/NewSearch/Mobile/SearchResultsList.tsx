@@ -8,7 +8,7 @@ import { SearchResultsList_viewer$data } from "__generated__/SearchResultsList_v
 import { extractNodes } from "Utils/extractNodes"
 import {
   NewSuggestionItem,
-  SuggionItemOptionProps,
+  SuggestionItemOptionProps,
 } from "Components/Search/NewSearch/SuggestionItem/NewSuggestionItem"
 import { Flex, Spinner } from "@artsy/palette"
 import {
@@ -35,7 +35,7 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
   onClose,
 }) => {
   const options = extractNodes(viewer.searchConnection)
-  const formattedOptions: SuggionItemOptionProps[] = formatOptions(
+  const formattedOptions: SuggestionItemOptionProps[] = formatOptions(
     options as SearchNodeOption[]
   )
 
