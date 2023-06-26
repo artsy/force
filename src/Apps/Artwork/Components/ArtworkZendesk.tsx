@@ -42,7 +42,7 @@ const ArtworkZendesk: FC<ArtworkZendeskProps> = ({ artwork }) => {
 
   return getENV("SALESFORCE_CHAT_ENABLED") ? (
     <Media greaterThan="xs">
-      <SalesforceWrapper />
+      <SalesforceWrapper isInAuction={isInAuction} />
     </Media>
   ) : (
     <ZendeskWrapper mode={isInAuction ? "auction" : "default"} />

@@ -161,7 +161,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
 
       {getENV("SALESFORCE_CHAT_ENABLED") ? (
         <Media greaterThan="xs">
-          <SalesforceWrapper />
+          <SalesforceWrapper isInAuction={true} />
         </Media>
       ) : (
         <ZendeskWrapper mode="auction" />
