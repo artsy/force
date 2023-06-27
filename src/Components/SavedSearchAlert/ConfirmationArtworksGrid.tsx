@@ -18,6 +18,7 @@ import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { useTranslation } from "react-i18next"
 import { extractNodes } from "Utils/extractNodes"
 import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
+import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface ConfirmationArtworksProps {
   artworksConnection: ConfirmationArtworksGridQuery$data["artworksConnection"]
@@ -43,22 +44,17 @@ export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
 
       <Spacer y={2} />
 
-      <GridColumns alignItems="flex-end">
-        {artworks.map((artwork, index) => {
-          return (
-            <Column
-              span={[6]}
-              key={`artwork-${index}`}
-              // Fix for issue in Firefox where contents overflow container.
-            >
-              <ArtworkGridItemFragmentContainer
-                artwork={artwork}
-                saveOnlyToDefaultList={true}
-              />
-            </Column>
-          )
-        })}
-      </GridColumns>
+      <ArtworkGridContextProvider saveOnlyToDefaultList>
+        <GridColumns alignItems="flex-end">
+          {artworks.map((artwork, index) => {
+            return (
+              <Column span={[6]} key={`artwork-${index}`}>
+                <ArtworkGridItemFragmentContainer artwork={artwork} />
+              </Column>
+            )
+          })}
+        </GridColumns>
+      </ArtworkGridContextProvider>
     </Flex>
   )
 }
