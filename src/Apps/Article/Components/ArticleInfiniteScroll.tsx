@@ -25,10 +25,10 @@ import { ArticleInfiniteScrollQuery } from "__generated__/ArticleInfiniteScrollQ
 import { ArticleBodyFragmentContainer } from "./ArticleBody"
 import { ArticleVerticalRelatedArticlesQueryRenderer } from "./ArticleVerticalRelatedArticles"
 import { ArticleInfiniteScroll_viewer$data } from "__generated__/ArticleInfiniteScroll_viewer.graphql"
-import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { useMode } from "Utils/Hooks/useMode"
 import { themeGet } from "@styled-system/theme-get"
 import { ArticleVisibilityMetadataFragmentContainer } from "./ArticleVisibilityMetadata"
+import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 
 interface ArticleInfiniteScrollProps {
   viewer: ArticleInfiniteScroll_viewer$data
@@ -75,7 +75,7 @@ export const ArticleInfiniteScroll: FC<ArticleInfiniteScrollProps> = ({
                 id={article.internalID}
               />
 
-              <ArticleInfiniteScrollSentinel onNext={handleNext} />
+              <InfiniteScrollSentinel onNext={handleNext} />
             </Fragment>
           )
         })}
@@ -84,18 +84,6 @@ export const ArticleInfiniteScroll: FC<ArticleInfiniteScrollProps> = ({
       {mode === "Loading" && <ArticleInfiniteScrollPlaceholder />}
     </>
   )
-}
-
-interface ArticleInfiniteScrollSentinelProps {
-  onNext(): void
-}
-
-const ArticleInfiniteScrollSentinel: FC<ArticleInfiniteScrollSentinelProps> = ({
-  onNext,
-}) => {
-  const { ref } = useIntersectionObserver({ onIntersection: onNext })
-
-  return <Box ref={ref as any} height={0} />
 }
 
 const ARTICLE_NEXT_QUERY = graphql`

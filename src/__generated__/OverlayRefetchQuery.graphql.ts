@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<59c21a3d12e434f8b2cceebd4fbf10c4>>
+ * @generated SignedSource<<cfce191c80b22a3c32c59f8b5d62d345>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,19 +11,19 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchEntity = "ARTICLE" | "ARTIST" | "ARTIST_SERIES" | "ARTWORK" | "CITY" | "COLLECTION" | "FAIR" | "FEATURE" | "GALLERY" | "GENE" | "INSTITUTION" | "PAGE" | "PROFILE" | "SALE" | "SHOW" | "TAG" | "VIEWING_ROOM" | "%future added value";
-export type MobileSearchBarSuggestQuery$variables = {
+export type OverlayRefetchQuery$variables = {
   entities?: ReadonlyArray<SearchEntity | null> | null;
   hasTerm: boolean;
   term: string;
 };
-export type MobileSearchBarSuggestQuery$data = {
+export type OverlayRefetchQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"Overlay_viewer">;
   } | null;
 };
-export type MobileSearchBarSuggestQuery = {
-  response: MobileSearchBarSuggestQuery$data;
-  variables: MobileSearchBarSuggestQuery$variables;
+export type OverlayRefetchQuery = {
+  response: OverlayRefetchQuery$data;
+  variables: OverlayRefetchQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -76,7 +76,7 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "MobileSearchBarSuggestQuery",
+    "name": "OverlayRefetchQuery",
     "selections": [
       {
         "alias": null,
@@ -118,7 +118,7 @@ return {
       (v0/*: any*/)
     ],
     "kind": "Operation",
-    "name": "MobileSearchBarSuggestQuery",
+    "name": "OverlayRefetchQuery",
     "selections": [
       {
         "alias": null,
@@ -376,16 +376,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "3eba0f03f8503849abebeeeafabf2b0d",
+    "cacheID": "38c71420b1c854b3f7041f491e226c9d",
     "id": null,
     "metadata": {},
-    "name": "MobileSearchBarSuggestQuery",
+    "name": "OverlayRefetchQuery",
     "operationKind": "query",
-    "text": "query MobileSearchBarSuggestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...Overlay_viewer_1B9obU\n  }\n}\n\nfragment NewSearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n\nfragment Overlay_viewer_1B9obU on Viewer {\n  ...NewSearchInputPills_viewer_4hh6ED\n  ...SearchResultsList_viewer_plJt2 @include(if: $hasTerm)\n}\n\nfragment SearchResultsList_viewer_plJt2 on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 10) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query OverlayRefetchQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...Overlay_viewer_1B9obU\n  }\n}\n\nfragment NewSearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n\nfragment Overlay_viewer_1B9obU on Viewer {\n  ...NewSearchInputPills_viewer_4hh6ED\n  ...SearchResultsList_viewer_plJt2 @include(if: $hasTerm)\n}\n\nfragment SearchResultsList_viewer_plJt2 on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 10) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1141fc584725e614d6d5dbc0520224f5";
+(node as any).hash = "86cd4d7171dd1d61feb7167f768cda14";
 
 export default node;

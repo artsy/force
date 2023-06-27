@@ -1,25 +1,25 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
 import { LabeledInput } from "@artsy/palette"
-import { Overlay } from "./Overlay"
+import { OverlayRefetchContainer } from "./Overlay"
 import { FC, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import { graphql } from "react-relay"
 import { useSystemContext } from "System/SystemContext"
 import { isServer } from "Server/isServer"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { MobileSearchBarSuggestQuery } from "__generated__/MobileSearchBarSuggestQuery.graphql"
-import { MobileSearchBar_viewer$data } from "__generated__/MobileSearchBar_viewer.graphql"
+import {
+  MobileSearchBarSuggestQuery,
+  MobileSearchBarSuggestQuery$data,
+} from "__generated__/MobileSearchBarSuggestQuery.graphql"
 import { StaticSearchContainer } from "Components/Search/NewSearch/StaticSearchContainer"
 
 interface MobileSearchBarProps {
-  viewer: MobileSearchBar_viewer$data
-  relay: RelayRefetchProp
+  viewer: NonNullable<MobileSearchBarSuggestQuery$data["viewer"]>
   onClose: () => void
 }
 
 export const MobileSearchBar: FC<MobileSearchBarProps> = ({
   viewer,
-  relay,
   onClose,
 }) => {
   const { t } = useTranslation()
@@ -37,7 +37,7 @@ export const MobileSearchBar: FC<MobileSearchBarProps> = ({
   return (
     <>
       {overlayDisplayed && (
-        <Overlay viewer={viewer} relay={relay} onClose={handleOverlayClose} />
+        <OverlayRefetchContainer viewer={viewer} onClose={handleOverlayClose} />
       )}
 
       <LabeledInput
@@ -49,25 +49,6 @@ export const MobileSearchBar: FC<MobileSearchBarProps> = ({
     </>
   )
 }
-
-export const MobileSearchBarRefetchContainer = createRefetchContainer(
-  MobileSearchBar,
-  {
-    viewer: graphql`
-      fragment MobileSearchBar_viewer on Viewer
-        @argumentDefinitions(term: { type: "String!", defaultValue: "" }) {
-        ...NewSearchInputPills_viewer @arguments(term: $term)
-      }
-    `,
-  },
-  graphql`
-    query MobileSearchBarRefetchQuery($term: String!) {
-      viewer {
-        ...MobileSearchBar_viewer @arguments(term: $term)
-      }
-    }
-  `
-)
 
 interface MobileSearchBarQueryRendererProps {
   onClose: () => void
@@ -84,9 +65,14 @@ export const MobileSearchBarQueryRenderer: FC<MobileSearchBarQueryRendererProps>
     <SystemQueryRenderer<MobileSearchBarSuggestQuery>
       environment={relayEnvironment}
       query={graphql`
-        query MobileSearchBarSuggestQuery($term: String!) {
+        query MobileSearchBarSuggestQuery(
+          $term: String!
+          $hasTerm: Boolean!
+          $entities: [SearchEntity]
+        ) {
           viewer {
-            ...MobileSearchBar_viewer @arguments(term: $term)
+            ...Overlay_viewer
+              @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
           }
         }
       `}
@@ -97,12 +83,7 @@ export const MobileSearchBarQueryRenderer: FC<MobileSearchBarQueryRendererProps>
       }}
       render={({ props: relayProps }) => {
         if (relayProps?.viewer) {
-          return (
-            <MobileSearchBarRefetchContainer
-              viewer={relayProps.viewer}
-              {...props}
-            />
-          )
+          return <MobileSearchBar viewer={relayProps.viewer} {...props} />
           // SSR render pass. Since we don't have access to `<Boot>` context
           // from within the NavBar (it's not a part of any app) we need to lean
           // on styled-system for showing / hiding depending upon breakpoint.

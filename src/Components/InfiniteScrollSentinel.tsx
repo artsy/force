@@ -2,16 +2,18 @@ import { Box } from "@artsy/palette"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { FC } from "react"
 
-interface ArtworksInfiniteScrollSentinelProps {
+interface InfiniteScrollSentinelProps {
   onNext: () => void
+  once?: boolean
 }
 
-export const ArtworksInfiniteScrollSentinel: FC<ArtworksInfiniteScrollSentinelProps> = ({
+export const InfiniteScrollSentinel: FC<InfiniteScrollSentinelProps> = ({
   onNext,
+  once = true,
 }) => {
   const { ref } = useIntersectionObserver({
     onIntersection: onNext,
-    once: false,
+    once: once,
   })
 
   return <Box ref={ref as any} height={0} />
