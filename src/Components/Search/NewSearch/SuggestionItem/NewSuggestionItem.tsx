@@ -20,14 +20,14 @@ export interface SuggestionItemOptionProps {
 interface SuggestionItemProps {
   query: string
   option: SuggestionItemOptionProps
-  onRedirect: () => void
+  onRedirect: (option?: SuggestionItemOptionProps) => void
 }
 
 export const NewSuggestionItem: FC<SuggestionItemProps> = props => {
   const { option, onRedirect } = props
 
   const handleClick = () => {
-    onRedirect()
+    onRedirect(option)
   }
 
   return (

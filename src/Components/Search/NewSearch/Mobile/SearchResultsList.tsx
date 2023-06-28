@@ -21,6 +21,7 @@ import { ContentPlaceholder } from "Components/Search/NewSearch/Mobile/SearchRes
 import { useTracking } from "react-tracking"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { PillType } from "Components/Search/NewSearch/constants"
+import { ActionType } from "@artsy/cohesion"
 
 interface SearchResultsListProps {
   relay: RelayPaginationProp
@@ -80,6 +81,19 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
     })
   }
 
+  const handleRedirect = (option: SuggestionItemOptionProps) => {
+    tracking.trackEvent({
+      action_type: ActionType.selectedItemFromSearch,
+      context_module: selectedPill.analyticsContextModule,
+      destination_path: option.href,
+      item_number: option.item_number,
+      item_type: option.item_type,
+      query: query,
+    })
+
+    onClose()
+  }
+
   return (
     <>
       {formattedOptions.map((option, index) => {
@@ -87,7 +101,7 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
           <NewSuggestionItem
             query={query}
             option={option}
-            onRedirect={onClose}
+            onRedirect={handleRedirect}
             key={index}
           />
         )

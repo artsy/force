@@ -169,10 +169,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
     tracking.trackEvent({
       action_type: ActionType.selectedItemFromSearch,
       context_module: selectedPill.analyticsContextModule,
-      destination_path:
-        option.typename === "Artist"
-          ? `${option.href}/works-for-sale`
-          : option.href,
+      destination_path: option.href,
       item_number: option.item_number,
       item_type: option.item_type,
       query: value,
