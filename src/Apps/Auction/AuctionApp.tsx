@@ -14,6 +14,7 @@ import { AuctionArtworkFilterRefetchContainer } from "./Components/AuctionArtwor
 import { AuctionDetailsFragmentContainer } from "./Components/AuctionDetails/AuctionDetails"
 import { AuctionBuyNowRailFragmentContainer } from "./Components/AuctionBuyNowRail"
 import { AuctionWorksByFollowedArtistsRailFragmentContainer } from "./Components/AuctionWorksByFollowedArtistsRail"
+import { ZendeskWrapper } from "Components/ZendeskWrapper"
 import { AuctionAssociatedSaleFragmentContainer } from "./Components/AuctionAssociatedSale"
 import { useEffect } from "react"
 import { useAuctionTracking } from "./Hooks/useAuctionTracking"
@@ -162,7 +163,9 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
         <Media greaterThan="xs">
           <SalesforceWrapper isInAuction={true} />
         </Media>
-      ) : null}
+      ) : (
+        <ZendeskWrapper mode="auction" />
+      )}
     </>
   )
 }

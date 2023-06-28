@@ -1,16 +1,17 @@
 import { FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
+import { ZendeskWrapper } from "Components/ZendeskWrapper"
 import { exceedsChatSupportThreshold } from "Utils/exceedsChatSupportThreshold"
+import { ArtworkZendesk_artwork$data } from "__generated__/ArtworkZendesk_artwork.graphql"
 import { getENV } from "Utils/getENV"
-import { ArtworkChatBubble_artwork$data } from "__generated__/ArtworkChatBubble_artwork.graphql"
 import { SalesforceWrapper } from "Components/SalesforceWrapper"
 import { Media } from "Utils/Responsive"
 
-interface ArtworkChatBubbleProps {
-  artwork: ArtworkChatBubble_artwork$data
+interface ArtworkZendeskProps {
+  artwork: ArtworkZendesk_artwork$data
 }
 
-const ArtworkChatBubble: FC<ArtworkChatBubbleProps> = ({ artwork }) => {
+const ArtworkZendesk: FC<ArtworkZendeskProps> = ({ artwork }) => {
   const {
     isAcquireable,
     isInquireable,
@@ -41,17 +42,18 @@ const ArtworkChatBubble: FC<ArtworkChatBubbleProps> = ({ artwork }) => {
 
   return getENV("SALESFORCE_CHAT_ENABLED") ? (
     <Media greaterThan="xs">
-      <SalesforceWrapper />
       <SalesforceWrapper isInAuction={isInAuction} />
     </Media>
-  ) : null
+  ) : (
+    <ZendeskWrapper mode={isInAuction ? "auction" : "default"} />
+  )
 }
 
-export const ArtworkChatBubbleFragmentContainer = createFragmentContainer(
-  ArtworkChatBubble,
+export const ArtworkZendeskFragmentContainer = createFragmentContainer(
+  ArtworkZendesk,
   {
     artwork: graphql`
-      fragment ArtworkChatBubble_artwork on Artwork {
+      fragment ArtworkZendesk_artwork on Artwork {
         isAcquireable
         isInquireable
         isOfferable

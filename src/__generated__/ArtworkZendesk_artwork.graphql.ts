@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a72ed0578747f0d61888e79ef28c0e07>>
+ * @generated SignedSource<<cd23932fb5fd12d64bf5bbc19635ffa0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkChatBubble_artwork$data = {
+export type ArtworkZendesk_artwork$data = {
   readonly isAcquireable: boolean | null;
   readonly isInAuction: boolean | null;
   readonly isInquireable: boolean | null;
@@ -30,11 +30,11 @@ export type ArtworkChatBubble_artwork$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null;
-  readonly " $fragmentType": "ArtworkChatBubble_artwork";
+  readonly " $fragmentType": "ArtworkZendesk_artwork";
 };
-export type ArtworkChatBubble_artwork$key = {
-  readonly " $data"?: ArtworkChatBubble_artwork$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkChatBubble_artwork">;
+export type ArtworkZendesk_artwork$key = {
+  readonly " $data"?: ArtworkZendesk_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkZendesk_artwork">;
 };
 
 const node: ReaderFragment = (function(){
@@ -58,7 +58,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtworkChatBubble_artwork",
+  "name": "ArtworkZendesk_artwork",
   "selections": [
     {
       "alias": null,
@@ -135,6 +135,6 @@ return {
 };
 })();
 
-(node as any).hash = "10b98c9d42fc5a7a6f3bce56fa7c4083";
+(node as any).hash = "800d5e40b10e81dd4892398e2a067baa";
 
 export default node;
