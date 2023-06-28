@@ -83,6 +83,7 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
 const testOrder: ReviewTestQuery$rawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
   internalID: "1234",
+  requireIdentityVerification: false,
   impulseConversationId: null,
 }
 

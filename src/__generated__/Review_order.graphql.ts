@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<52404741f80e81fed54116e4e48a3e9a>>
+ * @generated SignedSource<<07d83a4eeefbdd668ac0aeb0c49171c7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -45,6 +45,7 @@ export type Review_order$data = {
     readonly internalID: string;
   } | null;
   readonly paymentMethod: CommercePaymentMethodEnum | null;
+  readonly requireIdentityVerification: boolean;
   readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
   readonly stateExpiresAt: string | null;
@@ -118,6 +119,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "requireIdentityVerification",
       "storageKey": null
     },
     {
@@ -320,6 +328,6 @@ return {
 };
 })();
 
-(node as any).hash = "bef72db09da81130a96281294fc82958";
+(node as any).hash = "ddd9d31a85aa6f05b044b351a850a647";
 
 export default node;

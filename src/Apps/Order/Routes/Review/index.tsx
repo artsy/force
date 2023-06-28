@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Join, Spacer } from "@artsy/palette"
+import { Box, Button, Flex, Join, Message, Spacer } from "@artsy/palette"
 import { Review_order$data } from "__generated__/Review_order.graphql"
 import { ReviewSubmitOfferOrderWithConversationMutation } from "__generated__/ReviewSubmitOfferOrderWithConversationMutation.graphql"
 import { ReviewSubmitOrderMutation } from "__generated__/ReviewSubmitOrderMutation.graphql"
@@ -515,6 +515,17 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                   />
                 </>
               )}
+              {order.requireIdentityVerification && (
+                <>
+                  <Message title="Verify Your Identity">
+                    For certain orders and auctions, Artsy requires collectors
+                    to complete identity verification before finalizing their
+                    purchase. After submitting your order, you will receive an
+                    email with instructions on how to complete the process.
+                  </Message>
+                  <Spacer y={2} />
+                </>
+              )}
               {order.mode === "OFFER" && (
                 <OfferSummaryItem order={order} onChange={onChangeOffer} />
               )}
@@ -596,6 +607,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
         mode
         code
         source
+        requireIdentityVerification
         conditionsOfSale
         itemsTotal(precision: 2)
         impulseConversationId
