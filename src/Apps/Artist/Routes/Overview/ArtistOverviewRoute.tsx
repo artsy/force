@@ -12,13 +12,6 @@ const ArtistIconicCollectionsRailQueryRenderer = loadable(
       component.ArtistIconicCollectionsRailQueryRenderer,
   }
 )
-const ArtistFeaturedWorksRailQueryRenderer = loadable(
-  () => import("./Components/ArtistFeaturedWorksRail"),
-  {
-    resolveComponent: component =>
-      component.ArtistFeaturedWorksRailQueryRenderer,
-  }
-)
 const ArtistWorksForSaleRailQueryRenderer = loadable(
   () => import("./Components/ArtistWorksForSaleRail"),
   {
@@ -77,7 +70,6 @@ const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
       <Meta name="description" content={description} />
 
       <Join separator={<Spacer y={6} />}>
-        <ArtistFeaturedWorksRailQueryRenderer slug={artist.slug} />
         <ArtistCareerHighlightsQueryRenderer slug={artist.slug} />
         <ArtistSellWithArtsyQueryRenderer slug={artist.slug} />
         <ArtistIconicCollectionsRailQueryRenderer
