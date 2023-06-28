@@ -195,8 +195,8 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
       onChange={handleChange}
       onClear={clearSearchInput}
       onSubmit={handleSubmit}
-      onFocus={handleFocus}
       onSelect={handleSelect}
+      onClick={handleFocus}
       header={
         <NewSearchInputPillsFragmentContainer
           viewer={viewer}

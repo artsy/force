@@ -46,14 +46,16 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
   const options = extractNodes(viewer.searchConnection)
 
   useEffect(() => {
-    tracking.trackEvent({
-      action_type:
-        options.length > 0
-          ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
-          : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
-      context_module: selectedPill.analyticsContextModule,
-      query: query,
-    })
+    if (!relay.isLoading()) {
+      tracking.trackEvent({
+        action_type:
+          options.length > 0
+            ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
+            : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
+        context_module: selectedPill.analyticsContextModule,
+        query: query,
+      })
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [fetchCounter])
 
