@@ -19,6 +19,8 @@ import {
   OverlayBase,
 } from "Components/Search/NewSearch/Mobile/OverlayBase"
 import { SearchResultsListPaginationContainer } from "Components/Search/NewSearch/Mobile/SearchResultsList"
+import { useTracking } from "react-tracking"
+import { ActionType } from "@artsy/cohesion"
 
 const logger = createLogger("Components/Search/NewSearch/Mobile")
 
@@ -34,14 +36,22 @@ interface OverlayProps {
 
 export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
   const { t } = useTranslation()
+  const tracking = useTracking()
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
   // TODO: Parse value from url
   const [inputValue, setInputValue] = useState("")
   const disablePills = !shouldStartSearching(inputValue)
+  const [fetchCounter, setFetchCounter] = useState(0)
 
   useEffect(() => {
     inputRef.current?.focus()
+
+    tracking.trackEvent({
+      action_type: ActionType.focusedOnSearchInput,
+      context_module: selectedPill.analyticsContextModule,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const refetch = useCallback(
@@ -67,6 +77,8 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
           }
 
           scrollToTop()
+          // trigger useEffect to send tracking event
+          setFetchCounter(prevCounter => prevCounter + 1)
         }
       )
     },
@@ -124,6 +136,8 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
         <SearchResultsListPaginationContainer
           viewer={viewer}
           query={inputValue}
+          selectedPill={selectedPill}
+          fetchCounter={fetchCounter}
           onClose={onClose}
         />
       )}

@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import {
   RelayPaginationProp,
   createPaginationContainer,
@@ -18,11 +18,16 @@ import {
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 import { NoResults } from "Components/Search/NewSearch/Mobile/SearchResultsList/NoResults"
 import { ContentPlaceholder } from "Components/Search/NewSearch/Mobile/SearchResultsList/ContentPlaceholder"
+import { useTracking } from "react-tracking"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { PillType } from "Components/Search/NewSearch/constants"
 
 interface SearchResultsListProps {
   relay: RelayPaginationProp
   viewer: SearchResultsList_viewer$data
   query: string
+  selectedPill: PillType
+  fetchCounter: number
   onClose: () => void
 }
 
@@ -32,9 +37,25 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
   relay,
   viewer,
   query,
+  selectedPill,
+  fetchCounter,
   onClose,
 }) => {
+  const tracking = useTracking()
   const options = extractNodes(viewer.searchConnection)
+
+  useEffect(() => {
+    tracking.trackEvent({
+      action_type:
+        options.length > 0
+          ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
+          : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
+      context_module: selectedPill.analyticsContextModule,
+      query: query,
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [fetchCounter])
+
   const formattedOptions: SuggestionItemOptionProps[] = formatOptions(
     options as SearchNodeOption[]
   )
