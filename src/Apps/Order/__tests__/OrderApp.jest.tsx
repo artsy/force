@@ -678,7 +678,7 @@ describe("OrderApp", () => {
       mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
       const props = getProps()
       const subject = getWrapper({
-        props: { ...props, location: { query: { isModal: true } } },
+        props: { ...props, match: { location: { query: { isModal: true } } } },
       })
 
       expect(subject.find("SalesforceWrapper")).toHaveLength(0)

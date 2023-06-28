@@ -92,11 +92,15 @@ const OrderApp: FC<OrderAppProps> = props => {
       return null
     }
 
-    return getENV("SALESFORCE_CHAT_ENABLED") ? (
+    if (!getENV("SALESFORCE_CHAT_ENABLED")) {
+      return null
+    }
+
+    return (
       <Media greaterThan="xs">
         <SalesforceWrapper />
       </Media>
-    ) : null
+    )
   }
 
   const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
@@ -114,7 +118,9 @@ const OrderApp: FC<OrderAppProps> = props => {
             : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
         }
       />
+
       {!isEigen && !isModal && renderChatSupportScript()}
+
       <SafeAreaContainer>
         <OrderPaymentContextProvider>
           <Elements stripe={stripePromise}>
@@ -122,6 +128,7 @@ const OrderApp: FC<OrderAppProps> = props => {
           </Elements>
         </OrderPaymentContextProvider>
       </SafeAreaContainer>
+
       {!isModal && (
         <StickyFooterWithInquiry
           orderType={order.mode}
@@ -129,6 +136,7 @@ const OrderApp: FC<OrderAppProps> = props => {
           artworkID={artwork?.slug!}
         />
       )}
+
       <ConnectedModalDialog />
     </Box>
   )
