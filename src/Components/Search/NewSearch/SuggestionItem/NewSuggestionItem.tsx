@@ -20,7 +20,10 @@ export interface SuggestionItemOptionProps {
 interface SuggestionItemProps {
   query: string
   option: SuggestionItemOptionProps
-  onRedirect: (option?: SuggestionItemOptionProps) => void
+  onRedirect: (
+    option?: SuggestionItemOptionProps,
+    quickNavigation?: boolean
+  ) => void
 }
 
 export const NewSuggestionItem: FC<SuggestionItemProps> = props => {
@@ -30,10 +33,14 @@ export const NewSuggestionItem: FC<SuggestionItemProps> = props => {
     onRedirect(option)
   }
 
+  const handleQuickNavigationClick = () => {
+    onRedirect(option, true)
+  }
+
   return (
     <SuggestionItemLink onClick={handleClick} to={option.href}>
       <DefaultSuggestion {...props} />
-      <QuickNavigation option={option} onClick={onRedirect} />
+      <QuickNavigation option={option} onClick={handleQuickNavigationClick} />
     </SuggestionItemLink>
   )
 }

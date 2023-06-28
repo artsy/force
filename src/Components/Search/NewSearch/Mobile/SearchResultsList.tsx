@@ -81,15 +81,20 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
     })
   }
 
-  const handleRedirect = (option: SuggestionItemOptionProps) => {
-    tracking.trackEvent({
-      action_type: ActionType.selectedItemFromSearch,
-      context_module: selectedPill.analyticsContextModule,
-      destination_path: option.href,
-      item_number: option.item_number,
-      item_type: option.item_type,
-      query: query,
-    })
+  const handleRedirect = (
+    option: SuggestionItemOptionProps,
+    quickNavigation = false
+  ) => {
+    if (!quickNavigation) {
+      tracking.trackEvent({
+        action_type: ActionType.selectedItemFromSearch,
+        context_module: selectedPill.analyticsContextModule,
+        destination_path: option.href,
+        item_number: option.item_number,
+        item_type: option.item_type,
+        query: query,
+      })
+    }
 
     onClose()
   }
