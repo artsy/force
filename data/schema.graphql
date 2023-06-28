@@ -4062,6 +4062,9 @@ type CommerceBuyOrder implements CommerceOrder {
   paymentMethod: CommercePaymentMethodEnum
   paymentMethodDetails: PaymentMethodUnion
   requestedFulfillment: CommerceRequestedFulfillmentUnion
+
+  # Whether the buyer needs to complete identity verification to make this purchase.
+  requireIdentityVerification: Boolean!
   seller: CommerceOrderPartyUnion!
   sellerDetails: OrderParty
   sellerTotal(
@@ -4826,6 +4829,9 @@ type CommerceOfferOrder implements CommerceOrder {
   paymentMethod: CommercePaymentMethodEnum
   paymentMethodDetails: PaymentMethodUnion
   requestedFulfillment: CommerceRequestedFulfillmentUnion
+
+  # Whether the buyer needs to complete identity verification to make this purchase.
+  requireIdentityVerification: Boolean!
   seller: CommerceOrderPartyUnion!
   sellerDetails: OrderParty
   sellerTotal(
@@ -5031,6 +5037,9 @@ interface CommerceOrder {
   paymentMethod: CommercePaymentMethodEnum
   paymentMethodDetails: PaymentMethodUnion
   requestedFulfillment: CommerceRequestedFulfillmentUnion
+
+  # Whether the buyer needs to complete identity verification to make this purchase.
+  requireIdentityVerification: Boolean!
   seller: CommerceOrderPartyUnion!
   sellerDetails: OrderParty
   sellerTotal(
