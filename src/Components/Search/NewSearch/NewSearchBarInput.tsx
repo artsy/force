@@ -50,8 +50,8 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
   const options = extractNodes(viewer.searchConnection)
-  const formattedOptions: SuggestionItemOptionProps[] = [
-    ...options.map((option, index) => {
+  const formattedOptions: SuggestionItemOptionProps[] = options.map(
+    (option, index) => {
       return {
         text: option.displayLabel!,
         value: option.displayLabel!,
@@ -68,20 +68,8 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
         item_number: index,
         item_type: option.displayType!,
       }
-    }),
-    {
-      text: value,
-      value: value,
-      subtitle: "",
-      imageUrl: "",
-      showArtworksButton: false,
-      showAuctionResultsButton: false,
-      href: encodedSearchURL,
-      typename: "Footer",
-      item_number: options.length,
-      item_type: "Footer",
-    },
-  ]
+    }
+  )
 
   useUpdateEffect(() => {
     tracking.trackEvent({
@@ -179,6 +167,10 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
     redirect(option.href)
   }
 
+  const handleClickOnFooter = () => {
+    clearSearchInput()
+  }
+
   const handleFocus = () => {
     tracking.trackEvent({
       action_type: ActionType.focusedOnSearchInput,
@@ -188,6 +180,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
 
   return (
     <AutocompleteInput
+      id="SearchBarInput"
       placeholder={t`navbar.searchBy`}
       spellCheck={false}
       options={shouldStartSearching(value) ? formattedOptions : []}
@@ -204,17 +197,16 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
           onPillClick={handlePillClick}
         />
       }
+      footer={
+        <NewSearchBarFooter
+          query={value}
+          href={encodedSearchURL}
+          index={options.length}
+          selectedPill={selectedPill}
+          onClick={handleClickOnFooter}
+        />
+      }
       renderOption={option => {
-        if (option.item_type === "Footer") {
-          return (
-            <NewSearchBarFooter
-              query={value}
-              href={encodedSearchURL}
-              index={options.length}
-              selectedPill={selectedPill}
-            />
-          )
-        }
         return (
           <NewSuggestionItem
             query={value}
@@ -223,7 +215,8 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
           />
         )
       }}
-      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 10px)`}
+      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 150px)`}
+      flip={false}
     />
   )
 }
