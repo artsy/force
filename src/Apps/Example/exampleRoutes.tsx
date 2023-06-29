@@ -61,6 +61,16 @@ const AddToCollectionRoute = loadable(
   }
 )
 
+const SearchRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "exampleBundle" */ "./Routes/Search/SearchRoute"
+    ),
+  {
+    resolveComponent: component => component.SearchRoute,
+  }
+)
+
 export const exampleRoutes: AppRouteConfig[] = [
   {
     path: "/example",
@@ -144,6 +154,13 @@ export const exampleRoutes: AppRouteConfig[] = [
             }
           }
         `,
+      },
+      {
+        path: "search",
+        getComponent: () => SearchRoute,
+        onClientSideRender: () => {
+          SearchRoute.preload()
+        },
       },
     ],
   },
