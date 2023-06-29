@@ -18,12 +18,7 @@ describe("ConfirmationArtworksGrid", () => {
           counts {
             total
           }
-
-          edges {
-            node {
-              ...GridItem_artwork
-            }
-          }
+          ...ArtworkGrid_artworks
         }
       }
     `,

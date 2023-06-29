@@ -13,11 +13,11 @@ import {
   ConfirmationArtworksGridQuery,
   ConfirmationArtworksGridQuery$data,
 } from "__generated__/ConfirmationArtworksGridQuery.graphql"
-import { ArtworkGridPlaceholder } from "Components/ArtworkGrid/ArtworkGrid"
+import ArtworkGrid, {
+  ArtworkGridPlaceholder,
+} from "Components/ArtworkGrid/ArtworkGrid"
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { useTranslation } from "react-i18next"
-import { extractNodes } from "Utils/extractNodes"
-import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
 interface ConfirmationArtworksProps {
@@ -29,7 +29,6 @@ export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
 }) => {
   const { t } = useTranslation()
   const artworksCount = artworksConnection?.counts?.total
-  const artworks = extractNodes(artworksConnection!)
 
   return (
     <Flex flexDirection="column">
@@ -45,14 +44,10 @@ export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
       <Spacer y={2} />
 
       <ArtworkGridContextProvider saveOnlyToDefaultList>
-        <GridColumns alignItems="flex-end">
-          {artworks.map((artwork, index) => {
-            return (
-              <Column span={[6]} key={`artwork-${index}`}>
-                <ArtworkGridItemFragmentContainer artwork={artwork} />
-              </Column>
-            )
-          })}
+        <GridColumns>
+          <Column span={12}>
+            <ArtworkGrid artworks={artworksConnection!} columnCount={2} />
+          </Column>
         </GridColumns>
       </ArtworkGridContextProvider>
     </Flex>
@@ -69,12 +64,7 @@ export const ConfirmationArtworksGridQueryRenderer: FC<SearchCriteriaAttributes>
             counts {
               total
             }
-
-            edges {
-              node {
-                ...GridItem_artwork
-              }
-            }
+            ...ArtworkGrid_artworks
           }
         }
       `}
