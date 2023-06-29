@@ -39,12 +39,15 @@ const ArtworkChatBubble: FC<ArtworkChatBubbleProps> = ({ artwork }) => {
     return null
   }
 
-  return getENV("SALESFORCE_CHAT_ENABLED") ? (
+  if (!getENV("SALESFORCE_CHAT_ENABLED")) {
+    return null
+  }
+
+  return (
     <Media greaterThan="xs">
-      <SalesforceWrapper />
       <SalesforceWrapper isInAuction={isInAuction} />
     </Media>
-  ) : null
+  )
 }
 
 export const ArtworkChatBubbleFragmentContainer = createFragmentContainer(
