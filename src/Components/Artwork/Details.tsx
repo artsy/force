@@ -207,7 +207,11 @@ export const Details: React.FC<DetailsProps> = ({
   renderSaveButton,
   ...rest
 }) => {
-  const { isAuctionArtwork, hideLotLabel } = useArtworkGridContext()
+  const {
+    isAuctionArtwork,
+    hideLotLabel,
+    saveOnlyToDefaultList,
+  } = useArtworkGridContext()
 
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
   const isHighDemand =
@@ -225,7 +229,7 @@ export const Details: React.FC<DetailsProps> = ({
       return renderSaveButton(rest.artwork.internalID)
     }
 
-    if (isArtworksListEnabled) {
+    if (isArtworksListEnabled && !saveOnlyToDefaultList) {
       return (
         <SaveArtworkToListsButtonFragmentContainer
           contextModule={contextModule!}
