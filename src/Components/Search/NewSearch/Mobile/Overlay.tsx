@@ -42,7 +42,6 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
   // TODO: Parse value from url
   const [inputValue, setInputValue] = useState("")
   const disablePills = !shouldStartSearching(inputValue)
-  const [fetchCounter, setFetchCounter] = useState(0)
 
   useEffect(() => {
     inputRef.current?.focus()
@@ -77,8 +76,6 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
           }
 
           scrollToTop()
-          // trigger useEffect to send tracking event
-          setFetchCounter(prevCounter => prevCounter + 1)
         }
       )
     },
@@ -137,7 +134,6 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
           viewer={viewer}
           query={inputValue}
           selectedPill={selectedPill}
-          fetchCounter={fetchCounter}
           onClose={onClose}
         />
       )}

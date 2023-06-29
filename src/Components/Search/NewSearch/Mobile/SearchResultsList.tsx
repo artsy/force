@@ -28,7 +28,6 @@ interface SearchResultsListProps {
   viewer: SearchResultsList_viewer$data
   query: string
   selectedPill: PillType
-  fetchCounter: number
   onClose: () => void
 }
 
@@ -39,14 +38,13 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
   viewer,
   query,
   selectedPill,
-  fetchCounter,
   onClose,
 }) => {
   const tracking = useTracking()
   const options = extractNodes(viewer.searchConnection)
 
   useEffect(() => {
-    if (!relay.isLoading()) {
+    if (viewer.searchConnection) {
       tracking.trackEvent({
         action_type:
           options.length > 0
@@ -57,7 +55,7 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fetchCounter])
+  }, [viewer.searchConnection])
 
   const formattedOptions: SuggestionItemOptionProps[] = formatOptions(
     options as SearchNodeOption[]
