@@ -48,6 +48,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   const [fetchCounter, setFetchCounter] = useState(0)
   const { router } = useRouter()
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
+  const [forceRerender, setForceRerender] = useState(0)
 
   const options = extractNodes(viewer.searchConnection)
   const formattedOptions: SuggestionItemOptionProps[] = options.map(
@@ -168,7 +169,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   }
 
   const handleClickOnFooter = () => {
-    clearSearchInput()
+    setForceRerender(prevCounter => prevCounter + 1)
   }
 
   const handleFocus = () => {
@@ -181,6 +182,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   return (
     <AutocompleteInput
       id="SearchBarInput"
+      key={`autocomplete-input-${forceRerender}`}
       placeholder={t`navbar.searchBy`}
       spellCheck={false}
       options={shouldStartSearching(value) ? formattedOptions : []}
