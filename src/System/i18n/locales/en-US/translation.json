@@ -192,7 +192,6 @@
           "nonempty": "Name cannot be empty",
           "remainingCharactersCount_one": "{{count}} character remaining",
           "remainingCharactersCount_other": "{{count}} characters remaining"
-
         }
       },
       "buttons": {
@@ -252,10 +251,9 @@
   },
   "specialists": {
     "auctions": "Auctions",
-    "collectorServices": "Collector Services",
+    "collectorSales": "Collector Sales",
     "meetTheSpecialists": "Meet the Specialists",
-    "ourTeamIsReady": "Whether you’re seeking a specific work for your growing collection or wish to sell, our globe-spanning team is ready to source, sell, advise, and research on your behalf.",
-    "privateSales": "Private Sales & Advisory"
+    "ourTeamIsReady": "Whether you’re seeking a specific work for your growing collection or wish to sell, our globe-spanning team is ready to source, sell, advise, and research on your behalf."
   },
   "searchApp": {
     "noResultsFound": "No results found.",
