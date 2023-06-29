@@ -1,19 +1,22 @@
-/* eslint-disable jest/expect-expect */
+import { visitWithStatusRetries } from "../helpers/visitWithStatusRetries"
+
 describe("/artist/:id", () => {
   before(() => {
-    cy.visit("/artist/pablo-picasso", { timeout: 10000 })
+    visitWithStatusRetries("/artist/pablo-picasso/about", {
+      timeout: 30000,
+    })
   })
 
   it("renders metadata", () => {
     cy.title().should(
       "contain",
-      "Pablo Picasso - Artworks for Sale & More | Artsy"
+      "Pablo Picasso - Biography, Shows, Articles & More | Artsy"
     )
     cy.get("meta[name='description']")
       .should("have.attr", "content")
       .and(
         "contain",
-        "Discover and purchase Pablo Picasso’s artworks, available for sale. Browse our selection of paintings, prints, and sculptures by the artist, and find art you love."
+        "Explore Pablo Picasso’s biography, achievements, artworks, auction results, and shows on Artsy. Perhaps the most influential artist of the 20th century, Pablo Picasso"
       )
   })
 
