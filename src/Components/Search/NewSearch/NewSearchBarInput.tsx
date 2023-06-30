@@ -48,7 +48,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   const [fetchCounter, setFetchCounter] = useState(0)
   const { router } = useRouter()
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
-  const [forceRerender, setForceRerender] = useState(0)
 
   const options = extractNodes(viewer.searchConnection)
   const formattedOptions: SuggestionItemOptionProps[] = options.map(
@@ -171,10 +170,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
     redirect(option.href)
   }
 
-  const handleClickOnFooter = () => {
-    setForceRerender(prevCounter => prevCounter + 1)
-  }
-
   const handleFocus = () => {
     tracking.trackEvent({
       action_type: ActionType.focusedOnSearchInput,
@@ -185,7 +180,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   return (
     <AutocompleteInput
       id="SearchBarInput"
-      key={`autocomplete-input-${forceRerender}`}
       placeholder={t`navbar.searchBy`}
       spellCheck={false}
       options={shouldStartSearching(value) ? formattedOptions : []}
@@ -202,15 +196,17 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
           onPillClick={handlePillClick}
         />
       }
-      footer={
-        <NewSearchBarFooter
-          query={value}
-          href={encodedSearchURL}
-          index={options.length}
-          selectedPill={selectedPill}
-          onClick={handleClickOnFooter}
-        />
-      }
+      footer={({ onClose }) => {
+        return (
+          <NewSearchBarFooter
+            query={value}
+            href={encodedSearchURL}
+            index={options.length}
+            selectedPill={selectedPill}
+            onClick={onClose}
+          />
+        )
+      }}
       renderOption={option => {
         return (
           <NewSuggestionItem
