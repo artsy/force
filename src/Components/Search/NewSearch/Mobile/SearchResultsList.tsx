@@ -19,7 +19,6 @@ import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 import { NoResults } from "Components/Search/NewSearch/Mobile/SearchResultsList/NoResults"
 import { ContentPlaceholder } from "Components/Search/NewSearch/Mobile/SearchResultsList/ContentPlaceholder"
 import { useTracking } from "react-tracking"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { PillType } from "Components/Search/NewSearch/constants"
 import { ActionType } from "@artsy/cohesion"
 
@@ -48,12 +47,13 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
       tracking.trackEvent({
         action_type:
           options.length > 0
-            ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
-            : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
+            ? ActionType.searchedWithResults
+            : ActionType.searchedWithNoResults,
         context_module: selectedPill.analyticsContextModule,
         query: query,
       })
     }
+    // When selecting another pill - this effect shouldn't be executed again, so we disable the linting rule
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [viewer.searchConnection])
 

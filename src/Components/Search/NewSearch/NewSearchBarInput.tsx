@@ -30,7 +30,6 @@ import { reportPerformanceMeasurement } from "./utils/reportPerformanceMeasureme
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 import { getLabel } from "./utils/getLabel"
 import { ActionType } from "@artsy/cohesion"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 
@@ -87,8 +86,8 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
     tracking.trackEvent({
       action_type:
         options.length > 0
-          ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
-          : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
+          ? ActionType.searchedWithResults
+          : ActionType.searchedWithNoResults,
       context_module: selectedPill.analyticsContextModule,
       query: value,
     })

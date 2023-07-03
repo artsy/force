@@ -50,6 +50,7 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
       action_type: ActionType.focusedOnSearchInput,
       context_module: selectedPill.analyticsContextModule,
     })
+    // When selecting another pill - this effect shouldn't be executed again, so we disable the linting rule
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
