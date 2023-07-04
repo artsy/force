@@ -104,12 +104,10 @@ describe("SavedSearchAlertsApp", () => {
         },
       }),
     })
-    const emptyMessageTitle = "You haven't created any Alerts yet."
-    const emptyMessageDescription =
-      "Filter for the artworks you love on an Artist Page and tap ‘Create Alert’ to be notified when new works are added to Artsy."
 
-    expect(screen.getByText(emptyMessageTitle)).toBeInTheDocument()
-    expect(screen.getByText(emptyMessageDescription)).toBeInTheDocument()
+    expect(
+      screen.getByText("Get notifications when there’s a match.")
+    ).toBeInTheDocument()
   })
 
   it('renders edit form when "Edit" button is pressed', async () => {
