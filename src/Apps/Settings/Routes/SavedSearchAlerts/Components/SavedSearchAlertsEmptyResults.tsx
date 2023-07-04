@@ -15,7 +15,9 @@ interface InfoSectionProps {
 const InfoSection: React.FC<InfoSectionProps> = props => {
   return (
     <Flex flexDirection="row" alignItems="top">
-      {props.icon}
+      <Box width="18px" mr={1}>
+        {props.icon}
+      </Box>
       <Box>
         <Text variant="sm" lineHeight={1}>
           {props.title}
@@ -41,22 +43,22 @@ export const SavedSearchAlertsEmptyResults = () => {
           <InfoSection
             title={t("settings.alerts.empty.search.title")}
             body={t("settings.alerts.empty.search.body")}
-            icon={<SearchIcon mr={1} />}
+            icon={<SearchIcon />}
           />
           <InfoSection
             title={t("settings.alerts.empty.filter.title")}
             body={t("settings.alerts.empty.filter.body")}
-            icon={<FilterIcon mr={1} />}
+            icon={<FilterIcon />}
           />
           <InfoSection
             title={t("settings.alerts.empty.create.title")}
             body={t("settings.alerts.empty.create.body")}
-            icon={<BellStrokeIcon mr={1} />}
+            icon={<BellStrokeIcon />}
           />
           <InfoSection
             title={t("settings.alerts.empty.match.title")}
             body={t("settings.alerts.empty.match.body")}
-            icon={<ArtworkIcon mr={1} />}
+            icon={<ArtworkIcon />}
           />
         </Join>
         <Spacer y={4} />
