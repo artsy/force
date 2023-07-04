@@ -276,5 +276,34 @@
       "seeAllMatchingWorks": "See all matching works",
       "manageYourAlerts": "Manage your alerts"
     }
+  },
+  "settings": {
+    "alerts": {
+      "empty": {
+        "headline": {
+          "line1": "Hunting for a",
+          "line2": "particular artwork?"
+        },
+        "search": {
+          "title": "Find your artist",
+          "body": "On an artist page, go to the Works for Sale section."
+        },
+        "filter": {
+          "title": "Filter",
+          "body": "Set the filters for any search criteria you have, like price, medium or size."
+        },
+        "create": {
+          "title": "Create alert",
+          "body": "When you’re ready, click “Create Alert”."
+        },
+        "match": {
+          "title": "Get a match",
+          "body": "Get notifications when there’s a match."
+        },
+        "button": {
+          "label": "Explore Artists"
+        }
+      }
+    }
   }
 }
