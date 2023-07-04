@@ -166,15 +166,16 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     <>
       <MetaTags title="Alerts | Artsy" pathname="/settings/alerts" />
 
-      <SavedSearchAlertHeader selected={sort} onSortSelect={handleSortSelect} />
-
       <Box mx={[-2, 0]}>
-        <Separator color="black15" />
-
         {alerts.length === 0 ? (
           <SavedSearchAlertsEmptyResults />
         ) : (
           <>
+            <SavedSearchAlertHeader
+              selected={sort}
+              onSortSelect={handleSortSelect}
+            />
+            <Separator color="black15" />
             <Media greaterThanOrEqual="md">
               <GridColumns gridColumnGap={0}>
                 <Column span={isEditMode ? 6 : 12}>{list}</Column>
