@@ -38,7 +38,7 @@ const ShowsRoute = loadable(
 const ViewinRoomsRoute = loadable(
   () => import(/* webpackChunkName: "partnerBundle" */ "./Routes/ViewingRooms"),
   {
-    resolveComponent: component => component.ViewingRoomFragmentContainer,
+    resolveComponent: component => component.ViewingRooms,
   }
 )
 
@@ -175,7 +175,11 @@ export const partnerRoutes: AppRouteConfig[] = [
           ViewinRoomsRoute.preload()
         },
         query: graphql`
-          query partnerRoutes_ViewingRoomsQuery($partnerId: String!) {
+          query partnerRoutes_ViewingRoomsQuery(
+            $partnerId: String!
+            $count: Int
+            $cursor: String
+          ) {
             partner(id: $partnerId) @principalField {
               ...ViewingRooms_partner
             }

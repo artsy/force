@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<26d50ae3d4ddde449a5b16b08577d8a8>>
+ * @generated SignedSource<<a4da85b3947efaad26bdf027800a2612>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,8 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type partnerRoutes_ViewingRoomsQuery$variables = {
+  count?: number | null;
+  cursor?: string | null;
   partnerId: string;
 };
 export type partnerRoutes_ViewingRoomsQuery$data = {
@@ -24,130 +26,54 @@ export type partnerRoutes_ViewingRoomsQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "partnerId"
-  }
-],
-v1 = [
+var v0 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "count"
+},
+v1 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "cursor"
+},
+v2 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "partnerId"
+},
+v3 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "partnerId"
   }
 ],
-v2 = {
-  "kind": "Literal",
-  "name": "first",
-  "value": 12
-},
-v3 = [
+v4 = [
   {
-    "alias": null,
-    "args": null,
-    "concreteType": "ViewingRoomsEdge",
-    "kind": "LinkedField",
-    "name": "edges",
-    "plural": true,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "concreteType": "ViewingRoom",
-        "kind": "LinkedField",
-        "name": "node",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "internalID",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "href",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "title",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "exhibitionPeriod",
-            "storageKey": null
-          },
-          {
-            "alias": "coverImage",
-            "args": null,
-            "concreteType": "ARImage",
-            "kind": "LinkedField",
-            "name": "image",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "ImageURLs",
-                "kind": "LinkedField",
-                "name": "imageURLs",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "normalized",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "width",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "height",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          }
-        ],
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "Variable",
+    "name": "after",
+    "variableName": "cursor"
+  },
+  {
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "count"
   }
 ];
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v0/*: any*/),
+      (v1/*: any*/),
+      (v2/*: any*/)
+    ],
     "kind": "Fragment",
     "metadata": null,
     "name": "partnerRoutes_ViewingRoomsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "Partner",
         "kind": "LinkedField",
         "name": "partner",
@@ -167,13 +93,17 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [
+      (v2/*: any*/),
+      (v0/*: any*/),
+      (v1/*: any*/)
+    ],
     "kind": "Operation",
     "name": "partnerRoutes_ViewingRoomsQuery",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v3/*: any*/),
         "concreteType": "Partner",
         "kind": "LinkedField",
         "name": "partner",
@@ -183,42 +113,96 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "slug",
+            "name": "name",
             "storageKey": null
           },
           {
-            "alias": "currentViewingRooms",
-            "args": [
-              (v2/*: any*/),
-              {
-                "kind": "Literal",
-                "name": "statuses",
-                "value": "live"
-              }
-            ],
+            "alias": null,
+            "args": (v4/*: any*/),
             "concreteType": "ViewingRoomsConnection",
             "kind": "LinkedField",
             "name": "viewingRoomsConnection",
             "plural": false,
-            "selections": (v3/*: any*/),
-            "storageKey": "viewingRoomsConnection(first:12,statuses:\"live\")"
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ViewingRoomsEdge",
+                "kind": "LinkedField",
+                "name": "edges",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "ViewingRoom",
+                    "kind": "LinkedField",
+                    "name": "node",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "title",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "__typename",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "cursor",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "endCursor",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasNextPage",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
           },
           {
-            "alias": "upcomingViewingRooms",
-            "args": [
-              (v2/*: any*/),
-              {
-                "kind": "Literal",
-                "name": "statuses",
-                "value": "scheduled"
-              }
-            ],
-            "concreteType": "ViewingRoomsConnection",
-            "kind": "LinkedField",
-            "name": "viewingRoomsConnection",
-            "plural": false,
-            "selections": (v3/*: any*/),
-            "storageKey": "viewingRoomsConnection(first:12,statuses:\"scheduled\")"
+            "alias": null,
+            "args": (v4/*: any*/),
+            "filters": null,
+            "handle": "connection",
+            "key": "ViewingRooms_partner_viewingRoomsConnection",
+            "kind": "LinkedHandle",
+            "name": "viewingRoomsConnection"
           },
           {
             "alias": null,
@@ -233,16 +217,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "73324145b1f14706fd16b44add5aff3a",
+    "cacheID": "7eb99ed11e3d52ee03698e62fc224316",
     "id": null,
     "metadata": {},
     "name": "partnerRoutes_ViewingRoomsQuery",
     "operationKind": "query",
-    "text": "query partnerRoutes_ViewingRoomsQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...ViewingRooms_partner\n    id\n  }\n}\n\nfragment ViewingRoomCard_viewingRoom on ViewingRoom {\n  href\n  title\n  exhibitionPeriod\n  coverImage: image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n\nfragment ViewingRooms_edges on ViewingRoomsEdge {\n  node {\n    internalID\n    ...ViewingRoomCard_viewingRoom\n  }\n}\n\nfragment ViewingRooms_partner on Partner {\n  slug\n  currentViewingRooms: viewingRoomsConnection(first: 12, statuses: live) {\n    edges {\n      node {\n        internalID\n      }\n      ...ViewingRooms_edges\n    }\n  }\n  upcomingViewingRooms: viewingRoomsConnection(first: 12, statuses: scheduled) {\n    edges {\n      node {\n        internalID\n      }\n      ...ViewingRooms_edges\n    }\n  }\n}\n"
+    "text": "query partnerRoutes_ViewingRoomsQuery(\n  $partnerId: String!\n  $count: Int\n  $cursor: String\n) {\n  partner(id: $partnerId) @principalField {\n    ...ViewingRooms_partner\n    id\n  }\n}\n\nfragment ViewingRooms_partner on Partner {\n  name\n  viewingRoomsConnection(first: $count, after: $cursor) {\n    edges {\n      node {\n        title\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n  id\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3a936bbe65b85f49b27e1d593215dbd4";
+(node as any).hash = "fc8eaa1a849dc953e7c7c2d9c7d76e8b";
 
 export default node;

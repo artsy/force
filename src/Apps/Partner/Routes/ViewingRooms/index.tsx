@@ -1,73 +1,67 @@
 import * as React from "react"
-import compact from "lodash/compact"
-import { createFragmentContainer, graphql } from "react-relay"
-import { ViewingRooms_partner$data } from "__generated__/ViewingRooms_partner.graphql"
-import { ViewingRoomsFragmentContainer } from "Apps/Partner/Components/PartnerViewingRooms/ViewingRooms"
-import { ViewingRoomsPaginatedRenderer } from "Apps/Partner/Components/PartnerViewingRooms/ViewingRoomsPaginated"
+import { graphql, usePaginationFragment } from "react-relay"
+import { ViewingRooms_partner$key } from "__generated__/ViewingRooms_partner.graphql"
+import { ViewingRoomsPaginationQuery } from "__generated__/ViewingRoomsPaginationQuery.graphql"
+import { Suspense } from "react"
+import { Spinner, Text, GridColumns, Column, Box, Button } from "@artsy/palette"
 
-interface PartnerShowsProps {
-  partner: ViewingRooms_partner$data
+interface ViewingRoomsProps {
+  partner: ViewingRooms_partner$key
 }
 
-export const ViewingRooms: React.FC<PartnerShowsProps> = ({ partner }) => {
-  const { currentViewingRooms, upcomingViewingRooms, slug } = partner
-  const filteredCurrentViewingRooms = compact(currentViewingRooms?.edges)
-  const isCurrentViewingRoomsExist = !!filteredCurrentViewingRooms.length
-  const filteredUpcomingViewingRooms = compact(upcomingViewingRooms?.edges)
-  const isUpcomingViewingRoomsExist = !!filteredUpcomingViewingRooms.length
-
-  return (
-    <>
-      {isCurrentViewingRoomsExist && (
-        <ViewingRoomsFragmentContainer
-          edges={filteredCurrentViewingRooms}
-          eventTitle="Current Viewing Rooms"
-        />
-      )}
-
-      {isUpcomingViewingRoomsExist && (
-        <ViewingRoomsFragmentContainer
-          edges={filteredUpcomingViewingRooms}
-          eventTitle="Upcoming Viewing Rooms"
-        />
-      )}
-
-      <ViewingRoomsPaginatedRenderer
-        eventTitle="Past Viewing Rooms"
-        partnerId={slug}
-        scrollTo="pastShowsGrid"
-        offset={200}
-      />
-    </>
-  )
-}
-
-export const ViewingRoomFragmentContainer = createFragmentContainer(
-  ViewingRooms,
-  {
-    partner: graphql`
-      fragment ViewingRooms_partner on Partner {
-        slug
-        currentViewingRooms: viewingRoomsConnection(first: 12, statuses: live) {
+export const ViewingRooms: React.FC<ViewingRoomsProps> = ({ partner }) => {
+  const { data, loadNext, hasNext } = usePaginationFragment<
+    ViewingRoomsPaginationQuery,
+    ViewingRooms_partner$key
+  >(
+    graphql`
+      fragment ViewingRooms_partner on Partner
+        @refetchable(queryName: "ViewingRoomsPaginationQuery") {
+        name
+        viewingRoomsConnection(first: $count, after: $cursor)
+          @connection(key: "ViewingRooms_partner_viewingRoomsConnection") {
           edges {
             node {
-              internalID
+              title
             }
-            ...ViewingRooms_edges
-          }
-        }
-        upcomingViewingRooms: viewingRoomsConnection(
-          first: 12
-          statuses: scheduled
-        ) {
-          edges {
-            node {
-              internalID
-            }
-            ...ViewingRooms_edges
+            cursor
           }
         }
       }
     `,
-  }
-)
+    partner
+  )
+
+  return (
+    <>
+      <Text color="black" variant="lg-display" mb={6}>
+        Current Viewing Rooms for {data.name}
+      </Text>
+
+      <Suspense fallback={<Spinner />}>
+        <GridColumns mb={6} gridRowGap={[2, 4]}>
+          {data?.viewingRoomsConnection?.edges?.map(({ node: viewingRoom }) => {
+            if (!viewingRoom) return
+            return (
+              <Column key={viewingRoom.internalID} span={[6, 6, 3, 3]}>
+                <Text>{viewingRoom.title}</Text>
+              </Column>
+            )
+          })}
+        </GridColumns>
+      </Suspense>
+
+      {hasNext && (
+        <Box textAlign="center" mt={4}>
+          <Button
+            variant="secondaryBlack"
+            size="large"
+            onClick={() => loadNext(12)}
+          >
+            Show More
+          </Button>
+        </Box>
+      )}
+    </>
+  )
+}
