@@ -11,12 +11,12 @@ import { useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled from "styled-components"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { getSaleOrLotTimerInfo } from "Utils/getSaleOrLotTimerInfo"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
 import { SaveButtonFragmentContainer } from "./SaveButton"
+import { useCheckIfArtworkListsEnabled } from "Apps/CollectorProfile/Routes/Saves2/useCheckIfArtworkListsEnabled"
 
 interface DetailsProps {
   artwork: Details_artwork$data
@@ -207,13 +207,17 @@ export const Details: React.FC<DetailsProps> = ({
   renderSaveButton,
   ...rest
 }) => {
-  const { isAuctionArtwork, hideLotLabel } = useArtworkGridContext()
+  const {
+    isAuctionArtwork,
+    hideLotLabel,
+    saveOnlyToDefaultList,
+  } = useArtworkGridContext()
 
   const isP1Artist = rest?.artwork.artist?.targetSupply?.isP1
   const isHighDemand =
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
 
-  const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
+  const isArtworksListEnabled = useCheckIfArtworkListsEnabled()
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
 
   const renderSaveButtonComponent = () => {
@@ -225,7 +229,7 @@ export const Details: React.FC<DetailsProps> = ({
       return renderSaveButton(rest.artwork.internalID)
     }
 
-    if (isArtworksListEnabled) {
+    if (isArtworksListEnabled && !saveOnlyToDefaultList) {
       return (
         <SaveArtworkToListsButtonFragmentContainer
           contextModule={contextModule!}

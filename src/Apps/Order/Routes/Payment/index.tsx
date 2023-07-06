@@ -263,7 +263,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
           context_owner_id: props.order.internalID,
           title: "An internal error occurred",
           message:
-            "Something went wrong. Please try again or contact order@artsy.net",
+            "Something went wrong. Please try again or contact orders@artsy.net",
           error_code: null,
           flow: "user sets credit card as payment method",
         })
@@ -303,7 +303,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         context_owner_id: props.order.internalID,
         title: "An error occurred",
         message:
-          "Something went wrong. Please try again or contact order@artsy.net",
+          "Something went wrong. Please try again or contact orders@artsy.net",
         error_code: null,
         flow: "user sets credit card as payment method",
       })
@@ -340,7 +340,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         context_owner_id: props.order.internalID,
         title: "An error occurred",
         message:
-          "Something went wrong. Please try again or contact order@artsy.net",
+          "Something went wrong. Please try again or contact orders@artsy.net",
         error_code: null,
         flow: "user sets wire transfer as payment method",
       })

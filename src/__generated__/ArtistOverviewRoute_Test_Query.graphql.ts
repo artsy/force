@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a90ae3c4df34a33325c0900bd6697035>>
+ * @generated SignedSource<<7757173971dbad30443379da8a0772b5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,12 @@ v1 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v2 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -92,6 +98,37 @@ return {
           },
           {
             "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "page",
+                "value": "ABOUT"
+              }
+            ],
+            "concreteType": "ArtistMeta",
+            "kind": "LinkedField",
+            "name": "meta",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "description",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              }
+            ],
+            "storageKey": "meta(page:\"ABOUT\")"
+          },
+          {
+            "alias": null,
             "args": null,
             "concreteType": "ArtistCounts",
             "kind": "LinkedField",
@@ -128,7 +165,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b773ebca58c63c99ff9d379ce2c05939",
+    "cacheID": "9e858c5a691758248177e5a94eeede20",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -152,6 +189,14 @@ return {
         },
         "artist.id": (v1/*: any*/),
         "artist.internalID": (v1/*: any*/),
+        "artist.meta": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ArtistMeta"
+        },
+        "artist.meta.description": (v2/*: any*/),
+        "artist.meta.title": (v2/*: any*/),
         "artist.name": {
           "enumValues": null,
           "nullable": true,
@@ -163,7 +208,7 @@ return {
     },
     "name": "ArtistOverviewRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistOverviewRoute_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  slug\n  name\n  counts {\n    artworks\n  }\n  internalID\n}\n"
+    "text": "query ArtistOverviewRoute_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  slug\n  name\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  counts {\n    artworks\n  }\n  internalID\n}\n"
   }
 };
 })();

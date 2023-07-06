@@ -4,10 +4,10 @@ import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 import { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActionsSaveButton_artwork.graphql"
 import { ProgressiveOnboardingSaveArtwork } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
 import { SaveUtilButton } from "Apps/Artwork/Components/ArtworkImageBrowser/SaveUtilButton"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { ArtworkActionsWatchLotButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsWatchLotButton"
 import { ArtworkActionsSaveButtonV2FragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsSaveButtonV2"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
+import { useCheckIfArtworkListsEnabled } from "Apps/CollectorProfile/Routes/Saves2/useCheckIfArtworkListsEnabled"
 
 interface ArtworkActionsSaveButtonProps {
   artwork: ArtworkActionsSaveButton_artwork$data
@@ -15,7 +15,7 @@ interface ArtworkActionsSaveButtonProps {
 const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   artwork,
 }) => {
-  const isArtworksListEnabled = useFeatureFlag("force-enable-artworks-list")
+  const isArtworksListEnabled = useCheckIfArtworkListsEnabled()
   const { handleSave } = useSaveArtwork({
     isSaved: !!artwork.isSaved,
     artwork,

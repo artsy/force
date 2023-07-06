@@ -2,7 +2,6 @@ import { Formik, FormikHelpers } from "formik"
 import createLogger from "Utils/logger"
 import { ModalDialog } from "@artsy/palette"
 import { useTranslation } from "react-i18next"
-import { CreateNewListModalHeader } from "./CreateNewListModalHeader"
 import { useCreateCollection } from "Apps/CollectorProfile/Routes/Saves2/Components/Actions/Mutations/useCreateCollection"
 import { FC } from "react"
 import { useTracking } from "react-tracking"
@@ -13,7 +12,10 @@ import {
   ArtworkListFormikValues,
   validationSchema,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkListForm/ArtworkListForm"
-import { ArtworkModalHeaderInfoEntity } from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkModalHeaderInfo"
+import {
+  ArtworkModalHeaderInfo,
+  ArtworkModalHeaderInfoEntity,
+} from "Apps/CollectorProfile/Routes/Saves2/Components/ArtworkModalHeaderInfo"
 
 export interface ArtworkList {
   internalID: string
@@ -73,9 +75,9 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
         },
         rejectIf: response => {
           const result = response.createCollection?.responseOrError
-          const errorMessage = result?.mutationError?.message
+          const error = result?.mutationError
 
-          return !!errorMessage
+          return error
         },
       })
 
@@ -90,10 +92,19 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
       trackAnalyticEvent(artworkListId)
     } catch (error) {
       logger.error(error)
-      helpers.setFieldError(
-        "name",
-        error.message ?? t("common.errors.somethingWentWrong")
+
+      // use generic error message by default
+      let errorMessage = t("common.errors.somethingWentWrong")
+
+      // if there is a specific error message for the name field, use that instead
+      const nameErrorMessage = error?.fieldErrors?.find(
+        ({ name }) => name === "name"
       )
+      if (nameErrorMessage) {
+        errorMessage = nameErrorMessage.message
+      }
+
+      helpers.setFieldError("name", errorMessage)
     }
   }
 
@@ -110,9 +121,11 @@ export const CreateNewListModal: React.FC<CreateNewListModalProps> = ({
             onClose={onClose}
             title={t("collectorSaves.createNewListModal.title")}
             data-testid="CreateNewList"
-            header={
-              artwork ? <CreateNewListModalHeader artwork={artwork} /> : null
-            }
+            {...(artwork
+              ? {
+                  header: <ArtworkModalHeaderInfo artwork={artwork} />,
+                }
+              : {})}
           >
             <ArtworkListForm
               mode="create"

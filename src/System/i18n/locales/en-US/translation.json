@@ -192,7 +192,6 @@
           "nonempty": "Name cannot be empty",
           "remainingCharactersCount_one": "{{count}} character remaining",
           "remainingCharactersCount_other": "{{count}} characters remaining"
-
         }
       },
       "buttons": {
@@ -252,15 +251,59 @@
   },
   "specialists": {
     "auctions": "Auctions",
-    "collectorServices": "Collector Services",
+    "collectorSales": "Collector Sales",
     "meetTheSpecialists": "Meet the Specialists",
-    "ourTeamIsReady": "Whether you’re seeking a specific work for your growing collection or wish to sell, our globe-spanning team is ready to source, sell, advise, and research on your behalf.",
-    "privateSales": "Private Sales & Advisory"
+    "ourTeamIsReady": "Whether you’re seeking a specific work for your growing collection or wish to sell, our globe-spanning team is ready to source, sell, advise, and research on your behalf."
   },
   "searchApp": {
     "noResultsFound": "No results found.",
     "resultsCount_zero": "No results found for",
     "resultsCount_one": "1 result for",
-    "resultsCount_other": "{{count}} results for"
+    "resultsCount_other": "{{count}} results for",
+    "noResults": {
+      "sorryMessage": "Sorry, we couldn’t find anything for",
+      "trySearchingAgain": "Please try searching again with a different spelling."
+    }
+  },
+  "createAlertModal": {
+    "setPriceRange": "Set price range you are interested in",
+    "confirmationStep": {
+      "saved": "Your alert has been saved.",
+      "weWillNotifyYou": "We will notify you when new works get added to Artsy.",
+      "artworksMatchCriteria_one": "1 work currently on Artsy matches your criteria.",
+      "artworksMatchCriteria_other": "{{count}} works currently on Artsy match your criteria.",
+      "seeOurTopPicks": "See our top picks for you:",
+      "seeAllMatchingWorks": "See all matching works",
+      "manageYourAlerts": "Manage your alerts"
+    }
+  },
+  "settings": {
+    "alerts": {
+      "empty": {
+        "headline": {
+          "line1": "Hunting for a",
+          "line2": "particular artwork?"
+        },
+        "search": {
+          "title": "Find your artist",
+          "body": "On an artist page, go to the Works for Sale section."
+        },
+        "filter": {
+          "title": "Filter",
+          "body": "Set the filters for any search criteria you have, like price, medium or size."
+        },
+        "create": {
+          "title": "Create alert",
+          "body": "When you’re ready, click “Create Alert”."
+        },
+        "match": {
+          "title": "Get a match",
+          "body": "Get notifications when there’s a match."
+        },
+        "button": {
+          "label": "Explore Artists"
+        }
+      }
+    }
   }
 }

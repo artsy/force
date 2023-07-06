@@ -71,9 +71,9 @@ export const MeetTheSpecialistsIndex: FC = () => {
       <Spacer y={12} />
 
       <Join separator={<Separator my={12} />}>
-        {SPECIALISTS.map(({ i18nKey, specialists }) => {
+        {SPECIALISTS.map(({ i18nKey, specialists }, index) => {
           return (
-            <GridColumns gridRowGap={4}>
+            <GridColumns gridRowGap={4} key={index}>
               <Column span={4}>
                 <Text variant="xl">{t(i18nKey)}</Text>
               </Column>
@@ -134,43 +134,42 @@ interface Specialist {
   title: string
 }
 
-const ADVISORY_SPECIALISTS: Specialist[] = [
+const COLLECTOR_SALES_SPECIALISTS: Specialist[] = [
   {
-    name: "Alexander Forbes",
-    title: "Head of Collector Services & Private Sales",
-    location: "New York",
-    email: "alexander.forbes@artsy.net",
-    image:
-      "https://files.artsy.net/images/alexander-forbes-artsy-headshot-2019.jpg",
+    name: "Jessica Backus",
+    title: "VP, Collector Sales",
+    email: "jessica@artsymail.com",
+    image: "https://files.artsy.net/images/IMG_2619+(1).JPG",
   },
   {
-    name: "Christine Aschwald",
-    title: "Head of Advisory and Senior Private Sales Director",
-    location: "New York",
-    email: "christine.aschwald@artsy.net",
-    image: "https://files.artsy.net/images/unnamed-1660146854025.jpg",
+    name: "Wendy Wiberg",
+    title: "Collector Services Lead",
+    email: "wendy.wiberg@artsy.net",
+    image: "https://files.artsy.net/images/wendy_wiberg.png",
   },
   {
-    name: "Akanksha Ballaney",
-    title: "Director, Private Sales",
-    location: "New York",
-    email: "akanksha@artsy.net",
-    image: "https://files.artsy.net/images/akanksha.jpeg",
+    name: "Eleonora Leo",
+    title: "Senior Manager, Collector Services",
+    email: "eleonora.leo@artsy.net",
+    image: "https://files.artsy.net/images/eleonora_leo.png",
   },
   {
-    name: "Robin Roche",
-    title: "Senior Private Sales Director",
-    location: "New York",
-    email: "robin.roche@artsy.net",
-    phone: "+1 646 707 9450",
-    image: "https://files.artsy.net/images/robin.jpeg",
+    name: "Isabel Telonis",
+    title: "Senior Manager, Collector Services",
+    email: "isabel.telonis@artsy.net",
+    image: "https://files.artsy.net/images/isabel_telonis.png",
   },
   {
-    name: "Adriana Almeida",
-    title: "Senior Private Sales Director",
-    location: "London",
-    email: "adriana.almeida@artsy.net",
-    image: "https://files.artsy.net/images/photo_adriana.jpg",
+    name: "Vanessa Zingale",
+    title: "Senior Manager, Collector Services",
+    email: "vanessa.zingale@artsy.net",
+    image: "https://files.artsy.net/images/vanessa_zingale.png",
+  },
+  {
+    name: "Dana Rodriguez",
+    title: "Associate, Collector Services",
+    email: "dana.rodriguez@artsy.net",
+    image: "https://files.artsy.net/images/dana_rodriguez.png",
   },
   {
     name: "Meave Hamill",
@@ -196,33 +195,12 @@ const ADVISORY_SPECIALISTS: Specialist[] = [
     image: "https://files.artsy.net/images/daniela-bianco-duppen.jpeg",
   },
   {
-    name: "Itziar Ramos Ricoy",
-    title: "Advisor",
-    location: "London",
-    email: "itziar.ramos@artsy.net",
-    phone: "+44 7429 093319",
-    image: "https://files.artsy.net/images/itziar.jpeg",
-  },
-  {
     name: "Caroline Perkins",
     title: "Advisor",
     location: "New York",
     email: "caroline.perkins@artsy.net",
     phone: "+1 540 588 1371",
     image: "https://files.artsy.net/images/cperkins_headshot-copy.jpg",
-  },
-  {
-    name: "Akilah Chandler",
-    title: "Private Sales & Advisory Business Associate",
-    email: "akilah.chandler@artsymail.com",
-    image: "https://files.artsy.net/images/AkilahChandler.jpg",
-  },
-  {
-    name: "Sarah Punzel",
-    title: "Private Sales Business Associate",
-    location: "New York",
-    email: "sarah.punzel@artsy.net",
-    image: "https://files.artsy.net/images/Sarah_Punzel.png",
   },
 ]
 
@@ -233,6 +211,13 @@ const AUCTION_SPECIALISTS: Specialist[] = [
     location: "New York",
     email: "shlomi.rabi@artsy.net",
     image: "https://files.artsy.net/images/shlomi2.jpg",
+  },
+  {
+    name: "Christine Aschwald",
+    title: "Senior Director, Auctions & Private Sales",
+    location: "New York",
+    email: "christine.aschwald@artsy.net",
+    image: "https://files.artsy.net/images/unnamed-1660146854025.jpg",
   },
   {
     name: "Lauren Carpinelli",
@@ -262,7 +247,6 @@ const AUCTION_SPECIALISTS: Specialist[] = [
     email: "adam.mccoy@artsy.net",
     image: "https://files.artsy.net/images/adam2.jpg",
   },
-
   {
     name: "Alan Zeng",
     title: "Senior Specialist & Head of Street Art",
@@ -271,66 +255,19 @@ const AUCTION_SPECIALISTS: Specialist[] = [
     image: "https://files.artsy.net/images/alan.png",
   },
   {
-    name: "Celine Cunha",
-    title: "Specialist in Post-War & Contemporary Art",
-    location: "New York",
-    email: "celine.cunha@artsymail.com",
-    image: "https://files.artsy.net/images/Celine_Cunha_Krieger.png",
-  },
-]
-
-const COLLECTOR_SERVICES_SPECIALISTS: Specialist[] = [
-  {
-    name: "Wendy Wiberg",
-    title: "Collector Services Lead",
-    email: "wendy.wiberg@artsy.net",
-    image: "https://files.artsy.net/images/wendy_wiberg.png",
-  },
-  {
-    name: "Alexandra Freedman",
-    title: "Senior Manager, Collector Development",
-    location: "New York",
-    email: "alexandra.freedman@artsy.net",
-    phone: "+1 610 405 7151",
-    image: "https://files.artsy.net/images/alexandra.jpeg",
-  },
-  {
-    name: "Eleonora Leo",
-    title: "Senior Manager, Collector Services",
-    email: "eleonora.leo@artsy.net",
-    image: "https://files.artsy.net/images/eleonora_leo.png",
-  },
-  {
-    name: "Isabel Telonis",
-    title: "Senior Manager, Collector Services",
-    email: "isabel.telonis@artsy.net",
-    image: "https://files.artsy.net/images/isabel_telonis.png",
-  },
-  {
-    name: "Vanessa Zingale",
-    title: "Senior Manager, Collector Services",
-    email: "vanessa.zingale@artsy.net",
-    image: "https://files.artsy.net/images/vanessa_zingale.png",
-  },
-  {
-    name: "Caroline Targgart",
-    title: "Client Development Manager",
-    email: "caroline.targgart@artsy.net",
-    image: "https://files.artsy.net/images/CarolineTarggart.jpg",
-  },
-  {
-    name: "Dana Rodriguez",
-    title: "Associate, Collector Services",
-    email: "dana.rodriguez@artsy.net",
-    image: "https://files.artsy.net/images/dana_rodriguez.png",
+    name: "Itziar Ramos Ricoy",
+    title: "Advisor, Auctions and Private Sales",
+    location: "London",
+    email: "itziar.ramos@artsy.net",
+    phone: "+44 7429 093319",
+    image: "https://files.artsy.net/images/itziar.jpeg",
   },
 ]
 
 const SPECIALISTS = [
-  { i18nKey: "specialists.privateSales", specialists: ADVISORY_SPECIALISTS },
-  { i18nKey: "specialists.auctions", specialists: AUCTION_SPECIALISTS },
   {
-    i18nKey: "specialists.collectorServices",
-    specialists: COLLECTOR_SERVICES_SPECIALISTS,
+    i18nKey: "specialists.collectorSales",
+    specialists: COLLECTOR_SALES_SPECIALISTS,
   },
+  { i18nKey: "specialists.auctions", specialists: AUCTION_SPECIALISTS },
 ]

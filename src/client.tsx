@@ -9,7 +9,6 @@ import {
 } from "Server/analytics/helpers"
 import { getClientParam } from "Utils/getClientParam"
 import { buildClientApp } from "System/Router/buildClientApp"
-import { loadSegment } from "Server/analytics/segmentOneTrustIntegration/segmentOneTrustIntegration"
 
 async function setupClient() {
   // Attach analytics
@@ -19,8 +18,6 @@ async function setupClient() {
       onAnalyticsReady()
     })
   }
-
-  loadSegment()
 
   const { ClientApp } = await buildClientApp({
     routes: getAppRoutes(),

@@ -1,5 +1,5 @@
 import { FC } from "react"
-import { SuggionItemOptionProps } from "./NewSuggestionItem"
+import { SuggestionItemOptionProps } from "./NewSuggestionItem"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
 import { SuggestionItemPreview } from "Components/Search/Suggestions/SuggestionItemPreview"
@@ -7,7 +7,7 @@ import { Highlight } from "./Highlight"
 import { Text, Flex, Spacer } from "@artsy/palette"
 
 interface DefaultSuggestionProps {
-  option: SuggionItemOptionProps
+  option: SuggestionItemOptionProps
   query: string
 }
 

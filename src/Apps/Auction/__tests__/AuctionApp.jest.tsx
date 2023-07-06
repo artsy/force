@@ -14,10 +14,6 @@ jest.mock("Apps/Auction/Components/AuctionMeta", () => ({
   AuctionMetaFragmentContainer: () => null,
 }))
 
-jest.mock("Components/ZendeskWrapper", () => ({
-  ZendeskWrapper: () => null,
-}))
-
 jest.mock("Components/SalesforceWrapper", () => ({
   SalesforceWrapper: () => null,
 }))
@@ -108,17 +104,10 @@ describe("AuctionApp", () => {
     expect(spy).toHaveBeenCalled()
   })
 
-  it("embeds ZenDesk widget", () => {
-    const wrapper = getWrapper()
-    expect(wrapper.find("ZendeskWrapper").exists()).toBeTruthy()
-    expect(wrapper.find("SalesforceWrapper").exists()).toBeFalsy()
-  })
-
   it("embeds Salesforce widget", () => {
     mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
     const wrapper = getWrapper()
     expect(wrapper.find("SalesforceWrapper").exists()).toBeTruthy()
-    expect(wrapper.find("ZendeskWrapper").exists()).toBeFalsy()
   })
 
   it("does not embed Salesforce widget on mobile", () => {
@@ -126,7 +115,6 @@ describe("AuctionApp", () => {
     mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
     const wrapper = getWrapper()
     expect(wrapper.find("SalesforceWrapper").exists()).toBeFalsy()
-    expect(wrapper.find("ZendeskWrapper").exists()).toBeFalsy()
   })
 
   it("shows header if coverImage", () => {

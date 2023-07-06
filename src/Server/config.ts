@@ -30,7 +30,6 @@ export const APPLE_TEAM_ID: any = null
 export const APPLICATION_NAME: any = "force-staging"
 export const ARTSY_EDITORIAL_CHANNEL: any = "5759e3efb5989e6f98f77993"
 export const ARTSY_MERCHANDISING_PARTNER_SLUGS: any = null
-export const AUCTION_ZENDESK_KEY: any = null
 export const ALLOWED_REDIRECT_HOSTS: any = "localhost"
 export const CASCADING_AUCTION_HELP_ARTICLE_LINK: any = null
 export const CDN_URL: any = "https://d1s2w0upia4e9w.cloudfront.net"
@@ -96,12 +95,15 @@ export const SALESFORCE_CHAT_ENABLED: any = false
 export const SALESFORCE_CHAT_INSTANCE_URL: any = null
 export const SALESFORCE_CHAT_HELP_URL: any = null
 export const SALESFORCE_CHAT_ORG_ID: any = null
-export const SALESFORCE_CHAT_EMBEDDED_SERVICE_NAME: any = null
+export const SALESFORCE_CHAT_EMBEDDED_SERVICE_COLLECTOR_NAME: any = null
+export const SALESFORCE_CHAT_EMBEDDED_SERVICE_AUCTION_NAME: any = null
 export const SALESFORCE_CHAT_DEPLOYMENT_ID: any = null
-export const SALESFORCE_CHAT_BUTTON_ID: any = null
+export const SALESFORCE_CHAT_COLLECTOR_BUTTON_ID: any = null
+export const SALESFORCE_CHAT_AUCTION_BUTTON_ID: any = null
 export const SALESFORCE_CHAT_LIVE_AGENT_CONTENT_URL: any = null
 export const SALESFORCE_CHAT_LIVE_AGENT_URL: any = null
-export const SALESFORCE_CHAT_ESW_LIVE_AGENT_DEV_NAME: any = null
+export const SALESFORCE_CHAT_COLLECTOR_ESW_LIVE_AGENT_DEV_NAME: any = null
+export const SALESFORCE_CHAT_AUCTION_ESW_LIVE_AGENT_DEV_NAME: any = null
 export const SECURE_IMAGES_URL: any = "https://d1ycxz9plii3tb.cloudfront.net"
 export const SEGMENT_AMP_WRITE_KEY: any = null
 export const SEGMENT_WRITE_KEY_SERVER: any = null
@@ -128,7 +130,6 @@ export const VANITY_BUCKET: any = "artsy-vanity-files-production"
 export const VERBOSE_LOGGING: any = false
 export const VOLLEY_ENDPOINT: any = null
 export const WEBFONT_URL: any = "http://webfonts.artsy.net"
-export const ZENDESK_KEY: any = null
 
 // Override any values with env variables if they exist.
 // You can set JSON-y values for env variables as well such as "true" or

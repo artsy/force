@@ -5,9 +5,9 @@ describe("NotificationsEmptyStateByType", () => {
   it("should render correct state when type is 'All'", () => {
     render(<NotificationsEmptyStateByType type="all" />)
 
-    const title = "You haven’t followed any artists, galleries or fairs yet."
+    const title = "Follow artists and galleries to stay up to date"
     const message =
-      "Follow artists to keep track of their latest work and career highlights. Following artists helps Artsy to recommend works you might like."
+      "Keep track of the art and events you love, and get recommendations based on who you follow."
 
     expect(screen.getByText(title)).toBeInTheDocument()
     expect(screen.getByText(message)).toBeInTheDocument()
@@ -16,9 +16,9 @@ describe("NotificationsEmptyStateByType", () => {
   it("should render correct state when type is 'Alerts'", () => {
     render(<NotificationsEmptyStateByType type="alerts" />)
 
-    const title = "Set alerts for artworks you’re seeking."
+    const title = "Hunting for a particular artwork?"
     const message =
-      "Filter for the artworks you love on an artist page and select “Create Alert.” Get notifications here when there’s a match."
+      "Create alerts on an artist or artwork page and get notifications here when there’s a match."
 
     expect(screen.getByText(title)).toBeInTheDocument()
     expect(screen.getByText(message)).toBeInTheDocument()

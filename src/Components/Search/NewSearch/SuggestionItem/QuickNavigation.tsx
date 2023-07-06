@@ -1,15 +1,19 @@
 import { FC } from "react"
-import { SuggionItemOptionProps } from "./NewSuggestionItem"
+import { SuggestionItemOptionProps } from "./NewSuggestionItem"
 import { Flex } from "@artsy/palette"
 import GavelIcon from "@artsy/icons/GavelIcon"
 import ArtworkIcon from "@artsy/icons/ArtworkIcon"
 import { QuickNavigationItem } from "./QuickNavigationItem"
 
 interface QuickNavigationProps {
-  option: SuggionItemOptionProps
+  option: SuggestionItemOptionProps
+  onClick?: () => void
 }
 
-export const QuickNavigation: FC<QuickNavigationProps> = ({ option }) => {
+export const QuickNavigation: FC<QuickNavigationProps> = ({
+  option,
+  onClick,
+}) => {
   if (!option.showArtworksButton && !option.showAuctionResultsButton)
     return null
 
@@ -20,6 +24,7 @@ export const QuickNavigation: FC<QuickNavigationProps> = ({ option }) => {
           to={`${option.href}/works-for-sale`}
           Icon={ArtworkIcon}
           label="Artworks"
+          onClick={onClick}
         />
       )}
       {!!option.showAuctionResultsButton && (
@@ -27,6 +32,7 @@ export const QuickNavigation: FC<QuickNavigationProps> = ({ option }) => {
           to={`${option.href}/auction-results`}
           Icon={GavelIcon}
           label="Auction Results"
+          onClick={onClick}
         />
       )}
     </Flex>

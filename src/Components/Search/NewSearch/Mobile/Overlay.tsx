@@ -1,60 +1,53 @@
 import SearchIcon from "@artsy/icons/SearchIcon"
-import { Box, LabeledInput, useUpdateEffect } from "@artsy/palette"
+import { Box, LabeledInput } from "@artsy/palette"
 import { FC, useCallback, useEffect, useRef, useState } from "react"
 import { useTranslation } from "react-i18next"
-import { OverlayBase } from "./OverlayBase"
 import {
   PillType,
   TOP_PILL,
   SEARCH_DEBOUNCE_DELAY,
 } from "Components/Search/NewSearch/constants"
-import { RelayRefetchProp } from "react-relay"
+import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
 import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
 import { reportPerformanceMeasurement } from "Components/Search/NewSearch/utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "Components/Search/NewSearch/utils/shouldStartSearching"
 import { useDebounce } from "Utils/Hooks/useDebounce"
-import { useTracking } from "react-tracking"
-import { MobileSearchBar_viewer$data } from "__generated__/MobileSearchBar_viewer.graphql"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { Overlay_viewer$data } from "__generated__/Overlay_viewer.graphql"
+import {
+  OVERLAY_CONTENT_ID,
+  OverlayBase,
+} from "Components/Search/NewSearch/Mobile/OverlayBase"
+import { SearchResultsListPaginationContainer } from "Components/Search/NewSearch/Mobile/SearchResultsList"
 
 const logger = createLogger("Components/Search/NewSearch/Mobile")
 
+const scrollToTop = () => {
+  document.querySelector(`#${OVERLAY_CONTENT_ID}`)?.scrollTo(0, 0)
+}
+
 interface OverlayProps {
-  viewer: MobileSearchBar_viewer$data
+  viewer: Overlay_viewer$data
   relay: RelayRefetchProp
   onClose: () => void
 }
 
 export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
   const { t } = useTranslation()
-  const tracking = useTracking()
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
-  const [fetchCounter, setFetchCounter] = useState(0)
-  const [value, setValue] = useState("")
-  const options = [] // temporary
-  const disablePills = !shouldStartSearching(value)
+  // TODO: Parse value from url
+  const [inputValue, setInputValue] = useState("")
+  const disablePills = !shouldStartSearching(inputValue)
 
   useEffect(() => {
     inputRef.current?.focus()
   }, [])
 
-  useUpdateEffect(() => {
-    tracking.trackEvent({
-      action_type:
-        options.length > 0
-          ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
-          : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
-      context_module: selectedPill.analyticsContextModule,
-      query: value,
-    })
-  }, [fetchCounter])
-
   const refetch = useCallback(
     (value: string, entity?: string) => {
       const entities = entity ? [entity] : []
-      const performanceStart = performance && performance.now()
+      const performanceStart = performance?.now()
 
       relay.refetch(
         {
@@ -73,8 +66,7 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
             reportPerformanceMeasurement(performanceStart)
           }
 
-          // trigger useEffect to send tracking event
-          setFetchCounter(prevCounter => prevCounter + 1)
+          scrollToTop()
         }
       )
     },
@@ -88,37 +80,84 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
 
   const handlePillClick = (pill: PillType) => {
     setSelectedPill(pill)
-    refetch(value, pill.searchEntityName)
+    refetch(inputValue, pill.searchEntityName)
   }
 
   const handleValueChange = event => {
-    const inputValue = event.target.value
-    setValue(inputValue)
+    const value = event.target.value
+    setInputValue(value)
 
-    if (shouldStartSearching(inputValue))
-      debouncedSearchRequest(inputValue, selectedPill.searchEntityName)
+    if (shouldStartSearching(value)) {
+      debouncedSearchRequest(value, selectedPill.searchEntityName)
+    }
   }
 
   return (
-    <OverlayBase onClose={onClose}>
-      <Box mt={-15}>
-        <LabeledInput
-          ref={inputRef}
-          value={value}
-          placeholder={t`navbar.searchArtsy`}
-          label={<SearchIcon fill="black60" aria-hidden mr={-10} size={18} />}
-          onChange={handleValueChange}
-          // px={2}
-        />
-      </Box>
+    <OverlayBase
+      onClose={onClose}
+      header={
+        <>
+          <Box mt={-15}>
+            <LabeledInput
+              mx={2}
+              ref={inputRef}
+              value={inputValue}
+              placeholder={t`navbar.searchArtsy`}
+              label={
+                <SearchIcon fill="black60" aria-hidden mr={-10} size={18} />
+              }
+              onChange={handleValueChange}
+            />
+          </Box>
 
-      <NewSearchInputPillsFragmentContainer
-        onPillClick={handlePillClick}
-        viewer={viewer}
-        selectedPill={selectedPill}
-        enableChevronNavigation={false}
-        forceDisabled={disablePills}
-      />
+          <NewSearchInputPillsFragmentContainer
+            onPillClick={handlePillClick}
+            viewer={viewer}
+            selectedPill={selectedPill}
+            enableChevronNavigation={false}
+            forceDisabled={disablePills}
+          />
+        </>
+      }
+    >
+      {shouldStartSearching(inputValue) && (
+        <SearchResultsListPaginationContainer
+          viewer={viewer}
+          query={inputValue}
+          onClose={onClose}
+        />
+      )}
     </OverlayBase>
   )
 }
+
+export const OverlayRefetchContainer = createRefetchContainer(
+  Overlay,
+  {
+    viewer: graphql`
+      fragment Overlay_viewer on Viewer
+        @argumentDefinitions(
+          term: { type: "String!", defaultValue: "" }
+          hasTerm: { type: "Boolean!", defaultValue: false }
+          entities: { type: "[SearchEntity]" }
+        ) {
+        ...NewSearchInputPills_viewer @arguments(term: $term)
+        ...SearchResultsList_viewer
+          @arguments(term: $term, entities: $entities)
+          @include(if: $hasTerm)
+      }
+    `,
+  },
+  graphql`
+    query OverlayRefetchQuery(
+      $term: String!
+      $hasTerm: Boolean!
+      $entities: [SearchEntity]
+    ) {
+      viewer {
+        ...Overlay_viewer
+          @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
+      }
+    }
+  `
+)

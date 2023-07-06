@@ -32,7 +32,6 @@ declare module "sharify" {
       ARTSY_MERCHANDISING_PARTNER_SLUGS: string
       ARTSY_XAPP_TOKEN: string
       ARTWORK?: any // mobile artist app data
-      AUCTION_ZENDESK_KEY: string
       AUCTION?: any
       AUTHENTICATION_REDIRECT_TO?: string
       AUTHENTICATION_REFERER?: string
@@ -85,11 +84,14 @@ declare module "sharify" {
       SALESFORCE_CHAT_INSTANCE_URL: string
       SALESFORCE_CHAT_HELP_URL: string
       SALESFORCE_CHAT_ORG_ID: string
-      SALESFORCE_CHAT_EMBEDDED_SERVICE_NAME: string
+      SALESFORCE_CHAT_EMBEDDED_SERVICE_COLLECTOR_NAME: string
+      SALESFORCE_CHAT_EMBEDDED_SERVICE_AUCTION_NAME: string
       SALESFORCE_CHAT_DEPLOYMENT_ID: string
-      SALESFORCE_CHAT_BUTTON_ID: string
-      SALESFORCE_CHAT_ESW_LIVE_AGENT_DEV_NAME: string
       SALESFORCE_CHAT_LIVE_AGENT_URL: string
+      SALESFORCE_CHAT_COLLECTOR_BUTTON_ID: string
+      SALESFORCE_CHAT_AUCTION_BUTTON_ID: string
+      SALESFORCE_CHAT_COLLECTOR_ESW_LIVE_AGENT_DEV_NAME: string
+      SALESFORCE_CHAT_AUCTION_ESW_LIVE_AGENT_DEV_NAME: string
       SALESFORCE_CHAT_LIVE_AGENT_CONTENT_URL: string
       SECTION?: { slug?: string } // FIXME: used only for /venice-biennale-2015
       SEGMENT_WRITE_KEY: string
@@ -109,7 +111,6 @@ declare module "sharify" {
       VOLLEY_ENDPOINT: string
       WEBFONT_URL: string
       XAPP_TOKEN: string
-      ZENDESK_KEY: string
 
       // FORCE Tokens
       AP: {

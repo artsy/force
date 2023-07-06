@@ -276,7 +276,7 @@ describe("TransactionDetailsSummaryItem", () => {
         expect(text).toMatch("Premium delivery*")
         expect(text).toMatch("Tax†US$120")
         expect(text).toMatch(
-          "*Estimate Only. Price may vary once offer is finalized."
+          "*Estimate only. Price may vary once offer is finalized."
         )
         expect(text).toMatch(
           "†Additional duties and taxes may apply at import."

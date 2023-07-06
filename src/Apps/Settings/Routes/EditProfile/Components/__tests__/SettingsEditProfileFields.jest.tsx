@@ -173,6 +173,7 @@ describe("SettingsEditProfileFields", () => {
         Me: () => ({
           email: "success@example.com",
           canRequestEmailConfirmation: true,
+          internalID: "1234",
         }),
       })
 
@@ -182,7 +183,7 @@ describe("SettingsEditProfileFields", () => {
         expect(mockSubmitVerifyIDMutation).toHaveBeenCalledWith(
           expect.objectContaining({
             variables: {
-              input: {},
+              input: { initiatorID: "1234" },
             },
             rejectIf: expect.any(Function),
           })
@@ -203,7 +204,11 @@ describe("SettingsEditProfileFields", () => {
         message: "Retry later",
       })
 
-      renderWithRelay()
+      renderWithRelay({
+        Me: () => ({
+          internalID: "1234",
+        }),
+      })
 
       fireEvent.click(screen.getByText("Verify Your ID"))
 
@@ -211,7 +216,7 @@ describe("SettingsEditProfileFields", () => {
         expect(mockSubmitVerifyIDMutation).toHaveBeenCalledWith(
           expect.objectContaining({
             variables: {
-              input: {},
+              input: { initiatorID: "1234" },
             },
             rejectIf: expect.any(Function),
           })

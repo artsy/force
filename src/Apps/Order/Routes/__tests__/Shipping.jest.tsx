@@ -1406,6 +1406,7 @@ describe("Shipping", () => {
               Me: () => testMe,
             })
             const page = new ShippingTestPage(wrapper)
+            await page.update()
 
             expect(page.submitButton.props().disabled).toBeFalsy()
 
@@ -1436,18 +1437,45 @@ describe("Shipping", () => {
             expect(page.submitButton.props().disabled).toBeFalsy()
           })
 
-          it("commits selectShippingOption mutation with correct input", async () => {
+          it("commits selectShippingOption mutation twice with correct input", async () => {
             const wrapper = getWrapper({
               CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
               Me: () => testMe,
             })
             const page = new ShippingTestPage(wrapper)
+            await page.update()
 
             page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
 
             await page.clickSubmit()
 
-            expect(mockCommitMutation).toHaveBeenLastCalledWith(
+            expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+            // refreshing quotes
+            expect(mockCommitMutation).toHaveBeenNthCalledWith(
+              1,
+              expect.objectContaining({
+                variables: {
+                  input: {
+                    fulfillmentType: "SHIP_ARTA",
+                    id: "2939023",
+                    phoneNumber: "422-424-4242",
+                    shipping: {
+                      addressLine1: "401 Broadway",
+                      addressLine2: "Floor 25",
+                      city: "New York",
+                      country: "US",
+                      name: "Test Name",
+                      phoneNumber: "422-424-4242",
+                      postalCode: "10013",
+                      region: "NY",
+                    },
+                  },
+                },
+              })
+            )
+            // saving the selected quote and continuing
+            expect(mockCommitMutation).toHaveBeenNthCalledWith(
+              2,
               expect.objectContaining({
                 variables: {
                   input: {
@@ -1559,11 +1587,11 @@ describe("Shipping", () => {
               expect.anything(),
               expect.anything()
             )
-            expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+            expect(mockCommitMutation).toHaveBeenCalledTimes(3)
             // the intention here is to trigger the commitMutation again with the same value of the first
             // call once the selected adddress is edited
             expect(mockCommitMutation).toHaveBeenNthCalledWith(
-              2,
+              3,
               expect.objectContaining({
                 variables: {
                   input: {

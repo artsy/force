@@ -1,5 +1,5 @@
 import { AutocompleteInput, useUpdateEffect } from "@artsy/palette"
-import { ChangeEvent, FC, useCallback, useMemo, useState } from "react"
+import { ChangeEvent, FC, useCallback, useState } from "react"
 import { useTranslation } from "react-i18next"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -10,7 +10,6 @@ import { NewSearchBarInputSuggestQuery } from "__generated__/NewSearchBarInputSu
 import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
 import { NewSearchBarFooter } from "Components/Search/NewSearch/NewSearchBarFooter"
-import { getLabel } from "./utils/getLabel"
 import { getSearchTerm } from "./utils/getSearchTerm"
 import { isServer } from "Server/isServer"
 import {
@@ -20,7 +19,7 @@ import {
 } from "Components/Search/NewSearch/constants"
 import {
   NewSuggestionItem,
-  SuggionItemOptionProps,
+  SuggestionItemOptionProps,
 } from "./SuggestionItem/NewSuggestionItem"
 import { useTracking } from "react-tracking"
 import { StaticSearchContainer } from "./StaticSearchContainer"
@@ -29,6 +28,7 @@ import { useRouter } from "System/Router/useRouter"
 import { useDebounce } from "Utils/Hooks/useDebounce"
 import { reportPerformanceMeasurement } from "./utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "./utils/shouldStartSearching"
+import { getLabel } from "./utils/getLabel"
 import { ActionType } from "@artsy/cohesion"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 
@@ -50,7 +50,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
   const options = extractNodes(viewer.searchConnection)
-  const formattedOptions: SuggionItemOptionProps[] = [
+  const formattedOptions: SuggestionItemOptionProps[] = [
     ...options.map((option, index) => {
       return {
         text: option.displayLabel!,
@@ -82,17 +82,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
       item_type: "Footer",
     },
   ]
-
-  // Clear the search term once you navigate away from search results
-  useMemo(() => {
-    router.addNavigationListener(location => {
-      if (!location.pathname.startsWith("/search")) {
-        setValue("")
-      }
-
-      return true
-    })
-  }, [router])
 
   useUpdateEffect(() => {
     tracking.trackEvent({
@@ -176,7 +165,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
     }
   }
 
-  const handleSelect = (option: SuggionItemOptionProps) => {
+  const handleSelect = (option: SuggestionItemOptionProps) => {
     tracking.trackEvent({
       action_type: ActionType.selectedItemFromSearch,
       context_module: selectedPill.analyticsContextModule,

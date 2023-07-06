@@ -11,7 +11,6 @@ import { loadStripe } from "@stripe/stripe-js"
 import { Elements } from "@stripe/react-stripe-js"
 import styled from "styled-components"
 import { ConnectedModalDialog } from "./Dialogs"
-import { ZendeskWrapper } from "Components/ZendeskWrapper"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { exceedsChatSupportThreshold } from "Utils/exceedsChatSupportThreshold"
 import { getENV } from "Utils/getENV"
@@ -93,12 +92,14 @@ const OrderApp: FC<OrderAppProps> = props => {
       return null
     }
 
-    return getENV("SALESFORCE_CHAT_ENABLED") ? (
+    if (!getENV("SALESFORCE_CHAT_ENABLED")) {
+      return null
+    }
+
+    return (
       <Media greaterThan="xs">
         <SalesforceWrapper />
       </Media>
-    ) : (
-      <ZendeskWrapper />
     )
   }
 
@@ -117,7 +118,9 @@ const OrderApp: FC<OrderAppProps> = props => {
             : "width=device-width, initial-scale=1, maximum-scale=5 viewport-fit=cover"
         }
       />
+
       {!isEigen && !isModal && renderChatSupportScript()}
+
       <SafeAreaContainer>
         <OrderPaymentContextProvider>
           <Elements stripe={stripePromise}>
@@ -125,6 +128,7 @@ const OrderApp: FC<OrderAppProps> = props => {
           </Elements>
         </OrderPaymentContextProvider>
       </SafeAreaContainer>
+
       {!isModal && (
         <StickyFooterWithInquiry
           orderType={order.mode}
@@ -132,6 +136,7 @@ const OrderApp: FC<OrderAppProps> = props => {
           artworkID={artwork?.slug!}
         />
       )}
+
       <ConnectedModalDialog />
     </Box>
   )

@@ -8,12 +8,6 @@ jest.mock("react-head", () => ({
   Title: () => null,
 }))
 jest.mock(
-  "Apps/Artist/Routes/Overview/Components/ArtistFeaturedWorksRail",
-  () => ({
-    ArtistFeaturedWorksRailQueryRenderer: () => null,
-  })
-)
-jest.mock(
   "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlights",
   () => ({
     ArtistCareerHighlightsQueryRenderer: () => null,
@@ -66,7 +60,6 @@ describe("ArtistOverviewRoute", () => {
   // FIXME: SWC_COMPILER_MIGRATION
   it.skip("renders correctly", () => {
     const wrapper = getWrapper()
-    expect(wrapper.find("ArtistFeaturedWorksRailQueryRenderer").length).toBe(1)
     expect(wrapper.find("ArtistCareerHighlightsQueryRenderer").length).toBe(1)
     expect(
       wrapper.find("ArtistIconicCollectionsRailQueryRenderer").length

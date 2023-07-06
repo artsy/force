@@ -4,7 +4,7 @@ import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { RouterLink } from "System/Router/RouterLink"
 
 export const InquiryConfirmation: React.FC = () => {
-  const { next } = useInquiryContext()
+  const { context, dispatchCreateAlert, next } = useInquiryContext()
 
   return (
     <Box>
@@ -30,6 +30,17 @@ export const InquiryConfirmation: React.FC = () => {
       <Button onClick={next} width="100%">
         Continue Browsing
       </Button>
+
+      {context.current?.enableCreateAlert && (
+        <Button
+          onClick={dispatchCreateAlert}
+          width="100%"
+          mt={1}
+          variant="secondaryBlack"
+        >
+          Create Alert
+        </Button>
+      )}
     </Box>
   )
 }

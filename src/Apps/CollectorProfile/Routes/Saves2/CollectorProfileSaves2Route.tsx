@@ -12,6 +12,10 @@ import { ActionType, OwnerType, ViewedArtworkList } from "@artsy/cohesion"
 import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { HttpError } from "found"
 import { MetaTags } from "Components/MetaTags"
+import { Jump } from "Utils/Hooks/useJump"
+import { ArtworkListVisibilityProvider } from "Apps/CollectorProfile/Routes/Saves2/Utils/useArtworkListVisibility"
+
+export const ARTWORK_LIST_SCROLL_TARGET_ID = "ArtworkListScrollTarget"
 
 interface CollectorProfileSaves2RouteProps {
   me: CollectorProfileSaves2Route_me$data
@@ -77,7 +81,7 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   }
 
   return (
-    <>
+    <ArtworkListVisibilityProvider>
       <MetaTags title="Saves | Artsy" pathname="collector-profile/saves" />
 
       <ArtworkListsHeader
@@ -85,6 +89,8 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
           me?.savedArtworksArtworkList?.artworksConnection?.totalCount ?? 0
         }
       />
+
+      <Jump id={ARTWORK_LIST_SCROLL_TARGET_ID} />
 
       <Spacer y={4} />
 
@@ -104,14 +110,12 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
         })}
       </Shelf>
 
-      <Spacer y={4} />
-
       <ArtworkListContentQueryRenderer
         listID={selectedArtworkListId}
         initialPage={(page as unknown) as number}
         initialSort={sort}
       />
-    </>
+    </ArtworkListVisibilityProvider>
   )
 }
 

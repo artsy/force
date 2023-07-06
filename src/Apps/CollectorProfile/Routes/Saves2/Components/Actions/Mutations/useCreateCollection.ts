@@ -56,7 +56,10 @@ export const useCreateCollection = () => {
 
             ... on CreateCollectionFailure {
               mutationError {
-                message
+                fieldErrors {
+                  name
+                  message
+                }
               }
             }
           }

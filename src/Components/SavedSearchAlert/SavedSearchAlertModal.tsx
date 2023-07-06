@@ -1,4 +1,4 @@
-import React from "react"
+import React, { FC, useState } from "react"
 import { Formik } from "formik"
 import {
   Box,
@@ -8,6 +8,7 @@ import {
   Input,
   Join,
   ModalDialog,
+  Separator,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -31,12 +32,14 @@ import { SavedSearchAlertPills } from "./Components/SavedSearchAlertPills"
 import { Metric } from "Utils/metrics"
 import { DEFAULT_FREQUENCY } from "./constants"
 import { FrequenceRadioButtons } from "./Components/FrequencyRadioButtons"
+import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
+import { ConfirmationStepModal } from "Components/SavedSearchAlert/ConfirmationStepModal"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
   initialValues: SavedSearchAleftFormValues
   onClose: () => void
-  onComplete?: (result: SavedSearchAlertMutationResult) => void
+  onCreateAlert?: (result: SavedSearchAlertMutationResult) => void
 }
 
 export interface SavedSearchAlertFormContainerProps
@@ -45,15 +48,16 @@ export interface SavedSearchAlertFormContainerProps
   criteria: SearchCriteriaAttributes
   metric?: Metric
   aggregations: Aggregations | undefined
+  onComplete?: () => void
 }
 
 const logger = createLogger("Components/SavedSearchAlert/SavedSearchAlertModal")
 
-export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
+export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
   entity,
   initialValues,
   onClose,
-  onComplete,
+  onCreateAlert,
 }) => {
   const { relayEnvironment } = useSystemContext()
   const { pills, criteria, removeCriteriaValue } = useSavedSearchAlertContext()
@@ -84,11 +88,10 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
         userAlertSettings,
         criteria
       )
-
       const result = {
         id: response.createSavedSearch?.savedSearchOrErrors.internalID!,
       }
-      onComplete?.(result)
+      onCreateAlert?.(result)
     } catch (error) {
       logger.error(error)
     }
@@ -126,7 +129,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
               </Button>
             }
           >
-            <Join separator={<Spacer y={4} />}>
+            <Join separator={<Spacer y={2} />}>
               <Input
                 title="Alert Name"
                 name="name"
@@ -147,6 +150,12 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                     onDeletePress={handleRemovePillPress}
                   />
                 </Flex>
+
+                <Separator my={1} />
+
+                <PriceRangeFilter />
+
+                <Separator my={2} />
               </Box>
 
               <Box>
@@ -173,7 +182,7 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
                   />
                 </Box>
 
-                <Spacer y={4} />
+                <Spacer y={2} />
 
                 {values.push && (
                   <FrequenceRadioButtons
@@ -193,20 +202,59 @@ export const SavedSearchAlertModal: React.FC<SavedSearchAlertFormProps> = ({
 }
 
 export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContainerProps> = props => {
-  const { visible, entity, criteria, metric, aggregations } = props
+  const {
+    visible,
+    entity,
+    criteria,
+    metric,
+    aggregations,
+    onCreateAlert,
+    onComplete,
+  } = props
 
-  if (visible) {
-    return (
-      <SavedSearchAlertContextProvider
-        criteria={criteria}
-        aggregations={aggregations}
-        entity={entity}
-        metric={metric}
-      >
-        <SavedSearchAlertModal {...props} />
-      </SavedSearchAlertContextProvider>
-    )
+  const [searchCriteriaId, setSearchCriteriaId] = useState("")
+  const [step, setStep] = useState<"CREATE_ALERT" | "CONFIRMATION">(
+    "CREATE_ALERT"
+  )
+
+  const handleCreateAlert = (result: SavedSearchAlertMutationResult) => {
+    setSearchCriteriaId(result.id)
+    onCreateAlert?.(result)
+    setStep("CONFIRMATION")
   }
 
-  return null
+  const handleComplete = () => {
+    onComplete?.()
+    setStep("CREATE_ALERT")
+  }
+
+  if (!visible) return null
+
+  switch (step) {
+    case "CREATE_ALERT":
+      return (
+        <SavedSearchAlertContextProvider
+          criteria={criteria}
+          aggregations={aggregations}
+          entity={entity}
+          metric={metric}
+        >
+          <SavedSearchAlertModal {...props} onCreateAlert={handleCreateAlert} />
+        </SavedSearchAlertContextProvider>
+      )
+    case "CONFIRMATION":
+      return (
+        <SavedSearchAlertContextProvider
+          criteria={criteria}
+          aggregations={aggregations}
+          entity={entity}
+          metric={metric}
+        >
+          <ConfirmationStepModal
+            onClose={handleComplete}
+            searchCriteriaId={searchCriteriaId}
+          />
+        </SavedSearchAlertContextProvider>
+      )
+  }
 }

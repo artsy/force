@@ -220,4 +220,4 @@ COPY --chown=deploy:deploy --from=builder /app/server.dist.js.map .
 ENTRYPOINT ["/usr/bin/dumb-init", "--"]
 
 # TODO: Reduce production memory, this is not a concern
-CMD ["node", "--max_old_space_size=2048", "--heapsnapshot-signal=SIGUSR2", "./server.dist.js"]
+CMD ["node", "--max_old_space_size=2048", "--heapsnapshot-signal=SIGUSR2", "--no-experimental-fetch", "./server.dist.js"]

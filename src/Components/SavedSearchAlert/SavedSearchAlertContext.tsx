@@ -20,6 +20,10 @@ interface SavedSearchAlertContextProps {
     key: SearchCriteriaAttributeKeys,
     value: string | number | boolean
   ) => void
+  setCriteriaValue: (
+    key: SearchCriteriaAttributeKeys,
+    value: string | string[] | number | boolean | null
+  ) => void
   removePill: (pill: FilterPill) => void
 }
 
@@ -36,6 +40,7 @@ const SavedSearchAlertContext = createContext<SavedSearchAlertContextProps>({
   criteria: {} as SearchCriteriaAttributes,
   isCriteriaChanged: false,
   removeCriteriaValue: () => {},
+  setCriteriaValue: () => {},
   removePill: () => {},
 })
 
@@ -69,9 +74,16 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
       criteriaValue = null
     }
 
+    setCriteriaValue(key, criteriaValue)
+  }
+
+  const setCriteriaValue = (
+    key: SearchCriteriaAttributeKeys,
+    value: string | string[] | number | boolean | null
+  ) => {
     const updatedCriteria = getAllowedSearchCriteria({
       ...criteria,
-      [key]: criteriaValue,
+      [key]: value,
     })
 
     setIsCriteriaChanged(true)
@@ -92,6 +104,7 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
     criteria,
     isCriteriaChanged,
     removeCriteriaValue,
+    setCriteriaValue,
     removePill,
   }
 

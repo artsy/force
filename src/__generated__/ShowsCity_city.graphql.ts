@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<88936aca0aac87c0aaa53728b2f204ce>>
+ * @generated SignedSource<<742a25387216aa287ada28573e77271e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -268,6 +268,11 @@ return {
         (v0/*: any*/),
         {
           "kind": "Literal",
+          "name": "sort",
+          "value": "END_AT_DESC"
+        },
+        {
+          "kind": "Literal",
           "name": "status",
           "value": "CLOSED"
         }
@@ -279,7 +284,7 @@ return {
       "selections": [
         (v3/*: any*/)
       ],
-      "storageKey": "showsConnection(first:18,status:\"CLOSED\")"
+      "storageKey": "showsConnection(first:18,sort:\"END_AT_DESC\",status:\"CLOSED\")"
     }
   ],
   "type": "City",
@@ -287,6 +292,6 @@ return {
 };
 })();
 
-(node as any).hash = "d94f5343badc470c9b69f769b7ff268d";
+(node as any).hash = "0bf0c87351c5631ece3cf3b9e1c3548c";
 
 export default node;

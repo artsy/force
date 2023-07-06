@@ -1,6 +1,7 @@
 import loadable from "@loadable/component"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
+import { isArtsyEmail } from "Utils/isArtsyEmail"
 
 const CollectorProfileApp = loadable(
   () =>
@@ -172,7 +173,12 @@ export const collectorProfileRoutes: AppRouteConfig[] = [
         prepareVariables: (_, { context }) => {
           const featureFlags = context?.featureFlags ?? {}
           const featureFlag = featureFlags["force-enable-artworks-list"]
-          const isArtworkListsFlagEnabled = featureFlag?.flagEnabled ?? false
+          const isFeatureFlagEnabled = featureFlag?.flagEnabled ?? false
+          const isArtsyEmployee = isArtsyEmail(context?.user?.email ?? "")
+          const isIntegrityUser =
+            context?.user?.email === "cypress+test@example.com"
+          const isArtworkListsFlagEnabled =
+            isFeatureFlagEnabled && (isArtsyEmployee || isIntegrityUser)
 
           return {
             shouldFetchArtworkListsData: isArtworkListsFlagEnabled,

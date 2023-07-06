@@ -95,7 +95,7 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
       artwork_id: artwork.internalID,
       artwork_slug: artwork.slug,
     })
-    showInquiry()
+    showInquiry({ enableCreateAlert: true })
   }
 
   const handleCreateOrder = () => {
