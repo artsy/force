@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { StripeError } from "@stripe/stripe-js"
 
@@ -61,6 +61,31 @@ export const BankAccountPicker: FC<Props> = props => {
   }
 
   const { submitMutation: setPaymentMutation } = useSetPayment()
+
+  useEffect(() => {
+    if (bankAccountSelection) {
+      return
+    }
+
+    if (selectedPaymentMethod === "SEPA_DEBIT") {
+      setBankAccountSelection({ type: "new" })
+    } else if (selectedPaymentMethod === "US_BANK_ACCOUNT") {
+      if (order.bankAccountId) {
+        setBankAccountSelection({
+          type: "existing",
+          id: order.bankAccountId,
+        })
+      } else if (bankAccountsArray.length > 0) {
+        setBankAccountSelection({
+          type: "existing",
+          id: bankAccountsArray[0]?.internalID!,
+        })
+      } else {
+        setBankAccountSelection({ type: "new" })
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [bankAccountSelection, selectedPaymentMethod])
 
   const handleContinue = async () => {
     setBalanceCheckComplete(false)
