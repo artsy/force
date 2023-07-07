@@ -9,7 +9,6 @@ import { NewSearchBarInput_viewer$data } from "__generated__/NewSearchBarInput_v
 import { NewSearchBarInputSuggestQuery } from "__generated__/NewSearchBarInputSuggestQuery.graphql"
 import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
-import { NewSearchBarFooter } from "Components/Search/NewSearch/NewSearchBarFooter"
 import { getSearchTerm } from "./utils/getSearchTerm"
 import { isServer } from "Server/isServer"
 import {
@@ -30,7 +29,7 @@ import { reportPerformanceMeasurement } from "./utils/reportPerformanceMeasureme
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 import { getLabel } from "./utils/getLabel"
 import { ActionType } from "@artsy/cohesion"
-import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import { NewSearchBarFooter } from "Components/Search/NewSearch/NewSearchBarFooter"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 
@@ -50,33 +49,29 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
   const options = extractNodes(viewer.searchConnection)
-  const formattedOptions: SuggestionItemOptionProps[] = options.map(
-    (option, index) => {
-      return {
-        text: option.displayLabel!,
-        value: option.displayLabel!,
-        subtitle:
-          getLabel({
-            displayType: option.displayType ?? "",
-            typename: option.__typename,
-          }) ?? "",
-        imageUrl: option.imageUrl!,
-        showArtworksButton: !!option.statuses?.artworks,
-        showAuctionResultsButton: !!option.statuses?.auctionLots,
-        href: option.href!,
-        typename: option.__typename,
-        item_number: index,
-        item_type: option.displayType!,
-      }
+  const formattedOptions: SuggestionItemOptionProps[] = options.map(option => {
+    return {
+      text: option.displayLabel!,
+      value: option.displayLabel!,
+      subtitle:
+        getLabel({
+          displayType: option.displayType ?? "",
+          typename: option.__typename,
+        }) ?? "",
+      imageUrl: option.imageUrl!,
+      showArtworksButton: !!option.statuses?.artworks,
+      showAuctionResultsButton: !!option.statuses?.auctionLots,
+      href: option.href!,
+      typename: option.__typename,
     }
-  )
+  })
 
   useUpdateEffect(() => {
     tracking.trackEvent({
       action_type:
         options.length > 0
-          ? DeprecatedSchema.ActionType.SearchedAutosuggestWithResults
-          : DeprecatedSchema.ActionType.SearchedAutosuggestWithoutResults,
+          ? ActionType.searchedWithResults
+          : ActionType.searchedWithNoResults,
       context_module: selectedPill.analyticsContextModule,
       query: value,
     })
@@ -157,12 +152,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
     tracking.trackEvent({
       action_type: ActionType.selectedItemFromSearch,
       context_module: selectedPill.analyticsContextModule,
-      destination_path:
-        option.typename === "Artist"
-          ? `${option.href}/works-for-sale`
-          : option.href,
-      item_number: option.item_number,
-      item_type: option.item_type,
+      destination_path: option.href,
       query: value,
     })
 
@@ -186,8 +176,8 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
       onChange={handleChange}
       onClear={clearSearchInput}
       onSubmit={handleSubmit}
-      onFocus={handleFocus}
       onSelect={handleSelect}
+      onClick={handleFocus}
       header={
         <NewSearchInputPillsFragmentContainer
           viewer={viewer}
@@ -200,7 +190,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
           <NewSearchBarFooter
             query={value}
             href={encodedSearchURL}
-            index={options.length}
             selectedPill={selectedPill}
             onClick={onClose}
           />

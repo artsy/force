@@ -21,7 +21,7 @@ export const QuickNavigation: FC<QuickNavigationProps> = ({
     <Flex flexWrap="wrap">
       {!!option.showArtworksButton && (
         <QuickNavigationItem
-          to={`${option.href}/works-for-sale`}
+          to={`${option.href}`}
           Icon={ArtworkIcon}
           label="Artworks"
           onClick={onClick}

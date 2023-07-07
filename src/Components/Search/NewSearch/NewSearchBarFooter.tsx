@@ -10,7 +10,6 @@ import { PillType } from "Components/Search/NewSearch/constants"
 interface SuggestionItemProps {
   href: string
   query: string
-  index: number
   selectedPill: PillType
   onClick: () => void
 }
@@ -18,7 +17,6 @@ interface SuggestionItemProps {
 export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
   href,
   query,
-  index,
   selectedPill,
   onClick,
 }) => {
@@ -29,8 +27,6 @@ export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
       action_type: ActionType.selectedItemFromSearch,
       context_module: selectedPill.analyticsContextModule,
       destination_path: href,
-      item_number: index,
-      item_type: "Footer",
       query: query,
     })
 

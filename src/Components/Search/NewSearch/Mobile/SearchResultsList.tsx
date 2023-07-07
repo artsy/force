@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import {
   RelayPaginationProp,
   createPaginationContainer,
@@ -18,11 +18,15 @@ import {
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
 import { NoResults } from "Components/Search/NewSearch/Mobile/SearchResultsList/NoResults"
 import { ContentPlaceholder } from "Components/Search/NewSearch/Mobile/SearchResultsList/ContentPlaceholder"
+import { useTracking } from "react-tracking"
+import { PillType } from "Components/Search/NewSearch/constants"
+import { ActionType } from "@artsy/cohesion"
 
 interface SearchResultsListProps {
   relay: RelayPaginationProp
   viewer: SearchResultsList_viewer$data
   query: string
+  selectedPill: PillType
   onClose: () => void
 }
 
@@ -32,9 +36,27 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
   relay,
   viewer,
   query,
+  selectedPill,
   onClose,
 }) => {
+  const tracking = useTracking()
   const options = extractNodes(viewer.searchConnection)
+
+  useEffect(() => {
+    if (viewer.searchConnection) {
+      tracking.trackEvent({
+        action_type:
+          options.length > 0
+            ? ActionType.searchedWithResults
+            : ActionType.searchedWithNoResults,
+        context_module: selectedPill.analyticsContextModule,
+        query: query,
+      })
+    }
+    // When selecting another pill - this effect shouldn't be executed again, so we disable the linting rule
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [viewer.searchConnection])
+
   const formattedOptions: SuggestionItemOptionProps[] = formatOptions(
     options as SearchNodeOption[]
   )
@@ -59,6 +81,22 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
     })
   }
 
+  const handleRedirect = (
+    option: SuggestionItemOptionProps,
+    quickNavigation = false
+  ) => {
+    if (!quickNavigation) {
+      tracking.trackEvent({
+        action_type: ActionType.selectedItemFromSearch,
+        context_module: selectedPill.analyticsContextModule,
+        destination_path: option.href,
+        query: query,
+      })
+    }
+
+    onClose()
+  }
+
   return (
     <>
       {formattedOptions.map((option, index) => {
@@ -66,7 +104,7 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
           <NewSuggestionItem
             query={query}
             option={option}
-            onRedirect={onClose}
+            onRedirect={handleRedirect}
             key={index}
           />
         )

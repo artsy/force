@@ -19,6 +19,8 @@ import {
   OverlayBase,
 } from "Components/Search/NewSearch/Mobile/OverlayBase"
 import { SearchResultsListPaginationContainer } from "Components/Search/NewSearch/Mobile/SearchResultsList"
+import { useTracking } from "react-tracking"
+import { ActionType } from "@artsy/cohesion"
 
 const logger = createLogger("Components/Search/NewSearch/Mobile")
 
@@ -34,6 +36,7 @@ interface OverlayProps {
 
 export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
   const { t } = useTranslation()
+  const tracking = useTracking()
   const inputRef = useRef<HTMLInputElement | null>(null)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
   // TODO: Parse value from url
@@ -42,6 +45,13 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
 
   useEffect(() => {
     inputRef.current?.focus()
+
+    tracking.trackEvent({
+      action_type: ActionType.focusedOnSearchInput,
+      context_module: selectedPill.analyticsContextModule,
+    })
+    // When selecting another pill - this effect shouldn't be executed again, so we disable the linting rule
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const refetch = useCallback(
@@ -124,6 +134,7 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
         <SearchResultsListPaginationContainer
           viewer={viewer}
           query={inputValue}
+          selectedPill={selectedPill}
           onClose={onClose}
         />
       )}
