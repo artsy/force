@@ -30,7 +30,6 @@ export const APPLE_TEAM_ID: any = null
 export const APPLICATION_NAME: any = "force-staging"
 export const ARTSY_EDITORIAL_CHANNEL: any = "5759e3efb5989e6f98f77993"
 export const ARTSY_MERCHANDISING_PARTNER_SLUGS: any = null
-export const AUCTION_ZENDESK_KEY: any = null
 export const ALLOWED_REDIRECT_HOSTS: any = "localhost"
 export const CASCADING_AUCTION_HELP_ARTICLE_LINK: any = null
 export const CDN_URL: any = "https://d1s2w0upia4e9w.cloudfront.net"
@@ -131,7 +130,6 @@ export const VANITY_BUCKET: any = "artsy-vanity-files-production"
 export const VERBOSE_LOGGING: any = false
 export const VOLLEY_ENDPOINT: any = null
 export const WEBFONT_URL: any = "http://webfonts.artsy.net"
-export const ZENDESK_KEY: any = null
 
 // Override any values with env variables if they exist.
 // You can set JSON-y values for env variables as well such as "true" or

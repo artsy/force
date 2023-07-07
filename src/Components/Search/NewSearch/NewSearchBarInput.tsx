@@ -48,8 +48,8 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
   const options = extractNodes(viewer.searchConnection)
-  const formattedOptions: SuggestionItemOptionProps[] = [
-    ...options.map(option => {
+  const formattedOptions: SuggestionItemOptionProps[] = options.map(
+    (option) => {
       return {
         text: option.displayLabel!,
         value: option.displayLabel!,
@@ -64,19 +64,9 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
         href: option.href!,
         typename: option.__typename,
       }
-    }),
-    {
-      text: value,
-      value: value,
-      subtitle: "",
-      imageUrl: "",
-      showArtworksButton: false,
-      showAuctionResultsButton: false,
-      href: encodedSearchURL,
-      typename: "Footer",
-    },
-  ]
-
+    }
+  )
+  
   useUpdateEffect(() => {
     tracking.trackEvent({
       action_type:
@@ -196,6 +186,17 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
           onPillClick={handlePillClick}
         />
       }
+      footer={({ onClose }) => {
+        return (
+          <NewSearchBarFooter
+            query={value}
+            href={encodedSearchURL}
+            index={options.length}
+            selectedPill={selectedPill}
+            onClick={onClose}
+          />
+        )
+      }}
       renderOption={option => {
         return (
           <NewSuggestionItem
@@ -205,7 +206,8 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
           />
         )
       }}
-      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 10px)`}
+      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 150px)`}
+      flip={false}
     />
   )
 }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7a7d655cc8315abdb2e7ce4642e552ed>>
+ * @generated SignedSource<<7cec6c8af210c92d8de1f3a7db5ed5f5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type CreateUserInterestMutationInput = {
   clientMutationId?: string | null;
   interestId: string;
   interestType: UserInterestInterestType;
+  private?: boolean | null;
   sessionID?: string | null;
 };
 export type useAddArtistYouCollectMutation$variables = {

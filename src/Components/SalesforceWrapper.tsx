@@ -57,27 +57,29 @@ export const SalesforceWrapper: React.FC<SalesforceWrapperProps> = ({
     )}/embeddedservice/5.0/esw.min.js`,
     removeOnUnmount: true,
     onReady: () => {
-      window.embedded_svc.settings.defaultMinimizedText = "Chat"
-      window.embedded_svc.settings.enabledFeatures = ["LiveAgent"]
-      window.embedded_svc.settings.entryFeature = "LiveAgent"
+      if (window.embedded_svc?.settings) {
+        window.embedded_svc.settings.defaultMinimizedText = "Chat"
+        window.embedded_svc.settings.enabledFeatures = ["LiveAgent"]
+        window.embedded_svc.settings.entryFeature = "LiveAgent"
 
-      window.embedded_svc.init(
-        getENV("SALESFORCE_CHAT_INSTANCE_URL"),
-        getENV("SALESFORCE_CHAT_HELP_URL"),
-        "https://service.force.com",
-        getENV("SALESFORCE_CHAT_ORG_ID"),
-        embeddedService,
-        {
-          baseLiveAgentContentURL: getENV(
-            "SALESFORCE_CHAT_LIVE_AGENT_CONTENT_URL"
-          ),
-          deploymentId: getENV("SALESFORCE_CHAT_DEPLOYMENT_ID"),
-          buttonId: buttonId,
-          baseLiveAgentURL: getENV("SALESFORCE_CHAT_LIVE_AGENT_URL"),
-          eswLiveAgentDevName: ewsLiveAgentDevName,
-          isOfflineSupportEnabled: true,
-        }
-      )
+        window.embedded_svc.init(
+          getENV("SALESFORCE_CHAT_INSTANCE_URL"),
+          getENV("SALESFORCE_CHAT_HELP_URL"),
+          "https://service.force.com",
+          getENV("SALESFORCE_CHAT_ORG_ID"),
+          embeddedService,
+          {
+            baseLiveAgentContentURL: getENV(
+              "SALESFORCE_CHAT_LIVE_AGENT_CONTENT_URL"
+            ),
+            deploymentId: getENV("SALESFORCE_CHAT_DEPLOYMENT_ID"),
+            buttonId: buttonId,
+            baseLiveAgentURL: getENV("SALESFORCE_CHAT_LIVE_AGENT_URL"),
+            eswLiveAgentDevName: ewsLiveAgentDevName,
+            isOfflineSupportEnabled: true,
+          }
+        )
+      }
     },
   })
 

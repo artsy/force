@@ -11,12 +11,14 @@ interface SuggestionItemProps {
   href: string
   query: string
   selectedPill: PillType
+  onClick: () => void
 }
 
 export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
   href,
   query,
   selectedPill,
+  onClick,
 }) => {
   const tracking = useTracking()
 
@@ -27,12 +29,15 @@ export const NewSearchBarFooter: FC<SuggestionItemProps> = ({
       destination_path: href,
       query: query,
     })
+
+    onClick()
   }
 
   return (
     <SuggestionItemLink
       borderTop="1px solid"
       borderTopColor="black10"
+      backgroundColor="white100"
       onClick={handleClick}
       to={href}
     >

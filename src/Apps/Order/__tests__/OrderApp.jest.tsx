@@ -660,21 +660,6 @@ describe("OrderApp", () => {
   })
 
   describe("chat bubble", () => {
-    it("shows the Zendesk chat integration button", () => {
-      const props = getProps() as any
-      const subject = getWrapper({ props }) as any
-      expect(subject.find("ZendeskWrapper")).toHaveLength(1)
-    })
-
-    it("does not show the Zendesk chat integration button if in a modal", () => {
-      const props = getProps()
-      const subject = getWrapper({
-        props: { ...props, location: { query: { isModal: true } } },
-      })
-
-      expect(subject.find("ZendeskWrapper")).toHaveLength(1)
-    })
-
     it("shows the Salesforce chat integration button", () => {
       mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
       const props = getProps() as any
@@ -693,7 +678,7 @@ describe("OrderApp", () => {
       mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
       const props = getProps()
       const subject = getWrapper({
-        props: { ...props, location: { query: { isModal: true } } },
+        props: { ...props, match: { location: { query: { isModal: true } } } },
       })
 
       expect(subject.find("SalesforceWrapper")).toHaveLength(0)

@@ -47,6 +47,9 @@ const ExampleApp: React.FC<ExampleAppProps> = ({ system, children }) => {
           <RouterLink to="/example/add-to-collection">
             <Text>Add To Collection</Text>
           </RouterLink>
+          <RouterLink to="/example/search">
+            <Text>Search</Text>
+          </RouterLink>
         </Join>
       </Flex>
 
