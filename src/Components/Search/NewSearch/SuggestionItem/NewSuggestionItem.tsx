@@ -13,8 +13,6 @@ export interface SuggestionItemOptionProps {
   showAuctionResultsButton: boolean
   href: string
   typename: string
-  item_number: number
-  item_type: string
 }
 
 interface SuggestionItemProps {

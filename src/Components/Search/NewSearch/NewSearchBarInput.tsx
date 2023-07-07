@@ -9,7 +9,6 @@ import { NewSearchBarInput_viewer$data } from "__generated__/NewSearchBarInput_v
 import { NewSearchBarInputSuggestQuery } from "__generated__/NewSearchBarInputSuggestQuery.graphql"
 import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
-import { NewSearchBarFooter } from "Components/Search/NewSearch/NewSearchBarFooter"
 import { getSearchTerm } from "./utils/getSearchTerm"
 import { isServer } from "Server/isServer"
 import {
@@ -50,7 +49,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
 
   const options = extractNodes(viewer.searchConnection)
   const formattedOptions: SuggestionItemOptionProps[] = [
-    ...options.map((option, index) => {
+    ...options.map(option => {
       return {
         text: option.displayLabel!,
         value: option.displayLabel!,
@@ -64,8 +63,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
         showAuctionResultsButton: !!option.statuses?.auctionLots,
         href: option.href!,
         typename: option.__typename,
-        item_number: index,
-        item_type: option.displayType!,
       }
     }),
     {
@@ -77,8 +74,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
       showAuctionResultsButton: false,
       href: encodedSearchURL,
       typename: "Footer",
-      item_number: options.length,
-      item_type: "Footer",
     },
   ]
 
@@ -169,8 +164,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
       action_type: ActionType.selectedItemFromSearch,
       context_module: selectedPill.analyticsContextModule,
       destination_path: option.href,
-      item_number: option.item_number,
-      item_type: option.item_type,
       query: value,
     })
 
@@ -204,16 +197,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
         />
       }
       renderOption={option => {
-        if (option.item_type === "Footer") {
-          return (
-            <NewSearchBarFooter
-              query={value}
-              href={encodedSearchURL}
-              index={options.length}
-              selectedPill={selectedPill}
-            />
-          )
-        }
         return (
           <NewSuggestionItem
             query={value}

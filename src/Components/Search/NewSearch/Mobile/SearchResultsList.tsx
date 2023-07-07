@@ -90,8 +90,6 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
         action_type: ActionType.selectedItemFromSearch,
         context_module: selectedPill.analyticsContextModule,
         destination_path: option.href,
-        item_number: option.item_number,
-        item_type: option.item_type,
         query: query,
       })
     }
