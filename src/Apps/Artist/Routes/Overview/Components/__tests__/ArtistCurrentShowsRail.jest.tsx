@@ -42,8 +42,10 @@ describe("ArtistCurrentShowsRail", () => {
       Artist: () => ({
         name: "artistName",
         slug: "artistSlug",
+        href: "/artist/artistSlug/shows",
       }),
     })
+
     expect(wrapper.text()).toContain("Shows Featuring artistName")
     expect(wrapper.find("RouterLink").length).toBe(3)
     expect(wrapper.find("RouterLink").at(0).props().to).toContain(
@@ -70,18 +72,32 @@ describe("ArtistCurrentShowsRail", () => {
   })
 
   it("tracks show click", () => {
-    const wrapper = getWrapper()
+    const wrapper = getWrapper({
+      Artist: () => ({
+        internalId: "artistID",
+        slug: "artistSlug",
+        href: "/artist/artistSlug/shows",
+      }),
+
+      Show: () => ({
+        internalID: "showID",
+        slug: "showSlug",
+        href: "/show/showSlug",
+      }),
+    })
+
     wrapper.find("RouterLink").last().simulate("click")
-    expect(trackingSpy).toHaveBeenCalledWith(
-      expect.objectContaining({
-        action_type: "Click",
-        contextModule: "currentShowsRail",
-        destinationPageOwnerType: "artwork",
-        destination_path: '<mock-value-for-field-"href">',
-        horizontalSlidePosition: 1,
-        subject: "showCarouselSlide",
-        type: "thumbnail",
-      })
-    )
+
+    expect(trackingSpy).toHaveBeenCalledWith({
+      action_type: "Click",
+      contextModule: "currentShowsRail",
+      destinationPageOwnerId: "showID",
+      destinationPageOwnerSlug: "showSlug",
+      destinationPageOwnerType: "show",
+      destination_path: "/show/showSlug",
+      horizontalSlidePosition: 1,
+      subject: "showCarouselSlide",
+      type: "thumbnail",
+    })
   })
 })

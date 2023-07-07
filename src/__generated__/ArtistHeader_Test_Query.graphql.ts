@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7acb2d08a65000c1babc2f25af8e142b>>
+ * @generated SignedSource<<bc8e2c97bef471516b0f373fa79a0fc6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -95,42 +95,6 @@ return {
         "name": "artist",
         "plural": false,
         "selections": [
-          {
-            "alias": "insightPills",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "kind",
-                "value": [
-                  "ACTIVE_SECONDARY_MARKET",
-                  "HIGH_AUCTION_RECORD",
-                  "ARTSY_VANGUARD_YEAR",
-                  "CRITICALLY_ACCLAIMED"
-                ]
-              }
-            ],
-            "concreteType": "ArtistInsight",
-            "kind": "LinkedField",
-            "name": "insights",
-            "plural": true,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "kind",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "label",
-                "storageKey": null
-              }
-            ],
-            "storageKey": "insights(kind:[\"ACTIVE_SECONDARY_MARKET\",\"HIGH_AUCTION_RECORD\",\"ARTSY_VANGUARD_YEAR\",\"CRITICALLY_ACCLAIMED\"])"
-          },
           {
             "alias": null,
             "args": [
@@ -349,7 +313,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "6212194dd0253208aabdeb488df71816",
+    "cacheID": "3f50ecba5ba63d2e976c0a910e66408e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -412,37 +376,6 @@ return {
           "type": "Image"
         },
         "artist.image.url": (v3/*: any*/),
-        "artist.insightPills": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": true,
-          "type": "ArtistInsight"
-        },
-        "artist.insightPills.kind": {
-          "enumValues": [
-            "ACTIVE_SECONDARY_MARKET",
-            "ARTSY_VANGUARD_YEAR",
-            "AWARDS",
-            "BIENNIAL",
-            "COLLECTED",
-            "CRITICALLY_ACCLAIMED",
-            "GROUP_SHOW",
-            "HIGH_AUCTION_RECORD",
-            "PRIVATE_COLLECTIONS",
-            "RESIDENCIES",
-            "REVIEWED",
-            "SOLO_SHOW"
-          ],
-          "nullable": true,
-          "plural": false,
-          "type": "ArtistInsightKind"
-        },
-        "artist.insightPills.label": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "String"
-        },
         "artist.internalID": (v2/*: any*/),
         "artist.name": (v3/*: any*/),
         "artist.slug": (v2/*: any*/)
@@ -450,7 +383,7 @@ return {
     },
     "name": "ArtistHeader_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistHeader_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeader_artist\n    id\n  }\n}\n\nfragment ArtistHeader_artist on Artist {\n  ...ArtistInsightPills_artist\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  image {\n    url(version: [\"large\", \"tall\", \"square\"])\n  }\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n    forSaleArtworks\n  }\n  biographyBlurb(format: HTML, partnerBio: false) {\n    credit\n    text\n  }\n}\n\nfragment ArtistInsightPills_artist on Artist {\n  insightPills: insights(kind: [ACTIVE_SECONDARY_MARKET, HIGH_AUCTION_RECORD, ARTSY_VANGUARD_YEAR, CRITICALLY_ACCLAIMED]) {\n    kind\n    label\n  }\n}\n"
+    "text": "query ArtistHeader_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistHeader_artist\n    id\n  }\n}\n\nfragment ArtistHeader_artist on Artist {\n  auctionResultsConnection(recordsTrusted: true, first: 1, sort: PRICE_AND_DATE_DESC) {\n    edges {\n      node {\n        price_realized: priceRealized {\n          display(format: \"0.0a\")\n        }\n        organization\n        sale_date: saleDate(format: \"YYYY\")\n        id\n      }\n    }\n  }\n  image {\n    url(version: [\"large\", \"tall\", \"square\"])\n  }\n  internalID\n  slug\n  name\n  formattedNationalityAndBirthday\n  counts {\n    follows\n    forSaleArtworks\n  }\n  biographyBlurb(format: HTML, partnerBio: false) {\n    credit\n    text\n  }\n}\n"
   }
 };
 })();

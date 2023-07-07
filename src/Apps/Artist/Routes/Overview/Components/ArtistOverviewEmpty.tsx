@@ -6,11 +6,11 @@ export const ArtistOverviewEmpty: React.FC = () => {
     <GridColumns gridRowGap={2}>
       <Column span={6} start={4}>
         <Text variant="md" textAlign="center">
-          There is no overview for this artist at this time.
+          We‘ll update this page when more information is available.
         </Text>
+
         <Text variant="md" color="black60" textAlign="center">
-          The page will be updated once we have more information. Represent this
-          artist?{" "}
+          Do you represent this artist?{" "}
           <RouterLink inline to="/gallery-partnerships">
             Become a partner.
           </RouterLink>

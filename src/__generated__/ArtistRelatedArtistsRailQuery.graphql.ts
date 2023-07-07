@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7e9b4a57ca404b881861528254e28ff3>>
+ * @generated SignedSource<<fed2117f1196296cf95ec90cffb170c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,21 +38,7 @@ v1 = [
     "variableName": "slug"
   }
 ],
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v4 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -68,7 +54,7 @@ v4 = [
     "storageKey": null
   }
 ],
-v5 = {
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -116,8 +102,6 @@ return {
         "name": "artist",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
-          (v3/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -132,7 +116,7 @@ return {
                   {
                     "kind": "Literal",
                     "name": "first",
-                    "value": 20
+                    "value": 12
                   },
                   {
                     "kind": "Literal",
@@ -168,7 +152,13 @@ return {
                             "name": "internalID",
                             "storageKey": null
                           },
-                          (v3/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "href",
+                            "storageKey": null
+                          },
                           {
                             "alias": null,
                             "args": null,
@@ -176,7 +166,13 @@ return {
                             "name": "slug",
                             "storageKey": null
                           },
-                          (v2/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "name",
+                            "storageKey": null
+                          },
                           {
                             "alias": null,
                             "args": null,
@@ -242,7 +238,7 @@ return {
                                 "kind": "LinkedField",
                                 "name": "cropped",
                                 "plural": false,
-                                "selections": (v4/*: any*/),
+                                "selections": (v2/*: any*/),
                                 "storageKey": "cropped(height:45,width:45)"
                               }
                             ],
@@ -282,13 +278,13 @@ return {
                                 "kind": "LinkedField",
                                 "name": "cropped",
                                 "plural": false,
-                                "selections": (v4/*: any*/),
+                                "selections": (v2/*: any*/),
                                 "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
                               }
                             ],
                             "storageKey": null
                           },
-                          (v5/*: any*/)
+                          (v3/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -296,24 +292,24 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "artistsConnection(first:20,kind:\"MAIN\")"
+                "storageKey": "artistsConnection(first:12,kind:\"MAIN\")"
               }
             ],
             "storageKey": null
           },
-          (v5/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "8144ca77a0a71970f4ad6d3fb98effb6",
+    "cacheID": "0cf4ade26026b70fc705529dd076e0f7",
     "id": null,
     "metadata": {},
     "name": "ArtistRelatedArtistsRailQuery",
     "operationKind": "query",
-    "text": "query ArtistRelatedArtistsRailQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistRelatedArtistsRail_artist\n    id\n  }\n}\n\nfragment ArtistRelatedArtistsRail_artist on Artist {\n  name\n  href\n  related {\n    artistsConnection(kind: MAIN, first: 20) {\n      edges {\n        node {\n          ...CellArtist_artist\n          internalID\n          slug\n          href\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtistRelatedArtistsRailQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistRelatedArtistsRail_artist\n    id\n  }\n}\n\nfragment ArtistRelatedArtistsRail_artist on Artist {\n  related {\n    artistsConnection(kind: MAIN, first: 12) {\n      edges {\n        node {\n          ...CellArtist_artist\n          internalID\n          slug\n          href\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

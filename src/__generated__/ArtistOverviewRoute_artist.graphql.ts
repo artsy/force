@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<df00bdc2e1ca738a10a88a628f1c7013>>
+ * @generated SignedSource<<11654270f93764311595c9e3a5519f41>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,6 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "ARTSY_VANGUARD_YEAR" | "AWARDS" | "BIENNIAL" | "COLLECTED" | "CRITICALLY_ACCLAIMED" | "GROUP_SHOW" | "HIGH_AUCTION_RECORD" | "PRIVATE_COLLECTIONS" | "RESIDENCIES" | "REVIEWED" | "SOLO_SHOW" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistOverviewRoute_artist$data = {
   readonly articlesConnection: {
@@ -29,10 +28,7 @@ export type ArtistOverviewRoute_artist$data = {
     } | null> | null;
   } | null;
   readonly insights: ReadonlyArray<{
-    readonly description: string | null;
-    readonly entities: ReadonlyArray<string>;
-    readonly kind: ArtistInsightKind | null;
-    readonly label: string;
+    readonly __typename: "ArtistInsight";
   }>;
   readonly internalID: string;
   readonly meta: {
@@ -43,7 +39,6 @@ export type ArtistOverviewRoute_artist$data = {
   readonly showsConnection: {
     readonly totalCount: number | null;
   } | null;
-  readonly slug: string;
   readonly " $fragmentType": "ArtistOverviewRoute_artist";
 };
 export type ArtistOverviewRoute_artist$key = {
@@ -60,21 +55,14 @@ var v0 = {
   "storageKey": null
 },
 v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "description",
-  "storageKey": null
-},
-v2 = {
   "kind": "Literal",
   "name": "first",
   "value": 0
 },
-v3 = [
-  (v2/*: any*/)
+v2 = [
+  (v1/*: any*/)
 ],
-v4 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -89,6 +77,14 @@ return {
   "metadata": null,
   "name": "ArtistOverviewRoute_artist",
   "selections": [
+    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": [
@@ -141,22 +137,7 @@ return {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "entities",
-          "storageKey": null
-        },
-        (v1/*: any*/),
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "label",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "kind",
+          "name": "__typename",
           "storageKey": null
         }
       ],
@@ -164,28 +145,28 @@ return {
     },
     {
       "alias": null,
-      "args": (v3/*: any*/),
+      "args": (v2/*: any*/),
       "concreteType": "ArtistSeriesConnection",
       "kind": "LinkedField",
       "name": "artistSeriesConnection",
       "plural": false,
-      "selections": (v4/*: any*/),
+      "selections": (v3/*: any*/),
       "storageKey": "artistSeriesConnection(first:0)"
     },
     {
       "alias": null,
-      "args": (v3/*: any*/),
+      "args": (v2/*: any*/),
       "concreteType": "ArticleConnection",
       "kind": "LinkedField",
       "name": "articlesConnection",
       "plural": false,
-      "selections": (v4/*: any*/),
+      "selections": (v3/*: any*/),
       "storageKey": "articlesConnection(first:0)"
     },
     {
       "alias": null,
       "args": [
-        (v2/*: any*/),
+        (v1/*: any*/),
         {
           "kind": "Literal",
           "name": "status",
@@ -196,22 +177,8 @@ return {
       "kind": "LinkedField",
       "name": "showsConnection",
       "plural": false,
-      "selections": (v4/*: any*/),
+      "selections": (v3/*: any*/),
       "storageKey": "showsConnection(first:0,status:\"running\")"
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
     },
     {
       "alias": null,
@@ -227,7 +194,13 @@ return {
       "name": "meta",
       "plural": false,
       "selections": [
-        (v1/*: any*/),
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "description",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -255,14 +228,13 @@ return {
         }
       ],
       "storageKey": null
-    },
-    (v0/*: any*/)
+    }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 })();
 
-(node as any).hash = "b536bfed50c7135ffa5efd9d3003970b";
+(node as any).hash = "ccb37a4453e34d899487a888b2fcf573";
 
 export default node;

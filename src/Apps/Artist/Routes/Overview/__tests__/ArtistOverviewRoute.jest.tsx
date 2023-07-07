@@ -6,6 +6,7 @@ import { ArtistOverviewRouteFragmentContainer } from "Apps/Artist/Routes/Overvie
 jest.unmock("react-relay")
 jest.mock("react-head", () => ({
   Title: () => null,
+  Meta: () => null,
 }))
 
 const { renderWithRelay } = setupTestWrapperTL({
@@ -101,7 +102,9 @@ describe("ArtistOverviewRoute", () => {
     })
 
     expect(
-      screen.getByText("There is no overview for this artist at this time.")
+      screen.getByText(
+        "We‘ll update this page when more information is available."
+      )
     ).toBeInTheDocument()
   })
 })

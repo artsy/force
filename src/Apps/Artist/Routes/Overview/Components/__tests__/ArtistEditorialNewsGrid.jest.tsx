@@ -56,29 +56,19 @@ describe("ArtistEditorialNewsGrid", () => {
     it("tracks item clicks", () => {
       const wrapper = getWrapper({
         Artist: () => ({
-          name: "Test Artist",
-          articlesConnection: {
-            edges: [
-              {
-                node: {
-                  internalID: "<Article-mock-id-1>",
-                  href: "/article/test-article",
-                  title: "Test Article",
-                  publishedAt: "Jun 1, 2023",
-                },
-              },
-            ],
-          },
+          internalID: "example-artist-id",
+          slug: "example-artist-slug",
         }),
       })
 
       wrapper.find("RouterLink").last().simulate("click")
+
       expect(trackEvent).toBeCalledWith({
         action: "clickedArticleGroup",
         context_module: "marketNews",
-        context_page_owner_id: "<Article-mock-id-1>",
-        context_page_owner_slug: '<mock-value-for-field-"slug">',
-        context_page_owner_type: "home",
+        context_page_owner_id: "example-artist-id",
+        context_page_owner_slug: "example-artist-slug",
+        context_page_owner_type: "artist",
         destination_page_owner_type: "article",
         type: "thumbnail",
       })
@@ -86,11 +76,13 @@ describe("ArtistEditorialNewsGrid", () => {
 
     it("tracks view all", () => {
       const wrapper = getWrapper()
+
       wrapper.find("RouterLink").first().simulate("click")
+
       expect(trackEvent).toBeCalledWith({
         action: "clickedArticleGroup",
         context_module: "marketNews",
-        context_page_owner_type: "home",
+        context_page_owner_type: "artist",
         destination_page_owner_type: "articles",
         type: "viewAll",
       })

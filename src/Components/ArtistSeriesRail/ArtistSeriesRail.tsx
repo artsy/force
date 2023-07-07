@@ -47,6 +47,8 @@ const ArtistSeriesRail: FC<ArtistSeriesProps> = ({
   return (
     <Rail
       title={title ?? "Artist Series"}
+      viewAllLabel="View All"
+      viewAllHref={`${artist.href}/series`}
       getItems={() => {
         return artistSeries.map((series, i) => {
           return (
@@ -83,6 +85,7 @@ export const ArtistSeriesRailFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistSeriesRail_artist on Artist {
+        href
         artistSeriesConnection(first: 12) {
           edges {
             node {

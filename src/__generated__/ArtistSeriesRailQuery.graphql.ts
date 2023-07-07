@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6928cef92ea6b3d1c3142937fb43fcb2>>
+ * @generated SignedSource<<4bc01e7883eff10dfca2fafa36732bd8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -79,6 +79,13 @@ return {
         "name": "artist",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "href",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": [
@@ -221,12 +228,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9af11cb02699f658c724155ea48f157b",
+    "cacheID": "b85d4401eb0600b69e16a3a6a10623c9",
     "id": null,
     "metadata": {},
     "name": "ArtistSeriesRailQuery",
     "operationKind": "query",
-    "text": "query ArtistSeriesRailQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistSeriesRail_artist\n    id\n  }\n}\n\nfragment ArtistSeriesRail_artist on Artist {\n  artistSeriesConnection(first: 12) {\n    edges {\n      node {\n        ...CellArtistSeries_artistSeries\n        internalID\n        featured\n        slug\n      }\n    }\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtistSeriesRailQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistSeriesRail_artist\n    id\n  }\n}\n\nfragment ArtistSeriesRail_artist on Artist {\n  href\n  artistSeriesConnection(first: 12) {\n    edges {\n      node {\n        ...CellArtistSeries_artistSeries\n        internalID\n        featured\n        slug\n      }\n    }\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

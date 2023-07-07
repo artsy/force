@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6bb24dbc5e4ef0f84f0d957b82b1ce2c>>
+ * @generated SignedSource<<214412ed846903ddd990617ccacc7a8f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCareerHighlightsQuery$variables = {
-  slug: string;
+  id: string;
 };
 export type ArtistCareerHighlightsQuery$data = {
   readonly artist: {
@@ -28,14 +28,14 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "slug"
+    "name": "id"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
     "name": "id",
-    "variableName": "slug"
+    "variableName": "id"
   }
 ];
 return {
@@ -82,6 +82,20 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "href",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "ArtistInsight",
             "kind": "LinkedField",
             "name": "insights",
@@ -122,27 +136,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "internalID",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -152,16 +145,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0dfd42911c6234bbe7597dabfd0e89d5",
+    "cacheID": "d9ab5e607decb9f96228dfb0103afddd",
     "id": null,
     "metadata": {},
     "name": "ArtistCareerHighlightsQuery",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlightsQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  insights {\n    entities\n    description\n    label\n    kind\n  }\n  internalID\n  name\n  slug\n}\n"
+    "text": "query ArtistCareerHighlightsQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  insights {\n    entities\n    description\n    label\n    kind\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2319fa14933077a84e1968ae3e2cbec8";
+(node as any).hash = "c1d4a0ea83ff4eb6b59d788c6c602c4e";
 
 export default node;

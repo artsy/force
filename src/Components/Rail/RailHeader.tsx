@@ -47,7 +47,7 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
   return (
     <Flex justifyContent="space-between" alignItems="center">
       <Box pr={2}>
-        <Text variant="lg-display" as="h3">
+        <Text variant="lg-display" as="h3" lineClamp={2} mr={2}>
           <RailHeaderTitle
             title={title}
             viewAllHref={viewAllHref}
@@ -59,18 +59,22 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
         </Text>
 
         {subTitle && (
-          <Box display={["none", "block"]}>
-            <Text as="h3" variant="lg-display" color="black60" lineClamp={2}>
-              {subTitle}
-            </Text>
-          </Box>
+          <Text
+            display={["none", "block"]}
+            as="h4"
+            variant="lg-display"
+            color="black60"
+            lineClamp={2}
+          >
+            {subTitle}
+          </Text>
         )}
       </Box>
 
       {showViewAll && (
         <Text
           textAlign="right"
-          variant="sm"
+          variant={["xs", "sm-display"]}
           flexShrink={0}
           as={RouterLink}
           // @ts-ignore
@@ -80,6 +84,26 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
           {viewAllLabel}
         </Text>
       )}
+    </Flex>
+  )
+}
+
+interface RailHeaderPlaceholderProps {
+  title?: string
+}
+
+export const RailHeaderPlaceholder: React.FC<RailHeaderPlaceholderProps> = ({
+  title = "Example Title",
+}) => {
+  return (
+    <Flex justifyContent="space-between" alignItems="center">
+      <SkeletonText variant="lg-display" mr={2}>
+        {title}
+      </SkeletonText>
+
+      <SkeletonText variant={["xs", "sm"]} flexShrink={0} textAlign="right">
+        View All
+      </SkeletonText>
     </Flex>
   )
 }

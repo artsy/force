@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c80316660a16daac1d452676fa0f6a76>>
+ * @generated SignedSource<<7ba8c0f5a09a07739cbb9f3361cf736f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -44,21 +44,14 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "description",
-  "storageKey": null
-},
-v4 = {
   "kind": "Literal",
   "name": "first",
   "value": 0
 },
-v5 = [
-  (v4/*: any*/)
+v4 = [
+  (v3/*: any*/)
 ],
-v6 = [
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -108,6 +101,14 @@ return {
         "name": "artist",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": [
@@ -162,22 +163,7 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
-                "name": "entities",
-                "storageKey": null
-              },
-              (v3/*: any*/),
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "label",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "kind",
+                "name": "__typename",
                 "storageKey": null
               }
             ],
@@ -185,28 +171,28 @@ return {
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v4/*: any*/),
             "concreteType": "ArtistSeriesConnection",
             "kind": "LinkedField",
             "name": "artistSeriesConnection",
             "plural": false,
-            "selections": (v6/*: any*/),
+            "selections": (v5/*: any*/),
             "storageKey": "artistSeriesConnection(first:0)"
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v4/*: any*/),
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
             "name": "articlesConnection",
             "plural": false,
-            "selections": (v6/*: any*/),
+            "selections": (v5/*: any*/),
             "storageKey": "articlesConnection(first:0)"
           },
           {
             "alias": null,
             "args": [
-              (v4/*: any*/),
+              (v3/*: any*/),
               {
                 "kind": "Literal",
                 "name": "status",
@@ -217,22 +203,8 @@ return {
             "kind": "LinkedField",
             "name": "showsConnection",
             "plural": false,
-            "selections": (v6/*: any*/),
+            "selections": (v5/*: any*/),
             "storageKey": "showsConnection(first:0,status:\"running\")"
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
           },
           {
             "alias": null,
@@ -248,7 +220,13 @@ return {
             "name": "meta",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "description",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -277,7 +255,6 @@ return {
             ],
             "storageKey": null
           },
-          (v1/*: any*/),
           (v2/*: any*/)
         ],
         "storageKey": "artist(id:\"test\")"
@@ -285,12 +262,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5e1ecdfdab6506e0b6495a5a486eec7b",
+    "cacheID": "b5342b00acde15eab2f39cc0a266a882",
     "id": null,
     "metadata": {},
     "name": "ArtistOverviewRoute_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistOverviewRoute_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  filterArtworksConnection(first: 1) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n    id\n  }\n  insights {\n    entities\n    description\n    label\n    kind\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  articlesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  slug\n  name\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  counts {\n    artworks\n  }\n  internalID\n}\n"
+    "text": "query ArtistOverviewRoute_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  internalID\n  name\n  filterArtworksConnection(first: 1) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n    id\n  }\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  articlesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  counts {\n    artworks\n  }\n}\n"
   }
 };
 })();

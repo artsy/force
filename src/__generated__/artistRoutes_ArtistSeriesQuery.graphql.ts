@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2ae5ec693a3b8fefae129d3573491d1>>
+ * @generated SignedSource<<60d7c47232ac4d9afe409a745696d5c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistCurrentShowsRailQuery$variables = {
-  id: string;
+export type artistRoutes_ArtistSeriesQuery$variables = {
+  artistID: string;
 };
-export type ArtistCurrentShowsRailQuery$data = {
+export type artistRoutes_ArtistSeriesQuery$data = {
   readonly artist: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistCurrentShowsRail_artist">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistArtistSeriesRoute_artist">;
   } | null;
 };
-export type ArtistCurrentShowsRailQuery = {
-  response: ArtistCurrentShowsRailQuery$data;
-  variables: ArtistCurrentShowsRailQuery$variables;
+export type artistRoutes_ArtistSeriesQuery = {
+  response: artistRoutes_ArtistSeriesQuery$data;
+  variables: artistRoutes_ArtistSeriesQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -28,14 +28,14 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "id"
+    "name": "artistID"
   }
 ],
 v1 = [
   {
     "kind": "Variable",
     "name": "id",
-    "variableName": "id"
+    "variableName": "artistID"
   }
 ],
 v2 = {
@@ -49,39 +49,22 @@ v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
+  "name": "slug",
   "storageKey": null
 },
 v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "title",
   "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v7 = [
-  (v6/*: any*/)
-];
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtistCurrentShowsRailQuery",
+    "name": "artistRoutes_ArtistSeriesQuery",
     "selections": [
       {
         "alias": null,
@@ -94,7 +77,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtistCurrentShowsRail_artist"
+            "name": "ArtistArtistSeriesRoute_artist"
           }
         ],
         "storageKey": null
@@ -107,7 +90,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ArtistCurrentShowsRailQuery",
+    "name": "artistRoutes_ArtistSeriesQuery",
     "selections": [
       {
         "alias": null,
@@ -118,37 +101,57 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
           (v3/*: any*/),
-          (v4/*: any*/),
-          (v5/*: any*/),
+          {
+            "alias": null,
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "page",
+                "value": "ARTIST_SERIES"
+              }
+            ],
+            "concreteType": "ArtistMeta",
+            "kind": "LinkedField",
+            "name": "meta",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "description",
+                "storageKey": null
+              },
+              (v4/*: any*/)
+            ],
+            "storageKey": "meta(page:\"ARTIST_SERIES\")"
+          },
           {
             "alias": null,
             "args": [
               {
                 "kind": "Literal",
                 "name": "first",
-                "value": 12
-              },
-              {
-                "kind": "Literal",
-                "name": "sort",
-                "value": "END_AT_ASC"
-              },
-              {
-                "kind": "Literal",
-                "name": "status",
-                "value": "running"
+                "value": 50
               }
             ],
-            "concreteType": "ShowConnection",
+            "concreteType": "ArtistSeriesConnection",
             "kind": "LinkedField",
-            "name": "showsConnection",
+            "name": "artistSeriesConnection",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "ShowEdge",
+                "concreteType": "ArtistSeriesEdge",
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
@@ -156,79 +159,18 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Show",
+                    "concreteType": "ArtistSeries",
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v2/*: any*/),
-                      (v4/*: any*/),
                       (v3/*: any*/),
-                      (v5/*: any*/),
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "startAt",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "endAt",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "isFairBooth",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "exhibitionPeriod",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "concreteType": null,
-                        "kind": "LinkedField",
-                        "name": "partner",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "__typename",
-                            "storageKey": null
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": [
-                              (v3/*: any*/)
-                            ],
-                            "type": "Partner",
-                            "abstractKey": null
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": (v7/*: any*/),
-                            "type": "Node",
-                            "abstractKey": "__isNode"
-                          },
-                          {
-                            "kind": "InlineFragment",
-                            "selections": (v7/*: any*/),
-                            "type": "ExternalPartner",
-                            "abstractKey": null
-                          }
-                        ],
+                        "name": "artworksCountMessage",
                         "storageKey": null
                       },
                       {
@@ -236,7 +178,7 @@ return {
                         "args": null,
                         "concreteType": "Image",
                         "kind": "LinkedField",
-                        "name": "coverImage",
+                        "name": "image",
                         "plural": false,
                         "selections": [
                           {
@@ -286,7 +228,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v6/*: any*/)
+                      (v2/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -294,25 +236,31 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "showsConnection(first:12,sort:\"END_AT_ASC\",status:\"running\")"
+            "storageKey": "artistSeriesConnection(first:50)"
           },
-          (v6/*: any*/)
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "47f5f01a3e625dc8fe55ecad2695bb56",
+    "cacheID": "2c4ab015d0a9457e77dd807a061b6d8b",
     "id": null,
     "metadata": {},
-    "name": "ArtistCurrentShowsRailQuery",
+    "name": "artistRoutes_ArtistSeriesQuery",
     "operationKind": "query",
-    "text": "query ArtistCurrentShowsRailQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistCurrentShowsRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentShowsRail_artist on Artist {\n  internalID\n  name\n  slug\n  href\n  showsConnection(first: 12, sort: END_AT_ASC, status: \"running\") {\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        slug\n        href\n        id\n      }\n    }\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query artistRoutes_ArtistSeriesQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistArtistSeriesRoute_artist\n    id\n  }\n}\n\nfragment ArtistArtistSeriesRoute_artist on Artist {\n  internalID\n  name\n  slug\n  meta(page: ARTIST_SERIES) {\n    description\n    title\n  }\n  artistSeriesConnection(first: 50) {\n    edges {\n      node {\n        ...CellArtistSeries_artistSeries\n        internalID\n      }\n    }\n  }\n}\n\nfragment CellArtistSeries_artistSeries on ArtistSeries {\n  slug\n  title\n  artworksCountMessage\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "572e1d6b4fe3fad623d50af752f57ca0";
+(node as any).hash = "a71a61a23e02127cc7ef04911e360bd1";
 
 export default node;

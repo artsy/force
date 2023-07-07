@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<82ed087dd2ee69a1fb6dfa39b1601d76>>
+ * @generated SignedSource<<bcf975cd8ce6c8c5ebeb122da834f595>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -54,18 +54,19 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = [
-  (v4/*: any*/)
+v6 = [
+  (v5/*: any*/)
 ],
-v6 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
 v7 = {
   "enumValues": null,
   "nullable": true,
@@ -73,6 +74,12 @@ v7 = {
   "type": "String"
 },
 v8 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v9 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -122,13 +129,14 @@ return {
           (v1/*: any*/),
           (v2/*: any*/),
           (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": [
               {
                 "kind": "Literal",
                 "name": "first",
-                "value": 5
+                "value": 12
               },
               {
                 "kind": "Literal",
@@ -165,13 +173,7 @@ return {
                       (v1/*: any*/),
                       (v3/*: any*/),
                       (v2/*: any*/),
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "href",
-                        "storageKey": null
-                      },
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -225,13 +227,13 @@ return {
                           },
                           {
                             "kind": "InlineFragment",
-                            "selections": (v5/*: any*/),
+                            "selections": (v6/*: any*/),
                             "type": "Node",
                             "abstractKey": "__isNode"
                           },
                           {
                             "kind": "InlineFragment",
-                            "selections": (v5/*: any*/),
+                            "selections": (v6/*: any*/),
                             "type": "ExternalPartner",
                             "abstractKey": null
                           }
@@ -293,7 +295,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v4/*: any*/)
+                      (v5/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -301,16 +303,16 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "showsConnection(first:5,sort:\"END_AT_ASC\",status:\"running\")"
+            "storageKey": "showsConnection(first:12,sort:\"END_AT_ASC\",status:\"running\")"
           },
-          (v4/*: any*/)
+          (v5/*: any*/)
         ],
         "storageKey": "artist(id:\"test\")"
       }
     ]
   },
   "params": {
-    "cacheID": "6ad00c81c7f180957386439f825e5849",
+    "cacheID": "9b2f49d25c2ae7d38ea2741671e143b9",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -320,8 +322,9 @@ return {
           "plural": false,
           "type": "Artist"
         },
-        "artist.id": (v6/*: any*/),
-        "artist.internalID": (v6/*: any*/),
+        "artist.href": (v7/*: any*/),
+        "artist.id": (v8/*: any*/),
+        "artist.internalID": (v8/*: any*/),
         "artist.name": (v7/*: any*/),
         "artist.showsConnection": {
           "enumValues": null,
@@ -353,13 +356,13 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "artist.showsConnection.edges.node.coverImage.cropped.src": (v8/*: any*/),
-        "artist.showsConnection.edges.node.coverImage.cropped.srcSet": (v8/*: any*/),
+        "artist.showsConnection.edges.node.coverImage.cropped.src": (v9/*: any*/),
+        "artist.showsConnection.edges.node.coverImage.cropped.srcSet": (v9/*: any*/),
         "artist.showsConnection.edges.node.endAt": (v7/*: any*/),
         "artist.showsConnection.edges.node.exhibitionPeriod": (v7/*: any*/),
         "artist.showsConnection.edges.node.href": (v7/*: any*/),
-        "artist.showsConnection.edges.node.id": (v6/*: any*/),
-        "artist.showsConnection.edges.node.internalID": (v6/*: any*/),
+        "artist.showsConnection.edges.node.id": (v8/*: any*/),
+        "artist.showsConnection.edges.node.internalID": (v8/*: any*/),
         "artist.showsConnection.edges.node.isFairBooth": {
           "enumValues": null,
           "nullable": true,
@@ -373,18 +376,18 @@ return {
           "plural": false,
           "type": "PartnerTypes"
         },
-        "artist.showsConnection.edges.node.partner.__isNode": (v8/*: any*/),
-        "artist.showsConnection.edges.node.partner.__typename": (v8/*: any*/),
-        "artist.showsConnection.edges.node.partner.id": (v6/*: any*/),
+        "artist.showsConnection.edges.node.partner.__isNode": (v9/*: any*/),
+        "artist.showsConnection.edges.node.partner.__typename": (v9/*: any*/),
+        "artist.showsConnection.edges.node.partner.id": (v8/*: any*/),
         "artist.showsConnection.edges.node.partner.name": (v7/*: any*/),
-        "artist.showsConnection.edges.node.slug": (v6/*: any*/),
+        "artist.showsConnection.edges.node.slug": (v8/*: any*/),
         "artist.showsConnection.edges.node.startAt": (v7/*: any*/),
-        "artist.slug": (v6/*: any*/)
+        "artist.slug": (v8/*: any*/)
       }
     },
     "name": "ArtistCurrentShowsRail_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCurrentShowsRail_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistCurrentShowsRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentShowsRail_artist on Artist {\n  internalID\n  name\n  slug\n  showsConnection(first: 5, sort: END_AT_ASC, status: \"running\") {\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        slug\n        href\n        id\n      }\n    }\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtistCurrentShowsRail_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistCurrentShowsRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentShowsRail_artist on Artist {\n  internalID\n  name\n  slug\n  href\n  showsConnection(first: 12, sort: END_AT_ASC, status: \"running\") {\n    edges {\n      node {\n        ...CellShow_show\n        internalID\n        slug\n        href\n        id\n      }\n    }\n  }\n}\n\nfragment CellShow_show on Show {\n  internalID\n  slug\n  name\n  href\n  startAt\n  endAt\n  isFairBooth\n  exhibitionPeriod\n  partner {\n    __typename\n    ... on Partner {\n      name\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on ExternalPartner {\n      id\n    }\n  }\n  coverImage {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

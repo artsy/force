@@ -35,14 +35,12 @@ describe("ArtistCareerHighlights", () => {
     const button = screen.getByRole("button")
     fireEvent.click(button)
 
-    expect(
-      screen.getByText("Highlights and Achievements Continued")
-    ).toBeInTheDocument()
+    expect(screen.getByText("Highlights and Achievements")).toBeInTheDocument()
     expect(
       screen.getByText("Solo show at a major institution")
     ).toBeInTheDocument()
     expect(screen.getByText("Foo Museum")).toBeInTheDocument()
-    expect(screen.getByText("View Test Artist's CV")).toBeInTheDocument()
+    expect(screen.getByText("View CV")).toBeInTheDocument()
   })
 
   it("renders multiple Career Highlights correctly", () => {
@@ -63,14 +61,12 @@ describe("ArtistCareerHighlights", () => {
     const button = screen.getByRole("button")
     fireEvent.click(button)
 
-    expect(
-      screen.getByText("Highlights and Achievements Continued")
-    ).toBeInTheDocument()
+    expect(screen.getByText("Highlights and Achievements")).toBeInTheDocument()
     expect(
       screen.getByText("Solo show at 2 major institutions")
     ).toBeInTheDocument()
-    expect(screen.getByText("Foo Museum, Bar Museum")).toBeInTheDocument()
-    expect(screen.getByText("View Test Artist's CV")).toBeInTheDocument()
+    expect(screen.getByText("Foo Museum, and Bar Museum")).toBeInTheDocument()
+    expect(screen.getByText("View CV")).toBeInTheDocument()
   })
 
   it("does not render if there are no Career Highlights", () => {
@@ -83,8 +79,8 @@ describe("ArtistCareerHighlights", () => {
     })
 
     expect(
-      screen.queryByText("Highlights and Achievements Continued")
+      screen.queryByText("Highlights and Achievements")
     ).not.toBeInTheDocument()
-    expect(screen.queryByText("View Test Artist's CV")).not.toBeInTheDocument()
+    expect(screen.queryByText("View CV")).not.toBeInTheDocument()
   })
 })

@@ -13,7 +13,6 @@ import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
-import { ArtistInsightPillsFragmentContainer } from "Apps/Artist/Components/ArtistInsights"
 import { RouterLink } from "System/Router/RouterLink"
 import { useTranslation } from "react-i18next"
 import { HeaderIcon } from "Components/HeaderIcon"
@@ -93,10 +92,6 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
           </Column>
 
           <Column span={6}>
-            <ArtistInsightPillsFragmentContainer artist={artist} />
-
-            <Spacer y={4} />
-
             {!hideBioInHeaderIfPartnerSupplied && artist.biographyBlurb?.text && (
               <>
                 <Text variant="xs" mt={[2, 0]} mb={1}>
@@ -113,6 +108,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                 <Spacer y={2} />
               </>
             )}
+
             {!hideBioInHeaderIfPartnerSupplied && (
               <>
                 <RouterLink inline to={`/artist/${artist.slug}/cv`}>
@@ -132,7 +128,6 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistHeader_artist on Artist {
-        ...ArtistInsightPills_artist
         auctionResultsConnection(
           recordsTrusted: true
           first: 1

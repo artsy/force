@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<147b61bc4549f874aa594393fe12da8b>>
+ * @generated SignedSource<<ffc6eed4557c56a190b9eee68a8ab61a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,12 +30,6 @@ var v0 = [
   }
 ],
 v1 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
-v2 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -85,6 +79,20 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "href",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "ArtistInsight",
             "kind": "LinkedField",
             "name": "insights",
@@ -125,27 +133,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "internalID",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -155,7 +142,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "11fd6e998e13fd7328675e80899fd033",
+    "cacheID": "acfe7df1995aebde0b67bd121b16ddf5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -165,14 +152,20 @@ return {
           "plural": false,
           "type": "Artist"
         },
-        "artist.id": (v1/*: any*/),
+        "artist.href": (v1/*: any*/),
+        "artist.id": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "ID"
+        },
         "artist.insights": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "ArtistInsight"
         },
-        "artist.insights.description": (v2/*: any*/),
+        "artist.insights.description": (v1/*: any*/),
         "artist.insights.entities": {
           "enumValues": null,
           "nullable": false,
@@ -204,14 +197,12 @@ return {
           "plural": false,
           "type": "String"
         },
-        "artist.internalID": (v1/*: any*/),
-        "artist.name": (v2/*: any*/),
-        "artist.slug": (v1/*: any*/)
+        "artist.name": (v1/*: any*/)
       }
     },
     "name": "ArtistCareerHighlights_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  insights {\n    entities\n    description\n    label\n    kind\n  }\n  internalID\n  name\n  slug\n}\n"
+    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  insights {\n    entities\n    description\n    label\n    kind\n  }\n}\n"
   }
 };
 })();

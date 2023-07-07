@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { ArtistHeaderFragmentContainer } from "../ArtistHeader"
+import { ArtistHeaderFragmentContainer } from "Apps/Artist/Components/ArtistHeader/ArtistHeader"
 import { useTracking } from "react-tracking"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { screen } from "@testing-library/react"
@@ -10,14 +10,6 @@ jest.mock("react-tracking")
 jest.mock("react-head", () => ({
   Link: () => null,
 }))
-
-jest.mock("Apps/Artist/Components/ArtistInsights", () => {
-  return {
-    ArtistInsightPillsFragmentContainer: () => {
-      return null
-    },
-  }
-})
 
 const mockuseTracking = useTracking as jest.Mock
 const trackingSpy = jest.fn()

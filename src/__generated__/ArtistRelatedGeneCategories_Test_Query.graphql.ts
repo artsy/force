@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<79d46998ddf4706e428560eee5e9127f>>
+ * @generated SignedSource<<c15a0be3d3970e868d9aecf0cde072a6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -125,6 +125,13 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
+                            "name": "internalID",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
                             "name": "href",
                             "storageKey": null
                           },
@@ -155,7 +162,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d80c45cc6e675eaab38dd89dfe9c7f65",
+    "cacheID": "29bb933113695f53e75561b1d9bd2c02",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -192,12 +199,13 @@ return {
         },
         "artist.related.genes.edges.node.href": (v3/*: any*/),
         "artist.related.genes.edges.node.id": (v2/*: any*/),
+        "artist.related.genes.edges.node.internalID": (v2/*: any*/),
         "artist.related.genes.edges.node.name": (v3/*: any*/)
       }
     },
     "name": "ArtistRelatedGeneCategories_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistRelatedGeneCategories_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistRelatedGeneCategories_artist\n    id\n  }\n}\n\nfragment ArtistRelatedGeneCategories_artist on Artist {\n  related {\n    genes {\n      edges {\n        node {\n          href\n          name\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistRelatedGeneCategories_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistRelatedGeneCategories_artist\n    id\n  }\n}\n\nfragment ArtistRelatedGeneCategories_artist on Artist {\n  related {\n    genes {\n      edges {\n        node {\n          internalID\n          href\n          name\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

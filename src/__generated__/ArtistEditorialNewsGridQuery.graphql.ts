@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<064be21ad7eb5fa85f0768409419b9b6>>
+ * @generated SignedSource<<7d7dde181cd132c19a3665499a54c3a3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -52,7 +52,14 @@ v3 = {
   "name": "slug",
   "storageKey": null
 },
-v4 = [
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -82,7 +89,7 @@ v4 = [
     "storageKey": null
   }
 ],
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -139,13 +146,14 @@ return {
             "storageKey": null
           },
           (v3/*: any*/),
+          (v4/*: any*/),
           {
             "alias": null,
             "args": [
               {
                 "kind": "Literal",
                 "name": "first",
-                "value": 10
+                "value": 6
               },
               {
                 "kind": "Literal",
@@ -207,13 +215,7 @@ return {
                         "name": "byline",
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "href",
-                        "storageKey": null
-                      },
+                      (v4/*: any*/),
                       {
                         "alias": null,
                         "args": [
@@ -253,7 +255,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v4/*: any*/),
+                            "selections": (v5/*: any*/),
                             "storageKey": "cropped(height:334,width:445)"
                           },
                           {
@@ -274,7 +276,7 @@ return {
                             "kind": "LinkedField",
                             "name": "cropped",
                             "plural": false,
-                            "selections": (v4/*: any*/),
+                            "selections": (v5/*: any*/),
                             "storageKey": "cropped(height:720,width:670)"
                           }
                         ],
@@ -282,7 +284,7 @@ return {
                       },
                       (v2/*: any*/),
                       (v3/*: any*/),
-                      (v5/*: any*/)
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -290,21 +292,21 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "articlesConnection(first:10,inEditorialFeed:true,sort:\"PUBLISHED_AT_DESC\")"
+            "storageKey": "articlesConnection(first:6,inEditorialFeed:true,sort:\"PUBLISHED_AT_DESC\")"
           },
-          (v5/*: any*/)
+          (v6/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "944d83190d13d380f637eee8f1a60315",
+    "cacheID": "7e7186886f5c4abacb28b024ce2eb89a",
     "id": null,
     "metadata": {},
     "name": "ArtistEditorialNewsGridQuery",
     "operationKind": "query",
-    "text": "query ArtistEditorialNewsGridQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistEditorialNewsGrid_artist\n    id\n  }\n}\n\nfragment ArtistEditorialNewsGrid_artist on Artist {\n  internalID\n  name\n  slug\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        href\n        byline\n        slug\n        title\n        publishedAt(format: \"MMM D, YYYY\")\n        vertical\n        thumbnailTitle\n        thumbnailImage {\n          large: cropped(width: 670, height: 720) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtistEditorialNewsGridQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistEditorialNewsGrid_artist\n    id\n  }\n}\n\nfragment ArtistEditorialNewsGrid_artist on Artist {\n  internalID\n  name\n  slug\n  href\n  articlesConnection(first: 6, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        href\n        byline\n        slug\n        title\n        publishedAt(format: \"MMM D, YYYY\")\n        vertical\n        thumbnailTitle\n        thumbnailImage {\n          large: cropped(width: 670, height: 720) {\n            width\n            height\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

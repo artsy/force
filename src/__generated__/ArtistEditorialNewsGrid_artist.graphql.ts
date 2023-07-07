@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f90ae89d09e541394b4d559347551ab8>>
+ * @generated SignedSource<<0607469d7af2be38213ef1d6b78fbdb6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,7 @@ export type ArtistEditorialNewsGrid_artist$data = {
       } | null;
     } | null> | null;
   } | null;
+  readonly href: string | null;
   readonly internalID: string;
   readonly name: string | null;
   readonly slug: string;
@@ -58,6 +59,13 @@ v1 = {
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
 };
 return {
   "argumentDefinitions": [],
@@ -74,13 +82,14 @@ return {
       "storageKey": null
     },
     (v1/*: any*/),
+    (v2/*: any*/),
     {
       "alias": null,
       "args": [
         {
           "kind": "Literal",
           "name": "first",
-          "value": 10
+          "value": 6
         },
         {
           "kind": "Literal",
@@ -120,13 +129,7 @@ return {
                   "name": "CellArticle_article"
                 },
                 (v0/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "href",
-                  "storageKey": null
-                },
+                (v2/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -237,7 +240,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "articlesConnection(first:10,inEditorialFeed:true,sort:\"PUBLISHED_AT_DESC\")"
+      "storageKey": "articlesConnection(first:6,inEditorialFeed:true,sort:\"PUBLISHED_AT_DESC\")"
     }
   ],
   "type": "Artist",
@@ -245,6 +248,6 @@ return {
 };
 })();
 
-(node as any).hash = "2357bc7f7758a1d78caf9ed8a8e3cd60";
+(node as any).hash = "d595312130a224034cb1731778946676";
 
 export default node;

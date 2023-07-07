@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2fbbf1206577cb8f3b610c97d7f7d87d>>
+ * @generated SignedSource<<53f9f2f3c4e99e705ca2dc3f1d01c736>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistRelatedArtistsRail_artist$data = {
-  readonly href: string | null;
-  readonly name: string | null;
   readonly related: {
     readonly artistsConnection: {
       readonly edges: ReadonlyArray<{
@@ -32,28 +30,12 @@ export type ArtistRelatedArtistsRail_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistRelatedArtistsRail_artist">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "href",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtistRelatedArtistsRail_artist",
   "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -68,7 +50,7 @@ return {
             {
               "kind": "Literal",
               "name": "first",
-              "value": 20
+              "value": 12
             },
             {
               "kind": "Literal",
@@ -116,7 +98,13 @@ return {
                       "name": "slug",
                       "storageKey": null
                     },
-                    (v0/*: any*/)
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "href",
+                      "storageKey": null
+                    }
                   ],
                   "storageKey": null
                 }
@@ -124,7 +112,7 @@ return {
               "storageKey": null
             }
           ],
-          "storageKey": "artistsConnection(first:20,kind:\"MAIN\")"
+          "storageKey": "artistsConnection(first:12,kind:\"MAIN\")"
         }
       ],
       "storageKey": null
@@ -133,8 +121,7 @@ return {
   "type": "Artist",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "4a6a762d769be3f2f6465e7c12e16269";
+(node as any).hash = "cee9c910b20208edbd1c2c1b8d1b5f75";
 
 export default node;

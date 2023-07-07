@@ -2,8 +2,10 @@ import { graphql } from "react-relay"
 import { ArtistRelatedArtistsRailFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistRelatedArtistsRail"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
+jest.mock("react-tracking")
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: ArtistRelatedArtistsRailFragmentContainer,
@@ -20,38 +22,18 @@ describe("ArtistRelatedArtistsRail", () => {
   it("renders the related artists correctly", () => {
     renderWithRelay({
       Artist: () => ({
-        related: {
-          artistsConnection: [
-            {
-              slug: "artist-1",
-              internalID: "artist-1-id",
-              href: "/artist/artist-1",
-            },
-            {
-              slug: "artist-2",
-              internalID: "artist-2-id",
-              href: "/artist/artist-2",
-            },
-            {
-              slug: "artist-3",
-              internalID: "artist-3-id",
-              href: "/artist/artist-3",
-            },
-          ],
-        },
+        name: "Example Artist",
+        formattedNationalityAndBirthday: "German, b. 1967",
       }),
     })
 
-    expect(screen.getByRole("link", { name: "Artist 1" })).toBeInTheDocument()
-    expect(screen.getByRole("link", { name: "Artist 2" })).toBeInTheDocument()
-    expect(screen.getByRole("link", { name: "Artist 3" })).toBeInTheDocument()
+    expect(screen.getByText("Example Artist")).toBeInTheDocument()
+    expect(screen.getByText("German, b. 1967")).toBeInTheDocument()
   })
 
   it("does not render if there are no related artists", () => {
     renderWithRelay({
-      Artist: () => ({
-        related: { artistsConnection: [] },
-      }),
+      Artist: () => ({ related: null }),
     })
 
     expect(screen.queryByText("Related Artists")).not.toBeInTheDocument()
@@ -59,33 +41,31 @@ describe("ArtistRelatedArtistsRail", () => {
 })
 
 describe("tracking", () => {
+  const mockUseTracking = useTracking as jest.Mock
+  const trackEvent = jest.fn()
+
+  beforeAll(() => {
+    mockUseTracking.mockImplementation(() => ({ trackEvent }))
+  })
+
   it("tracks clicks on related artists", () => {
-    const trackEvent = jest.fn()
     renderWithRelay({
       Artist: () => ({
-        related: {
-          artistsConnection: [
-            {
-              slug: "artist-1",
-              internalID: "artist-1-id",
-              href: "/artist/artist-1",
-            },
-          ],
-        },
+        href: "/artist/example-artist",
+        internalID: "exampleID",
+        slug: "example-slug",
       }),
     })
 
-    screen.getByRole("link", { name: "Artist 1" }).click()
+    screen.getByTestId("related-artist").click()
 
     expect(trackEvent).toHaveBeenCalledWith({
       action: "clickedArtistGroup",
       context_module: "relatedArtistsRail",
-      context_page_owner_id: "example",
-      context_page_owner_slug: "example",
-      context_page_owner_type: "artist",
-      destination_page_owner_id: "artist-1-id",
-      destination_page_owner_slug: "artist-1",
+      destination_page_owner_id: "exampleID",
+      destination_page_owner_slug: "example-slug",
       destination_page_owner_type: "artist",
+      horizontal_slide_position: 1,
       type: "thumbnail",
     })
   })

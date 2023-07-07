@@ -1,4 +1,4 @@
-import { Join, Spacer } from "@artsy/palette"
+import { Flex } from "@artsy/palette"
 import * as React from "react"
 import { Title, Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -11,6 +11,7 @@ import { ArtistOverviewRoute_artist$data } from "__generated__/ArtistOverviewRou
 import { ArtistEditorialNewsGridQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
 import { ArtistOverviewEmpty } from "Apps/Artist/Routes/Overview/Components/ArtistOverviewEmpty"
 import { extractNodes } from "Utils/extractNodes"
+
 interface ArtistOverviewRouteProps {
   artist: ArtistOverviewRoute_artist$data
 }
@@ -44,17 +45,22 @@ const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
       <Meta name="title" content={title} />
       <Meta name="description" content={description} />
 
-      <Join separator={<Spacer y={6} />}>
-        <ArtistCareerHighlightsQueryRenderer slug={artist.slug} />
+      <Flex flexDirection="column" gap={6}>
+        <ArtistCareerHighlightsQueryRenderer id={artist.internalID} />
+
         <ArtistSeriesRailQueryRenderer
-          id={artist.slug}
+          id={artist.internalID}
           title={`${artist.name} Series`}
         />
-        <ArtistEditorialNewsGridQueryRenderer id={artist.slug} />
-        <ArtistCurrentShowsRailQueryRenderer slug={artist.slug} />
-        <ArtistRelatedArtistsRailQueryRenderer slug={artist.slug} />
-        <ArtistRelatedGeneCategoriesQueryRenderer slug={artist.slug} />
-      </Join>
+
+        <ArtistEditorialNewsGridQueryRenderer id={artist.internalID} />
+
+        <ArtistCurrentShowsRailQueryRenderer id={artist.internalID} />
+
+        <ArtistRelatedArtistsRailQueryRenderer slug={artist.internalID} />
+
+        <ArtistRelatedGeneCategoriesQueryRenderer slug={artist.internalID} />
+      </Flex>
     </>
   )
 }
@@ -64,6 +70,8 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistOverviewRoute_artist on Artist {
+        internalID
+        name
         filterArtworksConnection(first: 1) {
           edges {
             node {
@@ -72,10 +80,7 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
           }
         }
         insights {
-          entities
-          description
-          label
-          kind
+          __typename
         }
         artistSeriesConnection(first: 0) {
           totalCount
@@ -86,8 +91,6 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
         showsConnection(first: 0, status: "running") {
           totalCount
         }
-        slug
-        name
         meta(page: ABOUT) {
           description
           title
@@ -95,7 +98,6 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
         counts {
           artworks
         }
-        internalID
       }
     `,
   }

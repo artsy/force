@@ -1,23 +1,25 @@
-import { Column, Expandable, GridColumns, Text } from "@artsy/palette"
-import * as React from "react"
+import {
+  Box,
+  Column,
+  Expandable,
+  GridColumns,
+  SkeletonText,
+  Text,
+} from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCareerHighlights_artist$data } from "__generated__/ArtistCareerHighlights_artist.graphql"
 import { ArtistCareerHighlightsQuery } from "__generated__/ArtistCareerHighlightsQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useSystemContext } from "System/useSystemContext"
-import { ArtistInsightAchievementsPlaceholder } from "Apps/Artist/Components/ArtistInsights/ArtistInsightAchievements"
-import { RouterLink } from "System/Router/RouterLink"
-// import { useTranslation } from "react-i18next"
+import { FC } from "react"
+import { RailHeader } from "Components/Rail/RailHeader"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist$data
 }
 
-const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
+const ArtistCareerHighlights: FC<ArtistCareerHighlightsProps> = ({
   artist,
 }) => {
-  // const { t } = useTranslation()
-
   const insights = artist.insights
   const hasCareerHighlights = insights.length > 0
 
@@ -25,38 +27,47 @@ const ArtistCareerHighlights: React.FC<ArtistCareerHighlightsProps> = ({
     return null
   }
 
+  const numOfColumns = insights.length > 4 ? 2 : 1
+  const mid = Math.ceil(insights.length / 2)
+  const columns =
+    numOfColumns === 2
+      ? [insights.slice(0, mid), insights.slice(mid, insights.length)]
+      : [insights]
+
   return (
-    <>
-      <GridColumns gridRowGap={2} gridColumnGap={[0, 4]}>
-        <Column span={6}>
-          <Text variant="lg" color="black100">
-            Highlights and Achievements Continued
-          </Text>
-        </Column>
-        {hasCareerHighlights && (
-          <Column span={4} start={8}>
-            {insights.slice(0, 6).map((insight, index) => {
-              return (
-                <Expandable
-                  key={insight.kind ?? index}
-                  label={insight.label}
-                  pb={1}
-                >
-                  <Text variant="xs">
-                    {insight.entities.length > 0
-                      ? insight.entities.join(", ")
-                      : insight.description}
-                  </Text>
-                </Expandable>
-              )
-            })}
-            <RouterLink inline to={`/artist/${artist.slug}/cv`}>
-              View {artist.name}'s CV
-            </RouterLink>
-          </Column>
-        )}
+    <Box display="flex" gap={4} flexDirection="column">
+      <RailHeader
+        title="Highlights and Achievements"
+        viewAllHref={`${artist.href}/cv`}
+        viewAllLabel="View CV"
+      />
+
+      <GridColumns gridRowGap={0}>
+        {columns.map((column, index) => {
+          return (
+            <Column span={6} key={index}>
+              {column.map((insight, index) => {
+                return (
+                  <Expandable
+                    key={insight.kind ?? index}
+                    label={insight.label}
+                    pb={1}
+                  >
+                    <Text variant="xs">
+                      {insight.entities.length > 0
+                        ? insight.entities
+                            .join(", ")
+                            .replace(/,\s([^,]+)$/, ", and $1")
+                        : insight.description}
+                    </Text>
+                  </Expandable>
+                )
+              })}
+            </Column>
+          )
+        })}
       </GridColumns>
-    </>
+    </Box>
   )
 }
 
@@ -65,42 +76,61 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
   {
     artist: graphql`
       fragment ArtistCareerHighlights_artist on Artist {
+        name
+        href
         insights {
           entities
           description
           label
           kind
         }
-        internalID
-        name
-        slug
       }
     `,
   }
 )
 
 const PLACEHOLDER = (
-  <GridColumns gridRowGap={4}>
-    <Column span={6}>
-      <ArtistInsightAchievementsPlaceholder />
-    </Column>
-  </GridColumns>
+  <Box display="flex" gap={4} flexDirection="column">
+    <RailHeaderPlaceholder title="Highlights and Achievements" />
+
+    <GridColumns gridRowGap={0}>
+      {[...new Array(2)].map((_, i) => {
+        return (
+          <Column span={6} key={i}>
+            {[...new Array(5)].map((_, j) => {
+              return (
+                <Expandable
+                  key={[i, j].join("-")}
+                  label={
+                    <SkeletonText variant="sm-display">
+                      Example Label
+                    </SkeletonText>
+                  }
+                  pb={1}
+                  disabled
+                >
+                  <></>
+                </Expandable>
+              )
+            })}
+          </Column>
+        )
+      })}
+    </GridColumns>
+  </Box>
 )
 
-export const ArtistCareerHighlightsQueryRenderer: React.FC<{
-  slug: string
-}> = ({ slug }) => {
-  const { relayEnvironment } = useSystemContext()
-
+export const ArtistCareerHighlightsQueryRenderer: FC<{
+  id: string
+}> = ({ id }) => {
   return (
     <SystemQueryRenderer<ArtistCareerHighlightsQuery>
       lazyLoad
-      environment={relayEnvironment}
-      variables={{ slug }}
+      variables={{ id }}
       placeholder={PLACEHOLDER}
       query={graphql`
-        query ArtistCareerHighlightsQuery($slug: String!) {
-          artist(id: $slug) {
+        query ArtistCareerHighlightsQuery($id: String!) {
+          artist(id: $id) {
             ...ArtistCareerHighlights_artist
           }
         }

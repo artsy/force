@@ -1,5 +1,12 @@
-import { Box, Pill, PillProps, Spacer, Text } from "@artsy/palette"
-import { FC } from "react"
+import {
+  Box,
+  Flex,
+  HorizontalOverflow,
+  Pill,
+  Spacer,
+  Text,
+} from "@artsy/palette"
+import { FC, useMemo } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -7,6 +14,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
 import { ArtistRelatedGeneCategories_artist$data } from "__generated__/ArtistRelatedGeneCategories_artist.graphql"
 import { ArtistRelatedGeneCategoriesQuery } from "__generated__/ArtistRelatedGeneCategoriesQuery.graphql"
+import { Media } from "Utils/Responsive"
 
 interface ArtistRelatedGeneCategoriesProps {
   artist: ArtistRelatedGeneCategories_artist$data
@@ -15,32 +23,42 @@ interface ArtistRelatedGeneCategoriesProps {
 const ArtistRelatedGeneCategories: FC<ArtistRelatedGeneCategoriesProps> = ({
   artist,
 }) => {
-  const categories = extractNodes(artist.related?.genes)
+  const genes = extractNodes(artist.related?.genes)
 
-  if (categories.length === 0) return null
+  const pills = useMemo(
+    () => (
+      <Flex flexWrap="wrap" gap={1} width={[1000, "auto"]}>
+        {genes.map(gene => {
+          return (
+            <Pill
+              key={gene.internalID}
+              as={RouterLink}
+              // @ts-ignore
+              to={gene.href}
+            >
+              {gene.name}
+            </Pill>
+          )
+        })}
+      </Flex>
+    ),
+    [genes]
+  )
+
+  if (genes.length === 0) return null
 
   return (
-    <>
+    <Box>
       <Text variant="lg-display">Related Categories</Text>
 
       <Spacer y={4} />
 
-      <Box mb={-1}>
-        {categories.map(category => {
-          const props = {
-            as: RouterLink,
-            to: category.href,
-            key: category.name,
-          } as PillProps
+      <Media at="xs">
+        <HorizontalOverflow>{pills}</HorizontalOverflow>
+      </Media>
 
-          return (
-            <Pill mr={1} mb={1} {...props}>
-              {category.name}
-            </Pill>
-          )
-        })}
-      </Box>
-    </>
+      <Media greaterThan="xs">{pills}</Media>
+    </Box>
   )
 }
 
@@ -53,6 +71,7 @@ export const ArtistRelatedGeneCategoriesFragmentContainer = createFragmentContai
           genes {
             edges {
               node {
+                internalID
                 href
                 name
               }

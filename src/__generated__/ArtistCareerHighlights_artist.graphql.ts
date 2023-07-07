@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<018c0bf01571b65c9193730fbfe6bcce>>
+ * @generated SignedSource<<236d866f451b385ee3b341fbe78b3f1d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,15 +12,14 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "ARTSY_VANGUARD_YEAR" | "AWARDS" | "BIENNIAL" | "COLLECTED" | "CRITICALLY_ACCLAIMED" | "GROUP_SHOW" | "HIGH_AUCTION_RECORD" | "PRIVATE_COLLECTIONS" | "RESIDENCIES" | "REVIEWED" | "SOLO_SHOW" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCareerHighlights_artist$data = {
+  readonly href: string | null;
   readonly insights: ReadonlyArray<{
     readonly description: string | null;
     readonly entities: ReadonlyArray<string>;
     readonly kind: ArtistInsightKind | null;
     readonly label: string;
   }>;
-  readonly internalID: string;
   readonly name: string | null;
-  readonly slug: string;
   readonly " $fragmentType": "ArtistCareerHighlights_artist";
 };
 export type ArtistCareerHighlights_artist$key = {
@@ -34,6 +33,20 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "ArtistCareerHighlights_artist",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "href",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -72,33 +85,12 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "ad42b24b9a9c39db08641161b9860a65";
+(node as any).hash = "de8b00eed45022db246e87871996035e";
 
 export default node;
