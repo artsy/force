@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<324d2f722a0e8f59c0875220e9b08622>>
+ * @generated SignedSource<<618c19dfbcb50276e84890deb72aa9ba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,10 @@ export type ArtistSeriesRail_artist$data = {
   readonly artistSeriesConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
+        readonly featured: boolean;
         readonly internalID: string;
-        readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesItem_artistSeries">;
+        readonly slug: string;
+        readonly " $fragmentSpreads": FragmentRefs<"CellArtistSeries_artistSeries">;
       } | null;
     } | null> | null;
   } | null;
@@ -38,7 +40,7 @@ const node: ReaderFragment = {
         {
           "kind": "Literal",
           "name": "first",
-          "value": 50
+          "value": 12
         }
       ],
       "concreteType": "ArtistSeriesConnection",
@@ -63,6 +65,11 @@ const node: ReaderFragment = {
               "plural": false,
               "selections": [
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "CellArtistSeries_artistSeries"
+                },
+                {
                   "alias": null,
                   "args": null,
                   "kind": "ScalarField",
@@ -70,9 +77,18 @@ const node: ReaderFragment = {
                   "storageKey": null
                 },
                 {
+                  "alias": null,
                   "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "ArtistSeriesItem_artistSeries"
+                  "kind": "ScalarField",
+                  "name": "featured",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "slug",
+                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -81,13 +97,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "artistSeriesConnection(first:50)"
+      "storageKey": "artistSeriesConnection(first:12)"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "f41faa52602d290ce693d20ece2885a7";
+(node as any).hash = "a453a8a4f93b9d52a4ae0474e3bc87fa";
 
 export default node;

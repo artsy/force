@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a77c2b5fb9d3ca4d1742f772cfa2d443>>
+ * @generated SignedSource<<a0f826a8f88a8e7bb29ba16f3a0a0c13>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,15 +28,7 @@ export type OtherWorks_artwork$data = {
     readonly ctaTitle: string | null;
     readonly title: string | null;
   } | null> | null;
-  readonly internalID: string;
-  readonly sale: {
-    readonly is_closed: boolean | null;
-  } | null;
-  readonly seriesArtist: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesRail_artist">;
-  } | null;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesArtworkRail_artwork">;
   readonly " $fragmentType": "OtherWorks_artwork";
 };
 export type OtherWorks_artwork$key = {
@@ -149,37 +141,7 @@ return {
       ],
       "storageKey": "contextGrids(includeRelatedArtworks:false)"
     },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistSeriesArtworkRail_artwork"
-    },
     (v1/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Sale",
-      "kind": "LinkedField",
-      "name": "sale",
-      "plural": false,
-      "selections": [
-        {
-          "alias": "is_closed",
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isClosed",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -191,28 +153,6 @@ return {
         (v0/*: any*/)
       ],
       "storageKey": null
-    },
-    {
-      "alias": "seriesArtist",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "shallow",
-          "value": true
-        }
-      ],
-      "concreteType": "Artist",
-      "kind": "LinkedField",
-      "name": "artist",
-      "plural": false,
-      "selections": [
-        {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArtistSeriesRail_artist"
-        }
-      ],
-      "storageKey": "artist(shallow:true)"
     }
   ],
   "type": "Artwork",
@@ -220,6 +160,6 @@ return {
 };
 })();
 
-(node as any).hash = "0efdf87b1d36ab162d432a06d0283ef2";
+(node as any).hash = "dbc77ea065b65ce50d176f210a11be0c";
 
 export default node;
