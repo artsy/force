@@ -29,6 +29,7 @@ import { reportPerformanceMeasurement } from "./utils/reportPerformanceMeasureme
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 import { getLabel } from "./utils/getLabel"
 import { ActionType } from "@artsy/cohesion"
+import { NewSearchBarFooter } from "Components/Search/NewSearch/NewSearchBarFooter"
 
 const logger = createLogger("Components/Search/NewSearchBar")
 
@@ -48,25 +49,23 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
   const options = extractNodes(viewer.searchConnection)
-  const formattedOptions: SuggestionItemOptionProps[] = options.map(
-    (option) => {
-      return {
-        text: option.displayLabel!,
-        value: option.displayLabel!,
-        subtitle:
-          getLabel({
-            displayType: option.displayType ?? "",
-            typename: option.__typename,
-          }) ?? "",
-        imageUrl: option.imageUrl!,
-        showArtworksButton: !!option.statuses?.artworks,
-        showAuctionResultsButton: !!option.statuses?.auctionLots,
-        href: option.href!,
-        typename: option.__typename,
-      }
+  const formattedOptions: SuggestionItemOptionProps[] = options.map(option => {
+    return {
+      text: option.displayLabel!,
+      value: option.displayLabel!,
+      subtitle:
+        getLabel({
+          displayType: option.displayType ?? "",
+          typename: option.__typename,
+        }) ?? "",
+      imageUrl: option.imageUrl!,
+      showArtworksButton: !!option.statuses?.artworks,
+      showAuctionResultsButton: !!option.statuses?.auctionLots,
+      href: option.href!,
+      typename: option.__typename,
     }
-  )
-  
+  })
+
   useUpdateEffect(() => {
     tracking.trackEvent({
       action_type:
@@ -191,7 +190,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
           <NewSearchBarFooter
             query={value}
             href={encodedSearchURL}
-            index={options.length}
             selectedPill={selectedPill}
             onClick={onClose}
           />
