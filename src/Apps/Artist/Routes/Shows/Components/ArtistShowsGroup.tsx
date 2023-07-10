@@ -22,6 +22,7 @@ const ArtistShowsGroup: React.FC<ArtistShowsGroupProps> = ({
   relay,
   sort,
   status,
+  title,
 }) => {
   const [isLoading, setIsLoading] = useState(false)
 
@@ -54,7 +55,7 @@ const ArtistShowsGroup: React.FC<ArtistShowsGroupProps> = ({
 
   return (
     <>
-      <Text variant="xl">Upcoming Shows</Text>
+      <Text variant="xl">{title}</Text>
 
       <Spacer y={6} />
 
