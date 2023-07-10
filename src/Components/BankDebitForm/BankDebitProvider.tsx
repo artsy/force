@@ -83,7 +83,6 @@ export const BankDebitProvider: FC<Props> = ({ order, onError }) => {
 
   const appearance: Appearance = {
     theme: "stripe",
-    labels: "floating",
     variables: {
       colorPrimary: THEME.colors.black100,
       colorBackground: THEME.colors.white100,
