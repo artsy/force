@@ -21,10 +21,7 @@ import {
   CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-import {
-  getInitialPaymentMethodValue,
-  getInitialBankAccountSelection,
-} from "Apps/Order/Utils/orderUtils"
+import { getInitialPaymentMethodValue } from "Apps/Order/Utils/orderUtils"
 import { useStripePaymentBySetupIntentId } from "Apps/Order/Hooks/useStripePaymentBySetupIntentId"
 import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
@@ -82,7 +79,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const CreditCardPicker = createRef<CreditCardPicker>()
 
   const {
-    bankAccountSelection,
     selectedBankAccountId,
     selectedPaymentMethod,
     balanceCheckComplete,
@@ -100,21 +96,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     selectedPaymentMethod === "US_BANK_ACCOUNT"
 
   const artworkVersion = extractNodes(order.lineItems)[0]?.artworkVersion
-
-  useEffect(() => {
-    if (!bankAccountSelection && selectedPaymentMethod) {
-      const bankAccountsArray =
-        selectedPaymentMethod !== "SEPA_DEBIT"
-          ? extractNodes(me.bankAccounts)
-          : []
-
-      setBankAccountSelection(
-        getInitialBankAccountSelection(order, bankAccountsArray)
-      )
-    }
-
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [bankAccountSelection, selectedPaymentMethod])
 
   useEffect(() => {
     const bankAccountsArray =

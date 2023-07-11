@@ -1,4 +1,4 @@
-import { FC } from "react"
+import { FC, useEffect } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { StripeError } from "@stripe/stripe-js"
 
@@ -27,10 +27,7 @@ interface Props {
 }
 
 export const BankAccountPicker: FC<Props> = props => {
-  const {
-    me: { bankAccounts },
-    order,
-  } = props
+  const { me, order } = props
 
   const {
     bankAccountSelection,
@@ -45,7 +42,7 @@ export const BankAccountPicker: FC<Props> = props => {
 
   const bankAccountsArray: BankAccountRecord[] =
     selectedPaymentMethod === "US_BANK_ACCOUNT"
-      ? extractNodes(bankAccounts)
+      ? extractNodes(me.bankAccounts)
       : []
 
   if (order?.paymentMethodDetails?.internalID) {
@@ -61,6 +58,64 @@ export const BankAccountPicker: FC<Props> = props => {
   }
 
   const { submitMutation: setPaymentMutation } = useSetPayment()
+
+  /**
+   * This hook is responsible for setting the bankAccountSelection state
+   * properties that are used by this component to display an appropriate
+   * payment details section to users.
+   */
+  useEffect(() => {
+    if (bankAccountSelection) {
+      /**
+       * If a selection has been made once, do not repeat this hook unless that
+       * selection is cleared.
+       */
+      return
+    } else if (
+      selectedPaymentMethod === "US_BANK_ACCOUNT" &&
+      order.bankAccountId
+    ) {
+      /**
+       * If an ACH debit account has been saved to the order, indicate that it
+       * should be selected. This happens when the user returns to the Payment
+       * step after having completed it before.
+       */
+      setBankAccountSelection({
+        type: "existing",
+        id: order.bankAccountId,
+      })
+    } else if (
+      selectedPaymentMethod === "US_BANK_ACCOUNT" &&
+      bankAccountsArray.length > 0
+    ) {
+      /**
+       * If the user has one or more ACH debit accounts, indicate that the first
+       * one in the list should be selected. This happens the first time that a
+       * user is performing the Payment step for an order.
+       */
+      setBankAccountSelection({
+        type: "existing",
+        id: bankAccountsArray[0]?.internalID!,
+      })
+    } else if (
+      selectedPaymentMethod === "US_BANK_ACCOUNT" ||
+      selectedPaymentMethod === "SEPA_DEBIT"
+    ) {
+      /**
+       * If the user doesn't have any ACH debit accounts, or is paying with a
+       * SEPA debit account, indicate that a form should be displayed. This
+       * happens the first time that a user is performing the Payment step for
+       * an order.
+       */
+      setBankAccountSelection({ type: "new" })
+    }
+  }, [
+    bankAccountsArray,
+    bankAccountSelection,
+    order.bankAccountId,
+    selectedPaymentMethod,
+    setBankAccountSelection,
+  ])
 
   const handleContinue = async () => {
     setBalanceCheckComplete(false)
