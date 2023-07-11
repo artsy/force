@@ -19,6 +19,8 @@ import {
   CountrySelect,
   ALL_COUNTRY_SELECT_OPTIONS,
 } from "Components/CountrySelect"
+import { Environment, fetchQuery, graphql } from "relay-runtime"
+import { useSystemContext } from "System/useSystemContext"
 
 export interface Address {
   name: string
@@ -84,6 +86,8 @@ export const CheckoutAddress: FC<{
   >(AddressSuggestionRadioButton.recommended)
   const [addressLines, setAddressLines] = useState<string[]>([])
 
+  const { relayEnvironment } = useSystemContext()
+
   const handleKeepAddressClick = () => {
     // re-submit address
   }
@@ -97,8 +101,49 @@ export const CheckoutAddress: FC<{
     // submit suggested address
   }
 
-  const handleFormSubmit = async (address: Address) => {
-    const { firstLine, secondLine } = formatAddress(address)
+  const handleFormSubmit = async ({ name, ...address }: Address) => {
+    const response = await fetchQuery<any>(
+      relayEnvironment as Environment,
+      graphql`
+        query CheckoutAddressQuery($address: AddressInput!) {
+          verifyAddress(address: $address) {
+            inputAddress {
+              lines
+              address {
+                addressLine1
+                addressLine2
+                city
+                country
+                postalCode
+                region
+              }
+            }
+            suggestedAddresses {
+              lines
+              address {
+                addressLine1
+                addressLine2
+                city
+                country
+                postalCode
+                region
+              }
+            }
+            verificationStatus
+          }
+        }
+      `,
+      {
+        address,
+      },
+      {
+        fetchPolicy: "network-only",
+      }
+    ).toPromise()
+
+    console.log({ response })
+
+    const { firstLine, secondLine } = formatAddress({ name, ...address })
     setAddressLines([firstLine, secondLine])
 
     const res = await mockRequest()
