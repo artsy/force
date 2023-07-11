@@ -1,13 +1,15 @@
 import { Box, Flex, SkeletonText, Sup, Text as BaseText } from "@artsy/palette"
 import * as React from "react"
 import { RouterLink } from "System/Router/RouterLink"
+import { useRouter } from "System/Router/useRouter"
+import { getENV } from "Utils/getENV"
 
 export interface RailHeaderProps {
   countLabel?: number
   isLoading?: boolean
   title: string
   subTitle?: string
-  viewAllHref?: string
+  viewAllHref?: string | null
   viewAllLabel?: string
   viewAllOnClick?(event: React.MouseEvent<HTMLElement, MouseEvent>): void
 }
@@ -36,13 +38,15 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
   isLoading = false,
   title,
   subTitle,
-  viewAllHref,
+  viewAllHref: _viewAllHref,
   viewAllLabel,
   viewAllOnClick = () => null,
 }) => {
-  const showViewAll = Boolean(viewAllLabel && viewAllHref)
-
   const Text = isLoading ? SkeletonText : BaseText
+
+  const showViewAll = Boolean(viewAllLabel && _viewAllHref)
+
+  const viewAllHref = useReturnTo(_viewAllHref)
 
   return (
     <Flex justifyContent="space-between" alignItems="center">
@@ -88,22 +92,21 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
   )
 }
 
-interface RailHeaderPlaceholderProps {
-  title?: string
-}
+const useReturnTo = (href?: string | null): string | null => {
+  const router = useRouter()
 
-export const RailHeaderPlaceholder: React.FC<RailHeaderPlaceholderProps> = ({
-  title = "Example Title",
-}) => {
-  return (
-    <Flex justifyContent="space-between" alignItems="center">
-      <SkeletonText variant="lg-display" mr={2}>
-        {title}
-      </SkeletonText>
+  if (!href) return null
 
-      <SkeletonText variant={["xs", "sm"]} flexShrink={0} textAlign="right">
-        View All
-      </SkeletonText>
-    </Flex>
-  )
+  const referrer = router.match?.location?.pathname
+
+  if (!referrer) return href
+
+  try {
+    const withReferrer = new URL(href, getENV("APP_URL"))
+    withReferrer.searchParams.append("returnTo", referrer)
+
+    return withReferrer.toString()
+  } catch {
+    return href
+  }
 }

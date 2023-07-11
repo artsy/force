@@ -91,7 +91,12 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
 
 const PLACEHOLDER = (
   <Box display="flex" gap={4} flexDirection="column">
-    <RailHeaderPlaceholder title="Highlights and Achievements" />
+    <RailHeader
+      title="Highlights and Achievements"
+      viewAllHref="#"
+      viewAllLabel="View CV"
+      isLoading
+    />
 
     <GridColumns gridRowGap={0}>
       {[...new Array(2)].map((_, i) => {

@@ -4,6 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { ArtistBackLink_artist$data } from "__generated__/ArtistBackLink_artist.graphql"
 import { TopContextBar } from "Components/TopContextBar"
+import { useRouter } from "System/Router/useRouter"
 
 interface ArtistBackLinkProps {
   artist: ArtistBackLink_artist$data
@@ -12,14 +13,20 @@ interface ArtistBackLinkProps {
 const ArtistBackLink: React.FC<ArtistBackLinkProps> = ({ artist }) => {
   const { trackEvent } = useTracking()
 
+  const router = useRouter()
+
+  const returnTo = router.match?.location?.query?.returnTo
+
+  const href = returnTo || artist.href
+
   return (
     <TopContextBar
-      href={artist.href}
+      href={href}
       displayBackArrow
       onClick={() => {
         trackEvent({
           action_type: DeprecatedAnalyticsSchema.ActionType.Click,
-          destination_path: artist.href,
+          destination_path: href,
           subject: "Back to artist link",
         })
       }}
