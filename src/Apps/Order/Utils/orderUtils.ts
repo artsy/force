@@ -1,4 +1,3 @@
-import { BankAccountSelection } from "Apps/Order/Routes/Payment"
 import {
   CommercePaymentMethodEnum,
   Payment_order$data,
@@ -36,22 +35,3 @@ export const getInitialPaymentMethodValue = ({
     : initialPaymentMethods.find(method =>
         availablePaymentMethods.includes(method)
       )!
-
-export const getInitialBankAccountSelection = (
-  { bankAccountId },
-  bankAccountsArray
-): BankAccountSelection => {
-  if (bankAccountId) {
-    return {
-      type: "existing",
-      id: bankAccountId,
-    }
-  } else {
-    return bankAccountsArray.length > 0
-      ? {
-          type: "existing",
-          id: bankAccountsArray[0]?.internalID!,
-        }
-      : { type: "new" }
-  }
-}
