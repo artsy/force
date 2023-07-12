@@ -84,7 +84,10 @@ export const CheckoutAddress: FC<{
   const [selectedAddress, setSelectedAddress] = useState<
     AddressSuggestionRadioButton
   >(AddressSuggestionRadioButton.recommended)
-  const [addressLines, setAddressLines] = useState<string[]>([])
+  const [inputAddressLines, setInpuAddressLines] = useState<string[]>([])
+  const [suggestedAddressLines, setSuggestedAddressLines] = useState<string[]>(
+    []
+  )
 
   const { relayEnvironment } = useSystemContext()
 
@@ -135,32 +138,28 @@ export const CheckoutAddress: FC<{
       `,
       {
         address,
-      },
-      {
-        fetchPolicy: "network-only",
       }
     ).toPromise()
 
     console.log({ response })
 
-    const { firstLine, secondLine } = formatAddress({ name, ...address })
-    setAddressLines([firstLine, secondLine])
+    const status = response.verifyAddress?.verificationStatus
 
-    const res = await mockRequest()
-
-    switch (res) {
-      case 0:
-        setModalTitle(ErrorModalTitle.general)
-        setDisplayModal(true)
-        break
-      case 1:
-        setModalTitle(ErrorModalTitle.suggested)
-        setDisplayModal(true)
-        break
-      case 2:
-        break
-      default:
-        break
+    if (status === "VERIFIED_NO_CHANGE") {
+      // TODO: update order and proceed to payment step
+      return
+    } else if (status === "VERIFIED_WITH_CHANGES") {
+      setInpuAddressLines(response.verifyAddress.inputAddress.lines)
+      setSuggestedAddressLines(
+        // TODO: there can be more than one?
+        response.verifyAddress.suggestedAddresses[0].lines
+      )
+      setModalTitle(ErrorModalTitle.suggested)
+      setDisplayModal(true)
+    } else {
+      setInpuAddressLines(response.verifyAddress.inputAddress.lines)
+      setModalTitle(ErrorModalTitle.general)
+      setDisplayModal(true)
     }
   }
 
@@ -208,7 +207,7 @@ export const CheckoutAddress: FC<{
                     <Text fontWeight="bold">What you entered</Text>
                     <Spacer y={1} />
                     <Box border="1px solid" borderColor="black30" p={2}>
-                      {addressLines.map((line: string) => (
+                      {inputAddressLines.map((line: string) => (
                         <Text key={line}>{line}</Text>
                       ))}
                     </Box>
@@ -249,7 +248,7 @@ export const CheckoutAddress: FC<{
                         label={AddressSuggestionRadioButton.recommended}
                       >
                         <Flex flexDirection="column">
-                          {addressLines.map((line: string) => (
+                          {suggestedAddressLines.map((line: string) => (
                             <Text variant="xs" key={line}>
                               {line}
                             </Text>
@@ -261,7 +260,7 @@ export const CheckoutAddress: FC<{
                         label={AddressSuggestionRadioButton.user_address}
                       >
                         <Flex flexDirection="column">
-                          {addressLines.map((line: string) => (
+                          {inputAddressLines.map((line: string) => (
                             <Text variant="xs" key={line}>
                               {line}
                             </Text>
@@ -438,39 +437,4 @@ const getCountryNameOrCode = (userCountry: string, code: boolean): string => {
     country => country.value === userCountry
   )?.text
   return countryName || "United States"
-}
-
-// formats address into 2 lines
-const formatAddress = (
-  address: Address
-): { firstLine: string; secondLine: string } => {
-  let firstLine = address.addressLine1
-  let secondLine = address.city
-
-  if (address.addressLine2) {
-    firstLine = `${firstLine}, ${address.addressLine2}`
-  }
-
-  if (address.region) {
-    secondLine = `${secondLine}, ${address.region}`
-  }
-
-  secondLine = `${secondLine}, ${address.postalCode}, ${getCountryNameOrCode(
-    address.country,
-    false
-  )}`
-
-  return {
-    firstLine,
-    secondLine,
-  }
-}
-
-// TODO: to be deleted
-function mockRequest(): Promise<any> {
-  return new Promise(resolve =>
-    setTimeout(() => {
-      resolve(Math.floor(Math.random() * 3))
-    }, 300)
-  )
 }
