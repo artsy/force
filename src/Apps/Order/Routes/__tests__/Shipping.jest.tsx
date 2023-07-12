@@ -1425,12 +1425,13 @@ describe("Shipping", () => {
             )
           })
 
-          it("submit button enabled if shipping quote is selected", () => {
+          it("submit button enabled if shipping quote is selected", async () => {
             const wrapper = getWrapper({
               CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
               Me: () => testMe,
             })
             const page = new ShippingTestPage(wrapper)
+            await page.update()
 
             page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
 
