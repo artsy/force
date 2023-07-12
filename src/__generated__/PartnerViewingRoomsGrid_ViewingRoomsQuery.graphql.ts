@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<88cfff71467efeac25181c7d53665333>>
+ * @generated SignedSource<<e3ad55e5f493588f480cddd658c8140e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,19 +10,21 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomsPaginatedQuery$variables = {
+export type ViewingRoomStatusEnum = "closed" | "draft" | "live" | "scheduled" | "%future added value";
+export type PartnerViewingRoomsGrid_ViewingRoomsQuery$variables = {
   after?: string | null;
-  first?: number | null;
+  count: number;
   partnerId: string;
+  statuses?: ReadonlyArray<ViewingRoomStatusEnum> | null;
 };
-export type ViewingRoomsPaginatedQuery$data = {
-  readonly partner: {
-    readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsPaginated_partner">;
+export type PartnerViewingRoomsGrid_ViewingRoomsQuery$data = {
+  readonly viewingRoomsConnection: {
+    readonly " $fragmentSpreads": FragmentRefs<"PartnerViewingRoomsGrid_viewingRoomsConnection">;
   } | null;
 };
-export type ViewingRoomsPaginatedQuery = {
-  response: ViewingRoomsPaginatedQuery$data;
-  variables: ViewingRoomsPaginatedQuery$variables;
+export type PartnerViewingRoomsGrid_ViewingRoomsQuery = {
+  response: PartnerViewingRoomsGrid_ViewingRoomsQuery$data;
+  variables: PartnerViewingRoomsGrid_ViewingRoomsQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -34,69 +36,59 @@ var v0 = {
 v1 = {
   "defaultValue": null,
   "kind": "LocalArgument",
-  "name": "first"
+  "name": "count"
 },
 v2 = {
   "defaultValue": null,
   "kind": "LocalArgument",
   "name": "partnerId"
 },
-v3 = [
+v3 = {
+  "defaultValue": null,
+  "kind": "LocalArgument",
+  "name": "statuses"
+},
+v4 = [
   {
     "kind": "Variable",
     "name": "id",
     "variableName": "partnerId"
   }
 ],
-v4 = {
+v5 = {
   "kind": "Variable",
   "name": "after",
   "variableName": "after"
 },
-v5 = {
-  "kind": "Variable",
-  "name": "first",
-  "variableName": "first"
-},
 v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "cursor",
-  "storageKey": null
+  "kind": "Variable",
+  "name": "statuses",
+  "variableName": "statuses"
 },
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "page",
-  "storageKey": null
-},
-v8 = [
-  (v6/*: any*/),
-  (v7/*: any*/),
+v7 = [
+  (v5/*: any*/),
   {
-    "alias": null,
-    "args": null,
-    "kind": "ScalarField",
-    "name": "isCurrent",
-    "storageKey": null
-  }
+    "kind": "Variable",
+    "name": "first",
+    "variableName": "count"
+  },
+  (v6/*: any*/)
 ];
 return {
   "fragment": {
     "argumentDefinitions": [
       (v0/*: any*/),
       (v1/*: any*/),
-      (v2/*: any*/)
+      (v2/*: any*/),
+      (v3/*: any*/)
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ViewingRoomsPaginatedQuery",
+    "name": "PartnerViewingRoomsGrid_ViewingRoomsQuery",
     "selections": [
       {
-        "alias": null,
-        "args": (v3/*: any*/),
+        "alias": "viewingRoomsConnection",
+        "args": (v4/*: any*/),
         "concreteType": "Partner",
         "kind": "LinkedField",
         "name": "partner",
@@ -104,11 +96,16 @@ return {
         "selections": [
           {
             "args": [
-              (v4/*: any*/),
-              (v5/*: any*/)
+              (v5/*: any*/),
+              {
+                "kind": "Variable",
+                "name": "count",
+                "variableName": "count"
+              },
+              (v6/*: any*/)
             ],
             "kind": "FragmentSpread",
-            "name": "ViewingRoomsPaginated_partner"
+            "name": "PartnerViewingRoomsGrid_viewingRoomsConnection"
           }
         ],
         "storageKey": null
@@ -120,16 +117,17 @@ return {
   "kind": "Request",
   "operation": {
     "argumentDefinitions": [
-      (v2/*: any*/),
       (v1/*: any*/),
-      (v0/*: any*/)
+      (v0/*: any*/),
+      (v2/*: any*/),
+      (v3/*: any*/)
     ],
     "kind": "Operation",
-    "name": "ViewingRoomsPaginatedQuery",
+    "name": "PartnerViewingRoomsGrid_ViewingRoomsQuery",
     "selections": [
       {
-        "alias": null,
-        "args": (v3/*: any*/),
+        "alias": "viewingRoomsConnection",
+        "args": (v4/*: any*/),
         "concreteType": "Partner",
         "kind": "LinkedField",
         "name": "partner",
@@ -137,108 +135,12 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "slug",
-            "storageKey": null
-          },
-          {
-            "alias": "viewingRoomsList",
-            "args": [
-              (v4/*: any*/),
-              (v5/*: any*/),
-              {
-                "kind": "Literal",
-                "name": "statuses",
-                "value": [
-                  "closed"
-                ]
-              }
-            ],
+            "args": (v7/*: any*/),
             "concreteType": "ViewingRoomsConnection",
             "kind": "LinkedField",
             "name": "viewingRoomsConnection",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "PageInfo",
-                "kind": "LinkedField",
-                "name": "pageInfo",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "hasNextPage",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "endCursor",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "PageCursors",
-                "kind": "LinkedField",
-                "name": "pageCursors",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PageCursor",
-                    "kind": "LinkedField",
-                    "name": "around",
-                    "plural": true,
-                    "selections": (v8/*: any*/),
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PageCursor",
-                    "kind": "LinkedField",
-                    "name": "first",
-                    "plural": false,
-                    "selections": (v8/*: any*/),
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PageCursor",
-                    "kind": "LinkedField",
-                    "name": "last",
-                    "plural": false,
-                    "selections": (v8/*: any*/),
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "PageCursor",
-                    "kind": "LinkedField",
-                    "name": "previous",
-                    "plural": false,
-                    "selections": [
-                      (v6/*: any*/),
-                      (v7/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
               {
                 "alias": null,
                 "args": null,
@@ -325,8 +227,47 @@ return {
                           }
                         ],
                         "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "__typename",
+                        "storageKey": null
                       }
                     ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "cursor",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "PageInfo",
+                "kind": "LinkedField",
+                "name": "pageInfo",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "endCursor",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "hasNextPage",
                     "storageKey": null
                   }
                 ],
@@ -334,6 +275,17 @@ return {
               }
             ],
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": (v7/*: any*/),
+            "filters": [
+              "statuses"
+            ],
+            "handle": "connection",
+            "key": "PartnerViewingRoomsGrid_viewingRoomsConnection",
+            "kind": "LinkedHandle",
+            "name": "viewingRoomsConnection"
           },
           {
             "alias": null,
@@ -348,16 +300,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a0ab718a6e7eeea3eb53090209aaf30d",
+    "cacheID": "06ea61921141f612b554fa240fe63043",
     "id": null,
     "metadata": {},
-    "name": "ViewingRoomsPaginatedQuery",
+    "name": "PartnerViewingRoomsGrid_ViewingRoomsQuery",
     "operationKind": "query",
-    "text": "query ViewingRoomsPaginatedQuery(\n  $partnerId: String!\n  $first: Int\n  $after: String\n) {\n  partner(id: $partnerId) @principalField {\n    ...ViewingRoomsPaginated_partner_2HEEH6\n    id\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n\nfragment ViewingRoomCard_viewingRoom on ViewingRoom {\n  href\n  title\n  exhibitionPeriod\n  coverImage: image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n\nfragment ViewingRoomsPaginated_partner_2HEEH6 on Partner {\n  slug\n  viewingRoomsList: viewingRoomsConnection(first: $first, after: $after, statuses: [closed]) {\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      ...ViewingRooms_edges\n    }\n  }\n}\n\nfragment ViewingRooms_edges on ViewingRoomsEdge {\n  node {\n    internalID\n    ...ViewingRoomCard_viewingRoom\n  }\n}\n"
+    "text": "query PartnerViewingRoomsGrid_ViewingRoomsQuery(\n  $count: Int!\n  $after: String\n  $partnerId: String!\n  $statuses: [ViewingRoomStatusEnum!]\n) {\n  viewingRoomsConnection: partner(id: $partnerId) {\n    ...PartnerViewingRoomsGrid_viewingRoomsConnection_2E6mFi\n    id\n  }\n}\n\nfragment PartnerViewingRoomsGrid_viewingRoomsConnection_2E6mFi on Partner {\n  viewingRoomsConnection(first: $count, after: $after, statuses: $statuses) {\n    edges {\n      node {\n        internalID\n        ...ViewingRoomCard_viewingRoom\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ViewingRoomCard_viewingRoom on ViewingRoom {\n  href\n  title\n  exhibitionPeriod\n  coverImage: image {\n    imageURLs {\n      normalized\n    }\n    width\n    height\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "44f0a0b7293606faa1c016328edd9f28";
+(node as any).hash = "05e30cf5b6888332e23d6c570f258530";
 
 export default node;

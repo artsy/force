@@ -35,10 +35,14 @@ const ShowsRoute = loadable(
   }
 )
 
-const ViewinRoomsRoute = loadable(
-  () => import(/* webpackChunkName: "partnerBundle" */ "./Routes/ViewingRooms"),
+const ViewingRoomsRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "partnerBundle" */ "./Routes/PartnerViewingRooms"
+    ),
   {
-    resolveComponent: component => component.ViewingRoomFragmentContainer,
+    resolveComponent: component =>
+      component.PartnerViewingRoomsFragmentContainer,
   }
 )
 
@@ -170,30 +174,23 @@ export const partnerRoutes: AppRouteConfig[] = [
       },
       {
         path: "viewing-rooms",
-        getComponent: () => ViewinRoomsRoute,
+        getComponent: () => ViewingRoomsRoute,
         onClientSideRender: () => {
-          ViewinRoomsRoute.preload()
+          ViewingRoomsRoute.preload()
         },
         query: graphql`
           query partnerRoutes_ViewingRoomsQuery($partnerId: String!) {
-            partner(id: $partnerId) @principalField {
-              ...ViewingRooms_partner
+            currentViewingRooms: partner(id: $partnerId) @principalField {
+              ...PartnerViewingRooms_currentViewingRooms
+            }
+            upcomingViewingRooms: partner(id: $partnerId) {
+              ...PartnerViewingRooms_upcomingViewingRooms
+            }
+            pastViewingRooms: partner(id: $partnerId) {
+              ...PartnerViewingRooms_pastViewingRooms
             }
           }
         `,
-        render: ({ Component, props, match }) => {
-          if (!(Component && props)) {
-            return
-          }
-
-          const { partner } = props as any
-
-          if (!partner) {
-            return
-          }
-
-          return <Component {...props} />
-        },
       },
       {
         path: "works",
