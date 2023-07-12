@@ -7,6 +7,7 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
 import { ArtworkActionsSaveButtonV2_artwork$data } from "__generated__/ArtworkActionsSaveButtonV2_artwork.graphql"
+import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 
 const logger = createLogger("ArtworkActionsSaveButtonV2")
 
@@ -18,7 +19,7 @@ export const ArtworkActionsSaveButtonV2: FC<ArtworkActionsSaveButtonV2Props> = (
   artwork,
 }) => {
   const { isAuction, isClosed } = artwork.sale ?? {}
-  const isOpenSale = isAuction && !isClosed
+  const isOpenOrUpcomingSale = isAuction && !isClosed
   const customListsCount = artwork.customCollections?.totalCount ?? 0
   const isSavedToCustomLists = customListsCount > 0
 
@@ -37,6 +38,12 @@ export const ArtworkActionsSaveButtonV2: FC<ArtworkActionsSaveButtonV2Props> = (
     },
   })
 
+  const { handleSave: saveToDefaultCollection } = useSaveArtwork({
+    isSaved: !!artwork.isSaved,
+    artwork,
+    contextModule: ContextModule.artworkImage,
+  })
+
   const handleSave = async () => {
     try {
       await saveArtworkToLists()
@@ -45,12 +52,20 @@ export const ArtworkActionsSaveButtonV2: FC<ArtworkActionsSaveButtonV2Props> = (
     }
   }
 
-  if (isOpenSale) {
+  const handleSaveArtworkInAuction = async () => {
+    try {
+      await saveToDefaultCollection()
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
+  if (isOpenOrUpcomingSale) {
     return (
       <ArtworkActionsWatchLotButtonFragmentContainer
-        isSaved={isSaved}
+        isSaved={!!artwork.isSaved}
         artwork={artwork}
-        onClick={handleSave}
+        onClick={handleSaveArtworkInAuction}
         canShowRegistrationPopover={!isSavedToCustomLists}
       />
     )

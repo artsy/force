@@ -23,7 +23,7 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   })
 
   const { isAuction, isClosed } = artwork.sale ?? {}
-  const isOpenSale = isAuction && !isClosed
+  const isOpenOrUpcomingSale = isAuction && !isClosed
   const isSaved = !!artwork.isSaved
 
   if (isArtworksListEnabled) {
@@ -35,7 +35,7 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   }
 
   // If an Auction, use Bell (for notifications); if a standard artwork use Heart
-  if (isOpenSale) {
+  if (isOpenOrUpcomingSale) {
     return (
       <ArtworkActionsWatchLotButtonFragmentContainer
         isSaved={isSaved}
