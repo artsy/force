@@ -1,67 +1,98 @@
-import { Box } from "@artsy/palette"
-import * as React from "react"
+import { Box, Skeleton } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtistSeriesRail_artist$data } from "__generated__/ArtistSeriesRail_artist.graphql"
-import { ArtistSeriesItemFragmentContainer as ArtistSeriesItem } from "./ArtistSeriesItem"
-import { ContextModule } from "@artsy/cohesion"
+import {
+  ActionType,
+  ClickedArtistSeriesGroup,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
-import { SpaceProps } from "styled-system"
 import { Rail } from "Components/Rail/Rail"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { ArtistSeriesRail_artist$data } from "__generated__/ArtistSeriesRail_artist.graphql"
+import { ArtistSeriesRailQuery } from "__generated__/ArtistSeriesRailQuery.graphql"
+import {
+  CellArtistSeriesFragmentContainer,
+  CellArtistSeriesPlaceholder,
+} from "Components/Cells/CellArtistSeries"
+import { FC } from "react"
+import { useTracking } from "react-tracking"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
-interface Props extends SpaceProps {
+interface ArtistSeriesProps {
   artist: ArtistSeriesRail_artist$data
-  showProgress?: boolean
-  title?: string
   contextModule: ContextModule
+  title?: string
 }
 
-const ArtistSeriesRail: React.FC<Props> = ({
+const ArtistSeriesRail: FC<ArtistSeriesProps> = ({
   artist,
   contextModule,
-  showProgress = false,
   title,
-  ...rest
 }) => {
+  const { trackEvent } = useTracking()
+
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
+
   if (!artist) return null
 
-  const { artistSeriesConnection } = artist
-  const series = extractNodes(artistSeriesConnection)
+  const artistSeries = extractNodes(artist.artistSeriesConnection)
 
-  if (series.length === 0) {
-    return null
-  }
+  if (artistSeries.length === 0) return null
 
   return (
-    <Box {...rest}>
-      <Rail
-        title={title ?? "Artist Series"}
-        getItems={() => {
-          return series.map((node, index) => {
-            return (
-              <ArtistSeriesItem
-                key={node.internalID}
-                artistSeries={node}
-                index={index}
-                contextModule={contextModule}
-              />
-            )
-          })
-        }}
-      />
-    </Box>
+    <Rail
+      title={title ?? "Artist Series"}
+      viewAllLabel="View All"
+      viewAllHref={`${artist.href}/series`}
+      getItems={() => {
+        return artistSeries.map((series, i) => {
+          return (
+            <CellArtistSeriesFragmentContainer
+              key={series.internalID}
+              artistSeries={series}
+              onClick={() => {
+                const payload: ClickedArtistSeriesGroup = {
+                  action: ActionType.clickedArtistSeriesGroup,
+                  context_module: contextModule,
+                  context_page_owner_id: contextPageOwnerId,
+                  context_page_owner_slug: contextPageOwnerSlug,
+                  context_page_owner_type: contextPageOwnerType!,
+                  curation_boost: series.featured,
+                  destination_page_owner_id: series.internalID,
+                  destination_page_owner_slug: series.slug,
+                  destination_page_owner_type: OwnerType.artistSeries,
+                  horizontal_slide_position: i,
+                  type: "thumbnail",
+                }
+
+                trackEvent(payload)
+              }}
+            />
+          )
+        })
+      }}
+    />
   )
 }
 
 export const ArtistSeriesRailFragmentContainer = createFragmentContainer(
-  ArtistSeriesRail as React.FC<Props>,
+  ArtistSeriesRail,
   {
     artist: graphql`
       fragment ArtistSeriesRail_artist on Artist {
-        artistSeriesConnection(first: 50) {
+        href
+        artistSeriesConnection(first: 12) {
           edges {
             node {
+              ...CellArtistSeries_artistSeries
               internalID
-              ...ArtistSeriesItem_artistSeries
+              featured
+              slug
             }
           }
         }
@@ -69,3 +100,58 @@ export const ArtistSeriesRailFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const ArtistSeriesRailPlaceholder = () => {
+  return (
+    <Skeleton>
+      <Rail
+        title="Artist Series"
+        getItems={() => {
+          return [...new Array(12)].map((_, i) => {
+            return <CellArtistSeriesPlaceholder key={i} />
+          })
+        }}
+      />
+    </Skeleton>
+  )
+}
+
+export const ArtistSeriesRailQueryRenderer: FC<{
+  id: string
+  title?: string
+}> = ({ id, title }) => {
+  return (
+    <Box data-test="ArtistSeriesRailQueryRenderer">
+      <SystemQueryRenderer<ArtistSeriesRailQuery>
+        lazyLoad
+        variables={{ id }}
+        placeholder={<ArtistSeriesRailPlaceholder />}
+        query={graphql`
+          query ArtistSeriesRailQuery($id: String!) {
+            artist(id: $id) {
+              ...ArtistSeriesRail_artist
+            }
+          }
+        `}
+        render={({ error, props }) => {
+          if (error) {
+            console.error(error)
+            return null
+          }
+
+          if (!props?.artist) {
+            return <ArtistSeriesRailPlaceholder />
+          }
+
+          return (
+            <ArtistSeriesRailFragmentContainer
+              artist={props.artist}
+              title={title}
+              contextModule={ContextModule.artistSeriesRail}
+            />
+          )
+        }}
+      />
+    </Box>
+  )
+}

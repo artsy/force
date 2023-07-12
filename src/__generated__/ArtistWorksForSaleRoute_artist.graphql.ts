@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<beab591c0c80d6e3093c8048f02d808c>>
+ * @generated SignedSource<<45bc33f60ed76c7801322dd11201b231>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,16 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistWorksForSaleRoute_artist$data = {
-  readonly counts: {
-    readonly forSaleArtworks: any | null;
-  } | null;
-  readonly id: string;
-  readonly internalID: string;
   readonly meta: {
     readonly description: string;
     readonly title: string;
   };
-  readonly name: string | null;
   readonly sidebarAggregations: {
     readonly aggregations: ReadonlyArray<{
       readonly counts: ReadonlyArray<{
@@ -32,8 +26,7 @@ export type ArtistWorksForSaleRoute_artist$data = {
       readonly slice: ArtworkAggregation | null;
     } | null> | null;
   } | null;
-  readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistArtworkFilter_artist" | "ArtistSeriesRail_artist">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistArtworkFilter_artist">;
   readonly " $fragmentType": "ArtistWorksForSaleRoute_artist";
 };
 export type ArtistWorksForSaleRoute_artist$key = {
@@ -41,15 +34,7 @@ export type ArtistWorksForSaleRoute_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistWorksForSaleRoute_artist">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -67,11 +52,6 @@ return {
   "name": "ArtistWorksForSaleRoute_artist",
   "selections": [
     {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistSeriesRail_artist"
-    },
-    {
       "args": [
         {
           "kind": "Variable",
@@ -81,6 +61,37 @@ return {
       ],
       "kind": "FragmentSpread",
       "name": "ArtistArtworkFilter_artist"
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "page",
+          "value": "ARTWORKS"
+        }
+      ],
+      "concreteType": "ArtistMeta",
+      "kind": "LinkedField",
+      "name": "meta",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "description",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "title",
+          "storageKey": null
+        }
+      ],
+      "storageKey": "meta(page:\"ARTWORKS\")"
     },
     {
       "alias": "sidebarAggregations",
@@ -124,7 +135,13 @@ return {
               "name": "counts",
               "plural": true,
               "selections": [
-                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "name",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -147,84 +164,12 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "ArtistCounts",
-      "kind": "LinkedField",
-      "name": "counts",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "forSaleArtworks",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "page",
-          "value": "ARTWORKS"
-        }
-      ],
-      "concreteType": "ArtistMeta",
-      "kind": "LinkedField",
-      "name": "meta",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "description",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "title",
-          "storageKey": null
-        }
-      ],
-      "storageKey": "meta(page:\"ARTWORKS\")"
-    },
-    (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "id",
-      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "5bada67b9f5bd3c64345c30a0de97c74";
+(node as any).hash = "b8a57579ab43aa43785b25f0338d3e32";
 
 export default node;

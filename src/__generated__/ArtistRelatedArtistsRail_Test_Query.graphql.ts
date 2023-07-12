@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fed2117f1196296cf95ec90cffb170c1>>
+ * @generated SignedSource<<f9c115edc08ec51c72a0e7c9b6b59d2b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,35 +10,26 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistRelatedArtistsRailQuery$variables = {
-  slug: string;
-};
-export type ArtistRelatedArtistsRailQuery$data = {
+export type ArtistRelatedArtistsRail_Test_Query$variables = {};
+export type ArtistRelatedArtistsRail_Test_Query$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistRelatedArtistsRail_artist">;
   } | null;
 };
-export type ArtistRelatedArtistsRailQuery = {
-  response: ArtistRelatedArtistsRailQuery$data;
-  variables: ArtistRelatedArtistsRailQuery$variables;
+export type ArtistRelatedArtistsRail_Test_Query = {
+  response: ArtistRelatedArtistsRail_Test_Query$data;
+  variables: ArtistRelatedArtistsRail_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "slug"
+    "kind": "Literal",
+    "name": "id",
+    "value": "example"
   }
 ],
 v1 = [
-  {
-    "kind": "Variable",
-    "name": "id",
-    "variableName": "slug"
-  }
-],
-v2 = [
   {
     "alias": null,
     "args": null,
@@ -54,23 +45,65 @@ v2 = [
     "storageKey": null
   }
 ],
-v3 = {
+v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
+},
+v3 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Artist"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "ID"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Image"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v7 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v8 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "FormattedNumber"
+},
+v9 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtistRelatedArtistsRailQuery",
+    "name": "ArtistRelatedArtistsRail_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -82,7 +115,7 @@ return {
             "name": "ArtistRelatedArtistsRail_artist"
           }
         ],
-        "storageKey": null
+        "storageKey": "artist(id:\"example\")"
       }
     ],
     "type": "Query",
@@ -90,13 +123,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ArtistRelatedArtistsRailQuery",
+    "name": "ArtistRelatedArtistsRail_Test_Query",
     "selections": [
       {
         "alias": null,
-        "args": (v1/*: any*/),
+        "args": (v0/*: any*/),
         "concreteType": "Artist",
         "kind": "LinkedField",
         "name": "artist",
@@ -238,7 +271,7 @@ return {
                                 "kind": "LinkedField",
                                 "name": "cropped",
                                 "plural": false,
-                                "selections": (v2/*: any*/),
+                                "selections": (v1/*: any*/),
                                 "storageKey": "cropped(height:45,width:45)"
                               }
                             ],
@@ -278,13 +311,13 @@ return {
                                 "kind": "LinkedField",
                                 "name": "cropped",
                                 "plural": false,
-                                "selections": (v2/*: any*/),
+                                "selections": (v1/*: any*/),
                                 "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
                               }
                             ],
                             "storageKey": null
                           },
-                          (v3/*: any*/)
+                          (v2/*: any*/)
                         ],
                         "storageKey": null
                       }
@@ -297,23 +330,70 @@ return {
             ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          (v2/*: any*/)
         ],
-        "storageKey": null
+        "storageKey": "artist(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "0cf4ade26026b70fc705529dd076e0f7",
+    "cacheID": "9164775b8d3d1965c2c2894a509fe300",
     "id": null,
-    "metadata": {},
-    "name": "ArtistRelatedArtistsRailQuery",
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "artist": (v3/*: any*/),
+        "artist.id": (v4/*: any*/),
+        "artist.related": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistRelatedData"
+        },
+        "artist.related.artistsConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistConnection"
+        },
+        "artist.related.artistsConnection.edges": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "ArtistEdge"
+        },
+        "artist.related.artistsConnection.edges.node": (v3/*: any*/),
+        "artist.related.artistsConnection.edges.node.avatar": (v5/*: any*/),
+        "artist.related.artistsConnection.edges.node.avatar.cropped": (v6/*: any*/),
+        "artist.related.artistsConnection.edges.node.avatar.cropped.src": (v7/*: any*/),
+        "artist.related.artistsConnection.edges.node.avatar.cropped.srcSet": (v7/*: any*/),
+        "artist.related.artistsConnection.edges.node.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtistCounts"
+        },
+        "artist.related.artistsConnection.edges.node.counts.artworks": (v8/*: any*/),
+        "artist.related.artistsConnection.edges.node.counts.forSaleArtworks": (v8/*: any*/),
+        "artist.related.artistsConnection.edges.node.formattedNationalityAndBirthday": (v9/*: any*/),
+        "artist.related.artistsConnection.edges.node.href": (v9/*: any*/),
+        "artist.related.artistsConnection.edges.node.id": (v4/*: any*/),
+        "artist.related.artistsConnection.edges.node.image": (v5/*: any*/),
+        "artist.related.artistsConnection.edges.node.image.cropped": (v6/*: any*/),
+        "artist.related.artistsConnection.edges.node.image.cropped.src": (v7/*: any*/),
+        "artist.related.artistsConnection.edges.node.image.cropped.srcSet": (v7/*: any*/),
+        "artist.related.artistsConnection.edges.node.initials": (v9/*: any*/),
+        "artist.related.artistsConnection.edges.node.internalID": (v4/*: any*/),
+        "artist.related.artistsConnection.edges.node.name": (v9/*: any*/),
+        "artist.related.artistsConnection.edges.node.slug": (v4/*: any*/)
+      }
+    },
+    "name": "ArtistRelatedArtistsRail_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistRelatedArtistsRailQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistRelatedArtistsRail_artist\n    id\n  }\n}\n\nfragment ArtistRelatedArtistsRail_artist on Artist {\n  related {\n    artistsConnection(kind: MAIN, first: 12) {\n      edges {\n        node {\n          ...CellArtist_artist\n          internalID\n          slug\n          href\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtistRelatedArtistsRail_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistRelatedArtistsRail_artist\n    id\n  }\n}\n\nfragment ArtistRelatedArtistsRail_artist on Artist {\n  related {\n    artistsConnection(kind: MAIN, first: 12) {\n      edges {\n        node {\n          ...CellArtist_artist\n          internalID\n          slug\n          href\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b1c36c43ce75912bdf69405f7b37dd92";
+(node as any).hash = "a4a0d231e365bb8aca42d64279498a4d";
 
 export default node;

@@ -58,6 +58,17 @@ const ArticlesRoute = loadable(
   }
 )
 
+const ArtistSeriesRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "artistBundle" */ "./Routes/ArtistSeries/ArtistArtistSeriesRoute"
+    ),
+  {
+    resolveComponent: component =>
+      component.ArtistArtistSeriesRouteFragmentContainer,
+  }
+)
+
 const ShowsRoute = loadable(
   () =>
     import(
@@ -271,6 +282,20 @@ export const artistRoutes: AppRouteConfig[] = [
           query artistRoutes_CVQuery($artistID: String!) {
             viewer {
               ...ArtistCVRoute_viewer
+            }
+          }
+        `,
+      },
+      {
+        path: "series",
+        getComponent: () => ArtistSeriesRoute,
+        onClientSideRender: () => {
+          ArtistSeriesRoute.preload()
+        },
+        query: graphql`
+          query artistRoutes_ArtistSeriesQuery($artistID: String!) {
+            artist(id: $artistID) {
+              ...ArtistArtistSeriesRoute_artist
             }
           }
         `,

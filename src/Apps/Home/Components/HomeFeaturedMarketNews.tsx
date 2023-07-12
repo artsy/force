@@ -125,10 +125,12 @@ const HomeFeaturedMarketNewsContainer: React.FC = ({ children }) => {
   return (
     <>
       <Flex justifyContent="space-between" alignItems="center">
-        <Text variant="xl">Artsy Editorial</Text>
+        <Text variant={["lg-display", "xl"]} mr={2}>
+          Artsy Editorial
+        </Text>
 
         <Text
-          variant="sm-display"
+          variant={["xs", "sm-display"]}
           textAlign="right"
           as={RouterLink}
           // @ts-ignore

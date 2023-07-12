@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<487851853a7a34b295ef0fe92fe6ebf0>>
+ * @generated SignedSource<<59e5c7ffeac49aa64e88bb1418aa9c78>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type ArtistRelatedGeneCategories_artist$data = {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly href: string | null;
+          readonly internalID: string;
           readonly name: string | null;
         } | null;
       } | null> | null;
@@ -70,6 +71,13 @@ const node: ReaderFragment = {
                       "alias": null,
                       "args": null,
                       "kind": "ScalarField",
+                      "name": "internalID",
+                      "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
                       "name": "href",
                       "storageKey": null
                     },
@@ -97,6 +105,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "9bceff0b831e055c43a3aa8fc66d1754";
+(node as any).hash = "2235934d04ddf5351c90209d23d6a2f5";
 
 export default node;

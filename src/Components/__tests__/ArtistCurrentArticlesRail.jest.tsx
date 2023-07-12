@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { ArtistCurrentArticlesRailFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCurrentArticlesRail"
+import { ArtistCurrentArticlesRailFragmentContainer } from "Components/ArtistCurrentArticlesRail"
 import { ArtistCurrentArticlesRail_Test_Query } from "__generated__/ArtistCurrentArticlesRail_Test_Query.graphql"
 import { useTracking } from "react-tracking"
 

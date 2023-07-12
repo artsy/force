@@ -65,7 +65,7 @@ const CellShow: FC<CellShowProps> = ({
         </Text>
 
         {displayPartner && show.partner && (
-          <Text variant="sm" color="black60" lineClamp={1}>
+          <Text variant="sm" lineClamp={1}>
             {show.partner.name}
           </Text>
         )}

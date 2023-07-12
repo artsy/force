@@ -37,6 +37,6 @@ describe("ArtistGenes", () => {
     })
 
     expect(screen.getByText("Related Categories")).toBeInTheDocument()
-    expect(screen.getByText("example")).toBeInTheDocument()
+    expect(screen.queryAllByText("example")[0]).toBeInTheDocument()
   })
 })

@@ -9,23 +9,28 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
-import { CellSale_sale$data } from "__generated__/CellSale_sale.graphql"
+import { CellArtistSeries_artistSeries$data } from "__generated__/CellArtistSeries_artistSeries.graphql"
 import { DEFAULT_CELL_WIDTH } from "./constants"
 import { FC } from "react"
 
-export interface CellSaleProps extends Omit<RouterLinkProps, "to"> {
-  sale: CellSale_sale$data
+export interface CellArtistSeriesProps extends Omit<RouterLinkProps, "to"> {
+  artistSeries: CellArtistSeries_artistSeries$data
   /** Defaults to `"RAIL"` */
   mode?: "GRID" | "RAIL"
 }
 
-const CellSale: FC<CellSaleProps> = ({ sale, mode = "RAIL", ...rest }) => {
+const CellArtistSeries: FC<CellArtistSeriesProps> = ({
+  artistSeries,
+  mode = "RAIL",
+  ...rest
+}) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
-  const image = sale.coverImage?.cropped
+
+  const image = artistSeries.image?.cropped
 
   return (
     <RouterLink
-      to={sale.href}
+      to={`/artist-series/${artistSeries.slug}`}
       display="block"
       textDecoration="none"
       width={width}
@@ -56,15 +61,16 @@ const CellSale: FC<CellSaleProps> = ({ sale, mode = "RAIL", ...rest }) => {
 
       <Spacer y={0.5} />
 
-      <Text variant="sm-display">{sale.name}</Text>
+      <Text variant="sm-display">{artistSeries.title}</Text>
+
       <Text variant="sm-display" color="black60">
-        {sale.formattedStartDateTime}
+        {artistSeries.artworksCountMessage}
       </Text>
     </RouterLink>
   )
 }
 
-export const CellSalePlaceholder: FC = () => {
+export const CellArtistSeriesPlaceholder: FC = () => {
   return (
     <Box width={DEFAULT_CELL_WIDTH}>
       <ResponsiveBox aspectWidth={4} aspectHeight={3} maxWidth="100%">
@@ -73,28 +79,28 @@ export const CellSalePlaceholder: FC = () => {
 
       <Spacer y={0.5} />
 
-      <SkeletonText variant="sm-display">
-        Impact: Artists in Support of Refugees from Ukraine
-      </SkeletonText>
-      <SkeletonText variant="sm-display">
-        Ends Apr 14 at 12:00pm EDT
-      </SkeletonText>
+      <SkeletonText variant="sm-display">Example Title</SkeletonText>
+
+      <SkeletonText variant="sm-display">66 available</SkeletonText>
     </Box>
   )
 }
 
-export const CellSaleFragmentContainer = createFragmentContainer(CellSale, {
-  sale: graphql`
-    fragment CellSale_sale on Sale {
-      name
-      formattedStartDateTime
-      href
-      coverImage {
-        cropped(width: 445, height: 334, version: ["larger", "large"]) {
-          src
-          srcSet
+export const CellArtistSeriesFragmentContainer = createFragmentContainer(
+  CellArtistSeries,
+  {
+    artistSeries: graphql`
+      fragment CellArtistSeries_artistSeries on ArtistSeries {
+        slug
+        title
+        artworksCountMessage
+        image {
+          cropped(width: 445, height: 334, version: ["larger", "large"]) {
+            src
+            srcSet
+          }
         }
       }
-    }
-  `,
-})
+    `,
+  }
+)

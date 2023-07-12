@@ -10,6 +10,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { ArtworkArtistSeriesQuery } from "__generated__/ArtworkArtistSeriesQuery.graphql"
 import { useSystemContext } from "System/useSystemContext"
 import { Rail } from "Components/Rail/Rail"
+
 interface ArtworkArtistSeriesProps {
   artwork: ArtworkArtistSeries_artwork$data
 }
@@ -21,34 +22,23 @@ const ArtworkArtistSeries: React.FC<ArtworkArtistSeriesProps> = ({
   const artistArtistSeries = (artwork?.seriesArtist?.artistSeriesConnection
     ?.edges ?? [])[0]?.node
 
-  if (!artworkArtistSeries && !artistArtistSeries) {
-    return null
-  }
+  if (!artworkArtistSeries && !artistArtistSeries) return null
 
   const hasArtistSeriesArtworks =
     artworkArtistSeries?.artworksCount && artworkArtistSeries?.artworksCount > 0
 
   return (
     <>
-      {hasArtistSeriesArtworks && (
-        <>
-          <ArtistSeriesArtworkRail artwork={artwork} />
-        </>
-      )}
+      {hasArtistSeriesArtworks && <ArtistSeriesArtworkRail artwork={artwork} />}
 
       {hasArtistSeriesArtworks && !!artistArtistSeries && <Spacer y={6} />}
 
-      {!!artistArtistSeries && (
-        <>
-          {artwork.seriesArtist && (
-            <ArtistSeriesRail
-              artist={artwork.seriesArtist}
-              title="Series by this artist"
-              contextModule={ContextModule.moreSeriesByThisArtist}
-              showProgress
-            />
-          )}
-        </>
+      {!!artistArtistSeries && artwork.seriesArtist && (
+        <ArtistSeriesRail
+          artist={artwork.seriesArtist}
+          title="Series by this artist"
+          contextModule={ContextModule.moreSeriesByThisArtist}
+        />
       )}
     </>
   )
@@ -66,8 +56,8 @@ export const ArtworkArtistSeriesFragmentContainer = createFragmentContainer(
           # The below fragment is used for an exist-y check.
           # Since it repeats the 'artistSeriesConnection' selection
           # from the component that actually renders it, keep the arguments
-          # the same (first: 50).
-          artistSeriesConnection(first: 50) {
+          # the same (first: 12).
+          artistSeriesConnection(first: 12) {
             edges {
               node {
                 internalID

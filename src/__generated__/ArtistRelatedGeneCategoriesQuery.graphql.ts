@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2dbb4d4c34d37e09e4d10c4d7f453a3e>>
+ * @generated SignedSource<<40fbc270367553ed180f9d3e057e4ccb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -122,6 +122,13 @@ return {
                             "alias": null,
                             "args": null,
                             "kind": "ScalarField",
+                            "name": "internalID",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
                             "name": "href",
                             "storageKey": null
                           },
@@ -152,12 +159,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1f6f40de6a6e925c8485a749de5757a7",
+    "cacheID": "30b487f16f360d71b0dec1384a31edb9",
     "id": null,
     "metadata": {},
     "name": "ArtistRelatedGeneCategoriesQuery",
     "operationKind": "query",
-    "text": "query ArtistRelatedGeneCategoriesQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistRelatedGeneCategories_artist\n    id\n  }\n}\n\nfragment ArtistRelatedGeneCategories_artist on Artist {\n  related {\n    genes {\n      edges {\n        node {\n          href\n          name\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query ArtistRelatedGeneCategoriesQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistRelatedGeneCategories_artist\n    id\n  }\n}\n\nfragment ArtistRelatedGeneCategories_artist on Artist {\n  related {\n    genes {\n      edges {\n        node {\n          internalID\n          href\n          name\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

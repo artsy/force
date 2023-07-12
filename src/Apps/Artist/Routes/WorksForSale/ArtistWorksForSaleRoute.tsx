@@ -3,8 +3,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistArtworkFilterRefetchContainer } from "./Components/ArtistArtworkFilter"
 import { ArtistWorksForSaleRoute_artist$data } from "__generated__/ArtistWorksForSaleRoute_artist.graphql"
 import { SharedArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { ArtistSeriesRailFragmentContainer } from "Components/ArtistSeriesRail/ArtistSeriesRail"
-import { ContextModule } from "@artsy/cohesion"
 import { Title, Meta } from "react-head"
 import { useRouter } from "System/Router/useRouter"
 import { useJump } from "Utils/Hooks/useJump"
@@ -39,12 +37,6 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
       <Meta name="title" content={title} />
       <Meta name="description" content={description} />
 
-      <ArtistSeriesRailFragmentContainer
-        artist={artist}
-        contextModule={ContextModule.artistSeriesRail}
-        showProgress
-        mb={6}
-      />
       <ArtistArtworkFilterRefetchContainer
         artist={artist}
         aggregations={
@@ -65,8 +57,11 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
           aggregations: { type: "[ArtworkAggregation]" }
           input: { type: "FilterArtworksInput" }
         ) {
-        ...ArtistSeriesRail_artist
         ...ArtistArtworkFilter_artist @arguments(input: $input)
+        meta(page: ARTWORKS) {
+          description
+          title
+        }
         sidebarAggregations: filterArtworksConnection(
           aggregations: $aggregations
           first: 1
@@ -80,17 +75,6 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
             }
           }
         }
-        counts {
-          forSaleArtworks
-        }
-        meta(page: ARTWORKS) {
-          description
-          title
-        }
-        name
-        internalID
-        slug
-        id
       }
     `,
   }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1ef01daec3bea7dacbfeca9d6ca1c9b9>>
+ * @generated SignedSource<<1709b0b3323c6cb7827b1665e47c82a4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCurrentShowsRail_artist$data = {
+  readonly href: string | null;
   readonly internalID: string;
   readonly name: string | null;
   readonly showsConnection: {
@@ -45,6 +46,13 @@ v1 = {
   "kind": "ScalarField",
   "name": "slug",
   "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
 };
 return {
   "argumentDefinitions": [],
@@ -61,13 +69,14 @@ return {
       "storageKey": null
     },
     (v1/*: any*/),
+    (v2/*: any*/),
     {
       "alias": null,
       "args": [
         {
           "kind": "Literal",
           "name": "first",
-          "value": 5
+          "value": 12
         },
         {
           "kind": "Literal",
@@ -108,13 +117,7 @@ return {
                 },
                 (v0/*: any*/),
                 (v1/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "href",
-                  "storageKey": null
-                }
+                (v2/*: any*/)
               ],
               "storageKey": null
             }
@@ -122,7 +125,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "showsConnection(first:5,sort:\"END_AT_ASC\",status:\"running\")"
+      "storageKey": "showsConnection(first:12,sort:\"END_AT_ASC\",status:\"running\")"
     }
   ],
   "type": "Artist",
@@ -130,6 +133,6 @@ return {
 };
 })();
 
-(node as any).hash = "4c6c269dbc41fb2a6fe08b6946167b7a";
+(node as any).hash = "543693039594cd0406f6893064d81fea";
 
 export default node;

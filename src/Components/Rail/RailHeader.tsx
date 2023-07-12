@@ -1,13 +1,15 @@
 import { Box, Flex, SkeletonText, Sup, Text as BaseText } from "@artsy/palette"
 import * as React from "react"
 import { RouterLink } from "System/Router/RouterLink"
+import { useRouter } from "System/Router/useRouter"
+import { getENV } from "Utils/getENV"
 
 export interface RailHeaderProps {
   countLabel?: number
   isLoading?: boolean
   title: string
   subTitle?: string
-  viewAllHref?: string
+  viewAllHref?: string | null
   viewAllLabel?: string
   viewAllOnClick?(event: React.MouseEvent<HTMLElement, MouseEvent>): void
 }
@@ -36,18 +38,20 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
   isLoading = false,
   title,
   subTitle,
-  viewAllHref,
+  viewAllHref: _viewAllHref,
   viewAllLabel,
   viewAllOnClick = () => null,
 }) => {
-  const showViewAll = Boolean(viewAllLabel && viewAllHref)
-
   const Text = isLoading ? SkeletonText : BaseText
+
+  const showViewAll = Boolean(viewAllLabel && _viewAllHref)
+
+  const viewAllHref = useReturnTo(_viewAllHref)
 
   return (
     <Flex justifyContent="space-between" alignItems="center">
       <Box pr={2}>
-        <Text variant="lg-display" as="h3">
+        <Text variant="lg-display" as="h3" lineClamp={2} mr={2}>
           <RailHeaderTitle
             title={title}
             viewAllHref={viewAllHref}
@@ -59,18 +63,22 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
         </Text>
 
         {subTitle && (
-          <Box display={["none", "block"]}>
-            <Text as="h3" variant="lg-display" color="black60" lineClamp={2}>
-              {subTitle}
-            </Text>
-          </Box>
+          <Text
+            display={["none", "block"]}
+            as="h4"
+            variant="lg-display"
+            color="black60"
+            lineClamp={2}
+          >
+            {subTitle}
+          </Text>
         )}
       </Box>
 
       {showViewAll && (
         <Text
           textAlign="right"
-          variant="sm"
+          variant={["xs", "sm-display"]}
           flexShrink={0}
           as={RouterLink}
           // @ts-ignore
@@ -82,4 +90,23 @@ export const RailHeader: React.FC<RailHeaderProps> = ({
       )}
     </Flex>
   )
+}
+
+const useReturnTo = (href?: string | null): string | null => {
+  const router = useRouter()
+
+  if (!href) return null
+
+  const referrer = router.match?.location?.pathname
+
+  if (!referrer) return href
+
+  try {
+    const withReferrer = new URL(href, getENV("APP_URL"))
+    withReferrer.searchParams.append("returnTo", referrer)
+
+    return withReferrer.toString()
+  } catch {
+    return href
+  }
 }

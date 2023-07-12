@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { ArtistCareerHighlightsFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlights"
-import { screen } from "@testing-library/react"
+import { screen, fireEvent } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
@@ -17,70 +17,70 @@ const { renderWithRelay } = setupTestWrapperTL({
 })
 
 describe("ArtistCareerHighlights", () => {
-  it("renders Career Highlights correctly", () => {
+  it("renders one Career Highlight correctly", () => {
     renderWithRelay({
       Artist: () => ({
-        insightAchievements: [
+        insights: [
           {
             label: "Solo show at a major institution",
             entities: ["Foo Museum"],
             kind: "SOLO_SHOW",
           },
         ],
+        name: "Test Artist",
+        slug: "test-artist",
       }),
     })
 
-    expect(screen.getByText("Career Highlights")).toBeInTheDocument()
+    const button = screen.getByRole("button")
+    fireEvent.click(button)
+
+    expect(screen.getByText("Highlights and Achievements")).toBeInTheDocument()
     expect(
       screen.getByText("Solo show at a major institution")
     ).toBeInTheDocument()
     expect(screen.getByText("Foo Museum")).toBeInTheDocument()
+    expect(screen.getByText("View CV")).toBeInTheDocument()
   })
 
-  it("renders Artist Badges correctly", () => {
+  it("renders multiple Career Highlights correctly", () => {
     renderWithRelay({
       Artist: () => ({
-        insightBadges: [
+        insights: [
           {
-            label: "Active Secondary Market",
-            entities: [],
-            description: "Recent auction results in the Artsy Price Database",
-            kind: "ACTIVE_SECONDARY_MARKET",
+            label: "Solo show at 2 major institutions",
+            entities: ["Foo Museum", "Bar Museum"],
+            kind: "SOLO_SHOW",
           },
         ],
+        name: "Test Artist",
+        slug: "test-artist",
       }),
     })
 
-    expect(screen.getByText("Active Secondary Market")).toBeInTheDocument()
+    const button = screen.getByRole("button")
+    fireEvent.click(button)
+
+    expect(screen.getByText("Highlights and Achievements")).toBeInTheDocument()
     expect(
-      screen.getByText("Recent auction results in the Artsy Price Database")
+      screen.getByText("Solo show at 2 major institutions")
     ).toBeInTheDocument()
+    expect(screen.getByText("Foo Museum, and Bar Museum")).toBeInTheDocument()
+    expect(screen.getByText("View CV")).toBeInTheDocument()
   })
 
-  it("renders partner bios", () => {
+  it("does not render if there are no Career Highlights", () => {
     renderWithRelay({
       Artist: () => ({
-        biographyBlurb: {
-          partner: {
-            profile: {
-              href: "/number-one-best-gallery",
-            },
-          },
-          credit: "Submitted by Number One Best Gallery",
-          text: "this artist rocks",
-        },
+        insights: [],
+        name: "Test Artist",
+        slug: "test-artist",
       }),
     })
 
-    expect(screen.getByText("Bio")).toBeInTheDocument()
-    const galleryLink = screen.getByText("Submitted by Number One Best Gallery")
-    expect(galleryLink).toHaveAttribute(
-      "href",
-      expect.stringContaining("partner/number-one-best-gallery")
-    )
-    expect(screen.getByText("this artist rocks")).toBeInTheDocument()
     expect(
-      screen.queryByText("See all past shows and fair booths")
-    ).toBeInTheDocument()
+      screen.queryByText("Highlights and Achievements")
+    ).not.toBeInTheDocument()
+    expect(screen.queryByText("View CV")).not.toBeInTheDocument()
   })
 })

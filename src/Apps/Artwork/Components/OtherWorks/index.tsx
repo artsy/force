@@ -22,11 +22,13 @@ import track, { useTracking } from "react-tracking"
 
 /**
  * Check to see if a connection's edges have a length; if false hide the grid.
+ * FIXME: Fix `any`. Also has nothing to do with this file? Etc...
  */
 export function hideGrid(artworksConnection): boolean {
   return Boolean(get(artworksConnection, p => !p?.edges.length))
 }
 
+// FIXME: `any`
 const contextGridTypeToContextModule = contextGridType => {
   switch (contextGridType) {
     case "ArtistArtworkGrid": {
@@ -44,6 +46,7 @@ const contextGridTypeToContextModule = contextGridType => {
   }
 }
 
+// FIXME: Why is this a `string`?
 const contextGridTypeToV2ContextModule = (contextGridType: string) => {
   switch (contextGridType) {
     case "ArtistArtworkGrid": {
@@ -149,17 +152,9 @@ export const OtherWorksFragmentContainer = createFragmentContainer(
             }
           }
         }
-        ...ArtistSeriesArtworkRail_artwork
         slug
-        internalID
-        sale {
-          is_closed: isClosed
-        }
         context {
           __typename
-        }
-        seriesArtist: artist(shallow: true) {
-          ...ArtistSeriesRail_artist
         }
       }
     `,
