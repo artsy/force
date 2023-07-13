@@ -50,8 +50,7 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 export const CheckoutAddress: FC<{
   userCountry: string
   onChange: AddressChangeHandler
-  onSubmit: (address: AddressFormValues) => void
-}> = ({ userCountry, onChange, onSubmit }) => {
+}> = ({ userCountry, onChange }) => {
   const userDefaultCountry = getCountryNameOrCode(userCountry, true)
 
   return (
