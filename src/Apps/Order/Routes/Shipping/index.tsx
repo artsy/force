@@ -89,6 +89,7 @@ import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { AddressVerificationManager } from "Apps/Order/Components/AddressVerificationManager"
+import { AddressVerificationFlowQueryRenderer } from "Apps/Order/Components/AddressVerificationFlow"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -743,28 +744,21 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 Delivery address
               </Text>
               {isAddressVerificationEnabled ? (
-                <AddressVerificationManager
-                  render={({ verifyAddress, resetModal }) => (
-                    <CheckoutAddress
-                      userCountry={
-                        props.me.location?.country || "United States"
-                      }
-                      onChange={
-                        e => {}
-                        // console.log({ _type: "onAddressChange", e })
-                      }
-                      onSubmit={values => {
-                        console.log({ _type: "onAddressSubmit", e: values })
-                        verifyAddress(values).then(finalAddress => {
-                          console.log({ ADDRESS_SELECTED: finalAddress })
-                          // TODO: This... update it
-                          onAddressChange(finalAddress)
-                          resetModal()
-                        })
-                      }}
-                    />
-                  )}
+                <CheckoutAddress
+                  userCountry={props.me.location?.country || "United States"}
+                  onChange={onAddressChange}
+                  onSubmit={values => setSubmittedAddress(values)}
+                  // onSubmit={values => {
+                  //   console.log({ _type: "onAddressSubmit", e: values })
+                  //   verifyAddress(values).then(finalAddress => {
+                  //     console.log({ ADDRESS_SELECTED: finalAddress })
+                  //     // TODO: This... update it
+                  //     onAddressChange(finalAddress)
+                  //     resetModal()
+                  //   })
+                  // }}
                 />
+                {submittedAddress && <AddressVerificationFlowQueryRenderer address={submittedAddress} />}
               ) : (
                 <AddressForm
                   tabIndex={showAddressForm ? 0 : -1}
