@@ -88,6 +88,7 @@ import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { AddressVerificationManager } from "Apps/Order/Components/AddressVerificationManager"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -742,9 +743,27 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 Delivery address
               </Text>
               {isAddressVerificationEnabled ? (
-                <CheckoutAddress
-                  userCountry={props.me.location?.country || "United States"}
-                  onChange={onAddressChange}
+                <AddressVerificationManager
+                  render={({ verifyAddress, resetModal }) => (
+                    <CheckoutAddress
+                      userCountry={
+                        props.me.location?.country || "United States"
+                      }
+                      onChange={
+                        e => {}
+                        // console.log({ _type: "onAddressChange", e })
+                      }
+                      onSubmit={values => {
+                        console.log({ _type: "onAddressSubmit", e: values })
+                        verifyAddress(values).then(finalAddress => {
+                          console.log({ ADDRESS_SELECTED: finalAddress })
+                          // TODO: This... update it
+                          onAddressChange(finalAddress)
+                          resetModal()
+                        })
+                      }}
+                    />
+                  )}
                 />
               ) : (
                 <AddressForm
