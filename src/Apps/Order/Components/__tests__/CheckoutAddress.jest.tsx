@@ -2,7 +2,7 @@ import { screen, render, fireEvent } from "@testing-library/react"
 import { Formik } from "formik"
 import {
   CheckoutAddress,
-  Address,
+  AddressFormValues,
   INITIAL_ADDRESS,
 } from "Apps/Order/Components/CheckoutAddress"
 
@@ -23,7 +23,9 @@ const defaultFormikProps = {
   },
 }
 
-const mockOnChange = jest.fn((address: Address, key: keyof Address) => null)
+const mockOnChange = jest.fn(
+  (address: AddressFormValues, key: keyof AddressFormValues) => null
+)
 
 const checkoutAddressProps = {
   userCountry: "",

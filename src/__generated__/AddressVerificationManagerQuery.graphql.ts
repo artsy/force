@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<45e00c69664166ca975fe98864377e52>>
+ * @generated SignedSource<<16b0cfb734d9ad813788b9cdc846e094>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,10 +18,10 @@ export type AddressInput = {
   postalCode: string;
   region?: string | null;
 };
-export type CheckoutAddressQuery$variables = {
+export type AddressVerificationManagerQuery$variables = {
   address: AddressInput;
 };
-export type CheckoutAddressQuery$data = {
+export type AddressVerificationManagerQuery$data = {
   readonly verifyAddress: {
     readonly inputAddress: {
       readonly address: {
@@ -48,9 +48,9 @@ export type CheckoutAddressQuery$data = {
     readonly verificationStatus: VerificationStatuses | null;
   } | null;
 };
-export type CheckoutAddressQuery = {
-  response: CheckoutAddressQuery$data;
-  variables: CheckoutAddressQuery$variables;
+export type AddressVerificationManagerQuery = {
+  response: AddressVerificationManagerQuery$data;
+  variables: AddressVerificationManagerQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -187,7 +187,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "CheckoutAddressQuery",
+    "name": "AddressVerificationManagerQuery",
     "selections": (v3/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -196,20 +196,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "CheckoutAddressQuery",
+    "name": "AddressVerificationManagerQuery",
     "selections": (v3/*: any*/)
   },
   "params": {
-    "cacheID": "95e12062e1d450e93336f86a23d53215",
+    "cacheID": "250348439c017e994bbf2ed1b37d5074",
     "id": null,
     "metadata": {},
-    "name": "CheckoutAddressQuery",
+    "name": "AddressVerificationManagerQuery",
     "operationKind": "query",
-    "text": "query CheckoutAddressQuery(\n  $address: AddressInput!\n) {\n  verifyAddress(address: $address) {\n    inputAddress {\n      lines\n      address {\n        addressLine1\n        addressLine2\n        city\n        country\n        postalCode\n        region\n      }\n    }\n    suggestedAddresses {\n      lines\n      address {\n        addressLine1\n        addressLine2\n        city\n        country\n        postalCode\n        region\n      }\n    }\n    verificationStatus\n  }\n}\n"
+    "text": "query AddressVerificationManagerQuery(\n  $address: AddressInput!\n) {\n  verifyAddress(address: $address) {\n    inputAddress {\n      lines\n      address {\n        addressLine1\n        addressLine2\n        city\n        country\n        postalCode\n        region\n      }\n    }\n    suggestedAddresses {\n      lines\n      address {\n        addressLine1\n        addressLine2\n        city\n        country\n        postalCode\n        region\n      }\n    }\n    verificationStatus\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "83bd28b24c0af472e94e9112d82d338e";
+(node as any).hash = "7d78c8f6b38af2ebadf6b1e5383cee6a";
 
 export default node;

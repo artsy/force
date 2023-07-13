@@ -1,28 +1,13 @@
 import * as Yup from "yup"
-import {
-  Box,
-  Button,
-  Column,
-  GridColumns,
-  Input,
-  Flex,
-  Message,
-  ModalDialog,
-  Text,
-  Spacer,
-  RadioGroup,
-  BorderedRadio,
-} from "@artsy/palette"
+import { Button, Column, GridColumns, Input, Message } from "@artsy/palette"
 import { Formik, Form } from "formik"
-import { useState, FC } from "react"
+import { FC } from "react"
 import {
   CountrySelect,
   ALL_COUNTRY_SELECT_OPTIONS,
 } from "Components/CountrySelect"
-import { Environment, fetchQuery, graphql } from "relay-runtime"
-import { useSystemContext } from "System/useSystemContext"
 
-export interface Address {
+export interface AddressFormValues {
   name: string
   country: string
   addressLine1: string
@@ -33,19 +18,9 @@ export interface Address {
 }
 
 export type AddressChangeHandler = (
-  address: Address,
-  key: keyof Address
+  address: AddressFormValues,
+  key: keyof AddressFormValues
 ) => void
-
-enum ErrorModalTitle {
-  general = "Check your delivery address",
-  suggested = "Confirm your delivery address",
-}
-
-enum AddressSuggestionRadioButton {
-  recommended = "Recommended",
-  user_address = "What you entered",
-}
 
 export const INITIAL_ADDRESS = {
   name: "",
@@ -75,93 +50,9 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 export const CheckoutAddress: FC<{
   userCountry: string
   onChange: AddressChangeHandler
-}> = ({ userCountry, onChange }) => {
+  onSubmit: (address: AddressFormValues) => void
+}> = ({ userCountry, onChange, onSubmit }) => {
   const userDefaultCountry = getCountryNameOrCode(userCountry, true)
-  const [displayModal, setDisplayModal] = useState(false)
-  const [modalTitle, setModalTitle] = useState<ErrorModalTitle>(
-    ErrorModalTitle.general
-  )
-  const [selectedAddress, setSelectedAddress] = useState<
-    AddressSuggestionRadioButton
-  >(AddressSuggestionRadioButton.recommended)
-  const [inputAddressLines, setInpuAddressLines] = useState<string[]>([])
-  const [suggestedAddressLines, setSuggestedAddressLines] = useState<string[]>(
-    []
-  )
-
-  const { relayEnvironment } = useSystemContext()
-
-  const handleKeepAddressClick = () => {
-    // re-submit address
-  }
-
-  const handleEditAddressClick = () => {
-    // do nothing
-    setDisplayModal(false)
-  }
-
-  const handleUseSuggestedAddressClick = () => {
-    // submit suggested address
-  }
-
-  const handleFormSubmit = async ({ name, ...address }: Address) => {
-    const response = await fetchQuery<any>(
-      relayEnvironment as Environment,
-      graphql`
-        query CheckoutAddressQuery($address: AddressInput!) {
-          verifyAddress(address: $address) {
-            inputAddress {
-              lines
-              address {
-                addressLine1
-                addressLine2
-                city
-                country
-                postalCode
-                region
-              }
-            }
-            suggestedAddresses {
-              lines
-              address {
-                addressLine1
-                addressLine2
-                city
-                country
-                postalCode
-                region
-              }
-            }
-            verificationStatus
-          }
-        }
-      `,
-      {
-        address,
-      }
-    ).toPromise()
-
-    console.log({ response })
-
-    const status = response.verifyAddress?.verificationStatus
-
-    if (status === "VERIFIED_NO_CHANGE") {
-      // TODO: update order and proceed to payment step
-      return
-    } else if (status === "VERIFIED_WITH_CHANGES") {
-      setInpuAddressLines(response.verifyAddress.inputAddress.lines)
-      setSuggestedAddressLines(
-        // TODO: there can be more than one?
-        response.verifyAddress.suggestedAddresses[0].lines
-      )
-      setModalTitle(ErrorModalTitle.suggested)
-      setDisplayModal(true)
-    } else {
-      setInpuAddressLines(response.verifyAddress.inputAddress.lines)
-      setModalTitle(ErrorModalTitle.general)
-      setDisplayModal(true)
-    }
-  }
 
   return (
     <Formik
@@ -173,12 +64,12 @@ export const CheckoutAddress: FC<{
           country: userDefaultCountry,
         },
       }}
-      onSubmit={({ attributes }) => handleFormSubmit(attributes)}
+      onSubmit={({ attributes }) => onSubmit(attributes)}
     >
       {({ values, errors, touched, status, handleChange, handleBlur }) => {
         const changeEventHandler = (
           e: React.FormEvent<HTMLInputElement | HTMLSelectElement>,
-          key: keyof Address
+          key: keyof AddressFormValues
         ) => {
           handleChange(e)
           onChange(
@@ -191,101 +82,6 @@ export const CheckoutAddress: FC<{
         }
         return (
           <Form>
-            {displayModal && (
-              <ModalDialog
-                title={modalTitle}
-                onClose={() => setDisplayModal(false)}
-                width={["100%", 550]}
-              >
-                {modalTitle === ErrorModalTitle.general && (
-                  <>
-                    <Text>
-                      The address you entered may be incorrect or incomplete.
-                      Please check it and make any changes necessary.
-                    </Text>
-                    <Spacer y={4} />
-                    <Text fontWeight="bold">What you entered</Text>
-                    <Spacer y={1} />
-                    <Box border="1px solid" borderColor="black30" p={2}>
-                      {inputAddressLines.map((line: string) => (
-                        <Text key={line}>{line}</Text>
-                      ))}
-                    </Box>
-                    <Spacer y={4} />
-                    <Flex width="100%" justifyContent="space-between">
-                      <Button
-                        onClick={handleKeepAddressClick}
-                        variant="secondaryBlack"
-                        flex={1}
-                      >
-                        Use This Address
-                      </Button>
-                      <Spacer x={1} />
-                      <Button onClick={handleEditAddressClick} flex={1}>
-                        Edit Address
-                      </Button>
-                    </Flex>
-                  </>
-                )}
-
-                {modalTitle === ErrorModalTitle.suggested && (
-                  <>
-                    <Text>
-                      To ensure prompt and accurate delivery, we suggest a
-                      modified shipping address.
-                    </Text>
-                    <Spacer y={2} />
-                    <RadioGroup
-                      onSelect={selected =>
-                        setSelectedAddress(
-                          selected as AddressSuggestionRadioButton
-                        )
-                      }
-                      defaultValue={selectedAddress}
-                    >
-                      <BorderedRadio
-                        value={AddressSuggestionRadioButton.recommended}
-                        label={AddressSuggestionRadioButton.recommended}
-                      >
-                        <Flex flexDirection="column">
-                          {suggestedAddressLines.map((line: string) => (
-                            <Text variant="xs" key={line}>
-                              {line}
-                            </Text>
-                          ))}
-                        </Flex>
-                      </BorderedRadio>
-                      <BorderedRadio
-                        value={AddressSuggestionRadioButton.user_address}
-                        label={AddressSuggestionRadioButton.user_address}
-                      >
-                        <Flex flexDirection="column">
-                          {inputAddressLines.map((line: string) => (
-                            <Text variant="xs" key={line}>
-                              {line}
-                            </Text>
-                          ))}
-                        </Flex>
-                      </BorderedRadio>
-                    </RadioGroup>
-                    <Spacer y={4} />
-                    <Flex width="100%" justifyContent="space-between">
-                      <Button
-                        onClick={handleEditAddressClick}
-                        variant="secondaryBlack"
-                        flex={1}
-                      >
-                        Back to Edit
-                      </Button>
-                      <Spacer x={1} />
-                      <Button onClick={handleUseSuggestedAddressClick} flex={1}>
-                        Use This Address
-                      </Button>
-                    </Flex>
-                  </>
-                )}
-              </ModalDialog>
-            )}
             <GridColumns>
               <Column span={12}>
                 <Input
