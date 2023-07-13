@@ -7,6 +7,7 @@ import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { ArtworkActionsSaveButtonV2_Test_Query } from "__generated__/ArtworkActionsSaveButtonV2_Test_Query.graphql"
+import { wait } from "Utils/wait"
 
 jest.unmock("react-relay")
 jest.mock("Components/Artwork/SaveButton/SaveArtworkMutation")
@@ -89,15 +90,19 @@ describe("ArtworkActionsSaveButtonV2", () => {
       expect(await screen.findByText("Add to a List")).toBeInTheDocument()
     })
 
-    it("should display the same toast message when artwork is in auction", async () => {
+    it("should not display the toast message when artwork is in auction", async () => {
       renderWithRelay({
         Artwork: () => unsavedAuctionArtwork,
       })
 
       fireEvent.click(screen.getByText("Watch lot"))
 
-      expect(await screen.findByText("Artwork saved")).toBeInTheDocument()
-      expect(await screen.findByText("Add to a List")).toBeInTheDocument()
+      // giving the toast some time to appear. Without this line, the test succeeds
+      // even when the toast is being displayed
+      await wait(500)
+
+      expect(screen.queryByText("Artwork saved")).not.toBeInTheDocument()
+      expect(screen.queryByText("Add to a List")).not.toBeInTheDocument()
     })
 
     it("should open the modal when `Add to a List` button was pressed", async () => {
@@ -174,20 +179,6 @@ describe("ArtworkActionsSaveButtonV2", () => {
         expect(screen.getByText("Watching lot")).toBeInTheDocument()
       })
 
-      it("if artwork was previously saved in custom lists", () => {
-        renderWithRelay({
-          Artwork: () => ({
-            isSaved: false,
-            sale,
-            customCollections: {
-              totalCount: 2,
-            },
-          }),
-        })
-
-        expect(screen.getByText("Watching lot")).toBeInTheDocument()
-      })
-
       it("if artwork was previously saved in `Saved Artworks` and custom lists", () => {
         renderWithRelay({
           Artwork: () => ({
@@ -200,6 +191,22 @@ describe("ArtworkActionsSaveButtonV2", () => {
         })
 
         expect(screen.getByText("Watching lot")).toBeInTheDocument()
+      })
+    })
+
+    describe("should display `Watch lot` button with un-selected state", () => {
+      it("if artwork was previously saved only in custom lists", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            isSaved: false,
+            sale,
+            customCollections: {
+              totalCount: 2,
+            },
+          }),
+        })
+
+        expect(screen.getByText("Watch lot")).toBeInTheDocument()
       })
     })
 
