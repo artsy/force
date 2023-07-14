@@ -63,7 +63,7 @@ export const CheckoutAddress: FC<{
           country: userDefaultCountry,
         },
       }}
-      onSubmit={({ attributes }) => onSubmit(attributes)}
+      onSubmit={({ attributes }) => console.log(attributes)}
     >
       {({ values, errors, touched, status, handleChange, handleBlur }) => {
         const changeEventHandler = (
