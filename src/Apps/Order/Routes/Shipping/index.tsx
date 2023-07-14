@@ -88,7 +88,6 @@ import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { AddressVerificationManager } from "Apps/Order/Components/AddressVerificationManager"
 import { AddressVerificationFlowQueryRenderer } from "Apps/Order/Components/AddressVerificationFlow"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
@@ -744,21 +743,30 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 Delivery address
               </Text>
               {isAddressVerificationEnabled ? (
-                <CheckoutAddress
-                  userCountry={props.me.location?.country || "United States"}
-                  onChange={onAddressChange}
-                  onSubmit={values => setSubmittedAddress(values)}
-                  // onSubmit={values => {
-                  //   console.log({ _type: "onAddressSubmit", e: values })
-                  //   verifyAddress(values).then(finalAddress => {
-                  //     console.log({ ADDRESS_SELECTED: finalAddress })
-                  //     // TODO: This... update it
-                  //     onAddressChange(finalAddress)
-                  //     resetModal()
-                  //   })
-                  // }}
-                />
-                {submittedAddress && <AddressVerificationFlowQueryRenderer address={submittedAddress} />}
+                <>
+                  <CheckoutAddress
+                    userCountry={props.me.location?.country || "United States"}
+                    onChange={onAddressChange}
+                  />
+                  {/* TODO: When submitting a completed form, intercept the values,
+                   pass the entered address into here, tell the modal to display
+                   (remove false) */}
+                  {false && (
+                    <AddressVerificationFlowQueryRenderer
+                      address={{} as any}
+                      onClose={() => {
+                        console.log("close")
+                      }}
+                      onChosenAddress={address =>
+                        console.log({
+                          chosenAddress: address,
+                          next:
+                            "stick this back in the completed form input, continue and close the modal",
+                        })
+                      }
+                    />
+                  )}
+                </>
               ) : (
                 <AddressForm
                   tabIndex={showAddressForm ? 0 : -1}
