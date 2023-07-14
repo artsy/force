@@ -25,7 +25,6 @@ import {
   PhoneNumberForm,
   PhoneNumberTouched,
 } from "Apps/Order/Components/PhoneNumberForm"
-import { CheckoutAddress } from "Apps/Order/Components/CheckoutAddress"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
@@ -107,6 +106,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const { relayEnvironment } = useSystemContext()
 
   const isAddressVerificationEnabled = useFeatureFlag("address_verification")
+  const [addressVerified, setAddressVerified] = useState<boolean>(false)
+  const [verifyAddress, setVerifyAddress] = useState<boolean>(false)
 
   const [shippingOption, setShippingOption] = useState<
     CommerceOrderFulfillmentTypeEnum
@@ -210,6 +211,15 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   const onContinueButtonPressed = async () => {
+    if (isAddressVerificationEnabled && !addressVerified) {
+      /**
+       * Setting verifyAddress to true will cause the address verification flow
+       * to be initiated on this render.
+       */
+      setVerifyAddress(true)
+      return
+    }
+
     if (checkIfArtsyShipping() && !!shippingQuoteId) {
       selectShippingQuote()
     } else {
@@ -742,44 +752,44 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <Text variant="lg-display" mb="2">
                 Delivery address
               </Text>
-              {isAddressVerificationEnabled ? (
-                <>
-                  <CheckoutAddress
-                    userCountry={props.me.location?.country || "United States"}
-                    onChange={onAddressChange}
-                  />
-                  {/* TODO: When submitting a completed form, intercept the values,
-                   pass the entered address into here, tell the modal to display
-                   (remove false) */}
-                  {false && (
-                    <AddressVerificationFlowQueryRenderer
-                      address={{} as any}
-                      onClose={() => {
-                        console.log("close")
-                      }}
-                      onChosenAddress={address =>
-                        console.log({
-                          chosenAddress: address,
-                          next:
-                            "stick this back in the completed form input, continue and close the modal",
-                        })
-                      }
-                    />
-                  )}
-                </>
-              ) : (
-                <AddressForm
-                  tabIndex={showAddressForm ? 0 : -1}
-                  value={address}
-                  errors={addressErrors}
-                  touched={addressTouched}
-                  onChange={onAddressChange}
-                  domesticOnly={artwork?.onlyShipsDomestically!}
-                  euOrigin={artwork?.euShippingOrigin!}
-                  shippingCountry={artwork?.shippingCountry!}
-                  showPhoneNumberInput={false}
+              {verifyAddress && (
+                <AddressVerificationFlowQueryRenderer
+                  address={{
+                    addressLine1: address.addressLine1,
+                    addressLine2: address.addressLine2,
+                    country: address.country,
+                    city: address.city,
+                    region: address.region,
+                    postalCode: address.postalCode,
+                  }}
+                  onClose={() => {
+                    console.log("close")
+                  }}
+                  onChosenAddress={chosenAddress => {
+                    console.log({
+                      chosenAddress: chosenAddress,
+                      next:
+                        "stick this back in the completed form input, continue and close the modal",
+                    })
+                    // TODO: display the chosen address in the address form
+                    setAddress({ ...address, ...chosenAddress })
+                    setAddressVerified(true)
+                    setVerifyAddress(false)
+                    onContinueButtonPressed()
+                  }}
                 />
               )}
+              <AddressForm
+                tabIndex={showAddressForm ? 0 : -1}
+                value={address}
+                errors={addressErrors}
+                touched={addressTouched}
+                onChange={onAddressChange}
+                domesticOnly={artwork?.onlyShipsDomestically!}
+                euOrigin={artwork?.euShippingOrigin!}
+                shippingCountry={artwork?.shippingCountry!}
+                showPhoneNumberInput={false}
+              />
               <Spacer y={2} />
               <PhoneNumberForm
                 tabIndex={showAddressForm ? 0 : -1}
