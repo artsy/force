@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<02eddecf68822c4266ce51a98c6f843e>>
+ * @generated SignedSource<<7fcb7968ffa595576a0bc3f53bae4046>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type PageApp_page$data = {
   readonly content: string | null;
   readonly internalID: string;
   readonly name: string;
+  readonly published: boolean;
   readonly " $fragmentType": "PageApp_page";
 };
 export type PageApp_page$key = {
@@ -36,13 +37,6 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
-    {
-      "alias": null,
       "args": [
         {
           "kind": "Literal",
@@ -53,12 +47,26 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "content",
       "storageKey": "content(format:\"HTML\")"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "published",
+      "storageKey": null
     }
   ],
   "type": "Page",
   "abstractKey": null
 };
 
-(node as any).hash = "94845d296973a411f90edbe8aca444a5";
+(node as any).hash = "7f0f1470be702d44404830b317cffc00";
 
 export default node;

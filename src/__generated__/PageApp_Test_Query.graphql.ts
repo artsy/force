@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<adedd680beb46ca7e899ec3674839d6b>>
+ * @generated SignedSource<<e6415079de780a3d2ebb335861786810>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -85,13 +85,6 @@ return {
           },
           {
             "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "alias": null,
             "args": [
               {
                 "kind": "Literal",
@@ -107,6 +100,20 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "published",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -116,7 +123,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ce1e321e59737765254acd134c8b3fa7",
+    "cacheID": "5f93d561466837d7b5cb526e2f0d4caf",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -139,12 +146,18 @@ return {
           "nullable": false,
           "plural": false,
           "type": "String"
+        },
+        "page.published": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
         }
       }
     },
     "name": "PageApp_Test_Query",
     "operationKind": "query",
-    "text": "query PageApp_Test_Query {\n  page(id: \"example\") {\n    ...PageApp_page\n    id\n  }\n}\n\nfragment PageApp_page on Page {\n  internalID\n  name\n  content(format: HTML)\n}\n"
+    "text": "query PageApp_Test_Query {\n  page(id: \"example\") {\n    ...PageApp_page\n    id\n  }\n}\n\nfragment PageApp_page on Page {\n  internalID\n  content(format: HTML)\n  name\n  published\n}\n"
   }
 };
 })();
