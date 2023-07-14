@@ -12,6 +12,8 @@ import {
   TOP_LEVEL_PAGE_SLUG_ALLOWLIST,
   PAGE_SLUGS_WITH_AUTH_REQUIRED,
 } from "./pageRoutes"
+import { HttpError } from "found"
+import { userIsAdmin } from "Utils/user"
 
 interface PageAppProps {
   page: PageApp_page$data
@@ -19,6 +21,7 @@ interface PageAppProps {
 
 const PageApp: FC<PageAppProps> = ({ page }) => {
   const { user } = useSystemContext()
+  const isAdmin = userIsAdmin(user)
   const { showAuthDialog } = useAuthDialog()
   const { match } = useRouter()
 
@@ -58,6 +61,8 @@ const PageApp: FC<PageAppProps> = ({ page }) => {
     ? `/${match.params.id}`
     : `/page/${match.params.id}`
 
+  if (!page.published && !isAdmin) throw new HttpError(404)
+
   if (!page.content) return null
 
   if (PAGE_SLUGS_WITH_AUTH_REQUIRED.includes(page.internalID) && !user?.id)
@@ -86,8 +91,9 @@ export const PageAppFragmentContainer = createFragmentContainer(PageApp, {
   page: graphql`
     fragment PageApp_page on Page {
       internalID
-      name
       content(format: HTML)
+      name
+      published
     }
   `,
 })

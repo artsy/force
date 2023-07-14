@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4f95f410cf2aabf97e3ceb69ea1101d8>>
+ * @generated SignedSource<<d38c8dba8f5c8bcc056a792de9fb6699>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -88,13 +88,6 @@ return {
           },
           {
             "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "name",
-            "storageKey": null
-          },
-          {
-            "alias": null,
             "args": [
               {
                 "kind": "Literal",
@@ -110,6 +103,20 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
+            "name": "name",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "published",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -119,12 +126,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "bbce546c73c13350b02235445c92b516",
+    "cacheID": "f3e62a2ddb6575a2d04aaeba07a2eb55",
     "id": null,
     "metadata": {},
     "name": "pageRoutes_PageQuery",
     "operationKind": "query",
-    "text": "query pageRoutes_PageQuery(\n  $id: ID!\n) {\n  page(id: $id) @principalField {\n    ...PageApp_page\n    id\n  }\n}\n\nfragment PageApp_page on Page {\n  internalID\n  name\n  content(format: HTML)\n}\n"
+    "text": "query pageRoutes_PageQuery(\n  $id: ID!\n) {\n  page(id: $id) @principalField {\n    ...PageApp_page\n    id\n  }\n}\n\nfragment PageApp_page on Page {\n  internalID\n  content(format: HTML)\n  name\n  published\n}\n"
   }
 };
 })();
