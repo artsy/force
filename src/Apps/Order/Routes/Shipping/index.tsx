@@ -771,7 +771,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                       next:
                         "stick this back in the completed form input, continue and close the modal",
                     })
-                    // TODO: display the chosen address in the address form
                     setAddress({ ...address, ...chosenAddress })
                     setAddressVerified(true)
                     setVerifyAddress(false)
@@ -789,6 +788,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 euOrigin={artwork?.euShippingOrigin!}
                 shippingCountry={artwork?.shippingCountry!}
                 showPhoneNumberInput={false}
+                parentAddress={address}
               />
               <Spacer y={2} />
               <PhoneNumberForm

@@ -55,6 +55,7 @@ export interface AddressFormProps {
   errors: AddressErrors
   touched: AddressTouched
   tabIndex?: number
+  parentAddress?: Partial<Address>
 }
 
 export const AddressForm: React.FC<AddressFormProps> = ({
@@ -68,6 +69,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   errors,
   touched,
   tabIndex,
+  parentAddress,
 }) => {
   const [address, setAddress] = React.useState({ ...emptyAddress, ...value })
   const [key, setKey] = React.useState<keyof Address>()
@@ -83,6 +85,34 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     setKey(key)
     onChangeValue(key, value)
   }
+
+  /**
+   * This hook allows this component's parent to update the form fields if the
+   * address changes outside of this component.
+   */
+  React.useEffect(() => {
+    if (
+      parentAddress &&
+      (parentAddress.name !== address.name ||
+        parentAddress.addressLine1 !== address.addressLine1 ||
+        parentAddress.addressLine2 !== address.addressLine2 ||
+        parentAddress.country !== address.country ||
+        parentAddress.city !== address.city ||
+        parentAddress.region !== address.region ||
+        parentAddress.postalCode !== address.postalCode)
+    ) {
+      setAddress({ ...emptyAddress, ...parentAddress })
+    }
+  }, [
+    address.addressLine1,
+    address.addressLine2,
+    address.city,
+    address.country,
+    address.name,
+    address.postalCode,
+    address.region,
+    parentAddress,
+  ])
 
   React.useEffect(() => {
     if (key) {
