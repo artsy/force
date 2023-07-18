@@ -768,6 +768,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   }}
                   onClose={() => {
                     console.log("close")
+                    setVerifyAddress(false)
                   }}
                   onChosenAddress={chosenAddress => {
                     console.log({
