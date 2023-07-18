@@ -55,7 +55,6 @@ export interface AddressFormProps {
   errors: AddressErrors
   touched: AddressTouched
   tabIndex?: number
-  parentAddress?: Partial<Address>
 }
 
 export const AddressForm: React.FC<AddressFormProps> = ({
@@ -69,7 +68,6 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   errors,
   touched,
   tabIndex,
-  parentAddress,
 }) => {
   const [address, setAddress] = React.useState({ ...emptyAddress, ...value })
   const [key, setKey] = React.useState<keyof Address>()
@@ -86,33 +84,9 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     onChangeValue(key, value)
   }
 
-  /**
-   * This hook allows this component's parent to update the form fields if the
-   * address changes outside of this component.
-   */
   React.useEffect(() => {
-    if (
-      parentAddress &&
-      (parentAddress.name !== address.name ||
-        parentAddress.addressLine1 !== address.addressLine1 ||
-        parentAddress.addressLine2 !== address.addressLine2 ||
-        parentAddress.country !== address.country ||
-        parentAddress.city !== address.city ||
-        parentAddress.region !== address.region ||
-        parentAddress.postalCode !== address.postalCode)
-    ) {
-      setAddress({ ...emptyAddress, ...parentAddress })
-    }
-  }, [
-    address.addressLine1,
-    address.addressLine2,
-    address.city,
-    address.country,
-    address.name,
-    address.postalCode,
-    address.region,
-    parentAddress,
-  ])
+    console.log(value)
+  }, [value])
 
   React.useEffect(() => {
     if (key) {
@@ -153,7 +127,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           placeholder="Full name"
           title={billing ? "Name on card" : "Full name"}
           autoCorrect="off"
-          value={address.name}
+          value={value?.name}
           onChange={changeEventHandler("name")}
           error={getError("name")}
           data-test="AddressForm_name"
@@ -167,9 +141,9 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         <CountrySelect
           tabIndex={tabIndex}
           selected={
-            lockCountryToOrigin || (lockCountriesToEU && !address.country)
+            lockCountryToOrigin || (lockCountriesToEU && !value?.country)
               ? shippingCountry
-              : address.country
+              : value?.country
           }
           onSelect={changeValueHandler("country")}
           disabled={lockCountryToOrigin}
@@ -193,7 +167,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           id="AddressForm_addressLine1"
           placeholder="Street address"
           title="Address line 1"
-          value={address.addressLine1}
+          value={value?.addressLine1}
           onChange={changeEventHandler("addressLine1")}
           error={getError("addressLine1")}
           data-test="AddressForm_addressLine1"
@@ -205,7 +179,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           id="AddressForm_addressLine2"
           placeholder="Apt, floor, suite, etc."
           title="Address line 2 (optional)"
-          value={address.addressLine2}
+          value={value?.addressLine2}
           onChange={changeEventHandler("addressLine2")}
           error={getError("addressLine2")}
           data-test="AddressForm_addressLine2"
@@ -217,7 +191,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           id="AddressForm_city"
           placeholder="City"
           title="City"
-          value={address.city}
+          value={value?.city}
           onChange={changeEventHandler("city")}
           error={getError("city")}
           data-test="AddressForm_city"
@@ -230,7 +204,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           placeholder="State, province, or region"
           title="State, province, or region"
           autoCorrect="off"
-          value={address.region}
+          value={value?.region}
           onChange={changeEventHandler("region")}
           error={getError("region")}
           data-test="AddressForm_region"
@@ -244,7 +218,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           title="Postal code"
           autoCapitalize="characters"
           autoCorrect="off"
-          value={address.postalCode}
+          value={value?.postalCode}
           onChange={changeEventHandler("postalCode")}
           error={getError("postalCode")}
           data-test="AddressForm_postalCode"
@@ -262,7 +236,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
               description={phoneNumberInputDescription()}
               placeholder="Add phone"
               pattern="[^a-z]+"
-              value={address.phoneNumber}
+              value={value?.phoneNumber}
               onChange={changeEventHandler("phoneNumber")}
               error={getError("phoneNumber")}
               data-test="AddressForm_phoneNumber"
