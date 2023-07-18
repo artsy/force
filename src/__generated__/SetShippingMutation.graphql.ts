@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6bb95243b40dbc35656096c2e891f010>>
+ * @generated SignedSource<<55145d02323407f54069220c14f2418c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,9 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderFulfillmentTypeEnum = "PICKUP" | "SHIP" | "SHIP_ARTA" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
+export type CommerceShippingAddressVerifiedByEnum = "ARTSY" | "USER" | "%future added value";
 export type CommerceSetShippingInput = {
+  addressVerifiedBy?: CommerceShippingAddressVerifiedByEnum | null;
   clientMutationId?: string | null;
   fulfillmentType: CommerceOrderFulfillmentTypeEnum;
   id: string;
