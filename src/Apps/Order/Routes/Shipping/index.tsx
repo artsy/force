@@ -105,8 +105,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const { trackEvent } = useTracking()
   const { relayEnvironment } = useSystemContext()
 
+  // true if we want to verify addresses for this order
   const isAddressVerificationEnabled = useFeatureFlag("address_verification")
+  // true if the current address has been verified
   const [addressVerified, setAddressVerified] = useState<boolean>(false)
+  // true if the current address needs to be verified
   const [verifyAddress, setVerifyAddress] = useState<boolean>(false)
 
   const [shippingOption, setShippingOption] = useState<
@@ -754,6 +757,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               </Text>
               {verifyAddress && (
                 <AddressVerificationFlowQueryRenderer
+                  data-testid="address-verification-flow"
                   address={{
                     addressLine1: address.addressLine1,
                     addressLine2: address.addressLine2,

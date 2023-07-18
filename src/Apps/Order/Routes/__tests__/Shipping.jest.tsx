@@ -39,6 +39,7 @@ import {
   settingOrderArtaShipmentSuccess,
   selectShippingQuoteSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -63,7 +64,7 @@ jest.mock("@artsy/palette", () => {
 })
 
 jest.mock("System/useFeatureFlag", () => ({
-  useFeatureFlag: () => false,
+  useFeatureFlag: jest.fn(),
 }))
 
 const mockShowErrorDialog = jest.fn()
@@ -221,6 +222,7 @@ describe("Shipping", () => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent: jest.fn(),
     }))
+    ;(useFeatureFlag as jest.Mock).mockImplementation(() => false)
   })
 
   const { getWrapper } = setupTestWrapper({
@@ -1059,7 +1061,36 @@ describe("Shipping", () => {
         expect(page.orderStepperCurrentStep).toBe("Shipping")
       })
     })
+
+    // eslint-disable-next-line jest/no-focused-tests
+    describe.only("with address verification enabled", () => {
+      beforeAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockImplementation(
+          (featureName: string) => featureName === "address_verification"
+        )
+      })
+
+      describe("when the continue button is clicked", () => {
+        it("mounts the address verification flow", async () => {
+          const wrapper = getWrapper({
+            CommerceOrder: () => testOrder,
+            Me: () => emptyTestMe,
+          })
+
+          const page = new ShippingTestPage(wrapper)
+
+          fillAddressForm(page.root, validAddress)
+
+          await page.clickSubmit()
+
+          expect(
+            page.find(`[data-testid="address-verification-flow"]`).exists()
+          ).toBe(true)
+        })
+      })
+    })
   })
+
   describe("with saved addresses", () => {
     let page: ShippingTestPage
 
