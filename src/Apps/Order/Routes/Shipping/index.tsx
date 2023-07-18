@@ -788,7 +788,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 euOrigin={artwork?.euShippingOrigin!}
                 shippingCountry={artwork?.shippingCountry!}
                 showPhoneNumberInput={false}
-                parentAddress={address}
               />
               <Spacer y={2} />
               <PhoneNumberForm
