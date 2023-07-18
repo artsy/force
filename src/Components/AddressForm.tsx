@@ -85,10 +85,6 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   }
 
   React.useEffect(() => {
-    console.log(value)
-  }, [value])
-
-  React.useEffect(() => {
     if (key) {
       onChange(address, key)
     }
