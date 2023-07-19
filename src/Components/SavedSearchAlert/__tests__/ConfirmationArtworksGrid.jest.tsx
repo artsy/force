@@ -24,7 +24,7 @@ describe("ConfirmationArtworksGrid", () => {
     `,
   })
 
-  it("renders aworks count and artworks grid", () => {
+  it("renders artworks count and artworks grid", () => {
     renderWithRelay({
       FilterArtworksConnection: () => ({
         counts: {
@@ -38,6 +38,73 @@ describe("ConfirmationArtworksGrid", () => {
       screen.getByText("300 works currently on Artsy match your criteria.")
     ).toBeInTheDocument()
     expect(screen.getByText("See our top picks for you:")).toBeInTheDocument()
+  })
+
+  it("displays the correct message when there are many matches", async () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => ({
+        counts: {
+          total: 11,
+        },
+        edges: artworks,
+      }),
+    })
+
+    expect(
+      screen.getByText("11 works currently on Artsy match your criteria.")
+    ).toBeInTheDocument()
+    expect(screen.getByText("See our top picks for you:")).toBeInTheDocument()
+  })
+
+  it("displays the correct message when there are few matches", async () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => ({
+        counts: {
+          total: 9,
+        },
+        edges: artworks,
+      }),
+    })
+
+    expect(
+      screen.getByText(
+        "You might like these 9 works currently on Artsy that match your criteria:"
+      )
+    ).toBeInTheDocument()
+  })
+
+  it("displays the correct message when there are is one match", async () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => ({
+        counts: {
+          total: 1,
+        },
+        edges: artworks,
+      }),
+    })
+
+    expect(
+      screen.getByText(
+        "You might like this 1 work currently on Artsy that matches your criteria:"
+      )
+    ).toBeInTheDocument()
+  })
+
+  it("displays the correct message when there are no matches", async () => {
+    renderWithRelay({
+      FilterArtworksConnection: () => ({
+        counts: {
+          total: 0,
+        },
+        edges: artworks,
+      }),
+    })
+
+    expect(
+      screen.getByText(
+        "There aren’t any works available that meet the criteria at this time."
+      )
+    ).toBeInTheDocument()
   })
 })
 

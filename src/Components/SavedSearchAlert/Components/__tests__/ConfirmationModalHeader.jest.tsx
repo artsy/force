@@ -41,7 +41,9 @@ describe("ConfirmationModalHeader", () => {
     )
 
     expect(
-      screen.getByText("We will notify you when new works get added to Artsy.")
+      screen.getByText(
+        "We’ll let you know when matching works are added to Artsy."
+      )
     ).toBeInTheDocument()
     expect(screen.getByText("Prints")).toBeInTheDocument()
     expect(screen.getByText("Unique")).toBeInTheDocument()
