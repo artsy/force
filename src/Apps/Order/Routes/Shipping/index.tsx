@@ -25,7 +25,6 @@ import {
   PhoneNumberForm,
   PhoneNumberTouched,
 } from "Apps/Order/Components/PhoneNumberForm"
-import { CheckoutAddress } from "Apps/Order/Components/CheckoutAddress"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
@@ -88,6 +87,7 @@ import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { AddressVerificationFlowQueryRenderer } from "Apps/Order/Components/AddressVerificationFlow"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -105,7 +105,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const { trackEvent } = useTracking()
   const { relayEnvironment } = useSystemContext()
 
+  // true if we want to verify addresses for this order
   const isAddressVerificationEnabled = useFeatureFlag("address_verification")
+  // true if the current address has been verified
+  const [addressVerified, setAddressVerified] = useState<boolean>(false)
+  // true if the current address needs to be verified
+  const [verifyAddress, setVerifyAddress] = useState<boolean>(false)
 
   const [shippingOption, setShippingOption] = useState<
     CommerceOrderFulfillmentTypeEnum
@@ -209,6 +214,15 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   const onContinueButtonPressed = async () => {
+    if (isAddressVerificationEnabled && !addressVerified) {
+      /**
+       * Setting verifyAddress to true will cause the address verification flow
+       * to be initiated on this render.
+       */
+      setVerifyAddress(true)
+      return
+    }
+
     if (checkIfArtsyShipping() && !!shippingQuoteId) {
       selectShippingQuote()
     } else {
@@ -741,24 +755,39 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <Text variant="lg-display" mb="2">
                 Delivery address
               </Text>
-              {isAddressVerificationEnabled ? (
-                <CheckoutAddress
-                  userCountry={props.me.location?.country || "United States"}
-                  onChange={onAddressChange}
-                />
-              ) : (
-                <AddressForm
-                  tabIndex={showAddressForm ? 0 : -1}
-                  value={address}
-                  errors={addressErrors}
-                  touched={addressTouched}
-                  onChange={onAddressChange}
-                  domesticOnly={artwork?.onlyShipsDomestically!}
-                  euOrigin={artwork?.euShippingOrigin!}
-                  shippingCountry={artwork?.shippingCountry!}
-                  showPhoneNumberInput={false}
+              {verifyAddress && (
+                <AddressVerificationFlowQueryRenderer
+                  data-testid="address-verification-flow"
+                  address={{
+                    addressLine1: address.addressLine1,
+                    addressLine2: address.addressLine2,
+                    country: address.country,
+                    city: address.city,
+                    region: address.region,
+                    postalCode: address.postalCode,
+                  }}
+                  onClose={() => {
+                    setVerifyAddress(false)
+                  }}
+                  onChosenAddress={chosenAddress => {
+                    setVerifyAddress(false)
+                    setAddressVerified(true)
+                    setAddress({ ...address, ...chosenAddress })
+                    onContinueButtonPressed()
+                  }}
                 />
               )}
+              <AddressForm
+                tabIndex={showAddressForm ? 0 : -1}
+                value={address}
+                errors={addressErrors}
+                touched={addressTouched}
+                onChange={onAddressChange}
+                domesticOnly={artwork?.onlyShipsDomestically!}
+                euOrigin={artwork?.euShippingOrigin!}
+                shippingCountry={artwork?.shippingCountry!}
+                showPhoneNumberInput={false}
+              />
               <Spacer y={2} />
               <PhoneNumberForm
                 tabIndex={showAddressForm ? 0 : -1}
