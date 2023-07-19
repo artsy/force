@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f3b026228a6d744260bb8195e409dcfb>>
+ * @generated SignedSource<<53b20b9c300f5340ff06ac1198c488a4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type AddressVerificationFlow_verifiedAddressResult$data = {
   readonly inputAddress: {
     readonly address: {
       readonly addressLine1: string;
-      readonly addressLine2: string;
+      readonly addressLine2: string | null;
       readonly city: string;
       readonly country: string;
       readonly postalCode: string;
@@ -26,7 +26,7 @@ export type AddressVerificationFlow_verifiedAddressResult$data = {
   readonly suggestedAddresses: ReadonlyArray<{
     readonly address: {
       readonly addressLine1: string;
-      readonly addressLine2: string;
+      readonly addressLine2: string | null;
       readonly city: string;
       readonly country: string;
       readonly postalCode: string;

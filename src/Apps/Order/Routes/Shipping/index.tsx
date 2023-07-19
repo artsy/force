@@ -767,18 +767,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                     postalCode: address.postalCode,
                   }}
                   onClose={() => {
-                    console.log("close")
                     setVerifyAddress(false)
                   }}
                   onChosenAddress={chosenAddress => {
-                    console.log({
-                      chosenAddress: chosenAddress,
-                      next:
-                        "stick this back in the completed form input, continue and close the modal",
-                    })
-                    setAddress({ ...address, ...chosenAddress })
-                    setAddressVerified(true)
                     setVerifyAddress(false)
+                    setAddressVerified(true)
+                    setAddress({ ...address, ...chosenAddress })
                     onContinueButtonPressed()
                   }}
                 />

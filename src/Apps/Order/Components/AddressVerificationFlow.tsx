@@ -51,24 +51,13 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   onChosenAddress,
   onClose,
 }) => {
-  console.log({ queryResult: verifiedAddressResult })
-  const [modalType, setModalType2] = useState<ModalType | null>(null)
-  const [addressOptions, setAddressOptions2] = useState<AddressOption[]>([])
-
+  const [modalType, setModalType] = useState<ModalType | null>(null)
+  const [addressOptions, setAddressOptions] = useState<AddressOption[]>([])
   const [selectedAddressKey, setSelectedAddressKey2] = useState<string | null>(
     null
   )
 
-  const setModalType = (type: ModalType | null) => {
-    console.log("modal", type)
-    setModalType2(type)
-  }
-  const setAddressOptions = (options: AddressOption[]) => {
-    console.log("options", options)
-    setAddressOptions2(options)
-  }
   const setSelectedAddressKey = (key: string) => {
-    console.log("key", key)
     setSelectedAddressKey2(key)
   }
 
@@ -84,10 +73,10 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     }
   }, [addressOptions, onChosenAddress, selectedAddressKey])
 
-  const onClose2 = useCallback(() => {
+  const handleClose = () => {
     setModalType(null)
     onClose()
-  }, [onClose])
+  }
 
   useEffect(() => {
     if (addressOptions.length > 0) {
@@ -119,7 +108,6 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       onChosenAddress(inputOption.address as AddressValues)
     } else {
       if (verificationStatus === "VERIFIED_WITH_CHANGES") {
-        console.log("start of VERIFIED_WITH_CHANGES")
         setModalType(ModalType.SUGGESTIONS)
         const suggestedOptions = suggestedAddresses!
           .slice(0, 1)
@@ -130,28 +118,18 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
             address: address,
           }))
         setAddressOptions([...suggestedOptions, inputOption])
-
-        console.log("post-select initial key")
       } else {
         setAddressOptions([inputOption])
         setModalType(ModalType.REVIEW_AND_CONFIRM)
       }
     }
-  }, [
-    inputAddress,
-    // inputOption,
-    onChosenAddress,
-    suggestedAddresses,
-    verificationStatus,
-  ])
+  }, [inputAddress, onChosenAddress, suggestedAddresses, verificationStatus])
 
-  console.log("pre-render")
   if (addressOptions.length === 0) return null
-  console.log("rendering", { modalType, addressOptions, selectedAddressKey })
 
   if (modalType === ModalType.SUGGESTIONS) {
     return (
-      <ModalDialog title="Confirm your delivery address" onClose={onClose2}>
+      <ModalDialog title="Confirm your delivery address" onClose={handleClose}>
         <Text>
           To ensure prompt and accurate delivery, we suggest a modified shipping
           address.
@@ -188,7 +166,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
         </RadioGroup>
         <Spacer y={4} />
         <Flex width="100%" justifyContent="space-between">
-          <Button onClick={onClose2} variant="secondaryBlack" flex={1}>
+          <Button onClick={handleClose} variant="secondaryBlack" flex={1}>
             Back to Edit
           </Button>
           <Spacer x={1} />
@@ -277,9 +255,9 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
   return (
     <SystemQueryRenderer<AddressVerificationFlowQuery>
       variables={{ address }}
-      placeholder={<div>... loading ... </div>}
       render={({ props, error }) => {
         if (error) {
+          // TODO: we need better error handling
           console.error(error)
           return null
         }
@@ -288,7 +266,6 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
           return <div>... loading ... </div>
         }
 
-        console.warn("props change")
         return (
           <AddressVerificationFlowFragmentContainer
             verifiedAddressResult={props.verifyAddress}
