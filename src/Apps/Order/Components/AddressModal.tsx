@@ -112,7 +112,11 @@ export const AddressModal: React.FC<Props> = ({
       {show && (
         <ModalDialog
           title={title}
-          onClose={handleModalClose}
+          onClose={() => {
+            // TODO: tracking for modal close
+
+            handleModalClose()
+          }}
           width={ModalWidth.Wide}
         >
           <Formik
