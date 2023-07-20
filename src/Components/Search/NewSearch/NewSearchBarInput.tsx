@@ -124,7 +124,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
     delay: SEARCH_DEBOUNCE_DELAY,
   })
 
-  const clearSearchInput = () => {
+  const resetValue = () => {
     setValue("")
   }
 
@@ -150,10 +150,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
     })
   }
 
-  const handleRedirect = () => {
-    clearSearchInput()
-  }
-
   const handleSubmit = () => {
     if (value) {
       redirect(encodedSearchURL)
@@ -168,8 +164,8 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
       query: value,
     })
 
-    clearSearchInput()
-    redirect(option.href)
+    resetValue()
+    window.location.href = option.href
   }
 
   const handleFocus = () => {
@@ -184,9 +180,9 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
       placeholder={t`navbar.searchBy`}
       spellCheck={false}
       options={shouldStartSearching(value) ? formattedOptions : []}
-      value={value}
+      defaultValue={value}
       onChange={handleChange}
-      onClear={clearSearchInput}
+      onClear={resetValue}
       onSubmit={handleSubmit}
       onSelect={handleSelect}
       onClick={handleFocus}
@@ -211,7 +207,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
           <NewSuggestionItem
             query={value}
             option={option}
-            onRedirect={handleRedirect}
+            onRedirect={resetValue}
           />
         )
       }}
