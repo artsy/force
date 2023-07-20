@@ -6,7 +6,6 @@ metadata:
     app: force
     layer: application
     component: web
-    spot-allowed: false
     app.kubernetes.io/version: production
   name: force-web1
 spec:
@@ -21,14 +20,12 @@ spec:
       app: force
       layer: application
       component: web
-      spot-allowed: false
   template:
     metadata:
       labels:
         app: force
         layer: application
         component: web
-        spot-allowed: false
         app.kubernetes.io/version: production
       name: force-web1
       namespace: default
@@ -99,7 +96,6 @@ metadata:
     app: force
     layer: application
     component: web
-    spot-allowed: true
     app.kubernetes.io/version: production
   name: force-web2
 spec:
@@ -113,14 +109,12 @@ spec:
       app: force
       layer: application
       component: web
-      spot-allowed: true
   template:
     metadata:
       labels:
         app: force
         layer: application
         component: web
-        spot-allowed: true
         app.kubernetes.io/version: production
       name: force-web2
       namespace: default
