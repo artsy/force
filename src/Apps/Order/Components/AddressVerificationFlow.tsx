@@ -14,6 +14,9 @@ import {
 } from "@artsy/palette"
 import { useCallback, useEffect, useState } from "react"
 import { useTracking } from "react-tracking"
+import { useSystemContext } from "System/SystemContext"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 interface AddressVerificationFlowProps {
   verifiedAddressResult: AddressVerificationFlow_verifiedAddressResult$data
@@ -59,6 +62,8 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   )
 
   const { trackEvent } = useTracking()
+  const { user, isLoggedIn } = useSystemContext()
+  const { contextPageOwnerId } = useAnalyticsContext()
 
   const setSelectedAddressKey = (key: string) => {
     setSelectedAddressKey2(key)
@@ -117,10 +122,10 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
 
         trackEvent({
           action_type: "validationAddressViewed",
-          context_module: "OrdersShipping",
-          context_page_owner_type: "orders-shipping",
-          context_page_owner_id: "57e60c68-a198-431e-8a02-6ecb01e3a99b",
-          user_id: "61bcda16515b038ce5000104",
+          context_module: ContextModule.ordersShipping,
+          context_page_owner_type: OwnerType.ordersShipping,
+          context_page_owner_id: contextPageOwnerId,
+          user_id: isLoggedIn ? user?.id : undefined,
           flow: "user adding shipping address",
           subject: "Confirm your delivery address",
           option: "suggestions",
@@ -146,6 +151,9 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     suggestedAddresses,
     verificationStatus,
     trackEvent,
+    isLoggedIn,
+    user,
+    contextPageOwnerId,
   ])
 
   if (addressOptions.length === 0) return null
@@ -194,10 +202,10 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
               if (selectedAddressKey) {
                 trackEvent({
                   action_type: "clickedValidationAddress",
-                  context_module: "OrdersShipping",
-                  context_page_owner_type: "orders-shipping",
-                  context_page_owner_id: "57e60c68-a198-431e-8a02-6ecb01e3a99b",
-                  user_id: "61bcda16515b038ce5000104",
+                  context_module: ContextModule.ordersShipping,
+                  context_page_owner_type: OwnerType.ordersShipping,
+                  context_page_owner_id: contextPageOwnerId,
+                  user_id: isLoggedIn ? user?.id : undefined,
                   subject: "Check your delivery address",
                   option: selectedAddressKey.includes("suggestedAddress")
                     ? "Recommended"
@@ -221,10 +229,10 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
               if (selectedAddressKey) {
                 trackEvent({
                   action_type: "clickedValidationAddress",
-                  context_module: "OrdersShipping",
-                  context_page_owner_type: "orders-shipping",
-                  context_page_owner_id: "57e60c68-a198-431e-8a02-6ecb01e3a99b",
-                  user_id: "61bcda16515b038ce5000104",
+                  context_module: ContextModule.ordersShipping,
+                  context_page_owner_type: OwnerType.ordersShipping,
+                  context_page_owner_id: contextPageOwnerId,
+                  user_id: isLoggedIn ? user?.id : undefined,
                   subject: "Confirm your delivery address",
                   option: selectedAddressKey.includes("suggestedAddress")
                     ? "Recommended"
@@ -247,10 +255,10 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   if (modalType === ModalType.REVIEW_AND_CONFIRM) {
     trackEvent({
       action_type: "validationAddressViewed",
-      context_module: "OrdersShipping",
-      context_page_owner_type: "orders-shipping",
-      context_page_owner_id: "57e60c68-a198-431e-8a02-6ecb01e3a99b",
-      user_id: "61bcda16515b038ce5000104",
+      context_module: ContextModule.ordersShipping,
+      context_page_owner_type: OwnerType.ordersShipping,
+      context_page_owner_id: contextPageOwnerId,
+      user_id: isLoggedIn ? user?.id : undefined,
       flow: "user adding shipping address",
       subject: "Check your delivery address",
       option: "review and confirm",
