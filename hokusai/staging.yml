@@ -2,7 +2,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: force-web1
+  name: force-web
   labels:
     app: force
     layer: application
@@ -27,11 +27,11 @@ spec:
         layer: application
         component: web
         app.kubernetes.io/version: staging
-      name: force-web1
+      name: force-web
       namespace: default
     spec:
       containers:
-      - name: force-web1
+      - name: force-web
         env:
         - name: PORT
           value: '5000'
@@ -99,7 +99,7 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: force-web2
+  name: force-web-spotty
   labels:
     app: force
     layer: application
@@ -123,11 +123,11 @@ spec:
         layer: application
         component: web
         app.kubernetes.io/version: staging
-      name: force-web2
+      name: force-web-spotty
       namespace: default
     spec:
       containers:
-      - name: force-web2
+      - name: force-web-spotty
         env:
         - name: PORT
           value: '5000'
@@ -209,13 +209,13 @@ spec:
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: force-web2
+  name: force-web-spotty
   namespace: default
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: force-web2
+    name: force-web-spotty
   minReplicas: 1
   maxReplicas: 2
   behavior:
