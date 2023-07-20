@@ -9,7 +9,6 @@ import { NewSearchBarInput_viewer$data } from "__generated__/NewSearchBarInput_v
 import { NewSearchBarInputSuggestQuery } from "__generated__/NewSearchBarInputSuggestQuery.graphql"
 import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
-import { getSearchTerm } from "./utils/getSearchTerm"
 import { isServer } from "Server/isServer"
 import {
   PillType,
@@ -36,12 +35,17 @@ const logger = createLogger("Components/Search/NewSearchBar")
 export interface NewSearchBarInputProps extends SystemContextProps {
   relay: RelayRefetchProp
   viewer: NewSearchBarInput_viewer$data
+  searchTerm: string
 }
 
-const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
+const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
+  relay,
+  viewer,
+  searchTerm,
+}) => {
   const tracking = useTracking()
   const { t } = useTranslation()
-  const [value, setValue] = useState(getSearchTerm(window.location))
+  const [value, setValue] = useState(searchTerm)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
   // We use fetchCounter together with useUpdateEffect to track typing
   const [fetchCounter, setFetchCounter] = useState(0)
@@ -270,7 +274,13 @@ export const NewSearchBarInputRefetchContainer = createRefetchContainer(
   `
 )
 
-export const NewSearchBarInputQueryRenderer: FC = () => {
+interface NewSearchBarInputQueryRendererProps {
+  term?: string
+}
+
+export const NewSearchBarInputQueryRenderer: FC<NewSearchBarInputQueryRendererProps> = ({
+  term,
+}) => {
   const { relayEnvironment, searchQuery = "" } = useSystemContext()
 
   if (isServer) {
@@ -293,13 +303,18 @@ export const NewSearchBarInputQueryRenderer: FC = () => {
         }
       `}
       variables={{
-        hasTerm: false,
-        term: "",
+        hasTerm: shouldStartSearching(term ?? ""),
+        term: term ?? "",
         entities: [],
       }}
       render={({ props }) => {
         if (props?.viewer) {
-          return <NewSearchBarInputRefetchContainer viewer={props.viewer} />
+          return (
+            <NewSearchBarInputRefetchContainer
+              viewer={props.viewer}
+              searchTerm={term ?? ""}
+            />
+          )
           // SSR render pass. Since we don't have access to `<Boot>` context
           // from within the NavBar (it's not a part of any app) we need to lean
           // on styled-system for showing / hiding depending upon breakpoint.
