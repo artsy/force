@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<53b20b9c300f5340ff06ac1198c488a4>>
+ * @generated SignedSource<<9229996d1999538586f837aa2f75483a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,7 +22,7 @@ export type AddressVerificationFlow_verifiedAddressResult$data = {
       readonly region: string | null;
     } | null;
     readonly lines: ReadonlyArray<string | null> | null;
-  } | null;
+  };
   readonly suggestedAddresses: ReadonlyArray<{
     readonly address: {
       readonly addressLine1: string;
@@ -33,8 +33,8 @@ export type AddressVerificationFlow_verifiedAddressResult$data = {
       readonly region: string | null;
     } | null;
     readonly lines: ReadonlyArray<string | null> | null;
-  } | null> | null;
-  readonly verificationStatus: VerificationStatuses | null;
+  } | null>;
+  readonly verificationStatus: VerificationStatuses;
   readonly " $fragmentType": "AddressVerificationFlow_verifiedAddressResult";
 };
 export type AddressVerificationFlow_verifiedAddressResult$key = {
