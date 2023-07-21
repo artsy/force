@@ -19131,9 +19131,9 @@ enum VerificationStatuses {
 }
 
 type VerifyAddressType {
-  inputAddress: InputAddressFields
-  suggestedAddresses: [SuggestedAddressFields]
-  verificationStatus: VerificationStatuses
+  inputAddress: InputAddressFields!
+  suggestedAddresses: [SuggestedAddressFields]!
+  verificationStatus: VerificationStatuses!
 }
 
 # An object containing video metadata
