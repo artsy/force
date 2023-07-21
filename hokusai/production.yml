@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -8,6 +9,7 @@ metadata:
     app.kubernetes.io/version: production
   name: force-web
 spec:
+  replicas: 3
   strategy:
     rollingUpdate:
       maxSurge: 2
@@ -30,6 +32,95 @@ spec:
     spec:
       containers:
       - name: force-web
+        env:
+        - name: PORT
+          value: '5000'
+        - name: DD_TRACE_AGENT_HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: DD_VERSION
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['app.kubernetes.io/version']
+        envFrom:
+        - configMapRef:
+            name: force-environment
+        image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:production
+        imagePullPolicy: Always
+        ports:
+        - name: force-http
+          containerPort: 5000
+        readinessProbe:
+          httpGet:
+            port: force-http
+            path: /system/up
+            httpHeaders:
+            - name: X-FORWARDED-PROTO
+              value: https
+          initialDelaySeconds: 5
+          periodSeconds: 10
+          timeoutSeconds: 10
+        resources:
+          requests:
+            cpu: 1000m
+            memory: 1Gi
+          limits:
+            memory: 2Gi
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - sh
+              - -c
+              - sleep 10
+      dnsPolicy: ClusterFirst
+      dnsConfig:
+        options:
+        - name: ndots
+          value: '1'
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - foreground
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: force
+    layer: application
+    component: web
+    app.kubernetes.io/version: production
+  name: force-web-spotty
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: force
+      layer: application
+      component: web
+  template:
+    metadata:
+      labels:
+        app: force
+        layer: application
+        component: web
+        app.kubernetes.io/version: production
+      name: force-web-spotty
+      namespace: default
+    spec:
+      containers:
+      - name: force-web-spotty
         env:
         - name: PORT
           value: '5000'
@@ -104,15 +195,15 @@ spec:
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: force-web
+  name: force-web-spotty
   namespace: default
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: force-web
-  minReplicas: 3
-  maxReplicas: 20
+    name: force-web-spotty
+  minReplicas: 1
+  maxReplicas: 17
   behavior:
     scaleDown:
       stabilizationWindowSeconds: 1800
