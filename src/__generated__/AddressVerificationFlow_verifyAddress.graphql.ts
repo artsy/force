@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9229996d1999538586f837aa2f75483a>>
+ * @generated SignedSource<<f25211afc89824a6a08f1c3c17e14820>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type VerificationStatuses = "NOT_FOUND" | "NOT_PERFORMED" | "VERIFICATION_UNAVAILABLE" | "VERIFIED_NO_CHANGE" | "VERIFIED_WITH_CHANGES" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type AddressVerificationFlow_verifiedAddressResult$data = {
+export type AddressVerificationFlow_verifyAddress$data = {
   readonly inputAddress: {
     readonly address: {
       readonly addressLine1: string;
@@ -33,13 +33,13 @@ export type AddressVerificationFlow_verifiedAddressResult$data = {
       readonly region: string | null;
     } | null;
     readonly lines: ReadonlyArray<string | null> | null;
-  } | null>;
-  readonly verificationStatus: VerificationStatuses;
-  readonly " $fragmentType": "AddressVerificationFlow_verifiedAddressResult";
+  } | null> | null;
+  readonly verificationStatus: VerificationStatuses | null;
+  readonly " $fragmentType": "AddressVerificationFlow_verifyAddress";
 };
-export type AddressVerificationFlow_verifiedAddressResult$key = {
-  readonly " $data"?: AddressVerificationFlow_verifiedAddressResult$data;
-  readonly " $fragmentSpreads": FragmentRefs<"AddressVerificationFlow_verifiedAddressResult">;
+export type AddressVerificationFlow_verifyAddress$key = {
+  readonly " $data"?: AddressVerificationFlow_verifyAddress$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AddressVerificationFlow_verifyAddress">;
 };
 
 const node: ReaderFragment = (function(){
@@ -98,7 +98,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "AddressVerificationFlow_verifiedAddressResult",
+  "name": "AddressVerificationFlow_verifyAddress",
   "selections": [
     {
       "alias": null,
@@ -157,6 +157,6 @@ return {
 };
 })();
 
-(node as any).hash = "815aeb0ffb99d2d138f2e502d7a31139";
+(node as any).hash = "1cc5e84c3a0a61d8f92bba7d7efbf3a8";
 
 export default node;

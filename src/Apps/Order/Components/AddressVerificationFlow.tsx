@@ -1,7 +1,7 @@
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AddressVerificationFlowQuery } from "__generated__/AddressVerificationFlowQuery.graphql"
-import { AddressVerificationFlow_verifiedAddressResult$data } from "__generated__/AddressVerificationFlow_verifiedAddressResult.graphql"
+import { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
 import {
   BorderedRadio,
   Box,
@@ -15,7 +15,7 @@ import {
 import { useCallback, useEffect, useState } from "react"
 
 interface AddressVerificationFlowProps {
-  verifiedAddressResult: AddressVerificationFlow_verifiedAddressResult$data
+  verifyAddress: AddressVerificationFlow_verifyAddress$data
   onChosenAddress: (address: AddressValues) => void
   onClose: () => void
 }
@@ -47,19 +47,15 @@ enum AddressSuggestionRadioButton {
 }
 
 const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
-  verifiedAddressResult,
+  verifyAddress,
   onChosenAddress,
   onClose,
 }) => {
   const [modalType, setModalType] = useState<ModalType | null>(null)
   const [addressOptions, setAddressOptions] = useState<AddressOption[]>([])
-  const [selectedAddressKey, setSelectedAddressKey2] = useState<string | null>(
+  const [selectedAddressKey, setSelectedAddressKey] = useState<string | null>(
     null
   )
-
-  const setSelectedAddressKey = (key: string) => {
-    setSelectedAddressKey2(key)
-  }
 
   const chooseAddress = useCallback(() => {
     if (!selectedAddressKey) return
@@ -86,15 +82,15 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
 
   // Handling possibly incorrectly (by MP) possible null values
   const suggestedAddresses =
-    verifiedAddressResult.suggestedAddresses ||
+    verifyAddress.suggestedAddresses ||
     ([] as NonNullable<
-      NonNullable<AddressVerificationFlow_verifiedAddressResult$data>
+      NonNullable<AddressVerificationFlow_verifyAddress$data>
     >["suggestedAddresses"])
-  const inputAddress = verifiedAddressResult.inputAddress as NonNullable<
-    NonNullable<AddressVerificationFlow_verifiedAddressResult$data>
+  const inputAddress = verifyAddress.inputAddress as NonNullable<
+    NonNullable<AddressVerificationFlow_verifyAddress$data>
   >["inputAddress"]
-  const verificationStatus = verifiedAddressResult.verificationStatus as NonNullable<
-    AddressVerificationFlow_verifiedAddressResult$data
+  const verificationStatus = verifyAddress.verificationStatus as NonNullable<
+    AddressVerificationFlow_verifyAddress$data
   >["verificationStatus"]
 
   useEffect(() => {
@@ -214,11 +210,11 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   return <></>
 }
 
-const AddressVerificationFlowFragmentContainer = createFragmentContainer(
+export const AddressVerificationFlowFragmentContainer = createFragmentContainer(
   AddressVerificationFlow,
   {
-    verifiedAddressResult: graphql`
-      fragment AddressVerificationFlow_verifiedAddressResult on VerifyAddressType {
+    verifyAddress: graphql`
+      fragment AddressVerificationFlow_verifyAddress on VerifyAddressType {
         inputAddress {
           lines
           address {
@@ -268,7 +264,7 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
 
         return (
           <AddressVerificationFlowFragmentContainer
-            verifiedAddressResult={props.verifyAddress}
+            verifyAddress={props.verifyAddress}
             onChosenAddress={onChosenAddress}
             onClose={onClose}
           />
@@ -277,7 +273,7 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
       query={graphql`
         query AddressVerificationFlowQuery($address: AddressInput!) {
           verifyAddress(address: $address) {
-            ...AddressVerificationFlow_verifiedAddressResult
+            ...AddressVerificationFlow_verifyAddress
           }
         }
       `}

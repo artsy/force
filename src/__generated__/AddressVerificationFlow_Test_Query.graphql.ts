@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e122403e61456c1c2272093675069b67>>
+ * @generated SignedSource<<f16bbe990f6f827d8a26ca270d1c6fd4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,17 +18,17 @@ export type AddressInput = {
   postalCode: string;
   region?: string | null;
 };
-export type AddressVerificationFlowQuery$variables = {
+export type AddressVerificationFlow_Test_Query$variables = {
   address: AddressInput;
 };
-export type AddressVerificationFlowQuery$data = {
+export type AddressVerificationFlow_Test_Query$data = {
   readonly verifyAddress: {
     readonly " $fragmentSpreads": FragmentRefs<"AddressVerificationFlow_verifyAddress">;
   } | null;
 };
-export type AddressVerificationFlowQuery = {
-  response: AddressVerificationFlowQuery$data;
-  variables: AddressVerificationFlowQuery$variables;
+export type AddressVerificationFlow_Test_Query = {
+  response: AddressVerificationFlow_Test_Query$data;
+  variables: AddressVerificationFlow_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -96,13 +96,31 @@ v3 = [
     "name": "region",
     "storageKey": null
   }
-];
+],
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": true,
+  "type": "String"
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "AddressVerificationFlowQuery",
+    "name": "AddressVerificationFlow_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -128,7 +146,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "AddressVerificationFlowQuery",
+    "name": "AddressVerificationFlow_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -195,16 +213,75 @@ return {
     ]
   },
   "params": {
-    "cacheID": "01f44d47aa39b335ffa23007d00cd289",
+    "cacheID": "24e425ce3f99ac0b06d0e2522e50c45d",
     "id": null,
-    "metadata": {},
-    "name": "AddressVerificationFlowQuery",
+    "metadata": {
+      "relayTestingSelectionTypeInfo": {
+        "verifyAddress": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "VerifyAddressType"
+        },
+        "verifyAddress.inputAddress": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "InputAddressFields"
+        },
+        "verifyAddress.inputAddress.address": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "InputAddress"
+        },
+        "verifyAddress.inputAddress.address.addressLine1": (v4/*: any*/),
+        "verifyAddress.inputAddress.address.addressLine2": (v5/*: any*/),
+        "verifyAddress.inputAddress.address.city": (v4/*: any*/),
+        "verifyAddress.inputAddress.address.country": (v4/*: any*/),
+        "verifyAddress.inputAddress.address.postalCode": (v4/*: any*/),
+        "verifyAddress.inputAddress.address.region": (v5/*: any*/),
+        "verifyAddress.inputAddress.lines": (v6/*: any*/),
+        "verifyAddress.suggestedAddresses": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "SuggestedAddressFields"
+        },
+        "verifyAddress.suggestedAddresses.address": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "SuggestedAddress"
+        },
+        "verifyAddress.suggestedAddresses.address.addressLine1": (v4/*: any*/),
+        "verifyAddress.suggestedAddresses.address.addressLine2": (v5/*: any*/),
+        "verifyAddress.suggestedAddresses.address.city": (v4/*: any*/),
+        "verifyAddress.suggestedAddresses.address.country": (v4/*: any*/),
+        "verifyAddress.suggestedAddresses.address.postalCode": (v4/*: any*/),
+        "verifyAddress.suggestedAddresses.address.region": (v5/*: any*/),
+        "verifyAddress.suggestedAddresses.lines": (v6/*: any*/),
+        "verifyAddress.verificationStatus": {
+          "enumValues": [
+            "NOT_FOUND",
+            "NOT_PERFORMED",
+            "VERIFICATION_UNAVAILABLE",
+            "VERIFIED_NO_CHANGE",
+            "VERIFIED_WITH_CHANGES"
+          ],
+          "nullable": true,
+          "plural": false,
+          "type": "VerificationStatuses"
+        }
+      }
+    },
+    "name": "AddressVerificationFlow_Test_Query",
     "operationKind": "query",
-    "text": "query AddressVerificationFlowQuery(\n  $address: AddressInput!\n) {\n  verifyAddress(address: $address) {\n    ...AddressVerificationFlow_verifyAddress\n  }\n}\n\nfragment AddressVerificationFlow_verifyAddress on VerifyAddressType {\n  inputAddress {\n    lines\n    address {\n      addressLine1\n      addressLine2\n      city\n      country\n      postalCode\n      region\n    }\n  }\n  suggestedAddresses {\n    lines\n    address {\n      addressLine1\n      addressLine2\n      city\n      country\n      postalCode\n      region\n    }\n  }\n  verificationStatus\n}\n"
+    "text": "query AddressVerificationFlow_Test_Query(\n  $address: AddressInput!\n) {\n  verifyAddress(address: $address) {\n    ...AddressVerificationFlow_verifyAddress\n  }\n}\n\nfragment AddressVerificationFlow_verifyAddress on VerifyAddressType {\n  inputAddress {\n    lines\n    address {\n      addressLine1\n      addressLine2\n      city\n      country\n      postalCode\n      region\n    }\n  }\n  suggestedAddresses {\n    lines\n    address {\n      addressLine1\n      addressLine2\n      city\n      country\n      postalCode\n      region\n    }\n  }\n  verificationStatus\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2cc68455d9f5588f2331a3dc8bdc6942";
+(node as any).hash = "f9ed0de239e1632f8b2c4a3fa40f8d63";
 
 export default node;
