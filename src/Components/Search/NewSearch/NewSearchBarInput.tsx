@@ -49,22 +49,34 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
   const options = extractNodes(viewer.searchConnection)
-  const formattedOptions: SuggestionItemOptionProps[] = options.map(option => {
-    return {
-      text: option.displayLabel!,
-      value: option.displayLabel!,
-      subtitle:
-        getLabel({
-          displayType: option.displayType ?? "",
-          typename: option.__typename,
-        }) ?? "",
-      imageUrl: option.imageUrl!,
-      showArtworksButton: !!option.statuses?.artworks,
-      showAuctionResultsButton: !!option.statuses?.auctionLots,
-      href: option.href!,
-      typename: option.__typename,
-    }
-  })
+  const formattedOptions: SuggestionItemOptionProps[] = [
+    ...options.map(option => {
+      return {
+        text: option.displayLabel!,
+        value: option.displayLabel!,
+        subtitle:
+          getLabel({
+            displayType: option.displayType ?? "",
+            typename: option.__typename,
+          }) ?? "",
+        imageUrl: option.imageUrl!,
+        showArtworksButton: !!option.statuses?.artworks,
+        showAuctionResultsButton: !!option.statuses?.auctionLots,
+        href: option.href!,
+        typename: option.__typename,
+      }
+    }),
+    {
+      text: value,
+      value: value,
+      subtitle: "",
+      imageUrl: "",
+      showArtworksButton: false,
+      showAuctionResultsButton: false,
+      href: encodedSearchURL,
+      typename: "Footer",
+    },
+  ]
 
   useUpdateEffect(() => {
     tracking.trackEvent({
@@ -185,17 +197,16 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
           onPillClick={handlePillClick}
         />
       }
-      footer={({ onClose }) => {
-        return (
-          <NewSearchBarFooter
-            query={value}
-            href={encodedSearchURL}
-            selectedPill={selectedPill}
-            onClick={onClose}
-          />
-        )
-      }}
       renderOption={option => {
+        if (option.typename === "Footer") {
+          return (
+            <NewSearchBarFooter
+              query={value}
+              href={encodedSearchURL}
+              selectedPill={selectedPill}
+            />
+          )
+        }
         return (
           <NewSuggestionItem
             query={value}
@@ -204,7 +215,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
           />
         )
       }}
-      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 150px)`}
+      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
       flip={false}
     />
   )
