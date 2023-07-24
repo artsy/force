@@ -57,6 +57,10 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     null
   )
 
+  const emptyDiv: JSX.Element = (
+    <div data-testid="emptyAddressVerification"></div>
+  )
+
   const chooseAddress = useCallback(() => {
     if (!selectedAddressKey) return
 
@@ -121,7 +125,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     }
   }, [inputAddress, onChosenAddress, suggestedAddresses, verificationStatus])
 
-  if (addressOptions.length === 0) return null
+  if (addressOptions.length === 0) return emptyDiv
 
   if (modalType === ModalType.SUGGESTIONS) {
     return (
@@ -171,7 +175,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
             onClick={chooseAddress}
             flex={1}
           >
-            Use this Address
+            Use This Address
           </Button>
         </Flex>
       </ModalDialog>
@@ -207,7 +211,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     )
   }
 
-  return <></>
+  return emptyDiv
 }
 
 export const AddressVerificationFlowFragmentContainer = createFragmentContainer(
