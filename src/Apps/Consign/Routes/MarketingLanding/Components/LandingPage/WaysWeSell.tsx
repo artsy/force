@@ -55,7 +55,7 @@ const data: StepsWithImageBlackDataType[] = [
     srcSet: waysWeSellImage2.srcSet,
     text:
       "​​We offer tailored and discreet sales arrangements for our collectors’ highest value and most sensitive artworks.",
-    title: "Private Sales",
+    title: "Private sales",
   },
   {
     src: waysWeSellImage3.src,
@@ -158,9 +158,10 @@ const DesctopLayout: React.FC = () => {
   return (
     <Media greaterThan="xs">
       <GridColumns gridColumnGap={[0, 2, 4]}>
-        {data.map(step => {
+        {data.map((step, index) => {
           return (
             <Column
+              key={index}
               span={4}
               mb={[2, 0]}
               data-test="artworkShelfArtwork"
@@ -186,9 +187,10 @@ const MobileLayout: React.FC = () => {
   return (
     <Media at="xs">
       <Shelf showProgress={false}>
-        {data.map(step => {
+        {data.map((step, index) => {
           return (
             <Box
+              key={index}
               display="flex"
               flexDirection="column"
               justifyContent="flex-end"

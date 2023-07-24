@@ -27,9 +27,8 @@ export const Footer: React.FC = () => {
     <>
       <Box px={[2, 4, 12]} mb={[4, 6, 6]}>
         <Text variant={["lg-display", "xl", "xxl"]} pr={0} textAlign="center">
-          Meet your new art advisor.{" "}
-          <Text display={["block", "none"]}>{"\n"}</Text>
-          It’s Artsy.
+          Sell with Artsy is the simple, contemporary way to sell art from your
+          collection.
         </Text>
       </Box>
       <Box display="flex" justifyContent="center">
