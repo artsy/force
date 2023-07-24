@@ -49,7 +49,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
   // We use fetchCounter together with useUpdateEffect to track typing
   const [fetchCounter, setFetchCounter] = useState(0)
-  const { router } = useRouter()
+  const { router, match } = useRouter()
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
   const options = extractNodes(viewer.searchConnection)
@@ -169,7 +169,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
     })
 
     resetValue()
-    window.location.href = option.href
+    redirect(option.href)
   }
 
   const handleFocus = () => {
@@ -181,6 +181,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
 
   return (
     <AutocompleteInput
+      key={match.location.pathname}
       placeholder={t`navbar.searchBy`}
       spellCheck={false}
       options={shouldStartSearching(value) ? formattedOptions : []}

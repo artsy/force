@@ -1,4 +1,4 @@
-import React, { useMemo } from "react"
+import React from "react"
 import {
   Box,
   DROP_SHADOW,
@@ -18,6 +18,7 @@ import { Sticky } from "Components/Sticky"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { useTranslation } from "react-i18next"
 import { Jump } from "Utils/Hooks/useJump"
+import { usePrevious } from "@artsy/palette"
 
 export interface SearchAppProps {
   viewer: SearchApp_viewer$data
@@ -51,8 +52,7 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
   const { query } = location
   const { aggregations } = searchConnection!
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const term = useMemo(() => query.term ?? "", [])
+  const term = usePrevious(query.term ?? "")
   const typeAggregation = aggregations?.find(agg => agg?.slice === "TYPE")
     ?.counts
 

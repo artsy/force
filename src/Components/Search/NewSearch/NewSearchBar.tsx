@@ -3,15 +3,14 @@ import { NewSearchBarInputQueryRenderer } from "Components/Search/NewSearch/NewS
 import { Media } from "Utils/Responsive"
 import { MobileSearchBarQueryRenderer } from "./Mobile/MobileSearchBar"
 import { FC } from "react"
-import { getSearchTerm } from "Components/Search/NewSearch/utils/getSearchTerm"
-import { isServer } from "Server/isServer"
-
+import { useRouter } from "System/Router/useRouter"
 interface NewSearchBarProps {
   onClose: () => void
 }
 
 export const NewSearchBar: FC<NewSearchBarProps> = ({ onClose }) => {
-  const urlSearchTerm = isServer ? undefined : getSearchTerm(window?.location)
+  const { match } = useRouter()
+  const urlSearchTerm = match.location.query.term
 
   return (
     <Box flex={1}>
