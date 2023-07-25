@@ -29,7 +29,9 @@ describe("Footer", () => {
     render(<Footer />)
 
     expect(
-      screen.getByText("Meet your new art advisor. It’s Artsy.")
+      screen.getByText(
+        "Sell with Artsy is the simple, contemporary way to sell art from your collection."
+      )
     ).toBeInTheDocument()
     expect(screen.getByText("Start Selling")).toBeInTheDocument()
   })
