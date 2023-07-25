@@ -8339,6 +8339,8 @@ type deleteUserInterestForUserSuccess {
 input DeleteUserInterestMutationInput {
   anonymousSessionId: String
   clientMutationId: String
+
+  # Either the `id` or the `interest_id` of a user interest
   id: String!
   sessionID: String
 }
