@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f25211afc89824a6a08f1c3c17e14820>>
+ * @generated SignedSource<<c83c0b305bfafb03d2471b403942050e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,8 +33,8 @@ export type AddressVerificationFlow_verifyAddress$data = {
       readonly region: string | null;
     } | null;
     readonly lines: ReadonlyArray<string | null> | null;
-  } | null> | null;
-  readonly verificationStatus: VerificationStatuses | null;
+  } | null>;
+  readonly verificationStatus: VerificationStatuses;
   readonly " $fragmentType": "AddressVerificationFlow_verifyAddress";
 };
 export type AddressVerificationFlow_verifyAddress$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f16bbe990f6f827d8a26ca270d1c6fd4>>
+ * @generated SignedSource<<1a1825afd5694c1de007ac661b194cfe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -225,7 +225,7 @@ return {
         },
         "verifyAddress.inputAddress": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "InputAddressFields"
         },
@@ -244,7 +244,7 @@ return {
         "verifyAddress.inputAddress.lines": (v6/*: any*/),
         "verifyAddress.suggestedAddresses": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": true,
           "type": "SuggestedAddressFields"
         },
@@ -269,7 +269,7 @@ return {
             "VERIFIED_NO_CHANGE",
             "VERIFIED_WITH_CHANGES"
           ],
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "VerificationStatuses"
         }
