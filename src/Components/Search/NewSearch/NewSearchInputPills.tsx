@@ -162,7 +162,9 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({
         pillsRef.current.scrollWidth - pillsRef.current.clientWidth
 
       const isAtStart = currentPosition === 0
-      const isAtEnd = currentPosition === maxScroll
+      // currentPosition can vary a bit when user has browser zoomed in or out
+      // this is why we use a range instead of exact value
+      const isAtEnd = Math.abs(currentPosition - maxScroll) < 10
 
       setShowPreviousChevron(!isAtStart)
       setShowNextChevron(!isAtEnd)
