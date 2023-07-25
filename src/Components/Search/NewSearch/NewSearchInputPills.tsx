@@ -169,6 +169,25 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({
     }
   }
 
+  const handlePillClick = (pill: PillType) => {
+    onPillClick(pill)
+
+    // If user clicks on the leftmost or the rightmost pill, scroll to the left or to the right
+    // so that the pill is not hidden behind the chevron
+    const pillsContainer = pillsRef.current
+    if (pill == PILLS[0]) {
+      pillsContainer?.scrollBy({
+        left: -150, // Can be any number smaller than a pill width, 120 is the width of the current widest pill
+        behavior: "smooth",
+      })
+    } else if (pill == PILLS[PILLS.length - 1]) {
+      pillsContainer?.scrollBy({
+        left: 150, // Can be any number bigger than a pill width, 120 is the width of the current widest pill
+        behavior: "smooth",
+      })
+    }
+  }
+
   return (
     <Flex alignItems="center" bg="white">
       {enableChevronNavigation && (
@@ -177,6 +196,7 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({
           left={0}
           opacity={showPreviousChevron ? 1 : 0}
           zIndex={showPreviousChevron ? 1 : -1}
+          style={{ pointerEvents: "none" }}
         >
           <PreviousChevron onClick={scrollToLeft} left={2} />
           <GradientBg placement="left" />
@@ -200,7 +220,7 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({
               mr={1}
               selected={selected}
               disabled={disabled}
-              onClick={() => onPillClick(pill)}
+              onClick={() => handlePillClick(pill)}
             >
               {displayName}
             </Pill>
@@ -214,6 +234,7 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({
           right={0}
           opacity={showNextChevron ? 1 : 0}
           zIndex={showNextChevron ? 1 : -1}
+          style={{ pointerEvents: "none" }}
         >
           <NextChevron onClick={scrollToRight} right={2} />
           <GradientBg placement="right" />
