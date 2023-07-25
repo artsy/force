@@ -113,7 +113,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   >(false)
   // true if the current address has been verified
   const [addressHasBeenVerified, setAddressHasBeenVerified] = useState<boolean>(
-    false
+    true
   )
 
   const [shippingOption, setShippingOption] = useState<
@@ -617,6 +617,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     createdAddress: CreateUserAddressMutation$data["createUserAddress"]
   ) => {
     if (createdAddress?.userAddressOrErrors?.internalID) {
+      setAddressHasBeenVerified(false)
       selectSavedAddress(createdAddress.userAddressOrErrors.internalID)
     }
   }
