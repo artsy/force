@@ -13,7 +13,6 @@ import {
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useRouter } from "System/Router/useRouter"
 import { pathToRegexp } from "path-to-regexp"
-import { useSystemContext } from "System/SystemContext"
 
 interface ProgressiveOnboardingFollowArtistProps
   extends WithProgressiveOnboardingCountsProps {}
@@ -22,22 +21,39 @@ export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFoll
   counts,
   children,
 }) => {
-  const { isLoggedIn } = useSystemContext()
-
   const router = useRouter()
 
   const { dismiss, isDismissed } = useProgressiveOnboarding()
 
+  const hasNotDismissed = !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
+    .status
+  const countsReady = counts.isReady
+  const zeroFollows = counts.followedArtists === 0
+
+  const dismissedAll = PROGRESSIVE_ONBOARDING_ALERT_CHAIN.every(
+    key => isDismissed(key).status
+  )
+
+  const notArtistPage = !pathToRegexp("/artist/:artistID").test(
+    router.match.location.pathname
+  )
+
   const isDisplayable =
-    isLoggedIn &&
     // Hasn't dismissed the follow artist onboarding.
-    !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST).status &&
+    hasNotDismissed &&
     // Hasn't followed an artist yet.
-    counts.isReady &&
-    counts.followedArtists === 0 &&
+    countsReady &&
+    zeroFollows &&
     // If you've already dismissed the alerts onboarding OR you're not on the artist page.
-    (PROGRESSIVE_ONBOARDING_ALERT_CHAIN.every(key => isDismissed(key).status) ||
-      !pathToRegexp("/artist/:artistID").test(router.match.location.pathname))
+    (dismissedAll || notArtistPage)
+
+  console.log({
+    countsReady,
+    dismissedAll,
+    hasNotDismissed,
+    notArtistPage,
+    zeroFollows,
+  })
 
   const handleClose = useCallback(() => {
     dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
