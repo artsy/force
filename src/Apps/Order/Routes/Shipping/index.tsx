@@ -113,7 +113,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   >(false)
   // true if the current address has been verified
   const [addressHasBeenVerified, setAddressHasBeenVerified] = useState<boolean>(
-    true
+    false
   )
 
   const [shippingOption, setShippingOption] = useState<
@@ -218,7 +218,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   const onContinueButtonPressed = async () => {
-    if (isAddressVerificationEnabled && !addressHasBeenVerified) {
+    if (
+      isAddressVerificationEnabled &&
+      !addressHasBeenVerified &&
+      isCreateNewAddress()
+    ) {
       /**
        * Setting verifyAddress to true will cause the address verification flow
        * to be initiated on this render.
@@ -617,7 +621,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     createdAddress: CreateUserAddressMutation$data["createUserAddress"]
   ) => {
     if (createdAddress?.userAddressOrErrors?.internalID) {
-      setAddressHasBeenVerified(false)
       selectSavedAddress(createdAddress.userAddressOrErrors.internalID)
     }
   }
