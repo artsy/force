@@ -13,7 +13,6 @@ import {
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useRouter } from "System/Router/useRouter"
 import { pathToRegexp } from "path-to-regexp"
-import { useSystemContext } from "System/SystemContext"
 
 interface ProgressiveOnboardingFollowArtistProps
   extends WithProgressiveOnboardingCountsProps {}
@@ -22,14 +21,11 @@ export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFoll
   counts,
   children,
 }) => {
-  const { isLoggedIn } = useSystemContext()
-
   const router = useRouter()
 
   const { dismiss, isDismissed } = useProgressiveOnboarding()
 
   const isDisplayable =
-    isLoggedIn &&
     // Hasn't dismissed the follow artist onboarding.
     !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST).status &&
     // Hasn't followed an artist yet.
