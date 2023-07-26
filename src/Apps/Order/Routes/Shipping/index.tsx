@@ -105,8 +105,13 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const { trackEvent } = useTracking()
   const { relayEnvironment } = useSystemContext()
 
-  // true if we want to verify addresses for this order
-  const isAddressVerificationEnabled = useFeatureFlag("address_verification")
+  const addressVerificationUSEnabled = !!useFeatureFlag(
+    "address_verification_us"
+  )
+  const addressVerificationIntlEnabled = !!useFeatureFlag(
+    "address_verification_intl"
+  )
+
   // true if the current address needs to be verified
   const [addressNeedsVerification, setAddressNeedsVerification] = useState<
     boolean
@@ -217,8 +222,14 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     )
   }
 
+  const isAddressVerificationEnabled = (): boolean => {
+    return address.country === "US"
+      ? addressVerificationUSEnabled
+      : addressVerificationIntlEnabled
+  }
+
   const onContinueButtonPressed = async () => {
-    if (isAddressVerificationEnabled && !addressHasBeenVerified) {
+    if (isAddressVerificationEnabled() && !addressHasBeenVerified) {
       /**
        * Setting verifyAddress to true will cause the address verification flow
        * to be initiated on this render.
