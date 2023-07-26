@@ -9,7 +9,6 @@ import { MetaTags } from "Components/MetaTags"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { TopContextBar } from "Components/TopContextBar"
-import { useRouter } from "System/Router/useRouter"
 
 interface AuctionResultProps {
   auctionResult: AuctionResult_auctionResult$data
@@ -18,10 +17,10 @@ interface AuctionResultProps {
 export const AuctionResult: React.FC<AuctionResultProps> = ({
   auctionResult,
 }) => {
-  const { router } = useRouter()
   const { comparableAuctionResults, title, artist, internalID } = auctionResult
 
   const results = extractNodes(comparableAuctionResults)
+  const href = artist?.href + "/auction-results"
 
   return (
     <>
@@ -32,12 +31,7 @@ export const AuctionResult: React.FC<AuctionResultProps> = ({
         pathname={`/auction-result/${internalID}`}
       />
 
-      <TopContextBar
-        onClick={() => router.go(-1)}
-        redirectTo={artist?.href!}
-        displayBackArrow
-        hideSeparator
-      >
+      <TopContextBar href={href} displayBackArrow hideSeparator>
         Back
       </TopContextBar>
 
