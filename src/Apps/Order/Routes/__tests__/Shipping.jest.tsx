@@ -1062,8 +1062,7 @@ describe("Shipping", () => {
       })
     })
 
-    // eslint-disable-next-line jest/no-focused-tests
-    describe.only("with address verification enabled", () => {
+    describe("with address verification enabled", () => {
       beforeAll(() => {
         ;(useFeatureFlag as jest.Mock).mockImplementation(
           (featureName: string) => featureName === "address_verification"
@@ -1240,6 +1239,25 @@ describe("Shipping", () => {
       await page.update()
 
       expect(mockCommitMutation).not.toHaveBeenCalled()
+    })
+
+    describe("with address verification enabled", () => {
+      beforeAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockImplementation(
+          (featureName: string) => featureName === "address_verification"
+        )
+      })
+
+      describe("when the continue button is clicked", () => {
+        it("does not mount the address verification flow and commits shipping mutation", async () => {
+          await page.clickSubmit()
+
+          expect(
+            page.find(`[data-testid="address-verification-flow"]`).exists()
+          ).toBe(false)
+          expect(mockCommitMutation).toHaveBeenCalled()
+        })
+      })
     })
 
     describe("Artsy shipping international", () => {
