@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<20e09ec1e749c994296cd341f36e1732>>
+ * @generated SignedSource<<5f4bd2e6cbf1e1b4f89f5f016d7f0d79>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,8 +9,19 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type AuctionResultsAggregation = "SIMPLE_PRICE_HISTOGRAM" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistAuctionResultsRoute_artist$data = {
+  readonly sidebarAggregations: {
+    readonly aggregations: ReadonlyArray<{
+      readonly counts: ReadonlyArray<{
+        readonly count: number;
+        readonly name: string;
+        readonly value: string;
+      } | null> | null;
+      readonly slice: AuctionResultsAggregation | null;
+    } | null> | null;
+  } | null;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResults_artist">;
   readonly " $fragmentType": "ArtistAuctionResultsRoute_artist";
 };
@@ -44,12 +55,27 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
+      "name": "includeEstimateRange"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "includeUnknownPrices"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
       "name": "organizations"
     },
     {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "page"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "priceRange"
     },
     {
       "defaultValue": null,
@@ -90,6 +116,16 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Variable",
+          "name": "includeEstimateRange",
+          "variableName": "includeEstimateRange"
+        },
+        {
+          "kind": "Variable",
+          "name": "includeUnknownPrices",
+          "variableName": "includeUnknownPrices"
+        },
+        {
+          "kind": "Variable",
           "name": "organizations",
           "variableName": "organizations"
         },
@@ -97,6 +133,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "page",
           "variableName": "page"
+        },
+        {
+          "kind": "Variable",
+          "name": "priceRange",
+          "variableName": "priceRange"
         },
         {
           "kind": "Variable",
@@ -111,12 +152,81 @@ const node: ReaderFragment = {
       ],
       "kind": "FragmentSpread",
       "name": "ArtistAuctionResults_artist"
+    },
+    {
+      "alias": "sidebarAggregations",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "aggregations",
+          "value": [
+            "SIMPLE_PRICE_HISTOGRAM"
+          ]
+        }
+      ],
+      "concreteType": "AuctionResultConnection",
+      "kind": "LinkedField",
+      "name": "auctionResultsConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "AuctionResultsAggregationType",
+          "kind": "LinkedField",
+          "name": "aggregations",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "slice",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "AggregationCount",
+              "kind": "LinkedField",
+              "name": "counts",
+              "plural": true,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "name",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "value",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "count",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "auctionResultsConnection(aggregations:[\"SIMPLE_PRICE_HISTOGRAM\"])"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "77415e9b7ab12bb7008786080c206b2a";
+(node as any).hash = "9bd149c74830a2a7aa0ad569abc78618";
 
 export default node;
