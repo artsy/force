@@ -62,7 +62,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   )
 
   const { trackEvent } = useTracking()
-  const { user, isLoggedIn } = useSystemContext()
+  const { user } = useSystemContext()
   const { contextPageOwnerSlug } = useAnalyticsContext()
 
   const setSelectedAddressKey = (key: string) => {
@@ -167,7 +167,6 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     suggestedAddresses,
     verificationStatus,
     trackEvent,
-    isLoggedIn,
     user,
     contextPageOwnerSlug,
   ])
@@ -221,7 +220,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
                   context_module: ContextModule.ordersShipping,
                   context_page_owner_type: OwnerType.ordersShipping,
                   context_page_owner_id: contextPageOwnerSlug,
-                  user_id: isLoggedIn ? user?.id : undefined,
+                  user_id: user?.id,
                   subject: "Check your delivery address",
                   option: selectedAddressKey.includes("suggestedAddress")
                     ? "Recommended"
