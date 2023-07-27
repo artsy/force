@@ -77,7 +77,6 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     )
     if (selectedAddress) {
       setModalType(null)
-      // TODO: tracking for modal close
       onChosenAddress(selectedAddress.address)
     }
   }, [addressOptions, onChosenAddress, selectedAddressKey])
@@ -228,8 +227,6 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
                   label: "Back to Edit",
                 })
               }
-              // TODO: tracking for modal close
-
               handleClose()
             }}
             variant="secondaryBlack"
