@@ -229,10 +229,14 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   const onContinueButtonPressed = async () => {
-    if (isAddressVerificationEnabled() && !addressHasBeenVerified) {
+    if (
+      isAddressVerificationEnabled() &&
+      !addressHasBeenVerified &&
+      isCreateNewAddress()
+    ) {
       /**
-       * Setting verifyAddress to true will cause the address verification flow
-       * to be initiated on this render.
+       * Setting addressNeedsVerification to true will cause the address
+       * verification flow to be initiated on this render.
        */
       setAddressNeedsVerification(true)
       return
