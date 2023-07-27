@@ -19,19 +19,16 @@ import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowA
 import { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
-import { useArtistHeaderPalette } from "Apps/Artist/Components/ArtistHeader/useArtistHeaderPalette"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
 import { useMode } from "Utils/Hooks/useMode"
 import { RouterLink } from "System/Router/RouterLink"
-import { sortBy } from "lodash"
 import {
   ArtistHeaderImage,
   isValidImage,
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
-// TODO:
-// import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
+import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist$data
@@ -44,25 +41,11 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
     setMode(mode === "Collapsed" ? "Expanded" : "Collapsed")
   }
 
-  const iconicWork = artist.iconicArtworks?.edges?.[0]?.node
-  const image = iconicWork?.image
-
-  const {
-    backgroundColor,
-    foregroundColor,
-    secondaryColor,
-    overlayColor,
-    invert,
-  } = useArtistHeaderPalette(iconicWork?.dominantColors[0] ?? "#000000")
-
+  const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
   const hasInsights = artist.insights.length > 0
   const hasBio = artist.biographyBlurb?.text
   const hasSomething = hasImage || hasInsights || hasBio
-
-  const insights = sortBy(artist.insights, ({ kind }) => {
-    return INSIGHTS.indexOf(`${kind}`)
-  })
 
   if (mode === "Collapsed") {
     return (
@@ -81,12 +64,14 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
               {artist.name}
             </Text>
 
-            <FollowArtistButtonQueryRenderer
-              id={artist.internalID}
-              contextModule={ContextModule.artistHeader}
-              size="small"
-              width="fit-content"
-            />
+            <ProgressiveOnboardingFollowArtist>
+              <FollowArtistButtonQueryRenderer
+                id={artist.internalID}
+                contextModule={ContextModule.artistHeader}
+                size="small"
+                width="fit-content"
+              />
+            </ProgressiveOnboardingFollowArtist>
           </Column>
 
           <Column span={4} display="flex" justifyContent="flex-end">
@@ -104,24 +89,21 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
   }
 
   return (
-    <FullBleed
-      key={artist.internalID}
-      data-test="artistHeader"
-      bg={backgroundColor}
-      color={foregroundColor}
-    >
-      <Box width="100%" height="100%" bg={overlayColor}>
+    <FullBleed key={artist.internalID} data-test="artistHeader">
+      <Box width="100%" height="100%">
         <AppContainer>
           <HorizontalPadding pt={4} position="relative">
             <GridColumns gridRowGap={2} gridColumnGap={[0, 4]}>
-              {hasImage && (
+              {artist.coverArtwork && hasImage && (
                 <Column
                   span={3}
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
                 >
-                  <ArtistHeaderImage image={image} bg={secondaryColor} />
+                  <RouterLink to={artist.coverArtwork.href} display="block">
+                    <ArtistHeaderImage image={image} />
+                  </RouterLink>
                 </Column>
               )}
 
@@ -144,7 +126,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                         {artist.name}
                       </Text>
 
-                      <Text as="h2" variant="xl" color={secondaryColor}>
+                      <Text as="h2" variant="xl" color="black60">
                         {artist.formattedNationalityAndBirthday}
                       </Text>
                     </Box>
@@ -155,7 +137,6 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                         contextModule={ContextModule.artistHeader}
                         size="small"
                         width="fit-content"
-                        {...(invert && { style: { filter: "invert(100%)" } })}
                       />
                     )}
                   </Flex>
@@ -171,13 +152,12 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                         contextModule={ContextModule.artistHeader}
                         size="small"
                         width="100%"
-                        {...(invert && { style: { filter: "invert(100%)" } })}
                       />
 
                       {!!artist.counts?.follows && (
                         <Text
                           variant="xs"
-                          color={secondaryColor}
+                          color="black60"
                           textAlign="center"
                           flexShrink={0}
                         >
@@ -190,7 +170,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                 </Flex>
 
                 {hasBio && (
-                  <Bio variant="sm" color={secondaryColor}>
+                  <Bio variant="sm" color="black60">
                     <ReadMore
                       maxChars={250}
                       content={artist.biographyBlurb.text}
@@ -198,41 +178,42 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                   </Bio>
                 )}
 
-                <CV to={`/artist/${artist.slug}/cv`} color={secondaryColor}>
+                <CV to={`/artist/${artist.slug}/cv`} color="black60">
                   See all past shows and fair booths
                 </CV>
               </Column>
 
-              {insights.length > 0 && (
+              {artist.insights.length > 0 && (
                 <Column span={4} {...(!hasImage && { start: 9 })}>
-                  <Text variant="sm" color={secondaryColor}>
+                  <Text variant="sm" color="black60">
                     Highlights and Achievements
                   </Text>
 
                   <Spacer y={1} />
 
-                  {insights.slice(0, 6).map((insight, index) => {
-                    return (
-                      <Expandable
-                        key={insight.kind ?? index}
-                        label={insight.label}
-                        pb={1}
-                        borderColor={secondaryColor}
-                      >
-                        <Text variant="sm" color={secondaryColor} pb={1}>
-                          {insight.entities.length > 0
-                            ? insight.entities.join(", ")
-                            : insight.description}
-                        </Text>
-                      </Expandable>
-                    )
-                  })}
+                  {artist.insights
+                    .slice(0, ARTIST_HEADER_NUMBER_OF_INSIGHTS)
+                    .map((insight, index) => {
+                      return (
+                        <Expandable
+                          key={insight.kind ?? index}
+                          label={insight.label}
+                          pb={1}
+                        >
+                          <Text variant="sm" color="black60" pb={1}>
+                            {insight.entities.length > 0
+                              ? insight.entities.join(", ")
+                              : insight.description}
+                          </Text>
+                        </Expandable>
+                      )
+                    })}
                 </Column>
               )}
             </GridColumns>
 
             <Collapse title="Hide additional information" onClick={handleClick}>
-              <ChevronUpIcon m="auto" fill={foregroundColor} />
+              <ChevronUpIcon m="auto" />
             </Collapse>
           </HorizontalPadding>
         </AppContainer>
@@ -262,16 +243,13 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           description
           entities
         }
-        iconicArtworks: artworksConnection(first: 1, sort: ICONICITY_DESC) {
-          edges {
-            node {
-              dominantColors
-              image {
-                src: url(version: ["larger", "larger"])
-                width
-                height
-              }
-            }
+        coverArtwork {
+          title
+          href
+          image {
+            src: url(version: ["larger", "larger"])
+            width
+            height
           }
         }
       }
@@ -325,17 +303,4 @@ const formatFollowerCount = (n: number) => {
   }
 }
 
-const INSIGHTS = [
-  "HIGH_AUCTION_RECORD",
-  "ACTIVE_SECONDARY_MARKET",
-  "CRITICALLY_ACCLAIMED",
-  "ARTSY_VANGUARD_YEAR",
-  "SOLO_SHOW",
-  "GROUP_SHOW",
-  "BIENNIAL",
-  "PRIVATE_COLLECTIONS",
-  "COLLECTED",
-  "REVIEWED",
-  "RESIDENCIES",
-  "AWARDS",
-]
+export const ARTIST_HEADER_NUMBER_OF_INSIGHTS = 6
