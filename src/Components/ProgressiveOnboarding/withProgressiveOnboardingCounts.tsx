@@ -29,9 +29,7 @@ export const withProgressiveOnboardingCounts = <
     const { isLoggedIn } = useSystemContext()
 
     if (!isLoggedIn) {
-      return (
-        <Component {...props} counts={{ ...INITIAL_COUNTS, isReady: true }} />
-      )
+      return <Component {...props} counts={INITIAL_COUNTS} />
     }
 
     return (

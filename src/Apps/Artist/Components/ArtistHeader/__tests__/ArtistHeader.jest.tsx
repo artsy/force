@@ -11,13 +11,6 @@ jest.mock("react-head", () => ({
   Link: () => null,
 }))
 
-jest.mock(
-  "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist",
-  () => ({
-    ProgressiveOnboardingFollowArtist: ({ children }) => children,
-  })
-)
-
 const mockuseTracking = useTracking as jest.Mock
 const trackingSpy = jest.fn()
 
