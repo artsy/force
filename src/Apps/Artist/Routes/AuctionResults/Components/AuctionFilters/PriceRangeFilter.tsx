@@ -33,7 +33,7 @@ export const PriceRangeFilter: FC = () => {
   }
 
   return (
-    <Expandable label="Price" expanded borderColor="white100">
+    <Expandable label="Price" expanded>
       <Spacer y={2} />
       <PriceRange
         bars={bars}
