@@ -767,7 +767,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                     postalCode: address.postalCode,
                   }}
                   onClose={() => {
-                    // add universal tracking for closing modal here
                     setVerifyAddress(false)
                   }}
                   onChosenAddress={chosenAddress => {
