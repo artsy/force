@@ -113,8 +113,6 @@ export const AddressModal: React.FC<Props> = ({
         <ModalDialog
           title={title}
           onClose={() => {
-            // TODO: tracking for modal close
-
             handleModalClose()
           }}
           width={ModalWidth.Wide}
