@@ -1,6 +1,5 @@
 import { renderHook } from "@testing-library/react-hooks"
 import {
-  PROGRESSIVE_ONBOARDING_LOGGED_OUT_USER_ID,
   ProgressiveOnboardingProvider,
   __dismiss__,
   get,
@@ -10,14 +9,8 @@ import {
   useProgressiveOnboarding,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 
-jest.mock("System/SystemContext", () => ({
-  useSystemContext: jest.fn().mockReturnValue({
-    user: { id: "example-id" },
-  }),
-}))
-
 describe("ProgressiveOnboardingContext", () => {
-  const id = "example-id"
+  const id = "user"
 
   describe("get", () => {
     afterEach(() => reset(id))
@@ -209,53 +202,6 @@ describe("ProgressiveOnboardingContext", () => {
         { key: "follow-find", timestamp: expect.any(Number) },
         { key: "follow-highlight", timestamp: expect.any(Number) },
       ])
-    })
-  })
-
-  describe("syncFromLoggedOutUser", () => {
-    it("does nothing if the user is logged out", () => {
-      const { result } = renderHook(useProgressiveOnboarding, {
-        wrapper: ({ children }) => (
-          <ProgressiveOnboardingProvider>
-            {children}
-          </ProgressiveOnboardingProvider>
-        ),
-      })
-
-      result.current.syncFromLoggedOutUser()
-
-      expect(get(id)).toEqual([])
-    })
-
-    describe("logged in", () => {
-      it("syncs the dismissed state from the logged out user", () => {
-        const loggedOutUserId = PROGRESSIVE_ONBOARDING_LOGGED_OUT_USER_ID
-
-        const loggedOutDismissals = [
-          { key: "follow-artist", timestamp: 555 },
-          { key: "follow-find", timestamp: 555 },
-        ]
-
-        localStorage.setItem(
-          localStorageKey(loggedOutUserId),
-          JSON.stringify(loggedOutDismissals)
-        )
-
-        expect(get(id)).toEqual([])
-
-        const { result } = renderHook(useProgressiveOnboarding, {
-          initialProps: { id: loggedOutUserId },
-          wrapper: ({ children }) => (
-            <ProgressiveOnboardingProvider>
-              {children}
-            </ProgressiveOnboardingProvider>
-          ),
-        })
-
-        result.current.syncFromLoggedOutUser()
-
-        expect(get(id)).toEqual(loggedOutDismissals)
-      })
     })
   })
 })

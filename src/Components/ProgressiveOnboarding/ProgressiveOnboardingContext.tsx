@@ -27,18 +27,16 @@ const ProgressiveOnboardingContext = createContext<{
     key: ProgressiveOnboardingKey | readonly ProgressiveOnboardingKey[]
   ) => void
   isDismissed: (key: ProgressiveOnboardingKey) => DismissedKeyStatus
-  syncFromLoggedOutUser: () => void
 }>({
   dismissed: [],
   dismiss: () => {},
   isDismissed: _key => ({ status: false, timestamp: 0 }),
-  syncFromLoggedOutUser: () => {},
 })
 
 export const ProgressiveOnboardingProvider: FC = ({ children }) => {
   const { user } = useSystemContext()
 
-  const id = user?.id ?? PROGRESSIVE_ONBOARDING_LOGGED_OUT_USER_ID
+  const id = user?.id ?? "user"
 
   const [dismissed, setDismissed] = useState<DismissedKey[]>([])
 
@@ -78,29 +76,6 @@ export const ProgressiveOnboardingProvider: FC = ({ children }) => {
     [dismissed, mounted]
   )
 
-  /**
-   * If the user is logged out, and performs some action which causes them
-   * to login, we need to sync up the dismissed state from the logged out user
-   */
-  const syncFromLoggedOutUser = useCallback(() => {
-    if (id === PROGRESSIVE_ONBOARDING_LOGGED_OUT_USER_ID) return
-
-    const loggedOutDismissals = get(PROGRESSIVE_ONBOARDING_LOGGED_OUT_USER_ID)
-    const loggedInDismissals = get(id)
-
-    const dismissals = uniqBy(
-      [...loggedOutDismissals, ...loggedInDismissals],
-      d => d.key
-    )
-
-    setDismissed(dismissals)
-
-    localStorage.setItem(localStorageKey(id), JSON.stringify(dismissals))
-    localStorage.removeItem(
-      localStorageKey(PROGRESSIVE_ONBOARDING_LOGGED_OUT_USER_ID)
-    )
-  }, [id])
-
   // Ensure that the dismissed state stays in sync incase the user
   // has multiple tabs open.
   useEffect(() => {
@@ -117,7 +92,7 @@ export const ProgressiveOnboardingProvider: FC = ({ children }) => {
 
   return (
     <ProgressiveOnboardingContext.Provider
-      value={{ dismissed, dismiss, isDismissed, syncFromLoggedOutUser }}
+      value={{ dismissed, dismiss, isDismissed }}
     >
       {children}
     </ProgressiveOnboardingContext.Provider>
@@ -125,10 +100,16 @@ export const ProgressiveOnboardingProvider: FC = ({ children }) => {
 }
 
 export const useProgressiveOnboarding = () => {
-  return useContext(ProgressiveOnboardingContext)
-}
+  const { dismiss, dismissed, isDismissed } = useContext(
+    ProgressiveOnboardingContext
+  )
 
-export const PROGRESSIVE_ONBOARDING_LOGGED_OUT_USER_ID = "user" as const
+  return {
+    dismiss,
+    dismissed,
+    isDismissed,
+  }
+}
 
 export const localStorageKey = (id: string) => {
   return `progressive-onboarding.dismissed.${id}`
