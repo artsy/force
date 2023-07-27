@@ -14,7 +14,6 @@ export interface WithProgressiveOnboardingCountsProps {
 }
 
 const INITIAL_COUNTS = {
-  isReady: false,
   followedArtists: 0,
   savedArtworks: 0,
   savedSearches: 0,
@@ -37,7 +36,12 @@ export const withProgressiveOnboardingCounts = <
     return (
       <SystemQueryRenderer<withProgressiveOnboardingCountsQuery>
         lazyLoad
-        placeholder={<Component {...props} counts={INITIAL_COUNTS} />}
+        placeholder={
+          <Component
+            {...props}
+            counts={{ ...INITIAL_COUNTS, isReady: false }}
+          />
+        }
         query={graphql`
           query withProgressiveOnboardingCountsQuery {
             me {
@@ -50,9 +54,23 @@ export const withProgressiveOnboardingCounts = <
           }
         `}
         render={({ props: renderProps, error }) => {
-          if (error || !renderProps?.me) {
+          if (error) {
             console.error(error)
-            return <Component {...props} counts={INITIAL_COUNTS} />
+            return (
+              <Component
+                {...props}
+                counts={{ ...INITIAL_COUNTS, isReady: true }}
+              />
+            )
+          }
+
+          if (!renderProps?.me) {
+            return (
+              <Component
+                {...props}
+                counts={{ ...INITIAL_COUNTS, isReady: false }}
+              />
+            )
           }
 
           const counts = renderProps.me.counts || INITIAL_COUNTS
