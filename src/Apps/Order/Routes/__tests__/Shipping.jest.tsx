@@ -1062,29 +1062,100 @@ describe("Shipping", () => {
       })
     })
 
-    describe("with address verification enabled", () => {
+    describe("with US address verification enabled and international disabled", () => {
       beforeAll(() => {
         ;(useFeatureFlag as jest.Mock).mockImplementation(
-          (featureName: string) => featureName === "address_verification"
+          (featureName: string) => featureName === "address_verification_us"
         )
       })
 
       describe("when the continue button is clicked", () => {
-        it("mounts the address verification flow", async () => {
-          const wrapper = getWrapper({
-            CommerceOrder: () => testOrder,
-            Me: () => emptyTestMe,
+        describe("with US address", () => {
+          it("mounts the address verification flow", async () => {
+            const wrapper = getWrapper({
+              CommerceOrder: () => testOrder,
+              Me: () => emptyTestMe,
+            })
+
+            const page = new ShippingTestPage(wrapper)
+
+            fillAddressForm(page.root, validAddress)
+
+            await page.clickSubmit()
+
+            expect(
+              page.find(`[data-testid="address-verification-flow"]`).exists()
+            ).toBe(true)
           })
+        })
 
-          const page = new ShippingTestPage(wrapper)
+        describe("with international address", () => {
+          it("does not mount the address verification flow", async () => {
+            const wrapper = getWrapper({
+              CommerceOrder: () => testOrder,
+              Me: () => emptyTestMe,
+            })
 
-          fillAddressForm(page.root, validAddress)
+            const page = new ShippingTestPage(wrapper)
 
-          await page.clickSubmit()
+            const address = Object.assign({}, validAddress, { country: "GB" })
+            fillAddressForm(page.root, address)
 
-          expect(
-            page.find(`[data-testid="address-verification-flow"]`).exists()
-          ).toBe(true)
+            await page.clickSubmit()
+
+            expect(
+              page.find(`[data-testid="address-verification-flow"]`).exists()
+            ).toBe(false)
+          })
+        })
+      })
+    })
+
+    describe("with US address verification disabled and international enabled", () => {
+      beforeAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockImplementation(
+          (featureName: string) => featureName === "address_verification_intl"
+        )
+      })
+
+      describe("when the continue button is clicked", () => {
+        describe("with US address", () => {
+          it("does not mount the address verification flow", async () => {
+            const wrapper = getWrapper({
+              CommerceOrder: () => testOrder,
+              Me: () => emptyTestMe,
+            })
+
+            const page = new ShippingTestPage(wrapper)
+
+            fillAddressForm(page.root, validAddress)
+
+            await page.clickSubmit()
+
+            expect(
+              page.find(`[data-testid="address-verification-flow"]`).exists()
+            ).toBe(false)
+          })
+        })
+
+        describe("with international address", () => {
+          it("mounts the address verification flow", async () => {
+            const wrapper = getWrapper({
+              CommerceOrder: () => testOrder,
+              Me: () => emptyTestMe,
+            })
+
+            const page = new ShippingTestPage(wrapper)
+
+            const address = Object.assign({}, validAddress, { country: "GB" })
+            fillAddressForm(page.root, address)
+
+            await page.clickSubmit()
+
+            expect(
+              page.find(`[data-testid="address-verification-flow"]`).exists()
+            ).toBe(true)
+          })
         })
       })
     })
