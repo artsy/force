@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<444d5d35ba77bb992708bbb463d690c5>>
+ * @generated SignedSource<<97416c810c779c9651b2d67f762a5360>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -157,6 +157,7 @@ v5 = [
                     "kind": "Literal",
                     "name": "version",
                     "value": [
+                      "main",
                       "normalized",
                       "larger",
                       "large"
@@ -188,7 +189,7 @@ v5 = [
                     "storageKey": null
                   }
                 ],
-                "storageKey": "cropped(height:480,version:[\"normalized\",\"larger\",\"large\"],width:910)"
+                "storageKey": "cropped(height:480,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:910)"
               }
             ],
             "storageKey": null
@@ -354,12 +355,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "083410a8fc5629568c41e0ca81a1a63a",
+    "cacheID": "80195a43cae66720662fae4c8426afb3",
     "id": null,
     "metadata": {},
     "name": "ShowBannersRailRendererQuery",
     "operationKind": "query",
-    "text": "query ShowBannersRailRendererQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...ShowBannersRail_partner\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 910, height: 480, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowBannersRail_partner on Partner {\n  slug\n  featuredShow: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBanner_show\n      }\n    }\n  }\n  currentShows: showsConnection(first: 10, status: CURRENT, sort: END_AT_ASC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBanner_show\n      }\n    }\n  }\n  upcomingShows: showsConnection(first: 10, status: UPCOMING, sort: START_AT_ASC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBanner_show\n      }\n    }\n  }\n  pastShows: showsConnection(first: 2, status: CLOSED, sort: END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBanner_show\n      }\n    }\n  }\n}\n"
+    "text": "query ShowBannersRailRendererQuery(\n  $partnerId: String!\n) {\n  partner(id: $partnerId) @principalField {\n    ...ShowBannersRail_partner\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 910, height: 480, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ShowBannersRail_partner on Partner {\n  slug\n  featuredShow: showsConnection(first: 1, status: ALL, sort: FEATURED_DESC_END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBanner_show\n      }\n    }\n  }\n  currentShows: showsConnection(first: 10, status: CURRENT, sort: END_AT_ASC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBanner_show\n      }\n    }\n  }\n  upcomingShows: showsConnection(first: 10, status: UPCOMING, sort: START_AT_ASC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBanner_show\n      }\n    }\n  }\n  pastShows: showsConnection(first: 2, status: CLOSED, sort: END_AT_DESC, isDisplayable: true) {\n    edges {\n      node {\n        id\n        ...ShowBanner_show\n      }\n    }\n  }\n}\n"
   }
 };
 })();

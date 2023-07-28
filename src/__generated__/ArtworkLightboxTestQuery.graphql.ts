@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<41adc834b01315e17169c03c522eb3ff>>
+ * @generated SignedSource<<c9c8378edec9cd99109a3a2021968fb8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,6 +39,7 @@ v1 = [
     "kind": "Literal",
     "name": "version",
     "value": [
+      "main",
       "normalized",
       "larger",
       "large"
@@ -180,7 +181,7 @@ return {
                 "name": "cropped",
                 "plural": false,
                 "selections": (v2/*: any*/),
-                "storageKey": "cropped(height:800,version:[\"normalized\",\"larger\",\"large\"],width:800)"
+                "storageKey": "cropped(height:800,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
               },
               {
                 "alias": null,
@@ -190,7 +191,7 @@ return {
                 "name": "resized",
                 "plural": false,
                 "selections": (v2/*: any*/),
-                "storageKey": "resized(height:800,version:[\"normalized\",\"larger\",\"large\"],width:800)"
+                "storageKey": "resized(height:800,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
               },
               {
                 "alias": null,
@@ -215,12 +216,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a0d0f191ec5b0b1f617079572e0666b0",
+    "cacheID": "cf9aa39f424e8ff88ac7462b9bd6deb1",
     "id": null,
     "metadata": {},
     "name": "ArtworkLightboxTestQuery",
     "operationKind": "query",
-    "text": "query ArtworkLightboxTestQuery {\n  artwork(id: \"foo\") {\n    ...ArtworkLightbox_artwork\n    id\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n"
+    "text": "query ArtworkLightboxTestQuery {\n  artwork(id: \"foo\") {\n    ...ArtworkLightbox_artwork\n    id\n  }\n}\n\nfragment ArtworkLightbox_artwork on Artwork {\n  formattedMetadata\n  images(includeAll: false) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n"
   }
 };
 })();

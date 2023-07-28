@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fe8ce89055807d4edc30b6758a32e8aa>>
+ * @generated SignedSource<<10402dd2e26191af633827b2cf1e9c2f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -44,6 +44,7 @@ var v0 = {
   "kind": "Literal",
   "name": "version",
   "value": [
+    "main",
     "normalized",
     "larger",
     "large"
@@ -145,7 +146,7 @@ return {
             (v1/*: any*/),
             (v2/*: any*/)
           ],
-          "storageKey": "resized(version:[\"normalized\",\"larger\",\"large\"],width:200)"
+          "storageKey": "resized(version:[\"main\",\"normalized\",\"larger\",\"large\"],width:200)"
         },
         {
           "alias": "desktop",
@@ -162,7 +163,7 @@ return {
           "name": "resized",
           "plural": false,
           "selections": (v3/*: any*/),
-          "storageKey": "resized(version:[\"normalized\",\"larger\",\"large\"],width:325)"
+          "storageKey": "resized(version:[\"main\",\"normalized\",\"larger\",\"large\"],width:325)"
         },
         {
           "alias": "zoom",
@@ -184,7 +185,7 @@ return {
           "name": "resized",
           "plural": false,
           "selections": (v3/*: any*/),
-          "storageKey": "resized(height:900,version:[\"normalized\",\"larger\",\"large\"],width:900)"
+          "storageKey": "resized(height:900,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:900)"
         }
       ],
       "storageKey": "images(default:false,size:100)"
@@ -195,6 +196,6 @@ return {
 };
 })();
 
-(node as any).hash = "3b2517ce38562421567d146e6c64ea96";
+(node as any).hash = "fc65edc203f2de1cd4bc91a269d92366";
 
 export default node;

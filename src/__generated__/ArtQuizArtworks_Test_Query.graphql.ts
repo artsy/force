@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0ff5b4a2784214c537a6f43305e96860>>
+ * @generated SignedSource<<fceb782ae81d536626ede676a0baef9e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -225,6 +225,7 @@ return {
                                     "kind": "Literal",
                                     "name": "version",
                                     "value": [
+                                      "main",
                                       "normalized",
                                       "larger",
                                       "large"
@@ -270,7 +271,7 @@ return {
                                     "storageKey": null
                                   }
                                 ],
-                                "storageKey": "resized(height:900,version:[\"normalized\",\"larger\",\"large\"],width:900)"
+                                "storageKey": "resized(height:900,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:900)"
                               }
                             ],
                             "storageKey": null
@@ -323,7 +324,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e101885c79053c00ff38ebd76a7069ba",
+    "cacheID": "856c2b79b889594d0fc32d3da48b5743",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -420,7 +421,7 @@ return {
     },
     "name": "ArtQuizArtworks_Test_Query",
     "operationKind": "query",
-    "text": "query ArtQuizArtworks_Test_Query {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworksCardMetadata_artwork on Artwork {\n  title\n  date\n  dominantColors\n  culturalMaker\n  artists(shallow: true) {\n    name\n    id\n  }\n  partner(shallow: true) {\n    name\n    id\n  }\n}\n\nfragment ArtQuizArtworksCard_artwork on Artwork {\n  ...ArtQuizArtworksCardMetadata_artwork\n  image {\n    resized(width: 900, height: 900, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        node {\n          ...ArtQuizArtworksCard_artwork\n          internalID\n          slug\n          isDisliked\n          isSaved\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query ArtQuizArtworks_Test_Query {\n  me {\n    ...ArtQuizArtworks_me\n    id\n  }\n}\n\nfragment ArtQuizArtworksCardMetadata_artwork on Artwork {\n  title\n  date\n  dominantColors\n  culturalMaker\n  artists(shallow: true) {\n    name\n    id\n  }\n  partner(shallow: true) {\n    name\n    id\n  }\n}\n\nfragment ArtQuizArtworksCard_artwork on Artwork {\n  ...ArtQuizArtworksCardMetadata_artwork\n  image {\n    resized(width: 900, height: 900, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArtQuizArtworks_me on Me {\n  id\n  quiz {\n    quizArtworkConnection(first: 16) {\n      edges {\n        interactedAt\n        node {\n          ...ArtQuizArtworksCard_artwork\n          internalID\n          slug\n          isDisliked\n          isSaved\n          id\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

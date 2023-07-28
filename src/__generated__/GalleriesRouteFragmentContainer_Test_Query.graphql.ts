@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<22c07757812752db63b5decb708f295f>>
+ * @generated SignedSource<<35fff8a9f04156567b26bb0b09e54ecf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -280,6 +280,7 @@ return {
                                                     "kind": "Literal",
                                                     "name": "version",
                                                     "value": [
+                                                      "main",
                                                       "normalized",
                                                       "larger",
                                                       "large"
@@ -306,7 +307,7 @@ return {
                                                     "storageKey": null
                                                   }
                                                 ],
-                                                "storageKey": "resized(height:500,version:[\"normalized\",\"larger\",\"large\"])"
+                                                "storageKey": "resized(height:500,version:[\"main\",\"normalized\",\"larger\",\"large\"])"
                                               }
                                             ],
                                             "storageKey": null
@@ -360,7 +361,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c6157e290904c5b413152b7ea292da6b",
+    "cacheID": "036c94c633dc898558fb29f59e0a4e05",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -456,7 +457,7 @@ return {
     },
     "name": "GalleriesRouteFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query GalleriesRouteFragmentContainer_Test_Query {\n  viewer {\n    ...GalleriesRoute_viewer\n  }\n}\n\nfragment GalleriesRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_4uWBz4\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  internalID\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_4uWBz4 on Viewer {\n  orderedSet(id: \"5638fdfb7261690296000031\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query GalleriesRouteFragmentContainer_Test_Query {\n  viewer {\n    ...GalleriesRoute_viewer\n  }\n}\n\nfragment GalleriesRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_4uWBz4\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  internalID\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_4uWBz4 on Viewer {\n  orderedSet(id: \"5638fdfb7261690296000031\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

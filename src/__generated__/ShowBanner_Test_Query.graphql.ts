@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7be6339356175e78f429391269bc1abd>>
+ * @generated SignedSource<<4cbb343201c18386ce2f53e9db04250a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -253,6 +253,7 @@ return {
                                 "kind": "Literal",
                                 "name": "version",
                                 "value": [
+                                  "main",
                                   "normalized",
                                   "larger",
                                   "large"
@@ -284,7 +285,7 @@ return {
                                 "storageKey": null
                               }
                             ],
-                            "storageKey": "cropped(height:480,version:[\"normalized\",\"larger\",\"large\"],width:910)"
+                            "storageKey": "cropped(height:480,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:910)"
                           }
                         ],
                         "storageKey": null
@@ -306,7 +307,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a07d89381589fae43dac97a130582b6d",
+    "cacheID": "ea8bee9a71b35e245fd6648880f961eb",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -374,7 +375,7 @@ return {
     },
     "name": "ShowBanner_Test_Query",
     "operationKind": "query",
-    "text": "query ShowBanner_Test_Query {\n  partner(id: \"white-cube\") @principalField {\n    showsConnection(first: 1) {\n      edges {\n        node {\n          ...ShowBanner_show\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 910, height: 480, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ShowBanner_Test_Query {\n  partner(id: \"white-cube\") @principalField {\n    showsConnection(first: 1) {\n      edges {\n        node {\n          ...ShowBanner_show\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ShowBanner_show on Show {\n  slug\n  name\n  href\n  isFairBooth\n  exhibitionPeriod\n  status\n  description\n  location {\n    city\n    id\n  }\n  coverImage {\n    medium: cropped(width: 910, height: 480, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

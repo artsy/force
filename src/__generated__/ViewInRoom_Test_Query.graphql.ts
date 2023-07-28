@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<36a7c5de6fbf15edb8ba197356eaa69b>>
+ * @generated SignedSource<<0ea7928e5aff4c5c8eae889a149c209a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -122,6 +122,7 @@ return {
                     "kind": "Literal",
                     "name": "version",
                     "value": [
+                      "main",
                       "normalized",
                       "larger",
                       "large"
@@ -167,7 +168,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "resized(height:800,version:[\"normalized\",\"larger\",\"large\"],width:800)"
+                "storageKey": "resized(height:800,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
               }
             ],
             "storageKey": null
@@ -185,7 +186,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5c43ffbcc828ac268d41468cf90eba3d",
+    "cacheID": "55aac5e3b3d983fba30bd4e07d6ce448",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -223,7 +224,7 @@ return {
     },
     "name": "ViewInRoom_Test_Query",
     "operationKind": "query",
-    "text": "query ViewInRoom_Test_Query {\n  artwork(id: \"example\") {\n    ...ViewInRoom_artwork\n    id\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
+    "text": "query ViewInRoom_Test_Query {\n  artwork(id: \"example\") {\n    ...ViewInRoom_artwork\n    id\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
   }
 };
 })();
