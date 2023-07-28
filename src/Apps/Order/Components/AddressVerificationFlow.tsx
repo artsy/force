@@ -94,11 +94,12 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   }
 
   const handleBackToEdit = () => {
-    const option = selectedAddressKey?.includes("suggestedAddress")
-      ? "Recommended"
-      : selectedAddressKey === "userAddress"
-      ? "What you entered"
-      : null
+    const option =
+      selectedAddressKey === "suggestedAddress"
+        ? "Recommended"
+        : selectedAddressKey === "userAddress"
+        ? "What you entered"
+        : null
 
     trackEvent({
       action_type: "clickedValidationAddress",
