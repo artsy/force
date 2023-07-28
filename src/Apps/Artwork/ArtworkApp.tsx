@@ -13,7 +13,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
 import { ArtworkApp_artwork$data } from "__generated__/ArtworkApp_artwork.graphql"
 import { ArtworkApp_me$data } from "__generated__/ArtworkApp_me.graphql"
-import { ArtworkApp_artist$data } from "__generated__/ArtworkApp_artist.graphql"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkTopContextBarFragmentContainer } from "./Components/ArtworkTopContextBar/ArtworkTopContextBar"
 import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
@@ -46,6 +45,8 @@ import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { ArtworkAuctionCreateAlertFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlert"
 import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCreateAlertButton"
+import { useTimer } from "Utils/Hooks/useTimer"
+import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -56,7 +57,6 @@ export interface Props {
   me: ArtworkApp_me$data
   router: Router
   match: Match
-  artist: ArtworkApp_artist$data
 }
 
 declare const window: any
@@ -90,11 +90,22 @@ const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
 )
 
 export const ArtworkApp: React.FC<Props> = props => {
-  const { artwork, me, referrer, tracking, shouldTrackPageView, artist } = props
+  const { artwork, me, referrer, tracking, shouldTrackPageView } = props
   const { match } = useRouter()
   const isAuctionHeaderAlertCTA = useFeatureFlag(
     "onyx_auction-header-alert-cta"
   )
+  const hasArtists = (artwork.artists?.length ?? 0) > 0
+  const biddingEndAt =
+    artwork?.saleArtwork?.extendedBiddingEndAt ?? artwork?.saleArtwork?.endAt
+  const { hasEnded } = useTimer(biddingEndAt!, artwork?.sale?.startAt!)
+
+  // TODO: a mix of logic from displaying a "Bidding closed" message from
+  // ArtworkSidebar/ArtworkSidebar and our assumptions
+  const displayCreateAlertCtaHeader =
+    isAuctionHeaderAlertCTA &&
+    hasArtists &&
+    (hasEnded || lotIsClosed(artwork.sale, artwork.saleArtwork))
 
   const showUnlistedArtworkBanner =
     artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
@@ -211,7 +222,6 @@ export const ArtworkApp: React.FC<Props> = props => {
     )
   }
 
-  // console.log("artist", artist)
   return (
     <>
       <UseRecordArtworkView />
@@ -228,12 +238,9 @@ export const ArtworkApp: React.FC<Props> = props => {
       <ArtworkTopContextBarFragmentContainer artwork={artwork} />
       <GridColumns>
         <Column span={12} py={6}>
-          {isAuctionHeaderAlertCTA && (
+          {displayCreateAlertCtaHeader && (
             <Box py={6}>
-              <ArtworkAuctionCreateAlertFragmentContainer
-                artist={artist}
-                artwork={artwork}
-              />
+              <ArtworkAuctionCreateAlertFragmentContainer artwork={artwork} />
               <Box mt={2} mx="auto" width={209}>
                 <ArtworkSidebarCreateAlertButtonFragmentContainer
                   artwork={artwork}
@@ -384,6 +391,13 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
           internalID
           slug
           extendedBiddingIntervalMinutes
+          isClosed
+          startAt
+        }
+        saleArtwork {
+          extendedBiddingEndAt
+          endAt
+          endedAt
         }
         artists {
           id
@@ -406,11 +420,6 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
       fragment ArtworkApp_me on Me {
         ...ArtworkSidebar_me
         ...SubmittedOrderModal_me
-      }
-    `,
-    artist: graphql`
-      fragment ArtworkApp_artist on Artist {
-        ...ArtworkAuctionCreateAlert_artist
       }
     `,
   }
