@@ -228,6 +228,17 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       : addressVerificationIntlEnabled
   }
 
+  // Save shipping info on the order. If it's Artsy shipping and a quote hasn't
+  // been selected, this renders the quotes for user to select and finalize
+  // again.
+  const finalizeFulfillment = async () => {
+    if (checkIfArtsyShipping() && !!shippingQuoteId) {
+      selectShippingQuote()
+    } else {
+      selectShipping()
+    }
+  }
+
   const onContinueButtonPressed = async () => {
     if (
       isAddressVerificationEnabled() &&
@@ -242,11 +253,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       return
     }
 
-    if (checkIfArtsyShipping() && !!shippingQuoteId) {
-      selectShippingQuote()
-    } else {
-      selectShipping()
-    }
+    finalizeFulfillment()
   }
 
   const selectShipping = async (editedAddress?: MutationAddressResponse) => {
@@ -793,7 +800,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                     setAddressNeedsVerification(false)
                     setAddressHasBeenVerified(true)
                     setAddress({ ...address, ...chosenAddress })
-                    onContinueButtonPressed()
+                    finalizeFulfillment()
                   }}
                 />
               )}
