@@ -79,7 +79,7 @@ export const ViewInRoomArtworkFragmentContainer = createFragmentContainer(
           resized(
             width: 800
             height: 800
-            version: ["normalized", "larger", "large"]
+            version: ["main", "normalized", "larger", "large"]
           ) {
             src
             srcSet

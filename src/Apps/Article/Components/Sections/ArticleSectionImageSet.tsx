@@ -184,7 +184,7 @@ export const ArticleSectionImageSetFragmentContainer = createFragmentContainer(
               small: cropped(
                 width: 80
                 height: 80
-                version: ["normalized", "larger", "large"]
+                version: ["main", "normalized", "larger", "large"]
               ) {
                 src
                 srcSet
@@ -193,7 +193,7 @@ export const ArticleSectionImageSetFragmentContainer = createFragmentContainer(
               }
               large: resized(
                 width: 1220
-                version: ["normalized", "larger", "large"]
+                version: ["main", "normalized", "larger", "large"]
               ) {
                 src
                 srcSet
@@ -208,7 +208,7 @@ export const ArticleSectionImageSetFragmentContainer = createFragmentContainer(
               small: cropped(
                 width: 80
                 height: 80
-                version: ["normalized", "larger", "large"]
+                version: ["main", "normalized", "larger", "large"]
               ) {
                 src
                 srcSet
@@ -217,7 +217,7 @@ export const ArticleSectionImageSetFragmentContainer = createFragmentContainer(
               }
               large: resized(
                 width: 1220
-                version: ["normalized", "larger", "large"]
+                version: ["main", "normalized", "larger", "large"]
               ) {
                 src
                 srcSet

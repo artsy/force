@@ -139,14 +139,14 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
           caption
           mobile: resized(
             width: 200
-            version: ["normalized", "larger", "large"]
+            version: ["main", "normalized", "larger", "large"]
           ) {
             width
             height
           }
           desktop: resized(
             width: 325
-            version: ["normalized", "larger", "large"]
+            version: ["main", "normalized", "larger", "large"]
           ) {
             src
             srcSet
@@ -156,7 +156,7 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
           zoom: resized(
             width: 900
             height: 900
-            version: ["normalized", "larger", "large"]
+            version: ["main", "normalized", "larger", "large"]
           ) {
             src
             srcSet

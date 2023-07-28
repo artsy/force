@@ -86,7 +86,10 @@ export const ViewingRoomWorksArtworkFragmentContainer = createFragmentContainer(
         saleMessage
         title
         image {
-          resized(width: 445, version: ["normalized", "larger", "large"]) {
+          resized(
+            width: 445
+            version: ["main", "normalized", "larger", "large"]
+          ) {
             src
             srcSet
             width

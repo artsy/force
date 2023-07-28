@@ -63,7 +63,7 @@ export const ArticleSectionImageCollectionImageFragmentContainer = createFragmen
         ... on ArticleImageSection {
           id
           image {
-            url(version: ["normalized", "larger", "large"])
+            url(version: ["main", "normalized", "larger", "large"])
             width
             height
           }
@@ -71,7 +71,7 @@ export const ArticleSectionImageCollectionImageFragmentContainer = createFragmen
         ... on Artwork {
           id
           image {
-            url(version: ["normalized", "larger", "large"])
+            url(version: ["main", "normalized", "larger", "large"])
             width
             height
           }
@@ -79,7 +79,7 @@ export const ArticleSectionImageCollectionImageFragmentContainer = createFragmen
         ... on ArticleUnpublishedArtwork {
           id
           image {
-            url(version: ["normalized", "larger", "large"])
+            url(version: ["main", "normalized", "larger", "large"])
             width
             height
           }

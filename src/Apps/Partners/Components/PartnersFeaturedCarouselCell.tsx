@@ -127,7 +127,7 @@ export const PartnersFeaturedCarouselCellFragmentContainer = createFragmentConta
               coverImage {
                 resized(
                   height: 500
-                  version: ["normalized", "larger", "large"]
+                  version: ["main", "normalized", "larger", "large"]
                 ) {
                   src
                   srcSet

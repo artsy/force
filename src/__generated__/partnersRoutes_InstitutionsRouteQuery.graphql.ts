@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aa64273dff4bf221e41eadcae6d50eab>>
+ * @generated SignedSource<<c4bcd71791db96203f4bc323a2aed101>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -262,6 +262,7 @@ return {
                                                     "kind": "Literal",
                                                     "name": "version",
                                                     "value": [
+                                                      "main",
                                                       "normalized",
                                                       "larger",
                                                       "large"
@@ -288,7 +289,7 @@ return {
                                                     "storageKey": null
                                                   }
                                                 ],
-                                                "storageKey": "resized(height:500,version:[\"normalized\",\"larger\",\"large\"])"
+                                                "storageKey": "resized(height:500,version:[\"main\",\"normalized\",\"larger\",\"large\"])"
                                               }
                                             ],
                                             "storageKey": null
@@ -342,12 +343,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "963a17c581370b821167de5e6e0d97b6",
+    "cacheID": "a5189021100441e37aecfd0d971bd9da",
     "id": null,
     "metadata": {},
     "name": "partnersRoutes_InstitutionsRouteQuery",
     "operationKind": "query",
-    "text": "query partnersRoutes_InstitutionsRouteQuery {\n  viewer {\n    ...InstitutionsRoute_viewer\n  }\n}\n\nfragment InstitutionsRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_3Ao4DD\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  internalID\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_3Ao4DD on Viewer {\n  orderedSet(id: \"564e181a258faf3d5c000080\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query partnersRoutes_InstitutionsRouteQuery {\n  viewer {\n    ...InstitutionsRoute_viewer\n  }\n}\n\nfragment InstitutionsRoute_viewer on Viewer {\n  ...PartnersFeaturedCarousel_viewer_3Ao4DD\n}\n\nfragment PartnersFeaturedCarouselCell_profile on Profile {\n  internalID\n  owner {\n    __typename\n    ... on Partner {\n      internalID\n      href\n      name\n      featuredShow {\n        href\n        name\n        status\n        statusUpdate\n        startAt(format: \"MMM D\")\n        endAt(format: \"MMM D\")\n        isOnlineExclusive\n        location {\n          city\n          id\n        }\n        coverImage {\n          resized(height: 500, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n    ... on Node {\n      __isNode: __typename\n      id\n    }\n    ... on FairOrganizer {\n      id\n    }\n  }\n}\n\nfragment PartnersFeaturedCarousel_viewer_3Ao4DD on Viewer {\n  orderedSet(id: \"564e181a258faf3d5c000080\") {\n    orderedItemsConnection(first: 50) {\n      edges {\n        node {\n          __typename\n          ... on Profile {\n            internalID\n            ...PartnersFeaturedCarouselCell_profile\n            id\n          }\n          ... on Node {\n            __isNode: __typename\n            id\n          }\n          ... on FeaturedLink {\n            id\n          }\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

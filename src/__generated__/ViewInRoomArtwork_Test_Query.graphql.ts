@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<23319808be277d396b9a66c164129637>>
+ * @generated SignedSource<<07894ac9fd69bee30adfedf3bd87b095>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -122,6 +122,7 @@ return {
                     "kind": "Literal",
                     "name": "version",
                     "value": [
+                      "main",
                       "normalized",
                       "larger",
                       "large"
@@ -167,7 +168,7 @@ return {
                     "storageKey": null
                   }
                 ],
-                "storageKey": "resized(height:800,version:[\"normalized\",\"larger\",\"large\"],width:800)"
+                "storageKey": "resized(height:800,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
               }
             ],
             "storageKey": null
@@ -185,7 +186,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c463d5b2664aecdd09c78cb93f0d34f4",
+    "cacheID": "e0e544378c6323fc3b8451bfa5b479c2",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -223,7 +224,7 @@ return {
     },
     "name": "ViewInRoomArtwork_Test_Query",
     "operationKind": "query",
-    "text": "query ViewInRoomArtwork_Test_Query {\n  artwork(id: \"example\") {\n    ...ViewInRoomArtwork_artwork\n    id\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
+    "text": "query ViewInRoomArtwork_Test_Query {\n  artwork(id: \"example\") {\n    ...ViewInRoomArtwork_artwork\n    id\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
   }
 };
 })();

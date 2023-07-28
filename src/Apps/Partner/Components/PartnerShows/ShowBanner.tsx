@@ -168,7 +168,7 @@ export const ShowBannerFragmentContainer = createFragmentContainer(ShowBanner, {
         medium: cropped(
           width: 910
           height: 480
-          version: ["normalized", "larger", "large"]
+          version: ["main", "normalized", "larger", "large"]
         ) {
           src
           srcSet

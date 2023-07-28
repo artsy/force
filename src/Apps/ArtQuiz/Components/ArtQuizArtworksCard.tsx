@@ -63,7 +63,7 @@ export const ArtQuizArtworksCardFragmentContainer = createFragmentContainer(
           resized(
             width: 900
             height: 900
-            version: ["normalized", "larger", "large"]
+            version: ["main", "normalized", "larger", "large"]
           ) {
             src
             srcSet
