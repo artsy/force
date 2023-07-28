@@ -6,12 +6,14 @@ import {
   Flex,
   Spinner,
   Text,
+  Box,
 } from "@artsy/palette"
 import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
 import { ArtworkApp_artwork$data } from "__generated__/ArtworkApp_artwork.graphql"
 import { ArtworkApp_me$data } from "__generated__/ArtworkApp_me.graphql"
+import { ArtworkApp_artist$data } from "__generated__/ArtworkApp_artist.graphql"
 import { ArtistInfoQueryRenderer } from "./Components/ArtistInfo"
 import { ArtworkTopContextBarFragmentContainer } from "./Components/ArtworkTopContextBar/ArtworkTopContextBar"
 import { ArtworkDetailsQueryRenderer } from "./Components/ArtworkDetails"
@@ -40,8 +42,10 @@ import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEn
 import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtworkBanner"
 import { useCallback, useEffect } from "react"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar/ArtworkSidebar"
-// import { RelatedWorksQueryRenderer } from "Apps/Artwork/Components/RelatedWorks"
 import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { ArtworkAuctionCreateAlertFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlert"
+import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCreateAlertButton"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -52,6 +56,7 @@ export interface Props {
   me: ArtworkApp_me$data
   router: Router
   match: Match
+  artist: ArtworkApp_artist$data
 }
 
 declare const window: any
@@ -85,8 +90,11 @@ const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
 )
 
 export const ArtworkApp: React.FC<Props> = props => {
-  const { artwork, me, referrer, tracking, shouldTrackPageView } = props
+  const { artwork, me, referrer, tracking, shouldTrackPageView, artist } = props
   const { match } = useRouter()
+  const isAuctionHeaderAlertCTA = useFeatureFlag(
+    "onyx_auction-header-alert-cta"
+  )
 
   const showUnlistedArtworkBanner =
     artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
@@ -203,6 +211,7 @@ export const ArtworkApp: React.FC<Props> = props => {
     )
   }
 
+  // console.log("artist", artist)
   return (
     <>
       <UseRecordArtworkView />
@@ -217,7 +226,23 @@ export const ArtworkApp: React.FC<Props> = props => {
       <ArtworkMetaFragmentContainer artwork={artwork} />
 
       <ArtworkTopContextBarFragmentContainer artwork={artwork} />
-
+      <GridColumns>
+        <Column span={12} py={6}>
+          {isAuctionHeaderAlertCTA && (
+            <Box py={6}>
+              <ArtworkAuctionCreateAlertFragmentContainer
+                artist={artist}
+                artwork={artwork}
+              />
+              <Box mt={2} mx="auto" width={209}>
+                <ArtworkSidebarCreateAlertButtonFragmentContainer
+                  artwork={artwork}
+                />
+              </Box>
+            </Box>
+          )}
+        </Column>
+      </GridColumns>
       <GridColumns>
         <Column
           span={8}
@@ -234,7 +259,6 @@ export const ArtworkApp: React.FC<Props> = props => {
             />
           </Media>
         </Column>
-
         <Column span={4} pt={[0, 2]}>
           <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
         </Column>
@@ -340,6 +364,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         is_offerable: isOfferable
         availability
         visibilityLevel
+        isSold
         # FIXME: The props in the component need to update to reflect
         # the new structure for price.
         listPrice {
@@ -373,12 +398,19 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkTopContextBar_artwork
         ...ArtworkImageBrowser_artwork
         ...ArtworkSidebar_artwork
+        ...ArtworkAuctionCreateAlert_artwork
+        ...ArtworkSidebarCreateAlertButton_artwork
       }
     `,
     me: graphql`
       fragment ArtworkApp_me on Me {
         ...ArtworkSidebar_me
         ...SubmittedOrderModal_me
+      }
+    `,
+    artist: graphql`
+      fragment ArtworkApp_artist on Artist {
+        ...ArtworkAuctionCreateAlert_artist
       }
     `,
   }

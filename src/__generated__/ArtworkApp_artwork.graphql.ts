@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9476d7857f52cf299c5edd35c1bf7025>>
+ * @generated SignedSource<<e31a0c7b015e16019a911d53c0e66ebb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,6 +22,7 @@ export type ArtworkApp_artwork$data = {
   } | null> | null;
   readonly availability: string | null;
   readonly internalID: string;
+  readonly isSold: boolean | null;
   readonly is_acquireable: boolean | null;
   readonly is_in_auction: boolean | null;
   readonly is_offerable: boolean | null;
@@ -39,7 +40,7 @@ export type ArtworkApp_artwork$data = {
   } | null;
   readonly slug: string;
   readonly visibilityLevel: Visibility | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlert_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebarCreateAlertButton_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork">;
   readonly " $fragmentType": "ArtworkApp_artwork";
 };
 export type ArtworkApp_artwork$key = {
@@ -110,6 +111,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "visibilityLevel",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isSold",
       "storageKey": null
     },
     {
@@ -239,6 +247,16 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebar_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkAuctionCreateAlert_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebarCreateAlertButton_artwork"
     }
   ],
   "type": "Artwork",
@@ -246,6 +264,6 @@ return {
 };
 })();
 
-(node as any).hash = "b7807de55978a8a18608c20c352a8886";
+(node as any).hash = "4108640374cd8b41986139726cbcf214";
 
 export default node;
