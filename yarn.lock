@@ -22,10 +22,10 @@
   dependencies:
     tslib "~2.0.1"
 
-"@artsy/cohesion@4.133.0":
-  version "4.133.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.133.0.tgz#7da2b5a95c5ee1bc1c47ebea6ffe200b2ac8f2fe"
-  integrity sha512-zM1NQ1L4PLe57C2kSzPvkoq8pEaf+nkx3qi1GKzshrq9eStwXUTzvnlyy3ZDDOQtgytzQCy75g2kOn5vp5/Tjw==
+"@artsy/cohesion@4.136.0":
+  version "4.136.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.136.0.tgz#5420f1fc0c7d705ac3afd56d713ec375456d73d3"
+  integrity sha512-3qoi7yYK6YP7nxx7hGAwbMePagwNXm9j8jJwit6H8iuwmSP0SaZgy+y3pb/8exVP4i/VtB6/gw3vEDiBvs0UIg==
   dependencies:
     core-js "3"
 
@@ -22697,9 +22697,9 @@ windows-release@^3.1.0:
     execa "^0.10.0"
 
 word-wrap@~1.2.3:
-  version "1.2.3"
-  resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.3.tgz#610636f6b1f703891bd34771ccb17fb93b47079c"
-  integrity sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==
+  version "1.2.4"
+  resolved "https://registry.yarnpkg.com/word-wrap/-/word-wrap-1.2.4.tgz#cb4b50ec9aca570abd1f52f33cd45b6c61739a9f"
+  integrity sha512-2V81OA4ugVo5pRo46hAoD2ivUJx8jXmWXfUkY4KFNw0hEptvN0QfH3K4nHiwzGeKl5rFKedV48QVoqYavy4YpA==
 
 wordwrap@^1.0.0:
   version "1.0.0"

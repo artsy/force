@@ -9,7 +9,6 @@ import { NewSearchBarInput_viewer$data } from "__generated__/NewSearchBarInput_v
 import { NewSearchBarInputSuggestQuery } from "__generated__/NewSearchBarInputSuggestQuery.graphql"
 import createLogger from "Utils/logger"
 import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
-import { getSearchTerm } from "./utils/getSearchTerm"
 import { isServer } from "Server/isServer"
 import {
   PillType,
@@ -36,35 +35,52 @@ const logger = createLogger("Components/Search/NewSearchBar")
 export interface NewSearchBarInputProps extends SystemContextProps {
   relay: RelayRefetchProp
   viewer: NewSearchBarInput_viewer$data
+  searchTerm: string
 }
 
-const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
+const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
+  relay,
+  viewer,
+  searchTerm,
+}) => {
   const tracking = useTracking()
   const { t } = useTranslation()
-  const [value, setValue] = useState(getSearchTerm(window.location))
+  const [value, setValue] = useState(searchTerm)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
   // We use fetchCounter together with useUpdateEffect to track typing
   const [fetchCounter, setFetchCounter] = useState(0)
-  const { router } = useRouter()
+  const { router, match } = useRouter()
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
   const options = extractNodes(viewer.searchConnection)
-  const formattedOptions: SuggestionItemOptionProps[] = options.map(option => {
-    return {
-      text: option.displayLabel!,
-      value: option.displayLabel!,
-      subtitle:
-        getLabel({
-          displayType: option.displayType ?? "",
-          typename: option.__typename,
-        }) ?? "",
-      imageUrl: option.imageUrl!,
-      showArtworksButton: !!option.statuses?.artworks,
-      showAuctionResultsButton: !!option.statuses?.auctionLots,
-      href: option.href!,
-      typename: option.__typename,
-    }
-  })
+  const formattedOptions: SuggestionItemOptionProps[] = [
+    ...options.map(option => {
+      return {
+        text: option.displayLabel!,
+        value: option.displayLabel!,
+        subtitle:
+          getLabel({
+            displayType: option.displayType ?? "",
+            typename: option.__typename,
+          }) ?? "",
+        imageUrl: option.imageUrl!,
+        showArtworksButton: !!option.statuses?.artworks,
+        showAuctionResultsButton: !!option.statuses?.auctionLots,
+        href: option.href!,
+        typename: option.__typename,
+      }
+    }),
+    {
+      text: value,
+      value: value,
+      subtitle: "",
+      imageUrl: "",
+      showArtworksButton: false,
+      showAuctionResultsButton: false,
+      href: encodedSearchURL,
+      typename: "Footer",
+    },
+  ]
 
   useUpdateEffect(() => {
     tracking.trackEvent({
@@ -112,7 +128,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
     delay: SEARCH_DEBOUNCE_DELAY,
   })
 
-  const clearSearchInput = () => {
+  const resetValue = () => {
     setValue("")
   }
 
@@ -138,10 +154,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
     })
   }
 
-  const handleRedirect = () => {
-    clearSearchInput()
-  }
-
   const handleSubmit = () => {
     if (value) {
       redirect(encodedSearchURL)
@@ -156,7 +168,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
       query: value,
     })
 
-    clearSearchInput()
+    resetValue()
     redirect(option.href)
   }
 
@@ -169,12 +181,13 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
 
   return (
     <AutocompleteInput
+      key={match.location.pathname}
       placeholder={t`navbar.searchBy`}
       spellCheck={false}
       options={shouldStartSearching(value) ? formattedOptions : []}
-      value={value}
+      defaultValue={value}
       onChange={handleChange}
-      onClear={clearSearchInput}
+      onClear={resetValue}
       onSubmit={handleSubmit}
       onSelect={handleSelect}
       onClick={handleFocus}
@@ -185,26 +198,25 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({ relay, viewer }) => {
           onPillClick={handlePillClick}
         />
       }
-      footer={({ onClose }) => {
-        return (
-          <NewSearchBarFooter
-            query={value}
-            href={encodedSearchURL}
-            selectedPill={selectedPill}
-            onClick={onClose}
-          />
-        )
-      }}
       renderOption={option => {
+        if (option.typename === "Footer") {
+          return (
+            <NewSearchBarFooter
+              query={value}
+              href={encodedSearchURL}
+              selectedPill={selectedPill}
+            />
+          )
+        }
         return (
           <NewSuggestionItem
             query={value}
             option={option}
-            onRedirect={handleRedirect}
+            onRedirect={resetValue}
           />
         )
       }}
-      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 150px)`}
+      dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
       flip={false}
     />
   )
@@ -263,7 +275,13 @@ export const NewSearchBarInputRefetchContainer = createRefetchContainer(
   `
 )
 
-export const NewSearchBarInputQueryRenderer: FC = () => {
+interface NewSearchBarInputQueryRendererProps {
+  term?: string
+}
+
+export const NewSearchBarInputQueryRenderer: FC<NewSearchBarInputQueryRendererProps> = ({
+  term,
+}) => {
   const { relayEnvironment, searchQuery = "" } = useSystemContext()
 
   if (isServer) {
@@ -286,13 +304,18 @@ export const NewSearchBarInputQueryRenderer: FC = () => {
         }
       `}
       variables={{
-        hasTerm: false,
-        term: "",
+        hasTerm: shouldStartSearching(term ?? ""),
+        term: term ?? "",
         entities: [],
       }}
       render={({ props }) => {
         if (props?.viewer) {
-          return <NewSearchBarInputRefetchContainer viewer={props.viewer} />
+          return (
+            <NewSearchBarInputRefetchContainer
+              viewer={props.viewer}
+              searchTerm={term ?? ""}
+            />
+          )
           // SSR render pass. Since we don't have access to `<Boot>` context
           // from within the NavBar (it's not a part of any app) we need to lean
           // on styled-system for showing / hiding depending upon breakpoint.

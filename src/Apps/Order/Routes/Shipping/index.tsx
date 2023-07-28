@@ -105,12 +105,21 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const { trackEvent } = useTracking()
   const { relayEnvironment } = useSystemContext()
 
-  // true if we want to verify addresses for this order
-  const isAddressVerificationEnabled = useFeatureFlag("address_verification")
-  // true if the current address has been verified
-  const [addressVerified, setAddressVerified] = useState<boolean>(false)
+  const addressVerificationUSEnabled = !!useFeatureFlag(
+    "address_verification_us"
+  )
+  const addressVerificationIntlEnabled = !!useFeatureFlag(
+    "address_verification_intl"
+  )
+
   // true if the current address needs to be verified
-  const [verifyAddress, setVerifyAddress] = useState<boolean>(false)
+  const [addressNeedsVerification, setAddressNeedsVerification] = useState<
+    boolean
+  >(false)
+  // true if the current address has been verified
+  const [addressHasBeenVerified, setAddressHasBeenVerified] = useState<boolean>(
+    false
+  )
 
   const [shippingOption, setShippingOption] = useState<
     CommerceOrderFulfillmentTypeEnum
@@ -213,21 +222,38 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     )
   }
 
-  const onContinueButtonPressed = async () => {
-    if (isAddressVerificationEnabled && !addressVerified) {
-      /**
-       * Setting verifyAddress to true will cause the address verification flow
-       * to be initiated on this render.
-       */
-      setVerifyAddress(true)
-      return
-    }
+  const isAddressVerificationEnabled = (): boolean => {
+    return address.country === "US"
+      ? addressVerificationUSEnabled
+      : addressVerificationIntlEnabled
+  }
 
+  // Save shipping info on the order. If it's Artsy shipping and a quote hasn't
+  // been selected, this renders the quotes for user to select and finalize
+  // again.
+  const finalizeFulfillment = async () => {
     if (checkIfArtsyShipping() && !!shippingQuoteId) {
       selectShippingQuote()
     } else {
       selectShipping()
     }
+  }
+
+  const onContinueButtonPressed = async () => {
+    if (
+      isAddressVerificationEnabled() &&
+      !addressHasBeenVerified &&
+      isCreateNewAddress()
+    ) {
+      /**
+       * Setting addressNeedsVerification to true will cause the address
+       * verification flow to be initiated on this render.
+       */
+      setAddressNeedsVerification(true)
+      return
+    }
+
+    finalizeFulfillment()
   }
 
   const selectShipping = async (editedAddress?: MutationAddressResponse) => {
@@ -755,7 +781,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <Text variant="lg-display" mb="2">
                 Delivery address
               </Text>
-              {verifyAddress && (
+              {addressNeedsVerification && (
                 <AddressVerificationFlowQueryRenderer
                   data-testid="address-verification-flow"
                   address={{
@@ -767,13 +793,14 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                     postalCode: address.postalCode,
                   }}
                   onClose={() => {
-                    setVerifyAddress(false)
+                    setAddressNeedsVerification(false)
+                    setAddressHasBeenVerified(true)
                   }}
                   onChosenAddress={chosenAddress => {
-                    setVerifyAddress(false)
-                    setAddressVerified(true)
+                    setAddressNeedsVerification(false)
+                    setAddressHasBeenVerified(true)
                     setAddress({ ...address, ...chosenAddress })
-                    onContinueButtonPressed()
+                    finalizeFulfillment()
                   }}
                 />
               )}

@@ -269,9 +269,11 @@
     "setPriceRange": "Set price range you are interested in",
     "confirmationStep": {
       "saved": "Your alert has been saved.",
-      "weWillNotifyYou": "We will notify you when new works get added to Artsy.",
-      "artworksMatchCriteria_one": "1 work currently on Artsy matches your criteria.",
-      "artworksMatchCriteria_other": "{{count}} works currently on Artsy match your criteria.",
+      "weWillNotifyYou": "We’ll let you know when matching works are added to Artsy.",
+      "manyMatchingArtworks": "{{count}} works currently on Artsy match your criteria.",
+      "fewMatchingArtworks_one": "You might like this 1 work currently on Artsy that matches your criteria:",
+      "fewMatchingArtworks_other": "You might like these {{count}} works currently on Artsy that match your criteria:",
+      "noMatches": "There aren’t any works available that meet the criteria at this time.",
       "seeOurTopPicks": "See our top picks for you:",
       "seeAllMatchingWorks": "See all matching works",
       "manageYourAlerts": "Manage your alerts"

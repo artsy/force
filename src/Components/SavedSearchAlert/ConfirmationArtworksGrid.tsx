@@ -20,6 +20,8 @@ import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { useTranslation } from "react-i18next"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 
+export const NUMBER_OF_ARTWORKS_TO_SHOW = 10
+
 interface ConfirmationArtworksProps {
   artworksConnection: ConfirmationArtworksGridQuery$data["artworksConnection"]
 }
@@ -30,16 +32,36 @@ export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
   const { t } = useTranslation()
   const artworksCount = artworksConnection?.counts?.total
 
+  if (artworksCount === 0) {
+    return (
+      <Text mb={2} p={2} bg="black10" color="black60">
+        {t("createAlertModal.confirmationStep.noMatches")}
+      </Text>
+    )
+  }
+
   return (
     <Flex flexDirection="column">
-      <Text variant="sm-display" color="black60">
-        {t("createAlertModal.confirmationStep.artworksMatchCriteria", {
-          count: artworksCount,
-        })}
-      </Text>
-      <Text variant="sm-display" color="black60">
-        {t("createAlertModal.confirmationStep.seeOurTopPicks")}
-      </Text>
+      {artworksCount > NUMBER_OF_ARTWORKS_TO_SHOW ? (
+        <>
+          <Text variant="sm-display" color="black60">
+            {t("createAlertModal.confirmationStep.manyMatchingArtworks", {
+              count: artworksCount,
+            })}
+          </Text>
+          <Text variant="sm-display" color="black60">
+            {t("createAlertModal.confirmationStep.seeOurTopPicks")}
+          </Text>
+        </>
+      ) : (
+        <>
+          <Text variant="sm-display" color="black60">
+            {t("createAlertModal.confirmationStep.fewMatchingArtworks", {
+              count: artworksCount,
+            })}
+          </Text>
+        </>
+      )}
 
       <Spacer y={2} />
 
@@ -70,7 +92,7 @@ export const ConfirmationArtworksGridQueryRenderer: FC<SearchCriteriaAttributes>
       `}
       variables={{
         input: {
-          first: 10,
+          first: NUMBER_OF_ARTWORKS_TO_SHOW,
           sort: "-published_at",
           forSale: true,
           ...props,
@@ -113,7 +135,10 @@ const ContentPlaceholder: FC = () => {
 
       <Spacer y={2} />
 
-      <ArtworkGridPlaceholder columnCount={2} amount={10} />
+      <ArtworkGridPlaceholder
+        columnCount={2}
+        amount={NUMBER_OF_ARTWORKS_TO_SHOW}
+      />
     </Flex>
   )
 }

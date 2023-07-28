@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e457356364354ea97202f9d10d0ff9cc>>
+ * @generated SignedSource<<05036c5cbd07e4de8980d1a60f9718c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,6 +33,7 @@ v1 = {
   "kind": "Literal",
   "name": "version",
   "value": [
+    "main",
     "normalized",
     "larger",
     "large"
@@ -193,7 +194,7 @@ return {
                   (v2/*: any*/),
                   (v3/*: any*/)
                 ],
-                "storageKey": "resized(version:[\"normalized\",\"larger\",\"large\"],width:200)"
+                "storageKey": "resized(version:[\"main\",\"normalized\",\"larger\",\"large\"],width:200)"
               },
               {
                 "alias": "desktop",
@@ -210,7 +211,7 @@ return {
                 "name": "resized",
                 "plural": false,
                 "selections": (v4/*: any*/),
-                "storageKey": "resized(version:[\"normalized\",\"larger\",\"large\"],width:325)"
+                "storageKey": "resized(version:[\"main\",\"normalized\",\"larger\",\"large\"],width:325)"
               },
               {
                 "alias": "zoom",
@@ -232,7 +233,7 @@ return {
                 "name": "resized",
                 "plural": false,
                 "selections": (v4/*: any*/),
-                "storageKey": "resized(height:900,version:[\"normalized\",\"larger\",\"large\"],width:900)"
+                "storageKey": "resized(height:900,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:900)"
               }
             ],
             "storageKey": "images(default:false,size:100)"
@@ -250,7 +251,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f615b49b35db76f301775ae7691fa5f5",
+    "cacheID": "ac2c7fc55709e1fbe7df63f360922776",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -297,7 +298,7 @@ return {
     },
     "name": "ShowInstallShots_Test_Query",
     "operationKind": "query",
-    "text": "query ShowInstallShots_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInstallShots_show\n    id\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images(default: false, size: 100) {\n    internalID\n    caption\n    mobile: resized(width: 200, version: [\"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n    }\n    desktop: resized(width: 325, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    zoom: resized(width: 900, height: 900, version: [\"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
+    "text": "query ShowInstallShots_Test_Query {\n  show(id: \"xxx\") {\n    ...ShowInstallShots_show\n    id\n  }\n}\n\nfragment ShowInstallShots_show on Show {\n  name\n  images(default: false, size: 100) {\n    internalID\n    caption\n    mobile: resized(width: 200, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n    }\n    desktop: resized(width: 325, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n    zoom: resized(width: 900, height: 900, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n"
   }
 };
 })();

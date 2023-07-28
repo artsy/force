@@ -140,21 +140,21 @@ export const ArticleZoomGalleryFigureFragmentContainer = createFragmentContainer
           image {
             width
             height
-            url(version: ["normalized", "larger", "large"])
+            url(version: ["main", "normalized", "larger", "large"])
           }
         }
         ... on ArticleImageSection {
           image {
             width
             height
-            url(version: ["normalized", "larger", "large"])
+            url(version: ["main", "normalized", "larger", "large"])
           }
         }
         ... on ArticleUnpublishedArtwork {
           image {
             width
             height
-            url(version: ["normalized", "larger", "large"])
+            url(version: ["main", "normalized", "larger", "large"])
           }
         }
       }

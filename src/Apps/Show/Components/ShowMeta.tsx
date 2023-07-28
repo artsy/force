@@ -39,7 +39,7 @@ export const ShowMetaFragmentContainer = createFragmentContainer(ShowMeta, {
       href
       metaDescription: description
       metaImage {
-        src: url(version: ["normalized", "larger", "large"])
+        src: url(version: ["main", "normalized", "larger", "large"])
       }
       partner {
         ... on Partner {

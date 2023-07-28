@@ -89,7 +89,7 @@ export const ShowsFeaturedShowFragmentContainer = createFragmentContainer(
           large: cropped(
             width: 910
             height: 683
-            version: ["normalized", "larger", "large"]
+            version: ["main", "normalized", "larger", "large"]
           ) {
             width
             height
@@ -99,7 +99,7 @@ export const ShowsFeaturedShowFragmentContainer = createFragmentContainer(
           small: cropped(
             width: 600
             height: 450
-            version: ["normalized", "larger", "large"]
+            version: ["main", "normalized", "larger", "large"]
           ) {
             width
             height

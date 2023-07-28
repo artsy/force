@@ -25,7 +25,7 @@ export const CollectorsOverview: React.FC = () => {
   return (
     <>
       <Text mb={[2, 4, 6]} variant={["lg-display", "xl", "xxl"]}>
-        Reach a global network of Collectors
+        Reach a global network of collectors
       </Text>
       <GridColumns gridColumnGap={[0, 2, 6]} gridRowGap={[0, 2, 6]}>
         <Column span={4}>
@@ -35,8 +35,8 @@ export const CollectorsOverview: React.FC = () => {
             display="flex"
             alignItems={["flex-start", "center"]}
           >
-            {DATA.map(i => (
-              <Column flexDirection="column" span={[6, 8]}>
+            {DATA.map((i, index) => (
+              <Column flexDirection="column" span={[6, 8]} key={index}>
                 <Box>
                   <Text variant={["xl", "xxl", "xxxl"]}>{i.value}</Text>
                   <Text variant={["xs", "sm", "lg-display"]}>{i.title}</Text>

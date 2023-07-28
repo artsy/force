@@ -1525,6 +1525,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
       ACTIVE_SECONDARY_MARKET
       CRITICALLY_ACCLAIMED
       ARTSY_VANGUARD_YEAR
+      GAINING_FOLLOWERS
       SOLO_SHOW
       GROUP_SHOW
       BIENNIAL
@@ -1608,6 +1609,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
   statuses: ArtistStatuses
   targetSupply: ArtistTargetSupply
   vanguardYear: String
+  verifiedRepresentatives: [Partner!]!
   years: String
 }
 
@@ -1752,6 +1754,7 @@ enum ArtistInsightKind {
   BIENNIAL
   COLLECTED
   CRITICALLY_ACCLAIMED
+  GAINING_FOLLOWERS
   GROUP_SHOW
   HIGH_AUCTION_RECORD
   PRIVATE_COLLECTIONS
@@ -7019,6 +7022,16 @@ type Conversation implements Node {
     sort: sort
   ): MessageConnection @deprecated(reason: "Prefer messagesConnection")
 
+  # A connection for all messages and events in a single conversation
+  messagesAndConversationEventsConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+    page: Int
+    size: Int
+  ): MessageOrConversationEventTypeConnection
+
   # A connection for all messages in a single conversation
   messagesConnection(
     after: String
@@ -7069,6 +7082,22 @@ type ConversationEdge {
 
   # The item at the end of the edge
   node: Conversation
+}
+
+# An event (such as a submitted offer) in a conversation.
+type ConversationEvent implements Node {
+  # Text for this event, formatted for the buyer.
+  buyerBody: String
+  eventKey: String!
+
+  # A globally unique ID.
+  id: ID!
+
+  # A type-specific ID likely used as a database ID.
+  internalID: ID!
+
+  # Text for this event, formatted for the seller.
+  sellerBody: String
 }
 
 # The participant who started the conversation, currently always a User
@@ -7691,6 +7720,10 @@ type createUserAdminNoteSuccess {
   adminNote: UserAdminNotes
 }
 
+type CreateUserInterestFailure {
+  mutationError: GravityMutationError
+}
+
 type createUserInterestForUserFailure {
   mutationError: GravityMutationError
 }
@@ -7739,6 +7772,17 @@ type CreateUserInterestMutationPayload {
   clientMutationId: String
   me: Me!
   userInterest: UserInterest!
+}
+
+input CreateUserInterestsMutationInput {
+  clientMutationId: String
+  userInterests: [UserInterestInput!]!
+}
+
+type CreateUserInterestsMutationPayload {
+  clientMutationId: String
+  me: Me!
+  userInterestsOrErrors: [UserInterestOrError!]!
 }
 
 type CreateUserSaleProfileFailure {
@@ -8287,6 +8331,10 @@ input DeleteUserInput {
   id: String!
 }
 
+type DeleteUserInterestFailure {
+  mutationError: GravityMutationError
+}
+
 type deleteUserInterestForUserFailure {
   mutationError: GravityMutationError
 }
@@ -8320,6 +8368,8 @@ type deleteUserInterestForUserSuccess {
 input DeleteUserInterestMutationInput {
   anonymousSessionId: String
   clientMutationId: String
+
+  # Either the `id` or the `interest_id` of a user interest
   id: String!
   sessionID: String
 }
@@ -8328,6 +8378,19 @@ type DeleteUserInterestMutationPayload {
   clientMutationId: String
   me: Me!
   userInterest: UserInterest!
+}
+
+union DeleteUserInterestOrErrorType = DeleteUserInterestFailure | UserInterest
+
+input DeleteUserInterestsMutationInput {
+  clientMutationId: String
+  ids: [String!]!
+}
+
+type DeleteUserInterestsMutationPayload {
+  clientMutationId: String
+  me: Me!
+  userInterestsOrErrors: [DeleteUserInterestOrErrorType!]!
 }
 
 type DeleteUserPayload {
@@ -11646,6 +11709,9 @@ type Me implements Node {
   ): AuctionResultConnection
   myCollectionConnection(
     after: String
+
+    # Filter by artist IDs
+    artistIDs: [String!]
     before: String
 
     # Exclude artworks that have been purchased on Artsy and automatically added to the collection.
@@ -11850,6 +11916,21 @@ type Me implements Node {
     # The ID of the UserInterest
     id: String
   ): UserInterest
+  userInterestsConnection(
+    after: String
+    before: String
+
+    # UserInterest category to select. 'collected_before' or 'interested_in_collecting' category
+    category: UserInterestCategory
+    first: Int
+
+    # Id of the user interests to return if found. Can be an 'Artist' Id or a 'Gene' Id
+    interestID: String
+
+    # UserInterest InterestType to select. 'Artist' or 'Gene' type
+    interestType: UserInterestInterestType
+    last: Int
+  ): UserInterestConnection
 
   # A list of lots a user is watching.
   watchedLotConnection(
@@ -11992,6 +12073,28 @@ type MessageEdge {
 type MessageInitiator {
   email: String
   name: String
+}
+
+union MessageOrConversationEventType = ConversationEvent | Message
+
+# A connection to a list of items.
+type MessageOrConversationEventTypeConnection {
+  # A list of edges.
+  edges: [MessageOrConversationEventTypeEdge]
+  pageCursors: PageCursors!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+  totalCount: Int
+}
+
+# An edge in a connection.
+type MessageOrConversationEventTypeEdge {
+  # A cursor for use in pagination
+  cursor: String!
+
+  # The item at the end of the edge
+  node: MessageOrConversationEventType
 }
 
 type MetaphysicsService {
@@ -12355,6 +12458,11 @@ type Mutation {
     input: CreateUserInterestForUserInput!
   ): CreateUserInterestForUserPayload
 
+  # Collect Multiple Artists
+  createUserInterests(
+    input: CreateUserInterestsMutationInput!
+  ): CreateUserInterestsMutationPayload
+
   # Create a sale profile for a user
   createUserSaleProfile(
     input: CreateUserSaleProfileMutationInput!
@@ -12433,6 +12541,11 @@ type Mutation {
   deleteUserInterestForUser(
     input: DeleteUserInterestForUserInput!
   ): DeleteUserInterestForUserPayload
+
+  # Deletes multiple UserInterests on the logged in User's CollectorProfile.
+  deleteUserInterests(
+    input: DeleteUserInterestsMutationInput!
+  ): DeleteUserInterestsMutationPayload
 
   # Delete a role associated with a user
   deleteUserRole(
@@ -12666,6 +12779,16 @@ type Mutation {
   updateUserDefaultAddress(
     input: UpdateUserDefaultAddressInput!
   ): UpdateUserDefaultAddressPayload
+
+  # Updates a UserInterest on the logged in User's CollectorProfile.
+  updateUserInterest(
+    input: UpdateUserInterestMutationInput!
+  ): UpdateUserInterestMutationPayload
+
+  # Update user interests for multiple artists
+  updateUserInterests(
+    input: UpdateUserInterestsMutationInput!
+  ): UpdateUserInterestsMutationPayload
 
   # Update the user sale profile
   updateUserSaleProfile(
@@ -13436,6 +13559,8 @@ type Partner implements Node {
     before: String
     first: Int
     last: Int
+    page: Int
+    size: Int
   ): LocationConnection
   meta: PartnerMeta
   name: String
@@ -18370,6 +18495,53 @@ type UpdateUserDefaultAddressPayload {
   userAddressOrErrors: UserAddressOrErrorsUnion!
 }
 
+type UpdateUserInterestFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateUserInterestInput {
+  id: String!
+  private: Boolean
+}
+
+input UpdateUserInterestMutationInput {
+  clientMutationId: String
+  id: String!
+  private: Boolean
+}
+
+type UpdateUserInterestMutationPayload {
+  clientMutationId: String
+
+  # On success: the new state of the UserInterest
+  userInterestOrError: UpdateUserInterestResponseOrError
+}
+
+union UpdateUserInterestOrError = UpdateUserInterestsFailure | UserInterest
+
+union UpdateUserInterestResponseOrError =
+    UpdateUserInterestFailure
+  | UpdateUserInterestSuccess
+
+type UpdateUserInterestsFailure {
+  mutationError: GravityMutationError
+}
+
+input UpdateUserInterestsMutationInput {
+  clientMutationId: String
+  userInterests: [UpdateUserInterestInput!]!
+}
+
+type UpdateUserInterestsMutationPayload {
+  clientMutationId: String
+  me: Me!
+  userInterestsOrErrors: [UpdateUserInterestOrError!]!
+}
+
+type UpdateUserInterestSuccess {
+  userInterest: UserInterest
+}
+
 input UpdateUserMutationInput {
   clientMutationId: String
   dataTransferOptOut: Boolean
@@ -18912,6 +19084,19 @@ type UserInterestEdge {
   # The item at the end of the edge
   node: UserInterestInterest
   ownerType: String
+  private: Boolean!
+}
+
+input UserInterestInput {
+  anonymousSessionId: String
+
+  # Optional body for note
+  body: String
+  category: UserInterestCategory!
+  interestId: String!
+  interestType: UserInterestInterestType!
+  private: Boolean
+  sessionID: String
 }
 
 union UserInterestInterest = Artist | Gene
@@ -18920,6 +19105,8 @@ enum UserInterestInterestType {
   ARTIST
   GENE
 }
+
+union UserInterestOrError = CreateUserInterestFailure | UserInterest
 
 enum UserInterestOwnerType {
   COLLECTOR_PROFILE
@@ -19059,9 +19246,9 @@ enum VerificationStatuses {
 }
 
 type VerifyAddressType {
-  inputAddress: InputAddressFields
-  suggestedAddresses: [SuggestedAddressFields]
-  verificationStatus: VerificationStatuses
+  inputAddress: InputAddressFields!
+  suggestedAddresses: [SuggestedAddressFields]!
+  verificationStatus: VerificationStatuses!
 }
 
 # An object containing video metadata

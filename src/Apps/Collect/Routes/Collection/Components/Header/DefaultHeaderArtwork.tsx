@@ -65,7 +65,7 @@ export const DefaultHeaderArtworkFragmentContainer = createFragmentContainer(
           resized(
             width: 300
             height: 450
-            version: ["normalized", "larger", "large"]
+            version: ["main", "normalized", "larger", "large"]
           ) {
             src
             srcSet

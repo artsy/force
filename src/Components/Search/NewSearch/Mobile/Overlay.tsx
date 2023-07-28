@@ -120,13 +120,15 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
             />
           </Box>
 
-          <NewSearchInputPillsFragmentContainer
-            onPillClick={handlePillClick}
-            viewer={viewer}
-            selectedPill={selectedPill}
-            enableChevronNavigation={false}
-            forceDisabled={disablePills}
-          />
+          {shouldStartSearching(inputValue) && (
+            <NewSearchInputPillsFragmentContainer
+              onPillClick={handlePillClick}
+              viewer={viewer}
+              selectedPill={selectedPill}
+              enableChevronNavigation={false}
+              forceDisabled={disablePills}
+            />
+          )}
         </>
       }
     >

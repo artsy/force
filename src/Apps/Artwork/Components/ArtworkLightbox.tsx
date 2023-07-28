@@ -122,7 +122,7 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
           fallback: cropped(
             width: 800
             height: 800
-            version: ["normalized", "larger", "large"]
+            version: ["main", "normalized", "larger", "large"]
           ) {
             width
             height
@@ -132,7 +132,7 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
           resized(
             width: 800
             height: 800
-            version: ["normalized", "larger", "large"]
+            version: ["main", "normalized", "larger", "large"]
           ) {
             width
             height

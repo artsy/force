@@ -1,3 +1,4 @@
+---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -8,6 +9,7 @@ metadata:
     component: web
     app.kubernetes.io/version: staging
 spec:
+  replicas: 1
   strategy:
     rollingUpdate:
       maxSurge: 2
@@ -94,18 +96,128 @@ spec:
                 values:
                 - foreground
 ---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: force-web-spotty
+  labels:
+    app: force
+    layer: application
+    component: web
+    app.kubernetes.io/version: staging
+spec:
+  strategy:
+    rollingUpdate:
+      maxSurge: 2
+      maxUnavailable: 0
+    type: RollingUpdate
+  selector:
+    matchLabels:
+      app: force
+      layer: application
+      component: web
+  template:
+    metadata:
+      labels:
+        app: force
+        layer: application
+        component: web
+        app.kubernetes.io/version: staging
+      name: force-web-spotty
+      namespace: default
+    spec:
+      containers:
+      - name: force-web-spotty
+        env:
+        - name: PORT
+          value: '5000'
+        - name: DD_TRACE_AGENT_HOSTNAME
+          valueFrom:
+            fieldRef:
+              fieldPath: spec.nodeName
+        - name: PAGE_CACHE_NAMESPACE
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.namespace
+        - name: KEEPALIVE_TIMEOUT_SECONDS
+          value: '95'
+        - name: HEADERS_TIMEOUT_SECONDS
+          value: '105'
+        - name: DD_VERSION
+          valueFrom:
+            fieldRef:
+              fieldPath: metadata.labels['app.kubernetes.io/version']
+        envFrom:
+        - configMapRef:
+            name: force-environment
+        image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:staging
+        imagePullPolicy: Always
+        ports:
+        - name: force-http
+          containerPort: 5000
+        readinessProbe:
+          httpGet:
+            port: force-http
+            path: /system/up
+            httpHeaders:
+            - name: X-FORWARDED-PROTO
+              value: https
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        resources:
+          requests:
+            cpu: 100m
+            memory: 500Mi
+          limits:
+            memory: 1Gi
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - sh
+              - -c
+              - sleep 10
+      dnsPolicy: ClusterFirst
+      dnsConfig:
+        options:
+        - name: ndots
+          value: '1'
+      tolerations:
+        - key: reserved
+          operator: Equal
+          value: spot
+          effect: NoSchedule
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - foreground
+                - foreground-spot
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            preference:
+              matchExpressions:
+              - key: tier
+                operator: In
+                values:
+                - foreground-spot
+---
 apiVersion: autoscaling/v2beta2
 kind: HorizontalPodAutoscaler
 metadata:
-  name: force-web
+  name: force-web-spotty
   namespace: default
 spec:
   scaleTargetRef:
     apiVersion: apps/v1
     kind: Deployment
-    name: force-web
-  minReplicas: 2
-  maxReplicas: 3
+    name: force-web-spotty
+  minReplicas: 1
+  maxReplicas: 2
   behavior:
     scaleDown:
       stabilizationWindowSeconds: 1800
