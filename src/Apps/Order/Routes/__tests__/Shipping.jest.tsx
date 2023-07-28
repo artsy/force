@@ -1658,9 +1658,10 @@ describe("Shipping", () => {
             )
             const wrapper = getWrapper({
               CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
-              Me: () => emptyTestMe,
+              Me: () => testMe,
             })
             const page = new ShippingTestPage(wrapper)
+            await page.update()
 
             page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
 

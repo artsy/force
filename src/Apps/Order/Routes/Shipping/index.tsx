@@ -239,7 +239,42 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }
 
+  /**
+   * Perform basic form validation for address and phone number.
+   *
+   * @returns true if both are valid; false, otherwise
+   */
+  const validateAddressAndPhoneNumber = () => {
+    const {
+      errors: addressErrors,
+      hasErrors: invalidAddress,
+    } = validateAddress(address)
+    const {
+      error: phoneNumberError,
+      hasError: invalidPhoneNumber,
+    } = validatePhoneNumber(phoneNumber)
+
+    if (invalidAddress) {
+      setAddressErrors(addressErrors!)
+      setAddressTouched(touchedAddress)
+    }
+    if (invalidPhoneNumber) {
+      setPhoneNumberError(phoneNumberError!)
+      setPhoneNumberTouched(true)
+    }
+
+    return !invalidAddress && !invalidPhoneNumber
+  }
+
   const onContinueButtonPressed = async () => {
+    if (
+      shippingOption === "SHIP" &&
+      isCreateNewAddress() &&
+      !validateAddressAndPhoneNumber()
+    ) {
+      return
+    }
+
     if (
       isAddressVerificationEnabled() &&
       !addressHasBeenVerified &&
@@ -257,28 +292,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   const selectShipping = async (editedAddress?: MutationAddressResponse) => {
-    if (shippingOption === "SHIP") {
-      if (isCreateNewAddress()) {
-        // validate when order is not pickup and the address is new
-        const { errors, hasErrors } = validateAddress(address)
-        const { error, hasError } = validatePhoneNumber(phoneNumber)
-        if (hasErrors && hasError) {
-          setAddressErrors(errors!)
-          setAddressTouched(touchedAddress)
-          setPhoneNumberError(error!)
-          setPhoneNumberTouched(true)
-          return
-        } else if (hasErrors) {
-          setAddressErrors(errors!)
-          setAddressTouched(touchedAddress)
-          return
-        } else if (hasError) {
-          setPhoneNumberError(error!)
-          setPhoneNumberTouched(true)
-          return
-        }
-      }
-    } else {
+    if (shippingOption === "PICKUP") {
       const { error, hasError } = validatePhoneNumber(phoneNumber)
       if (hasError) {
         setPhoneNumberError(error!)
