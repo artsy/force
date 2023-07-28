@@ -1069,6 +1069,10 @@ describe("Shipping", () => {
         )
       })
 
+      afterAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockReset()
+      })
+
       describe("when the continue button is clicked", () => {
         describe("with US address", () => {
           it("mounts the address verification flow", async () => {
@@ -1116,6 +1120,10 @@ describe("Shipping", () => {
         ;(useFeatureFlag as jest.Mock).mockImplementation(
           (featureName: string) => featureName === "address_verification_intl"
         )
+      })
+
+      afterAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockReset()
       })
 
       describe("when the continue button is clicked", () => {
@@ -1315,8 +1323,12 @@ describe("Shipping", () => {
     describe("with address verification enabled", () => {
       beforeAll(() => {
         ;(useFeatureFlag as jest.Mock).mockImplementation(
-          (featureName: string) => featureName === "address_verification"
+          (featureName: string) => featureName === "address_verification_us"
         )
+      })
+
+      afterAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockReset()
       })
 
       describe("when the continue button is clicked", () => {
