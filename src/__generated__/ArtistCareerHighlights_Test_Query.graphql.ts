@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ffc6eed4557c56a190b9eee68a8ab61a>>
+ * @generated SignedSource<<5a9b0b63a4e762e13a15509c09c7ea8c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -180,6 +180,7 @@ return {
             "BIENNIAL",
             "COLLECTED",
             "CRITICALLY_ACCLAIMED",
+            "GAINING_FOLLOWERS",
             "GROUP_SHOW",
             "HIGH_AUCTION_RECORD",
             "PRIVATE_COLLECTIONS",
