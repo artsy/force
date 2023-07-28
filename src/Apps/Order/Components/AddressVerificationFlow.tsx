@@ -82,14 +82,46 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   }, [addressOptions, onChosenAddress, selectedAddressKey])
 
   const handleClose = () => {
-    setModalType(null)
     trackEvent({
       action_type: "clickedCloseValidationAddress",
       context_module: ContextModule.ordersShipping,
       context_page_owner_type: OwnerType.ordersShipping,
       context_page_owner_id: contextPageOwnerSlug,
-      option: "null",
+      option: "X",
       label: "X",
+    })
+    onClose()
+  }
+
+  const handleBackToEdit = () => {
+    const option = selectedAddressKey?.includes("suggestedAddress")
+      ? "Recommended"
+      : selectedAddressKey === "userAddress"
+      ? "What you entered"
+      : null
+
+    trackEvent({
+      action_type: "clickedValidationAddress",
+      context_module: ContextModule.ordersShipping,
+      context_page_owner_type: OwnerType.ordersShipping,
+      context_page_owner_id: contextPageOwnerSlug,
+      user_id: user?.id,
+      subject: "Check your delivery address",
+      option,
+      label: "Back to Edit",
+    })
+    onClose()
+  }
+
+  const handleEditAddress = () => {
+    trackEvent({
+      action_type: "clickedValidationAddress",
+      context_module: ContextModule.ordersShipping,
+      context_page_owner_type: OwnerType.ordersShipping,
+      context_page_owner_id: contextPageOwnerSlug,
+      user_id: user?.id,
+      subject: "Check your delivery address",
+      label: "Edit Address",
     })
     onClose()
   }
@@ -211,27 +243,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
         </RadioGroup>
         <Spacer y={4} />
         <Flex width="100%" justifyContent="space-between">
-          <Button
-            onClick={() => {
-              if (selectedAddressKey) {
-                trackEvent({
-                  action_type: "clickedValidationAddress",
-                  context_module: ContextModule.ordersShipping,
-                  context_page_owner_type: OwnerType.ordersShipping,
-                  context_page_owner_id: contextPageOwnerSlug,
-                  user_id: user?.id,
-                  subject: "Check your delivery address",
-                  option: selectedAddressKey.includes("suggestedAddress")
-                    ? "Recommended"
-                    : "What you entered",
-                  label: "Back to Edit",
-                })
-              }
-              handleClose()
-            }}
-            variant="secondaryBlack"
-            flex={1}
-          >
+          <Button onClick={handleBackToEdit} variant="secondaryBlack" flex={1}>
             Back to Edit
           </Button>
           <Spacer x={1} />
@@ -266,7 +278,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
 
   if (modalType === ModalType.REVIEW_AND_CONFIRM) {
     return (
-      <ModalDialog title="Check your delivery address" onClose={onClose}>
+      <ModalDialog title="Check your delivery address" onClose={handleClose}>
         <Text>
           The address you entered may be incorrect or incomplete. Please check
           it and make any changes necessary.
@@ -300,21 +312,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
             Use This Address
           </Button>
           <Spacer x={1} />
-          <Button
-            onClick={() => {
-              onClose()
-              trackEvent({
-                action_type: "clickedValidationAddress",
-                context_module: ContextModule.ordersShipping,
-                context_page_owner_type: OwnerType.ordersShipping,
-                context_page_owner_id: contextPageOwnerSlug,
-                user_id: user?.id,
-                subject: "Check your delivery address",
-                label: "Edit Address",
-              })
-            }}
-            flex={1}
-          >
+          <Button onClick={handleEditAddress} flex={1}>
             Edit Address
           </Button>
         </Flex>
