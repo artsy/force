@@ -104,8 +104,12 @@ export const ProgressiveOnboardingProvider: FC = ({ children }) => {
   // Ensure that the dismissed state stays in sync incase the user
   // has multiple tabs open.
   useEffect(() => {
+    const current = get(id)
+
+    if (current.length === 0) return
+
     const handleFocus = () => {
-      setDismissed(get(id))
+      setDismissed(current)
     }
 
     window.addEventListener("focus", handleFocus)
