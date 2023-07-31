@@ -7,7 +7,7 @@ import { AuthContextModule } from "@artsy/cohesion"
 import { Box, Image, SkeletonBox } from "@artsy/palette"
 import { useHoverMetadata } from "Components/Artwork/useHoverMetadata"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
-import { maxWidthByArea, resized } from "Utils/resized"
+import { maxDimensionsByArea, resized } from "Utils/resized"
 
 const DEFAULT_AREA = 200 * 200
 const DEFAULT_MAX_IMG_HEIGHT = 250
@@ -44,7 +44,7 @@ const ShelfArtwork: React.FC<ShelfArtworkProps> = ({
     return null
   }
 
-  const width = maxWidthByArea({
+  const { width } = maxDimensionsByArea({
     area,
     height: artwork.image.height,
     width: artwork.image.width,
@@ -151,12 +151,11 @@ export const ShelfArtworkPlaceholder: React.FC<ShelfArtworkPlaceholderProps> = (
   const width = [275, 200, 300, 250][index % 4]
   const height = [200, 300, 250, 275][index % 4]
 
-  const maxWidth = maxWidthByArea({
+  const { width: maxWidth, height: maxHeight } = maxDimensionsByArea({
     area,
     height,
     width,
   })
-  const scaledHeight = Math.round((height / width) * maxWidth)
 
   return (
     <Box
@@ -166,7 +165,7 @@ export const ShelfArtworkPlaceholder: React.FC<ShelfArtworkPlaceholderProps> = (
       width={maxWidth}
     >
       <Box height={maxImageHeight} display="flex" alignItems="flex-end">
-        <SkeletonBox width={maxWidth} height={scaledHeight} />
+        <SkeletonBox width={maxWidth} height={maxHeight} />
       </Box>
 
       <MetadataPlaceholder hideSaleInfo={hideSaleInfo} />
