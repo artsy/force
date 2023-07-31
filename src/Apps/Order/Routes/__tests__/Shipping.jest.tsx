@@ -1029,6 +1029,38 @@ describe("Shipping", () => {
 
           expect(mockCommitMutation).toHaveBeenCalled()
         })
+
+        describe("with address verfication enabled", () => {
+          beforeAll(() => {
+            ;(useFeatureFlag as jest.Mock).mockImplementation(
+              (featureName: string) => featureName === "address_verification_us"
+            )
+          })
+
+          afterAll(() => {
+            ;(useFeatureFlag as jest.Mock).mockReset()
+          })
+
+          it("triggers basic form validation first", async () => {
+            const wrapper = getWrapper({
+              CommerceOrder: () => testOrder,
+              Me: () => emptyTestMe,
+            })
+
+            const page = new ShippingTestPage(wrapper)
+
+            await page.clickSubmit()
+
+            const input = page
+              .find(Input)
+              .filterWhere(wrapper => wrapper.props().title === "Full name")
+            expect(input.props().error).toEqual("This field is required")
+
+            expect(
+              page.find(`[data-testid="address-verification-flow"]`).exists()
+            ).toBe(false)
+          })
+        })
       })
 
       it("does submit the mutation with a non-ship order", async () => {
@@ -1626,9 +1658,10 @@ describe("Shipping", () => {
             )
             const wrapper = getWrapper({
               CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
-              Me: () => emptyTestMe,
+              Me: () => testMe,
             })
             const page = new ShippingTestPage(wrapper)
+            await page.update()
 
             page.find(`[data-test="shipping-quotes"]`).last().simulate("click")
 
