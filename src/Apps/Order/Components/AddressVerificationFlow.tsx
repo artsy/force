@@ -87,8 +87,8 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       context_module: ContextModule.ordersShipping,
       context_page_owner_type: OwnerType.ordersShipping,
       context_page_owner_id: contextPageOwnerSlug,
-      option: "X",
-      label: "X",
+      option: null,
+      label: null,
     })
     onClose()
   }
@@ -296,7 +296,6 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
         <Flex width="100%" justifyContent="space-between">
           <Button
             onClick={() => {
-              chooseAddress()
               trackEvent({
                 action_type: "clickedValidationAddress",
                 context_module: ContextModule.ordersShipping,
@@ -306,6 +305,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
                 subject: "Check your delivery address",
                 label: "Use This Address",
               })
+              chooseAddress()
             }}
             variant="secondaryBlack"
             flex={1}
