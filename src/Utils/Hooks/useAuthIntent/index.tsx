@@ -10,6 +10,7 @@ import { createOrderMutation } from "./mutations/AuthIntentCreateOrderMutation"
 import { createOfferOrderMutation } from "./mutations/AuthIntentCreateOfferOrderMutation"
 import { associateSubmissionMutation } from "./mutations/AuthIntentAssociateSubmissionMutation"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import { useProgressiveOnboarding } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 
 export const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
 
@@ -117,13 +118,31 @@ export const runAuthIntent = async ({
  */
 export const useRunAuthIntent = () => {
   const { user, relayEnvironment } = useSystemContext()
+
   const { setValue } = useAuthIntent()
+
+  const { syncFromLoggedOutUser } = useProgressiveOnboarding()
 
   useEffect(() => {
     if (!relayEnvironment) return
 
-    runAuthIntent({ user, relayEnvironment, onSuccess: setValue })
-  }, [relayEnvironment, setValue, user])
+    runAuthIntent({
+      user,
+      relayEnvironment,
+      onSuccess: value => {
+        setValue(value)
+
+        // Run any success actions/clean up
+        switch (value.action) {
+          case "follow":
+            switch (value.kind) {
+              case "artist":
+                syncFromLoggedOutUser()
+            }
+        }
+      },
+    })
+  }, [relayEnvironment, setValue, syncFromLoggedOutUser, user])
 }
 
 const AuthIntentContext = createContext<{
