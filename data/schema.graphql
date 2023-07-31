@@ -12867,6 +12867,7 @@ type MyCollectionConnection {
     size: Int
     sort: ArtistSorts
   ): ArtistConnection
+    @deprecated(reason: "Please use `me.userInterestsConnection` instead")
   default: Boolean!
   description: String!
 
@@ -12963,6 +12964,7 @@ type MyCollectionInfo {
     size: Int
     sort: ArtistSorts
   ): ArtistConnection
+    @deprecated(reason: "Please use `me.userInterestsConnection` instead")
   default: Boolean!
   description: String!
   includesPurchasedArtworks: Boolean!
