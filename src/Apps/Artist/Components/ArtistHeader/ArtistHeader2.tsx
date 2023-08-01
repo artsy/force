@@ -182,9 +182,19 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                 {hasVerifiedRepresentatives && (
                   <Text variant="sm" color="black60">
                     Represented by: &nbsp;
-                    {parseVerifiedRepresentatives(
-                      artist.verifiedRepresentatives
-                    )}
+                    {artist.verifiedRepresentatives.map((rep, index) => {
+                      return (
+                        <Fragment key={rep.slug}>
+                          {index > 0 && ", "}
+                          <RouterLink
+                            to={`/partner/${rep.slug}`}
+                            color="black100"
+                          >
+                            {rep.name}
+                          </RouterLink>
+                        </Fragment>
+                      )
+                    })}
                   </Text>
                 )}
 
@@ -315,21 +325,6 @@ const formatFollowerCount = (n: number) => {
   } catch (error) {
     return n
   }
-}
-
-const parseVerifiedRepresentatives = (
-  representatives: ArtistHeader2_artist$data["verifiedRepresentatives"]
-) => {
-  return representatives.map((rep, index) => {
-    return (
-      <Fragment key={rep.slug}>
-        {index > 0 && ", "}
-        <RouterLink to={`/partner/${rep.slug}`} color="black100">
-          {rep.name}
-        </RouterLink>
-      </Fragment>
-    )
-  })
 }
 
 export const ARTIST_HEADER_NUMBER_OF_INSIGHTS = 6
