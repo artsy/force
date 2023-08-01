@@ -1,4 +1,4 @@
-import { Box, Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
+import { Column, GridColumns, Join, Spacer, Text } from "@artsy/palette"
 import { AuctionResult_auctionResult$data } from "__generated__/AuctionResult_auctionResult.graphql"
 import { ArtistAuctionResultItemFragmentContainer } from "Apps/Artist/Routes/AuctionResults/ArtistAuctionResultItem"
 import { AuctionResultImage } from "Apps/Artist/Routes/AuctionResults/SingleAuctionResultPage/AuctionResultImage"
@@ -9,7 +9,6 @@ import { MetaTags } from "Components/MetaTags"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { TopContextBar } from "Components/TopContextBar"
-import { useRouter } from "System/Router/useRouter"
 
 interface AuctionResultProps {
   auctionResult: AuctionResult_auctionResult$data
@@ -18,27 +17,23 @@ interface AuctionResultProps {
 export const AuctionResult: React.FC<AuctionResultProps> = ({
   auctionResult,
 }) => {
-  const { router } = useRouter()
   const { comparableAuctionResults, title, artist, internalID } = auctionResult
 
   const results = extractNodes(comparableAuctionResults)
+
+  if (!artist) return null
 
   return (
     <>
       <MetaTags
         title={`${title}${
-          artist?.name ? ` by ${artist.name}` : ""
+          artist.name ? ` by ${artist.name}` : ""
         } | Auction Results on Artsy`}
         pathname={`/auction-result/${internalID}`}
       />
 
-      <TopContextBar
-        onClick={() => router.go(-1)}
-        redirectTo={artist?.href!}
-        displayBackArrow
-        hideSeparator
-      >
-        Back
+      <TopContextBar displayBackArrow href={`${artist.href}/auction-results`}>
+        {artist.name} Auction Results
       </TopContextBar>
 
       <GridColumns mt={[0, 2]}>
@@ -47,15 +42,13 @@ export const AuctionResult: React.FC<AuctionResultProps> = ({
         </Column>
 
         <Column span={8}>
-          <Box>
-            <Join separator={<Spacer y={[2, 4]} />}>
-              <AuctionResultTitleInfo auctionResult={auctionResult} />
+          <Join separator={<Spacer y={[2, 4]} />}>
+            <AuctionResultTitleInfo auctionResult={auctionResult} />
 
-              <AuctionResultPrice auctionResult={auctionResult} />
+            <AuctionResultPrice auctionResult={auctionResult} />
 
-              <AuctionResultMetaData auctionResult={auctionResult} />
-            </Join>
-          </Box>
+            <AuctionResultMetaData auctionResult={auctionResult} />
+          </Join>
         </Column>
       </GridColumns>
 
@@ -63,9 +56,7 @@ export const AuctionResult: React.FC<AuctionResultProps> = ({
 
       {!!results.length && (
         <>
-          <Text variant={["sm-display", "md"]} textAlign="left">
-            Comparable Works
-          </Text>
+          <Text variant={["sm-display", "md"]}>Comparable Works</Text>
 
           <Spacer y={[2, 4]} />
 
