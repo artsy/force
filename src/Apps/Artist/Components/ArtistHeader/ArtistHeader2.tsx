@@ -12,7 +12,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import * as React from "react"
+import { Fragment } from "react"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
@@ -46,6 +46,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
   const hasInsights = artist.insights.length > 0
   const hasBio = artist.biographyBlurb?.text
   const hasSomething = hasImage || hasInsights || hasBio
+  const hasVerifiedRepresentatives = artist?.verifiedRepresentatives?.length > 0
 
   if (mode === "Collapsed") {
     return (
@@ -178,6 +179,15 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                   </Bio>
                 )}
 
+                {hasVerifiedRepresentatives && (
+                  <Text variant="sm" color="black60">
+                    Represented by: &nbsp;
+                    {parseVerifiedRepresentatives(
+                      artist.verifiedRepresentatives
+                    )}
+                  </Text>
+                )}
+
                 <CV to={`/artist/${artist.slug}/cv`} color="black60">
                   See all past shows and fair booths
                 </CV>
@@ -243,6 +253,10 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           description
           entities
         }
+        verifiedRepresentatives {
+          name
+          slug
+        }
         coverArtwork {
           title
           href
@@ -301,6 +315,21 @@ const formatFollowerCount = (n: number) => {
   } catch (error) {
     return n
   }
+}
+
+const parseVerifiedRepresentatives = (
+  representatives: ArtistHeader2_artist$data["verifiedRepresentatives"]
+) => {
+  return representatives.map((rep, index) => {
+    return (
+      <Fragment key={rep.slug}>
+        {index > 0 && ", "}
+        <RouterLink to={`/partner/${rep.slug}`} color="black100">
+          {rep.name}
+        </RouterLink>
+      </Fragment>
+    )
+  })
 }
 
 export const ARTIST_HEADER_NUMBER_OF_INSIGHTS = 6
