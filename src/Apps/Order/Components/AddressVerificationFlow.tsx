@@ -57,9 +57,10 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
 }) => {
   const [modalType, setModalType] = useState<ModalType | null>(null)
   const [addressOptions, setAddressOptions] = useState<AddressOption[]>([])
-  const [selectedAddressKey, setSelectedAddressKey] = useState<AddressOptionKey | null>(
-    null
-  )
+  const [
+    selectedAddressKey,
+    setSelectedAddressKey,
+  ] = useState<AddressOptionKey | null>(null)
 
   const { trackEvent } = useTracking()
   const { user } = useSystemContext()
@@ -129,18 +130,13 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     }
   }, [addressOptions])
 
-  // Handling possibly incorrectly (by MP) possible null values
   const suggestedAddresses =
     verifiedAddressResult.suggestedAddresses ||
     ([] as NonNullable<
-      NonNullable<AddressVerificationFlow_verifiedAddressResult$data>
+      AddressVerificationFlow_verifiedAddressResult$data
     >["suggestedAddresses"])
-  const inputAddress = verifiedAddressResult.inputAddress as NonNullable<
-    NonNullable<AddressVerificationFlow_verifiedAddressResult$data>
-  >["inputAddress"]
-  const verificationStatus = verifiedAddressResult.verificationStatus as NonNullable<
-    AddressVerificationFlow_verifiedAddressResult$data
-  >["verificationStatus"]
+  const inputAddress = verifiedAddressResult.inputAddress as AddressVerificationFlow_verifiedAddressResult$data["inputAddress"]
+  const verificationStatus = verifiedAddressResult.verificationStatus as AddressVerificationFlow_verifiedAddressResult$data["verificationStatus"]
 
   useEffect(() => {
     const inputOption: AddressOption = {
