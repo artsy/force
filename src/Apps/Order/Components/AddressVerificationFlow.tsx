@@ -20,7 +20,7 @@ import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 interface AddressVerificationFlowProps {
   verifiedAddressResult: AddressVerificationFlow_verifiedAddressResult$data
-  onChosenAddress: (address: AddressValues) => void
+  onChosenAddress: (address: AddressValues, saveAndContinue: boolean) => void
   onClose: () => void
 }
 
@@ -77,7 +77,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     )
     if (selectedAddress) {
       setModalType(null)
-      onChosenAddress(selectedAddress.address)
+      onChosenAddress(selectedAddress.address, false)
     }
   }, [addressOptions, onChosenAddress, selectedAddressKey])
 
@@ -154,7 +154,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     }
 
     if (verificationStatus === "VERIFIED_NO_CHANGE") {
-      onChosenAddress(inputOption.address as AddressValues)
+      onChosenAddress(inputOption.address as AddressValues, true)
     } else {
       if (verificationStatus === "VERIFIED_WITH_CHANGES") {
         setModalType(ModalType.SUGGESTIONS)
@@ -359,7 +359,7 @@ const AddressVerificationFlowFragmentContainer = createFragmentContainer(
 
 export const AddressVerificationFlowQueryRenderer: React.FC<{
   address: AddressValues
-  onChosenAddress: (address: AddressValues) => void
+  onChosenAddress: (address: AddressValues, saveAndContinue: boolean) => void
   onClose: () => void
 }> = ({ address, onChosenAddress, onClose }) => {
   return (
