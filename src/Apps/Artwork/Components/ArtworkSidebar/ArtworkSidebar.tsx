@@ -208,6 +208,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
           lotLabel
           extendedBiddingEndAt
           endAt
+          endedAt
         }
         artists {
           internalID

@@ -1,4 +1,4 @@
-import { lotIsClosed } from "../lotIsClosed"
+import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 
 const closedSale = { is_closed: true }
 const openSale = { is_closed: false }
