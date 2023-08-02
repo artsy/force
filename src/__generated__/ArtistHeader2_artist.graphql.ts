@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6d3ee6ae3014190c22c327592cefac7f>>
+ * @generated SignedSource<<9980bc17eba753a801fba2a817787364>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,6 +37,10 @@ export type ArtistHeader2_artist$data = {
   readonly internalID: string;
   readonly name: string | null;
   readonly slug: string;
+  readonly verifiedRepresentatives: ReadonlyArray<{
+    readonly name: string | null;
+    readonly slug: string;
+  }>;
   readonly " $fragmentType": "ArtistHeader2_artist";
 };
 export type ArtistHeader2_artist$key = {
@@ -44,7 +48,22 @@ export type ArtistHeader2_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader2_artist">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -57,20 +76,8 @@ const node: ReaderFragment = {
       "name": "internalID",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
+    (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -167,6 +174,19 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "Partner",
+      "kind": "LinkedField",
+      "name": "verifiedRepresentatives",
+      "plural": true,
+      "selections": [
+        (v1/*: any*/),
+        (v0/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Artwork",
       "kind": "LinkedField",
       "name": "coverArtwork",
@@ -234,7 +254,8 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "05dc703c1026ade811d40ebc4a21bbea";
+(node as any).hash = "ed76bfc133b4ade0f51163ac9168edc9";
 
 export default node;
