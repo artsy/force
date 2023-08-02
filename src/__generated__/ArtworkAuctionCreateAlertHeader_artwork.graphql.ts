@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<757eff0cc5188504911f1334fbcebf36>>
+ * @generated SignedSource<<4fadf500f79770bfe4133a0df5ab31d3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,21 +10,22 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkAuctionCreateAlert_artwork$data = {
+export type ArtworkAuctionCreateAlertHeader_artwork$data = {
   readonly artistNames: string | null;
   readonly title: string | null;
-  readonly " $fragmentType": "ArtworkAuctionCreateAlert_artwork";
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork">;
+  readonly " $fragmentType": "ArtworkAuctionCreateAlertHeader_artwork";
 };
-export type ArtworkAuctionCreateAlert_artwork$key = {
-  readonly " $data"?: ArtworkAuctionCreateAlert_artwork$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlert_artwork">;
+export type ArtworkAuctionCreateAlertHeader_artwork$key = {
+  readonly " $data"?: ArtworkAuctionCreateAlertHeader_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlertHeader_artwork">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtworkAuctionCreateAlert_artwork",
+  "name": "ArtworkAuctionCreateAlertHeader_artwork",
   "selections": [
     {
       "alias": null,
@@ -39,12 +40,17 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "artistNames",
       "storageKey": null
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSidebarCreateAlertButton_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "63e9dcb445312d0b6972668c7bb02c8a";
+(node as any).hash = "66f2b3de516634c6af99920c7233c612";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<531065368596de1669cb2d4b06179acd>>
+ * @generated SignedSource<<a659ea108c63d04b3c62ac80e2a350e9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,7 +22,6 @@ export type ArtworkApp_artwork$data = {
   } | null> | null;
   readonly availability: string | null;
   readonly internalID: string;
-  readonly isSold: boolean | null;
   readonly is_acquireable: boolean | null;
   readonly is_in_auction: boolean | null;
   readonly is_offerable: boolean | null;
@@ -35,7 +34,6 @@ export type ArtworkApp_artwork$data = {
   readonly sale: {
     readonly extendedBiddingIntervalMinutes: number | null;
     readonly internalID: string;
-    readonly isClosed: boolean | null;
     readonly slug: string;
     readonly startAt: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"CascadingEndTimesBanner_sale">;
@@ -47,7 +45,7 @@ export type ArtworkApp_artwork$data = {
   } | null;
   readonly slug: string;
   readonly visibilityLevel: Visibility | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlert_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebarCreateAlertButton_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlertHeader_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebarCreateAlertButton_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork">;
   readonly " $fragmentType": "ArtworkApp_artwork";
 };
 export type ArtworkApp_artwork$key = {
@@ -123,13 +121,6 @@ return {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "isSold",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": null,
       "kind": "LinkedField",
       "name": "listPrice",
@@ -193,13 +184,6 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "extendedBiddingIntervalMinutes",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isClosed",
           "storageKey": null
         },
         {
@@ -304,7 +288,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkAuctionCreateAlert_artwork"
+      "name": "ArtworkAuctionCreateAlertHeader_artwork"
     },
     {
       "args": null,
@@ -317,6 +301,6 @@ return {
 };
 })();
 
-(node as any).hash = "95e67aa9efd493d3382933f234e5ac17";
+(node as any).hash = "f6fabfec9e9da6efec00e56f6148f60b";
 
 export default node;

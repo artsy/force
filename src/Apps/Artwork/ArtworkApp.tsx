@@ -6,7 +6,6 @@ import {
   Flex,
   Spinner,
   Text,
-  Box,
 } from "@artsy/palette"
 import styled from "styled-components"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -42,11 +41,9 @@ import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtwo
 import { useCallback, useEffect } from "react"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar/ArtworkSidebar"
 import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { ArtworkAuctionCreateAlertFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlert"
-import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCreateAlertButton"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
+import { ArtworkAuctionCreateAlertHeaderFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertHeader"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -92,20 +89,13 @@ const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
 export const ArtworkApp: React.FC<Props> = props => {
   const { artwork, me, referrer, tracking, shouldTrackPageView } = props
   const { match } = useRouter()
-  const isAuctionHeaderAlertCTA = useFeatureFlag(
-    "onyx_auction-header-alert-cta"
-  )
   const hasArtists = (artwork.artists?.length ?? 0) > 0
   const biddingEndAt =
     artwork?.saleArtwork?.extendedBiddingEndAt ?? artwork?.saleArtwork?.endAt
   const { hasEnded } = useTimer(biddingEndAt!, artwork?.sale?.startAt!)
 
-  // TODO: a mix of logic from displaying a "Bidding closed" message from
-  // ArtworkSidebar/ArtworkSidebar and our assumptions
-  const displayCreateAlertCtaHeader =
-    isAuctionHeaderAlertCTA &&
-    hasArtists &&
-    (hasEnded || lotIsClosed(artwork.sale, artwork.saleArtwork))
+  const displayAuctionCreateAlertHeader =
+    hasArtists && (hasEnded || lotIsClosed(artwork.sale, artwork.saleArtwork))
 
   const showUnlistedArtworkBanner =
     artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
@@ -238,15 +228,10 @@ export const ArtworkApp: React.FC<Props> = props => {
       <ArtworkTopContextBarFragmentContainer artwork={artwork} />
       <GridColumns>
         <Column span={12} py={6}>
-          {displayCreateAlertCtaHeader && (
-            <Box py={6}>
-              <ArtworkAuctionCreateAlertFragmentContainer artwork={artwork} />
-              <Box mt={2} mx="auto" width={209}>
-                <ArtworkSidebarCreateAlertButtonFragmentContainer
-                  artwork={artwork}
-                />
-              </Box>
-            </Box>
+          {displayAuctionCreateAlertHeader && (
+            <ArtworkAuctionCreateAlertHeaderFragmentContainer
+              artwork={artwork}
+            />
           )}
         </Column>
       </GridColumns>
@@ -371,7 +356,6 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         is_offerable: isOfferable
         availability
         visibilityLevel
-        isSold
         # FIXME: The props in the component need to update to reflect
         # the new structure for price.
         listPrice {
@@ -391,7 +375,6 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
           internalID
           slug
           extendedBiddingIntervalMinutes
-          isClosed
           startAt
         }
         saleArtwork {
@@ -412,7 +395,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkTopContextBar_artwork
         ...ArtworkImageBrowser_artwork
         ...ArtworkSidebar_artwork
-        ...ArtworkAuctionCreateAlert_artwork
+        ...ArtworkAuctionCreateAlertHeader_artwork
         ...ArtworkSidebarCreateAlertButton_artwork
       }
     `,
