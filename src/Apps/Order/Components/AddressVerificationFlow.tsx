@@ -57,17 +57,13 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
 }) => {
   const [modalType, setModalType] = useState<ModalType | null>(null)
   const [addressOptions, setAddressOptions] = useState<AddressOption[]>([])
-  const [selectedAddressKey, setSelectedAddressKey2] = useState<string | null>(
+  const [selectedAddressKey, setSelectedAddressKey] = useState<AddressOptionKey | null>(
     null
   )
 
   const { trackEvent } = useTracking()
   const { user } = useSystemContext()
   const { contextPageOwnerSlug } = useAnalyticsContext()
-
-  const setSelectedAddressKey = (key: string) => {
-    setSelectedAddressKey2(key)
-  }
 
   const chooseAddress = useCallback(() => {
     if (!selectedAddressKey) return
