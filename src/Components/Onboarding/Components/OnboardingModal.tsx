@@ -6,9 +6,8 @@ import {
   useDidMount,
   Box,
   DROP_SHADOW,
-  Clickable,
+  ModalClose,
 } from "@artsy/palette"
-import CloseIcon from "@artsy/icons/CloseIcon"
 
 export type OnboardingModalProps = ModalBaseProps
 
@@ -60,18 +59,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
         }}
         {...boxProps}
       >
-        <Clickable
-          p={2}
-          ml="auto"
-          onClick={onClose}
-          aria-label="Close"
-          position="absolute"
-          top={0}
-          right={0}
-          zIndex={1}
-        >
-          <CloseIcon fill="black100" display="block" />
-        </Clickable>
+        <ModalClose onClick={onClose} position="absolute" top={0} right={0} />
 
         {children}
       </Box>
