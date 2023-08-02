@@ -40,8 +40,8 @@ import { CascadingEndTimesBannerFragmentContainer } from "Components/CascadingEn
 import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtworkBanner"
 import { useCallback, useEffect } from "react"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar/ArtworkSidebar"
-// import { RelatedWorksQueryRenderer } from "Apps/Artwork/Components/RelatedWorks"
 import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
+import { ArtworkAuctionCreateAlertHeaderFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertHeader"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -218,6 +218,8 @@ export const ArtworkApp: React.FC<Props> = props => {
 
       <ArtworkTopContextBarFragmentContainer artwork={artwork} />
 
+      <ArtworkAuctionCreateAlertHeaderFragmentContainer artwork={artwork} />
+
       <GridColumns>
         <Column
           span={8}
@@ -234,7 +236,6 @@ export const ArtworkApp: React.FC<Props> = props => {
             />
           </Media>
         </Column>
-
         <Column span={4} pt={[0, 2]}>
           <ArtworkSidebarFragmentContainer artwork={artwork} me={me} />
         </Column>
@@ -373,6 +374,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkTopContextBar_artwork
         ...ArtworkImageBrowser_artwork
         ...ArtworkSidebar_artwork
+        ...ArtworkAuctionCreateAlertHeader_artwork
       }
     `,
     me: graphql`
