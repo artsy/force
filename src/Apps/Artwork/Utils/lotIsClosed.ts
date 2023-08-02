@@ -15,8 +15,8 @@ export const lotIsClosed = (
   saleArtwork: SaleArtwork | null
 ): boolean => {
   // If there is no sale or saleArtwork, we can't determine if the lot is closed
-  // so we return false to be safe.
-  if (!sale || !saleArtwork) return false
+  // so we return true to be safe.
+  if (!sale || !saleArtwork) return true
 
   if ("is_closed" in sale && sale.is_closed) return true
   if ("isClosed" in sale && sale.isClosed) return true

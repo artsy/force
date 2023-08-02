@@ -100,7 +100,10 @@ export const ArtworkApp: React.FC<Props> = props => {
   )
   const isLotClosed = hasEnded || lotIsClosed(artwork.sale, artwork.saleArtwork)
   const displayAuctionCreateAlertHeader =
-    hasArtists && isLotClosed && auctionHeaderAlertCTAEnabled
+    hasArtists &&
+    artwork.is_in_auction &&
+    isLotClosed &&
+    auctionHeaderAlertCTAEnabled
 
   const showUnlistedArtworkBanner =
     artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
