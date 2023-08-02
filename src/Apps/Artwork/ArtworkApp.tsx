@@ -41,10 +41,7 @@ import { UnlistedArtworkBannerFragmentContainer } from "Components/UnlistedArtwo
 import { useCallback, useEffect } from "react"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar/ArtworkSidebar"
 import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
-import { useTimer } from "Utils/Hooks/useTimer"
-import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { ArtworkAuctionCreateAlertHeaderFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertHeader"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -90,20 +87,6 @@ const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
 export const ArtworkApp: React.FC<Props> = props => {
   const { artwork, me, referrer, tracking, shouldTrackPageView } = props
   const { match } = useRouter()
-  const hasArtists = (artwork.artists?.length ?? 0) > 0
-  const biddingEndAt =
-    artwork?.saleArtwork?.extendedBiddingEndAt ?? artwork?.saleArtwork?.endAt
-  const { hasEnded } = useTimer(biddingEndAt!, artwork?.sale?.startAt!)
-
-  const auctionHeaderAlertCTAEnabled = useFeatureFlag(
-    "onyx_auction-header-alert-cta"
-  )
-  const isLotClosed = hasEnded || lotIsClosed(artwork.sale, artwork.saleArtwork)
-  const displayAuctionCreateAlertHeader =
-    hasArtists &&
-    artwork.is_in_auction &&
-    isLotClosed &&
-    auctionHeaderAlertCTAEnabled
 
   const showUnlistedArtworkBanner =
     artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
@@ -235,15 +218,7 @@ export const ArtworkApp: React.FC<Props> = props => {
 
       <ArtworkTopContextBarFragmentContainer artwork={artwork} />
 
-      {displayAuctionCreateAlertHeader && (
-        <GridColumns>
-          <Column span={12} py={6}>
-            <ArtworkAuctionCreateAlertHeaderFragmentContainer
-              artwork={artwork}
-            />
-          </Column>
-        </GridColumns>
-      )}
+      <ArtworkAuctionCreateAlertHeaderFragmentContainer artwork={artwork} />
 
       <GridColumns>
         <Column
@@ -385,13 +360,6 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
           internalID
           slug
           extendedBiddingIntervalMinutes
-          startAt
-          isClosed
-        }
-        saleArtwork {
-          extendedBiddingEndAt
-          endAt
-          endedAt
         }
         artists {
           id

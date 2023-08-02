@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a8107d95d24f144fa7a3a2118160f0f3>>
+ * @generated SignedSource<<65b1f53081d0041be6e0d29c0c1e5e1d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,15 +34,8 @@ export type ArtworkApp_artwork$data = {
   readonly sale: {
     readonly extendedBiddingIntervalMinutes: number | null;
     readonly internalID: string;
-    readonly isClosed: boolean | null;
     readonly slug: string;
-    readonly startAt: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"CascadingEndTimesBanner_sale">;
-  } | null;
-  readonly saleArtwork: {
-    readonly endAt: string | null;
-    readonly endedAt: string | null;
-    readonly extendedBiddingEndAt: string | null;
   } | null;
   readonly slug: string;
   readonly visibilityLevel: Visibility | null;
@@ -186,52 +179,6 @@ return {
           "kind": "ScalarField",
           "name": "extendedBiddingIntervalMinutes",
           "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "startAt",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isClosed",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "SaleArtwork",
-      "kind": "LinkedField",
-      "name": "saleArtwork",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "extendedBiddingEndAt",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "endAt",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "endedAt",
-          "storageKey": null
         }
       ],
       "storageKey": null
@@ -304,6 +251,6 @@ return {
 };
 })();
 
-(node as any).hash = "acbddf79dcdb63b11618703c2d0e3616";
+(node as any).hash = "25d8548df52eb81ac57239f5be941545";
 
 export default node;
