@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<28e611e65619bc8ce535fa8e54be0553>>
+ * @generated SignedSource<<8fbc6cc6cee22475e3285866ba780d37>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -945,6 +945,7 @@ return {
             "GROUP_SHOW",
             "HIGH_AUCTION_RECORD",
             "PRIVATE_COLLECTIONS",
+            "RECENT_CAREER_EVENT",
             "RESIDENCIES",
             "REVIEWED",
             "SOLO_SHOW"
