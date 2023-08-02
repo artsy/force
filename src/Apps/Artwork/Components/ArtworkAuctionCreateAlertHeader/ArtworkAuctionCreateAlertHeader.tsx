@@ -3,7 +3,6 @@ import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
 import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCreateAlertButton"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
@@ -12,14 +11,6 @@ interface ArtworkAuctionCreateAlertHeaderProps {
 const ArtworkAuctionCreateAlertHeader: React.FC<ArtworkAuctionCreateAlertHeaderProps> = ({
   artwork,
 }) => {
-  const isArtworkAuctionCreateAlertHeaderEnabled = useFeatureFlag(
-    "onyx_auction-header-alert-cta"
-  )
-
-  if (!isArtworkAuctionCreateAlertHeaderEnabled) {
-    return null
-  }
-
   const artistName = artwork.artistNames ? ", " + artwork.artistNames : ""
 
   return (
