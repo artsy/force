@@ -20,12 +20,13 @@ const ArtworkAuctionCreateAlertHeader: React.FC<ArtworkAuctionCreateAlertHeaderP
     return null
   }
 
-  const artistName = artwork.artistNames ?? "Artist Unavailable"
+  const artistName = artwork.artistNames ? ", " + artwork.artistNames : ""
 
   return (
     <Box py={6}>
-      <Text variant="lg" textAlign={"center"}>
-        Bidding for <i>{artwork.title?.trim()}</i>, {artistName} has ended.
+      <Text variant="lg" textAlign="center">
+        Bidding for <i>{artwork.title?.trim()}</i>
+        {artistName} has ended.
       </Text>
       <Box mt={2} mx="auto" width={["100%", 209]}>
         <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
