@@ -810,10 +810,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                     setAddressNeedsVerification(false)
                     setAddressHasBeenVerified(true)
                   }}
-                  onChosenAddress={chosenAddress => {
+                  onChosenAddress={(chosenAddress, saveAndContinue) => {
                     setAddressNeedsVerification(false)
                     setAddressHasBeenVerified(true)
                     setAddress({ ...address, ...chosenAddress })
+                    saveAndContinue && finalizeFulfillment()
                   }}
                 />
               )}
