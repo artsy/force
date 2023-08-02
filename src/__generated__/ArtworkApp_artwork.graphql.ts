@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a659ea108c63d04b3c62ac80e2a350e9>>
+ * @generated SignedSource<<a8107d95d24f144fa7a3a2118160f0f3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,6 +34,7 @@ export type ArtworkApp_artwork$data = {
   readonly sale: {
     readonly extendedBiddingIntervalMinutes: number | null;
     readonly internalID: string;
+    readonly isClosed: boolean | null;
     readonly slug: string;
     readonly startAt: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"CascadingEndTimesBanner_sale">;
@@ -45,7 +46,7 @@ export type ArtworkApp_artwork$data = {
   } | null;
   readonly slug: string;
   readonly visibilityLevel: Visibility | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlertHeader_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebarCreateAlertButton_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlertHeader_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork">;
   readonly " $fragmentType": "ArtworkApp_artwork";
 };
 export type ArtworkApp_artwork$key = {
@@ -192,6 +193,13 @@ return {
           "kind": "ScalarField",
           "name": "startAt",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isClosed",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -289,11 +297,6 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkAuctionCreateAlertHeader_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkSidebarCreateAlertButton_artwork"
     }
   ],
   "type": "Artwork",
@@ -301,6 +304,6 @@ return {
 };
 })();
 
-(node as any).hash = "f6fabfec9e9da6efec00e56f6148f60b";
+(node as any).hash = "acbddf79dcdb63b11618703c2d0e3616";
 
 export default node;

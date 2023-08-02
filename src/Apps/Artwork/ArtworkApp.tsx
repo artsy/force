@@ -376,6 +376,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
           slug
           extendedBiddingIntervalMinutes
           startAt
+          isClosed
         }
         saleArtwork {
           extendedBiddingEndAt
@@ -396,7 +397,6 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         ...ArtworkImageBrowser_artwork
         ...ArtworkSidebar_artwork
         ...ArtworkAuctionCreateAlertHeader_artwork
-        ...ArtworkSidebarCreateAlertButton_artwork
       }
     `,
     me: graphql`

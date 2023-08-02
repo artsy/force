@@ -50,6 +50,7 @@ export const ArtworkSidebarAuctionTimerFragmentContainer = createFragmentContain
         saleArtwork {
           ...LotTimer_saleArtwork
           endAt
+          endedAt
         }
       }
     `,

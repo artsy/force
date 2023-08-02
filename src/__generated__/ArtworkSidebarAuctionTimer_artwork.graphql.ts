@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd35d9786ef7923fd9ec0e0b52c8428e>>
+ * @generated SignedSource<<61bd6c1605954a199712424780bb6a3b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type ArtworkSidebarAuctionTimer_artwork$data = {
   } | null;
   readonly saleArtwork: {
     readonly endAt: string | null;
+    readonly endedAt: string | null;
     readonly " $fragmentSpreads": FragmentRefs<"LotTimer_saleArtwork">;
   } | null;
   readonly " $fragmentType": "ArtworkSidebarAuctionTimer_artwork";
@@ -98,6 +99,13 @@ const node: ReaderFragment = {
           "kind": "ScalarField",
           "name": "endAt",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "endedAt",
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -107,6 +115,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "ee979a38a92f846d74830f71c75c5e5b";
+(node as any).hash = "d94eb66021b938b313fb4b8bbab2bde4";
 
 export default node;
