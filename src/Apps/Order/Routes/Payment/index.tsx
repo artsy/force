@@ -129,6 +129,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     isProcessingRedirect,
     stripeSetupIntentId,
     isPaymentSetupSuccessful,
+    paymentSetupErrorCode,
   } = useStripePaymentBySetupIntentId(order.internalID)
 
   // SavingPaymentSpinner is rendered and PaymentContent is hidden when true
@@ -339,6 +340,29 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         selectedPaymentMethod === "SEPA_DEBIT")
     ) {
       handlePaymentStepComplete()
+    } else if (paymentSetupErrorCode && !isPaymentSetupSuccessful) {
+      setIsSavingPayment(false)
+      props.router.push(`/orders/${props.order.internalID}/payment`)
+
+      const title = "Unsupported country"
+      const message =
+        "We are unable to process payments from SEPA accounts in your country at the moment."
+      const error_code = paymentSetupErrorCode
+
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersPayment,
+        context_owner_id: props.order.internalID,
+        title: title,
+        message: message,
+        error_code: error_code,
+        flow: "user sets payment by setup intent",
+      })
+
+      props.dialog.showErrorDialog({
+        title: title,
+        message: message,
+      })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -346,6 +370,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     selectedBankAccountId,
     balanceCheckEnabled,
     selectedPaymentMethod,
+    paymentSetupErrorCode,
   ])
 
   const setOrderPayment = (
