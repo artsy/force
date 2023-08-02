@@ -18,9 +18,16 @@ import { useSystemContext } from "System/SystemContext"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
+export type AddressVerifiedBy = "USER" | "ARTSY"
+type AddressOptionKey = "userInput" | string
+
 interface AddressVerificationFlowProps {
   verifiedAddressResult: AddressVerificationFlow_verifiedAddressResult$data
-  onChosenAddress: (address: AddressValues, saveAndContinue: boolean) => void
+  onChosenAddress: (
+    verifiedBy: AddressVerifiedBy,
+    address: AddressValues,
+    saveAndContinue: boolean
+  ) => void
   onClose: () => void
 }
 
@@ -39,7 +46,7 @@ enum ModalType {
 }
 
 interface AddressOption {
-  key: string
+  key: AddressOptionKey
   recommended: boolean
   lines: string[]
   address: AddressValues
@@ -72,9 +79,12 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     const selectedAddress = addressOptions.find(
       option => option.key === selectedAddressKey
     )
+
+    const verifiedBy = selectedAddressKey === "userInput" ? "USER" : "ARTSY"
+
     if (selectedAddress) {
       setModalType(null)
-      onChosenAddress(selectedAddress.address, false)
+      onChosenAddress(verifiedBy, selectedAddress.address, false)
     }
   }, [addressOptions, onChosenAddress, selectedAddressKey])
 
@@ -92,9 +102,9 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
 
   const handleBackToEdit = () => {
     const option =
-      selectedAddressKey === "suggestedAddress"
+      selectedAddressKey && selectedAddressKey.includes("suggestedAddress")
         ? "Recommended"
-        : selectedAddressKey === "userAddress"
+        : selectedAddressKey === "userInput"
         ? "What you entered"
         : null
 
@@ -141,12 +151,13 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   useEffect(() => {
     const inputOption: AddressOption = {
       ...(inputAddress as any),
-      key: "userAddress",
+      key: "userInput",
       recommended: false,
     }
 
     if (verificationStatus === "VERIFIED_NO_CHANGE") {
-      onChosenAddress(inputOption.address as AddressValues, true)
+      const verifiedBy = "ARTSY"
+      onChosenAddress(verifiedBy, inputOption.address as AddressValues, true)
     } else {
       if (verificationStatus === "VERIFIED_WITH_CHANGES") {
         setModalType(ModalType.SUGGESTIONS)
@@ -164,7 +175,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
         const suggestedOptions = suggestedAddresses!
           .slice(0, 1)
           .map(({ address, lines }: any, index) => ({
-            key: `suggestedAddress-${index}`,
+            key: `suggestedAddress-${index}` as AddressOptionKey,
             recommended: index === 0,
             lines: lines,
             address: address,
@@ -351,7 +362,11 @@ const AddressVerificationFlowFragmentContainer = createFragmentContainer(
 
 export const AddressVerificationFlowQueryRenderer: React.FC<{
   address: AddressValues
-  onChosenAddress: (address: AddressValues, saveAndContinue: boolean) => void
+  onChosenAddress: (
+    verifiedBy: AddressVerifiedBy,
+    address: AddressValues,
+    saveAndContinue: boolean
+  ) => void
   onClose: () => void
 }> = ({ address, onChosenAddress, onClose }) => {
   return (

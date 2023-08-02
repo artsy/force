@@ -87,7 +87,10 @@ import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { AddressVerificationFlowQueryRenderer } from "Apps/Order/Components/AddressVerificationFlow"
+import {
+  AddressVerificationFlowQueryRenderer,
+  AddressVerifiedBy,
+} from "Apps/Order/Components/AddressVerificationFlow"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -117,9 +120,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     boolean
   >(false)
   // true if the current address has been verified
-  const [addressHasBeenVerified, setAddressHasBeenVerified] = useState<boolean>(
-    false
-  )
+  const [
+    addressVerifiedBy,
+    setAddressVerifiedBy,
+  ] = useState<AddressVerifiedBy | null>(null)
 
   const [shippingOption, setShippingOption] = useState<
     CommerceOrderFulfillmentTypeEnum
@@ -277,7 +281,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
     if (
       isAddressVerificationEnabled() &&
-      !addressHasBeenVerified &&
+      !addressVerifiedBy &&
       isCreateNewAddress()
     ) {
       /**
@@ -329,6 +333,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           input: {
             id: props.order.internalID,
             fulfillmentType: isArtsyShipping ? "SHIP_ARTA" : shippingOption,
+            addressVerifiedBy,
             shipping: shipToAddress,
             phoneNumber: shipToPhoneNumber,
           },
@@ -565,6 +570,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
     setShippingQuotes(null)
     setShippingQuoteId(undefined)
+
+    // If the address has already been verified and the user is editing the form,
+    // consider this a user-verified address (perform verification only once).
+    if (addressVerifiedBy) {
+      setAddressVerifiedBy("USER")
+    }
   }
 
   const onPhoneNumberChange: PhoneNumberChangeHandler = newPhoneNumber => {
@@ -808,11 +819,15 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   }}
                   onClose={() => {
                     setAddressNeedsVerification(false)
-                    setAddressHasBeenVerified(true)
+                    setAddressVerifiedBy("USER")
                   }}
-                  onChosenAddress={(chosenAddress, saveAndContinue) => {
+                  onChosenAddress={(
+                    verifiedBy,
+                    chosenAddress,
+                    saveAndContinue
+                  ) => {
                     setAddressNeedsVerification(false)
-                    setAddressHasBeenVerified(true)
+                    setAddressVerifiedBy(verifiedBy)
                     setAddress({ ...address, ...chosenAddress })
                     saveAndContinue && finalizeFulfillment()
                   }}
