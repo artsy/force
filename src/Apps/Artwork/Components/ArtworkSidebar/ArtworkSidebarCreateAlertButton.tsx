@@ -11,7 +11,7 @@ import {
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
 import { ArtworkSidebarCreateAlertButton_artwork$data } from "__generated__/ArtworkSidebarCreateAlertButton_artwork.graphql"
-
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 interface ArtworkSidebarCreateAlertButtonProps {
   artwork: ArtworkSidebarCreateAlertButton_artwork$data
 }
@@ -89,7 +89,12 @@ const ArtworkSidebarCreateAlertButton: FC<ArtworkSidebarCreateAlertButtonProps> 
         },
       }}
       renderButton={({ onClick }) => (
-        <Button width="100%" size="large" onClick={onClick}>
+        <Button
+          width="100%"
+          size="large"
+          onClick={onClick}
+          Icon={BellStrokeIcon}
+        >
           Create Alert
         </Button>
       )}
