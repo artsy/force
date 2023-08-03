@@ -19,24 +19,40 @@ import ArtworkGrid, {
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { useTranslation } from "react-i18next"
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
+import {
+  ConfirmationStepFooterContentPlaceholder,
+  ConfirmationStepFooterQueryRenderer,
+} from "Components/SavedSearchAlert/Components/ConfirmationStepFooter"
 
 export const NUMBER_OF_ARTWORKS_TO_SHOW = 10
 
 interface ConfirmationArtworksProps {
   artworksConnection: ConfirmationArtworksGridQuery$data["artworksConnection"]
+  searchCriteriaId: string
+  onClose: () => void
 }
 
 export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
   artworksConnection,
+  searchCriteriaId,
+  onClose,
 }) => {
   const { t } = useTranslation()
-  const artworksCount = artworksConnection?.counts?.total
+  const artworksCount = artworksConnection?.counts?.total ?? 0
 
   if (artworksCount === 0) {
     return (
-      <Text mb={2} p={2} bg="black10" color="black60">
-        {t("createAlertModal.confirmationStep.noMatches")}
-      </Text>
+      <>
+        <Text mb={2} p={2} bg="black10" color="black60">
+          {t("createAlertModal.confirmationStep.noMatches")}
+        </Text>
+
+        <ConfirmationStepFooterQueryRenderer
+          artworksCount={artworksCount!}
+          searchCriteriaId={searchCriteriaId}
+          onClose={onClose}
+        />
+      </>
     )
   }
 
@@ -72,11 +88,27 @@ export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
           </Column>
         </GridColumns>
       </ArtworkGridContextProvider>
+
+      <Spacer y={2} />
+
+      <ConfirmationStepFooterQueryRenderer
+        artworksCount={artworksCount!}
+        searchCriteriaId={searchCriteriaId}
+        onClose={onClose}
+      />
     </Flex>
   )
 }
 
-export const ConfirmationArtworksGridQueryRenderer: FC<SearchCriteriaAttributes> = props => {
+interface ConfirmationArtworksGridQueryRendererProps
+  extends SearchCriteriaAttributes {
+  searchCriteriaId: string
+  onClose: () => void
+}
+
+export const ConfirmationArtworksGridQueryRenderer: FC<ConfirmationArtworksGridQueryRendererProps> = props => {
+  const { searchCriteriaId, onClose, ...inputProps } = props
+
   return (
     <SystemQueryRenderer<ConfirmationArtworksGridQuery>
       placeholder={<ContentPlaceholder />}
@@ -95,7 +127,7 @@ export const ConfirmationArtworksGridQueryRenderer: FC<SearchCriteriaAttributes>
           first: NUMBER_OF_ARTWORKS_TO_SHOW,
           sort: "-published_at",
           forSale: true,
-          ...props,
+          ...inputProps,
         },
       }}
       render={({ props: relayProps, error }) => {
@@ -139,6 +171,10 @@ const ContentPlaceholder: FC = () => {
         columnCount={2}
         amount={NUMBER_OF_ARTWORKS_TO_SHOW}
       />
+
+      <Spacer y={2} />
+
+      <ConfirmationStepFooterContentPlaceholder />
     </Flex>
   )
 }

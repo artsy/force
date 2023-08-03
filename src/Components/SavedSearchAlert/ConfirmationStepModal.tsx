@@ -1,6 +1,5 @@
 import { Join, ModalDialog, Spacer } from "@artsy/palette"
 import { ConfirmationModalHeader } from "Components/SavedSearchAlert/Components/ConfirmationModalHeader"
-import { ConfirmationStepFooterQueryRenderer } from "Components/SavedSearchAlert/Components/ConfirmationStepFooter"
 import { ConfirmationArtworksGridQueryRenderer } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { FC } from "react"
@@ -26,10 +25,10 @@ export const ConfirmationStepModal: FC<ConfirmationStepModalProps> = ({
     >
       <Join separator={<Spacer y={2} />}>
         <ConfirmationModalHeader />
-        <ConfirmationArtworksGridQueryRenderer {...criteria} />
-        <ConfirmationStepFooterQueryRenderer
+        <ConfirmationArtworksGridQueryRenderer
           searchCriteriaId={searchCriteriaId}
           onClose={onClose}
+          {...criteria}
         />
       </Join>
     </ModalDialog>
