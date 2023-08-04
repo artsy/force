@@ -161,7 +161,6 @@ jobs:
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     working_directory: /app
     steps:
-      - run: node scripts/strictness-migration.js check-pr
       - run:
           name: Danger
           command: yarn danger ci --verbose
@@ -322,7 +321,9 @@ workflows:
 
       - check-pr:
           <<: *not_staging_or_release
-          context: hokusai
+          context:
+            - hokusai
+            - danger-github-oss
           requires:
             - builder-image-push
 
