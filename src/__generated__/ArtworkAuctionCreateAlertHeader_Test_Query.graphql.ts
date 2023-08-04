@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a41c90a4cf9502b684abeb3e100d5352>>
+ * @generated SignedSource<<e12bbed5f07e57921b403b14332ffb33>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -258,7 +258,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "50c83b759f65058a079b4ec64e3a4868",
+    "cacheID": "5cf7fdf168cf53334d4a154f72d2e499",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -330,7 +330,7 @@ return {
     },
     "name": "ArtworkAuctionCreateAlertHeader_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkAuctionCreateAlertHeader_Test_Query {\n  artwork(id: \"emily-ludwig-shaffer-untitled-3\") {\n    ...ArtworkAuctionCreateAlertHeader_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {\n  title\n  isInAuction\n  artistNames\n  artists {\n    id\n  }\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    extendedBiddingEndAt\n    endAt\n    endedAt\n    id\n  }\n  ...ArtworkSidebarCreateAlertButton_artwork\n}\n\nfragment ArtworkSidebarCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkAuctionCreateAlertHeader_Test_Query {\n  artwork(id: \"emily-ludwig-shaffer-untitled-3\") {\n    ...ArtworkAuctionCreateAlertHeader_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {\n  title\n  isInAuction\n  artistNames\n  artists {\n    id\n  }\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    extendedBiddingEndAt\n    endAt\n    endedAt\n    id\n  }\n  ...ArtworkSidebarCreateAlertButton_artwork\n  ...SuggestedArtworksButton_artwork\n}\n\nfragment ArtworkSidebarCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n\nfragment SuggestedArtworksButton_artwork on Artwork {\n  internalID\n  slug\n  title\n  artists {\n    internalID\n    slug\n    name\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();

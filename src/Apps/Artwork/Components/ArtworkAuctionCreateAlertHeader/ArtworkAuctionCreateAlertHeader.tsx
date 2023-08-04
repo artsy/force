@@ -6,12 +6,14 @@ import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "Apps/Artwork/C
 import { useTimer } from "Utils/Hooks/useTimer"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
+import { FC } from "react"
+import { SuggestedArtworksButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksButton"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
 }
 
-const ArtworkAuctionCreateAlertHeader: React.FC<ArtworkAuctionCreateAlertHeaderProps> = ({
+const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> = ({
   artwork,
 }) => {
   const hasArtists = (artwork.artists?.length ?? 0) > 0
@@ -43,6 +45,9 @@ const ArtworkAuctionCreateAlertHeader: React.FC<ArtworkAuctionCreateAlertHeaderP
       <Box mt={2} mx="auto" width={["100%", 209]}>
         <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
       </Box>
+      <Box mt={2} mx="auto" width={["100%", 209]}>
+        <SuggestedArtworksButtonFragmentContainer artwork={artwork} />
+      </Box>
     </Box>
   )
 }
@@ -68,6 +73,7 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
           endedAt
         }
         ...ArtworkSidebarCreateAlertButton_artwork
+        ...SuggestedArtworksButton_artwork
       }
     `,
   }

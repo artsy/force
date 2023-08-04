@@ -167,10 +167,14 @@ const ContentPlaceholder: FC = () => {
 
       <Spacer y={2} />
 
-      <ArtworkGridPlaceholder
-        columnCount={2}
-        amount={NUMBER_OF_ARTWORKS_TO_SHOW}
-      />
+      <GridColumns>
+        <Column span={12}>
+          <ArtworkGridPlaceholder
+            columnCount={2}
+            amount={NUMBER_OF_ARTWORKS_TO_SHOW}
+          />
+        </Column>
+      </GridColumns>
 
       <Spacer y={2} />
 

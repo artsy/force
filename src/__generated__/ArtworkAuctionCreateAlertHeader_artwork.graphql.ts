@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dfcea63f1ca98a6fac638b68fc51cee9>>
+ * @generated SignedSource<<e4af3d5fc90c7ade0aa050f9782e1ba0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -26,7 +26,7 @@ export type ArtworkAuctionCreateAlertHeader_artwork$data = {
     readonly extendedBiddingEndAt: string | null;
   } | null;
   readonly title: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork" | "SuggestedArtworksButton_artwork">;
   readonly " $fragmentType": "ArtworkAuctionCreateAlertHeader_artwork";
 };
 export type ArtworkAuctionCreateAlertHeader_artwork$key = {
@@ -140,12 +140,17 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebarCreateAlertButton_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SuggestedArtworksButton_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "5eaab295947d0fdc977bcf0ca28702fd";
+(node as any).hash = "9f097120f1429d76e8e397360f7fe6a3";
 
 export default node;

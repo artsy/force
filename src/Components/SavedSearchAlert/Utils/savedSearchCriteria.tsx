@@ -2,12 +2,14 @@ import {
   ArtworkFiltersState,
   initialArtworkFilterState,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { allowedSearchCriteriaKeys } from "../constants"
+import { allowedSearchCriteriaKeys } from "Components/SavedSearchAlert/constants"
 import {
   SavedSearchDefaultCriteria,
   SavedSearchEntity,
   SearchCriteriaAttributes,
-} from "../types"
+} from "Components/SavedSearchAlert/types"
+import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/urlBuilder"
+import qs from "qs"
 
 export const isDefaultValue = (
   paramName: string,
@@ -66,4 +68,20 @@ export const getSearchCriteriaFromFilters = (
     ...allowedFilters,
     ...defaultCriteria,
   }
+}
+
+export const searchCriteriaHref = (
+  artistSlug: string,
+  criteria: SearchCriteriaAttributes
+) => {
+  const allowedCriteriaValues = Object.fromEntries(
+    Object.entries(criteria).filter(([key, _]) => {
+      // artistSlug is passed separately
+      if (key === "artistIDs") return false
+      return allowedSearchCriteriaKeys.includes(key)
+    })
+  )
+  const queryParams = qs.stringify(paramsToSnakeCase(allowedCriteriaValues))
+
+  return `/artist/${artistSlug}?${queryParams}`
 }
