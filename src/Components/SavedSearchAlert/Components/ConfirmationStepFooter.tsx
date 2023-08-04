@@ -8,13 +8,16 @@ import {
 } from "__generated__/ConfirmationStepFooterQuery.graphql"
 import { useTranslation } from "react-i18next"
 import { RouterLink } from "System/Router/RouterLink"
+import { NUMBER_OF_ARTWORKS_TO_SHOW } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
 
 interface ConfirmationStepFooterProps {
+  artworksCount: number
   me: ConfirmationStepFooterQuery$data["me"]
   onClose: () => void
 }
 
 export const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({
+  artworksCount,
   me,
   onClose,
 }) => {
@@ -23,18 +26,20 @@ export const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({
 
   return (
     <Flex flexDirection={["column", "row"]} gap={1}>
-      <Button
-        width="100%"
-        // @ts-ignore
-        as={RouterLink}
-        to={savedSearch?.href!}
-        onClick={() => {
-          onClose()
-        }}
-        data-testid="seeAllMatchingWorksButton"
-      >
-        {t("createAlertModal.confirmationStep.seeAllMatchingWorks")}
-      </Button>
+      {artworksCount > NUMBER_OF_ARTWORKS_TO_SHOW && (
+        <Button
+          width="100%"
+          // @ts-ignore
+          as={RouterLink}
+          to={savedSearch?.href!}
+          onClick={() => {
+            onClose()
+          }}
+          data-testid="seeAllMatchingWorksButton"
+        >
+          {t("createAlertModal.confirmationStep.seeAllMatchingWorks")}
+        </Button>
+      )}
 
       <Button
         width="100%"
@@ -54,6 +59,7 @@ export const ConfirmationStepFooter: FC<ConfirmationStepFooterProps> = ({
 }
 
 interface ConfirmationStepFooterQueryRendererProps {
+  artworksCount: number
   searchCriteriaId: string
   onClose: () => void
 }
@@ -61,7 +67,7 @@ interface ConfirmationStepFooterQueryRendererProps {
 export const ConfirmationStepFooterQueryRenderer: FC<ConfirmationStepFooterQueryRendererProps> = props => {
   return (
     <SystemQueryRenderer<ConfirmationStepFooterQuery>
-      placeholder={<ContentPlaceholder />}
+      placeholder={<ConfirmationStepFooterContentPlaceholder />}
       // Temporary workaround internalID is requested because there is a bug in Metaphysics. If a user's field is not requested, the
       // query returns null for savedSearch.
       query={graphql`
@@ -84,7 +90,7 @@ export const ConfirmationStepFooterQueryRenderer: FC<ConfirmationStepFooterQuery
         }
 
         if (!relayProps?.me?.savedSearch) {
-          return <ContentPlaceholder />
+          return <ConfirmationStepFooterContentPlaceholder />
         }
 
         return <ConfirmationStepFooter me={relayProps.me} {...props} />
@@ -93,7 +99,7 @@ export const ConfirmationStepFooterQueryRenderer: FC<ConfirmationStepFooterQuery
   )
 }
 
-const ContentPlaceholder: FC = () => {
+export const ConfirmationStepFooterContentPlaceholder: FC = () => {
   const { t } = useTranslation()
 
   return (
