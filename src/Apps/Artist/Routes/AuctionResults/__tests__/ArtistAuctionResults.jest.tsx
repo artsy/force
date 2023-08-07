@@ -238,12 +238,9 @@ describe("AuctionResults", () => {
         expect(checkedCheckboxes[4]).toHaveTextContent(
           "Include unspecified dates"
         )
-        expect(checkedCheckboxes[5]).toHaveTextContent(
-          "Include unknown and unavailable prices"
-        )
-        expect(checkedCheckboxes[6]).toHaveTextContent("Phillips")
-        expect(checkedCheckboxes[7]).toHaveTextContent("Bonhams")
-        expect(checkedCheckboxes[8]).toHaveTextContent("Artsy Auction")
+        expect(checkedCheckboxes[5]).toHaveTextContent("Phillips")
+        expect(checkedCheckboxes[6]).toHaveTextContent("Bonhams")
+        expect(checkedCheckboxes[7]).toHaveTextContent("Artsy Auction")
       })
     })
 
@@ -537,9 +534,6 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
     },
     upcomingAuctionResults: {
       totalCount: 5,
-    },
-    sidebarAggregations: {
-      aggregations: [{ slice: "SIMPLE_PRICE_HISTOGRAM", counts: [] }],
     },
     auctionResultsConnection: {
       pageInfo: { hasNextPage: true, endCursor: "cursor4" },
