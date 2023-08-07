@@ -53,6 +53,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
       ],
     },
   }
+
   const defaultPills: FilterPill[] = [
     {
       isDefault: true,

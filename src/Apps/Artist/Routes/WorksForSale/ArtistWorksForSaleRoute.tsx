@@ -6,6 +6,7 @@ import { SharedArtworkFilterContextProps } from "Components/ArtworkFilter/Artwor
 import { Title, Meta } from "react-head"
 import { useRouter } from "System/Router/useRouter"
 import { useJump } from "Utils/Hooks/useJump"
+import { ArtistWorksForSaleEmptyFragmentContainer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistWorksForSaleEmpty"
 
 interface ArtistWorksForSaleRouteProps {
   artist: ArtistWorksForSaleRoute_artist$data
@@ -31,19 +32,25 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
     }
   }, [jumpTo, match.location.query.search_criteria_id])
 
+  const total = artist.sidebarAggregations?.counts?.total ?? 0
+
   return (
     <>
       <Title>{title}</Title>
       <Meta name="title" content={title} />
       <Meta name="description" content={description} />
 
-      <ArtistArtworkFilterRefetchContainer
-        artist={artist}
-        aggregations={
-          artist.sidebarAggregations
-            ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
-        }
-      />
+      {total === 0 ? (
+        <ArtistWorksForSaleEmptyFragmentContainer artist={artist} />
+      ) : (
+        <ArtistArtworkFilterRefetchContainer
+          artist={artist}
+          aggregations={
+            artist.sidebarAggregations
+              ?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+          }
+        />
+      )}
     </>
   )
 }
@@ -58,6 +65,7 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
           input: { type: "FilterArtworksInput" }
         ) {
         ...ArtistArtworkFilter_artist @arguments(input: $input)
+        ...ArtistWorksForSaleEmpty_artist
         meta(page: ARTWORKS) {
           description
           title
@@ -66,6 +74,9 @@ export const ArtistWorksForSaleRouteFragmentContainer = createFragmentContainer(
           aggregations: $aggregations
           first: 1
         ) {
+          counts {
+            total
+          }
           aggregations {
             slice
             counts {
