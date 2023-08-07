@@ -1,4 +1,4 @@
-import { Box, Text } from "@artsy/palette"
+import { Column, GridColumns, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
@@ -37,18 +37,21 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
   const artistName = artwork.artistNames ? ", " + artwork.artistNames : ""
 
   return (
-    <Box py={12}>
-      <Text variant="lg" textAlign="center">
-        Bidding for <i>{artwork.title?.trim()}</i>
-        {artistName} has ended.
-      </Text>
-      <Box mt={2} mx="auto" width={["100%", 209]}>
+    <GridColumns py={6}>
+      <Column span={12}>
+        <Text variant="lg" textAlign="center">
+          Bidding for <i>{artwork.title?.trim()}</i>
+          {artistName} has ended.
+        </Text>
+      </Column>
+
+      <Column span={2} start={6}>
         <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
-      </Box>
-      <Box mt={2} mx="auto" width={["100%", 209]}>
+      </Column>
+      <Column span={2} start={6}>
         <SuggestedArtworksButtonFragmentContainer artwork={artwork} />
-      </Box>
-    </Box>
+      </Column>
+    </GridColumns>
   )
 }
 
