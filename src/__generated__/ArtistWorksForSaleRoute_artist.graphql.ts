@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<45bc33f60ed76c7801322dd11201b231>>
+ * @generated SignedSource<<0505da69884059297ef584906e29b0bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,8 +25,11 @@ export type ArtistWorksForSaleRoute_artist$data = {
       } | null> | null;
       readonly slice: ArtworkAggregation | null;
     } | null> | null;
+    readonly counts: {
+      readonly total: any | null;
+    } | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistArtworkFilter_artist">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistArtworkFilter_artist" | "ArtistWorksForSaleEmpty_artist">;
   readonly " $fragmentType": "ArtistWorksForSaleRoute_artist";
 };
 export type ArtistWorksForSaleRoute_artist$key = {
@@ -61,6 +64,11 @@ const node: ReaderFragment = {
       ],
       "kind": "FragmentSpread",
       "name": "ArtistArtworkFilter_artist"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtistWorksForSaleEmpty_artist"
     },
     {
       "alias": null,
@@ -112,6 +120,24 @@ const node: ReaderFragment = {
       "name": "filterArtworksConnection",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "FilterArtworksCounts",
+          "kind": "LinkedField",
+          "name": "counts",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "total",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -170,6 +196,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "b8a57579ab43aa43785b25f0338d3e32";
+(node as any).hash = "e4105285dbcb7340032c6766dabffed6";
 
 export default node;
