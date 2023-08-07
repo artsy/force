@@ -230,7 +230,7 @@ describe("AuctionResults", () => {
           checked: true,
         })
 
-        expect(checkedCheckboxes).toHaveLength(9)
+        expect(checkedCheckboxes).toHaveLength(8)
         expect(checkedCheckboxes[0]).toHaveTextContent("Hide upcoming auctions")
         expect(checkedCheckboxes[1]).toHaveTextContent("Painting")
         expect(checkedCheckboxes[2]).toHaveTextContent("Small (under 40cm)")
