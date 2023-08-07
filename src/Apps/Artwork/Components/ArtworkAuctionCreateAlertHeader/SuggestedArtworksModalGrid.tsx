@@ -25,15 +25,11 @@ import { SuggestedArtworksModalFooter } from "Apps/Artwork/Components/ArtworkAuc
 export const NUMBER_OF_ARTWORKS_TO_SHOW = 10
 
 interface SuggestedArtworksModalGridProps {
-  criteria: SearchCriteriaAttributes
-  artistSlug: string
   artworksConnection: SuggestedArtworksModalGridQuery$data["artworksConnection"]
   onClose: () => void
 }
 
 const SuggestedArtworksModalGrid: FC<SuggestedArtworksModalGridProps> = ({
-  criteria,
-  artistSlug,
   artworksConnection,
   onClose,
 }) => {
@@ -73,9 +69,7 @@ const SuggestedArtworksModalGrid: FC<SuggestedArtworksModalGridProps> = ({
       <Spacer y={2} />
 
       <SuggestedArtworksModalFooter
-        criteria={criteria}
         artworksCount={artworksCount}
-        artistSlug={artistSlug}
         onClose={onClose}
       />
     </>
@@ -84,12 +78,11 @@ const SuggestedArtworksModalGrid: FC<SuggestedArtworksModalGridProps> = ({
 
 interface SuggestedArtworksModalGridQueryRendererProps
   extends SearchCriteriaAttributes {
-  artistSlug: string
   onClose: () => void
 }
 
 export const SuggestedArtworksModalGridQueryRenderer: FC<SuggestedArtworksModalGridQueryRendererProps> = props => {
-  const { onClose, artistSlug, ...inputProps } = props
+  const { onClose, ...inputProps } = props
 
   return (
     <SystemQueryRenderer<SuggestedArtworksModalGridQuery>
@@ -124,8 +117,6 @@ export const SuggestedArtworksModalGridQueryRenderer: FC<SuggestedArtworksModalG
 
         return (
           <SuggestedArtworksModalGrid
-            criteria={inputProps}
-            artistSlug={artistSlug}
             artworksConnection={relayProps.artworksConnection}
             onClose={onClose}
           />

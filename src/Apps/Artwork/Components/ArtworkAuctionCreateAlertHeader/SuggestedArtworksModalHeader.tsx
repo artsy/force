@@ -1,21 +1,9 @@
 import { Flex, Pill } from "@artsy/palette"
-import { extractPills } from "Components/SavedSearchAlert/Utils/extractPills"
-import {
-  SavedSearchEntity,
-  SearchCriteriaAttributes,
-} from "Components/SavedSearchAlert/types"
+import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { FC } from "react"
 
-interface SuggestedArtworksModalHeaderProps {
-  criteria: SearchCriteriaAttributes
-  entity: SavedSearchEntity
-}
-
-export const SuggestedArtworksModalHeader: FC<SuggestedArtworksModalHeaderProps> = ({
-  criteria,
-  entity,
-}) => {
-  const pills = extractPills({ criteria, entity })
+export const SuggestedArtworksModalHeader: FC = () => {
+  const { pills } = useSavedSearchAlertContext()
 
   return (
     <Flex flexDirection="column">

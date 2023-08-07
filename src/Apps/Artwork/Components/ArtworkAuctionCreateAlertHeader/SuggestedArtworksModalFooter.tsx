@@ -3,23 +3,19 @@ import { FC } from "react"
 import { useTranslation } from "react-i18next"
 import { RouterLink } from "System/Router/RouterLink"
 import { NUMBER_OF_ARTWORKS_TO_SHOW } from "./SuggestedArtworksModalGrid"
-import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
-import { searchCriteriaHref } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
+import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 
 interface SuggestedArtworksModalFooterProps {
-  criteria: SearchCriteriaAttributes
   artworksCount: number
-  artistSlug: string
   onClose: () => void
 }
 
 export const SuggestedArtworksModalFooter: FC<SuggestedArtworksModalFooterProps> = ({
-  criteria,
   artworksCount,
-  artistSlug,
   onClose,
 }) => {
   const { t } = useTranslation()
+  const { criteriaHref } = useSavedSearchAlertContext()
 
   if (artworksCount <= NUMBER_OF_ARTWORKS_TO_SHOW) return null
 
@@ -28,7 +24,7 @@ export const SuggestedArtworksModalFooter: FC<SuggestedArtworksModalFooterProps>
       width="100%"
       // @ts-ignore
       as={RouterLink}
-      to={searchCriteriaHref(artistSlug, criteria)}
+      to={criteriaHref()}
       onClick={() => {
         onClose()
       }}

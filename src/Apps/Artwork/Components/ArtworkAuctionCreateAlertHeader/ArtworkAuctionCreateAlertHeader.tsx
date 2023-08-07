@@ -7,7 +7,17 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { FC } from "react"
-import { SuggestedArtworksButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksButton"
+import { SuggestedArtworksButton } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksButton"
+import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
+import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { compact } from "lodash"
+import {
+  SavedSearchEntity,
+  SavedSearchEntityCriteria,
+  SearchCriteriaAttributes,
+} from "Components/SavedSearchAlert/types"
+import { OwnerType } from "@artsy/cohesion"
+import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
@@ -35,23 +45,81 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
   if (!displayAuctionCreateAlertHeader) return null
 
   const artistName = artwork.artistNames ? ", " + artwork.artistNames : ""
+  const artistSlug = artwork.artists?.[0]?.slug
+  let aggregations: Aggregations = []
+  let additionalGeneIDs: string[] = []
+  const artists = compact(artwork.artists)
+  const attributionClass = compact([artwork.attributionClass?.internalID])
+  const artistIDs = artists.map(artist => artist.internalID)
+  const placeholder = `Artworks like: ${artwork.title!}`
+  const defaultArtistsCriteria: SavedSearchEntityCriteria[] = artists.map(
+    artist => ({
+      value: artist.internalID,
+      displayValue: artist.name ?? "",
+    })
+  )
+  const entity: SavedSearchEntity = {
+    placeholder,
+    defaultCriteria: {
+      artistIDs: defaultArtistsCriteria,
+    },
+    owner: {
+      type: OwnerType.artwork,
+      slug: artwork.slug,
+      id: artwork.internalID,
+      name: artwork.title!,
+    },
+  }
+
+  if (
+    artwork.mediumType?.filterGene?.name &&
+    artwork.mediumType?.filterGene.slug
+  ) {
+    additionalGeneIDs = [artwork.mediumType.filterGene.slug]
+    aggregations = [
+      {
+        slice: "MEDIUM",
+        counts: [
+          {
+            name: artwork.mediumType.filterGene.name,
+            value: artwork.mediumType.filterGene.slug,
+            count: 0,
+          },
+        ],
+      },
+    ]
+  }
+
+  const criteria: SearchCriteriaAttributes = {
+    artistIDs,
+    attributionClass,
+    additionalGeneIDs,
+  }
+  const allowedCriteria = getAllowedSearchCriteria(criteria)
 
   return (
-    <GridColumns py={6}>
-      <Column span={12}>
-        <Text variant="lg" textAlign="center">
-          Bidding for <i>{artwork.title?.trim()}</i>
-          {artistName} has ended.
-        </Text>
-      </Column>
+    <SavedSearchAlertContextProvider
+      criteria={allowedCriteria}
+      aggregations={aggregations}
+      entity={entity}
+      artistSlug={artistSlug}
+    >
+      <GridColumns py={6}>
+        <Column span={12}>
+          <Text variant="lg" textAlign="center">
+            Bidding for <i>{artwork.title?.trim()}</i>
+            {artistName} has ended.
+          </Text>
+        </Column>
 
-      <Column span={2} start={6}>
-        <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
-      </Column>
-      <Column span={2} start={6}>
-        <SuggestedArtworksButtonFragmentContainer artwork={artwork} />
-      </Column>
-    </GridColumns>
+        <Column span={2} start={6}>
+          <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
+        </Column>
+        <Column span={2} start={6}>
+          <SuggestedArtworksButton />
+        </Column>
+      </GridColumns>
+    </SavedSearchAlertContextProvider>
   )
 }
 
@@ -60,11 +128,15 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
   {
     artwork: graphql`
       fragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {
+        slug
+        internalID
         title
         isInAuction
         artistNames
         artists {
-          id
+          internalID
+          name
+          slug
         }
         sale {
           startAt
@@ -75,8 +147,16 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
           endAt
           endedAt
         }
+        attributionClass {
+          internalID
+        }
+        mediumType {
+          filterGene {
+            slug
+            name
+          }
+        }
         ...ArtworkSidebarCreateAlertButton_artwork
-        ...SuggestedArtworksButton_artwork
       }
     `,
   }

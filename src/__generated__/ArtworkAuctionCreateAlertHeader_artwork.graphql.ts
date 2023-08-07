@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e4af3d5fc90c7ade0aa050f9782e1ba0>>
+ * @generated SignedSource<<58ff4693bd096b8172a0d8a8067923e0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,9 +13,21 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkAuctionCreateAlertHeader_artwork$data = {
   readonly artistNames: string | null;
   readonly artists: ReadonlyArray<{
-    readonly id: string;
+    readonly internalID: string;
+    readonly name: string | null;
+    readonly slug: string;
   } | null> | null;
+  readonly attributionClass: {
+    readonly internalID: string;
+  } | null;
+  readonly internalID: string;
   readonly isInAuction: boolean | null;
+  readonly mediumType: {
+    readonly filterGene: {
+      readonly name: string | null;
+      readonly slug: string;
+    } | null;
+  } | null;
   readonly sale: {
     readonly isClosed: boolean | null;
     readonly startAt: string | null;
@@ -25,8 +37,9 @@ export type ArtworkAuctionCreateAlertHeader_artwork$data = {
     readonly endedAt: string | null;
     readonly extendedBiddingEndAt: string | null;
   } | null;
+  readonly slug: string;
   readonly title: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork" | "SuggestedArtworksButton_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork">;
   readonly " $fragmentType": "ArtworkAuctionCreateAlertHeader_artwork";
 };
 export type ArtworkAuctionCreateAlertHeader_artwork$key = {
@@ -34,12 +47,36 @@ export type ArtworkAuctionCreateAlertHeader_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlertHeader_artwork">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtworkAuctionCreateAlertHeader_artwork",
   "selections": [
+    (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -69,13 +106,9 @@ const node: ReaderFragment = {
       "name": "artists",
       "plural": true,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "id",
-          "storageKey": null
-        }
+        (v1/*: any*/),
+        (v2/*: any*/),
+        (v0/*: any*/)
       ],
       "storageKey": null
     },
@@ -137,20 +170,52 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
+      "alias": null,
       "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkSidebarCreateAlertButton_artwork"
+      "concreteType": "AttributionClass",
+      "kind": "LinkedField",
+      "name": "attributionClass",
+      "plural": false,
+      "selections": [
+        (v1/*: any*/)
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkMedium",
+      "kind": "LinkedField",
+      "name": "mediumType",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Gene",
+          "kind": "LinkedField",
+          "name": "filterGene",
+          "plural": false,
+          "selections": [
+            (v0/*: any*/),
+            (v2/*: any*/)
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
     },
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "SuggestedArtworksButton_artwork"
+      "name": "ArtworkSidebarCreateAlertButton_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "9f097120f1429d76e8e397360f7fe6a3";
+(node as any).hash = "ed5c627ed8959af6f518b0560dbcd05b";
 
 export default node;
