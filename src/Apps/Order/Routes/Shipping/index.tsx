@@ -116,10 +116,13 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   )
 
   // true if the current address needs to be verified
+  // TODO: Is this necessary, or can it just use the checks above?
   const [addressNeedsVerification, setAddressNeedsVerification] = useState<
     boolean
   >(false)
-  // true if the current address has been verified
+
+  // Presence of addressVerifiedBy indicates that the address has been verified
+  // via the address verification flow.
   const [
     addressVerifiedBy,
     setAddressVerifiedBy,
@@ -574,7 +577,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     // If the address has already been verified and the user is editing the form,
     // consider this a user-verified address (perform verification only once).
     if (addressVerifiedBy) {
-      setAddressVerifiedBy("USER")
+      setAddressVerifiedBy(AddressVerifiedBy.USER)
     }
   }
 
@@ -819,7 +822,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   }}
                   onClose={() => {
                     setAddressNeedsVerification(false)
-                    setAddressVerifiedBy("USER")
+                    setAddressVerifiedBy(AddressVerifiedBy.USER)
                   }}
                   onChosenAddress={(
                     verifiedBy,

@@ -18,7 +18,10 @@ import { useSystemContext } from "System/SystemContext"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
-export type AddressVerifiedBy = "USER" | "ARTSY"
+export enum AddressVerifiedBy {
+  USER = "USER",
+  ARTSY = "ARTSY",
+}
 type AddressOptionKey = "userInput" | string
 
 interface AddressVerificationFlowProps {
@@ -80,7 +83,10 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       option => option.key === selectedAddressKey
     )
 
-    const verifiedBy = selectedAddressKey === "userInput" ? "USER" : "ARTSY"
+    const verifiedBy =
+      selectedAddressKey === "userInput"
+        ? AddressVerifiedBy.USER
+        : AddressVerifiedBy.ARTSY
 
     if (selectedAddress) {
       setModalType(null)
@@ -156,7 +162,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     }
 
     if (verificationStatus === "VERIFIED_NO_CHANGE") {
-      const verifiedBy = "ARTSY"
+      const verifiedBy = AddressVerifiedBy.ARTSY
       onChosenAddress(verifiedBy, inputOption.address as AddressValues, true)
     } else {
       if (verificationStatus === "VERIFIED_WITH_CHANGES") {
