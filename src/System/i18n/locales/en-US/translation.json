@@ -116,7 +116,7 @@
         "artworksCount_one": "{{count}} Artwork:",
         "artworksCount_other": "{{count}} Artworks:",
         "noMatches": "There aren’t any works available that meet the criteria at this time.",
-        "seeAllMatchingWorks": "See all matching works"
+        "exploreMore": "Explore more on Artsy"
       }
     }
   },

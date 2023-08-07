@@ -30,7 +30,7 @@ export const SuggestedArtworksModalFooter: FC<SuggestedArtworksModalFooterProps>
       }}
     >
       {t(
-        "artworkPage.artworkAuctionCreateAlertHeader.suggestedArtworksModal.seeAllMatchingWorks"
+        "artworkPage.artworkAuctionCreateAlertHeader.suggestedArtworksModal.exploreMore"
       )}
     </Button>
   )

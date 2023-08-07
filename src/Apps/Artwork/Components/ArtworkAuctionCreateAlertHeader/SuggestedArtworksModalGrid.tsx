@@ -29,7 +29,7 @@ interface SuggestedArtworksModalGridProps {
   onClose: () => void
 }
 
-const SuggestedArtworksModalGrid: FC<SuggestedArtworksModalGridProps> = ({
+export const SuggestedArtworksModalGrid: FC<SuggestedArtworksModalGridProps> = ({
   artworksConnection,
   onClose,
 }) => {

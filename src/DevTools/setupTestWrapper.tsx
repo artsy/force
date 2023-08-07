@@ -70,7 +70,7 @@ type SetupTestWrapper<T extends OperationType> = {
  * data for GraphQL queries.
  *
  * @see https://relay.dev/docs/en/testing-relay-components
- * @see https://testing-library.com/docs/react-testing-library/
+ * @see https://testing-library.com/docs/react-testing-library/intro
  */
 
 type RTLRenderResult = RenderResult<

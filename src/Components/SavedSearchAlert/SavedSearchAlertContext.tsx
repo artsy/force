@@ -107,9 +107,6 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
 
   // href calculated from criteria and primary artist slug
   const criteriaHref = () => {
-    console.log("[Debug] artistSlug: ", artistSlug)
-    console.log("[Debug] criteria: ", criteria)
-
     if (!artistSlug) return null
 
     const allowedCriteriaValues = Object.fromEntries(
@@ -120,7 +117,7 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
     )
     const queryParams = qs.stringify(paramsToSnakeCase(allowedCriteriaValues))
 
-    return `/artist/${artistSlug}?${queryParams}?for_sale=true`
+    return `/artist/${artistSlug}?${queryParams}&for_sale=true`
   }
 
   const contextValue: SavedSearchAlertContextProps = {
