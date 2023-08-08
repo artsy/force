@@ -135,15 +135,23 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
 
   // Handling possibly incorrectly (by MP) possible null values
   const suggestedAddresses =
-    verifiedAddressResult.suggestedAddresses ||
+    verifiedAddressResult.verifyAddressOrError?.suggestedAddresses ||
     ([] as NonNullable<
-      NonNullable<AddressVerificationFlow_verifiedAddressResult$data>
+      NonNullable<
+        NonNullable<AddressVerificationFlow_verifiedAddressResult$data>
+      >["verifyAddressOrError"]
     >["suggestedAddresses"])
-  const inputAddress = verifiedAddressResult.inputAddress as NonNullable<
-    NonNullable<AddressVerificationFlow_verifiedAddressResult$data>
+  const inputAddress = verifiedAddressResult.verifyAddressOrError
+    ?.inputAddress as NonNullable<
+    NonNullable<
+      NonNullable<AddressVerificationFlow_verifiedAddressResult$data>
+    >["verifyAddressOrError"]
   >["inputAddress"]
-  const verificationStatus = verifiedAddressResult.verificationStatus as NonNullable<
-    AddressVerificationFlow_verifiedAddressResult$data
+  const verificationStatus = verifiedAddressResult.verifyAddressOrError
+    ?.verificationStatus as NonNullable<
+    NonNullable<
+      AddressVerificationFlow_verifiedAddressResult$data
+    >["verifyAddressOrError"]
   >["verificationStatus"]
 
   useEffect(() => {
@@ -328,30 +336,34 @@ const AddressVerificationFlowFragmentContainer = createFragmentContainer(
   AddressVerificationFlow,
   {
     verifiedAddressResult: graphql`
-      fragment AddressVerificationFlow_verifiedAddressResult on VerifyAddressType {
-        inputAddress {
-          lines
-          address {
-            addressLine1
-            addressLine2
-            city
-            country
-            postalCode
-            region
+      fragment AddressVerificationFlow_verifiedAddressResult on VerifyAddressPayload {
+        verifyAddressOrError {
+          ... on VerifyAddressType {
+            inputAddress {
+              lines
+              address {
+                addressLine1
+                addressLine2
+                city
+                country
+                postalCode
+                region
+              }
+            }
+            suggestedAddresses {
+              lines
+              address {
+                addressLine1
+                addressLine2
+                city
+                country
+                postalCode
+                region
+              }
+            }
+            verificationStatus
           }
         }
-        suggestedAddresses {
-          lines
-          address {
-            addressLine1
-            addressLine2
-            city
-            country
-            postalCode
-            region
-          }
-        }
-        verificationStatus
       }
     `,
   }
@@ -385,8 +397,8 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
         )
       }}
       query={graphql`
-        query AddressVerificationFlowQuery($address: AddressInput!) {
-          verifyAddress(address: $address) {
+        query AddressVerificationFlowQuery($address: VerifyAddressInput!) {
+          verifyAddress(input: $address) {
             ...AddressVerificationFlow_verifiedAddressResult
           }
         }
