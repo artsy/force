@@ -30,9 +30,9 @@ const { renderWithRelay } = setupTestWrapperTL<
 >({
   Component: AddressVerificationFlowFragmentContainer,
   query: graphql`
-    query AddressVerificationFlow_Test_Query($address: AddressInput!)
+    query AddressVerificationFlow_Test_Query($address: VerifyAddressInput!)
       @relay_test_operation {
-      verifyAddress(address: $address) {
+      verifyAddress(input: $address) {
         ...AddressVerificationFlow_verifyAddress
       }
     }

@@ -18,6 +18,15 @@ import { useSystemContext } from "System/SystemContext"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
+type VerifyAddressSuccessType = Extract<
+  AddressVerificationFlow_verifyAddress$data["verifyAddressOrError"],
+  { __typename: "VerifyAddressType" }
+>
+type VerifyAddressErrorType = Extract<
+  AddressVerificationFlow_verifyAddress$data["verifyAddressOrError"],
+  { __typename: "VerifyAddressFailureType" }
+>
+
 export enum AddressVerifiedBy {
   USER = "USER",
   ARTSY = "ARTSY",
@@ -153,12 +162,12 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   }, [addressOptions])
 
   const suggestedAddresses =
-    verifyAddress.suggestedAddresses ||
-    ([] as NonNullable<
-      AddressVerificationFlow_verifyAddress$data
-    >["suggestedAddresses"])
-  const inputAddress = verifyAddress.inputAddress as AddressVerificationFlow_verifyAddress$data["inputAddress"]
-  const verificationStatus = verifyAddress.verificationStatus as AddressVerificationFlow_verifyAddress$data["verificationStatus"]
+    verifyAddress.verifyAddressOrError?.suggestedAddresses ||
+    ([] as VerifyAddressSuccessType["suggestedAddresses"])
+  const inputAddress = verifyAddress.verifyAddressOrError
+    ?.inputAddress as VerifyAddressSuccessType["verifyAddressOrError"]["inputAddress"]
+  const verificationStatus = verifyAddress.verifyAddressOrError
+    ?.verificationStatus as VerifyAddressSuccessType["verifyAddressOrError"]["verificationStatus"]
 
   useEffect(() => {
     const inputOption: AddressOption = {
@@ -351,30 +360,41 @@ export const AddressVerificationFlowFragmentContainer = createFragmentContainer(
   AddressVerificationFlow,
   {
     verifyAddress: graphql`
-      fragment AddressVerificationFlow_verifyAddress on VerifyAddressType {
-        inputAddress {
-          lines
-          address {
-            addressLine1
-            addressLine2
-            city
-            country
-            postalCode
-            region
+      fragment AddressVerificationFlow_verifyAddress on VerifyAddressPayload {
+        verifyAddressOrError {
+          ... on VerifyAddressType {
+            inputAddress {
+              lines
+              address {
+                addressLine1
+                addressLine2
+                city
+                country
+                postalCode
+                region
+              }
+            }
+            suggestedAddresses {
+              lines
+              address {
+                addressLine1
+                addressLine2
+                city
+                country
+                postalCode
+                region
+              }
+            }
+            verificationStatus
+          }
+          ... on VerifyAddressFailureType {
+            mutationError {
+              type
+              message
+              statusCode
+            }
           }
         }
-        suggestedAddresses {
-          lines
-          address {
-            addressLine1
-            addressLine2
-            city
-            country
-            postalCode
-            region
-          }
-        }
-        verificationStatus
       }
     `,
   }
@@ -412,8 +432,8 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
         )
       }}
       query={graphql`
-        query AddressVerificationFlowQuery($address: AddressInput!) {
-          verifyAddress(address: $address) {
+        query AddressVerificationFlowQuery($address: VerifyAddressInput!) {
+          verifyAddress(input: $address) {
             ...AddressVerificationFlow_verifyAddress
           }
         }
