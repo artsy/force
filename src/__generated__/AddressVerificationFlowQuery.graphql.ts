@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b6764c3f8857351e0034a8273abeea46>>
+ * @generated SignedSource<<583724a2c34ac790a82e71bc348115cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,16 +10,17 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AddressInput = {
+export type VerifyAddressInput = {
   addressLine1: string;
   addressLine2?: string | null;
   city?: string | null;
+  clientMutationId?: string | null;
   country: string;
   postalCode: string;
   region?: string | null;
 };
 export type AddressVerificationFlowQuery$variables = {
-  address: AddressInput;
+  address: VerifyAddressInput;
 };
 export type AddressVerificationFlowQuery$data = {
   readonly verifyAddress: {
@@ -42,7 +43,7 @@ var v0 = [
 v1 = [
   {
     "kind": "Variable",
-    "name": "address",
+    "name": "input",
     "variableName": "address"
   }
 ],
@@ -107,7 +108,7 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "VerifyAddressType",
+        "concreteType": "VerifyAddressPayload",
         "kind": "LinkedField",
         "name": "verifyAddress",
         "plural": false,
@@ -133,7 +134,7 @@ return {
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "VerifyAddressType",
+        "concreteType": "VerifyAddressPayload",
         "kind": "LinkedField",
         "name": "verifyAddress",
         "plural": false,
@@ -141,52 +142,77 @@ return {
           {
             "alias": null,
             "args": null,
-            "concreteType": "InputAddressFields",
+            "concreteType": null,
             "kind": "LinkedField",
-            "name": "inputAddress",
+            "name": "verifyAddressOrError",
             "plural": false,
             "selections": [
-              (v2/*: any*/),
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "InputAddress",
-                "kind": "LinkedField",
-                "name": "address",
-                "plural": false,
-                "selections": (v3/*: any*/),
+                "kind": "ScalarField",
+                "name": "__typename",
                 "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "SuggestedAddressFields",
-            "kind": "LinkedField",
-            "name": "suggestedAddresses",
-            "plural": true,
-            "selections": [
-              (v2/*: any*/),
+              },
               {
-                "alias": null,
-                "args": null,
-                "concreteType": "SuggestedAddress",
-                "kind": "LinkedField",
-                "name": "address",
-                "plural": false,
-                "selections": (v3/*: any*/),
-                "storageKey": null
+                "kind": "InlineFragment",
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "InputAddressFields",
+                    "kind": "LinkedField",
+                    "name": "inputAddress",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "InputAddress",
+                        "kind": "LinkedField",
+                        "name": "address",
+                        "plural": false,
+                        "selections": (v3/*: any*/),
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "SuggestedAddressFields",
+                    "kind": "LinkedField",
+                    "name": "suggestedAddresses",
+                    "plural": true,
+                    "selections": [
+                      (v2/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "SuggestedAddress",
+                        "kind": "LinkedField",
+                        "name": "address",
+                        "plural": false,
+                        "selections": (v3/*: any*/),
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "verificationStatus",
+                    "storageKey": null
+                  }
+                ],
+                "type": "VerifyAddressType",
+                "abstractKey": null
               }
             ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "verificationStatus",
             "storageKey": null
           }
         ],
@@ -195,16 +221,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "242e36573eba93a6afcaef3208233de4",
+    "cacheID": "cb46a34eb42d272a530f24a979312c71",
     "id": null,
     "metadata": {},
     "name": "AddressVerificationFlowQuery",
     "operationKind": "query",
-    "text": "query AddressVerificationFlowQuery(\n  $address: AddressInput!\n) {\n  verifyAddress(address: $address) {\n    ...AddressVerificationFlow_verifiedAddressResult\n  }\n}\n\nfragment AddressVerificationFlow_verifiedAddressResult on VerifyAddressType {\n  inputAddress {\n    lines\n    address {\n      addressLine1\n      addressLine2\n      city\n      country\n      postalCode\n      region\n    }\n  }\n  suggestedAddresses {\n    lines\n    address {\n      addressLine1\n      addressLine2\n      city\n      country\n      postalCode\n      region\n    }\n  }\n  verificationStatus\n}\n"
+    "text": "query AddressVerificationFlowQuery(\n  $address: VerifyAddressInput!\n) {\n  verifyAddress(input: $address) {\n    ...AddressVerificationFlow_verifiedAddressResult\n  }\n}\n\nfragment AddressVerificationFlow_verifiedAddressResult on VerifyAddressPayload {\n  verifyAddressOrError {\n    __typename\n    ... on VerifyAddressType {\n      inputAddress {\n        lines\n        address {\n          addressLine1\n          addressLine2\n          city\n          country\n          postalCode\n          region\n        }\n      }\n      suggestedAddresses {\n        lines\n        address {\n          addressLine1\n          addressLine2\n          city\n          country\n          postalCode\n          region\n        }\n      }\n      verificationStatus\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "fc3f5b41165706d036f0f408dc3ddba2";
+(node as any).hash = "9cd92a98345e3a667a62caa83c9f94e6";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<47302d10b8dd1e2f39b5c8113faf1c2c>>
+ * @generated SignedSource<<28e611e65619bc8ce535fa8e54be0553>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -941,16 +941,13 @@ return {
             "BIENNIAL",
             "COLLECTED",
             "CRITICALLY_ACCLAIMED",
-            "CURATORS_PICK_EMERGING",
             "GAINING_FOLLOWERS",
             "GROUP_SHOW",
             "HIGH_AUCTION_RECORD",
             "PRIVATE_COLLECTIONS",
-            "RECENT_CAREER_EVENT",
             "RESIDENCIES",
             "REVIEWED",
-            "SOLO_SHOW",
-            "TRENDING_NOW"
+            "SOLO_SHOW"
           ],
           "nullable": true,
           "plural": false,
