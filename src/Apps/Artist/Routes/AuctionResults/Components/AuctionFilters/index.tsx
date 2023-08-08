@@ -1,6 +1,8 @@
 import { Join, Spacer } from "@artsy/palette"
 import { HideUpcomingFilter } from "Apps/Artist/Routes/AuctionResults/Components/AuctionFilters/HideUpcomingFilter"
+import { PriceRangeFilter } from "./PriceRangeFilter"
 import * as React from "react"
+import { useSystemContext } from "System/SystemContext"
 import { AuctionHouseFilter } from "./AuctionHouseFilter"
 import { MediumFilter } from "./MediumFilter"
 import { SizeFilter } from "./SizeFilter"
@@ -9,6 +11,7 @@ import { YearCreated } from "./YearCreated"
 export const AuctionFilters: React.FC<{
   showUpcomingAuctionResults: boolean
 }> = ({ showUpcomingAuctionResults }) => {
+  const { isLoggedIn } = useSystemContext()
   return (
     <>
       {showUpcomingAuctionResults && (
@@ -22,6 +25,7 @@ export const AuctionFilters: React.FC<{
         <MediumFilter />
         <SizeFilter />
         <YearCreated />
+        {isLoggedIn && <PriceRangeFilter />}
         <AuctionHouseFilter />
       </Join>
     </>

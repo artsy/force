@@ -19,7 +19,25 @@ export interface AuctionResultsFilters {
   createdBeforeYear?: number | null
   allowEmptyCreatedDates?: boolean
   metric?: Metric
+  priceRange?: string
+  includeEstimateRange?: boolean
+  includeUnknownPrices?: boolean
 }
+
+export type Slice = "SIMPLE_PRICE_HISTOGRAM"
+
+/**
+ * Possible aggregations that can be passed
+ */
+export type Aggregation = {
+  slice: Slice
+  counts: Array<{
+    count: number
+    value: string
+    name: string
+  }>
+}
+export type Aggregations = Array<Aggregation>
 
 interface AuctionResultsFiltersState extends AuctionResultsFilters {
   reset?: boolean
@@ -47,6 +65,9 @@ export const initialAuctionResultsFilterState = ({
   createdBeforeYear: typeof endDate === "number" ? endDate : MAX_END_DATE,
   allowEmptyCreatedDates: true,
   metric,
+  priceRange: "*-*",
+  includeEstimateRange: false,
+  includeUnknownPrices: true,
 })
 
 /**
@@ -90,6 +111,7 @@ export interface AuctionResultsFilterContextProps {
   /** Used to get the overall latest created year for all lots of given artist */
   latestCreatedYear?: number | null
   userPreferredMetric?: Metric
+  aggregations?: Aggregations
 }
 
 /**
@@ -110,6 +132,7 @@ export const AuctionResultsFilterContext = React.createContext<
 
 export type SharedAuctionResultsFilterContextProps = Pick<
   AuctionResultsFilterContextProps,
+  | "aggregations"
   | "filters"
   | "onFilterClick"
   | "ZeroState"
@@ -125,6 +148,7 @@ export const AuctionResultsFilterContextProvider: React.FC<
     children: React.ReactNode
   }
 > = ({
+  aggregations = [],
   children,
   filters = {},
   onFilterClick,
@@ -180,7 +204,7 @@ export const AuctionResultsFilterContextProvider: React.FC<
     filters: auctionResultsFilterState,
     earliestCreatedYear,
     latestCreatedYear,
-
+    aggregations,
     stagedFilters: stagedAuctionResultsFilterState,
     currentlySelectedFilters: currentlySelectedFilters,
 
@@ -294,6 +318,9 @@ const AuctionResultsFilterReducer = (
         "createdBeforeYear",
         "allowEmptyCreatedDates",
         "metric",
+        "priceRange",
+        "includeEstimateRange",
+        "includeUnknownPrices",
       ]
 
       primitiveFilterTypes.forEach(filter => {

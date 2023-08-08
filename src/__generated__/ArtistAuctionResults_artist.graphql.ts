@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3efa400a2d791ca9ad993348e359dda0>>
+ * @generated SignedSource<<f9be357a50ad70970d5de65bab5aa86d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -72,33 +72,48 @@ v2 = {
 },
 v3 = {
   "kind": "Variable",
+  "name": "includeEstimateRange",
+  "variableName": "includeEstimateRange"
+},
+v4 = {
+  "kind": "Variable",
+  "name": "includeUnknownPrices",
+  "variableName": "includeUnknownPrices"
+},
+v5 = {
+  "kind": "Variable",
   "name": "keyword",
   "variableName": "keyword"
 },
-v4 = {
+v6 = {
   "kind": "Variable",
   "name": "latestCreatedYear",
   "variableName": "createdBeforeYear"
 },
-v5 = {
+v7 = {
   "kind": "Variable",
   "name": "organizations",
   "variableName": "organizations"
 },
-v6 = {
+v8 = {
+  "kind": "Variable",
+  "name": "priceRange",
+  "variableName": "priceRange"
+},
+v9 = {
   "kind": "Variable",
   "name": "sizes",
   "variableName": "sizes"
 },
-v7 = {
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "totalCount",
   "storageKey": null
 },
-v8 = [
-  (v7/*: any*/)
+v11 = [
+  (v10/*: any*/)
 ];
 return {
   "argumentDefinitions": [
@@ -135,6 +150,16 @@ return {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
+      "name": "includeEstimateRange"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "includeUnknownPrices"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
       "name": "keyword"
     },
     {
@@ -151,6 +176,11 @@ return {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "page"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "priceRange"
     },
     {
       "defaultValue": null,
@@ -264,24 +294,27 @@ return {
           "variableName": "first"
         },
         (v3/*: any*/),
+        (v4/*: any*/),
+        (v5/*: any*/),
         {
           "kind": "Variable",
           "name": "last",
           "variableName": "last"
         },
-        (v4/*: any*/),
-        (v5/*: any*/),
+        (v6/*: any*/),
+        (v7/*: any*/),
         {
           "kind": "Variable",
           "name": "page",
           "variableName": "page"
         },
+        (v8/*: any*/),
         {
           "kind": "Variable",
           "name": "size",
           "variableName": "size"
         },
-        (v6/*: any*/),
+        (v9/*: any*/),
         {
           "kind": "Variable",
           "name": "sort",
@@ -364,7 +397,7 @@ return {
           ],
           "storageKey": null
         },
-        (v7/*: any*/),
+        (v10/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -412,6 +445,9 @@ return {
         (v4/*: any*/),
         (v5/*: any*/),
         (v6/*: any*/),
+        (v7/*: any*/),
+        (v8/*: any*/),
+        (v9/*: any*/),
         {
           "kind": "Literal",
           "name": "state",
@@ -422,7 +458,7 @@ return {
       "kind": "LinkedField",
       "name": "auctionResultsConnection",
       "plural": false,
-      "selections": (v8/*: any*/),
+      "selections": (v11/*: any*/),
       "storageKey": null
     },
     {
@@ -435,6 +471,9 @@ return {
         (v4/*: any*/),
         (v5/*: any*/),
         (v6/*: any*/),
+        (v7/*: any*/),
+        (v8/*: any*/),
+        (v9/*: any*/),
         {
           "kind": "Literal",
           "name": "state",
@@ -445,7 +484,7 @@ return {
       "kind": "LinkedField",
       "name": "auctionResultsConnection",
       "plural": false,
-      "selections": (v8/*: any*/),
+      "selections": (v11/*: any*/),
       "storageKey": null
     }
   ],
@@ -454,6 +493,6 @@ return {
 };
 })();
 
-(node as any).hash = "41c747ed572b862cf5b1539ee45199cf";
+(node as any).hash = "8aca010b5f3a74c49f6338af8c03dca2";
 
 export default node;
