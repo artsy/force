@@ -535,6 +535,9 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
     upcomingAuctionResults: {
       totalCount: 5,
     },
+    sidebarAggregations: {
+      aggregations: [{ slice: "SIMPLE_PRICE_HISTOGRAM", counts: [] }],
+    },
     auctionResultsConnection: {
       pageInfo: { hasNextPage: true, endCursor: "cursor4" },
       pageCursors: {

@@ -313,6 +313,7 @@
     "jest-environment-jsdom": "^29.5.0",
     "jest-junit": "^15.0.0",
     "jest-styled-components": "7.0.4",
+    "jest-watch-typeahead": "^2.2.2",
     "jsdom-global": "3.0.2",
     "json-loader": "0.5.7",
     "lint-staged": "10.2.6",
