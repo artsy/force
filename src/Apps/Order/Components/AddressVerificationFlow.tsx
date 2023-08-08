@@ -217,6 +217,8 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   if (verificationStatus === "VERIFIED_NO_CHANGE")
     return <div data-testid="emptyAddressVerification"></div>
 
+  if (addressOptions.length === 0) return null
+
   if (modalType === ModalType.SUGGESTIONS) {
     return (
       <ModalDialog title="Confirm your delivery address" onClose={handleClose}>
