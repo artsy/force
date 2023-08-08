@@ -12,7 +12,10 @@ import {
 import { useSystemContext } from "System/useSystemContext"
 import { RouterLink } from "System/Router/RouterLink"
 import { Shipping_order$data } from "__generated__/Shipping_order.graphql"
-import { CommerceOrderFulfillmentTypeEnum } from "__generated__/SetShippingMutation.graphql"
+import {
+  CommerceOrderFulfillmentTypeEnum,
+  CommerceSetShippingInput,
+} from "__generated__/SetShippingMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import {
   buyNowFlowSteps,
@@ -331,15 +334,19 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
       const isArtsyShipping = checkIfArtsyShipping()
 
+      const mutationInput: CommerceSetShippingInput = {
+        id: props.order.internalID,
+        fulfillmentType: isArtsyShipping ? "SHIP_ARTA" : shippingOption,
+        shipping: shipToAddress,
+        phoneNumber: shipToPhoneNumber,
+      }
+      if (addressVerifiedBy) {
+        mutationInput.addressVerifiedBy = addressVerifiedBy
+      }
+
       const orderOrError = (
         await setShipping(props.commitMutation, {
-          input: {
-            id: props.order.internalID,
-            fulfillmentType: isArtsyShipping ? "SHIP_ARTA" : shippingOption,
-            addressVerifiedBy,
-            shipping: shipToAddress,
-            phoneNumber: shipToPhoneNumber,
-          },
+          input: mutationInput,
         })
       ).commerceSetShipping?.orderOrError
 
