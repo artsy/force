@@ -38,16 +38,22 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children }) => {
         <Spacer y={[2, 4]} />
 
         {isRevisedArtistHeader ? (
-          <ArtistHeader2FragmentContainer artist={artist} />
-        ) : (
-          <ArtistHeaderFragmentContainer artist={artist} />
-        )}
+          <>
+            <ArtistHeader2FragmentContainer artist={artist} />
 
-        <Spacer y={[4, 12]} />
+            <Spacer y={4} />
+          </>
+        ) : (
+          <>
+            <ArtistHeaderFragmentContainer artist={artist} />
+
+            <Spacer y={[4, 6]} />
+          </>
+        )}
 
         <Jump id="artistContentArea" />
 
-        <RouteTabs fill data-test="navigationTabs">
+        <RouteTabs data-test="navigationTabs">
           <RouteTab exact to={`/artist/${artist.slug}`}>
             Artworks
           </RouteTab>
