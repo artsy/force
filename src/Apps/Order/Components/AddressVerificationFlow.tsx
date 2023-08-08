@@ -189,7 +189,6 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
           }))
         setAddressOptions([...suggestedOptions, inputOption])
       } else {
-        console.warn("ELSE address could not be verified")
         setAddressOptions([inputOption])
         setModalType(ModalType.REVIEW_AND_CONFIRM)
         trackEvent({
