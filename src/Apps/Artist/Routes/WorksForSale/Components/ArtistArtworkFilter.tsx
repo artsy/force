@@ -8,15 +8,12 @@ import {
 import { Match } from "found"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
-import {
-  FilterPill,
-  SavedSearchEntity,
-} from "Components/SavedSearchAlert/types"
+import { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import { OwnerType } from "@artsy/cohesion"
 import { ZeroState } from "./ZeroState"
 import { ArtistArtworkFilters } from "./ArtistArtworkFilters"
-import { ActiveFilterPillsAndCreateAlert } from "Components/SavedSearchAlert/Components/ActiveFilterPillsAndCreateAlert"
 import { useSystemContext } from "System/useSystemContext"
+import { ArtworkFilterSavedSearchAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterSavedSearchAlertContextProvider"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -37,31 +34,22 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   }
 
   const savedSearchEntity: SavedSearchEntity = {
-    placeholder: artist.name ?? "",
+    placeholder: artist.name!,
     owner: {
       type: OwnerType.artist,
       id: artist.internalID,
-      name: artist.name ?? "",
+      name: artist.name!,
       slug: artist.slug,
     },
     defaultCriteria: {
       artistIDs: [
         {
-          displayValue: artist.name ?? "",
+          displayValue: artist.name!,
           value: artist.internalID,
         },
       ],
     },
   }
-
-  const defaultPills: FilterPill[] = [
-    {
-      isDefault: true,
-      value: artist.internalID,
-      displayValue: artist.name ?? "",
-      field: "artistIDs",
-    },
-  ]
 
   return (
     <ArtworkFilterContextProvider
@@ -80,20 +68,18 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
       ZeroState={ZeroState}
       userPreferredMetric={userPreferences?.metric}
     >
-      <BaseArtworkFilter
-        relay={relay}
-        viewer={artist}
-        Filters={<ArtistArtworkFilters relayEnvironment={relay.environment} />}
-        relayVariables={{
-          aggregations: ["TOTAL"],
-        }}
-        FilterPillsSection={
-          <ActiveFilterPillsAndCreateAlert
-            defaultPills={defaultPills}
-            savedSearchEntity={savedSearchEntity}
-          />
-        }
-      />
+      <ArtworkFilterSavedSearchAlertContextProvider entity={savedSearchEntity}>
+        <BaseArtworkFilter
+          relay={relay}
+          viewer={artist}
+          Filters={
+            <ArtistArtworkFilters relayEnvironment={relay.environment} />
+          }
+          relayVariables={{
+            aggregations: ["TOTAL"],
+          }}
+        />
+      </ArtworkFilterSavedSearchAlertContextProvider>
     </ArtworkFilterContextProvider>
   )
 }

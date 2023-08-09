@@ -21,7 +21,6 @@ import { ArtistNationalityFilter } from "Components/ArtworkFilter/ArtworkFilters
 import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/MaterialsFilter"
 import { ArtworkLocationFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtworkLocationFilter"
 import { SizeFilter } from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
-import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { useSystemContext } from "System/useSystemContext"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
 import { Join, Spacer } from "@artsy/palette"
@@ -92,7 +91,6 @@ const FairArtworksFilter: React.FC<FairArtworksFilterProps> = props => {
         relay={relay}
         viewer={fair}
         Filters={Filters}
-        FilterPillsSection={<ActiveFilterPills />}
       />
     </ArtworkFilterContextProvider>
   )

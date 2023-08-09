@@ -1,6 +1,8 @@
 import { screen, fireEvent, render } from "@testing-library/react"
-import { FilterPill } from "Components/SavedSearchAlert/types"
-import { ActiveFilterPills, ActiveFilterPillsProps } from "../ActiveFilterPills"
+import {
+  ActiveFilterPills,
+  ActiveFilterPillsProps,
+} from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import {
   ArtworkFilterContextProvider,
   ArtworkFiltersState,
@@ -20,28 +22,6 @@ describe("ActiveFilterPills", () => {
 
     expect(screen.getByText("Yellow")).toBeInTheDocument()
     expect(screen.getByText("Pink")).toBeInTheDocument()
-  })
-
-  it("renders default pills", () => {
-    const defaultPills: FilterPill[] = [
-      {
-        isDefault: true,
-        value: "artistOne",
-        displayValue: "Artist One",
-        field: "artistIDs",
-      },
-      {
-        isDefault: true,
-        value: "artistTwo",
-        displayValue: "Artist Two",
-        field: "artistIDs",
-      },
-    ]
-
-    render(<TestWrapper defaultPills={defaultPills} />)
-
-    expect(screen.getByText("Artist One")).toBeInTheDocument()
-    expect(screen.getByText("Artist Two")).toBeInTheDocument()
   })
 
   it("removes pill after click on it", () => {

@@ -4,15 +4,11 @@ import * as React from "react"
 import { Link, Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
-
 import { SeoProductsForArtworks } from "Apps/Collect/Components/SeoProductsForArtworks"
 import { buildUrlForCollectApp } from "Apps/Collect/Utils/urlBuilder"
-
 import { FrameWithRecentlyViewed } from "Components/FrameWithRecentlyViewed"
 import { BreadCrumbList } from "Components/Seo/BreadCrumbList"
-
 import { getMetadata, Medium, Color } from "./Utils/getMetadata"
-
 import { Collect_marketingCollections$data } from "__generated__/Collect_marketingCollections.graphql"
 import { collectRoutes_ArtworkFilterQuery$data } from "__generated__/collectRoutes_ArtworkFilterQuery.graphql"
 import { CollectionsHubsNavFragmentContainer as CollectionsHubsNav } from "Components/CollectionsHubsNav"
@@ -22,9 +18,6 @@ import {
   Counts,
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
-import { FilterPill } from "Components/SavedSearchAlert/types"
-import { hardcodedMediums } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { useSystemContext } from "System/useSystemContext"
 
 export interface CollectAppProps {
@@ -50,24 +43,9 @@ export const CollectApp: React.FC<CollectAppProps> = ({
   })
 
   let canonicalHref
-  let defaultPills: FilterPill[] = []
 
   if (medium) {
     canonicalHref = `${getENV("APP_URL")}/collect/${medium}`
-    const hardcodedMedium = hardcodedMediums.find(
-      entity => entity.value === medium
-    )
-
-    if (hardcodedMedium) {
-      defaultPills = [
-        {
-          isDefault: true,
-          value: hardcodedMedium.value,
-          displayValue: hardcodedMedium.name,
-          field: "additionalGeneIDs",
-        },
-      ]
-    }
   } else if (color) {
     canonicalHref = `${getENV("APP_URL")}/collect/color/${color}`
   } else {
@@ -162,9 +140,6 @@ export const CollectApp: React.FC<CollectAppProps> = ({
             *
             */
             }}
-            FilterPillsSection={
-              <ActiveFilterPills defaultPills={defaultPills} />
-            }
             userPreferredMetric={userPreferences?.metric}
           />
         </Box>
