@@ -230,7 +230,7 @@ describe("AuctionResults", () => {
           checked: true,
         })
 
-        expect(checkedCheckboxes).toHaveLength(8)
+        expect(checkedCheckboxes).toHaveLength(9)
         expect(checkedCheckboxes[0]).toHaveTextContent("Hide upcoming auctions")
         expect(checkedCheckboxes[1]).toHaveTextContent("Painting")
         expect(checkedCheckboxes[2]).toHaveTextContent("Small (under 40cm)")
@@ -238,9 +238,12 @@ describe("AuctionResults", () => {
         expect(checkedCheckboxes[4]).toHaveTextContent(
           "Include unspecified dates"
         )
-        expect(checkedCheckboxes[5]).toHaveTextContent("Phillips")
-        expect(checkedCheckboxes[6]).toHaveTextContent("Bonhams")
-        expect(checkedCheckboxes[7]).toHaveTextContent("Artsy Auction")
+        expect(checkedCheckboxes[5]).toHaveTextContent(
+          "Include unknown and unavailable prices"
+        )
+        expect(checkedCheckboxes[6]).toHaveTextContent("Phillips")
+        expect(checkedCheckboxes[7]).toHaveTextContent("Bonhams")
+        expect(checkedCheckboxes[8]).toHaveTextContent("Artsy Auction")
       })
     })
 
