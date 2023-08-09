@@ -17,6 +17,7 @@ import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/SystemContext"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { Address } from "Components/AddressForm"
 
 interface AddressVerificationFlowProps {
   verifiedAddressResult: AddressVerificationFlow_verifiedAddressResult$data
@@ -48,6 +49,18 @@ interface AddressOption {
 enum AddressSuggestionRadioButton {
   recommended = "Recommended",
   user_address = "What you entered",
+}
+
+const formValues = (address: Address) => {
+  return {
+    address: {
+      addressLine1: address.addressLine1,
+      addressLine2: address.addressLine2,
+      country: address.country,
+      city: address.city,
+      postalCode: address.postalCode,
+    },
+  }
 }
 
 const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
@@ -153,6 +166,10 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       AddressVerificationFlow_verifiedAddressResult$data
     >["verifyAddressOrError"]
   >["verificationStatus"]
+  const error = verifiedAddressResult.verifyAddressOrError
+    ?.mutationError as NonNullable<
+    AddressVerificationFlow_verifiedAddressResult$data["verifyAddressOrError"]
+  >["mutationError"]
 
   useEffect(() => {
     const inputOption: AddressOption = {
@@ -161,44 +178,56 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       recommended: false,
     }
 
-    if (verificationStatus === "VERIFIED_NO_CHANGE") {
-      onChosenAddress(inputOption.address as AddressValues, true)
-    } else {
-      if (verificationStatus === "VERIFIED_WITH_CHANGES") {
-        setModalType(ModalType.SUGGESTIONS)
-        trackEvent({
-          action_type: "validationAddressViewed",
-          context_module: ContextModule.ordersShipping,
-          context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: contextPageOwnerSlug,
-          user_id: user?.id,
-          flow: "user adding shipping address",
-          subject: "Confirm your delivery address",
-          option: "suggestions",
-        })
+    const formInput: AddressOption = {
+      ...(formValues as any),
+      key: "userAddress",
+      recommended: false,
+      lines: [formValues],
+    }
 
-        const suggestedOptions = suggestedAddresses!
-          .slice(0, 1)
-          .map(({ address, lines }: any, index) => ({
-            key: `suggestedAddress-${index}`,
-            recommended: index === 0,
-            lines: lines,
-            address: address,
-          }))
-        setAddressOptions([...suggestedOptions, inputOption])
+    if (error) {
+      setAddressOptions([formInput])
+      setModalType(ModalType.REVIEW_AND_CONFIRM)
+    } else {
+      if (verificationStatus === "VERIFIED_NO_CHANGE") {
+        onChosenAddress(inputOption.address as AddressValues, true)
       } else {
-        setAddressOptions([inputOption])
-        setModalType(ModalType.REVIEW_AND_CONFIRM)
-        trackEvent({
-          action_type: "validationAddressViewed",
-          context_module: ContextModule.ordersShipping,
-          context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: contextPageOwnerSlug,
-          user_id: user?.id,
-          flow: "user adding shipping address",
-          subject: "Check your delivery address",
-          option: "review and confirm",
-        })
+        if (verificationStatus === "VERIFIED_WITH_CHANGES") {
+          setModalType(ModalType.SUGGESTIONS)
+          trackEvent({
+            action_type: "validationAddressViewed",
+            context_module: ContextModule.ordersShipping,
+            context_page_owner_type: OwnerType.ordersShipping,
+            context_page_owner_id: contextPageOwnerSlug,
+            user_id: user?.id,
+            flow: "user adding shipping address",
+            subject: "Confirm your delivery address",
+            option: "suggestions",
+          })
+
+          const suggestedOptions = suggestedAddresses!
+            .slice(0, 1)
+            .map(({ address, lines }: any, index) => ({
+              key: `suggestedAddress-${index}`,
+              recommended: index === 0,
+              lines: lines,
+              address: address,
+            }))
+          setAddressOptions([...suggestedOptions, inputOption])
+        } else {
+          setAddressOptions([inputOption])
+          setModalType(ModalType.REVIEW_AND_CONFIRM)
+          trackEvent({
+            action_type: "validationAddressViewed",
+            context_module: ContextModule.ordersShipping,
+            context_page_owner_type: OwnerType.ordersShipping,
+            context_page_owner_id: contextPageOwnerSlug,
+            user_id: user?.id,
+            flow: "user adding shipping address",
+            subject: "Check your delivery address",
+            option: "review and confirm",
+          })
+        }
       }
     }
   }, [
@@ -209,6 +238,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     trackEvent,
     user,
     contextPageOwnerSlug,
+    error,
   ])
 
   if (addressOptions.length === 0) return null
@@ -363,6 +393,13 @@ const AddressVerificationFlowFragmentContainer = createFragmentContainer(
             }
             verificationStatus
           }
+          ... on VerifyAddressFailureType {
+            mutationError {
+              type
+              message
+              statusCode
+            }
+          }
         }
       }
     `,
@@ -377,13 +414,7 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
   return (
     <SystemQueryRenderer<AddressVerificationFlowQuery>
       variables={{ address }}
-      render={({ props, error }) => {
-        if (error) {
-          // TODO: we need better error handling
-          console.error(error)
-          return null
-        }
-
+      render={({ props }) => {
         if (!props?.verifyAddress) {
           return <div>... loading ... </div>
         }

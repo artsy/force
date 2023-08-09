@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d9f5cb888d482f9e420f50c4ff805e4b>>
+ * @generated SignedSource<<79e77fcc92ba39e316a45872597ea7d2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,6 +24,11 @@ export type AddressVerificationFlow_verifiedAddressResult$data = {
       } | null;
       readonly lines: ReadonlyArray<string | null> | null;
     };
+    readonly mutationError?: {
+      readonly message: string;
+      readonly statusCode: number | null;
+      readonly type: string | null;
+    } | null;
     readonly suggestedAddresses?: ReadonlyArray<{
       readonly address: {
         readonly addressLine1: string;
@@ -167,6 +172,45 @@ return {
           ],
           "type": "VerifyAddressType",
           "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "GravityMutationError",
+              "kind": "LinkedField",
+              "name": "mutationError",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "type",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "message",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "statusCode",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "type": "VerifyAddressFailureType",
+          "abstractKey": null
         }
       ],
       "storageKey": null
@@ -177,6 +221,6 @@ return {
 };
 })();
 
-(node as any).hash = "782ba37c562bfd5c8e3127fd3d95e16e";
+(node as any).hash = "6795615167f6d70f9f083443550debb8";
 
 export default node;

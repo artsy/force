@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<583724a2c34ac790a82e71bc348115cf>>
+ * @generated SignedSource<<ba0f8a4c443e5281f987de6d5d1ffee6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -211,6 +211,45 @@ return {
                 ],
                 "type": "VerifyAddressType",
                 "abstractKey": null
+              },
+              {
+                "kind": "InlineFragment",
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "GravityMutationError",
+                    "kind": "LinkedField",
+                    "name": "mutationError",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "type",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "message",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "statusCode",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "type": "VerifyAddressFailureType",
+                "abstractKey": null
               }
             ],
             "storageKey": null
@@ -221,12 +260,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cb46a34eb42d272a530f24a979312c71",
+    "cacheID": "4015ec1428f40530a71a7784417c18af",
     "id": null,
     "metadata": {},
     "name": "AddressVerificationFlowQuery",
     "operationKind": "query",
-    "text": "query AddressVerificationFlowQuery(\n  $address: VerifyAddressInput!\n) {\n  verifyAddress(input: $address) {\n    ...AddressVerificationFlow_verifiedAddressResult\n  }\n}\n\nfragment AddressVerificationFlow_verifiedAddressResult on VerifyAddressPayload {\n  verifyAddressOrError {\n    __typename\n    ... on VerifyAddressType {\n      inputAddress {\n        lines\n        address {\n          addressLine1\n          addressLine2\n          city\n          country\n          postalCode\n          region\n        }\n      }\n      suggestedAddresses {\n        lines\n        address {\n          addressLine1\n          addressLine2\n          city\n          country\n          postalCode\n          region\n        }\n      }\n      verificationStatus\n    }\n  }\n}\n"
+    "text": "query AddressVerificationFlowQuery(\n  $address: VerifyAddressInput!\n) {\n  verifyAddress(input: $address) {\n    ...AddressVerificationFlow_verifiedAddressResult\n  }\n}\n\nfragment AddressVerificationFlow_verifiedAddressResult on VerifyAddressPayload {\n  verifyAddressOrError {\n    __typename\n    ... on VerifyAddressType {\n      inputAddress {\n        lines\n        address {\n          addressLine1\n          addressLine2\n          city\n          country\n          postalCode\n          region\n        }\n      }\n      suggestedAddresses {\n        lines\n        address {\n          addressLine1\n          addressLine2\n          city\n          country\n          postalCode\n          region\n        }\n      }\n      verificationStatus\n    }\n    ... on VerifyAddressFailureType {\n      mutationError {\n        type\n        message\n        statusCode\n      }\n    }\n  }\n}\n"
   }
 };
 })();
