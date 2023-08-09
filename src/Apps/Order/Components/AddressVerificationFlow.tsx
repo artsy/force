@@ -49,6 +49,11 @@ enum ModalType {
   REVIEW_AND_CONFIRM = "review_and_confirm",
 }
 
+const modalTitles: Record<ModalType, string> = {
+  [ModalType.SUGGESTIONS]: "Confirm your delivery address",
+  [ModalType.REVIEW_AND_CONFIRM]: "Check your delivery address",
+} as const
+
 interface AddressOption {
   key: AddressOptionKey
   recommended: boolean
@@ -216,125 +221,130 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   if (verificationStatus === "VERIFIED_NO_CHANGE")
     return <div data-testid="emptyAddressVerification"></div>
 
-  if (addressOptions.length === 0) return null
+  if (!modalType || addressOptions.length === 0) return null
 
-  if (modalType === ModalType.SUGGESTIONS) {
-    return (
-      <ModalDialog title="Confirm your delivery address" onClose={handleClose}>
-        <Text>
-          To ensure prompt and accurate delivery, we suggest a modified shipping
-          address.
-        </Text>
-        <Spacer y={2} />
-        <RadioGroup
-          defaultValue={selectedAddressKey || ""}
-          onSelect={(selected: AddressOption["key"]) => {
-            setSelectedAddressKey(selected)
-          }}
-        >
-          {addressOptions.map(
-            ({ key, recommended, ...addressOption }) =>
-              addressOption.lines && (
-                <BorderedRadio
-                  key={key}
-                  value={key}
-                  label={
-                    recommended
-                      ? AddressSuggestionRadioButton.recommended
-                      : AddressSuggestionRadioButton.user_address
-                  }
-                >
-                  <Flex flexDirection="column">
-                    {addressOption.lines.map((line: string) => (
-                      <Text variant="xs" key={line}>
-                        {line}
-                      </Text>
-                    ))}
-                  </Flex>
-                </BorderedRadio>
-              )
-          )}
-        </RadioGroup>
-        <Spacer y={4} />
-        <Flex width="100%" justifyContent="space-between">
-          <Button onClick={handleBackToEdit} variant="secondaryBlack" flex={1}>
-            Back to Edit
-          </Button>
-          <Spacer x={1} />
-          <Button
-            disabled={!(selectedAddressKey && selectedAddressKey.length > 0)}
-            onClick={() => {
-              if (selectedAddressKey) {
+  return (
+    <ModalDialog
+      width={["100%", 590]}
+      height={["100vh", "auto"]}
+      m={[0, 2]}
+      title={modalTitles[modalType]}
+      onClose={handleClose}
+    >
+      {modalType === ModalType.SUGGESTIONS ? (
+        <>
+          <Text>
+            To ensure prompt and accurate delivery, we suggest a modified
+            shipping address.
+          </Text>
+          <Spacer y={2} />
+          <RadioGroup
+            defaultValue={selectedAddressKey || ""}
+            onSelect={(selected: AddressOption["key"]) => {
+              setSelectedAddressKey(selected)
+            }}
+          >
+            {addressOptions.map(
+              ({ key, recommended, ...addressOption }) =>
+                addressOption.lines && (
+                  <BorderedRadio
+                    key={key}
+                    value={key}
+                    label={
+                      recommended
+                        ? AddressSuggestionRadioButton.recommended
+                        : AddressSuggestionRadioButton.user_address
+                    }
+                  >
+                    <Flex flexDirection="column">
+                      {addressOption.lines.map((line: string) => (
+                        <Text variant="xs" key={line}>
+                          {line}
+                        </Text>
+                      ))}
+                    </Flex>
+                  </BorderedRadio>
+                )
+            )}
+          </RadioGroup>
+          <Spacer y={4} />
+          <Flex width="100%" justifyContent="space-between">
+            <Button
+              onClick={handleBackToEdit}
+              variant="secondaryBlack"
+              flex={1}
+            >
+              Back to Edit
+            </Button>
+            <Spacer x={1} />
+            <Button
+              disabled={!(selectedAddressKey && selectedAddressKey.length > 0)}
+              onClick={() => {
+                if (selectedAddressKey) {
+                  trackEvent({
+                    action_type: "clickedValidationAddress",
+                    context_module: ContextModule.ordersShipping,
+                    context_page_owner_type: OwnerType.ordersShipping,
+                    context_page_owner_id: contextPageOwnerSlug,
+                    user_id: user?.id,
+                    subject: "Confirm your delivery address",
+                    option: selectedAddressKey.includes("suggestedAddress")
+                      ? "Recommended"
+                      : "What you entered",
+                    label: "Use This Address",
+                  })
+                }
+                chooseAddress()
+              }}
+              flex={1}
+            >
+              Use This Address
+            </Button>
+          </Flex>
+        </>
+      ) : (
+        <>
+          <Text>
+            The address you entered may be incorrect or incomplete. Please check
+            it and make any changes necessary.
+          </Text>
+          <Spacer y={4} />
+          <Text fontWeight="bold">What you entered</Text>
+          <Spacer y={1} />
+          <Box border="1px solid" borderColor="black30" p={2}>
+            {addressOptions[0]!.lines!.map((line: string) => (
+              <Text key={line}>{line}</Text>
+            ))}
+          </Box>
+          <Spacer y={4} />
+          <Flex width="100%" justifyContent="space-between">
+            <Button
+              onClick={() => {
                 trackEvent({
                   action_type: "clickedValidationAddress",
                   context_module: ContextModule.ordersShipping,
                   context_page_owner_type: OwnerType.ordersShipping,
                   context_page_owner_id: contextPageOwnerSlug,
                   user_id: user?.id,
-                  subject: "Confirm your delivery address",
-                  option: selectedAddressKey.includes("suggestedAddress")
-                    ? "Recommended"
-                    : "What you entered",
+                  subject: "Check your delivery address",
                   label: "Use This Address",
                 })
-              }
-
-              chooseAddress()
-            }}
-            flex={1}
-          >
-            Use This Address
-          </Button>
-        </Flex>
-      </ModalDialog>
-    )
-  }
-
-  if (modalType === ModalType.REVIEW_AND_CONFIRM) {
-    return (
-      <ModalDialog title="Check your delivery address" onClose={handleClose}>
-        <Text>
-          The address you entered may be incorrect or incomplete. Please check
-          it and make any changes necessary.
-        </Text>
-        <Spacer y={4} />
-        <Text fontWeight="bold">What you entered</Text>
-        <Spacer y={1} />
-        <Box border="1px solid" borderColor="black30" p={2}>
-          {addressOptions[0]!.lines!.map((line: string) => (
-            <Text key={line}>{line}</Text>
-          ))}
-        </Box>
-        <Spacer y={4} />
-        <Flex width="100%" justifyContent="space-between">
-          <Button
-            onClick={() => {
-              trackEvent({
-                action_type: "clickedValidationAddress",
-                context_module: ContextModule.ordersShipping,
-                context_page_owner_type: OwnerType.ordersShipping,
-                context_page_owner_id: contextPageOwnerSlug,
-                user_id: user?.id,
-                subject: "Check your delivery address",
-                label: "Use This Address",
-              })
-              chooseAddress()
-            }}
-            variant="secondaryBlack"
-            flex={1}
-          >
-            Use This Address
-          </Button>
-          <Spacer x={1} />
-          <Button onClick={handleEditAddress} flex={1}>
-            Edit Address
-          </Button>
-        </Flex>
-      </ModalDialog>
-    )
-  }
-
-  return <></>
+                chooseAddress()
+              }}
+              variant="secondaryBlack"
+              flex={1}
+            >
+              Use This Address
+            </Button>
+            <Spacer x={1} />
+            <Button onClick={handleEditAddress} flex={1}>
+              Edit Address
+            </Button>
+          </Flex>
+        </>
+      )}
+    </ModalDialog>
+  )
 }
 
 export const AddressVerificationFlowFragmentContainer = createFragmentContainer(
