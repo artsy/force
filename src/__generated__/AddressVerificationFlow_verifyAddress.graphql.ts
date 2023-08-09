@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d6410b273f262533be6f588a51fe144c>>
+ * @generated SignedSource<<fda14fac03ad195d14bbf0c11a98629a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,15 @@ export type VerificationStatuses = "NOT_FOUND" | "NOT_PERFORMED" | "VERIFICATION
 import { FragmentRefs } from "relay-runtime";
 export type AddressVerificationFlow_verifyAddress$data = {
   readonly verifyAddressOrError: {
-    readonly inputAddress?: {
+    readonly __typename: "VerifyAddressFailureType";
+    readonly mutationError: {
+      readonly message: string;
+      readonly statusCode: number | null;
+      readonly type: string | null;
+    } | null;
+  } | {
+    readonly __typename: "VerifyAddressType";
+    readonly inputAddress: {
       readonly address: {
         readonly addressLine1: string;
         readonly addressLine2: string | null;
@@ -24,12 +32,7 @@ export type AddressVerificationFlow_verifyAddress$data = {
       } | null;
       readonly lines: ReadonlyArray<string | null> | null;
     };
-    readonly mutationError?: {
-      readonly message: string;
-      readonly statusCode: number | null;
-      readonly type: string | null;
-    } | null;
-    readonly suggestedAddresses?: ReadonlyArray<{
+    readonly suggestedAddresses: ReadonlyArray<{
       readonly address: {
         readonly addressLine1: string;
         readonly addressLine2: string | null;
@@ -40,7 +43,11 @@ export type AddressVerificationFlow_verifyAddress$data = {
       } | null;
       readonly lines: ReadonlyArray<string | null> | null;
     } | null>;
-    readonly verificationStatus?: VerificationStatuses;
+    readonly verificationStatus: VerificationStatuses;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
   } | null;
   readonly " $fragmentType": "AddressVerificationFlow_verifyAddress";
 };
@@ -115,6 +122,13 @@ return {
       "name": "verifyAddressOrError",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "__typename",
+          "storageKey": null
+        },
         {
           "kind": "InlineFragment",
           "selections": [
@@ -221,6 +235,6 @@ return {
 };
 })();
 
-(node as any).hash = "cb5608ca3f58c8a79579d1caa0e349ba";
+(node as any).hash = "b8978b3664eccfdd5cb181d5a78e78aa";
 
 export default node;
