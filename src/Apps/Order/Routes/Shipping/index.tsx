@@ -12,7 +12,10 @@ import {
 import { useSystemContext } from "System/useSystemContext"
 import { RouterLink } from "System/Router/RouterLink"
 import { Shipping_order$data } from "__generated__/Shipping_order.graphql"
-import { CommerceOrderFulfillmentTypeEnum } from "__generated__/SetShippingMutation.graphql"
+import {
+  CommerceOrderFulfillmentTypeEnum,
+  CommerceSetShippingInput,
+} from "__generated__/SetShippingMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import {
   buyNowFlowSteps,
@@ -87,7 +90,10 @@ import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { AddressVerificationFlowQueryRenderer } from "Apps/Order/Components/AddressVerificationFlow"
+import {
+  AddressVerificationFlowQueryRenderer,
+  AddressVerifiedBy,
+} from "Apps/Order/Components/AddressVerificationFlow"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -113,13 +119,17 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   )
 
   // true if the current address needs to be verified
+  // TODO: Is this necessary, or can it just use the checks above?
   const [addressNeedsVerification, setAddressNeedsVerification] = useState<
     boolean
   >(false)
-  // true if the current address has been verified
-  const [addressHasBeenVerified, setAddressHasBeenVerified] = useState<boolean>(
-    false
-  )
+
+  // Presence of addressVerifiedBy indicates that the address has been verified
+  // via the address verification flow.
+  const [
+    addressVerifiedBy,
+    setAddressVerifiedBy,
+  ] = useState<AddressVerifiedBy | null>(null)
 
   const [shippingOption, setShippingOption] = useState<
     CommerceOrderFulfillmentTypeEnum
@@ -277,7 +287,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
     if (
       isAddressVerificationEnabled() &&
-      !addressHasBeenVerified &&
+      !addressVerifiedBy &&
       isCreateNewAddress()
     ) {
       /**
@@ -324,14 +334,19 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
       const isArtsyShipping = checkIfArtsyShipping()
 
+      const mutationInput: CommerceSetShippingInput = {
+        id: props.order.internalID,
+        fulfillmentType: isArtsyShipping ? "SHIP_ARTA" : shippingOption,
+        shipping: shipToAddress,
+        phoneNumber: shipToPhoneNumber,
+      }
+      if (addressVerifiedBy) {
+        mutationInput.addressVerifiedBy = addressVerifiedBy
+      }
+
       const orderOrError = (
         await setShipping(props.commitMutation, {
-          input: {
-            id: props.order.internalID,
-            fulfillmentType: isArtsyShipping ? "SHIP_ARTA" : shippingOption,
-            shipping: shipToAddress,
-            phoneNumber: shipToPhoneNumber,
-          },
+          input: mutationInput,
         })
       ).commerceSetShipping?.orderOrError
 
@@ -565,6 +580,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
     setShippingQuotes(null)
     setShippingQuoteId(undefined)
+
+    // If the address has already been verified and the user is editing the form,
+    // consider this a user-verified address (perform verification only once).
+    if (addressVerifiedBy) {
+      setAddressVerifiedBy(AddressVerifiedBy.USER)
+    }
   }
 
   const onPhoneNumberChange: PhoneNumberChangeHandler = newPhoneNumber => {
@@ -808,11 +829,15 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   }}
                   onClose={() => {
                     setAddressNeedsVerification(false)
-                    setAddressHasBeenVerified(true)
+                    setAddressVerifiedBy(AddressVerifiedBy.USER)
                   }}
-                  onChosenAddress={(chosenAddress, saveAndContinue) => {
+                  onChosenAddress={(
+                    verifiedBy,
+                    chosenAddress,
+                    saveAndContinue
+                  ) => {
                     setAddressNeedsVerification(false)
-                    setAddressHasBeenVerified(true)
+                    setAddressVerifiedBy(verifiedBy)
                     setAddress({ ...address, ...chosenAddress })
                     saveAndContinue && finalizeFulfillment()
                   }}
