@@ -176,13 +176,16 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
 
   const error = (verifyAddress.verifyAddressOrError as VerifyAddressErrorType)
     ?.mutationError
-  const suggestedAddresses =
-    (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
-      ?.suggestedAddresses || []
+  const suggestedAddresses = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
+    ?.suggestedAddresses
   const inputAddress = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
     ?.inputAddress
   const verificationStatus = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
     ?.verificationStatus
+
+  const userId = user?.id
+
+  const hasError = Boolean(error)
 
   useEffect(() => {
     const inputOption: AddressOption = {
@@ -198,7 +201,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       lines: [formValues],
     }
 
-    if (error) {
+    if (hasError) {
       setAddressOptions([formInput])
       setModalType(ModalType.REVIEW_AND_CONFIRM)
     } else {
@@ -213,13 +216,13 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
             context_module: ContextModule.ordersShipping,
             context_page_owner_type: OwnerType.ordersShipping,
             context_page_owner_id: contextPageOwnerSlug,
-            user_id: user?.id,
+            user_id: userId,
             flow: "user adding shipping address",
             subject: "Confirm your delivery address",
             option: "suggestions",
           })
 
-          const suggestedOptions = suggestedAddresses!
+          const suggestedOptions = (suggestedAddresses || [])
             .slice(0, 1)
             .map(({ address, lines }: any, index) => ({
               key: `suggestedAddress-${index}`,
@@ -236,7 +239,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
             context_module: ContextModule.ordersShipping,
             context_page_owner_type: OwnerType.ordersShipping,
             context_page_owner_id: contextPageOwnerSlug,
-            user_id: user?.id,
+            user_id: userId,
             flow: "user adding shipping address",
             subject: "Check your delivery address",
             option: "review and confirm",
@@ -250,9 +253,9 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     suggestedAddresses,
     verificationStatus,
     trackEvent,
-    user,
+    userId,
     contextPageOwnerSlug,
-    error,
+    hasError,
   ])
 
   if (verificationStatus === "VERIFIED_NO_CHANGE")

@@ -40,14 +40,17 @@ const { renderWithRelay } = setupTestWrapperTL<
   variables: { address: mockInputAddress },
 })
 
-let defaultResult: Omit<
-  AddressVerificationFlow_verifyAddress$data,
-  " $fragmentType"
+type SuccessType = Extract<
+  AddressVerificationFlow_verifyAddress$data["verifyAddressOrError"],
+  { __typename: "VerifyAddressType" }
 >
+
+let defaultResult: SuccessType
 
 beforeEach(() => {
   jest.clearAllMocks()
   defaultResult = {
+    __typename: "VerifyAddressType",
     verificationStatus: "NOT_FOUND",
     suggestedAddresses: [],
     inputAddress: {
@@ -67,6 +70,37 @@ beforeAll(() => {
 })
 
 describe("AddressVerificationFlow", () => {
+  describe("when the verification result is an error", () => {
+    it("displays the 'check your address modal just like NOT_FOUND'", async () => {
+      const mockResult = {
+        __typename: "VerifyAddressFailureType",
+        mutationError: {
+          detail: "Something went wrong",
+          error: "ERROR",
+          message: "Something went wrong",
+          statusCode: 500,
+          type: "error",
+          fieldErrors: [{ message: "oh no", name: "Errorik" }],
+        },
+      }
+      renderWithRelay(
+        {
+          VerifyAddressMutationType: () => mockResult,
+        },
+        undefined,
+        componentProps
+      )
+
+      await screen.findByText("Check your delivery address")
+      const body =
+        "The address you entered may be incorrect or incomplete. Please check it and make any changes necessary."
+      expect(screen.getByText(body)).toBeInTheDocument()
+      expect(screen.getByText("What you entered")).toBeInTheDocument()
+      expect(screen.getByText("Use This Address")).toBeInTheDocument()
+      expect(screen.getByText("Edit Address")).toBeInTheDocument()
+    })
+  })
+
   describe("when the verification status is NOT_FOUND", () => {
     const mockResult = {
       ...defaultResult,
@@ -88,7 +122,7 @@ describe("AddressVerificationFlow", () => {
     it("displays the correct content", async () => {
       renderWithRelay(
         {
-          VerifyAddressType: () => mockResult,
+          VerifyAddressMutationType: () => mockResult,
         },
         undefined,
         componentProps
@@ -107,7 +141,7 @@ describe("AddressVerificationFlow", () => {
     it("tracks that the validation modal was seen", async () => {
       renderWithRelay(
         {
-          VerifyAddressType: () => mockResult,
+          VerifyAddressMutationType: () => mockResult,
         },
         undefined,
         componentProps
@@ -130,7 +164,7 @@ describe("AddressVerificationFlow", () => {
     it('calls onChosenAddress and tracks the click with the suggested address when "Use This Address" is clicked', async () => {
       renderWithRelay(
         {
-          VerifyAddressType: () => mockResult,
+          VerifyAddressMutationType: () => mockResult,
         },
         undefined,
         componentProps
@@ -167,7 +201,10 @@ describe("AddressVerificationFlow", () => {
     it("calls onChosenAddress without displaying a modal", async () => {
       renderWithRelay(
         {
-          VerifyAddressType: () => ({ ...defaultResult, verificationStatus }),
+          VerifyAddressMutationType: () => ({
+            ...defaultResult,
+            verificationStatus,
+          }),
         },
         undefined,
         componentProps
@@ -209,7 +246,7 @@ describe("AddressVerificationFlow", () => {
     it("displays the correct content", async () => {
       renderWithRelay(
         {
-          VerifyAddressType: () => mockResult,
+          VerifyAddressMutationType: () => mockResult,
         },
         undefined,
         componentProps
@@ -229,7 +266,7 @@ describe("AddressVerificationFlow", () => {
     it("tracks that the validation modal was seen", async () => {
       renderWithRelay(
         {
-          VerifyAddressType: () => mockResult,
+          VerifyAddressMutationType: () => mockResult,
         },
         undefined,
         componentProps
@@ -252,7 +289,7 @@ describe("AddressVerificationFlow", () => {
     it('calls onChosenAddress and tracks the click with the suggested address when "Use This Address" is clicked', async () => {
       renderWithRelay(
         {
-          VerifyAddressType: () => mockResult,
+          VerifyAddressMutationType: () => mockResult,
         },
         undefined,
         componentProps
@@ -286,7 +323,7 @@ describe("AddressVerificationFlow", () => {
     it("calls onChosenAddress with the user's input when 'Use This Address' is clicked after selecting 'What you entered'", async () => {
       renderWithRelay(
         {
-          VerifyAddressType: () => mockResult,
+          VerifyAddressMutationType: () => mockResult,
         },
         undefined,
         componentProps
@@ -321,7 +358,7 @@ describe("AddressVerificationFlow", () => {
     it("calls onClose and tracks the click with the user closes the modal", async () => {
       renderWithRelay(
         {
-          VerifyAddressType: () => mockResult,
+          VerifyAddressMutationType: () => mockResult,
         },
         undefined,
         componentProps
