@@ -44,6 +44,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
 import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 const logger = createLogger(
   "Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -101,12 +102,17 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   )
   const userAllowsEmails = isCustomAlertsNotificationsEnabled ?? false
   const shouldShowEmailWarning = !!initialValues.email && !userAllowsEmails
+  const isFallbackToGeneratedAlertNamesEnabled = useFeatureFlag(
+    "onyx_force-fallback-to-generated-alert-names"
+  )
 
   const handleSubmit = async (values: SavedSearchAleftFormValues) => {
     try {
       const updatedAlertSettings: SavedSearchAleftFormValues = {
         ...values,
-        name: values.name || entity.placeholder,
+        name:
+          values.name ||
+          (isFallbackToGeneratedAlertNamesEnabled ? "" : entity.placeholder),
         frequency: values.push ? values.frequency : DEFAULT_FREQUENCY,
       }
 
@@ -160,7 +166,11 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
               <Input
                 title="Alert Name"
                 name="name"
-                placeholder={entity.placeholder}
+                placeholder={
+                  isFallbackToGeneratedAlertNamesEnabled
+                    ? undefined
+                    : entity.placeholder
+                }
                 value={values.name}
                 onChange={handleChange("name")}
                 onBlur={handleBlur("name")}
@@ -312,7 +322,7 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
       id: savedSearch?.internalID!,
       // alert doesn't have a slug, for this reason we pass internalID
       slug: savedSearch?.internalID!,
-      name: savedSearch?.userAlertSettings.name ?? "",
+      name: savedSearch?.userAlertSettings.name ?? undefined,
     },
   }
 

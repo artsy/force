@@ -1,6 +1,6 @@
 export interface EditAlertEntity {
   id: string
-  name: string
+  name: string | undefined
   artistIds: string[]
 }
 

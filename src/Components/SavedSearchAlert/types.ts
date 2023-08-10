@@ -27,7 +27,7 @@ export interface SavedSearchEntityOwner {
   type: PageOwnerType
   slug: string
   id: string
-  name: string
+  name: string | undefined
 }
 
 export interface SavedSearchEntityCriteria {
@@ -56,7 +56,7 @@ export type FilterPill = {
 
 export type SavedSearchFrequency = "daily" | "instant"
 
-export interface SavedSearchAleftFormValues {
+export interface SavedSearchAlerfFormValues {
   name: string
   email: boolean
   push: boolean

@@ -34,6 +34,7 @@ import { DEFAULT_FREQUENCY } from "./constants"
 import { FrequenceRadioButtons } from "./Components/FrequencyRadioButtons"
 import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
 import { ConfirmationStepModal } from "Components/SavedSearchAlert/ConfirmationStepModal"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -61,6 +62,9 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
 }) => {
   const { relayEnvironment } = useSystemContext()
   const { pills, criteria, removeCriteriaValue } = useSavedSearchAlertContext()
+  const isFallbackToGeneratedAlertNamesEnabled = useFeatureFlag(
+    "onyx_force-fallback-to-generated-alert-names"
+  )
 
   const handleRemovePillPress = (pill: FilterPill) => {
     if (pill.isDefault) {
@@ -76,7 +80,9 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
     }
 
     const userAlertSettings: SavedSearchAleftFormValues = {
-      name: values.name || entity.placeholder,
+      name:
+        values.name ||
+        (isFallbackToGeneratedAlertNamesEnabled ? "" : entity.placeholder),
       email: values.email,
       push: values.push,
       frequency: values.push ? values.frequency : DEFAULT_FREQUENCY,
@@ -133,7 +139,11 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
               <Input
                 title="Alert Name"
                 name="name"
-                placeholder={entity.placeholder}
+                placeholder={
+                  isFallbackToGeneratedAlertNamesEnabled
+                    ? undefined
+                    : entity.placeholder
+                }
                 value={values.name}
                 onChange={handleChange("name")}
                 onBlur={handleBlur("name")}
