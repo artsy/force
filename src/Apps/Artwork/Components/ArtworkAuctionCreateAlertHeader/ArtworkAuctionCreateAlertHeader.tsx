@@ -6,6 +6,8 @@ import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "Apps/Artwork/C
 import { useTimer } from "Utils/Hooks/useTimer"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
+import { Media } from "Utils/Responsive"
+import { ArtworkAuctionCreateAlertTooltipFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
@@ -46,10 +48,16 @@ const ArtworkAuctionCreateAlertHeader: React.FC<ArtworkAuctionCreateAlertHeaderP
       <Column span={2} start={6}>
         <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
       </Column>
+      <Column span={12}>
+        <Media greaterThan="xs">
+          <ArtworkAuctionCreateAlertTooltipFragmentContainer
+            artwork={artwork}
+          />
+        </Media>
+      </Column>
     </GridColumns>
   )
 }
-
 export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentContainer(
   ArtworkAuctionCreateAlertHeader,
   {
@@ -58,6 +66,7 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
         title
         isInAuction
         artistNames
+        internalID
         artists {
           id
         }
@@ -71,6 +80,7 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
           endedAt
         }
         ...ArtworkSidebarCreateAlertButton_artwork
+        ...ArtworkAuctionCreateAlertTooltip_artwork
       }
     `,
   }

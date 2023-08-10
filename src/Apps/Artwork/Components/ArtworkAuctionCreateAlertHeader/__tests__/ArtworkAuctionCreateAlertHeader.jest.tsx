@@ -47,7 +47,7 @@ describe("ArtworkAuctionCreateAlertHeader", () => {
       })
 
       expect(screen.queryByText("Untitled")).toBeInTheDocument()
-      expect(screen.queryByText(/Emily Ludwig Shaffer/)).toBeInTheDocument()
+      expect(screen.queryByText("Emily Ludwig Shaffer")).toBeInTheDocument()
       expect(screen.getByText("Create Alert")).toBeInTheDocument()
     })
 
