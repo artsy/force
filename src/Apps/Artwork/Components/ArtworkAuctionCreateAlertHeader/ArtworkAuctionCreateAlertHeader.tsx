@@ -19,7 +19,7 @@ import {
 import { OwnerType } from "@artsy/cohesion"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { Media } from "Utils/Responsive"
-import { ArtworkAuctionCreateAlertTooltipFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
+import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
@@ -120,9 +120,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
 
         <Column span={12}>
           <Media greaterThan="xs">
-            <ArtworkAuctionCreateAlertTooltipFragmentContainer
-              artwork={artwork}
-            />
+            <ArtworkAuctionCreateAlertTooltip />
           </Media>
         </Column>
 
@@ -168,7 +166,6 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
           }
         }
         ...ArtworkSidebarCreateAlertButton_artwork
-        ...ArtworkAuctionCreateAlertTooltip_artwork
       }
     `,
   }

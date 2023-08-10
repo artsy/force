@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<91ab09f8af757423a413f04d45d436f0>>
+ * @generated SignedSource<<b2d835bf174d697775dc599b30c246cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -222,8 +222,7 @@ return {
             "plural": false,
             "selections": [
               (v2/*: any*/),
-              (v4/*: any*/),
-              (v3/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -259,7 +258,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4f9aeb3e83a3038fd2129f7ddbb2de0b",
+    "cacheID": "baf8554d878f23ceb8174ed8c3234a95",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -288,7 +287,6 @@ return {
         },
         "artwork.attributionClass.id": (v6/*: any*/),
         "artwork.attributionClass.internalID": (v6/*: any*/),
-        "artwork.attributionClass.name": (v5/*: any*/),
         "artwork.id": (v6/*: any*/),
         "artwork.internalID": (v6/*: any*/),
         "artwork.isInAuction": (v7/*: any*/),
@@ -332,7 +330,7 @@ return {
     },
     "name": "ArtworkAuctionCreateAlertHeader_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkAuctionCreateAlertHeader_Test_Query {\n  artwork(id: \"emily-ludwig-shaffer-untitled-3\") {\n    ...ArtworkAuctionCreateAlertHeader_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {\n  slug\n  internalID\n  title\n  isInAuction\n  artistNames\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    extendedBiddingEndAt\n    endAt\n    endedAt\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n  ...ArtworkSidebarCreateAlertButton_artwork\n  ...ArtworkAuctionCreateAlertTooltip_artwork\n}\n\nfragment ArtworkAuctionCreateAlertTooltip_artwork on Artwork {\n  artistNames\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebarCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkAuctionCreateAlertHeader_Test_Query {\n  artwork(id: \"emily-ludwig-shaffer-untitled-3\") {\n    ...ArtworkAuctionCreateAlertHeader_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {\n  slug\n  internalID\n  title\n  isInAuction\n  artistNames\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    extendedBiddingEndAt\n    endAt\n    endedAt\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n  ...ArtworkSidebarCreateAlertButton_artwork\n}\n\nfragment ArtworkSidebarCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();

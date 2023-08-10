@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aa9b18778668238e0ab7e0f4d3661c4d>>
+ * @generated SignedSource<<5e65ff28f39f69f4f7db0f6f9e145d0d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,7 +39,7 @@ export type ArtworkAuctionCreateAlertHeader_artwork$data = {
   } | null;
   readonly slug: string;
   readonly title: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlertTooltip_artwork" | "ArtworkSidebarCreateAlertButton_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork">;
   readonly " $fragmentType": "ArtworkAuctionCreateAlertHeader_artwork";
 };
 export type ArtworkAuctionCreateAlertHeader_artwork$key = {
@@ -209,11 +209,6 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebarCreateAlertButton_artwork"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkAuctionCreateAlertTooltip_artwork"
     }
   ],
   "type": "Artwork",
@@ -221,6 +216,6 @@ return {
 };
 })();
 
-(node as any).hash = "b97bfddb6d8366d6022e3ac4a67b0e60";
+(node as any).hash = "58e2babb9c1c0f8b0dd4026105dd5bdd";
 
 export default node;
