@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dfcea63f1ca98a6fac638b68fc51cee9>>
+ * @generated SignedSource<<95bad6b2b2c8beeef89a403f18263be2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,7 @@ export type ArtworkAuctionCreateAlertHeader_artwork$data = {
   readonly artists: ReadonlyArray<{
     readonly id: string;
   } | null> | null;
+  readonly internalID: string;
   readonly isInAuction: boolean | null;
   readonly sale: {
     readonly isClosed: boolean | null;
@@ -26,7 +27,7 @@ export type ArtworkAuctionCreateAlertHeader_artwork$data = {
     readonly extendedBiddingEndAt: string | null;
   } | null;
   readonly title: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlertTooltip_artwork" | "ArtworkSidebarCreateAlertButton_artwork">;
   readonly " $fragmentType": "ArtworkAuctionCreateAlertHeader_artwork";
 };
 export type ArtworkAuctionCreateAlertHeader_artwork$key = {
@@ -59,6 +60,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "artistNames",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
       "storageKey": null
     },
     {
@@ -140,12 +148,17 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebarCreateAlertButton_artwork"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkAuctionCreateAlertTooltip_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "5eaab295947d0fdc977bcf0ca28702fd";
+(node as any).hash = "0fecfa728cb5475bf6bb103137ba93f5";
 
 export default node;
