@@ -136,7 +136,9 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
   const displayLoading =
     isProcessingRedirect ||
     isSavingPayment ||
-    (!!match?.location?.query?.setup_intent && !bankAccountHasInsufficientFunds)
+    (!!match?.location?.query?.setup_intent &&
+      !bankAccountHasInsufficientFunds &&
+      !paymentSetupErrorCode)
 
   let routeSteps
   if (order.mode === "OFFER") {
@@ -341,12 +343,12 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     ) {
       handlePaymentStepComplete()
     } else if (paymentSetupErrorCode && !isPaymentSetupSuccessful) {
-      setIsSavingPayment(false)
-      props.router.push(`/orders/${props.order.internalID}/payment`)
+      // setIsSavingPayment(false)
+      // props.router.push(`/orders/${props.order.internalID}/payment`)
 
-      const title = "Unsupported country"
+      const title = "Choose another payment method"
       const message =
-        "We are unable to process payments from SEPA accounts in your country at the moment."
+        "The bank account you entered is not denominated in EUR. Please select another payment method and try again."
       const error_code = paymentSetupErrorCode
 
       trackEvent({
