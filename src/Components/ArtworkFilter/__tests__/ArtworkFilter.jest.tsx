@@ -262,15 +262,15 @@ describe("ArtworkFilter", () => {
     describe("total count label", () => {
       it("computs total count correctly", () => {
         let label = getTotalCountLabel({ total: "0", isAuctionArtwork: false })
-        expect(label).toEqual("0 Artworks:")
+        expect(label).toEqual("0 Artworks")
         label = getTotalCountLabel({ total: "1", isAuctionArtwork: false })
-        expect(label).toEqual("1 Artwork:")
+        expect(label).toEqual("1 Artwork")
         label = getTotalCountLabel({ total: "10", isAuctionArtwork: false })
-        expect(label).toEqual("10 Artworks:")
+        expect(label).toEqual("10 Artworks")
         label = getTotalCountLabel({ total: "1", isAuctionArtwork: true })
-        expect(label).toEqual("1 Lot:")
+        expect(label).toEqual("1 Lot")
         label = getTotalCountLabel({ total: "10", isAuctionArtwork: true })
-        expect(label).toEqual("10 Lots:")
+        expect(label).toEqual("10 Lots")
       })
 
       it("renders total count", () => {

@@ -1,6 +1,6 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
-import { Button } from "@artsy/palette"
+import { Button, ButtonProps } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { usePrepareFiltersForPills } from "Components/ArtworkFilter/Utils/usePrepareFiltersForPills"
 import { ProgressiveOnboardingAlertCreate } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
@@ -12,7 +12,9 @@ import { DEFAULT_METRIC } from "Utils/metrics"
 import { isEmpty } from "lodash"
 import { FC } from "react"
 
-export const ArtworkFilterCreateAlert: FC = () => {
+interface ArtworkFilterCreateAlertProps extends ButtonProps {}
+
+export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = props => {
   const { entity } = useSavedSearchAlertContext()
   const { aggregations } = useArtworkFilterContext()
   const filters = usePrepareFiltersForPills()
@@ -52,6 +54,7 @@ export const ArtworkFilterCreateAlert: FC = () => {
                   variant="secondaryBlack"
                   size="small"
                   Icon={BellStrokeIcon}
+                  {...props}
                   onClick={() => {
                     createSkip()
                     readySkip()
