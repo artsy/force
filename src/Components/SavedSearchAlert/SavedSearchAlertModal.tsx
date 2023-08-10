@@ -22,7 +22,7 @@ import {
 } from "./SavedSearchAlertContext"
 import {
   FilterPill,
-  SavedSearchAleftFormValues,
+  SavedSearchAlertFormValues,
   SavedSearchAlertMutationResult,
   SavedSearchEntity,
   SearchCriteriaAttributeKeys,
@@ -38,7 +38,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
-  initialValues: SavedSearchAleftFormValues
+  initialValues: SavedSearchAlertFormValues
   onClose: () => void
   onCreateAlert?: (result: SavedSearchAlertMutationResult) => void
 }
@@ -74,12 +74,12 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
     removeCriteriaValue(pill.field as SearchCriteriaAttributeKeys, pill.value)
   }
 
-  const handleSubmit = async (values: SavedSearchAleftFormValues) => {
+  const handleSubmit = async (values: SavedSearchAlertFormValues) => {
     if (!relayEnvironment) {
       return null
     }
 
-    const userAlertSettings: SavedSearchAleftFormValues = {
+    const userAlertSettings: SavedSearchAlertFormValues = {
       name:
         values.name ||
         (isFallbackToGeneratedAlertNamesEnabled ? "" : entity.placeholder),
@@ -104,7 +104,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
   }
 
   return (
-    <Formik<SavedSearchAleftFormValues>
+    <Formik<SavedSearchAlertFormValues>
       initialValues={initialValues}
       onSubmit={handleSubmit}
     >

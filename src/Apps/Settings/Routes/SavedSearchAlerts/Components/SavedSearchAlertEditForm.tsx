@@ -30,7 +30,7 @@ import {
   useSavedSearchAlertContext,
 } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import {
-  SavedSearchAleftFormValues,
+  SavedSearchAlertFormValues,
   SavedSearchEntity,
   SavedSearchEntityCriteria,
   SavedSearchFrequency,
@@ -85,7 +85,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     removePill,
   } = useSavedSearchAlertContext()
 
-  const initialValues: SavedSearchAleftFormValues = {
+  const initialValues: SavedSearchAlertFormValues = {
     name: userAlertSettings.name ?? "",
     push: userAlertSettings.push,
     email: userAlertSettings.email,
@@ -106,9 +106,9 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     "onyx_force-fallback-to-generated-alert-names"
   )
 
-  const handleSubmit = async (values: SavedSearchAleftFormValues) => {
+  const handleSubmit = async (values: SavedSearchAlertFormValues) => {
     try {
-      const updatedAlertSettings: SavedSearchAleftFormValues = {
+      const updatedAlertSettings: SavedSearchAlertFormValues = {
         ...values,
         name:
           values.name ||

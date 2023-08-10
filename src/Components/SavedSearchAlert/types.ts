@@ -56,7 +56,7 @@ export type FilterPill = {
 
 export type SavedSearchFrequency = "daily" | "instant"
 
-export interface SavedSearchAlerfFormValues {
+export interface SavedSearchAlertFormValues {
   name: string
   email: boolean
   push: boolean
