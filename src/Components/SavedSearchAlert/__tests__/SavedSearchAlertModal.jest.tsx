@@ -8,12 +8,12 @@ import {
   SavedSearchAlertFormContainerProps,
 } from "Components/SavedSearchAlert/SavedSearchAlertModal"
 import {
-  SavedSearchAleftFormValues,
+  SavedSearchAlertFormValues,
   SavedSearchEntity,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
 
-const formInitialValues: SavedSearchAleftFormValues = {
+const formInitialValues: SavedSearchAlertFormValues = {
   name: "",
   email: true,
   push: false,
