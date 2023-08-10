@@ -36,6 +36,7 @@ import { ArtistAuctionResultItemFragmentContainer } from "./ArtistAuctionResultI
 import {
   AuctionResultsFilterContextProvider,
   initialAuctionResultsFilterState,
+  SharedAuctionResultsFilterContextProps,
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
 } from "./AuctionResultsFilterContext"
@@ -48,6 +49,7 @@ import { SortSelect } from "./Components/SortSelect"
 import { TableSidebar } from "./Components/TableSidebar"
 import { ArtistAuctionResultsEmptyState } from "./Components/ArtistAuctionResultsEmptyState"
 import { ArtworkGridEmptyState } from "Components/ArtworkGrid/ArtworkGridEmptyState"
+import { ArtistAuctionResultsRoute_artist$data } from "__generated__/ArtistAuctionResultsRoute_artist.graphql"
 
 const logger = createLogger("ArtistAuctionResults.tsx")
 
@@ -56,6 +58,9 @@ const PAGE_SIZE = 50
 interface AuctionResultsProps {
   relay: RelayRefetchProp
   artist: ArtistAuctionResults_artist$data
+  aggregations?: NonNullable<
+    ArtistAuctionResultsRoute_artist$data["sidebarAggregations"]
+  >["aggregations"]
 }
 
 const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
@@ -375,6 +380,9 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
 
     return (
       <AuctionResultsFilterContextProvider
+        aggregations={
+          props.aggregations as SharedAuctionResultsFilterContextProps["aggregations"]
+        }
         earliestCreatedYear={startAt}
         latestCreatedYear={endAt}
         userPreferredMetric={userPreferences?.metric}
@@ -399,6 +407,9 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           before: { type: "String" }
           organizations: { type: "[String]" }
           keyword: { type: "String" }
+          priceRange: { type: "String" }
+          includeEstimateRange: { type: "Boolean" }
+          includeUnknownPrices: { type: "Boolean" }
           categories: { type: "[String]" }
           sizes: { type: "[ArtworkSizes]" }
           createdAfterYear: { type: "Int" }
@@ -427,6 +438,9 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           keyword: $keyword
           categories: $categories
           sizes: $sizes
+          priceRange: $priceRange
+          includeEstimateRange: $includeEstimateRange
+          includeUnknownPrices: $includeUnknownPrices
           earliestCreatedYear: $createdAfterYear
           latestCreatedYear: $createdBeforeYear
           allowEmptyCreatedDates: $allowEmptyCreatedDates
@@ -457,6 +471,9 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           keyword: $keyword
           categories: $categories
           sizes: $sizes
+          priceRange: $priceRange
+          includeEstimateRange: $includeEstimateRange
+          includeUnknownPrices: $includeUnknownPrices
           earliestCreatedYear: $createdAfterYear
           latestCreatedYear: $createdBeforeYear
           allowEmptyCreatedDates: $allowEmptyCreatedDates
@@ -469,6 +486,9 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           keyword: $keyword
           categories: $categories
           sizes: $sizes
+          priceRange: $priceRange
+          includeEstimateRange: $includeEstimateRange
+          includeUnknownPrices: $includeUnknownPrices
           earliestCreatedYear: $createdAfterYear
           latestCreatedYear: $createdBeforeYear
           allowEmptyCreatedDates: $allowEmptyCreatedDates
@@ -492,6 +512,9 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
       $keyword: String
       $categories: [String]
       $sizes: [ArtworkSizes]
+      $priceRange: String
+      $includeEstimateRange: Boolean
+      $includeUnknownPrices: Boolean
       $createdBeforeYear: Int
       $createdAfterYear: Int
       $allowEmptyCreatedDates: Boolean
@@ -510,6 +533,9 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
             keyword: $keyword
             categories: $categories
             sizes: $sizes
+            priceRange: $priceRange
+            includeEstimateRange: $includeEstimateRange
+            includeUnknownPrices: $includeUnknownPrices
             createdAfterYear: $createdAfterYear
             createdBeforeYear: $createdBeforeYear
             allowEmptyCreatedDates: $allowEmptyCreatedDates

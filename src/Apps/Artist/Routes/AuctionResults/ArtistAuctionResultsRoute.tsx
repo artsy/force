@@ -8,7 +8,12 @@ export interface AuctionResultsRouteProps {
 }
 
 export const ArtistAuctionResultsRoute: React.FC<AuctionResultsRouteProps> = props => {
-  return <ArtistAuctionResultsRefetchContainer artist={props.artist} />
+  return (
+    <ArtistAuctionResultsRefetchContainer
+      artist={props.artist}
+      aggregations={props.artist.sidebarAggregations?.aggregations}
+    />
+  )
 }
 
 export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
@@ -22,6 +27,9 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
           organizations: { type: "[String]" }
           categories: { type: "[String]" }
           sizes: { type: "[ArtworkSizes]" }
+          priceRange: { type: "String" }
+          includeEstimateRange: { type: "Boolean" }
+          includeUnknownPrices: { type: "Boolean" }
           createdAfterYear: { type: "Int" }
           createdBeforeYear: { type: "Int" }
           allowEmptyCreatedDates: { type: "Boolean" }
@@ -33,10 +41,25 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
             organizations: $organizations
             categories: $categories
             sizes: $sizes
+            priceRange: $priceRange
+            includeEstimateRange: $includeEstimateRange
+            includeUnknownPrices: $includeUnknownPrices
             createdAfterYear: $createdAfterYear
             createdBeforeYear: $createdBeforeYear
             allowEmptyCreatedDates: $allowEmptyCreatedDates
           )
+        sidebarAggregations: auctionResultsConnection(
+          aggregations: [SIMPLE_PRICE_HISTOGRAM]
+        ) {
+          aggregations {
+            slice
+            counts {
+              name
+              value
+              count
+            }
+          }
+        }
       }
     `,
   }

@@ -18,6 +18,8 @@ import {
 } from "Components/SavedSearchAlert/types"
 import { OwnerType } from "@artsy/cohesion"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
+import { Media } from "Utils/Responsive"
+import { ArtworkAuctionCreateAlertTooltipFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
@@ -115,6 +117,15 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
         <Column span={2} start={6}>
           <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
         </Column>
+
+        <Column span={12}>
+          <Media greaterThan="xs">
+            <ArtworkAuctionCreateAlertTooltipFragmentContainer
+              artwork={artwork}
+            />
+          </Media>
+        </Column>
+
         <Column span={2} start={6}>
           <SuggestedArtworksButton />
         </Column>
@@ -122,7 +133,6 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
     </SavedSearchAlertContextProvider>
   )
 }
-
 export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentContainer(
   ArtworkAuctionCreateAlertHeader,
   {
@@ -133,6 +143,7 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
         title
         isInAuction
         artistNames
+        internalID
         artists {
           internalID
           name
@@ -157,6 +168,7 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
           }
         }
         ...ArtworkSidebarCreateAlertButton_artwork
+        ...ArtworkAuctionCreateAlertTooltip_artwork
       }
     `,
   }

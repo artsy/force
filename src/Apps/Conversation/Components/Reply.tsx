@@ -1,7 +1,15 @@
 import { RelayRefetchProp } from "react-relay"
 import { useRef, useState } from "react"
 import * as React from "react"
-import { Button, Dialog, Flex, FlexProps, media, THEME } from "@artsy/palette"
+import {
+  Button,
+  Flex,
+  FlexProps,
+  media,
+  ModalDialog,
+  Text,
+  THEME,
+} from "@artsy/palette"
 import {
   focusedOnConversationMessageInput,
   sentConversationMessage,
@@ -9,17 +17,15 @@ import {
 import styled from "styled-components"
 import { RightProps } from "styled-system"
 import { themeGet } from "@styled-system/theme-get"
-
 import { useTracking } from "react-tracking"
 import { ConversationCTAFragmentContainer } from "./ConversationCTA"
 import { SendConversationMessage } from "Apps/Conversation/Mutation/SendConversationMessage"
-
 import { Conversation_conversation$data } from "__generated__/Conversation_conversation.graphql"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 
 const StyledFlex = styled(Flex)<FlexProps & RightProps>`
   border-top: 1px solid ${themeGet("colors.black10")};
-  background: white;
+  background: ${themeGet("colors.white100")};
 `
 
 const FullWidthFlex = styled(Flex)<{ height?: string }>`
@@ -113,22 +119,42 @@ export const Reply: React.FC<ReplyProps> = props => {
 
   return (
     <>
-      <Dialog
-        show={showModal}
-        title="We couldn’t deliver your message."
-        detail="Sorry, something went wrong while sending your message. Try and resend the message or discard it."
-        primaryCta={{
-          action: () => {
-            setShowModal(false)
-            setupAndSendMessage()
-          },
-          text: "Retry",
-        }}
-        secondaryCta={{
-          action: () => setShowModal(false),
-          text: "Discard message",
-        }}
-      />
+      {showModal && (
+        <ModalDialog
+          title="We couldn’t deliver your message."
+          onClose={() => setShowModal(false)}
+          footer={
+            <Flex gap={1}>
+              <Button
+                flex={1}
+                variant="secondaryBlack"
+                onClick={() => {
+                  setShowModal(false)
+                }}
+              >
+                Discard message
+              </Button>
+
+              <Button
+                flex={1}
+                variant="primaryBlack"
+                onClick={() => {
+                  setShowModal(false)
+                  setupAndSendMessage()
+                }}
+              >
+                Retry
+              </Button>
+            </Flex>
+          }
+        >
+          <Text variant="sm" color="black60">
+            Sorry, something went wrong while sending your message. Try and
+            resend the message or discard it.
+          </Text>
+        </ModalDialog>
+      )}
+
       <Flex zIndex={[null, 2]} flexDirection="column" background="white">
         <ConversationCTAFragmentContainer
           conversation={conversation}

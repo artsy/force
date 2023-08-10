@@ -11,7 +11,7 @@ orbs:
 jobs:
   validate_production_schema:
     docker:
-      - image: cimg/node:18.17.0
+      - image: cimg/node:18.17.1
     parameters:
       # find channel ID at the botton of channel details view (slack app) or by right clicking on channel, and copying the link. The ID will be visible at the end of that URL.
       dev:
@@ -161,13 +161,9 @@ jobs:
           aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
     working_directory: /app
     steps:
-      - run: node scripts/strictness-migration.js check-pr
       - run:
           name: Danger
           command: yarn danger ci --verbose
-      - run:
-          name: Prevent Strictness Regressions
-          command: node scripts/strictness-migration.js check-pr
 
   relay-check:
     docker:
@@ -322,7 +318,9 @@ workflows:
 
       - check-pr:
           <<: *not_staging_or_release
-          context: hokusai
+          context:
+            - hokusai
+            - danger-github-oss
           requires:
             - builder-image-push
 

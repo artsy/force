@@ -1,7 +1,7 @@
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AddressVerificationFlowQuery } from "__generated__/AddressVerificationFlowQuery.graphql"
-import { AddressVerificationFlow_verifiedAddressResult$data } from "__generated__/AddressVerificationFlow_verifiedAddressResult.graphql"
+import { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
 import {
   BorderedRadio,
   Box,
@@ -18,9 +18,20 @@ import { useSystemContext } from "System/SystemContext"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
+export enum AddressVerifiedBy {
+  USER = "USER",
+  ARTSY = "ARTSY",
+}
+
+type AddressOptionKey = "userInput" | string
+
 interface AddressVerificationFlowProps {
-  verifiedAddressResult: AddressVerificationFlow_verifiedAddressResult$data
-  onChosenAddress: (address: AddressValues, saveAndContinue: boolean) => void
+  verifyAddress: AddressVerificationFlow_verifyAddress$data
+  onChosenAddress: (
+    verifiedBy: AddressVerifiedBy,
+    address: AddressValues,
+    saveAndContinue: boolean
+  ) => void
   onClose: () => void
 }
 
@@ -39,7 +50,7 @@ enum ModalType {
 }
 
 interface AddressOption {
-  key: string
+  key: AddressOptionKey
   recommended: boolean
   lines: string[]
   address: AddressValues
@@ -51,23 +62,20 @@ enum AddressSuggestionRadioButton {
 }
 
 const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
-  verifiedAddressResult,
+  verifyAddress,
   onChosenAddress,
   onClose,
 }) => {
   const [modalType, setModalType] = useState<ModalType | null>(null)
   const [addressOptions, setAddressOptions] = useState<AddressOption[]>([])
-  const [selectedAddressKey, setSelectedAddressKey2] = useState<string | null>(
-    null
-  )
+  const [
+    selectedAddressKey,
+    setSelectedAddressKey,
+  ] = useState<AddressOptionKey | null>(null)
 
   const { trackEvent } = useTracking()
   const { user } = useSystemContext()
   const { contextPageOwnerSlug } = useAnalyticsContext()
-
-  const setSelectedAddressKey = (key: string) => {
-    setSelectedAddressKey2(key)
-  }
 
   const chooseAddress = useCallback(() => {
     if (!selectedAddressKey) return
@@ -75,9 +83,15 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     const selectedAddress = addressOptions.find(
       option => option.key === selectedAddressKey
     )
+
+    const verifiedBy =
+      selectedAddressKey === "userInput"
+        ? AddressVerifiedBy.USER
+        : AddressVerifiedBy.ARTSY
+
     if (selectedAddress) {
       setModalType(null)
-      onChosenAddress(selectedAddress.address, false)
+      onChosenAddress(verifiedBy, selectedAddress.address, false)
     }
   }, [addressOptions, onChosenAddress, selectedAddressKey])
 
@@ -95,9 +109,9 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
 
   const handleBackToEdit = () => {
     const option =
-      selectedAddressKey === "suggestedAddress"
+      selectedAddressKey && selectedAddressKey.includes("suggestedAddress")
         ? "Recommended"
-        : selectedAddressKey === "userAddress"
+        : selectedAddressKey === "userInput"
         ? "What you entered"
         : null
 
@@ -133,28 +147,24 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     }
   }, [addressOptions])
 
-  // Handling possibly incorrectly (by MP) possible null values
   const suggestedAddresses =
-    verifiedAddressResult.suggestedAddresses ||
+    verifyAddress.suggestedAddresses ||
     ([] as NonNullable<
-      NonNullable<AddressVerificationFlow_verifiedAddressResult$data>
+      AddressVerificationFlow_verifyAddress$data
     >["suggestedAddresses"])
-  const inputAddress = verifiedAddressResult.inputAddress as NonNullable<
-    NonNullable<AddressVerificationFlow_verifiedAddressResult$data>
-  >["inputAddress"]
-  const verificationStatus = verifiedAddressResult.verificationStatus as NonNullable<
-    AddressVerificationFlow_verifiedAddressResult$data
-  >["verificationStatus"]
+  const inputAddress = verifyAddress.inputAddress as AddressVerificationFlow_verifyAddress$data["inputAddress"]
+  const verificationStatus = verifyAddress.verificationStatus as AddressVerificationFlow_verifyAddress$data["verificationStatus"]
 
   useEffect(() => {
     const inputOption: AddressOption = {
       ...(inputAddress as any),
-      key: "userAddress",
+      key: "userInput",
       recommended: false,
     }
 
     if (verificationStatus === "VERIFIED_NO_CHANGE") {
-      onChosenAddress(inputOption.address as AddressValues, true)
+      const verifiedBy = AddressVerifiedBy.ARTSY
+      onChosenAddress(verifiedBy, inputOption.address as AddressValues, true)
     } else {
       if (verificationStatus === "VERIFIED_WITH_CHANGES") {
         setModalType(ModalType.SUGGESTIONS)
@@ -172,7 +182,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
         const suggestedOptions = suggestedAddresses!
           .slice(0, 1)
           .map(({ address, lines }: any, index) => ({
-            key: `suggestedAddress-${index}`,
+            key: `suggestedAddress-${index}` as AddressOptionKey,
             recommended: index === 0,
             lines: lines,
             address: address,
@@ -202,6 +212,9 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     user,
     contextPageOwnerSlug,
   ])
+
+  if (verificationStatus === "VERIFIED_NO_CHANGE")
+    return <div data-testid="emptyAddressVerification"></div>
 
   if (addressOptions.length === 0) return null
 
@@ -270,7 +283,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
             }}
             flex={1}
           >
-            Use this Address
+            Use This Address
           </Button>
         </Flex>
       </ModalDialog>
@@ -324,11 +337,11 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   return <></>
 }
 
-const AddressVerificationFlowFragmentContainer = createFragmentContainer(
+export const AddressVerificationFlowFragmentContainer = createFragmentContainer(
   AddressVerificationFlow,
   {
-    verifiedAddressResult: graphql`
-      fragment AddressVerificationFlow_verifiedAddressResult on VerifyAddressType {
+    verifyAddress: graphql`
+      fragment AddressVerificationFlow_verifyAddress on VerifyAddressType {
         inputAddress {
           lines
           address {
@@ -359,7 +372,11 @@ const AddressVerificationFlowFragmentContainer = createFragmentContainer(
 
 export const AddressVerificationFlowQueryRenderer: React.FC<{
   address: AddressValues
-  onChosenAddress: (address: AddressValues, saveAndContinue: boolean) => void
+  onChosenAddress: (
+    verifiedBy: AddressVerifiedBy,
+    address: AddressValues,
+    saveAndContinue: boolean
+  ) => void
   onClose: () => void
 }> = ({ address, onChosenAddress, onClose }) => {
   return (
@@ -378,7 +395,7 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
 
         return (
           <AddressVerificationFlowFragmentContainer
-            verifiedAddressResult={props.verifyAddress}
+            verifyAddress={props.verifyAddress}
             onChosenAddress={onChosenAddress}
             onClose={onClose}
           />
@@ -387,7 +404,7 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
       query={graphql`
         query AddressVerificationFlowQuery($address: AddressInput!) {
           verifyAddress(address: $address) {
-            ...AddressVerificationFlow_verifiedAddressResult
+            ...AddressVerificationFlow_verifyAddress
           }
         }
       `}

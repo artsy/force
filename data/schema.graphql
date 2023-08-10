@@ -14091,6 +14091,9 @@ type PhoneNumberType {
 }
 
 type PreviewSavedSearch {
+  # A suggestion for a name that describes a set of saved search criteria in a conventional format
+  displayName: String!
+
   # Human-friendly labels that are added by Metaphysics to the upstream SearchCriteria type coming from Gravity
   labels: [SearchCriteriaLabel]!
 }
@@ -16718,6 +16721,7 @@ type SearchCriteria {
   attributionClass: [String!]!
   colors: [String!]!
   dimensionRange: String
+  displayName: String!
   height: String
   href: String!
   inquireableOnly: Boolean

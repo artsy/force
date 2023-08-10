@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<411252e0d5763ed51325984c14eb6e65>>
+ * @generated SignedSource<<b2f1fd3c34b6591aac30d5ea340db738>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type AuctionResultsAggregation = "SIMPLE_PRICE_HISTOGRAM" | "%future added value";
 export type ArtistAuctionResults_Test_Query$variables = {
   artistID: string;
 };
@@ -108,6 +109,16 @@ export type ArtistAuctionResults_Test_Query$rawResponse = {
     readonly name: string | null;
     readonly pastAuctionResults: {
       readonly totalCount: number | null;
+    } | null;
+    readonly sidebarAggregations: {
+      readonly aggregations: ReadonlyArray<{
+        readonly counts: ReadonlyArray<{
+          readonly count: number;
+          readonly name: string;
+          readonly value: string;
+        } | null> | null;
+        readonly slice: AuctionResultsAggregation | null;
+      } | null> | null;
     } | null;
     readonly slug: string;
     readonly upcomingAuctionResults: {
@@ -720,6 +731,69 @@ return {
             "selections": (v11/*: any*/),
             "storageKey": "auctionResultsConnection(state:\"UPCOMING\")"
           },
+          {
+            "alias": "sidebarAggregations",
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "aggregations",
+                "value": [
+                  "SIMPLE_PRICE_HISTOGRAM"
+                ]
+              }
+            ],
+            "concreteType": "AuctionResultConnection",
+            "kind": "LinkedField",
+            "name": "auctionResultsConnection",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "AuctionResultsAggregationType",
+                "kind": "LinkedField",
+                "name": "aggregations",
+                "plural": true,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "slice",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "AggregationCount",
+                    "kind": "LinkedField",
+                    "name": "counts",
+                    "plural": true,
+                    "selections": [
+                      (v3/*: any*/),
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "value",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "count",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": "auctionResultsConnection(aggregations:[\"SIMPLE_PRICE_HISTOGRAM\"])"
+          },
           (v9/*: any*/)
         ],
         "storageKey": null
@@ -727,12 +801,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4fd811b308b656f352bcaea944bdeb64",
+    "cacheID": "b46fd8fcc099774558ec51eab0799cb2",
     "id": null,
     "metadata": {},
     "name": "ArtistAuctionResults_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistAuctionResults_Test_Query(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistAuctionResultsRoute_artist\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    thumbnail {\n      cropped(width: 130, height: 130, version: [\"square140\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n  location\n  lotNumber\n  saleTitle\n  isUpcoming\n}\n\nfragment ArtistAuctionResultsRoute_artist on Artist {\n  ...ArtistAuctionResults_artist_1HOUFh\n}\n\nfragment ArtistAuctionResults_artist_1HOUFh on Artist {\n  slug\n  internalID\n  name\n  meta(page: AUCTION_RESULTS) {\n    description\n    title\n  }\n  counts {\n    auctionResults\n  }\n  auctionResultsConnection(first: 50, sort: DATE_DESC, state: ALL) {\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        isUpcoming\n        id\n      }\n    }\n  }\n  pastAuctionResults: auctionResultsConnection(state: PAST) {\n    totalCount\n  }\n  upcomingAuctionResults: auctionResultsConnection(state: UPCOMING) {\n    totalCount\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query ArtistAuctionResults_Test_Query(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistAuctionResultsRoute_artist\n    id\n  }\n}\n\nfragment ArtistAuctionResultItem_auctionResult on AuctionResult {\n  internalID\n  title\n  dimension_text: dimensionText\n  organization\n  artist {\n    name\n    id\n  }\n  images {\n    thumbnail {\n      cropped(width: 130, height: 130, version: [\"square140\"]) {\n        src\n        srcSet\n        width\n        height\n      }\n    }\n  }\n  mediumText\n  categoryText\n  date_text: dateText\n  saleDate\n  boughtIn\n  currency\n  price_realized: priceRealized {\n    display\n    display_usd: displayUSD\n    cents_usd: centsUSD\n  }\n  performance {\n    mid\n  }\n  estimate {\n    display\n  }\n  location\n  lotNumber\n  saleTitle\n  isUpcoming\n}\n\nfragment ArtistAuctionResultsRoute_artist on Artist {\n  ...ArtistAuctionResults_artist_42icVe\n  sidebarAggregations: auctionResultsConnection(aggregations: [SIMPLE_PRICE_HISTOGRAM]) {\n    aggregations {\n      slice\n      counts {\n        name\n        value\n        count\n      }\n    }\n  }\n}\n\nfragment ArtistAuctionResults_artist_42icVe on Artist {\n  slug\n  internalID\n  name\n  meta(page: AUCTION_RESULTS) {\n    description\n    title\n  }\n  counts {\n    auctionResults\n  }\n  auctionResultsConnection(first: 50, sort: DATE_DESC, state: ALL) {\n    createdYearRange {\n      startAt\n      endAt\n    }\n    pageInfo {\n      hasNextPage\n      endCursor\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    totalCount\n    edges {\n      node {\n        ...ArtistAuctionResultItem_auctionResult\n        isUpcoming\n        id\n      }\n    }\n  }\n  pastAuctionResults: auctionResultsConnection(state: PAST) {\n    totalCount\n  }\n  upcomingAuctionResults: auctionResultsConnection(state: UPCOMING) {\n    totalCount\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

@@ -177,6 +177,9 @@ export const artistRoutes: AppRouteConfig[] = [
             $organizations: [String]
             $categories: [String]
             $sizes: [ArtworkSizes]
+            $priceRange: String
+            $includeEstimateRange: Boolean
+            $includeUnknownPrices: Boolean
             $createdAfterYear: Int
             $createdBeforeYear: Int
             $allowEmptyCreatedDates: Boolean
@@ -189,6 +192,9 @@ export const artistRoutes: AppRouteConfig[] = [
                   organizations: $organizations
                   categories: $categories
                   sizes: $sizes
+                  priceRange: $priceRange
+                  includeEstimateRange: $includeEstimateRange
+                  includeUnknownPrices: $includeUnknownPrices
                   createdAfterYear: $createdAfterYear
                   createdBeforeYear: $createdBeforeYear
                   allowEmptyCreatedDates: $allowEmptyCreatedDates

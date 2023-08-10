@@ -27,5 +27,9 @@ module.exports = {
       ? ["@swc/jest", swcConfig]
       : "babel-jest",
   },
+  watchPlugins: [
+    "jest-watch-typeahead/filename",
+    "jest-watch-typeahead/testname",
+  ],
   workerIdleMemoryLimit: "500MB",
 }
