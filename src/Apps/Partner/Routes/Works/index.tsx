@@ -9,7 +9,6 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { BaseArtworkFilter } from "Components/ArtworkFilter"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
-import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { useRouter } from "System/Router/useRouter"
 import { getMerchandisingPartnerSlugs } from "Apps/Partner/Utils/getMerchandisingPartnerSlugs"
 
@@ -51,12 +50,7 @@ export const Artworks: React.FC<PartnerArtworkFilterProps> = ({
       }
       counts={sidebar?.counts as Counts}
     >
-      <BaseArtworkFilter
-        relay={relay}
-        offset={200}
-        viewer={partner}
-        FilterPillsSection={<ActiveFilterPills />}
-      />
+      <BaseArtworkFilter relay={relay} offset={200} viewer={partner} />
     </ArtworkFilterContextProvider>
   )
 }

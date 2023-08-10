@@ -12,7 +12,6 @@ import { ArtworkFilterFixture } from "./fixtures/ArtworkFilter.fixture"
 import { initialArtworkFilterState } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { omit } from "lodash"
-import { Text } from "@artsy/palette"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -35,7 +34,6 @@ describe("ArtworkFilter", () => {
   let sortOptionsMock
   let filters
   let breakpoint
-  let FilterPillsSection
 
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
@@ -46,7 +44,6 @@ describe("ArtworkFilter", () => {
           onChange={onChange}
           sortOptions={sortOptionsMock}
           filters={{ ...initialArtworkFilterState, ...filters }}
-          FilterPillsSection={FilterPillsSection}
         />
       </MockBoot>
     ),
@@ -65,7 +62,6 @@ describe("ArtworkFilter", () => {
     filters = {
       colors: ["yellow", "pink"],
     }
-    FilterPillsSection = undefined
     sortOptionsMock = [
       { value: "sortTest1", text: "Sort Test 1" },
       { value: "sortTest2", text: "Sort Test 2" },
@@ -74,13 +70,6 @@ describe("ArtworkFilter", () => {
 
   afterEach(() => {
     jest.clearAllMocks()
-  })
-
-  it("renders content above artworks when FilterPillsSection prop is passed", () => {
-    FilterPillsSection = <Text>FilterPillsSection</Text>
-    renderWithRelay()
-
-    expect(screen.getByText("FilterPillsSection")).toBeInTheDocument()
   })
 
   describe("without any filtered artworks", () => {
@@ -199,7 +188,7 @@ describe("ArtworkFilter", () => {
       expect(screen.getByRole("navigation")).toBeInTheDocument()
       expect(screen.getAllByText("Andy Warhol")).toHaveLength(30)
       expect(screen.getAllByRole("option")).toHaveLength(2)
-      expect(screen.getByText("Yellow")).toBeInTheDocument()
+      expect(screen.getAllByText("Yellow")).toHaveLength(2)
     })
 
     it("triggers #onFilterClick on filter click, passing back the changed value and current filter state", () => {

@@ -9,7 +9,6 @@ import {
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { GeneArtworkFilter_gene$data } from "__generated__/GeneArtworkFilter_gene.graphql"
-import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { useSystemContext } from "System/useSystemContext"
 
 interface GeneArtworkFilterProps {
@@ -44,11 +43,7 @@ const GeneArtworkFilter: React.FC<GeneArtworkFilterProps> = ({
       counts={sidebar?.counts as Counts}
       userPreferredMetric={userPreferences?.metric}
     >
-      <BaseArtworkFilter
-        relay={relay}
-        viewer={gene}
-        FilterPillsSection={<ActiveFilterPills />}
-      />
+      <BaseArtworkFilter relay={relay} viewer={gene} />
     </ArtworkFilterContextProvider>
   )
 }

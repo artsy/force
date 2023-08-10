@@ -27,7 +27,7 @@ interface SavedSearchAlertContextProps {
   removePill: (pill: FilterPill) => void
 }
 
-interface SavedSearchAlertContextProviderProps {
+export interface SavedSearchAlertContextProviderProps {
   entity: SavedSearchEntity
   aggregations?: Aggregations
   criteria: SearchCriteriaAttributes

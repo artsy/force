@@ -11,7 +11,6 @@ import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { BoxProps } from "@artsy/palette"
 import { useRouter } from "System/Router/useRouter"
 import { omit } from "lodash"
-import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { useSystemContext } from "System/useSystemContext"
 
 interface ShowArtworksFilterProps extends BoxProps {
@@ -65,7 +64,6 @@ const ShowArtworksFilter: React.FC<ShowArtworksFilterProps> = props => {
         relayVariables={{
           aggregations: ["TOTAL"],
         }}
-        FilterPillsSection={<ActiveFilterPills />}
         {...rest}
       />
     </ArtworkFilterContextProvider>

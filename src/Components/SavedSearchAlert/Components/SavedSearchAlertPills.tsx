@@ -1,6 +1,6 @@
 import React from "react"
 import { Pill } from "@artsy/palette"
-import { FilterPill } from "../types"
+import { FilterPill } from "Components/SavedSearchAlert/types"
 
 export interface SavedSearchAlertPillsProps {
   items: FilterPill[]
@@ -17,20 +17,14 @@ export const SavedSearchAlertPills: React.FC<SavedSearchAlertPillsProps> = props
 
         if (item.isDefault) {
           return (
-            <Pill key={key} variant="filter" mx={0.5} mb={1} disabled>
+            <Pill key={key} variant="filter" disabled>
               {item.displayValue}
             </Pill>
           )
         }
 
         return (
-          <Pill
-            key={key}
-            variant="filter"
-            mx={0.5}
-            mb={1}
-            onClick={() => onDeletePress(item)}
-          >
+          <Pill key={key} variant="filter" onClick={() => onDeletePress(item)}>
             {item.displayValue}
           </Pill>
         )

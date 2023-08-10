@@ -144,7 +144,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
               <Box>
                 <Text variant="xs">Filters</Text>
                 <Spacer y={2} />
-                <Flex flexWrap="wrap" mx={-0.5}>
+                <Flex flexWrap="wrap" gap={1}>
                   <SavedSearchAlertPills
                     items={pills}
                     onDeletePress={handleRemovePillPress}
