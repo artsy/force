@@ -15,6 +15,7 @@ import { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAle
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 export type SavedSearchAlertListItemVariant = "active" | "inactive"
 
@@ -34,6 +35,9 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
   const Icon = isExpanded ? ChevronUpIcon : ChevronDownIcon
 
   const toggleExpandFilters = () => setIsExpanded(isExpanded => !isExpanded)
+  const isFallbackToGeneratedAlertNamesEnabled = useFeatureFlag(
+    "onyx_force-fallback-to-generated-alert-names"
+  )
 
   const toggleExpandFiltersText = isExpanded
     ? "Close all filters"
@@ -61,7 +65,9 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
             variant={["md", "lg"]}
             color={variant === "active" ? "blue100" : "black100"}
           >
-            {item.userAlertSettings.name}
+            {isFallbackToGeneratedAlertNamesEnabled
+              ? item.displayName
+              : item.userAlertSettings.name}
           </Text>
           <Spacer x={2} y={2} />
           <Clickable textDecoration="underline" onClick={toggleExpandFilters}>
@@ -77,7 +83,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
             onClick={() => {
               onEditAlertClick({
                 id: item.internalID,
-                name: item.userAlertSettings.name!,
+                name: item.userAlertSettings.name ?? undefined,
                 artistIds: item.artistIDs as string[],
               })
             }}
@@ -117,6 +123,7 @@ export const SavedSearchAlertListItemFragmentContainer = createFragmentContainer
     item: graphql`
       fragment SavedSearchAlertListItem_item on SearchCriteria {
         internalID
+        displayName
         artistIDs
         href
         labels {
