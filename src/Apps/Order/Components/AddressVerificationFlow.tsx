@@ -446,7 +446,7 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
       variables={{ address }}
       render={({ props }) => {
         if (!props?.verifyAddress) {
-          return <div>... loading ... </div>
+          return null
         }
 
         return (
