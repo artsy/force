@@ -18,12 +18,22 @@ import { useSystemContext } from "System/SystemContext"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
+type VerifyAddressSuccessType = Extract<
+  AddressVerificationFlow_verifyAddress$data["verifyAddressOrError"],
+  { __typename: "VerifyAddressType" }
+>
+type VerifyAddressErrorType = Extract<
+  AddressVerificationFlow_verifyAddress$data["verifyAddressOrError"],
+  { __typename: "VerifyAddressFailureType" }
+>
+
 export enum AddressVerifiedBy {
   USER = "USER",
   ARTSY = "ARTSY",
 }
 
-type AddressOptionKey = "userInput" | string
+const USER_INPUT = "userInput"
+type AddressOptionKey = typeof USER_INPUT | string
 
 interface AddressVerificationFlowProps {
   verifyAddress: AddressVerificationFlow_verifyAddress$data
@@ -33,6 +43,8 @@ interface AddressVerificationFlowProps {
     saveAndContinue: boolean
   ) => void
   onClose: () => void
+  /* used only as a fallback if verification is unavailable */
+  verificationInput: AddressValues
 }
 
 export interface AddressValues {
@@ -66,7 +78,30 @@ enum AddressSuggestionRadioButton {
   user_address = "What you entered",
 }
 
+const fallbackFromFormValues = (address: AddressValues): AddressOption => {
+  return {
+    key: USER_INPUT,
+    recommended: false,
+    lines: [
+      address.addressLine1,
+      address.addressLine2 || null,
+      `${address.city}, ${address.region} ${address.postalCode}`,
+      address.country,
+    ].filter(Boolean) as string[],
+
+    address: {
+      addressLine1: address.addressLine1,
+      addressLine2: address.addressLine2,
+      region: address.region,
+      country: address.country,
+      city: address.city,
+      postalCode: address.postalCode,
+    },
+  }
+}
+
 const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
+  verificationInput,
   verifyAddress,
   onChosenAddress,
   onClose,
@@ -90,7 +125,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     )
 
     const verifiedBy =
-      selectedAddressKey === "userInput"
+      selectedAddressKey === USER_INPUT
         ? AddressVerifiedBy.USER
         : AddressVerifiedBy.ARTSY
 
@@ -116,7 +151,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     const option =
       selectedAddressKey && selectedAddressKey.includes("suggestedAddress")
         ? "Recommended"
-        : selectedAddressKey === "userInput"
+        : selectedAddressKey === USER_INPUT
         ? "What you entered"
         : null
 
@@ -125,7 +160,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       context_module: ContextModule.ordersShipping,
       context_page_owner_type: OwnerType.ordersShipping,
       context_page_owner_id: contextPageOwnerSlug,
-      user_id: user?.id,
+      user_id: userId,
       subject: "Check your delivery address",
       option,
       label: "Back to Edit",
@@ -139,7 +174,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       context_module: ContextModule.ordersShipping,
       context_page_owner_type: OwnerType.ordersShipping,
       context_page_owner_id: contextPageOwnerSlug,
-      user_id: user?.id,
+      user_id: userId,
       subject: "Check your delivery address",
       label: "Edit Address",
     })
@@ -152,60 +187,71 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     }
   }, [addressOptions])
 
-  const suggestedAddresses =
-    verifyAddress.suggestedAddresses ||
-    ([] as NonNullable<
-      AddressVerificationFlow_verifyAddress$data
-    >["suggestedAddresses"])
-  const inputAddress = verifyAddress.inputAddress as AddressVerificationFlow_verifyAddress$data["inputAddress"]
-  const verificationStatus = verifyAddress.verificationStatus as AddressVerificationFlow_verifyAddress$data["verificationStatus"]
+  const error = (verifyAddress.verifyAddressOrError as VerifyAddressErrorType)
+    ?.mutationError
+  const suggestedAddresses = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
+    ?.suggestedAddresses
+  const inputAddress = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
+    ?.inputAddress
+  const verificationStatus = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
+    ?.verificationStatus
+
+  const userId = user?.id
+
+  const hasError = Boolean(error)
 
   useEffect(() => {
     const inputOption: AddressOption = {
       ...(inputAddress as any),
-      key: "userInput",
+      key: USER_INPUT,
       recommended: false,
     }
 
-    if (verificationStatus === "VERIFIED_NO_CHANGE") {
-      const verifiedBy = AddressVerifiedBy.ARTSY
-      onChosenAddress(verifiedBy, inputOption.address as AddressValues, true)
+    if (hasError) {
+      const fallbackOption = fallbackFromFormValues(verificationInput)
+      const verifiedBy = AddressVerifiedBy.USER
+      onChosenAddress(verifiedBy, fallbackOption.address, true)
     } else {
-      if (verificationStatus === "VERIFIED_WITH_CHANGES") {
-        setModalType(ModalType.SUGGESTIONS)
-        trackEvent({
-          action_type: "validationAddressViewed",
-          context_module: ContextModule.ordersShipping,
-          context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: contextPageOwnerSlug,
-          user_id: user?.id,
-          flow: "user adding shipping address",
-          subject: "Confirm your delivery address",
-          option: "suggestions",
-        })
-
-        const suggestedOptions = suggestedAddresses!
-          .slice(0, 1)
-          .map(({ address, lines }: any, index) => ({
-            key: `suggestedAddress-${index}` as AddressOptionKey,
-            recommended: index === 0,
-            lines: lines,
-            address: address,
-          }))
-        setAddressOptions([...suggestedOptions, inputOption])
+      if (verificationStatus === "VERIFIED_NO_CHANGE") {
+        const verifiedBy = AddressVerifiedBy.ARTSY
+        onChosenAddress(verifiedBy, inputOption.address, true)
       } else {
-        setAddressOptions([inputOption])
-        setModalType(ModalType.REVIEW_AND_CONFIRM)
-        trackEvent({
-          action_type: "validationAddressViewed",
-          context_module: ContextModule.ordersShipping,
-          context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: contextPageOwnerSlug,
-          user_id: user?.id,
-          flow: "user adding shipping address",
-          subject: "Check your delivery address",
-          option: "review and confirm",
-        })
+        if (verificationStatus === "VERIFIED_WITH_CHANGES") {
+          setModalType(ModalType.SUGGESTIONS)
+          trackEvent({
+            action_type: "validationAddressViewed",
+            context_module: ContextModule.ordersShipping,
+            context_page_owner_type: OwnerType.ordersShipping,
+            context_page_owner_id: contextPageOwnerSlug,
+            user_id: userId,
+            flow: "user adding shipping address",
+            subject: "Confirm your delivery address",
+            option: "suggestions",
+          })
+
+          const suggestedOptions = (suggestedAddresses || [])
+            .slice(0, 1)
+            .map(({ address, lines }: any, index) => ({
+              key: `suggestedAddress-${index}`,
+              recommended: index === 0,
+              lines: lines,
+              address: address,
+            }))
+          setAddressOptions([...suggestedOptions, inputOption])
+        } else {
+          setAddressOptions([inputOption])
+          setModalType(ModalType.REVIEW_AND_CONFIRM)
+          trackEvent({
+            action_type: "validationAddressViewed",
+            context_module: ContextModule.ordersShipping,
+            context_page_owner_type: OwnerType.ordersShipping,
+            context_page_owner_id: contextPageOwnerSlug,
+            user_id: userId,
+            flow: "user adding shipping address",
+            subject: "Check your delivery address",
+            option: "review and confirm",
+          })
+        }
       }
     }
   }, [
@@ -214,11 +260,13 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     suggestedAddresses,
     verificationStatus,
     trackEvent,
-    user,
+    userId,
     contextPageOwnerSlug,
+    hasError,
+    verificationInput,
   ])
 
-  if (verificationStatus === "VERIFIED_NO_CHANGE")
+  if (verificationStatus === "VERIFIED_NO_CHANGE" || hasError)
     return <div data-testid="emptyAddressVerification"></div>
 
   if (!modalType || addressOptions.length === 0) return null
@@ -286,7 +334,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
                     context_module: ContextModule.ordersShipping,
                     context_page_owner_type: OwnerType.ordersShipping,
                     context_page_owner_id: contextPageOwnerSlug,
-                    user_id: user?.id,
+                    user_id: userId,
                     subject: "Confirm your delivery address",
                     option: selectedAddressKey.includes("suggestedAddress")
                       ? "Recommended"
@@ -325,7 +373,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
                   context_module: ContextModule.ordersShipping,
                   context_page_owner_type: OwnerType.ordersShipping,
                   context_page_owner_id: contextPageOwnerSlug,
-                  user_id: user?.id,
+                  user_id: userId,
                   subject: "Check your delivery address",
                   label: "Use This Address",
                 })
@@ -351,30 +399,42 @@ export const AddressVerificationFlowFragmentContainer = createFragmentContainer(
   AddressVerificationFlow,
   {
     verifyAddress: graphql`
-      fragment AddressVerificationFlow_verifyAddress on VerifyAddressType {
-        inputAddress {
-          lines
-          address {
-            addressLine1
-            addressLine2
-            city
-            country
-            postalCode
-            region
+      fragment AddressVerificationFlow_verifyAddress on VerifyAddressPayload {
+        verifyAddressOrError {
+          __typename
+          ... on VerifyAddressType {
+            inputAddress {
+              lines
+              address {
+                addressLine1
+                addressLine2
+                city
+                country
+                postalCode
+                region
+              }
+            }
+            suggestedAddresses {
+              lines
+              address {
+                addressLine1
+                addressLine2
+                city
+                country
+                postalCode
+                region
+              }
+            }
+            verificationStatus
+          }
+          ... on VerifyAddressFailureType {
+            mutationError {
+              type
+              message
+              statusCode
+            }
           }
         }
-        suggestedAddresses {
-          lines
-          address {
-            addressLine1
-            addressLine2
-            city
-            country
-            postalCode
-            region
-          }
-        }
-        verificationStatus
       }
     `,
   }
@@ -392,19 +452,14 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
   return (
     <SystemQueryRenderer<AddressVerificationFlowQuery>
       variables={{ address }}
-      render={({ props, error }) => {
-        if (error) {
-          // TODO: we need better error handling
-          console.error(error)
-          return null
-        }
-
+      render={({ props }) => {
         if (!props?.verifyAddress) {
-          return <div>... loading ... </div>
+          return null
         }
 
         return (
           <AddressVerificationFlowFragmentContainer
+            verificationInput={address}
             verifyAddress={props.verifyAddress}
             onChosenAddress={onChosenAddress}
             onClose={onClose}
@@ -412,8 +467,8 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
         )
       }}
       query={graphql`
-        query AddressVerificationFlowQuery($address: AddressInput!) {
-          verifyAddress(address: $address) {
+        query AddressVerificationFlowQuery($address: VerifyAddressInput!) {
+          verifyAddress(input: $address) {
             ...AddressVerificationFlow_verifyAddress
           }
         }

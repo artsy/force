@@ -5,6 +5,7 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { AddressVerificationFlow_verifyAddress$data } from "__generated__/AddressVerificationFlow_verifyAddress.graphql"
 import { useTracking } from "react-tracking"
+import { useSystemContext } from "System/SystemContext"
 
 const mockOnChosenAddress = jest.fn()
 const mockOnClose = jest.fn()
@@ -17,22 +18,44 @@ const mockInputAddress = {
   country: "US",
 }
 const componentProps = {
+  verificationInput: mockInputAddress,
   onClose: mockOnClose,
   onChosenAddress: mockOnChosenAddress,
 }
 
-jest.unmock("react-relay")
+jest.mock("System/useSystemContext")
+jest.mock("System/Analytics/AnalyticsContext", () => ({
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerSlug: "example-order-id",
+  })),
+}))
 
+jest.unmock("react-relay")
 jest.mock("react-tracking")
+
+const trackEvent = jest.fn()
+
+beforeAll(() => {
+  ;(useSystemContext as jest.Mock).mockImplementation(() => ({
+    user: {
+      id: "example-user-id",
+      name: "Logged In",
+      email: "loggedin@example.com",
+    },
+  }))
+  ;(useTracking as jest.Mock).mockImplementation(() => ({
+    trackEvent,
+  }))
+})
 
 const { renderWithRelay } = setupTestWrapperTL<
   AddressVerificationFlow_Test_Query
 >({
   Component: AddressVerificationFlowFragmentContainer,
   query: graphql`
-    query AddressVerificationFlow_Test_Query($address: AddressInput!)
+    query AddressVerificationFlow_Test_Query($address: VerifyAddressInput!)
       @relay_test_operation {
-      verifyAddress(address: $address) {
+      verifyAddress(input: $address) {
         ...AddressVerificationFlow_verifyAddress
       }
     }
@@ -40,14 +63,18 @@ const { renderWithRelay } = setupTestWrapperTL<
   variables: { address: mockInputAddress },
 })
 
-let defaultResult: Omit<
-  AddressVerificationFlow_verifyAddress$data,
-  " $fragmentType"
+type SuccessType = Extract<
+  AddressVerificationFlow_verifyAddress$data["verifyAddressOrError"],
+  { __typename: "VerifyAddressType" }
 >
+
+let defaultResult: SuccessType
 
 beforeEach(() => {
   jest.clearAllMocks()
+
   defaultResult = {
+    __typename: "VerifyAddressType",
     verificationStatus: "NOT_FOUND",
     suggestedAddresses: [],
     inputAddress: {
@@ -57,16 +84,43 @@ beforeEach(() => {
   }
 })
 
-const trackEvent = jest.fn()
-beforeAll(() => {
-  ;(useTracking as jest.Mock).mockImplementation(() => {
-    return {
-      trackEvent,
-    }
-  })
-})
-
 describe("AddressVerificationFlow", () => {
+  const renderComponentWithResult = result => {
+    return renderWithRelay(
+      {
+        VerifyAddressMutationType: () => result,
+      },
+      undefined,
+      componentProps
+    )
+  }
+
+  describe("when the verification result is an error", () => {
+    const mockError = {
+      __typename: "VerifyAddressFailureType",
+      mutationError: {
+        detail: "Something went wrong",
+        error: "ERROR",
+        message: "Something went wrong",
+        statusCode: 500,
+        type: "error",
+        fieldErrors: [{ message: "oh no", name: "Errorik" }],
+      },
+    }
+    it("calls onChosenAddress, verified by USER without displaying a modal or tracking", async () => {
+      renderComponentWithResult(mockError)
+
+      await screen.findByTestId("emptyAddressVerification")
+      expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
+      expect(mockOnChosenAddress).toHaveBeenCalledWith(
+        "USER",
+        mockInputAddress,
+        true
+      )
+      expect(trackEvent).not.toHaveBeenCalled()
+    })
+  })
+
   describe("when the verification status is NOT_FOUND", () => {
     const mockResult = {
       ...defaultResult,
@@ -86,13 +140,7 @@ describe("AddressVerificationFlow", () => {
     }
 
     it("displays the correct content", async () => {
-      renderWithRelay(
-        {
-          VerifyAddressType: () => mockResult,
-        },
-        undefined,
-        componentProps
-      )
+      renderComponentWithResult(mockResult)
 
       await screen.findByText("Check your delivery address")
 
@@ -105,36 +153,25 @@ describe("AddressVerificationFlow", () => {
     })
 
     it("tracks that the validation modal was seen", async () => {
-      renderWithRelay(
-        {
-          VerifyAddressType: () => mockResult,
-        },
-        undefined,
-        componentProps
-      )
+      renderComponentWithResult(mockResult)
+
       await screen.findByText("Check your delivery address")
 
       expect(trackEvent).toHaveBeenCalledTimes(1)
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "validationAddressViewed",
         context_module: "ordersShipping",
-        context_page_owner_id: undefined,
+        context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         flow: "user adding shipping address",
         option: "review and confirm",
         subject: "Check your delivery address",
-        user_id: undefined,
+        user_id: "example-user-id",
       })
     })
 
     it('calls onChosenAddress and tracks the click with the suggested address when "Use This Address" is clicked', async () => {
-      renderWithRelay(
-        {
-          VerifyAddressType: () => mockResult,
-        },
-        undefined,
-        componentProps
-      )
+      renderComponentWithResult(mockResult)
 
       await screen.findByText("Check your delivery address")
 
@@ -152,11 +189,11 @@ describe("AddressVerificationFlow", () => {
       expect(trackEvent).toHaveBeenNthCalledWith(2, {
         action_type: "clickedValidationAddress",
         context_module: "ordersShipping",
-        context_page_owner_id: undefined,
+        context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         label: "Use This Address",
         subject: "Check your delivery address",
-        user_id: undefined,
+        user_id: "example-user-id",
       })
     })
   })
@@ -164,14 +201,8 @@ describe("AddressVerificationFlow", () => {
   describe("when the verification status is VERIFIED_NO_CHANGE", () => {
     const verificationStatus = "VERIFIED_NO_CHANGE"
 
-    it("calls onChosenAddress without displaying a modal", async () => {
-      renderWithRelay(
-        {
-          VerifyAddressType: () => ({ ...defaultResult, verificationStatus }),
-        },
-        undefined,
-        componentProps
-      )
+    it("calls onChosenAddress, verified by ARTSY without displaying a modal", async () => {
+      renderComponentWithResult({ ...defaultResult, verificationStatus })
 
       await screen.findByTestId("emptyAddressVerification")
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
@@ -207,13 +238,7 @@ describe("AddressVerificationFlow", () => {
     })
 
     it("displays the correct content", async () => {
-      renderWithRelay(
-        {
-          VerifyAddressType: () => mockResult,
-        },
-        undefined,
-        componentProps
-      )
+      renderComponentWithResult(mockResult)
 
       await screen.findByText("Confirm your delivery address")
 
@@ -227,36 +252,25 @@ describe("AddressVerificationFlow", () => {
     })
 
     it("tracks that the validation modal was seen", async () => {
-      renderWithRelay(
-        {
-          VerifyAddressType: () => mockResult,
-        },
-        undefined,
-        componentProps
-      )
+      renderComponentWithResult(mockResult)
+
       await screen.findByText("Confirm your delivery address")
 
       expect(trackEvent).toHaveBeenCalledTimes(1)
       expect(trackEvent).toHaveBeenCalledWith({
         action_type: "validationAddressViewed",
         context_module: "ordersShipping",
-        context_page_owner_id: undefined,
+        context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         flow: "user adding shipping address",
         option: "suggestions",
         subject: "Confirm your delivery address",
-        user_id: undefined,
+        user_id: "example-user-id",
       })
     })
 
     it('calls onChosenAddress and tracks the click with the suggested address when "Use This Address" is clicked', async () => {
-      renderWithRelay(
-        {
-          VerifyAddressType: () => mockResult,
-        },
-        undefined,
-        componentProps
-      )
+      renderComponentWithResult(mockResult)
 
       await screen.findByText("Confirm your delivery address")
 
@@ -267,12 +281,12 @@ describe("AddressVerificationFlow", () => {
       expect(trackEvent).toHaveBeenNthCalledWith(2, {
         action_type: "clickedValidationAddress",
         context_module: "ordersShipping",
-        context_page_owner_id: undefined,
+        context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         label: "Use This Address",
         option: "Recommended",
         subject: "Confirm your delivery address",
-        user_id: undefined,
+        user_id: "example-user-id",
       })
 
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
@@ -284,13 +298,7 @@ describe("AddressVerificationFlow", () => {
     })
 
     it("calls onChosenAddress with the user's input when 'Use This Address' is clicked after selecting 'What you entered'", async () => {
-      renderWithRelay(
-        {
-          VerifyAddressType: () => mockResult,
-        },
-        undefined,
-        componentProps
-      )
+      renderComponentWithResult(mockResult)
 
       await screen.findByText("Confirm your delivery address")
 
@@ -303,12 +311,12 @@ describe("AddressVerificationFlow", () => {
       expect(trackEvent).toHaveBeenNthCalledWith(2, {
         action_type: "clickedValidationAddress",
         context_module: "ordersShipping",
-        context_page_owner_id: undefined,
+        context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         label: "Use This Address",
         option: "What you entered",
         subject: "Confirm your delivery address",
-        user_id: undefined,
+        user_id: "example-user-id",
       })
 
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
@@ -318,14 +326,9 @@ describe("AddressVerificationFlow", () => {
         false
       )
     })
+
     it("calls onClose and tracks the click with the user closes the modal", async () => {
-      renderWithRelay(
-        {
-          VerifyAddressType: () => mockResult,
-        },
-        undefined,
-        componentProps
-      )
+      renderComponentWithResult(mockResult)
 
       await screen.findByText("Confirm your delivery address")
 
@@ -336,12 +339,12 @@ describe("AddressVerificationFlow", () => {
       expect(trackEvent).toHaveBeenNthCalledWith(2, {
         action_type: "clickedValidationAddress",
         context_module: "ordersShipping",
-        context_page_owner_id: undefined,
+        context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         label: "Back to Edit",
         option: "Recommended",
         subject: "Check your delivery address",
-        user_id: undefined,
+        user_id: "example-user-id",
       })
 
       expect(mockOnClose).toHaveBeenCalledTimes(1)
