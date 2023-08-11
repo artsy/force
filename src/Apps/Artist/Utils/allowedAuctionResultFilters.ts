@@ -40,6 +40,7 @@ const SUPPORTED_INPUT_ARGS = [
   "hideUpcoming",
   "page",
   "priceRange",
+  "currency",
   "allowEmptyCreatedDates",
   "includeEstimateRange",
   "includeUnknownPrices",

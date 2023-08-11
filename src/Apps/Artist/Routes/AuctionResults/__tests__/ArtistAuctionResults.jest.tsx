@@ -539,7 +539,10 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
       totalCount: 5,
     },
     sidebarAggregations: {
-      aggregations: [{ slice: "SIMPLE_PRICE_HISTOGRAM", counts: [] }],
+      aggregations: [
+        { slice: "SIMPLE_PRICE_HISTOGRAM", counts: [] },
+        { slice: "CURRENCIES_COUNT", counts: [] },
+      ],
     },
     auctionResultsConnection: {
       pageInfo: { hasNextPage: true, endCursor: "cursor4" },
