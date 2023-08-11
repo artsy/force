@@ -160,7 +160,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       context_module: ContextModule.ordersShipping,
       context_page_owner_type: OwnerType.ordersShipping,
       context_page_owner_id: contextPageOwnerSlug,
-      user_id: user?.id,
+      user_id: userId,
       subject: "Check your delivery address",
       option,
       label: "Back to Edit",
@@ -174,7 +174,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       context_module: ContextModule.ordersShipping,
       context_page_owner_type: OwnerType.ordersShipping,
       context_page_owner_id: contextPageOwnerSlug,
-      user_id: user?.id,
+      user_id: userId,
       subject: "Check your delivery address",
       label: "Edit Address",
     })
@@ -334,7 +334,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
                     context_module: ContextModule.ordersShipping,
                     context_page_owner_type: OwnerType.ordersShipping,
                     context_page_owner_id: contextPageOwnerSlug,
-                    user_id: user?.id,
+                    user_id: userId,
                     subject: "Confirm your delivery address",
                     option: selectedAddressKey.includes("suggestedAddress")
                       ? "Recommended"
@@ -373,7 +373,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
                   context_module: ContextModule.ordersShipping,
                   context_page_owner_type: OwnerType.ordersShipping,
                   context_page_owner_id: contextPageOwnerSlug,
-                  user_id: user?.id,
+                  user_id: userId,
                   subject: "Check your delivery address",
                   label: "Use This Address",
                 })
