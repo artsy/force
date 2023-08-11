@@ -218,7 +218,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
         context_page_owner_id: contextPageOwnerSlug,
         user_id: userId,
         flow: "user adding shipping address",
-        subject: "Check your delivery address",
+        subject: "Check your delivery address (error)",
         option: "review and confirm",
       })
     } else {

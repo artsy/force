@@ -118,7 +118,7 @@ describe("AddressVerificationFlow", () => {
         context_page_owner_type: "orders-shipping",
         flow: "user adding shipping address",
         option: "review and confirm",
-        subject: "Check your delivery address",
+        subject: "Check your delivery address (error)",
         user_id: undefined,
       })
     })
