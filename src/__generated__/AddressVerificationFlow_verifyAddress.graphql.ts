@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c83c0b305bfafb03d2471b403942050e>>
+ * @generated SignedSource<<fda14fac03ad195d14bbf0c11a98629a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,29 +12,43 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type VerificationStatuses = "NOT_FOUND" | "NOT_PERFORMED" | "VERIFICATION_UNAVAILABLE" | "VERIFIED_NO_CHANGE" | "VERIFIED_WITH_CHANGES" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type AddressVerificationFlow_verifyAddress$data = {
-  readonly inputAddress: {
-    readonly address: {
-      readonly addressLine1: string;
-      readonly addressLine2: string | null;
-      readonly city: string;
-      readonly country: string;
-      readonly postalCode: string;
-      readonly region: string | null;
+  readonly verifyAddressOrError: {
+    readonly __typename: "VerifyAddressFailureType";
+    readonly mutationError: {
+      readonly message: string;
+      readonly statusCode: number | null;
+      readonly type: string | null;
     } | null;
-    readonly lines: ReadonlyArray<string | null> | null;
-  };
-  readonly suggestedAddresses: ReadonlyArray<{
-    readonly address: {
-      readonly addressLine1: string;
-      readonly addressLine2: string | null;
-      readonly city: string;
-      readonly country: string;
-      readonly postalCode: string;
-      readonly region: string | null;
-    } | null;
-    readonly lines: ReadonlyArray<string | null> | null;
-  } | null>;
-  readonly verificationStatus: VerificationStatuses;
+  } | {
+    readonly __typename: "VerifyAddressType";
+    readonly inputAddress: {
+      readonly address: {
+        readonly addressLine1: string;
+        readonly addressLine2: string | null;
+        readonly city: string;
+        readonly country: string;
+        readonly postalCode: string;
+        readonly region: string | null;
+      } | null;
+      readonly lines: ReadonlyArray<string | null> | null;
+    };
+    readonly suggestedAddresses: ReadonlyArray<{
+      readonly address: {
+        readonly addressLine1: string;
+        readonly addressLine2: string | null;
+        readonly city: string;
+        readonly country: string;
+        readonly postalCode: string;
+        readonly region: string | null;
+      } | null;
+      readonly lines: ReadonlyArray<string | null> | null;
+    } | null>;
+    readonly verificationStatus: VerificationStatuses;
+  } | {
+    // This will never be '%other', but we need some
+    // value in case none of the concrete values match.
+    readonly __typename: "%other";
+  } | null;
   readonly " $fragmentType": "AddressVerificationFlow_verifyAddress";
 };
 export type AddressVerificationFlow_verifyAddress$key = {
@@ -103,60 +117,124 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "InputAddressFields",
+      "concreteType": null,
       "kind": "LinkedField",
-      "name": "inputAddress",
+      "name": "verifyAddressOrError",
       "plural": false,
       "selections": [
-        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
-          "concreteType": "InputAddress",
-          "kind": "LinkedField",
-          "name": "address",
-          "plural": false,
-          "selections": (v1/*: any*/),
+          "kind": "ScalarField",
+          "name": "__typename",
           "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "SuggestedAddressFields",
-      "kind": "LinkedField",
-      "name": "suggestedAddresses",
-      "plural": true,
-      "selections": [
-        (v0/*: any*/),
+        },
         {
-          "alias": null,
-          "args": null,
-          "concreteType": "SuggestedAddress",
-          "kind": "LinkedField",
-          "name": "address",
-          "plural": false,
-          "selections": (v1/*: any*/),
-          "storageKey": null
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "InputAddressFields",
+              "kind": "LinkedField",
+              "name": "inputAddress",
+              "plural": false,
+              "selections": [
+                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "InputAddress",
+                  "kind": "LinkedField",
+                  "name": "address",
+                  "plural": false,
+                  "selections": (v1/*: any*/),
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "SuggestedAddressFields",
+              "kind": "LinkedField",
+              "name": "suggestedAddresses",
+              "plural": true,
+              "selections": [
+                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "SuggestedAddress",
+                  "kind": "LinkedField",
+                  "name": "address",
+                  "plural": false,
+                  "selections": (v1/*: any*/),
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "verificationStatus",
+              "storageKey": null
+            }
+          ],
+          "type": "VerifyAddressType",
+          "abstractKey": null
+        },
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "GravityMutationError",
+              "kind": "LinkedField",
+              "name": "mutationError",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "type",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "message",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "statusCode",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "type": "VerifyAddressFailureType",
+          "abstractKey": null
         }
       ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "verificationStatus",
       "storageKey": null
     }
   ],
-  "type": "VerifyAddressType",
+  "type": "VerifyAddressPayload",
   "abstractKey": null
 };
 })();
 
-(node as any).hash = "1cc5e84c3a0a61d8f92bba7d7efbf3a8";
+(node as any).hash = "b8978b3664eccfdd5cb181d5a78e78aa";
 
 export default node;
