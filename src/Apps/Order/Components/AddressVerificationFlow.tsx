@@ -359,7 +359,12 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
           <Spacer y={4} />
           <Text fontWeight="bold">What you entered</Text>
           <Spacer y={1} />
-          <Box border="1px solid" borderColor="black30" p={2}>
+          <Box
+            border="1px solid"
+            borderColor="black5"
+            p={2}
+            backgroundColor="black5"
+          >
             {addressOptions[0]!.lines!.map((line: string) => (
               <Text key={line}>{line}</Text>
             ))}
