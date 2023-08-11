@@ -1,4 +1,4 @@
-import { Column, GridColumns, Text } from "@artsy/palette"
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
@@ -120,6 +120,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
 
         <Column span={12}>
           <Media greaterThan="xs">
+            <Spacer y={4} />
             <ArtworkAuctionCreateAlertTooltip />
           </Media>
         </Column>

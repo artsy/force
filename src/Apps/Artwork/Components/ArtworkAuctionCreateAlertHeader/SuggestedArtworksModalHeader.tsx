@@ -7,14 +7,13 @@ export const SuggestedArtworksModalHeader: FC = () => {
 
   return (
     <Flex flexDirection="column">
-      <Flex flexWrap="wrap">
+      <Flex flexWrap="wrap" gap={1}>
         {pills.map(pill => {
           return (
             <Pill
               key={`filter-label-${pill.field}-${pill.value}`}
               variant="filter"
               mb={1}
-              mr={1}
               disabled
             >
               {pill.displayValue}

@@ -13,7 +13,7 @@ export const ArtworkAuctionCreateAlertTooltip: FC = () => {
   }
 
   return (
-    <Flex justifyContent="center" alignItems="center" mt={4}>
+    <Flex justifyContent="center" alignItems="center">
       <Text variant="sm">
         Available works by {artistName} based on similar tags and auction
         activity.
@@ -27,19 +27,20 @@ export const ArtworkAuctionCreateAlertTooltip: FC = () => {
               similar tags. <br />
               All works are available and ready to purchase.
             </Text>
-            {pills.map(pill => {
-              return (
-                <Pill
-                  key={`pill-${pill.field}-${pill.value}`}
-                  variant="filter"
-                  disabled
-                  width="auto"
-                  mr={0.5}
-                >
-                  {pill.displayValue}
-                </Pill>
-              )
-            })}
+            <Flex flexWrap="wrap" gap={1}>
+              {pills.map(pill => {
+                return (
+                  <Pill
+                    key={`pill-${pill.field}-${pill.value}`}
+                    variant="filter"
+                    disabled
+                    width="auto"
+                  >
+                    {pill.displayValue}
+                  </Pill>
+                )
+              })}
+            </Flex>
           </>
         }
         placement="bottom"
