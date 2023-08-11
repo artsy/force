@@ -17795,6 +17795,7 @@ input UpdateArtistMutationInput {
   hometown: String
   id: String!
   last: String
+  location: String
   middle: String
   nationality: String
 }
