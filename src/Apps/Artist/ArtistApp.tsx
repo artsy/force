@@ -65,7 +65,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children }) => {
           <RouteTab to={`/artist/${artist.slug}/about`}>About</RouteTab>
         </RouteTabs>
 
-        <Spacer y={4} />
+        <Spacer y={[0, 4]} />
 
         {children}
       </AnalyticsContext.Provider>
