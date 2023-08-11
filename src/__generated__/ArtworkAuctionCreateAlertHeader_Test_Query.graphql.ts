@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5f4adfa5a375a066b19de2f5833afdc9>>
+ * @generated SignedSource<<b2d835bf174d697775dc599b30c246cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,14 +33,14 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "slug",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
+  "name": "internalID",
   "storageKey": null
 },
 v3 = {
@@ -54,7 +54,7 @@ v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "id",
   "storageKey": null
 },
 v5 = {
@@ -116,6 +116,8 @@ return {
         "name": "artwork",
         "plural": false,
         "selections": [
+          (v1/*: any*/),
+          (v2/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -137,7 +139,6 @@ return {
             "name": "artistNames",
             "storageKey": null
           },
-          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -147,8 +148,8 @@ return {
             "plural": true,
             "selections": [
               (v2/*: any*/),
-              (v1/*: any*/),
               (v3/*: any*/),
+              (v1/*: any*/),
               (v4/*: any*/)
             ],
             "storageKey": null
@@ -175,7 +176,7 @@ return {
                 "name": "isClosed",
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -208,11 +209,10 @@ return {
                 "name": "endedAt",
                 "storageKey": null
               },
-              (v2/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
-          (v4/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -221,9 +221,8 @@ return {
             "name": "attributionClass",
             "plural": false,
             "selections": [
-              (v1/*: any*/),
               (v2/*: any*/),
-              (v3/*: any*/)
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -243,23 +242,23 @@ return {
                 "name": "filterGene",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
+                  (v1/*: any*/),
                   (v3/*: any*/),
-                  (v2/*: any*/)
+                  (v4/*: any*/)
                 ],
                 "storageKey": null
               }
             ],
             "storageKey": null
           },
-          (v2/*: any*/)
+          (v4/*: any*/)
         ],
         "storageKey": "artwork(id:\"emily-ludwig-shaffer-untitled-3\")"
       }
     ]
   },
   "params": {
-    "cacheID": "e51d68f8bc3b6befa4e2ab538f64ff33",
+    "cacheID": "baf8554d878f23ceb8174ed8c3234a95",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -288,7 +287,6 @@ return {
         },
         "artwork.attributionClass.id": (v6/*: any*/),
         "artwork.attributionClass.internalID": (v6/*: any*/),
-        "artwork.attributionClass.name": (v5/*: any*/),
         "artwork.id": (v6/*: any*/),
         "artwork.internalID": (v6/*: any*/),
         "artwork.isInAuction": (v7/*: any*/),
@@ -332,7 +330,7 @@ return {
     },
     "name": "ArtworkAuctionCreateAlertHeader_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkAuctionCreateAlertHeader_Test_Query {\n  artwork(id: \"emily-ludwig-shaffer-untitled-3\") {\n    ...ArtworkAuctionCreateAlertHeader_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {\n  title\n  isInAuction\n  artistNames\n  internalID\n  artists {\n    id\n  }\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    extendedBiddingEndAt\n    endAt\n    endedAt\n    id\n  }\n  ...ArtworkSidebarCreateAlertButton_artwork\n  ...ArtworkAuctionCreateAlertTooltip_artwork\n}\n\nfragment ArtworkAuctionCreateAlertTooltip_artwork on Artwork {\n  artistNames\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment ArtworkSidebarCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkAuctionCreateAlertHeader_Test_Query {\n  artwork(id: \"emily-ludwig-shaffer-untitled-3\") {\n    ...ArtworkAuctionCreateAlertHeader_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {\n  slug\n  internalID\n  title\n  isInAuction\n  artistNames\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    extendedBiddingEndAt\n    endAt\n    endedAt\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n  ...ArtworkSidebarCreateAlertButton_artwork\n}\n\nfragment ArtworkSidebarCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();

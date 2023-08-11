@@ -10,6 +10,9 @@ import {
 } from "./types"
 import { extractPills } from "./Utils/extractPills"
 import { getAllowedSearchCriteria } from "./Utils/savedSearchCriteria"
+import { allowedSearchCriteriaKeys } from "Components/SavedSearchAlert/constants"
+import qs from "qs"
+import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 
 interface SavedSearchAlertContextProps {
   pills: FilterPill[]
@@ -25,6 +28,7 @@ interface SavedSearchAlertContextProps {
     value: string | string[] | number | boolean | null
   ) => void
   removePill: (pill: FilterPill) => void
+  criteriaHref: () => string | null
 }
 
 export interface SavedSearchAlertContextProviderProps {
@@ -32,6 +36,7 @@ export interface SavedSearchAlertContextProviderProps {
   aggregations?: Aggregations
   criteria: SearchCriteriaAttributes
   metric?: Metric
+  artistSlug?: string
 }
 
 const SavedSearchAlertContext = createContext<SavedSearchAlertContextProps>({
@@ -42,6 +47,7 @@ const SavedSearchAlertContext = createContext<SavedSearchAlertContextProps>({
   removeCriteriaValue: () => {},
   setCriteriaValue: () => {},
   removePill: () => {},
+  criteriaHref: () => null,
 })
 
 export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextProviderProps> = ({
@@ -49,6 +55,7 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
   aggregations,
   criteria: criteriaFromArgument,
   metric,
+  artistSlug,
   children,
 }) => {
   const [criteria, setCriteria] = useState(criteriaFromArgument)
@@ -98,6 +105,21 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
     removeCriteriaValue(pill.field as SearchCriteriaAttributeKeys, pill.value)
   }
 
+  // href calculated from criteria and primary artist slug
+  const criteriaHref = () => {
+    if (!artistSlug) return null
+
+    const allowedCriteriaValues = Object.fromEntries(
+      Object.entries(criteria).filter(([key, _]) => {
+        if (key === "artistIDs") return false
+        return allowedSearchCriteriaKeys.includes(key)
+      })
+    )
+    const queryParams = qs.stringify(paramsToSnakeCase(allowedCriteriaValues))
+
+    return `/artist/${artistSlug}?${queryParams}&for_sale=true`
+  }
+
   const contextValue: SavedSearchAlertContextProps = {
     pills,
     entity,
@@ -106,6 +128,7 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
     removeCriteriaValue,
     setCriteriaValue,
     removePill,
+    criteriaHref,
   }
 
   return (
