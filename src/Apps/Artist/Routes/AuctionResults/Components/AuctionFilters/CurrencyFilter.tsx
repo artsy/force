@@ -22,7 +22,7 @@ export const CurrencyFilter: React.FC = () => {
   return (
     <FilterExpandable label="Original Currency of Sale" expanded>
       <Flex flexDirection="column" alignItems="left">
-        <ShowMore>
+        <ShowMore initial={5}>
           {counts?.map((currency, index) => (
             <Radio
               key={index}
