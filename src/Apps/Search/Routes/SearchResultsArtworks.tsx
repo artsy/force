@@ -11,6 +11,8 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useSystemContext } from "System/useSystemContext"
 import { SearchResultsArtworksFilters } from "Apps/Search/Components/SearchResultsArtworksFilters"
+import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { OwnerType } from "@artsy/cohesion"
 
 interface SearchResultsRouteProps {
   viewer: SearchResultsArtworks_viewer$data
@@ -23,28 +25,34 @@ export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = pro
   const { sidebar } = viewer
 
   return (
-    <ArtworkFilter
-      mt={4}
-      viewer={viewer}
-      filters={match.location.query}
-      onChange={updateUrl}
-      ZeroState={ZeroState}
-      aggregations={
-        sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
-      }
-      counts={sidebar?.counts as Counts}
-      sortOptions={[
-        { value: "-decayed_merch", text: "Recommended" },
-        { value: "-has_price,-prices", text: "Price (High to Low)" },
-        { value: "-has_price,prices", text: "Price (Low to High)" },
-        { value: "-partner_updated_at", text: "Recently Updated" },
-        { value: "-published_at", text: "Recently Added" },
-        { value: "-year", text: "Artwork Year (Descending)" },
-        { value: "year", text: "Artwork Year (Ascending)" },
-      ]}
-      Filters={<SearchResultsArtworksFilters />}
-      userPreferredMetric={userPreferences?.metric}
-    />
+    <AnalyticsContext.Provider
+      value={{
+        contextPageOwnerType: OwnerType.search,
+      }}
+    >
+      <ArtworkFilter
+        mt={4}
+        viewer={viewer}
+        filters={match.location.query}
+        onChange={updateUrl}
+        ZeroState={ZeroState}
+        aggregations={
+          sidebar?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+        }
+        counts={sidebar?.counts as Counts}
+        sortOptions={[
+          { value: "-decayed_merch", text: "Recommended" },
+          { value: "-has_price,-prices", text: "Price (High to Low)" },
+          { value: "-has_price,prices", text: "Price (Low to High)" },
+          { value: "-partner_updated_at", text: "Recently Updated" },
+          { value: "-published_at", text: "Recently Added" },
+          { value: "-year", text: "Artwork Year (Descending)" },
+          { value: "year", text: "Artwork Year (Ascending)" },
+        ]}
+        Filters={<SearchResultsArtworksFilters />}
+        userPreferredMetric={userPreferences?.metric}
+      />
+    </AnalyticsContext.Provider>
   )
 }
 
