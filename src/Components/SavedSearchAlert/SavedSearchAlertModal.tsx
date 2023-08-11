@@ -22,7 +22,7 @@ import {
 } from "./SavedSearchAlertContext"
 import {
   FilterPill,
-  SavedSearchAleftFormValues,
+  SavedSearchAlertFormValues,
   SavedSearchAlertMutationResult,
   SavedSearchEntity,
   SearchCriteriaAttributeKeys,
@@ -34,10 +34,11 @@ import { DEFAULT_FREQUENCY } from "./constants"
 import { FrequenceRadioButtons } from "./Components/FrequencyRadioButtons"
 import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
 import { ConfirmationStepModal } from "Components/SavedSearchAlert/ConfirmationStepModal"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
-  initialValues: SavedSearchAleftFormValues
+  initialValues: SavedSearchAlertFormValues
   onClose: () => void
   onCreateAlert?: (result: SavedSearchAlertMutationResult) => void
 }
@@ -61,6 +62,9 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
 }) => {
   const { relayEnvironment } = useSystemContext()
   const { pills, criteria, removeCriteriaValue } = useSavedSearchAlertContext()
+  const isFallbackToGeneratedAlertNamesEnabled = useFeatureFlag(
+    "onyx_force-fallback-to-generated-alert-names"
+  )
 
   const handleRemovePillPress = (pill: FilterPill) => {
     if (pill.isDefault) {
@@ -70,13 +74,15 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
     removeCriteriaValue(pill.field as SearchCriteriaAttributeKeys, pill.value)
   }
 
-  const handleSubmit = async (values: SavedSearchAleftFormValues) => {
+  const handleSubmit = async (values: SavedSearchAlertFormValues) => {
     if (!relayEnvironment) {
       return null
     }
 
-    const userAlertSettings: SavedSearchAleftFormValues = {
-      name: values.name || entity.placeholder,
+    const userAlertSettings: SavedSearchAlertFormValues = {
+      name:
+        values.name ||
+        (isFallbackToGeneratedAlertNamesEnabled ? "" : entity.placeholder),
       email: values.email,
       push: values.push,
       frequency: values.push ? values.frequency : DEFAULT_FREQUENCY,
@@ -98,7 +104,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
   }
 
   return (
-    <Formik<SavedSearchAleftFormValues>
+    <Formik<SavedSearchAlertFormValues>
       initialValues={initialValues}
       onSubmit={handleSubmit}
     >
@@ -133,7 +139,11 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
               <Input
                 title="Alert Name"
                 name="name"
-                placeholder={entity.placeholder}
+                placeholder={
+                  isFallbackToGeneratedAlertNamesEnabled
+                    ? undefined
+                    : entity.placeholder
+                }
                 value={values.name}
                 onChange={handleChange("name")}
                 onBlur={handleBlur("name")}
@@ -144,7 +154,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
               <Box>
                 <Text variant="xs">Filters</Text>
                 <Spacer y={2} />
-                <Flex flexWrap="wrap" mx={-0.5}>
+                <Flex flexWrap="wrap" gap={1}>
                   <SavedSearchAlertPills
                     items={pills}
                     onDeletePress={handleRemovePillPress}

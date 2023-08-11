@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b2f1fd3c34b6591aac30d5ea340db738>>
+ * @generated SignedSource<<5883f8ccdc95284939785765b0f0118d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionResultsAggregation = "SIMPLE_PRICE_HISTOGRAM" | "%future added value";
+export type AuctionResultsAggregation = "CURRENCIES_COUNT" | "SIMPLE_PRICE_HISTOGRAM" | "%future added value";
 export type ArtistAuctionResults_Test_Query$variables = {
   artistID: string;
 };

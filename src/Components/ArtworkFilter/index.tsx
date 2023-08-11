@@ -43,6 +43,8 @@ import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext
 import { Jump } from "Utils/Hooks/useJump"
 import FilterIcon from "@artsy/icons/FilterIcon"
 import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
+import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
+import { ArtworkFilterCreateAlert } from "Components/ArtworkFilter/ArtworkFilterCreateAlert"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -51,7 +53,6 @@ interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   relayRefetchInputVariables?: object
   // Root-level variables passed to Relay query
   relayVariables?: object
-  FilterPillsSection?: JSX.Element
   viewer
 }
 
@@ -102,7 +103,6 @@ export const BaseArtworkFilter: React.FC<
   relayRefetchInputVariables = {},
   relayVariables = {},
   viewer,
-  FilterPillsSection,
   ...rest
 }) => {
   const tracking = useTracking()
@@ -276,7 +276,13 @@ export const BaseArtworkFilter: React.FC<
 
           <Spacer y={2} />
 
-          {FilterPillsSection}
+          <ActiveFilterPills />
+
+          <Spacer y={1} />
+
+          <ArtworkFilterCreateAlert />
+
+          <Spacer y={2} />
 
           <Text variant="sm" fontWeight="bold">
             {totalCountLabel}
@@ -329,7 +335,13 @@ export const BaseArtworkFilter: React.FC<
             // Safe to remove once artwork masonry uses CSS grid.
             width="100%"
           >
-            {FilterPillsSection}
+            <Flex gap={1}>
+              <ActiveFilterPills />
+
+              <ArtworkFilterCreateAlert />
+            </Flex>
+
+            <Spacer y={2} />
 
             {children || (
               <ArtworkFilterArtworkGrid

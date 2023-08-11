@@ -1,4 +1,4 @@
-import { Column, GridColumns, Text } from "@artsy/palette"
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
@@ -6,12 +6,26 @@ import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "Apps/Artwork/C
 import { useTimer } from "Utils/Hooks/useTimer"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
+import { FC } from "react"
+import { SuggestedArtworksButton } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksButton"
+import { SavedSearchAlertContextProvider } from "Components/SavedSearchAlert/SavedSearchAlertContext"
+import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { compact } from "lodash"
+import {
+  SavedSearchEntity,
+  SavedSearchEntityCriteria,
+  SearchCriteriaAttributes,
+} from "Components/SavedSearchAlert/types"
+import { OwnerType } from "@artsy/cohesion"
+import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
+import { Media } from "Utils/Responsive"
+import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
 }
 
-const ArtworkAuctionCreateAlertHeader: React.FC<ArtworkAuctionCreateAlertHeaderProps> = ({
+const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> = ({
   artwork,
 }) => {
   const hasArtists = (artwork.artists?.length ?? 0) > 0
@@ -33,33 +47,106 @@ const ArtworkAuctionCreateAlertHeader: React.FC<ArtworkAuctionCreateAlertHeaderP
   if (!displayAuctionCreateAlertHeader) return null
 
   const artistName = artwork.artistNames ? ", " + artwork.artistNames : ""
+  const artistSlug = artwork.artists?.[0]?.slug
+  let aggregations: Aggregations = []
+  let additionalGeneIDs: string[] = []
+  const artists = compact(artwork.artists)
+  const attributionClass = compact([artwork.attributionClass?.internalID])
+  const artistIDs = artists.map(artist => artist.internalID)
+  const placeholder = `Artworks like: ${artwork.title!}`
+  const defaultArtistsCriteria: SavedSearchEntityCriteria[] = artists.map(
+    artist => ({
+      value: artist.internalID,
+      displayValue: artist.name ?? "",
+    })
+  )
+  const entity: SavedSearchEntity = {
+    placeholder,
+    defaultCriteria: {
+      artistIDs: defaultArtistsCriteria,
+    },
+    owner: {
+      type: OwnerType.artwork,
+      slug: artwork.slug,
+      id: artwork.internalID,
+      name: artwork.title!,
+    },
+  }
+
+  if (
+    artwork.mediumType?.filterGene?.name &&
+    artwork.mediumType?.filterGene.slug
+  ) {
+    additionalGeneIDs = [artwork.mediumType.filterGene.slug]
+    aggregations = [
+      {
+        slice: "MEDIUM",
+        counts: [
+          {
+            name: artwork.mediumType.filterGene.name,
+            value: artwork.mediumType.filterGene.slug,
+            count: 0,
+          },
+        ],
+      },
+    ]
+  }
+
+  const criteria: SearchCriteriaAttributes = {
+    artistIDs,
+    attributionClass,
+    additionalGeneIDs,
+  }
+  const allowedCriteria = getAllowedSearchCriteria(criteria)
 
   return (
-    <GridColumns py={6}>
-      <Column span={12}>
-        <Text variant="lg" textAlign="center">
-          Bidding for <i>{artwork.title?.trim()}</i>
-          {artistName} has ended.
-        </Text>
-      </Column>
+    <SavedSearchAlertContextProvider
+      criteria={allowedCriteria}
+      aggregations={aggregations}
+      entity={entity}
+      artistSlug={artistSlug}
+    >
+      <GridColumns py={6}>
+        <Column span={12}>
+          <Text variant="lg" textAlign="center">
+            Bidding for <i>{artwork.title?.trim()}</i>
+            {artistName} has ended.
+          </Text>
+        </Column>
 
-      <Column span={2} start={6}>
-        <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
-      </Column>
-    </GridColumns>
+        <Column span={2} start={6}>
+          <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
+        </Column>
+
+        <Column span={12}>
+          <Media greaterThan="xs">
+            <Spacer y={4} />
+            <ArtworkAuctionCreateAlertTooltip />
+          </Media>
+        </Column>
+
+        <Column span={2} start={6}>
+          <SuggestedArtworksButton />
+        </Column>
+      </GridColumns>
+    </SavedSearchAlertContextProvider>
   )
 }
-
 export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentContainer(
   ArtworkAuctionCreateAlertHeader,
   {
     artwork: graphql`
       fragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {
+        slug
+        internalID
         title
         isInAuction
         artistNames
+        internalID
         artists {
-          id
+          internalID
+          name
+          slug
         }
         sale {
           startAt
@@ -69,6 +156,15 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
           extendedBiddingEndAt
           endAt
           endedAt
+        }
+        attributionClass {
+          internalID
+        }
+        mediumType {
+          filterGene {
+            slug
+            name
+          }
         }
         ...ArtworkSidebarCreateAlertButton_artwork
       }

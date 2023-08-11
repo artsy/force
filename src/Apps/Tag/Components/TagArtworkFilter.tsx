@@ -9,7 +9,6 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { updateUrl } from "Components/ArtworkFilter/Utils/urlBuilder"
 import { TagArtworkFilter_tag$data } from "__generated__/TagArtworkFilter_tag.graphql"
-import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { useSystemContext } from "System/useSystemContext"
 
 interface TagArtworkFilterProps {
@@ -41,11 +40,7 @@ const TagArtworkFilter: React.FC<TagArtworkFilterProps> = ({ tag, relay }) => {
       }
       userPreferredMetric={userPreferences?.metric}
     >
-      <BaseArtworkFilter
-        relay={relay}
-        viewer={tag}
-        FilterPillsSection={<ActiveFilterPills />}
-      />
+      <BaseArtworkFilter relay={relay} viewer={tag} />
     </ArtworkFilterContextProvider>
   )
 }

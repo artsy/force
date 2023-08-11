@@ -30,7 +30,7 @@ import {
   useSavedSearchAlertContext,
 } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import {
-  SavedSearchAleftFormValues,
+  SavedSearchAlertFormValues,
   SavedSearchEntity,
   SavedSearchEntityCriteria,
   SavedSearchFrequency,
@@ -44,6 +44,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
 import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 const logger = createLogger(
   "Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -84,7 +85,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     removePill,
   } = useSavedSearchAlertContext()
 
-  const initialValues: SavedSearchAleftFormValues = {
+  const initialValues: SavedSearchAlertFormValues = {
     name: userAlertSettings.name ?? "",
     push: userAlertSettings.push,
     email: userAlertSettings.email,
@@ -101,12 +102,17 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   )
   const userAllowsEmails = isCustomAlertsNotificationsEnabled ?? false
   const shouldShowEmailWarning = !!initialValues.email && !userAllowsEmails
+  const isFallbackToGeneratedAlertNamesEnabled = useFeatureFlag(
+    "onyx_force-fallback-to-generated-alert-names"
+  )
 
-  const handleSubmit = async (values: SavedSearchAleftFormValues) => {
+  const handleSubmit = async (values: SavedSearchAlertFormValues) => {
     try {
-      const updatedAlertSettings: SavedSearchAleftFormValues = {
+      const updatedAlertSettings: SavedSearchAlertFormValues = {
         ...values,
-        name: values.name || entity.placeholder,
+        name:
+          values.name ||
+          (isFallbackToGeneratedAlertNamesEnabled ? "" : entity.placeholder),
         frequency: values.push ? values.frequency : DEFAULT_FREQUENCY,
       }
 
@@ -160,7 +166,11 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
               <Input
                 title="Alert Name"
                 name="name"
-                placeholder={entity.placeholder}
+                placeholder={
+                  isFallbackToGeneratedAlertNamesEnabled
+                    ? undefined
+                    : entity.placeholder
+                }
                 value={values.name}
                 onChange={handleChange("name")}
                 onBlur={handleBlur("name")}
@@ -170,8 +180,10 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
               <Box>
                 <Text variant="xs">Filters</Text>
+
                 <Spacer y={2} />
-                <Flex flexWrap="wrap" mx={-0.5}>
+
+                <Flex flexWrap="wrap" gap={1}>
                   <SavedSearchAlertPills
                     items={pills}
                     onDeletePress={removePill}
@@ -312,7 +324,7 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
       id: savedSearch?.internalID!,
       // alert doesn't have a slug, for this reason we pass internalID
       slug: savedSearch?.internalID!,
-      name: savedSearch?.userAlertSettings.name ?? "",
+      name: savedSearch?.userAlertSettings.name ?? undefined,
     },
   }
 

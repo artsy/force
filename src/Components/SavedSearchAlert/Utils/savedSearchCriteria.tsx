@@ -2,12 +2,12 @@ import {
   ArtworkFiltersState,
   initialArtworkFilterState,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { allowedSearchCriteriaKeys } from "../constants"
+import { allowedSearchCriteriaKeys } from "Components/SavedSearchAlert/constants"
 import {
   SavedSearchDefaultCriteria,
   SavedSearchEntity,
   SearchCriteriaAttributes,
-} from "../types"
+} from "Components/SavedSearchAlert/types"
 
 export const isDefaultValue = (
   paramName: string,

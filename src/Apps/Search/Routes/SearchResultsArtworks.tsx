@@ -9,7 +9,6 @@ import {
   Counts,
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { useSystemContext } from "System/useSystemContext"
 import { SearchResultsArtworksFilters } from "Apps/Search/Components/SearchResultsArtworksFilters"
 
@@ -44,7 +43,6 @@ export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = pro
         { value: "year", text: "Artwork Year (Ascending)" },
       ]}
       Filters={<SearchResultsArtworksFilters />}
-      FilterPillsSection={<ActiveFilterPills />}
       userPreferredMetric={userPreferences?.metric}
     />
   )

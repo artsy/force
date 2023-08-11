@@ -11,7 +11,6 @@ import { PriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceR
 import { ArtworkGridContextProvider } from "Components/ArtworkGrid/ArtworkGridContext"
 import { useSystemContext } from "System/useSystemContext"
 import { AuctionArtworkFilter_viewer$data } from "__generated__/AuctionArtworkFilter_viewer.graphql"
-import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
 import { Join, Spacer } from "@artsy/palette"
 
@@ -57,7 +56,6 @@ const AuctionArtworkFilter: React.FC<AuctionArtworkFilterProps> = ({
             <MediumFilter expanded />
           </Join>
         }
-        FilterPillsSection={<ActiveFilterPills />}
       />
     </ArtworkGridContextProvider>
   )
