@@ -83,8 +83,7 @@ describe("AddressVerificationFlow", () => {
         fieldErrors: [{ message: "oh no", name: "Errorik" }],
       },
     }
-
-    it("displays the 'check your address modal similar to NOT_FOUND'", async () => {
+    it("calls onChosenAddress, verified by USER without displaying a modal or tracking", async () => {
       renderWithRelay(
         {
           VerifyAddressMutationType: () => mockError,
@@ -93,67 +92,14 @@ describe("AddressVerificationFlow", () => {
         componentProps
       )
 
-      await screen.findByText("Check your delivery address")
-      const body =
-        "The address you entered may be incorrect or incomplete. Please check it and make any changes necessary."
-      expect(screen.getByText(body)).toBeInTheDocument()
-      expect(screen.getByText("What you entered")).toBeInTheDocument()
-      expect(screen.getByText("Use This Address")).toBeInTheDocument()
-      expect(screen.getByText("Edit Address")).toBeInTheDocument()
-
-      // These values come from the input address, not the verification result
-      // and are constructed locally
-      expect(screen.getByText("401 Broadway")).toBeInTheDocument()
-      expect(screen.getByText("Suite 25")).toBeInTheDocument()
-      expect(screen.getByText("New York, NY 10013")).toBeInTheDocument()
-      expect(screen.getByText("US")).toBeInTheDocument()
-
-      await screen.findByText("Check your delivery address")
-
-      expect(trackEvent).toHaveBeenCalledTimes(1)
-      expect(trackEvent).toHaveBeenCalledWith({
-        action_type: "validationAddressViewed",
-        context_module: "ordersShipping",
-        context_page_owner_id: undefined,
-        context_page_owner_type: "orders-shipping",
-        flow: "user adding shipping address",
-        option: "review and confirm",
-        subject: "Check your delivery address (error)",
-        user_id: undefined,
-      })
-    })
-
-    it("can be selected similar to NOT_FOUND", async () => {
-      renderWithRelay(
-        {
-          VerifyAddressMutationType: () => mockError,
-        },
-        undefined,
-        componentProps
-      )
-
-      await screen.findByText("Check your delivery address")
-
-      const button = screen.getByText("Use This Address")
-      button.click()
-
+      await screen.findByTestId("emptyAddressVerification")
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
       expect(mockOnChosenAddress).toHaveBeenCalledWith(
         "USER",
         mockInputAddress,
-        false
+        true
       )
-
-      expect(trackEvent).toHaveBeenCalledTimes(2)
-      expect(trackEvent).toHaveBeenNthCalledWith(2, {
-        action_type: "clickedValidationAddress",
-        context_module: "ordersShipping",
-        context_page_owner_id: undefined,
-        context_page_owner_type: "orders-shipping",
-        label: "Use This Address",
-        subject: "Check your delivery address",
-        user_id: undefined,
-      })
+      expect(trackEvent).not.toHaveBeenCalled()
     })
   })
 
@@ -254,7 +200,7 @@ describe("AddressVerificationFlow", () => {
   describe("when the verification status is VERIFIED_NO_CHANGE", () => {
     const verificationStatus = "VERIFIED_NO_CHANGE"
 
-    it("calls onChosenAddress without displaying a modal", async () => {
+    it("calls onChosenAddress, verified by ARTSY without displaying a modal", async () => {
       renderWithRelay(
         {
           VerifyAddressMutationType: () => ({

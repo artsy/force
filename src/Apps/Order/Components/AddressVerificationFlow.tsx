@@ -209,18 +209,8 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
 
     if (hasError) {
       const fallbackOption = fallbackFromFormValues(verificationInput)
-      setAddressOptions([fallbackOption])
-      setModalType(ModalType.REVIEW_AND_CONFIRM)
-      trackEvent({
-        action_type: "validationAddressViewed",
-        context_module: ContextModule.ordersShipping,
-        context_page_owner_type: OwnerType.ordersShipping,
-        context_page_owner_id: contextPageOwnerSlug,
-        user_id: userId,
-        flow: "user adding shipping address",
-        subject: "Check your delivery address (error)",
-        option: "review and confirm",
-      })
+      const verifiedBy = AddressVerifiedBy.USER
+      onChosenAddress(verifiedBy, fallbackOption.address, true)
     } else {
       if (verificationStatus === "VERIFIED_NO_CHANGE") {
         const verifiedBy = AddressVerifiedBy.ARTSY
@@ -276,7 +266,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     verificationInput,
   ])
 
-  if (verificationStatus === "VERIFIED_NO_CHANGE")
+  if (verificationStatus === "VERIFIED_NO_CHANGE" || hasError)
     return <div data-testid="emptyAddressVerification"></div>
 
   if (!modalType || addressOptions.length === 0) return null
