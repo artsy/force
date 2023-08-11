@@ -45,6 +45,9 @@ import FilterIcon from "@artsy/icons/FilterIcon"
 import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { ArtworkFilterCreateAlert } from "Components/ArtworkFilter/ArtworkFilterCreateAlert"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { ArtworkFilterDrawer } from "Components/ArtworkFilter/ArtworkFilterDrawer"
+import { ArtworkSortFilter2 } from "Components/ArtworkFilter/ArtworkFilters/ArtworkSortFilter2"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -106,22 +109,34 @@ export const BaseArtworkFilter: React.FC<
   ...rest
 }) => {
   const tracking = useTracking()
+
   const {
     contextPageOwnerId,
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
+
   const [isFetching, toggleFetching] = useState(false)
   const [showMobileActionSheet, toggleMobileActionSheet] = useState(false)
+
   const filterContext = useArtworkFilterContext()
+
   const previousFilters = usePrevious(filterContext.filters)
+
   const { user } = useSystemContext()
+
   const { isAuctionArtwork } = useArtworkGridContext()
+
   const appliedFiltersTotalCount = getTotalSelectedFiltersCount(
     filterContext.selectedFiltersCounts
   )
+
   const total = viewer.filtered_artworks?.counts?.total ?? 0
   const totalCountLabel = getTotalCountLabel({ total, isAuctionArtwork })
+
+  const isRevisedArtworkFilters = useFeatureFlag(
+    "diamond_revised-artwork-filters"
+  )
 
   /**
    * Check to see if the mobile action sheet is present and prevent scrolling
@@ -301,44 +316,36 @@ export const BaseArtworkFilter: React.FC<
 
       {/* Desktop Artwork Filter */}
       <Media greaterThan="xs">
-        <GridColumns mb={4} alignItems="center">
-          <Column span={3}>
-            <Text variant="xs">Filter by</Text>
-          </Column>
+        {isRevisedArtworkFilters ? (
+          // New desktop filters
+          <>
+            <Flex alignItems="center" justifyContent="space-between" gap={2}>
+              <Flex alignItems="center" gap={2}>
+                <Text variant="sm-display" fontWeight="bold" flexShrink={0}>
+                  {totalCountLabel}
+                </Text>
 
-          <Column span={6}>
-            <Text variant="sm" fontWeight="bold">
-              {totalCountLabel}
-            </Text>
-          </Column>
+                <ActiveFilterPills />
+              </Flex>
 
-          <Column span={3}>
-            <ArtworkSortFilter />
-          </Column>
-        </GridColumns>
+              <Flex alignItems="center" gap={0.5} flexShrink={0}>
+                <ArtworkFilterCreateAlert variant="tertiary" />
 
-        <GridColumns>
-          <Column span={3}>
-            {Filters ? (
-              Filters
-            ) : (
-              <ArtworkFilters
-                user={user}
-                relayEnvironment={relay.environment}
-              />
-            )}
-          </Column>
+                <ArtworkFilterDrawer>
+                  <ArtworkSortFilter2 />
 
-          <Column
-            span={9}
-            // Fix for issue in Firefox where contents overflow container.
-            // Safe to remove once artwork masonry uses CSS grid.
-            width="100%"
-          >
-            <Flex gap={1}>
-              <ActiveFilterPills />
+                  <Spacer y={4} />
 
-              <ArtworkFilterCreateAlert />
+                  {Filters ? (
+                    Filters
+                  ) : (
+                    <ArtworkFilters
+                      user={user}
+                      relayEnvironment={relay.environment}
+                    />
+                  )}
+                </ArtworkFilterDrawer>
+              </Flex>
             </Flex>
 
             <Spacer y={2} />
@@ -348,11 +355,63 @@ export const BaseArtworkFilter: React.FC<
                 filtered_artworks={viewer.filtered_artworks!}
                 isLoading={isFetching}
                 offset={offset}
-                columnCount={[2, 2, 2, 3]}
+                columnCount={[2, 3, 3, 4]}
               />
             )}
-          </Column>
-        </GridColumns>
+          </>
+        ) : (
+          // Old desktop filters
+          <GridColumns>
+            <Column span={3}>
+              <Text variant="xs">Filter by</Text>
+            </Column>
+
+            <Column span={6}>
+              <Text variant="sm" fontWeight="bold">
+                {totalCountLabel}:
+              </Text>
+            </Column>
+
+            <Column span={3}>
+              <ArtworkSortFilter />
+            </Column>
+
+            <Column span={3}>
+              {Filters ? (
+                Filters
+              ) : (
+                <ArtworkFilters
+                  user={user}
+                  relayEnvironment={relay.environment}
+                />
+              )}
+            </Column>
+
+            <Column
+              span={9}
+              // Fix for issue in Firefox where contents overflow container.
+              // Safe to remove once artwork masonry uses CSS grid.
+              width="100%"
+            >
+              <Flex gap={1}>
+                <ActiveFilterPills />
+
+                <ArtworkFilterCreateAlert />
+              </Flex>
+
+              <Spacer y={2} />
+
+              {children || (
+                <ArtworkFilterArtworkGrid
+                  filtered_artworks={viewer.filtered_artworks!}
+                  isLoading={isFetching}
+                  offset={offset}
+                  columnCount={[2, 2, 2, 3]}
+                />
+              )}
+            </Column>
+          </GridColumns>
+        )}
       </Media>
     </Box>
   )
@@ -412,6 +471,7 @@ export const getTotalCountLabel = ({
   const artworkType = isAuctionArtwork ? "Lot" : "Artwork"
   const totalCountLabel = `${total} ${
     total === "1" ? artworkType : `${artworkType}s`
-  }:`
+  }`
+
   return totalCountLabel
 }
