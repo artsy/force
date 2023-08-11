@@ -17,7 +17,6 @@ import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/SystemContext"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { Address } from "Components/AddressForm"
 
 type VerifyAddressSuccessType = Extract<
   AddressVerificationFlow_verifyAddress$data["verifyAddressOrError"],
@@ -33,7 +32,8 @@ export enum AddressVerifiedBy {
   ARTSY = "ARTSY",
 }
 
-type AddressOptionKey = "userInput" | string
+const USER_INPUT = "userInput"
+type AddressOptionKey = typeof USER_INPUT | string
 
 interface AddressVerificationFlowProps {
   verifyAddress: AddressVerificationFlow_verifyAddress$data
@@ -43,6 +43,8 @@ interface AddressVerificationFlowProps {
     saveAndContinue: boolean
   ) => void
   onClose: () => void
+  /* used only as a fallback if verification is unavailable */
+  verificationInput: AddressValues
 }
 
 export interface AddressValues {
@@ -76,11 +78,21 @@ enum AddressSuggestionRadioButton {
   user_address = "What you entered",
 }
 
-const formValues = (address: Address) => {
+const fallbackFromFormValues = (address: AddressValues): AddressOption => {
   return {
+    key: USER_INPUT,
+    recommended: false,
+    lines: [
+      address.addressLine1,
+      address.addressLine2 || null,
+      `${address.city}, ${address.region} ${address.postalCode}`,
+      address.country,
+    ].filter(Boolean) as string[],
+
     address: {
       addressLine1: address.addressLine1,
       addressLine2: address.addressLine2,
+      region: address.region,
       country: address.country,
       city: address.city,
       postalCode: address.postalCode,
@@ -89,6 +101,7 @@ const formValues = (address: Address) => {
 }
 
 const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
+  verificationInput,
   verifyAddress,
   onChosenAddress,
   onClose,
@@ -112,7 +125,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     )
 
     const verifiedBy =
-      selectedAddressKey === "userInput"
+      selectedAddressKey === USER_INPUT
         ? AddressVerifiedBy.USER
         : AddressVerifiedBy.ARTSY
 
@@ -138,7 +151,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     const option =
       selectedAddressKey && selectedAddressKey.includes("suggestedAddress")
         ? "Recommended"
-        : selectedAddressKey === "userInput"
+        : selectedAddressKey === USER_INPUT
         ? "What you entered"
         : null
 
@@ -190,20 +203,24 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   useEffect(() => {
     const inputOption: AddressOption = {
       ...(inputAddress as any),
-      key: "userInput",
+      key: USER_INPUT,
       recommended: false,
-    }
-
-    const formInput: AddressOption = {
-      ...(formValues as any),
-      key: "userAddress",
-      recommended: false,
-      lines: [formValues],
     }
 
     if (hasError) {
-      setAddressOptions([formInput])
+      const fallbackOption = fallbackFromFormValues(verificationInput)
+      setAddressOptions([fallbackOption])
       setModalType(ModalType.REVIEW_AND_CONFIRM)
+      trackEvent({
+        action_type: "validationAddressViewed",
+        context_module: ContextModule.ordersShipping,
+        context_page_owner_type: OwnerType.ordersShipping,
+        context_page_owner_id: contextPageOwnerSlug,
+        user_id: userId,
+        flow: "user adding shipping address",
+        subject: "Check your delivery address",
+        option: "review and confirm",
+      })
     } else {
       if (verificationStatus === "VERIFIED_NO_CHANGE") {
         const verifiedBy = AddressVerifiedBy.ARTSY
@@ -256,6 +273,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     userId,
     contextPageOwnerSlug,
     hasError,
+    verificationInput,
   ])
 
   if (verificationStatus === "VERIFIED_NO_CHANGE")
@@ -451,6 +469,7 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
 
         return (
           <AddressVerificationFlowFragmentContainer
+            verificationInput={address}
             verifyAddress={props.verifyAddress}
             onChosenAddress={onChosenAddress}
             onClose={onClose}

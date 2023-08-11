@@ -17,6 +17,7 @@ const mockInputAddress = {
   country: "US",
 }
 const componentProps = {
+  verificationInput: mockInputAddress,
   onClose: mockOnClose,
   onChosenAddress: mockOnChosenAddress,
 }
@@ -71,21 +72,22 @@ beforeAll(() => {
 
 describe("AddressVerificationFlow", () => {
   describe("when the verification result is an error", () => {
-    it("displays the 'check your address modal just like NOT_FOUND'", async () => {
-      const mockResult = {
-        __typename: "VerifyAddressFailureType",
-        mutationError: {
-          detail: "Something went wrong",
-          error: "ERROR",
-          message: "Something went wrong",
-          statusCode: 500,
-          type: "error",
-          fieldErrors: [{ message: "oh no", name: "Errorik" }],
-        },
-      }
+    const mockError = {
+      __typename: "VerifyAddressFailureType",
+      mutationError: {
+        detail: "Something went wrong",
+        error: "ERROR",
+        message: "Something went wrong",
+        statusCode: 500,
+        type: "error",
+        fieldErrors: [{ message: "oh no", name: "Errorik" }],
+      },
+    }
+
+    it("displays the 'check your address modal similar to NOT_FOUND'", async () => {
       renderWithRelay(
         {
-          VerifyAddressMutationType: () => mockResult,
+          VerifyAddressMutationType: () => mockError,
         },
         undefined,
         componentProps
@@ -98,6 +100,60 @@ describe("AddressVerificationFlow", () => {
       expect(screen.getByText("What you entered")).toBeInTheDocument()
       expect(screen.getByText("Use This Address")).toBeInTheDocument()
       expect(screen.getByText("Edit Address")).toBeInTheDocument()
+
+      // These values come from the input address, not the verification result
+      // and are constructed locally
+      expect(screen.getByText("401 Broadway")).toBeInTheDocument()
+      expect(screen.getByText("Suite 25")).toBeInTheDocument()
+      expect(screen.getByText("New York, NY 10013")).toBeInTheDocument()
+      expect(screen.getByText("US")).toBeInTheDocument()
+
+      await screen.findByText("Check your delivery address")
+
+      expect(trackEvent).toHaveBeenCalledTimes(1)
+      expect(trackEvent).toHaveBeenCalledWith({
+        action_type: "validationAddressViewed",
+        context_module: "ordersShipping",
+        context_page_owner_id: undefined,
+        context_page_owner_type: "orders-shipping",
+        flow: "user adding shipping address",
+        option: "review and confirm",
+        subject: "Check your delivery address",
+        user_id: undefined,
+      })
+    })
+
+    it("can be selected similar to NOT_FOUND", async () => {
+      renderWithRelay(
+        {
+          VerifyAddressMutationType: () => mockError,
+        },
+        undefined,
+        componentProps
+      )
+
+      await screen.findByText("Check your delivery address")
+
+      const button = screen.getByText("Use This Address")
+      button.click()
+
+      expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
+      expect(mockOnChosenAddress).toHaveBeenCalledWith(
+        "USER",
+        mockInputAddress,
+        false
+      )
+
+      expect(trackEvent).toHaveBeenCalledTimes(2)
+      expect(trackEvent).toHaveBeenNthCalledWith(2, {
+        action_type: "clickedValidationAddress",
+        context_module: "ordersShipping",
+        context_page_owner_id: undefined,
+        context_page_owner_type: "orders-shipping",
+        label: "Use This Address",
+        subject: "Check your delivery address",
+        user_id: undefined,
+      })
     })
   })
 
