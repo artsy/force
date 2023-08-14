@@ -18,6 +18,7 @@ import {
   Box,
   BoxProps,
   Button,
+  Clickable,
   Column,
   Flex,
   FullBleed,
@@ -48,6 +49,7 @@ import { ArtworkFilterCreateAlert } from "Components/ArtworkFilter/ArtworkFilter
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { ArtworkFilterDrawer } from "Components/ArtworkFilter/ArtworkFilterDrawer"
 import { ArtworkSortFilter2 } from "Components/ArtworkFilter/ArtworkFilters/ArtworkSortFilter2"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -223,58 +225,152 @@ export const BaseArtworkFilter: React.FC<
 
       {/* Mobile Artwork Filter */}
       <Media at="xs">
-        <Sticky>
-          {({ stuck }) => {
-            return (
+        {isRevisedArtworkFilters ? (
+          // New mobile filters
+          <>
+            <Sticky>
               <FullBleed backgroundColor="white100">
                 <Flex
                   justifyContent="space-between"
                   alignItems="center"
-                  py={1}
-                  px={2}
+                  p={2}
                   gap={2}
-                  {...(stuck
-                    ? {
-                        borderBottom: "1px solid",
-                        borderColor: "black10",
-                      }
-                    : {})}
+                  borderBottom="1px solid"
+                  borderColor="black10"
                 >
                   <ProgressiveOnboardingAlertSelectFilter placement="bottom-start">
-                    <Button size="small" onClick={handleOpen} Icon={FilterIcon}>
-                      Filter
-                      {appliedFiltersTotalCount > 0
-                        ? ` • ${appliedFiltersTotalCount}`
-                        : ""}
-                    </Button>
+                    <Clickable
+                      onClick={handleOpen}
+                      display="flex"
+                      alignItems="center"
+                      gap={0.5}
+                    >
+                      <FilterIcon />
+                      <Text variant="xs">
+                        Sort & Filter
+                        {appliedFiltersTotalCount > 0 && (
+                          <Box as="span" color="brand">
+                            {" "}
+                            • {appliedFiltersTotalCount}
+                          </Box>
+                        )}
+                      </Text>
+                    </Clickable>
 
                     {isOpen && (
                       <ArtworkFilterMobileOverlay onClose={handleClose}>
-                        <FiltersWithScrollIntoView
-                          Filters={Filters}
-                          user={user}
-                          relayEnvironment={relay.environment}
-                        />
+                        <ArtworkSortFilter2 />
+
+                        <Spacer y={4} />
+
+                        {Filters ? (
+                          Filters
+                        ) : (
+                          <ArtworkFilters
+                            user={user}
+                            relayEnvironment={relay.environment}
+                          />
+                        )}
                       </ArtworkFilterMobileOverlay>
                     )}
                   </ProgressiveOnboardingAlertSelectFilter>
 
-                  <ArtworkSortFilter />
+                  <ArtworkFilterCreateAlert
+                    renderButton={props => {
+                      return (
+                        <Clickable
+                          display="flex"
+                          alignItems="center"
+                          gap={0.5}
+                          {...props}
+                        >
+                          <BellStrokeIcon />
+
+                          <Text variant="xs">Create Alert</Text>
+                        </Clickable>
+                      )
+                    }}
+                  />
                 </Flex>
               </FullBleed>
-            )
-          }}
-        </Sticky>
+            </Sticky>
 
-        <Spacer y={2} />
+            <Spacer y={4} />
+          </>
+        ) : (
+          // Old mobile filters
+          <>
+            <Sticky>
+              {({ stuck }) => {
+                return (
+                  <FullBleed backgroundColor="white100">
+                    <Flex
+                      justifyContent="space-between"
+                      alignItems="center"
+                      py={1}
+                      px={2}
+                      gap={2}
+                      {...(stuck
+                        ? {
+                            borderBottom: "1px solid",
+                            borderColor: "black10",
+                          }
+                        : {})}
+                    >
+                      <ProgressiveOnboardingAlertSelectFilter placement="bottom-start">
+                        <Button
+                          size="small"
+                          onClick={handleOpen}
+                          Icon={FilterIcon}
+                        >
+                          Filter
+                          {appliedFiltersTotalCount > 0
+                            ? ` • ${appliedFiltersTotalCount}`
+                            : ""}
+                        </Button>
 
-        <ActiveFilterPills />
+                        {isOpen && (
+                          <ArtworkFilterMobileOverlay onClose={handleClose}>
+                            <FiltersWithScrollIntoView
+                              Filters={Filters}
+                              user={user}
+                              relayEnvironment={relay.environment}
+                            />
+                          </ArtworkFilterMobileOverlay>
+                        )}
+                      </ProgressiveOnboardingAlertSelectFilter>
 
-        <Spacer y={1} />
+                      <ArtworkSortFilter />
+                    </Flex>
+                  </FullBleed>
+                )
+              }}
+            </Sticky>
 
-        <ArtworkFilterCreateAlert />
+            <Spacer y={2} />
 
-        <Spacer y={2} />
+            <ActiveFilterPills />
+
+            <Spacer y={1} />
+
+            <ArtworkFilterCreateAlert
+              renderButton={props => {
+                return (
+                  <Button
+                    variant="secondaryBlack"
+                    size="small"
+                    Icon={BellStrokeIcon}
+                    {...props}
+                  >
+                    Create Alert
+                  </Button>
+                )
+              }}
+            />
+
+            <Spacer y={2} />
+          </>
+        )}
 
         <Text variant="sm" fontWeight="bold">
           {totalCountLabel}
@@ -305,7 +401,20 @@ export const BaseArtworkFilter: React.FC<
               </Flex>
 
               <Flex alignItems="center" gap={0.5} flexShrink={0}>
-                <ArtworkFilterCreateAlert variant="tertiary" />
+                <ArtworkFilterCreateAlert
+                  renderButton={props => {
+                    return (
+                      <Button
+                        variant="tertiary"
+                        size="small"
+                        Icon={BellStrokeIcon}
+                        {...props}
+                      >
+                        Create Alert
+                      </Button>
+                    )
+                  }}
+                />
 
                 <Button
                   variant="tertiary"
@@ -381,7 +490,20 @@ export const BaseArtworkFilter: React.FC<
               <Flex gap={1}>
                 <ActiveFilterPills />
 
-                <ArtworkFilterCreateAlert />
+                <ArtworkFilterCreateAlert
+                  renderButton={props => {
+                    return (
+                      <Button
+                        variant="secondaryBlack"
+                        size="small"
+                        Icon={BellStrokeIcon}
+                        {...props}
+                      >
+                        Create Alert
+                      </Button>
+                    )
+                  }}
+                />
               </Flex>
 
               <Spacer y={2} />
