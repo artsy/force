@@ -1,11 +1,12 @@
 import * as React from "react"
-import { Radio, Flex, ShowMore } from "@artsy/palette"
+import { Radio, Flex } from "@artsy/palette"
 
 import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
+import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 
 export const CurrencyFilter: React.FC = () => {
   const { setFilter, aggregations } = useAuctionResultsFilterContext()
