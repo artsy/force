@@ -1,6 +1,4 @@
 import { ContextModule, Intent } from "@artsy/cohesion"
-import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
-import { Button, ButtonProps } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { usePrepareFiltersForPills } from "Components/ArtworkFilter/Utils/usePrepareFiltersForPills"
 import { ProgressiveOnboardingAlertCreate } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
@@ -12,9 +10,13 @@ import { DEFAULT_METRIC } from "Utils/metrics"
 import { isEmpty } from "lodash"
 import { FC } from "react"
 
-interface ArtworkFilterCreateAlertProps extends ButtonProps {}
+interface ArtworkFilterCreateAlertProps {
+  renderButton: (props: { onClick: () => void }) => JSX.Element
+}
 
-export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = props => {
+export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = ({
+  renderButton,
+}) => {
   const { entity } = useSavedSearchAlertContext()
   const { aggregations } = useArtworkFilterContext()
   const filters = usePrepareFiltersForPills()
@@ -49,21 +51,15 @@ export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = props
         <ProgressiveOnboardingAlertCreate>
           {({ onSkip: createSkip }) => (
             <ProgressiveOnboardingAlertReady>
-              {({ onSkip: readySkip }) => (
-                <Button
-                  variant="secondaryBlack"
-                  size="small"
-                  Icon={BellStrokeIcon}
-                  {...props}
-                  onClick={() => {
+              {({ onSkip: readySkip }) =>
+                renderButton({
+                  onClick: () => {
                     createSkip()
                     readySkip()
                     onClick()
-                  }}
-                >
-                  Create Alert
-                </Button>
-              )}
+                  },
+                })
+              }
             </ProgressiveOnboardingAlertReady>
           )}
         </ProgressiveOnboardingAlertCreate>
