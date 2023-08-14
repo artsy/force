@@ -55,18 +55,18 @@ export interface AddressValues {
   postalCode: string
 }
 
-enum FlowType {
+enum VerificationPath {
   ERROR_IMMEDIATE_CONFIRM = "error_immediate_confirm",
   IMMEDIATE_CONFIRM = "immediate_confirm",
   SUGGESTIONS = "suggestions",
   REVIEW_AND_CONFIRM = "review_and_confirm",
 }
 
-const modalTitles: Record<FlowType, string | null> = {
-  [FlowType.SUGGESTIONS]: "Confirm your delivery address",
-  [FlowType.REVIEW_AND_CONFIRM]: "Check your delivery address",
-  [FlowType.ERROR_IMMEDIATE_CONFIRM]: null,
-  [FlowType.IMMEDIATE_CONFIRM]: null,
+const modalTitles: Record<VerificationPath, string | null> = {
+  [VerificationPath.SUGGESTIONS]: "Confirm your delivery address",
+  [VerificationPath.REVIEW_AND_CONFIRM]: "Check your delivery address",
+  [VerificationPath.ERROR_IMMEDIATE_CONFIRM]: null,
+  [VerificationPath.IMMEDIATE_CONFIRM]: null,
 } as const
 
 interface AddressOption {
@@ -160,7 +160,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   const [showModal, setShowModal] = useState(false)
   const didLoad = useRef(false)
 
-  let modalType: FlowType = FlowType.REVIEW_AND_CONFIRM
+  let verificationPath: VerificationPath = VerificationPath.REVIEW_AND_CONFIRM
   let addressOptions: AddressOption[] = []
 
   const {
@@ -180,7 +180,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   const hasError = Boolean(error)
 
   if (hasError) {
-    modalType = FlowType.ERROR_IMMEDIATE_CONFIRM
+    verificationPath = VerificationPath.ERROR_IMMEDIATE_CONFIRM
   } else {
     const inputOption: AddressOption = {
       ...(inputAddress as any),
@@ -188,11 +188,11 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       recommended: false,
     }
     if (verificationStatus === "VERIFIED_NO_CHANGE") {
-      modalType = FlowType.IMMEDIATE_CONFIRM
+      verificationPath = VerificationPath.IMMEDIATE_CONFIRM
       addressOptions = [inputOption]
     } else {
       if (verificationStatus === "VERIFIED_WITH_CHANGES") {
-        modalType = FlowType.SUGGESTIONS
+        verificationPath = VerificationPath.SUGGESTIONS
 
         const suggestedOptions = (suggestedAddresses || [])
           .slice(0, 1)
@@ -205,33 +205,31 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
         addressOptions = [...suggestedOptions, inputOption]
       } else {
         addressOptions = [inputOption]
-        modalType = FlowType.REVIEW_AND_CONFIRM
+        verificationPath = VerificationPath.REVIEW_AND_CONFIRM
       }
     }
   }
 
-  const [
-    selectedAddressKey,
-    setSelectedAddressKey,
-  ] = useState<AddressOptionKey | null>(addressOptions[0]?.key)
+  const [selectedAddressKey, setSelectedAddressKey] = useState<
+    AddressOptionKey | undefined
+  >(addressOptions[0]?.key)
 
   // perform only once on mount
   useEffect(() => {
     if (!didLoad.current) {
-      if (modalType === FlowType.ERROR_IMMEDIATE_CONFIRM) {
-        const verifiedBy = AddressVerifiedBy.USER
+      if (verificationPath === VerificationPath.ERROR_IMMEDIATE_CONFIRM) {
         const fallbackOption = fallbackFromFormValues(verificationInput)
-        onChosenAddress(verifiedBy, fallbackOption.address)
+        onChosenAddress(AddressVerifiedBy.USER, fallbackOption.address)
         didLoad.current = true
-      } else if (modalType === FlowType.IMMEDIATE_CONFIRM) {
+      } else if (verificationPath === VerificationPath.IMMEDIATE_CONFIRM) {
         onChosenAddress(AddressVerifiedBy.ARTSY, addressOptions[0].address!)
         didLoad.current = true
       } else {
         didLoad.current = true
 
         trackViewedModal({
-          option: modalType,
-          subject: modalTitles[modalType]!,
+          option: verificationPath,
+          subject: modalTitles[verificationPath]!,
         })
       }
       setShowModal(true)
@@ -239,7 +237,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   }, [
     didLoad,
     addressOptions,
-    modalType,
+    verificationPath,
     verificationInput,
     onChosenAddress,
     trackViewedModal,
@@ -266,7 +264,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   const handleClose = () => {
     trackClickedModal({
       label: "close modal",
-      subject: modalTitles[modalType],
+      subject: modalTitles[verificationPath],
     })
     onClose()
   }
@@ -305,10 +303,10 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       width={["100%", 590]}
       height={["100vh", "auto"]}
       m={[0, 2]}
-      title={modalTitles[modalType]!}
+      title={modalTitles[verificationPath]!}
       onClose={handleClose}
     >
-      {modalType === FlowType.SUGGESTIONS ? (
+      {verificationPath === VerificationPath.SUGGESTIONS ? (
         <>
           <Text>
             To ensure prompt and accurate delivery, we suggest a modified
