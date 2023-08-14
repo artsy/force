@@ -117,6 +117,28 @@ describe("AddressVerificationFlow", () => {
     })
   })
 
+  it("calls onClose and tracks the click when the user closes the modal via the x", async () => {
+    renderComponentWithResult(defaultResult)
+
+    await screen.findByText("Check your delivery address")
+
+    const button = screen.getByLabelText("Close")
+    button.click()
+
+    expect(trackEvent).toHaveBeenCalledTimes(2)
+    expect(trackEvent).toHaveBeenNthCalledWith(2, {
+      action_type: "clickedValidationAddress",
+      context_module: "ordersShipping",
+      context_page_owner_id: "example-order-id",
+      context_page_owner_type: "orders-shipping",
+      label: "close modal",
+      subject: "Check your delivery address",
+      user_id: "example-user-id",
+    })
+
+    expect(mockOnClose).toHaveBeenCalledTimes(1)
+  })
+
   describe("when the verification status is NOT_FOUND", () => {
     const mockResult = {
       ...defaultResult,
@@ -160,7 +182,7 @@ describe("AddressVerificationFlow", () => {
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         flow: "user adding shipping address",
-        option: "review and confirm",
+        option: "review_and_confirm",
         subject: "Check your delivery address",
         user_id: "example-user-id",
       })

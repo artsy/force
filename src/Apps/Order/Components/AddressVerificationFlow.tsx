@@ -12,7 +12,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useRef, useState } from "react"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/SystemContext"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
@@ -55,14 +55,18 @@ export interface AddressValues {
   postalCode: string
 }
 
-enum ModalType {
+enum FlowType {
+  ERROR_IMMEDIATE_CONFIRM = "error_immediate_confirm",
+  IMMEDIATE_CONFIRM = "immediate_confirm",
   SUGGESTIONS = "suggestions",
   REVIEW_AND_CONFIRM = "review_and_confirm",
 }
 
-const modalTitles: Record<ModalType, string> = {
-  [ModalType.SUGGESTIONS]: "Confirm your delivery address",
-  [ModalType.REVIEW_AND_CONFIRM]: "Check your delivery address",
+const modalTitles: Record<FlowType, string | null> = {
+  [FlowType.SUGGESTIONS]: "Confirm your delivery address",
+  [FlowType.REVIEW_AND_CONFIRM]: "Check your delivery address",
+  [FlowType.ERROR_IMMEDIATE_CONFIRM]: null,
+  [FlowType.IMMEDIATE_CONFIRM]: null,
 } as const
 
 interface AddressOption {
@@ -153,17 +157,93 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   onChosenAddress,
   onClose,
 }) => {
-  const [modalType, setModalType] = useState<ModalType | null>(null)
-  const [addressOptions, setAddressOptions] = useState<AddressOption[]>([])
-  const [
-    selectedAddressKey,
-    setSelectedAddressKey,
-  ] = useState<AddressOptionKey | null>(null)
+  const [showModal, setShowModal] = useState(false)
+  const didLoad = useRef(false)
+
+  let modalType: FlowType = FlowType.REVIEW_AND_CONFIRM
+  let addressOptions: AddressOption[] = []
 
   const {
     trackViewedModal,
     trackClickedModal,
   } = useAddressVerificationTracking()
+
+  const error = (verifyAddress.verifyAddressOrError as VerifyAddressErrorType)
+    ?.mutationError
+  const suggestedAddresses = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
+    ?.suggestedAddresses
+  const inputAddress = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
+    ?.inputAddress
+  const verificationStatus = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
+    ?.verificationStatus
+
+  const hasError = Boolean(error)
+
+  if (hasError) {
+    modalType = FlowType.ERROR_IMMEDIATE_CONFIRM
+  } else {
+    const inputOption: AddressOption = {
+      ...(inputAddress as any),
+      key: USER_INPUT,
+      recommended: false,
+    }
+    if (verificationStatus === "VERIFIED_NO_CHANGE") {
+      modalType = FlowType.IMMEDIATE_CONFIRM
+      addressOptions = [inputOption]
+    } else {
+      if (verificationStatus === "VERIFIED_WITH_CHANGES") {
+        modalType = FlowType.SUGGESTIONS
+
+        const suggestedOptions = (suggestedAddresses || [])
+          .slice(0, 1)
+          .map(({ address, lines }: any, index) => ({
+            key: `suggestedAddress-${index}`,
+            recommended: index === 0,
+            lines: lines,
+            address: address,
+          }))
+        addressOptions = [...suggestedOptions, inputOption]
+      } else {
+        addressOptions = [inputOption]
+        modalType = FlowType.REVIEW_AND_CONFIRM
+      }
+    }
+  }
+
+  const [
+    selectedAddressKey,
+    setSelectedAddressKey,
+  ] = useState<AddressOptionKey | null>(addressOptions[0]?.key)
+
+  // perform only once on mount
+  useEffect(() => {
+    if (!didLoad.current) {
+      if (modalType === FlowType.ERROR_IMMEDIATE_CONFIRM) {
+        const verifiedBy = AddressVerifiedBy.USER
+        const fallbackOption = fallbackFromFormValues(verificationInput)
+        onChosenAddress(verifiedBy, fallbackOption.address)
+        didLoad.current = true
+      } else if (modalType === FlowType.IMMEDIATE_CONFIRM) {
+        onChosenAddress(AddressVerifiedBy.ARTSY, addressOptions[0].address!)
+        didLoad.current = true
+      } else {
+        didLoad.current = true
+
+        trackViewedModal({
+          option: modalType,
+          subject: modalTitles[modalType]!,
+        })
+      }
+      setShowModal(true)
+    }
+  }, [
+    didLoad,
+    addressOptions,
+    modalType,
+    verificationInput,
+    onChosenAddress,
+    trackViewedModal,
+  ])
 
   const chooseAddress = useCallback(() => {
     if (!selectedAddressKey) return
@@ -178,15 +258,15 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
         : AddressVerifiedBy.ARTSY
 
     if (selectedAddress) {
-      setModalType(null)
+      setShowModal(false)
       onChosenAddress(verifiedBy, selectedAddress.address)
     }
   }, [addressOptions, onChosenAddress, selectedAddressKey])
 
   const handleClose = () => {
     trackClickedModal({
-      option: null,
-      label: "close icon",
+      label: "close modal",
+      subject: modalTitles[modalType],
     })
     onClose()
   }
@@ -215,89 +295,20 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     onClose()
   }
 
-  useEffect(() => {
-    if (addressOptions.length > 0) {
-      setSelectedAddressKey(addressOptions[0].key)
-    }
-  }, [addressOptions])
-
-  const error = (verifyAddress.verifyAddressOrError as VerifyAddressErrorType)
-    ?.mutationError
-  const suggestedAddresses = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
-    ?.suggestedAddresses
-  const inputAddress = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
-    ?.inputAddress
-  const verificationStatus = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
-    ?.verificationStatus
-
-  const hasError = Boolean(error)
-
-  useEffect(() => {
-    const inputOption: AddressOption = {
-      ...(inputAddress as any),
-      key: USER_INPUT,
-      recommended: false,
-    }
-
-    if (hasError) {
-      const fallbackOption = fallbackFromFormValues(verificationInput)
-      const verifiedBy = AddressVerifiedBy.USER
-      onChosenAddress(verifiedBy, fallbackOption.address)
-    } else {
-      if (verificationStatus === "VERIFIED_NO_CHANGE") {
-        const verifiedBy = AddressVerifiedBy.ARTSY
-        onChosenAddress(verifiedBy, inputOption.address)
-      } else {
-        if (verificationStatus === "VERIFIED_WITH_CHANGES") {
-          setModalType(ModalType.SUGGESTIONS)
-          trackViewedModal({
-            subject: "Confirm your delivery address",
-            option: "suggestions",
-          })
-
-          const suggestedOptions = (suggestedAddresses || [])
-            .slice(0, 1)
-            .map(({ address, lines }: any, index) => ({
-              key: `suggestedAddress-${index}`,
-              recommended: index === 0,
-              lines: lines,
-              address: address,
-            }))
-          setAddressOptions([...suggestedOptions, inputOption])
-        } else {
-          setAddressOptions([inputOption])
-          setModalType(ModalType.REVIEW_AND_CONFIRM)
-          trackViewedModal({
-            subject: "Check your delivery address",
-            option: "review and confirm",
-          })
-        }
-      }
-    }
-  }, [
-    inputAddress,
-    onChosenAddress,
-    suggestedAddresses,
-    verificationStatus,
-    hasError,
-    verificationInput,
-    trackViewedModal,
-  ])
+  if (!showModal) return null
 
   if (verificationStatus === "VERIFIED_NO_CHANGE" || hasError)
     return <div data-testid="emptyAddressVerification"></div>
-
-  if (!modalType || addressOptions.length === 0) return null
 
   return (
     <ModalDialog
       width={["100%", 590]}
       height={["100vh", "auto"]}
       m={[0, 2]}
-      title={modalTitles[modalType]}
+      title={modalTitles[modalType]!}
       onClose={handleClose}
     >
-      {modalType === ModalType.SUGGESTIONS ? (
+      {modalType === FlowType.SUGGESTIONS ? (
         <>
           <Text>
             To ensure prompt and accurate delivery, we suggest a modified
