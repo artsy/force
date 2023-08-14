@@ -1,37 +1,47 @@
-import { Input, Text } from "@artsy/palette"
+import { Input } from "@artsy/palette"
 import { SavedSearchAlertFormValues } from "Components/SavedSearchAlert/types"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useFormikContext } from "formik"
-import { FC } from "react"
+import { FC, useEffect, useMemo, useState } from "react"
 import { graphql } from "react-relay"
 import { SavedSearchAlertNameInputQuery } from "__generated__/SavedSearchAlertNameInputQuery.graphql"
+import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
+import { debounce } from "lodash"
 
 interface SavedSavedAlertNameInputProps {
   placeholder?: string
 }
 
 export const SavedSearchAlertNameInputQueryRenderer: FC = () => {
+  const { criteria } = useSavedSearchAlertContext()
+  const [criteriaState, setCriteriaState] = useState({})
+
+  const debouncedSetCriteriaState = useMemo(
+    () => debounce(setCriteriaState, 200),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
+
+  useEffect(() => {
+    debouncedSetCriteriaState(criteria)
+  }, [criteria])
+
   return (
     <SystemQueryRenderer<SavedSearchAlertNameInputQuery>
       lazyLoad
-      // placeholder={}
       query={graphql`
-        query SavedSearchAlertNameInputQuery {
+        query SavedSearchAlertNameInputQuery($attributes: PreviewSavedSearchAttributes!) {
           previewSavedSearch(
-            attributes: { artistIDs: ["andy-warhol"], priceRange: "*-35000" }
+            attributes: $attributes
           ) {
             displayName
           }
         }
       `}
+      variables={{ attributes: criteriaState }}
       render={({ props, error }) => {
         if (error) {
           console.error(error)
-          return null
-        }
-
-        if (!props) {
-          return <Text>Loading...</Text>
         }
 
         return (
@@ -47,15 +57,23 @@ export const SavedSearchAlertNameInputQueryRenderer: FC = () => {
 export const SavedSearchAlertNameInput: FC<SavedSavedAlertNameInputProps> = ({
   placeholder,
 }) => {
+  const [statePlaceholder, setStatePlaceholder] = useState("")
   const { values, errors, handleChange, handleBlur } = useFormikContext<
     SavedSearchAlertFormValues
   >()
+
+
+  useEffect(() => {
+    if (placeholder) {
+      setStatePlaceholder(placeholder)
+    }
+  }, [placeholder])
 
   return (
     <Input
       title="Alert Name"
       name="name"
-      placeholder={placeholder}
+      placeholder={statePlaceholder}
       value={values.name}
       onChange={handleChange("name")}
       onBlur={handleBlur("name")}
