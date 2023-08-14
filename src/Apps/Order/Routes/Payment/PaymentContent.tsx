@@ -267,7 +267,7 @@ const getAvailablePaymentMethods = (
         }
       >
         <Text ml="24px" variant="xs" color="black60">
-          See full list of SEPA countries below
+          Your bank account must be denominated in EUR
         </Text>
       </BorderedRadio>
     )
@@ -352,7 +352,8 @@ const getPaymentMethodInfo = (
           )}
           <Flex>
             <Text color="black60" variant="sm">
-              • Your bank account must be located in one of the SEPA countries.
+              • Your bank account must be denominated in EUR and located in one
+              of the SEPA countries.
             </Text>
             <Tooltip
               placement="top-start"
@@ -366,10 +367,6 @@ const getPaymentMethodInfo = (
           </Flex>
           <Text color="black60" variant="sm">
             • Enter your billing address in the form below.
-          </Text>
-          <Text color="black60" variant="sm">
-            • UK bank accounts will be charged in GBP once the gallery accepts
-            the order.
           </Text>
           <Text color="black60" variant="sm">
             • Payment processing will take 4-7 business days once the gallery
