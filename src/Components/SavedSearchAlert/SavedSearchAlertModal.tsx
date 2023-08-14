@@ -5,7 +5,6 @@ import {
   Button,
   Checkbox,
   Flex,
-  Input,
   Join,
   ModalDialog,
   Separator,
@@ -35,6 +34,7 @@ import { FrequenceRadioButtons } from "./Components/FrequencyRadioButtons"
 import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
 import { ConfirmationStepModal } from "Components/SavedSearchAlert/ConfirmationStepModal"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { SavedSearchAlertNameInputQueryRenderer } from "Components/SavedSearchAlert/Components/SavedSearchAlertNameInput"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -136,21 +136,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
             }
           >
             <Join separator={<Spacer y={2} />}>
-              <Input
-                title="Alert Name"
-                name="name"
-                placeholder={
-                  isFallbackToGeneratedAlertNamesEnabled
-                    ? undefined
-                    : entity.placeholder
-                }
-                value={values.name}
-                onChange={handleChange("name")}
-                onBlur={handleBlur("name")}
-                error={errors.name}
-                maxLength={75}
-              />
-
+              <SavedSearchAlertNameInputQueryRenderer />
               <Box>
                 <Text variant="xs">Filters</Text>
                 <Spacer y={2} />
