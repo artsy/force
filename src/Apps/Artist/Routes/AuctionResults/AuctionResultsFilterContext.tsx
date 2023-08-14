@@ -20,11 +20,12 @@ export interface AuctionResultsFilters {
   allowEmptyCreatedDates?: boolean
   metric?: Metric
   priceRange?: string
+  currency?: string
   includeEstimateRange?: boolean
   includeUnknownPrices?: boolean
 }
 
-export type Slice = "SIMPLE_PRICE_HISTOGRAM"
+export type Slice = "SIMPLE_PRICE_HISTOGRAM" | "CURRENCIES_COUNT"
 
 /**
  * Possible aggregations that can be passed
@@ -66,6 +67,7 @@ export const initialAuctionResultsFilterState = ({
   allowEmptyCreatedDates: true,
   metric,
   priceRange: "*-*",
+  currency: "",
   includeEstimateRange: false,
   includeUnknownPrices: true,
 })
@@ -321,6 +323,7 @@ const AuctionResultsFilterReducer = (
         "priceRange",
         "includeEstimateRange",
         "includeUnknownPrices",
+        "currency",
       ]
 
       primitiveFilterTypes.forEach(filter => {

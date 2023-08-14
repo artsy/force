@@ -28,6 +28,7 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
           categories: { type: "[String]" }
           sizes: { type: "[ArtworkSizes]" }
           priceRange: { type: "String" }
+          currency: { type: "String" }
           includeEstimateRange: { type: "Boolean" }
           includeUnknownPrices: { type: "Boolean" }
           createdAfterYear: { type: "Int" }
@@ -42,6 +43,7 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
             categories: $categories
             sizes: $sizes
             priceRange: $priceRange
+            currency: $currency
             includeEstimateRange: $includeEstimateRange
             includeUnknownPrices: $includeUnknownPrices
             createdAfterYear: $createdAfterYear
@@ -49,7 +51,7 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
             allowEmptyCreatedDates: $allowEmptyCreatedDates
           )
         sidebarAggregations: auctionResultsConnection(
-          aggregations: [SIMPLE_PRICE_HISTOGRAM]
+          aggregations: [SIMPLE_PRICE_HISTOGRAM, CURRENCIES_COUNT]
         ) {
           aggregations {
             slice

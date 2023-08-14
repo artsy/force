@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f9be357a50ad70970d5de65bab5aa86d>>
+ * @generated SignedSource<<f1bad9f26aedb903f25e903767f68ccb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -141,6 +141,11 @@ return {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "createdBeforeYear"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "currency"
     },
     {
       "defaultValue": 50,
@@ -287,6 +292,11 @@ return {
           "variableName": "before"
         },
         (v1/*: any*/),
+        {
+          "kind": "Variable",
+          "name": "currency",
+          "variableName": "currency"
+        },
         (v2/*: any*/),
         {
           "kind": "Variable",
@@ -493,6 +503,6 @@ return {
 };
 })();
 
-(node as any).hash = "8aca010b5f3a74c49f6338af8c03dca2";
+(node as any).hash = "c1a7858c4f6f6e2ac8fee51f0912076d";
 
 export default node;

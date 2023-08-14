@@ -408,6 +408,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           organizations: { type: "[String]" }
           keyword: { type: "String" }
           priceRange: { type: "String" }
+          currency: { type: "String" }
           includeEstimateRange: { type: "Boolean" }
           includeUnknownPrices: { type: "Boolean" }
           categories: { type: "[String]" }
@@ -439,6 +440,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           categories: $categories
           sizes: $sizes
           priceRange: $priceRange
+          currency: $currency
           includeEstimateRange: $includeEstimateRange
           includeUnknownPrices: $includeUnknownPrices
           earliestCreatedYear: $createdAfterYear
@@ -513,6 +515,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
       $categories: [String]
       $sizes: [ArtworkSizes]
       $priceRange: String
+      $currency: String
       $includeEstimateRange: Boolean
       $includeUnknownPrices: Boolean
       $createdBeforeYear: Int
@@ -534,6 +537,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
             categories: $categories
             sizes: $sizes
             priceRange: $priceRange
+            currency: $currency
             includeEstimateRange: $includeEstimateRange
             includeUnknownPrices: $includeUnknownPrices
             createdAfterYear: $createdAfterYear
