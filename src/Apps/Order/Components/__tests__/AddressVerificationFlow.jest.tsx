@@ -182,7 +182,7 @@ describe("AddressVerificationFlow", () => {
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         flow: "user adding shipping address",
-        option: "review_and_confirm",
+        option: "review and confirm",
         subject: "Check your delivery address",
         user_id: "example-user-id",
       })

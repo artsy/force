@@ -83,7 +83,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   const [showModal, setShowModal] = useState(false)
   const didLoad = useRef(false)
 
-  let verificationPath: VerificationPath = VerificationPath.REVIEW_AND_CONFIRM
+  let verificationPath: VerificationPath
   let addressOptions: AddressOption[] = []
 
   const {
@@ -152,7 +152,10 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
         didLoad.current = true
 
         trackViewedModal({
-          option: verificationPath,
+          option:
+            verificationPath === VerificationPath.SUGGESTIONS
+              ? "suggestions"
+              : "review and confirm",
           subject: modalTitles[verificationPath]!,
         })
       }
