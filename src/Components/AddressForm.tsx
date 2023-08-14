@@ -2,6 +2,7 @@ import { Column, GridColumns, Text, Spacer, Input } from "@artsy/palette"
 import { CountrySelect } from "Components/CountrySelect"
 import * as React from "react"
 import { CreateTokenCardData } from "@stripe/stripe-js"
+import { isEqual } from "lodash"
 
 export interface Address {
   name: string
@@ -69,7 +70,15 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   touched,
   tabIndex,
 }) => {
-  const [address, setAddress] = React.useState({ ...emptyAddress, ...value })
+  const addressFromProp = { ...emptyAddress, ...value }
+  const [address, setAddress] = React.useState(addressFromProp)
+  const [prevValue, setPrevValue] = React.useState(value)
+
+  if (!isEqual(value, prevValue)) {
+    setPrevValue(value)
+    setAddress(addressFromProp)
+  }
+
   const [key, setKey] = React.useState<keyof Address>()
 
   const changeEventHandler = (key: keyof Address) => (
