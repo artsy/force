@@ -62,13 +62,6 @@ enum VerificationPath {
   REVIEW_AND_CONFIRM = "review_and_confirm",
 }
 
-const modalTitles: Record<VerificationPath, string | null> = {
-  [VerificationPath.SUGGESTIONS]: "Confirm your delivery address",
-  [VerificationPath.REVIEW_AND_CONFIRM]: "Check your delivery address",
-  [VerificationPath.ERROR_IMMEDIATE_CONFIRM]: null,
-  [VerificationPath.IMMEDIATE_CONFIRM]: null,
-} as const
-
 interface AddressOption {
   key: AddressOptionKey
   recommended: boolean
@@ -79,76 +72,6 @@ interface AddressOption {
 enum AddressSuggestionRadioButton {
   recommended = "Recommended",
   user_address = "What you entered",
-}
-
-const fallbackFromFormValues = (address: AddressValues): AddressOption => {
-  return {
-    key: USER_INPUT,
-    recommended: false,
-    lines: [
-      address.addressLine1,
-      address.addressLine2 || null,
-      `${address.city}, ${address.region} ${address.postalCode}`,
-      address.country,
-    ].filter(Boolean) as string[],
-
-    address: {
-      addressLine1: address.addressLine1,
-      addressLine2: address.addressLine2,
-      region: address.region,
-      country: address.country,
-      city: address.city,
-      postalCode: address.postalCode,
-    },
-  }
-}
-
-const useAddressVerificationTracking = () => {
-  const { trackEvent } = useTracking()
-  const { contextPageOwnerSlug } = useAnalyticsContext()
-  const { user } = useSystemContext()
-  const userId = user?.id
-
-  return {
-    trackViewedModal: useCallback(
-      ({ subject, option }: { subject: string; option: string }) => {
-        trackEvent({
-          action_type: "validationAddressViewed",
-          context_module: ContextModule.ordersShipping,
-          context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: contextPageOwnerSlug,
-          user_id: userId,
-          flow: "user adding shipping address",
-          subject,
-          option,
-        })
-      },
-      [contextPageOwnerSlug, trackEvent, userId]
-    ),
-    trackClickedModal: useCallback(
-      ({
-        label,
-        option,
-        subject = null,
-      }: {
-        label?: string | null
-        option?: string | null
-        subject?: string | null
-      }) => {
-        trackEvent({
-          action_type: "clickedValidationAddress",
-          context_module: ContextModule.ordersShipping,
-          context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: contextPageOwnerSlug,
-          user_id: userId,
-          ...(typeof subject !== "undefined" && { subject }),
-          ...(typeof option !== "undefined" && { option }),
-          ...(typeof label !== "undefined" && { label }),
-        })
-      },
-      [contextPageOwnerSlug, trackEvent, userId]
-    ),
-  }
 }
 
 const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
@@ -225,6 +148,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
         onChosenAddress(AddressVerifiedBy.ARTSY, addressOptions[0].address!)
         didLoad.current = true
       } else {
+        setShowModal(true)
         didLoad.current = true
 
         trackViewedModal({
@@ -232,7 +156,6 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
           subject: modalTitles[verificationPath]!,
         })
       }
-      setShowModal(true)
     }
   }, [
     didLoad,
@@ -293,12 +216,16 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     onClose()
   }
 
-  if (!showModal) return null
-
-  if (verificationStatus === "VERIFIED_NO_CHANGE" || hasError)
+  if (
+    [
+      VerificationPath.ERROR_IMMEDIATE_CONFIRM,
+      VerificationPath.IMMEDIATE_CONFIRM,
+    ].includes(verificationPath)
+  ) {
     return <div data-testid="emptyAddressVerification"></div>
+  }
 
-  return (
+  return !showModal ? null : (
     <ModalDialog
       width={["100%", 590]}
       height={["100vh", "auto"]}
@@ -496,4 +423,81 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
       `}
     />
   )
+}
+
+const modalTitles: Record<VerificationPath, string | null> = {
+  [VerificationPath.SUGGESTIONS]: "Confirm your delivery address",
+  [VerificationPath.REVIEW_AND_CONFIRM]: "Check your delivery address",
+  [VerificationPath.ERROR_IMMEDIATE_CONFIRM]: null,
+  [VerificationPath.IMMEDIATE_CONFIRM]: null,
+} as const
+
+const fallbackFromFormValues = (address: AddressValues): AddressOption => {
+  return {
+    key: USER_INPUT,
+    recommended: false,
+    lines: [
+      address.addressLine1,
+      address.addressLine2 || null,
+      `${address.city}, ${address.region} ${address.postalCode}`,
+      address.country,
+    ].filter(Boolean) as string[],
+
+    address: {
+      addressLine1: address.addressLine1,
+      addressLine2: address.addressLine2,
+      region: address.region,
+      country: address.country,
+      city: address.city,
+      postalCode: address.postalCode,
+    },
+  }
+}
+
+const useAddressVerificationTracking = () => {
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerSlug } = useAnalyticsContext()
+  const { user } = useSystemContext()
+  const userId = user?.id
+
+  return {
+    trackViewedModal: useCallback(
+      ({ subject, option }: { subject: string; option: string }) => {
+        trackEvent({
+          action_type: "validationAddressViewed",
+          context_module: ContextModule.ordersShipping,
+          context_page_owner_type: OwnerType.ordersShipping,
+          context_page_owner_id: contextPageOwnerSlug,
+          user_id: userId,
+          flow: "user adding shipping address",
+          subject,
+          option,
+        })
+      },
+      [contextPageOwnerSlug, trackEvent, userId]
+    ),
+    trackClickedModal: useCallback(
+      ({
+        label,
+        option,
+        subject = null,
+      }: {
+        label?: string | null
+        option?: string | null
+        subject?: string | null
+      }) => {
+        trackEvent({
+          action_type: "clickedValidationAddress",
+          context_module: ContextModule.ordersShipping,
+          context_page_owner_type: OwnerType.ordersShipping,
+          context_page_owner_id: contextPageOwnerSlug,
+          user_id: userId,
+          ...(typeof subject !== "undefined" && { subject }),
+          ...(typeof option !== "undefined" && { option }),
+          ...(typeof label !== "undefined" && { label }),
+        })
+      },
+      [contextPageOwnerSlug, trackEvent, userId]
+    ),
+  }
 }
