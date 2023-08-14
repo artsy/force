@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import { isEqual } from "lodash"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
@@ -12,7 +12,7 @@ import {
   SharedArtworkFilterContextProps,
   useArtworkFilterContext,
 } from "./ArtworkFilterContext"
-import { ArtworkFilterMobileActionSheet } from "./ArtworkFilterMobileActionSheet"
+import { ArtworkFilterMobileOverlay } from "./ArtworkFilterMobileOverlay"
 import { ArtworkFilters } from "./ArtworkFilters"
 import {
   Box,
@@ -116,8 +116,16 @@ export const BaseArtworkFilter: React.FC<
     contextPageOwnerType,
   } = useAnalyticsContext()
 
-  const [isFetching, toggleFetching] = useState(false)
-  const [showMobileActionSheet, toggleMobileActionSheet] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isOpen, setIsOpen] = useState(false)
+
+  const handleOpen = () => {
+    setIsOpen(true)
+  }
+
+  const handleClose = () => {
+    setIsOpen(false)
+  }
 
   const filterContext = useArtworkFilterContext()
 
@@ -137,21 +145,6 @@ export const BaseArtworkFilter: React.FC<
   const isRevisedArtworkFilters = useFeatureFlag(
     "diamond_revised-artwork-filters"
   )
-
-  /**
-   * Check to see if the mobile action sheet is present and prevent scrolling
-   */
-  useEffect(() => {
-    const setScrollable = doScroll => {
-      document.body.style.overflowY = doScroll ? "visible" : "hidden"
-    }
-    if (showMobileActionSheet) {
-      setScrollable(false)
-    }
-    return () => {
-      setScrollable(true)
-    }
-  }, [showMobileActionSheet])
 
   /**
    * Check to see if the current filter is different from the previous filter
@@ -201,8 +194,8 @@ export const BaseArtworkFilter: React.FC<
     )
   }, [filterContext.filters])
 
-  function fetchResults() {
-    toggleFetching(true)
+  const fetchResults = () => {
+    setIsLoading(true)
 
     const refetchVariables = {
       input: {
@@ -215,11 +208,8 @@ export const BaseArtworkFilter: React.FC<
     }
 
     relay.refetch(refetchVariables, null, error => {
-      if (error) {
-        console.error(error)
-      }
-
-      toggleFetching(false)
+      if (error) console.error(error)
+      setIsLoading(false)
     })
   }
 
@@ -233,85 +223,71 @@ export const BaseArtworkFilter: React.FC<
 
       {/* Mobile Artwork Filter */}
       <Media at="xs">
-        <Box mb={1}>
-          {showMobileActionSheet && (
-            <ArtworkFilterMobileActionSheet
-              onClose={() => toggleMobileActionSheet(false)}
-            >
-              <FiltersWithScrollIntoView
-                Filters={Filters}
-                user={user}
-                relayEnvironment={relay.environment}
-              />
-            </ArtworkFilterMobileActionSheet>
-          )}
+        <Sticky>
+          {({ stuck }) => {
+            return (
+              <FullBleed backgroundColor="white100">
+                <Flex
+                  justifyContent="space-between"
+                  alignItems="center"
+                  py={1}
+                  px={2}
+                  gap={2}
+                  {...(stuck
+                    ? {
+                        borderBottom: "1px solid",
+                        borderColor: "black10",
+                      }
+                    : {})}
+                >
+                  <ProgressiveOnboardingAlertSelectFilter placement="bottom-start">
+                    <Button size="small" onClick={handleOpen} Icon={FilterIcon}>
+                      Filter
+                      {appliedFiltersTotalCount > 0
+                        ? ` • ${appliedFiltersTotalCount}`
+                        : ""}
+                    </Button>
 
-          <Sticky>
-            {({ stuck }) => {
-              return (
-                <FullBleed backgroundColor="white100">
-                  <Flex
-                    justifyContent="space-between"
-                    alignItems="center"
-                    py={1}
-                    px={2}
-                    {...(stuck
-                      ? {
-                          borderBottom: "1px solid",
-                          borderColor: "black10",
-                        }
-                      : {})}
-                  >
-                    <ProgressiveOnboardingAlertSelectFilter placement="bottom-start">
-                      <Button
-                        size="small"
-                        onClick={() => toggleMobileActionSheet(true)}
-                        mr={2}
-                      >
-                        <Flex
-                          justifyContent="space-between"
-                          alignItems="center"
-                        >
-                          <FilterIcon fill="white100" />
-                          <Spacer x={0.5} />
-                          Filter
-                          {appliedFiltersTotalCount > 0
-                            ? ` • ${appliedFiltersTotalCount}`
-                            : ""}
-                        </Flex>
-                      </Button>
-                    </ProgressiveOnboardingAlertSelectFilter>
+                    {isOpen && (
+                      <ArtworkFilterMobileOverlay onClose={handleClose}>
+                        <FiltersWithScrollIntoView
+                          Filters={Filters}
+                          user={user}
+                          relayEnvironment={relay.environment}
+                        />
+                      </ArtworkFilterMobileOverlay>
+                    )}
+                  </ProgressiveOnboardingAlertSelectFilter>
 
-                    <ArtworkSortFilter />
-                  </Flex>
-                </FullBleed>
-              )
-            }}
-          </Sticky>
+                  <ArtworkSortFilter />
+                </Flex>
+              </FullBleed>
+            )
+          }}
+        </Sticky>
 
-          <Spacer y={2} />
+        <Spacer y={2} />
 
-          <ActiveFilterPills />
+        <ActiveFilterPills />
 
-          <Spacer y={1} />
+        <Spacer y={1} />
 
-          <ArtworkFilterCreateAlert />
+        <ArtworkFilterCreateAlert />
 
-          <Spacer y={2} />
+        <Spacer y={2} />
 
-          <Text variant="sm" fontWeight="bold">
-            {totalCountLabel}
-          </Text>
+        <Text variant="sm" fontWeight="bold">
+          {totalCountLabel}
+        </Text>
 
-          <Spacer y={2} />
+        <Spacer y={2} />
 
-          <ArtworkFilterArtworkGrid
-            filtered_artworks={viewer.filtered_artworks!}
-            isLoading={isFetching}
-            offset={offset}
-            columnCount={[2, 2, 2, 3]}
-          />
-        </Box>
+        <ArtworkFilterArtworkGrid
+          filtered_artworks={viewer.filtered_artworks!}
+          isLoading={isLoading}
+          offset={offset}
+          columnCount={[2, 2, 2, 3]}
+        />
       </Media>
 
       {/* Desktop Artwork Filter */}
@@ -331,7 +307,16 @@ export const BaseArtworkFilter: React.FC<
               <Flex alignItems="center" gap={0.5} flexShrink={0}>
                 <ArtworkFilterCreateAlert variant="tertiary" />
 
-                <ArtworkFilterDrawer>
+                <Button
+                  variant="tertiary"
+                  Icon={FilterIcon}
+                  size="small"
+                  onClick={handleOpen}
+                >
+                  Sort and Filter
+                </Button>
+
+                <ArtworkFilterDrawer open={isOpen} onClose={handleClose}>
                   <ArtworkSortFilter2 />
 
                   <Spacer y={4} />
@@ -353,7 +338,7 @@ export const BaseArtworkFilter: React.FC<
             {children || (
               <ArtworkFilterArtworkGrid
                 filtered_artworks={viewer.filtered_artworks!}
-                isLoading={isFetching}
+                isLoading={isLoading}
                 offset={offset}
                 columnCount={[2, 3, 3, 4]}
               />
@@ -404,7 +389,7 @@ export const BaseArtworkFilter: React.FC<
               {children || (
                 <ArtworkFilterArtworkGrid
                   filtered_artworks={viewer.filtered_artworks!}
-                  isLoading={isFetching}
+                  isLoading={isLoading}
                   offset={offset}
                   columnCount={[2, 2, 2, 3]}
                 />

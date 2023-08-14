@@ -4,9 +4,9 @@ import {
   ArtworkFilterContextProvider,
   initialArtworkFilterState,
   useArtworkFilterContext,
-} from "../ArtworkFilterContext"
-import { ArtworkFilterMobileActionSheet } from "../ArtworkFilterMobileActionSheet"
-import { ArtworkFilters } from "../ArtworkFilters"
+} from "Components/ArtworkFilter/ArtworkFilterContext"
+import { ArtworkFilterMobileOverlay } from "Components/ArtworkFilter/ArtworkFilterMobileOverlay"
+import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilters"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({ sm: true }),
@@ -20,7 +20,7 @@ jest.mock("System/Router/useRouter", () => ({
   }),
 }))
 
-describe("ArtworkFilterMobileActionSheet", () => {
+describe("ArtworkFilterMobileOverlay", () => {
   let context
   let spy
   const trackEvent = jest.fn()
@@ -36,19 +36,19 @@ describe("ArtworkFilterMobileActionSheet", () => {
   const getWrapper = (props = {}) => {
     return mount(
       <ArtworkFilterContextProvider {...props}>
-        <ArtworkFilterMobileActionSheetTest />
+        <ArtworkFilterMobileOverlayTest />
       </ArtworkFilterContextProvider>
     )
   }
 
-  const ArtworkFilterMobileActionSheetTest = () => {
+  const ArtworkFilterMobileOverlayTest = () => {
     context = useArtworkFilterContext()
     spy = jest.fn()
 
     return (
-      <ArtworkFilterMobileActionSheet onClose={spy}>
+      <ArtworkFilterMobileOverlay onClose={spy}>
         <ArtworkFilters />
-      </ArtworkFilterMobileActionSheet>
+      </ArtworkFilterMobileOverlay>
     )
   }
 
