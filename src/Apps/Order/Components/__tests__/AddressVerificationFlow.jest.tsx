@@ -182,7 +182,6 @@ describe("AddressVerificationFlow", () => {
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         flow: "user adding shipping address",
-        option: "review and confirm",
         subject: "Check your delivery address",
         user_id: "example-user-id",
       })
@@ -279,7 +278,6 @@ describe("AddressVerificationFlow", () => {
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         flow: "user adding shipping address",
-        option: "suggestions",
         subject: "Confirm your delivery address",
         user_id: "example-user-id",
       })
@@ -298,11 +296,11 @@ describe("AddressVerificationFlow", () => {
         action_type: "clickedValidationAddress",
         context_module: "ordersShipping",
         context_page_owner_id: "example-order-id",
+        user_id: "example-user-id",
         context_page_owner_type: "orders-shipping",
+        subject: "Confirm your delivery address",
         label: "Use This Address",
         option: "Recommended",
-        subject: "Confirm your delivery address",
-        user_id: "example-user-id",
       })
 
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
@@ -328,9 +326,9 @@ describe("AddressVerificationFlow", () => {
         context_module: "ordersShipping",
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
+        subject: "Confirm your delivery address",
         label: "Use This Address",
         option: "What you entered",
-        subject: "Confirm your delivery address",
         user_id: "example-user-id",
       })
 
@@ -353,8 +351,7 @@ describe("AddressVerificationFlow", () => {
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         label: "Back to Edit",
-        option: "Recommended",
-        subject: "Check your delivery address",
+        subject: "Confirm your delivery address",
         user_id: "example-user-id",
       })
 

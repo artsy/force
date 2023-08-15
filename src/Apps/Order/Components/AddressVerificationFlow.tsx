@@ -62,6 +62,13 @@ enum VerificationPath {
   REVIEW_AND_CONFIRM = "review_and_confirm",
 }
 
+const modalTitles: Record<VerificationPath, string | null> = {
+  [VerificationPath.SUGGESTIONS]: "Confirm your delivery address",
+  [VerificationPath.REVIEW_AND_CONFIRM]: "Check your delivery address",
+  [VerificationPath.ERROR_IMMEDIATE_CONFIRM]: null,
+  [VerificationPath.IMMEDIATE_CONFIRM]: null,
+} as const
+
 interface AddressOption {
   key: AddressOptionKey
   recommended: boolean
@@ -133,32 +140,30 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     }
   }
 
+  const modalTitle = modalTitles[verificationPath]
+
   const [selectedAddressKey, setSelectedAddressKey] = useState<
     AddressOptionKey | undefined
   >(addressOptions[0]?.key)
 
   // perform only once on mount
   useEffect(() => {
-    if (!didLoad.current) {
-      if (verificationPath === VerificationPath.ERROR_IMMEDIATE_CONFIRM) {
-        const fallbackOption = fallbackFromFormValues(verificationInput)
-        onChosenAddress(AddressVerifiedBy.USER, fallbackOption.address)
-        didLoad.current = true
-      } else if (verificationPath === VerificationPath.IMMEDIATE_CONFIRM) {
-        onChosenAddress(AddressVerifiedBy.ARTSY, addressOptions[0].address!)
-        didLoad.current = true
-      } else {
-        setShowModal(true)
-        didLoad.current = true
+    if (didLoad.current) return
 
-        trackViewedModal({
-          option:
-            verificationPath === VerificationPath.SUGGESTIONS
-              ? "suggestions"
-              : "review and confirm",
-          subject: modalTitles[verificationPath]!,
-        })
-      }
+    if (verificationPath === VerificationPath.ERROR_IMMEDIATE_CONFIRM) {
+      const fallbackOption = fallbackFromFormValues(verificationInput)
+      onChosenAddress(AddressVerifiedBy.USER, fallbackOption.address)
+      didLoad.current = true
+    } else if (verificationPath === VerificationPath.IMMEDIATE_CONFIRM) {
+      onChosenAddress(AddressVerifiedBy.ARTSY, addressOptions[0].address!)
+      didLoad.current = true
+    } else {
+      setShowModal(true)
+      didLoad.current = true
+
+      trackViewedModal({
+        subject: modalTitle!,
+      })
     }
   }, [
     didLoad,
@@ -167,6 +172,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     verificationInput,
     onChosenAddress,
     trackViewedModal,
+    modalTitle,
   ])
 
   const chooseAddress = useCallback(() => {
@@ -187,34 +193,19 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     }
   }, [addressOptions, onChosenAddress, selectedAddressKey])
 
-  const handleClose = () => {
+  const handleBackToEdit = ({
+    label,
+    option,
+    subject,
+  }: {
+    label: string
+    subject: string
+    option?: string
+  }) => {
     trackClickedModal({
-      label: "close modal",
-      subject: modalTitles[verificationPath],
-    })
-    onClose()
-  }
-
-  const handleBackToEdit = () => {
-    const option =
-      selectedAddressKey && selectedAddressKey.includes("suggestedAddress")
-        ? "Recommended"
-        : selectedAddressKey === USER_INPUT
-        ? "What you entered"
-        : null
-
-    trackClickedModal({
-      subject: "Check your delivery address",
+      subject,
       option,
-      label: "Back to Edit",
-    })
-    onClose()
-  }
-
-  const handleEditAddress = () => {
-    trackClickedModal({
-      subject: "Check your delivery address",
-      label: "Edit Address",
+      label,
     })
     onClose()
   }
@@ -233,8 +224,10 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       width={["100%", 590]}
       height={["100vh", "auto"]}
       m={[0, 2]}
-      title={modalTitles[verificationPath]!}
-      onClose={handleClose}
+      title={modalTitle!}
+      onClose={() => {
+        handleBackToEdit({ label: "close modal", subject: modalTitle! })
+      }}
     >
       {verificationPath === VerificationPath.SUGGESTIONS ? (
         <>
@@ -275,7 +268,12 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
           <Spacer y={4} />
           <Flex width="100%" justifyContent="space-between">
             <Button
-              onClick={handleBackToEdit}
+              onClick={() => {
+                handleBackToEdit({
+                  label: "Back to Edit",
+                  subject: modalTitle!,
+                })
+              }}
               variant="secondaryBlack"
               flex={1}
             >
@@ -287,7 +285,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
               onClick={() => {
                 if (selectedAddressKey) {
                   trackClickedModal({
-                    subject: "Confirm your delivery address",
+                    subject: modalTitle!,
                     option: selectedAddressKey.includes("suggestedAddress")
                       ? "Recommended"
                       : "What you entered",
@@ -326,7 +324,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
             <Button
               onClick={() => {
                 trackClickedModal({
-                  subject: "Check your delivery address",
+                  subject: modalTitle!,
                   label: "Use This Address",
                 })
                 chooseAddress()
@@ -337,7 +335,15 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
               Use This Address
             </Button>
             <Spacer x={1} />
-            <Button onClick={handleEditAddress} flex={1}>
+            <Button
+              onClick={() => {
+                handleBackToEdit({
+                  label: "Edit Address",
+                  subject: modalTitle!,
+                })
+              }}
+              flex={1}
+            >
               Edit Address
             </Button>
           </Flex>
@@ -428,13 +434,6 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
   )
 }
 
-const modalTitles: Record<VerificationPath, string | null> = {
-  [VerificationPath.SUGGESTIONS]: "Confirm your delivery address",
-  [VerificationPath.REVIEW_AND_CONFIRM]: "Check your delivery address",
-  [VerificationPath.ERROR_IMMEDIATE_CONFIRM]: null,
-  [VerificationPath.IMMEDIATE_CONFIRM]: null,
-} as const
-
 const fallbackFromFormValues = (address: AddressValues): AddressOption => {
   return {
     key: USER_INPUT,
@@ -465,7 +464,7 @@ const useAddressVerificationTracking = () => {
 
   return {
     trackViewedModal: useCallback(
-      ({ subject, option }: { subject: string; option: string }) => {
+      ({ subject }: { subject: string }) => {
         trackEvent({
           action_type: "validationAddressViewed",
           context_module: ContextModule.ordersShipping,
@@ -474,7 +473,6 @@ const useAddressVerificationTracking = () => {
           user_id: userId,
           flow: "user adding shipping address",
           subject,
-          option,
         })
       },
       [contextPageOwnerSlug, trackEvent, userId]
@@ -483,11 +481,11 @@ const useAddressVerificationTracking = () => {
       ({
         label,
         option,
-        subject = null,
+        subject,
       }: {
         label?: string | null
         option?: string | null
-        subject?: string | null
+        subject: string
       }) => {
         trackEvent({
           action_type: "clickedValidationAddress",
@@ -495,6 +493,7 @@ const useAddressVerificationTracking = () => {
           context_page_owner_type: OwnerType.ordersShipping,
           context_page_owner_id: contextPageOwnerSlug,
           user_id: userId,
+          subject,
           ...(typeof subject !== "undefined" && { subject }),
           ...(typeof option !== "undefined" && { option }),
           ...(typeof label !== "undefined" && { label }),
