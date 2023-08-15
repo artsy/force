@@ -343,13 +343,9 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     ) {
       handlePaymentStepComplete()
     } else if (paymentSetupErrorCode && !isPaymentSetupSuccessful) {
-      // setIsSavingPayment(false)
-      // props.router.push(`/orders/${props.order.internalID}/payment`)
-
       const title = "Choose another payment method"
       const message =
         "The bank account you entered is not denominated in EUR. Please select another payment method and try again."
-      const error_code = paymentSetupErrorCode
 
       trackEvent({
         action: ActionType.errorMessageViewed,
@@ -357,13 +353,14 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         context_owner_id: props.order.internalID,
         title: title,
         message: message,
-        error_code: error_code,
+        error_code: paymentSetupErrorCode,
         flow: "user sets payment by setup intent",
       })
 
       props.dialog.showErrorDialog({
         title: title,
         message: message,
+        width: 500,
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

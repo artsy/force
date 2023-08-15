@@ -13,6 +13,7 @@ interface CtaProps {
 
 interface ModalDialogProps {
   show?: boolean
+  width?: number
   heading?: string
   detail?: React.ReactNode
   primaryCta: CtaProps
@@ -132,11 +133,13 @@ export class DialogContainer extends Container<DialogState> {
       </>
     ),
     continueButtonText = "Continue",
+    width = undefined,
   }: {
     title?: string
     message?: React.ReactNode
     supportEmail?: string
     continueButtonText?: string
+    width?: number
   } = {}): Promise<boolean> => {
     return new Promise<boolean>(resolve => {
       const onContinue = () => {
@@ -152,6 +155,7 @@ export class DialogContainer extends Container<DialogState> {
       this.show({
         props: {
           show: true,
+          width,
           heading: title,
           detail: message,
           primaryCta: {
@@ -209,6 +213,8 @@ export const ConnectedModalDialog = () => (
         <ModalDialog
           title={props.heading}
           onClose={props.onClose}
+          width={props.width ? "fit-content" : undefined}
+          maxWidth={props.width}
           footer={
             <Button width="100%" onClick={props.primaryCta.action}>
               {props.primaryCta.text}
