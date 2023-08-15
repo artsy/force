@@ -26,7 +26,7 @@ const componentProps = {
 jest.mock("System/useSystemContext")
 jest.mock("System/Analytics/AnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
-    contextPageOwnerSlug: "example-order-id",
+    contextPageOwnerId: "example-order-id",
   })),
 }))
 

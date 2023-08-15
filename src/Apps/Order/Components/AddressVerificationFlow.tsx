@@ -458,7 +458,7 @@ const fallbackFromFormValues = (address: AddressValues): AddressOption => {
 
 const useAddressVerificationTracking = () => {
   const { trackEvent } = useTracking()
-  const { contextPageOwnerSlug } = useAnalyticsContext()
+  const { contextPageOwnerId } = useAnalyticsContext()
   const { user } = useSystemContext()
   const userId = user?.id
 
@@ -469,13 +469,13 @@ const useAddressVerificationTracking = () => {
           action_type: "validationAddressViewed",
           context_module: ContextModule.ordersShipping,
           context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: contextPageOwnerSlug,
+          context_page_owner_id: contextPageOwnerId,
           user_id: userId,
           flow: "user adding shipping address",
           subject,
         })
       },
-      [contextPageOwnerSlug, trackEvent, userId]
+      [contextPageOwnerId, trackEvent, userId]
     ),
     trackClickedModal: useCallback(
       ({
@@ -491,7 +491,7 @@ const useAddressVerificationTracking = () => {
           action_type: "clickedValidationAddress",
           context_module: ContextModule.ordersShipping,
           context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: contextPageOwnerSlug,
+          context_page_owner_id: contextPageOwnerId,
           user_id: userId,
           subject,
           ...(typeof subject !== "undefined" && { subject }),
@@ -499,7 +499,7 @@ const useAddressVerificationTracking = () => {
           ...(typeof label !== "undefined" && { label }),
         })
       },
-      [contextPageOwnerSlug, trackEvent, userId]
+      [contextPageOwnerId, trackEvent, userId]
     ),
   }
 }
