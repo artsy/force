@@ -18,22 +18,21 @@ export const SavedSearchAlertNameInputQueryRenderer: FC = () => {
 
   const debouncedSetCriteriaState = useMemo(
     () => debounce(setCriteriaState, 200),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
 
   useEffect(() => {
     debouncedSetCriteriaState(criteria)
-  }, [criteria])
+  }, [criteria, debouncedSetCriteriaState])
 
   return (
     <SystemQueryRenderer<SavedSearchAlertNameInputQuery>
       lazyLoad
       query={graphql`
-        query SavedSearchAlertNameInputQuery($attributes: PreviewSavedSearchAttributes!) {
-          previewSavedSearch(
-            attributes: $attributes
-          ) {
+        query SavedSearchAlertNameInputQuery(
+          $attributes: PreviewSavedSearchAttributes!
+        ) {
+          previewSavedSearch(attributes: $attributes) {
             displayName
           }
         }
@@ -61,7 +60,6 @@ export const SavedSearchAlertNameInput: FC<SavedSavedAlertNameInputProps> = ({
   const { values, errors, handleChange, handleBlur } = useFormikContext<
     SavedSearchAlertFormValues
   >()
-
 
   useEffect(() => {
     if (placeholder) {
