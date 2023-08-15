@@ -27,7 +27,6 @@ export const SavedSearchAlertNameInputQueryRenderer: FC = () => {
 
   return (
     <SystemQueryRenderer<SavedSearchAlertNameInputQuery>
-      lazyLoad
       query={graphql`
         query SavedSearchAlertNameInputQuery(
           $attributes: PreviewSavedSearchAttributes!
