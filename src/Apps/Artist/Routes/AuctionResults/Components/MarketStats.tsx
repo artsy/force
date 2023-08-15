@@ -217,7 +217,7 @@ const MarketStatsFigure: FC<MarketStatsFigureProps> = ({
 
   return (
     <Column
-      span={[6, 3]}
+      span={[6, 6, 3]}
       justifyContent="flex-end"
       display="flex"
       flexDirection="column"
