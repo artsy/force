@@ -79,6 +79,11 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
                   data
                 }
               }
+              ... on CommerceOrderRequiresAction {
+                actionData {
+                  clientSecret
+                }
+              }
             }
           }
         }
@@ -90,6 +95,22 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
     try {
       const orderOrError = (await acceptOffer()).commerceBuyerAcceptOffer
         ?.orderOrError
+
+      if (orderOrError?.actionData?.clientSecret) {
+        const scaResult = await stripe.handleCardAction(
+          orderOrError.actionData.clientSecret
+        )
+
+        if (scaResult.error) {
+          return dialog.showErrorDialog({
+            title: "An error occurred",
+            message: scaResult.error.message,
+          })
+        }
+
+        onSubmit()
+        return
+      }
 
       if (!orderOrError?.error) {
         router.push(`/orders/${order.internalID}/status`)
