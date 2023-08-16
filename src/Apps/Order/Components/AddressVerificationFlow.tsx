@@ -131,7 +131,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
 
     if (selectedAddress) {
       setModalType(null)
-      onChosenAddress(verifiedBy, selectedAddress.address, false)
+      onChosenAddress(verifiedBy, selectedAddress.address, true)
     }
   }, [addressOptions, onChosenAddress, selectedAddressKey])
 

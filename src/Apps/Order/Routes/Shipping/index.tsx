@@ -131,6 +131,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     setAddressVerifiedBy,
   ] = useState<AddressVerifiedBy | null>(null)
 
+  const [readyToSaveVerifiedAddress, setReadyToSaveVerifiedAddress] = useState(
+    false
+  )
+
   const [shippingOption, setShippingOption] = useState<
     CommerceOrderFulfillmentTypeEnum
   >(getShippingOption(props.order.requestedFulfillment?.__typename))
@@ -241,7 +245,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   // Save shipping info on the order. If it's Artsy shipping and a quote hasn't
   // been selected, this renders the quotes for user to select and finalize
   // again.
+  console.log({ renderCycle: address })
   const finalizeFulfillment = async () => {
+    console.log({ finalizeFulfillment: address })
     if (checkIfArtsyShipping() && !!shippingQuoteId) {
       selectShippingQuote()
     } else {
@@ -686,6 +692,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     return false
   }
 
+  useEffect(() => {
+    if (readyToSaveVerifiedAddress) {
+      finalizeFulfillment()
+    }
+  }, [readyToSaveVerifiedAddress])
+
   const renderArtaErrorMessage = () => {
     return (
       <Text
@@ -838,8 +850,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   ) => {
                     setAddressNeedsVerification(false)
                     setAddressVerifiedBy(verifiedBy)
-                    setAddress({ ...address, ...chosenAddress })
-                    saveAndContinue && finalizeFulfillment()
+                    setAddress(address => {
+                      return { ...address, ...chosenAddress }
+                    })
+                    setReadyToSaveVerifiedAddress(true)
+                    // saveAndContinue && finalizeFulfillment()
                   }}
                 />
               )}
