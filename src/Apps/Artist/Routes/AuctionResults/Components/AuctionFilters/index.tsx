@@ -6,6 +6,8 @@ import { AuctionHouseFilter } from "./AuctionHouseFilter"
 import { MediumFilter } from "./MediumFilter"
 import { SizeFilter } from "./SizeFilter"
 import { YearCreated } from "./YearCreated"
+import { CurrencyFilter } from "./CurrencyFilter"
+import { KeywordFilter } from "./KeywordFilter"
 
 export const AuctionFilters: React.FC<{
   showUpcomingAuctionResults: boolean
@@ -20,10 +22,12 @@ export const AuctionFilters: React.FC<{
       )}
 
       <Join separator={<Spacer y={4} />}>
+        <KeywordFilter />
         <MediumFilter />
         <SizeFilter />
         <YearCreated />
         <PriceRangeFilter />
+        <CurrencyFilter />
         <AuctionHouseFilter />
       </Join>
     </>

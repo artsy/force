@@ -1,16 +1,19 @@
 import { Box, Button, Clickable, Flex, ModalBase, Text } from "@artsy/palette"
-import { useEffect, useRef } from "react"
-import * as React from "react"
+import { ReactNode, useEffect, useRef } from "react"
 import styled from "styled-components"
 import { useArtworkFilterContext } from "./ArtworkFilterContext"
 import { isEqual, omit } from "lodash"
 import { countChangedFilters } from "./Utils/countChangedFilters"
-import { themeGet } from "@styled-system/theme-get"
 
-export const ArtworkFilterMobileActionSheet: React.FC<{
-  children: JSX.Element
+interface ArtworkFilterMobileOverlayProps {
+  children: ReactNode
   onClose: () => void
-}> = ({ children, onClose }) => {
+}
+
+export const ArtworkFilterMobileOverlay: React.FC<ArtworkFilterMobileOverlayProps> = ({
+  children,
+  onClose,
+}) => {
   const filterContext = useArtworkFilterContext()
 
   const contentRef = useRef<HTMLDivElement | null>(null)
@@ -30,27 +33,28 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
     // While mobile sheet is mounted, the effect of the user's filter selections
     // should be merely staged until the Apply button is pressed, rather than
     // applied immediately. Therefore…
-    //
+
     // On mount, enter staged mode, and initialize a set of staged filter
     // changes from the current filter choices.
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    filterContext.setShouldStageFilterChanges(true)
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    filterContext.setStagedFilters(filterContext.filters)
+    filterContext.setShouldStageFilterChanges?.(true)
+    if (filterContext.filters) {
+      filterContext.setStagedFilters?.(filterContext.filters)
+    }
 
     // On unmount, exit staged mode.
     return () => {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-      filterContext.setShouldStageFilterChanges(false)
+      filterContext.setShouldStageFilterChanges?.(false)
     }
-  }, []) // eslint-disable-line react-hooks/exhaustive-deps
+    // FIXME: Unclear how to unwind this hack at the moment; satisfying the deps causes
+    // this to immediately un-apply the changes. Leaving it as-is for now.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
-  // enumerate the difference between prior and currently selected filters
-  const changedFilterCount = countChangedFilters(
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    filterContext.filters,
-    filterContext.stagedFilters
-  )
+  // Enumerate the difference between prior and currently selected filters
+  const changedFilterCount =
+    filterContext.filters && filterContext.stagedFilters
+      ? countChangedFilters(filterContext.filters, filterContext.stagedFilters)
+      : 0
 
   const applyFilters = () => {
     // On apply, replace the actual filter state with the
@@ -72,7 +76,13 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
         flexDirection: "column",
       }}
     >
-      <Header p={1}>
+      <Flex
+        p={1}
+        width="100%"
+        alignItems="center"
+        borderBottom="1px solid"
+        borderColor="black10"
+      >
         <Button
           variant="tertiary"
           size="small"
@@ -102,13 +112,13 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
         >
           Clear all
         </Button>
-      </Header>
+      </Flex>
 
       <Content ref={contentRef as any} width="100%" px={2} pt={2}>
         {children}
       </Content>
 
-      <Footer p={1}>
+      <Flex p={1} width="100%">
         <Button
           variant="primaryBlack"
           width="100%"
@@ -117,20 +127,10 @@ export const ArtworkFilterMobileActionSheet: React.FC<{
         >
           Show Results
         </Button>
-      </Footer>
+      </Flex>
     </ModalBase>
   )
 }
-
-const Header = styled(Flex)`
-  width: 100%;
-  align-items: center;
-  border-bottom: 1px solid ${themeGet("colors.black10")};
-`
-
-const Footer = styled(Flex)`
-  width: 100%;
-`
 
 const Content = styled(Box)`
   flex: 1;

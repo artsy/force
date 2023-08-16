@@ -472,13 +472,10 @@ describe("Payment", () => {
         "• Enter your billing address in the form below."
       )
       expect(page.text()).toContain(
-        "• Your bank account must be located in one of the SEPA countries."
+        "• Your bank account must be denominated in EUR and located in one of the SEPA countries."
       )
       expect(page.text()).toContain(
         "• Payment processing will take 4-7 business days once the gallery accepts the order."
-      )
-      expect(page.text()).toContain(
-        "• UK bank accounts will be charged in GBP once the gallery accepts the order."
       )
     })
 
@@ -666,7 +663,7 @@ describe("Payment", () => {
       },
       SEPA_DEBIT: () => {
         expect(page.text()).toContain(
-          "Your bank account must be located in one of the SEPA countries."
+          "Your bank account must be denominated in EUR and located in one of the SEPA countries."
         )
         expect(
           page

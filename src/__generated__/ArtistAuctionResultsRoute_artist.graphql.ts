@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<711ea812064ca8d63a70c5c84134452e>>
+ * @generated SignedSource<<984ef2b9f1e649f82657521eb2503b8e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -51,6 +51,11 @@ const node: ReaderFragment = {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "createdBeforeYear"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "currency"
     },
     {
       "defaultValue": null,
@@ -116,6 +121,11 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Variable",
+          "name": "currency",
+          "variableName": "currency"
+        },
+        {
+          "kind": "Variable",
           "name": "includeEstimateRange",
           "variableName": "includeEstimateRange"
         },
@@ -160,7 +170,8 @@ const node: ReaderFragment = {
           "kind": "Literal",
           "name": "aggregations",
           "value": [
-            "SIMPLE_PRICE_HISTOGRAM"
+            "SIMPLE_PRICE_HISTOGRAM",
+            "CURRENCIES_COUNT"
           ]
         }
       ],
@@ -220,13 +231,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "auctionResultsConnection(aggregations:[\"SIMPLE_PRICE_HISTOGRAM\"])"
+      "storageKey": "auctionResultsConnection(aggregations:[\"SIMPLE_PRICE_HISTOGRAM\",\"CURRENCIES_COUNT\"])"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "9bd149c74830a2a7aa0ad569abc78618";
+(node as any).hash = "8a4aec5718ff9101680e9fa540c50c9c";
 
 export default node;

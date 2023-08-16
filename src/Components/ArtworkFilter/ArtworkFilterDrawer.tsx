@@ -1,63 +1,33 @@
-import FilterIcon from "@artsy/icons/FilterIcon"
-import {
-  Box,
-  Button,
-  Drawer,
-  Flex,
-  ModalClose,
-  Spacer,
-  Text,
-} from "@artsy/palette"
+import { Box, Drawer, Flex, ModalClose, Spacer, Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
-import { FC, ReactNode, useState } from "react"
+import { FC, ReactNode } from "react"
 
 interface ArtworkFilterDrawerProps {
   children: ReactNode
+  open: boolean
+  onClose: () => void
 }
 
 export const ArtworkFilterDrawer: FC<ArtworkFilterDrawerProps> = ({
   children,
+  open,
+  onClose,
 }) => {
-  const [mode, setMode] = useState<"Idle" | "Open">("Idle")
-
   return (
-    <>
-      <Button
-        variant="tertiary"
-        Icon={FilterIcon}
-        size="small"
-        onClick={() => {
-          setMode("Open")
-        }}
-      >
-        Sort and Filter
-      </Button>
+    <Drawer zIndex={Z.dropdown} open={open} onClose={onClose}>
+      <Box p={2} minWidth={375} position="relative">
+        <Flex alignItems="center">
+          <Text variant="xs" flex={1}>
+            Sort & Filter
+          </Text>
 
-      <Drawer
-        zIndex={Z.dropdown}
-        open={mode === "Open"}
-        onClose={() => {
-          setMode("Idle")
-        }}
-      >
-        <Box p={2} minWidth={375} position="relative">
-          <Flex alignItems="center">
-            <Text variant="xs" flex={1}>
-              Sort & Filter
-            </Text>
+          <ModalClose onClick={onClose} />
+        </Flex>
 
-            <ModalClose
-              onClick={() => {
-                setMode("Idle")
-              }}
-            />
-          </Flex>
+        <Spacer y={4} />
 
-          <Spacer y={4} />
-
-          {children}
-        </Box>
-      </Drawer>
-    </>
+        {children}
+      </Box>
+    </Drawer>
   )
 }

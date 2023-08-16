@@ -206,6 +206,7 @@ describe("AuctionResults", () => {
                 hide_upcoming: true,
                 categories: ["Painting"],
                 sizes: ["SMALL", "LARGE"],
+                currency: "USD",
                 organizations: ["Phillips", "Bonhams", "Artsy Auction"],
               },
             },
@@ -230,6 +231,10 @@ describe("AuctionResults", () => {
           checked: true,
         })
 
+        const radioElements = screen.getAllByRole("radio", {
+          checked: true,
+        })
+
         expect(checkedCheckboxes).toHaveLength(9)
         expect(checkedCheckboxes[0]).toHaveTextContent("Hide upcoming auctions")
         expect(checkedCheckboxes[1]).toHaveTextContent("Painting")
@@ -244,6 +249,10 @@ describe("AuctionResults", () => {
         expect(checkedCheckboxes[6]).toHaveTextContent("Phillips")
         expect(checkedCheckboxes[7]).toHaveTextContent("Bonhams")
         expect(checkedCheckboxes[8]).toHaveTextContent("Artsy Auction")
+
+        expect(radioElements).toHaveLength(2)
+        expect(radioElements[0]).toHaveTextContent("cm")
+        expect(radioElements[1]).toHaveTextContent("USD")
       })
     })
 
@@ -539,7 +548,13 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
       totalCount: 5,
     },
     sidebarAggregations: {
-      aggregations: [{ slice: "SIMPLE_PRICE_HISTOGRAM", counts: [] }],
+      aggregations: [
+        { slice: "SIMPLE_PRICE_HISTOGRAM", counts: [] },
+        {
+          slice: "CURRENCIES_COUNT",
+          counts: [{ name: "USD", value: "USD", count: 100 }],
+        },
+      ],
     },
     auctionResultsConnection: {
       pageInfo: { hasNextPage: true, endCursor: "cursor4" },

@@ -43,7 +43,6 @@ import {
 import { AuctionFilterMobileActionSheet } from "./Components/AuctionFilterMobileActionSheet"
 import { AuctionFilters } from "./Components/AuctionFilters"
 import { AuctionResultsControls } from "./Components/AuctionResultsControls"
-import { KeywordFilter } from "./Components/KeywordFilter"
 import { MarketStatsQueryRenderer } from "./Components/MarketStats"
 import { SortSelect } from "./Components/SortSelect"
 import { TableSidebar } from "./Components/TableSidebar"
@@ -252,7 +251,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
       <Text variant={["sm-display", "lg-display"]}>Auction Results</Text>
 
-      <Spacer y={2} />
+      <Spacer y={4} />
 
       {showMobileActionSheet && (
         <AuctionFilterMobileActionSheet
@@ -266,12 +265,8 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
       <Media greaterThan="xs">
         <GridColumns>
-          <Column span={3}>
+          <Column span={9}>
             <Text variant="xs">Filter by</Text>
-          </Column>
-
-          <Column span={6}>
-            <KeywordFilter />
           </Column>
 
           <Column span={3}>
@@ -279,7 +274,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
           </Column>
         </GridColumns>
 
-        <Spacer y={4} />
+        <Spacer y={2} />
       </Media>
 
       <GridColumns>
@@ -408,6 +403,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           organizations: { type: "[String]" }
           keyword: { type: "String" }
           priceRange: { type: "String" }
+          currency: { type: "String" }
           includeEstimateRange: { type: "Boolean" }
           includeUnknownPrices: { type: "Boolean" }
           categories: { type: "[String]" }
@@ -439,6 +435,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           categories: $categories
           sizes: $sizes
           priceRange: $priceRange
+          currency: $currency
           includeEstimateRange: $includeEstimateRange
           includeUnknownPrices: $includeUnknownPrices
           earliestCreatedYear: $createdAfterYear
@@ -513,6 +510,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
       $categories: [String]
       $sizes: [ArtworkSizes]
       $priceRange: String
+      $currency: String
       $includeEstimateRange: Boolean
       $includeUnknownPrices: Boolean
       $createdBeforeYear: Int
@@ -534,6 +532,7 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
             categories: $categories
             sizes: $sizes
             priceRange: $priceRange
+            currency: $currency
             includeEstimateRange: $includeEstimateRange
             includeUnknownPrices: $includeUnknownPrices
             createdAfterYear: $createdAfterYear

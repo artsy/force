@@ -309,13 +309,11 @@ describe("ArtworkFilter", () => {
       fireEvent.click(screen.getAllByRole("button")[0])
 
       expect(screen.getByText("Clear all")).toBeInTheDocument()
-      expect(document.body).toHaveStyle("overflow-y: hidden")
 
       fireEvent.click(screen.getByText("Purchase"))
       fireEvent.click(screen.getByText("Show Results"))
 
       expect(screen.queryByText("Clear all")).not.toBeInTheDocument()
-      expect(document.body).toHaveStyle("overflow-y: visible")
     })
   })
 })
