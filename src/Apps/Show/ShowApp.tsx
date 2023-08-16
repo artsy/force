@@ -16,10 +16,7 @@ import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "./Component
 import { ShowApp_show$data } from "__generated__/ShowApp_show.graphql"
 import { ShowArtworksRefetchContainer as ShowArtworksFilter } from "./Components/ShowArtworks"
 import { ShowContextCardFragmentContainer as ShowContextCard } from "./Components/ShowContextCard"
-import {
-  AnalyticsContext,
-  useAnalyticsContext,
-} from "System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
 import { ShowArtworksEmptyStateFragmentContainer as ShowArtworksEmptyState } from "./Components/ShowArtworksEmptyState"
 import {
   Counts,
@@ -33,8 +30,6 @@ interface ShowAppProps {
 }
 
 export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
-  const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
-
   const hasViewingRoom = (show.viewingRoomsConnection?.edges?.length ?? 0) > 0
   const hasAbout = !!show.about
   const hasWideHeader =
@@ -46,13 +41,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
       <ShowMeta show={show} />
 
       <>
-        <AnalyticsContext.Provider
-          value={{
-            contextPageOwnerId: show.internalID,
-            contextPageOwnerSlug,
-            contextPageOwnerType,
-          }}
-        >
+        <AnalyticsContextProvider contextPageOwnerId={show.internalID}>
           {show.fair?.hasFullFeature && isFairBooth && (
             <BackToFairBanner show={show} />
           )}
@@ -125,7 +114,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
               </>
             )}
           </Join>
-        </AnalyticsContext.Provider>
+        </AnalyticsContextProvider>
       </>
     </>
   )

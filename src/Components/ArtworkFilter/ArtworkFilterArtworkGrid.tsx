@@ -67,7 +67,6 @@ const ArtworkFilterArtworkGrid: React.FC<ArtworkFilterArtworkGridProps> = props 
           onBrickClick={(artwork, artworkIndex) => {
             trackEvent(
               clickedMainArtworkGrid({
-                // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                 contextPageOwnerType,
                 contextPageOwnerSlug,
                 contextPageOwnerId,

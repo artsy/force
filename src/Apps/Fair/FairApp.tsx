@@ -4,10 +4,7 @@ import { FairApp_fair$data } from "__generated__/FairApp_fair.graphql"
 import { DROP_SHADOW, FullBleed, Spacer } from "@artsy/palette"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
 import { useSystemContext } from "System/useSystemContext"
-import {
-  AnalyticsContext,
-  useAnalyticsContext,
-} from "System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
 import { HttpError } from "found"
 import { useRouter } from "System/Router/useRouter"
 import { userIsAdmin } from "Utils/user"
@@ -84,8 +81,6 @@ const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
     fair: { internalID, profile, slug },
   } = props
 
-  const { contextPageOwnerType } = useAnalyticsContext()
-
   const { user } = useSystemContext()
 
   // If a fair's profile is inaccessible, that means it's private, which in turn means
@@ -95,15 +90,12 @@ const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
   }
 
   return (
-    <AnalyticsContext.Provider
-      value={{
-        contextPageOwnerId: internalID,
-        contextPageOwnerSlug: slug,
-        contextPageOwnerType,
-      }}
+    <AnalyticsContextProvider
+      contextPageOwnerId={internalID}
+      contextPageOwnerSlug={slug}
     >
       <FairApp {...props} />
-    </AnalyticsContext.Provider>
+    </AnalyticsContextProvider>
   )
 }
 

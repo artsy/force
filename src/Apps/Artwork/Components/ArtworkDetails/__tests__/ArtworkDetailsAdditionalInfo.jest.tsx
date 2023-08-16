@@ -3,7 +3,7 @@ import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"
 import { ArtworkDetailsAdditionalInfo_Test_Query } from "__generated__/ArtworkDetailsAdditionalInfo_Test_Query.graphql"
-import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
 import { ArtworkDetailsAdditionalInfoFragmentContainer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsAdditionalInfo"
 import { fireEvent, screen } from "@testing-library/react"
@@ -18,16 +18,14 @@ const { renderWithRelay } = setupTestWrapperTL<
   Component: props => {
     return (
       <MockBoot>
-        <AnalyticsContext.Provider
-          value={{
-            contextPageOwnerId: "example-artwork-id",
-            contextPageOwnerSlug: "example-artwork-slug",
-            contextPageOwnerType: OwnerType.artwork,
-          }}
+        <AnalyticsContextProvider
+          contextPageOwnerId="example-artwork-id"
+          contextPageOwnerSlug="example-artwork-slug"
+          contextPageOwnerType={OwnerType.artwork}
         >
           {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <ArtworkDetailsAdditionalInfoFragmentContainer {...props} />
-        </AnalyticsContext.Provider>
+        </AnalyticsContextProvider>
       </MockBoot>
     )
   },

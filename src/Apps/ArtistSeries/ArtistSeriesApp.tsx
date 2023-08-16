@@ -6,10 +6,7 @@ import { ArtistSeriesArtworksFilterRefetchContainer as ArtistSeriesArtworksFilte
 import { ArtistSeriesRailFragmentContainer as OtherArtistSeriesRail } from "Components/ArtistSeriesRail/ArtistSeriesRail"
 import { ArtistSeriesMetaFragmentContainer as ArtistSeriesMeta } from "./Components/ArtistSeriesMeta"
 import { ContextModule } from "@artsy/cohesion"
-import {
-  AnalyticsContext,
-  useAnalyticsContext,
-} from "System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
 import { SharedArtworkFilterContextProps } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { Spacer } from "@artsy/palette"
 
@@ -18,45 +15,35 @@ interface ArtistSeriesAppProps {
 }
 
 const ArtistSeriesApp: React.FC<ArtistSeriesAppProps> = ({ artistSeries }) => {
-  const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
-
   const { railArtist, internalID, sidebarAggregations } = artistSeries
 
   return (
-    <AnalyticsContext.Provider
-      value={{
-        contextPageOwnerId: internalID,
-        contextPageOwnerSlug,
-        contextPageOwnerType,
-      }}
-    >
-      <>
-        <ArtistSeriesMeta artistSeries={artistSeries} />
+    <AnalyticsContextProvider contextPageOwnerId={internalID}>
+      <ArtistSeriesMeta artistSeries={artistSeries} />
 
-        <ArtistSeriesHeader artistSeries={artistSeries} />
+      <ArtistSeriesHeader artistSeries={artistSeries} />
 
-        <Spacer y={6} />
+      <Spacer y={6} />
 
-        <ArtistSeriesArtworksFilter
-          artistSeries={artistSeries}
-          aggregations={
-            sidebarAggregations?.aggregations as SharedArtworkFilterContextProps["aggregations"]
-          }
-        />
+      <ArtistSeriesArtworksFilter
+        artistSeries={artistSeries}
+        aggregations={
+          sidebarAggregations?.aggregations as SharedArtworkFilterContextProps["aggregations"]
+        }
+      />
 
-        {(railArtist?.length ?? 0) > 0 && (
-          <>
-            <Spacer y={6} />
+      {(railArtist?.length ?? 0) > 0 && (
+        <>
+          <Spacer y={6} />
 
-            <OtherArtistSeriesRail
-              artist={(railArtist ?? [])[0]!}
-              title="Series by this artist"
-              contextModule={ContextModule.moreSeriesByThisArtist}
-            />
-          </>
-        )}
-      </>
-    </AnalyticsContext.Provider>
+          <OtherArtistSeriesRail
+            artist={(railArtist ?? [])[0]!}
+            title="Series by this artist"
+            contextModule={ContextModule.moreSeriesByThisArtist}
+          />
+        </>
+      )}
+    </AnalyticsContextProvider>
   )
 }
 

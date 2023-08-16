@@ -12,9 +12,8 @@ import { RelayRefetchProp, graphql, createFragmentContainer } from "react-relay"
 import { truncate } from "lodash"
 import { CollectionsHubRailsContainer as CollectionsHubRails } from "./Components/CollectionsHubRails"
 import {
-  AnalyticsContext,
   AnalyticsContextProps,
-  useAnalyticsContext,
+  AnalyticsContextProvider,
 } from "System/Analytics/AnalyticsContext"
 import { TrackingProp } from "react-tracking"
 import { ErrorPage } from "Components/ErrorPage"
@@ -142,17 +141,10 @@ const TrackingWrappedCollectionApp: React.FC<CollectionAppProps> = props => {
   const {
     collection: { id },
   } = props
-  const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
   return (
-    <AnalyticsContext.Provider
-      value={{
-        contextPageOwnerId: id,
-        contextPageOwnerSlug,
-        contextPageOwnerType,
-      }}
-    >
+    <AnalyticsContextProvider contextPageOwnerId={id}>
       <CollectionApp {...props} />
-    </AnalyticsContext.Provider>
+    </AnalyticsContextProvider>
   )
 }
 

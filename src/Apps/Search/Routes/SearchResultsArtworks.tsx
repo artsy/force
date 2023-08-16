@@ -11,7 +11,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useSystemContext } from "System/useSystemContext"
 import { SearchResultsArtworksFilters } from "Apps/Search/Components/SearchResultsArtworksFilters"
-import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
 
 interface SearchResultsRouteProps {
@@ -25,11 +25,7 @@ export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = pro
   const { sidebar } = viewer
 
   return (
-    <AnalyticsContext.Provider
-      value={{
-        contextPageOwnerType: OwnerType.search,
-      }}
-    >
+    <AnalyticsContextProvider contextPageOwnerType={OwnerType.search}>
       <ArtworkFilter
         mt={4}
         viewer={viewer}
@@ -52,7 +48,7 @@ export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = pro
         Filters={<SearchResultsArtworksFilters />}
         userPreferredMetric={userPreferences?.metric}
       />
-    </AnalyticsContext.Provider>
+    </AnalyticsContextProvider>
   )
 }
 

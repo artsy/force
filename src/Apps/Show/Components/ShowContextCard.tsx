@@ -55,7 +55,6 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
       const payload: ClickedFairCard = {
         action: ActionType.clickedFairCard,
         context_module: ContextModule.presentingFair,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         context_page_owner_type: contextPageOwnerType,
         context_page_owner_id: contextPageOwnerId,
         context_page_owner_slug: contextPageOwnerSlug,
@@ -70,31 +69,27 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
       tracking.trackEvent(payload)
     }
 
+    if (!fair) return null
+
     return (
       <GridColumns>
-        {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         {fair.isActive && (
           <Column span={6}>
-            {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
             <Text variant="lg-display">Part of {fair.name}</Text>
           </Column>
         )}
         <Column span={6}>
           <StyledLink
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             to={fair.href}
             textDecoration="none"
             onClick={handleClick}
           >
-            {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
             <FairCard fair={fair} />
 
             <Spacer y={2} />
             <Box>
-              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
               <Text variant="xl">{fair.name}</Text>
 
-              {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
               <FairTiming fair={fair} />
             </Box>
           </StyledLink>
@@ -126,7 +121,6 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
       const payload: ClickedPartnerCard = {
         action: ActionType.clickedPartnerCard,
         context_module: ContextModule.presentingPartner,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         context_page_owner_type: contextPageOwnerType,
         context_page_owner_id: contextPageOwnerId,
         context_page_owner_slug: contextPageOwnerSlug,

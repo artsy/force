@@ -14,7 +14,7 @@ export interface ClientContext {
 
 export const buildClientAppContext = (
   context: { injectedData?: object } = {}
-) => {
+): ClientContext | undefined => {
   const contextPage = getContextPageFromClient()
 
   if (contextPage) {
