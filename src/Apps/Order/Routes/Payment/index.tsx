@@ -343,9 +343,17 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     ) {
       handlePaymentStepComplete()
     } else if (paymentSetupErrorCode && !isPaymentSetupSuccessful) {
-      const title = "Choose another payment method"
-      const message =
-        "The bank account you entered is not denominated in EUR. Please select another payment method and try again."
+      let title = "An error occurred"
+      let message =
+        "Something went wrong. Please try again or contact orders@artsy.net"
+      let width: undefined | number = undefined
+
+      if (paymentSetupErrorCode === "unsupported_sepa_country") {
+        title = "Choose another payment method"
+        message =
+          "The bank account you entered is not denominated in EUR. Please select another payment method and try again."
+        width = 500
+      }
 
       trackEvent({
         action: ActionType.errorMessageViewed,
@@ -358,9 +366,9 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       })
 
       props.dialog.showErrorDialog({
-        title: title,
-        message: message,
-        width: 500,
+        title,
+        message,
+        width,
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
