@@ -3,14 +3,11 @@ import { SavedSearchAlertFormValues } from "Components/SavedSearchAlert/types"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useFormikContext } from "formik"
 import { FC, useEffect, useMemo, useState } from "react"
-import { graphql } from "react-relay"
+import { createFragmentContainer, graphql } from "react-relay"
 import { SavedSearchAlertNameInputQuery } from "__generated__/SavedSearchAlertNameInputQuery.graphql"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { debounce } from "lodash"
-
-interface SavedSavedAlertNameInputProps {
-  placeholder?: string
-}
+import { SavedSearchAlertNameInput_previewSavedSearch$data } from "__generated__/SavedSearchAlertNameInput_previewSavedSearch.graphql"
 
 export const SavedSearchAlertNameInputQueryRenderer: FC = () => {
   const { criteria } = useSavedSearchAlertContext()
@@ -31,8 +28,10 @@ export const SavedSearchAlertNameInputQueryRenderer: FC = () => {
         query SavedSearchAlertNameInputQuery(
           $attributes: PreviewSavedSearchAttributes!
         ) {
-          previewSavedSearch(attributes: $attributes) {
-            displayName
+          viewer {
+            previewSavedSearch(attributes: $attributes) {
+              ...SavedSearchAlertNameInput_previewSavedSearch
+            }
           }
         }
       `}
@@ -43,8 +42,9 @@ export const SavedSearchAlertNameInputQueryRenderer: FC = () => {
         }
 
         return (
-          <SavedSearchAlertNameInput
-            placeholder={props?.previewSavedSearch?.displayName}
+          <SavedSearchAlertNameInputFragmentContainer
+            // @ts-expect-error "No overload matches this call" TODO: why??
+            previewSavedSearch={props?.viewer?.previewSavedSearch}
           />
         )
       }}
@@ -52,10 +52,13 @@ export const SavedSearchAlertNameInputQueryRenderer: FC = () => {
   )
 }
 
-export const SavedSearchAlertNameInput: FC<SavedSavedAlertNameInputProps> = ({
-  placeholder,
-}) => {
-  const [statePlaceholder, setStatePlaceholder] = useState("")
+interface SavedSavedAlertNameInputProps {
+  previewSavedSearch: SavedSearchAlertNameInput_previewSavedSearch$data
+}
+
+const SavedSearchAlertNameInput: FC<SavedSavedAlertNameInputProps> = props => {
+  const placeholder = props.previewSavedSearch?.displayName ?? ""
+  const [statePlaceholder, setStatePlaceholder] = useState(placeholder)
   const { values, errors, handleChange, handleBlur } = useFormikContext<
     SavedSearchAlertFormValues
   >()
@@ -79,3 +82,14 @@ export const SavedSearchAlertNameInput: FC<SavedSavedAlertNameInputProps> = ({
     />
   )
 }
+
+const SavedSearchAlertNameInputFragmentContainer = createFragmentContainer(
+  SavedSearchAlertNameInput,
+  {
+    previewSavedSearch: graphql`
+      fragment SavedSearchAlertNameInput_previewSavedSearch on PreviewSavedSearch {
+        displayName
+      }
+    `,
+  }
+)

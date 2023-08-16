@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<62e1597db72a9a15e87057020914d96a>>
+ * @generated SignedSource<<1421321f86349da4506cac136ea65894>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
+import { FragmentRefs } from "relay-runtime";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type PreviewSavedSearchAttributes = {
   acquireable?: boolean | null;
@@ -32,8 +33,10 @@ export type SavedSearchAlertNameInputQuery$variables = {
   attributes: PreviewSavedSearchAttributes;
 };
 export type SavedSearchAlertNameInputQuery$data = {
-  readonly previewSavedSearch: {
-    readonly displayName: string;
+  readonly viewer: {
+    readonly previewSavedSearch: {
+      readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertNameInput_previewSavedSearch">;
+    } | null;
   } | null;
 };
 export type SavedSearchAlertNameInputQuery = {
@@ -51,28 +54,9 @@ var v0 = [
 ],
 v1 = [
   {
-    "alias": null,
-    "args": [
-      {
-        "kind": "Variable",
-        "name": "attributes",
-        "variableName": "attributes"
-      }
-    ],
-    "concreteType": "PreviewSavedSearch",
-    "kind": "LinkedField",
-    "name": "previewSavedSearch",
-    "plural": false,
-    "selections": [
-      {
-        "alias": null,
-        "args": null,
-        "kind": "ScalarField",
-        "name": "displayName",
-        "storageKey": null
-      }
-    ],
-    "storageKey": null
+    "kind": "Variable",
+    "name": "attributes",
+    "variableName": "attributes"
   }
 ];
 return {
@@ -81,7 +65,35 @@ return {
     "kind": "Fragment",
     "metadata": null,
     "name": "SavedSearchAlertNameInputQuery",
-    "selections": (v1/*: any*/),
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v1/*: any*/),
+            "concreteType": "PreviewSavedSearch",
+            "kind": "LinkedField",
+            "name": "previewSavedSearch",
+            "plural": false,
+            "selections": [
+              {
+                "args": null,
+                "kind": "FragmentSpread",
+                "name": "SavedSearchAlertNameInput_previewSavedSearch"
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ],
     "type": "Query",
     "abstractKey": null
   },
@@ -90,19 +102,49 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "SavedSearchAlertNameInputQuery",
-    "selections": (v1/*: any*/)
+    "selections": [
+      {
+        "alias": null,
+        "args": null,
+        "concreteType": "Viewer",
+        "kind": "LinkedField",
+        "name": "viewer",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": (v1/*: any*/),
+            "concreteType": "PreviewSavedSearch",
+            "kind": "LinkedField",
+            "name": "previewSavedSearch",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "displayName",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": null
+      }
+    ]
   },
   "params": {
-    "cacheID": "de53c207480e7620a54434f8120b3596",
+    "cacheID": "77f96e974094f5bcc19f2294877ad861",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertNameInputQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertNameInputQuery(\n  $attributes: PreviewSavedSearchAttributes!\n) {\n  previewSavedSearch(attributes: $attributes) {\n    displayName\n  }\n}\n"
+    "text": "query SavedSearchAlertNameInputQuery(\n  $attributes: PreviewSavedSearchAttributes!\n) {\n  viewer {\n    previewSavedSearch(attributes: $attributes) {\n      ...SavedSearchAlertNameInput_previewSavedSearch\n    }\n  }\n}\n\nfragment SavedSearchAlertNameInput_previewSavedSearch on PreviewSavedSearch {\n  displayName\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1fff36175ac490e3c795e516f2f2c5b2";
+(node as any).hash = "55f1e043586d42fa286585a27e62a01e";
 
 export default node;
