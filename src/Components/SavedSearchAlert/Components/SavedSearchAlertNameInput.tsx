@@ -83,7 +83,7 @@ const SavedSearchAlertNameInput: FC<SavedSavedAlertNameInputProps> = props => {
   )
 }
 
-const SavedSearchAlertNameInputFragmentContainer = createFragmentContainer(
+export const SavedSearchAlertNameInputFragmentContainer = createFragmentContainer(
   SavedSearchAlertNameInput,
   {
     previewSavedSearch: graphql`
