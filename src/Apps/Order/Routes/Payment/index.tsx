@@ -342,7 +342,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         selectedPaymentMethod === "SEPA_DEBIT")
     ) {
       handlePaymentStepComplete()
-    } else if (paymentSetupErrorCode && !isPaymentSetupSuccessful) {
+    } else if (!isPaymentSetupSuccessful) {
       let title = "An error occurred"
       let message =
         "Something went wrong. Please try again or contact orders@artsy.net"
