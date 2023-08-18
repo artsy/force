@@ -31,7 +31,7 @@ export const SuggestedArtworksShelf: FC<SuggestedArtworksShelfProps> = ({
         <Flex
           flexDirection="row"
           flexWrap="wrap"
-          gap={1}
+          gap={2}
           justifyContent="center"
         >
           {artworks.map(artwork => (
