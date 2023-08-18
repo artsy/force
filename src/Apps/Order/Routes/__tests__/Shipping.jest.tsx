@@ -206,7 +206,11 @@ class ShippingTestPage extends OrderAppTestPage {
   }
 }
 
-describe("Shipping", () => {
+describe("Shipping [testing-library]", () => {
+  describe("US address verification", () => {})
+})
+
+describe("Shipping [enzyme]", () => {
   const pushMock = jest.fn()
   let isCommittingMutation
 
