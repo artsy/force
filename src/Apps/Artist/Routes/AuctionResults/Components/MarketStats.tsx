@@ -65,7 +65,6 @@ export const MarketStats: FC<MarketStatsProps> = ({
 
   return (
     <>
-      <Spacer y={30} />
       <Text
         variant={["sm-display", "lg-display"]}
         display="flex"
