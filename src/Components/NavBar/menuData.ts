@@ -37,12 +37,7 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
       },
       {
         text: "Trending Now",
-        href: "/collection/trending-this-week",
-      },
-      {
-        text: "Artsy Vanguard Artists",
-        href: "/collection/the-artsy-vanguard",
-        dividerBelow: true,
+        href: "/collection/trending-this-week/new-this-week",
       },
       {
         text: "Curator's Picks",
@@ -50,56 +45,16 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           title: "Curator's Picks",
           links: [
             {
-              text: "Rising Artists of Africa & Its Diaspora",
-              href: "/collection/rising-artists-of-africa-and-its-diaspora",
+              text: "Curators’ Picks: Emerging",
+              href: "/collection/curators-picks-emerging",
             },
             {
-              text: "Rising Artists of Asia & Its Diaspora",
-              href: "/collection/rising-artists-of-asia-and-its-diaspora",
-            },
-            {
-              text: "Women Artists Now",
-              href: "/collection/women-artists-to-watch",
+              text: "Curators’ Picks: Blue-Chip",
+              href: "/collection/curators-picks-blue-chip",
             },
           ],
         },
         dividerBelow: true,
-      },
-      {
-        text: "Artist Nationality and Region",
-        menu: {
-          title: "Artist Nationality and Region",
-          links: [
-            {
-              text: "American",
-              href: "/collect?artist_nationalities%5B0%5D=American",
-            },
-            {
-              text: "African",
-              href: "/collection/african-artists",
-            },
-            {
-              text: "Asian",
-              href: "/collection/asian-artists",
-            },
-            {
-              text: "British",
-              href: "/collect?artist_nationalities%5B0%5D=British",
-            },
-            {
-              text: "European",
-              href: "/collection/european-artists",
-            },
-            {
-              text: "Latin American",
-              href: "/collection/latin-american-artists",
-            },
-            {
-              text: "Middle Eastern",
-              href: "/collection/middle-eastern-artists",
-            },
-          ],
-        },
       },
       {
         text: "Featured Artists",
@@ -137,6 +92,14 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
           ],
         },
       },
+      // Empty column
+      {
+        text: "",
+        menu: {
+          title: "",
+          links: [],
+        },
+      },
       {
         text: "View All Artists",
         href: "/artists",
@@ -151,12 +114,8 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
     title: "Artworks",
     links: [
       {
-        text: "Curators’ Picks: Emerging",
-        href: "/collection/curators-picks-emerging",
-      },
-      {
-        text: "Curators’ Picks: Blue-Chip",
-        href: "/collection/curators-picks-blue-chip",
+        text: "Contemporary Abstraction",
+        href: "/collection/contemporary-abstraction",
       },
       {
         text: "Top Auction Lots",
@@ -164,7 +123,7 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
       },
       {
         text: "Best of Prints & Editions",
-        href: "/collection/iconic-prints",
+        href: "/collection/best-of-prints-and-editions",
       },
       {
         text: "Price",
@@ -172,20 +131,16 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
           title: "Price",
           links: [
             {
-              text: "Finds Under $25,000",
-              href: "/collection/finds-under-25000-dollars",
-            },
-            {
-              text: "Finds Under $10,000",
-              href: "/collection/finds-under-10000-dollars",
+              text: "Finds Under $1,0000",
+              href: "/collection/finds-under-1000-dollars",
             },
             {
               text: "Finds Under $5,000",
               href: "/collection/finds-under-5000-dollars",
             },
             {
-              text: "Finds Under $1,000",
-              href: "/collection/finds-under-1000-dollars",
+              text: "Finds Under $10,000",
+              href: "/collection/finds-under-10000-dollars",
             },
           ],
         },

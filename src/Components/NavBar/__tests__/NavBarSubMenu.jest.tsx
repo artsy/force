@@ -32,28 +32,23 @@ describe("NavBarSubMenu", () => {
     const wrapper = getWrapper()
     const linkMenuItems = wrapper.find("a")
 
-    expect(linkMenuItems.at(0).text()).toContain("Curators’ Picks: Emerging")
+    expect(linkMenuItems.at(0).text()).toContain("Contemporary Abstraction")
     expect(linkMenuItems.at(0).prop("href")).toEqual(
-      "/collection/curators-picks-emerging"
+      "/collection/contemporary-abstraction"
     )
 
-    expect(linkMenuItems.at(1).text()).toContain("Curators’ Picks: Blue-Chip")
+    expect(linkMenuItems.at(1).text()).toContain("Top Auction Lots")
     expect(linkMenuItems.at(1).prop("href")).toEqual(
-      "/collection/curators-picks-blue-chip"
-    )
-
-    expect(linkMenuItems.at(2).text()).toContain("Top Auction Lots")
-    expect(linkMenuItems.at(2).prop("href")).toEqual(
       "/collection/top-auction-lots"
     )
 
-    expect(linkMenuItems.at(3).text()).toContain("Best of Prints & Editions")
-    expect(linkMenuItems.at(3).prop("href")).toEqual(
-      "/collection/iconic-prints"
+    expect(linkMenuItems.at(2).text()).toContain("Best of Prints & Editions")
+    expect(linkMenuItems.at(2).prop("href")).toEqual(
+      "/collection/best-of-prints-and-editions"
     )
 
-    expect(linkMenuItems.at(4).text()).toContain("View All Artworks")
-    expect(linkMenuItems.at(4).prop("href")).toEqual("/collect")
+    expect(linkMenuItems.at(3).text()).toContain("View All Artworks")
+    expect(linkMenuItems.at(3).prop("href")).toEqual("/collect")
   })
 
   it("doesn't render artists letter nav inside artworks dropdown", () => {
