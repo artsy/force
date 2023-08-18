@@ -6,6 +6,7 @@ import styled from "styled-components"
 import { compose, ResponsiveValue, system } from "styled-system"
 import { useMemo } from "react"
 import { themeGet } from "@styled-system/theme-get"
+import { sanitizeURL } from "Utils/sanitizeURL"
 
 /**
  * Wrapper component around found's <Link> component with a fallback to a normal
@@ -35,11 +36,18 @@ export const RouterLink: React.FC<RouterLinkProps> = React.forwardRef(
       [matcher, routes, to]
     )
 
+    // Sanitize the URL as it may come from a query param
+    const safeTo = useMemo(() => {
+      return sanitizeURL(to ?? "")
+    }, [to])
+
     if (isSupportedInRouter) {
-      return <RouterAwareLink inline={inline} to={to ?? ""} {...rest} />
+      return <RouterAwareLink ref={ref} inline={inline} to={safeTo} {...rest} />
     }
 
-    return <RouterUnawareLink inline={inline} href={to ?? ""} {...rest} />
+    return (
+      <RouterUnawareLink ref={ref} inline={inline} href={safeTo} {...rest} />
+    )
   }
 )
 
