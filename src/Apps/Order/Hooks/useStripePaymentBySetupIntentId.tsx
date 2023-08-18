@@ -19,9 +19,9 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
   const [isPaymentSetupSuccessful, setIsPaymentSetupSuccessful] = useState(
     false
   )
-  const [paymentSetupErrorCode, setPaymentSetupErrorCode] = useState<
-    null | string
-  >(null)
+  const [paymentSetupError, setPaymentSetupError] = useState<null | object>(
+    null
+  )
 
   useEffect(() => {
     // pull necessary params from Stripe redirect URL
@@ -77,7 +77,7 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
       setIsPaymentSetupSuccessful(true)
     } catch (error) {
       setIsPaymentSetupSuccessful(false)
-      setPaymentSetupErrorCode(error.code)
+      setPaymentSetupError(error)
     }
   }
 
@@ -85,6 +85,6 @@ export function useStripePaymentBySetupIntentId(orderId: string) {
     isProcessingRedirect,
     stripeSetupIntentId,
     isPaymentSetupSuccessful,
-    paymentSetupErrorCode,
+    paymentSetupError,
   }
 }

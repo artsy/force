@@ -63,7 +63,7 @@ describe("useStripePaymentBySetupIntentId", () => {
         isProcessingRedirect: false,
         stripeSetupIntentId: "setup-intent-id",
         isPaymentSetupSuccessful: true,
-        paymentSetupErrorCode: null,
+        paymentSetupError: null,
       })
     })
   })
@@ -88,7 +88,7 @@ describe("useStripePaymentBySetupIntentId", () => {
         isProcessingRedirect: false,
         stripeSetupIntentId: "setup-intent-id",
         isPaymentSetupSuccessful: false,
-        paymentSetupErrorCode: "error-code",
+        paymentSetupError: { code: "error-code" },
       })
     })
   })

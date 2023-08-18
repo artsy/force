@@ -129,7 +129,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     isProcessingRedirect,
     stripeSetupIntentId,
     isPaymentSetupSuccessful,
-    paymentSetupErrorCode,
+    paymentSetupError,
   } = useStripePaymentBySetupIntentId(order.internalID)
 
   // SavingPaymentSpinner is rendered and PaymentContent is hidden when true
@@ -138,7 +138,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     isSavingPayment ||
     (!!match?.location?.query?.setup_intent &&
       !bankAccountHasInsufficientFunds &&
-      !paymentSetupErrorCode)
+      !paymentSetupError)
 
   let routeSteps
   if (order.mode === "OFFER") {
@@ -342,13 +342,15 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         selectedPaymentMethod === "SEPA_DEBIT")
     ) {
       handlePaymentStepComplete()
-    } else if (!isPaymentSetupSuccessful) {
+    } else if (paymentSetupError) {
       let title = "An error occurred"
       let message =
         "Something went wrong. Please try again or contact orders@artsy.net"
       let width: undefined | number = undefined
 
-      if (paymentSetupErrorCode === "unsupported_sepa_country") {
+      const errorCode = (paymentSetupError as any).code
+
+      if (errorCode === "unsupported_sepa_country") {
         title = "Choose another payment method"
         message =
           "The bank account you entered is not denominated in EUR. Please select another payment method and try again."
@@ -361,7 +363,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         context_owner_id: props.order.internalID,
         title: title,
         message: message,
-        error_code: paymentSetupErrorCode,
+        error_code: errorCode,
         flow: "user sets payment by setup intent",
       })
 
@@ -377,7 +379,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     selectedBankAccountId,
     balanceCheckEnabled,
     selectedPaymentMethod,
-    paymentSetupErrorCode,
+    paymentSetupError,
   ])
 
   const setOrderPayment = (
