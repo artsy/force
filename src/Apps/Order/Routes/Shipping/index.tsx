@@ -245,9 +245,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   // Save shipping info on the order. If it's Artsy shipping and a quote hasn't
   // been selected, this renders the quotes for user to select and finalize
   // again.
-  console.log({ renderCycle: address })
   const finalizeFulfillment = async () => {
-    console.log({ finalizeFulfillment: address })
     if (checkIfArtsyShipping() && !!shippingQuoteId) {
       selectShippingQuote()
     } else {
@@ -692,10 +690,13 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     return false
   }
 
+  // Automatically proceed after address verification flow is completed.
   useEffect(() => {
     if (readyToSaveVerifiedAddress) {
       finalizeFulfillment()
     }
+    // disabled because we only want this to run when once when readyToSaveVerifiedAddress changes to true
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [readyToSaveVerifiedAddress])
 
   const renderArtaErrorMessage = () => {
