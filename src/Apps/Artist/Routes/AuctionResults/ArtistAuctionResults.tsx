@@ -240,7 +240,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
       <Jump id="marketSignalsTop" />
 
-      <Spacer y={2} />
+      <Spacer y={[2, 0]} />
 
       <MarketStatsQueryRenderer
         id={artist.internalID}

@@ -1,4 +1,4 @@
-import { Flex } from "@artsy/palette"
+import { Flex, Spacer } from "@artsy/palette"
 import * as React from "react"
 import { Title, Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -44,6 +44,8 @@ const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
       <Title>{title}</Title>
       <Meta name="title" content={title} />
       <Meta name="description" content={description} />
+
+      <Spacer y={[2, 0]} />
 
       <Flex flexDirection="column" gap={6}>
         <ArtistCareerHighlightsQueryRenderer id={artist.internalID} />
