@@ -844,18 +844,13 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                     setAddressNeedsVerification(false)
                     setAddressVerifiedBy(AddressVerifiedBy.USER)
                   }}
-                  onChosenAddress={(
-                    verifiedBy,
-                    chosenAddress,
-                    saveAndContinue
-                  ) => {
+                  onChosenAddress={(verifiedBy, chosenAddress) => {
                     setAddressNeedsVerification(false)
                     setAddressVerifiedBy(verifiedBy)
                     setAddress(address => {
                       return { ...address, ...chosenAddress }
                     })
                     setReadyToSaveVerifiedAddress(true)
-                    // saveAndContinue && finalizeFulfillment()
                   }}
                 />
               )}

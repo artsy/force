@@ -39,8 +39,7 @@ interface AddressVerificationFlowProps {
   verifyAddress: AddressVerificationFlow_verifyAddress$data
   onChosenAddress: (
     verifiedBy: AddressVerifiedBy,
-    address: AddressValues,
-    saveAndContinue: boolean
+    address: AddressValues
   ) => void
   onClose: () => void
   /* used only as a fallback if verification is unavailable */
@@ -131,7 +130,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
 
     if (selectedAddress) {
       setModalType(null)
-      onChosenAddress(verifiedBy, selectedAddress.address, true)
+      onChosenAddress(verifiedBy, selectedAddress.address)
     }
   }, [addressOptions, onChosenAddress, selectedAddressKey])
 
@@ -210,11 +209,11 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     if (hasError) {
       const fallbackOption = fallbackFromFormValues(verificationInput)
       const verifiedBy = AddressVerifiedBy.USER
-      onChosenAddress(verifiedBy, fallbackOption.address, true)
+      onChosenAddress(verifiedBy, fallbackOption.address)
     } else {
       if (verificationStatus === "VERIFIED_NO_CHANGE") {
         const verifiedBy = AddressVerifiedBy.ARTSY
-        onChosenAddress(verifiedBy, inputOption.address, true)
+        onChosenAddress(verifiedBy, inputOption.address)
       } else {
         if (verificationStatus === "VERIFIED_WITH_CHANGES") {
           setModalType(ModalType.SUGGESTIONS)
@@ -449,8 +448,7 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
   address: AddressValues
   onChosenAddress: (
     verifiedBy: AddressVerifiedBy,
-    address: AddressValues,
-    saveAndContinue: boolean
+    address: AddressValues
   ) => void
   onClose: () => void
 }> = ({ address, onChosenAddress, onClose }) => {
