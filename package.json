@@ -105,7 +105,7 @@
     "analytics-node": "2.4.1",
     "async": "^3.2.4",
     "autosuggest-highlight": "3.1.1",
-    "body-parser": "1.18.3",
+    "body-parser": "1.19.2",
     "chalk": "4.1.0",
     "cheerio": "0.22.0",
     "compression": "1.7.2",
