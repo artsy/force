@@ -1,4 +1,6 @@
 export const sanitizeURL = (path: string) => {
+  if (!path || typeof path !== "string") return "/"
+
   const _path = path.toLowerCase()
 
   if (
