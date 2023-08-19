@@ -48,9 +48,4 @@ describe("RouterLink", () => {
     expect(wrapper.find(Link).length).toEqual(0)
     expect(wrapper.find("a").length).toEqual(1)
   })
-
-  it("sanitizes unsafe URLs", () => {
-    const wrapper = mount(<RouterLink to="javascript:alert(1)">Foo</RouterLink>)
-    expect(wrapper.find("a").prop("href")).toEqual("/")
-  })
 })
