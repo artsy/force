@@ -20,6 +20,7 @@ import { OwnerType } from "@artsy/cohesion"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { Media } from "Utils/Responsive"
 import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
+import { SuggestedArtworksShelfQueryRenderer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksShelf"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
@@ -122,6 +123,12 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
           <Media greaterThan="xs">
             <Spacer y={4} />
             <ArtworkAuctionCreateAlertTooltip />
+          </Media>
+        </Column>
+
+        <Column span={12}>
+          <Media greaterThan="xs">
+            <SuggestedArtworksShelfQueryRenderer {...criteria} />
           </Media>
         </Column>
 
