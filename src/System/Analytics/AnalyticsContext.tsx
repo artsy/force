@@ -78,6 +78,13 @@ export const AnalyticsContextProvider: FC<AnalyticsContextProviderProps> = ({
 
   const path = match?.location?.pathname
 
+  // An unfortunate workaround for the fact that some routes rely on the previous
+  // behavior of just giving up and returning _something_ and casting it as a valid
+  // `PageOwnerType`. We will still warn on these routes and hopefully they are
+  // replaced, one-by-one.
+  const parts = tokenize(path || "")
+  const fallback = formatType(parts[0]) as PageOwnerType
+
   // Update context when the route changes
   useEffect(() => {
     // Routing context is typically missing in specs
@@ -116,7 +123,7 @@ export const AnalyticsContextProvider: FC<AnalyticsContextProviderProps> = ({
     isReady: state.isReady,
     contextPageOwnerId: contextPageOwnerId,
     contextPageOwnerSlug: state.contextPageOwnerSlug,
-    contextPageOwnerType: state.contextPageOwnerType!,
+    contextPageOwnerType: state.contextPageOwnerType || fallback,
   }
 
   return (
@@ -133,6 +140,10 @@ const tokenize = (path: string) => {
   return path.slice(slice).split("/")
 }
 
+const formatType = (part: string): string => {
+  return camelCase(part).replace("2", "")
+}
+
 export const pathToOwnerType = (path: string): PageOwnerType => {
   if (path === "/") {
     return OwnerType.home
@@ -141,7 +152,7 @@ export const pathToOwnerType = (path: string): PageOwnerType => {
   const [_type, slug, tab] = tokenize(path)
 
   // Remove '2' to ensure that show2/fair2/etc are schema compliant
-  const type = camelCase(_type).replace("2", "")
+  const type = formatType(_type)
 
   switch (true) {
     // Handle special cases
