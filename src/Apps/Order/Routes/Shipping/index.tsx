@@ -850,7 +850,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                     setAddress(address => {
                       return { ...address, ...chosenAddress }
                     })
-                    // trigger finalizeAddres() via useEffect
+                    // trigger finalizeFulfillment() via useEffect
                     setReadyToSaveVerifiedAddress(true)
                   }}
                 />
