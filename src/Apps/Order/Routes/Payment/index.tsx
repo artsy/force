@@ -342,7 +342,18 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         selectedPaymentMethod === "SEPA_DEBIT")
     ) {
       handlePaymentStepComplete()
-    } else if (paymentSetupError) {
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    isPaymentSetupSuccessful,
+    selectedBankAccountId,
+    balanceCheckEnabled,
+    selectedPaymentMethod,
+  ])
+
+  // show error modal when payment setup error is set
+  useEffect(() => {
+    if (paymentSetupError) {
       let title = "An error occurred"
       let message =
         "Something went wrong. Please try again or contact orders@artsy.net"
@@ -374,13 +385,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    isPaymentSetupSuccessful,
-    selectedBankAccountId,
-    balanceCheckEnabled,
-    selectedPaymentMethod,
-    paymentSetupError,
-  ])
+  }, [paymentSetupError])
 
   const setOrderPayment = (
     variables: PaymentRouteSetOrderPaymentMutation["variables"]
