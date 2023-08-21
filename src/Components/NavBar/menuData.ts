@@ -131,7 +131,7 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
           title: "Price",
           links: [
             {
-              text: "Finds Under $1,0000",
+              text: "Finds Under $1,000",
               href: "/collection/finds-under-1000-dollars",
             },
             {
