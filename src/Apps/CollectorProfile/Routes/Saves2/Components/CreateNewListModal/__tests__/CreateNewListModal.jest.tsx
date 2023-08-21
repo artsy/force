@@ -36,8 +36,8 @@ describe("CreateNewListModal", () => {
     return (
       <AnalyticsContextProvider
         contextPageOwnerId="page-owner-id"
-        contextPageOwnerSlug="page-owner-slug"
-        contextPageOwnerType={OwnerType.saves}
+        __contextPageOwnerSlug__="page-owner-slug"
+        __contextPageOwnerType__={OwnerType.saves}
       >
         <CreateNewListModalContainer
           {...props}

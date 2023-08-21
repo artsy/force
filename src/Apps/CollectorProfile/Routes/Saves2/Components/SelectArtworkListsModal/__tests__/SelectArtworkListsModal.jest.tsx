@@ -42,8 +42,8 @@ const { renderWithRelay } = setupTestWrapperTL<
     return (
       <AnalyticsContextProvider
         contextPageOwnerId="page-owner-id"
-        contextPageOwnerSlug="page-owner-slug"
-        contextPageOwnerType={OwnerType.artist}
+        __contextPageOwnerSlug__="page-owner-slug"
+        __contextPageOwnerType__={OwnerType.artist}
       >
         <ManageArtworkForSavesProvider artwork={artwork}>
           <TestComponent {...props} />

@@ -123,10 +123,7 @@ const PageWrapper: FC<CollectorProfileSaves2RouteProps> = props => {
   const { match } = useRouter()
 
   return (
-    <AnalyticsContextProvider
-      contextPageOwnerId={match.params.id}
-      contextPageOwnerType={OwnerType.saves}
-    >
+    <AnalyticsContextProvider contextPageOwnerId={match.params.id}>
       <CollectorProfileSaves2Route {...props} />
     </AnalyticsContextProvider>
   )

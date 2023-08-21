@@ -34,8 +34,8 @@ describe.skip("ArtistSeriesEntity", () => {
     return mount(
       <AnalyticsContextProvider
         contextPageOwnerId="1234"
-        contextPageOwnerSlug="slug"
-        contextPageOwnerType={OwnerType.collection}
+        __contextPageOwnerSlug__="slug"
+        __contextPageOwnerType__={OwnerType.collection}
       >
         <ArtistSeriesEntity {...passedProps} />
       </AnalyticsContextProvider>

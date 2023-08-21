@@ -45,8 +45,8 @@ describe("FairFollowedArtists", () => {
     return mount(
       <AnalyticsContextProvider
         contextPageOwnerId="example-fair-id"
-        contextPageOwnerSlug="example-fair-slug"
-        contextPageOwnerType={OwnerType.fair}
+        __contextPageOwnerSlug__="example-fair-slug"
+        __contextPageOwnerType__={OwnerType.fair}
       >
         <FairFollowedArtists fair={FAIR_FOLLOWED_ARTISTS_FIXTURE as any} />
       </AnalyticsContextProvider>

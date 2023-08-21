@@ -19,8 +19,8 @@ const { renderWithRelay } = setupTestWrapperTL<FairBoothRail_Test_Query>({
       return (
         <AnalyticsContextProvider
           contextPageOwnerId="context-page-owner-id"
-          contextPageOwnerSlug="context-page-owner-slug"
-          contextPageOwnerType={OwnerType.show}
+          __contextPageOwnerSlug__="context-page-owner-slug"
+          __contextPageOwnerType__={OwnerType.show}
         >
           <BoothFilterContextProvider filters={{ sort: "NAME_ASC", page: 2 }}>
             <FairBoothRailFragmentContainer show={props.show} />

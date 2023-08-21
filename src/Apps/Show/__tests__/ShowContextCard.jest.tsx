@@ -13,8 +13,8 @@ const { getWrapper } = setupTestWrapper<ShowContextCard_Test_Query>({
   Component: props => (
     <AnalyticsContextProvider
       contextPageOwnerId="example-show-id"
-      contextPageOwnerSlug="example-show-slug"
-      contextPageOwnerType={OwnerType.show}
+      __contextPageOwnerSlug__="example-show-slug"
+      __contextPageOwnerType__={OwnerType.show}
     >
       {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
       <ShowContextCardFragmentContainer {...props} />

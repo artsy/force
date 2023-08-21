@@ -20,8 +20,8 @@ const { renderWithRelay } = setupTestWrapperTL<
       <MockBoot>
         <AnalyticsContextProvider
           contextPageOwnerId="example-artwork-id"
-          contextPageOwnerSlug="example-artwork-slug"
-          contextPageOwnerType={OwnerType.artwork}
+          __contextPageOwnerSlug__="example-artwork-slug"
+          __contextPageOwnerType__={OwnerType.artwork}
         >
           {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
           <ArtworkDetailsAdditionalInfoFragmentContainer {...props} />

@@ -21,8 +21,8 @@ describe("FairCollection", () => {
         return (
           <AnalyticsContextProvider
             contextPageOwnerId="abc1234"
-            contextPageOwnerSlug="miart-2020"
-            contextPageOwnerType={OwnerType.fair}
+            __contextPageOwnerSlug__="miart-2020"
+            __contextPageOwnerType__={OwnerType.fair}
           >
             <FairCollectionFragmentContainer
               collection={collection}

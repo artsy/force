@@ -78,7 +78,7 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
 const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
   const {
-    fair: { internalID, profile, slug },
+    fair: { internalID, profile },
   } = props
 
   const { user } = useSystemContext()
@@ -90,10 +90,7 @@ const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
   }
 
   return (
-    <AnalyticsContextProvider
-      contextPageOwnerId={internalID}
-      contextPageOwnerSlug={slug}
-    >
+    <AnalyticsContextProvider contextPageOwnerId={internalID}>
       <FairApp {...props} />
     </AnalyticsContextProvider>
   )
@@ -111,7 +108,6 @@ export const FairAppFragmentContainer = createFragmentContainer(
         ...FairHeaderImage_fair
         ...ExhibitorsLetterNav_fair
         internalID
-        slug
         profile {
           id
         }
