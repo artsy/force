@@ -6,7 +6,7 @@ import {
   SuggestedArtworksShelfQuery,
   SuggestedArtworksShelfQuery$data,
 } from "__generated__/SuggestedArtworksShelfQuery.graphql"
-import { Media } from "Utils/Responsive"
+
 import {
   ShelfArtworkFragmentContainer,
   ShelfArtworkPlaceholder,
@@ -26,24 +26,15 @@ export const SuggestedArtworksShelf: FC<SuggestedArtworksShelfProps> = ({
   const artworks = extractNodes(artworksConnection)
 
   return (
-    <>
-      <Media greaterThan="xs">
-        <Flex
-          flexDirection="row"
-          flexWrap="wrap"
-          gap={2}
-          justifyContent="center"
-        >
-          {artworks.map(artwork => (
-            <ShelfArtworkFragmentContainer
-              artwork={artwork}
-              key={artwork.internalID}
-              data-testid="ShelfSuggestedArtworks"
-            />
-          ))}
-        </Flex>
-      </Media>
-    </>
+    <Flex flexDirection="row" flexWrap="wrap" gap={2} justifyContent="center">
+      {artworks.map(artwork => (
+        <ShelfArtworkFragmentContainer
+          artwork={artwork}
+          key={artwork.internalID}
+          data-testid="ShelfSuggestedArtworks"
+        />
+      ))}
+    </Flex>
   )
 }
 

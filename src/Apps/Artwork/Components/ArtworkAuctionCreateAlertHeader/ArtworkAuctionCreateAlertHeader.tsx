@@ -127,7 +127,9 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
         </Column>
 
         <Column span={12}>
-          <SuggestedArtworksShelfQueryRenderer {...criteria} />
+          <Media greaterThan="xs">
+            <SuggestedArtworksShelfQueryRenderer {...criteria} />
+          </Media>
         </Column>
 
         <Column span={2} start={6}>
