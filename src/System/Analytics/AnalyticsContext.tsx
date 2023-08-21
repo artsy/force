@@ -138,13 +138,19 @@ export const pathToOwnerType = (path: string): PageOwnerType => {
     return OwnerType.home
   }
 
-  const [_type, slug] = tokenize(path)
+  const [_type, slug, tab] = tokenize(path)
 
   // Remove '2' to ensure that show2/fair2/etc are schema compliant
   const type = camelCase(_type).replace("2", "")
 
   switch (true) {
     // Handle special cases
+    case type === "orders" && tab === "shipping":
+      return OwnerType.ordersShipping
+    case type === "orders" && tab === "payment":
+      return OwnerType.ordersPayment
+    case type === "orders" && tab === "review":
+      return OwnerType.ordersReview
     case type === "collectorProfile" && slug === "saves":
       // Why is this somehow different from OwnerType.savesAndFollows?
       // Why aren't there other cases for collector-profile routes?
@@ -160,7 +166,6 @@ export const pathToOwnerType = (path: string): PageOwnerType => {
     case type === "settings":
     case type === "collectorProfile":
       return OwnerType.editProfile
-
     default:
       return OwnerType[type]
   }
