@@ -1,10 +1,10 @@
 import { graphql } from "react-relay"
-import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "../Components/ShowViewingRoom"
+import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "Apps/Show/Components/ShowViewingRoom"
 import { ShowViewingRoom_Test_Query } from "__generated__/ShowViewingRoom_Test_Query.graphql"
 import { useTracking } from "react-tracking"
-import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
@@ -12,16 +12,14 @@ jest.unmock("react-relay")
 const { getWrapper } = setupTestWrapper<ShowViewingRoom_Test_Query>({
   Component: props => {
     return (
-      <AnalyticsContext.Provider
-        value={{
-          contextPageOwnerId: "example-show-id",
-          contextPageOwnerSlug: "example-show-slug",
-          contextPageOwnerType: OwnerType.show,
-        }}
+      <AnalyticsContextProvider
+        contextPageOwnerId="example-show-id"
+        __contextPageOwnerSlug__="example-show-slug"
+        __contextPageOwnerType__={OwnerType.show}
       >
         {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
         <ShowViewingRoom {...props} />
-      </AnalyticsContext.Provider>
+      </AnalyticsContextProvider>
     )
   },
   query: graphql`

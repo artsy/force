@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<21eefa9d47d41323298a4cf955228452>>
+ * @generated SignedSource<<6ef2673021922a5f93f58cabc2152d4a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -268,7 +268,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "df1378df77df69320a1323aba4f2f8f6",
+    "cacheID": "b08d17b25c77374037b4b8d7c9d43067",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -321,7 +321,7 @@ return {
     },
     "name": "FairApp_Test_Query",
     "operationKind": "query",
-    "text": "query FairApp_Test_Query {\n  fair(id: \"example\") {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n\nfragment FairApp_fair on Fair {\n  ...FairTabs_fair\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  ...ExhibitorsLetterNav_fair\n  internalID\n  slug\n  profile {\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairTabs_fair on Fair {\n  href\n  counts {\n    artworks\n  }\n}\n"
+    "text": "query FairApp_Test_Query {\n  fair(id: \"example\") {\n    ...FairApp_fair\n    id\n  }\n}\n\nfragment ExhibitorsLetterNav_fair on Fair {\n  exhibitorsGroupedByName {\n    letter\n  }\n}\n\nfragment FairApp_fair on Fair {\n  ...FairTabs_fair\n  ...FairMeta_fair\n  ...FairHeader_fair\n  ...FairHeaderImage_fair\n  ...ExhibitorsLetterNav_fair\n  internalID\n  profile {\n    id\n  }\n}\n\nfragment FairHeaderImage_fair on Fair {\n  image {\n    url(version: \"wide\")\n  }\n}\n\nfragment FairHeader_fair on Fair {\n  name\n  exhibitionPeriod\n  profile {\n    icon {\n      url(version: [\"large\", \"square\", \"square140\"])\n    }\n    id\n  }\n}\n\nfragment FairMeta_fair on Fair {\n  name\n  slug\n  metaDescription: summary\n  metaImage: image {\n    src: url(version: \"large_rectangle\")\n  }\n}\n\nfragment FairTabs_fair on Fair {\n  href\n  counts {\n    artworks\n  }\n}\n"
   }
 };
 })();

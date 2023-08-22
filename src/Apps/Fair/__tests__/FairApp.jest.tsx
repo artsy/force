@@ -3,10 +3,10 @@ import { FairAppFragmentContainer } from "Apps/Fair/FairApp"
 import { graphql } from "react-relay"
 import { FairApp_Test_Query } from "__generated__/FairApp_Test_Query.graphql"
 import { useTracking } from "react-tracking"
-import { OwnerType } from "@artsy/cohesion"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Router/useRouter"
 import { fireEvent, screen } from "@testing-library/react"
+import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
 
 const mockJumpTo = jest.fn()
 
@@ -29,16 +29,10 @@ const { renderWithRelay } = setupTestWrapperTL<FairApp_Test_Query>({
     if (!props.fair) return null
 
     return (
-      <MockBoot
-        context={{
-          analytics: {
-            contextPageOwnerId: "bson-fair",
-            contextPageOwnerSlug: "miart-2020",
-            contextPageOwnerType: OwnerType.fair,
-          },
-        }}
-      >
-        <FairAppFragmentContainer fair={props.fair} />
+      <MockBoot>
+        <AnalyticsContextProvider contextPageOwnerId="bson-fair">
+          <FairAppFragmentContainer fair={props.fair} />
+        </AnalyticsContextProvider>
       </MockBoot>
     )
   },
@@ -60,7 +54,7 @@ describe("FairApp", () => {
     mockUseRouter.mockImplementation(() => ({
       match: {
         location: {
-          pathname: "anything",
+          pathname: "fair/miart-2020",
         },
       },
     }))

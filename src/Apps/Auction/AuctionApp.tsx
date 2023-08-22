@@ -1,10 +1,7 @@
 import { Box, Join, Message, Spacer, Tab, Tabs, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
-import {
-  AnalyticsContext,
-  useAnalyticsContext,
-} from "System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
 import { AuctionApp_me$data } from "__generated__/AuctionApp_me.graphql"
 import { AuctionApp_sale$data } from "__generated__/AuctionApp_sale.graphql"
 import { AuctionApp_viewer$data } from "__generated__/AuctionApp_viewer.graphql"
@@ -36,7 +33,6 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
   sale,
   viewer,
 }) => {
-  const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
   const { tracking } = useAuctionTracking()
 
   const showActiveBids = me?.showActiveBids?.length && !sale.isClosed
@@ -71,13 +67,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
 
   return (
     <>
-      <AnalyticsContext.Provider
-        value={{
-          contextPageOwnerId: sale.internalID,
-          contextPageOwnerSlug,
-          contextPageOwnerType,
-        }}
-      >
+      <AnalyticsContextProvider contextPageOwnerId={sale.internalID}>
         <WebsocketContextProvider
           channelInfo={{
             channel: "SalesChannel",
@@ -156,7 +146,7 @@ export const AuctionApp: React.FC<AuctionAppProps> = ({
             <Box>{children}</Box>
           </Join>
         </WebsocketContextProvider>
-      </AnalyticsContext.Provider>
+      </AnalyticsContextProvider>
 
       {getENV("SALESFORCE_CHAT_ENABLED") ? (
         <Media greaterThan="xs">

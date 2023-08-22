@@ -30,7 +30,6 @@ export const OtherCollectionEntity: React.FC<CollectionProps> = ({
         contextModule: ContextModule.otherCollectionsRail,
         contextPageOwnerId,
         contextPageOwnerSlug,
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         contextPageOwnerType,
         destinationPageOwnerId: id,
         destinationPageOwnerSlug: slug,

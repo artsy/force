@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0acecd7ca27e37f9bf0a8d6ba93cd8a5>>
+ * @generated SignedSource<<65e33742be706f950351f5bc53e589ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type PartnerApp_partner$data = {
     readonly name: string | null;
   } | null> | null;
   readonly displayFullPartnerPage: boolean | null;
+  readonly internalID: string;
   readonly isDefaultProfilePublic: boolean | null;
   readonly partnerPageEligible: boolean | null;
   readonly partnerType: string | null;
@@ -36,6 +37,13 @@ const node: ReaderFragment = {
   "metadata": null,
   "name": "PartnerApp_partner",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -125,6 +133,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "9ab19f514efb71031e2ccf955bc30515";
+(node as any).hash = "9db7bc7d8ab75e3488b5d16ad875d4f7";
 
 export default node;

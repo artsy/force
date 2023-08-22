@@ -1,13 +1,11 @@
 import { Box, Flex, Image, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import {
-  AnalyticsContext,
-  useAnalyticsContext,
-} from "System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
 import { ExampleArtworkRoute_artwork$data } from "__generated__/ExampleArtworkRoute_artwork.graphql"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { MetaTags } from "Components/MetaTags"
+import { extractNodes } from "Utils/extractNodes"
 
 export interface ExampleArtworkRouteProps {
   artwork: ExampleArtworkRoute_artwork$data
@@ -16,6 +14,8 @@ export interface ExampleArtworkRouteProps {
 const ExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = ({
   artwork,
 }) => {
+  const artists = extractNodes(artwork.artist?.related?.artistsConnection)
+
   return (
     <Box>
       <MetaTags title={`${artwork.title} | Artsy`} />
@@ -33,10 +33,13 @@ const ExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = ({
       <Box>
         <Text variant="sm-display">Related Artists</Text>
         <Flex my={2}>
-          {/* @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION */}
-          {artwork.artist.related.artistsConnection.edges.map(({ node }) => (
-            <Box width={["100%", "25%"]} pr={[0, "20px"]}>
-              <EntityHeaderArtistFragmentContainer artist={node} />
+          {artists.map(artist => (
+            <Box
+              key={artist.internalID}
+              width={["100%", "25%"]}
+              pr={[0, "20px"]}
+            >
+              <EntityHeaderArtistFragmentContainer artist={artist} />
             </Box>
           ))}
         </Flex>
@@ -46,26 +49,17 @@ const ExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = ({
 }
 
 /**
- * Routes with /:id require an additional AnalyticsContext.Provider
- * declaration to add slug and id, extending the context provided by <Boot>
+ * Routes with :slugs require AnalyticsContextProvider to provide the corresponding internalID
  */
 const TrackingWrappedExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = props => {
   const {
-    artwork: { internalID, slug },
+    artwork: { internalID },
   } = props
 
-  const { contextPageOwnerType } = useAnalyticsContext()
-
   return (
-    <AnalyticsContext.Provider
-      value={{
-        contextPageOwnerId: internalID,
-        contextPageOwnerSlug: slug,
-        contextPageOwnerType,
-      }}
-    >
+    <AnalyticsContextProvider contextPageOwnerId={internalID}>
       <ExampleArtworkRoute {...props} />
-    </AnalyticsContext.Provider>
+    </AnalyticsContextProvider>
   )
 }
 
@@ -88,6 +82,7 @@ export const ExampleArtworkRouteFragmentContainer = createFragmentContainer(
               edges {
                 node {
                   ...EntityHeaderArtist_artist
+                  internalID
                 }
               }
             }

@@ -1,6 +1,6 @@
 import { FairFollowedArtists } from "Apps/Fair/Components/FairOverview/FairFollowedArtists"
 import { useTracking } from "react-tracking"
-import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
 import { mount } from "enzyme"
 import { OwnerType } from "@artsy/cohesion"
 
@@ -43,15 +43,13 @@ describe("FairFollowedArtists", () => {
 
   const getWrapper = () => {
     return mount(
-      <AnalyticsContext.Provider
-        value={{
-          contextPageOwnerId: "example-fair-id",
-          contextPageOwnerSlug: "example-fair-slug",
-          contextPageOwnerType: OwnerType.fair,
-        }}
+      <AnalyticsContextProvider
+        contextPageOwnerId="example-fair-id"
+        __contextPageOwnerSlug__="example-fair-slug"
+        __contextPageOwnerType__={OwnerType.fair}
       >
         <FairFollowedArtists fair={FAIR_FOLLOWED_ARTISTS_FIXTURE as any} />
-      </AnalyticsContext.Provider>
+      </AnalyticsContextProvider>
     )
   }
 

@@ -8,6 +8,7 @@ import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "./Com
 import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
 import { PartnerArtistsLoadingContextProvider } from "./Utils/PartnerArtistsLoadingContext"
 import { HttpError } from "found"
+import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
 
 export interface PartnerAppProps {
   partner: PartnerApp_partner$data
@@ -41,38 +42,41 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
   )
 
   return (
-    <PartnerArtistsLoadingContextProvider>
-      {profile && displayFullPartnerPage && (
-        <PartnerHeaderImage profile={profile} />
-      )}
-
-      <PartnerMetaFragmentContainer partner={partner} />
-
-      <PartnerHeader partner={partner} />
-
-      <FullBleed mb={[2, 4]}>
-        {firstEligibleBadgeName ? (
-          <Marquee
-            speed="static"
-            marqueeText={firstEligibleBadgeName.replace(" ", "-")} // hypenate gallery badges
-          />
-        ) : (
-          <Separator />
+    <AnalyticsContextProvider contextPageOwnerId={partner.internalID}>
+      <PartnerArtistsLoadingContextProvider>
+        {profile && displayFullPartnerPage && (
+          <PartnerHeaderImage profile={profile} />
         )}
-      </FullBleed>
 
-      {(displayFullPartnerPage || partnerType === "Brand") && (
-        <NavigationTabs partner={partner} />
-      )}
+        <PartnerMetaFragmentContainer partner={partner} />
 
-      {children}
-    </PartnerArtistsLoadingContextProvider>
+        <PartnerHeader partner={partner} />
+
+        <FullBleed mb={[2, 4]}>
+          {firstEligibleBadgeName ? (
+            <Marquee
+              speed="static"
+              marqueeText={firstEligibleBadgeName.replace(" ", "-")} // hypenate gallery badges
+            />
+          ) : (
+            <Separator />
+          )}
+        </FullBleed>
+
+        {(displayFullPartnerPage || partnerType === "Brand") && (
+          <NavigationTabs partner={partner} />
+        )}
+
+        {children}
+      </PartnerArtistsLoadingContextProvider>
+    </AnalyticsContextProvider>
   )
 }
 
 export const PartnerAppFragmentContainer = createFragmentContainer(PartnerApp, {
   partner: graphql`
     fragment PartnerApp_partner on Partner {
+      internalID
       partnerType
       displayFullPartnerPage
       partnerPageEligible
