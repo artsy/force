@@ -104,7 +104,7 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
           <NewSuggestionItem
             query={query}
             option={option}
-            onRedirect={handleRedirect}
+            onClick={handleRedirect}
             key={index}
           />
         )

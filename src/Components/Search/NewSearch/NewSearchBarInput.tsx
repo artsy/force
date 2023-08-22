@@ -64,7 +64,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
             typename: option.__typename,
           }) ?? "",
         imageUrl: option.imageUrl!,
-        showArtworksButton: !!option.statuses?.artworks,
         showAuctionResultsButton: !!option.statuses?.auctionLots,
         href: option.href!,
         typename: option.__typename,
@@ -75,7 +74,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       value: value,
       subtitle: "",
       imageUrl: "",
-      showArtworksButton: false,
       showAuctionResultsButton: false,
       href: encodedSearchURL,
       typename: "Footer",
@@ -208,11 +206,12 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
             />
           )
         }
+
         return (
           <NewSuggestionItem
             query={value}
             option={option}
-            onRedirect={resetValue}
+            onClick={resetValue}
           />
         )
       }}

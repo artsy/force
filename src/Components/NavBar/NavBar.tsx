@@ -11,7 +11,6 @@ import {
 import CloseIcon from "@artsy/icons/CloseIcon"
 import PersonIcon from "@artsy/icons/PersonIcon"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
-import { SearchBarQueryRenderer } from "Components/Search/SearchBar"
 import { useSystemContext } from "System/SystemContext"
 import * as React from "react"
 import { useEffect, useState } from "react"
@@ -49,7 +48,6 @@ import { useNavBarHeight } from "./useNavBarHeight"
 import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { NewSearchBar } from "Components/Search/NewSearch/NewSearchBar"
 
 /**
@@ -79,10 +77,6 @@ export const NavBar: React.FC = track(
   const isMobile = xs || sm
   const isLoggedIn = Boolean(user)
   const showNotificationCount = isLoggedIn && !showMobileMenu
-
-  const isSearchDropDownImprovementsEnabled = useFeatureFlag(
-    "fx-force-search-dropdown-improvements"
-  )
 
   // Close mobile menu if dragging window from small size to desktop
   useEffect(() => {
@@ -194,8 +188,7 @@ export const NavBar: React.FC = track(
                 flex={1}
                 alignItems="center"
                 onFocus={() => {
-                  if (!isSearchDropDownImprovementsEnabled)
-                    setSearchFocused(true)
+                  setSearchFocused(true)
                 }}
                 // Update only on mobile
                 position={[
@@ -205,11 +198,7 @@ export const NavBar: React.FC = track(
                 width={[`${searchFocused ? "90%" : "auto"}`, "auto"]}
                 zIndex={9}
               >
-                {isSearchDropDownImprovementsEnabled ? (
-                  <NewSearchBar onClose={handleMobileSearchBarClose} />
-                ) : (
-                  <SearchBarQueryRenderer width="100%" />
-                )}
+                <NewSearchBar onClose={handleMobileSearchBarClose} />
 
                 {searchFocused && (
                   <Clickable
