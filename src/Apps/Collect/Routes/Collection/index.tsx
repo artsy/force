@@ -11,10 +11,7 @@ import * as React from "react"
 import { RelayRefetchProp, graphql, createFragmentContainer } from "react-relay"
 import { truncate } from "lodash"
 import { CollectionsHubRailsContainer as CollectionsHubRails } from "./Components/CollectionsHubRails"
-import {
-  AnalyticsContextProps,
-  AnalyticsContextProvider,
-} from "System/Analytics/AnalyticsContext"
+import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
 import { TrackingProp } from "react-tracking"
 import { ErrorPage } from "Components/ErrorPage"
 import { CollectionArtworksFilterRefetchContainer } from "./Components/CollectionArtworksFilter"
@@ -25,7 +22,7 @@ import {
 import { MetaTags } from "Components/MetaTags"
 import { getENV } from "Utils/getENV"
 
-interface CollectionAppProps extends SystemContextProps, AnalyticsContextProps {
+interface CollectionAppProps extends SystemContextProps {
   collection: Collection_collection$data
   relay: RelayRefetchProp
   tracking: TrackingProp

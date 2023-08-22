@@ -12,13 +12,6 @@ import { useToasts } from "@artsy/palette"
 import { camelCase } from "lodash"
 import { useRouter } from "System/Router/useRouter"
 
-// FIXME: Remove this
-export interface AnalyticsContextProps {
-  contextPageOwnerId?: string
-  contextPageOwnerSlug?: string
-  contextPageOwnerType?: PageOwnerType
-}
-
 const AnalyticsContext = createContext<{
   contextPageOwnerId?: string
   contextPageOwnerSlug?: string
