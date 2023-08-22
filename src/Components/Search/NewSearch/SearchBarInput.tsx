@@ -5,10 +5,10 @@ import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { SystemContextProps, useSystemContext } from "System/SystemContext"
 import { extractNodes } from "Utils/extractNodes"
-import { NewSearchBarInput_viewer$data } from "__generated__/NewSearchBarInput_viewer.graphql"
-import { NewSearchBarInputSuggestQuery } from "__generated__/NewSearchBarInputSuggestQuery.graphql"
+import { SearchBarInput_viewer$data } from "__generated__/SearchBarInput_viewer.graphql"
+import { SearchBarInputSuggestQuery } from "__generated__/SearchBarInputSuggestQuery.graphql"
 import createLogger from "Utils/logger"
-import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
+import { SearchInputPillsFragmentContainer } from "Components/Search/NewSearch/SearchInputPills"
 import { isServer } from "Server/isServer"
 import {
   PillType,
@@ -16,9 +16,9 @@ import {
   SEARCH_DEBOUNCE_DELAY,
 } from "Components/Search/NewSearch/constants"
 import {
-  NewSuggestionItem,
+  SuggestionItem,
   SuggestionItemOptionProps,
-} from "./SuggestionItem/NewSuggestionItem"
+} from "./SuggestionItem/SuggestionItem"
 import { useTracking } from "react-tracking"
 import { StaticSearchContainer } from "./StaticSearchContainer"
 import { DESKTOP_NAV_BAR_TOP_TIER_HEIGHT } from "Components/NavBar/constants"
@@ -28,17 +28,17 @@ import { reportPerformanceMeasurement } from "./utils/reportPerformanceMeasureme
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 import { getLabel } from "./utils/getLabel"
 import { ActionType } from "@artsy/cohesion"
-import { NewSearchBarFooter } from "Components/Search/NewSearch/NewSearchBarFooter"
+import { SearchBarFooter } from "Components/Search/NewSearch/SearchBarFooter"
 
-const logger = createLogger("Components/Search/NewSearchBar")
+const logger = createLogger("Components/Search/SearchBar")
 
-export interface NewSearchBarInputProps extends SystemContextProps {
+export interface SearchBarInputProps extends SystemContextProps {
   relay: RelayRefetchProp
-  viewer: NewSearchBarInput_viewer$data
+  viewer: SearchBarInput_viewer$data
   searchTerm: string
 }
 
-const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
+const SearchBarInput: FC<SearchBarInputProps> = ({
   relay,
   viewer,
   searchTerm,
@@ -64,7 +64,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
             typename: option.__typename,
           }) ?? "",
         imageUrl: option.imageUrl!,
-        showArtworksButton: !!option.statuses?.artworks,
         showAuctionResultsButton: !!option.statuses?.auctionLots,
         href: option.href!,
         typename: option.__typename,
@@ -75,7 +74,6 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       value: value,
       subtitle: "",
       imageUrl: "",
-      showArtworksButton: false,
       showAuctionResultsButton: false,
       href: encodedSearchURL,
       typename: "Footer",
@@ -192,7 +190,7 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       onSelect={handleSelect}
       onClick={handleFocus}
       header={
-        <NewSearchInputPillsFragmentContainer
+        <SearchInputPillsFragmentContainer
           viewer={viewer}
           selectedPill={selectedPill}
           onPillClick={handlePillClick}
@@ -201,19 +199,16 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
       renderOption={option => {
         if (option.typename === "Footer") {
           return (
-            <NewSearchBarFooter
+            <SearchBarFooter
               query={value}
               href={encodedSearchURL}
               selectedPill={selectedPill}
             />
           )
         }
+
         return (
-          <NewSuggestionItem
-            query={value}
-            option={option}
-            onRedirect={resetValue}
-          />
+          <SuggestionItem query={value} option={option} onClick={resetValue} />
         )
       }}
       dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
@@ -222,11 +217,11 @@ const NewSearchBarInput: FC<NewSearchBarInputProps> = ({
   )
 }
 
-export const NewSearchBarInputRefetchContainer = createRefetchContainer(
-  NewSearchBarInput,
+export const SearchBarInputRefetchContainer = createRefetchContainer(
+  SearchBarInput,
   {
     viewer: graphql`
-      fragment NewSearchBarInput_viewer on Viewer
+      fragment SearchBarInput_viewer on Viewer
         @argumentDefinitions(
           term: { type: "String!", defaultValue: "" }
           hasTerm: { type: "Boolean!", defaultValue: false }
@@ -257,29 +252,29 @@ export const NewSearchBarInputRefetchContainer = createRefetchContainer(
             }
           }
         }
-        ...NewSearchInputPills_viewer @arguments(term: $term)
+        ...SearchInputPills_viewer @arguments(term: $term)
       }
     `,
   },
   graphql`
-    query NewSearchBarInputRefetchQuery(
+    query SearchBarInputRefetchQuery(
       $term: String!
       $hasTerm: Boolean!
       $entities: [SearchEntity]
     ) {
       viewer {
-        ...NewSearchBarInput_viewer
+        ...SearchBarInput_viewer
           @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
       }
     }
   `
 )
 
-interface NewSearchBarInputQueryRendererProps {
+interface SearchBarInputQueryRendererProps {
   term?: string
 }
 
-export const NewSearchBarInputQueryRenderer: FC<NewSearchBarInputQueryRendererProps> = ({
+export const SearchBarInputQueryRenderer: FC<SearchBarInputQueryRendererProps> = ({
   term,
 }) => {
   const { relayEnvironment, searchQuery = "" } = useSystemContext()
@@ -289,16 +284,16 @@ export const NewSearchBarInputQueryRenderer: FC<NewSearchBarInputQueryRendererPr
   }
 
   return (
-    <SystemQueryRenderer<NewSearchBarInputSuggestQuery>
+    <SystemQueryRenderer<SearchBarInputSuggestQuery>
       environment={relayEnvironment}
       query={graphql`
-        query NewSearchBarInputSuggestQuery(
+        query SearchBarInputSuggestQuery(
           $term: String!
           $hasTerm: Boolean!
           $entities: [SearchEntity]
         ) {
           viewer {
-            ...NewSearchBarInput_viewer
+            ...SearchBarInput_viewer
               @arguments(term: $term, hasTerm: $hasTerm, entities: $entities)
           }
         }
@@ -311,7 +306,7 @@ export const NewSearchBarInputQueryRenderer: FC<NewSearchBarInputQueryRendererPr
       render={({ props }) => {
         if (props?.viewer) {
           return (
-            <NewSearchBarInputRefetchContainer
+            <SearchBarInputRefetchContainer
               viewer={props.viewer}
               searchTerm={term ?? ""}
             />

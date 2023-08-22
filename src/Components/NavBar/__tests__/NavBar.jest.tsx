@@ -5,9 +5,9 @@ import { NavBar } from "Components/NavBar/NavBar"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer as NavBarMobileMenuNotificationsIndicator } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
 import { useAuthDialog } from "Components/AuthDialog"
 
-jest.mock("Components/Search/SearchBar", () => {
+jest.mock("Components/Search/NewSearch/SearchBar", () => {
   return {
-    SearchBarQueryRenderer: () => <div />,
+    SearchBar: () => <div />,
   }
 })
 
@@ -75,7 +75,7 @@ describe("NavBar", () => {
   it("renders Artsy Logo and SearchBar", () => {
     const wrapper = getWrapper()
     expect(wrapper.find("ArtsyMarkIcon").length).toEqual(1)
-    expect(wrapper.find("SearchBarQueryRenderer").length).toEqual(1)
+    expect(wrapper.find("SearchBar").length).toEqual(1)
   })
 
   describe("desktop", () => {

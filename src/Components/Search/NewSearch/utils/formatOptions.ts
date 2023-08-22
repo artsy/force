@@ -1,5 +1,5 @@
 import { getLabel } from "./getLabel"
-import { SuggestionItemOptionProps } from "Components/Search/NewSearch/SuggestionItem/NewSuggestionItem"
+import { SuggestionItemOptionProps } from "Components/Search/NewSearch/SuggestionItem/SuggestionItem"
 
 export interface SearchNodeOption {
   __typename: string
@@ -7,7 +7,6 @@ export interface SearchNodeOption {
   displayType?: string
   imageUrl?: string
   statuses?: {
-    artworks?: boolean
     auctionLots?: boolean
   }
   href?: string
@@ -26,7 +25,6 @@ export const formatOptions = (
           typename: option.__typename,
         }) ?? "",
       imageUrl: option.imageUrl!,
-      showArtworksButton: !!option.statuses?.artworks,
       showAuctionResultsButton: !!option.statuses?.auctionLots,
       href: option.href!,
       typename: option.__typename,

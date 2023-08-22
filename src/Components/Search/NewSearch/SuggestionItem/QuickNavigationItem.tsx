@@ -8,10 +8,11 @@ import {
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 
-type Label = SelectedSearchSuggestionQuickNavigationItem["label"]
-
 interface QuickNavigationItemProps {
-  label: Label
+  /**
+   * Expand union for new options as needed (would need to update Cohesion's schema)
+   */
+  label: "Auction Results"
   to: string
   onClick?: (event: React.MouseEvent<HTMLAnchorElement>) => void
 }
@@ -25,30 +26,25 @@ export const QuickNavigationItem: FC<QuickNavigationItemProps & PillProps> = ({
 }) => {
   const { trackEvent } = useTracking()
 
-  const track = () => {
-    const event: SelectedSearchSuggestionQuickNavigationItem = {
-      context_module: ContextModule.header,
-      destination_path: to,
-      action: ActionType.selectedSearchSuggestionQuickNavigationItem,
-      label,
-    }
-
-    trackEvent(event)
-  }
-
   const handleClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    event.stopPropagation()
-    track()
     onClick?.(event)
+
+    const payload: SelectedSearchSuggestionQuickNavigationItem = {
+      action: ActionType.selectedSearchSuggestionQuickNavigationItem,
+      context_module: ContextModule.header,
+      destination_path: to,
+      label,
+    }
+
+    trackEvent(payload)
   }
 
-  const handleMouseDown = (
-    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  // AutocompleteInput utilizes onMouseDown to handle selection typically.
+  // These links are not part of normal option selection so we want to prevent that
+  const handleMouseDown = (event: React.MouseEvent<HTMLButtonElement>) => {
     event.stopPropagation()
-    onMouseDown?.(event)
   }
 
   return (
@@ -56,8 +52,6 @@ export const QuickNavigationItem: FC<QuickNavigationItemProps & PillProps> = ({
       as={RouterLink}
       // @ts-ignore
       to={to}
-      mt={1}
-      mr={1}
       onClick={handleClick}
       onMouseDown={handleMouseDown}
       {...rest}
