@@ -1,6 +1,9 @@
-import { ShippingTestQuery$rawResponse } from "__generated__/ShippingTestQuery.graphql"
-import { cloneDeep } from "lodash"
-
+import {
+  ShippingTestQuery,
+  ShippingTestQuery$rawResponse,
+} from "__generated__/ShippingTestQuery.graphql"
+import { cloneDeep, create } from "lodash"
+import { act, screen, waitFor } from "@testing-library/react"
 import {
   UntouchedBuyOrder,
   UntouchedOfferOrder,
@@ -15,7 +18,8 @@ import {
   fillIn,
   fillInPhoneNumber,
   validAddress,
-} from "Components/__tests__/Utils/addressForm"
+} from "Components/__tests__/Utils/addressFormEnzymeHelpers"
+import * as TLHelpers from "Components/__tests__/Utils/addressFormTLHelpers"
 import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
 import { graphql } from "react-relay"
@@ -28,7 +32,7 @@ import {
 import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { setupTestWrapper, setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import * as updateUserAddress from "Apps/Order/Mutations/UpdateUserAddress"
 import * as deleteUserAddress from "Apps/Order/Mutations/DeleteUserAddress"
 import {
@@ -40,6 +44,8 @@ import {
   selectShippingQuoteSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { Address } from "Components/AddressForm"
+import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -199,6 +205,120 @@ const testMe: ShippingTestQuery$rawResponse["me"] = {
   },
 }
 
+const pushMock = jest.fn()
+let isCommittingMutation
+const relayEnv = createMockEnvironment()
+
+afterEach(relayEnv.mockClear)
+
+const testWrapperConfig = {
+  Component: (props: any) => (
+    <MockBoot relayEnvironment={relayEnv}>
+      <ShippingFragmentContainer
+        router={{ push: pushMock } as any}
+        order={props.order}
+        me={props.me}
+        // @ts-ignore
+        isCommittingMutation={isCommittingMutation}
+      />
+    </MockBoot>
+  ),
+  query: graphql`
+    query ShippingTestQuery @raw_response_type @relay_test_operation {
+      order: commerceOrder(id: "unused") {
+        ...Shipping_order
+      }
+      me {
+        ...Shipping_me
+      }
+    }
+  `,
+}
+
+const { renderWithRelay } = setupTestWrapperTL<ShippingTestQuery>(
+  testWrapperConfig
+)
+describe("Shipping [@testing-library/react]", () => {
+  const validAddress: Address = {
+    name: "Joelle Van Dyne",
+    country: "US",
+    postalCode: "10013",
+    addressLine1: "401 Broadway",
+    addressLine2: "Suite 25",
+    city: "New York",
+    region: "NY",
+    phoneNumber: "422-424-4242",
+  }
+  describe("US address verification", () => {
+    const addressVerificationResult = {
+      __typename: "VerifyAddressType",
+      verificationStatus: "NOT_FOUND",
+      suggestedAddresses: [],
+      inputAddress: {
+        lines: ["401 Broadway", "Suite 25", "New York, NY 10013", "USA"],
+        address: validAddress,
+      },
+    }
+    beforeAll(() => {
+      ;(useFeatureFlag as jest.Mock).mockImplementation(
+        (featureName: string) => featureName === "address_verification_us"
+      )
+    })
+
+    beforeEach(() => {
+      isCommittingMutation = false
+    })
+    afterEach(() => {
+      jest.clearAllMocks()
+    })
+    afterAll(() => {
+      ;(useFeatureFlag as jest.Mock).mockReset()
+    })
+
+    it("triggers basic form validation first", async () => {
+      const mockResolvers = {
+        CommerceOrder: () => testOrder,
+        Me: () => emptyTestMe,
+      }
+      const { env } = renderWithRelay(mockResolvers, true, {}, relayEnv)
+
+      console.log(env.mock.getAllOperations())
+      env.mock.resolveMostRecentOperation(operation => {
+        return MockPayloadGenerator.generate(operation, mockResolvers)
+      })
+      const submitButton = screen.getByText("Save and Continue")
+      submitButton.click()
+
+      await waitFor(() => {
+        const errorFields = screen.getAllByText("This field is required")
+        expect(errorFields).toHaveLength(7)
+      })
+
+      TLHelpers.fillAddressFields(TLHelpers.validAddress)
+      await waitFor(() => {
+        expect(
+          screen.queryByText("This field is required")
+        ).not.toBeInTheDocument()
+      })
+
+      console.log("about to click")
+      submitButton.click()
+      console.log("cliked")
+
+      act(() => {
+        env.mock.resolveMostRecentOperation(operation => {
+          console.log(operation)
+          return MockPayloadGenerator.generate(operation, {
+            VerifyAddressMutationType: () => addressVerificationResult,
+          })
+        })
+      })
+
+      await screen.findByText("Check your delivery address")
+    })
+  })
+})
+
 class ShippingTestPage extends OrderAppTestPage {
   async selectPickupOption() {
     this.find(`[data-test="pickupOption"]`).last().simulate("click")
@@ -206,14 +326,7 @@ class ShippingTestPage extends OrderAppTestPage {
   }
 }
 
-describe("Shipping [testing-library]", () => {
-  describe("US address verification", () => {})
-})
-
-describe("Shipping [enzyme]", () => {
-  const pushMock = jest.fn()
-  let isCommittingMutation
-
+describe("Shipping [enzyme - deprecated]", () => {
   beforeEach(() => {
     isCommittingMutation = false
   })
@@ -229,29 +342,7 @@ describe("Shipping [enzyme]", () => {
     ;(useFeatureFlag as jest.Mock).mockImplementation(() => false)
   })
 
-  const { getWrapper } = setupTestWrapper({
-    Component: (props: any) => (
-      <MockBoot>
-        <ShippingFragmentContainer
-          router={{ push: pushMock } as any}
-          order={props.order}
-          me={props.me}
-          // @ts-ignore
-          isCommittingMutation={isCommittingMutation}
-        />
-      </MockBoot>
-    ),
-    query: graphql`
-      query ShippingTestQuery @raw_response_type @relay_test_operation {
-        order: commerceOrder(id: "unused") {
-          ...Shipping_order
-        }
-        me {
-          ...Shipping_me
-        }
-      }
-    `,
-  })
+  const { getWrapper } = setupTestWrapper(testWrapperConfig)
 
   describe("with no saved addresses", () => {
     it("removes radio group if pickup_available flag is false", async () => {

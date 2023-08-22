@@ -1,7 +1,7 @@
 import { render, RenderResult } from "@testing-library/react"
 import { mount } from "enzyme"
 import * as React from "react"
-import { QueryRenderer } from "react-relay"
+import { QueryRenderer, RelayEnvironmentProvider } from "react-relay"
 import { GraphQLTaggedNode, OperationType } from "relay-runtime"
 import {
   createMockEnvironment,
@@ -86,22 +86,27 @@ export const setupTestWrapperTL = <T extends OperationType>({
   const renderWithRelay = (
     mockResolvers: MockResolvers = {},
     manualEnvControl?: boolean,
-    componentProps?: {}
+    componentProps?: {},
+    mockedEnv?: ReturnType<
+      typeof createMockEnvironment
+    > = createMockEnvironment()
   ): RenderWithRelay => {
-    const env = createMockEnvironment()
+    const env = mockedEnv || createMockEnvironment()
     const TestRenderer = () => (
-      <QueryRenderer<T>
-        environment={env}
-        variables={variables}
-        query={query}
-        render={({ props, error }) => {
-          if (props) {
-            return <Component {...componentProps} {...(props as {})} />
-          } else if (error) {
-            console.error(error)
-          }
-        }}
-      />
+      <RelayEnvironmentProvider environment={env}>
+        <QueryRenderer<T>
+          environment={env}
+          variables={variables}
+          query={query}
+          render={({ props, error }) => {
+            if (props) {
+              return <Component {...componentProps} {...(props as {})} />
+            } else if (error) {
+              console.error(error)
+            }
+          }}
+        />
+      </RelayEnvironmentProvider>
     )
 
     const view = render(<TestRenderer />)
