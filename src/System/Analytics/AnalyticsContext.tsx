@@ -120,6 +120,8 @@ export const pathToOwnerType = (path: string): PageOwnerType => {
 
   switch (true) {
     // Handle special cases
+    case type === "debug":
+      return OwnerType.home
     case type === "orders" && tab === "shipping":
       return OwnerType.ordersShipping
     case type === "orders" && tab === "payment":
