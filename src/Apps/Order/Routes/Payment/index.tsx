@@ -129,13 +129,16 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     isProcessingRedirect,
     stripeSetupIntentId,
     isPaymentSetupSuccessful,
+    paymentSetupError,
   } = useStripePaymentBySetupIntentId(order.internalID)
 
   // SavingPaymentSpinner is rendered and PaymentContent is hidden when true
   const displayLoading =
     isProcessingRedirect ||
     isSavingPayment ||
-    (!!match?.location?.query?.setup_intent && !bankAccountHasInsufficientFunds)
+    (!!match?.location?.query?.setup_intent &&
+      !bankAccountHasInsufficientFunds &&
+      !paymentSetupError)
 
   let routeSteps
   if (order.mode === "OFFER") {
@@ -347,6 +350,42 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     balanceCheckEnabled,
     selectedPaymentMethod,
   ])
+
+  // show error modal when payment setup error is set
+  useEffect(() => {
+    if (paymentSetupError) {
+      let title = "An error occurred"
+      let message =
+        "Something went wrong. Please try again or contact orders@artsy.net"
+      let width: undefined | number = undefined
+
+      const errorCode = (paymentSetupError as any).code
+
+      if (errorCode === "unsupported_sepa_country") {
+        title = "Choose another payment method"
+        message =
+          "The bank account you entered is not denominated in EUR. Please select another payment method and try again."
+        width = 500
+      }
+
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersPayment,
+        context_owner_id: props.order.internalID,
+        title: title,
+        message: message,
+        error_code: errorCode,
+        flow: "user sets payment by setup intent",
+      })
+
+      props.dialog.showErrorDialog({
+        title,
+        message,
+        width,
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [paymentSetupError])
 
   const setOrderPayment = (
     variables: PaymentRouteSetOrderPaymentMutation["variables"]

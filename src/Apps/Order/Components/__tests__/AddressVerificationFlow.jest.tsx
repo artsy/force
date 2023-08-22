@@ -112,11 +112,7 @@ describe("AddressVerificationFlow", () => {
 
       await screen.findByTestId("emptyAddressVerification")
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
-      expect(mockOnChosenAddress).toHaveBeenCalledWith(
-        "USER",
-        mockInputAddress,
-        true
-      )
+      expect(mockOnChosenAddress).toHaveBeenCalledWith("USER", mockInputAddress)
       expect(trackEvent).not.toHaveBeenCalled()
     })
   })
@@ -181,8 +177,7 @@ describe("AddressVerificationFlow", () => {
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
       expect(mockOnChosenAddress).toHaveBeenCalledWith(
         "USER",
-        mockResult.inputAddress.address,
-        false
+        mockResult.inputAddress.address
       )
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
@@ -208,8 +203,7 @@ describe("AddressVerificationFlow", () => {
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
       expect(mockOnChosenAddress).toHaveBeenCalledWith(
         "ARTSY",
-        mockInputAddress,
-        true
+        mockInputAddress
       )
       expect(trackEvent).not.toHaveBeenCalled()
     })
@@ -292,8 +286,7 @@ describe("AddressVerificationFlow", () => {
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
       expect(mockOnChosenAddress).toHaveBeenCalledWith(
         "ARTSY",
-        mockResult.suggestedAddresses[0].address,
-        false
+        mockResult.suggestedAddresses[0].address
       )
     })
 
@@ -320,11 +313,7 @@ describe("AddressVerificationFlow", () => {
       })
 
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
-      expect(mockOnChosenAddress).toHaveBeenCalledWith(
-        "USER",
-        mockInputAddress,
-        false
-      )
+      expect(mockOnChosenAddress).toHaveBeenCalledWith("USER", mockInputAddress)
     })
 
     it("calls onClose and tracks the click with the user closes the modal", async () => {

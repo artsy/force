@@ -131,6 +131,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     setAddressVerifiedBy,
   ] = useState<AddressVerifiedBy | null>(null)
 
+  const [readyToSaveVerifiedAddress, setReadyToSaveVerifiedAddress] = useState(
+    false
+  )
+
   const [shippingOption, setShippingOption] = useState<
     CommerceOrderFulfillmentTypeEnum
   >(getShippingOption(props.order.requestedFulfillment?.__typename))
@@ -686,6 +690,15 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     return false
   }
 
+  // Automatically proceed after address verification flow is completed.
+  useEffect(() => {
+    if (readyToSaveVerifiedAddress) {
+      finalizeFulfillment()
+    }
+    // disabled because we only want this to run when once when readyToSaveVerifiedAddress changes to true
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [readyToSaveVerifiedAddress])
+
   const renderArtaErrorMessage = () => {
     return (
       <Text
@@ -831,15 +844,14 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                     setAddressNeedsVerification(false)
                     setAddressVerifiedBy(AddressVerifiedBy.USER)
                   }}
-                  onChosenAddress={(
-                    verifiedBy,
-                    chosenAddress,
-                    saveAndContinue
-                  ) => {
+                  onChosenAddress={(verifiedBy, chosenAddress) => {
                     setAddressNeedsVerification(false)
                     setAddressVerifiedBy(verifiedBy)
-                    setAddress({ ...address, ...chosenAddress })
-                    saveAndContinue && finalizeFulfillment()
+                    setAddress(address => {
+                      return { ...address, ...chosenAddress }
+                    })
+                    // trigger finalizeFulfillment() via useEffect
+                    setReadyToSaveVerifiedAddress(true)
                   }}
                 />
               )}
