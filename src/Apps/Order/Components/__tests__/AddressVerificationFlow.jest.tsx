@@ -127,7 +127,7 @@ describe("AddressVerificationFlow", () => {
 
     expect(trackEvent).toHaveBeenCalledTimes(2)
     expect(trackEvent).toHaveBeenNthCalledWith(2, {
-      action_type: "clickedValidationAddress",
+      action: "clickedValidationAddressOptions",
       context_module: "ordersShipping",
       context_page_owner_id: "example-order-id",
       context_page_owner_type: "orders-shipping",
@@ -177,7 +177,7 @@ describe("AddressVerificationFlow", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(1)
       expect(trackEvent).toHaveBeenCalledWith({
-        action_type: "validationAddressViewed",
+        action: "validationAddressViewed",
         context_module: "ordersShipping",
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
@@ -203,7 +203,7 @@ describe("AddressVerificationFlow", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
       expect(trackEvent).toHaveBeenNthCalledWith(2, {
-        action_type: "clickedValidationAddress",
+        action: "clickedValidationAddressOptions",
         context_module: "ordersShipping",
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
@@ -273,7 +273,7 @@ describe("AddressVerificationFlow", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(1)
       expect(trackEvent).toHaveBeenCalledWith({
-        action_type: "validationAddressViewed",
+        action: "validationAddressViewed",
         context_module: "ordersShipping",
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
@@ -293,7 +293,7 @@ describe("AddressVerificationFlow", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
       expect(trackEvent).toHaveBeenNthCalledWith(2, {
-        action_type: "clickedValidationAddress",
+        action: "clickedValidationAddressOptions",
         context_module: "ordersShipping",
         context_page_owner_id: "example-order-id",
         user_id: "example-user-id",
@@ -322,7 +322,7 @@ describe("AddressVerificationFlow", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
       expect(trackEvent).toHaveBeenNthCalledWith(2, {
-        action_type: "clickedValidationAddress",
+        action: "clickedValidationAddressOptions",
         context_module: "ordersShipping",
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
@@ -346,7 +346,7 @@ describe("AddressVerificationFlow", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
       expect(trackEvent).toHaveBeenNthCalledWith(2, {
-        action_type: "clickedValidationAddress",
+        action: "clickedValidationAddressOptions",
         context_module: "ordersShipping",
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",

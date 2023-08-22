@@ -15,7 +15,13 @@ import {
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/SystemContext"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import {
+  ActionType,
+  ClickedValidationAddressOptions,
+  ContextModule,
+  OwnerType,
+  ValidationAddressViewed,
+} from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 type VerifyAddressSuccessType = Extract<
@@ -409,7 +415,7 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
   return (
     <SystemQueryRenderer<AddressVerificationFlowQuery>
       variables={{ address }}
-      render={({ props }) => {
+      render={({ props, error }) => {
         if (!props?.verifyAddress) {
           return null
         }
@@ -466,14 +472,14 @@ const useAddressVerificationTracking = () => {
     trackViewedModal: useCallback(
       ({ subject }: { subject: string }) => {
         trackEvent({
-          action_type: "validationAddressViewed",
+          action: ActionType.validationAddressViewed,
           context_module: ContextModule.ordersShipping,
           context_page_owner_type: OwnerType.ordersShipping,
           context_page_owner_id: contextPageOwnerId,
           user_id: userId,
           flow: "user adding shipping address",
           subject,
-        })
+        } as ValidationAddressViewed)
       },
       [contextPageOwnerId, trackEvent, userId]
     ),
@@ -488,7 +494,7 @@ const useAddressVerificationTracking = () => {
         subject: string
       }) => {
         trackEvent({
-          action_type: "clickedValidationAddress",
+          action: ActionType.clickedValidationAddressOptions,
           context_module: ContextModule.ordersShipping,
           context_page_owner_type: OwnerType.ordersShipping,
           context_page_owner_id: contextPageOwnerId,
@@ -497,7 +503,7 @@ const useAddressVerificationTracking = () => {
           ...(typeof subject !== "undefined" && { subject }),
           ...(typeof option !== "undefined" && { option }),
           ...(typeof label !== "undefined" && { label }),
-        })
+        } as ClickedValidationAddressOptions)
       },
       [contextPageOwnerId, trackEvent, userId]
     ),

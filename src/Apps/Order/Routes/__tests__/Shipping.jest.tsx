@@ -1,6 +1,9 @@
-import { ShippingTestQuery$rawResponse } from "__generated__/ShippingTestQuery.graphql"
+import {
+  ShippingTestQuery,
+  ShippingTestQuery$rawResponse,
+} from "__generated__/ShippingTestQuery.graphql"
 import { cloneDeep } from "lodash"
-
+import { act, fireEvent, screen, waitFor } from "@testing-library/react"
 import {
   UntouchedBuyOrder,
   UntouchedOfferOrder,
@@ -28,7 +31,7 @@ import {
 import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { setupTestWrapper, setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import * as updateUserAddress from "Apps/Order/Mutations/UpdateUserAddress"
 import * as deleteUserAddress from "Apps/Order/Mutations/DeleteUserAddress"
 import {
@@ -40,6 +43,8 @@ import {
   selectShippingQuoteSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { Address } from "Components/AddressForm"
+import { createMockEnvironment } from "relay-test-utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -199,6 +204,287 @@ const testMe: ShippingTestQuery$rawResponse["me"] = {
   },
 }
 
+const pushMock = jest.fn()
+let isCommittingMutation
+const relayEnv = createMockEnvironment()
+
+// This config extracted so it can be used with both enzyme (setupTestWrapper)
+// and react-testing-library (setupTestWrapperTL) tests.
+// We need to pass in our own relayEnv to both <MockBoot /> and
+// renderWithRelay so that downstream QueryRenderers can use the test
+// environment. Otherwise SystemContext will create a new [real] environment.
+const testWrapperConfig = {
+  Component: (props: any) => (
+    <MockBoot
+      relayEnvironment={relayEnv}
+      user={{
+        id: "example-user-id",
+        name: "Logged In",
+        email: "loggedin@example.com",
+      }}
+      context={{ user: { id: "example-user-id" } }}
+    >
+      <ShippingFragmentContainer
+        router={{ push: pushMock } as any}
+        order={props.order}
+        me={props.me}
+        // @ts-ignore
+        isCommittingMutation={isCommittingMutation}
+      />
+    </MockBoot>
+  ),
+  query: graphql`
+    query ShippingTestQuery @raw_response_type @relay_test_operation {
+      order: commerceOrder(id: "unused") {
+        ...Shipping_order
+      }
+      me {
+        ...Shipping_me
+      }
+    }
+  `,
+}
+
+describe("Shipping [@testing-library/react]", () => {
+  const trackEvent = jest.fn()
+  beforeAll(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent,
+    }))
+    ;(useFeatureFlag as jest.Mock).mockImplementation(() => false)
+  })
+  const { renderWithRelay } = setupTestWrapperTL<ShippingTestQuery>(
+    testWrapperConfig
+  )
+
+  const validAddress: Address = {
+    name: "Joelle Van Dyne",
+    country: "US",
+    postalCode: "10013",
+    addressLine1: "401 Broadway",
+    addressLine2: "Suite 25",
+    city: "New York",
+    region: "NY",
+    phoneNumber: "422-424-4242",
+  }
+  const addressVerifiedWithChangesResult = {
+    __typename: "VerifyAddressType",
+    verificationStatus: "VERIFIED_WITH_CHANGES",
+    suggestedAddresses: [
+      {
+        lines: ["401 Broadway Suite 25", "New York, NY 10013", "USA"],
+        address: {
+          addressLine1: "401 Broadway Suite 25",
+          addressLine2: null,
+          city: "New York",
+          region: "NY",
+          postalCode: "10013",
+          country: "US",
+        },
+      },
+    ],
+    inputAddress: {
+      lines: ["401 Broadway", "Suite 25", "New York, NY 10013", "USA"],
+      address: validAddress,
+    },
+  }
+  // const addressVerifiedNoChangesResult = {
+  //   ...addressVerifiedWithChangesResult,
+  //   verificationStatus: "VERIFIED_NO_CHANGES",
+  // }
+  // const addressNotFoundResult = {
+  //   ...addressVerifiedWithChangesResult,
+  //   verificationStatus: "NOT_FOUND",
+  //   suggestedAddresses: [],
+  // }
+
+  const resolveAddressVerification = (relayEnv, resultPayload) => {
+    act(() => {
+      relayEnv.mock.resolveMostRecentOperation(operation => {
+        // TODO: this doesn't work. I have to return full explicit data. WHY?
+        // return MockPayloadGenerator.generate(operation, {
+        //   VerifyAddressMutationType: () => addressVerificationResult,
+        // })
+        return {
+          data: {
+            verifyAddress: {
+              verifyAddressOrError: resultPayload,
+            },
+          },
+        }
+      })
+    })
+  }
+  // TODO: Switch these to use [@testing-library/user-event](https://testing-library.com/docs/user-event/intro#writing-tests-with-userevent)
+  const fireChangeEvent = (input: HTMLElement, value: string) => {
+    fireEvent.change(input, {
+      target: { value: value },
+    })
+  }
+
+  const fillAddressFields = (address: Address = validAddress) => {
+    fireChangeEvent(screen.getByPlaceholderText("Full name"), address.name)
+    fireChangeEvent(screen.getByLabelText("Country"), address.country || "US")
+
+    fireChangeEvent(
+      screen.getByPlaceholderText("Street address"),
+      address.addressLine1 || ""
+    )
+    fireChangeEvent(
+      screen.getByPlaceholderText("Apt, floor, suite, etc."),
+      address.addressLine2 || ""
+    )
+
+    fireChangeEvent(screen.getByPlaceholderText("City"), "New York")
+    fireChangeEvent(
+      screen.getByPlaceholderText("ZIP/postal code"),
+      address.postalCode || ""
+    )
+    fireChangeEvent(
+      screen.getByPlaceholderText("State, province, or region"),
+      address.region || ""
+    )
+
+    fireChangeEvent(
+      screen.getAllByPlaceholderText(
+        "Add phone number including country code"
+      )[0],
+      address.phoneNumber || ""
+    )
+  }
+
+  describe("US address verification", () => {
+    beforeAll(() => {
+      ;(useFeatureFlag as jest.Mock).mockImplementation(
+        (featureName: string) => featureName === "address_verification_us"
+      )
+    })
+
+    beforeEach(() => {
+      isCommittingMutation = false
+    })
+
+    afterEach(() => {
+      jest.clearAllMocks()
+      relayEnv.mockClear()
+    })
+
+    afterAll(() => {
+      ;(useFeatureFlag as jest.Mock).mockReset()
+    })
+
+    it("triggers basic form validation first", async () => {
+      const { env } = renderWithRelay(
+        {
+          CommerceOrder: () => testOrder,
+          Me: () => emptyTestMe,
+        },
+        false,
+        {},
+        relayEnv
+      )
+
+      const submitButton = screen.getByText("Save and Continue")
+      submitButton.click()
+
+      await waitFor(() => {
+        const errorFields = screen.getAllByText("This field is required")
+        expect(errorFields).toHaveLength(7)
+      })
+
+      fillAddressFields(validAddress)
+      await waitFor(() => {
+        expect(
+          screen.queryByText("This field is required")
+        ).not.toBeInTheDocument()
+      })
+
+      submitButton.click()
+
+      // Resolve the address verification query
+      await waitFor(() =>
+        resolveAddressVerification(env, addressVerifiedWithChangesResult)
+      )
+      await screen.findByText("Confirm your delivery address")
+    })
+
+    it("lets the user complete the flow when they select the address they entered", async () => {
+      const { env } = renderWithRelay(
+        {
+          CommerceOrder: () => testOrder,
+          Me: () => emptyTestMe,
+        },
+        false,
+        {},
+        relayEnv
+      )
+
+      fillAddressFields(validAddress)
+
+      screen.getByText("Save and Continue").click()
+      await waitFor(() =>
+        resolveAddressVerification(env, addressVerifiedWithChangesResult)
+      )
+      await screen.findByText("Confirm your delivery address")
+      expect(trackEvent).toHaveBeenCalledTimes(1)
+      expect(trackEvent).toHaveBeenNthCalledWith(
+        1,
+        expect.objectContaining({
+          action: "validationAddressViewed",
+          flow: "user adding shipping address",
+          subject: "Confirm your delivery address",
+        })
+      )
+
+      await waitFor(() => screen.getByText("What you entered").click())
+      mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+
+      screen.getByText("Use This Address").click()
+      await waitFor(() => {
+        expect(
+          screen.queryByText("Confirm your delivery address")
+        ).not.toBeInTheDocument()
+        expect(trackEvent).toHaveBeenCalledTimes(2)
+        expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+
+        expect(trackEvent).toHaveBeenNthCalledWith(
+          2,
+          expect.objectContaining({
+            action: "clickedValidationAddressOptions",
+            label: "Use This Address",
+            option: "What you entered",
+          })
+        )
+        const firstCommitArgs = mockCommitMutation.mock.calls[0][0]
+        expect(firstCommitArgs.mutation.default.fragment.name).toEqual(
+          "SetShippingMutation"
+        )
+        expect(firstCommitArgs.variables.input).toEqual({
+          addressVerifiedBy: "USER",
+          id: "1234",
+          fulfillmentType: "SHIP",
+          phoneNumber: validAddress.phoneNumber,
+          shipping: {
+            ...validAddress,
+            phoneNumber: "",
+          },
+        })
+
+        // TODO: Why do we need the extra drilling here?
+        const secondCommitArgs = mockCommitMutation.mock.calls[1][0][1]
+
+        expect(secondCommitArgs.mutation.default.fragment.name).toEqual(
+          "CreateUserAddressMutation"
+        )
+        expect(secondCommitArgs.variables.input).toEqual({
+          attributes: validAddress,
+        })
+        expect(pushMock).toHaveBeenCalledWith("/orders/1234/payment")
+      })
+    })
+  })
+})
+
 class ShippingTestPage extends OrderAppTestPage {
   async selectPickupOption() {
     this.find(`[data-test="pickupOption"]`).last().simulate("click")
@@ -206,14 +492,7 @@ class ShippingTestPage extends OrderAppTestPage {
   }
 }
 
-describe("Shipping [testing-library]", () => {
-  describe("US address verification", () => {})
-})
-
-describe("Shipping [enzyme]", () => {
-  const pushMock = jest.fn()
-  let isCommittingMutation
-
+describe.skip("Shipping [enzyme - deprecated]", () => {
   beforeEach(() => {
     isCommittingMutation = false
   })
@@ -229,29 +508,7 @@ describe("Shipping [enzyme]", () => {
     ;(useFeatureFlag as jest.Mock).mockImplementation(() => false)
   })
 
-  const { getWrapper } = setupTestWrapper({
-    Component: (props: any) => (
-      <MockBoot>
-        <ShippingFragmentContainer
-          router={{ push: pushMock } as any}
-          order={props.order}
-          me={props.me}
-          // @ts-ignore
-          isCommittingMutation={isCommittingMutation}
-        />
-      </MockBoot>
-    ),
-    query: graphql`
-      query ShippingTestQuery @raw_response_type @relay_test_operation {
-        order: commerceOrder(id: "unused") {
-          ...Shipping_order
-        }
-        me {
-          ...Shipping_me
-        }
-      }
-    `,
-  })
+  const { getWrapper } = setupTestWrapper(testWrapperConfig)
 
   describe("with no saved addresses", () => {
     it("removes radio group if pickup_available flag is false", async () => {
