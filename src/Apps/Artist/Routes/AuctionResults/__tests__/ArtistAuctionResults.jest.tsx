@@ -554,6 +554,10 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
           slice: "CURRENCIES_COUNT",
           counts: [{ name: "USD", value: "USD", count: 100 }],
         },
+        {
+          slice: "LOTS_BY_SALE_YEAR",
+          counts: [],
+        },
       ],
     },
     auctionResultsConnection: {
