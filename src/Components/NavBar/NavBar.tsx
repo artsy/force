@@ -187,9 +187,6 @@ export const NavBar: React.FC = track(
               <Flex
                 flex={1}
                 alignItems="center"
-                onFocus={() => {
-                  setSearchFocused(true)
-                }}
                 // Update only on mobile
                 position={[
                   `${searchFocused ? "absolute" : "relative"}`,
