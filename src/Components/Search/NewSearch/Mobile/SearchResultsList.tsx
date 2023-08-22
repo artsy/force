@@ -7,9 +7,9 @@ import {
 import { SearchResultsList_viewer$data } from "__generated__/SearchResultsList_viewer.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import {
-  NewSuggestionItem,
+  SuggestionItem,
   SuggestionItemOptionProps,
-} from "Components/Search/NewSearch/SuggestionItem/NewSuggestionItem"
+} from "Components/Search/NewSearch/SuggestionItem/SuggestionItem"
 import { Flex, Spinner } from "@artsy/palette"
 import {
   SearchNodeOption,
@@ -101,7 +101,7 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
     <>
       {formattedOptions.map((option, index) => {
         return (
-          <NewSuggestionItem
+          <SuggestionItem
             query={query}
             option={option}
             onClick={handleRedirect}

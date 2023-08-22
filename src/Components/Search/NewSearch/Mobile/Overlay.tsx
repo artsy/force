@@ -9,7 +9,7 @@ import {
 } from "Components/Search/NewSearch/constants"
 import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
 import createLogger from "Utils/logger"
-import { NewSearchInputPillsFragmentContainer } from "Components/Search/NewSearch/NewSearchInputPills"
+import { SearchInputPillsFragmentContainer } from "Components/Search/NewSearch/SearchInputPills"
 import { reportPerformanceMeasurement } from "Components/Search/NewSearch/utils/reportPerformanceMeasurement"
 import { shouldStartSearching } from "Components/Search/NewSearch/utils/shouldStartSearching"
 import { useDebounce } from "Utils/Hooks/useDebounce"
@@ -121,7 +121,7 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
           </Box>
 
           {shouldStartSearching(inputValue) && (
-            <NewSearchInputPillsFragmentContainer
+            <SearchInputPillsFragmentContainer
               onPillClick={handlePillClick}
               viewer={viewer}
               selectedPill={selectedPill}
@@ -154,7 +154,7 @@ export const OverlayRefetchContainer = createRefetchContainer(
           hasTerm: { type: "Boolean!", defaultValue: false }
           entities: { type: "[SearchEntity]" }
         ) {
-        ...NewSearchInputPills_viewer @arguments(term: $term)
+        ...SearchInputPills_viewer @arguments(term: $term)
         ...SearchResultsList_viewer
           @arguments(term: $term, entities: $entities)
           @include(if: $hasTerm)

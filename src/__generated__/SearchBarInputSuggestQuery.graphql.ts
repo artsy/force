@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<55095039f535ab0351d68fe090eb1693>>
+ * @generated SignedSource<<0a012d9fdb4915c7e2274bd8f01ae91d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,19 +11,19 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchEntity = "ARTICLE" | "ARTIST" | "ARTIST_SERIES" | "ARTWORK" | "CITY" | "COLLECTION" | "FAIR" | "FEATURE" | "GALLERY" | "GENE" | "INSTITUTION" | "PAGE" | "PROFILE" | "SALE" | "SHOW" | "TAG" | "VIEWING_ROOM" | "%future added value";
-export type NewSearchBarInputRefetchQuery$variables = {
+export type SearchBarInputSuggestQuery$variables = {
   entities?: ReadonlyArray<SearchEntity | null> | null;
   hasTerm: boolean;
   term: string;
 };
-export type NewSearchBarInputRefetchQuery$data = {
+export type SearchBarInputSuggestQuery$data = {
   readonly viewer: {
-    readonly " $fragmentSpreads": FragmentRefs<"NewSearchBarInput_viewer">;
+    readonly " $fragmentSpreads": FragmentRefs<"SearchBarInput_viewer">;
   } | null;
 };
-export type NewSearchBarInputRefetchQuery = {
-  response: NewSearchBarInputRefetchQuery$data;
-  variables: NewSearchBarInputRefetchQuery$variables;
+export type SearchBarInputSuggestQuery = {
+  response: SearchBarInputSuggestQuery$data;
+  variables: SearchBarInputSuggestQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -66,7 +66,7 @@ return {
     ],
     "kind": "Fragment",
     "metadata": null,
-    "name": "NewSearchBarInputRefetchQuery",
+    "name": "SearchBarInputSuggestQuery",
     "selections": [
       {
         "alias": null,
@@ -91,7 +91,7 @@ return {
               }
             ],
             "kind": "FragmentSpread",
-            "name": "NewSearchBarInput_viewer"
+            "name": "SearchBarInput_viewer"
           }
         ],
         "storageKey": null
@@ -108,7 +108,7 @@ return {
       (v0/*: any*/)
     ],
     "kind": "Operation",
-    "name": "NewSearchBarInputRefetchQuery",
+    "name": "SearchBarInputSuggestQuery",
     "selections": [
       {
         "alias": null,
@@ -330,16 +330,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "58a551411af36e1230870fdbef18f921",
+    "cacheID": "244adb5043b2f3806342f9da61a8e76b",
     "id": null,
     "metadata": {},
-    "name": "NewSearchBarInputRefetchQuery",
+    "name": "SearchBarInputSuggestQuery",
     "operationKind": "query",
-    "text": "query NewSearchBarInputRefetchQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...NewSearchBarInput_viewer_1B9obU\n  }\n}\n\nfragment NewSearchBarInput_viewer_1B9obU on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n  ...NewSearchInputPills_viewer_4hh6ED\n}\n\nfragment NewSearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n"
+    "text": "query SearchBarInputSuggestQuery(\n  $term: String!\n  $hasTerm: Boolean!\n  $entities: [SearchEntity]\n) {\n  viewer {\n    ...SearchBarInput_viewer_1B9obU\n  }\n}\n\nfragment SearchBarInput_viewer_1B9obU on Viewer {\n  searchConnection(query: $term, entities: $entities, mode: AUTOSUGGEST, first: 7) @include(if: $hasTerm) {\n    edges {\n      node {\n        displayLabel\n        href\n        imageUrl\n        __typename\n        ... on SearchableItem {\n          displayType\n          slug\n        }\n        ... on Artist {\n          statuses {\n            artworks\n            auctionLots\n          }\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n      }\n    }\n  }\n  ...SearchInputPills_viewer_4hh6ED\n}\n\nfragment SearchInputPills_viewer_4hh6ED on Viewer {\n  searchConnectionAggregation: searchConnection(first: 0, mode: AUTOSUGGEST, query: $term, aggregations: [TYPE]) {\n    aggregations {\n      counts {\n        count\n        name\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c665338e849ac816e4befa7eda72e93c";
+(node as any).hash = "95d353003e510c4ac573272097b475de";
 
 export default node;

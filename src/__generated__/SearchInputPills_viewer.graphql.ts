@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cf24b9a90b06e9bd0f80bd8443910b6d>>
+ * @generated SignedSource<<d1ef6b49b5944d14c15e8c7936b8685b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NewSearchInputPills_viewer$data = {
+export type SearchInputPills_viewer$data = {
   readonly searchConnectionAggregation: {
     readonly aggregations: ReadonlyArray<{
       readonly counts: ReadonlyArray<{
@@ -19,11 +19,11 @@ export type NewSearchInputPills_viewer$data = {
       } | null> | null;
     } | null> | null;
   } | null;
-  readonly " $fragmentType": "NewSearchInputPills_viewer";
+  readonly " $fragmentType": "SearchInputPills_viewer";
 };
-export type NewSearchInputPills_viewer$key = {
-  readonly " $data"?: NewSearchInputPills_viewer$data;
-  readonly " $fragmentSpreads": FragmentRefs<"NewSearchInputPills_viewer">;
+export type SearchInputPills_viewer$key = {
+  readonly " $data"?: SearchInputPills_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SearchInputPills_viewer">;
 };
 
 const node: ReaderFragment = {
@@ -36,7 +36,7 @@ const node: ReaderFragment = {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "NewSearchInputPills_viewer",
+  "name": "SearchInputPills_viewer",
   "selections": [
     {
       "alias": "searchConnectionAggregation",
@@ -113,6 +113,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "49a362a9711b6eb80245196a95e72bf9";
+(node as any).hash = "7c6c7b1125cae5937bfc554e43d7db56";
 
 export default node;

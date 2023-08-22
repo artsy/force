@@ -9,7 +9,7 @@ import {
 import { FC, useEffect, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
-import { NewSearchInputPills_viewer$data } from "__generated__/NewSearchInputPills_viewer.graphql"
+import { SearchInputPills_viewer$data } from "__generated__/SearchInputPills_viewer.graphql"
 import {
   PILLS,
   PillType,
@@ -62,15 +62,15 @@ const PillsContainer = styled(Flex)`
 
 const GRADIENT_BG_WIDTH = 30
 
-interface NewSearchInputPillsProps {
-  viewer: NewSearchInputPills_viewer$data
+interface SearchInputPillsProps {
+  viewer: SearchInputPills_viewer$data
   selectedPill: PillType
   enableChevronNavigation?: boolean
   forceDisabled?: boolean
   onPillClick: (pill: PillType) => void
 }
 
-const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({
+const SearchInputPills: FC<SearchInputPillsProps> = ({
   viewer,
   selectedPill,
   enableChevronNavigation = true,
@@ -225,11 +225,11 @@ const NewSearchInputPills: FC<NewSearchInputPillsProps> = ({
   )
 }
 
-export const NewSearchInputPillsFragmentContainer = createFragmentContainer(
-  NewSearchInputPills,
+export const SearchInputPillsFragmentContainer = createFragmentContainer(
+  SearchInputPills,
   {
     viewer: graphql`
-      fragment NewSearchInputPills_viewer on Viewer
+      fragment SearchInputPills_viewer on Viewer
         @argumentDefinitions(term: { type: "String!", defaultValue: "" }) {
         searchConnectionAggregation: searchConnection(
           first: 0

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1bd9858b31c6193f77dfdbc8eff12410>>
+ * @generated SignedSource<<953a6914a20668a8c9233b6d2ffb5817>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NewSearchBarInput_viewer$data = {
+export type SearchBarInput_viewer$data = {
   readonly searchConnection?: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -27,12 +27,12 @@ export type NewSearchBarInput_viewer$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"NewSearchInputPills_viewer">;
-  readonly " $fragmentType": "NewSearchBarInput_viewer";
+  readonly " $fragmentSpreads": FragmentRefs<"SearchInputPills_viewer">;
+  readonly " $fragmentType": "SearchBarInput_viewer";
 };
-export type NewSearchBarInput_viewer$key = {
-  readonly " $data"?: NewSearchBarInput_viewer$data;
-  readonly " $fragmentSpreads": FragmentRefs<"NewSearchBarInput_viewer">;
+export type SearchBarInput_viewer$key = {
+  readonly " $data"?: SearchBarInput_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SearchBarInput_viewer">;
 };
 
 const node: ReaderFragment = {
@@ -55,7 +55,7 @@ const node: ReaderFragment = {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "NewSearchBarInput_viewer",
+  "name": "SearchBarInput_viewer",
   "selections": [
     {
       "condition": "hasTerm",
@@ -208,13 +208,13 @@ const node: ReaderFragment = {
         }
       ],
       "kind": "FragmentSpread",
-      "name": "NewSearchInputPills_viewer"
+      "name": "SearchInputPills_viewer"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "34be6c938696883ffedbacb2ad694f1f";
+(node as any).hash = "92e9fc123f592d6f0778d455c3febb50";
 
 export default node;

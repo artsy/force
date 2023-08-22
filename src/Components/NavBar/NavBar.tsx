@@ -48,7 +48,7 @@ import { useNavBarHeight } from "./useNavBarHeight"
 import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
-import { NewSearchBar } from "Components/Search/NewSearch/NewSearchBar"
+import { SearchBar } from "Components/Search/NewSearch/SearchBar"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included
@@ -198,7 +198,7 @@ export const NavBar: React.FC = track(
                 width={[`${searchFocused ? "90%" : "auto"}`, "auto"]}
                 zIndex={9}
               >
-                <NewSearchBar onClose={handleMobileSearchBarClose} />
+                <SearchBar onClose={handleMobileSearchBarClose} />
 
                 {searchFocused && (
                   <Clickable

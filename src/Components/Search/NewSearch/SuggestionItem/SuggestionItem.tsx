@@ -21,7 +21,7 @@ interface SuggestionItemProps {
   onClick: (option?: SuggestionItemOptionProps) => void
 }
 
-export const NewSuggestionItem: FC<SuggestionItemProps> = props => {
+export const SuggestionItem: FC<SuggestionItemProps> = props => {
   const { option, onClick } = props
 
   const handleClick = () => {
