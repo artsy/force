@@ -182,19 +182,23 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                 {hasVerifiedRepresentatives && (
                   <Text variant="sm" color="black60">
                     Represented by: &nbsp;
-                    {artist.verifiedRepresentatives.map((rep, index) => {
-                      return (
-                        <Fragment key={rep.slug}>
-                          {index > 0 && ", "}
-                          <RouterLink
-                            to={`/partner/${rep.slug}`}
-                            color="black100"
-                          >
-                            {rep.name}
-                          </RouterLink>
-                        </Fragment>
-                      )
-                    })}
+                    {artist.verifiedRepresentatives.map(
+                      ({ partner }, index) => {
+                        if (!partner) return null
+
+                        return (
+                          <Fragment key={partner.slug}>
+                            {index > 0 && ", "}
+                            <RouterLink
+                              to={`/partner/${partner.slug}`}
+                              color="black100"
+                            >
+                              {partner.name}
+                            </RouterLink>
+                          </Fragment>
+                        )
+                      }
+                    )}
                   </Text>
                 )}
 
