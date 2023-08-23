@@ -235,7 +235,7 @@ describe("AuctionResults", () => {
           checked: true,
         })
 
-        expect(checkedCheckboxes).toHaveLength(9)
+        expect(checkedCheckboxes).toHaveLength(10)
         expect(checkedCheckboxes[0]).toHaveTextContent("Hide upcoming auctions")
         expect(checkedCheckboxes[1]).toHaveTextContent("Painting")
         expect(checkedCheckboxes[2]).toHaveTextContent("Small (under 40cm)")
@@ -246,9 +246,12 @@ describe("AuctionResults", () => {
         expect(checkedCheckboxes[5]).toHaveTextContent(
           "Include unknown and unavailable prices"
         )
-        expect(checkedCheckboxes[6]).toHaveTextContent("Phillips")
-        expect(checkedCheckboxes[7]).toHaveTextContent("Bonhams")
-        expect(checkedCheckboxes[8]).toHaveTextContent("Artsy Auction")
+        expect(checkedCheckboxes[6]).toHaveTextContent(
+          "Include unspecified sale dates"
+        )
+        expect(checkedCheckboxes[7]).toHaveTextContent("Phillips")
+        expect(checkedCheckboxes[8]).toHaveTextContent("Bonhams")
+        expect(checkedCheckboxes[9]).toHaveTextContent("Artsy Auction")
 
         expect(radioElements).toHaveLength(2)
         expect(radioElements[0]).toHaveTextContent("cm")
@@ -322,7 +325,7 @@ describe("AuctionResults", () => {
               })
             })
 
-            expect(trackEvent).toHaveBeenCalledTimes(3)
+            expect(trackEvent).toHaveBeenCalledTimes(5)
             expect(trackEvent.mock.calls[0][0]).toMatchObject({
               action_type: "Auction results filter params changed",
               context_page: "Artist Auction Results",
@@ -331,12 +334,13 @@ describe("AuctionResults", () => {
 
             const { changed, current } = trackEvent.mock.calls[0][0]
             expect(JSON.parse(changed)).toMatchObject({
-              categories: ["Work on Paper"],
+              saleEndYear: 2023,
             })
             expect(JSON.parse(current)).toMatchObject({
-              categories: ["Work on Paper"],
-              organizations: [],
-              sizes: [],
+              categories: ["Painting"],
+              organizations: ["Phillips", "Bonhams", "Artsy Auction"],
+              saleEndYear: 2023,
+              sizes: ["SMALL", "LARGE"],
               page: 1,
               sort: "DATE_DESC",
               allowEmptyCreatedDates: true,
