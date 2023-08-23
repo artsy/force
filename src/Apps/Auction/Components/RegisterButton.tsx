@@ -223,14 +223,11 @@ const ButtonAction: React.FC<{
   return (
     <Flex flexDirection="column" data-testid="RegisterButton">
       <Button
+        // @ts-ignore
+        as={RouterLink}
+        to={to}
         onClick={onClick}
         disabled={disabled}
-        {...(to
-          ? {
-              as: RouterLink,
-              to,
-            }
-          : {})}
       >
         {title}
       </Button>
