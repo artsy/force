@@ -109,7 +109,7 @@
       "watchingLot": "Watching lot"
     },
     "artworkAuctionCreateAlertHeader": {
-      "suggestedArtworksButton": "Suggested Artworks",
+      "suggestedArtworksButton": "Browse Similar Artworks",
       "seeMoreButton": "See more",
       "suggestedArtworksModal": {
         "title": "Suggested Artworks",

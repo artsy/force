@@ -41,7 +41,7 @@ export const SuggestedArtworksShelf: FC<SuggestedArtworksShelfProps> = ({
 export const SuggestedArtworksShelfQueryRenderer: FC<SearchCriteriaAttributes> = props => {
   return (
     <SystemQueryRenderer<SuggestedArtworksShelfQuery>
-      placeholder={<ContentPlaceholder />}
+      placeholder={<SuggestedArtworksShelfPlaceholder />}
       query={graphql`
         query SuggestedArtworksShelfQuery($input: FilterArtworksInput) {
           artworksConnection(input: $input) {
@@ -72,7 +72,7 @@ export const SuggestedArtworksShelfQueryRenderer: FC<SearchCriteriaAttributes> =
         }
 
         if (!relayProps?.artworksConnection) {
-          return <ContentPlaceholder />
+          return <SuggestedArtworksShelfPlaceholder />
         }
 
         return (
@@ -85,10 +85,10 @@ export const SuggestedArtworksShelfQueryRenderer: FC<SearchCriteriaAttributes> =
   )
 }
 
-const ContentPlaceholder: FC = () => {
+const SuggestedArtworksShelfPlaceholder: FC = () => {
   return (
     <Skeleton>
-      <Flex flexDirection="row" flexWrap="wrap" gap={1} justifyContent="center">
+      <Flex flexDirection="row" flexWrap="wrap" gap={2} justifyContent="center">
         {[...new Array(5)].map((_, i) => {
           return <ShelfArtworkPlaceholder key={i} index={i} />
         })}
