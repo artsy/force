@@ -3,6 +3,7 @@ import { BackToFairBanner_show$data } from "__generated__/BackToFairBanner_show.
 import { createFragmentContainer, graphql } from "react-relay"
 import { TopContextBar } from "Components/TopContextBar"
 import { useRouter } from "System/Router/useRouter"
+import { sanitizeURL } from "Utils/sanitizeURL"
 
 interface BackToFairBannerProps {
   show: BackToFairBanner_show$data
@@ -14,7 +15,8 @@ const BackToFairBanner: React.FC<BackToFairBannerProps & BoxProps> = ({
   const { match } = useRouter()
   const { back_to_fair_href } = match.location.query
   const { fair } = show
-  let link = back_to_fair_href ?? fair?.href
+
+  const link = back_to_fair_href ? sanitizeURL(back_to_fair_href) : fair?.href
 
   if (!fair?.name) {
     return null
