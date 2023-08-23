@@ -5,6 +5,7 @@ import { useTracking } from "react-tracking"
 import { ArtistBackLink_artist$data } from "__generated__/ArtistBackLink_artist.graphql"
 import { TopContextBar } from "Components/TopContextBar"
 import { useRouter } from "System/Router/useRouter"
+import { sanitizeURL } from "Utils/sanitizeURL"
 
 interface ArtistBackLinkProps {
   artist: ArtistBackLink_artist$data
@@ -17,7 +18,7 @@ const ArtistBackLink: React.FC<ArtistBackLinkProps> = ({ artist }) => {
 
   const returnTo = router.match?.location?.query?.returnTo
 
-  const href = returnTo || artist.href
+  const href = returnTo ? sanitizeURL(returnTo) : artist.href
 
   return (
     <TopContextBar
