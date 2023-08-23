@@ -344,7 +344,6 @@ describe("ViewingRoomApp", () => {
 
 const DraftViewingRoomAppFixture: ViewingRoomApp_DraftTest_Query$rawResponse = {
   viewingRoom: {
-    internalID: "example",
     href: "/viewing-room/example",
     pullQuote: "Example pull quote",
     distanceToClose: null,
@@ -368,7 +367,6 @@ const DraftViewingRoomAppFixture: ViewingRoomApp_DraftTest_Query$rawResponse = {
 
 const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_Query$rawResponse = {
   viewingRoom: {
-    internalID: "example",
     href: "/viewing-room/example",
     pullQuote: "Example pull quote",
     distanceToClose: null,
@@ -392,7 +390,6 @@ const ScheduledViewingRoomAppFixture: ViewingRoomApp_ScheduledTest_Query$rawResp
 
 const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_Query$rawResponse = {
   viewingRoom: {
-    internalID: "example",
     href: "/viewing-room/example",
     pullQuote: "Example pull quote",
     distanceToClose: "1 month",
@@ -416,7 +413,6 @@ const OpenViewingRoomAppFixture: ViewingRoomApp_OpenTest_Query$rawResponse = {
 
 const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_Query$rawResponse = {
   viewingRoom: {
-    internalID: "example",
     href: "/viewing-room/example",
     pullQuote: "Example pull quote",
     distanceToClose: null,
@@ -440,7 +436,6 @@ const ClosedViewingRoomAppFixture: ViewingRoomApp_ClosedTest_Query$rawResponse =
 
 const LoggedOutViewingRoomAppFixture: ViewingRoomApp_LoggedOutTest_Query$rawResponse = {
   viewingRoom: {
-    internalID: "example",
     href: "/viewing-room/example",
     pullQuote: "Example pull quote",
     distanceToClose: "1 month",

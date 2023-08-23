@@ -1,9 +1,9 @@
 import { CollectionsRailFixture } from "Apps/__tests__/Fixtures/Collections"
 import { mount } from "enzyme"
-import { RelatedCollectionEntity } from "Components/RelatedCollectionsRail/RelatedCollectionEntity"
+import { RelatedCollectionEntity } from "../RelatedCollectionEntity"
 import { useTracking } from "react-tracking"
 import { OwnerType } from "@artsy/cohesion"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { RouterLink } from "System/Router/RouterLink"
 
 jest.mock("react-tracking")
@@ -26,13 +26,15 @@ describe.skip("RelatedCollectionEntity", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
-      <AnalyticsContextProvider
-        contextPageOwnerId="1234"
-        __contextPageOwnerSlug__="slug"
-        __contextPageOwnerType__={OwnerType.collection}
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "1234",
+          contextPageOwnerSlug: "slug",
+          contextPageOwnerType: OwnerType.collection,
+        }}
       >
         <RelatedCollectionEntity {...passedProps} />
-      </AnalyticsContextProvider>
+      </AnalyticsContext.Provider>
     )
   }
 

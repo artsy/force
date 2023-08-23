@@ -1,7 +1,10 @@
 import { Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistApp_artist$data } from "__generated__/ArtistApp_artist.graphql"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import {
+  AnalyticsContext,
+  useAnalyticsContext,
+} from "System/Analytics/AnalyticsContext"
 import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"
 import { ArtistHeaderFragmentContainer as ArtistHeader2FragmentContainer } from "./Components/ArtistHeader/ArtistHeader2"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
@@ -15,6 +18,8 @@ interface ArtistAppProps {
 }
 
 const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children }) => {
+  const { contextPageOwnerType, contextPageOwnerSlug } = useAnalyticsContext()
+
   useScrollToOpenArtistAuthModal()
 
   const isRevisedArtistHeader = useFeatureFlag("diamond_revised-artist-header")
@@ -23,7 +28,13 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children }) => {
     <>
       <ArtistMetaFragmentContainer artist={artist} />
 
-      <AnalyticsContextProvider contextPageOwnerId={artist.internalID}>
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: artist.internalID,
+          contextPageOwnerSlug,
+          contextPageOwnerType,
+        }}
+      >
         <Spacer y={[2, 4]} />
 
         {isRevisedArtistHeader ? (
@@ -57,7 +68,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children }) => {
         <Spacer y={[0, 4]} />
 
         {children}
-      </AnalyticsContextProvider>
+      </AnalyticsContext.Provider>
     </>
   )
 }

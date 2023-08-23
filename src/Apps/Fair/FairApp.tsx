@@ -4,7 +4,10 @@ import { FairApp_fair$data } from "__generated__/FairApp_fair.graphql"
 import { DROP_SHADOW, FullBleed, Spacer } from "@artsy/palette"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
 import { useSystemContext } from "System/useSystemContext"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import {
+  AnalyticsContext,
+  useAnalyticsContext,
+} from "System/Analytics/AnalyticsContext"
 import { HttpError } from "found"
 import { useRouter } from "System/Router/useRouter"
 import { userIsAdmin } from "Utils/user"
@@ -78,8 +81,10 @@ const FairApp: React.FC<FairAppProps> = ({ children, fair }) => {
 
 const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
   const {
-    fair: { internalID, profile },
+    fair: { internalID, profile, slug },
   } = props
+
+  const { contextPageOwnerType } = useAnalyticsContext()
 
   const { user } = useSystemContext()
 
@@ -90,9 +95,15 @@ const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
   }
 
   return (
-    <AnalyticsContextProvider contextPageOwnerId={internalID}>
+    <AnalyticsContext.Provider
+      value={{
+        contextPageOwnerId: internalID,
+        contextPageOwnerSlug: slug,
+        contextPageOwnerType,
+      }}
+    >
       <FairApp {...props} />
-    </AnalyticsContextProvider>
+    </AnalyticsContext.Provider>
   )
 }
 
@@ -108,6 +119,7 @@ export const FairAppFragmentContainer = createFragmentContainer(
         ...FairHeaderImage_fair
         ...ExhibitorsLetterNav_fair
         internalID
+        slug
         profile {
           id
         }

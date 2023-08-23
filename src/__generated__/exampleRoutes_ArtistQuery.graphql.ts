@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<45a58708b37983188608af996e206a95>>
+ * @generated SignedSource<<fa1ff612eef6bf97e8bf8a269bfb3867>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -109,6 +109,13 @@ return {
             "kind": "ScalarField",
             "name": "internalID",
             "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "slug",
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -116,12 +123,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f4b3a80c97fa58b6055b7bff5ba53caf",
+    "cacheID": "8f7d15cd5f0d3bb3949bd45c16f88738",
     "id": null,
     "metadata": {},
     "name": "exampleRoutes_ArtistQuery",
     "operationKind": "query",
-    "text": "query exampleRoutes_ArtistQuery(\n  $slug: String!\n) {\n  artist(id: $slug) @principalField {\n    id\n    ...ExampleArtistRoute_artist\n  }\n}\n\nfragment ExampleArtistRoute_artist on Artist {\n  name\n  bio\n  internalID\n}\n"
+    "text": "query exampleRoutes_ArtistQuery(\n  $slug: String!\n) {\n  artist(id: $slug) @principalField {\n    id\n    ...ExampleArtistRoute_artist\n  }\n}\n\nfragment ExampleArtistRoute_artist on Artist {\n  name\n  bio\n  internalID\n  slug\n}\n"
   }
 };
 })();

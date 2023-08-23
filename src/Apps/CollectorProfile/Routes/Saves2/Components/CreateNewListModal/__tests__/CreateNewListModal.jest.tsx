@@ -4,7 +4,7 @@ import {
   CreateNewListModalContainer,
   CreateNewListModalContainerProps,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useTracking } from "react-tracking"
 
@@ -34,10 +34,12 @@ describe("CreateNewListModal", () => {
 
   const TestComponent = (props: Partial<CreateNewListModalContainerProps>) => {
     return (
-      <AnalyticsContextProvider
-        contextPageOwnerId="page-owner-id"
-        __contextPageOwnerSlug__="page-owner-slug"
-        __contextPageOwnerType__={OwnerType.saves}
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "page-owner-id",
+          contextPageOwnerSlug: "page-owner-slug",
+          contextPageOwnerType: OwnerType.saves,
+        }}
       >
         <CreateNewListModalContainer
           {...props}
@@ -45,7 +47,7 @@ describe("CreateNewListModal", () => {
           onClose={props.onClose ?? onCloseMock}
           onComplete={props.onComplete ?? onCompleteMock}
         />
-      </AnalyticsContextProvider>
+      </AnalyticsContext.Provider>
     )
   }
 

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<013097b127508cdde0d1116f9ca614af>>
+ * @generated SignedSource<<8385fabcd3b2ff6ba2697ae8718bb2f3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,6 @@ export type ViewingRoomApp_ScheduledTest_Query$rawResponse = {
         readonly normalized: string | null;
       } | null;
     } | null;
-    readonly internalID: string;
     readonly partner: {
       readonly href: string | null;
       readonly id: string;
@@ -69,25 +68,18 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v4 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "String"
 },
-v5 = {
+v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "ID"
 },
-v6 = {
+v5 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
@@ -201,7 +193,13 @@ return {
                 "name": "id",
                 "storageKey": null
               },
-              (v3/*: any*/)
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              }
             ],
             "storageKey": null
           },
@@ -225,15 +223,14 @@ return {
             "kind": "ScalarField",
             "name": "status",
             "storageKey": null
-          },
-          (v3/*: any*/)
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "8a97c70297faaffd0289d44eb4b3000b",
+    "cacheID": "8e55ad76766571c76959d338b77eb60c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -243,9 +240,9 @@ return {
           "plural": false,
           "type": "ViewingRoom"
         },
-        "viewingRoom.distanceToClose": (v4/*: any*/),
-        "viewingRoom.distanceToOpen": (v4/*: any*/),
-        "viewingRoom.href": (v4/*: any*/),
+        "viewingRoom.distanceToClose": (v3/*: any*/),
+        "viewingRoom.distanceToOpen": (v3/*: any*/),
+        "viewingRoom.href": (v3/*: any*/),
         "viewingRoom.image": {
           "enumValues": null,
           "nullable": true,
@@ -258,26 +255,25 @@ return {
           "plural": false,
           "type": "ImageURLs"
         },
-        "viewingRoom.image.imageURLs.normalized": (v4/*: any*/),
-        "viewingRoom.internalID": (v5/*: any*/),
+        "viewingRoom.image.imageURLs.normalized": (v3/*: any*/),
         "viewingRoom.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "viewingRoom.partner.href": (v4/*: any*/),
-        "viewingRoom.partner.id": (v5/*: any*/),
-        "viewingRoom.partner.internalID": (v5/*: any*/),
-        "viewingRoom.partner.name": (v4/*: any*/),
-        "viewingRoom.pullQuote": (v4/*: any*/),
-        "viewingRoom.status": (v6/*: any*/),
-        "viewingRoom.title": (v6/*: any*/)
+        "viewingRoom.partner.href": (v3/*: any*/),
+        "viewingRoom.partner.id": (v4/*: any*/),
+        "viewingRoom.partner.internalID": (v4/*: any*/),
+        "viewingRoom.partner.name": (v3/*: any*/),
+        "viewingRoom.pullQuote": (v3/*: any*/),
+        "viewingRoom.status": (v5/*: any*/),
+        "viewingRoom.title": (v5/*: any*/)
       }
     },
     "name": "ViewingRoomApp_ScheduledTest_Query",
     "operationKind": "query",
-    "text": "query ViewingRoomApp_ScheduledTest_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  internalID\n  status\n  partner {\n    internalID\n    id\n  }\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  title\n  partner {\n    name\n    href\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n  href\n  pullQuote\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n}\n"
+    "text": "query ViewingRoomApp_ScheduledTest_Query(\n  $slug: ID!\n) {\n  viewingRoom(id: $slug) {\n    ...ViewingRoomApp_viewingRoom\n  }\n}\n\nfragment ViewingRoomApp_viewingRoom on ViewingRoom {\n  ...ViewingRoomMeta_viewingRoom\n  ...ViewingRoomHeader_viewingRoom\n  ...ViewingRoomContentNotAccessible_viewingRoom\n  partner {\n    internalID\n    id\n  }\n  status\n}\n\nfragment ViewingRoomContentNotAccessible_viewingRoom on ViewingRoom {\n  status\n  partner {\n    href\n    id\n  }\n}\n\nfragment ViewingRoomHeader_viewingRoom on ViewingRoom {\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n  title\n  partner {\n    name\n    href\n    id\n  }\n  distanceToOpen\n  distanceToClose\n  status\n}\n\nfragment ViewingRoomMeta_viewingRoom on ViewingRoom {\n  title\n  href\n  pullQuote\n  image {\n    imageURLs {\n      normalized\n    }\n  }\n}\n"
   }
 };
 })();

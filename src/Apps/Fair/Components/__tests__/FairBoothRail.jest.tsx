@@ -4,7 +4,7 @@ import { graphql } from "react-relay"
 import { FairBoothRail_Test_Query } from "__generated__/FairBoothRail_Test_Query.graphql"
 import { BoothFilterContextProvider } from "Apps/Fair/Components/BoothFilterContext"
 import { fireEvent, screen } from "@testing-library/react"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { OwnerType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { useRouter } from "System/Router/useRouter"
@@ -17,15 +17,17 @@ const { renderWithRelay } = setupTestWrapperTL<FairBoothRail_Test_Query>({
   Component: props => {
     if (props.show) {
       return (
-        <AnalyticsContextProvider
-          contextPageOwnerId="context-page-owner-id"
-          __contextPageOwnerSlug__="context-page-owner-slug"
-          __contextPageOwnerType__={OwnerType.show}
+        <AnalyticsContext.Provider
+          value={{
+            contextPageOwnerId: "context-page-owner-id",
+            contextPageOwnerSlug: "context-page-owner-slug",
+            contextPageOwnerType: OwnerType.show,
+          }}
         >
           <BoothFilterContextProvider filters={{ sort: "NAME_ASC", page: 2 }}>
             <FairBoothRailFragmentContainer show={props.show} />
           </BoothFilterContextProvider>
-        </AnalyticsContextProvider>
+        </AnalyticsContext.Provider>
       )
     }
 

@@ -109,6 +109,7 @@ describe("buildClientApp", () => {
         <SystemContextConsumer>
           {context => {
             expect(Object.keys(context).sort()).toEqual([
+              "analytics",
               "featureFlags",
               "isEigen",
               "isFetching",

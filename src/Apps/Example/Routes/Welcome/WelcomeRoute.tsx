@@ -21,6 +21,7 @@ export const WelcomeRoute: React.FC = () => {
     trackEvent(
       clickedShowMore({
         context_module: ContextModule.promoSpace,
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         context_page_owner_type: contextPageOwnerType,
         context_page_owner_slug: contextPageOwnerSlug,
         context_page_owner_id: contextPageOwnerId,

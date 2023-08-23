@@ -3,7 +3,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { Box } from "@artsy/palette"
 import { ShowSubApp_show$data } from "__generated__/ShowSubApp_show.graphql"
 import { ShowMetaFragmentContainer as ShowMeta } from "./Components/ShowMeta"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import {
+  AnalyticsContext,
+  useAnalyticsContext,
+} from "System/Analytics/AnalyticsContext"
 import { TopContextBar } from "Components/TopContextBar"
 
 interface ShowAppProps {
@@ -11,11 +14,19 @@ interface ShowAppProps {
 }
 
 const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
+  const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
+
   return (
     <>
       <ShowMeta show={show} />
 
-      <AnalyticsContextProvider contextPageOwnerId={show.internalID}>
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: show.internalID,
+          contextPageOwnerSlug,
+          contextPageOwnerType,
+        }}
+      >
         <TopContextBar displayBackArrow href={show.href}>
           Back to {show.name}
           {!show.isFairBooth && show.partner?.name && (
@@ -24,7 +35,7 @@ const ShowApp: React.FC<ShowAppProps> = ({ children, show }) => {
         </TopContextBar>
 
         <Box minHeight="50vh">{children}</Box>
-      </AnalyticsContextProvider>
+      </AnalyticsContext.Provider>
     </>
   )
 }

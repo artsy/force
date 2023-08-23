@@ -9,7 +9,6 @@ import { useProductionEnvironmentWarning } from "Utils/Hooks/useProductionEnviro
 import { useOnboardingModal } from "Utils/Hooks/useOnboardingModal"
 import { Layout } from "Apps/Components/Layouts"
 import { useSetupAuth } from "Utils/Hooks/useSetupAuth"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
 
 const logger = createLogger("Apps/Components/AppShell")
 interface AppShellProps {
@@ -48,10 +47,10 @@ export const AppShell: React.FC<AppShellProps> = props => {
   useProductionEnvironmentWarning()
 
   return (
-    <AnalyticsContextProvider>
+    <>
       <Layout variant={routeConfig?.layout}>{children}</Layout>
 
       {onboardingComponent}
-    </AnalyticsContextProvider>
+    </>
   )
 }

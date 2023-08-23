@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eded007f50df18e8c41a92ad389d5de6>>
+ * @generated SignedSource<<e4927562baaf41e144b12990e05dcb44>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,6 @@ export type ExampleArtworkRoute_artwork$data = {
       readonly artistsConnection: {
         readonly edges: ReadonlyArray<{
           readonly node: {
-            readonly internalID: string;
             readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
           } | null;
         } | null> | null;
@@ -37,15 +36,7 @@ export type ExampleArtworkRoute_artwork$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ExampleArtworkRoute_artwork">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": {
@@ -99,7 +90,13 @@ return {
       "name": "date",
       "storageKey": null
     },
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "internalID",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -158,7 +155,6 @@ return {
                           "kind": "FragmentSpread",
                           "name": "EntityHeaderArtist_artist"
                         },
-                        (v0/*: any*/),
                         {
                           "alias": null,
                           "args": null,
@@ -217,8 +213,7 @@ return {
   "type": "Artwork",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "8b51a28c607092606cfb37e6a8700831";
+(node as any).hash = "48e949f2d2071b986181176ba9fde9d6";
 
 export default node;
