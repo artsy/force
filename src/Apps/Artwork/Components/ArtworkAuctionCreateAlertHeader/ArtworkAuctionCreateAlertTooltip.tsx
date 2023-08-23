@@ -15,8 +15,7 @@ export const ArtworkAuctionCreateAlertTooltip: FC = () => {
   return (
     <Flex justifyContent="center" alignItems="center">
       <Text variant="sm">
-        Available works by {artistName} based on similar tags and auction
-        activity.
+        You may be interested in these similar works by {artistName}.
       </Text>
       <Tooltip
         width="auto"
