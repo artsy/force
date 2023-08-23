@@ -34,7 +34,7 @@ export const SaleEndYearFilter: React.FC = () => {
   }, [saleEndYear, saleStartYear, setFilter, options])
 
   return (
-    <FilterExpandable label="Sale End Date" expanded>
+    <FilterExpandable label="Sale Date" expanded>
       <Flex flexDirection="column" alignItems="left">
         <ShowMore>
           <Flex>
