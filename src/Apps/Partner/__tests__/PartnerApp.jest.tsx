@@ -1,15 +1,12 @@
 import { graphql } from "react-relay"
 import { PartnerApp_Test_Query } from "__generated__/PartnerApp_Test_Query.graphql"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { PartnerAppFragmentContainer } from "Apps/Partner/PartnerApp"
-import { PartnerHeaderImageFragmentContainer } from "Apps/Partner/Components/PartnerHeader/PartnerHeaderImage"
+import { PartnerAppFragmentContainer } from "../PartnerApp"
+import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "../Components/PartnerHeader/PartnerHeaderImage"
 import { HeadProvider } from "react-head"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
-jest.mock("System/Analytics/AnalyticsContext", () => ({
-  AnalyticsContextProvider: ({ children }) => children,
-}))
 jest.mock("System/Router/useRouter", () => ({
   useRouter: () => ({
     match: {
@@ -97,7 +94,7 @@ describe("PartnerApp", () => {
       }),
     })
 
-    expect(wrapper.find(PartnerHeaderImageFragmentContainer).length).toEqual(1)
+    expect(wrapper.find(PartnerHeaderImage).length).toEqual(1)
   })
 
   it("doesn't display profile image if there is no info", () => {
@@ -108,7 +105,7 @@ describe("PartnerApp", () => {
         },
       }),
     })
-    expect(wrapper.find(PartnerHeaderImageFragmentContainer).length).toBe(0)
+    expect(wrapper.find(PartnerHeaderImage).length).toBe(0)
   })
 
   it("doesn't display profile image if the partner isn't eligible for a full profile", () => {
@@ -118,6 +115,6 @@ describe("PartnerApp", () => {
       }),
     })
 
-    expect(wrapper.find(PartnerHeaderImageFragmentContainer)).toHaveLength(0)
+    expect(wrapper.find(PartnerHeaderImage)).toHaveLength(0)
   })
 })

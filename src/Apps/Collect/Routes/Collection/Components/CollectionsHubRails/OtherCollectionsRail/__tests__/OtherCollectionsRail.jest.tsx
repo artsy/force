@@ -2,10 +2,10 @@ import { CollectionHubFixture } from "Apps/__tests__/Fixtures/Collections"
 import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
 import "jest-styled-components"
-import { OtherCollectionsRail } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/OtherCollectionsRail/index"
+import { OtherCollectionsRail } from "../index"
 import { paginateCarousel } from "@artsy/palette"
 import { OwnerType } from "@artsy/cohesion"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
 jest.mock("@artsy/palette", () => {
@@ -41,13 +41,15 @@ describe("CollectionsRail", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
-      <AnalyticsContextProvider
-        contextPageOwnerId="1234"
-        __contextPageOwnerSlug__="slug"
-        __contextPageOwnerType__={OwnerType.collection}
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "1234",
+          contextPageOwnerSlug: "slug",
+          contextPageOwnerType: OwnerType.collection,
+        }}
       >
         <OtherCollectionsRail {...passedProps} />
-      </AnalyticsContextProvider>
+      </AnalyticsContext.Provider>
     )
   }
 

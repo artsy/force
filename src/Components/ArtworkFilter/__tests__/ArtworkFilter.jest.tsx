@@ -92,6 +92,9 @@ describe("ArtworkFilter", () => {
         expect.objectContaining({
           action: "commercialFilterParamsChanged",
           context_module: "artworkGrid",
+          context_owner_id: undefined,
+          context_owner_slug: undefined,
+          context_owner_type: "home",
           // `current` and `changed` are sent as
           // JSON blobs, and verified below
         })
@@ -164,6 +167,9 @@ describe("ArtworkFilter", () => {
         expect.objectContaining({
           action: "clickedChangePage",
           context_module: "artworkGrid",
+          context_page_owner_id: undefined,
+          context_page_owner_slug: undefined,
+          context_page_owner_type: "home",
           page_current: 1,
           page_changed: 3,
         })
@@ -210,6 +216,9 @@ describe("ArtworkFilter", () => {
       expect(trackEvent).toHaveBeenCalledWith({
         action: "clickedMainArtworkGrid",
         context_module: "artworkGrid",
+        context_page_owner_id: undefined,
+        context_page_owner_slug: undefined,
+        context_page_owner_type: "home",
         destination_page_owner_id: "5d041931e607c200127ef3c1",
         destination_page_owner_slug: "andy-warhol-kenny-burrell",
         destination_page_owner_type: "artwork",

@@ -23,6 +23,7 @@ import {
   MediaContextProvider,
   ResponsiveProvider,
 } from "Utils/Responsive"
+import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { ClientContext } from "System/Router/buildClientAppContext"
 import { SiftContainer } from "Utils/SiftContainer"
 import { setupSentryClient } from "Server/setupSentryClient"
@@ -81,31 +82,33 @@ export const Boot = track(undefined, {
       <HeadProvider headTags={headTags}>
         <StateProvider>
           <SystemContextProvider {...contextProps}>
-            <ErrorBoundary>
-              <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
-                <ResponsiveProvider
-                  mediaQueries={THEME.mediaQueries}
-                  initialMatchingMediaQueries={onlyMatchMediaQueries as any}
-                >
-                  <ToastsProvider>
-                    <StickyProvider>
-                      <AuthIntentProvider>
-                        <AuthDialogProvider>
-                          <ProgressiveOnboardingProvider>
-                            <CookieConsentManager>
-                              <FocusVisible />
-                              <SiftContainer />
+            <AnalyticsContext.Provider value={context?.analytics}>
+              <ErrorBoundary>
+                <MediaContextProvider onlyMatch={onlyMatchMediaQueries}>
+                  <ResponsiveProvider
+                    mediaQueries={THEME.mediaQueries}
+                    initialMatchingMediaQueries={onlyMatchMediaQueries as any}
+                  >
+                    <ToastsProvider>
+                      <StickyProvider>
+                        <AuthIntentProvider>
+                          <AuthDialogProvider>
+                            <ProgressiveOnboardingProvider>
+                              <CookieConsentManager>
+                                <FocusVisible />
+                                <SiftContainer />
 
-                              {children}
-                            </CookieConsentManager>
-                          </ProgressiveOnboardingProvider>
-                        </AuthDialogProvider>
-                      </AuthIntentProvider>
-                    </StickyProvider>
-                  </ToastsProvider>
-                </ResponsiveProvider>
-              </MediaContextProvider>
-            </ErrorBoundary>
+                                {children}
+                              </CookieConsentManager>
+                            </ProgressiveOnboardingProvider>
+                          </AuthDialogProvider>
+                        </AuthIntentProvider>
+                      </StickyProvider>
+                    </ToastsProvider>
+                  </ResponsiveProvider>
+                </MediaContextProvider>
+              </ErrorBoundary>
+            </AnalyticsContext.Provider>
           </SystemContextProvider>
         </StateProvider>
       </HeadProvider>

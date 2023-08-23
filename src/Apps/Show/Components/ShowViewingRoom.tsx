@@ -41,6 +41,7 @@ export const ShowViewingRoom: React.FC<ShowViewingRoomProps> = ({
     const payload: ClickedViewingRoomCard = {
       action: ActionType.clickedViewingRoomCard,
       context_module: ContextModule.associatedViewingRoom,
+      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       context_page_owner_type: contextPageOwnerType,
       context_page_owner_id: contextPageOwnerId,
       context_page_owner_slug: contextPageOwnerSlug,

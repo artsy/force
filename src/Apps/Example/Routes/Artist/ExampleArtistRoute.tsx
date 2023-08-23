@@ -3,7 +3,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ExampleArtistRoute_artist$data } from "__generated__/ExampleArtistRoute_artist.graphql"
 import { Box, Text } from "@artsy/palette"
 import { Title } from "react-head"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import {
+  AnalyticsContext,
+  useAnalyticsContext,
+} from "System/Analytics/AnalyticsContext"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ContextModule } from "@artsy/cohesion"
 
@@ -33,17 +36,26 @@ const ExampleArtistRoute: React.FC<ExampleArtistAppProps> = ({ artist }) => {
 }
 
 /**
- * Routes with :slugs require AnalyticsContextProvider to provide the corresponding internalID
+ * Routes with /:id require an additional AnalyticsContext.Provider
+ * declaration to add slug and id, extending the context provided by <Boot>
  */
 const TrackingWrappedExampleArtistRoute: React.FC<ExampleArtistAppProps> = props => {
   const {
-    artist: { internalID },
+    artist: { internalID, slug },
   } = props
 
+  const { contextPageOwnerType } = useAnalyticsContext()
+
   return (
-    <AnalyticsContextProvider contextPageOwnerId={internalID}>
+    <AnalyticsContext.Provider
+      value={{
+        contextPageOwnerId: internalID,
+        contextPageOwnerSlug: slug,
+        contextPageOwnerType,
+      }}
+    >
       <ExampleArtistRoute {...props} />
-    </AnalyticsContextProvider>
+    </AnalyticsContext.Provider>
   )
 }
 
@@ -55,6 +67,7 @@ export const ExampleArtistRouteFragmentContainer = createFragmentContainer(
         name
         bio
         internalID
+        slug
       }
     `,
   }

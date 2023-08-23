@@ -8,7 +8,6 @@ import { ContextModule, clickedCollectionGroup } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { RouterLink } from "System/Router/RouterLink"
 import { cropped } from "Utils/resized"
-import { extractNodes } from "Utils/extractNodes"
 
 export interface RelatedCollectionEntityProps {
   collection: RelatedCollectionEntity_collection$data
@@ -29,8 +28,8 @@ export const RelatedCollectionEntity: React.FC<RelatedCollectionEntityProps> = (
     slug,
     title,
   } = collection
-
-  const artworks = extractNodes(artworksConnection)
+  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+  const artworks = artworksConnection.edges.map(({ node }) => node)
 
   const { trackEvent } = useTracking()
   const {
@@ -45,6 +44,7 @@ export const RelatedCollectionEntity: React.FC<RelatedCollectionEntityProps> = (
         contextModule: ContextModule.relatedCollectionsRail,
         contextPageOwnerId,
         contextPageOwnerSlug,
+        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         contextPageOwnerType,
         destinationPageOwnerId: id,
         destinationPageOwnerSlug: slug,
@@ -67,8 +67,6 @@ export const RelatedCollectionEntity: React.FC<RelatedCollectionEntityProps> = (
 
               const { resized } = artwork.image
 
-              if (!resized) return null
-
               return (
                 <Box key={index} ml={index === 0 ? 0 : -2}>
                   <Image
@@ -76,7 +74,7 @@ export const RelatedCollectionEntity: React.FC<RelatedCollectionEntityProps> = (
                     srcSet={resized.srcSet}
                     width={resized.width}
                     height={resized.height}
-                    alt=""
+                    alt={artwork.title}
                     lazyLoad
                   />
                 </Box>

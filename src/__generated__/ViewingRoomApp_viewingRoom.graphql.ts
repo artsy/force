@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9114c0a1b4bcdac1847580799cab8aaa>>
+ * @generated SignedSource<<57685ff19f1920eb636289cab73e90c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,6 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomApp_viewingRoom$data = {
-  readonly internalID: string;
   readonly partner: {
     readonly internalID: string;
   } | null;
@@ -24,15 +23,7 @@ export type ViewingRoomApp_viewingRoom$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomApp_viewingRoom">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -53,14 +44,6 @@ return {
       "kind": "FragmentSpread",
       "name": "ViewingRoomContentNotAccessible_viewingRoom"
     },
-    (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "status",
-      "storageKey": null
-    },
     {
       "alias": null,
       "args": null,
@@ -69,16 +52,28 @@ return {
       "name": "partner",
       "plural": false,
       "selections": [
-        (v0/*: any*/)
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "internalID",
+          "storageKey": null
+        }
       ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "status",
       "storageKey": null
     }
   ],
   "type": "ViewingRoom",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "2d21bb76bccd60f41b8510ed547e84cd";
+(node as any).hash = "42b4a4acd26b4325cfef0fefd73552d6";
 
 export default node;

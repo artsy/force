@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a40b9ef7338b67a608f933302434209>>
+ * @generated SignedSource<<55a9a38a78b2875619b8e79ec515bed6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type ExampleArtistRoute_artist$data = {
   readonly bio: string | null;
   readonly internalID: string;
   readonly name: string | null;
+  readonly slug: string;
   readonly " $fragmentType": "ExampleArtistRoute_artist";
 };
 export type ExampleArtistRoute_artist$key = {
@@ -47,12 +48,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "9f949ee70f6a716caf42c982adc9270a";
+(node as any).hash = "c3e11e91b699af66a2aeadf0fc2222b3";
 
 export default node;

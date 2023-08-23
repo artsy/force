@@ -88,6 +88,7 @@ const MyBids: React.FC<MyBidsProps> = props => {
                           trackEvent(
                             clickedEntityGroup({
                               contextModule: ContextModule.yourActiveBids,
+                              // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
                               contextPageOwnerType,
                               destinationPageOwnerType: OwnerType.sale,
                               type: "thumbnail",

@@ -1,9 +1,9 @@
 import { CollectionsHubLinkedCollections } from "Apps/__tests__/Fixtures/Collections"
 import { useTracking } from "react-tracking"
 import { mount } from "enzyme"
-import { ArtistSeriesEntity } from "Apps/Collect/Routes/Collection/Components/CollectionsHubRails/ArtistSeriesRail/ArtistSeriesEntity"
+import { ArtistSeriesEntity } from "../ArtistSeriesEntity"
 import { OwnerType } from "@artsy/cohesion"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { Image } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 
@@ -32,13 +32,15 @@ describe.skip("ArtistSeriesEntity", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
-      <AnalyticsContextProvider
-        contextPageOwnerId="1234"
-        __contextPageOwnerSlug__="slug"
-        __contextPageOwnerType__={OwnerType.collection}
+      <AnalyticsContext.Provider
+        value={{
+          contextPageOwnerId: "1234",
+          contextPageOwnerSlug: "slug",
+          contextPageOwnerType: OwnerType.collection,
+        }}
       >
         <ArtistSeriesEntity {...passedProps} />
-      </AnalyticsContextProvider>
+      </AnalyticsContext.Provider>
     )
   }
 

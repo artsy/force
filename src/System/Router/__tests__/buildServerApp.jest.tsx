@@ -167,6 +167,7 @@ describe("buildServerApp", () => {
         <SystemContextConsumer>
           {context => {
             expect(Object.keys(context).sort()).toEqual([
+              "analytics",
               "featureFlags",
               "initialMatchingMediaQueries",
               "isEigen",

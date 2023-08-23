@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c2026c2d75409a20f8cecfff003210e4>>
+ * @generated SignedSource<<4ff2baba0d511a1dd1bc8bba0511f398>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -367,12 +367,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "58fef622bf0480e368cf463046e2970b",
+    "cacheID": "961537e94655194c36c733dfe736e9be",
     "id": null,
     "metadata": {},
     "name": "exampleRoutes_ArtworkQuery",
     "operationKind": "query",
-    "text": "query exampleRoutes_ArtworkQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) @principalField {\n    id\n    ...ExampleArtworkRoute_artwork\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ExampleArtworkRoute_artwork on Artwork {\n  title\n  artistNames\n  medium\n  imageUrl\n  date\n  internalID\n  slug\n  artist {\n    related {\n      artistsConnection(kind: MAIN, first: 4) {\n        edges {\n          node {\n            ...EntityHeaderArtist_artist\n            internalID\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query exampleRoutes_ArtworkQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) @principalField {\n    id\n    ...ExampleArtworkRoute_artwork\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment ExampleArtworkRoute_artwork on Artwork {\n  title\n  artistNames\n  medium\n  imageUrl\n  date\n  internalID\n  slug\n  artist {\n    related {\n      artistsConnection(kind: MAIN, first: 4) {\n        edges {\n          node {\n            ...EntityHeaderArtist_artist\n            id\n            __typename\n          }\n          cursor\n        }\n        pageInfo {\n          endCursor\n          hasNextPage\n        }\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
