@@ -264,8 +264,10 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           entities
         }
         verifiedRepresentatives {
-          name
-          slug
+          partner {
+            name
+            slug
+          }
         }
         coverArtwork {
           title
