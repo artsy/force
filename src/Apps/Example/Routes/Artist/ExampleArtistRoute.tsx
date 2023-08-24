@@ -3,7 +3,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ExampleArtistRoute_artist$data } from "__generated__/ExampleArtistRoute_artist.graphql"
 import { Box, Text } from "@artsy/palette"
 import { Title } from "react-head"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Analytics/AnalyticsContext"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ContextModule } from "@artsy/cohesion"
 
@@ -33,7 +33,7 @@ const ExampleArtistRoute: React.FC<ExampleArtistAppProps> = ({ artist }) => {
 }
 
 /**
- * Routes with :slugs require AnalyticsContextProvider to provide the corresponding internalID
+ * Routes with :slugs require Analytics to provide the corresponding internalID
  */
 const TrackingWrappedExampleArtistRoute: React.FC<ExampleArtistAppProps> = props => {
   const {
@@ -41,9 +41,9 @@ const TrackingWrappedExampleArtistRoute: React.FC<ExampleArtistAppProps> = props
   } = props
 
   return (
-    <AnalyticsContextProvider contextPageOwnerId={internalID}>
+    <Analytics contextPageOwnerId={internalID}>
       <ExampleArtistRoute {...props} />
-    </AnalyticsContextProvider>
+    </Analytics>
   )
 }
 

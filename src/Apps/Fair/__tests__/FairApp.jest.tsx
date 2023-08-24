@@ -6,7 +6,7 @@ import { useTracking } from "react-tracking"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useRouter } from "System/Router/useRouter"
 import { fireEvent, screen } from "@testing-library/react"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
 
 const mockJumpTo = jest.fn()
 
@@ -30,9 +30,12 @@ const { renderWithRelay } = setupTestWrapperTL<FairApp_Test_Query>({
 
     return (
       <MockBoot>
-        <AnalyticsContextProvider contextPageOwnerId="bson-fair">
+        <AnalyticsCombinedContextProvider
+          path="/fair/miart-2020"
+          contextPageOwnerId="bson-fair"
+        >
           <FairAppFragmentContainer fair={props.fair} />
-        </AnalyticsContextProvider>
+        </AnalyticsCombinedContextProvider>
       </MockBoot>
     )
   },

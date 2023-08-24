@@ -1,7 +1,7 @@
 import { Box, Flex, Image, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Analytics/AnalyticsContext"
 import { ExampleArtworkRoute_artwork$data } from "__generated__/ExampleArtworkRoute_artwork.graphql"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { MetaTags } from "Components/MetaTags"
@@ -49,7 +49,7 @@ const ExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = ({
 }
 
 /**
- * Routes with :slugs require AnalyticsContextProvider to provide the corresponding internalID
+ * Routes with :slugs require Analytics to provide the corresponding internalID
  */
 const TrackingWrappedExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = props => {
   const {
@@ -57,9 +57,9 @@ const TrackingWrappedExampleArtworkRoute: React.FC<ExampleArtworkRouteProps> = p
   } = props
 
   return (
-    <AnalyticsContextProvider contextPageOwnerId={internalID}>
+    <Analytics contextPageOwnerId={internalID}>
       <ExampleArtworkRoute {...props} />
-    </AnalyticsContextProvider>
+    </Analytics>
   )
 }
 

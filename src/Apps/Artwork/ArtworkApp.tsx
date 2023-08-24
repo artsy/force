@@ -27,7 +27,7 @@ import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { RecentlyViewed } from "Components/RecentlyViewed"
 import { useRouter } from "System/Router/useRouter"
 import { TrackingProp } from "react-tracking"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Analytics/AnalyticsContext"
 import { useRouteComplete } from "Utils/Hooks/useRouteComplete"
 import { Media } from "Utils/Responsive"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
@@ -296,7 +296,7 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
   const websocketEnabled = !!sale?.extendedBiddingIntervalMinutes
 
   return (
-    <AnalyticsContextProvider contextPageOwnerId={internalID}>
+    <Analytics contextPageOwnerId={internalID}>
       <WebsocketContextProvider
         channelInfo={{
           channel: "SalesChannel",
@@ -311,7 +311,7 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
           shouldTrackPageView={isComplete}
         />
       </WebsocketContextProvider>
-    </AnalyticsContextProvider>
+    </Analytics>
   )
 }
 

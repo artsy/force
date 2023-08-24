@@ -4,7 +4,7 @@ import { FairApp_fair$data } from "__generated__/FairApp_fair.graphql"
 import { DROP_SHADOW, FullBleed, Spacer } from "@artsy/palette"
 import { FairMetaFragmentContainer } from "./Components/FairMeta"
 import { useSystemContext } from "System/useSystemContext"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Analytics/AnalyticsContext"
 import { HttpError } from "found"
 import { useRouter } from "System/Router/useRouter"
 import { userIsAdmin } from "Utils/user"
@@ -90,9 +90,9 @@ const TrackingWrappedFairApp: React.FC<FairAppProps> = props => {
   }
 
   return (
-    <AnalyticsContextProvider contextPageOwnerId={internalID}>
+    <Analytics contextPageOwnerId={internalID}>
       <FairApp {...props} />
-    </AnalyticsContextProvider>
+    </Analytics>
   )
 }
 

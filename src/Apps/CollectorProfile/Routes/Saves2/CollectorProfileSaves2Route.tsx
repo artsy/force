@@ -9,7 +9,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { CollectorProfileSaves2Route_me$data } from "__generated__/CollectorProfileSaves2Route_me.graphql"
 import { useTracking } from "react-tracking"
 import { ActionType, OwnerType, ViewedArtworkList } from "@artsy/cohesion"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Analytics/AnalyticsContext"
 import { HttpError } from "found"
 import { MetaTags } from "Components/MetaTags"
 import { Jump } from "Utils/Hooks/useJump"
@@ -123,9 +123,9 @@ const PageWrapper: FC<CollectorProfileSaves2RouteProps> = props => {
   const { match } = useRouter()
 
   return (
-    <AnalyticsContextProvider contextPageOwnerId={match.params.id}>
+    <Analytics contextPageOwnerId={match.params.id}>
       <CollectorProfileSaves2Route {...props} />
-    </AnalyticsContextProvider>
+    </Analytics>
   )
 }
 

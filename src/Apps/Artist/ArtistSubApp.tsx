@@ -2,7 +2,7 @@ import { Spacer } from "@artsy/palette"
 import { Match } from "found"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistSubApp_artist$data } from "__generated__/ArtistSubApp_artist.graphql"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Analytics/AnalyticsContext"
 import { ArtistBackLinkFragmentContainer } from "./Components/ArtistBackLink"
 import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta/ArtistMeta"
 import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
@@ -26,13 +26,13 @@ const ArtistSubApp: React.FC<ArtistSubAppProps> = ({
     <>
       <ArtistMetaFragmentContainer artist={artist} />
 
-      <AnalyticsContextProvider contextPageOwnerId={artist.internalID}>
+      <Analytics contextPageOwnerId={artist.internalID}>
         {!isEigen && <ArtistBackLinkFragmentContainer artist={artist} />}
 
         <Spacer y={[2, 4]} />
 
         {children}
-      </AnalyticsContextProvider>
+      </Analytics>
     </>
   )
 }

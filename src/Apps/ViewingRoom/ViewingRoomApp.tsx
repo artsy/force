@@ -11,7 +11,7 @@ import { SystemContext } from "System/SystemContext"
 import { userHasAccessToPartner } from "Utils/user"
 import { FullBleedBanner } from "Components/FullBleedBanner"
 import HideIcon from "@artsy/icons/HideIcon"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Analytics/AnalyticsContext"
 
 interface ViewingRoomAppProps {
   children: React.ReactNode
@@ -30,7 +30,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
     (viewingRoom.status === "draft" || viewingRoom.status === "scheduled")
 
   return (
-    <AnalyticsContextProvider contextPageOwnerId={viewingRoom.internalID}>
+    <Analytics contextPageOwnerId={viewingRoom.internalID}>
       <ViewingRoomMeta viewingRoom={viewingRoom} />
 
       {isPreviewable && (
@@ -53,7 +53,7 @@ const ViewingRoomApp: React.FC<ViewingRoomAppProps> = ({
           <ViewingRoomContentNotAccessible viewingRoom={viewingRoom} />
         )}
       </Join>
-    </AnalyticsContextProvider>
+    </Analytics>
   )
 }
 

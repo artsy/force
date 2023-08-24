@@ -25,7 +25,7 @@ import { ArticleAd } from "./ArticleAd/ArticleAd"
 import { ArticleSectionFragmentContainer } from "./ArticleSection"
 import { ArticleSectionAdFragmentContainer } from "./ArticleSectionAd"
 import { OPTIMAL_READING_WIDTH } from "./Sections/ArticleSectionText"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Analytics/AnalyticsContext"
 import { ArticleNewsSourceFragmentContainer } from "./ArticleNewsSource"
 import { TopContextBar } from "Components/TopContextBar"
 
@@ -37,7 +37,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
   const centered = article.layout === "FEATURE" || article.layout === "NEWS"
 
   return (
-    <AnalyticsContextProvider contextPageOwnerId={article.internalID}>
+    <Analytics contextPageOwnerId={article.internalID}>
       <ArticleContextProvider articleId={article.internalID}>
         {article.layout === "STANDARD" && (
           <FullBleed bg="black5" p={1}>
@@ -216,7 +216,7 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
           )}
         </GridColumns>
       </ArticleContextProvider>
-    </AnalyticsContextProvider>
+    </Analytics>
   )
 }
 

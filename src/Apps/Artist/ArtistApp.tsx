@@ -1,7 +1,7 @@
 import { Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistApp_artist$data } from "__generated__/ArtistApp_artist.graphql"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Analytics/AnalyticsContext"
 import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"
 import { ArtistHeaderFragmentContainer as ArtistHeader2FragmentContainer } from "./Components/ArtistHeader/ArtistHeader2"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
@@ -23,7 +23,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children }) => {
     <>
       <ArtistMetaFragmentContainer artist={artist} />
 
-      <AnalyticsContextProvider contextPageOwnerId={artist.internalID}>
+      <Analytics contextPageOwnerId={artist.internalID}>
         <Spacer y={[2, 4]} />
 
         {isRevisedArtistHeader ? (
@@ -57,7 +57,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children }) => {
         <Spacer y={[0, 4]} />
 
         {children}
-      </AnalyticsContextProvider>
+      </Analytics>
     </>
   )
 }

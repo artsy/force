@@ -26,7 +26,7 @@ export const useAnalyticsContext = () => {
   }
 }
 
-interface AnalyticsContextProviderProps {
+interface AnalyticsProps {
   children: ReactNode
   contextPageOwnerId: string
 }
@@ -34,7 +34,7 @@ interface AnalyticsContextProviderProps {
 /**
  * Wrap entity pages (/example/:slug) with this component to provide the internalID
  */
-export const AnalyticsContextProvider: FC<AnalyticsContextProviderProps> = ({
+export const Analytics: FC<AnalyticsProps> = ({
   contextPageOwnerId,
   children,
 }) => {
@@ -45,7 +45,7 @@ export const AnalyticsContextProvider: FC<AnalyticsContextProviderProps> = ({
   )
 }
 
-interface AnalyticsInferredContextProviderProps {
+interface AnalyticsContextProviderProps {
   children: ReactNode
   path?: string
 }
@@ -54,7 +54,7 @@ interface AnalyticsInferredContextProviderProps {
  * Wraps `AppShell` and updates on route changes.
  * Pulls out the `contextPageOwnerType` and `contextPageOwnerSlug` from the route.
  */
-export const AnalyticsInferredContextProvider: FC<AnalyticsInferredContextProviderProps> = ({
+export const AnalyticsContextProvider: FC<AnalyticsContextProviderProps> = ({
   children,
   path,
 }) => {
@@ -78,14 +78,14 @@ export const AnalyticsInferredContextProvider: FC<AnalyticsInferredContextProvid
 }
 
 export const AnalyticsCombinedContextProvider: FC<
-  AnalyticsContextProviderProps & AnalyticsInferredContextProviderProps
+  AnalyticsProps & AnalyticsContextProviderProps
 > = ({ children, contextPageOwnerId, path }) => {
   return (
-    <AnalyticsContextProvider contextPageOwnerId={contextPageOwnerId}>
-      <AnalyticsInferredContextProvider path={path}>
+    <Analytics contextPageOwnerId={contextPageOwnerId}>
+      <AnalyticsContextProvider path={path}>
         {children}
-      </AnalyticsInferredContextProvider>
-    </AnalyticsContextProvider>
+      </AnalyticsContextProvider>
+    </Analytics>
   )
 }
 

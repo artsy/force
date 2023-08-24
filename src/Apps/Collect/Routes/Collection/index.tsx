@@ -11,7 +11,7 @@ import * as React from "react"
 import { RelayRefetchProp, graphql, createFragmentContainer } from "react-relay"
 import { truncate } from "lodash"
 import { CollectionsHubRailsContainer as CollectionsHubRails } from "./Components/CollectionsHubRails"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Analytics/AnalyticsContext"
 import { TrackingProp } from "react-tracking"
 import { ErrorPage } from "Components/ErrorPage"
 import { CollectionArtworksFilterRefetchContainer } from "./Components/CollectionArtworksFilter"
@@ -139,9 +139,9 @@ const TrackingWrappedCollectionApp: React.FC<CollectionAppProps> = props => {
     collection: { id },
   } = props
   return (
-    <AnalyticsContextProvider contextPageOwnerId={id}>
+    <Analytics contextPageOwnerId={id}>
       <CollectionApp {...props} />
-    </AnalyticsContextProvider>
+    </Analytics>
   )
 }
 

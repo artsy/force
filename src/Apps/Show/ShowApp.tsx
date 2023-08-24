@@ -16,7 +16,7 @@ import { ShowViewingRoomFragmentContainer as ShowViewingRoom } from "./Component
 import { ShowApp_show$data } from "__generated__/ShowApp_show.graphql"
 import { ShowArtworksRefetchContainer as ShowArtworksFilter } from "./Components/ShowArtworks"
 import { ShowContextCardFragmentContainer as ShowContextCard } from "./Components/ShowContextCard"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Analytics/AnalyticsContext"
 import { ShowArtworksEmptyStateFragmentContainer as ShowArtworksEmptyState } from "./Components/ShowArtworksEmptyState"
 import {
   Counts,
@@ -41,7 +41,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
       <ShowMeta show={show} />
 
       <>
-        <AnalyticsContextProvider contextPageOwnerId={show.internalID}>
+        <Analytics contextPageOwnerId={show.internalID}>
           {show.fair?.hasFullFeature && isFairBooth && (
             <BackToFairBanner show={show} />
           )}
@@ -114,7 +114,7 @@ export const ShowApp: React.FC<ShowAppProps> = ({ show }) => {
               </>
             )}
           </Join>
-        </AnalyticsContextProvider>
+        </Analytics>
       </>
     </>
   )

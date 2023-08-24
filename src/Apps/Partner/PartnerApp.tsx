@@ -8,7 +8,7 @@ import { PartnerHeaderImageFragmentContainer as PartnerHeaderImage } from "./Com
 import { PartnerMetaFragmentContainer } from "./Components/PartnerMeta"
 import { PartnerArtistsLoadingContextProvider } from "./Utils/PartnerArtistsLoadingContext"
 import { HttpError } from "found"
-import { AnalyticsContextProvider } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Analytics/AnalyticsContext"
 
 export interface PartnerAppProps {
   partner: PartnerApp_partner$data
@@ -42,7 +42,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
   )
 
   return (
-    <AnalyticsContextProvider contextPageOwnerId={partner.internalID}>
+    <Analytics contextPageOwnerId={partner.internalID}>
       <PartnerArtistsLoadingContextProvider>
         {profile && displayFullPartnerPage && (
           <PartnerHeaderImage profile={profile} />
@@ -69,7 +69,7 @@ export const PartnerApp: React.FC<PartnerAppProps> = ({
 
         {children}
       </PartnerArtistsLoadingContextProvider>
-    </AnalyticsContextProvider>
+    </Analytics>
   )
 }
 

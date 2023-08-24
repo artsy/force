@@ -8,7 +8,7 @@ import { HeadProvider } from "react-head"
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("System/Analytics/AnalyticsContext", () => ({
-  AnalyticsContextProvider: ({ children }) => children,
+  Analytics: ({ children }) => children,
 }))
 jest.mock("System/Router/useRouter", () => ({
   useRouter: () => ({
