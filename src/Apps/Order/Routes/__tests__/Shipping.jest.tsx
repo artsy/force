@@ -209,6 +209,11 @@ const pushMock = jest.fn()
 let isCommittingMutation
 const relayEnv = createMockEnvironment()
 
+// This config extracted so it can be used with both enzyme (setupTestWrapper)
+// and react-testing-library (setupTestWrapperTL) tests.
+// We need to pass in our own relayEnv to both <MockBoot /> and
+// renderWithRelay so that downstream QueryRenderers can use the test
+// environment. Otherwise SystemContext will create a new [real] environment.
 const testWrapperConfig = {
   Component: (props: any) => (
     <MockBoot relayEnvironment={relayEnv}>
