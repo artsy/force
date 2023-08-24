@@ -19358,14 +19358,14 @@ enum VerificationStatuses {
 }
 
 type VerifiedRepresentative implements Node {
-  artist: Artist
+  artist: Artist!
 
   # A globally unique ID.
   id: ID!
 
   # A type-specific ID.
   internalID: ID!
-  partner: Partner
+  partner: Partner!
 }
 
 type VerifyAddressFailureType {
