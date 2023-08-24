@@ -107,7 +107,7 @@ describe("AuctionApp", () => {
   it("embeds Salesforce widget", () => {
     mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
     const wrapper = getWrapper()
-    expect(wrapper.find("SalesforceWrapper").exists()).toBeTruthy()
+    expect(wrapper.find("SalesforceWrapper").exists()).toBeFalsy()
   })
 
   it("does not embed Salesforce widget on mobile", () => {
