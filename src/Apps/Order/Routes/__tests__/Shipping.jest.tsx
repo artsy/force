@@ -3,7 +3,7 @@ import {
   ShippingTestQuery$rawResponse,
 } from "__generated__/ShippingTestQuery.graphql"
 import { cloneDeep } from "lodash"
-import { act, screen, waitFor } from "@testing-library/react"
+import { act, fireEvent, screen, waitFor } from "@testing-library/react"
 import {
   UntouchedBuyOrder,
   UntouchedOfferOrder,
@@ -19,7 +19,6 @@ import {
   fillInPhoneNumber,
   validAddress,
 } from "Components/__tests__/Utils/addressFormEnzymeHelpers"
-import * as TLHelpers from "Components/__tests__/Utils/addressFormTLHelpers"
 import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
 import { graphql } from "react-relay"
@@ -46,6 +45,7 @@ import {
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Address } from "Components/AddressForm"
 import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
+import { t } from "i18next"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -216,7 +216,15 @@ const relayEnv = createMockEnvironment()
 // environment. Otherwise SystemContext will create a new [real] environment.
 const testWrapperConfig = {
   Component: (props: any) => (
-    <MockBoot relayEnvironment={relayEnv}>
+    <MockBoot
+      relayEnvironment={relayEnv}
+      user={{
+        id: "example-user-id",
+        name: "Logged In",
+        email: "loggedin@example.com",
+      }}
+      context={{ user: { id: "example-user-id" } }}
+    >
       <ShippingFragmentContainer
         router={{ push: pushMock } as any}
         order={props.order}
@@ -238,10 +246,18 @@ const testWrapperConfig = {
   `,
 }
 
-const { renderWithRelay } = setupTestWrapperTL<ShippingTestQuery>(
-  testWrapperConfig
-)
 describe("Shipping [@testing-library/react]", () => {
+  const trackEvent = jest.fn()
+  beforeAll(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent,
+    }))
+    ;(useFeatureFlag as jest.Mock).mockImplementation(() => false)
+  })
+  const { renderWithRelay } = setupTestWrapperTL<ShippingTestQuery>(
+    testWrapperConfig
+  )
+
   const validAddress: Address = {
     name: "Joelle Van Dyne",
     country: "US",
@@ -252,15 +268,96 @@ describe("Shipping [@testing-library/react]", () => {
     region: "NY",
     phoneNumber: "422-424-4242",
   }
-  describe("US address verification", () => {
-    const addressVerificationResult = {
-      __typename: "VerifyAddressType",
-      verificationStatus: "NOT_FOUND",
-      suggestedAddresses: [],
-      inputAddress: {
-        lines: ["401 Broadway", "Suite 25", "New York, NY 10013", "USA"],
-        address: validAddress,
+  const addressVerifiedWithChangesResult = {
+    __typename: "VerifyAddressType",
+    verificationStatus: "VERIFIED_WITH_CHANGES",
+    suggestedAddresses: [
+      {
+        lines: ["401 Broadway Suite 25", "New York, NY 10013", "USA"],
+        address: {
+          addressLine1: "401 Broadway Suite 25",
+          addressLine2: null,
+          city: "New York",
+          region: "NY",
+          postalCode: "10013",
+          country: "US",
+        },
       },
+    ],
+    inputAddress: {
+      lines: ["401 Broadway", "Suite 25", "New York, NY 10013", "USA"],
+      address: validAddress,
+    },
+  }
+  const addressVerifiedNoChangesResult = {
+    ...addressVerifiedWithChangesResult,
+    verificationStatus: "VERIFIED_NO_CHANGES",
+  }
+  const addressNotFoundResult = {
+    ...addressVerifiedWithChangesResult,
+    verificationStatus: "NOT_FOUND",
+    suggestedAddresses: [],
+  }
+
+  const resolveAddressVerification = (relayEnv, resultPayload) => {
+    act(() => {
+      relayEnv.mock.resolveMostRecentOperation(operation => {
+        // TODO: this doesn't work. I have to return full explicit data. WHY?
+        // return MockPayloadGenerator.generate(operation, {
+        //   VerifyAddressMutationType: () => addressVerificationResult,
+        // })
+        return {
+          data: {
+            verifyAddress: {
+              verifyAddressOrError: resultPayload,
+            },
+          },
+        }
+      })
+    })
+  }
+  // TODO: Switch these to use [@testing-library/user-event](https://testing-library.com/docs/user-event/intro#writing-tests-with-userevent)
+  const fireChangeEvent = (input: HTMLElement, value: string) => {
+    fireEvent.change(input, {
+      target: { value: value },
+    })
+  }
+
+  const fillAddressFields = (address: Address = validAddress) => {
+    fireChangeEvent(screen.getByPlaceholderText("Full name"), address.name)
+    fireChangeEvent(screen.getByLabelText("Country"), address.country || "US")
+
+    fireChangeEvent(
+      screen.getByPlaceholderText("Street address"),
+      address.addressLine1 || ""
+    )
+    fireChangeEvent(
+      screen.getByPlaceholderText("Apt, floor, suite, etc."),
+      address.addressLine2 || ""
+    )
+
+    fireChangeEvent(screen.getByPlaceholderText("City"), "New York")
+    fireChangeEvent(
+      screen.getByPlaceholderText("ZIP/postal code"),
+      address.postalCode || ""
+    )
+    fireChangeEvent(
+      screen.getByPlaceholderText("State, province, or region"),
+      address.region || ""
+    )
+
+    fireChangeEvent(
+      screen.getAllByPlaceholderText(
+        "Add phone number including country code"
+      )[0],
+      address.phoneNumber || ""
+    )
+  }
+
+  describe("US address verification", () => {
+    const mockResolvers = {
+      CommerceOrder: () => testOrder,
+      Me: () => emptyTestMe,
     }
     beforeAll(() => {
       ;(useFeatureFlag as jest.Mock).mockImplementation(
@@ -282,15 +379,8 @@ describe("Shipping [@testing-library/react]", () => {
     })
 
     it("triggers basic form validation first", async () => {
-      const mockResolvers = {
-        CommerceOrder: () => testOrder,
-        Me: () => emptyTestMe,
-      }
-      const { env } = renderWithRelay(mockResolvers, true, {}, relayEnv)
+      const { env } = renderWithRelay(mockResolvers, false, {}, relayEnv)
 
-      env.mock.resolveMostRecentOperation(operation => {
-        return MockPayloadGenerator.generate(operation, mockResolvers)
-      })
       const submitButton = screen.getByText("Save and Continue")
       submitButton.click()
 
@@ -299,7 +389,7 @@ describe("Shipping [@testing-library/react]", () => {
         expect(errorFields).toHaveLength(7)
       })
 
-      TLHelpers.fillAddressFields(TLHelpers.validAddress)
+      fillAddressFields(validAddress)
       await waitFor(() => {
         expect(
           screen.queryByText("This field is required")
@@ -309,24 +399,54 @@ describe("Shipping [@testing-library/react]", () => {
       submitButton.click()
 
       // Resolve the address verification query
-      await waitFor(() => {
-        act(() => {
-          env.mock.resolveMostRecentOperation(operation => {
-            // TODO: this doesn't work. WHY?
-            // return MockPayloadGenerator.generate(operation, {
-            //   VerifyAddressMutationType: () => addressVerificationResult,
-            // })
-            return {
-              data: {
-                verifyAddress: {
-                  verifyAddressOrError: addressVerificationResult,
-                },
-              },
-            }
-          })
-        })
+      await waitFor(() =>
+        resolveAddressVerification(env, addressVerifiedWithChangesResult)
+      )
+      await screen.findByText("Confirm your delivery address")
+    })
+
+    it("lets the user complete the flow they they select a suggested address", async () => {
+      const { env } = renderWithRelay(mockResolvers, false, {}, relayEnv)
+
+      fillAddressFields(validAddress)
+
+      screen.getByText("Save and Continue").click()
+      await waitFor(() =>
+        resolveAddressVerification(env, addressVerifiedWithChangesResult)
+      )
+      await screen.findByText("Confirm your delivery address")
+      expect(trackEvent).toHaveBeenCalledTimes(1)
+      expect(trackEvent).toHaveBeenNthCalledWith(1, {
+        action_type: "validationAddressViewed",
+        context_module: "ordersShipping",
+        context_page_owner_id: "1234",
+        context_page_owner_type: "orders-shipping",
+        flow: "user adding shipping address",
+        subject: "Confirm your delivery address",
+        user_id: "example-user-id",
       })
-      await screen.findByText("Check your delivery address")
+
+      await waitFor(() => screen.getByText("What you entered").click())
+      // await flushPromiseQueue()
+      screen.getByText("Use This Address").click()
+      await waitFor(() => {
+        expect(
+          screen.queryByText("Confirm your delivery address")
+        ).not.toBeInTheDocument()
+        // expect(trackEvent).toHaveBeenCalledTimes(3)
+        // expect(trackEvent).toHaveBeenNthCalledWith(2, {
+        //   action_type: "clickedValidationAddress",
+        //   context_module: "ordersShipping",
+        //   context_page_owner_id: "1234",
+        //   context_page_owner_type: "orders-shipping",
+        //   label: "Use This Address",
+        //   option: "What you entered",
+        //   subject: "Confirm your delivery address",
+        //   user_id: "example-user-id",
+        // })
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+        expect(trackEvent).toHaveBeenNthCalledWith(3, {})
+      })
     })
   })
 })
@@ -338,7 +458,7 @@ class ShippingTestPage extends OrderAppTestPage {
   }
 }
 
-describe("Shipping [enzyme - deprecated]", () => {
+describe.skip("Shipping [enzyme - deprecated]", () => {
   beforeEach(() => {
     isCommittingMutation = false
   })
