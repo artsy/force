@@ -94,7 +94,7 @@ import {
   AddressVerificationFlowQueryRenderer,
   AddressVerifiedBy,
 } from "Apps/Order/Components/AddressVerificationFlow"
-import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Analytics/AnalyticsContext"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -758,12 +758,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   return (
-    <AnalyticsContext.Provider
-      value={{
-        contextPageOwnerId: order.internalID,
-        contextPageOwnerType: OwnerType.ordersShipping,
-      }}
-    >
+    <Analytics contextPageOwnerId={order.internalID}>
       <Box data-test="orderShipping">
         <OrderRouteContainer
           order={order}
@@ -966,7 +961,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           }
         />
       </Box>
-    </AnalyticsContext.Provider>
+    </Analytics>
   )
 }
 
