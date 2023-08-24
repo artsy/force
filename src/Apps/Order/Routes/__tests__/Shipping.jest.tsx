@@ -44,8 +44,7 @@ import {
 } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { Address } from "Components/AddressForm"
-import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
-import { t } from "i18next"
+import { createMockEnvironment } from "relay-test-utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -289,15 +288,15 @@ describe("Shipping [@testing-library/react]", () => {
       address: validAddress,
     },
   }
-  const addressVerifiedNoChangesResult = {
-    ...addressVerifiedWithChangesResult,
-    verificationStatus: "VERIFIED_NO_CHANGES",
-  }
-  const addressNotFoundResult = {
-    ...addressVerifiedWithChangesResult,
-    verificationStatus: "NOT_FOUND",
-    suggestedAddresses: [],
-  }
+  // const addressVerifiedNoChangesResult = {
+  //   ...addressVerifiedWithChangesResult,
+  //   verificationStatus: "VERIFIED_NO_CHANGES",
+  // }
+  // const addressNotFoundResult = {
+  //   ...addressVerifiedWithChangesResult,
+  //   verificationStatus: "NOT_FOUND",
+  //   suggestedAddresses: [],
+  // }
 
   const resolveAddressVerification = (relayEnv, resultPayload) => {
     act(() => {
@@ -355,10 +354,6 @@ describe("Shipping [@testing-library/react]", () => {
   }
 
   describe("US address verification", () => {
-    const mockResolvers = {
-      CommerceOrder: () => testOrder,
-      Me: () => emptyTestMe,
-    }
     beforeAll(() => {
       ;(useFeatureFlag as jest.Mock).mockImplementation(
         (featureName: string) => featureName === "address_verification_us"
@@ -379,7 +374,15 @@ describe("Shipping [@testing-library/react]", () => {
     })
 
     it("triggers basic form validation first", async () => {
-      const { env } = renderWithRelay(mockResolvers, false, {}, relayEnv)
+      const { env } = renderWithRelay(
+        {
+          CommerceOrder: () => testOrder,
+          Me: () => emptyTestMe,
+        },
+        false,
+        {},
+        relayEnv
+      )
 
       const submitButton = screen.getByText("Save and Continue")
       submitButton.click()
@@ -405,8 +408,16 @@ describe("Shipping [@testing-library/react]", () => {
       await screen.findByText("Confirm your delivery address")
     })
 
-    it("lets the user complete the flow they they select a suggested address", async () => {
-      const { env } = renderWithRelay(mockResolvers, false, {}, relayEnv)
+    it("lets the user complete the flow when they select the address they entered", async () => {
+      const { env } = renderWithRelay(
+        {
+          CommerceOrder: () => testOrder,
+          Me: () => emptyTestMe,
+        },
+        false,
+        {},
+        relayEnv
+      )
 
       fillAddressFields(validAddress)
 
@@ -416,36 +427,59 @@ describe("Shipping [@testing-library/react]", () => {
       )
       await screen.findByText("Confirm your delivery address")
       expect(trackEvent).toHaveBeenCalledTimes(1)
-      expect(trackEvent).toHaveBeenNthCalledWith(1, {
-        action_type: "validationAddressViewed",
-        context_module: "ordersShipping",
-        context_page_owner_id: "1234",
-        context_page_owner_type: "orders-shipping",
-        flow: "user adding shipping address",
-        subject: "Confirm your delivery address",
-        user_id: "example-user-id",
-      })
+      expect(trackEvent).toHaveBeenNthCalledWith(
+        1,
+        expect.objectContaining({
+          action: "validationAddressViewed",
+          flow: "user adding shipping address",
+          subject: "Confirm your delivery address",
+        })
+      )
 
       await waitFor(() => screen.getByText("What you entered").click())
-      // await flushPromiseQueue()
+      mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+
       screen.getByText("Use This Address").click()
       await waitFor(() => {
         expect(
           screen.queryByText("Confirm your delivery address")
         ).not.toBeInTheDocument()
-        // expect(trackEvent).toHaveBeenCalledTimes(3)
-        // expect(trackEvent).toHaveBeenNthCalledWith(2, {
-        //   action_type: "clickedValidationAddress",
-        //   context_module: "ordersShipping",
-        //   context_page_owner_id: "1234",
-        //   context_page_owner_type: "orders-shipping",
-        //   label: "Use This Address",
-        //   option: "What you entered",
-        //   subject: "Confirm your delivery address",
-        //   user_id: "example-user-id",
-        // })
-        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-        expect(trackEvent).toHaveBeenNthCalledWith(3, {})
+        expect(trackEvent).toHaveBeenCalledTimes(2)
+        expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+
+        expect(trackEvent).toHaveBeenNthCalledWith(
+          2,
+          expect.objectContaining({
+            action: "clickedValidationAddressOptions",
+            label: "Use This Address",
+            option: "What you entered",
+          })
+        )
+        const firstCommitArgs = mockCommitMutation.mock.calls[0][0]
+        expect(firstCommitArgs.mutation.default.fragment.name).toEqual(
+          "SetShippingMutation"
+        )
+        expect(firstCommitArgs.variables.input).toEqual({
+          addressVerifiedBy: "USER",
+          id: "1234",
+          fulfillmentType: "SHIP",
+          phoneNumber: validAddress.phoneNumber,
+          shipping: {
+            ...validAddress,
+            phoneNumber: "",
+          },
+        })
+
+        // TODO: Why do we need the extra drilling here?
+        const secondCommitArgs = mockCommitMutation.mock.calls[1][0][1]
+
+        expect(secondCommitArgs.mutation.default.fragment.name).toEqual(
+          "CreateUserAddressMutation"
+        )
+        expect(secondCommitArgs.variables.input).toEqual({
+          attributes: validAddress,
+        })
+        expect(pushMock).toHaveBeenCalledWith("/orders/1234/payment")
       })
     })
   })
