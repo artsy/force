@@ -1,9 +1,7 @@
 import {
   formatOwnerTypes,
   getContextPageFromClient,
-  getContextPageFromReq,
 } from "Server/getContextPage"
-import { Request } from "express"
 import { OwnerType } from "@artsy/cohesion"
 
 jest.mock("sharify", () => ({
@@ -11,36 +9,6 @@ jest.mock("sharify", () => ({
     APP_URL: "https://artsy.net",
   },
 }))
-
-describe("getContextPageFromReq", () => {
-  it("returns expected values", () => {
-    const page = getContextPageFromReq({
-      path: "/artist/test-artist",
-    } as Request)
-
-    expect(page).toEqual({
-      canonicalUrl: "https://artsy.net/artist/test-artist",
-      pageParts: ["", "artist", "test-artist"],
-      pageSlug: "test-artist",
-      pageType: "artist",
-      path: "/artist/test-artist",
-    })
-  })
-
-  it("handles camelcasing", () => {
-    const page = getContextPageFromReq({
-      path: "/artist-series/test-artist-series",
-    } as Request)
-
-    expect(page).toEqual({
-      canonicalUrl: "https://artsy.net/artist-series/test-artist-series",
-      pageParts: ["", "artist-series", "test-artist-series"],
-      pageSlug: "test-artist-series",
-      pageType: "artistSeries",
-      path: "/artist-series/test-artist-series",
-    })
-  })
-})
 
 describe("getContextPageFromClient", () => {
   it("returns correct props", () => {

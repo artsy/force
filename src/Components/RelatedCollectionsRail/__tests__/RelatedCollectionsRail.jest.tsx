@@ -2,13 +2,13 @@ import { CollectionsRailFixture } from "Apps/__tests__/Fixtures/Collections"
 import { mount } from "enzyme"
 import "jest-styled-components"
 import { clone, drop } from "lodash"
+// eslint-disable-next-line no-restricted-imports
 import Waypoint from "react-waypoint"
-import { RelatedCollectionEntity } from "../RelatedCollectionEntity"
-import { RelatedCollectionsRail } from "../RelatedCollectionsRail"
+import { RelatedCollectionEntity } from "Components/RelatedCollectionsRail/RelatedCollectionEntity"
+import { RelatedCollectionsRail } from "Components/RelatedCollectionsRail/RelatedCollectionsRail"
 import { paginateCarousel } from "@artsy/palette"
-import { OwnerType } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
-import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
 
 jest.mock("react-tracking")
 jest.mock("@artsy/palette/dist/elements/Carousel/paginate")
@@ -20,15 +20,12 @@ describe.skip("CollectionsRail", () => {
 
   const getWrapper = (passedProps = props) => {
     return mount(
-      <AnalyticsContext.Provider
-        value={{
-          contextPageOwnerId: "1234",
-          contextPageOwnerSlug: "slug",
-          contextPageOwnerType: OwnerType.collection,
-        }}
+      <AnalyticsCombinedContextProvider
+        contextPageOwnerId="1234"
+        path="/collection/slug"
       >
         <RelatedCollectionsRail {...passedProps} />
-      </AnalyticsContext.Provider>
+      </AnalyticsCombinedContextProvider>
     )
   }
 
