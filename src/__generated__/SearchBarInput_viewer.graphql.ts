@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4c7d8ba96f2c3d6f945656ae68d73a6f>>
+ * @generated SignedSource<<953a6914a20668a8c9233b6d2ffb5817>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SearchBar_viewer$data = {
+export type SearchBarInput_viewer$data = {
   readonly searchConnection?: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -27,15 +27,21 @@ export type SearchBar_viewer$data = {
       } | null;
     } | null> | null;
   } | null;
-  readonly " $fragmentType": "SearchBar_viewer";
+  readonly " $fragmentSpreads": FragmentRefs<"SearchInputPills_viewer">;
+  readonly " $fragmentType": "SearchBarInput_viewer";
 };
-export type SearchBar_viewer$key = {
-  readonly " $data"?: SearchBar_viewer$data;
-  readonly " $fragmentSpreads": FragmentRefs<"SearchBar_viewer">;
+export type SearchBarInput_viewer$key = {
+  readonly " $data"?: SearchBarInput_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SearchBarInput_viewer">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "entities"
+    },
     {
       "defaultValue": false,
       "kind": "LocalArgument",
@@ -49,7 +55,7 @@ const node: ReaderFragment = {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "SearchBar_viewer",
+  "name": "SearchBarInput_viewer",
   "selections": [
     {
       "condition": "hasTerm",
@@ -59,6 +65,11 @@ const node: ReaderFragment = {
         {
           "alias": null,
           "args": [
+            {
+              "kind": "Variable",
+              "name": "entities",
+              "variableName": "entities"
+            },
             {
               "kind": "Literal",
               "name": "first",
@@ -187,12 +198,23 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ]
+    },
+    {
+      "args": [
+        {
+          "kind": "Variable",
+          "name": "term",
+          "variableName": "term"
+        }
+      ],
+      "kind": "FragmentSpread",
+      "name": "SearchInputPills_viewer"
     }
   ],
   "type": "Viewer",
   "abstractKey": null
 };
 
-(node as any).hash = "cb3e5ef31951ddfe15a268d4b3e80056";
+(node as any).hash = "92e9fc123f592d6f0778d455c3febb50";
 
 export default node;

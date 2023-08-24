@@ -46,7 +46,7 @@ describe("ArtworkAuctionCreateAlertTooltip", () => {
 
     expect(
       screen.getByText(
-        "Available works by Andy Warhol based on similar tags and auction activity."
+        "You may be interested in these similar works by Andy Warhol."
       )
     ).toBeInTheDocument()
     expect(screen.getByText("Andy Warhol")).toBeInTheDocument()

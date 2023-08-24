@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d2108c40a2add3119b4a1f8dc2e7fa58>>
+ * @generated SignedSource<<1c938dc556ddd5120ea1c2406b07f01d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,8 +38,10 @@ export type ArtistHeader2_artist$data = {
   readonly name: string | null;
   readonly slug: string;
   readonly verifiedRepresentatives: ReadonlyArray<{
-    readonly name: string | null;
-    readonly slug: string;
+    readonly partner: {
+      readonly name: string | null;
+      readonly slug: string;
+    } | null;
   }>;
   readonly " $fragmentType": "ArtistHeader2_artist";
 };
@@ -174,13 +176,24 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Partner",
+      "concreteType": "VerifiedRepresentative",
       "kind": "LinkedField",
       "name": "verifiedRepresentatives",
       "plural": true,
       "selections": [
-        (v1/*: any*/),
-        (v0/*: any*/)
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Partner",
+          "kind": "LinkedField",
+          "name": "partner",
+          "plural": false,
+          "selections": [
+            (v1/*: any*/),
+            (v0/*: any*/)
+          ],
+          "storageKey": null
+        }
       ],
       "storageKey": null
     },
@@ -256,6 +269,6 @@ return {
 };
 })();
 
-(node as any).hash = "ed76bfc133b4ade0f51163ac9168edc9";
+(node as any).hash = "263650363d3b9082afd0007bb4b1aa62";
 
 export default node;

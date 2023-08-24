@@ -1,24 +1,27 @@
 import { Box } from "@artsy/palette"
-import { NewSearchBarInputQueryRenderer } from "Components/Search/NewSearch/NewSearchBarInput"
+import { SearchBarInputQueryRenderer } from "Components/Search/NewSearch/SearchBarInput"
 import { Media } from "Utils/Responsive"
 import { MobileSearchBarQueryRenderer } from "./Mobile/MobileSearchBar"
 import { FC } from "react"
 import { useRouter } from "System/Router/useRouter"
-interface NewSearchBarProps {
+
+interface SearchBarProps {
   onClose: () => void
 }
 
-export const NewSearchBar: FC<NewSearchBarProps> = ({ onClose }) => {
+export const SearchBar: FC<SearchBarProps> = ({ onClose }) => {
   const { match } = useRouter()
-  const urlSearchTerm = match.location.query.term
+
+  const urlSearchTerm = match?.location?.query?.term
 
   return (
     <Box flex={1}>
       <Media at="xs">
         <MobileSearchBarQueryRenderer onClose={onClose} />
       </Media>
+
       <Media greaterThan="xs">
-        <NewSearchBarInputQueryRenderer term={urlSearchTerm} />
+        <SearchBarInputQueryRenderer term={urlSearchTerm} />
       </Media>
     </Box>
   )
