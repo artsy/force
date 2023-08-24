@@ -17,6 +17,7 @@ import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/SystemContext"
 import {
   ActionType,
+  ClickedCloseValidationAddressModal,
   ClickedValidationAddressOptions,
   ContextModule,
   OwnerType,
@@ -94,14 +95,14 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   onClose,
 }) => {
   const [showModal, setShowModal] = useState(false)
-  const didLoad = useRef(false)
 
   let verificationPath: VerificationPath
   let addressOptions: AddressOption[] = []
 
   const {
     trackViewedModal,
-    trackClickedModal,
+    trackClosedModal,
+    trackSelectedAddress,
   } = useAddressVerificationTracking()
 
   const error = (verifyAddress.verifyAddressOrError as VerifyAddressErrorType)
@@ -152,34 +153,22 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     AddressOptionKey | undefined
   >(addressOptions[0]?.key)
 
-  // perform only once on mount
+  // perform only once when the flow first loads
   useEffect(() => {
-    if (didLoad.current) return
-
     if (verificationPath === VerificationPath.ERROR_IMMEDIATE_CONFIRM) {
       const fallbackOption = fallbackFromFormValues(verificationInput)
       onChosenAddress(AddressVerifiedBy.USER, fallbackOption.address)
-      didLoad.current = true
     } else if (verificationPath === VerificationPath.IMMEDIATE_CONFIRM) {
       onChosenAddress(AddressVerifiedBy.ARTSY, addressOptions[0].address!)
-      didLoad.current = true
     } else {
       setShowModal(true)
-      didLoad.current = true
 
       trackViewedModal({
         subject: modalTitle!,
       })
     }
-  }, [
-    didLoad,
-    addressOptions,
-    verificationPath,
-    verificationInput,
-    onChosenAddress,
-    trackViewedModal,
-    modalTitle,
-  ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const chooseAddress = useCallback(() => {
     if (!selectedAddressKey) return
@@ -199,18 +188,15 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     }
   }, [addressOptions, onChosenAddress, selectedAddressKey])
 
-  const handleBackToEdit = ({
+  const handleCloseModal = ({
     label,
-    option,
     subject,
   }: {
-    label: string
+    label: string | null
     subject: string
-    option?: string
   }) => {
-    trackClickedModal({
+    trackClosedModal({
       subject,
-      option,
       label,
     })
     onClose()
@@ -232,7 +218,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       m={[0, 2]}
       title={modalTitle!}
       onClose={() => {
-        handleBackToEdit({ label: "close modal", subject: modalTitle! })
+        handleCloseModal({ label: "close modal", subject: modalTitle! })
       }}
     >
       {verificationPath === VerificationPath.SUGGESTIONS ? (
@@ -275,7 +261,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
           <Flex width="100%" justifyContent="space-between">
             <Button
               onClick={() => {
-                handleBackToEdit({
+                handleCloseModal({
                   label: "Back to Edit",
                   subject: modalTitle!,
                 })
@@ -290,7 +276,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
               disabled={!(selectedAddressKey && selectedAddressKey.length > 0)}
               onClick={() => {
                 if (selectedAddressKey) {
-                  trackClickedModal({
+                  trackSelectedAddress({
                     subject: modalTitle!,
                     option: selectedAddressKey.includes("suggestedAddress")
                       ? "Recommended"
@@ -329,7 +315,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
           <Flex width="100%" justifyContent="space-between">
             <Button
               onClick={() => {
-                trackClickedModal({
+                trackSelectedAddress({
                   subject: modalTitle!,
                   label: "Use This Address",
                 })
@@ -343,7 +329,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
             <Spacer x={1} />
             <Button
               onClick={() => {
-                handleBackToEdit({
+                handleCloseModal({
                   label: "Edit Address",
                   subject: modalTitle!,
                 })
@@ -415,7 +401,7 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
   return (
     <SystemQueryRenderer<AddressVerificationFlowQuery>
       variables={{ address }}
-      render={({ props, error }) => {
+      render={({ props }) => {
         if (!props?.verifyAddress) {
           return null
         }
@@ -483,7 +469,8 @@ const useAddressVerificationTracking = () => {
       },
       [contextPageOwnerId, trackEvent, userId]
     ),
-    trackClickedModal: useCallback(
+
+    trackSelectedAddress: useCallback(
       ({
         label,
         option,
@@ -499,11 +486,26 @@ const useAddressVerificationTracking = () => {
           context_page_owner_type: OwnerType.ordersShipping,
           context_page_owner_id: contextPageOwnerId,
           user_id: userId,
-          subject,
           ...(typeof subject !== "undefined" && { subject }),
           ...(typeof option !== "undefined" && { option }),
           ...(typeof label !== "undefined" && { label }),
         } as ClickedValidationAddressOptions)
+      },
+      [contextPageOwnerId, trackEvent, userId]
+    ),
+
+    trackClosedModal: useCallback(
+      ({ label, subject }: { label?: string | null; subject: string }) => {
+        trackEvent({
+          action: ActionType.clickedCloseValidationAddressModal,
+          context_module: ContextModule.ordersShipping,
+          context_page_owner_type: OwnerType.ordersShipping,
+          context_page_owner_id: contextPageOwnerId,
+          user_id: userId,
+          option: "close",
+          ...(typeof subject !== "undefined" && { subject }),
+          ...(typeof label !== "undefined" && { label }),
+        } as ClickedCloseValidationAddressModal)
       },
       [contextPageOwnerId, trackEvent, userId]
     ),
