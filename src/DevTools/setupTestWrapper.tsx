@@ -86,12 +86,12 @@ export const setupTestWrapperTL = <T extends OperationType>({
   const renderWithRelay = (
     mockResolvers: MockResolvers = {},
     manualEnvControl?: boolean,
-    componentProps?: {},
-    mockedEnv: MockEnvironment = createMockEnvironment()
+    componentProps?: {}
   ): RenderWithRelay => {
+    const env = createMockEnvironment()
     const TestRenderer = () => (
       <QueryRenderer<T>
-        environment={mockedEnv}
+        environment={env}
         variables={variables}
         query={query}
         render={({ props, error }) => {
@@ -107,12 +107,12 @@ export const setupTestWrapperTL = <T extends OperationType>({
     const view = render(<TestRenderer />)
 
     if (!manualEnvControl) {
-      mockedEnv.mock.resolveMostRecentOperation(operation => {
+      env.mock.resolveMostRecentOperation(operation => {
         return MockPayloadGenerator.generate(operation, mockResolvers)
       })
     }
 
-    return { ...view, env: mockedEnv }
+    return { ...view, env }
   }
 
   return { renderWithRelay }

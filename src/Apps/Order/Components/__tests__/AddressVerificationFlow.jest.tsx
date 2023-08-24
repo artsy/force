@@ -134,7 +134,6 @@ describe("AddressVerificationFlow", () => {
       label: "close modal",
       option: "close",
       subject: "Check your delivery address",
-      user_id: "example-user-id",
     })
 
     expect(mockOnClose).toHaveBeenCalledTimes(1)
@@ -209,6 +208,7 @@ describe("AddressVerificationFlow", () => {
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         label: "Use This Address",
+        option: "What you entered",
         subject: "Check your delivery address",
         user_id: "example-user-id",
       })
@@ -354,7 +354,6 @@ describe("AddressVerificationFlow", () => {
         label: "Back to Edit",
         option: "close",
         subject: "Confirm your delivery address",
-        user_id: "example-user-id",
       })
 
       expect(mockOnClose).toHaveBeenCalledTimes(1)

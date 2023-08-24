@@ -12,7 +12,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useCallback, useEffect, useRef, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/SystemContext"
 import {
@@ -192,7 +192,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     label,
     subject,
   }: {
-    label: string | null
+    label: string
     subject: string
   }) => {
     trackClosedModal({
@@ -317,6 +317,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
               onClick={() => {
                 trackSelectedAddress({
                   subject: modalTitle!,
+                  option: "What you entered",
                   label: "Use This Address",
                 })
                 chooseAddress()
@@ -476,38 +477,39 @@ const useAddressVerificationTracking = () => {
         option,
         subject,
       }: {
-        label?: string | null
-        option?: string | null
+        label: string
+        option: string
         subject: string
       }) => {
-        trackEvent({
+        const event: ClickedValidationAddressOptions = {
           action: ActionType.clickedValidationAddressOptions,
           context_module: ContextModule.ordersShipping,
           context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: contextPageOwnerId,
-          user_id: userId,
-          ...(typeof subject !== "undefined" && { subject }),
-          ...(typeof option !== "undefined" && { option }),
-          ...(typeof label !== "undefined" && { label }),
-        } as ClickedValidationAddressOptions)
+          context_page_owner_id: contextPageOwnerId!,
+          user_id: userId!,
+          subject,
+          option,
+          label,
+        }
+        trackEvent(event)
       },
       [contextPageOwnerId, trackEvent, userId]
     ),
 
     trackClosedModal: useCallback(
-      ({ label, subject }: { label?: string | null; subject: string }) => {
-        trackEvent({
+      ({ label, subject }: { label: string; subject: string }) => {
+        const event: ClickedCloseValidationAddressModal = {
           action: ActionType.clickedCloseValidationAddressModal,
           context_module: ContextModule.ordersShipping,
           context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: contextPageOwnerId,
-          user_id: userId,
+          context_page_owner_id: contextPageOwnerId!,
           option: "close",
-          ...(typeof subject !== "undefined" && { subject }),
-          ...(typeof label !== "undefined" && { label }),
-        } as ClickedCloseValidationAddressModal)
+          subject,
+          label,
+        }
+        trackEvent(event)
       },
-      [contextPageOwnerId, trackEvent, userId]
+      [contextPageOwnerId, trackEvent]
     ),
   }
 }
