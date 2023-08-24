@@ -12,6 +12,7 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
+import { Fragment } from "react"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
@@ -45,6 +46,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
   const hasInsights = artist.insights.length > 0
   const hasBio = artist.biographyBlurb?.text
   const hasSomething = hasImage || hasInsights || hasBio
+  const hasVerifiedRepresentatives = artist?.verifiedRepresentatives?.length > 0
 
   if (mode === "Collapsed") {
     return (
@@ -177,6 +179,27 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                   </Bio>
                 )}
 
+                {hasVerifiedRepresentatives && (
+                  <Text variant="sm" color="black60">
+                    Represented by: &nbsp;
+                    {artist.verifiedRepresentatives.map(
+                      ({ partner }, index) => {
+                        return (
+                          <Fragment key={partner.slug}>
+                            {index > 0 && ", "}
+                            <RouterLink
+                              to={`/partner/${partner.slug}`}
+                              color="black100"
+                            >
+                              {partner.name}
+                            </RouterLink>
+                          </Fragment>
+                        )
+                      }
+                    )}
+                  </Text>
+                )}
+
                 <CV to={`/artist/${artist.slug}/cv`} color="black60">
                   See all past shows and fair booths
                 </CV>
@@ -241,6 +264,12 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           label
           description
           entities
+        }
+        verifiedRepresentatives {
+          partner {
+            name
+            slug
+          }
         }
         coverArtwork {
           title

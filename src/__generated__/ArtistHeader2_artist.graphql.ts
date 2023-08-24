@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d1ee5d64b4e0d37009beb7ebb8c678de>>
+ * @generated SignedSource<<89021dac8c25b6f1d476eb6ffb316be0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,6 +37,12 @@ export type ArtistHeader2_artist$data = {
   readonly internalID: string;
   readonly name: string | null;
   readonly slug: string;
+  readonly verifiedRepresentatives: ReadonlyArray<{
+    readonly partner: {
+      readonly name: string | null;
+      readonly slug: string;
+    };
+  }>;
   readonly " $fragmentType": "ArtistHeader2_artist";
 };
 export type ArtistHeader2_artist$key = {
@@ -44,7 +50,22 @@ export type ArtistHeader2_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader2_artist">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "slug",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "name",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -57,20 +78,8 @@ const node: ReaderFragment = {
       "name": "internalID",
       "storageKey": null
     },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "name",
-      "storageKey": null
-    },
+    (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -167,6 +176,30 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "VerifiedRepresentative",
+      "kind": "LinkedField",
+      "name": "verifiedRepresentatives",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Partner",
+          "kind": "LinkedField",
+          "name": "partner",
+          "plural": false,
+          "selections": [
+            (v1/*: any*/),
+            (v0/*: any*/)
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Artwork",
       "kind": "LinkedField",
       "name": "coverArtwork",
@@ -234,7 +267,8 @@ const node: ReaderFragment = {
   "type": "Artist",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "05dc703c1026ade811d40ebc4a21bbea";
+(node as any).hash = "263650363d3b9082afd0007bb4b1aa62";
 
 export default node;
