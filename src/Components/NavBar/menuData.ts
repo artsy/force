@@ -37,7 +37,7 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
       },
       {
         text: "Trending Now",
-        href: "/collection/trending-this-week/new-this-week",
+        href: "/collection/trending-now",
       },
       {
         text: "Curator's Picks",
