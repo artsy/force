@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1c938dc556ddd5120ea1c2406b07f01d>>
+ * @generated SignedSource<<d1ee5d64b4e0d37009beb7ebb8c678de>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,12 +37,6 @@ export type ArtistHeader2_artist$data = {
   readonly internalID: string;
   readonly name: string | null;
   readonly slug: string;
-  readonly verifiedRepresentatives: ReadonlyArray<{
-    readonly partner: {
-      readonly name: string | null;
-      readonly slug: string;
-    } | null;
-  }>;
   readonly " $fragmentType": "ArtistHeader2_artist";
 };
 export type ArtistHeader2_artist$key = {
@@ -50,22 +44,7 @@ export type ArtistHeader2_artist$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader2_artist">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "slug",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -78,8 +57,20 @@ return {
       "name": "internalID",
       "storageKey": null
     },
-    (v0/*: any*/),
-    (v1/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "slug",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -176,30 +167,6 @@ return {
     {
       "alias": null,
       "args": null,
-      "concreteType": "VerifiedRepresentative",
-      "kind": "LinkedField",
-      "name": "verifiedRepresentatives",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "Partner",
-          "kind": "LinkedField",
-          "name": "partner",
-          "plural": false,
-          "selections": [
-            (v1/*: any*/),
-            (v0/*: any*/)
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "Artwork",
       "kind": "LinkedField",
       "name": "coverArtwork",
@@ -267,8 +234,7 @@ return {
   "type": "Artist",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "263650363d3b9082afd0007bb4b1aa62";
+(node as any).hash = "05dc703c1026ade811d40ebc4a21bbea";
 
 export default node;
