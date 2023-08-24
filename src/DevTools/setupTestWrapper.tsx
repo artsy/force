@@ -1,7 +1,7 @@
 import { render, RenderResult } from "@testing-library/react"
 import { mount } from "enzyme"
 import * as React from "react"
-import { QueryRenderer, RelayEnvironmentProvider } from "react-relay"
+import { QueryRenderer } from "react-relay"
 import { GraphQLTaggedNode, OperationType } from "relay-runtime"
 import {
   createMockEnvironment,
@@ -87,37 +87,32 @@ export const setupTestWrapperTL = <T extends OperationType>({
     mockResolvers: MockResolvers = {},
     manualEnvControl?: boolean,
     componentProps?: {},
-    mockedEnv?: ReturnType<
-      typeof createMockEnvironment
-    > = createMockEnvironment()
+    mockedEnv: MockEnvironment = createMockEnvironment()
   ): RenderWithRelay => {
-    const env = mockedEnv || createMockEnvironment()
     const TestRenderer = () => (
-      <RelayEnvironmentProvider environment={env}>
-        <QueryRenderer<T>
-          environment={env}
-          variables={variables}
-          query={query}
-          render={({ props, error }) => {
-            if (props) {
-              return <Component {...componentProps} {...(props as {})} />
-            } else if (error) {
-              console.error(error)
-            }
-          }}
-        />
-      </RelayEnvironmentProvider>
+      <QueryRenderer<T>
+        environment={mockedEnv}
+        variables={variables}
+        query={query}
+        render={({ props, error }) => {
+          if (props) {
+            return <Component {...componentProps} {...(props as {})} />
+          } else if (error) {
+            console.error(error)
+          }
+        }}
+      />
     )
 
     const view = render(<TestRenderer />)
 
     if (!manualEnvControl) {
-      env.mock.resolveMostRecentOperation(operation => {
+      mockedEnv.mock.resolveMostRecentOperation(operation => {
         return MockPayloadGenerator.generate(operation, mockResolvers)
       })
     }
 
-    return { ...view, env }
+    return { ...view, env: mockedEnv }
   }
 
   return { renderWithRelay }

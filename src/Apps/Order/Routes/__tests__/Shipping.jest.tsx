@@ -2,7 +2,7 @@ import {
   ShippingTestQuery,
   ShippingTestQuery$rawResponse,
 } from "__generated__/ShippingTestQuery.graphql"
-import { cloneDeep, create } from "lodash"
+import { cloneDeep } from "lodash"
 import { act, screen, waitFor } from "@testing-library/react"
 import {
   UntouchedBuyOrder,
@@ -209,8 +209,6 @@ const pushMock = jest.fn()
 let isCommittingMutation
 const relayEnv = createMockEnvironment()
 
-afterEach(relayEnv.mockClear)
-
 const testWrapperConfig = {
   Component: (props: any) => (
     <MockBoot relayEnvironment={relayEnv}>
@@ -268,9 +266,12 @@ describe("Shipping [@testing-library/react]", () => {
     beforeEach(() => {
       isCommittingMutation = false
     })
+
     afterEach(() => {
       jest.clearAllMocks()
+      relayEnv.mockClear()
     })
+
     afterAll(() => {
       ;(useFeatureFlag as jest.Mock).mockReset()
     })
@@ -282,7 +283,6 @@ describe("Shipping [@testing-library/react]", () => {
       }
       const { env } = renderWithRelay(mockResolvers, true, {}, relayEnv)
 
-      console.log(env.mock.getAllOperations())
       env.mock.resolveMostRecentOperation(operation => {
         return MockPayloadGenerator.generate(operation, mockResolvers)
       })
@@ -301,19 +301,26 @@ describe("Shipping [@testing-library/react]", () => {
         ).not.toBeInTheDocument()
       })
 
-      console.log("about to click")
       submitButton.click()
-      console.log("cliked")
 
-      act(() => {
-        env.mock.resolveMostRecentOperation(operation => {
-          console.log(operation)
-          return MockPayloadGenerator.generate(operation, {
-            VerifyAddressMutationType: () => addressVerificationResult,
+      // Resolve the address verification query
+      await waitFor(() => {
+        act(() => {
+          env.mock.resolveMostRecentOperation(operation => {
+            // TODO: this doesn't work. WHY?
+            // return MockPayloadGenerator.generate(operation, {
+            //   VerifyAddressMutationType: () => addressVerificationResult,
+            // })
+            return {
+              data: {
+                verifyAddress: {
+                  verifyAddressOrError: addressVerificationResult,
+                },
+              },
+            }
           })
         })
       })
-
       await screen.findByText("Check your delivery address")
     })
   })

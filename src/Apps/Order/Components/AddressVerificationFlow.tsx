@@ -410,7 +410,6 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
     <SystemQueryRenderer<AddressVerificationFlowQuery>
       variables={{ address }}
       render={({ props, error }) => {
-        console.log({ props, error })
         if (!props?.verifyAddress) {
           return null
         }
