@@ -25,13 +25,13 @@ export const SaleEndYearFilter: React.FC = () => {
   }))
 
   React.useEffect(() => {
-    if (!saleEndYear) {
+    if (saleEndYear === null) {
       setFilter?.("saleEndYear", new Date().getFullYear())
     }
-    if (!saleStartYear && options.length > 0) {
+    if (saleStartYear === null && options.length > 0) {
       setFilter?.("saleStartYear", parseInt(options[0].value))
     }
-  }, [saleEndYear, saleStartYear, setFilter, options])
+  }, [saleEndYear, saleStartYear]) // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <FilterExpandable label="Sale Date" expanded>
@@ -43,6 +43,7 @@ export const SaleEndYearFilter: React.FC = () => {
               options={options}
               onSelect={year => setFilter?.("saleStartYear", parseInt(year))}
               defaultValue={options[0]?.value}
+              selected={saleStartYear?.toString()}
             />
             <Spacer x={1} />
             <Select
@@ -50,6 +51,7 @@ export const SaleEndYearFilter: React.FC = () => {
               options={options}
               onSelect={year => setFilter?.("saleEndYear", parseInt(year))}
               defaultValue={new Date().getFullYear().toString()}
+              selected={saleEndYear?.toString()}
             />
           </Flex>
 

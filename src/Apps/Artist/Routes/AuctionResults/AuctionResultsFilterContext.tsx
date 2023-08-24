@@ -259,6 +259,8 @@ export const AuctionResultsFilterContextProvider: React.FC<
           earliestCreatedYear,
           latestCreatedYear,
           metric: userPreferredMetric,
+          saleStartYear: null,
+          saleEndYear: null,
         } as any,
       }
       dispatchOrStage(action)
