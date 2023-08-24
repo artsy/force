@@ -18,7 +18,7 @@ import {
   fillIn,
   fillInPhoneNumber,
   validAddress,
-} from "Components/__tests__/Utils/addressFormEnzymeHelpers"
+} from "Components/__tests__/Utils/addressForm"
 import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
 import { graphql } from "react-relay"

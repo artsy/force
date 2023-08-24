@@ -11,7 +11,7 @@ import {
   fillCountrySelect,
   fillIn,
   validAddress,
-} from "Components/__tests__/Utils/addressFormEnzymeHelpers"
+} from "Components/__tests__/Utils/addressForm"
 import { Address, AddressForm } from "Components/AddressForm"
 import { RootTestPage } from "DevTools/RootTestPage"
 import { graphql } from "react-relay"

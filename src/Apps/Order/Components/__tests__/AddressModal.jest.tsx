@@ -5,7 +5,7 @@ import {
   GENERIC_FAIL_MESSAGE,
 } from "Apps/Order/Components/AddressModal"
 import { mount } from "enzyme"
-import { validAddress } from "Components/__tests__/Utils/addressFormEnzymeHelpers"
+import { validAddress } from "Components/__tests__/Utils/addressForm"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
 import { useSystemContext } from "System/useSystemContext"
 import {
