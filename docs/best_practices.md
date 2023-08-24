@@ -294,3 +294,11 @@ const MyApp = () => {
   )
 }
 ```
+
+If you are building an entity route (/example/:slug) — be sure to wrap your app in the `Analytics` and provide the corresponding `internalID`.
+
+```tsx
+<Analytics contextPageOwnerId={artist.internalID}>
+  {...}
+</Analytics>
+```

@@ -12,8 +12,7 @@ import {
 } from "Components/Artwork/ManageArtworkForSaves"
 import { useTracking } from "react-tracking"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { OwnerType } from "@artsy/cohesion"
+import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
 import { FC } from "react"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
@@ -40,17 +39,14 @@ const { renderWithRelay } = setupTestWrapperTL<
     }
 
     return (
-      <AnalyticsContext.Provider
-        value={{
-          contextPageOwnerId: "page-owner-id",
-          contextPageOwnerSlug: "page-owner-slug",
-          contextPageOwnerType: OwnerType.artist,
-        }}
+      <AnalyticsCombinedContextProvider
+        contextPageOwnerId="page-owner-id"
+        path="/artist/page-owner-slug"
       >
         <ManageArtworkForSavesProvider artwork={artwork}>
           <TestComponent {...props} />
         </ManageArtworkForSavesProvider>
-      </AnalyticsContext.Provider>
+      </AnalyticsCombinedContextProvider>
     )
   },
   query: graphql`

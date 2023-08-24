@@ -1,10 +1,9 @@
-import { OwnerType } from "@artsy/cohesion"
 import { render, screen, fireEvent, waitFor } from "@testing-library/react"
 import {
   CreateNewListModalContainer,
   CreateNewListModalContainerProps,
 } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
-import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 import { useTracking } from "react-tracking"
 
@@ -34,12 +33,9 @@ describe("CreateNewListModal", () => {
 
   const TestComponent = (props: Partial<CreateNewListModalContainerProps>) => {
     return (
-      <AnalyticsContext.Provider
-        value={{
-          contextPageOwnerId: "page-owner-id",
-          contextPageOwnerSlug: "page-owner-slug",
-          contextPageOwnerType: OwnerType.saves,
-        }}
+      <AnalyticsCombinedContextProvider
+        contextPageOwnerId="page-owner-id"
+        path="/saves/page-owner-slug"
       >
         <CreateNewListModalContainer
           {...props}
@@ -47,7 +43,7 @@ describe("CreateNewListModal", () => {
           onClose={props.onClose ?? onCloseMock}
           onComplete={props.onComplete ?? onCompleteMock}
         />
-      </AnalyticsContext.Provider>
+      </AnalyticsCombinedContextProvider>
     )
   }
 

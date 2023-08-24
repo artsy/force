@@ -1,30 +1,7 @@
-import { Request } from "express"
 import { OwnerType, PageOwnerType } from "@artsy/cohesion"
 import { camelCase } from "lodash"
+// eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
-
-export function getContextPageFromReq({
-  path,
-}: Request): {
-  canonicalUrl: string
-  pageParts: string[]
-  pageType: PageOwnerType
-  pageSlug: string
-  path: string
-} {
-  const pageParts = path.split("/")
-  const pageSlug = pageParts[2]
-  const pageType = formatOwnerTypes(path)
-  const canonicalUrl = `${sd.APP_URL}${path}`
-
-  return {
-    canonicalUrl,
-    pageParts,
-    pageSlug,
-    pageType,
-    path,
-  }
-}
 
 interface ClientContextPage {
   canonicalUrl: string
@@ -34,6 +11,9 @@ interface ClientContextPage {
   path: string
 }
 
+/**
+ * @deprecated: See `AnalyticsContext`
+ */
 export function getContextPageFromClient(): ClientContextPage | undefined {
   if (!window) {
     return
@@ -55,6 +35,9 @@ export function getContextPageFromClient(): ClientContextPage | undefined {
   }
 }
 
+/**
+ * @deprecated: Use `pathToOwnerType` from `AnalyticsContext`
+ */
 export const formatOwnerTypes = (path: string) => {
   const type = path.split("/")[1]
   // Remove '2' to ensure that show2/fair2/etc are schema compliant

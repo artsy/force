@@ -27,10 +27,7 @@ import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { RecentlyViewed } from "Components/RecentlyViewed"
 import { useRouter } from "System/Router/useRouter"
 import { TrackingProp } from "react-tracking"
-import {
-  AnalyticsContext,
-  useAnalyticsContext,
-} from "System/Analytics/AnalyticsContext"
+import { Analytics } from "System/Analytics/AnalyticsContext"
 import { useRouteComplete } from "Utils/Hooks/useRouteComplete"
 import { Media } from "Utils/Responsive"
 import { UseRecordArtworkView } from "./useRecordArtworkView"
@@ -290,7 +287,7 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
       location: { pathname, state },
     },
   } = useRouter()
-  const { contextPageOwnerSlug, contextPageOwnerType } = useAnalyticsContext()
+
   // Check to see if referrer comes from link interception.
   // @see interceptLinks.ts
   const referrer = state && state.previousHref
@@ -299,13 +296,7 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
   const websocketEnabled = !!sale?.extendedBiddingIntervalMinutes
 
   return (
-    <AnalyticsContext.Provider
-      value={{
-        contextPageOwnerId: internalID,
-        contextPageOwnerSlug,
-        contextPageOwnerType,
-      }}
-    >
+    <Analytics contextPageOwnerId={internalID}>
       <WebsocketContextProvider
         channelInfo={{
           channel: "SalesChannel",
@@ -320,7 +311,7 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
           shouldTrackPageView={isComplete}
         />
       </WebsocketContextProvider>
-    </AnalyticsContext.Provider>
+    </Analytics>
   )
 }
 
