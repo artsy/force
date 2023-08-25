@@ -1,10 +1,11 @@
-import { graphql } from "react-relay"
-import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { act, fireEvent, screen } from "@testing-library/react"
 import { CreateArtworkAlertSectionFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/CreateArtworkAlertSection"
-import { CreateArtworkAlertSection_Test_Query } from "__generated__/CreateArtworkAlertSection_Test_Query.graphql"
-import { fireEvent, screen } from "@testing-library/react"
-import { useTracking } from "react-tracking"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useSystemContext } from "System/useSystemContext"
+import { CreateArtworkAlertSection_Test_Query } from "__generated__/CreateArtworkAlertSection_Test_Query.graphql"
+import { graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import { MockPayloadGenerator } from "relay-test-utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -41,12 +42,37 @@ describe("CreateArtworkAlertSection", () => {
   })
 
   it("should correctly render placeholder", () => {
-    const placeholder = "Artworks like: Some artwork title"
-    renderWithRelay({
+    const placeholder = "Banana"
+
+    const { env } = renderWithRelay({
       Artwork: () => Artwork,
+      Viewer: () => ({
+        previewSavedSearch: {
+          displayName: placeholder,
+        },
+      }),
     })
 
-    fireEvent.click(screen.getByText("Create Alert"))
+    mockuseSystemContext.mockImplementation(() => {
+      return {
+        isLoggedIn: true,
+        relayEnvironment: env,
+      }
+    })
+
+    act(() => {
+      fireEvent.click(screen.getByText("Create Alert"))
+    })
+
+    act(() => {
+      env.mock.resolveMostRecentOperation(operation => {
+        return MockPayloadGenerator.generate(operation, {
+          PreviewSavedSearch: () => ({
+            displayName: "Banana",
+          }),
+        })
+      })
+    })
 
     expect(screen.getByPlaceholderText(placeholder)).toBeInTheDocument()
   })

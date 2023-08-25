@@ -1,29 +1,28 @@
 import { Input } from "@artsy/palette"
+import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { SavedSearchAlertFormValues } from "Components/SavedSearchAlert/types"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useFormikContext } from "formik"
-import { FC, useEffect, useMemo, useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { useSystemContext } from "System/SystemContext"
+import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { SavedSearchAlertNameInputQuery } from "__generated__/SavedSearchAlertNameInputQuery.graphql"
-import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
-import { debounce } from "lodash"
 import { SavedSearchAlertNameInput_previewSavedSearch$data } from "__generated__/SavedSearchAlertNameInput_previewSavedSearch.graphql"
+import { useFormikContext } from "formik"
+import { FC, useEffect, useState } from "react"
+import { createFragmentContainer, graphql } from "react-relay"
 
 export const SavedSearchAlertNameInputQueryRenderer: FC = () => {
+  const { relayEnvironment } = useSystemContext()
+
   const { criteria } = useSavedSearchAlertContext()
-  const [criteriaState, setCriteriaState] = useState({})
 
-  const debouncedSetCriteriaState = useMemo(
-    () => debounce(setCriteriaState, 200),
-    []
-  )
-
-  useEffect(() => {
-    debouncedSetCriteriaState(criteria)
-  }, [criteria, debouncedSetCriteriaState])
+  const { debouncedValue: criteriaState } = useDebouncedValue({
+    value: criteria,
+    delay: 200,
+  })
 
   return (
     <SystemQueryRenderer<SavedSearchAlertNameInputQuery>
+      environment={relayEnvironment}
       query={graphql`
         query SavedSearchAlertNameInputQuery(
           $attributes: PreviewSavedSearchAttributes!
@@ -43,8 +42,7 @@ export const SavedSearchAlertNameInputQueryRenderer: FC = () => {
 
         return (
           <SavedSearchAlertNameInputFragmentContainer
-            // @ts-expect-error "No overload matches this call" TODO: why??
-            previewSavedSearch={props?.viewer?.previewSavedSearch}
+            previewSavedSearch={(props?.viewer?.previewSavedSearch ?? null)!}
           />
         )
       }}

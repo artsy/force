@@ -1,6 +1,6 @@
+import { screen } from "@testing-library/react"
 import { SavedSearchAlertNameInputFragmentContainer } from "Components/SavedSearchAlert/Components/SavedSearchAlertNameInput"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 
 jest.unmock("react-relay")
