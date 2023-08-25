@@ -1,4 +1,4 @@
-import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { Box, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
@@ -18,9 +18,9 @@ import {
 } from "Components/SavedSearchAlert/types"
 import { OwnerType } from "@artsy/cohesion"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
-import { Media } from "Utils/Responsive"
 import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
 import { SuggestedArtworksShelfQueryRenderer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksShelf"
+import { Media } from "Utils/Responsive"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
@@ -107,36 +107,37 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
       entity={entity}
       artistSlug={artistSlug}
     >
-      <GridColumns py={6}>
+      <GridColumns py={[4, 4, 6]}>
         <Column span={12}>
-          <Text variant="lg" textAlign={["left", "center"]}>
+          <Text variant={["md", "md", "lg"]} textAlign={["left", "center"]}>
             Bidding for <i>{artwork.title?.trim()}</i>
             {artistName} has ended.
           </Text>
           <Text
-            variant={["sm-display", "lg"]}
+            variant={["sm-display", "md", "lg"]}
             textAlign={["left", "center"]}
             textColor={["black60", "black100"]}
           >
             Get notified when similar works become available.
           </Text>
         </Column>
-
-        <Column span={2} start={6}>
-          <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
+        <Column span={12}>
+          <Media lessThan="sm">
+            <Spacer y={1} />
+          </Media>
+          <Box mx="auto" width={["100%", 209]}>
+            <ArtworkSidebarCreateAlertButtonFragmentContainer
+              artwork={artwork}
+            />
+          </Box>
+        </Column>
+        <Column span={12} display={["none", "block"]}>
+          <Spacer y={4} />
+          <ArtworkAuctionCreateAlertTooltip />
         </Column>
 
-        <Column span={12}>
-          <Media greaterThan="xs">
-            <Spacer y={4} />
-            <ArtworkAuctionCreateAlertTooltip />
-          </Media>
-        </Column>
-
-        <Column span={12}>
-          <Media greaterThan="xs">
-            <SuggestedArtworksShelfQueryRenderer {...criteria} />
-          </Media>
+        <Column span={12} display={["none", "block"]}>
+          <SuggestedArtworksShelfQueryRenderer {...criteria} />
         </Column>
 
         <Column span={2} start={6}>
