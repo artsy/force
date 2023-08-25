@@ -100,8 +100,10 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
   }
   const allowedCriteria = getAllowedSearchCriteria(criteria)
 
-  const displaySuggestedArtworksSection =
-    artwork?.savedSearch?.suggestedArtworksConnection?.totalCount ?? 0 > 0
+  const suggestedArtworksCount =
+    artwork?.savedSearch?.suggestedArtworksConnection?.totalCount ?? 0
+  const displaySuggestedArtworksSection = suggestedArtworksCount > 0
+  const displaySeeMoreButton = suggestedArtworksCount > 5
 
   return (
     <SavedSearchAlertContextProvider
@@ -146,9 +148,11 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
               <SuggestedArtworksShelfQueryRenderer {...criteria} />
             </Column>
 
-            <Column span={2} start={6}>
-              <SuggestedArtworksButton />
-            </Column>
+            {!!displaySeeMoreButton && (
+              <Column span={2} start={6}>
+                <SuggestedArtworksButton />
+              </Column>
+            )}
           </>
         )}
       </GridColumns>

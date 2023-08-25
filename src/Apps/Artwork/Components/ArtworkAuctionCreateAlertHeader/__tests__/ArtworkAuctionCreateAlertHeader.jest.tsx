@@ -133,6 +133,50 @@ describe("ArtworkAuctionCreateAlertHeader", () => {
         ).not.toBeInTheDocument()
       })
     })
+
+    describe("See more button", () => {
+      it("displays when there are more than 5 suggested artworks", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            title: "Untitled",
+            artistNames: "Emily Ludwig Shaffer",
+            artists: [{ id: "emily-ludwig-shaffer" }],
+            isInAuction: true,
+            savedSearch: {
+              suggestedArtworksConnection: {
+                totalCount: 6,
+              },
+            },
+          }),
+          Sale: () => ({
+            isClosed: true,
+          }),
+        })
+
+        expect(screen.getByText("See more")).toBeInTheDocument()
+      })
+
+      it("doesn't display when there are less than 6 suggested artworks", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            title: "Untitled",
+            artistNames: "Emily Ludwig Shaffer",
+            artists: [{ id: "emily-ludwig-shaffer" }],
+            isInAuction: true,
+            savedSearch: {
+              suggestedArtworksConnection: {
+                totalCount: 5,
+              },
+            },
+          }),
+          Sale: () => ({
+            isClosed: true,
+          }),
+        })
+
+        expect(screen.queryByText("See more")).not.toBeInTheDocument()
+      })
+    })
   })
 
   describe("with the feture flag disabled", () => {
