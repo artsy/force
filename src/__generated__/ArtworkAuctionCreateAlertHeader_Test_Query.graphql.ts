@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b2d835bf174d697775dc599b30c246cd>>
+ * @generated SignedSource<<37d429c4b44802be166973b92bd9e004>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -251,6 +251,35 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArtworkSavedSearch",
+            "kind": "LinkedField",
+            "name": "savedSearch",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "ArtworkConnection",
+                "kind": "LinkedField",
+                "name": "suggestedArtworksConnection",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "totalCount",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
           (v4/*: any*/)
         ],
         "storageKey": "artwork(id:\"emily-ludwig-shaffer-untitled-3\")"
@@ -258,7 +287,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "baf8554d878f23ceb8174ed8c3234a95",
+    "cacheID": "32c6eb7676139b23a3bc5fb461d00c53",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -324,13 +353,31 @@ return {
         "artwork.saleArtwork.endedAt": (v5/*: any*/),
         "artwork.saleArtwork.extendedBiddingEndAt": (v5/*: any*/),
         "artwork.saleArtwork.id": (v6/*: any*/),
+        "artwork.savedSearch": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkSavedSearch"
+        },
+        "artwork.savedSearch.suggestedArtworksConnection": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ArtworkConnection"
+        },
+        "artwork.savedSearch.suggestedArtworksConnection.totalCount": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Int"
+        },
         "artwork.slug": (v6/*: any*/),
         "artwork.title": (v5/*: any*/)
       }
     },
     "name": "ArtworkAuctionCreateAlertHeader_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkAuctionCreateAlertHeader_Test_Query {\n  artwork(id: \"emily-ludwig-shaffer-untitled-3\") {\n    ...ArtworkAuctionCreateAlertHeader_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {\n  slug\n  internalID\n  title\n  isInAuction\n  artistNames\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    extendedBiddingEndAt\n    endAt\n    endedAt\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n  ...ArtworkSidebarCreateAlertButton_artwork\n}\n\nfragment ArtworkSidebarCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkAuctionCreateAlertHeader_Test_Query {\n  artwork(id: \"emily-ludwig-shaffer-untitled-3\") {\n    ...ArtworkAuctionCreateAlertHeader_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {\n  slug\n  internalID\n  title\n  isInAuction\n  artistNames\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    extendedBiddingEndAt\n    endAt\n    endedAt\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n  savedSearch {\n    suggestedArtworksConnection {\n      totalCount\n    }\n  }\n  ...ArtworkSidebarCreateAlertButton_artwork\n}\n\nfragment ArtworkSidebarCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();

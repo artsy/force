@@ -100,6 +100,9 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
   }
   const allowedCriteria = getAllowedSearchCriteria(criteria)
 
+  const displaySuggestedArtworksSection =
+    artwork?.savedSearch?.suggestedArtworksConnection?.totalCount ?? 0 > 0
+
   return (
     <SavedSearchAlertContextProvider
       criteria={allowedCriteria}
@@ -131,18 +134,23 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
             />
           </Box>
         </Column>
-        <Column span={12} display={["none", "block"]}>
-          <Spacer y={4} />
-          <ArtworkAuctionCreateAlertTooltip />
-        </Column>
 
-        <Column span={12} display={["none", "block"]}>
-          <SuggestedArtworksShelfQueryRenderer {...criteria} />
-        </Column>
+        {!!displaySuggestedArtworksSection && (
+          <>
+            <Column span={12} display={["none", "block"]}>
+              <Spacer y={4} />
+              <ArtworkAuctionCreateAlertTooltip />
+            </Column>
 
-        <Column span={2} start={6}>
-          <SuggestedArtworksButton />
-        </Column>
+            <Column span={12} display={["none", "block"]}>
+              <SuggestedArtworksShelfQueryRenderer {...criteria} />
+            </Column>
+
+            <Column span={2} start={6}>
+              <SuggestedArtworksButton />
+            </Column>
+          </>
+        )}
       </GridColumns>
     </SavedSearchAlertContextProvider>
   )
@@ -179,6 +187,11 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
           filterGene {
             slug
             name
+          }
+        }
+        savedSearch {
+          suggestedArtworksConnection {
+            totalCount
           }
         }
         ...ArtworkSidebarCreateAlertButton_artwork
