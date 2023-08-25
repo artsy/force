@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5e65ff28f39f69f4f7db0f6f9e145d0d>>
+ * @generated SignedSource<<6ebd56964c82a2e6b4cdd157fd06a67e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,6 +36,11 @@ export type ArtworkAuctionCreateAlertHeader_artwork$data = {
     readonly endAt: string | null;
     readonly endedAt: string | null;
     readonly extendedBiddingEndAt: string | null;
+  } | null;
+  readonly savedSearch: {
+    readonly suggestedArtworksConnection: {
+      readonly totalCount: number | null;
+    } | null;
   } | null;
   readonly slug: string;
   readonly title: string | null;
@@ -206,6 +211,35 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkSavedSearch",
+      "kind": "LinkedField",
+      "name": "savedSearch",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtworkConnection",
+          "kind": "LinkedField",
+          "name": "suggestedArtworksConnection",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "totalCount",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkSidebarCreateAlertButton_artwork"
@@ -216,6 +250,6 @@ return {
 };
 })();
 
-(node as any).hash = "58e2babb9c1c0f8b0dd4026105dd5bdd";
+(node as any).hash = "701f6af2f53242a37493beff95540e20";
 
 export default node;

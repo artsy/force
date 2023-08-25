@@ -33,6 +33,7 @@ describe("ArtworkAuctionCreateAlertHeader", () => {
     beforeAll(() => {
       ;(useFeatureFlag as jest.Mock).mockImplementation(() => true)
     })
+
     it("displays when the auction is closed", () => {
       renderWithRelay({
         Artwork: () => ({
@@ -83,6 +84,54 @@ describe("ArtworkAuctionCreateAlertHeader", () => {
       })
 
       expect(screen.queryByText("Create Alert")).not.toBeInTheDocument()
+    })
+
+    describe("suggested artworks section", () => {
+      it("displays when there are suggested artworks", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            title: "Untitled",
+            artistNames: "Emily Ludwig Shaffer",
+            artists: [{ id: "emily-ludwig-shaffer" }],
+            isInAuction: true,
+            savedSearch: {
+              suggestedArtworksConnection: {
+                totalCount: 1,
+              },
+            },
+          }),
+          Sale: () => ({
+            isClosed: true,
+          }),
+        })
+
+        expect(
+          screen.queryByText(/You may be interested in these similar works/)
+        ).toBeInTheDocument()
+      })
+
+      it("doesn't display when there are no suggested artworks", () => {
+        renderWithRelay({
+          Artwork: () => ({
+            title: "Untitled",
+            artistNames: "Emily Ludwig Shaffer",
+            artists: [{ id: "emily-ludwig-shaffer" }],
+            isInAuction: true,
+            savedSearch: {
+              suggestedArtworksConnection: {
+                totalCount: 0,
+              },
+            },
+          }),
+          Sale: () => ({
+            isClosed: true,
+          }),
+        })
+
+        expect(
+          screen.queryByText(/You may be interested in these similar works/)
+        ).not.toBeInTheDocument()
+      })
     })
   })
 
