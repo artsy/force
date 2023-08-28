@@ -114,10 +114,16 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
     >
       <GridColumns py={[4, 4, 6]}>
         <Column span={12}>
-          <Text variant={["md", "md", "lg"]} textAlign={["left", "center"]}>
+          <Text
+            variant={["lg-display", "md", "lg"]}
+            textAlign={["left", "center"]}
+          >
             Bidding for <i>{artwork.title?.trim()}</i>
             {artistName} has ended.
           </Text>
+          <Media lessThan="sm">
+            <Spacer y={1} />
+          </Media>
           <Text
             variant={["sm-display", "md", "lg"]}
             textAlign={["left", "center"]}
