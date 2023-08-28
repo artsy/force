@@ -165,6 +165,10 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
 
       trackViewedModal({
         subject: modalTitle!,
+        option:
+          verificationPath === VerificationPath.SUGGESTIONS
+            ? "suggestions"
+            : "review and confirm",
       })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -458,7 +462,7 @@ const useAddressVerificationTracking = () => {
 
   return {
     trackViewedModal: useCallback(
-      ({ subject }: { subject: string }) => {
+      ({ subject, option }: { subject: string; option: string }) => {
         trackEvent({
           action: ActionType.validationAddressViewed,
           context_module: ContextModule.ordersShipping,
@@ -467,6 +471,7 @@ const useAddressVerificationTracking = () => {
           user_id: userId,
           flow: "user adding shipping address",
           subject,
+          option,
         } as ValidationAddressViewed)
       },
       [contextPageOwnerId, trackEvent, userId]

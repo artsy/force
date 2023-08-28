@@ -184,6 +184,7 @@ describe("AddressVerificationFlow", () => {
         flow: "user adding shipping address",
         subject: "Check your delivery address",
         user_id: "example-user-id",
+        option: "review and confirm",
       })
     })
 
@@ -281,6 +282,7 @@ describe("AddressVerificationFlow", () => {
         flow: "user adding shipping address",
         subject: "Confirm your delivery address",
         user_id: "example-user-id",
+        option: "suggestions",
       })
     })
 
