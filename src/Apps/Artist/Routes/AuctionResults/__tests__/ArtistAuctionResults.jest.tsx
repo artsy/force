@@ -325,7 +325,7 @@ describe("AuctionResults", () => {
               })
             })
 
-            expect(trackEvent).toHaveBeenCalledTimes(5)
+            expect(trackEvent).toHaveBeenCalledTimes(3)
             expect(trackEvent.mock.calls[0][0]).toMatchObject({
               action_type: "Auction results filter params changed",
               context_page: "Artist Auction Results",
@@ -334,13 +334,14 @@ describe("AuctionResults", () => {
 
             const { changed, current } = trackEvent.mock.calls[0][0]
             expect(JSON.parse(changed)).toMatchObject({
-              saleEndYear: 2023,
+              categories: ["Work on Paper"],
             })
             expect(JSON.parse(current)).toMatchObject({
-              categories: ["Painting"],
-              organizations: ["Phillips", "Bonhams", "Artsy Auction"],
-              saleEndYear: 2023,
-              sizes: ["SMALL", "LARGE"],
+              categories: ["Work on Paper"],
+              organizations: [],
+              saleEndYear: null,
+              saleStartYear: null,
+              sizes: [],
               page: 1,
               sort: "DATE_DESC",
               allowEmptyCreatedDates: true,
