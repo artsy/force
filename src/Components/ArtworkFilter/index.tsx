@@ -1,19 +1,11 @@
-import React, { useRef, useState } from "react"
-import { isEqual } from "lodash"
-import useDeepCompareEffect from "use-deep-compare-effect"
-import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
-import { useSystemContext } from "System/useSystemContext"
-import { useTracking } from "react-tracking"
-import { usePrevious } from "Utils/Hooks/usePrevious"
-import { Media } from "Utils/Responsive"
-import { ArtworkFilterArtworkGridRefetchContainer as ArtworkFilterArtworkGrid } from "./ArtworkFilterArtworkGrid"
 import {
-  ArtworkFilterContextProvider,
-  SharedArtworkFilterContextProps,
-  useArtworkFilterContext,
-} from "./ArtworkFilterContext"
-import { ArtworkFilterMobileOverlay } from "./ArtworkFilterMobileOverlay"
-import { ArtworkFilters } from "./ArtworkFilters"
+  ActionType,
+  ClickedChangePage,
+  ContextModule,
+  commercialFilterParamsChanged,
+} from "@artsy/cohesion"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import FilterIcon from "@artsy/icons/FilterIcon"
 import {
   Box,
   BoxProps,
@@ -26,30 +18,38 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
-import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import {
-  commercialFilterParamsChanged,
-  ActionType,
-  ContextModule,
-  ClickedChangePage,
-} from "@artsy/cohesion"
-import { allowedFilters } from "./Utils/allowedFilters"
-import { Sticky } from "Components/Sticky"
-import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
-import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
-import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
-import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
-import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
-import { Jump } from "Utils/Hooks/useJump"
-import FilterIcon from "@artsy/icons/FilterIcon"
-import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
-import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { ArtworkFilterCreateAlert } from "Components/ArtworkFilter/ArtworkFilterCreateAlert"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { ArtworkFilterDrawer } from "Components/ArtworkFilter/ArtworkFilterDrawer"
 import { ArtworkSortFilter2 } from "Components/ArtworkFilter/ArtworkFilters/ArtworkSortFilter2"
-import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
+import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
+import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
+import { Sticky } from "Components/Sticky"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { useSystemContext } from "System/useSystemContext"
+import { Jump } from "Utils/Hooks/useJump"
+import { usePrevious } from "Utils/Hooks/usePrevious"
+import { Media } from "Utils/Responsive"
+import { isEqual } from "lodash"
+import React, { useRef, useState } from "react"
+import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
+import { useTracking } from "react-tracking"
+import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import useDeepCompareEffect from "use-deep-compare-effect"
+import { ArtworkFilterArtworkGridRefetchContainer as ArtworkFilterArtworkGrid } from "./ArtworkFilterArtworkGrid"
+import {
+  ArtworkFilterContextProvider,
+  SharedArtworkFilterContextProps,
+  useArtworkFilterContext,
+} from "./ArtworkFilterContext"
+import { ArtworkFilterMobileOverlay } from "./ArtworkFilterMobileOverlay"
+import { ArtworkFilters } from "./ArtworkFilters"
+import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
+import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
+import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
+import { allowedFilters } from "./Utils/allowedFilters"
+import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -220,7 +220,7 @@ export const BaseArtworkFilter: React.FC<
   }
 
   return (
-    <Box {...rest}>
+    <Box {...rest} key={viewer.internalID}>
       <Jump id="artworkFilter" />
 
       {/* Mobile Artwork Filter */}
