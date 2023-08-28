@@ -2,7 +2,6 @@ import type {
   ArtsyRequest,
   ArtsyResponse,
 } from "Server/middleware/artsyExpress"
-import { getContextPageFromReq } from "Server/getContextPage"
 
 /**
  * Builds initial context for Reaction components from server load. Put commonly
@@ -17,15 +16,10 @@ export const buildServerAppContext = (
   res: ArtsyResponse,
   context: { injectedData?: object } = {}
 ) => {
-  const { pageType, pageSlug } = getContextPageFromReq(req)
   return {
     initialMatchingMediaQueries: res.locals.sd.IS_MOBILE ? ["xs"] : undefined,
     user: req.user,
     isEigen: req.header("User-Agent")?.match("Artsy-Mobile") != null,
-    analytics: {
-      contextPageOwnerType: pageType,
-      contextPageOwnerSlug: pageSlug,
-    },
     featureFlags: res.locals.sd.FEATURE_FLAGS,
     userPreferences: res.locals.sd.USER_PREFERENCES,
     ...context,

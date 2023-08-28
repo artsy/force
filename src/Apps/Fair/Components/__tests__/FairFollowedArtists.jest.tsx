@@ -1,8 +1,7 @@
 import { FairFollowedArtists } from "Apps/Fair/Components/FairOverview/FairFollowedArtists"
 import { useTracking } from "react-tracking"
-import { AnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
 import { mount } from "enzyme"
-import { OwnerType } from "@artsy/cohesion"
 
 jest.mock("react-tracking")
 jest.mock("Components/Artwork/ShelfArtwork", () => {
@@ -43,15 +42,12 @@ describe("FairFollowedArtists", () => {
 
   const getWrapper = () => {
     return mount(
-      <AnalyticsContext.Provider
-        value={{
-          contextPageOwnerId: "example-fair-id",
-          contextPageOwnerSlug: "example-fair-slug",
-          contextPageOwnerType: OwnerType.fair,
-        }}
+      <AnalyticsCombinedContextProvider
+        contextPageOwnerId="example-fair-id"
+        path="/fair/example-fair-slug"
       >
         <FairFollowedArtists fair={FAIR_FOLLOWED_ARTISTS_FIXTURE as any} />
-      </AnalyticsContext.Provider>
+      </AnalyticsCombinedContextProvider>
     )
   }
 

@@ -26,7 +26,14 @@ export const SuggestedArtworksShelf: FC<SuggestedArtworksShelfProps> = ({
   const artworks = extractNodes(artworksConnection)
 
   return (
-    <Flex flexDirection="row" flexWrap="wrap" gap={2} justifyContent="center">
+    <Flex
+      flexDirection="row"
+      flexWrap="wrap"
+      gap={2}
+      justifyContent="center"
+      overflow="hidden"
+      height="340px"
+    >
       {artworks.map(artwork => (
         <ShelfArtworkFragmentContainer
           artwork={artwork}
@@ -88,7 +95,14 @@ export const SuggestedArtworksShelfQueryRenderer: FC<SearchCriteriaAttributes> =
 const SuggestedArtworksShelfPlaceholder: FC = () => {
   return (
     <Skeleton>
-      <Flex flexDirection="row" flexWrap="wrap" gap={2} justifyContent="center">
+      <Flex
+        flexDirection="row"
+        flexWrap="wrap"
+        gap={2}
+        justifyContent="center"
+        overflow="hidden"
+        height="340px"
+      >
         {[...new Array(5)].map((_, i) => {
           return <ShelfArtworkPlaceholder key={i} index={i} />
         })}

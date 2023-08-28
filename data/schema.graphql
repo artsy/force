@@ -2319,6 +2319,9 @@ type Artwork implements Node & Searchable & Sellable {
   sale: Sale
   saleArtwork(saleID: String = null): SaleArtwork
   saleMessage: String
+
+  # Schema related to saved searches based on this artwork
+  savedSearch: ArtworkSavedSearch
   series(format: Format): String
 
   # The country an artwork will be shipped from.
@@ -2595,6 +2598,16 @@ type ArtworkPriceInsights {
 type ArtworksAggregationResults {
   counts: [AggregationCount]
   slice: ArtworkAggregation
+}
+
+type ArtworkSavedSearch {
+  # Based on the artworks attributes (usually considered for saved searches).
+  suggestedArtworksConnection(
+    after: String
+    before: String
+    first: Int
+    last: Int
+  ): ArtworkConnection
 }
 
 type ArtworksCollectionsBatchUpdateCounts {
@@ -13664,6 +13677,17 @@ type Partner implements Node {
   profile: Profile
   profileArtistsLayout: String
   profileBannerDisplay: String
+  searchCriteriaConnection(
+    after: String
+    artistID: ID
+    before: String
+    first: Int
+    highQuality: Boolean
+    last: Int
+    partnerID: String
+    previewByArtist: Boolean
+    since: Int
+  ): SearchCriteriaConnection
   showPromoted: Boolean
 
   # A connection of shows from a Partner.
@@ -14578,6 +14602,26 @@ type Query {
 
     # Returns saved searches sorted by input (default: by created date in descending order)
     sort: SavedSearchesSortEnum
+  ): SearchCriteriaConnection
+
+  # List of more general partner facing search criteria data
+  _unused_gravity_searchCriteriaConnection(
+    # Returns the elements in the list that come after the specified cursor.
+    after: String
+    artistID: ID
+
+    # Returns the elements in the list that come before the specified cursor.
+    before: String
+
+    # Returns the first _n_ elements from the list.
+    first: Int
+    highQuality: Boolean
+
+    # Returns the last _n_ elements from the list.
+    last: Int
+    partnerID: ID
+    previewByArtist: Boolean
+    since: Int
   ): SearchCriteriaConnection
 
   # List enabled Two-Factor Authentication factors
@@ -16781,11 +16825,21 @@ type SearchCriteria {
   additionalGeneIDs: [String!]!
   artistID: String @deprecated(reason: "Deprecated in favor of artistIDs array")
   artistIDs: [String!]
+  artistsConnection(
+    after: String
+    before: String
+    first: Int
+    ids: [String]
+    last: Int
+    sort: ArtistSorts
+    term: String
+  ): ArtistConnection
   atAuction: Boolean
   attributionClass: [String!]!
   colors: [String!]!
   dimensionRange: String
   displayName: String!
+  hasRecentlyEnabledUserSearchCriteria: Boolean!
   height: String
   href: String!
   inquireableOnly: Boolean
@@ -16801,7 +16855,12 @@ type SearchCriteria {
   partnerIDs: [String!]!
   priceRange: String
   sizes: [String!]!
+  totalUserSearchCriteriaCount: Int
+  totalWithAdditionalGeneIdsCount: Int
+  totalWithAttributionClassCount: Int
+  totalWithPriceRangeCount: Int
   userAlertSettings: SavedSearchUserAlertSettings!
+  userSearchCriteriaCount: Int!
   width: String
 }
 
