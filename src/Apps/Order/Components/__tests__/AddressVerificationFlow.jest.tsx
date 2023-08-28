@@ -26,7 +26,7 @@ const componentProps = {
 jest.mock("System/useSystemContext")
 jest.mock("System/Analytics/AnalyticsContext", () => ({
   useAnalyticsContext: jest.fn(() => ({
-    contextPageOwnerSlug: "example-order-id",
+    contextPageOwnerId: "example-order-id",
   })),
 }))
 
@@ -117,6 +117,28 @@ describe("AddressVerificationFlow", () => {
     })
   })
 
+  it("calls onClose and tracks the click when the user closes the modal via the x", async () => {
+    renderComponentWithResult(defaultResult)
+
+    await screen.findByText("Check your delivery address")
+
+    const button = screen.getByLabelText("Close")
+    button.click()
+
+    expect(trackEvent).toHaveBeenCalledTimes(2)
+    expect(trackEvent).toHaveBeenNthCalledWith(2, {
+      action: "clickedCloseValidationAddressModal",
+      context_module: "ordersShipping",
+      context_page_owner_id: "example-order-id",
+      context_page_owner_type: "orders-shipping",
+      subject: "Check your delivery address",
+      label: null,
+      option: null,
+    })
+
+    expect(mockOnClose).toHaveBeenCalledTimes(1)
+  })
+
   describe("when the verification status is NOT_FOUND", () => {
     const mockResult = {
       ...defaultResult,
@@ -155,14 +177,14 @@ describe("AddressVerificationFlow", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(1)
       expect(trackEvent).toHaveBeenCalledWith({
-        action_type: "validationAddressViewed",
+        action: "validationAddressViewed",
         context_module: "ordersShipping",
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         flow: "user adding shipping address",
-        option: "review and confirm",
         subject: "Check your delivery address",
         user_id: "example-user-id",
+        option: "review and confirm",
       })
     })
 
@@ -182,11 +204,12 @@ describe("AddressVerificationFlow", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
       expect(trackEvent).toHaveBeenNthCalledWith(2, {
-        action_type: "clickedValidationAddress",
+        action: "clickedValidationAddressOptions",
         context_module: "ordersShipping",
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         label: "Use This Address",
+        option: "What you entered",
         subject: "Check your delivery address",
         user_id: "example-user-id",
       })
@@ -252,14 +275,14 @@ describe("AddressVerificationFlow", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(1)
       expect(trackEvent).toHaveBeenCalledWith({
-        action_type: "validationAddressViewed",
+        action: "validationAddressViewed",
         context_module: "ordersShipping",
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         flow: "user adding shipping address",
-        option: "suggestions",
         subject: "Confirm your delivery address",
         user_id: "example-user-id",
+        option: "suggestions",
       })
     })
 
@@ -273,14 +296,14 @@ describe("AddressVerificationFlow", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
       expect(trackEvent).toHaveBeenNthCalledWith(2, {
-        action_type: "clickedValidationAddress",
+        action: "clickedValidationAddressOptions",
         context_module: "ordersShipping",
         context_page_owner_id: "example-order-id",
+        user_id: "example-user-id",
         context_page_owner_type: "orders-shipping",
+        subject: "Confirm your delivery address",
         label: "Use This Address",
         option: "Recommended",
-        subject: "Confirm your delivery address",
-        user_id: "example-user-id",
       })
 
       expect(mockOnChosenAddress).toHaveBeenCalledTimes(1)
@@ -302,13 +325,13 @@ describe("AddressVerificationFlow", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
       expect(trackEvent).toHaveBeenNthCalledWith(2, {
-        action_type: "clickedValidationAddress",
+        action: "clickedValidationAddressOptions",
         context_module: "ordersShipping",
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
+        subject: "Confirm your delivery address",
         label: "Use This Address",
         option: "What you entered",
-        subject: "Confirm your delivery address",
         user_id: "example-user-id",
       })
 
@@ -326,14 +349,13 @@ describe("AddressVerificationFlow", () => {
 
       expect(trackEvent).toHaveBeenCalledTimes(2)
       expect(trackEvent).toHaveBeenNthCalledWith(2, {
-        action_type: "clickedValidationAddress",
+        action: "clickedCloseValidationAddressModal",
         context_module: "ordersShipping",
         context_page_owner_id: "example-order-id",
         context_page_owner_type: "orders-shipping",
         label: "Back to Edit",
-        option: "Recommended",
-        subject: "Check your delivery address",
-        user_id: "example-user-id",
+        option: null,
+        subject: "Confirm your delivery address",
       })
 
       expect(mockOnClose).toHaveBeenCalledTimes(1)

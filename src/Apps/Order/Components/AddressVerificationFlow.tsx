@@ -15,7 +15,14 @@ import {
 import { useCallback, useEffect, useState } from "react"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/SystemContext"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import {
+  ActionType,
+  ClickedCloseValidationAddressModal,
+  ClickedValidationAddressOptions,
+  ContextModule,
+  OwnerType,
+  ValidationAddressViewed,
+} from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 type VerifyAddressSuccessType = Extract<
@@ -55,14 +62,18 @@ export interface AddressValues {
   postalCode: string
 }
 
-enum ModalType {
+enum VerificationPath {
+  ERROR_IMMEDIATE_CONFIRM = "error_immediate_confirm",
+  IMMEDIATE_CONFIRM = "immediate_confirm",
   SUGGESTIONS = "suggestions",
   REVIEW_AND_CONFIRM = "review_and_confirm",
 }
 
-const modalTitles: Record<ModalType, string> = {
-  [ModalType.SUGGESTIONS]: "Confirm your delivery address",
-  [ModalType.REVIEW_AND_CONFIRM]: "Check your delivery address",
+const modalTitles: Record<VerificationPath, string | null> = {
+  [VerificationPath.SUGGESTIONS]: "Confirm your delivery address",
+  [VerificationPath.REVIEW_AND_CONFIRM]: "Check your delivery address",
+  [VerificationPath.ERROR_IMMEDIATE_CONFIRM]: null,
+  [VerificationPath.IMMEDIATE_CONFIRM]: null,
 } as const
 
 interface AddressOption {
@@ -77,44 +88,91 @@ enum AddressSuggestionRadioButton {
   user_address = "What you entered",
 }
 
-const fallbackFromFormValues = (address: AddressValues): AddressOption => {
-  return {
-    key: USER_INPUT,
-    recommended: false,
-    lines: [
-      address.addressLine1,
-      address.addressLine2 || null,
-      `${address.city}, ${address.region} ${address.postalCode}`,
-      address.country,
-    ].filter(Boolean) as string[],
-
-    address: {
-      addressLine1: address.addressLine1,
-      addressLine2: address.addressLine2,
-      region: address.region,
-      country: address.country,
-      city: address.city,
-      postalCode: address.postalCode,
-    },
-  }
-}
-
 const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
   verificationInput,
   verifyAddress,
   onChosenAddress,
   onClose,
 }) => {
-  const [modalType, setModalType] = useState<ModalType | null>(null)
-  const [addressOptions, setAddressOptions] = useState<AddressOption[]>([])
-  const [
-    selectedAddressKey,
-    setSelectedAddressKey,
-  ] = useState<AddressOptionKey | null>(null)
+  const [showModal, setShowModal] = useState(false)
 
-  const { trackEvent } = useTracking()
-  const { user } = useSystemContext()
-  const { contextPageOwnerSlug } = useAnalyticsContext()
+  let verificationPath: VerificationPath
+  let addressOptions: AddressOption[] = []
+
+  const {
+    trackViewedModal,
+    trackClosedModal,
+    trackSelectedAddress,
+  } = useAddressVerificationTracking()
+
+  const error = (verifyAddress.verifyAddressOrError as VerifyAddressErrorType)
+    ?.mutationError
+  const suggestedAddresses = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
+    ?.suggestedAddresses
+  const inputAddress = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
+    ?.inputAddress
+  const verificationStatus = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
+    ?.verificationStatus
+
+  const hasError = Boolean(error)
+
+  if (hasError) {
+    verificationPath = VerificationPath.ERROR_IMMEDIATE_CONFIRM
+  } else {
+    const inputOption: AddressOption = {
+      ...(inputAddress as any),
+      key: USER_INPUT,
+      recommended: false,
+    }
+    if (verificationStatus === "VERIFIED_NO_CHANGE") {
+      verificationPath = VerificationPath.IMMEDIATE_CONFIRM
+      addressOptions = [inputOption]
+    } else {
+      if (verificationStatus === "VERIFIED_WITH_CHANGES") {
+        verificationPath = VerificationPath.SUGGESTIONS
+
+        const suggestedOptions = (suggestedAddresses || [])
+          .slice(0, 1)
+          .map(({ address, lines }: any, index) => ({
+            key: `suggestedAddress-${index}`,
+            recommended: index === 0,
+            lines: lines,
+            address: address,
+          }))
+        addressOptions = [...suggestedOptions, inputOption]
+      } else {
+        addressOptions = [inputOption]
+        verificationPath = VerificationPath.REVIEW_AND_CONFIRM
+      }
+    }
+  }
+
+  const modalTitle = modalTitles[verificationPath]
+
+  const [selectedAddressKey, setSelectedAddressKey] = useState<
+    AddressOptionKey | undefined
+  >(addressOptions[0]?.key)
+
+  // perform only once when the flow first loads
+  useEffect(() => {
+    if (verificationPath === VerificationPath.ERROR_IMMEDIATE_CONFIRM) {
+      const fallbackOption = fallbackFromFormValues(verificationInput)
+      onChosenAddress(AddressVerifiedBy.USER, fallbackOption.address)
+    } else if (verificationPath === VerificationPath.IMMEDIATE_CONFIRM) {
+      onChosenAddress(AddressVerifiedBy.ARTSY, addressOptions[0].address!)
+    } else {
+      setShowModal(true)
+
+      trackViewedModal({
+        subject: modalTitle!,
+        option:
+          verificationPath === VerificationPath.SUGGESTIONS
+            ? "suggestions"
+            : "review and confirm",
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const chooseAddress = useCallback(() => {
     if (!selectedAddressKey) return
@@ -129,156 +187,46 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
         : AddressVerifiedBy.ARTSY
 
     if (selectedAddress) {
-      setModalType(null)
+      setShowModal(false)
       onChosenAddress(verifiedBy, selectedAddress.address)
     }
   }, [addressOptions, onChosenAddress, selectedAddressKey])
 
-  const handleClose = () => {
-    trackEvent({
-      action_type: "clickedCloseValidationAddress",
-      context_module: ContextModule.ordersShipping,
-      context_page_owner_type: OwnerType.ordersShipping,
-      context_page_owner_id: contextPageOwnerSlug,
+  const handleCloseModal = ({
+    label,
+    subject,
+  }: {
+    label: string | null
+    subject: string
+  }) => {
+    trackClosedModal({
+      subject,
+      label,
       option: null,
-      label: null,
     })
     onClose()
   }
 
-  const handleBackToEdit = () => {
-    const option =
-      selectedAddressKey && selectedAddressKey.includes("suggestedAddress")
-        ? "Recommended"
-        : selectedAddressKey === USER_INPUT
-        ? "What you entered"
-        : null
-
-    trackEvent({
-      action_type: "clickedValidationAddress",
-      context_module: ContextModule.ordersShipping,
-      context_page_owner_type: OwnerType.ordersShipping,
-      context_page_owner_id: contextPageOwnerSlug,
-      user_id: userId,
-      subject: "Check your delivery address",
-      option,
-      label: "Back to Edit",
-    })
-    onClose()
-  }
-
-  const handleEditAddress = () => {
-    trackEvent({
-      action_type: "clickedValidationAddress",
-      context_module: ContextModule.ordersShipping,
-      context_page_owner_type: OwnerType.ordersShipping,
-      context_page_owner_id: contextPageOwnerSlug,
-      user_id: userId,
-      subject: "Check your delivery address",
-      label: "Edit Address",
-    })
-    onClose()
-  }
-
-  useEffect(() => {
-    if (addressOptions.length > 0) {
-      setSelectedAddressKey(addressOptions[0].key)
-    }
-  }, [addressOptions])
-
-  const error = (verifyAddress.verifyAddressOrError as VerifyAddressErrorType)
-    ?.mutationError
-  const suggestedAddresses = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
-    ?.suggestedAddresses
-  const inputAddress = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
-    ?.inputAddress
-  const verificationStatus = (verifyAddress.verifyAddressOrError as VerifyAddressSuccessType)
-    ?.verificationStatus
-
-  const userId = user?.id
-
-  const hasError = Boolean(error)
-
-  useEffect(() => {
-    const inputOption: AddressOption = {
-      ...(inputAddress as any),
-      key: USER_INPUT,
-      recommended: false,
-    }
-
-    if (hasError) {
-      const fallbackOption = fallbackFromFormValues(verificationInput)
-      const verifiedBy = AddressVerifiedBy.USER
-      onChosenAddress(verifiedBy, fallbackOption.address)
-    } else {
-      if (verificationStatus === "VERIFIED_NO_CHANGE") {
-        const verifiedBy = AddressVerifiedBy.ARTSY
-        onChosenAddress(verifiedBy, inputOption.address)
-      } else {
-        if (verificationStatus === "VERIFIED_WITH_CHANGES") {
-          setModalType(ModalType.SUGGESTIONS)
-          trackEvent({
-            action_type: "validationAddressViewed",
-            context_module: ContextModule.ordersShipping,
-            context_page_owner_type: OwnerType.ordersShipping,
-            context_page_owner_id: contextPageOwnerSlug,
-            user_id: userId,
-            flow: "user adding shipping address",
-            subject: "Confirm your delivery address",
-            option: "suggestions",
-          })
-
-          const suggestedOptions = (suggestedAddresses || [])
-            .slice(0, 1)
-            .map(({ address, lines }: any, index) => ({
-              key: `suggestedAddress-${index}`,
-              recommended: index === 0,
-              lines: lines,
-              address: address,
-            }))
-          setAddressOptions([...suggestedOptions, inputOption])
-        } else {
-          setAddressOptions([inputOption])
-          setModalType(ModalType.REVIEW_AND_CONFIRM)
-          trackEvent({
-            action_type: "validationAddressViewed",
-            context_module: ContextModule.ordersShipping,
-            context_page_owner_type: OwnerType.ordersShipping,
-            context_page_owner_id: contextPageOwnerSlug,
-            user_id: userId,
-            flow: "user adding shipping address",
-            subject: "Check your delivery address",
-            option: "review and confirm",
-          })
-        }
-      }
-    }
-  }, [
-    inputAddress,
-    onChosenAddress,
-    suggestedAddresses,
-    verificationStatus,
-    trackEvent,
-    userId,
-    contextPageOwnerSlug,
-    hasError,
-    verificationInput,
-  ])
-
-  if (verificationStatus === "VERIFIED_NO_CHANGE" || hasError)
+  if (
+    [
+      VerificationPath.ERROR_IMMEDIATE_CONFIRM,
+      VerificationPath.IMMEDIATE_CONFIRM,
+    ].includes(verificationPath)
+  ) {
     return <div data-testid="emptyAddressVerification"></div>
+  }
 
-  if (!modalType || addressOptions.length === 0) return null
-
-  return (
+  return !showModal ? null : (
     <ModalDialog
       width={["100%", 590]}
       height={["100vh", "auto"]}
       m={[0, 2]}
-      title={modalTitles[modalType]}
-      onClose={handleClose}
+      title={modalTitle!}
+      onClose={() => {
+        handleCloseModal({ label: null, subject: modalTitle! })
+      }}
     >
-      {modalType === ModalType.SUGGESTIONS ? (
+      {verificationPath === VerificationPath.SUGGESTIONS ? (
         <>
           <Text>
             To ensure prompt and accurate delivery, we suggest a modified
@@ -317,7 +265,12 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
           <Spacer y={4} />
           <Flex width="100%" justifyContent="space-between">
             <Button
-              onClick={handleBackToEdit}
+              onClick={() => {
+                handleCloseModal({
+                  label: "Back to Edit",
+                  subject: modalTitle!,
+                })
+              }}
               variant="secondaryBlack"
               flex={1}
             >
@@ -328,13 +281,8 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
               disabled={!(selectedAddressKey && selectedAddressKey.length > 0)}
               onClick={() => {
                 if (selectedAddressKey) {
-                  trackEvent({
-                    action_type: "clickedValidationAddress",
-                    context_module: ContextModule.ordersShipping,
-                    context_page_owner_type: OwnerType.ordersShipping,
-                    context_page_owner_id: contextPageOwnerSlug,
-                    user_id: userId,
-                    subject: "Confirm your delivery address",
+                  trackSelectedAddress({
+                    subject: modalTitle!,
                     option: selectedAddressKey.includes("suggestedAddress")
                       ? "Recommended"
                       : "What you entered",
@@ -372,13 +320,9 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
           <Flex width="100%" justifyContent="space-between">
             <Button
               onClick={() => {
-                trackEvent({
-                  action_type: "clickedValidationAddress",
-                  context_module: ContextModule.ordersShipping,
-                  context_page_owner_type: OwnerType.ordersShipping,
-                  context_page_owner_id: contextPageOwnerSlug,
-                  user_id: userId,
-                  subject: "Check your delivery address",
+                trackSelectedAddress({
+                  subject: modalTitle!,
+                  option: "What you entered",
                   label: "Use This Address",
                 })
                 chooseAddress()
@@ -389,7 +333,15 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
               Use This Address
             </Button>
             <Spacer x={1} />
-            <Button onClick={handleEditAddress} flex={1}>
+            <Button
+              onClick={() => {
+                handleCloseModal({
+                  label: "Edit Address",
+                  subject: modalTitle!,
+                })
+              }}
+              flex={1}
+            >
               Edit Address
             </Button>
           </Flex>
@@ -478,4 +430,101 @@ export const AddressVerificationFlowQueryRenderer: React.FC<{
       `}
     />
   )
+}
+
+const fallbackFromFormValues = (address: AddressValues): AddressOption => {
+  return {
+    key: USER_INPUT,
+    recommended: false,
+    lines: [
+      address.addressLine1,
+      address.addressLine2 || null,
+      `${address.city}, ${address.region} ${address.postalCode}`,
+      address.country,
+    ].filter(Boolean) as string[],
+
+    address: {
+      addressLine1: address.addressLine1,
+      addressLine2: address.addressLine2,
+      region: address.region,
+      country: address.country,
+      city: address.city,
+      postalCode: address.postalCode,
+    },
+  }
+}
+
+const useAddressVerificationTracking = () => {
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerId } = useAnalyticsContext()
+  const { user } = useSystemContext()
+  const userId = user?.id
+
+  return {
+    trackViewedModal: useCallback(
+      ({ subject, option }: { subject: string; option: string }) => {
+        trackEvent({
+          action: ActionType.validationAddressViewed,
+          context_module: ContextModule.ordersShipping,
+          context_page_owner_type: OwnerType.ordersShipping,
+          context_page_owner_id: contextPageOwnerId,
+          user_id: userId,
+          flow: "user adding shipping address",
+          subject,
+          option,
+        } as ValidationAddressViewed)
+      },
+      [contextPageOwnerId, trackEvent, userId]
+    ),
+
+    trackSelectedAddress: useCallback(
+      ({
+        label,
+        option,
+        subject,
+      }: {
+        label: string
+        option: string
+        subject: string
+      }) => {
+        const event: ClickedValidationAddressOptions = {
+          action: ActionType.clickedValidationAddressOptions,
+          context_module: ContextModule.ordersShipping,
+          context_page_owner_type: OwnerType.ordersShipping,
+          context_page_owner_id: contextPageOwnerId!,
+          user_id: userId!,
+          subject,
+          option,
+          label,
+        }
+        trackEvent(event)
+      },
+      [contextPageOwnerId, trackEvent, userId]
+    ),
+
+    trackClosedModal: useCallback(
+      ({
+        label = null,
+        option = null,
+        subject,
+      }: {
+        label: string | null
+        option: string | null
+        subject: string
+      }) => {
+        const event: ClickedCloseValidationAddressModal = {
+          action: ActionType.clickedCloseValidationAddressModal,
+          context_module: ContextModule.ordersShipping,
+          context_page_owner_type: OwnerType.ordersShipping,
+          context_page_owner_id: contextPageOwnerId!,
+          subject,
+          // TODO: Update cohesion schema to allow for optional fields and remove casting
+          option: option as string,
+          label: label as string,
+        }
+        trackEvent(event)
+      },
+      [contextPageOwnerId, trackEvent]
+    ),
+  }
 }
