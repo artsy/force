@@ -4,6 +4,7 @@ import { useAuthDialogTracking } from "Components/AuthDialog/Hooks/useAuthDialog
 import { useEffect } from "react"
 import { useSystemContext } from "System/useSystemContext"
 import { useRouter } from "System/Router/useRouter"
+import { AuthDialogAnalytics } from "Components/AuthDialog/AuthDialogContext"
 
 const USE_SOCIAL_AUTH_TRACKING_KEY = "useSocialAuthTracking"
 
@@ -35,6 +36,7 @@ export const useSocialAuthTracking = () => {
     if (!value) {
       // Expire the cookie so we don't keep trying to parse it
       Cookies.expire(USE_SOCIAL_AUTH_TRACKING_KEY)
+      console.warn('Invalid cookie found for "useSocialAuthTracking"')
 
       return
     }
@@ -48,7 +50,11 @@ export const useSocialAuthTracking = () => {
       return
     }
 
-    track[value.action]({ service: value.service, userId: user.id })
+    track[value.action]({
+      service: value.service,
+      userId: user.id,
+      ...value.analytics,
+    })
 
     Cookies.expire(USE_SOCIAL_AUTH_TRACKING_KEY)
   }, [location.pathname, track, user])
@@ -56,10 +62,19 @@ export const useSocialAuthTracking = () => {
 
 const schema = Yup.object({
   action: Yup.string().oneOf(["loggedIn", "signedUp"]).required(),
+  analytics: Yup.object({
+    contextModule: Yup.string().required(),
+    intent: Yup.string(),
+    trigger: Yup.string(),
+  }),
   service: Yup.string().oneOf(["apple", "google", "facebook"]).required(),
 })
 
-type Payload = Yup.InferType<typeof schema>
+type Payload = Omit<Yup.InferType<typeof schema>, "analytics"> & {
+  // We assume that the unions are valid because it would
+  // be difficult to get the runtime values from Cohesion
+  analytics: AuthDialogAnalytics
+}
 
 const isValid = (value: any): value is Payload => {
   return schema.isValidSync(value)
