@@ -192,12 +192,13 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
     label,
     subject,
   }: {
-    label: string
+    label: string | null
     subject: string
   }) => {
     trackClosedModal({
       subject,
       label,
+      option: null,
     })
     onClose()
   }
@@ -218,7 +219,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       m={[0, 2]}
       title={modalTitle!}
       onClose={() => {
-        handleCloseModal({ label: "close modal", subject: modalTitle! })
+        handleCloseModal({ label: null, subject: modalTitle! })
       }}
     >
       {verificationPath === VerificationPath.SUGGESTIONS ? (
@@ -497,15 +498,24 @@ const useAddressVerificationTracking = () => {
     ),
 
     trackClosedModal: useCallback(
-      ({ label, subject }: { label: string; subject: string }) => {
+      ({
+        label = null,
+        option = null,
+        subject,
+      }: {
+        label: string | null
+        option: string | null
+        subject: string
+      }) => {
         const event: ClickedCloseValidationAddressModal = {
           action: ActionType.clickedCloseValidationAddressModal,
           context_module: ContextModule.ordersShipping,
           context_page_owner_type: OwnerType.ordersShipping,
           context_page_owner_id: contextPageOwnerId!,
-          option: "close",
           subject,
-          label,
+          // TODO: Update cohesion schema to allow for optional fields and remove casting
+          option: option as string,
+          label: label as string,
         }
         trackEvent(event)
       },
