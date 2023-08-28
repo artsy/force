@@ -40,6 +40,7 @@ export const AuthDialogSocial: FC = () => {
   const handleClick = (service: "facebook" | "apple" | "google") => () => {
     setSocialAuthTracking({
       action: { Login: "loggedIn", SignUp: "signedUp" }[mode],
+      analytics,
       service,
     })
   }

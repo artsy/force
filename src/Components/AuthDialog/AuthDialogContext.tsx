@@ -42,7 +42,7 @@ export type AuthDialogOptions = {
   onSuccess?: () => void
 }
 
-type AuthDialogAnalytics = {
+export type AuthDialogAnalytics = {
   contextModule: AuthContextModule
   intent?: AuthIntent
   trigger?: AuthTrigger
