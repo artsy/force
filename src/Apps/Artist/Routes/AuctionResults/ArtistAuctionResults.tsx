@@ -221,7 +221,7 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   const { title, description } = artist.meta
 
-  if (artist.counts?.auctionResults == 0) {
+  if (!artist.statuses?.auctionLots) {
     return (
       <>
         <Title>{title}</Title>
@@ -425,8 +425,8 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           description
           title
         }
-        counts {
-          auctionResults
+        statuses {
+          auctionLots
         }
         auctionResultsConnection(
           first: $first
