@@ -281,7 +281,7 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
         {taxPrefix()}
         <RouterLink
           inline
-          to="https://support.artsy.net/hc/en-us/articles/4413546314647-Will-my-order-be-subject-to-customs-fees-"
+          to="https://help.artsy.net/s/article/Will-my-order-be-subject-to-customs-fees"
           target="_blank"
           rel="noopener noreferrer"
         >
