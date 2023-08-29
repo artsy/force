@@ -21,8 +21,8 @@ const ArtistWorksForSaleEmpty: FC<ArtistWorksForSaleEmptyProps> = ({
   } = useAnalyticsContext()
 
   return (
-    <GridColumns py={4}>
-      <Column span={4} start={5} textAlign="center">
+    <GridColumns>
+      <Column span={6} start={4} textAlign="center">
         <Text variant="md">Get notified when new works are available</Text>
 
         <Text variant="md" color="black60">
