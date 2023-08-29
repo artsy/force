@@ -3,6 +3,7 @@ import { CountrySelect } from "Components/CountrySelect"
 import * as React from "react"
 import { CreateTokenCardData } from "@stripe/stripe-js"
 import { isEqual } from "lodash"
+// import { useAddressAutocomplete } from "Apps/Order/Routes/Shipping/useAddressAutocomplete"
 
 export interface Address {
   name: string
@@ -74,6 +75,12 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const [address, setAddress] = React.useState(addressFromProp)
   const [prevValue, setPrevValue] = React.useState(value)
 
+  // const {
+  //   autocompleteSuggestions,
+  //   // fetchForAutocomplete,
+  // } = useAddressAutocomplete()
+  // console.log({ autocompleteSuggestions })
+
   if (!isEqual(value, prevValue)) {
     setPrevValue(value)
     setAddress(addressFromProp)
@@ -81,12 +88,23 @@ export const AddressForm: React.FC<AddressFormProps> = ({
 
   const [key, setKey] = React.useState<keyof Address>()
 
-  const changeEventHandler = (key: keyof Address) => (
-    ev: React.FormEvent<HTMLInputElement>
-  ) => {
-    setKey(key)
-    onChangeValue(key, ev.currentTarget.value)
-  }
+  const changeEventHandler = (key: keyof Address) =>
+    // React.useCallback(
+    (ev: React.FormEvent<HTMLInputElement>) => {
+      console.log("Change event handler-" + key)
+      console.warn(key, ev.currentTarget.value)
+      const shouldFetch = !!(
+        key === "addressLine1" && ev.currentTarget.value.length
+      )
+      setKey(key)
+      if (shouldFetch) {
+        console.warn({ shouldFetch })
+        // fetchForAutocomplete(ev.currentTarget.value)
+      }
+      onChangeValue(key, ev.currentTarget.value)
+    }
+  // [key]
+  // )
 
   const changeValueHandler = (key: keyof Address) => (value: string) => {
     setKey(key)
