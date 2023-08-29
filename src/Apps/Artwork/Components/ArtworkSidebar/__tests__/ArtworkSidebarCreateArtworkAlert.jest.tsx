@@ -40,17 +40,6 @@ describe("ArtworkSidebarCreateArtworkAlert", () => {
     })
   })
 
-  it("should correctly render placeholder", () => {
-    const placeholder = "Artworks like: Some artwork title"
-    renderWithRelay({
-      Artwork: () => Artwork,
-    })
-
-    fireEvent.click(screen.getByText("Create Alert"))
-
-    expect(screen.getByPlaceholderText(placeholder)).toBeInTheDocument()
-  })
-
   it("should correctly render pills", () => {
     renderWithRelay({
       Artwork: () => Artwork,

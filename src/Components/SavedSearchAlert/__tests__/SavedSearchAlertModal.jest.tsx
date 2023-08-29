@@ -98,7 +98,6 @@ describe("SavedSearchAlertModal", () => {
 
   it("renders correctly", () => {
     render(<TestComponent />)
-    expect(screen.getByText("Alert Name")).toBeInTheDocument()
     expect(screen.getByText("Filters")).toBeInTheDocument()
     expect(screen.getByText("Test Artist")).toBeInTheDocument()
     expect(screen.getByText("Open Edition")).toBeInTheDocument()
@@ -106,17 +105,8 @@ describe("SavedSearchAlertModal", () => {
     expect(screen.getByText("Email Alerts")).toBeInTheDocument()
     expect(screen.getByText("Mobile Alerts")).toBeInTheDocument()
     expect(screen.getByText("Save Alert")).toBeInTheDocument()
-    expect(screen.getByRole("textbox")).toHaveValue("")
     expect(screen.getAllByRole("checkbox")[0]).toBeChecked()
     expect(screen.getAllByRole("checkbox")[1]).not.toBeChecked()
-  })
-
-  it("alert name generated correctly", () => {
-    render(<TestComponent />)
-    expect(screen.getByRole("textbox")).toHaveAttribute(
-      "placeholder",
-      "Test Artist"
-    )
   })
 
   it("email value changes correctly", () => {
@@ -151,22 +141,15 @@ describe("SavedSearchAlertModal", () => {
   it("clear entered data when modal is closed", () => {
     const { rerender } = render(<TestComponent />)
 
-    fireEvent.change(screen.getByRole("textbox"), {
-      target: {
-        value: "New Name",
-      },
-    })
     fireEvent.click(screen.getAllByRole("checkbox")[0])
     fireEvent.click(screen.getAllByRole("checkbox")[1])
 
-    expect(screen.getByRole("textbox")).toHaveValue("New Name")
     expect(screen.getAllByRole("checkbox")[0]).not.toBeChecked()
     expect(screen.getAllByRole("checkbox")[1]).toBeChecked()
 
     rerender(<TestComponent visible={false} />)
     rerender(<TestComponent visible={true} />)
 
-    expect(screen.getByRole("textbox")).toHaveValue("")
     expect(screen.getAllByRole("checkbox")[0]).toBeChecked()
     expect(screen.getAllByRole("checkbox")[1]).not.toBeChecked()
   })
