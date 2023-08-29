@@ -41,6 +41,7 @@ import {
   submitOrderWithFailureInsufficientFunds,
   submitOrderWithNoInventoryFailure,
   submitOrderWithActionRequired,
+  submitOrderWithFailureCurrencyNotSupported,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/submitOrder"
 import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
 
@@ -268,6 +269,23 @@ describe("Review", () => {
         title: "Insufficient funds",
         message:
           "There aren't enough funds available on the payment methods you provided. Please contact your card provider or try another card.",
+      })
+    })
+
+    it("shows a modal with a helpful error message if the user's card is declined due to currency not supported", async () => {
+      mockCommitMutation.mockResolvedValue(
+        submitOrderWithFailureCurrencyNotSupported
+      )
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      const page = new ReviewTestPage(wrapper)
+      await page.clickSubmit()
+
+      expect(mockShowErrorDialog).toHaveBeenCalledWith({
+        title: "Payment declined",
+        message:
+          "This card is not compatible with the currency for this artwork. Please confirm with your card issuer if this currency can be supported, try a different payment method or contact orders@artsy.net.",
       })
     })
 

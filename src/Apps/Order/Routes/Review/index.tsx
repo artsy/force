@@ -36,6 +36,7 @@ import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
+
 export interface ReviewProps extends SystemContextProps {
   stripe: Stripe
   elements: StripeElements
@@ -339,6 +340,17 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           const title = "Insufficient funds"
           const message =
             "There aren't enough funds available on the payment methods you provided. Please contact your card provider or try another card."
+
+          trackErrorMessageEvent(title, message, data.decline_code)
+
+          await props.dialog.showErrorDialog({
+            title: title,
+            message: message,
+          })
+        } else if (data.decline_code === "currency_not_supported") {
+          const title = "Payment declined"
+          const message =
+            "This card is not compatible with the currency for this artwork. Please confirm with your card issuer if this currency can be supported, try a different payment method or contact orders@artsy.net."
 
           trackErrorMessageEvent(title, message, data.decline_code)
 
