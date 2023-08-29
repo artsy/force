@@ -561,7 +561,7 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         },
         {
           slice: "LOTS_BY_SALE_YEAR",
-          counts: [],
+          counts: [{ name: "1880", value: "1880", count: 100 }],
         },
       ],
     },
