@@ -21,59 +21,63 @@ const ArtistWorksForSaleEmpty: FC<ArtistWorksForSaleEmptyProps> = ({
   } = useAnalyticsContext()
 
   return (
-    <GridColumns py={4}>
-      <Column span={4} start={5} textAlign="center">
-        <Text variant="md">Get notified when new works are available</Text>
+    <>
+      <Spacer y={[2, 0]} />
 
-        <Text variant="md" color="black60">
-          There are currently no works for sale for this artist. Create an
-          alert, and we’ll let you know when new works are added.
-        </Text>
+      <GridColumns>
+        <Column span={6} start={4} textAlign="center">
+          <Text variant="md">Get notified when new works are available</Text>
 
-        <Spacer y={2} />
+          <Text variant="md" color="black60">
+            There are currently no works for sale for this artist. Create an
+            alert, and we’ll let you know when new works are added.
+          </Text>
 
-        <SavedSearchCreateAlertButtonContainer
-          entity={{
-            placeholder: artist.name!,
-            owner: {
-              id: contextPageOwnerId!,
-              name: artist.name!,
-              slug: contextPageOwnerSlug!,
-              type: contextPageOwnerType!,
-            },
-            defaultCriteria: {
-              artistIDs: [
-                { displayValue: artist.name!, value: artist.internalID },
-              ],
-            },
-          }}
-          criteria={{ artistIDs: [artist.internalID] }}
-          authDialogOptions={{
-            options: {
-              title: "Sign up to create your alert",
-              afterAuthAction: {
-                action: "createAlert",
-                kind: "artist",
-                objectId: artist.internalID,
+          <Spacer y={2} />
+
+          <SavedSearchCreateAlertButtonContainer
+            entity={{
+              placeholder: artist.name!,
+              owner: {
+                id: contextPageOwnerId!,
+                name: artist.name!,
+                slug: contextPageOwnerSlug!,
+                type: contextPageOwnerType!,
               },
-            },
-            analytics: {
-              contextModule: ContextModule.artworkGrid,
-              intent: Intent.createAlert,
-            },
-          }}
-          renderButton={({ onClick }) => (
-            <Button
-              onClick={onClick}
-              Icon={BellStrokeIcon}
-              variant="secondaryBlack"
-            >
-              Create Alert
-            </Button>
-          )}
-        />
-      </Column>
-    </GridColumns>
+              defaultCriteria: {
+                artistIDs: [
+                  { displayValue: artist.name!, value: artist.internalID },
+                ],
+              },
+            }}
+            criteria={{ artistIDs: [artist.internalID] }}
+            authDialogOptions={{
+              options: {
+                title: "Sign up to create your alert",
+                afterAuthAction: {
+                  action: "createAlert",
+                  kind: "artist",
+                  objectId: artist.internalID,
+                },
+              },
+              analytics: {
+                contextModule: ContextModule.artworkGrid,
+                intent: Intent.createAlert,
+              },
+            }}
+            renderButton={({ onClick }) => (
+              <Button
+                onClick={onClick}
+                Icon={BellStrokeIcon}
+                variant="secondaryBlack"
+              >
+                Create Alert
+              </Button>
+            )}
+          />
+        </Column>
+      </GridColumns>
+    </>
   )
 }
 
