@@ -118,6 +118,7 @@ export const SHOW_ANALYTICS_CALLS: any = false
 export const SIFT_BEACON_KEY: any = null
 export const SITEMAP_BASE_URL: any =
   "http://artsy-sitemaps.s3-website-us-east-1.amazonaws.com"
+export const SMARTY_EMBEDDED_KEY_JSON: any = {}
 export const STRIPE_PUBLISHABLE_KEY: any = null
 export const TARGET_CAMPAIGN_URL: any = "/seattle-art-fair-2017"
 export const THIRD_PARTIES_DISABLED: any = false

@@ -1,33 +1,58 @@
+import { AutocompleteInputOptionType } from "@artsy/palette"
 import { useDebounce } from "Utils/Hooks/useDebounce"
-import { useEffect, useRef, useState } from "react"
+import { getENV } from "Utils/getENV"
+import { useCallback, useState } from "react"
+// importing this package causes an error that breaks the app...
 // import SmartySDK from "smartystreets-javascript-sdk"
 
-// const Lookup = SmartySDK.usAutocomplete.Lookup
-// const SmartyCore = SmartySDK.core
-// const key = process.env.SMARTY_EMBEDDED_KEY
-// console.log({ key })
+// NOTE: Due to the format of this key (a long string of numbers that cannot be parsed as json)
+// This key must be set in the env as a json string like SMARTY_EMBEDDED_KEY_JSON_JSON='{ "key": "xxxxxxxxxxxxxxxxxx" }'
+const smartyCreds = getENV("SMARTY_EMBEDDED_KEY_JSON")
+console.log({ smartyCreds })
+const key = smartyCreds.key
 
 // type SmartyClient = SmartySDK.core.Client<
 //   SmartySDK.usAutocompletePro.Lookup,
 //   SmartySDK.usAutocompletePro.Lookup
 // >
 
+export type SuggestionJSON = {
+  city: string
+  entries: number
+  secondary: string
+  state: string
+  street_line: string
+  zipcode: string
+}
+
 export const useAddressAutocomplete = () => {
-  const [autocompleteSuggestions, setAutocompleteSuggestions] = useState<any[]>(
-    []
-  )
-  if (false) setAutocompleteSuggestions([])
-  return { autocompleteSuggestions, fetchForAutocomplete: console.log }
+  const [result, setResult] = useState<SuggestionJSON[]>([])
 
-  // const enabled = !!key
-  // // if (!key) return {}
+  // Add feature flag checks, etc here later
+  // console.log({ key, kind: typeof key })
+  const enabled = !!key
 
-  // console.log(
-  //   "Smarty credentials present: " + !!key && key?.slice(0, 5) + "..."
-  // )
+  const fetchSuggestions = useCallback(async (query: string) => {
+    console.log({ key })
+    if (!key) return null
+    const url = `https://us-autocomplete-pro.api.smarty.com/lookup?key=${encodeURIComponent(
+      key
+    )}&prefer_ratio=3&search=${encodeURIComponent(query)}`
+    console.log({ url })
+    const response = await fetch(url, {
+      headers: {
+        Host: "us-autocomplete-pro.api.smartystreets.com",
+      },
+    })
+    console.log({ response })
+    const json = await response.json()
+    return json
+  }, [])
 
   // // make sure we don't rebuild client needlessly
-  // const clientRef = useRef<SmartyClient>()
+  // const clientRef = useRef()
+
+  // // load client
   // useEffect(() => {
   //   if (clientRef.current || !enabled) return
   //   console.warn("building client")
@@ -38,34 +63,80 @@ export const useAddressAutocomplete = () => {
   //   clientRef.current = clientBuilder.buildUsAutocompleteProClient()
   // }, [enabled])
 
-  // // debounce requests
-  // const fetchForAutocomplete = useDebounce({
-  //   delay: 500,
-  //   callback: async (query: string) => {
-  //     console.log(clientRef.current)
-  //     if (!clientRef.current) return
+  const fetchForAutocomplete = useCallback(
+    async (query: string) => {
+      if (query.length < 5) {
+        console.log("type more...")
+        setResult([])
+        return
+      }
 
-  //     if (query.length < 3) {
-  //       console.log("type more...")
-  //       setAutocompleteSuggestions([])
-  //       return
-  //     }
+      // if (!(clientRef.current && enabled)) return
+      // console.warn("fetching for autocomplete: " + query)
+      // const lookup = new Lookup(query)
 
-  //     console.warn("fetching for autocomplete: " + query)
-  //     const lookup = new Lookup(query)
+      // lookup.maxSuggestions = 10
+      // const lookupResponse = await clientRef.current.send(
+      //   (lookup as unknown) as SmartySDK.usAutocompletePro.Lookup
+      // )
+      try {
+        const result = await fetchSuggestions(query)
 
-  //     console.log({ lookup })
-  //     lookup.maxSuggestions = 10
-  //     const results = await clientRef.current.send(lookup)
-  //     console.log({ results })
-  //     setAutocompleteSuggestions(results)
-  //   },
-  // })
-  // return {
-  //   autocompleteSuggestions: [],
-  //   fetchForAutocomplete: console.log,
-  //   enabled,
-  // }
+        console.log({ result })
+        setResult(result.suggestions)
+      } catch (e) {
+        console.error(e)
+      }
+    },
+    [fetchSuggestions]
+  )
 
-  // return { autocompleteSuggestions, fetchForAutocomplete }
+  // debounce requests
+  const debouncedFetchForAutocomplete = useDebounce({
+    delay: 300,
+    callback: fetchForAutocomplete,
+  })
+
+  const buildAddress = suggestion => {
+    let whiteSpace = ""
+    if (suggestion.secondary) {
+      if (suggestion.entries > 1) {
+        suggestion.secondary += " (" + suggestion.entries + " entries)"
+      }
+      whiteSpace = " "
+    }
+    return (
+      suggestion.street_line +
+      whiteSpace +
+      suggestion.secondary +
+      " " +
+      suggestion.city +
+      ", " +
+      suggestion.state +
+      " " +
+      suggestion.zipcode
+    )
+  }
+
+  const autocompleteOptions: AutocompleteInputOptionType[] = result.map(
+    suggestion => ({
+      text: buildAddress(suggestion),
+      value: {
+        addressLine1: suggestion.street_line,
+        addressLine2: suggestion.secondary,
+        city: suggestion.city,
+        region: suggestion.state,
+        postalCode: suggestion.zipcode,
+        country: "US",
+        // autocompleteinput wants a string
+      } as any,
+    })
+  )
+
+  return {
+    autocompleteOptions,
+    suggestions: result,
+    fetchForAutocomplete: debouncedFetchForAutocomplete,
+    enabled,
+  }
 }

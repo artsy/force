@@ -5113,13 +5113,6 @@
   resolved "https://registry.yarnpkg.com/@types/sizzle/-/sizzle-2.3.2.tgz#a811b8c18e2babab7d542b3365887ae2e4d9de47"
   integrity sha512-7EJYyKTL7tFR8+gDbB6Wwz/arpGa0Mywk1TJbNzKzHtzbwVmY4HR9WqS5VV7dsBUKQmPNr192jHr/VpBluj/hg==
 
-"@types/smartystreets-javascript-sdk@^1.6.7":
-  version "1.6.7"
-  resolved "https://registry.yarnpkg.com/@types/smartystreets-javascript-sdk/-/smartystreets-javascript-sdk-1.6.7.tgz#7fb477300f366ba83cfd1b761e22d6152b962513"
-  integrity sha512-FZIXLa/EwczhNR8+/+Hc0+wRCY4IAx0+XqxBw95hbgEDsTlcp+Amg8KjoiJWVVAX6R+0So40GG1Va/5H0gy6ZA==
-  dependencies:
-    "@types/express" "*"
-
 "@types/source-list-map@*":
   version "0.1.2"
   resolved "https://registry.yarnpkg.com/@types/source-list-map/-/source-list-map-0.1.2.tgz#0078836063ffaf17412349bba364087e0ac02ec9"
