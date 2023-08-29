@@ -23,9 +23,15 @@ export interface AuctionResultsFilters {
   currency?: string
   includeEstimateRange?: boolean
   includeUnknownPrices?: boolean
+  saleStartYear?: number | null
+  saleEndYear?: number | null
+  allowUnspecifiedSaleDates?: boolean
 }
 
-export type Slice = "SIMPLE_PRICE_HISTOGRAM" | "CURRENCIES_COUNT"
+export type Slice =
+  | "SIMPLE_PRICE_HISTOGRAM"
+  | "CURRENCIES_COUNT"
+  | "LOTS_BY_SALE_YEAR"
 
 /**
  * Possible aggregations that can be passed
@@ -70,6 +76,9 @@ export const initialAuctionResultsFilterState = ({
   currency: "",
   includeEstimateRange: false,
   includeUnknownPrices: true,
+  saleStartYear: null,
+  saleEndYear: null,
+  allowUnspecifiedSaleDates: true,
 })
 
 /**
@@ -250,6 +259,8 @@ export const AuctionResultsFilterContextProvider: React.FC<
           earliestCreatedYear,
           latestCreatedYear,
           metric: userPreferredMetric,
+          saleStartYear: null,
+          saleEndYear: null,
         } as any,
       }
       dispatchOrStage(action)
@@ -324,6 +335,9 @@ const AuctionResultsFilterReducer = (
         "includeEstimateRange",
         "includeUnknownPrices",
         "currency",
+        "saleStartYear",
+        "saleEndYear",
+        "allowUnspecifiedSaleDates",
       ]
 
       primitiveFilterTypes.forEach(filter => {

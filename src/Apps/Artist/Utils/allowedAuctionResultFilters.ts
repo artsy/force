@@ -31,6 +31,7 @@ const BOOLEAN_INPUT_ARGS = [
   "hideUpcoming",
   "includeEstimateRange",
   "includeUnknownPrices",
+  "allowUnspecifiedSaleDates",
 ]
 const SUPPORTED_INPUT_ARGS = [
   "organizations",
@@ -44,4 +45,7 @@ const SUPPORTED_INPUT_ARGS = [
   "allowEmptyCreatedDates",
   "includeEstimateRange",
   "includeUnknownPrices",
+  "allowUnspecifiedSaleDates",
+  "saleEndYear",
+  "saleStartYear",
 ]
