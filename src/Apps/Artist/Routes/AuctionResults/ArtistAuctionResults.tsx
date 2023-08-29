@@ -227,6 +227,9 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
         <Title>{title}</Title>
         <Meta name="title" content={title} />
         <Meta name="description" content={description} />
+
+        <Spacer y={[2, 0]} />
+
         <ArtistAuctionResultsEmptyState />
       </>
     )
