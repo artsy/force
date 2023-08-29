@@ -408,6 +408,9 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           currency: { type: "String" }
           includeEstimateRange: { type: "Boolean" }
           includeUnknownPrices: { type: "Boolean" }
+          saleStartYear: { type: "Int" }
+          saleEndYear: { type: "Int" }
+          allowUnspecifiedSaleDates: { type: "Boolean" }
           categories: { type: "[String]" }
           sizes: { type: "[ArtworkSizes]" }
           createdAfterYear: { type: "Int" }
@@ -438,6 +441,9 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           sizes: $sizes
           priceRange: $priceRange
           currency: $currency
+          saleStartYear: $saleStartYear
+          saleEndYear: $saleEndYear
+          allowUnspecifiedSaleDates: $allowUnspecifiedSaleDates
           includeEstimateRange: $includeEstimateRange
           includeUnknownPrices: $includeUnknownPrices
           earliestCreatedYear: $createdAfterYear
@@ -471,6 +477,10 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           categories: $categories
           sizes: $sizes
           priceRange: $priceRange
+          currency: $currency
+          saleStartYear: $saleStartYear
+          saleEndYear: $saleEndYear
+          allowUnspecifiedSaleDates: $allowUnspecifiedSaleDates
           includeEstimateRange: $includeEstimateRange
           includeUnknownPrices: $includeUnknownPrices
           earliestCreatedYear: $createdAfterYear
@@ -486,6 +496,10 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           categories: $categories
           sizes: $sizes
           priceRange: $priceRange
+          currency: $currency
+          saleStartYear: $saleStartYear
+          saleEndYear: $saleEndYear
+          allowUnspecifiedSaleDates: $allowUnspecifiedSaleDates
           includeEstimateRange: $includeEstimateRange
           includeUnknownPrices: $includeUnknownPrices
           earliestCreatedYear: $createdAfterYear
@@ -513,6 +527,9 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
       $sizes: [ArtworkSizes]
       $priceRange: String
       $currency: String
+      $saleStartYear: Int
+      $saleEndYear: Int
+      $allowUnspecifiedSaleDates: Boolean
       $includeEstimateRange: Boolean
       $includeUnknownPrices: Boolean
       $createdBeforeYear: Int
@@ -535,6 +552,9 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
             sizes: $sizes
             priceRange: $priceRange
             currency: $currency
+            saleStartYear: $saleStartYear
+            saleEndYear: $saleEndYear
+            allowUnspecifiedSaleDates: $allowUnspecifiedSaleDates
             includeEstimateRange: $includeEstimateRange
             includeUnknownPrices: $includeUnknownPrices
             createdAfterYear: $createdAfterYear

@@ -37,12 +37,23 @@ describe("useSocialAuthTracking", () => {
     mockCookiesExpire.mockImplementation(jest.fn())
 
     mockCookiesGet.mockImplementation(() =>
-      JSON.stringify({ action: "loggedIn", service: "google" })
+      JSON.stringify({
+        action: "loggedIn",
+        service: "google",
+        analytics: {
+          contextModule: "header",
+        },
+      })
     )
 
     renderHook(useSocialAuthTracking)
 
-    expect(loggedIn).toBeCalledWith({ service: "google", userId: "example" })
+    expect(loggedIn).toBeCalledWith({
+      contextModule: "header",
+      service: "google",
+      userId: "example",
+    })
+
     expect(mockCookiesExpire).toBeCalledWith("useSocialAuthTracking")
   })
 
@@ -67,7 +78,13 @@ describe("useSocialAuthTracking", () => {
     mockCookiesExpire.mockImplementation(jest.fn())
 
     mockCookiesGet.mockImplementation(() =>
-      JSON.stringify({ action: "loggedIn", service: "google" })
+      JSON.stringify({
+        action: "loggedIn",
+        service: "google",
+        analytics: {
+          contextModule: "header",
+        },
+      })
     )
 
     mockUseRouter.mockImplementation(() => ({

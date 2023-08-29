@@ -94,6 +94,7 @@ import {
   AddressVerificationFlowQueryRenderer,
   AddressVerifiedBy,
 } from "Apps/Order/Components/AddressVerificationFlow"
+import { Analytics } from "System/Analytics/AnalyticsContext"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -757,208 +758,210 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   return (
-    <Box data-test="orderShipping">
-      <OrderRouteContainer
-        order={order}
-        currentStep="Shipping"
-        steps={isOffer ? offerFlowSteps : buyNowFlowSteps}
-        content={
-          <Flex
-            flexDirection="column"
-            style={isCommittingMutation ? { pointerEvents: "none" } : {}}
-          >
-            {/* TODO: Make RadioGroup generic for the allowed values,
+    <Analytics contextPageOwnerId={order.internalID}>
+      <Box data-test="orderShipping">
+        <OrderRouteContainer
+          order={order}
+          currentStep="Shipping"
+          steps={isOffer ? offerFlowSteps : buyNowFlowSteps}
+          content={
+            <Flex
+              flexDirection="column"
+              style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+            >
+              {/* TODO: Make RadioGroup generic for the allowed values,
               which could also ensure the children only use
               allowed values. */}
-            {artwork?.pickup_available && (
-              <>
-                <RadioGroup
-                  data-test="shipping-options"
-                  onSelect={onSelectShippingOption}
-                  defaultValue={shippingOption}
-                >
-                  <Text variant="lg-display" mb="1">
-                    Delivery method
-                  </Text>
-                  <BorderedRadio value="SHIP" label="Shipping" />
-                  <BorderedRadio
-                    value="PICKUP"
-                    label="Arrange for pickup (free)"
-                    data-test="pickupOption"
+              {artwork?.pickup_available && (
+                <>
+                  <RadioGroup
+                    data-test="shipping-options"
+                    onSelect={onSelectShippingOption}
+                    defaultValue={shippingOption}
                   >
-                    <Collapse open={shippingOption === "PICKUP"}>
-                      <Text variant="xs" color="black60">
-                        After your order is confirmed, a specialist will contact
-                        you to coordinate pickup.
-                      </Text>
-                    </Collapse>
-                  </BorderedRadio>
-                </RadioGroup>
-                <Spacer y={4} />
-              </>
-            )}
-
-            {/* SAVED ADDRESSES */}
-            <Collapse
-              data-test="savedAddressesCollapse"
-              open={!!showSavedAddresses}
-            >
-              <Text variant="lg-display" mb="1">
-                Delivery address
-              </Text>
-              {isArtsyShipping &&
-                shippingQuotes &&
-                shippingQuotes.length === 0 &&
-                renderArtaErrorMessage()}
-              <SavedAddresses
-                me={props.me}
-                selectedAddress={selectedAddressID}
-                onSelect={selectSavedAddressWithTracking}
-                onAddressDelete={handleAddressDelete}
-                onAddressCreate={handleAddressCreate}
-                onAddressEdit={handleAddressEdit}
-              />
-            </Collapse>
-
-            {/* NEW ADDRESS */}
-            <Collapse data-test="addressFormCollapse" open={showAddressForm}>
-              {isArtsyShipping &&
-                shippingQuotes &&
-                shippingQuotes.length === 0 &&
-                renderArtaErrorMessage()}
-              <Text variant="lg-display" mb="2">
-                Delivery address
-              </Text>
-              {addressNeedsVerification && (
-                <AddressVerificationFlowQueryRenderer
-                  data-testid="address-verification-flow"
-                  address={{
-                    addressLine1: address.addressLine1,
-                    addressLine2: address.addressLine2,
-                    country: address.country,
-                    city: address.city,
-                    region: address.region,
-                    postalCode: address.postalCode,
-                  }}
-                  onClose={() => {
-                    setAddressNeedsVerification(false)
-                    setAddressVerifiedBy(AddressVerifiedBy.USER)
-                  }}
-                  onChosenAddress={(verifiedBy, chosenAddress) => {
-                    setAddressNeedsVerification(false)
-                    setAddressVerifiedBy(verifiedBy)
-                    setAddress(address => {
-                      return { ...address, ...chosenAddress }
-                    })
-                    // trigger finalizeFulfillment() via useEffect
-                    setReadyToSaveVerifiedAddress(true)
-                  }}
-                />
+                    <Text variant="lg-display" mb="1">
+                      Delivery method
+                    </Text>
+                    <BorderedRadio value="SHIP" label="Shipping" />
+                    <BorderedRadio
+                      value="PICKUP"
+                      label="Arrange for pickup (free)"
+                      data-test="pickupOption"
+                    >
+                      <Collapse open={shippingOption === "PICKUP"}>
+                        <Text variant="xs" color="black60">
+                          After your order is confirmed, a specialist will
+                          contact you to coordinate pickup.
+                        </Text>
+                      </Collapse>
+                    </BorderedRadio>
+                  </RadioGroup>
+                  <Spacer y={4} />
+                </>
               )}
-              <AddressForm
-                tabIndex={showAddressForm ? 0 : -1}
-                value={address}
-                errors={addressErrors}
-                touched={addressTouched}
-                onChange={onAddressChange}
-                domesticOnly={artwork?.onlyShipsDomestically!}
-                euOrigin={artwork?.euShippingOrigin!}
-                shippingCountry={artwork?.shippingCountry!}
-                showPhoneNumberInput={false}
-              />
-              <Spacer y={2} />
-              <PhoneNumberForm
-                tabIndex={showAddressForm ? 0 : -1}
-                value={phoneNumber}
-                errors={phoneNumberError}
-                touched={phoneNumberTouched}
-                onChange={onPhoneNumberChange}
-                label="Required for shipping logistics"
-              />
-              <Checkbox
-                tabIndex={showAddressForm ? 0 : -1}
-                onSelect={selected => setSaveAddress(selected)}
-                selected={saveAddress}
-                data-test="save-address-checkbox"
-              >
-                Save shipping address for later use
-              </Checkbox>
-              <Spacer y={4} />
-            </Collapse>
 
-            {/* PHONE NUMBER */}
-            <Collapse
-              data-test="phoneNumberCollapse"
-              open={shippingOption === "PICKUP"}
-            >
-              <PhoneNumberForm
-                tabIndex={shippingOption === "PICKUP" ? 0 : -1}
-                data-test="pickupPhoneNumberForm"
-                value={phoneNumber}
-                errors={phoneNumberError}
-                touched={phoneNumberTouched}
-                onChange={onPhoneNumberChange}
-                label="Number to contact you for pickup logistics"
-              />
-              <Spacer y={4} />
-            </Collapse>
-
-            {/* SHIPPING OPTION */}
-            <Collapse open={showArtsyShipping}>
-              <Text variant="sm">Artsy shipping options</Text>
-              <Text variant="xs" mb="1" color="black60">
-                {renderArtsyShippingOptionText()}
-              </Text>
-              <ShippingQuotesFragmentContainer
-                mb={3}
-                selectedShippingQuoteId={shippingQuoteId}
-                shippingQuotes={compact(shippingQuotes)}
-                onSelect={handleShippingQuoteSelected}
-              />
-              <Spacer y={4} />
-            </Collapse>
-            <Media greaterThan="xs">
-              <Button
-                onClick={onContinueButtonPressed}
-                loading={isCommittingMutation}
-                variant="primaryBlack"
-                width="50%"
-                disabled={isSaveAndContinueAllowed()}
+              {/* SAVED ADDRESSES */}
+              <Collapse
+                data-test="savedAddressesCollapse"
+                open={!!showSavedAddresses}
               >
-                Save and Continue
-              </Button>
-            </Media>
-          </Flex>
-        }
-        sidebar={
-          <Flex flexDirection="column">
-            <Flex flexDirection="column">
-              <ArtworkSummaryItem order={order} />
-              <TransactionDetailsSummaryItem
-                order={order}
-                transactionStep="shipping"
-              />
+                <Text variant="lg-display" mb="1">
+                  Delivery address
+                </Text>
+                {isArtsyShipping &&
+                  shippingQuotes &&
+                  shippingQuotes.length === 0 &&
+                  renderArtaErrorMessage()}
+                <SavedAddresses
+                  me={props.me}
+                  selectedAddress={selectedAddressID}
+                  onSelect={selectSavedAddressWithTracking}
+                  onAddressDelete={handleAddressDelete}
+                  onAddressCreate={handleAddressCreate}
+                  onAddressEdit={handleAddressEdit}
+                />
+              </Collapse>
+
+              {/* NEW ADDRESS */}
+              <Collapse data-test="addressFormCollapse" open={showAddressForm}>
+                {isArtsyShipping &&
+                  shippingQuotes &&
+                  shippingQuotes.length === 0 &&
+                  renderArtaErrorMessage()}
+                <Text variant="lg-display" mb="2">
+                  Delivery address
+                </Text>
+                {addressNeedsVerification && (
+                  <AddressVerificationFlowQueryRenderer
+                    data-testid="address-verification-flow"
+                    address={{
+                      addressLine1: address.addressLine1,
+                      addressLine2: address.addressLine2,
+                      country: address.country,
+                      city: address.city,
+                      region: address.region,
+                      postalCode: address.postalCode,
+                    }}
+                    onClose={() => {
+                      setAddressNeedsVerification(false)
+                      setAddressVerifiedBy(AddressVerifiedBy.USER)
+                    }}
+                    onChosenAddress={(verifiedBy, chosenAddress) => {
+                      setAddressNeedsVerification(false)
+                      setAddressVerifiedBy(verifiedBy)
+                      setAddress(address => {
+                        return { ...address, ...chosenAddress }
+                      })
+                      // trigger finalizeFulfillment() via useEffect
+                      setReadyToSaveVerifiedAddress(true)
+                    }}
+                  />
+                )}
+                <AddressForm
+                  tabIndex={showAddressForm ? 0 : -1}
+                  value={address}
+                  errors={addressErrors}
+                  touched={addressTouched}
+                  onChange={onAddressChange}
+                  domesticOnly={artwork?.onlyShipsDomestically!}
+                  euOrigin={artwork?.euShippingOrigin!}
+                  shippingCountry={artwork?.shippingCountry!}
+                  showPhoneNumberInput={false}
+                />
+                <Spacer y={2} />
+                <PhoneNumberForm
+                  tabIndex={showAddressForm ? 0 : -1}
+                  value={phoneNumber}
+                  errors={phoneNumberError}
+                  touched={phoneNumberTouched}
+                  onChange={onPhoneNumberChange}
+                  label="Required for shipping logistics"
+                />
+                <Checkbox
+                  tabIndex={showAddressForm ? 0 : -1}
+                  onSelect={selected => setSaveAddress(selected)}
+                  selected={saveAddress}
+                  data-test="save-address-checkbox"
+                >
+                  Save shipping address for later use
+                </Checkbox>
+                <Spacer y={4} />
+              </Collapse>
+
+              {/* PHONE NUMBER */}
+              <Collapse
+                data-test="phoneNumberCollapse"
+                open={shippingOption === "PICKUP"}
+              >
+                <PhoneNumberForm
+                  tabIndex={shippingOption === "PICKUP" ? 0 : -1}
+                  data-test="pickupPhoneNumberForm"
+                  value={phoneNumber}
+                  errors={phoneNumberError}
+                  touched={phoneNumberTouched}
+                  onChange={onPhoneNumberChange}
+                  label="Number to contact you for pickup logistics"
+                />
+                <Spacer y={4} />
+              </Collapse>
+
+              {/* SHIPPING OPTION */}
+              <Collapse open={showArtsyShipping}>
+                <Text variant="sm">Artsy shipping options</Text>
+                <Text variant="xs" mb="1" color="black60">
+                  {renderArtsyShippingOptionText()}
+                </Text>
+                <ShippingQuotesFragmentContainer
+                  mb={3}
+                  selectedShippingQuoteId={shippingQuoteId}
+                  shippingQuotes={compact(shippingQuotes)}
+                  onSelect={handleShippingQuoteSelected}
+                />
+                <Spacer y={4} />
+              </Collapse>
+              <Media greaterThan="xs">
+                <Button
+                  onClick={onContinueButtonPressed}
+                  loading={isCommittingMutation}
+                  variant="primaryBlack"
+                  width="50%"
+                  disabled={isSaveAndContinueAllowed()}
+                >
+                  Save and Continue
+                </Button>
+              </Media>
             </Flex>
-            <BuyerGuarantee
-              contextModule={ContextModule.ordersShipping}
-              contextPageOwnerType={OwnerType.ordersShipping}
-            />
-            <Spacer y={[2, 4]} />
-            <Media at="xs">
-              <Button
-                onClick={onContinueButtonPressed}
-                loading={isCommittingMutation}
-                variant="primaryBlack"
-                width="100%"
-                disabled={isSaveAndContinueAllowed()}
-              >
-                Save and Continue
-              </Button>
-            </Media>
-          </Flex>
-        }
-      />
-    </Box>
+          }
+          sidebar={
+            <Flex flexDirection="column">
+              <Flex flexDirection="column">
+                <ArtworkSummaryItem order={order} />
+                <TransactionDetailsSummaryItem
+                  order={order}
+                  transactionStep="shipping"
+                />
+              </Flex>
+              <BuyerGuarantee
+                contextModule={ContextModule.ordersShipping}
+                contextPageOwnerType={OwnerType.ordersShipping}
+              />
+              <Spacer y={[2, 4]} />
+              <Media at="xs">
+                <Button
+                  onClick={onContinueButtonPressed}
+                  loading={isCommittingMutation}
+                  variant="primaryBlack"
+                  width="100%"
+                  disabled={isSaveAndContinueAllowed()}
+                >
+                  Save and Continue
+                </Button>
+              </Media>
+            </Flex>
+          }
+        />
+      </Box>
+    </Analytics>
   )
 }
 

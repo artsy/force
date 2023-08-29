@@ -235,7 +235,7 @@ describe("AuctionResults", () => {
           checked: true,
         })
 
-        expect(checkedCheckboxes).toHaveLength(9)
+        expect(checkedCheckboxes).toHaveLength(10)
         expect(checkedCheckboxes[0]).toHaveTextContent("Hide upcoming auctions")
         expect(checkedCheckboxes[1]).toHaveTextContent("Painting")
         expect(checkedCheckboxes[2]).toHaveTextContent("Small (under 40cm)")
@@ -246,9 +246,12 @@ describe("AuctionResults", () => {
         expect(checkedCheckboxes[5]).toHaveTextContent(
           "Include unknown and unavailable prices"
         )
-        expect(checkedCheckboxes[6]).toHaveTextContent("Phillips")
-        expect(checkedCheckboxes[7]).toHaveTextContent("Bonhams")
-        expect(checkedCheckboxes[8]).toHaveTextContent("Artsy Auction")
+        expect(checkedCheckboxes[6]).toHaveTextContent(
+          "Include unspecified sale dates"
+        )
+        expect(checkedCheckboxes[7]).toHaveTextContent("Phillips")
+        expect(checkedCheckboxes[8]).toHaveTextContent("Bonhams")
+        expect(checkedCheckboxes[9]).toHaveTextContent("Artsy Auction")
 
         expect(radioElements).toHaveLength(2)
         expect(radioElements[0]).toHaveTextContent("cm")
@@ -336,6 +339,8 @@ describe("AuctionResults", () => {
             expect(JSON.parse(current)).toMatchObject({
               categories: ["Work on Paper"],
               organizations: [],
+              saleEndYear: null,
+              saleStartYear: null,
               sizes: [],
               page: 1,
               sort: "DATE_DESC",
@@ -553,6 +558,10 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         {
           slice: "CURRENCIES_COUNT",
           counts: [{ name: "USD", value: "USD", count: 100 }],
+        },
+        {
+          slice: "LOTS_BY_SALE_YEAR",
+          counts: [{ name: "1880", value: "1880", count: 100 }],
         },
       ],
     },

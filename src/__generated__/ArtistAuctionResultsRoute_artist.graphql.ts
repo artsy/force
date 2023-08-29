@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8fe38c23c2f757725a0be0f1a8294d1>>
+ * @generated SignedSource<<17c742c2e5763032fc9c1ae4d16919a4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,6 +36,11 @@ const node: ReaderFragment = {
       "defaultValue": null,
       "kind": "LocalArgument",
       "name": "allowEmptyCreatedDates"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "allowUnspecifiedSaleDates"
     },
     {
       "defaultValue": null,
@@ -85,6 +90,16 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
+      "name": "saleEndYear"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
+      "name": "saleStartYear"
+    },
+    {
+      "defaultValue": null,
+      "kind": "LocalArgument",
       "name": "sizes"
     },
     {
@@ -103,6 +118,11 @@ const node: ReaderFragment = {
           "kind": "Variable",
           "name": "allowEmptyCreatedDates",
           "variableName": "allowEmptyCreatedDates"
+        },
+        {
+          "kind": "Variable",
+          "name": "allowUnspecifiedSaleDates",
+          "variableName": "allowUnspecifiedSaleDates"
         },
         {
           "kind": "Variable",
@@ -151,6 +171,16 @@ const node: ReaderFragment = {
         },
         {
           "kind": "Variable",
+          "name": "saleEndYear",
+          "variableName": "saleEndYear"
+        },
+        {
+          "kind": "Variable",
+          "name": "saleStartYear",
+          "variableName": "saleStartYear"
+        },
+        {
+          "kind": "Variable",
           "name": "sizes",
           "variableName": "sizes"
         },
@@ -171,7 +201,8 @@ const node: ReaderFragment = {
           "name": "aggregations",
           "value": [
             "SIMPLE_PRICE_HISTOGRAM",
-            "CURRENCIES_COUNT"
+            "CURRENCIES_COUNT",
+            "LOTS_BY_SALE_YEAR"
           ]
         }
       ],
@@ -231,13 +262,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "auctionResultsConnection(aggregations:[\"SIMPLE_PRICE_HISTOGRAM\",\"CURRENCIES_COUNT\"])"
+      "storageKey": "auctionResultsConnection(aggregations:[\"SIMPLE_PRICE_HISTOGRAM\",\"CURRENCIES_COUNT\",\"LOTS_BY_SALE_YEAR\"])"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "8a4aec5718ff9101680e9fa540c50c9c";
+(node as any).hash = "8cc699aeb92de8bbb29b0af6d247c650";
 
 export default node;
