@@ -1,7 +1,7 @@
 import { render, screen } from "@testing-library/react"
 import {
   ErrorDialogs,
-  formatErrorDialogMessage,
+  ErrorDialogMessage,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
 
@@ -51,12 +51,12 @@ describe("getErrorDialogCopy", () => {
   })
 })
 
-describe("formatErrorDialogMessage", () => {
+describe("ErrorDialogMessage", () => {
   describe("message contains one support email address", () => {
     it("replaces it with a mailto link", () => {
       const message = "Foo orders@artsy.net."
 
-      render(<>{formatErrorDialogMessage(message)}</>)
+      render(<ErrorDialogMessage message={message} />)
 
       expect(screen.queryByTestId("support-email-link")).toHaveAttribute(
         "href",
@@ -73,7 +73,7 @@ describe("formatErrorDialogMessage", () => {
       const message =
         "Foo orders@artsy.net bar orders@artsy.net baz orders@artsy.net."
 
-      render(<>{formatErrorDialogMessage(message)}</>)
+      render(<ErrorDialogMessage message={message} />)
 
       expect(screen.queryByTestId("support-email-link-0")).toHaveAttribute(
         "href",
@@ -97,7 +97,7 @@ describe("formatErrorDialogMessage", () => {
     it("replaces it with a mailto link", () => {
       const message = "orders@artsy.net"
 
-      render(<>{formatErrorDialogMessage(message)}</>)
+      render(<ErrorDialogMessage message={message} />)
 
       expect(screen.queryByTestId("support-email-link")).toHaveAttribute(
         "href",
@@ -113,7 +113,7 @@ describe("formatErrorDialogMessage", () => {
     it("returns the message", () => {
       const message = "Foo bar baz."
 
-      render(<>{formatErrorDialogMessage(message)}</>)
+      render(<ErrorDialogMessage message={message} />)
 
       expect(screen.queryByTestId("support-email-link")).not.toBeInTheDocument()
       expect(screen.queryByTestId("formatted-message")).toHaveTextContent(

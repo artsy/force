@@ -40,22 +40,20 @@ const errorDialogCopy = (title: string, message: string): ErrorDialogCopy => {
   return {
     title,
     message,
-    formattedMessage: formatErrorDialogMessage(message),
+    formattedMessage: <ErrorDialogMessage message={message} />,
   }
 }
 
-export const formatErrorDialogMessage = (message: string) => {
-  return (
-    <div data-testid="formatted-message">
-      {replaceSupportEmailWithMailtoLinks(message)}
-    </div>
-  )
+interface ErrorDialogMessageProps {
+  message: string
 }
 
-const replaceSupportEmailWithMailtoLinks = (message: string) => {
+export const ErrorDialogMessage = (props: ErrorDialogMessageProps) => {
+  const { message } = props
   const substrings = message.split(SUPPORT_EMAIL)
 
-  return substrings.map((substring, index) => {
+  // replaces all support emails with mailto links
+  const formattedMessage = substrings.map((substring, index) => {
     // prevents a mailto link being added after the last substring
     const isLastSubstring = index === substrings.length - 1
 
@@ -77,4 +75,6 @@ const replaceSupportEmailWithMailtoLinks = (message: string) => {
       </>
     )
   })
+
+  return <div data-testid="formatted-message">{formattedMessage}</div>
 }
