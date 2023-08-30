@@ -1,4 +1,5 @@
 import { AutocompleteInputOptionType } from "@artsy/palette"
+import { Address } from "Components/AddressForm"
 import { useDebounce } from "Utils/Hooks/useDebounce"
 import { getENV } from "Utils/getENV"
 import { useCallback, useState } from "react"
@@ -23,6 +24,10 @@ export type SuggestionJSON = {
   state: string
   street_line: string
   zipcode: string
+}
+
+export interface AddressSuggestion extends AutocompleteInputOptionType {
+  address: Omit<Address, "name">
 }
 
 export const useAddressAutocomplete = () => {
@@ -93,11 +98,12 @@ export const useAddressAutocomplete = () => {
 
   // debounce requests
   const debouncedFetchForAutocomplete = useDebounce({
-    delay: 300,
+    // high debounce for testing to not eat up our credits
+    delay: 700,
     callback: fetchForAutocomplete,
   })
 
-  const buildAddress = suggestion => {
+  const buildAddress = (suggestion): string => {
     let whiteSpace = ""
     if (suggestion.secondary) {
       if (suggestion.entries > 1) {
@@ -118,19 +124,22 @@ export const useAddressAutocomplete = () => {
     )
   }
 
-  const autocompleteOptions: AutocompleteInputOptionType[] = result.map(
-    suggestion => ({
-      text: buildAddress(suggestion),
-      value: {
-        addressLine1: suggestion.street_line,
-        addressLine2: suggestion.secondary,
-        city: suggestion.city,
-        region: suggestion.state,
-        postalCode: suggestion.zipcode,
-        country: "US",
-        // autocompleteinput wants a string
-      } as any,
-    })
+  const autocompleteOptions: Array<AddressSuggestion> = result.map(
+    suggestion => {
+      const text = buildAddress(suggestion)
+      return {
+        text,
+        value: text,
+        address: {
+          addressLine1: suggestion.street_line,
+          addressLine2: suggestion.secondary,
+          city: suggestion.city,
+          region: suggestion.state,
+          postalCode: suggestion.zipcode,
+          country: "US",
+        },
+      }
+    }
   )
 
   return {

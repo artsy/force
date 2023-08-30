@@ -1,9 +1,19 @@
-import { Column, GridColumns, Text, Spacer, Input } from "@artsy/palette"
+import {
+  Column,
+  GridColumns,
+  Text,
+  Spacer,
+  Input,
+  AutocompleteInput,
+} from "@artsy/palette"
 import { CountrySelect } from "Components/CountrySelect"
 import * as React from "react"
 import { CreateTokenCardData } from "@stripe/stripe-js"
 import { isEqual } from "lodash"
-import { useAddressAutocomplete } from "Apps/Order/Routes/Shipping/useAddressAutocomplete"
+import {
+  AddressSuggestion,
+  useAddressAutocomplete,
+} from "Apps/Order/Routes/Shipping/useAddressAutocomplete"
 
 export interface Address {
   name: string
@@ -181,7 +191,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         )}
       </Column>
       <Column span={12}>
-        <Input
+        {/* <Input
           tabIndex={tabIndex}
           id="AddressForm_addressLine1"
           placeholder="Street address"
@@ -190,31 +200,24 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           onChange={changeEventHandler("addressLine1")}
           error={getError("addressLine1")}
           data-test="AddressForm_addressLine1"
-        />
-        {/* TODO: Make this work with autocomplete input 
-          <AutocompleteInput
-          options={[]}
+        /> */}
+        {/* TODO: Make this work with autocomplete input */}
+        <AutocompleteInput<AddressSuggestion>
           tabIndex={tabIndex}
           id="AddressForm_addressLine1"
           placeholder="Street address"
           title="Address line 1"
           value={value?.addressLine1}
-          onChange={e => {
-            console.log(e)
-
-            if (typeof e.target.value === "string") {
-              changeEventHandler("addressLine1")(e)
-            } else {
-              const chosenAddress = (e.target
-                .value as AutocompleteInputOptionType).value
-              Object.entries(chosenAddress).forEach(([key, value]) => {
-                changeValueHandler(key as keyof Address)(value)
-              })
-            }
+          onChange={changeEventHandler("addressLine1")}
+          options={autocompleteOptions}
+          onSelect={option => {
+            Object.entries(option.address).forEach(([key, value]) => {
+              changeValueHandler(key as keyof Address)(value)
+            })
           }}
           error={getError("addressLine1")}
           data-test="AddressForm_addressLine1"
-        /> */}
+        />
       </Column>
       <Column span={12}>
         <Input
