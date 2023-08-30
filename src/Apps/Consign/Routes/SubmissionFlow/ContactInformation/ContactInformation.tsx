@@ -208,15 +208,16 @@ export const ContactInformation: React.FC<ContactInformationProps> = ({
   return (
     <>
       {isFirstStep && !artworkId ? (
+        // FIXME: Inappropriate component for this; don't replicate browser back button
         <TopContextBar
           displayBackArrow
           hideSeparator
           onClick={() => router.go(-1)}
-          redirectTo="/sell"
         >
           Back
         </TopContextBar>
       ) : (
+        // FIXME: Should not have a generic "Back" label that links to a specific location
         <TopContextBar displayBackArrow hideSeparator href={backTo}>
           Back
         </TopContextBar>

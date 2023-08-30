@@ -1,5 +1,13 @@
 import * as React from "react"
-import { Box, Flex, FullBleed, Separator, Text, Image } from "@artsy/palette"
+import {
+  Box,
+  Flex,
+  FullBleed,
+  Separator,
+  Text,
+  Image,
+  Clickable,
+} from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import { cropped } from "Utils/resized"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
@@ -7,7 +15,6 @@ import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 export interface TopContextBarProps {
   displayBackArrow?: boolean
   href?: string | null
-  redirectTo?: string | undefined
   /** Should the biggest size image available */
   src?: string | null
   rightContent?: React.ReactNode
@@ -19,7 +26,6 @@ export const TopContextBar: React.FC<TopContextBarProps> = ({
   children,
   displayBackArrow = false,
   href,
-  redirectTo,
   src,
   rightContent,
   onClick,
@@ -39,14 +45,14 @@ export const TopContextBar: React.FC<TopContextBarProps> = ({
               textDecoration: "none",
               onClick,
             }
-          : {})}
-        {...(redirectTo
-          ? {
-              as: RouterLink,
-              textDecoration: "none",
-              onClick,
-            }
-          : {})}
+          : {
+              ...(onClick
+                ? {
+                    as: Clickable,
+                    onClick,
+                  }
+                : {}),
+            })}
       >
         <Flex flex={1} flexDirection="row" alignItems="center">
           {displayBackArrow && (

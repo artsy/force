@@ -203,7 +203,6 @@ export const ConsignmentInquiry: React.FC<ConsignmentInquiryProps> = ({
               onClick={() => {
                 handleBack(dirty)
               }}
-              redirectTo="/sell"
             >
               Back
             </TopContextBar>
