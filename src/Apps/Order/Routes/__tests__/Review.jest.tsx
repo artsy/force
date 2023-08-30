@@ -44,6 +44,10 @@ import {
   submitOrderWithFailureCurrencyNotSupported,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/submitOrder"
 import { CommercePaymentMethodEnum } from "__generated__/Payment_order.graphql"
+import {
+  ErrorDialogs,
+  getErrorDialogCopy,
+} from "Apps/Order/Utils/getErrorDialogCopy"
 
 jest.unmock("react-relay")
 
@@ -282,10 +286,14 @@ describe("Review", () => {
       const page = new ReviewTestPage(wrapper)
       await page.clickSubmit()
 
+      const {
+        title: expectedTitle,
+        message: expectedMessage,
+      } = getErrorDialogCopy(ErrorDialogs.CurrencyNotSupported)
+
       expect(mockShowErrorDialog).toHaveBeenCalledWith({
-        title: "Payment declined",
-        message:
-          "This card is not compatible with the currency for this artwork. Please confirm with your card issuer if this currency can be supported, try a different payment method or contact orders@artsy.net.",
+        title: expectedTitle,
+        message: expectedMessage,
       })
     })
 

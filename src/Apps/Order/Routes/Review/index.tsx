@@ -36,6 +36,10 @@ import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
+import {
+  ErrorDialogs,
+  getErrorDialogCopy,
+} from "Apps/Order/Utils/getErrorDialogCopy"
 
 export interface ReviewProps extends SystemContextProps {
   stripe: Stripe
@@ -348,11 +352,11 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             message: message,
           })
         } else if (data.decline_code === "currency_not_supported") {
-          const title = "Payment declined"
-          const message =
-            "This card is not compatible with the currency for this artwork. Please confirm with your card issuer if this currency can be supported, try a different payment method or contact orders@artsy.net."
+          const { title, message, messagePlain } = getErrorDialogCopy(
+            ErrorDialogs.CurrencyNotSupported
+          )
 
-          trackErrorMessageEvent(title, message, data.decline_code)
+          trackErrorMessageEvent(title, messagePlain, data.decline_code)
 
           await props.dialog.showErrorDialog({
             title: title,
