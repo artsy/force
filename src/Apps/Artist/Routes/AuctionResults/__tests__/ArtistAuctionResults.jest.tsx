@@ -543,8 +543,8 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         "Find out about Pablo Picasso’s auction history, past sales, and current market value. Browse Artsy’s Price Database for recent auction results from the artist.`",
       title: "Pablo Picasso - Auction Results and Sales Data | Artsy",
     },
-    counts: {
-      auctionResults: 830,
+    statuses: {
+      auctionLots: true,
     },
     pastAuctionResults: {
       totalCount: 2,

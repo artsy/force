@@ -36,7 +36,17 @@ const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
     !hasEditorial &&
     !hasCurrentShows
   ) {
-    return <ArtistOverviewEmpty />
+    return (
+      <>
+        <Title>{title}</Title>
+        <Meta name="title" content={title} />
+        <Meta name="description" content={description} />
+
+        <Spacer y={[2, 0]} />
+
+        <ArtistOverviewEmpty />
+      </>
+    )
   }
 
   return (
