@@ -3,7 +3,6 @@ import {
   Button,
   Checkbox,
   Flex,
-  Input,
   Join,
   Message,
   Separator,
@@ -45,6 +44,7 @@ import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
 import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { SavedSearchAlertNameInputQueryRenderer } from "Components/SavedSearchAlert/Components/SavedSearchAlertNameInput"
 
 const logger = createLogger(
   "Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -163,20 +163,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
         return (
           <Box>
             <Join separator={<Spacer y={[4, 6]} />}>
-              <Input
-                title="Alert Name"
-                name="name"
-                placeholder={
-                  isFallbackToGeneratedAlertNamesEnabled
-                    ? undefined
-                    : entity.placeholder
-                }
-                value={values.name}
-                onChange={handleChange("name")}
-                onBlur={handleBlur("name")}
-                error={errors.name}
-                maxLength={75}
-              />
+              <SavedSearchAlertNameInputQueryRenderer />
 
               <Box>
                 <Text variant="xs">Filters</Text>
