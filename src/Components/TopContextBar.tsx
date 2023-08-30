@@ -11,6 +11,7 @@ import {
 import { RouterLink } from "System/Router/RouterLink"
 import { cropped } from "Utils/resized"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
+import { sanitizeURL } from "Utils/sanitizeURL"
 
 export interface TopContextBarProps {
   displayBackArrow?: boolean
@@ -25,13 +26,14 @@ export interface TopContextBarProps {
 export const TopContextBar: React.FC<TopContextBarProps> = ({
   children,
   displayBackArrow = false,
-  href,
+  href: _href,
   src,
   rightContent,
   onClick,
   hideSeparator = false,
 }) => {
   const image = src ? cropped(src, { width: 60, height: 60 }) : null
+  const href = _href ? sanitizeURL(_href, { enforceInternal: true }) : null
 
   return (
     <>
