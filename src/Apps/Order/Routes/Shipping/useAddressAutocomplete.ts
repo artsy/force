@@ -3,19 +3,12 @@ import { Address } from "Components/AddressForm"
 import { useDebounce } from "Utils/Hooks/useDebounce"
 import { getENV } from "Utils/getENV"
 import { useCallback, useState } from "react"
-// importing this package causes an error that breaks the app...
-// import SmartySDK from "smartystreets-javascript-sdk"
 
 // NOTE: Due to the format of this key (a long string of numbers that cannot be parsed as json)
 // This key must be set in the env as a json string like SMARTY_EMBEDDED_KEY_JSON_JSON='{ "key": "xxxxxxxxxxxxxxxxxx" }'
 const smartyCreds = getENV("SMARTY_EMBEDDED_KEY_JSON")
 console.log({ smartyCreds })
 const key = smartyCreds.key
-
-// type SmartyClient = SmartySDK.core.Client<
-//   SmartySDK.usAutocompletePro.Lookup,
-//   SmartySDK.usAutocompletePro.Lookup
-// >
 
 export type SuggestionJSON = {
   city: string
@@ -33,7 +26,7 @@ export interface AddressSuggestion extends AutocompleteInputOptionType {
 export const useAddressAutocomplete = () => {
   const [result, setResult] = useState<SuggestionJSON[]>([])
 
-  // Add feature flag checks, etc here later
+  // Add feature flag checks including country, etc here later
   // console.log({ key, kind: typeof key })
   const enabled = !!key
 
@@ -54,20 +47,6 @@ export const useAddressAutocomplete = () => {
     return json
   }, [])
 
-  // // make sure we don't rebuild client needlessly
-  // const clientRef = useRef()
-
-  // // load client
-  // useEffect(() => {
-  //   if (clientRef.current || !enabled) return
-  //   console.warn("building client")
-  //   const credentials = new SmartyCore.SharedCredentials(key)
-  //   const clientBuilder = new SmartyCore.ClientBuilder(
-  //     credentials
-  //   ).withLicenses(["us-autocomplete-pro-cloud"])
-  //   clientRef.current = clientBuilder.buildUsAutocompleteProClient()
-  // }, [enabled])
-
   const fetchForAutocomplete = useCallback(
     async (query: string) => {
       if (query.length < 5) {
@@ -76,14 +55,6 @@ export const useAddressAutocomplete = () => {
         return
       }
 
-      // if (!(clientRef.current && enabled)) return
-      // console.warn("fetching for autocomplete: " + query)
-      // const lookup = new Lookup(query)
-
-      // lookup.maxSuggestions = 10
-      // const lookupResponse = await clientRef.current.send(
-      //   (lookup as unknown) as SmartySDK.usAutocompletePro.Lookup
-      // )
       try {
         const result = await fetchSuggestions(query)
 
