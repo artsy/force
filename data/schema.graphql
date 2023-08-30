@@ -14621,7 +14621,7 @@ type Query {
     last: Int
     partnerID: ID
     previewByArtist: Boolean
-    since: Int
+    since: SearchCriteriaSinceEnum
 
     # Returns search criteria sorted by input (default: by high quality and count desc)
     sort: [SearchCriteriaSortEnum!] = [HIGH_QUALITY_DESC, COUNT_DESC]
@@ -16944,6 +16944,24 @@ type SearchCriteriaLabel {
 
 # A search criteria or errors object
 union SearchCriteriaOrErrorsUnion = Errors | SearchCriteria
+
+# Time range for the since argument
+enum SearchCriteriaSinceEnum {
+  # Query for search criteria enabled within the last 1 day
+  LAST_1_DAY
+
+  # Query for search criteria enabled within the last 15 days
+  LAST_15_DAYS
+
+  # Query for search criteria enabled within the last 30 days
+  LAST_30_DAYS
+
+  # Query for search criteria enabled within the last 7 days
+  LAST_7_DAYS
+
+  # Query for search criteria enabled within the last 90 days
+  LAST_90_DAYS
+}
 
 enum SearchCriteriaSortEnum {
   # Sort by most popular search criteria in descending order
