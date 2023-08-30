@@ -4,6 +4,7 @@ import React from "react"
 const SUPPORT_EMAIL = "orders@artsy.net"
 
 export enum ErrorDialogs {
+  DestinationCouldNotBeGeocoded = "destination_could_not_be_geocoded",
   CurrencyNotSupported = "currency_not_supported",
 }
 
@@ -15,11 +16,20 @@ interface ErrorDialogCopy {
 
 export const getErrorDialogCopy = (dialog?: ErrorDialogs): ErrorDialogCopy => {
   switch (dialog) {
+    case ErrorDialogs.DestinationCouldNotBeGeocoded:
+      return destinationCouldNotBeGeocodedErrorDialogCopy()
     case ErrorDialogs.CurrencyNotSupported:
       return currencyNotSupportedErrorDialogCopy()
     default:
       return defaultErrorDialogCopy()
   }
+}
+
+const destinationCouldNotBeGeocodedErrorDialogCopy = () => {
+  const title = "Cannot calculate shipping"
+  const message = `Please confirm that your address details are correct and try again. If the issue continues contact ${SUPPORT_EMAIL}.`
+
+  return errorDialogCopy(title, message)
 }
 
 const currencyNotSupportedErrorDialogCopy = () => {
