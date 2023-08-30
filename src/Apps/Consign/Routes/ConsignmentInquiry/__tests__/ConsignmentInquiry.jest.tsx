@@ -90,7 +90,7 @@ describe("ConsignmentInquiry", () => {
     expect(screen.getByText("Contact a specialist")).toBeInTheDocument()
 
     expect(
-      screen.getAllByRole("link").find(c => c.textContent?.includes("Back"))
+      screen.getAllByRole("button").find(c => c.textContent?.includes("Back"))
     ).toBeInTheDocument()
 
     expect(getSubmitButton()).toBeInTheDocument()
