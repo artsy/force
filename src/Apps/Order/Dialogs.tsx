@@ -1,7 +1,7 @@
 import { Button, Text } from "@artsy/palette"
 import { ModalDialog } from "@artsy/palette"
+import { getErrorDialogCopy } from "Apps/Order/Utils/getErrorDialogCopy"
 import * as React from "react"
-import { RouterLink } from "System/Router/RouterLink"
 // TODO: Replace with normal React state
 // eslint-disable-next-line no-restricted-imports
 import { Container, Subscribe } from "unstated"
@@ -25,6 +25,8 @@ interface DialogState {
   props: ModalDialogProps
   onForceClose: () => Promise<void>
 }
+
+const defaultErrorDialogCopy = getErrorDialogCopy()
 
 export class DialogContainer extends Container<DialogState> {
   state: DialogState = {
@@ -121,17 +123,8 @@ export class DialogContainer extends Container<DialogState> {
    * continue button, and `false` if the modal was dismissed through other means.
    */
   showErrorDialog = ({
-    title = "An error occurred",
-    supportEmail = "orders@artsy.net",
-    message = (
-      <>
-        Something went wrong. Please try again or contact{" "}
-        <RouterLink inline to={`mailto:${supportEmail}}`}>
-          {supportEmail}
-        </RouterLink>
-        .
-      </>
-    ),
+    title = defaultErrorDialogCopy.title,
+    message = defaultErrorDialogCopy.formattedMessage,
     continueButtonText = "Continue",
     width = undefined,
   }: {
