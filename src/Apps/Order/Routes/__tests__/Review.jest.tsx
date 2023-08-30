@@ -288,12 +288,12 @@ describe("Review", () => {
 
       const {
         title: expectedTitle,
-        message: expectedMessage,
+        formattedMessage: expectedFormattedMessage,
       } = getErrorDialogCopy(ErrorDialogs.CurrencyNotSupported)
 
       expect(mockShowErrorDialog).toHaveBeenCalledWith({
         title: expectedTitle,
-        message: expectedMessage,
+        message: expectedFormattedMessage,
       })
     })
 

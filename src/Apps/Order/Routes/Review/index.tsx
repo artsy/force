@@ -352,15 +352,15 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             message: message,
           })
         } else if (data.decline_code === "currency_not_supported") {
-          const { title, message, messagePlain } = getErrorDialogCopy(
+          const { title, message, formattedMessage } = getErrorDialogCopy(
             ErrorDialogs.CurrencyNotSupported
           )
 
-          trackErrorMessageEvent(title, messagePlain, data.decline_code)
+          trackErrorMessageEvent(title, message, data.decline_code)
 
           await props.dialog.showErrorDialog({
             title: title,
-            message: message,
+            message: formattedMessage,
           })
         } else {
           const title = "Charge failed"
@@ -417,9 +417,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         break
       }
       default: {
-        const title = "An error occurred"
-        const message =
-          "Something went wrong. Please try again or contact orders@artsy.net"
+        const { title, message } = getErrorDialogCopy()
         const errorCode = error.code || ""
 
         trackErrorMessageEvent(title, message, errorCode)

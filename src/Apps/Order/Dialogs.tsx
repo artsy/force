@@ -26,6 +26,8 @@ interface DialogState {
   onForceClose: () => Promise<void>
 }
 
+const defaultErrorDialogCopy = getErrorDialogCopy()
+
 export class DialogContainer extends Container<DialogState> {
   state: DialogState = {
     props: {
@@ -116,15 +118,13 @@ export class DialogContainer extends Container<DialogState> {
     })
   }
 
-  defaultErrorDialogCopy = getErrorDialogCopy()
-
   /**
    * returns a promise that resolves to `true` if the user clicked the
    * continue button, and `false` if the modal was dismissed through other means.
    */
   showErrorDialog = ({
-    title = this.defaultErrorDialogCopy.title,
-    message = this.defaultErrorDialogCopy.message,
+    title = defaultErrorDialogCopy.title,
+    message = defaultErrorDialogCopy.formattedMessage,
     continueButtonText = "Continue",
     width = undefined,
   }: {
