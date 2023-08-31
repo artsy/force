@@ -2,7 +2,7 @@ import { Box, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
-import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCreateAlertButton"
+import { ArtworkCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkCreateAlertButton"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
@@ -16,7 +16,7 @@ import {
   SavedSearchEntityCriteria,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
-import { OwnerType } from "@artsy/cohesion"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
 import { SuggestedArtworksShelfQueryRenderer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksShelf"
@@ -137,7 +137,8 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
             <Spacer y={1} />
           </Media>
           <Box mx="auto" width={["100%", 209]}>
-            <ArtworkSidebarCreateAlertButtonFragmentContainer
+            <ArtworkCreateAlertButtonFragmentContainer
+              analyticsContextModule={ContextModule.artworkClosedLotHeader}
               artwork={artwork}
             />
           </Box>
@@ -204,7 +205,7 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
             totalCount
           }
         }
-        ...ArtworkSidebarCreateAlertButton_artwork
+        ...ArtworkCreateAlertButton_artwork
       }
     `,
   }
