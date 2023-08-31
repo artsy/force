@@ -1,3 +1,4 @@
+import { ContextModule } from "@artsy/cohesion"
 import { Flex, Skeleton } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { FC } from "react"
@@ -37,6 +38,7 @@ export const SuggestedArtworksShelf: FC<SuggestedArtworksShelfProps> = ({
       {artworks.map(artwork => (
         <ShelfArtworkFragmentContainer
           artwork={artwork}
+          contextModule={ContextModule.artworkClosedLotHeader}
           key={artwork.internalID}
           data-testid="ShelfSuggestedArtworks"
         />
