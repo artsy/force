@@ -211,9 +211,16 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           onChange={changeEventHandler("addressLine1")}
           options={autocompleteOptions}
           onSelect={option => {
-            Object.entries(option.address).forEach(([key, value]) => {
-              changeValueHandler(key as keyof Address)(value)
-            })
+            if (option.entries > 1) {
+              const searchParam = value?.addressLine1
+              const selectedParam = `${option.address.addressLine1} ${option.address.addressLine2} (${option.entries}) ${option.address.city} ${option.address.region} ${option.address.postalCode}`
+
+              fetchForAutocomplete(searchParam, selectedParam)
+            } else {
+              Object.entries(option.address).forEach(([key, value]) => {
+                changeValueHandler(key as keyof Address)(value)
+              })
+            }
           }}
           error={getError("addressLine1")}
           data-test="AddressForm_addressLine1"

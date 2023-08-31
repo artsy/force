@@ -21,6 +21,7 @@ export type SuggestionJSON = {
 
 export interface AddressSuggestion extends AutocompleteInputOptionType {
   address: Omit<Address, "name">
+  entries: number
 }
 
 export const useAddressAutocomplete = () => {
@@ -30,33 +31,42 @@ export const useAddressAutocomplete = () => {
   // console.log({ key, kind: typeof key })
   const enabled = !!key
 
-  const fetchSuggestions = useCallback(async (query: string) => {
-    console.log({ key })
-    if (!key) return null
-    const url = `https://us-autocomplete-pro.api.smarty.com/lookup?key=${encodeURIComponent(
-      key
-    )}&prefer_ratio=3&search=${encodeURIComponent(query)}`
-    console.log({ url })
-    const response = await fetch(url, {
-      headers: {
-        Host: "us-autocomplete-pro.api.smartystreets.com",
-      },
-    })
-    console.log({ response })
-    const json = await response.json()
-    return json
-  }, [])
+  const fetchSuggestions = useCallback(
+    async (searchParam: string, selectedParam?: string) => {
+      console.log({ key })
+      if (!key) return null
+      let url = `https://us-autocomplete-pro.api.smarty.com/lookup?key=${encodeURIComponent(
+        key
+      )}&prefer_ratio=3&search=${encodeURIComponent(searchParam)}`
+
+      if (selectedParam) {
+        url += `&selected=${encodeURIComponent(selectedParam)}`
+      }
+
+      console.log({ url })
+      const response = await fetch(url, {
+        headers: {
+          Host: "us-autocomplete-pro.api.smartystreets.com",
+        },
+      })
+      console.log({ response })
+      const json = await response.json()
+      return json
+    },
+    []
+  )
 
   const fetchForAutocomplete = useCallback(
-    async (query: string) => {
-      if (query.length < 5) {
+    // these are the parameters to the Smarty API call
+    async (searchParam: string, selectedParam?: string) => {
+      if (searchParam.length < 5) {
         console.log("type more...")
         setResult([])
         return
       }
 
       try {
-        const result = await fetchSuggestions(query)
+        const result = await fetchSuggestions(searchParam, selectedParam)
 
         console.log({ result })
         setResult(result.suggestions)
@@ -74,11 +84,12 @@ export const useAddressAutocomplete = () => {
     callback: fetchForAutocomplete,
   })
 
-  const buildAddress = (suggestion): string => {
+  const buildAddressText = (suggestion): string => {
     let whiteSpace = ""
+    let secondaryExtraInformation = ""
     if (suggestion.secondary) {
       if (suggestion.entries > 1) {
-        suggestion.secondary += " (" + suggestion.entries + " entries)"
+        secondaryExtraInformation = " (" + suggestion.entries + " entries)"
       }
       whiteSpace = " "
     }
@@ -86,6 +97,7 @@ export const useAddressAutocomplete = () => {
       suggestion.street_line +
       whiteSpace +
       suggestion.secondary +
+      secondaryExtraInformation +
       " " +
       suggestion.city +
       ", " +
@@ -97,10 +109,11 @@ export const useAddressAutocomplete = () => {
 
   const autocompleteOptions: Array<AddressSuggestion> = result.map(
     suggestion => {
-      const text = buildAddress(suggestion)
+      const text = buildAddressText(suggestion)
       return {
         text,
         value: text,
+        entries: suggestion.entries,
         address: {
           addressLine1: suggestion.street_line,
           addressLine2: suggestion.secondary,
