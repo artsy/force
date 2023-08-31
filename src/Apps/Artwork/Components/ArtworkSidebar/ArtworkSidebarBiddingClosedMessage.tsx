@@ -29,7 +29,7 @@ const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
           <Spacer y={2} />
           <ArtworkCreateAlertButtonFragmentContainer
             artwork={artwork}
-            analytics={ContextModule.artworkSidebar}
+            analyticsContextModule={ContextModule.artworkSidebar}
           />
         </>
       )}

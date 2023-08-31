@@ -351,7 +351,7 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
           {!!isCreateAlertAvailable && (
             <ArtworkCreateAlertButtonFragmentContainer
               artwork={artwork}
-              analytics={ContextModule.artworkSidebar}
+              analyticsContextModule={ContextModule.artworkSidebar}
             />
           )}
           {artwork.isAcquireable && (

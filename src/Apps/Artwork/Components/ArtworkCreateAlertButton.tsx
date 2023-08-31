@@ -16,12 +16,12 @@ import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOn
 
 interface ArtworkCreateAlertButtonProps {
   artwork: ArtworkCreateAlertButton_artwork$data
-  analytics: AuthContextModule
+  analyticsContextModule: AuthContextModule
 }
 
 const ArtworkCreateAlertButton: FC<ArtworkCreateAlertButtonProps> = ({
   artwork,
-  analytics,
+  analyticsContextModule,
 }) => {
   let aggregations: Aggregations = []
   let additionalGeneIDs: string[] = []
@@ -88,7 +88,7 @@ const ArtworkCreateAlertButton: FC<ArtworkCreateAlertButtonProps> = ({
           },
         },
         analytics: {
-          contextModule: analytics,
+          contextModule: analyticsContextModule,
           intent: Intent.createAlert,
         },
       }}

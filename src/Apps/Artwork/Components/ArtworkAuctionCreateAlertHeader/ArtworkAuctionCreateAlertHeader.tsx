@@ -138,7 +138,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
           </Media>
           <Box mx="auto" width={["100%", 209]}>
             <ArtworkCreateAlertButtonFragmentContainer
-              analytics={ContextModule.artworkClosedLotHeader}
+              analyticsContextModule={ContextModule.artworkClosedLotHeader}
               artwork={artwork}
             />
           </Box>
