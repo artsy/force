@@ -27,7 +27,6 @@ import { MetaTags } from "Components/MetaTags"
 import { SavedSearchAlertsEmptyResults } from "./Components/SavedSearchAlertsEmptyResults"
 import { SavedSearchAlertEditFormDesktop } from "./Components/SavedSearchAlertEditFormDesktop"
 import { Sticky } from "Components/Sticky"
-import { useNavBarHeight } from "Components/NavBar/useNavBarHeight"
 import { SavedSearchAlertEditFormMobile } from "./Components/SavedSearchAlertEditFormMobile"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
@@ -45,7 +44,6 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   me,
   relay,
 }) => {
-  const { desktop } = useNavBarHeight()
   const [
     editAlertEntity,
     setEditAlertEntity,
@@ -186,17 +184,12 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                     borderLeftColor="black15"
                   >
                     <Sticky bottomBoundary="#content-end">
-                      <Box
-                        overflowY="auto"
-                        maxHeight={`calc(100vh - ${desktop}px)`}
-                      >
-                        <SavedSearchAlertEditFormDesktop
-                          editAlertEntity={editAlertEntity}
-                          onCloseClick={closeEditForm}
-                          onCompleted={handleCompleted}
-                          onDeleteClick={handleDeleteClick}
-                        />
-                      </Box>
+                      <SavedSearchAlertEditFormDesktop
+                        editAlertEntity={editAlertEntity}
+                        onCloseClick={closeEditForm}
+                        onCompleted={handleCompleted}
+                        onDeleteClick={handleDeleteClick}
+                      />
                     </Sticky>
                   </Column>
                 )}

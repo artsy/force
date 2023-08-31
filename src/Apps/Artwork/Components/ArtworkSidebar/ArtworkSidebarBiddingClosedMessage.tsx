@@ -1,8 +1,9 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { Spacer, Text } from "@artsy/palette"
-import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCreateAlertButton"
+import { ArtworkCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkCreateAlertButton"
 import { useTranslation } from "react-i18next"
 import { ArtworkSidebarBiddingClosedMessage_artwork$data } from "__generated__/ArtworkSidebarBiddingClosedMessage_artwork.graphql"
+import { ContextModule } from "@artsy/cohesion"
 
 interface BiddingClosedMessageProps {
   artwork: ArtworkSidebarBiddingClosedMessage_artwork$data
@@ -26,7 +27,10 @@ const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
             {t(`artworkPage.sidebar.createAlert.description`)}
           </Text>
           <Spacer y={2} />
-          <ArtworkSidebarCreateAlertButtonFragmentContainer artwork={artwork} />
+          <ArtworkCreateAlertButtonFragmentContainer
+            artwork={artwork}
+            analyticsContextModule={ContextModule.artworkSidebar}
+          />
         </>
       )}
     </>
@@ -41,7 +45,7 @@ export const ArtworkSidebarBiddingClosedMessageFragmentContainer = createFragmen
         artists {
           internalID
         }
-        ...ArtworkSidebarCreateAlertButton_artwork
+        ...ArtworkCreateAlertButton_artwork
       }
     `,
   }
