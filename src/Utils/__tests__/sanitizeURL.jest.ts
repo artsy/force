@@ -34,4 +34,10 @@ describe("sanitizeURL", () => {
   it("lets through relative urls without a leading slash", () => {
     expect(sanitizeURL("foo/bar")).toEqual("foo/bar")
   })
+
+  it("optionally enforces internal urls", () => {
+    expect(
+      sanitizeURL("http://example.com", { enforceInternal: true })
+    ).toEqual("/")
+  })
 })

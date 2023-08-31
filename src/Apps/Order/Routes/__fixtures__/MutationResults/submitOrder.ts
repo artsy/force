@@ -41,6 +41,20 @@ export const submitOrderWithFailureInsufficientFunds = {
   },
 }
 
+export const submitOrderWithFailureCurrencyNotSupported = {
+  commerceSubmitOrder: {
+    orderOrError: {
+      __typename: "CommerceOrderWithMutationFailure",
+      error: {
+        type: "processing",
+        code: "charge_authorization_failed",
+        data:
+          '{"id":null,"failure_code":"card_declined","failure_message":"Your card is not supported for this currency.","decline_code":"currency_not_supported"}',
+      },
+    },
+  },
+}
+
 export const submitOrderWithVersionMismatchFailure = {
   commerceSubmitOrder: {
     orderOrError: {

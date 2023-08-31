@@ -38,8 +38,13 @@ import {
   settingOrderShipmentMissingRegionFailure,
   settingOrderArtaShipmentSuccess,
   selectShippingQuoteSuccess,
+  settingOrderArtaShipmentDestinationCouldNotBeGeocodedFailure,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import {
+  ErrorDialogs,
+  getErrorDialogCopy,
+} from "Apps/Order/Utils/getErrorDialogCopy"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -538,6 +543,30 @@ describe("Shipping", () => {
           title: "Invalid address",
           message:
             "There was an error processing your address. Please review and try again.",
+        })
+      })
+
+      it("shows a validation error modal when there is a destination_could_not_be_geocoded error from the server", async () => {
+        mockCommitMutation.mockResolvedValueOnce(
+          settingOrderArtaShipmentDestinationCouldNotBeGeocodedFailure
+        )
+        const wrapper = getWrapper({
+          CommerceOrder: () => testOrder,
+          Me: () => emptyTestMe,
+        })
+        const page = new ShippingTestPage(wrapper)
+
+        fillAddressForm(page.root, validAddress)
+        await page.clickSubmit()
+
+        const {
+          title: expectedTitle,
+          formattedMessage: expectedMessage,
+        } = getErrorDialogCopy(ErrorDialogs.DestinationCouldNotBeGeocoded)
+
+        expect(mockShowErrorDialog).toHaveBeenCalledWith({
+          title: expectedTitle,
+          message: expectedMessage,
         })
       })
     })

@@ -95,6 +95,10 @@ import {
   AddressVerifiedBy,
 } from "Apps/Order/Components/AddressVerificationFlow"
 import { Analytics } from "System/Analytics/AnalyticsContext"
+import {
+  ErrorDialogs,
+  getErrorDialogCopy,
+} from "Apps/Order/Utils/getErrorDialogCopy"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -528,6 +532,25 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       props.dialog.showErrorDialog({
         title: "Can't ship to that address",
         message: "This work can only be shipped domestically.",
+      })
+    } else if (error.code === "destination_could_not_be_geocoded") {
+      const { title, message, formattedMessage } = getErrorDialogCopy(
+        ErrorDialogs.DestinationCouldNotBeGeocoded
+      )
+
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title,
+        message,
+        error_code: error.code,
+        flow: "user submits a shipping option",
+      })
+
+      props.dialog.showErrorDialog({
+        title,
+        message: formattedMessage,
       })
     } else if (checkIfArtsyShipping() && shippingQuoteId) {
       trackEvent({

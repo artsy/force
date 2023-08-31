@@ -1,8 +1,7 @@
-import { Join, ModalDialog, Separator, Spacer } from "@artsy/palette"
+import { Join, ModalDialog, Spacer } from "@artsy/palette"
 import { FC } from "react"
 import { SuggestedArtworksModalHeader } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksModalHeader"
 import { SuggestedArtworksModalGridQueryRenderer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksModalGrid"
-import { useTranslation } from "react-i18next"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 
 interface SuggestedArtworksModalProps {
@@ -12,20 +11,17 @@ interface SuggestedArtworksModalProps {
 export const SuggestedArtworksModal: FC<SuggestedArtworksModalProps> = ({
   onClose,
 }) => {
-  const { t } = useTranslation()
-  const { criteria } = useSavedSearchAlertContext()
+  const { criteria, entity } = useSavedSearchAlertContext()
+  const artistName = entity.defaultCriteria?.artistIDs?.[0].displayValue ?? ""
 
   return (
     <ModalDialog
       width={["100%", 700]}
       onClose={onClose}
-      title={t(
-        "artworkPage.artworkAuctionCreateAlertHeader.suggestedArtworksModal.title"
-      )}
+      title={"Works by " + artistName}
     >
       <Join separator={<Spacer y={2} />}>
         <SuggestedArtworksModalHeader />
-        <Separator />
         <SuggestedArtworksModalGridQueryRenderer
           {...criteria}
           onClose={onClose}
