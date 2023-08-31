@@ -147,6 +147,8 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const lockCountryToOrigin = onlyLocalShipping && !euOrigin
   const lockCountriesToEU = onlyLocalShipping && euOrigin
 
+  const autocompleteRef = React.createRef<HTMLInputElement>()
+
   return (
     <GridColumns>
       <Column span={12}>
@@ -216,6 +218,12 @@ export const AddressForm: React.FC<AddressFormProps> = ({
               const selectedParam = `${option.address.addressLine1} ${option.address.addressLine2} (${option.entries}) ${option.address.city} ${option.address.region} ${option.address.postalCode}`
 
               fetchForAutocomplete(searchParam, selectedParam)
+
+              // TODO: make the secondary options appear
+              console.log({ autocompleteRefCurrent: autocompleteRef.current })
+              setTimeout(() => {
+                autocompleteRef.current?.focus()
+              }, 1000)
             } else {
               Object.entries(option.address).forEach(([key, value]) => {
                 changeValueHandler(key as keyof Address)(value)
@@ -224,6 +232,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           }}
           error={getError("addressLine1")}
           data-test="AddressForm_addressLine1"
+          forwardRef={autocompleteRef}
         />
       </Column>
       <Column span={12}>
