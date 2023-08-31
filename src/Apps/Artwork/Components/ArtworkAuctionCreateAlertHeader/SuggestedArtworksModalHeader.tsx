@@ -1,4 +1,4 @@
-import { Flex, Pill } from "@artsy/palette"
+import { Flex, Pill, Text } from "@artsy/palette"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { FC } from "react"
 
@@ -7,6 +7,11 @@ export const SuggestedArtworksModalHeader: FC = () => {
 
   return (
     <Flex flexDirection="column">
+      <Text variant="sm-display" textColor="black60" mb={2}>
+        Available works you may have missed based on similar filters listed
+        below.
+      </Text>
+
       <Flex flexWrap="wrap" gap={1}>
         {pills.map(pill => {
           return (
