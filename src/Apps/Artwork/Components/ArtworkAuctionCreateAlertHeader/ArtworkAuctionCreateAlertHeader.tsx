@@ -129,7 +129,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
             textAlign={["left", "center"]}
             textColor={["black60", "black100"]}
           >
-            Get notified when similar works become available.
+            Create an alert to get notified when similar works become available.
           </Text>
         </Column>
         <Column span={12}>
