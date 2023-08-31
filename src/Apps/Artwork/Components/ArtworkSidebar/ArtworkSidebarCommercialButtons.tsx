@@ -14,7 +14,7 @@ import {
 } from "@artsy/palette"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useCallback, useEffect, useState } from "react"
-import { ArtworkSidebarCreateAlertButtonFragmentContainer } from "./ArtworkSidebarCreateAlertButton"
+import { ArtworkCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkCreateAlertButton"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 import { ErrorWithMetadata } from "Utils/errors"
 import { logger } from "@sentry/utils"
@@ -349,8 +349,9 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
       <Flex flexDirection={["column", "column", "column", "column", "row"]}>
         <Join separator={<Spacer x={1} y={1} />}>
           {!!isCreateAlertAvailable && (
-            <ArtworkSidebarCreateAlertButtonFragmentContainer
+            <ArtworkCreateAlertButtonFragmentContainer
               artwork={artwork}
+              analytics={ContextModule.artworkSidebar}
             />
           )}
           {artwork.isAcquireable && (
@@ -425,7 +426,7 @@ export const ArtworkSidebarCommercialButtonsFragmentContainer = createFragmentCo
     artwork: graphql`
       fragment ArtworkSidebarCommercialButtons_artwork on Artwork {
         ...ArtworkSidebarEditionSets_artwork
-        ...ArtworkSidebarCreateAlertButton_artwork
+        ...ArtworkCreateAlertButton_artwork
         artists {
           internalID
         }

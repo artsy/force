@@ -1,4 +1,4 @@
-import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
+import { AuthContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { Button } from "@artsy/palette"
 import { compact } from "lodash"
 import { FC } from "react"
@@ -10,16 +10,18 @@ import {
   SavedSearchEntityCriteria,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
-import { ArtworkSidebarCreateAlertButton_artwork$data } from "__generated__/ArtworkSidebarCreateAlertButton_artwork.graphql"
+import { ArtworkCreateAlertButton_artwork$data } from "__generated__/ArtworkCreateAlertButton_artwork.graphql"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
 
-interface ArtworkSidebarCreateAlertButtonProps {
-  artwork: ArtworkSidebarCreateAlertButton_artwork$data
+interface ArtworkCreateAlertButtonProps {
+  artwork: ArtworkCreateAlertButton_artwork$data
+  analytics: AuthContextModule
 }
 
-const ArtworkSidebarCreateAlertButton: FC<ArtworkSidebarCreateAlertButtonProps> = ({
+const ArtworkCreateAlertButton: FC<ArtworkCreateAlertButtonProps> = ({
   artwork,
+  analytics,
 }) => {
   let aggregations: Aggregations = []
   let additionalGeneIDs: string[] = []
@@ -86,7 +88,7 @@ const ArtworkSidebarCreateAlertButton: FC<ArtworkSidebarCreateAlertButtonProps> 
           },
         },
         analytics: {
-          contextModule: ContextModule.artworkSidebar,
+          contextModule: analytics,
           intent: Intent.createAlert,
         },
       }}
@@ -106,11 +108,11 @@ const ArtworkSidebarCreateAlertButton: FC<ArtworkSidebarCreateAlertButtonProps> 
   )
 }
 
-export const ArtworkSidebarCreateAlertButtonFragmentContainer = createFragmentContainer(
-  ArtworkSidebarCreateAlertButton,
+export const ArtworkCreateAlertButtonFragmentContainer = createFragmentContainer(
+  ArtworkCreateAlertButton,
   {
     artwork: graphql`
-      fragment ArtworkSidebarCreateAlertButton_artwork on Artwork {
+      fragment ArtworkCreateAlertButton_artwork on Artwork {
         slug
         internalID
         title
