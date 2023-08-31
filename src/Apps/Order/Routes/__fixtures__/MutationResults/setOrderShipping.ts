@@ -49,6 +49,19 @@ export const settingOrderShipmentSuccess = {
   },
 }
 
+export const settingOrderArtaShipmentDestinationCouldNotBeGeocodedFailure = {
+  commerceSetShipping: {
+    orderOrError: {
+      error: {
+        type: "arta",
+        code: "destination_could_not_be_geocoded",
+        data:
+          '{"status":422,"errors":{"destination":["could not be geocoded"]}}',
+      },
+    },
+  },
+}
+
 export const settingOrderArtaShipmentSuccess = {
   commerceSetShipping: {
     orderOrError: {
