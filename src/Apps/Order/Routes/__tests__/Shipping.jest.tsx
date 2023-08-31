@@ -255,17 +255,6 @@ describe("Shipping", () => {
   })
 
   describe("with no saved addresses", () => {
-    it("removes radio group if pickup_available flag is false", async () => {
-      const pickupAvailableOrder = cloneDeep(testOrder) as any
-      pickupAvailableOrder.lineItems.edges[0].node.artwork.pickup_available = false
-      const wrapper = getWrapper({
-        CommerceOrder: () => pickupAvailableOrder,
-      })
-      const page = new ShippingTestPage(wrapper)
-
-      expect(page.find(`[data-test="shipping-options"]`).length).toEqual(0)
-    })
-
     it("disables country select when onlyShipsDomestically is true and artwork is not in EU local zone", async () => {
       const domesticShippingOnlyOrder = cloneDeep(testOrder) as any
       domesticShippingOnlyOrder.lineItems.edges[0].node.artwork.onlyShipsDomestically = true

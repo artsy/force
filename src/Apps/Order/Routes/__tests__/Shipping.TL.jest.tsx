@@ -1,9 +1,168 @@
+import { cloneDeep } from "lodash"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { MockBoot } from "DevTools/MockBoot"
+import { ShippingFragmentContainer } from "Apps/Order/Routes/Shipping"
+import { graphql } from "react-relay"
+import { UntouchedBuyOrder } from "Apps/__tests__/Fixtures/Order"
+import { settingOrderShipmentSuccess } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
+import { ShippingTestQuery$rawResponse } from "__generated__/ShippingTestQuery.graphql"
+import { screen } from "@testing-library/react"
+import { useTracking } from "react-tracking"
+import { useFeatureFlag } from "System/useFeatureFlag"
+
+jest.unmock("react-relay")
+jest.mock("react-tracking")
+jest.mock("Utils/Hooks/useMatchMedia", () => ({
+  __internal__useMatchMedia: () => ({}),
+}))
+
+jest.mock("@artsy/palette", () => {
+  return {
+    ...jest.requireActual("@artsy/palette"),
+    ModalDialog: ({ title, children, onClose, footer }) => {
+      return (
+        <div data-testid="ModalDialog">
+          <button onClick={onClose}>close</button>
+          {title}
+          {children}
+          {footer}
+        </div>
+      )
+    },
+  }
+})
+
+jest.mock("System/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(),
+}))
+
+const mockShowErrorDialog = jest.fn()
+jest.mock("Apps/Order/Dialogs", () => ({
+  ...jest.requireActual("../../Dialogs"),
+  injectDialog: Component => props => (
+    <Component {...props} dialog={{ showErrorDialog: mockShowErrorDialog }} />
+  ),
+}))
+
+const mockCommitMutation = jest.fn()
+jest.mock("Apps/Order/Utils/commitMutation", () => ({
+  ...jest.requireActual("../../Utils/commitMutation"),
+  injectCommitMutation: Component => props => (
+    <Component {...props} commitMutation={mockCommitMutation} />
+  ),
+}))
+jest.mock("relay-runtime", () => ({
+  ...jest.requireActual("relay-runtime"),
+  commitMutation: (...args) => mockCommitMutation(args),
+}))
+
+const order: ShippingTestQuery$rawResponse["order"] = {
+  ...UntouchedBuyOrder,
+  internalID: "1234",
+  id: "1234",
+}
+
+const meWithoutAddress: ShippingTestQuery$rawResponse["me"] = {
+  name: "Test Name",
+  email: "test@gmail.com",
+  id: "4321",
+  location: {
+    id: "123",
+    country: "United States",
+  },
+  addressConnection: {
+    totalCount: 0,
+    edges: [],
+    pageInfo: {
+      startCursor: "aaa",
+      endCursor: "bbb",
+      hasNextPage: false,
+      hasPreviousPage: false,
+    },
+  },
+}
+
 describe("Shipping", () => {
+  const pushMock = jest.fn()
+  let isCommittingMutation
+
+  beforeEach(() => {
+    isCommittingMutation = false
+  })
+
+  afterEach(() => {
+    jest.clearAllMocks()
+  })
+
+  beforeAll(() => {
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent: jest.fn(),
+    }))
+    ;(useFeatureFlag as jest.Mock).mockImplementation(() => false)
+  })
+
+  const { renderWithRelay } = setupTestWrapperTL({
+    Component: (props: any) => (
+      <MockBoot>
+        <ShippingFragmentContainer
+          router={{ push: pushMock } as any}
+          order={props.order}
+          me={props.me}
+          // @ts-ignore
+          isCommittingMutation={isCommittingMutation}
+        />
+      </MockBoot>
+    ),
+    query: graphql`
+      query ShippingTestQuery @raw_response_type @relay_test_operation {
+        order: commerceOrder(id: "unused") {
+          ...Shipping_order
+        }
+        me {
+          ...Shipping_me
+        }
+      }
+    `,
+  })
+
   describe("with partner shipping", () => {
     describe("with no saved address", () => {
       it("shows an active offer stepper if it's an offer order", async () => {})
 
-      it("does not render fulfillment selection if artwork is not available for pickup", async () => {})
+      it("renders fulfillment selection if artwork is available for pickup", async () => {
+        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+
+        renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
+
+        expect(screen.getByText("Delivery method")).toBeVisible()
+        expect(screen.getByRole("radio", { name: /Shipping/i })).toBeVisible()
+        expect(
+          screen.getByRole("radio", { name: /Arrange for pickup/i })
+        ).toBeVisible()
+      })
+
+      it("does not render fulfillment selection if artwork is not available for pickup", async () => {
+        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+
+        const pickupUnavailableOrder = cloneDeep(order) as any
+        pickupUnavailableOrder.lineItems.edges[0].node.artwork.pickup_available = false
+
+        renderWithRelay({
+          CommerceOrder: () => pickupUnavailableOrder,
+          Me: () => meWithoutAddress,
+        })
+
+        expect(screen.queryByText("Delivery method")).not.toBeInTheDocument()
+        expect(
+          screen.queryByRole("radio", { name: /Shipping/i })
+        ).not.toBeInTheDocument()
+        expect(
+          screen.queryByRole("radio", { name: /Arrange for pickup/i })
+        ).not.toBeInTheDocument()
+      })
 
       it("disables country select if artwork only ships domestically and is not in the EU", async () => {})
 
