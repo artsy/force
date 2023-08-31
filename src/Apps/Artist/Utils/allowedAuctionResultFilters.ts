@@ -46,6 +46,4 @@ const SUPPORTED_INPUT_ARGS = [
   "includeEstimateRange",
   "includeUnknownPrices",
   "allowUnspecifiedSaleDates",
-  "saleEndYear",
-  "saleStartYear",
 ]
