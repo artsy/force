@@ -61,7 +61,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
           flexDirection={["column", "row"]}
           alignItems={["stretch", "center"]}
           flex={1}
-          overflow={"hidden"}
+          overflow="hidden"
         >
           <Text
             variant={["md", "lg"]}
