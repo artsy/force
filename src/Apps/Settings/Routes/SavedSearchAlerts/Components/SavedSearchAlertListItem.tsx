@@ -60,10 +60,13 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
           mr={2}
           flexDirection={["column", "row"]}
           alignItems={["stretch", "center"]}
+          flex={1}
+          overflow="hidden"
         >
           <Text
             variant={["md", "lg"]}
             color={variant === "active" ? "blue100" : "black100"}
+            style={{ overflowWrap: "break-word" }}
           >
             {isFallbackToGeneratedAlertNamesEnabled
               ? item.displayName

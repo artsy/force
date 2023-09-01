@@ -21,6 +21,7 @@ export const SavedSearchAlertHeader: FC<SavedSearchAlertHeaderProps> = ({
       alignItems={["stretch", "center"]}
       justifyContent="space-between"
       mb={4}
+      mx={[2, 0]}
     >
       <Text variant={["md", "lg"]} mb={[4, 0]} mr={[0, 2]}>
         Alerts
