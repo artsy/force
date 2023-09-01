@@ -1,12 +1,13 @@
 import { AutocompleteInputOptionType } from "@artsy/palette"
 import { Address } from "Components/AddressForm"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { useDebounce } from "Utils/Hooks/useDebounce"
 import { getENV } from "Utils/getENV"
 import { useCallback, useState } from "react"
 
 // NOTE: Due to the format of this key (a long string of numbers that cannot be parsed as json)
 // This key must be set in the env as a json string like SMARTY_EMBEDDED_KEY_JSON_JSON='{ "key": "xxxxxxxxxxxxxxxxxx" }'
-const smartyCreds = getENV("SMARTY_EMBEDDED_KEY_JSON")
+const smartyCreds = getENV("SMARTY_EMBEDDED_KEY_JSON") || { key: "" }
 console.log({ smartyCreds })
 const key = smartyCreds.key
 
@@ -29,7 +30,10 @@ export const useAddressAutocomplete = () => {
 
   // Add feature flag checks including country, etc here later
   // console.log({ key, kind: typeof key })
-  const enabled = !!key
+
+  const isAPIKeyPresent = !!key
+  const isFeatureFlagEnabled = !!useFeatureFlag("address_autocomplete_us")
+  const isFeatureEnabled = isAPIKeyPresent && isFeatureFlagEnabled
 
   const fetchSuggestions = useCallback(
     async (searchParam: string, selectedParam?: string) => {
@@ -130,6 +134,6 @@ export const useAddressAutocomplete = () => {
     autocompleteOptions,
     suggestions: result,
     fetchForAutocomplete: debouncedFetchForAutocomplete,
-    enabled,
+    isFeatureEnabled,
   }
 }

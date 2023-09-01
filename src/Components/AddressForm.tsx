@@ -85,7 +85,11 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const [address, setAddress] = React.useState(addressFromProp)
   const [prevValue, setPrevValue] = React.useState(value)
 
-  const { autocompleteOptions, fetchForAutocomplete } = useAddressAutocomplete()
+  const {
+    autocompleteOptions,
+    fetchForAutocomplete,
+    isFeatureEnabled: isAddressAutocompleteEnabled,
+  } = useAddressAutocomplete()
 
   React.useEffect(() => {
     console.log({ autocompleteOptions })
@@ -147,6 +151,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const lockCountryToOrigin = onlyLocalShipping && !euOrigin
   const lockCountriesToEU = onlyLocalShipping && euOrigin
 
+  /* TODO: Make this work with autocomplete input */
   const autocompleteRef = React.createRef<HTMLInputElement>()
 
   return (
@@ -193,47 +198,49 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         )}
       </Column>
       <Column span={12}>
-        {/* <Input
-          tabIndex={tabIndex}
-          id="AddressForm_addressLine1"
-          placeholder="Street address"
-          title="Address line 1"
-          value={value?.addressLine1}
-          onChange={changeEventHandler("addressLine1")}
-          error={getError("addressLine1")}
-          data-test="AddressForm_addressLine1"
-        /> */}
-        {/* TODO: Make this work with autocomplete input */}
-        <AutocompleteInput<AddressSuggestion>
-          tabIndex={tabIndex}
-          id="AddressForm_addressLine1"
-          placeholder="Street address"
-          title="Address line 1"
-          value={value?.addressLine1}
-          onChange={changeEventHandler("addressLine1")}
-          options={autocompleteOptions}
-          onSelect={option => {
-            if (option.entries > 1) {
-              const searchParam = value?.addressLine1
-              const selectedParam = `${option.address.addressLine1} ${option.address.addressLine2} (${option.entries}) ${option.address.city} ${option.address.region} ${option.address.postalCode}`
+        {isAddressAutocompleteEnabled ? (
+          <AutocompleteInput<AddressSuggestion>
+            tabIndex={tabIndex}
+            id="AddressForm_addressLine1"
+            placeholder="Street address"
+            title="Address line 1"
+            value={value?.addressLine1}
+            onChange={changeEventHandler("addressLine1")}
+            options={autocompleteOptions}
+            onSelect={option => {
+              if (option.entries > 1) {
+                const searchParam = value?.addressLine1
+                const selectedParam = `${option.address.addressLine1} ${option.address.addressLine2} (${option.entries}) ${option.address.city} ${option.address.region} ${option.address.postalCode}`
 
-              fetchForAutocomplete(searchParam, selectedParam)
+                fetchForAutocomplete(searchParam, selectedParam)
 
-              // TODO: make the secondary options appear
-              console.log({ autocompleteRefCurrent: autocompleteRef.current })
-              setTimeout(() => {
-                autocompleteRef.current?.focus()
-              }, 1000)
-            } else {
-              Object.entries(option.address).forEach(([key, value]) => {
-                changeValueHandler(key as keyof Address)(value)
-              })
-            }
-          }}
-          error={getError("addressLine1")}
-          data-test="AddressForm_addressLine1"
-          forwardRef={autocompleteRef}
-        />
+                // TODO: make the secondary options appear
+                console.log({ autocompleteRefCurrent: autocompleteRef.current })
+                setTimeout(() => {
+                  autocompleteRef.current?.focus()
+                }, 1000)
+              } else {
+                Object.entries(option.address).forEach(([key, value]) => {
+                  changeValueHandler(key as keyof Address)(value)
+                })
+              }
+            }}
+            error={getError("addressLine1")}
+            data-test="AddressForm_addressLine1"
+            forwardRef={autocompleteRef}
+          />
+        ) : (
+          <Input
+            tabIndex={tabIndex}
+            id="AddressForm_addressLine1"
+            placeholder="Street address"
+            title="Address line 1"
+            value={value?.addressLine1}
+            onChange={changeEventHandler("addressLine1")}
+            error={getError("addressLine1")}
+            data-test="AddressForm_addressLine1"
+          />
+        )}
       </Column>
       <Column span={12}>
         <Input
