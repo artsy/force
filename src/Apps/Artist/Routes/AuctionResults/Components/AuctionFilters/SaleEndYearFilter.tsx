@@ -24,6 +24,10 @@ export const SaleEndYearFilter: React.FC = () => {
     value: c?.name,
   }))
 
+  if (options.length === 0) {
+    return null
+  }
+
   const startOptions = options.filter(
     option =>
       parseInt(option.value) <=
