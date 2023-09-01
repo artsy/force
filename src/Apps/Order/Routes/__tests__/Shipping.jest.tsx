@@ -16,7 +16,6 @@ import {
   fillInPhoneNumber,
   validAddress,
 } from "Components/__tests__/Utils/addressForm"
-import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
 import { graphql } from "react-relay"
 import { ShippingFragmentContainer } from "Apps/Order/Routes/Shipping"
@@ -255,30 +254,6 @@ describe("Shipping", () => {
   })
 
   describe("with no saved addresses", () => {
-    it("disables country select when onlyShipsDomestically is true and artwork is not in EU local zone", async () => {
-      const domesticShippingOnlyOrder = cloneDeep(testOrder) as any
-      domesticShippingOnlyOrder.lineItems.edges[0].node.artwork.onlyShipsDomestically = true
-      domesticShippingOnlyOrder.lineItems.edges[0].node.artwork.euShippingOrigin = false
-      const wrapper = getWrapper({
-        CommerceOrder: () => domesticShippingOnlyOrder,
-      })
-      const page = new ShippingTestPage(wrapper)
-
-      expect(page.find(CountrySelect).props().disabled).toBe(true)
-    })
-
-    it("does not disable select when onlyShipsDomestically is true but artwork is located in EU local zone", async () => {
-      const domesticShippingEUOrder = cloneDeep(testOrder) as any
-      domesticShippingEUOrder.lineItems.edges[0].node.artworkShipsDomestically = true
-      domesticShippingEUOrder.lineItems.edges[0].node.artwork.euShippingOrigin = true
-      const wrapper = getWrapper({
-        CommerceOrder: () => domesticShippingEUOrder,
-      })
-      const page = new ShippingTestPage(wrapper)
-
-      expect(page.find(CountrySelect).props().disabled).toBe(false)
-    })
-
     it("commits set shipping mutation with the orderId and save address", async () => {
       mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
       const wrapper = getWrapper({

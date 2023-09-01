@@ -130,43 +130,74 @@ describe("Shipping", () => {
       it("shows an active offer stepper if it's an offer order", async () => {})
 
       it("renders fulfillment selection if artwork is available for pickup", async () => {
-        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
-
         renderWithRelay({
           CommerceOrder: () => order,
           Me: () => meWithoutAddress,
         })
 
         expect(screen.getByText("Delivery method")).toBeVisible()
-        expect(screen.getByRole("radio", { name: /Shipping/i })).toBeVisible()
+        expect(screen.getByRole("radio", { name: "Shipping" })).toBeVisible()
         expect(
-          screen.getByRole("radio", { name: /Arrange for pickup/i })
+          screen.getByRole("radio", { name: /Arrange for pickup/ })
         ).toBeVisible()
       })
 
       it("does not render fulfillment selection if artwork is not available for pickup", async () => {
-        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
-
-        const pickupUnavailableOrder = cloneDeep(order) as any
-        pickupUnavailableOrder.lineItems.edges[0].node.artwork.pickup_available = false
+        const shippingOnlyOrder = cloneDeep(order) as any
+        shippingOnlyOrder.lineItems.edges[0].node.artwork.pickup_available = false
 
         renderWithRelay({
-          CommerceOrder: () => pickupUnavailableOrder,
+          CommerceOrder: () => shippingOnlyOrder,
           Me: () => meWithoutAddress,
         })
 
         expect(screen.queryByText("Delivery method")).not.toBeInTheDocument()
         expect(
-          screen.queryByRole("radio", { name: /Shipping/i })
+          screen.queryByRole("radio", { name: "Shipping" })
         ).not.toBeInTheDocument()
         expect(
-          screen.queryByRole("radio", { name: /Arrange for pickup/i })
+          screen.queryByRole("radio", { name: /Arrange for pickup/ })
         ).not.toBeInTheDocument()
       })
 
-      it("disables country select if artwork only ships domestically and is not in the EU", async () => {})
+      it("sets and disables country select if artwork only ships domestically and is not in the EU", async () => {
+        const domesticShippingNonEUOrder = cloneDeep(order) as any
+        const artwork =
+          domesticShippingNonEUOrder.lineItems.edges[0].node.artwork
 
-      it("enables country select if artwork only ships domestically and is in the EU", async () => {})
+        Object.assign(artwork, {
+          onlyShipsDomestically: true,
+          euShippingOrigin: false,
+          shippingCountry: "US",
+        })
+
+        renderWithRelay({
+          CommerceOrder: () => domesticShippingNonEUOrder,
+          Me: () => meWithoutAddress,
+        })
+
+        expect(screen.getByRole("combobox")).toHaveValue("US")
+        expect(screen.getByRole("combobox")).toBeDisabled()
+      })
+
+      it("sets and enables country select if artwork only ships domestically and is in the EU", async () => {
+        const domesticShippingEUOrder = cloneDeep(order) as any
+        const artwork = domesticShippingEUOrder.lineItems.edges[0].node.artwork
+
+        Object.assign(artwork, {
+          onlyShipsDomestically: true,
+          euShippingOrigin: true,
+          shippingCountry: "IT",
+        })
+
+        renderWithRelay({
+          CommerceOrder: () => domesticShippingEUOrder,
+          Me: () => meWithoutAddress,
+        })
+
+        expect(screen.getByRole("combobox")).toHaveValue("IT")
+        expect(screen.getByRole("combobox")).toBeEnabled()
+      })
 
       it("sets shipping on order and saves address on user", async () => {})
 
