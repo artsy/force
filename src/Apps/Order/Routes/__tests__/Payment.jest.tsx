@@ -475,7 +475,7 @@ describe("Payment", () => {
         "• Your bank account must be denominated in EUR and located in one of the SEPA countries."
       )
       expect(page.text()).toContain(
-        "• Payment processing will take 4-7 business days once the gallery accepts the order."
+        "• Once your order is accepted, please allow 7-10 business days for processing your payment. After processing, your order will be prepared for pickup or packed and shipped, depending on your chosen delivery type."
       )
     })
 
