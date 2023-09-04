@@ -1,6 +1,8 @@
 import { Address } from "Components/Address/AddressForm"
 import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
+import { screen } from "@testing-library/react"
+import userEvent from "@testing-library/user-event"
 
 export const validAddress: Address = {
   name: "Erik David",
@@ -57,4 +59,26 @@ export const fillAddressForm = (component: any, address: Address) => {
   fillInPhoneNumber(component, {
     value: address.phoneNumber!,
   })
+}
+
+export const fillAddressFormTL = (address: Address) => {
+  const name = screen.getByPlaceholderText("Full name")
+  const country = screen.getByRole("combobox")
+  const addressLine1 = screen.getByPlaceholderText("Street address")
+  const addressLine2 = screen.getByPlaceholderText("Apt, floor, suite, etc.")
+  const city = screen.getByPlaceholderText("City")
+  const region = screen.getByPlaceholderText("State, province, or region")
+  const postalCode = screen.getByPlaceholderText("ZIP/postal code")
+  const phoneNumber = screen.getAllByPlaceholderText(
+    "Add phone number including country code"
+  )[0]
+
+  userEvent.type(name, address.name)
+  userEvent.selectOptions(country, ["US"])
+  userEvent.type(addressLine1, address.addressLine1)
+  userEvent.type(addressLine2, address.addressLine2)
+  userEvent.type(city, address.city)
+  userEvent.type(region, address.region)
+  userEvent.type(postalCode, address.postalCode)
+  userEvent.type(phoneNumber, address.phoneNumber!)
 }

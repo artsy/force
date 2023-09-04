@@ -9,6 +9,11 @@ import { ShippingTestQuery$rawResponse } from "__generated__/ShippingTestQuery.g
 import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import {
+  fillAddressFormTL,
+  validAddress,
+} from "Components/__tests__/Utils/addressForm"
+import userEvent from "@testing-library/user-event"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -199,7 +204,49 @@ describe("Shipping", () => {
         expect(screen.getByRole("combobox")).toBeEnabled()
       })
 
-      it("sets shipping on order and saves address on user", async () => {})
+      it("sets shipping on order and saves address on user", async () => {
+        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+        renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
+
+        fillAddressFormTL(validAddress)
+        await userEvent.click(
+          screen.getByRole("button", { name: "Save and Continue" })
+        )
+
+        expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          1,
+          expect.objectContaining({
+            variables: {
+              input: {
+                id: "1234",
+                fulfillmentType: "SHIP",
+                phoneNumber: validAddress.phoneNumber,
+                shipping: {
+                  ...validAddress,
+                  phoneNumber: "",
+                },
+              },
+            },
+          })
+        )
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          2,
+          expect.arrayContaining([
+            expect.anything(),
+            expect.objectContaining({
+              variables: {
+                input: {
+                  attributes: validAddress,
+                },
+              },
+            }),
+          ])
+        )
+      })
 
       it("sets shipping on order but does not save address if save address is not checked", async () => {})
 

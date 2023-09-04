@@ -254,50 +254,6 @@ describe("Shipping", () => {
   })
 
   describe("with no saved addresses", () => {
-    it("commits set shipping mutation with the orderId and save address", async () => {
-      mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
-      const wrapper = getWrapper({
-        CommerceOrder: () => testOrder,
-        Me: () => emptyTestMe,
-      })
-      const page = new ShippingTestPage(wrapper)
-
-      fillAddressForm(page.root, validAddress)
-
-      await page.clickSubmit()
-
-      expect(mockCommitMutation).toHaveBeenCalledTimes(2)
-      expect(mockCommitMutation).toHaveBeenNthCalledWith(
-        1,
-        expect.objectContaining({
-          variables: {
-            input: {
-              id: "1234",
-              fulfillmentType: "SHIP",
-              phoneNumber: validAddress.phoneNumber,
-              shipping: {
-                ...validAddress,
-                phoneNumber: "",
-              },
-            },
-          },
-        })
-      )
-      expect(mockCommitMutation).toHaveBeenNthCalledWith(
-        2,
-        expect.arrayContaining([
-          expect.anything(),
-          expect.objectContaining({
-            variables: {
-              input: {
-                attributes: validAddress,
-              },
-            },
-          }),
-        ])
-      )
-    })
-
     it("commits the mutation with the orderId when save address is not selected", async () => {
       mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
       const wrapper = getWrapper({
