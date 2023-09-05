@@ -28,7 +28,7 @@ describe("CollectorProfileHeader", () => {
   it("renders the name, bio, and member since", () => {
     const { renderWithRelay } = getWrapper()
 
-    renderWithRelay(mockResolvers, false)
+    renderWithRelay(mockResolvers)
 
     expect(screen.getByText("Darth Vader")).toBeInTheDocument()
     expect(screen.getByText("Member since 1987")).toBeInTheDocument()
@@ -39,14 +39,14 @@ describe("CollectorProfileHeader", () => {
     it("renders the settings button in Desktop", () => {
       const { renderWithRelay } = getWrapper()
 
-      renderWithRelay(mockResolvers, false)
+      renderWithRelay(mockResolvers)
 
       expect(screen.getByText("Settings")).toBeInTheDocument()
     })
 
     it("navigates when the settings button is pressed", () => {
       const { renderWithRelay } = getWrapper()
-      renderWithRelay(mockResolvers, false)
+      renderWithRelay(mockResolvers)
 
       expect(
         screen
@@ -58,14 +58,14 @@ describe("CollectorProfileHeader", () => {
     it("renders the settings icon in Mobile", () => {
       const { renderWithRelay } = getWrapper("xs")
 
-      renderWithRelay(mockResolvers, false)
+      renderWithRelay(mockResolvers)
 
       expect(screen.getByLabelText("Settings")).toBeInTheDocument()
     })
 
     it("navigates when the the settings icon in Mobile is pressed", () => {
       const { renderWithRelay } = getWrapper("xs")
-      renderWithRelay(mockResolvers, false)
+      renderWithRelay(mockResolvers)
 
       expect(screen.getByLabelText("Settings")).toHaveAttribute(
         "href",

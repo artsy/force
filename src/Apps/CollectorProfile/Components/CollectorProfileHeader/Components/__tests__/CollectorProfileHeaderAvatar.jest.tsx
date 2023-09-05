@@ -23,13 +23,13 @@ describe("CollectorProfileHeaderAvatar", () => {
   })
 
   it("renders the avatar when there is a picture", () => {
-    renderWithRelay(dataMockResolvers, false)
+    renderWithRelay(dataMockResolvers)
 
     expect(screen.getByRole("img")).toBeInTheDocument()
   })
 
   it("does not render the image when there is no picture", () => {
-    renderWithRelay({ Me: () => ({ icon: null }) }, false)
+    renderWithRelay({ Me: () => ({ icon: null }) })
 
     expect(screen.queryByRole("img")).not.toBeInTheDocument()
   })

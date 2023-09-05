@@ -36,7 +36,6 @@ describe("ConfirmationStepFooter", () => {
           },
         }),
       },
-      false,
       { artworksCount: artworksCount }
     )
   }

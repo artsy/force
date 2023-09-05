@@ -45,7 +45,7 @@ describe("InsightsMedianSalePrice", () => {
   describe("when there are market price insights data", () => {
     describe("Median auction price in the last 3 years", () => {
       it("renders the median auction price in the last 3 years", () => {
-        renderWithRelay(mockResolver, false)
+        renderWithRelay(mockResolver)
 
         expect(
           screen.getByText("Median Auction Price in the Last 3 Years")
@@ -72,7 +72,7 @@ describe("InsightsMedianSalePrice", () => {
         },
       }))
 
-      renderWithRelay(mockResolver, false)
+      renderWithRelay(mockResolver)
 
       const artistRow = screen.getByText("Takashi Murakami")
 
@@ -92,7 +92,7 @@ describe("InsightsMedianSalePrice", () => {
         },
       }))
 
-      renderWithRelay(mockResolver, false)
+      renderWithRelay(mockResolver)
 
       const artistRow = screen.getByText("Takashi Murakami")
 
@@ -106,7 +106,7 @@ describe("InsightsMedianSalePrice", () => {
 
   describe("when there are no market price insights data", () => {
     it("renders nothing", () => {
-      renderWithRelay(mockEmptyResolver, false)
+      renderWithRelay(mockEmptyResolver)
 
       expect(
         screen.queryByText("Median Auction Price in the Last 3 Years")
