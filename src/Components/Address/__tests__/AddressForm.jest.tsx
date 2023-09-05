@@ -96,14 +96,20 @@ describe("AddressForm", () => {
           })
         })
 
-        const input = screen.getByPlaceholderText("Street address")
-        fireEvent.change(input, { target: { value: "401 Broadway" } })
+        const line1Input = screen.getByPlaceholderText("Street address")
+        fireEvent.change(line1Input, { target: { value: "401 Broadway" } })
 
         const listbox = await screen.findByRole("listbox", { hidden: true })
 
         expect(listbox).toHaveTextContent(
-          "401 Broadway Fl 25 New York, NY 10013"
+          "401 Broadway Fl 25, New York NY 10013"
         )
+
+        // await act(() => {
+        //   fireEvent.click(listbox)
+        // })
+        // expect(line1Input).toHaveValue("401 Broadway")
+        // expect(screen.getByPlaceholderText("City")).toHaveValue("New York")
       })
     })
   })
