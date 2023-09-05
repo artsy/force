@@ -11,7 +11,7 @@ import * as React from "react"
 import { CreateTokenCardData } from "@stripe/stripe-js"
 import { isEqual } from "lodash"
 import {
-  AddressSuggestion,
+  AddressAutocompleteSuggestion,
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
 
@@ -89,6 +89,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     autocompleteOptions,
     fetchForAutocomplete,
     isAddressAutocompleteEnabled,
+    fetchSecondarySuggestions,
   } = useAddressAutocomplete(address)
 
   // // TODO: Remove this, it's just for debugging
@@ -109,7 +110,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     const shouldFetch = isAddressAutocompleteEnabled && key === "addressLine1"
     console.warn({ shouldFetch })
     if (shouldFetch) {
-      fetchForAutocomplete(ev.currentTarget.value)
+      fetchForAutocomplete({ search: ev.currentTarget.value })
     }
     setKey(key)
     onChangeValue(key, ev.currentTarget.value)
@@ -199,7 +200,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
       </Column>
       <Column span={12}>
         {isAddressAutocompleteEnabled ? (
-          <AutocompleteInput<AddressSuggestion>
+          <AutocompleteInput<AddressAutocompleteSuggestion>
             tabIndex={tabIndex}
             id="AddressForm_addressLine1"
             placeholder="Street address"
@@ -209,17 +210,16 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             options={autocompleteOptions}
             onSelect={option => {
               if (option.entries > 1) {
-                const searchParam = value?.addressLine1
-                const selectedParam = `${option.address.addressLine1} ${option.address.addressLine2} (${option.entries}) ${option.address.city} ${option.address.region} ${option.address.postalCode}`
-
-                fetchForAutocomplete(searchParam, selectedParam)
+                fetchSecondarySuggestions(value!.addressLine1!, option)
 
                 // TODO: make the secondary options appear
-                console.log({ autocompleteRefCurrent: autocompleteRef.current })
+                // console.log({ autocompleteRefCurrent: autocompleteRef.current })
                 setTimeout(() => {
                   autocompleteRef.current?.focus()
                 }, 1000)
               } else {
+                // TODO: Maybe we want to update the address even if there are
+                // more entries to fetch (no else here)
                 Object.entries(option.address).forEach(([key, value]) => {
                   changeValueHandler(key as keyof Address)(value)
                 })

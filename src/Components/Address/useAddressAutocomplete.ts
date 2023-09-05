@@ -19,14 +19,24 @@ export type ProviderSuggestion = {
   source?: "postal" | "other"
 }
 
-export interface AddressSuggestion extends AutocompleteInputOptionType {
+export interface AddressAutocompleteSuggestion
+  extends AutocompleteInputOptionType {
   address: Omit<Address, "name">
   entries: number
 }
 
 export const useAddressAutocomplete = (
   address: Partial<Address> & { country: Address["country"] }
-) => {
+): {
+  autocompleteOptions: AddressAutocompleteSuggestion[]
+  suggestions: ProviderSuggestion[]
+  fetchForAutocomplete: (args: { search: string; selected?: string }) => void
+  isAddressAutocompleteEnabled: boolean
+  fetchSecondarySuggestions: (
+    search: string,
+    option: AddressAutocompleteSuggestion
+  ) => void
+} => {
   const [result, setResult] = useState<ProviderSuggestion[]>([])
   const isUSAddress = address.country === "US"
   const isAPIKeyPresent = !!apiKey
@@ -45,21 +55,22 @@ export const useAddressAutocomplete = (
   }, [isUSAddress, result.length])
 
   const fetchSuggestions = useCallback(
-    async (searchParam: string, selectedParam?: string) => {
-      if (!apiKey) return null
-      let url = `https://us-autocomplete-pro.api.smarty.com/lookup?key=${encodeURIComponent(
-        apiKey
-      )}&prefer_ratio=3&search=${encodeURIComponent(searchParam)}`
-
-      if (selectedParam) {
-        url += `&selected=${encodeURIComponent(selectedParam)}`
+    async ({ search, selected }: { search: string; selected?: string }) => {
+      const params = {
+        key: apiKey,
+        search: search,
       }
 
-      const response = await fetch(url, {
-        headers: {
-          Host: "us-autocomplete-pro.api.smartystreets.com",
-        },
-      })
+      if (selected) {
+        params["selected"] = selected
+      }
+
+      if (!apiKey) return null
+      let url =
+        "https://us-autocomplete-pro.api.smarty.com/lookup?" +
+        new URLSearchParams(params).toString()
+
+      const response = await fetch(url)
       const json = await response.json()
       return json
     },
@@ -68,23 +79,31 @@ export const useAddressAutocomplete = (
 
   const fetchForAutocomplete = useCallback(
     // these are the parameters to the Smarty API call
-    async (searchParam: string, selectedParam?: string) => {
+    async ({ search, selected }: { search: string; selected?: string }) => {
       if (!isAddressAutocompleteEnabled) return
 
-      if (searchParam.length < 5) {
+      if (search.length < 5) {
         setResult([])
         return
       }
 
       try {
-        const result = await fetchSuggestions(searchParam, selectedParam)
+        const response = await fetchSuggestions({ search, selected })
 
-        setResult(result.suggestions)
+        setResult(response.suggestions)
       } catch (e) {
         console.error(e)
       }
     },
     [fetchSuggestions, isAddressAutocompleteEnabled]
+  )
+
+  const fetchSecondarySuggestions = useCallback(
+    async (search: string, option: AddressAutocompleteSuggestion) => {
+      const selectedParam = `${option.address.addressLine1} ${option.address.addressLine2} (${option.entries}) ${option.address.city} ${option.address.region} ${option.address.postalCode}`
+      fetchForAutocomplete({ search, selected: selectedParam })
+    },
+    [fetchForAutocomplete]
   )
 
   // debounce requests
@@ -95,31 +114,22 @@ export const useAddressAutocomplete = (
   })
 
   const buildAddressText = (suggestion: ProviderSuggestion): string => {
-    let whiteSpace = ""
-    let secondaryExtraInformation = ""
-    if (suggestion.secondary) {
-      if (suggestion.entries > 1) {
-        secondaryExtraInformation = " (" + suggestion.entries + " entries)"
-      }
-      whiteSpace = " "
-    }
-    return (
-      suggestion.street_line +
-      whiteSpace +
-      suggestion.secondary +
-      secondaryExtraInformation +
-      " " +
-      suggestion.city +
-      ", " +
-      suggestion.state +
-      " " +
-      suggestion.zipcode
-    )
+    let buildingAddress = suggestion.street_line
+    if (suggestion.secondary) buildingAddress += ` ${suggestion.secondary}`
+    if (suggestion.entries > 1)
+      buildingAddress += ` (${suggestion.entries} entries)`
+
+    return [
+      `${buildingAddress}, ${suggestion.city}`,
+      suggestion.state,
+      suggestion.zipcode,
+    ].join(" ")
   }
 
-  const autocompleteOptions: Array<AddressSuggestion> = result.map(
-    suggestion => {
+  const autocompleteOptions = result.map(
+    (suggestion: ProviderSuggestion): AddressAutocompleteSuggestion => {
       const text = buildAddressText(suggestion)
+
       return {
         text,
         value: text,
@@ -141,5 +151,6 @@ export const useAddressAutocomplete = (
     suggestions: result,
     fetchForAutocomplete: debouncedFetchForAutocomplete,
     isAddressAutocompleteEnabled,
+    fetchSecondarySuggestions,
   }
 }
