@@ -108,7 +108,6 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     ev: React.FormEvent<HTMLInputElement>
   ) => {
     const shouldFetch = isAddressAutocompleteEnabled && key === "addressLine1"
-    console.warn({ shouldFetch })
     if (shouldFetch) {
       fetchForAutocomplete({ search: ev.currentTarget.value })
     }
