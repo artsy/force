@@ -102,13 +102,7 @@ describe("AuctionResults", () => {
       mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
 
       let operationVariables
-      const { env } = renderWithRelay(mockedResolver, true)
-
-      act(() => {
-        env.mock.resolveMostRecentOperation(operation => {
-          return MockPayloadGenerator.generate(operation, mockedResolver)
-        })
-      })
+      const { env } = renderWithRelay(mockedResolver)
 
       const checkboxes = screen.getAllByRole("checkbox")
       fireEvent.click(checkboxes[2])
@@ -260,14 +254,8 @@ describe("AuctionResults", () => {
       describe("pagination", () => {
         // FIXME: SWC_COMPILER_MIGRATION
         it.skip("triggers relay refetch with after, and re-shows sign up to see price", async () => {
-          const { env } = renderWithRelay(mockedResolver, true)
+          const { env } = renderWithRelay(mockedResolver)
           let operationVariables
-
-          act(() => {
-            env.mock.resolveMostRecentOperation(operation => {
-              return MockPayloadGenerator.generate(operation, mockedResolver)
-            })
-          })
 
           const navigation = screen.getByRole("navigation")
           const checkboxes = screen.getAllByRole("checkbox")
@@ -292,13 +280,7 @@ describe("AuctionResults", () => {
       describe("filters", () => {
         describe("medium filter", () => {
           it("triggers relay refetch with medium list, and re-shows sign up to see price", () => {
-            const { env } = renderWithRelay(mockedResolver, true)
-
-            act(() => {
-              env.mock.resolveMostRecentOperation(operation => {
-                return MockPayloadGenerator.generate(operation, mockedResolver)
-              })
-            })
+            const { env } = renderWithRelay(mockedResolver)
 
             const checkboxes = screen.getAllByRole("checkbox")
             fireEvent.click(checkboxes[2])
@@ -361,13 +343,7 @@ describe("AuctionResults", () => {
         describe("auction house filter", () => {
           it("triggers relay refetch with organization list, and re-shows sign up to see price", () => {
             let operationVariables
-            const { env } = renderWithRelay(mockedResolver, true)
-
-            act(() => {
-              env.mock.resolveMostRecentOperation(operation => {
-                return MockPayloadGenerator.generate(operation, mockedResolver)
-              })
-            })
+            const { env } = renderWithRelay(mockedResolver)
 
             fireEvent.click(
               screen.getAllByText("Christie's", { exact: false })[0]
@@ -407,13 +383,7 @@ describe("AuctionResults", () => {
         describe("size filter", () => {
           it("triggers relay refetch with size list and tracks events, and re-shows sign up to see price", () => {
             let operationVariables
-            const { env } = renderWithRelay(mockedResolver, true)
-
-            act(() => {
-              env.mock.resolveMostRecentOperation(operation => {
-                return MockPayloadGenerator.generate(operation, mockedResolver)
-              })
-            })
+            const { env } = renderWithRelay(mockedResolver)
 
             fireEvent.click(screen.getByText("Medium (40 – 100cm)"))
             act(() => {
@@ -449,13 +419,7 @@ describe("AuctionResults", () => {
         describe("year created filter", () => {
           it("triggers relay refetch with created years and tracks events, and re-shows sign up to see price", () => {
             let operationVariables
-            const { env } = renderWithRelay(mockedResolver, true)
-
-            act(() => {
-              env.mock.resolveMostRecentOperation(operation => {
-                return MockPayloadGenerator.generate(operation, mockedResolver)
-              })
-            })
+            const { env } = renderWithRelay(mockedResolver)
 
             const comboboxes = screen.getAllByRole("combobox")
             fireEvent.change(comboboxes[1], { target: { value: "1900" } })
@@ -475,13 +439,7 @@ describe("AuctionResults", () => {
         describe("hide upcoming filter", () => {
           it("triggers relay refetch with state", () => {
             let operationVariables
-            const { env } = renderWithRelay(mockedResolver, true)
-
-            act(() => {
-              env.mock.resolveMostRecentOperation(operation => {
-                return MockPayloadGenerator.generate(operation, mockedResolver)
-              })
-            })
+            const { env } = renderWithRelay(mockedResolver)
 
             const checkboxes = screen.getAllByRole("checkbox")
             fireEvent.click(checkboxes[0])
@@ -500,13 +458,7 @@ describe("AuctionResults", () => {
       describe("sort", () => {
         it("triggers relay refetch with correct params, and re-shows sign up to see price", () => {
           let operationVariables
-          const { env } = renderWithRelay(mockedResolver, true)
-
-          act(() => {
-            env.mock.resolveMostRecentOperation(operation => {
-              return MockPayloadGenerator.generate(operation, mockedResolver)
-            })
-          })
+          const { env } = renderWithRelay(mockedResolver)
 
           const comboboxes = screen.getAllByRole("combobox")
           fireEvent.change(comboboxes[0], {
