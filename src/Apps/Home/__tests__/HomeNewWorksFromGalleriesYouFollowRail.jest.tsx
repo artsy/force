@@ -54,9 +54,25 @@ describe("HomeNewWorksFromGalleriesYouFollowRail", () => {
   })
 
   describe("tracking", () => {
+    it("tracks view all clicks", () => {
+      const wrapper = getWrapper()
+      wrapper.find("RouterLink").at(1).simulate("click")
+
+      expect(trackEvent).toBeCalledWith({
+        action: "clickedArtworkGroup",
+        context_module: "troveArtworksRail",
+        destination_page_owner_id: "932d0b13-3cf1-46d1-8e49-18b186230347",
+        destination_page_owner_slug: "curators-picks-emerging",
+        destination_page_owner_type: "collection",
+        type: "viewAll",
+        context_page_owner_type: "home",
+      })
+    })
+
     it("tracks item clicks", () => {
       const wrapper = getWrapper()
-      wrapper.find("RouterLink").first().simulate("click")
+      wrapper.find("RouterLink").at(2).simulate("click")
+
       expect(trackEvent).toBeCalledWith({
         action: "clickedArtworkGroup",
         context_module: "newWorksByGalleriesYouFollowRail",
