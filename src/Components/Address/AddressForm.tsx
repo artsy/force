@@ -13,7 +13,7 @@ import { isEqual } from "lodash"
 import {
   AddressSuggestion,
   useAddressAutocomplete,
-} from "Apps/Order/Routes/Shipping/useAddressAutocomplete"
+} from "Components/Address/useAddressAutocomplete"
 
 export interface Address {
   name: string
@@ -91,9 +91,10 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     isAddressAutocompleteEnabled,
   } = useAddressAutocomplete(address)
 
-  React.useEffect(() => {
-    console.log({ autocompleteOptions })
-  }, [autocompleteOptions])
+  // // TODO: Remove this, it's just for debugging
+  // React.useEffect(() => {
+  //   console.log({ autocompleteOptions })
+  // }, [autocompleteOptions])
 
   if (!isEqual(value, prevValue)) {
     setPrevValue(value)
@@ -105,13 +106,11 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const changeEventHandler = (key: keyof Address) => (
     ev: React.FormEvent<HTMLInputElement>
   ) => {
-    const shouldFetch = !!(key === "addressLine1")
+    const shouldFetch = isAddressAutocompleteEnabled && key === "addressLine1"
     console.warn({ shouldFetch })
     if (shouldFetch) {
       fetchForAutocomplete(ev.currentTarget.value)
     }
-    console.log("Change event handler-" + key)
-    console.warn(key, ev.currentTarget.value)
     setKey(key)
     onChangeValue(key, ev.currentTarget.value)
   }
@@ -153,8 +152,6 @@ export const AddressForm: React.FC<AddressFormProps> = ({
 
   /* TODO: Make this work with autocomplete input */
   const autocompleteRef = React.createRef<HTMLInputElement>()
-
-  console.log({ isAddressAutocompleteEnabled })
 
   return (
     <GridColumns>

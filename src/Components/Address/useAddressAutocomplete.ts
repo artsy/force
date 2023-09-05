@@ -1,5 +1,5 @@
 import { AutocompleteInputOptionType } from "@artsy/palette"
-import { Address } from "Components/AddressForm"
+import { Address } from "Components/Address/AddressForm"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useDebounce } from "Utils/Hooks/useDebounce"
 import { getENV } from "Utils/getENV"
@@ -34,6 +34,7 @@ export const useAddressAutocomplete = (
   const isAddressAutocompleteEnabled =
     isAPIKeyPresent && isFeatureFlagEnabled && isUSAddress
 
+  // reset suggestions if the country changes
   useEffect(() => {
     if (result.length > 0 && !isUSAddress) {
       setResult([])
@@ -51,13 +52,11 @@ export const useAddressAutocomplete = (
         url += `&selected=${encodeURIComponent(selectedParam)}`
       }
 
-      console.log({ url })
       const response = await fetch(url, {
         headers: {
           Host: "us-autocomplete-pro.api.smartystreets.com",
         },
       })
-      console.log({ response })
       const json = await response.json()
       return json
     },
@@ -70,7 +69,6 @@ export const useAddressAutocomplete = (
       if (!isAddressAutocompleteEnabled) return
 
       if (searchParam.length < 5) {
-        console.log("type more...")
         setResult([])
         return
       }
@@ -78,7 +76,6 @@ export const useAddressAutocomplete = (
       try {
         const result = await fetchSuggestions(searchParam, selectedParam)
 
-        console.log({ result })
         setResult(result.suggestions)
       } catch (e) {
         console.error(e)

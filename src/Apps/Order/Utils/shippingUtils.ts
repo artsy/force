@@ -1,4 +1,4 @@
-import { Address, emptyAddress } from "Components/AddressForm"
+import { Address, emptyAddress } from "Components/Address/AddressForm"
 import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
 import { Shipping_order$data } from "__generated__/Shipping_order.graphql"
 import { pick, omit, compact } from "lodash"

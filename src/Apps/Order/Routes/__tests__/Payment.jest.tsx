@@ -6,7 +6,7 @@ import {
   BuyOrderWithBankDebitDetails,
   OfferOrderWithShippingDetails,
 } from "Apps/__tests__/Fixtures/Order"
-import { AddressForm } from "Components/AddressForm"
+import { AddressForm } from "Components/Address/AddressForm"
 import { graphql } from "react-relay"
 import { PaymentFragmentContainer } from "Apps/Order/Routes/Payment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
