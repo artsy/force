@@ -8,16 +8,16 @@ import { useCallback, useState } from "react"
 // NOTE: Due to the format of this key (a long string of numbers that cannot be parsed as json)
 // This key must be set in the env as a json string like SMARTY_EMBEDDED_KEY_JSON_JSON='{ "key": "xxxxxxxxxxxxxxxxxx" }'
 const smartyCreds = getENV("SMARTY_EMBEDDED_KEY_JSON") || { key: "" }
-console.log({ smartyCreds })
-const key = smartyCreds.key
+const apiKey = smartyCreds.key
 
-export type SuggestionJSON = {
+export type ProviderSuggestion = {
   city: string
   entries: number
   secondary: string
   state: string
   street_line: string
   zipcode: string
+  source?: "postal" | "other"
 }
 
 export interface AddressSuggestion extends AutocompleteInputOptionType {
@@ -26,21 +26,18 @@ export interface AddressSuggestion extends AutocompleteInputOptionType {
 }
 
 export const useAddressAutocomplete = () => {
-  const [result, setResult] = useState<SuggestionJSON[]>([])
-
+  const [result, setResult] = useState<ProviderSuggestion[]>([])
   // Add feature flag checks including country, etc here later
-  // console.log({ key, kind: typeof key })
 
-  const isAPIKeyPresent = !!key
+  const isAPIKeyPresent = !!apiKey
   const isFeatureFlagEnabled = !!useFeatureFlag("address_autocomplete_us")
   const isFeatureEnabled = isAPIKeyPresent && isFeatureFlagEnabled
 
   const fetchSuggestions = useCallback(
     async (searchParam: string, selectedParam?: string) => {
-      console.log({ key })
-      if (!key) return null
+      if (!apiKey) return null
       let url = `https://us-autocomplete-pro.api.smarty.com/lookup?key=${encodeURIComponent(
-        key
+        apiKey
       )}&prefer_ratio=3&search=${encodeURIComponent(searchParam)}`
 
       if (selectedParam) {
@@ -88,7 +85,7 @@ export const useAddressAutocomplete = () => {
     callback: fetchForAutocomplete,
   })
 
-  const buildAddressText = (suggestion): string => {
+  const buildAddressText = (suggestion: ProviderSuggestion): string => {
     let whiteSpace = ""
     let secondaryExtraInformation = ""
     if (suggestion.secondary) {
