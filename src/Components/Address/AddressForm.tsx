@@ -93,8 +93,8 @@ export const AddressForm: React.FC<AddressFormProps> = ({
 
   // // TODO: Remove this, it's just for debugging
   // React.useEffect(() => {
-  //   console.log({ autocompleteOptions })
-  // }, [autocompleteOptions])
+  //   console.log({ address, autocompleteOptions, isAddressAutocompleteEnabled })
+  // }, [address, autocompleteOptions, isAddressAutocompleteEnabled])
 
   if (!isEqual(value, prevValue)) {
     setPrevValue(value)
@@ -170,10 +170,11 @@ export const AddressForm: React.FC<AddressFormProps> = ({
       </Column>
 
       <Column span={12}>
-        <Text mb={0.5} variant="xs" color="black100">
+        <Text id="country-select" mb={0.5} variant="xs" color="black100">
           Country
         </Text>
         <CountrySelect
+          aria-labelledby="country-select"
           tabIndex={tabIndex}
           selected={
             lockCountryToOrigin || (lockCountriesToEU && !value?.country)

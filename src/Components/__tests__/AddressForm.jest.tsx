@@ -1,4 +1,4 @@
-import { screen, render, fireEvent } from "@testing-library/react"
+import { screen, render, fireEvent, act } from "@testing-library/react"
 import { AddressForm } from "Components/Address/AddressForm"
 import { FC, useState } from "react"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -18,9 +18,12 @@ jest.mock("Utils/getENV", () => ({
 describe("AddressForm", () => {
   it("preserves updated value from props after user input", () => {
     const Page: FC = () => {
-      const [address, setAddress] = useState({ addressLine1: "Before update" })
+      const [address, setAddress] = useState({
+        addressLine1: "Before update",
+        country: "US",
+      })
       const updateAddress = () => {
-        setAddress({ addressLine1: "After update" })
+        setAddress({ addressLine1: "After update", country: "US" })
       }
 
       return (
@@ -83,8 +86,15 @@ describe("AddressForm", () => {
     })
 
     describe("address line 1", () => {
-      it("shows suggestions", async () => {
+      it("shows suggestions for a US address", async () => {
         render(<AddressForm onChange={jest.fn()} errors={{}} touched={{}} />)
+
+        const countryInput = screen.getByLabelText("Country")
+        await act(() => {
+          fireEvent.change(countryInput, {
+            target: { value: "US" },
+          })
+        })
 
         const input = screen.getByPlaceholderText("Street address")
         fireEvent.change(input, { target: { value: "401 Broadway" } })
