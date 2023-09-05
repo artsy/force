@@ -35,7 +35,7 @@ describe("CareerHighlightModalStep", () => {
   })
 
   it("renders the career highlights data", () => {
-    renderWithRelay(mockResolver, false)
+    renderWithRelay(mockResolver)
 
     expect(screen.getByText("3")).toBeInTheDocument()
     expect(

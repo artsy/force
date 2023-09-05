@@ -30,7 +30,7 @@ describe("MyCollectionArtworkSidebar", () => {
 
   describe("for artwork with metadata", () => {
     beforeEach(() => {
-      renderWithRelay({ Artwork: () => mockResolversWithData }, false)
+      renderWithRelay({ Artwork: () => mockResolversWithData })
     })
 
     it("displays artists names and title with the artist url", () => {
@@ -67,32 +67,26 @@ describe("MyCollectionArtworkSidebar", () => {
     })
 
     it("includes Notes when notes are present", () => {
-      renderWithRelay(
-        {
-          Artwork: () => ({
-            ...mockResolversWithData,
-            confidentialNotes: "A short text",
-          }),
-        },
-        false
-      )
+      renderWithRelay({
+        Artwork: () => ({
+          ...mockResolversWithData,
+          confidentialNotes: "A short text",
+        }),
+      })
       expect(screen.getByText("A short text")).toBeInTheDocument()
     })
 
     describe("when the artwork is part of limited edition", () => {
       beforeEach(() => {
-        renderWithRelay(
-          {
-            Artwork: () => ({
-              ...mockResolversWithData,
-              attributionClass: {
-                shortDescription: "Part of a limited edition set",
-              },
-              editionOf: "Edition 7/11",
-            }),
-          },
-          false
-        )
+        renderWithRelay({
+          Artwork: () => ({
+            ...mockResolversWithData,
+            attributionClass: {
+              shortDescription: "Part of a limited edition set",
+            },
+            editionOf: "Edition 7/11",
+          }),
+        })
       })
 
       it("displays edition info", () => {
@@ -106,10 +100,9 @@ describe("MyCollectionArtworkSidebar", () => {
 
     describe("when metric is set to 'cm'", () => {
       beforeEach(() => {
-        renderWithRelay(
-          { Artwork: () => ({ ...mockResolversWithData, metric: "cm" }) },
-          false
-        )
+        renderWithRelay({
+          Artwork: () => ({ ...mockResolversWithData, metric: "cm" }),
+        })
       })
 
       it("displays dimensions in cm", () => {
@@ -124,7 +117,7 @@ describe("MyCollectionArtworkSidebar", () => {
 
   describe("for artwork with minimal metadata", () => {
     beforeEach(() => {
-      renderWithRelay({ Artwork: () => emptyMockResolvers }, false)
+      renderWithRelay({ Artwork: () => emptyMockResolvers })
     })
 
     it("displays artists names and title", () => {

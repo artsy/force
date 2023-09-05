@@ -36,22 +36,19 @@ describe("MyCollectionArtworkImageBrowser", () => {
       }
     })
     it("renders correctly", () => {
-      renderWithRelay(
-        {
-          Artwork: () => ({
-            images: [{ width: 800, height: 600 }],
-            figures: [{ __typename: "Image" }],
-          }),
-          Image: () => ({ isDefault: true }),
-          ResizedImageUrl: () => ({
-            width: 800,
-            height: 600,
-            src: "image.jpg",
-            srcSet: "image.jpg 1x",
-          }),
-        },
-        false
-      )
+      renderWithRelay({
+        Artwork: () => ({
+          images: [{ width: 800, height: 600 }],
+          figures: [{ __typename: "Image" }],
+        }),
+        Image: () => ({ isDefault: true }),
+        ResizedImageUrl: () => ({
+          width: 800,
+          height: 600,
+          src: "image.jpg",
+          srcSet: "image.jpg 1x",
+        }),
+      })
 
       expect(screen.getByTestId("artwork-lightbox-box")).toHaveStyle(
         "max-width: 800px"
@@ -79,7 +76,6 @@ describe("MyCollectionArtworkImageBrowser", () => {
               internalID: "artwork-x",
             }),
           },
-          false,
           { isMyCollectionArtwork: true }
         )
 
@@ -93,7 +89,7 @@ describe("MyCollectionArtworkImageBrowser", () => {
 
     describe("when the artwork is a normal artwork", () => {
       it("renders the empty state correctly", () => {
-        renderWithRelay({ Artwork: () => ({ images: [], figures: [] }) }, false)
+        renderWithRelay({ Artwork: () => ({ images: [], figures: [] }) })
 
         expect(
           screen.getByTestId("artwork-browser-no-image-box")

@@ -22,16 +22,13 @@ const { renderWithRelay } = setupTestWrapperTL<
 
 describe("ArtworkAuctionRegistrationPanel", () => {
   it("renders countdown timer and button", () => {
-    renderWithRelay(
-      {
-        Artwork: () => ({
-          sale: {
-            registrationEndsAt: DateTime.local().plus({ days: 1 }).toString(),
-          },
-        }),
-      },
-      false
-    )
+    renderWithRelay({
+      Artwork: () => ({
+        sale: {
+          registrationEndsAt: DateTime.local().plus({ days: 1 }).toString(),
+        },
+      }),
+    })
 
     const timer = screen.getByText("Registration for this auction ends:")
     const button = screen.getByText("Register to Bid")
@@ -41,16 +38,13 @@ describe("ArtworkAuctionRegistrationPanel", () => {
   })
 
   it("renders only button", () => {
-    renderWithRelay(
-      {
-        Artwork: () => ({
-          sale: {
-            registrationEndsAt: null,
-          },
-        }),
-      },
-      false
-    )
+    renderWithRelay({
+      Artwork: () => ({
+        sale: {
+          registrationEndsAt: null,
+        },
+      }),
+    })
 
     const timer = screen.queryByText("Registration for this auction ends:")
     const button = screen.getByText("Register to Bid")
