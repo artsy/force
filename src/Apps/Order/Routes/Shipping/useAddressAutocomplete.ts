@@ -3,12 +3,11 @@ import { Address } from "Components/AddressForm"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useDebounce } from "Utils/Hooks/useDebounce"
 import { getENV } from "Utils/getENV"
-import { useCallback, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 
 // NOTE: Due to the format of this key (a long string of numbers that cannot be parsed as json)
-// This key must be set in the env as a json string like SMARTY_EMBEDDED_KEY_JSON_JSON='{ "key": "xxxxxxxxxxxxxxxxxx" }'
-const smartyCreds = getENV("SMARTY_EMBEDDED_KEY_JSON") || { key: "" }
-const apiKey = smartyCreds.key
+// This key must be set in the env as a json string like SMARTY_EMBEDDED_KEY_JSON={ "key": "xxxxxxxxxxxxxxxxxx" }
+const { key: apiKey } = getENV("SMARTY_EMBEDDED_KEY_JSON") || { key: "" }
 
 export type ProviderSuggestion = {
   city: string
@@ -25,13 +24,21 @@ export interface AddressSuggestion extends AutocompleteInputOptionType {
   entries: number
 }
 
-export const useAddressAutocomplete = () => {
+export const useAddressAutocomplete = (
+  address: Partial<Address> & { country: Address["country"] }
+) => {
   const [result, setResult] = useState<ProviderSuggestion[]>([])
-  // Add feature flag checks including country, etc here later
-
+  const isUSAddress = address.country === "US"
   const isAPIKeyPresent = !!apiKey
   const isFeatureFlagEnabled = !!useFeatureFlag("address_autocomplete_us")
-  const isFeatureEnabled = isAPIKeyPresent && isFeatureFlagEnabled
+  const isAddressAutocompleteEnabled =
+    isAPIKeyPresent && isFeatureFlagEnabled && isUSAddress
+
+  useEffect(() => {
+    if (result.length > 0 && !isUSAddress) {
+      setResult([])
+    }
+  }, [isUSAddress, result.length])
 
   const fetchSuggestions = useCallback(
     async (searchParam: string, selectedParam?: string) => {
@@ -60,6 +67,8 @@ export const useAddressAutocomplete = () => {
   const fetchForAutocomplete = useCallback(
     // these are the parameters to the Smarty API call
     async (searchParam: string, selectedParam?: string) => {
+      if (!isAddressAutocompleteEnabled) return
+
       if (searchParam.length < 5) {
         console.log("type more...")
         setResult([])
@@ -75,7 +84,7 @@ export const useAddressAutocomplete = () => {
         console.error(e)
       }
     },
-    [fetchSuggestions]
+    [fetchSuggestions, isAddressAutocompleteEnabled]
   )
 
   // debounce requests
@@ -131,6 +140,6 @@ export const useAddressAutocomplete = () => {
     autocompleteOptions,
     suggestions: result,
     fetchForAutocomplete: debouncedFetchForAutocomplete,
-    isFeatureEnabled,
+    isAddressAutocompleteEnabled,
   }
 }

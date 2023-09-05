@@ -88,8 +88,8 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const {
     autocompleteOptions,
     fetchForAutocomplete,
-    isFeatureEnabled: isAddressAutocompleteEnabled,
-  } = useAddressAutocomplete()
+    isAddressAutocompleteEnabled,
+  } = useAddressAutocomplete(address)
 
   React.useEffect(() => {
     console.log({ autocompleteOptions })
@@ -153,6 +153,8 @@ export const AddressForm: React.FC<AddressFormProps> = ({
 
   /* TODO: Make this work with autocomplete input */
   const autocompleteRef = React.createRef<HTMLInputElement>()
+
+  console.log({ isAddressAutocompleteEnabled })
 
   return (
     <GridColumns>
