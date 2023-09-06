@@ -4,17 +4,12 @@ import {
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { getENV } from "Utils/getENV"
 import { waitFor } from "@testing-library/react"
 
 jest.mock("react-tracking")
 jest.mock("System/useFeatureFlag")
-jest.mock("Utils/getENV", () => ({
-  getENV: jest.fn().mockImplementation(() => {
-    return {
-      key: "smarty-api-key",
-    }
-  }),
-}))
+jest.mock("Utils/getENV")
 
 let mockFetch: jest.Mock
 
@@ -57,6 +52,11 @@ describe("useAddressAutocomplete", () => {
       ;(useFeatureFlag as jest.Mock).mockImplementation(
         featureName => featureName === "address_autocomplete_us"
       )
+      ;(getENV as jest.Mock).mockImplementation(() => {
+        return {
+          key: "smarty-api-key",
+        }
+      })
     })
     afterAll(jest.resetAllMocks)
 
@@ -200,6 +200,110 @@ describe("useAddressAutocomplete", () => {
             },
           ])
         )
+      })
+    })
+  })
+
+  describe("isAddressAutocompleteEnabled", () => {
+    describe("feature flag is enabled", () => {
+      beforeAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockImplementation(
+          featureName => featureName === "address_autocomplete_us"
+        )
+      })
+
+      describe("API key is availaible", () => {
+        beforeAll(() => {
+          ;(getENV as jest.Mock).mockImplementation(() => {
+            return {
+              key: "smarty-api-key",
+            }
+          })
+        })
+
+        describe("selected country is US", () => {
+          it("returns true", () => {
+            const { result } = setupHook({ country: "US" })
+            expect(result.current.isAddressAutocompleteEnabled).toBe(true)
+          })
+        })
+
+        describe("selected country is not US", () => {
+          it("returns false", () => {
+            const { result } = setupHook({ country: "AF" })
+            expect(result.current.isAddressAutocompleteEnabled).toBe(false)
+          })
+        })
+      })
+
+      describe("API key is missing", () => {
+        beforeAll(() => {
+          ;(getENV as jest.Mock).mockImplementation(() => null)
+        })
+
+        describe("selected country is US", () => {
+          it("returns false", () => {
+            const { result } = setupHook({ country: "US" })
+            expect(result.current.isAddressAutocompleteEnabled).toBe(false)
+          })
+        })
+
+        describe("selected country is not US", () => {
+          it("returns false", () => {
+            const { result } = setupHook({ country: "AF" })
+            expect(result.current.isAddressAutocompleteEnabled).toBe(false)
+          })
+        })
+      })
+    })
+
+    describe("feature flag is disabled", () => {
+      beforeAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockImplementation(featureName => false)
+      })
+
+      describe("API key is availaible", () => {
+        beforeAll(() => {
+          ;(getENV as jest.Mock).mockImplementation(() => {
+            return {
+              key: "smarty-api-key",
+            }
+          })
+        })
+
+        describe("selected country is US", () => {
+          it("returns false", () => {
+            const { result } = setupHook({ country: "US" })
+            expect(result.current.isAddressAutocompleteEnabled).toBe(false)
+          })
+        })
+
+        describe("selected country is not US", () => {
+          it("returns false", () => {
+            const { result } = setupHook({ country: "AF" })
+            expect(result.current.isAddressAutocompleteEnabled).toBe(false)
+          })
+        })
+      })
+
+      describe("API key is missing", () => {
+        beforeAll(() => {
+          ;(getENV as jest.Mock).mockImplementation(() => null)
+        })
+
+        describe("selected country is US", () => {
+          it("returns false", () => {
+            const { result } = setupHook({ country: "US" })
+            expect(result.current.isAddressAutocompleteEnabled).toBe(false)
+          })
+        })
+
+        describe("selected country is not US", () => {
+          it("returns false", () => {
+            const { result } = setupHook({ country: "AF" })
+            expect(result.current.isAddressAutocompleteEnabled).toBe(false)
+          })
+        })
       })
     })
   })

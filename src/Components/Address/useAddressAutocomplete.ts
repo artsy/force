@@ -5,10 +5,6 @@ import { useDebounce } from "Utils/Hooks/useDebounce"
 import { getENV } from "Utils/getENV"
 import { useCallback, useEffect, useState } from "react"
 
-// NOTE: Due to the format of this key (a long string of numbers that cannot be parsed as json)
-// This key must be set in the env as a json string like SMARTY_EMBEDDED_KEY_JSON={ "key": "xxxxxxxxxxxxxxxxxx" }
-const { key: apiKey } = getENV("SMARTY_EMBEDDED_KEY_JSON") || { key: "" }
-
 export type ProviderSuggestion = {
   city: string
   entries: number
@@ -38,6 +34,11 @@ export const useAddressAutocomplete = (
   ) => void
 } => {
   const [result, setResult] = useState<ProviderSuggestion[]>([])
+
+  // NOTE: Due to the format of this key (a long string of numbers that cannot be parsed as json)
+  // This key must be set in the env as a json string like SMARTY_EMBEDDED_KEY_JSON={ "key": "xxxxxxxxxxxxxxxxxx" }
+  const { key: apiKey } = getENV("SMARTY_EMBEDDED_KEY_JSON") || { key: "" }
+
   const isUSAddress = address.country === "US"
   const isAPIKeyPresent = !!apiKey
   const isFeatureFlagEnabled = !!useFeatureFlag("address_autocomplete_us")
@@ -74,7 +75,7 @@ export const useAddressAutocomplete = (
       const json = await response.json()
       return json
     },
-    []
+    [apiKey]
   )
 
   const fetchForAutocomplete = useCallback(
