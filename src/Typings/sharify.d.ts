@@ -99,6 +99,7 @@ declare module "sharify" {
       SESSION_ID?: string
       SET_PASSWORD: string
       SHOW_ANALYTICS_CALLS: boolean
+      SMARTY_EMBEDDED_KEY_JSON: { key: string }
       SIFT_BEACON_KEY: string
       STRIPE_PUBLISHABLE_KEY: string
       SUBMISSION_ARTIST_NAME: string

@@ -12,7 +12,7 @@ import {
   fillIn,
   validAddress,
 } from "Components/__tests__/Utils/addressForm"
-import { Address, AddressForm } from "Components/AddressForm"
+import { Address, AddressForm } from "Components/Address/AddressForm"
 import { RootTestPage } from "DevTools/RootTestPage"
 import { graphql } from "react-relay"
 import {
