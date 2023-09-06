@@ -214,15 +214,15 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     setDeletedAddressID(deletedAddressID)
   }
 
-  const getOrderArtwork = () => props.order.lineItems?.edges?.[0]?.node?.artwork
-  const isCreateNewAddress = () => selectedAddressID === NEW_ADDRESS
+  const orderPrimaryArtwork = props.order.lineItems?.edges?.[0]?.node?.artwork
+  const isCreatingNewAddress = selectedAddressID === NEW_ADDRESS
 
   const checkIfArtsyShipping = () => {
-    const artwork = getOrderArtwork()
+    const artwork = orderPrimaryArtwork
     const processWithArtsyShippingDomestic = !!artwork?.processWithArtsyShippingDomestic
     const artsyShippingInternational = !!artwork?.artsyShippingInternational
 
-    const shippingCountry = isCreateNewAddress()
+    const shippingCountry = isCreatingNewAddress
       ? address.country
       : addressList &&
         addressList.find(address => address.internalID == selectedAddressID)
@@ -288,7 +288,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const onContinueButtonPressed = async () => {
     if (
       shippingOption === "SHIP" &&
-      isCreateNewAddress() &&
+      isCreatingNewAddress &&
       !validateAddressAndPhoneNumber()
     ) {
       return
@@ -297,7 +297,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     if (
       isAddressVerificationEnabled() &&
       !addressVerifiedBy &&
-      isCreateNewAddress()
+      isCreatingNewAddress
     ) {
       /**
        * Setting addressNeedsVerification to true will cause the address
@@ -322,7 +322,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
     try {
       // if not creating a new address, use the saved address selection for shipping
-      const shipToAddress = isCreateNewAddress()
+      const shipToAddress = isCreatingNewAddress
         ? address
         : convertShippingAddressForExchange(
             editedAddress
@@ -333,7 +333,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           )
 
       const shipToPhoneNumber =
-        isCreateNewAddress() || shippingOption === "PICKUP"
+        isCreatingNewAddress || shippingOption === "PICKUP"
           ? phoneNumber
           : addressList.find(address => address.internalID == selectedAddressID)
               ?.phoneNumber
@@ -426,14 +426,14 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         })
 
         props.dialog.showErrorDialog({
-          message: getArtaErrorMessage(),
+          message: <ArtaErrorDialogContent />,
         })
       }
     }
   }
 
   const updateAddress = async () => {
-    const shouldCreateNewAddress = isCreateNewAddress()
+    const shouldCreateNewAddress = isCreatingNewAddress
 
     if (saveAddress) {
       if (
@@ -565,7 +565,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       })
 
       props.dialog.showErrorDialog({
-        message: getArtaErrorMessage(),
+        message: <ArtaErrorDialogContent />,
       })
     } else {
       trackEvent({
@@ -582,17 +582,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       props.dialog.showErrorDialog()
     }
   }
-
-  const getArtaErrorMessage = () => (
-    <>
-      There was a problem getting shipping quotes. <br />
-      Please contact{" "}
-      <RouterLink inline to={`mailto:orders@artsy.net`}>
-        orders@artsy.net
-      </RouterLink>
-      .
-    </>
-  )
 
   const onAddressChange: AddressChangeHandler = (newAddress, key) => {
     const { errors } = validateAddress(newAddress)
@@ -630,7 +619,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     if (
       addressList?.length > 0 &&
       checkIfArtsyShipping() &&
-      !isCreateNewAddress()
+      !isCreatingNewAddress
     ) {
       selectShipping()
     }
@@ -723,49 +712,23 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [readyToSaveVerifiedAddress])
 
-  const renderArtaErrorMessage = () => {
-    return (
-      <Text
-        py={1}
-        px={2}
-        mb={2}
-        bg="red10"
-        color="red100"
-        data-test="artaErrorMessage"
-      >
-        In order to provide a shipping quote, we need some more information from
-        you. Please contact{" "}
-        <RouterLink color="red100" to="mailto:orders@artsy.net">
-          orders@artsy.net
-        </RouterLink>{" "}
-        so we can assist you.
-      </Text>
-    )
-  }
-
-  const renderArtsyShippingOptionText = () => {
-    let text
-    if (isOffer) {
-      text =
-        "Please note that these are estimates and may change once offer is finalized. "
-    } else {
-      text = ""
-    }
-    return `${text}All options are eligible for Artsy’s Buyer Protection policy, which protects against damage and loss.`
-  }
-
   const { order, isCommittingMutation } = props
-  const artwork = getOrderArtwork()
   const shippingSelected =
-    !artwork?.pickup_available || shippingOption === "SHIP"
+    !orderPrimaryArtwork?.pickup_available || shippingOption === "SHIP"
   const showAddressForm =
-    shippingSelected && (isCreateNewAddress() || addressList?.length === 0)
+    shippingSelected && (isCreatingNewAddress || addressList?.length === 0)
   const showSavedAddresses =
     shippingSelected && addressList && addressList.length > 0
   const isArtsyShipping = checkIfArtsyShipping()
   const showArtsyShipping =
     isArtsyShipping && !!shippingQuotes && shippingQuotes.length > 0
   const isOffer = order.mode === "OFFER"
+
+  const artsyShippingOptionText = `${
+    isOffer
+      ? "Please note that these are estimates and may change once offer is finalized. "
+      : ""
+  }All options are eligible for Artsy’s Buyer Protection policy, which protects against damage and loss.`
 
   const useDefaultArtsyShippingQuote =
     isArtsyShipping &&
@@ -795,7 +758,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               {/* TODO: Make RadioGroup generic for the allowed values,
               which could also ensure the children only use
               allowed values. */}
-              {artwork?.pickup_available && (
+              {orderPrimaryArtwork?.pickup_available && (
                 <>
                   <RadioGroup
                     data-test="shipping-options"
@@ -833,8 +796,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 </Text>
                 {isArtsyShipping &&
                   shippingQuotes &&
-                  shippingQuotes.length === 0 &&
-                  renderArtaErrorMessage()}
+                  shippingQuotes.length === 0 && <ArtaErrorMessage />}
                 <SavedAddresses
                   me={props.me}
                   selectedAddress={selectedAddressID}
@@ -849,8 +811,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <Collapse data-test="addressFormCollapse" open={showAddressForm}>
                 {isArtsyShipping &&
                   shippingQuotes &&
-                  shippingQuotes.length === 0 &&
-                  renderArtaErrorMessage()}
+                  shippingQuotes.length === 0 && <ArtaErrorMessage />}
                 <Text variant="lg-display" mb="2">
                   Delivery address
                 </Text>
@@ -886,9 +847,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   errors={addressErrors}
                   touched={addressTouched}
                   onChange={onAddressChange}
-                  domesticOnly={artwork?.onlyShipsDomestically!}
-                  euOrigin={artwork?.euShippingOrigin!}
-                  shippingCountry={artwork?.shippingCountry!}
+                  domesticOnly={orderPrimaryArtwork?.onlyShipsDomestically!}
+                  euOrigin={orderPrimaryArtwork?.euShippingOrigin!}
+                  shippingCountry={orderPrimaryArtwork?.shippingCountry!}
                   showPhoneNumberInput={false}
                 />
                 <Spacer y={2} />
@@ -932,7 +893,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <Collapse open={showArtsyShipping}>
                 <Text variant="sm">Artsy shipping options</Text>
                 <Text variant="xs" mb="1" color="black60">
-                  {renderArtsyShippingOptionText()}
+                  {artsyShippingOptionText}
                 </Text>
                 <ShippingQuotesFragmentContainer
                   mb={3}
@@ -1092,4 +1053,35 @@ export const ShippingFragmentContainer = createFragmentContainer(
       }
     `,
   }
+)
+
+const ArtaErrorMessage = () => {
+  return (
+    <Text
+      py={1}
+      px={2}
+      mb={2}
+      bg="red10"
+      color="red100"
+      data-test="artaErrorMessage"
+    >
+      In order to provide a shipping quote, we need some more information from
+      you. Please contact{" "}
+      <RouterLink color="red100" to="mailto:orders@artsy.net">
+        orders@artsy.net
+      </RouterLink>{" "}
+      so we can assist you.
+    </Text>
+  )
+}
+
+const ArtaErrorDialogContent = () => (
+  <>
+    There was a problem getting shipping quotes. <br />
+    Please contact{" "}
+    <RouterLink inline to={`mailto:orders@artsy.net`}>
+      orders@artsy.net
+    </RouterLink>
+    .
+  </>
 )
