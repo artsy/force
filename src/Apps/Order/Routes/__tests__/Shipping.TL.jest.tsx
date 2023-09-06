@@ -217,35 +217,32 @@ describe("Shipping", () => {
         )
 
         expect(mockCommitMutation).toHaveBeenCalledTimes(2)
-        expect(mockCommitMutation).toHaveBeenNthCalledWith(
-          1,
-          expect.objectContaining({
-            variables: {
-              input: {
-                id: "1234",
-                fulfillmentType: "SHIP",
-                phoneNumber: validAddress.phoneNumber,
-                shipping: {
-                  ...validAddress,
-                  phoneNumber: "",
-                },
-              },
+
+        let mutationArg = mockCommitMutation.mock.calls[0][0]
+        expect(mutationArg.mutation.default.operation.name).toEqual(
+          "SetShippingMutation"
+        )
+        expect(mutationArg.variables).toEqual({
+          input: {
+            id: "1234",
+            fulfillmentType: "SHIP",
+            phoneNumber: validAddress.phoneNumber,
+            shipping: {
+              ...validAddress,
+              phoneNumber: "",
             },
-          })
+          },
+        })
+
+        mutationArg = mockCommitMutation.mock.calls[1][0][1]
+        expect(mutationArg.mutation.default.operation.name).toEqual(
+          "CreateUserAddressMutation"
         )
-        expect(mockCommitMutation).toHaveBeenNthCalledWith(
-          2,
-          expect.arrayContaining([
-            expect.anything(),
-            expect.objectContaining({
-              variables: {
-                input: {
-                  attributes: validAddress,
-                },
-              },
-            }),
-          ])
-        )
+        expect(mutationArg.variables).toEqual({
+          input: {
+            attributes: validAddress,
+          },
+        })
       })
 
       it("sets shipping on order but does not save address if save address is not checked", async () => {})
