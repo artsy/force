@@ -208,7 +208,13 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             onChange={changeEventHandler("addressLine1")}
             options={autocompleteOptions}
             onSelect={option => {
-              if (option.entries > 1) {
+              const hasSecondarySuggestions = option.entries > 1
+              if (hasSecondarySuggestions) {
+                // Fill in the address form with the selection, but skip line 2
+                Object.entries(option.address).forEach(([key, value]) => {
+                  if (key === "addressLine2") return
+                  changeValueHandler(key as keyof Address)(value)
+                })
                 fetchSecondarySuggestions(value!.addressLine1!, option)
 
                 // TODO: make the secondary options appear
@@ -217,8 +223,6 @@ export const AddressForm: React.FC<AddressFormProps> = ({
                   autocompleteRef.current?.focus()
                 }, 1000)
               } else {
-                // TODO: Maybe we want to update the address even if there are
-                // more entries to fetch (no else here)
                 Object.entries(option.address).forEach(([key, value]) => {
                   changeValueHandler(key as keyof Address)(value)
                 })
