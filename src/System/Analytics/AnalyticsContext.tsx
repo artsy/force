@@ -1,6 +1,9 @@
 import { FC, ReactNode, createContext, useContext, useMemo } from "react"
 import { OwnerType, PageOwnerType } from "@artsy/cohesion"
 import { camelCase } from "lodash"
+import { getENV } from "Utils/getENV"
+
+const SHOW_ANALYTICS_CALLS = getENV("SHOW_ANALYTICS_CALLS")
 
 const AnalyticsContext = createContext<{
   contextPageOwnerId?: string
@@ -63,9 +66,16 @@ export const AnalyticsContextProvider: FC<AnalyticsContextProviderProps> = ({
   ])
 
   const contextPageOwnerType = useMemo(() => {
-    return (path
+    const ownerType = (path
       ? pathToOwnerType(path) || formatType(_type) // Fallback for unsupported routes
       : "Unknown") as PageOwnerType
+
+    if (!Object.values(OwnerType).includes(ownerType) && SHOW_ANALYTICS_CALLS) {
+      console.warn(
+        `OwnerType "${ownerType}" is not part of @artsy/cohesion's schema.`
+      )
+    }
+    return ownerType
   }, [_type, path])
 
   return (
