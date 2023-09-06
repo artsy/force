@@ -14,6 +14,7 @@ import {
   validAddress,
 } from "Components/__tests__/Utils/addressForm"
 import userEvent from "@testing-library/user-event"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -245,9 +246,56 @@ describe("Shipping", () => {
         })
       })
 
-      it("sets shipping on order but does not save address if save address is not checked", async () => {})
+      it("sets shipping on order but does not save address if save address is not checked", async () => {
+        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+        renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
 
-      it("routes to payment screen after mutation completes", async () => {})
+        fillAddressFormTL(validAddress)
+        userEvent.click(
+          screen.getByRole("checkbox", { name: /Save shipping address/ })
+        )
+        await userEvent.click(
+          screen.getByRole("button", { name: "Save and Continue" })
+        )
+
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+
+        let mutationArg = mockCommitMutation.mock.calls[0][0]
+        expect(mutationArg.mutation.default.operation.name).toEqual(
+          "SetShippingMutation"
+        )
+        expect(mutationArg.variables).toEqual({
+          input: {
+            id: "1234",
+            fulfillmentType: "SHIP",
+            phoneNumber: validAddress.phoneNumber,
+            shipping: {
+              ...validAddress,
+              phoneNumber: "",
+            },
+          },
+        })
+      })
+
+      it("routes to payment screen after mutation completes", async () => {
+        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+        renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
+
+        fillAddressFormTL(validAddress)
+        await userEvent.click(
+          screen.getByRole("button", { name: "Save and Continue" })
+        )
+        await flushPromiseQueue()
+
+        expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+        expect(pushMock).toHaveBeenCalledWith("/orders/1234/payment")
+      })
 
       it("shows the button spinner while loading the mutation", async () => {})
 
@@ -382,7 +430,48 @@ describe("Shipping", () => {
   describe("with pickup", () => {
     it("shows an empty phone number input", async () => {})
 
-    it("sets pickup on order", async () => {})
+    it("sets pickup on order", async () => {
+      mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
+      renderWithRelay({
+        CommerceOrder: () => order,
+        Me: () => meWithoutAddress,
+      })
+
+      userEvent.click(screen.getByRole("radio", { name: /Arrange for pickup/ }))
+      userEvent.type(
+        screen.getAllByPlaceholderText(
+          "Add phone number including country code"
+        )[0],
+        "2813308004"
+      )
+      await userEvent.click(
+        screen.getByRole("button", { name: "Save and Continue" })
+      )
+
+      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+
+      let mutationArg = mockCommitMutation.mock.calls[0][0]
+      expect(mutationArg.mutation.default.operation.name).toEqual(
+        "SetShippingMutation"
+      )
+      expect(mutationArg.variables).toEqual({
+        input: {
+          id: "1234",
+          fulfillmentType: "PICKUP",
+          shipping: {
+            addressLine1: "",
+            addressLine2: "",
+            country: "US",
+            name: "",
+            city: "",
+            postalCode: "",
+            region: "",
+            phoneNumber: "",
+          },
+          phoneNumber: "2813308004",
+        },
+      })
+    })
 
     it("does not submit an incomplete form", async () => {})
   })
