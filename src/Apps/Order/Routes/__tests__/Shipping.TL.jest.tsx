@@ -1,7 +1,6 @@
 import { cloneDeep } from "lodash"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools/MockBoot"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { ShippingFragmentContainer } from "Apps/Order/Routes/Shipping"
 import { graphql } from "react-relay"
 import { UntouchedBuyOrder } from "Apps/__tests__/Fixtures/Order"
@@ -15,7 +14,6 @@ import {
   validAddress,
 } from "Components/__tests__/Utils/addressForm"
 import userEvent from "@testing-library/user-event"
-import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -51,6 +49,18 @@ jest.mock("Apps/Order/Dialogs", () => ({
   ),
 }))
 
+const mockCommitMutation = jest.fn()
+jest.mock("Apps/Order/Utils/commitMutation", () => ({
+  ...jest.requireActual("../../Utils/commitMutation"),
+  injectCommitMutation: Component => props => (
+    <Component {...props} commitMutation={mockCommitMutation} />
+  ),
+}))
+jest.mock("relay-runtime", () => ({
+  ...jest.requireActual("relay-runtime"),
+  commitMutation: (...args) => mockCommitMutation(args),
+}))
+
 const order: ShippingTestQuery$rawResponse["order"] = {
   ...UntouchedBuyOrder,
   internalID: "1234",
@@ -79,11 +89,9 @@ const meWithoutAddress: ShippingTestQuery$rawResponse["me"] = {
 
 describe("Shipping", () => {
   const pushMock = jest.fn()
-  let relayEnv
   let isCommittingMutation
 
   beforeEach(() => {
-    relayEnv = createMockEnvironment()
     isCommittingMutation = false
   })
 
@@ -100,7 +108,7 @@ describe("Shipping", () => {
 
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
-      <MockBoot relayEnvironment={relayEnv}>
+      <MockBoot>
         <ShippingFragmentContainer
           router={{ push: pushMock } as any}
           order={props.order}
@@ -197,6 +205,7 @@ describe("Shipping", () => {
       })
 
       it("sets shipping on order and saves address on user", async () => {
+        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
         renderWithRelay({
           CommerceOrder: () => order,
           Me: () => meWithoutAddress,
@@ -207,40 +216,36 @@ describe("Shipping", () => {
           screen.getByRole("button", { name: "Save and Continue" })
         )
 
-        let mutation = relayEnv.mock.getMostRecentOperation()
-        expect(mutation.request.node.operation.name).toEqual(
-          "SetShippingMutation"
-        )
-        expect(mutation.request.variables).toEqual({
-          input: {
-            id: "1234",
-            fulfillmentType: "SHIP",
-            phoneNumber: validAddress.phoneNumber,
-            shipping: {
-              ...validAddress,
-              phoneNumber: "",
+        expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          1,
+          expect.objectContaining({
+            variables: {
+              input: {
+                id: "1234",
+                fulfillmentType: "SHIP",
+                phoneNumber: validAddress.phoneNumber,
+                shipping: {
+                  ...validAddress,
+                  phoneNumber: "",
+                },
+              },
             },
-          },
-        })
-
-        relayEnv.mock.resolveMostRecentOperation(operation => {
-          return MockPayloadGenerator.generate(operation, {
-            CommerceOrderWithMutationSuccess: () =>
-              settingOrderShipmentSuccess.commerceSetShipping.orderOrError,
           })
-        })
-
-        await flushPromiseQueue()
-
-        mutation = relayEnv.mock.getMostRecentOperation()
-        expect(mutation.request.node.operation.name).toEqual(
-          "CreateUserAddressMutation"
         )
-        expect(mutation.request.variables).toEqual({
-          input: {
-            attributes: validAddress,
-          },
-        })
+        expect(mockCommitMutation).toHaveBeenNthCalledWith(
+          2,
+          expect.arrayContaining([
+            expect.anything(),
+            expect.objectContaining({
+              variables: {
+                input: {
+                  attributes: validAddress,
+                },
+              },
+            }),
+          ])
+        )
       })
 
       it("sets shipping on order but does not save address if save address is not checked", async () => {})
