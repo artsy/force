@@ -16,8 +16,10 @@ import {
   ClickedArtworkGroup,
   ContextModule,
   OwnerType,
+  clickedEntityGroup,
 } from "@artsy/cohesion"
 import { Rail } from "Components/Rail/Rail"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 interface HomeNewWorksFromGalleriesYouFollowRailProps {
   newWorksFromGalleriesYouFollowConnection: HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$data
@@ -27,6 +29,11 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<HomeNewWorksFromGalleries
   newWorksFromGalleriesYouFollowConnection,
 }) => {
   const { trackEvent } = useTracking()
+  const {
+    contextPageOwnerId,
+    contextPageOwnerSlug,
+    contextPageOwnerType,
+  } = useAnalyticsContext()
 
   const artworks = extractNodes(newWorksFromGalleriesYouFollowConnection)
 
@@ -40,16 +47,16 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<HomeNewWorksFromGalleries
       viewAllLabel="View All Works"
       viewAllHref="/new-works-from-galleries-you-follow"
       viewAllOnClick={() => {
-        const trackingEvent: ClickedArtworkGroup = {
-          action: ActionType.clickedArtworkGroup,
-          context_module: ContextModule.newWorksByGalleriesYouFollowRail,
-          context_page_owner_type: OwnerType.home,
-          destination_page_owner_type: OwnerType.collection,
-          destination_page_owner_id: "932d0b13-3cf1-46d1-8e49-18b186230347",
-          destination_page_owner_slug: "curators-picks-emerging",
-          type: "viewAll",
-        }
-        trackEvent(trackingEvent)
+        trackEvent(
+          clickedEntityGroup({
+            contextModule: ContextModule.newWorksByGalleriesYouFollowRail,
+            contextPageOwnerId,
+            contextPageOwnerSlug,
+            contextPageOwnerType: contextPageOwnerType!,
+            destinationPageOwnerType: OwnerType.newWorksFromGalleriesYouFollow,
+            type: "viewAll",
+          })
+        )
       }}
       getItems={() => {
         return artworks.map(artwork => (
@@ -57,8 +64,6 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<HomeNewWorksFromGalleries
             artwork={artwork}
             key={artwork.internalID}
             lazyLoad
-            // TODO: add troveArtworksRail to the union type of auth context module
-            // @ts-ignore
             contextModule={ContextModule.newWorksByGalleriesYouFollowRail}
             onClick={() => {
               const trackingEvent: ClickedArtworkGroup = {

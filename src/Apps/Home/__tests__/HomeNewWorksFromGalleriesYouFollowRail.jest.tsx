@@ -59,13 +59,16 @@ describe("HomeNewWorksFromGalleriesYouFollowRail", () => {
       wrapper.find("RouterLink").at(1).simulate("click")
 
       expect(trackEvent).toBeCalledWith({
-        action: "clickedArtworkGroup",
-        context_module: "troveArtworksRail",
-        destination_page_owner_id: "932d0b13-3cf1-46d1-8e49-18b186230347",
-        destination_page_owner_slug: "curators-picks-emerging",
-        destination_page_owner_type: "collection",
+        action: undefined,
+        context_module: "newWorksByGalleriesYouFollowRail",
+        context_page_owner_id: undefined,
+        context_page_owner_slug: undefined,
+        context_page_owner_type: undefined,
+        destination_page_owner_id: undefined,
+        destination_page_owner_slug: undefined,
+        destination_page_owner_type: "newWorksFromGalleriesYouFollow",
+        horizontal_slide_position: undefined,
         type: "viewAll",
-        context_page_owner_type: "home",
       })
     })
 
