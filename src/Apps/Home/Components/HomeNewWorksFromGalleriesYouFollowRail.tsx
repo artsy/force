@@ -38,11 +38,11 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<HomeNewWorksFromGalleries
     <Rail
       title="New Works From Galleries You Follow"
       viewAllLabel="View All Works"
-      viewAllHref="/collection/curators-picks-emerging"
+      viewAllHref="/new-works-from-galleries-you-follow"
       viewAllOnClick={() => {
         const trackingEvent: ClickedArtworkGroup = {
           action: ActionType.clickedArtworkGroup,
-          context_module: ContextModule.troveArtworksRail,
+          context_module: ContextModule.newWorksByGalleriesYouFollowRail,
           context_page_owner_type: OwnerType.home,
           destination_page_owner_type: OwnerType.collection,
           destination_page_owner_id: "932d0b13-3cf1-46d1-8e49-18b186230347",
