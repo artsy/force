@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b6a64d8770ccad3542787f1050c8eeb3>>
+ * @generated SignedSource<<17ea08938bc70c3bd7a216b33af84ec9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type ArtworkSidebarBiddingClosedMessage_artwork$data = {
   readonly artists: ReadonlyArray<{
     readonly internalID: string;
   } | null> | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkCreateAlertButton_artwork">;
   readonly " $fragmentType": "ArtworkSidebarBiddingClosedMessage_artwork";
 };
 export type ArtworkSidebarBiddingClosedMessage_artwork$key = {
@@ -49,13 +49,13 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarCreateAlertButton_artwork"
+      "name": "ArtworkCreateAlertButton_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "41d2b728262cda860e0937a3a9efb9aa";
+(node as any).hash = "4b29a61c94f4bc7e00ac2e100273f2d9";
 
 export default node;

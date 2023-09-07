@@ -23,7 +23,7 @@ describe("CollectorProfileHeaderInfo", () => {
   })
 
   it("renders all the info fields when all data is available", () => {
-    renderWithRelay(mockResolversAllFields, false)
+    renderWithRelay(mockResolversAllFields)
 
     expect(screen.getByText("New York, NY, USA")).toBeInTheDocument()
     expect(screen.getByText("Collector")).toBeInTheDocument()
@@ -31,7 +31,7 @@ describe("CollectorProfileHeaderInfo", () => {
   })
 
   it("renders the info field when some data is available", () => {
-    renderWithRelay(mockResolversSomeFields, false)
+    renderWithRelay(mockResolversSomeFields)
 
     expect(screen.getByText("Berlin, Germany")).toBeInTheDocument()
     expect(screen.getByText("Gallery")).toBeInTheDocument()

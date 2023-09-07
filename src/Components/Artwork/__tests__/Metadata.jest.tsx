@@ -24,7 +24,7 @@ describe("Metadata", () => {
   })
 
   it("navigates to artwork page when clicking on a normal artwork", () => {
-    renderWithRelay(mockResolver, false)
+    renderWithRelay(mockResolver)
 
     expect(screen.getByText("artwork title")).toBeInTheDocument()
 
@@ -35,7 +35,7 @@ describe("Metadata", () => {
   })
 
   it("navigates to my collection artwork page when clicking on a my collection artwork", () => {
-    renderWithRelay(mockResolver, false, {
+    renderWithRelay(mockResolver, {
       to: "/my-collection/artwork/artwork-id",
     })
 
@@ -48,7 +48,7 @@ describe("Metadata", () => {
   })
 
   it("navigates to my collection artwork page when clicking on a my collection artwork when ff enabled", () => {
-    renderWithRelay(mockResolver, false, {
+    renderWithRelay(mockResolver, {
       to: "/collector-profile/my-collection/artwork/artwork-id",
     })
 

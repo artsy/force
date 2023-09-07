@@ -32,7 +32,7 @@ describe("MyCollectionArtworkArtistMarket", () => {
   })
 
   it("renders the market price insights for an artwork", () => {
-    renderWithRelay(mockResolvers, false)
+    renderWithRelay(mockResolvers)
 
     expect(screen.getByText("Annual Value Sold")).toBeInTheDocument()
     expect(screen.getByText("$13B")).toBeInTheDocument()

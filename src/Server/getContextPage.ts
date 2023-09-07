@@ -1,5 +1,5 @@
-import { OwnerType, PageOwnerType } from "@artsy/cohesion"
-import { camelCase } from "lodash"
+import { PageOwnerType } from "@artsy/cohesion"
+import { pathToOwnerType } from "System/Analytics/AnalyticsContext"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 
@@ -23,7 +23,7 @@ export function getContextPageFromClient(): ClientContextPage | undefined {
   const { pathname } = window.location
   const pageParts = pathname.split("/")
   const pageSlug = pageParts[2]
-  const pageType = PAGE_TYPE || formatOwnerTypes(pathname)
+  const pageType = PAGE_TYPE || pathToOwnerType(pathname)
   const canonicalUrl = `${sd.APP_URL}${pathname}`
 
   return {
@@ -33,36 +33,4 @@ export function getContextPageFromClient(): ClientContextPage | undefined {
     pageType,
     path: pathname,
   }
-}
-
-/**
- * @deprecated: Use `pathToOwnerType` from `AnalyticsContext`
- */
-export const formatOwnerTypes = (path: string) => {
-  const type = path.split("/")[1]
-  // Remove '2' to ensure that show2/fair2/etc are schema compliant
-  let formattedType = camelCase(type).replace("2", "")
-
-  if (path === "/") {
-    formattedType = OwnerType.home
-  }
-
-  switch (type) {
-    case "auction":
-      formattedType = OwnerType.sale
-      break
-    case "news":
-    case "series":
-    case "video":
-      formattedType = OwnerType.article
-      break
-  }
-
-  if (!OwnerType[formattedType] && sd.SHOW_ANALYTICS_CALLS) {
-    console.warn(
-      `OwnerType ${formattedType} is not part of @artsy/cohesion's schema.`
-    )
-  }
-
-  return OwnerType[formattedType] || formattedType
 }

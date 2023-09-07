@@ -24,7 +24,7 @@ describe("InsightsCareerHighlightRail", () => {
 
   describe("when a user collection has career highlights", () => {
     it("renders career highlights", () => {
-      renderWithRelay(mockResolverData, false)
+      renderWithRelay(mockResolverData)
 
       // singular
       expect(
@@ -55,7 +55,7 @@ describe("InsightsCareerHighlightRail", () => {
 
   describe("when a user collection has no career highlights", () => {
     it("doesn't render career highlights or promo card", () => {
-      renderWithRelay(mockResolverNoData, false)
+      renderWithRelay(mockResolverNoData)
 
       expect(
         screen.queryByText("Artist had a solo show at a major institution.")

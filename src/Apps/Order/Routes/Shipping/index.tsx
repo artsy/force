@@ -45,7 +45,7 @@ import {
   AddressErrors,
   AddressForm,
   AddressTouched,
-} from "Components/AddressForm"
+} from "Components/Address/AddressForm"
 import { Router } from "found"
 import { FC, useState, useEffect } from "react"
 import { COUNTRIES_IN_EUROPEAN_UNION } from "@artsy/commerce_helpers"

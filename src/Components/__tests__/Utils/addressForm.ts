@@ -1,4 +1,4 @@
-import { Address } from "Components/AddressForm"
+import { Address } from "Components/Address/AddressForm"
 import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
 

@@ -2,8 +2,8 @@ import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 
-import { GridItem_Test_Query } from "../../../__generated__/GridItem_Test_Query.graphql"
-import ArtworkGridItemFragmentContainer from "../GridItem"
+import { GridItem_Test_Query } from "__generated__/GridItem_Test_Query.graphql"
+import ArtworkGridItemFragmentContainer from "Components/Artwork/GridItem"
 
 jest.unmock("react-relay")
 describe("GridItem", () => {
@@ -24,7 +24,7 @@ describe("GridItem", () => {
   })
 
   it("navigates to the standard artwork page for standard artworks", async () => {
-    renderWithRelay(mockResolvers, false)
+    renderWithRelay(mockResolvers)
 
     expect(screen.getByText("artwork-title")).toBeInTheDocument()
 
@@ -35,7 +35,7 @@ describe("GridItem", () => {
   })
 
   it("navigates to my collection artwork page for my collection artworks", async () => {
-    renderWithRelay(mockResolvers, false, {
+    renderWithRelay(mockResolvers, {
       to: "/my-collection/artwork/artwork-id",
     })
 

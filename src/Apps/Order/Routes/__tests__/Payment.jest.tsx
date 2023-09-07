@@ -6,7 +6,7 @@ import {
   BuyOrderWithBankDebitDetails,
   OfferOrderWithShippingDetails,
 } from "Apps/__tests__/Fixtures/Order"
-import { AddressForm } from "Components/AddressForm"
+import { AddressForm } from "Components/Address/AddressForm"
 import { graphql } from "react-relay"
 import { PaymentFragmentContainer } from "Apps/Order/Routes/Payment"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
@@ -475,7 +475,7 @@ describe("Payment", () => {
         "• Your bank account must be denominated in EUR and located in one of the SEPA countries."
       )
       expect(page.text()).toContain(
-        "• Payment processing will take 4-7 business days once the gallery accepts the order."
+        "• Once your order is accepted, please allow 7-10 business days for processing your payment. After processing, your order will be prepared for pickup or packed and shipped, depending on your chosen delivery type."
       )
     })
 

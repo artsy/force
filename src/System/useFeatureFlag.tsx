@@ -1,9 +1,9 @@
 import { ActionType } from "@artsy/cohesion"
-import { formatOwnerTypes } from "Server/getContextPage"
 import { useSystemContext } from "System/useSystemContext"
 import { Variant } from "unleash-client"
 import { getENV } from "Utils/getENV"
 import { useRouter } from "./Router/useRouter"
+import { pathToOwnerType } from "System/Analytics/AnalyticsContext"
 
 export type FeatureFlags = Record<string, FeatureFlagDetails>
 
@@ -85,7 +85,7 @@ export function useTrackFeatureVariant({
     const path = router.match.location.pathname
     const pageParts = path.split("/")
     const pageSlug = pageParts[2]
-    const pageType = formatOwnerTypes(path)
+    const pageType = pathToOwnerType(path)
 
     const trackFeatureView = shouldTrack(experimentName, variantName)
 

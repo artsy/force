@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<852609d6f6535bea73a9d68e72065312>>
+ * @generated SignedSource<<ebe775c9059f239a0db3335396a0b713>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarCreateAlertButton_artwork$data = {
+export type ArtworkCreateAlertButton_artwork$data = {
   readonly artists: ReadonlyArray<{
     readonly internalID: string;
     readonly name: string | null;
@@ -28,11 +28,11 @@ export type ArtworkSidebarCreateAlertButton_artwork$data = {
   } | null;
   readonly slug: string;
   readonly title: string | null;
-  readonly " $fragmentType": "ArtworkSidebarCreateAlertButton_artwork";
+  readonly " $fragmentType": "ArtworkCreateAlertButton_artwork";
 };
-export type ArtworkSidebarCreateAlertButton_artwork$key = {
-  readonly " $data"?: ArtworkSidebarCreateAlertButton_artwork$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCreateAlertButton_artwork">;
+export type ArtworkCreateAlertButton_artwork$key = {
+  readonly " $data"?: ArtworkCreateAlertButton_artwork$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkCreateAlertButton_artwork">;
 };
 
 const node: ReaderFragment = (function(){
@@ -61,7 +61,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtworkSidebarCreateAlertButton_artwork",
+  "name": "ArtworkCreateAlertButton_artwork",
   "selections": [
     (v0/*: any*/),
     (v1/*: any*/),
@@ -128,6 +128,6 @@ return {
 };
 })();
 
-(node as any).hash = "4df5f222f3236aacd8dbc226f42abe55";
+(node as any).hash = "8d4c87c608159c8ef75274e7b1534bd9";
 
 export default node;
