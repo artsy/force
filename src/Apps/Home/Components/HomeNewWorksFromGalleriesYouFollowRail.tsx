@@ -131,7 +131,7 @@ export const HomeNewWorksFromGalleriesYouFollowRailQueryRenderer: React.FC = () 
         }
 
         if (!props?.me) {
-          return null
+          return PLACEHOLDER
         }
 
         if (props.me.newWorksFromGalleriesYouFollowConnection) {
