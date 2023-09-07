@@ -32,18 +32,10 @@ import * as updateUserAddress from "Apps/Order/Mutations/UpdateUserAddress"
 import * as deleteUserAddress from "Apps/Order/Mutations/DeleteUserAddress"
 import {
   settingOrderShipmentSuccess,
-  settingOrderShipmentFailure,
-  settingOrderShipmentMissingCountryFailure,
-  settingOrderShipmentMissingRegionFailure,
   settingOrderArtaShipmentSuccess,
   selectShippingQuoteSuccess,
-  settingOrderArtaShipmentDestinationCouldNotBeGeocodedFailure,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import {
-  ErrorDialogs,
-  getErrorDialogCopy,
-} from "Apps/Order/Utils/getErrorDialogCopy"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -254,40 +246,6 @@ describe("Shipping", () => {
   })
 
   describe("with no saved addresses", () => {
-    it("commits the mutation with the orderId when save address is not selected", async () => {
-      mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
-      const wrapper = getWrapper({
-        CommerceOrder: () => testOrder,
-        Me: () => emptyTestMe,
-      })
-      const page = new ShippingTestPage(wrapper)
-
-      fillAddressForm(page.root, validAddress)
-
-      expect(mockCommitMutation).not.toHaveBeenCalled()
-
-      page.find(`[data-test="save-address-checkbox"]`).first().simulate("click")
-
-      await page.clickSubmit()
-
-      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-      expect(mockCommitMutation).toHaveBeenCalledWith(
-        expect.objectContaining({
-          variables: {
-            input: {
-              id: "1234",
-              fulfillmentType: "SHIP",
-              phoneNumber: validAddress.phoneNumber,
-              shipping: {
-                ...validAddress,
-                phoneNumber: "",
-              },
-            },
-          },
-        })
-      )
-    })
-
     it("commits the mutation with shipping option", async () => {
       mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
       const wrapper = getWrapper({
@@ -334,161 +292,6 @@ describe("Shipping", () => {
           }),
         ])
       )
-    })
-
-    it("commits the mutation with pickup option", async () => {
-      mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
-      const wrapper = getWrapper({
-        CommerceOrder: () => testOrder,
-        Me: () => emptyTestMe,
-      })
-      const page = new ShippingTestPage(wrapper)
-
-      await page.selectPickupOption()
-      fillInPhoneNumber(page.root, { isPickup: true, value: "2813308004" })
-      expect(mockCommitMutation).not.toHaveBeenCalled()
-
-      await page.clickSubmit()
-      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-      expect(mockCommitMutation).toHaveBeenCalledWith(
-        expect.objectContaining({
-          variables: {
-            input: {
-              id: "1234",
-              fulfillmentType: "PICKUP",
-              shipping: {
-                addressLine1: "",
-                addressLine2: "",
-                country: "US",
-                name: "",
-                city: "",
-                postalCode: "",
-                region: "",
-                phoneNumber: "",
-              },
-              phoneNumber: "2813308004",
-            },
-          },
-        })
-      )
-    })
-
-    describe("mutation", () => {
-      it("routes to payment screen after mutation completes", async () => {
-        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
-        const wrapper = getWrapper({
-          CommerceOrder: () => testOrder,
-          Me: () => emptyTestMe,
-        })
-        const page = new ShippingTestPage(wrapper)
-
-        fillAddressForm(page.root, validAddress)
-        await page.clickSubmit()
-
-        expect(pushMock).toHaveBeenCalledWith("/orders/1234/payment")
-      })
-
-      it("shows the button spinner while loading the mutation", async () => {
-        isCommittingMutation = true
-        const wrapper = getWrapper()
-        const page = new ShippingTestPage(wrapper)
-
-        fillAddressForm(page.root, validAddress)
-
-        expect(page.isLoading()).toBeTruthy()
-      })
-
-      it("shows an error modal when there is an error from the server", async () => {
-        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentFailure)
-        const wrapper = getWrapper({
-          CommerceOrder: () => testOrder,
-          Me: () => emptyTestMe,
-        })
-        const page = new ShippingTestPage(wrapper)
-
-        fillAddressForm(page.root, validAddress)
-        await page.clickSubmit()
-
-        expect(mockShowErrorDialog).toHaveBeenCalledWith()
-      })
-
-      it("shows an error modal when there is a network error", async () => {
-        mockCommitMutation.mockRejectedValueOnce({})
-        const wrapper = getWrapper({
-          CommerceOrder: () => testOrder,
-          Me: () => emptyTestMe,
-        })
-        const page = new ShippingTestPage(wrapper)
-
-        fillAddressForm(page.root, validAddress)
-        await page.clickSubmit()
-
-        expect(mockShowErrorDialog).toHaveBeenCalledWith()
-      })
-
-      it("shows a validation error modal when there is a missing_country error from the server", async () => {
-        mockCommitMutation.mockResolvedValueOnce(
-          settingOrderShipmentMissingCountryFailure
-        )
-        const wrapper = getWrapper({
-          CommerceOrder: () => testOrder,
-          Me: () => emptyTestMe,
-        })
-        const page = new ShippingTestPage(wrapper)
-
-        fillAddressForm(page.root, validAddress)
-        await page.clickSubmit()
-
-        expect(mockShowErrorDialog).toHaveBeenCalledWith({
-          title: "Invalid address",
-          message:
-            "There was an error processing your address. Please review and try again.",
-        })
-      })
-
-      it("shows a validation error modal when there is a missing_region error from the server", async () => {
-        mockCommitMutation.mockResolvedValueOnce(
-          settingOrderShipmentMissingRegionFailure
-        )
-        const wrapper = getWrapper({
-          CommerceOrder: () => testOrder,
-          Me: () => emptyTestMe,
-        })
-        const page = new ShippingTestPage(wrapper)
-
-        fillAddressForm(page.root, validAddress)
-        await page.clickSubmit()
-
-        expect(mockShowErrorDialog).toHaveBeenCalledWith({
-          title: "Invalid address",
-          message:
-            "There was an error processing your address. Please review and try again.",
-        })
-      })
-
-      it("shows a validation error modal when there is a destination_could_not_be_geocoded error from the server", async () => {
-        mockCommitMutation.mockResolvedValueOnce(
-          settingOrderArtaShipmentDestinationCouldNotBeGeocodedFailure
-        )
-        const wrapper = getWrapper({
-          CommerceOrder: () => testOrder,
-          Me: () => emptyTestMe,
-        })
-        const page = new ShippingTestPage(wrapper)
-
-        fillAddressForm(page.root, validAddress)
-        await page.clickSubmit()
-
-        const {
-          title: expectedTitle,
-          formattedMessage: expectedMessage,
-        } = getErrorDialogCopy(ErrorDialogs.DestinationCouldNotBeGeocoded)
-
-        expect(mockShowErrorDialog).toHaveBeenCalledWith({
-          title: expectedTitle,
-          message: expectedMessage,
-        })
-      })
     })
 
     describe("Artsy domestic shipping", () => {

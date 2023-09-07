@@ -4,7 +4,13 @@ import { MockBoot } from "DevTools/MockBoot"
 import { ShippingFragmentContainer } from "Apps/Order/Routes/Shipping"
 import { graphql } from "react-relay"
 import { UntouchedBuyOrder } from "Apps/__tests__/Fixtures/Order"
-import { settingOrderShipmentSuccess } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
+import {
+  settingOrderShipmentSuccess,
+  settingOrderShipmentFailure,
+  settingOrderShipmentMissingCountryFailure,
+  settingOrderShipmentMissingRegionFailure,
+  settingOrderArtaShipmentDestinationCouldNotBeGeocodedFailure,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
 import { ShippingTestQuery$rawResponse } from "__generated__/ShippingTestQuery.graphql"
 import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
@@ -15,6 +21,8 @@ import {
 } from "Components/__tests__/Utils/addressForm"
 import userEvent from "@testing-library/user-event"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { queryByAttribute } from "@testing-library/dom"
+import { ErrorDialogMessage } from "Apps/Order/Utils/getErrorDialogCopy"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -297,15 +305,110 @@ describe("Shipping", () => {
         expect(pushMock).toHaveBeenCalledWith("/orders/1234/payment")
       })
 
-      it("shows the button spinner while loading the mutation", async () => {})
+      it("shows the button spinner while loading the mutation", async () => {
+        isCommittingMutation = true
+        renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
 
-      it("shows an error when there is an error from the server", async () => {})
+        const button = screen.getByRole("button", { name: "Save and Continue" })
+        expect(queryByAttribute("class", button, /Spinner/)).toBeInTheDocument()
+      })
 
-      it("shows an error when there is a network error", async () => {})
+      it("shows an error when there is an error from the server", async () => {
+        mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentFailure)
+        renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
 
-      it("shows an error when there is a missing_country error from the server", async () => {})
+        fillAddressFormTL(validAddress)
+        await userEvent.click(
+          screen.getByRole("button", { name: "Save and Continue" })
+        )
 
-      it("shows an error when there is a missing_region error from the server", async () => {})
+        expect(mockShowErrorDialog).toHaveBeenCalledWith()
+      })
+
+      it("shows an error when there is a network error", async () => {
+        mockCommitMutation.mockRejectedValueOnce({})
+        renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
+
+        fillAddressFormTL(validAddress)
+        await userEvent.click(
+          screen.getByRole("button", { name: "Save and Continue" })
+        )
+
+        expect(mockShowErrorDialog).toHaveBeenCalledWith()
+      })
+
+      it("shows an error when there is a missing_country error from the server", async () => {
+        mockCommitMutation.mockResolvedValueOnce(
+          settingOrderShipmentMissingCountryFailure
+        )
+        renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
+
+        fillAddressFormTL(validAddress)
+        await userEvent.click(
+          screen.getByRole("button", { name: "Save and Continue" })
+        )
+
+        expect(mockShowErrorDialog).toHaveBeenCalledWith({
+          title: "Invalid address",
+          message:
+            "There was an error processing your address. Please review and try again.",
+        })
+      })
+
+      it("shows an error when there is a missing_region error from the server", async () => {
+        mockCommitMutation.mockResolvedValueOnce(
+          settingOrderShipmentMissingRegionFailure
+        )
+        renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
+
+        fillAddressFormTL(validAddress)
+        await userEvent.click(
+          screen.getByRole("button", { name: "Save and Continue" })
+        )
+
+        expect(mockShowErrorDialog).toHaveBeenCalledWith({
+          title: "Invalid address",
+          message:
+            "There was an error processing your address. Please review and try again.",
+        })
+      })
+
+      it("shows an error when there is a destination_could_not_be_geocodederror from the server", async () => {
+        mockCommitMutation.mockResolvedValueOnce(
+          settingOrderArtaShipmentDestinationCouldNotBeGeocodedFailure
+        )
+        renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithoutAddress,
+        })
+
+        fillAddressFormTL(validAddress)
+        await userEvent.click(
+          screen.getByRole("button", { name: "Save and Continue" })
+        )
+
+        expect(mockShowErrorDialog).toHaveBeenCalledWith({
+          title: "Cannot calculate shipping",
+          message: (
+            <ErrorDialogMessage message="Please confirm that your address details are correct and try again. If the issue continues contact orders@artsy.net." />
+          ),
+        })
+      })
 
       it("pre-populates address form for order with already persisted shipping info", async () => {})
 
