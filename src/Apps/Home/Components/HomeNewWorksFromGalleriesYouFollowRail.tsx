@@ -43,7 +43,7 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<HomeNewWorksFromGalleries
 
   return (
     <Rail
-      title="New Works From Galleries You Follow"
+      title="New Works from Galleries You Follow"
       viewAllLabel="View All Works"
       viewAllHref="/new-works-from-galleries-you-follow"
       viewAllOnClick={() => {
@@ -153,7 +153,7 @@ export const HomeNewWorksFromGalleriesYouFollowRailQueryRenderer: React.FC = () 
 const PLACEHOLDER = (
   <Skeleton>
     <Rail
-      title="New Works From Galleries You Follow"
+      title="New Works from Galleries You Follow"
       getItems={() => {
         return [...new Array(8)].map((_, i) => {
           return <ShelfArtworkPlaceholder key={i} index={i} />
