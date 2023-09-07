@@ -106,9 +106,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
     artwork?.savedSearch?.suggestedArtworksConnection?.totalCount ?? 0
   const displaySuggestedArtworksSection = suggestedArtworksCount > 0
   const displaySeeMoreButton = suggestedArtworksCount > 5
-
-  // //TODO: find if user has already bid on an artwork that is closed.
-  const hasBid = artwork.myLotStanding?.isHighestBidder
+  const isUnderbidder = artwork.myLotStandingManageAlerts?.[0]?.isHighestBidder
 
   return (
     <SavedSearchAlertContextProvider
@@ -134,9 +132,9 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
             textAlign={["left", "center"]}
             textColor={["black60", "black100"]}
           >
-            {!hasBid
-              ? "Create an alert to get notified when similar works become available."
-              : "We’ve created an alert for you for similar works."}
+            {isUnderbidder
+              ? "We’ve created an alert for you for similar works."
+              : "Create an alert to get notified when similar works become available."}
           </Text>
         </Column>
         <Column span={12}>
@@ -144,12 +142,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
             <Spacer y={1} />
           </Media>
           <Box mx="auto" width={["100%", 209]}>
-            {!hasBid ? (
-              <ArtworkCreateAlertButtonFragmentContainer
-                analyticsContextModule={ContextModule.artworkClosedLotHeader}
-                artwork={artwork}
-              />
-            ) : (
+            {isUnderbidder ? (
               <Button
                 width={["100%", 220]}
                 variant="secondaryBlack"
@@ -160,6 +153,11 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
               >
                 Manage your alerts
               </Button>
+            ) : (
+              <ArtworkCreateAlertButtonFragmentContainer
+                analyticsContextModule={ContextModule.artworkClosedLotHeader}
+                artwork={artwork}
+              />
             )}
           </Box>
         </Column>
@@ -226,7 +224,7 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
             totalCount
           }
         }
-        myLotStanding(live: true) {
+        myLotStandingManageAlerts: myLotStanding {
           isHighestBidder
         }
 
