@@ -16,6 +16,7 @@ import { HomeWorksForYouTabBar } from "./Components/HomeWorksForYouTabBar"
 import { MyBidsQueryRenderer } from "Apps/Auctions/Components/MyBids/MyBids"
 import { HomeEmergingPicksArtworksRailQueryRenderer } from "./Components/HomeEmergingPicksArtworksRail"
 import { HomeHeroUnitsFragmentContainer } from "./Components/HomeHeroUnits"
+import { HomeNewWorksFromGalleriesYouFollowRailQueryRenderer } from "Apps/Home/Components/HomeNewWorksFromGalleriesYouFollowRail"
 
 interface HomeAppProps {
   featuredEventsOrderedSet: HomeApp_featuredEventsOrderedSet$data | null
@@ -62,6 +63,8 @@ export const HomeApp: React.FC<HomeAppProps> = ({
         <HomeCurrentFairsQueryRenderer />
 
         <HomeFeaturedGalleriesRailQueryRenderer />
+
+        <HomeNewWorksFromGalleriesYouFollowRailQueryRenderer />
 
         <HomeTrendingArtistsRailQueryRenderer />
       </Join>

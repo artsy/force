@@ -57,6 +57,7 @@ import { tagRoutes } from "./Apps/Tag/tagRoutes"
 import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
 import { myCollectionInsightsCollectorProfileRoutes } from "Apps/MyCollectionInsights/myCollectionInsightsCollectorProfileRoutes"
 import { endingSoonAuctionsRoutes } from "Apps/Auctions/EndingSoonAuctions/endingSoonAuctionsRoutes"
+import { newWorksFromGalleriesYouFollowRoutes } from "Apps/NewWorksFromGalleriesYouFollow/newWorksFromGalleriesYouFollowRoutes"
 
 export const getAppRoutes = (): AppRouteConfig[] => {
   return buildAppRoutes([
@@ -99,6 +100,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: myCollectionInsightsRoutes },
     { routes: myCollectionInsightsCollectorProfileRoutes },
     { routes: newForYouRoutes },
+    { routes: newWorksFromGalleriesYouFollowRoutes },
     { routes: notificationsRoutes },
     { routes: onboardingRoutes },
     { routes: orderRoutes },
