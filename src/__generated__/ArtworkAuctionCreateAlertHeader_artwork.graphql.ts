@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<08ee8886210d555c2024287ec542e07c>>
+ * @generated SignedSource<<a723419976d8889550f8a5f83e36037d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,6 +28,9 @@ export type ArtworkAuctionCreateAlertHeader_artwork$data = {
       readonly slug: string;
     } | null;
   } | null;
+  readonly myLotStanding: ReadonlyArray<{
+    readonly isHighestBidder: boolean | null;
+  }> | null;
   readonly sale: {
     readonly isClosed: boolean | null;
     readonly startAt: string | null;
@@ -36,6 +39,7 @@ export type ArtworkAuctionCreateAlertHeader_artwork$data = {
     readonly endAt: string | null;
     readonly endedAt: string | null;
     readonly extendedBiddingEndAt: string | null;
+    readonly isHighestBidder: boolean | null;
   } | null;
   readonly savedSearch: {
     readonly suggestedArtworksConnection: {
@@ -72,6 +76,13 @@ v2 = {
   "args": null,
   "kind": "ScalarField",
   "name": "name",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isHighestBidder",
   "storageKey": null
 };
 return {
@@ -170,7 +181,8 @@ return {
           "kind": "ScalarField",
           "name": "endedAt",
           "storageKey": null
-        }
+        },
+        (v3/*: any*/)
       ],
       "storageKey": null
     },
@@ -240,6 +252,24 @@ return {
       "storageKey": null
     },
     {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "live",
+          "value": true
+        }
+      ],
+      "concreteType": "LotStanding",
+      "kind": "LinkedField",
+      "name": "myLotStanding",
+      "plural": true,
+      "selections": [
+        (v3/*: any*/)
+      ],
+      "storageKey": "myLotStanding(live:true)"
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkCreateAlertButton_artwork"
@@ -250,6 +280,6 @@ return {
 };
 })();
 
-(node as any).hash = "0e04493bee6d94891c0f74ed7f0da881";
+(node as any).hash = "a101b59b3055a9f37b41853141b96137";
 
 export default node;

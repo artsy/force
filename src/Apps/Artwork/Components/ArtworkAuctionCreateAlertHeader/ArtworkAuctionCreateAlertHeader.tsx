@@ -1,4 +1,4 @@
-import { Box, Column, GridColumns, Spacer, Text } from "@artsy/palette"
+import { Box, Button, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
@@ -21,6 +21,8 @@ import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/save
 import { ArtworkAuctionCreateAlertTooltip } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertTooltip"
 import { SuggestedArtworksShelfQueryRenderer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksShelf"
 import { Media } from "Utils/Responsive"
+import { RouterLink } from "System/Router/RouterLink"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
@@ -105,6 +107,9 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
   const displaySuggestedArtworksSection = suggestedArtworksCount > 0
   const displaySeeMoreButton = suggestedArtworksCount > 5
 
+  // //TODO: find if user has already bid on an artwork that is closed.
+  const hasBid = artwork.myLotStanding?.isHighestBidder
+
   return (
     <SavedSearchAlertContextProvider
       criteria={allowedCriteria}
@@ -129,7 +134,9 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
             textAlign={["left", "center"]}
             textColor={["black60", "black100"]}
           >
-            Create an alert to get notified when similar works become available.
+            {!hasBid
+              ? "Create an alert to get notified when similar works become available."
+              : "We’ve created an alert for you for similar works."}
           </Text>
         </Column>
         <Column span={12}>
@@ -137,10 +144,23 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
             <Spacer y={1} />
           </Media>
           <Box mx="auto" width={["100%", 209]}>
-            <ArtworkCreateAlertButtonFragmentContainer
-              analyticsContextModule={ContextModule.artworkClosedLotHeader}
-              artwork={artwork}
-            />
+            {!hasBid ? (
+              <ArtworkCreateAlertButtonFragmentContainer
+                analyticsContextModule={ContextModule.artworkClosedLotHeader}
+                artwork={artwork}
+              />
+            ) : (
+              <Button
+                width={["100%", 220]}
+                variant="secondaryBlack"
+                Icon={BellStrokeIcon}
+                // @ts-ignore
+                as={RouterLink}
+                to={"/settings/alerts"}
+              >
+                Manage your alerts
+              </Button>
+            )}
           </Box>
         </Column>
 
@@ -190,6 +210,7 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
           extendedBiddingEndAt
           endAt
           endedAt
+          isHighestBidder
         }
         attributionClass {
           internalID
@@ -205,6 +226,10 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
             totalCount
           }
         }
+        myLotStanding(live: true) {
+          isHighestBidder
+        }
+
         ...ArtworkCreateAlertButton_artwork
       }
     `,
