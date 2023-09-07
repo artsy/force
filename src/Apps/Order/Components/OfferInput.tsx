@@ -8,6 +8,7 @@ export interface OfferInputProps {
   onChange: (value: number) => void
   onFocus?: () => void
   onBlur?: () => void
+  value?: number
 }
 
 export const OfferInput: FC<OfferInputProps> = ({
@@ -17,6 +18,7 @@ export const OfferInput: FC<OfferInputProps> = ({
   onFocus,
   onBlur,
   onChange,
+  value,
 }) => {
   return (
     <Input
@@ -27,6 +29,7 @@ export const OfferInput: FC<OfferInputProps> = ({
       error={showError ? "Offer amount missing or invalid." : false}
       onFocus={onFocus}
       onBlur={onBlur}
+      value={value}
       onChange={ev => {
         const currentValue = ev.currentTarget.value
         const nonDigitMatch = currentValue.match(/\D/)

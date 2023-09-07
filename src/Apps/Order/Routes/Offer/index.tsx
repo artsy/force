@@ -1,4 +1,4 @@
-import { FC, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Button, Flex, Message, Spacer, Text } from "@artsy/palette"
 import { Offer_order$data } from "__generated__/Offer_order.graphql"
@@ -53,6 +53,19 @@ export const OfferRoute: FC<OfferRouteProps> = ({
     value: "",
   })
   const [offerValue, setOfferValue] = useState(0)
+
+  useEffect(() => {
+    if (order.myLastOffer?.note) {
+      if (!order.myLastOffer.note.startsWith("I sent an offer for")) {
+        setOfferNoteValue({
+          exceedsCharacterLimit: false,
+          value: order.myLastOffer.note,
+        })
+      }
+    }
+    // need this to run only once
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const onOfferInputFocus = () => {
     trackEvent({
@@ -267,6 +280,7 @@ export const OfferRoute: FC<OfferRouteProps> = ({
               <OfferNote
                 onChange={offerNoteValue => setOfferNoteValue(offerNoteValue)}
                 artworkId={artworkId!}
+                value={offerNoteValue.value}
               />
             </>
           )}
@@ -381,6 +395,9 @@ export const OfferFragmentContainer = createFragmentContainer(
         }
         ... on CommerceOfferOrder {
           isInquiryOrder
+          myLastOffer {
+            note
+          }
         }
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order

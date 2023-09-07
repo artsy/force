@@ -36,12 +36,35 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const listPrice = artwork?.listPrice
 
   useEffect(() => {
-    if (listPrice && !toggle && !customValue) {
+    const customOffer = order?.myLastOffer?.amountCents
+
+    if (listPrice && !toggle && !customValue && !customOffer) {
       onChange(listPrice.major ?? listPrice.maxPrice?.major!)
       setSelectedRadio("price-option-0")
     }
+
+    if (customOffer) {
+      const priceOptions = artwork?.isPriceRange
+        ? getRangeOptions()
+        : getPercentageOptions()
+
+      const matchingPriceOption = priceOptions.find(
+        option => option?.value === customOffer / 100
+      )
+
+      if (matchingPriceOption) {
+        onChange(matchingPriceOption.value)
+        setSelectedRadio(matchingPriceOption.key)
+      } else {
+        setSelectedRadio("price-option-custom")
+        setToggle(true)
+        setCustomValue(customOffer / 100)
+      }
+    }
+
+    // need this to run only once
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listPrice, toggle, customValue])
+  }, [])
 
   useEffect(() => {
     if (!!customValue) onChange(customValue)
@@ -90,7 +113,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     const midPriceRange = Math.round(
       (Number(minPriceRange) + Number(maxPriceRange)) / 2
     )
-
     const getRangeDetails = [
       {
         value: maxPriceRange,
@@ -154,7 +176,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
             value={key}
             label={asCurrency(value!)}
             onSelect={() => {
-              onChange(value!)
+              onChange(value)
               setToggle(false)
               setCustomValue(undefined)
               trackClick(description, value)
@@ -182,6 +204,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                   <OfferInput
                     id="OfferForm_offerValue"
                     showError={showError}
+                    value={customValue}
                     onChange={setCustomValue}
                     onFocus={() => {
                       onFocus()
@@ -230,6 +253,11 @@ export const PriceOptionsFragmentContainer = createFragmentContainer(
     order: graphql`
       fragment PriceOptions_order on CommerceOrder {
         internalID
+        ... on CommerceOfferOrder {
+          myLastOffer {
+            amountCents
+          }
+        }
       }
     `,
   }

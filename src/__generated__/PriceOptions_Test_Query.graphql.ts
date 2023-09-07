@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8fce92b76afddd5fe7d7fd684e965a82>>
+ * @generated SignedSource<<60177d4948f1866c8aef3e617dad819c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -202,6 +202,32 @@ return {
             "name": "internalID",
             "storageKey": null
           },
+          {
+            "kind": "InlineFragment",
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "CommerceOffer",
+                "kind": "LinkedField",
+                "name": "myLastOffer",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "amountCents",
+                    "storageKey": null
+                  },
+                  (v4/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "type": "CommerceOfferOrder",
+            "abstractKey": null
+          },
           (v4/*: any*/)
         ],
         "storageKey": "commerceOrder(id:\"order-id\")"
@@ -209,12 +235,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e8abb97efc6f911ff65766d072a53609",
+    "cacheID": "92e7e34a5b2befea6a78bb1745883993",
     "id": null,
     "metadata": {},
     "name": "PriceOptions_Test_Query",
     "operationKind": "query",
-    "text": "query PriceOptions_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...PriceOptions_artwork\n    id\n  }\n  order: commerceOrder(id: \"order-id\") {\n    __typename\n    ...PriceOptions_order\n    id\n  }\n}\n\nfragment PriceOptions_artwork on Artwork {\n  priceCurrency\n  isPriceRange\n  listPrice {\n    __typename\n    ... on Money {\n      major\n    }\n    ... on PriceRange {\n      maxPrice {\n        major\n      }\n      minPrice {\n        major\n      }\n    }\n  }\n}\n\nfragment PriceOptions_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n}\n"
+    "text": "query PriceOptions_Test_Query {\n  artwork(id: \"artwork-id\") {\n    ...PriceOptions_artwork\n    id\n  }\n  order: commerceOrder(id: \"order-id\") {\n    __typename\n    ...PriceOptions_order\n    id\n  }\n}\n\nfragment PriceOptions_artwork on Artwork {\n  priceCurrency\n  isPriceRange\n  listPrice {\n    __typename\n    ... on Money {\n      major\n    }\n    ... on PriceRange {\n      maxPrice {\n        major\n      }\n      minPrice {\n        major\n      }\n    }\n  }\n}\n\nfragment PriceOptions_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  internalID\n  ... on CommerceOfferOrder {\n    myLastOffer {\n      amountCents\n      id\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2e3d291efd1573d3b1f82596015a04e3>>
+ * @generated SignedSource<<fcf3198b3509b2efb9dc5d45e3ce7f62>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -61,6 +61,9 @@ export type Offer_order$data = {
     } | null> | null;
   } | null;
   readonly mode: CommerceOrderModeEnum | null;
+  readonly myLastOffer?: {
+    readonly note: string | null;
+  } | null;
   readonly state: CommerceOrderStateEnum;
   readonly totalListPriceCents: number;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order" | "PriceOptions_order" | "TransactionDetailsSummaryItem_order">;
@@ -301,6 +304,24 @@ return {
           "kind": "ScalarField",
           "name": "isInquiryOrder",
           "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceOffer",
+          "kind": "LinkedField",
+          "name": "myLastOffer",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "note",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
         }
       ],
       "type": "CommerceOfferOrder",
@@ -332,6 +353,6 @@ return {
 };
 })();
 
-(node as any).hash = "f10ce1a42914cc2b5a5ad3456e77bf16";
+(node as any).hash = "29644a990f455d037931e680e2f88f62";
 
 export default node;
