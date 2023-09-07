@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f81c1dd9a5f5cacd7b03f7598fa0ba4c>>
+ * @generated SignedSource<<6adda476a2ca9be50676638e55591214>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,7 +39,6 @@ export type ArtworkAuctionCreateAlertHeader_artwork$data = {
     readonly endAt: string | null;
     readonly endedAt: string | null;
     readonly extendedBiddingEndAt: string | null;
-    readonly isHighestBidder: boolean | null;
   } | null;
   readonly savedSearch: {
     readonly suggestedArtworksConnection: {
@@ -76,13 +75,6 @@ v2 = {
   "args": null,
   "kind": "ScalarField",
   "name": "name",
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "isHighestBidder",
   "storageKey": null
 };
 return {
@@ -181,8 +173,7 @@ return {
           "kind": "ScalarField",
           "name": "endedAt",
           "storageKey": null
-        },
-        (v3/*: any*/)
+        }
       ],
       "storageKey": null
     },
@@ -259,7 +250,13 @@ return {
       "name": "myLotStanding",
       "plural": true,
       "selections": [
-        (v3/*: any*/)
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isHighestBidder",
+          "storageKey": null
+        }
       ],
       "storageKey": null
     },
@@ -274,6 +271,6 @@ return {
 };
 })();
 
-(node as any).hash = "0aabfb5488a4b23a780679655f987a11";
+(node as any).hash = "06569c4e3013b421e25f1813b32ab119";
 
 export default node;

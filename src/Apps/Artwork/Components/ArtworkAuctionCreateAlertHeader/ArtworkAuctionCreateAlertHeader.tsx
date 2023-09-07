@@ -208,7 +208,6 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
           extendedBiddingEndAt
           endAt
           endedAt
-          isHighestBidder
         }
         attributionClass {
           internalID
