@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ca939ed76afbf4279308fffe3b34033>>
+ * @generated SignedSource<<f26cddfca3354416ff7d4fe7a55bce93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -672,7 +672,7 @@ return {
         "me.inactiveLotStandings.saleArtwork.artwork.artist.id": (v8/*: any*/),
         "me.inactiveLotStandings.saleArtwork.artwork.artist.targetSupply": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "ArtistTargetSupply"
         },

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f42334f4a0313ccd14b847864e863c8e>>
+ * @generated SignedSource<<66cc99d72bc7a46de38eae3a81c7d74f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -776,7 +776,7 @@ return {
         "article.sections.figures.artist.name": (v21/*: any*/),
         "article.sections.figures.artist.targetSupply": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "ArtistTargetSupply"
         },

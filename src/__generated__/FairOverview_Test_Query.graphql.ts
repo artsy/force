@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a25e74e46c59395c983ae9244b5b8ca9>>
+ * @generated SignedSource<<6152aa85f90f8740dd6a11c82174618d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -964,7 +964,7 @@ return {
         "fair.followedArtistArtworks.edges.node.artist.id": (v16/*: any*/),
         "fair.followedArtistArtworks.edges.node.artist.targetSupply": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "ArtistTargetSupply"
         },

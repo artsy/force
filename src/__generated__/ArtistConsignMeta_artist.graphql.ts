@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4098c1099bc5549adc1a05a3ea4e2612>>
+ * @generated SignedSource<<9db41edb021e47fc5f72aa87d57de053>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,7 @@ export type ArtistConsignMeta_artist$data = {
         } | null> | null;
       } | null;
     } | null;
-  } | null;
+  };
   readonly " $fragmentType": "ArtistConsignMeta_artist";
 };
 export type ArtistConsignMeta_artist$key = {

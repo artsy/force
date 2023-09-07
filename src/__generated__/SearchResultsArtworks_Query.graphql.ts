@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e9db05bec57ca6f5e54996b966dc6042>>
+ * @generated SignedSource<<7e7e186c4953509f01f3cfc32f72cf2b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -1043,7 +1043,7 @@ return {
         "viewer.filtered_artworks.edges.node.artist.id": (v19/*: any*/),
         "viewer.filtered_artworks.edges.node.artist.targetSupply": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "ArtistTargetSupply"
         },

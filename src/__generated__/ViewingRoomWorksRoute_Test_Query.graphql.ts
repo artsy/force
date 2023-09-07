@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e8ae933dd1375167feca01670f854d95>>
+ * @generated SignedSource<<1a29cdd92cf88d81d15b4318e00e23bb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,7 @@ export type ViewingRoomWorksRoute_Test_Query$rawResponse = {
             readonly id: string;
             readonly targetSupply: {
               readonly isP1: boolean | null;
-            } | null;
+            };
           } | null;
           readonly artistNames: string | null;
           readonly artists: ReadonlyArray<{
@@ -785,7 +785,7 @@ return {
         "viewingRoom.artworksConnection.edges.node.artist.id": (v13/*: any*/),
         "viewingRoom.artworksConnection.edges.node.artist.targetSupply": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "ArtistTargetSupply"
         },

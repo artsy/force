@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<610feda29a114c11172f3f88ecbacb33>>
+ * @generated SignedSource<<d967c96f059579d261d01b6f1f45be75>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -677,7 +677,7 @@ return {
         "viewer.trendingLotsConnection.edges.node.artist.id": (v9/*: any*/),
         "viewer.trendingLotsConnection.edges.node.artist.targetSupply": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "ArtistTargetSupply"
         },

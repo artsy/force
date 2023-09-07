@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c161f53aca7fc650462b489a956d0f4b>>
+ * @generated SignedSource<<46826101a5eaa38f98a5b74e40f7f611>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,7 +21,7 @@ export type ArtistSellWithArtsy_artist$data = {
   readonly slug: string;
   readonly targetSupply: {
     readonly isInMicrofunnel: boolean | null;
-  } | null;
+  };
   readonly " $fragmentType": "ArtistSellWithArtsy_artist";
 };
 export type ArtistSellWithArtsy_artist$key = {
