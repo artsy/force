@@ -23,8 +23,6 @@ const NewWorksFromGalleriesYouFollowApp: FC<NewWorksFromGalleriesYouFollowAppPro
 }) => {
   const [isLoading, setLoading] = useState(false)
 
-  const { newWorksFromGalleriesYouFollowConnection } = me
-
   const handleLoadMore = () => {
     if (!relay.hasMore() || relay.isLoading()) return
 
@@ -35,6 +33,8 @@ const NewWorksFromGalleriesYouFollowApp: FC<NewWorksFromGalleriesYouFollowAppPro
       setLoading(false)
     })
   }
+
+  const artworksConnection = me?.newWorksFromGalleriesYouFollowConnection
 
   return (
     <>
@@ -55,10 +55,10 @@ const NewWorksFromGalleriesYouFollowApp: FC<NewWorksFromGalleriesYouFollowAppPro
         }
       />
 
-      {newWorksFromGalleriesYouFollowConnection?.totalCount ? (
+      {artworksConnection?.totalCount ? (
         <>
           <ArtworkGrid
-            artworks={newWorksFromGalleriesYouFollowConnection}
+            artworks={artworksConnection}
             columnCount={[2, 3, 4, 4]}
             showHoverDetails={false}
             showArtworksWithoutImages
@@ -77,11 +77,11 @@ const NewWorksFromGalleriesYouFollowApp: FC<NewWorksFromGalleriesYouFollowAppPro
             </Box>
           )}
         </>
-      ) : (
+      ) : me ? (
         <Text variant="lg" mt={4} color="black60">
           Nothing yet.
         </Text>
-      )}
+      ) : null}
     </>
   )
 }
