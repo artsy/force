@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<17c742c2e5763032fc9c1ae4d16919a4>>
+ * @generated SignedSource<<49e3d8c24a108a8de6f7181db17972d1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type AuctionResultsAggregation = "CURRENCIES_COUNT" | "LOTS_BY_SALE_YEAR" | "SIMPLE_PRICE_HISTOGRAM" | "%future added value";
+export type AuctionResultsAggregation = "CURRENCIES_COUNT" | "LOTS_BY_CREATED_YEAR" | "LOTS_BY_SALE_YEAR" | "SIMPLE_PRICE_HISTOGRAM" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistAuctionResultsRoute_artist$data = {
   readonly sidebarAggregations: {
