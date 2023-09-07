@@ -1,4 +1,4 @@
-import { Shelf, Skeleton } from "@artsy/palette"
+import { Skeleton } from "@artsy/palette"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
@@ -84,16 +84,6 @@ const HomeNewWorksFromGalleriesYouFollowRail: React.FC<HomeNewWorksFromGalleries
   )
 }
 
-const PLACEHOLDER = (
-  <Skeleton>
-    <Shelf>
-      {[...new Array(8)].map((_, i) => {
-        return <ShelfArtworkPlaceholder key={i} index={i} />
-      })}
-    </Shelf>
-  </Skeleton>
-)
-
 export const HomeNewWorksFromGalleriesYouFollowRailFragmentContainer = createFragmentContainer(
   HomeNewWorksFromGalleriesYouFollowRail,
   {
@@ -159,3 +149,16 @@ export const HomeNewWorksFromGalleriesYouFollowRailQueryRenderer: React.FC = () 
     />
   )
 }
+
+const PLACEHOLDER = (
+  <Skeleton>
+    <Rail
+      title="New Works From Galleries You Follow"
+      getItems={() => {
+        return [...new Array(8)].map((_, i) => {
+          return <ShelfArtworkPlaceholder key={i} index={i} />
+        })
+      }}
+    />
+  </Skeleton>
+)
