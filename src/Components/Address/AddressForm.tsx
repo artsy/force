@@ -1,8 +1,19 @@
-import { Column, GridColumns, Text, Spacer, Input } from "@artsy/palette"
+import {
+  Column,
+  GridColumns,
+  Text,
+  Spacer,
+  Input,
+  AutocompleteInput,
+} from "@artsy/palette"
 import { CountrySelect } from "Components/CountrySelect"
 import * as React from "react"
 import { CreateTokenCardData } from "@stripe/stripe-js"
 import { isEqual } from "lodash"
+import {
+  AddressAutocompleteSuggestion,
+  useAddressAutocomplete,
+} from "Components/Address/useAddressAutocomplete"
 
 export interface Address {
   name: string
@@ -74,6 +85,18 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const [address, setAddress] = React.useState(addressFromProp)
   const [prevValue, setPrevValue] = React.useState(value)
 
+  const {
+    autocompleteOptions,
+    fetchForAutocomplete,
+    isAddressAutocompleteEnabled,
+    fetchSecondarySuggestions,
+  } = useAddressAutocomplete(address)
+
+  // // TODO: Remove this, it's just for debugging
+  // React.useEffect(() => {
+  //   console.log({ address, autocompleteOptions, isAddressAutocompleteEnabled })
+  // }, [address, autocompleteOptions, isAddressAutocompleteEnabled])
+
   if (!isEqual(value, prevValue)) {
     setPrevValue(value)
     setAddress(addressFromProp)
@@ -84,6 +107,10 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const changeEventHandler = (key: keyof Address) => (
     ev: React.FormEvent<HTMLInputElement>
   ) => {
+    const shouldFetch = isAddressAutocompleteEnabled && key === "addressLine1"
+    if (shouldFetch) {
+      fetchForAutocomplete({ search: ev.currentTarget.value })
+    }
     setKey(key)
     onChangeValue(key, ev.currentTarget.value)
   }
@@ -123,6 +150,9 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const lockCountryToOrigin = onlyLocalShipping && !euOrigin
   const lockCountriesToEU = onlyLocalShipping && euOrigin
 
+  /* TODO: Make this work with autocomplete input */
+  const autocompleteRef = React.createRef<HTMLInputElement>()
+
   return (
     <GridColumns>
       <Column span={12}>
@@ -140,10 +170,11 @@ export const AddressForm: React.FC<AddressFormProps> = ({
       </Column>
 
       <Column span={12}>
-        <Text mb={0.5} variant="xs" color="black100">
+        <Text id="country-select" mb={0.5} variant="xs" color="black100">
           Country
         </Text>
         <CountrySelect
+          aria-labelledby="country-select"
           tabIndex={tabIndex}
           selected={
             lockCountryToOrigin || (lockCountriesToEU && !value?.country)
@@ -167,16 +198,52 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         )}
       </Column>
       <Column span={12}>
-        <Input
-          tabIndex={tabIndex}
-          id="AddressForm_addressLine1"
-          placeholder="Street address"
-          title="Address line 1"
-          value={value?.addressLine1}
-          onChange={changeEventHandler("addressLine1")}
-          error={getError("addressLine1")}
-          data-test="AddressForm_addressLine1"
-        />
+        {isAddressAutocompleteEnabled ? (
+          <AutocompleteInput<AddressAutocompleteSuggestion>
+            tabIndex={tabIndex}
+            id="AddressForm_addressLine1"
+            placeholder="Street address"
+            title="Address line 1"
+            value={value?.addressLine1}
+            onChange={changeEventHandler("addressLine1")}
+            options={autocompleteOptions}
+            onSelect={option => {
+              const hasSecondarySuggestions = option.entries > 1
+              if (hasSecondarySuggestions) {
+                // Fill in the address form with the selection, but skip line 2
+                Object.entries(option.address).forEach(([key, value]) => {
+                  if (key === "addressLine2") return
+                  changeValueHandler(key as keyof Address)(value)
+                })
+                fetchSecondarySuggestions(value!.addressLine1!, option)
+
+                // TODO: make the secondary options appear
+                // console.log({ autocompleteRefCurrent: autocompleteRef.current })
+                setTimeout(() => {
+                  autocompleteRef.current?.focus()
+                }, 1000)
+              } else {
+                Object.entries(option.address).forEach(([key, value]) => {
+                  changeValueHandler(key as keyof Address)(value)
+                })
+              }
+            }}
+            error={getError("addressLine1")}
+            data-test="AddressForm_addressLine1"
+            forwardRef={autocompleteRef}
+          />
+        ) : (
+          <Input
+            tabIndex={tabIndex}
+            id="AddressForm_addressLine1"
+            placeholder="Street address"
+            title="Address line 1"
+            value={value?.addressLine1}
+            onChange={changeEventHandler("addressLine1")}
+            error={getError("addressLine1")}
+            data-test="AddressForm_addressLine1"
+          />
+        )}
       </Column>
       <Column span={12}>
         <Input

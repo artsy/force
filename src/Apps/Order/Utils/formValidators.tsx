@@ -1,4 +1,4 @@
-import { Address } from "Components/AddressForm"
+import { Address } from "Components/Address/AddressForm"
 import { isEmpty } from "lodash"
 
 export const validatePresence = (value: string): string | null => {

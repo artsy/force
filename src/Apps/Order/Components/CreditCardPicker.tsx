@@ -8,7 +8,7 @@ import {
   AddressForm,
   AddressTouched,
   emptyAddress,
-} from "Components/AddressForm"
+} from "Components/Address/AddressForm"
 
 import { CreditCardInput } from "Components/CreditCardInput"
 import { validateAddress } from "Apps/Order/Utils/formValidators"

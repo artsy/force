@@ -43,7 +43,7 @@ describe("ArtistAuctionResultItem", () => {
   })
 
   it("renders the auction result data", () => {
-    renderWithRelay(mockResolver, false)
+    renderWithRelay(mockResolver)
 
     expect(
       screen.getByText("Neuschwanstein (Feldmann & Schellmann 372), 1987")
@@ -67,7 +67,7 @@ describe("ArtistAuctionResultItem", () => {
       user: { name: "Logged In", email: "loggedin@example.com" },
     }))
 
-    renderWithRelay(mockResolver, false)
+    renderWithRelay(mockResolver)
 
     const auctioResultLink = screen.getByRole("link")
 
@@ -79,7 +79,7 @@ describe("ArtistAuctionResultItem", () => {
 
   describe("when showArtistName is true", () => {
     it("renders artist name with the auction result data", () => {
-      renderWithRelay(mockResolver, false, { showArtistName: true })
+      renderWithRelay(mockResolver, { showArtistName: true })
 
       expect(screen.getAllByText("Andy Warhol").length).toBe(2)
       expect(
@@ -110,10 +110,9 @@ describe("ArtistAuctionResultItem", () => {
       const lastMonth = new Date().setDate(new Date().getDate() - 1)
       const lastMonthISO = new Date(lastMonth).toISOString()
 
-      renderWithRelay(
-        { AuctionResult: () => ({ ...auctionResult, saleDate: lastMonthISO }) },
-        false
-      )
+      renderWithRelay({
+        AuctionResult: () => ({ ...auctionResult, saleDate: lastMonthISO }),
+      })
 
       expect(screen.getAllByText("Awaiting results")).toHaveLength(2)
     })
@@ -122,23 +121,20 @@ describe("ArtistAuctionResultItem", () => {
       const lastMonth = new Date().setDate(new Date().getDate() - 1)
       const lastMonthISO = new Date(lastMonth).toISOString()
 
-      renderWithRelay(
-        {
-          AuctionResult: () => ({
-            ...auctionResult,
-            saleDate: lastMonthISO,
-            boughtIn: true,
-          }),
-        },
-        false
-      )
+      renderWithRelay({
+        AuctionResult: () => ({
+          ...auctionResult,
+          saleDate: lastMonthISO,
+          boughtIn: true,
+        }),
+      })
 
       expect(screen.getAllByText("Bought In")).toHaveLength(2)
       expect(screen.queryByText("Awaiting results")).not.toBeInTheDocument()
     })
 
     it("renders price not available when the auction result is over a month with no price", () => {
-      renderWithRelay(mockResolver, false)
+      renderWithRelay(mockResolver)
 
       expect(screen.getAllByText("Price not available")).toHaveLength(2)
     })

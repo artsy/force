@@ -30,10 +30,9 @@ describe("InsightsOverview", () => {
   })
 
   it("renders My Collection info properly", () => {
-    renderWithRelay(
-      { MyCollectionInfo: () => ({ artistsCount: 7, artworksCount: 21 }) },
-      false
-    )
+    renderWithRelay({
+      MyCollectionInfo: () => ({ artistsCount: 7, artworksCount: 21 }),
+    })
 
     expect(screen.getByText("Total Artists")).toBeInTheDocument()
     expect(screen.getByText("7")).toBeInTheDocument()

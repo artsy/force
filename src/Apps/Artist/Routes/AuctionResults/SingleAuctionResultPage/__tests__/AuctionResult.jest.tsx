@@ -28,7 +28,7 @@ describe("AuctionResult", () => {
   describe("Auction result data", () => {
     describe("when it's a past auction", () => {
       it("renders the auction result data", () => {
-        renderWithRelay({ AuctionResult: () => mockAuctionResult }, false)
+        renderWithRelay({ AuctionResult: () => mockAuctionResult })
 
         expect(screen.getByText("Carrie Mae Weems")).toBeInTheDocument()
         expect(
@@ -71,19 +71,16 @@ describe("AuctionResult", () => {
       })
 
       it("renders the auction result data with non-USD currency", () => {
-        renderWithRelay(
-          {
-            AuctionResult: () => ({
-              ...mockAuctionResult,
-              currency: "EUR",
-              priceRealized: {
-                display: "€35,280",
-                displayUSD: "US$35,280",
-              },
-            }),
-          },
-          false
-        )
+        renderWithRelay({
+          AuctionResult: () => ({
+            ...mockAuctionResult,
+            currency: "EUR",
+            priceRealized: {
+              display: "€35,280",
+              displayUSD: "US$35,280",
+            },
+          }),
+        })
 
         expect(screen.getByText("Carrie Mae Weems")).toBeInTheDocument()
         expect(
@@ -99,15 +96,12 @@ describe("AuctionResult", () => {
       })
 
       it("renders the auction result data with no sale price", () => {
-        renderWithRelay(
-          {
-            AuctionResult: () => ({
-              ...mockAuctionResult,
-              priceRealized: null,
-            }),
-          },
-          false
-        )
+        renderWithRelay({
+          AuctionResult: () => ({
+            ...mockAuctionResult,
+            priceRealized: null,
+          }),
+        })
 
         expect(screen.getByText("Carrie Mae Weems")).toBeInTheDocument()
         expect(
@@ -121,16 +115,13 @@ describe("AuctionResult", () => {
       })
 
       it("renders the auction result data when bought in", () => {
-        renderWithRelay(
-          {
-            AuctionResult: () => ({
-              ...mockAuctionResult,
-              priceRealized: null,
-              boughtIn: true,
-            }),
-          },
-          false
-        )
+        renderWithRelay({
+          AuctionResult: () => ({
+            ...mockAuctionResult,
+            priceRealized: null,
+            boughtIn: true,
+          }),
+        })
 
         expect(screen.getByText("Carrie Mae Weems")).toBeInTheDocument()
         expect(
@@ -147,16 +138,13 @@ describe("AuctionResult", () => {
         const lastMonth = new Date().setDate(new Date().getDate() - 1)
         const lastMonthISO = new Date(lastMonth).toISOString()
 
-        renderWithRelay(
-          {
-            AuctionResult: () => ({
-              ...mockAuctionResult,
-              saleDate: lastMonthISO,
-              priceRealized: null,
-            }),
-          },
-          false
-        )
+        renderWithRelay({
+          AuctionResult: () => ({
+            ...mockAuctionResult,
+            saleDate: lastMonthISO,
+            priceRealized: null,
+          }),
+        })
 
         expect(screen.getByText("Carrie Mae Weems")).toBeInTheDocument()
         expect(
@@ -172,10 +160,9 @@ describe("AuctionResult", () => {
 
     describe("when it's an upcoming auction", () => {
       it("renders the auction result data with estimate when available", () => {
-        renderWithRelay(
-          { AuctionResult: () => ({ ...mockAuctionResult, isUpcoming: true }) },
-          false
-        )
+        renderWithRelay({
+          AuctionResult: () => ({ ...mockAuctionResult, isUpcoming: true }),
+        })
 
         expect(screen.getByText("Carrie Mae Weems")).toBeInTheDocument()
         expect(
@@ -216,16 +203,13 @@ describe("AuctionResult", () => {
       })
 
       it("renders the auction result data without estimate when not available", () => {
-        renderWithRelay(
-          {
-            AuctionResult: () => ({
-              ...mockAuctionResult,
-              isUpcoming: true,
-              estimate: null,
-            }),
-          },
-          false
-        )
+        renderWithRelay({
+          AuctionResult: () => ({
+            ...mockAuctionResult,
+            isUpcoming: true,
+            estimate: null,
+          }),
+        })
 
         expect(screen.queryByText("Sale Price")).not.toBeInTheDocument()
 

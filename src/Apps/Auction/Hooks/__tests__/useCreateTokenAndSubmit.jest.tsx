@@ -11,7 +11,7 @@ import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useAuctionTracking } from "Apps/Auction/Hooks/useAuctionTracking"
 import { useRefreshUserData } from "Apps/Auction/Queries/useRefreshUserData"
 
-jest.mock("Components/AddressForm", () => ({
+jest.mock("Components/Address/AddressForm", () => ({
   toStripeAddress: jest.fn(),
 }))
 

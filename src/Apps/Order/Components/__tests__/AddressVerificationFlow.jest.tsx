@@ -90,7 +90,6 @@ describe("AddressVerificationFlow", () => {
       {
         VerifyAddressMutationType: () => result,
       },
-      undefined,
       componentProps
     )
   }

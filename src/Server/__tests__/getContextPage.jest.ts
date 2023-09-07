@@ -1,8 +1,4 @@
-import {
-  formatOwnerTypes,
-  getContextPageFromClient,
-} from "Server/getContextPage"
-import { OwnerType } from "@artsy/cohesion"
+import { getContextPageFromClient } from "Server/getContextPage"
 
 jest.mock("sharify", () => ({
   data: {
@@ -43,17 +39,5 @@ describe("getContextPageFromClient", () => {
       pageType: "artistSeries",
       path: "/artist-series/test-artist-series",
     })
-  })
-})
-
-describe("formatOwnerTypes", () => {
-  it("handles article path types", () => {
-    expect(formatOwnerTypes("/news")).toBe(OwnerType.article)
-    expect(formatOwnerTypes("/series")).toBe(OwnerType.article)
-    expect(formatOwnerTypes("/video")).toBe(OwnerType.article)
-  })
-
-  it("handles auction page types", () => {
-    expect(formatOwnerTypes("/auction")).toBe(OwnerType.sale)
   })
 })
