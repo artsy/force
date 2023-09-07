@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bc279a14dda119950949af7350a4f5f2>>
+ * @generated SignedSource<<08c7aafbb4c15da9ac0de6de2a0aa3a0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,7 @@ export type MyCollectionArtwork_artwork$data = {
     readonly slug: string;
     readonly targetSupply: {
       readonly isP1: boolean | null;
-    } | null;
+    };
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
   } | null;
   readonly comparables: {

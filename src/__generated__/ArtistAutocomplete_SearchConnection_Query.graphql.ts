@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<856d249dc4f6d96a80ce82f9dacb6898>>
+ * @generated SignedSource<<ff0f6629a50afd756771bf9afc16dd1e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,7 +35,7 @@ export type ArtistAutocomplete_SearchConnection_Query$data = {
         readonly name?: string | null;
         readonly targetSupply?: {
           readonly isP1: boolean | null;
-        } | null;
+        };
       } | null;
     } | null> | null;
   } | null;

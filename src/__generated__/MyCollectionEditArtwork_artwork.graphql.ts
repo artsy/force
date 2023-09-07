@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f6b9dd9c3709e637eac639d8e5bc188e>>
+ * @generated SignedSource<<7c29db21c059160fe6988055c955c0f6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -27,7 +27,7 @@ export type MyCollectionEditArtwork_artwork$data = {
     readonly name: string | null;
     readonly targetSupply: {
       readonly isP1: boolean | null;
-    } | null;
+    };
   } | null;
   readonly artistNames: string | null;
   readonly artworkLocation: string | null;

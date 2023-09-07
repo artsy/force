@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<416001504fff4b7fa622c36e9fd5ce07>>
+ * @generated SignedSource<<a6d69f3ed827470c0da561d76a59b32f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,7 +30,7 @@ export type ArtistConsignHeader_artist$data = {
         } | null> | null;
       } | null;
     } | null;
-  } | null;
+  };
   readonly " $fragmentType": "ArtistConsignHeader_artist";
 };
 export type ArtistConsignHeader_artist$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<38e429a76f95bb6de596cfcb94ec6ee5>>
+ * @generated SignedSource<<55750eac7084bd70be30a6c728166486>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type Details_artwork$data = {
   readonly artist: {
     readonly targetSupply: {
       readonly isP1: boolean | null;
-    } | null;
+    };
   } | null;
   readonly artists: ReadonlyArray<{
     readonly href: string | null;

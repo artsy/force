@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac1a24a0816ac606b87956f3ec48fb3a>>
+ * @generated SignedSource<<a20a7bdd80338a751318f8ac9818da2e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type ArtistConsignPageViews_artist$data = {
         readonly roundedViews: string | null;
       } | null;
     } | null;
-  } | null;
+  };
   readonly " $fragmentType": "ArtistConsignPageViews_artist";
 };
 export type ArtistConsignPageViews_artist$key = {
