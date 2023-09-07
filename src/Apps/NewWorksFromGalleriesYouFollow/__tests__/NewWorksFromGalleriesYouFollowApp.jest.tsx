@@ -42,7 +42,7 @@ describe("NewWorksFromGalleriesYouFollowApp", () => {
     expect(screen.getByText("MetaTags")).toBeInTheDocument()
 
     expect(
-      screen.getByText("New Works from Galleries You Follow")
+      screen.getByText("New Works From Galleries You Follow")
     ).toBeInTheDocument()
   })
 

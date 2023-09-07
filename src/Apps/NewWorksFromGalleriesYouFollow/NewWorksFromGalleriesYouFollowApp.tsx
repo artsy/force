@@ -39,13 +39,15 @@ const NewWorksFromGalleriesYouFollowApp: FC<NewWorksFromGalleriesYouFollowAppPro
   return (
     <>
       <MetaTags
-        title="New Works from Galleries You Follow | Artsy"
+        title="New Works From Galleries You Follow | Artsy"
         pathname="/new-works-from-galleries-you-follow"
       />
 
       <Spacer y={4} />
 
-      <Text variant="xl">New Works from Galleries You Follow</Text>
+      <Text variant="xl" as="h1">
+        New Works From Galleries You Follow
+      </Text>
 
       <Spacer y={4} />
 
