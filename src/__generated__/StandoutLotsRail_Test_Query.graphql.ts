@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3bf4654bb0f9112515ccd03be55f0d7c>>
+ * @generated SignedSource<<bbe00943a1b91ef387feb49345dd6594>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -634,7 +634,7 @@ return {
         "viewer.standoutLotsRailConnection.edges.node.artist.id": (v7/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.artist.targetSupply": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "ArtistTargetSupply"
         },

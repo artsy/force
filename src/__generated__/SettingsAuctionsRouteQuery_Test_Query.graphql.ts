@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ea078bf1b55236e84b03729cc2d08a90>>
+ * @generated SignedSource<<8b1a426a00b249ac049f5e9b9fa12b71>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -566,7 +566,7 @@ v15 = {
 },
 v16 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "ArtistTargetSupply"
 },

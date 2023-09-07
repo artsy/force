@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8b479f836bf42f3ae459f0e0c885b6f4>>
+ * @generated SignedSource<<f7a5b784a118e3a1342e34d746e6c446>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,7 @@ export type ArtworkGrid_Test_Query$rawResponse = {
           readonly id: string;
           readonly targetSupply: {
             readonly isP1: boolean | null;
-          } | null;
+          };
         } | null;
         readonly artistNames: string | null;
         readonly artists: ReadonlyArray<{
@@ -876,7 +876,7 @@ return {
         "artworksConnection.edges.node.artist.id": (v13/*: any*/),
         "artworksConnection.edges.node.artist.targetSupply": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "ArtistTargetSupply"
         },

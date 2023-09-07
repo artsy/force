@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7418a30ed01eb5651d360c9f798f807d>>
+ * @generated SignedSource<<85004f528dadc3504244d450e3f991e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -886,7 +886,7 @@ return {
         "me.followsAndSaves.artistsConnection.edges.node.artist.artworksConnection.edges.node.artist.id": (v15/*: any*/),
         "me.followsAndSaves.artistsConnection.edges.node.artist.artworksConnection.edges.node.artist.targetSupply": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "ArtistTargetSupply"
         },

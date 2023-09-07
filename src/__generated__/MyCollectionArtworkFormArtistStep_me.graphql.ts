@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d08dcc09cada6fe69179828e346a7b6f>>
+ * @generated SignedSource<<0315b6e89a2466f7950cf0e53808bfda>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,7 +33,7 @@ export type MyCollectionArtworkFormArtistStep_me$data = {
           readonly slug: string;
           readonly targetSupply: {
             readonly isP1: boolean | null;
-          } | null;
+          };
           readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
         } | null;
       } | null> | null;

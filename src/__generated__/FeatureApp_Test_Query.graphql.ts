@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c432fb98c171cb012bf65f5bbf6129f0>>
+ * @generated SignedSource<<b94bf5694aa2da212d45bf74712bed19>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -1132,7 +1132,7 @@ return {
         "feature.sets.edges.node.orderedItems.edges.node.artist.id": (v25/*: any*/),
         "feature.sets.edges.node.orderedItems.edges.node.artist.targetSupply": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "ArtistTargetSupply"
         },

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8e01b6dace57a0a89f05b66acfe3039>>
+ * @generated SignedSource<<5f55a5dcfbe0821f6b403aa37e4fcb54>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,7 +22,7 @@ export type Details_Test_Query$rawResponse = {
       readonly id: string;
       readonly targetSupply: {
         readonly isP1: boolean | null;
-      } | null;
+      };
     } | null;
     readonly artistNames: string | null;
     readonly artists: ReadonlyArray<{
@@ -601,7 +601,7 @@ return {
         "artwork.artist.id": (v8/*: any*/),
         "artwork.artist.targetSupply": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "ArtistTargetSupply"
         },

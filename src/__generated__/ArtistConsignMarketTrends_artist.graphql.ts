@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c22b3904e88ac2bac54ede926851df4c>>
+ * @generated SignedSource<<d04392b94068d6c961ae8584842ff40e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,7 +20,7 @@ export type ArtistConsignMarketTrends_artist$data = {
         readonly str: string | null;
       } | null;
     } | null;
-  } | null;
+  };
   readonly " $fragmentType": "ArtistConsignMarketTrends_artist";
 };
 export type ArtistConsignMarketTrends_artist$key = {

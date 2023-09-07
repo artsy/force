@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0625f5d91f1479caf53b66f2d9425bf8>>
+ * @generated SignedSource<<ba4c63afcab20688ac247e44bbcebe68>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -86,7 +86,7 @@ export type ArtworkQueryFilterQuery$rawResponse = {
             readonly id: string;
             readonly targetSupply: {
               readonly isP1: boolean | null;
-            } | null;
+            };
           } | null;
           readonly artistNames?: string | null;
           readonly artists?: ReadonlyArray<{

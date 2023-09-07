@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3d67ae48ecf9eb8d570f00e9fd34700a>>
+ * @generated SignedSource<<3fc943291183e82ffa8d45d405d1ccf3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -606,7 +606,7 @@ return {
         "homePage.artworkModule.results.artist.id": (v7/*: any*/),
         "homePage.artworkModule.results.artist.targetSupply": {
           "enumValues": null,
-          "nullable": true,
+          "nullable": false,
           "plural": false,
           "type": "ArtistTargetSupply"
         },

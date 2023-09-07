@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a663ade5c36379c3d0c31a68cad2887a>>
+ * @generated SignedSource<<29c7aeeb49e1197379ddf329040e192e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,7 @@ export type artistRoutes_ArtistConsignQuery$data = {
   readonly artist: {
     readonly targetSupply: {
       readonly isInMicrofunnel: boolean | null;
-    } | null;
+    };
     readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignRoute_artist">;
   } | null;
 };

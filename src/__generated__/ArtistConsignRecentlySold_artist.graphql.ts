@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4bf0847c858d1a191d3d88fae9c9facc>>
+ * @generated SignedSource<<e20efce8e6767c6835736f6c91aa1b78>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,7 +24,7 @@ export type ArtistConsignRecentlySold_artist$data = {
         } | null> | null;
       } | null;
     } | null;
-  } | null;
+  };
   readonly " $fragmentType": "ArtistConsignRecentlySold_artist";
 };
 export type ArtistConsignRecentlySold_artist$key = {
