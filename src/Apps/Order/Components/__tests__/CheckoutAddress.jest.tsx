@@ -4,7 +4,7 @@ import {
   CheckoutAddress,
   AddressFormValues,
   INITIAL_ADDRESS,
-} from "Apps/Order/Components/NewAddressForm"
+} from "Apps/Order/Components/CheckoutAddress"
 
 jest.mock("formik", () => ({
   ...jest.requireActual("formik"),
