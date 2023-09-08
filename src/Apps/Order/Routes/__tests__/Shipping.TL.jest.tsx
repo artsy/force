@@ -3,14 +3,20 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools/MockBoot"
 import { ShippingFragmentContainer } from "Apps/Order/Routes/Shipping"
 import { graphql } from "react-relay"
-import { UntouchedBuyOrder } from "Apps/__tests__/Fixtures/Order"
+import {
+  UntouchedBuyOrder,
+  UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+} from "Apps/__tests__/Fixtures/Order"
 import {
   settingOrderShipmentSuccess,
   settingOrderShipmentFailure,
   settingOrderShipmentMissingCountryFailure,
   settingOrderShipmentMissingRegionFailure,
   settingOrderArtaShipmentDestinationCouldNotBeGeocodedFailure,
+  settingOrderArtaShipmentSuccess,
+  selectShippingQuoteSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
+import { saveAddressSuccess } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
 import { ShippingTestQuery$rawResponse } from "__generated__/ShippingTestQuery.graphql"
 import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
@@ -58,6 +64,8 @@ jest.mock("Apps/Order/Dialogs", () => ({
   ),
 }))
 
+// TODO: We need to mock `commitMutation` from 3 different places due to the
+// inconsistent implementation.
 const mockCommitMutation = jest.fn()
 jest.mock("Apps/Order/Utils/commitMutation", () => ({
   ...jest.requireActual("../../Utils/commitMutation"),
@@ -69,9 +77,22 @@ jest.mock("relay-runtime", () => ({
   ...jest.requireActual("relay-runtime"),
   commitMutation: (...args) => mockCommitMutation(args),
 }))
+jest.mock("react-relay", () => ({
+  ...jest.requireActual("react-relay"),
+  commitMutation: (...args) => mockCommitMutation(args),
+}))
 
 const order: ShippingTestQuery$rawResponse["order"] = {
   ...UntouchedBuyOrder,
+  internalID: "1234",
+  id: "1234",
+}
+
+// TODO: Can we just use the untouched fixtures?
+const ArtsyShippingDomesticFromUSOrder: ShippingTestQuery$rawResponse["order"] = {
+  ...UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+  __typename: "CommerceBuyOrder",
+  mode: "BUY",
   internalID: "1234",
   id: "1234",
 }
@@ -474,7 +495,91 @@ describe("Shipping", () => {
 
   describe("with Artsy shipping", () => {
     describe("with no saved address", () => {
-      it("sets shipping on order, selects shipping quote, and save address on user", async () => {})
+      it("sets shipping on order, selects shipping quote, and save address on user", async () => {
+        mockCommitMutation
+          .mockReturnValueOnce(settingOrderArtaShipmentSuccess)
+          .mockImplementationOnce(relayProps => {
+            relayProps[1].onCompleted(saveAddressSuccess)
+          })
+          .mockReturnValueOnce(selectShippingQuoteSuccess)
+
+        renderWithRelay({
+          CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
+          Me: () => meWithoutAddress,
+        })
+
+        fillAddressFormTL(validAddress)
+        await userEvent.click(
+          screen.getByRole("button", { name: "Save and Continue" })
+        )
+        await flushPromiseQueue()
+
+        // FIXME: `getByRole` can be slow and cause test to time out.
+        // https://github.com/testing-library/dom-testing-library/issues/552#issuecomment-625172052
+        // expect(screen.getByRole("radio", { name: /Standard/ })).toBeVisible()
+        // expect(screen.getByRole("radio", { name: /Express/ })).toBeVisible()
+        // expect(screen.getByRole("radio", { name: /White Glove/ })).toBeVisible()
+        // expect(screen.getByRole("radio", { name: /Rush/ })).toBeVisible()
+        // expect(screen.getByRole("radio", { name: /Premium/ })).toBeVisible()
+
+        expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+
+        let mutationArg = mockCommitMutation.mock.calls[0][0]
+        expect(mutationArg.mutation.default.operation.name).toEqual(
+          "SetShippingMutation"
+        )
+        expect(mutationArg.variables).toEqual({
+          input: {
+            id: "1234",
+            fulfillmentType: "SHIP_ARTA",
+            phoneNumber: validAddress.phoneNumber,
+            shipping: {
+              ...validAddress,
+              phoneNumber: "",
+            },
+          },
+        })
+
+        mutationArg = mockCommitMutation.mock.calls[1][0][1]
+        expect(mutationArg.mutation.default.operation.name).toEqual(
+          "CreateUserAddressMutation"
+        )
+        expect(mutationArg.variables).toEqual({
+          input: {
+            attributes: validAddress,
+          },
+        })
+
+        userEvent.click(screen.getByRole("radio", { name: /Premium/ }))
+        await userEvent.click(
+          screen.getByRole("button", { name: "Save and Continue" })
+        )
+
+        expect(mockCommitMutation).toHaveBeenCalledTimes(4)
+
+        mutationArg = mockCommitMutation.mock.calls[2][0]
+        expect(mutationArg.mutation.default.operation.name).toEqual(
+          "SelectShippingOptionMutation"
+        )
+        expect(mutationArg.variables).toEqual({
+          input: {
+            id: "1234",
+            selectedShippingQuoteId: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+          },
+        })
+
+        // TODO: Why do we need to update address shortly after creating it?
+        mutationArg = mockCommitMutation.mock.calls[3][0][1]
+        expect(mutationArg.mutation.default.operation.name).toEqual(
+          "UpdateUserAddressMutation"
+        )
+        expect(mutationArg.variables).toEqual({
+          input: {
+            userAddressID: "address-id",
+            attributes: validAddress,
+          },
+        })
+      })
 
       it("shows an error if Arta doesn't return shipping quotes", async () => {})
 
