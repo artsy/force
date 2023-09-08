@@ -487,11 +487,11 @@ describe("Shipping", () => {
     describe("with no saved address", () => {
       it("sets shipping on order, selects shipping quote, and save address on user", async () => {
         mockCommitMutation
-          .mockReturnValueOnce(settingOrderArtaShipmentSuccess)
+          .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
           .mockImplementationOnce(relayProps => {
             relayProps[1].onCompleted(saveAddressSuccess)
           })
-          .mockReturnValueOnce(selectShippingQuoteSuccess)
+          .mockResolvedValueOnce(selectShippingQuoteSuccess)
 
         renderWithRelay({
           CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
@@ -594,7 +594,87 @@ describe("Shipping", () => {
         ).toHaveLength(2)
       })
 
-      it("removes previously saved address if save address is not selected", async () => {})
+      it("removes saved address if save address is deselected after fetching shipping quotes", async () => {
+        mockCommitMutation
+          .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
+          .mockImplementationOnce(relayProps => {
+            relayProps[1].onCompleted(saveAddressSuccess)
+          })
+          .mockResolvedValueOnce(selectShippingQuoteSuccess)
+
+        renderWithRelay({
+          CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
+          Me: () => meWithoutAddress,
+        })
+
+        fillAddressFormTL(validAddress)
+        await saveAndContinue()
+
+        // FIXME: `getByRole` can be slow and cause test to time out.
+        // https://github.com/testing-library/dom-testing-library/issues/552#issuecomment-625172052
+        // expect(screen.getByRole("radio", { name: /Standard/ })).toBeVisible()
+        // expect(screen.getByRole("radio", { name: /Express/ })).toBeVisible()
+        // expect(screen.getByRole("radio", { name: /White Glove/ })).toBeVisible()
+        // expect(screen.getByRole("radio", { name: /Rush/ })).toBeVisible()
+        // expect(screen.getByRole("radio", { name: /Premium/ })).toBeVisible()
+
+        expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+
+        let mutationArg = mockCommitMutation.mock.calls[0][0]
+        expect(mutationArg.mutation.default.operation.name).toEqual(
+          "SetShippingMutation"
+        )
+        expect(mutationArg.variables).toEqual({
+          input: {
+            id: "1234",
+            fulfillmentType: "SHIP_ARTA",
+            phoneNumber: validAddress.phoneNumber,
+            shipping: {
+              ...validAddress,
+              phoneNumber: "",
+            },
+          },
+        })
+
+        mutationArg = mockCommitMutation.mock.calls[1][0][1]
+        expect(mutationArg.mutation.default.operation.name).toEqual(
+          "CreateUserAddressMutation"
+        )
+        expect(mutationArg.variables).toEqual({
+          input: {
+            attributes: validAddress,
+          },
+        })
+
+        userEvent.click(screen.getByRole("radio", { name: /Premium/ }))
+        userEvent.click(
+          screen.getByRole("checkbox", { name: /Save shipping address/ })
+        )
+        await saveAndContinue()
+
+        expect(mockCommitMutation).toHaveBeenCalledTimes(4)
+
+        mutationArg = mockCommitMutation.mock.calls[2][0]
+        expect(mutationArg.mutation.default.operation.name).toEqual(
+          "SelectShippingOptionMutation"
+        )
+        expect(mutationArg.variables).toEqual({
+          input: {
+            id: "1234",
+            selectedShippingQuoteId: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+          },
+        })
+
+        mutationArg = mockCommitMutation.mock.calls[3][0][1]
+        expect(mutationArg.mutation.default.operation.name).toEqual(
+          "DeleteUserAddressMutation"
+        )
+        expect(mutationArg.variables).toEqual({
+          input: {
+            userAddressID: "address-id",
+          },
+        })
+      })
     })
 
     describe("with saved addresses", () => {
