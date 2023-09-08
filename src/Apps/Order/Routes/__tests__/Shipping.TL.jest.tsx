@@ -5,6 +5,7 @@ import { ShippingFragmentContainer } from "Apps/Order/Routes/Shipping"
 import { graphql } from "react-relay"
 import {
   UntouchedBuyOrder,
+  UntouchedOfferOrder,
   UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
 } from "Apps/__tests__/Fixtures/Order"
 import {
@@ -169,7 +170,14 @@ describe("Shipping", () => {
 
   describe("with partner shipping", () => {
     describe("with no saved address", () => {
-      it("shows an active offer stepper if it's an offer order", async () => {})
+      it("shows an active offer stepper if it's an offer order", async () => {
+        renderWithRelay({
+          CommerceOrder: () => UntouchedOfferOrder,
+          Me: () => meWithoutAddress,
+        })
+
+        expect(screen.getByRole("button", { name: "Offer" })).toBeVisible()
+      })
 
       it("renders fulfillment selection if artwork is available for pickup", async () => {
         renderWithRelay({
@@ -421,26 +429,168 @@ describe("Shipping", () => {
         })
       })
 
-      it("pre-populates address form for order with already persisted shipping info", async () => {})
+      it("pre-populates address form for order with already persisted shipping info", async () => {
+        renderWithRelay({
+          CommerceOrder: () => ({
+            ...order,
+            requestedFulfillment: {
+              ...validAddress,
+              __typename: "CommerceShip",
+              name: "Dr Collector",
+            },
+          }),
+          Me: () => meWithoutAddress,
+        })
 
-      it("resets shipping for order with already persisted shipping info", async () => {})
+        expect(screen.getByPlaceholderText("Full name")).toHaveValue(
+          "Dr Collector"
+        )
+      })
+
+      it("resets shipping for order with already persisted shipping info", async () => {
+        renderWithRelay({
+          CommerceOrder: () => ({
+            ...order,
+            requestedFulfillment: {
+              ...validAddress,
+              __typename: "CommerceShip",
+              name: "Dr Collector",
+            },
+          }),
+          Me: () => meWithoutAddress,
+        })
+
+        await saveAndContinue()
+
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+
+        const mutationArg = mockCommitMutation.mock.calls[0][0]
+        expect(mutationArg.mutation.default.operation.name).toEqual(
+          "SetShippingMutation"
+        )
+        expect(mutationArg.variables).toEqual({
+          input: {
+            id: "1234",
+            fulfillmentType: "SHIP",
+            phoneNumber: validAddress.phoneNumber,
+            shipping: {
+              ...validAddress,
+              name: "Dr Collector",
+            },
+          },
+        })
+      })
 
       describe("form validations", () => {
-        it("does not submit an empty form", async () => {})
+        it("does not submit an empty form", async () => {
+          renderWithRelay({
+            CommerceOrder: () => order,
+            Me: () => meWithoutAddress,
+          })
 
-        it("does not submit an incomplete form", async () => {})
+          await saveAndContinue()
+          expect(mockCommitMutation).not.toBeCalled()
+        })
 
-        it("requires some fields", async () => {})
+        it("does not submit an incomplete form", async () => {
+          renderWithRelay({
+            CommerceOrder: () => order,
+            Me: () => meWithoutAddress,
+          })
 
-        it("requires a phone number", async () => {})
+          userEvent.type(screen.getByPlaceholderText("Full name"), "First Last")
 
-        it("allows a missing postal code if the selected country is not US or Canada", async () => {})
+          await saveAndContinue()
+          expect(mockCommitMutation).not.toBeCalled()
+        })
 
-        it("allows a missing state/province if the selected country is not US or Canada", async () => {})
+        it("requires some fields", async () => {
+          renderWithRelay({
+            CommerceOrder: () => order,
+            Me: () => meWithoutAddress,
+          })
 
-        it("only shows validation erros on touched inputs before submission", async () => {})
+          await saveAndContinue()
+          expect(
+            screen.getAllByText("This field is required").length
+          ).toBeGreaterThanOrEqual(1)
+        })
 
-        it("shows all validation erros including untouched inputs after submission", async () => {})
+        it("requires a phone number", async () => {
+          renderWithRelay({
+            CommerceOrder: () => order,
+            Me: () => meWithoutAddress,
+          })
+
+          fillAddressFormTL({
+            name: "Erik David",
+            addressLine1: "401 Broadway",
+            addressLine2: "",
+            city: "New York",
+            region: "NY",
+            postalCode: "10013",
+            phoneNumber: "",
+            country: "US",
+          })
+          await saveAndContinue()
+
+          // TODO: form validation is triggered for collapsed form unnecessarily
+          expect(screen.getAllByText("This field is required")).toHaveLength(2)
+          expect(mockCommitMutation).not.toHaveBeenCalled()
+        })
+
+        it("allows a missing postal code and state/province if the selected country is not US or Canada", async () => {
+          renderWithRelay({
+            CommerceOrder: () => order,
+            Me: () => meWithoutAddress,
+          })
+
+          fillAddressFormTL({
+            name: "Erik David",
+            addressLine1: "401 Broadway",
+            addressLine2: "",
+            city: "New York",
+            region: "",
+            postalCode: "",
+            phoneNumber: "5555937743",
+            country: "AQ",
+          })
+          await saveAndContinue()
+
+          expect(
+            screen.queryByText("This field is required")
+          ).not.toBeInTheDocument()
+          expect(mockCommitMutation).toHaveBeenCalled()
+        })
+
+        it("only shows validation erros on touched inputs before submission", async () => {
+          renderWithRelay({
+            CommerceOrder: () => order,
+            Me: () => meWithoutAddress,
+          })
+
+          const name = screen.getByPlaceholderText("Full name")
+          userEvent.type(name, "First Last")
+          userEvent.clear(name)
+
+          expect(screen.getByText("This field is required")).toBeInTheDocument()
+        })
+
+        it("shows all validation erros including untouched inputs after submission", async () => {
+          renderWithRelay({
+            CommerceOrder: () => order,
+            Me: () => meWithoutAddress,
+          })
+
+          const name = screen.getByPlaceholderText("Full name")
+          userEvent.type(name, "First Last")
+          userEvent.clear(name)
+
+          await saveAndContinue()
+          expect(
+            screen.getAllByText("This field is required").length
+          ).toBeGreaterThan(1)
+        })
       })
 
       describe("address verification", () => {
@@ -768,6 +918,18 @@ describe("Shipping", () => {
       })
     })
 
-    it("does not submit an incomplete form", async () => {})
+    it("disables submission without a phone number", async () => {
+      renderWithRelay({
+        CommerceOrder: () => order,
+        Me: () => meWithoutAddress,
+      })
+
+      userEvent.click(screen.getByRole("radio", { name: /Arrange for pickup/ }))
+      expect(
+        screen.getByRole("button", {
+          name: "Save and Continue",
+        }) as HTMLInputElement
+      ).toBeDisabled()
+    })
   })
 })

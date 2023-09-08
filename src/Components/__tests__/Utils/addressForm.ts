@@ -74,7 +74,7 @@ export const fillAddressFormTL = (address: Address) => {
   )[0]
 
   userEvent.type(name, address.name)
-  userEvent.selectOptions(country, ["US"])
+  userEvent.selectOptions(country, [address.country])
   userEvent.type(addressLine1, address.addressLine1)
   userEvent.type(addressLine2, address.addressLine2)
   userEvent.type(city, address.city)
