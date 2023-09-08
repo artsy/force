@@ -117,6 +117,13 @@ const meWithoutAddress: ShippingTestQuery$rawResponse["me"] = {
   },
 }
 
+const saveAndContinue = async () => {
+  await userEvent.click(
+    screen.getByRole("button", { name: "Save and Continue" })
+  )
+  await flushPromiseQueue()
+}
+
 describe("Shipping", () => {
   const pushMock = jest.fn()
   let isCommittingMutation
@@ -242,9 +249,7 @@ describe("Shipping", () => {
         })
 
         fillAddressFormTL(validAddress)
-        await userEvent.click(
-          screen.getByRole("button", { name: "Save and Continue" })
-        )
+        await saveAndContinue()
 
         expect(mockCommitMutation).toHaveBeenCalledTimes(2)
 
@@ -286,9 +291,7 @@ describe("Shipping", () => {
         userEvent.click(
           screen.getByRole("checkbox", { name: /Save shipping address/ })
         )
-        await userEvent.click(
-          screen.getByRole("button", { name: "Save and Continue" })
-        )
+        await saveAndContinue()
 
         expect(mockCommitMutation).toHaveBeenCalledTimes(1)
 
@@ -317,10 +320,7 @@ describe("Shipping", () => {
         })
 
         fillAddressFormTL(validAddress)
-        await userEvent.click(
-          screen.getByRole("button", { name: "Save and Continue" })
-        )
-        await flushPromiseQueue()
+        await saveAndContinue()
 
         expect(mockCommitMutation).toHaveBeenCalledTimes(2)
         expect(pushMock).toHaveBeenCalledWith("/orders/1234/payment")
@@ -345,9 +345,7 @@ describe("Shipping", () => {
         })
 
         fillAddressFormTL(validAddress)
-        await userEvent.click(
-          screen.getByRole("button", { name: "Save and Continue" })
-        )
+        await saveAndContinue()
 
         expect(mockShowErrorDialog).toHaveBeenCalledWith()
       })
@@ -360,9 +358,7 @@ describe("Shipping", () => {
         })
 
         fillAddressFormTL(validAddress)
-        await userEvent.click(
-          screen.getByRole("button", { name: "Save and Continue" })
-        )
+        await saveAndContinue()
 
         expect(mockShowErrorDialog).toHaveBeenCalledWith()
       })
@@ -377,9 +373,7 @@ describe("Shipping", () => {
         })
 
         fillAddressFormTL(validAddress)
-        await userEvent.click(
-          screen.getByRole("button", { name: "Save and Continue" })
-        )
+        await saveAndContinue()
 
         expect(mockShowErrorDialog).toHaveBeenCalledWith({
           title: "Invalid address",
@@ -398,9 +392,7 @@ describe("Shipping", () => {
         })
 
         fillAddressFormTL(validAddress)
-        await userEvent.click(
-          screen.getByRole("button", { name: "Save and Continue" })
-        )
+        await saveAndContinue()
 
         expect(mockShowErrorDialog).toHaveBeenCalledWith({
           title: "Invalid address",
@@ -419,9 +411,7 @@ describe("Shipping", () => {
         })
 
         fillAddressFormTL(validAddress)
-        await userEvent.click(
-          screen.getByRole("button", { name: "Save and Continue" })
-        )
+        await saveAndContinue()
 
         expect(mockShowErrorDialog).toHaveBeenCalledWith({
           title: "Cannot calculate shipping",
@@ -509,10 +499,7 @@ describe("Shipping", () => {
         })
 
         fillAddressFormTL(validAddress)
-        await userEvent.click(
-          screen.getByRole("button", { name: "Save and Continue" })
-        )
-        await flushPromiseQueue()
+        await saveAndContinue()
 
         // FIXME: `getByRole` can be slow and cause test to time out.
         // https://github.com/testing-library/dom-testing-library/issues/552#issuecomment-625172052
@@ -551,9 +538,7 @@ describe("Shipping", () => {
         })
 
         userEvent.click(screen.getByRole("radio", { name: /Premium/ }))
-        await userEvent.click(
-          screen.getByRole("button", { name: "Save and Continue" })
-        )
+        await saveAndContinue()
 
         expect(mockCommitMutation).toHaveBeenCalledTimes(4)
 
@@ -596,10 +581,7 @@ describe("Shipping", () => {
         })
 
         fillAddressFormTL(validAddress)
-        await userEvent.click(
-          screen.getByRole("button", { name: "Save and Continue" })
-        )
-        await flushPromiseQueue()
+        await saveAndContinue()
 
         expect(
           screen.queryByRole("radio", { name: /Standard/ })
@@ -681,9 +663,7 @@ describe("Shipping", () => {
         )[0],
         "2813308004"
       )
-      await userEvent.click(
-        screen.getByRole("button", { name: "Save and Continue" })
-      )
+      await saveAndContinue()
 
       expect(mockCommitMutation).toHaveBeenCalledTimes(1)
 
