@@ -106,7 +106,9 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
     artwork?.savedSearch?.suggestedArtworksConnection?.totalCount ?? 0
   const displaySuggestedArtworksSection = suggestedArtworksCount > 0
   const displaySeeMoreButton = suggestedArtworksCount > 5
-  const isUnderbidder = artwork.myLotStandingManageAlerts?.[0]?.isHighestBidder
+  const isBidder = artwork.myLotStandingManageAlerts?.[0]
+  const isHighest = artwork.myLotStandingManageAlerts?.[0]?.isHighestBidder
+  const isUnderbidder = isBidder && !isHighest
 
   return (
     <SavedSearchAlertContextProvider
