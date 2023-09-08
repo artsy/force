@@ -140,7 +140,7 @@ export const AddressInputs: FC<{ endContent?: JSX.Element }> = ({
     handleBlur,
   } = useFormikContext<AddressFormValues>()
   return (
-    <GridColumns>
+    <GridColumns data-testid="address-inputs">
       <Column span={12}>
         <Input
           name="name"
@@ -160,6 +160,7 @@ export const AddressInputs: FC<{ endContent?: JSX.Element }> = ({
       <Column span={12}>
         <CountrySelect
           title="Country"
+          data-testid="address-country-select"
           aria-label="address-country-select"
           name="country"
           value={values.country}
