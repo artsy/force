@@ -15,7 +15,9 @@ let mockFetch: jest.Mock
 
 describe("useAddressAutocomplete", () => {
   const setupHook = (...args: Parameters<typeof useAddressAutocomplete>) => {
-    const result = renderHook(() => useAddressAutocomplete(...args))
+    const result = renderHook(props => useAddressAutocomplete(props), {
+      initialProps: args[0],
+    })
     return result
   }
 
@@ -41,10 +43,15 @@ describe("useAddressAutocomplete", () => {
 
   afterAll(() => {
     jest.resetAllMocks()
+    jest.resetModules()
   })
 
   beforeEach(() => {
     jest.clearAllMocks()
+  })
+
+  afterEach(() => {
+    jest.useRealTimers()
   })
 
   describe("when the US address autocomplete feature flag is enabled", () => {
@@ -132,10 +139,7 @@ describe("useAddressAutocomplete", () => {
       })
 
       it("returns the correct single-line text for an address with multiple entries", async () => {
-        jest.clearAllMocks()
-
-        // Override the mock just for this example to include multiple entries??
-        global.fetch = jest.fn().mockResolvedValue({
+        mockFetch.mockResolvedValue({
           json: jest.fn().mockResolvedValue({
             suggestions: [
               {
@@ -174,8 +178,8 @@ describe("useAddressAutocomplete", () => {
         await waitFor(() => result.current.autocompleteOptions.length > 0)
 
         rerender({ country: "UK" })
+
         expect(result.current.autocompleteOptions).toEqual([])
-        // :(
       })
 
       it("resets the suggestions without fetching when the search term is too short", async () => {
@@ -185,7 +189,10 @@ describe("useAddressAutocomplete", () => {
           result.current.fetchForAutocomplete({ search: "401 Broadway" })
         })
 
+        expect(mockFetch).toHaveBeenCalledTimes(1)
         await waitFor(() => result.current.autocompleteOptions.length > 0)
+
+        mockFetch.mockClear()
 
         act(() => {
           result.current.fetchForAutocomplete({ search: "40" })
@@ -193,6 +200,23 @@ describe("useAddressAutocomplete", () => {
 
         expect(result.current.autocompleteOptions).toEqual([])
         expect(mockFetch).not.toHaveBeenCalled()
+      })
+
+      it.skip("debounces calls to Smarty API", async () => {
+        jest.useFakeTimers()
+
+        const { result } = setupHook({ country: "US" })
+
+        act(() => {
+          result.current.fetchForAutocomplete({ search: "401 Broadway" })
+          result.current.fetchForAutocomplete({ search: "401 Broad" })
+          result.current.fetchForAutocomplete({ search: "401 Bro" })
+        })
+
+        jest.advanceTimersByTime(700)
+
+        await waitFor(() => result.current.autocompleteOptions.length > 0)
+        expect(mockFetch).toHaveBeenCalledTimes(1)
       })
     })
 
