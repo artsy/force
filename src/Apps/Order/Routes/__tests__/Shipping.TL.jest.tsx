@@ -594,8 +594,6 @@ describe("Shipping", () => {
         ).toHaveLength(2)
       })
 
-      it("saves address only once", async () => {})
-
       it("removes previously saved address if save address is not selected", async () => {})
     })
 
