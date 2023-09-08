@@ -65,6 +65,11 @@ export const BasicAddressForm: FC<{
   )
 }
 
+export interface AddressFormWrapperProps<T extends AddressFormValues>
+  extends Omit<FormikConfig<T>, "initialValues"> {
+  initialValues: Partial<T>
+}
+
 /**
  * A Formik context that provides a default validation schema and initial values
  * for an address form. Provide a custom type extending `AddressFormValues` to
@@ -79,9 +84,7 @@ export const AddressFormWrapper = <
   validate,
   validationSchema,
   ...props
-}: Omit<FormikConfig<T>, "initialValues"> & {
-  initialValues: Partial<T>
-}): JSX.Element => {
+}: AddressFormWrapperProps<T>): JSX.Element => {
   let validationRule: Pick<FormikConfig<T>, "validate" | "validationSchema">
   if (validationSchema) {
     validationRule = { validationSchema }
