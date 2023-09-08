@@ -98,6 +98,13 @@ const ArtsyShippingDomesticFromUSOrder: ShippingTestQuery$rawResponse["order"] =
   id: "1234",
 }
 
+const pageInfo = {
+  startCursor: "aaa",
+  endCursor: "bbb",
+  hasNextPage: false,
+  hasPreviousPage: false,
+}
+
 const meWithoutAddress: ShippingTestQuery$rawResponse["me"] = {
   name: "Test Name",
   email: "test@gmail.com",
@@ -109,14 +116,58 @@ const meWithoutAddress: ShippingTestQuery$rawResponse["me"] = {
   addressConnection: {
     totalCount: 0,
     edges: [],
-    pageInfo: {
-      startCursor: "aaa",
-      endCursor: "bbb",
-      hasNextPage: false,
-      hasPreviousPage: false,
-    },
+    pageInfo,
   },
 }
+
+const meWithAddresses: ShippingTestQuery$rawResponse["me"] = Object.assign(
+  {},
+  meWithoutAddress,
+  {
+    addressConnection: {
+      totalCount: 0,
+      edges: [
+        {
+          node: {
+            __typename: "UserAddress",
+            internalID: "1",
+            addressLine1: "1 Main St",
+            addressLine2: "",
+            addressLine3: "",
+            city: "Madrid",
+            country: "ES",
+            isDefault: false,
+            name: "Test Name",
+            phoneNumber: "555-555-5555",
+            postalCode: "28001",
+            region: "",
+            id: "addressID1",
+          },
+          cursor: "aaa",
+        },
+        {
+          node: {
+            __typename: "UserAddress",
+            internalID: "2",
+            addressLine1: "401 Broadway",
+            addressLine2: "Floor 25",
+            addressLine3: "",
+            city: "New York",
+            country: "US",
+            isDefault: true,
+            name: "Test Name",
+            phoneNumber: "422-424-4242",
+            postalCode: "10013",
+            region: "NY",
+            id: "addressID2",
+          },
+          cursor: "aaa",
+        },
+      ],
+      pageInfo,
+    },
+  }
+)
 
 const saveAndContinue = async () => {
   await userEvent.click(
@@ -611,13 +662,102 @@ describe("Shipping", () => {
     })
 
     describe("with saved addresses", () => {
-      it("does not show the new address form", async () => {})
+      it("does not show the new address form", async () => {
+        renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithAddresses,
+        })
 
-      it("lists the addresses and renders the add address option", async () => {})
+        // TODO: need a better way to check if the form is collapsed (height 0).
+        // Zero height is not considered invisible.
+        // https://github.com/testing-library/jest-dom/issues/450
+        expect(screen.getByPlaceholderText("Street address")).toHaveAttribute(
+          "tabindex",
+          "-1"
+        )
+      })
 
-      it("sets shipping with the first saved address and phone number when user submits the form directly", async () => {})
+      it("lists the addresses and renders the add address option", async () => {
+        renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithAddresses,
+        })
 
-      it("sets shipping with the selected saved address and phone number", async () => {})
+        expect(
+          screen.getByRole("radio", { name: /401 Broadway/ })
+        ).toBeVisible()
+        expect(screen.getByRole("radio", { name: /1 Main St/ })).toBeVisible()
+        expect(
+          screen.getByRole("button", { name: "Add a new address" })
+        ).toBeVisible()
+      })
+
+      it("sets shipping with the first saved address and phone number when user submits the form directly", async () => {
+        renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithAddresses,
+        })
+
+        await saveAndContinue()
+
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+
+        const mutationArg = mockCommitMutation.mock.calls[0][0]
+        expect(mutationArg.mutation.default.operation.name).toEqual(
+          "SetShippingMutation"
+        )
+        expect(mutationArg.variables).toEqual({
+          input: {
+            id: "1234",
+            fulfillmentType: "SHIP",
+            phoneNumber: "422-424-4242",
+            shipping: {
+              addressLine1: "401 Broadway",
+              addressLine2: "Floor 25",
+              city: "New York",
+              country: "US",
+              name: "Test Name",
+              phoneNumber: "422-424-4242",
+              postalCode: "10013",
+              region: "NY",
+            },
+          },
+        })
+      })
+
+      it("sets shipping with the selected saved address and phone number", async () => {
+        renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithAddresses,
+        })
+
+        userEvent.click(screen.getByRole("radio", { name: /1 Main St/ }))
+        await saveAndContinue()
+
+        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+
+        const mutationArg = mockCommitMutation.mock.calls[0][0]
+        expect(mutationArg.mutation.default.operation.name).toEqual(
+          "SetShippingMutation"
+        )
+        expect(mutationArg.variables).toEqual({
+          input: {
+            id: "1234",
+            fulfillmentType: "SHIP",
+            phoneNumber: "555-555-5555",
+            shipping: {
+              addressLine1: "1 Main St",
+              addressLine2: "",
+              city: "Madrid",
+              country: "ES",
+              name: "Test Name",
+              phoneNumber: "555-555-5555",
+              postalCode: "28001",
+              region: "",
+            },
+          },
+        })
+      })
 
       describe("address verification", () => {
         describe("with address verification enabled", () => {
@@ -875,7 +1015,20 @@ describe("Shipping", () => {
   })
 
   describe("with pickup", () => {
-    it("shows an empty phone number input", async () => {})
+    it("shows an empty phone number input with saved addresses", async () => {
+      renderWithRelay({
+        CommerceOrder: () => order,
+        Me: () => meWithAddresses,
+      })
+
+      userEvent.click(screen.getByRole("radio", { name: /Arrange for pickup/ }))
+      const phoneNumber = screen.getAllByPlaceholderText(
+        "Add phone number including country code"
+      )[1]
+      // TODO: need a better way to check the input is displayed/expanded (height > 0)
+      expect(phoneNumber).toHaveAttribute("tabindex", "0")
+      expect(phoneNumber).toHaveValue("")
+    })
 
     it("sets pickup on order", async () => {
       mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)

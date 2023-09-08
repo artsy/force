@@ -3,7 +3,6 @@ import { cloneDeep } from "lodash"
 
 import {
   UntouchedBuyOrder,
-  UntouchedOfferOrder,
   UntouchedBuyOrderWithArtsyShippingDomesticFromGermany,
   UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
   UntouchedBuyOrderWithArtsyShippingInternationalFromGermany,
@@ -12,28 +11,20 @@ import {
 } from "Apps/__tests__/Fixtures/Order"
 import {
   fillAddressForm,
-  fillIn,
-  fillInPhoneNumber,
   validAddress,
 } from "Components/__tests__/Utils/addressForm"
 import { Input } from "@artsy/palette"
 import { graphql } from "react-relay"
 import { ShippingFragmentContainer } from "Apps/Order/Routes/Shipping"
 import { OrderAppTestPage } from "./Utils/OrderAppTestPage"
-import {
-  saveAddressSuccess,
-  updateAddressSuccess,
-} from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
+import { updateAddressSuccess } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
 import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"
-import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import * as updateUserAddress from "Apps/Order/Mutations/UpdateUserAddress"
-import * as deleteUserAddress from "Apps/Order/Mutations/DeleteUserAddress"
 import {
   settingOrderShipmentSuccess,
   settingOrderArtaShipmentSuccess,
-  selectShippingQuoteSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
@@ -295,15 +286,6 @@ describe("Shipping", () => {
     })
 
     describe("Validations", () => {
-      let page: ShippingTestPage
-      beforeEach(async () => {
-        const wrapper = getWrapper({
-          CommerceOrder: () => testOrder,
-          Me: () => emptyTestMe,
-        })
-        page = new ShippingTestPage(wrapper)
-      })
-
       describe("for Ship orders", () => {
         describe("with address verfication enabled", () => {
           beforeAll(() => {
@@ -455,131 +437,6 @@ describe("Shipping", () => {
         Me: () => testMe,
       })
       page = new ShippingTestPage(wrapper)
-    })
-
-    it("does not show the new address form", async () => {
-      expect(
-        page.find(`[data-test="addressFormCollapse"]`).props().open
-      ).toEqual(false)
-    })
-
-    it("opens the empty pick-up phone number input", async () => {
-      await page.selectPickupOption()
-
-      expect(
-        page.find(`[data-test="phoneNumberCollapse"]`).props().open
-      ).toEqual(true)
-      expect(
-        page.find(`[data-test="pickupPhoneNumberForm"]`).props().value
-      ).toEqual("")
-    })
-
-    it("commits correct phone number for pickup orders", async () => {
-      const mockPhoneNumber = "12345678"
-      await page.selectPickupOption()
-      fillInPhoneNumber(page.root, { isPickup: true, value: mockPhoneNumber })
-
-      await flushPromiseQueue()
-      await page.clickSubmit()
-
-      expect(mockCommitMutation).toHaveBeenCalledWith(
-        expect.objectContaining({
-          variables: {
-            input: {
-              fulfillmentType: "PICKUP",
-              id: "1234",
-              phoneNumber: mockPhoneNumber,
-              shipping: {
-                addressLine1: "401 Broadway",
-                addressLine2: "Floor 25",
-                city: "New York",
-                country: "US",
-                phoneNumber: "422-424-4242",
-                postalCode: "10013",
-                region: "NY",
-                name: "Test Name",
-              },
-            },
-          },
-        })
-      )
-    })
-
-    it("lists the addresses and renders the add address option", async () => {
-      expect(
-        page
-          .find('[role="radio"]')
-          .hostNodes()
-          .map(node => node.text())
-      ).toEqual([
-        "Shipping",
-        "Arrange for pickup (free)After your order is confirmed, a specialist will contact you to coordinate pickup.",
-        "Test Name1 Main StMadrid, ES, 28001555-555-5555Edit",
-        "Test Name401 BroadwayFloor 25New York, NY, US, 10013422-424-4242Edit",
-      ])
-
-      expect(page.text()).toContain(
-        "Test Name1 Main StMadrid, ES, 28001555-555-5555Edit"
-      )
-      expect(page.text()).toContain(
-        "Test Name401 BroadwayFloor 25New York, NY, US, 10013422-424-4242Edit"
-      )
-    })
-
-    it("commits mutation with saved address and phone number when user submits form directly", async () => {
-      await page.clickSubmit()
-
-      expect(mockCommitMutation).toBeCalledTimes(1)
-      expect(mockCommitMutation).toBeCalledWith(
-        expect.objectContaining({
-          variables: {
-            input: {
-              fulfillmentType: "SHIP",
-              id: "1234",
-              phoneNumber: "422-424-4242",
-              shipping: {
-                addressLine1: "401 Broadway",
-                addressLine2: "Floor 25",
-                city: "New York",
-                country: "US",
-                name: "Test Name",
-                phoneNumber: "422-424-4242",
-                postalCode: "10013",
-                region: "NY",
-              },
-            },
-          },
-        })
-      )
-    })
-
-    it("when another saved address is selected commits mutation with selected address and phone number", async () => {
-      page.find(`[data-test="savedAddress"]`).first().simulate("click")
-      await page.update()
-      await page.clickSubmit()
-
-      expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-      expect(mockCommitMutation).toBeCalledWith(
-        expect.objectContaining({
-          variables: {
-            input: {
-              fulfillmentType: "SHIP",
-              id: "1234",
-              phoneNumber: "555-555-5555",
-              shipping: {
-                addressLine1: "1 Main St",
-                addressLine2: "",
-                city: "Madrid",
-                country: "ES",
-                name: "Test Name",
-                phoneNumber: "555-555-5555",
-                postalCode: "28001",
-                region: "",
-              },
-            },
-          },
-        })
-      )
     })
 
     it("does not commit set shipping mutation if address in Europe", async () => {
