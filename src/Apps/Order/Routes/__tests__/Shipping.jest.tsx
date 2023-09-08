@@ -295,32 +295,6 @@ describe("Shipping", () => {
     })
 
     describe("Artsy domestic shipping", () => {
-      it("show error message if arta doesn't return shipping quotes", async () => {
-        const settingOrderArtaShipmentSuccessWithoutQuotes = cloneDeep(
-          settingOrderArtaShipmentSuccess
-        ) as any
-        settingOrderArtaShipmentSuccessWithoutQuotes.commerceSetShipping.orderOrError.order.lineItems.edges[0].node.shippingQuoteOptions.edges = []
-        mockCommitMutation.mockResolvedValueOnce(
-          settingOrderArtaShipmentSuccessWithoutQuotes
-        )
-        const wrapper = getWrapper({
-          CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
-          Me: () => emptyTestMe,
-        })
-        const page = new ShippingTestPage(wrapper)
-
-        fillAddressForm(page.root, {
-          ...validAddress,
-          region: "New Brunswick",
-          country: "US",
-        })
-
-        await page.clickSubmit()
-
-        expect(page.find(`[data-test="shipping-quotes"]`)).toHaveLength(0)
-        expect(page.find(`[data-test="artaErrorMessage"]`)).not.toHaveLength(0)
-      })
-
       it("save address only once", async () => {
         mockCommitMutation
           .mockReturnValueOnce(settingOrderArtaShipmentSuccess)

@@ -581,7 +581,36 @@ describe("Shipping", () => {
         })
       })
 
-      it("shows an error if Arta doesn't return shipping quotes", async () => {})
+      it("shows an error if Arta doesn't return shipping quotes", async () => {
+        const settingOrderArtaShipmentSuccessWithoutQuotes = cloneDeep(
+          settingOrderArtaShipmentSuccess
+        ) as any
+        settingOrderArtaShipmentSuccessWithoutQuotes.commerceSetShipping.orderOrError.order.lineItems.edges[0].node.shippingQuoteOptions.edges = []
+        mockCommitMutation.mockResolvedValueOnce(
+          settingOrderArtaShipmentSuccessWithoutQuotes
+        )
+
+        renderWithRelay({
+          CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
+          Me: () => meWithoutAddress,
+        })
+
+        fillAddressFormTL(validAddress)
+        await userEvent.click(
+          screen.getByRole("button", { name: "Save and Continue" })
+        )
+        await flushPromiseQueue()
+
+        expect(
+          screen.queryByRole("radio", { name: /Standard/ })
+        ).not.toBeInTheDocument()
+        // TODO: Why are there 2 error messages?
+        expect(
+          screen.getAllByText(
+            /In order to provide a shipping quote, we need some more information from you./
+          )
+        ).toHaveLength(2)
+      })
 
       it("saves address only once", async () => {})
 
