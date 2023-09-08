@@ -27,12 +27,22 @@ export const YearCreated: React.FC = () => {
     setFilter,
     earliestCreatedYear,
     latestCreatedYear,
+    aggregations,
   } = useAuctionResultsFilterContext()
   const {
     createdAfterYear,
     createdBeforeYear,
     allowEmptyCreatedDates,
   } = useCurrentlySelectedFiltersForAuctionResults()
+
+  const options = (
+    aggregations
+      ?.find(aggregation => aggregation.slice === "LOTS_BY_CREATED_YEAR")
+      ?.counts.filter(c => c !== null) || []
+  ).map(c => ({
+    text: c?.name,
+    value: c?.name,
+  }))
 
   const hasChanges =
     earliestCreatedYear !== createdAfterYear ||
@@ -69,7 +79,7 @@ export const YearCreated: React.FC = () => {
           <Flex>
             <Select
               title="Earliest"
-              options={fullDateRange}
+              options={options}
               onSelect={year => {
                 setFilter?.("createdAfterYear", parseInt(year))
               }}

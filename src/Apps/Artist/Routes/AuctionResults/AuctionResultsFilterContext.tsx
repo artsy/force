@@ -32,6 +32,7 @@ export type Slice =
   | "SIMPLE_PRICE_HISTOGRAM"
   | "CURRENCIES_COUNT"
   | "LOTS_BY_SALE_YEAR"
+  | "LOTS_BY_CREATED_YEAR"
 
 /**
  * Possible aggregations that can be passed
