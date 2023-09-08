@@ -1,7 +1,7 @@
 import { Address } from "Components/Address/AddressForm"
 import { isEmpty } from "lodash"
 
-export const validatePresence = (value: string): string | null => {
+export const validatePresence = (value?: string): string | null => {
   if (value == undefined || isEmpty(value.trim())) {
     return "This field is required"
   }
@@ -19,7 +19,8 @@ export const validatePostalCode = (postalCode: string, countryCode: string) => {
     : "Please enter a valid zip/postal code for your region"
 }
 
-export const validateAddress = (address: Address) => {
+// TODO: consolidate address types
+export const validateAddress = (address: Partial<Address>) => {
   const { name, addressLine1, city, region, country, postalCode } = address
   const usOrCanada = country === "US" || country === "CA"
 
@@ -29,7 +30,8 @@ export const validateAddress = (address: Address) => {
     postalCodeValidationResult = validatePresence(postalCode)
 
     if (postalCodeValidationResult === null) {
-      postalCodeValidationResult = validatePostalCode(postalCode, country)
+      // postal code is present
+      postalCodeValidationResult = validatePostalCode(postalCode!, country)
     }
   }
 

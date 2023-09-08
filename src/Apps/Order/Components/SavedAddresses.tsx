@@ -17,6 +17,8 @@ import { useTracking } from "react-tracking"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
+import { useShippingOperations } from "Apps/Order/Mutations/useShippingOperations"
+import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
@@ -28,14 +30,12 @@ interface SavedAddressesProps {
   commitMutation?: CommitMutation
   relay: RelayRefetchProp
   addressCount?: number
-  onAddressDelete?: (removedAddressId: string) => void
-  onAddressCreate?: (
-    address: CreateUserAddressMutation$data["createUserAddress"]
-  ) => void
-  onAddressEdit?: (
-    address: UpdateUserAddressMutation$data["updateUserAddress"]
-  ) => void
+  /* Threaded props from parent pertaining to formik/relay operations */
+  onAddressDelete: ReturnType<typeof useShippingOperations>["deleteUserAddress"]
+  onAddressCreate: () => void
+  onAddressEdit: (address: SavedAddressType) => void
   selectedAddress?: string
+  // TODO: Unused
   onShowToast?: (isShow: boolean, action: string) => void
 }
 
@@ -59,6 +59,8 @@ const defaultAddressIndex = (addressList: Address[]) => {
   return defaultAddressID || items[0].internalID
 }
 
+// TODO: I think modal management can move into the parent or we can just use a
+// single form in the page (simpler)
 const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const { trackEvent } = useTracking()
   const [modalDetails, setModalDetails] = useState<ModalDetails | undefined>()
@@ -84,7 +86,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me.addressConnection?.totalCount])
   const addressList = extractNodes(me?.addressConnection) ?? []
-  const { relayEnvironment } = useSystemContext()
 
   const refetchAddresses = (refetchSuccessCallback?: () => void) => {
     relay.refetch(
@@ -107,42 +108,22 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }
 
   const handleDeleteAddress = async (addressID: string) => {
-    let response = await deleteUserAddress(
-      relayEnvironment!,
-      addressID,
-      () => {
-        refetchAddresses(() => {
-          // Execute address delete callback after address deleted
-          // and list of addresses updated
-          onAddressDelete && onAddressDelete(addressID)
-        })
-      },
-      onError
-    )
+    let response = await onAddressDelete(addressID, () => {
+      refetchAddresses()
+    })
     if (!response.deleteUserAddress?.userAddressOrErrors.errors) {
       onShowToast && onShowToast(true, "Deleted")
     }
   }
 
-  const handleEditAddress = (address: Address, index: number) => {
-    setShowAddressModal(true)
-    setModalDetails({
-      addressModalTitle: "Edit address",
-      addressModalAction: "editUserAddress",
-    })
-    setAddress(address)
+  const handleEditAddress = (address: Address) => {
+    onAddressEdit(address)
   }
 
   const createOrUpdateAddressSuccess = (
     address?: UpdateUserAddressMutation$data & CreateUserAddressMutation$data
   ) => {
-    refetchAddresses(() => {
-      if (address?.createUserAddress) {
-        onAddressCreate && onAddressCreate(address.createUserAddress)
-      } else if (address?.updateUserAddress) {
-        onAddressEdit && onAddressEdit(address.updateUserAddress)
-      }
-    })
+    refetchAddresses()
 
     onShowToast && onShowToast(true, "Saved")
   }
@@ -163,11 +144,12 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           data-test="shippingButton"
           onClick={() => {
             trackAddAddressClick()
-            setShowAddressModal(true),
-              setModalDetails({
-                addressModalTitle: "Add address",
-                addressModalAction: "createUserAddress",
-              })
+            onAddressCreate()
+            // setShowAddressModal(true),
+            //   setModalDetails({
+            //     addressModalTitle: "Add address",
+            //     addressModalAction: "createUserAddress",
+            //   })
           }}
         >
           Add a new address
@@ -195,9 +177,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         data-test="savedAddress"
       >
         <SavedAddressItem
-          index={index}
           address={address}
-          handleClickEdit={() => handleEditAddress(address, index)}
+          handleClickEdit={() => handleEditAddress(address)}
         />
       </BorderedRadio>
     )

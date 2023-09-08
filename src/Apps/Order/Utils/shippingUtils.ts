@@ -1,7 +1,7 @@
 import { Address, emptyAddress } from "Components/Address/AddressForm"
 import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
 import { Shipping_order$data } from "__generated__/Shipping_order.graphql"
-import { pick, omit, compact } from "lodash"
+import { pick, omit, compact, isNil, omitBy } from "lodash"
 import {
   UpdateUserAddressMutation$data,
   UserAddressAttributes,
@@ -11,6 +11,12 @@ import {
   CommerceOrderFulfillmentTypeEnum,
   SetShippingMutation$data,
 } from "__generated__/SetShippingMutation.graphql"
+import { ShippingValues } from "Apps/Order/Routes/Shipping"
+
+export enum FulfillmentType {
+  SHIP = "SHIP",
+  PICKUP = "PICKUP",
+}
 
 export type SavedAddressType = NonNullable<
   NonNullable<
@@ -96,18 +102,33 @@ export const startingPhoneNumber = (
     : ""
 }
 
+export const addressWithEmptyValues = (
+  nullishAddress: Partial<Record<keyof ShippingValues, string | null>>
+): ShippingValues => {
+  return {
+    ...emptyAddress,
+    ...omitBy<Partial<ShippingValues>>(
+      pick(nullishAddress, Object.keys(emptyAddress)),
+      isNil
+    ),
+  }
+}
+
 export const startingAddress = (
   me: Shipping_me$data,
   order: Shipping_order$data
-) => {
-  const initialAddress = {
-    ...emptyAddress,
-    country: order.lineItems?.edges?.[0]?.node?.artwork?.shippingCountry!,
+): ShippingValues => {
+  const initialCountry: string = order.lineItems?.edges?.[0]?.node?.artwork
+    ?.shippingCountry!
 
-    // We need to pull out _only_ the values specified by the Address type,
-    // since our state will be used for Relay variables later on. The
-    // easiest way to do this is with the emptyAddress.
-    ...pick(order.requestedFulfillment, Object.keys(emptyAddress)),
+  const orderAddress = omitBy<ShippingValues>(
+    pick(order.requestedFulfillment, Object.keys(emptyAddress)),
+    isNil
+  )
+
+  const initialAddress: ShippingValues = {
+    ...addressWithEmptyValues(orderAddress),
+    country: initialCountry,
   }
   return initialAddress
 }
@@ -139,7 +160,9 @@ export const convertShippingAddressToMutationInput = (
   )
 }
 
-export const getShippingOption = (requestedFulfillmentType?: string) => {
+export const getShippingOption = (
+  requestedFulfillmentType?: string
+): FulfillmentType => {
   let result: CommerceOrderFulfillmentTypeEnum
 
   switch (requestedFulfillmentType) {
