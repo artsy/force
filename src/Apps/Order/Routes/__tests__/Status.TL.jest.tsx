@@ -1,6 +1,35 @@
+import { StatusFragmentContainer } from "Apps/Order/Routes/Status"
+import { UntouchedOfferOrder } from "Apps/__tests__/Fixtures/Order"
+import { MockBoot } from "DevTools/MockBoot"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { graphql } from "react-relay"
+
+jest.unmock("react-relay")
+
 describe("Status", () => {
   describe("offers", () => {
-    it("should should have a title containing status", () => {})
+    it("should should have a title containing status", () => {
+      const { renderWithRelay } = setupTestWrapperTL({
+        Component: (props: any) => (
+          <MockBoot>
+            <StatusFragmentContainer {...props} />
+          </MockBoot>
+        ),
+        query: graphql`
+          query StatusTestQuery @raw_response_type @relay_test_operation {
+            order: commerceOrder(id: "42") {
+              ...Status_order
+            }
+          }
+        `,
+      })
+
+      renderWithRelay({
+        CommerceOrder: () => UntouchedOfferOrder,
+      })
+
+      expect(document.title).toEqual("Offer status | Artsy")
+    })
 
     describe("submitted", () => {
       it("should say order submitted and have message box", () => {})
