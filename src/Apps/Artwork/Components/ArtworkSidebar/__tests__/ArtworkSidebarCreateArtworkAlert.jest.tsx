@@ -40,6 +40,14 @@ describe("ArtworkSidebarCreateArtworkAlert", () => {
     })
   })
 
+  it("should not render when an artwork has no artists", () => {
+    renderWithRelay({
+      Artwork: () => ({ ...Artwork, artists: [] }),
+    })
+
+    expect(screen.queryByText("Create Alert")).not.toBeInTheDocument()
+  })
+
   it("should correctly render pills", () => {
     renderWithRelay({
       Artwork: () => Artwork,
