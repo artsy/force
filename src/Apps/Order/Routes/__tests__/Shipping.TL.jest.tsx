@@ -39,6 +39,7 @@ import { queryByAttribute } from "@testing-library/dom"
 import { ErrorDialogMessage } from "Apps/Order/Utils/getErrorDialogCopy"
 import * as updateUserAddress from "Apps/Order/Mutations/UpdateUserAddress"
 import { within } from "@testing-library/dom"
+import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -188,6 +189,7 @@ const saveAndContinue = async () => {
 describe("Shipping", () => {
   const pushMock = jest.fn()
   let isCommittingMutation
+  let relayEnv
 
   beforeEach(() => {
     isCommittingMutation = false
@@ -206,7 +208,7 @@ describe("Shipping", () => {
 
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
-      <MockBoot>
+      <MockBoot relayEnvironment={relayEnv}>
         <ShippingFragmentContainer
           router={{ push: pushMock } as any}
           order={props.order}
@@ -655,18 +657,194 @@ describe("Shipping", () => {
 
       describe("address verification", () => {
         describe("with US enabled and international disabled", () => {
-          it("triggers the flow for US address after clicking continue", async () => {})
+          beforeEach(() => {
+            ;(useFeatureFlag as jest.Mock).mockImplementation(
+              (featureName: string) => featureName === "address_verification_us"
+            )
+            relayEnv = createMockEnvironment()
+          })
 
-          it("does not triggers the flow for international address after clicking continue", async () => {})
+          afterEach(() => {
+            ;(useFeatureFlag as jest.Mock).mockReset()
+            relayEnv = undefined
+          })
+
+          it("triggers basic form validation before address verification", async () => {
+            const { env } = renderWithRelay(
+              {
+                CommerceOrder: () => order,
+                Me: () => meWithoutAddress,
+              },
+              undefined,
+              relayEnv
+            )
+
+            expect(
+              screen.queryByText("This field is required")
+            ).not.toBeInTheDocument()
+
+            fillAddressFormTL(validAddress)
+            userEvent.clear(screen.getByPlaceholderText("Street address"))
+
+            await userEvent.click(
+              screen.getByRole("button", { name: "Save and Continue" })
+            )
+
+            expect(screen.getByText("This field is required")).toBeVisible()
+            expect(env.mock.getAllOperations()).toHaveLength(0)
+          })
+
+          it("triggers the flow for US address after clicking continue", async () => {
+            const addressVerifiedWithChangesResult = {
+              __typename: "VerifyAddressType",
+              verificationStatus: "VERIFIED_WITH_CHANGES",
+              suggestedAddresses: [
+                {
+                  lines: ["401 Broadway Suite 25", "New York, NY 10013", "USA"],
+                  address: {
+                    addressLine1: "401 Broadway Suite 25",
+                    addressLine2: null,
+                    city: "New York",
+                    region: "NY",
+                    postalCode: "10013",
+                    country: "US",
+                  },
+                },
+              ],
+              inputAddress: {
+                lines: [
+                  "401 Broadway",
+                  "Suite 25",
+                  "New York, NY 10013",
+                  "USA",
+                ],
+                address: validAddress,
+              },
+            }
+
+            const { env } = renderWithRelay(
+              {
+                CommerceOrder: () => order,
+                Me: () => meWithoutAddress,
+              },
+              undefined,
+              relayEnv
+            )
+
+            fillAddressFormTL(validAddress)
+            await userEvent.click(
+              screen.getByRole("button", { name: "Save and Continue" })
+            )
+
+            const mutation = env.mock.getMostRecentOperation()
+            expect(mutation.request.node.operation.name).toEqual(
+              "AddressVerificationFlowQuery"
+            )
+            expect(mutation.request.variables).toEqual({
+              address: {
+                addressLine1: "401 Broadway",
+                addressLine2: "",
+                city: "New York",
+                region: "NY",
+                postalCode: "15601",
+                country: "US",
+              },
+            })
+
+            env.mock.resolveMostRecentOperation(operation => {
+              return MockPayloadGenerator.generate(operation, {
+                VerifyAddressType: () => addressVerifiedWithChangesResult,
+              })
+            })
+            expect(
+              await screen.findByText("Confirm your delivery address")
+            ).toBeVisible()
+          })
+
+          it("does not triggers the flow for international address after clicking continue", async () => {
+            const { env } = renderWithRelay(
+              {
+                CommerceOrder: () => order,
+                Me: () => meWithoutAddress,
+              },
+              undefined,
+              relayEnv
+            )
+
+            fillAddressFormTL(validAddress)
+            userEvent.selectOptions(screen.getByRole("combobox"), ["TW"])
+            await userEvent.click(
+              screen.getByRole("button", { name: "Save and Continue" })
+            )
+
+            expect(env.mock.getAllOperations()).toHaveLength(0)
+          })
         })
 
         describe("with US disabled and international enabled", () => {
-          it("does not triggers tthe flow for US address after clicking continue", async () => {})
+          beforeEach(() => {
+            ;(useFeatureFlag as jest.Mock).mockImplementation(
+              (featureName: string) =>
+                featureName === "address_verification_intl"
+            )
+            relayEnv = createMockEnvironment()
+          })
 
-          it("triggers the flow for international address after clicking continue", async () => {})
+          afterEach(() => {
+            ;(useFeatureFlag as jest.Mock).mockReset()
+            relayEnv = undefined
+          })
+
+          it("does not triggers tthe flow for US address after clicking continue", async () => {
+            const { env } = renderWithRelay(
+              {
+                CommerceOrder: () => order,
+                Me: () => meWithoutAddress,
+              },
+              undefined,
+              relayEnv
+            )
+
+            fillAddressFormTL(validAddress)
+            await userEvent.click(
+              screen.getByRole("button", { name: "Save and Continue" })
+            )
+
+            expect(env.mock.getAllOperations()).toHaveLength(0)
+          })
+
+          it("triggers the flow for international address after clicking continue", async () => {
+            const { env } = renderWithRelay(
+              {
+                CommerceOrder: () => order,
+                Me: () => meWithoutAddress,
+              },
+              undefined,
+              relayEnv
+            )
+
+            fillAddressFormTL(validAddress)
+            userEvent.selectOptions(screen.getByRole("combobox"), ["TW"])
+            await userEvent.click(
+              screen.getByRole("button", { name: "Save and Continue" })
+            )
+
+            const mutation = env.mock.getMostRecentOperation()
+            expect(mutation.request.node.operation.name).toEqual(
+              "AddressVerificationFlowQuery"
+            )
+            expect(mutation.request.variables).toEqual({
+              address: {
+                addressLine1: "401 Broadway",
+                addressLine2: "",
+                city: "New York",
+                region: "NY",
+                postalCode: "15601",
+                country: "TW",
+              },
+            })
+          })
         })
-
-        it("triggers basic form validation before address verification", async () => {})
       })
     })
 
@@ -770,7 +948,43 @@ describe("Shipping", () => {
 
       describe("address verification", () => {
         describe("with address verification enabled", () => {
-          it("does not trigger the flow", async () => {})
+          beforeEach(() => {
+            ;(useFeatureFlag as jest.Mock).mockImplementation(
+              (featureName: string) => featureName === "address_verification_us"
+            )
+            relayEnv = createMockEnvironment()
+          })
+
+          afterEach(() => {
+            ;(useFeatureFlag as jest.Mock).mockReset()
+            relayEnv = undefined
+          })
+
+          it("does not trigger the flow", async () => {
+            const { env } = renderWithRelay(
+              {
+                CommerceOrder: () => order,
+                Me: () => meWithAddresses,
+              },
+              undefined,
+              relayEnv
+            )
+
+            await userEvent.click(
+              screen.getByRole("button", { name: "Save and Continue" })
+            )
+
+            // Address verification flow is not triggered.
+            expect(env.mock.getAllOperations()).toHaveLength(0)
+
+            // It sets shipping on order directly.
+            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+
+            const mutationArg = mockCommitMutation.mock.calls[0][0]
+            expect(mutationArg.mutation.default.operation.name).toEqual(
+              "SetShippingMutation"
+            )
+          })
         })
       })
 
