@@ -13710,7 +13710,7 @@ type Partner implements Node {
     highQuality: Boolean
     last: Int
     partnerID: String
-    since: Int
+    since: SearchCriteriaSinceEnum
   ): SearchCriteriaConnection
   showPromoted: Boolean
 
@@ -15789,7 +15789,7 @@ type Query {
     highQuality: Boolean
     last: Int
     partnerID: String
-    since: Int
+    since: SearchCriteriaSinceEnum
   ): SearchCriteriaConnection
   shortcut(id: ID!): Shortcut
 
@@ -20401,7 +20401,7 @@ type Viewer {
     highQuality: Boolean
     last: Int
     partnerID: String
-    since: Int
+    since: SearchCriteriaSinceEnum
   ): SearchCriteriaConnection
   shortcut(id: ID!): Shortcut
 
