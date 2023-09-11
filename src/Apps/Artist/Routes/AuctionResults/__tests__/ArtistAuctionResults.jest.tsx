@@ -327,8 +327,8 @@ describe("AuctionResults", () => {
               page: 1,
               sort: "DATE_DESC",
               allowEmptyCreatedDates: true,
-              createdAfterYear: 1880,
-              createdBeforeYear: 1973,
+              createdAfterYear: 1979,
+              createdBeforeYear: 1991,
             })
           })
         })
@@ -427,8 +427,8 @@ describe("AuctionResults", () => {
             const { env } = renderWithRelay(mockedResolver)
 
             const comboboxes = screen.getAllByRole("combobox")
-            fireEvent.change(comboboxes[1], { target: { value: "1900" } })
-            fireEvent.change(comboboxes[2], { target: { value: "1960" } })
+            fireEvent.change(comboboxes[1], { target: { value: "1979" } })
+            fireEvent.change(comboboxes[2], { target: { value: "1980" } })
             act(() => {
               env.mock.resolveMostRecentOperation(operation => {
                 operationVariables = operation.request.variables
@@ -436,8 +436,8 @@ describe("AuctionResults", () => {
               })
             })
 
-            expect(operationVariables.createdAfterYear).toBe(1900)
-            expect(operationVariables.createdBeforeYear).toBe(1960)
+            expect(operationVariables.createdAfterYear).toBe(1979)
+            expect(operationVariables.createdBeforeYear).toBe(1980)
           })
         })
 
@@ -518,8 +518,10 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         {
           slice: "LOTS_BY_CREATED_YEAR",
           counts: [
+            { name: "1979", value: "1979", count: 100 },
             { name: "1980", value: "1980", count: 100 },
             { name: "1990", value: "1990", count: 300 },
+            { name: "1990", value: "1991", count: 300 },
           ],
         },
       ],
