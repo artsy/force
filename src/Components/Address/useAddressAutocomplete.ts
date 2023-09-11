@@ -45,6 +45,7 @@ export const useAddressAutocomplete = (
   const isAddressAutocompleteEnabled =
     isAPIKeyPresent && isFeatureFlagEnabled && isUSAddress
 
+  // reset suggestions if the country changes
   useEffect(() => {
     if (result.length > 0 && !isUSAddress) {
       setResult([])
