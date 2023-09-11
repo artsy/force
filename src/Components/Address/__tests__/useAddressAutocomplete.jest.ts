@@ -43,15 +43,10 @@ describe("useAddressAutocomplete", () => {
 
   afterAll(() => {
     jest.resetAllMocks()
-    jest.resetModules()
   })
 
   beforeEach(() => {
     jest.clearAllMocks()
-  })
-
-  afterEach(() => {
-    jest.useRealTimers()
   })
 
   describe("when the US address autocomplete feature flag is enabled", () => {
@@ -200,23 +195,6 @@ describe("useAddressAutocomplete", () => {
 
         expect(result.current.autocompleteOptions).toEqual([])
         expect(mockFetch).not.toHaveBeenCalled()
-      })
-
-      it.skip("debounces calls to Smarty API", async () => {
-        jest.useFakeTimers()
-
-        const { result } = setupHook({ country: "US" })
-
-        act(() => {
-          result.current.fetchForAutocomplete({ search: "401 Broadway" })
-          result.current.fetchForAutocomplete({ search: "401 Broad" })
-          result.current.fetchForAutocomplete({ search: "401 Bro" })
-        })
-
-        jest.advanceTimersByTime(700)
-
-        await waitFor(() => result.current.autocompleteOptions.length > 0)
-        expect(mockFetch).toHaveBeenCalledTimes(1)
       })
     })
 
