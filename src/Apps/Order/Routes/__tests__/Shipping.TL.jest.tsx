@@ -7,6 +7,7 @@ import {
   UntouchedBuyOrder,
   UntouchedOfferOrder,
   UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+  UntouchedBuyOrderWithShippingQuotes,
 } from "Apps/__tests__/Fixtures/Order"
 import {
   settingOrderShipmentSuccess,
@@ -982,7 +983,7 @@ describe("Shipping", () => {
         })
       })
 
-      describe("Artsy shipping domestic", () => {
+      describe("Artsy shipping domestic only", () => {
         describe("with artwork located in Germany", () => {
           it("sets shipping on order if the collector is in Germany", async () => {})
 
@@ -990,22 +991,240 @@ describe("Shipping", () => {
         })
 
         describe("with artwork located in the US", () => {
-          it("does not show shipping quote if the collector is in the EU", async () => {})
+          it("does not fetch or show shipping quotes if the collector is in the EU", async () => {
+            const meWithDefaultAddressInSpain = cloneDeep(
+              meWithAddresses
+            ) as any
+            meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault = true // Spain
+            meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault = false // US
+
+            renderWithRelay({
+              CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
+              Me: () => meWithDefaultAddressInSpain,
+            })
+
+            expect(mockCommitMutation).not.toHaveBeenCalled()
+            expect(
+              screen.queryByRole("radio", { name: /^Standard/ })
+            ).not.toBeInTheDocument()
+          })
 
           describe("with the collector in the US", () => {
-            it("sets shipping", async () => {})
+            it("sets shipping with the default address on load", async () => {
+              mockCommitMutation.mockResolvedValueOnce(
+                settingOrderArtaShipmentSuccess
+              )
 
-            it("shows shipping quotes after committing set shipping mutation", async () => {})
+              renderWithRelay({
+                CommerceOrder: () =>
+                  UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+                Me: () => meWithAddresses,
+              })
+              await flushPromiseQueue()
 
-            it("selects the first quote and enables the submit button", async () => {})
+              expect(mockCommitMutation).toHaveBeenCalledTimes(1)
 
-            it("keeps the submit button enabled after selecting a shipping quote", async () => {})
+              const mutationArg = mockCommitMutation.mock.calls[0][0]
+              expect(mutationArg.mutation.default.operation.name).toEqual(
+                "SetShippingMutation"
+              )
+              expect(mutationArg.variables).toEqual({
+                input: {
+                  id: "2939023",
+                  fulfillmentType: "SHIP_ARTA",
+                  phoneNumber: "422-424-4242",
+                  shipping: {
+                    addressLine1: "401 Broadway",
+                    addressLine2: "Floor 25",
+                    city: "New York",
+                    country: "US",
+                    name: "Test Name",
+                    phoneNumber: "422-424-4242",
+                    postalCode: "10013",
+                    region: "NY",
+                  },
+                },
+              })
+            })
 
-            it("commits selectShippingOption mutation twice with correct input", async () => {})
+            it("shows shipping quotes for the default address on load", async () => {
+              mockCommitMutation.mockResolvedValueOnce(
+                settingOrderArtaShipmentSuccess
+              )
 
-            it("routes to payment screen after selectShippingOption mutation completes", async () => {})
+              renderWithRelay({
+                CommerceOrder: () =>
+                  UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+                Me: () => meWithAddresses,
+              })
+              await flushPromiseQueue()
 
-            it("reloads shipping quotes after editing the selected address", async () => {})
+              expect(
+                screen.getAllByRole("radio", {
+                  name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
+                })
+              ).toHaveLength(5)
+            })
+
+            it("sets shipping on order, shows shipping quotes and saves the pre-selected quote", async () => {
+              mockCommitMutation.mockResolvedValueOnce(
+                settingOrderArtaShipmentSuccess
+              )
+
+              renderWithRelay({
+                // Simulate the condition with an order with saved shipping quotes
+                CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+                Me: () => meWithAddresses,
+              })
+
+              await flushPromiseQueue()
+              expect(
+                screen.getByRole("button", { name: "Save and Continue" })
+              ).toBeEnabled()
+
+              await saveAndContinue()
+
+              expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+
+              let mutationArg = mockCommitMutation.mock.calls[0][0]
+              expect(mutationArg.mutation.default.operation.name).toEqual(
+                "SetShippingMutation"
+              )
+              expect(mutationArg.variables).toEqual({
+                input: {
+                  id: "2939023",
+                  fulfillmentType: "SHIP_ARTA",
+                  phoneNumber: "422-424-4242",
+                  shipping: {
+                    addressLine1: "401 Broadway",
+                    addressLine2: "Floor 25",
+                    city: "New York",
+                    country: "US",
+                    name: "Test Name",
+                    phoneNumber: "422-424-4242",
+                    postalCode: "10013",
+                    region: "NY",
+                  },
+                },
+              })
+
+              mutationArg = mockCommitMutation.mock.calls[1][0]
+              expect(mutationArg.mutation.default.operation.name).toEqual(
+                "SelectShippingOptionMutation"
+              )
+              expect(mutationArg.variables).toEqual({
+                input: {
+                  id: "2939023",
+                  selectedShippingQuoteId:
+                    "4a8f8080-23d3-4c0e-9811-7a41a9df6933",
+                },
+              })
+            })
+
+            it("selects a different shipping quote and saves it", async () => {
+              mockCommitMutation.mockResolvedValueOnce(
+                settingOrderArtaShipmentSuccess
+              )
+
+              renderWithRelay({
+                // Simulate the condition with an order with saved shipping quotes
+                CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+                Me: () => meWithAddresses,
+              })
+              await flushPromiseQueue()
+
+              userEvent.click(screen.getByRole("radio", { name: /^Premium/ }))
+              expect(
+                screen.getByRole("button", { name: "Save and Continue" })
+              ).toBeEnabled()
+              await saveAndContinue()
+
+              expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+
+              let mutationArg = mockCommitMutation.mock.calls[0][0]
+              expect(mutationArg.mutation.default.operation.name).toEqual(
+                "SetShippingMutation"
+              )
+              expect(mutationArg.variables).toEqual({
+                input: {
+                  id: "2939023",
+                  fulfillmentType: "SHIP_ARTA",
+                  phoneNumber: "422-424-4242",
+                  shipping: {
+                    addressLine1: "401 Broadway",
+                    addressLine2: "Floor 25",
+                    city: "New York",
+                    country: "US",
+                    name: "Test Name",
+                    phoneNumber: "422-424-4242",
+                    postalCode: "10013",
+                    region: "NY",
+                  },
+                },
+              })
+
+              mutationArg = mockCommitMutation.mock.calls[1][0]
+              expect(mutationArg.mutation.default.operation.name).toEqual(
+                "SelectShippingOptionMutation"
+              )
+              expect(mutationArg.variables).toEqual({
+                input: {
+                  id: "2939023",
+                  selectedShippingQuoteId:
+                    "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+                },
+              })
+            })
+
+            it("keeps the submit button enabled after selecting a shipping quote", async () => {
+              mockCommitMutation.mockResolvedValueOnce(
+                settingOrderArtaShipmentSuccess
+              )
+
+              renderWithRelay({
+                CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+                Me: () => meWithAddresses,
+              })
+              await flushPromiseQueue()
+
+              const premiumShipping = screen.getByRole("radio", {
+                name: /^Premium/,
+              })
+              expect(premiumShipping).not.toBeChecked()
+
+              userEvent.click(premiumShipping)
+              await flushPromiseQueue()
+
+              expect(premiumShipping).toBeChecked()
+              expect(
+                screen.getByRole("button", { name: "Save and Continue" })
+              ).toBeEnabled()
+            })
+
+            it("routes to payment screen after saving shipping option", async () => {
+              mockCommitMutation
+                .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
+                .mockResolvedValueOnce(selectShippingQuoteSuccess)
+
+              renderWithRelay({
+                CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+                Me: () => meWithAddresses,
+              })
+              await flushPromiseQueue()
+              await saveAndContinue()
+
+              expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+
+              let mutationArg = mockCommitMutation.mock.calls[0][0]
+              expect(mutationArg.mutation.default.operation.name).toEqual(
+                "SetShippingMutation"
+              )
+              mutationArg = mockCommitMutation.mock.calls[1][0]
+              expect(mutationArg.mutation.default.operation.name).toEqual(
+                "SelectShippingOptionMutation"
+              )
+              expect(pushMock).toHaveBeenCalledWith("/orders/2939023/payment")
+            })
 
             it("does not reload shipping quotes after editing a non-selected address", async () => {})
           })
