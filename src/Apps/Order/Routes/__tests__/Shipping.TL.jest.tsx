@@ -7,7 +7,10 @@ import {
   UntouchedBuyOrder,
   UntouchedOfferOrder,
   UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+  UntouchedBuyOrderWithArtsyShippingDomesticFromGermany,
   UntouchedBuyOrderWithShippingQuotes,
+  UntouchedBuyOrderWithArtsyShippingInternationalFromUS,
+  UntouchedBuyOrderWithArtsyShippingInternationalFromGermany,
 } from "Apps/__tests__/Fixtures/Order"
 import {
   settingOrderShipmentSuccess,
@@ -1067,25 +1070,175 @@ describe("Shipping", () => {
     })
 
     describe("with saved addresses", () => {
-      describe("Artsy shipping international", () => {
+      describe("Artsy shipping international only", () => {
         describe("with artwork located in the US", () => {
-          it("sets shipping on order if the collector is in the EU", async () => {})
+          it("sets shipping on order if the collector is in the EU", async () => {
+            const meWithDefaultAddressInSpain = cloneDeep(
+              meWithAddresses
+            ) as any
+            meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault = true // Spain
+            meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault = false // US
 
-          it("does not set shipping on order if the collector is in the US", async () => {})
+            renderWithRelay({
+              CommerceOrder: () =>
+                UntouchedBuyOrderWithArtsyShippingInternationalFromUS,
+              Me: () => meWithDefaultAddressInSpain,
+            })
+            await flushPromiseQueue()
+
+            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+            const mutationArg = mockCommitMutation.mock.calls[0][0]
+            expect(mutationArg.mutation.default.operation.name).toEqual(
+              "SetShippingMutation"
+            )
+            expect(mutationArg.variables).toEqual({
+              input: {
+                id: "2939023",
+                fulfillmentType: "SHIP_ARTA",
+                phoneNumber: "555-555-5555",
+                shipping: {
+                  addressLine1: "1 Main St",
+                  addressLine2: "",
+                  city: "Madrid",
+                  country: "ES",
+                  name: "Test Name",
+                  phoneNumber: "555-555-5555",
+                  postalCode: "28001",
+                  region: "",
+                },
+              },
+            })
+          })
+
+          it("does not set shipping on order if the collector is in the US", async () => {
+            renderWithRelay({
+              CommerceOrder: () =>
+                UntouchedBuyOrderWithArtsyShippingInternationalFromUS,
+              Me: () => meWithAddresses,
+            })
+            await flushPromiseQueue()
+
+            expect(mockCommitMutation).not.toHaveBeenCalled()
+            expect(
+              screen.queryByRole("radio", {
+                name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
+              })
+            ).not.toBeInTheDocument()
+          })
         })
 
         describe("with artwork located in Germany", () => {
-          it("does not set shipping on order if the collector is in the EU", async () => {})
+          it("does not set shipping on order if the collector is in the EU", async () => {
+            const meWithDefaultAddressInSpain = cloneDeep(
+              meWithAddresses
+            ) as any
+            meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault = true // Spain
+            meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault = false // US
 
-          it("sets shipping on order if the collector is in the US", async () => {})
+            renderWithRelay({
+              CommerceOrder: () =>
+                UntouchedBuyOrderWithArtsyShippingInternationalFromGermany,
+              Me: () => meWithDefaultAddressInSpain,
+            })
+            await flushPromiseQueue()
+
+            expect(mockCommitMutation).not.toHaveBeenCalled()
+            expect(
+              screen.queryByRole("radio", {
+                name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
+              })
+            ).not.toBeInTheDocument()
+          })
+
+          it("sets shipping on order if the collector is in the US", async () => {
+            renderWithRelay({
+              CommerceOrder: () =>
+                UntouchedBuyOrderWithArtsyShippingInternationalFromGermany,
+              Me: () => meWithAddresses,
+            })
+            await flushPromiseQueue()
+
+            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+            const mutationArg = mockCommitMutation.mock.calls[0][0]
+            expect(mutationArg.mutation.default.operation.name).toEqual(
+              "SetShippingMutation"
+            )
+            expect(mutationArg.variables).toEqual({
+              input: {
+                id: "2939023",
+                fulfillmentType: "SHIP_ARTA",
+                phoneNumber: "422-424-4242",
+                shipping: {
+                  addressLine1: "401 Broadway",
+                  addressLine2: "Floor 25",
+                  city: "New York",
+                  country: "US",
+                  name: "Test Name",
+                  phoneNumber: "422-424-4242",
+                  postalCode: "10013",
+                  region: "NY",
+                },
+              },
+            })
+          })
         })
       })
 
       describe("Artsy shipping domestic only", () => {
         describe("with artwork located in Germany", () => {
-          it("sets shipping on order if the collector is in Germany", async () => {})
+          it("sets shipping on order if the collector is in Germany", async () => {
+            const meWithDefaultAddressInSpain = cloneDeep(
+              meWithAddresses
+            ) as any
+            meWithDefaultAddressInSpain.addressConnection.edges[0].node.isDefault = true // Spain
+            meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault = false // US
 
-          it("does not set shipping on order if the collector is in the US", async () => {})
+            renderWithRelay({
+              CommerceOrder: () =>
+                UntouchedBuyOrderWithArtsyShippingDomesticFromGermany,
+              Me: () => meWithDefaultAddressInSpain,
+            })
+            await flushPromiseQueue()
+
+            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+            const mutationArg = mockCommitMutation.mock.calls[0][0]
+            expect(mutationArg.mutation.default.operation.name).toEqual(
+              "SetShippingMutation"
+            )
+            expect(mutationArg.variables).toEqual({
+              input: {
+                id: "2939023",
+                fulfillmentType: "SHIP_ARTA",
+                phoneNumber: "555-555-5555",
+                shipping: {
+                  addressLine1: "1 Main St",
+                  addressLine2: "",
+                  city: "Madrid",
+                  country: "ES",
+                  name: "Test Name",
+                  phoneNumber: "555-555-5555",
+                  postalCode: "28001",
+                  region: "",
+                },
+              },
+            })
+          })
+
+          it("does not set shipping on order if the collector is in the US", async () => {
+            renderWithRelay({
+              CommerceOrder: () =>
+                UntouchedBuyOrderWithArtsyShippingDomesticFromGermany,
+              Me: () => meWithAddresses,
+            })
+            await flushPromiseQueue()
+
+            expect(mockCommitMutation).not.toHaveBeenCalled()
+            expect(
+              screen.queryByRole("radio", {
+                name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
+              })
+            ).not.toBeInTheDocument()
+          })
         })
 
         describe("with artwork located in the US", () => {
@@ -1100,10 +1253,13 @@ describe("Shipping", () => {
               CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
               Me: () => meWithDefaultAddressInSpain,
             })
+            await flushPromiseQueue()
 
             expect(mockCommitMutation).not.toHaveBeenCalled()
             expect(
-              screen.queryByRole("radio", { name: /^Standard/ })
+              screen.queryByRole("radio", {
+                name: /(^Standard|^Express|^White Glove|^Rush|^Premium)/,
+              })
             ).not.toBeInTheDocument()
           })
 
