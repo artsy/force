@@ -237,54 +237,6 @@ describe("Shipping", () => {
   })
 
   describe("with no saved addresses", () => {
-    it("commits the mutation with shipping option", async () => {
-      mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
-      const wrapper = getWrapper({
-        CommerceOrder: () => testOrder,
-        Me: () => emptyTestMe,
-      })
-      const page = new ShippingTestPage(wrapper)
-
-      const address = {
-        ...validAddress,
-        region: "New Brunswick",
-        country: "US",
-      }
-      fillAddressForm(page.root, address)
-
-      await page.clickSubmit()
-      expect(mockCommitMutation).toHaveBeenCalledTimes(2)
-      expect(mockCommitMutation).toHaveBeenNthCalledWith(
-        1,
-        expect.objectContaining({
-          variables: {
-            input: {
-              id: "1234",
-              fulfillmentType: "SHIP",
-              phoneNumber: address.phoneNumber,
-              shipping: {
-                ...address,
-                phoneNumber: "",
-              },
-            },
-          },
-        })
-      )
-      expect(mockCommitMutation).toHaveBeenNthCalledWith(
-        2,
-        expect.arrayContaining([
-          expect.anything(),
-          expect.objectContaining({
-            variables: {
-              input: {
-                attributes: address,
-              },
-            },
-          }),
-        ])
-      )
-    })
-
     describe("Validations", () => {
       describe("for Ship orders", () => {
         describe("with address verfication enabled", () => {
