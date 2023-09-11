@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<75a1e8ee116c9c32e49e7c4d4968bf52>>
+ * @generated SignedSource<<f6e105cf1950d586f2abba74c5e8cc05>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -225,6 +225,13 @@ return {
                     "kind": "ScalarField",
                     "name": "verificationStatus",
                     "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "addressVerificationId",
+                    "storageKey": null
                   }
                 ],
                 "type": "VerifyAddressType",
@@ -278,7 +285,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "74290259e39657f12c9d0bcc8e0ac38f",
+    "cacheID": "22015b04dd5c1e149a6094fd3837e20e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -295,6 +302,7 @@ return {
           "type": "VerifyAddressMutationType"
         },
         "verifyAddress.verifyAddressOrError.__typename": (v4/*: any*/),
+        "verifyAddress.verifyAddressOrError.addressVerificationId": (v4/*: any*/),
         "verifyAddress.verifyAddressOrError.inputAddress": {
           "enumValues": null,
           "nullable": false,
@@ -363,7 +371,7 @@ return {
     },
     "name": "AddressVerificationFlow_Test_Query",
     "operationKind": "query",
-    "text": "query AddressVerificationFlow_Test_Query(\n  $address: VerifyAddressInput!\n) {\n  verifyAddress(input: $address) {\n    ...AddressVerificationFlow_verifyAddress\n  }\n}\n\nfragment AddressVerificationFlow_verifyAddress on VerifyAddressPayload {\n  verifyAddressOrError {\n    __typename\n    ... on VerifyAddressType {\n      inputAddress {\n        lines\n        address {\n          addressLine1\n          addressLine2\n          city\n          country\n          postalCode\n          region\n        }\n      }\n      suggestedAddresses {\n        lines\n        address {\n          addressLine1\n          addressLine2\n          city\n          country\n          postalCode\n          region\n        }\n      }\n      verificationStatus\n    }\n    ... on VerifyAddressFailureType {\n      mutationError {\n        type\n        message\n        statusCode\n      }\n    }\n  }\n}\n"
+    "text": "query AddressVerificationFlow_Test_Query(\n  $address: VerifyAddressInput!\n) {\n  verifyAddress(input: $address) {\n    ...AddressVerificationFlow_verifyAddress\n  }\n}\n\nfragment AddressVerificationFlow_verifyAddress on VerifyAddressPayload {\n  verifyAddressOrError {\n    __typename\n    ... on VerifyAddressType {\n      inputAddress {\n        lines\n        address {\n          addressLine1\n          addressLine2\n          city\n          country\n          postalCode\n          region\n        }\n      }\n      suggestedAddresses {\n        lines\n        address {\n          addressLine1\n          addressLine2\n          city\n          country\n          postalCode\n          region\n        }\n      }\n      verificationStatus\n      addressVerificationId\n    }\n    ... on VerifyAddressFailureType {\n      mutationError {\n        type\n        message\n        statusCode\n      }\n    }\n  }\n}\n"
   }
 };
 })();
