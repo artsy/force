@@ -18,7 +18,10 @@ import {
   settingOrderArtaShipmentSuccess,
   selectShippingQuoteSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
-import { saveAddressSuccess } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
+import {
+  saveAddressSuccess,
+  updateAddressSuccess,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
 import { ShippingTestQuery$rawResponse } from "__generated__/ShippingTestQuery.graphql"
 import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
@@ -31,6 +34,8 @@ import userEvent from "@testing-library/user-event"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { queryByAttribute } from "@testing-library/dom"
 import { ErrorDialogMessage } from "Apps/Order/Utils/getErrorDialogCopy"
+import * as updateUserAddress from "Apps/Order/Mutations/UpdateUserAddress"
+import { within } from "@testing-library/dom"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -767,9 +772,102 @@ describe("Shipping", () => {
       })
 
       describe("editing address", () => {
-        it("opens a modal with the address prepopulated", async () => {})
+        it("opens a modal with the address prepopulated", async () => {
+          mockCommitMutation.mockResolvedValueOnce(
+            settingOrderArtaShipmentSuccess
+          )
 
-        it("updates the address after submitting the modal form", async () => {})
+          renderWithRelay({
+            CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+            Me: () => meWithAddresses,
+          })
+          await flushPromiseQueue()
+
+          // Set shipping on load for the default address
+          expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+          let mutationArg = mockCommitMutation.mock.calls[0][0]
+          expect(mutationArg.mutation.default.operation.name).toEqual(
+            "SetShippingMutation"
+          )
+
+          const selectedAddress = screen.getByRole("radio", {
+            name: /401 Broadway/,
+            checked: true,
+          })
+          await userEvent.click(within(selectedAddress).getByText("Edit"))
+          await flushPromiseQueue()
+
+          expect(screen.getByText("Edit address")).toBeVisible()
+          expect(screen.getByDisplayValue("401 Broadway")).toBeInTheDocument()
+          expect(screen.getByDisplayValue("Floor 25")).toBeInTheDocument()
+          expect(screen.getByDisplayValue("New York")).toBeInTheDocument()
+          expect(screen.getByDisplayValue("NY")).toBeInTheDocument()
+          expect(screen.getByDisplayValue("10013")).toBeInTheDocument()
+        })
+
+        it("updates the address after submitting the modal form", async () => {
+          mockCommitMutation.mockResolvedValueOnce(
+            settingOrderArtaShipmentSuccess
+          )
+
+          const updateAddressSpy = jest
+            .spyOn(updateUserAddress, "updateUserAddress")
+            // @ts-ignore
+            .mockImplementationOnce((_, __, ___, ____, onSuccess) => {
+              onSuccess(updateAddressSuccess)
+            })
+
+          renderWithRelay({
+            CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+            Me: () => meWithAddresses,
+          })
+          await flushPromiseQueue()
+
+          // Set shipping on load for the default address
+          expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+          let mutationArg = mockCommitMutation.mock.calls[0][0]
+          expect(mutationArg.mutation.default.operation.name).toEqual(
+            "SetShippingMutation"
+          )
+
+          const selectedAddress = screen.getByRole("radio", {
+            name: /401 Broadway/,
+            checked: true,
+          })
+          await userEvent.click(within(selectedAddress).getByText("Edit"))
+
+          const modalTitle = screen.getByText("Edit address")
+          expect(modalTitle).toBeVisible()
+
+          // TODO: need a better way to get a specific input field from multiple forms
+          const addressLine2 = screen.getAllByPlaceholderText(
+            /Apt, floor, suite/
+          )[0]
+          userEvent.clear(addressLine2)
+          userEvent.type(addressLine2, "25th fl.")
+          userEvent.click(screen.getByRole("button", { name: "Save" }))
+          await flushPromiseQueue()
+
+          expect(updateAddressSpy).toHaveBeenCalledTimes(1)
+          expect(updateAddressSpy).toHaveBeenCalledWith(
+            expect.anything(),
+            "2",
+            {
+              addressLine1: "401 Broadway",
+              addressLine2: "25th fl.",
+              addressLine3: "",
+              city: "New York",
+              country: "US",
+              name: "Test Name",
+              phoneNumber: "422-424-4242",
+              postalCode: "10013",
+              region: "NY",
+            },
+            expect.anything(),
+            expect.anything(),
+            expect.anything()
+          )
+        })
       })
     })
   })
