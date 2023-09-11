@@ -515,6 +515,13 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
           slice: "LOTS_BY_SALE_YEAR",
           counts: [{ name: "1880", value: "1880", count: 100 }],
         },
+        {
+          slice: "LOTS_BY_CREATED_YEAR",
+          counts: [
+            { name: "1980", value: "1980", count: 100 },
+            { name: "1990", value: "1990", count: 300 },
+          ],
+        },
       ],
     },
     auctionResultsConnection: {
@@ -535,10 +542,6 @@ const AuctionResultsFixture: ArtistAuctionResults_Test_Query$rawResponse = {
         previous: null,
       },
       totalCount: 830,
-      createdYearRange: {
-        startAt: 1880,
-        endAt: 1973,
-      },
       edges: [
         {
           node: {
