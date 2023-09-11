@@ -10,6 +10,8 @@ const initialPaymentMethods: CommercePaymentMethodEnum[] = [
   "WIRE_TRANSFER",
 ]
 
+export const DEFUALT_OFFER_NOTE_PREFIX = "I sent an offer for"
+
 export const isPaymentSet = (
   paymentMethodDetails: Payment_order$data["paymentMethodDetails"]
 ): boolean => {
@@ -35,3 +37,11 @@ export const getInitialPaymentMethodValue = ({
     : initialPaymentMethods.find(method =>
         availablePaymentMethods.includes(method)
       )!
+
+export const lastOfferNote = (note: string) => {
+  if (note.startsWith(DEFUALT_OFFER_NOTE_PREFIX)) {
+    return ""
+  } else {
+    return note
+  }
+}

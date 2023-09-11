@@ -1,4 +1,8 @@
-import { getInitialPaymentMethodValue, isPaymentSet } from "./../orderUtils"
+import {
+  getInitialPaymentMethodValue,
+  isPaymentSet,
+  lastOfferNote,
+} from "./../orderUtils"
 import {
   CommercePaymentMethodEnum,
   Payment_order$data,
@@ -94,6 +98,22 @@ describe("order utils", () => {
           } as unknown) as Payment_order$data)
         ).toEqual("WIRE_TRANSFER")
       })
+    })
+  })
+
+  describe("last offer note", () => {
+    it("returns empty string if note is empty", () => {
+      expect(lastOfferNote("")).toEqual("")
+    })
+
+    it("returns empty string if note is default", () => {
+      expect(
+        lastOfferNote("I sent an offer for $1,000 on Untitled Artwork")
+      ).toEqual("")
+    })
+
+    it("returns note if note is custom", () => {
+      expect(lastOfferNote("This is my note")).toEqual("This is my note")
     })
   })
 })

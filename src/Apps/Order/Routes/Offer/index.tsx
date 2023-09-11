@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react"
+import { FC, useState } from "react"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { Button, Flex, Message, Spacer, Text } from "@artsy/palette"
 import { Offer_order$data } from "__generated__/Offer_order.graphql"
@@ -25,6 +25,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
+import { lastOfferNote } from "Apps/Order/Utils/orderUtils"
 
 const logger = createLogger("Order/Routes/Offer/index.tsx")
 
@@ -50,22 +51,9 @@ export const OfferRoute: FC<OfferRouteProps> = ({
   const [lowSpeedBumpEncountered, setLowSpeedBumpEncountered] = useState(false)
   const [offerNoteValue, setOfferNoteValue] = useState({
     exceedsCharacterLimit: false,
-    value: "",
+    value: lastOfferNote(order.myLastOffer?.note || ""),
   })
   const [offerValue, setOfferValue] = useState(0)
-
-  useEffect(() => {
-    if (order.myLastOffer?.note) {
-      if (!order.myLastOffer.note.startsWith("I sent an offer for")) {
-        setOfferNoteValue({
-          exceedsCharacterLimit: false,
-          value: order.myLastOffer.note,
-        })
-      }
-    }
-    // need this to run only once
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const onOfferInputFocus = () => {
     trackEvent({
