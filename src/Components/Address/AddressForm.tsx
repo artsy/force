@@ -92,11 +92,6 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     fetchSecondarySuggestions,
   } = useAddressAutocomplete(address)
 
-  // // TODO: Remove this, it's just for debugging
-  // React.useEffect(() => {
-  //   console.log({ address, autocompleteOptions, isAddressAutocompleteEnabled })
-  // }, [address, autocompleteOptions, isAddressAutocompleteEnabled])
-
   if (!isEqual(value, prevValue)) {
     setPrevValue(value)
     setAddress(addressFromProp)

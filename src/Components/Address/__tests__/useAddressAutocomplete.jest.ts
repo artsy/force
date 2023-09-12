@@ -110,11 +110,11 @@ describe("useAddressAutocomplete", () => {
         )
       })
 
-      it("does not fetch for a query of less than 5 characters", async () => {
+      it("does not fetch for a query of less than 3 characters", async () => {
         const { result } = setupHook({ country: "US" })
 
         await act(() => {
-          result.current.fetchForAutocomplete({ search: "1234" })
+          result.current.fetchForAutocomplete({ search: "12" })
         })
 
         expect(mockFetch).not.toHaveBeenCalled()
