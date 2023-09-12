@@ -1694,7 +1694,252 @@ describe("Shipping", () => {
               expect(pushMock).toHaveBeenCalledWith("/orders/2939023/payment")
             })
 
-            it("does not reload shipping quotes after editing a non-selected address", async () => {})
+            it("reloads shipping quotes after editing the selected address", async () => {
+              relayEnv = createMockEnvironment()
+              mockCommitMutation
+                .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
+                .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
+
+              const updateAddressResponse = cloneDeep(
+                updateAddressSuccess
+              ) as any
+              // Match the edited address with the selected address to trigger refetching quotes
+              updateAddressResponse.updateUserAddress.userAddressOrErrors.internalID =
+                "2"
+              const updateAddressSpy = jest
+                .spyOn(updateUserAddress, "updateUserAddress")
+                // @ts-ignore
+                .mockImplementationOnce((_, __, ___, ____, onSuccess) => {
+                  onSuccess(updateAddressResponse)
+                })
+
+              const { env } = renderWithRelay(
+                {
+                  CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+                  Me: () => meWithAddresses,
+                },
+                undefined
+              )
+              await flushPromiseQueue()
+
+              // Set shipping/fetch quotes on load for the default address
+              expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+              let mutationArg = mockCommitMutation.mock.calls[0][0]
+              expect(mutationArg.mutation.default.operation.name).toEqual(
+                "SetShippingMutation"
+              )
+
+              // Edit the selected address
+              const selectedAddress = screen.getByRole("radio", {
+                name: /401 Broadway/,
+                checked: true,
+              })
+              await userEvent.click(within(selectedAddress).getByText("Edit"))
+
+              const modalTitle = screen.getByText("Edit address")
+              expect(modalTitle).toBeVisible()
+
+              // TODO: need a better way to get a specific input field from multiple forms
+              const addressLine2 = screen.getAllByPlaceholderText(
+                /Apt, floor, suite/
+              )[0]
+              userEvent.clear(addressLine2)
+              userEvent.type(addressLine2, "25th fl.")
+              userEvent.click(screen.getByRole("button", { name: "Save" }))
+
+              await flushPromiseQueue()
+
+              expect(updateAddressSpy).toHaveBeenCalledTimes(1)
+              expect(updateAddressSpy).toHaveBeenCalledWith(
+                expect.anything(),
+                "2",
+                {
+                  addressLine1: "401 Broadway",
+                  addressLine2: "25th fl.",
+                  addressLine3: "",
+                  city: "New York",
+                  country: "US",
+                  name: "Test Name",
+                  phoneNumber: "422-424-4242",
+                  postalCode: "10013",
+                  region: "NY",
+                },
+                expect.anything(),
+                expect.anything(),
+                expect.anything()
+              )
+
+              // TODO: This uses relay mock environment to mock the refetch query. Is there a better way?
+              const mutation = env.mock.getMostRecentOperation()
+              expect(mutation.request.node.operation.name).toEqual(
+                "SavedAddressesRefetchQuery"
+              )
+              expect(mutation.request.variables).toEqual({})
+
+              const updatedMe = cloneDeep(meWithAddresses) as any
+              updatedMe.addressConnection.edges[1].node.addressLine2 =
+                "25th fl."
+              env.mock.resolveMostRecentOperation(operation => {
+                return MockPayloadGenerator.generate(operation, {
+                  CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+                  Me: () => updatedMe,
+                })
+              })
+
+              // Wait for the second setShipping mutation to complete before clicking save and continue
+              await flushPromiseQueue()
+              await saveAndContinue()
+
+              expect(mockCommitMutation).toHaveBeenCalledTimes(3)
+
+              // Set shipping/fetch quotes again for the edited address
+              mutationArg = mockCommitMutation.mock.calls[1][0]
+              expect(mutationArg.mutation.default.operation.name).toEqual(
+                "SetShippingMutation"
+              )
+              expect(mutationArg.variables).toEqual({
+                input: {
+                  fulfillmentType: "SHIP_ARTA",
+                  id: "2939023",
+                  phoneNumber: "422-424-4242",
+                  shipping: {
+                    addressLine1: "1 Main St",
+                    addressLine2: "",
+                    city: "New York",
+                    country: "USA",
+                    name: "Bob Ross",
+                    phoneNumber: "718-000-0000",
+                    postalCode: "10012",
+                    region: "NY",
+                  },
+                },
+              })
+
+              mutationArg = mockCommitMutation.mock.calls[2][0]
+              expect(mutationArg.mutation.default.operation.name).toEqual(
+                "SelectShippingOptionMutation"
+              )
+              expect(mutationArg.variables).toEqual({
+                input: {
+                  id: "2939023",
+                  selectedShippingQuoteId:
+                    "4a8f8080-23d3-4c0e-9811-7a41a9df6933",
+                },
+              })
+            })
+
+            it("does not reload shipping quotes after editing a non-selected address", async () => {
+              relayEnv = createMockEnvironment()
+              mockCommitMutation
+                .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
+                .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
+
+              const updateAddressResponse = cloneDeep(
+                updateAddressSuccess
+              ) as any
+              // Match the edited address with the selected address to trigger refetching quotes
+              updateAddressResponse.updateUserAddress.userAddressOrErrors.internalID =
+                "1"
+              const updateAddressSpy = jest
+                .spyOn(updateUserAddress, "updateUserAddress")
+                // @ts-ignore
+                .mockImplementationOnce((_, __, ___, ____, onSuccess) => {
+                  onSuccess(updateAddressResponse)
+                })
+
+              const { env } = renderWithRelay(
+                {
+                  CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+                  Me: () => meWithAddresses,
+                },
+                undefined
+              )
+              await flushPromiseQueue()
+
+              // Set shipping/fetch quotes on load for the default address
+              expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+              let mutationArg = mockCommitMutation.mock.calls[0][0]
+              expect(mutationArg.mutation.default.operation.name).toEqual(
+                "SetShippingMutation"
+              )
+
+              // Edit the address that's not selected
+              const nonSelectedAddress = screen.getByRole("radio", {
+                name: /1 Main St/,
+                checked: false,
+              })
+              await userEvent.click(
+                within(nonSelectedAddress).getByText("Edit")
+              )
+
+              const modalTitle = screen.getByText("Edit address")
+              expect(modalTitle).toBeVisible()
+
+              // TODO: need a better way to get a specific input field from multiple forms
+              const addressLine2 = screen.getAllByPlaceholderText(
+                /Apt, floor, suite/
+              )[0]
+              userEvent.clear(addressLine2)
+              userEvent.type(addressLine2, "25th fl.")
+              userEvent.click(screen.getByRole("button", { name: "Save" }))
+
+              await flushPromiseQueue()
+
+              expect(updateAddressSpy).toHaveBeenCalledTimes(1)
+              expect(updateAddressSpy).toHaveBeenCalledWith(
+                expect.anything(),
+                "1",
+                {
+                  addressLine1: "1 Main St",
+                  addressLine2: "25th fl.",
+                  addressLine3: "",
+                  city: "Madrid",
+                  country: "ES",
+                  name: "Test Name",
+                  phoneNumber: "555-555-5555",
+                  postalCode: "28001",
+                  region: "",
+                },
+                expect.anything(),
+                expect.anything(),
+                expect.anything()
+              )
+
+              // TODO: This uses relay mock environment to mock the refetch query. Is there a better way?
+              const mutation = env.mock.getMostRecentOperation()
+              expect(mutation.request.node.operation.name).toEqual(
+                "SavedAddressesRefetchQuery"
+              )
+              expect(mutation.request.variables).toEqual({})
+
+              const updatedMe = cloneDeep(meWithAddresses) as any
+              updatedMe.addressConnection.edges[1].node.addressLine2 =
+                "25th fl."
+              env.mock.resolveMostRecentOperation(operation => {
+                return MockPayloadGenerator.generate(operation, {
+                  CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
+                  Me: () => updatedMe,
+                })
+              })
+
+              // Wait for the second setShipping mutation to complete before clicking save and continue
+              await flushPromiseQueue()
+              await saveAndContinue()
+
+              expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+
+              mutationArg = mockCommitMutation.mock.calls[1][0]
+              expect(mutationArg.mutation.default.operation.name).toEqual(
+                "SelectShippingOptionMutation"
+              )
+              expect(mutationArg.variables).toEqual({
+                input: {
+                  id: "2939023",
+                  selectedShippingQuoteId:
+                    "4a8f8080-23d3-4c0e-9811-7a41a9df6933",
+                },
+              })
+            })
           })
         })
       })
