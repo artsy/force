@@ -3,7 +3,7 @@ import { Omit } from "lodash"
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { get } from "Utils/get"
-import { getOfferItemFromOrder } from "Apps/Order/Utils/offerItemExtractor"
+import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import {
   Box,

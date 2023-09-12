@@ -20,12 +20,14 @@ import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { offerFlowSteps } from "Apps/Order/Components/OrderStepper"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
-import { getOfferItemFromOrder } from "Apps/Order/Utils/offerItemExtractor"
+import {
+  getOfferItemFromOrder,
+  lastOfferNote,
+} from "Apps/Order/Utils/offerUtils"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
-import { lastOfferNote } from "Apps/Order/Utils/orderUtils"
 
 const logger = createLogger("Order/Routes/Offer/index.tsx")
 
