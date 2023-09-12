@@ -102,13 +102,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const changeEventHandler = (key: keyof Address) => (
     ev: React.FormEvent<HTMLInputElement>
   ) => {
-    const inputValue = ev.currentTarget.value
-
-    // Only trigger fetch for autocomplete if the key is 'addressLine1' and the input length is >= 3
-    const shouldFetch =
-      isAddressAutocompleteEnabled &&
-      key === "addressLine1" &&
-      inputValue.length >= 3
+    const shouldFetch = isAddressAutocompleteEnabled && key === "addressLine1"
     if (shouldFetch) {
       fetchForAutocomplete({ search: ev.currentTarget.value })
     }

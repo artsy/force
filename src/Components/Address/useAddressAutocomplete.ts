@@ -80,7 +80,7 @@ export const useAddressAutocomplete = (
     async ({ search, selected }: { search: string; selected?: string }) => {
       if (!isAddressAutocompleteEnabled) return
 
-      if (search.length < 5) {
+      if (search.length < 3) {
         setResult([])
         return
       }
