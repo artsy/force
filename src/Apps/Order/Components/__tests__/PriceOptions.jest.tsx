@@ -257,6 +257,11 @@ describe("PriceOptions", () => {
             major: 99,
           },
         }),
+        CommerceOfferOrder: () => ({
+          myLastOffer: {
+            amountCents: null,
+          },
+        }),
       })
       radios = screen.getAllByRole("radio")
     })
@@ -267,7 +272,10 @@ describe("PriceOptions", () => {
       ).not.toBeInTheDocument()
     })
     it("displays the error and automatically selects the custom value option when an error is passed", async () => {
+      await waitFor(() => expect(radios[3]).toBeChecked())
+
       const selected = await screen.findByRole("radio", { checked: true })
+
       expect(selected).toBeInTheDocument()
       expect(selected).toHaveTextContent("Different amount")
       expect(selected).toHaveTextContent("Offer amount missing or invalid.")

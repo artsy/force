@@ -12,6 +12,10 @@ import { PriceOptions_order$data } from "__generated__/PriceOptions_order.graphq
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { useTracking } from "react-tracking"
 import { Jump, useJump } from "Utils/Hooks/useJump"
+import {
+  getInitialOfferState,
+  getOfferPriceOptions,
+} from "Apps/Order/Utils/offerUtils"
 
 export interface PriceOptionsProps {
   onChange: (value: number) => void
@@ -30,36 +34,31 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 }) => {
   const tracking = useTracking()
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
-  const [customValue, setCustomValue] = useState<number>()
-  const [toggle, setToggle] = useState(false)
-  const [selectedRadio, setSelectedRadio] = useState<string>()
+
   const listPrice = artwork?.listPrice
+  const priceOptions = getOfferPriceOptions(listPrice, artwork?.isPriceRange)
+  const {
+    customOffer,
+    selectedPriceOption,
+    selectedPriceValue,
+  } = getInitialOfferState(
+    priceOptions,
+    Number(order?.myLastOffer?.amountCents || 0) / 100
+  )
+
+  const [customValue, setCustomValue] = useState<number | undefined>(
+    customOffer
+  )
+  const [toggle, setToggle] = useState(!!customOffer)
+  const [selectedRadio, setSelectedRadio] = useState<string>(
+    selectedPriceOption || "price-option-0"
+  )
 
   useEffect(() => {
-    const customOffer = order?.myLastOffer?.amountCents
-
-    if (listPrice && !toggle && !customValue && !customOffer) {
-      onChange(listPrice.major ?? listPrice.maxPrice?.major!)
-      setSelectedRadio("price-option-0")
-    }
-
     if (customOffer) {
-      const priceOptions = artwork?.isPriceRange
-        ? getRangeOptions()
-        : getPercentageOptions()
-
-      const matchingPriceOption = priceOptions.find(
-        option => option?.value === customOffer / 100
-      )
-
-      if (matchingPriceOption) {
-        onChange(matchingPriceOption.value)
-        setSelectedRadio(matchingPriceOption.key)
-      } else {
-        setSelectedRadio("price-option-custom")
-        setToggle(true)
-        setCustomValue(customOffer / 100)
-      }
+      onChange(customOffer)
+    } else {
+      onChange(selectedPriceValue!)
     }
 
     // need this to run only once
@@ -107,63 +106,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
       artwork?.priceCurrency!
     )
 
-  const getRangeOptions = () => {
-    const minPriceRange = listPrice?.minPrice?.major
-    const maxPriceRange = listPrice?.maxPrice?.major
-    const midPriceRange = Math.round(
-      (Number(minPriceRange) + Number(maxPriceRange)) / 2
-    )
-    const getRangeDetails = [
-      {
-        value: maxPriceRange,
-        description: "Top-end of range (high chance of acceptance)",
-      },
-      {
-        value: midPriceRange,
-        description: "Midpoint (good chance of acceptance)",
-      },
-      {
-        value: minPriceRange,
-        description: "Low-end of range (lower chance of acceptance)",
-      },
-    ]
-
-    return getRangeDetails.map((rangePrice, idx) => ({
-      key: `price-option-${idx}`,
-      value: rangePrice.value!,
-      description: rangePrice.description,
-    }))
-  }
-
-  const getPercentageOptions = () => {
-    const percentageOptions = [
-      { percentage: 0, description: "List price (high chance of acceptance)" },
-      {
-        percentage: 0.1,
-        description: "10% below the list price (good chance of acceptance)",
-      },
-      {
-        percentage: 0.2,
-        description:
-          "20% below the list price (substantial reduction, lower chance of acceptance)",
-      },
-    ]
-
-    return percentageOptions.map((option, idx) => {
-      if (listPrice?.major) {
-        return {
-          key: `price-option-${idx}`,
-          value: Math.round(listPrice.major * (1 - option.percentage)),
-          description: option.description,
-        }
-      }
-      return
-    })
-  }
-
-  const priceOptions = artwork?.isPriceRange
-    ? getRangeOptions()
-    : getPercentageOptions()
   const minPrice = priceOptions[2]?.value!
 
   const { jumpTo } = useJump()
