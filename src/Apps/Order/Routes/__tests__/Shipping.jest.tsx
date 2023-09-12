@@ -180,9 +180,7 @@ const meWithAddresses: ShippingTestQuery$rawResponse["me"] = Object.assign(
 )
 
 const saveAndContinue = async () => {
-  await userEvent.click(
-    screen.getByRole("button", { name: "Save and Continue" })
-  )
+  await userEvent.click(screen.getByText("Save and Continue"))
   await flushPromiseQueue()
 }
 
@@ -686,9 +684,7 @@ describe("Shipping", () => {
             fillAddressFormTL(validAddress)
             userEvent.clear(screen.getByPlaceholderText("Street address"))
 
-            await userEvent.click(
-              screen.getByRole("button", { name: "Save and Continue" })
-            )
+            await userEvent.click(screen.getByText("Save and Continue"))
 
             expect(screen.getByText("This field is required")).toBeVisible()
             expect(env.mock.getAllOperations()).toHaveLength(0)
@@ -732,9 +728,7 @@ describe("Shipping", () => {
             )
 
             fillAddressFormTL(validAddress)
-            await userEvent.click(
-              screen.getByRole("button", { name: "Save and Continue" })
-            )
+            await userEvent.click(screen.getByText("Save and Continue"))
 
             const mutation = env.mock.getMostRecentOperation()
             expect(mutation.request.node.operation.name).toEqual(
@@ -773,9 +767,7 @@ describe("Shipping", () => {
 
             fillAddressFormTL(validAddress)
             userEvent.selectOptions(screen.getByRole("combobox"), ["TW"])
-            await userEvent.click(
-              screen.getByRole("button", { name: "Save and Continue" })
-            )
+            await userEvent.click(screen.getByText("Save and Continue"))
 
             expect(env.mock.getAllOperations()).toHaveLength(0)
           })
@@ -806,9 +798,7 @@ describe("Shipping", () => {
             )
 
             fillAddressFormTL(validAddress)
-            await userEvent.click(
-              screen.getByRole("button", { name: "Save and Continue" })
-            )
+            await userEvent.click(screen.getByText("Save and Continue"))
 
             expect(env.mock.getAllOperations()).toHaveLength(0)
           })
@@ -825,9 +815,7 @@ describe("Shipping", () => {
 
             fillAddressFormTL(validAddress)
             userEvent.selectOptions(screen.getByRole("combobox"), ["TW"])
-            await userEvent.click(
-              screen.getByRole("button", { name: "Save and Continue" })
-            )
+            await userEvent.click(screen.getByText("Save and Continue"))
 
             const mutation = env.mock.getMostRecentOperation()
             expect(mutation.request.node.operation.name).toEqual(
@@ -970,9 +958,7 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            await userEvent.click(
-              screen.getByRole("button", { name: "Save and Continue" })
-            )
+            await userEvent.click(screen.getByText("Save and Continue"))
 
             // Address verification flow is not triggered.
             expect(env.mock.getAllOperations()).toHaveLength(0)
@@ -1143,7 +1129,7 @@ describe("Shipping", () => {
           },
         })
 
-        userEvent.click(screen.getByRole("radio", { name: /Premium/ }))
+        userEvent.click(screen.getByText(/^Premium/))
         await saveAndContinue()
 
         expect(mockCommitMutation).toHaveBeenCalledTimes(4)
@@ -1252,10 +1238,9 @@ describe("Shipping", () => {
           },
         })
 
-        userEvent.click(screen.getByRole("radio", { name: /Premium/ }))
-        userEvent.click(
-          screen.getByRole("checkbox", { name: /Save shipping address/ })
-        )
+        userEvent.click(screen.getByText(/^Premium/))
+        userEvent.click(screen.getByText(/^Save shipping address/))
+
         await saveAndContinue()
 
         expect(mockCommitMutation).toHaveBeenCalledTimes(4)
@@ -1546,9 +1531,7 @@ describe("Shipping", () => {
               })
 
               await flushPromiseQueue()
-              expect(
-                screen.getByRole("button", { name: "Save and Continue" })
-              ).toBeEnabled()
+              expect(screen.getByText("Save and Continue")).toBeEnabled()
 
               await saveAndContinue()
 
@@ -1601,10 +1584,8 @@ describe("Shipping", () => {
               })
               await flushPromiseQueue()
 
-              userEvent.click(screen.getByRole("radio", { name: /^Premium/ }))
-              expect(
-                screen.getByRole("button", { name: "Save and Continue" })
-              ).toBeEnabled()
+              userEvent.click(screen.getByText(/^Premium/))
+              expect(screen.getByText("Save and Continue")).toBeEnabled()
               await saveAndContinue()
 
               expect(mockCommitMutation).toHaveBeenCalledTimes(2)
@@ -1744,8 +1725,8 @@ describe("Shipping", () => {
                 /Apt, floor, suite/
               )[0]
               userEvent.clear(addressLine2)
-              userEvent.type(addressLine2, "25th fl.")
-              userEvent.click(screen.getByRole("button", { name: "Save" }))
+              userEvent.paste(addressLine2, "25th fl.")
+              userEvent.click(screen.getByText("Save"))
 
               await flushPromiseQueue()
 
@@ -1880,8 +1861,8 @@ describe("Shipping", () => {
                 /Apt, floor, suite/
               )[0]
               userEvent.clear(addressLine2)
-              userEvent.type(addressLine2, "25th fl.")
-              userEvent.click(screen.getByRole("button", { name: "Save" }))
+              userEvent.paste(addressLine2, "25th fl.")
+              userEvent.click(screen.getByText("Save"))
 
               await flushPromiseQueue()
 

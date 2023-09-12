@@ -73,12 +73,12 @@ export const fillAddressFormTL = (address: Address) => {
     "Add phone number including country code"
   )[0]
 
-  userEvent.type(name, address.name)
+  userEvent.paste(name, address.name)
   userEvent.selectOptions(country, [address.country])
-  userEvent.type(addressLine1, address.addressLine1)
-  userEvent.type(addressLine2, address.addressLine2)
-  userEvent.type(city, address.city)
-  userEvent.type(region, address.region)
-  userEvent.type(postalCode, address.postalCode)
-  userEvent.type(phoneNumber, address.phoneNumber!)
+  userEvent.paste(addressLine1, address.addressLine1)
+  userEvent.paste(addressLine2, address.addressLine2)
+  userEvent.paste(city, address.city)
+  userEvent.paste(region, address.region)
+  userEvent.paste(postalCode, address.postalCode)
+  userEvent.paste(phoneNumber, address.phoneNumber!)
 }
