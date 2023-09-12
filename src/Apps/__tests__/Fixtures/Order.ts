@@ -854,7 +854,10 @@ export const UntouchedOfferOrderWithRange = {
 
 export const OfferOrderWithOffers = {
   ...UntouchedOfferOrder,
-  lastOffer: OfferWithTotals,
+  lastOffer: {
+    ...OfferWithTotals,
+    note: null,
+  },
   source: "artwork_page",
   conversation: {
     internalID: "5665",

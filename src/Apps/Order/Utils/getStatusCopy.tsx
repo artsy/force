@@ -12,6 +12,8 @@ interface StatusPageConfig {
 }
 
 export const getStatusCopy = (order, logger?): StatusPageConfig => {
+  // debugger
+
   if (!order) {
     return {}
   }

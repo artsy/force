@@ -45,6 +45,8 @@ export interface StatusProps {
 }
 
 export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
+  // debugger
+
   const { isEigen } = useSystemContext()
 
   const flowName = order.mode === "OFFER" ? "Offer" : "Order"
