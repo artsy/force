@@ -108,7 +108,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
   const displaySeeMoreButton = suggestedArtworksCount > 5
   const isBidder = artwork.myLotStandingManageAlerts?.[0]
   const isHighest = artwork.myLotStandingManageAlerts?.[0]?.isHighestBidder
-  const isUnderbidder = isBidder && !isHighest && !artwork.isInAuction
+  const hasLostBid = isBidder && !isHighest
 
   return (
     <SavedSearchAlertContextProvider
@@ -134,7 +134,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
             textAlign={["left", "center"]}
             textColor={["black60", "black100"]}
           >
-            {isUnderbidder
+            {hasLostBid
               ? "We’ve created an alert for you for similar works."
               : "Create an alert to get notified when similar works become available."}
           </Text>
@@ -144,7 +144,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
             <Spacer y={1} />
           </Media>
           <Box mx="auto" width={["100%", 209]}>
-            {isUnderbidder ? (
+            {hasLostBid ? (
               <Button
                 width={["100%", 220]}
                 variant="secondaryBlack"
