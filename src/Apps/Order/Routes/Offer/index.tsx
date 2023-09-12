@@ -31,6 +31,8 @@ import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
 const logger = createLogger("Order/Routes/Offer/index.tsx")
 
+export const DEFUALT_OFFER_NOTE_PREFIX = "I sent an offer for"
+
 export interface OfferRouteProps {
   order: Offer_order$data
   relay?: RelayProp
@@ -175,7 +177,7 @@ export const OfferRoute: FC<OfferRouteProps> = ({
 
       let note = hasNote
         ? offerNoteValue.value
-        : `I sent an offer for ${appendCurrencySymbol(
+        : `${DEFUALT_OFFER_NOTE_PREFIX} ${appendCurrencySymbol(
             offerValue.toLocaleString("en-US", {
               currency: order.currencyCode,
               minimumFractionDigits: 2,

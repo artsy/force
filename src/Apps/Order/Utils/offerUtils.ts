@@ -1,3 +1,4 @@
+import { DEFUALT_OFFER_NOTE_PREFIX } from "Apps/Order/Routes/Offer"
 import { PriceOptions_artwork$data } from "__generated__/PriceOptions_artwork.graphql"
 
 export interface OfferItem {
@@ -14,8 +15,6 @@ type ListPriceOptionsType = (
     }
   | undefined
 )[]
-
-export const DEFUALT_OFFER_NOTE_PREFIX = "I sent an offer for"
 
 export const getOfferItemFromOrder = (orderLineItemsNode): OfferItem | null => {
   const offerItem = orderLineItemsNode.edges[0].node.artworkOrEditionSet
