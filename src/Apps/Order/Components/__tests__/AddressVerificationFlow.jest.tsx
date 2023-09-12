@@ -76,6 +76,7 @@ beforeEach(() => {
   defaultResult = {
     __typename: "VerifyAddressType",
     verificationStatus: "NOT_FOUND",
+    addressVerificationId: "id",
     suggestedAddresses: [],
     inputAddress: {
       lines: ["401 Broadway", "Suite 25", "New York, NY 10013", "USA"],
@@ -142,6 +143,7 @@ describe("AddressVerificationFlow", () => {
     const mockResult = {
       ...defaultResult,
       verificationStatus: "NOT_FOUND",
+      addressVerificationId: "id",
       inputAddress: {
         lines: ["401 Broadway", "Suite 25", "New York, NY 10013", "USA"],
         address: {
@@ -237,6 +239,7 @@ describe("AddressVerificationFlow", () => {
       mockResult = {
         ...defaultResult,
         verificationStatus: "VERIFIED_WITH_CHANGES",
+        addressVerificationId: "id",
         suggestedAddresses: [
           {
             lines: ["401 Broadway Suite 25", "New York, NY 10013", "USA"],

@@ -35,7 +35,7 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
         ...(worksAvailableBy.length === 0
           ? []
           : [{ name: "Works Available by", edges: worksAvailableBy }]),
-      ].sort((a, b) => b.edges.length - a.edges.length)
+      ]
     : [{ name: null, edges }]
 
   return (
@@ -45,7 +45,9 @@ export const PartnerArtistList: React.FC<PartnerArtistListProps> = ({
           <Box key={name ?? i}>
             {name && (
               <>
-                <Text variant="sm-display">{name}</Text>
+                <Text variant="sm-display" fontWeight="bold">
+                  {name}
+                </Text>
 
                 <Spacer y={2} />
               </>

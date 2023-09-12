@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<08ee8886210d555c2024287ec542e07c>>
+ * @generated SignedSource<<6adda476a2ca9be50676638e55591214>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,6 +28,9 @@ export type ArtworkAuctionCreateAlertHeader_artwork$data = {
       readonly slug: string;
     } | null;
   } | null;
+  readonly myLotStandingManageAlerts: ReadonlyArray<{
+    readonly isHighestBidder: boolean | null;
+  }> | null;
   readonly sale: {
     readonly isClosed: boolean | null;
     readonly startAt: string | null;
@@ -240,6 +243,24 @@ return {
       "storageKey": null
     },
     {
+      "alias": "myLotStandingManageAlerts",
+      "args": null,
+      "concreteType": "LotStanding",
+      "kind": "LinkedField",
+      "name": "myLotStanding",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "isHighestBidder",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkCreateAlertButton_artwork"
@@ -250,6 +271,6 @@ return {
 };
 })();
 
-(node as any).hash = "0e04493bee6d94891c0f74ed7f0da881";
+(node as any).hash = "06569c4e3013b421e25f1813b32ab119";
 
 export default node;
