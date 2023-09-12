@@ -35,29 +35,29 @@ export const lastOfferNote = (note: string) => {
 
 export const getInitialOfferState = (
   listPriceOptions: ListPriceOptionsType,
-  customOffer?: number
+  lastOffer?: number
 ) => {
-  let customOfferValue: number | undefined = undefined
+  let lastOfferValue: number | undefined = undefined
   let selectedPriceOption = listPriceOptions[0]?.key
   let selectedPriceValue = listPriceOptions[0]?.value
 
-  if (customOffer) {
+  if (lastOffer) {
     const matchingPriceOption = listPriceOptions.find(
-      option => option?.value === customOffer
+      option => option?.value === lastOffer
     )
 
     if (matchingPriceOption) {
       selectedPriceOption = matchingPriceOption.key
       selectedPriceValue = matchingPriceOption.value
     } else {
-      customOfferValue = customOffer
+      lastOfferValue = lastOffer
       selectedPriceOption = "price-option-custom"
       selectedPriceValue = undefined
     }
   }
 
   return {
-    customOffer: customOfferValue,
+    lastOffer: lastOfferValue,
     selectedPriceOption,
     selectedPriceValue,
   }

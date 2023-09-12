@@ -38,7 +38,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const listPrice = artwork?.listPrice
   const priceOptions = getOfferPriceOptions(listPrice, artwork?.isPriceRange)
   const {
-    customOffer,
+    lastOffer,
     selectedPriceOption,
     selectedPriceValue,
   } = getInitialOfferState(
@@ -46,17 +46,15 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     Number(order?.myLastOffer?.amountCents || 0) / 100
   )
 
-  const [customValue, setCustomValue] = useState<number | undefined>(
-    customOffer
-  )
-  const [toggle, setToggle] = useState(!!customOffer)
+  const [customValue, setCustomValue] = useState<number | undefined>(lastOffer)
+  const [toggle, setToggle] = useState(!!lastOffer)
   const [selectedRadio, setSelectedRadio] = useState<string>(
     selectedPriceOption || "price-option-0"
   )
 
   useEffect(() => {
-    if (customOffer) {
-      onChange(customOffer)
+    if (lastOffer) {
+      onChange(lastOffer)
     } else {
       onChange(selectedPriceValue!)
     }

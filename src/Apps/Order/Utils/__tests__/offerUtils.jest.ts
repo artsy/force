@@ -13,35 +13,27 @@ describe("offer utils", () => {
     ]
     it("returns first option if custom offer is undefined", () => {
       expect(getInitialOfferState(priceOptions, undefined)).toEqual({
-        customOffer: undefined,
+        lastOffer: undefined,
         selectedPriceOption: "price-option-0",
         selectedPriceValue: 100,
       })
     })
 
-    describe("custom offer", () => {
-      it("returns one of the options if the custom offer value matches", () => {
+    describe("last offer", () => {
+      it("returns one of the options if the last offer value matches", () => {
         expect(getInitialOfferState(priceOptions, 90)).toEqual({
-          customOffer: undefined,
+          lastOffer: undefined,
           selectedPriceOption: "price-option-1",
           selectedPriceValue: 90,
         })
       })
 
-      it("returns custom offer if custom offer is not in list price options", () => {
+      it("returns custom option if last offer is not in list price options", () => {
         expect(getInitialOfferState(priceOptions, 85)).toEqual({
-          customOffer: 85,
+          lastOffer: 85,
           selectedPriceOption: "price-option-custom",
           selectedPriceValue: undefined,
         })
-      })
-    })
-
-    it("returns custom offer if custom offer is not in list price options", () => {
-      expect(getInitialOfferState(priceOptions, 95)).toEqual({
-        customOffer: 95,
-        selectedPriceOption: "price-option-custom",
-        selectedPriceValue: undefined,
       })
     })
   })
@@ -85,10 +77,7 @@ describe("offer utils", () => {
     it("returns range options if list price is range", () => {
       expect(
         getOfferPriceOptions(
-          {
-            maxPrice: { major: 150 },
-            minPrice: { major: 100 },
-          },
+          { maxPrice: { major: 150 }, minPrice: { major: 100 } },
           true
         )
       ).toEqual([
