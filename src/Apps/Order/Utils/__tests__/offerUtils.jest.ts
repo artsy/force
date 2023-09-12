@@ -38,13 +38,8 @@ describe("offer utils", () => {
     })
 
     it("returns custom offer if custom offer is not in list price options", () => {
-      expect(
-        getInitialOfferState(
-          [{ key: "key", value: 100, description: "description" }],
-          300
-        )
-      ).toEqual({
-        customOffer: 300,
+      expect(getInitialOfferState(priceOptions, 95)).toEqual({
+        customOffer: 95,
         selectedPriceOption: "price-option-custom",
         selectedPriceValue: undefined,
       })
