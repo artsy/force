@@ -99,15 +99,6 @@ const order: ShippingTestQuery$rawResponse["order"] = {
   id: "1234",
 }
 
-// TODO: Can we just use the untouched fixtures?
-const ArtsyShippingDomesticFromUSOrder: ShippingTestQuery$rawResponse["order"] = {
-  ...UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
-  __typename: "CommerceBuyOrder",
-  mode: "BUY",
-  internalID: "1234",
-  id: "1234",
-}
-
 const pageInfo = {
   startCursor: "aaa",
   endCursor: "bbb",
@@ -1086,7 +1077,7 @@ describe("Shipping", () => {
           .mockResolvedValueOnce(selectShippingQuoteSuccess)
 
         renderWithRelay({
-          CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
+          CommerceOrder: () => UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
           Me: () => meWithoutAddress,
         })
 
@@ -1109,7 +1100,7 @@ describe("Shipping", () => {
         )
         expect(mutationArg.variables).toEqual({
           input: {
-            id: "1234",
+            id: "2939023",
             fulfillmentType: "SHIP_ARTA",
             phoneNumber: validAddress.phoneNumber,
             shipping: {
@@ -1140,7 +1131,7 @@ describe("Shipping", () => {
         )
         expect(mutationArg.variables).toEqual({
           input: {
-            id: "1234",
+            id: "2939023",
             selectedShippingQuoteId: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
           },
         })
@@ -1168,7 +1159,7 @@ describe("Shipping", () => {
         )
 
         renderWithRelay({
-          CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
+          CommerceOrder: () => UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
           Me: () => meWithoutAddress,
         })
 
@@ -1195,7 +1186,7 @@ describe("Shipping", () => {
           .mockResolvedValueOnce(selectShippingQuoteSuccess)
 
         renderWithRelay({
-          CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
+          CommerceOrder: () => UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
           Me: () => meWithoutAddress,
         })
 
@@ -1218,7 +1209,7 @@ describe("Shipping", () => {
         )
         expect(mutationArg.variables).toEqual({
           input: {
-            id: "1234",
+            id: "2939023",
             fulfillmentType: "SHIP_ARTA",
             phoneNumber: validAddress.phoneNumber,
             shipping: {
@@ -1251,7 +1242,7 @@ describe("Shipping", () => {
         )
         expect(mutationArg.variables).toEqual({
           input: {
-            id: "1234",
+            id: "2939023",
             selectedShippingQuoteId: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
           },
         })
@@ -1449,7 +1440,8 @@ describe("Shipping", () => {
             meWithDefaultAddressInSpain.addressConnection.edges[1].node.isDefault = false // US
 
             renderWithRelay({
-              CommerceOrder: () => ArtsyShippingDomesticFromUSOrder,
+              CommerceOrder: () =>
+                UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
               Me: () => meWithDefaultAddressInSpain,
             })
             await flushPromiseQueue()
