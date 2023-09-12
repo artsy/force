@@ -47,34 +47,30 @@ describe("Status", () => {
     describe("submitted", () => {
       it("should say order submitted and have message box", async () => {
         renderWithRelay({
-          CommerceOrder: () => {
-            return {
-              ...OfferOrderWithShippingDetailsAndNote,
-              ...CreditCardPaymentDetails,
-              state: "SUBMITTED",
-              displayState: "SUBMITTED",
-            }
-          },
+          CommerceOrder: () => ({
+            ...OfferOrderWithShippingDetailsAndNote,
+            ...CreditCardPaymentDetails,
+            state: "SUBMITTED",
+            displayState: "SUBMITTED",
+          }),
         })
 
         expect(
           screen.queryByText("Thank you, your offer has been submitted")
         ).toBeInTheDocument()
         expect(
-          screen.queryByText(/The seller will respond to your offer by Jan 15/)
+          screen.queryByText(
+            /The seller will respond to your offer by Jan 15. Keep in mind making an offer doesn’t guarantee you the work./
+          )
         ).toBeInTheDocument()
         expect(
           screen.queryByText(
             "Negotiation with the gallery will continue in the Inbox."
           )
         ).not.toBeInTheDocument()
-
-        // TODO: assert that no alert message is displayed
-
         expect(
           screen.queryByText("Kathryn Markel Fine Arts")
         ).toBeInTheDocument()
-
         expect(screen.queryByText(/List price/)).toBeInTheDocument()
         expect(screen.queryByText("Your note")).toBeInTheDocument()
         expect(screen.queryByText("Another note!")).toBeInTheDocument()
@@ -84,28 +80,27 @@ describe("Status", () => {
         isEigen = true
 
         renderWithRelay({
-          CommerceOrder: () => {
-            return {
-              ...OfferOrderWithShippingDetailsAndNote,
-              ...CreditCardPaymentDetails,
-              state: "SUBMITTED",
-              displayState: "SUBMITTED",
-            }
-          },
+          CommerceOrder: () => ({
+            ...OfferOrderWithShippingDetailsAndNote,
+            ...CreditCardPaymentDetails,
+            state: "SUBMITTED",
+            displayState: "SUBMITTED",
+          }),
         })
 
         expect(
           screen.queryByText("Thank you, your offer has been submitted")
         ).toBeInTheDocument()
         expect(
-          screen.queryByText(/The seller will respond to your offer by Jan 15/)
+          screen.queryByText(
+            /The seller will respond to your offer by Jan 15. Keep in mind making an offer doesn’t guarantee you the work./
+          )
         ).toBeInTheDocument()
         expect(
           screen.queryByText(
             "Negotiation with the gallery will continue in the Inbox."
           )
         ).toBeInTheDocument()
-        // TODO: assert that no alert message is displayed
         expect(
           screen.queryByText("Kathryn Markel Fine Arts")
         ).not.toBeInTheDocument()
@@ -114,14 +109,12 @@ describe("Status", () => {
 
       it("should not show a note section if none exists", () => {
         renderWithRelay({
-          CommerceOrder: () => {
-            return {
-              ...OfferOrderWithShippingDetails,
-              ...CreditCardPaymentDetails,
-              state: "SUBMITTED",
-              displayState: "SUBMITTED",
-            }
-          },
+          CommerceOrder: () => ({
+            ...OfferOrderWithShippingDetails,
+            ...CreditCardPaymentDetails,
+            state: "SUBMITTED",
+            displayState: "SUBMITTED",
+          }),
         })
 
         expect(screen.queryByText("Your note")).not.toBeInTheDocument()
@@ -129,34 +122,230 @@ describe("Status", () => {
     })
 
     describe("in review", () => {
-      it("should say order submitted and have message box", () => {})
+      it("should say order submitted and have message box", () => {
+        renderWithRelay({
+          CommerceOrder: () => ({
+            ...OfferOrderWithShippingDetailsAndNote,
+            ...CreditCardPaymentDetails,
+            state: "IN_REVIEW",
+            displayState: "SUBMITTED",
+          }),
+        })
 
-      it("should say order submitted and have message to continue to inbox on Eigen", () => {})
+        expect(
+          screen.queryByText("Thank you, your offer has been submitted")
+        ).toBeInTheDocument()
+        expect(
+          screen.queryByText(
+            /The seller will respond to your offer by Jan 15. Keep in mind making an offer doesn’t guarantee you the work./
+          )
+        ).toBeInTheDocument()
+        expect(
+          screen.queryByText(
+            "Negotiation with the gallery will continue in the Inbox."
+          )
+        ).not.toBeInTheDocument()
+        expect(
+          screen.queryByText("Kathryn Markel Fine Arts")
+        ).toBeInTheDocument()
+        expect(screen.queryByText(/List price/)).toBeInTheDocument()
+        expect(screen.queryByText("Your note")).toBeInTheDocument()
+        expect(screen.queryByText("Another note!")).toBeInTheDocument()
+      })
+
+      it("should say order submitted and have message to continue to inbox on Eigen", () => {
+        isEigen = true
+
+        renderWithRelay({
+          CommerceOrder: () => ({
+            ...OfferOrderWithShippingDetailsAndNote,
+            ...CreditCardPaymentDetails,
+            state: "IN_REVIEW",
+            displayState: "SUBMITTED",
+          }),
+        })
+
+        expect(
+          screen.queryByText("Thank you, your offer has been submitted")
+        ).toBeInTheDocument()
+        expect(
+          screen.queryByText(
+            /The seller will respond to your offer by Jan 15. Keep in mind making an offer doesn’t guarantee you the work./
+          )
+        ).toBeInTheDocument()
+        expect(
+          screen.queryByText(
+            "Negotiation with the gallery will continue in the Inbox."
+          )
+        ).toBeInTheDocument()
+        expect(
+          screen.queryByText("Kathryn Markel Fine Arts")
+        ).not.toBeInTheDocument()
+        expect(screen.queryByText("List price")).not.toBeInTheDocument()
+      })
     })
 
     describe("approved", () => {
-      it("should say confirmed and have message box", () => {})
+      it("should say confirmed and have message box", () => {
+        renderWithRelay({
+          CommerceOrder: () => ({
+            ...OfferOrderWithShippingDetails,
+            displayState: "APPROVED",
+          }),
+        })
+
+        expect(screen.queryByText("Offer accepted")).toBeInTheDocument()
+        expect(
+          screen.queryByText(
+            "Thank you for your purchase. You will be notified when the work has shipped, typically within 5–7 business days."
+          )
+        ).toBeInTheDocument()
+      })
     })
 
     describe("processing", () => {
-      it("should say confirmed and have message box", () => {})
+      it("should say confirmed and have message box", () => {
+        renderWithRelay({
+          CommerceOrder: () => ({
+            ...OfferOrderWithShippingDetails,
+            displayState: "PROCESSING",
+          }),
+        })
+
+        expect(screen.queryByText("Offer accepted")).toBeInTheDocument()
+        expect(
+          screen.queryByText(
+            /Thank you for your purchase. More delivery information will be available once your order ships./
+          )
+        ).toBeInTheDocument()
+      })
     })
 
     describe("processing approval", () => {
       describe("with wire payment method", () => {
-        it("should say 'Thank you, your offer has been accepted' and have message box", () => {})
+        it("should say 'Thank you, your offer has been accepted' and have message box", () => {
+          renderWithRelay({
+            CommerceOrder: () => ({
+              ...OfferOrderWithShippingDetails,
+              displayState: "PROCESSING_APPROVAL",
+              paymentMethod: "WIRE_TRANSFER",
+            }),
+          })
 
-        it("renders Message with alert variant and 'please proceed' message", () => {})
+          expect(
+            screen.queryByText("Thank you, your offer has been accepted")
+          ).toBeInTheDocument()
+        })
 
-        it("renders the alert Message with correct messages", () => {})
+        it("renders Message with alert variant and 'please proceed' message", () => {
+          renderWithRelay({
+            CommerceOrder: () => ({
+              ...OfferOrderWithShippingDetails,
+              displayState: "PROCESSING_APPROVAL",
+              paymentMethod: "WIRE_TRANSFER",
+            }),
+          })
 
-        it("renders content for Artsy's bank details", () => {})
+          expect(
+            screen.queryByText(
+              "Please proceed with the wire transfer within 7 days to complete your purchase."
+            )
+          ).toBeInTheDocument()
+        })
+
+        it("renders the alert Message with correct messages", () => {
+          renderWithRelay({
+            CommerceOrder: () => ({
+              ...OfferOrderWithShippingDetails,
+              displayState: "PROCESSING_APPROVAL",
+              paymentMethod: "WIRE_TRANSFER",
+            }),
+          })
+
+          expect(
+            screen.queryByText(
+              /Find the total amount due and Artsy’s banking details below./
+            )
+          ).toBeInTheDocument()
+          expect(
+            screen.queryByText(
+              /Please inform your bank that you are responsible for all wire transfer fees./
+            )
+          ).toBeInTheDocument()
+          expect(
+            screen.queryByText(
+              /Please make the transfer in the currency displayed on the order breakdown and then email proof of payment to/
+            )
+          ).toBeInTheDocument()
+        })
+
+        it("renders content for Artsy's bank details", () => {
+          renderWithRelay({
+            CommerceOrder: () => ({
+              ...OfferOrderWithShippingDetails,
+              displayState: "PROCESSING_APPROVAL",
+              paymentMethod: "WIRE_TRANSFER",
+            }),
+          })
+
+          expect(
+            screen.queryByText("Send wire transfer to")
+          ).toBeInTheDocument()
+          expect(
+            screen.queryByText("Account name: Art.sy Inc.")
+          ).toBeInTheDocument()
+          expect(
+            screen.queryByText("Account number: 4243851425")
+          ).toBeInTheDocument()
+          expect(
+            screen.queryByText("Routing number: 121000248")
+          ).toBeInTheDocument()
+          expect(
+            screen.queryByText("International SWIFT: WFBIUS6S")
+          ).toBeInTheDocument()
+          expect(screen.queryByText("Bank address")).toBeInTheDocument()
+          expect(
+            screen.queryByText("Wells Fargo Bank, N.A.")
+          ).toBeInTheDocument()
+          expect(
+            screen.queryByText("420 Montgomery Street")
+          ).toBeInTheDocument()
+          expect(
+            screen.queryByText("San Francisco, CA 94104")
+          ).toBeInTheDocument()
+        })
       })
 
       describe("with non-wire payment methods", () => {
-        it("should say 'Offer accepted. Payment processing.' and have message box", () => {})
+        it("should say 'Offer accepted. Payment processing.' and have message box", () => {
+          renderWithRelay({
+            CommerceOrder: () => ({
+              ...OfferOrderWithShippingDetails,
+              displayState: "PROCESSING_APPROVAL",
+              paymentMethod: "CREDIT_CARD",
+            }),
+          })
 
-        it("renders description", () => {})
+          expect(
+            screen.queryByText("Offer accepted. Payment processing.")
+          ).toBeInTheDocument()
+        })
+
+        it("renders description", () => {
+          renderWithRelay({
+            CommerceOrder: () => ({
+              ...OfferOrderWithShippingDetails,
+              displayState: "PROCESSING_APPROVAL",
+              paymentMethod: "CREDIT_CARD",
+            }),
+          })
+
+          expect(
+            screen.queryByText(
+              /Thank you for your purchase. nullMore delivery information will be available once your order ships./
+            )
+          ).toBeInTheDocument()
+        })
 
         it("does not render an alert message", () => {})
       })
