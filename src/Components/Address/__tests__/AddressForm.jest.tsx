@@ -15,6 +15,10 @@ jest.mock("Utils/getENV", () => ({
   }),
 }))
 
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
 describe("AddressForm", () => {
   it("preserves updated value from props after user input", () => {
     const Page: FC = () => {
@@ -104,12 +108,43 @@ describe("AddressForm", () => {
         expect(listbox).toHaveTextContent(
           "401 Broadway Fl 25, New York NY 10013"
         )
+      })
+      it("does not fetch suggestions if input is less than 3 characters", async () => {
+        const fetchMock = jest.fn()
+        jest.spyOn(window, "fetch").mockImplementation(fetchMock)
 
-        // await act(() => {
-        //   fireEvent.click(listbox)
-        // })
-        // expect(line1Input).toHaveValue("401 Broadway")
-        // expect(screen.getByPlaceholderText("City")).toHaveValue("New York")
+        render(<AddressForm onChange={jest.fn()} errors={{}} touched={{}} />)
+
+        const countryInput = screen.getByLabelText("Country")
+        fireEvent.change(countryInput, {
+          target: { value: "US" },
+        })
+
+        const line1Input = screen.getByPlaceholderText("Street address")
+        fireEvent.change(line1Input, { target: { value: "40" } })
+
+        expect(fetchMock).not.toHaveBeenCalled()
+      })
+
+      it("fetches suggestions if input is 3 or more characters", async () => {
+        const fetchMock = jest.fn()
+        jest.spyOn(window, "fetch").mockImplementation(fetchMock)
+
+        render(<AddressForm onChange={jest.fn()} errors={{}} touched={{}} />)
+
+        const countryInput = screen.getByLabelText("Country")
+        fireEvent.change(countryInput, {
+          target: { value: "US" },
+        })
+
+        const line1Input = screen.getByPlaceholderText("Street address")
+        fireEvent.change(line1Input, { target: { value: "401" } })
+
+        expect(fetchMock).not.toHaveBeenCalled()
+
+        fireEvent.change(line1Input, { target: { value: "401 Broadway" } })
+
+        expect(fetchMock).toHaveBeenCalled()
       })
     })
   })

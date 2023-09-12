@@ -92,11 +92,6 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     fetchSecondarySuggestions,
   } = useAddressAutocomplete(address)
 
-  // // TODO: Remove this, it's just for debugging
-  // React.useEffect(() => {
-  //   console.log({ address, autocompleteOptions, isAddressAutocompleteEnabled })
-  // }, [address, autocompleteOptions, isAddressAutocompleteEnabled])
-
   if (!isEqual(value, prevValue)) {
     setPrevValue(value)
     setAddress(addressFromProp)
@@ -107,7 +102,13 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const changeEventHandler = (key: keyof Address) => (
     ev: React.FormEvent<HTMLInputElement>
   ) => {
-    const shouldFetch = isAddressAutocompleteEnabled && key === "addressLine1"
+    const inputValue = ev.currentTarget.value
+
+    // Only trigger fetch for autocomplete if the key is 'addressLine1' and the input length is >= 3
+    const shouldFetch =
+      isAddressAutocompleteEnabled &&
+      key === "addressLine1" &&
+      inputValue.length >= 3
     if (shouldFetch) {
       fetchForAutocomplete({ search: ev.currentTarget.value })
     }
