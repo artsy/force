@@ -12,6 +12,7 @@ import { PriceOptions_order$data } from "__generated__/PriceOptions_order.graphq
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { useTracking } from "react-tracking"
 import { Jump, useJump } from "Utils/Hooks/useJump"
+import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 
 export interface PriceOptionsProps {
   onChange: (value: number) => void
@@ -33,6 +34,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const [customValue, setCustomValue] = useState<number>()
   const [toggle, setToggle] = useState(false)
   const [selectedRadio, setSelectedRadio] = useState<string>()
+  const { device } = useDeviceDetection()
   const listPrice = artwork?.listPrice
 
   useEffect(() => {
@@ -185,7 +187,8 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                     onChange={setCustomValue}
                     onFocus={() => {
                       onFocus()
-                      jumpTo("price-option-custom")
+                      if (device !== Device.iPhone)
+                        jumpTo("price-option-custom")
                     }}
                     noTitle
                   />
