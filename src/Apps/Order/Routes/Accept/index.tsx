@@ -21,7 +21,6 @@ import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/
 import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import { AcceptRouteSetOrderPaymentMutation } from "__generated__/AcceptRouteSetOrderPaymentMutation.graphql"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { Stripe, StripeElements } from "@stripe/stripe-js"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
@@ -135,86 +134,11 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
         return
       }
 
-      // TODO: Remove below fixedOrderOrError logic and fixFailedPayment once Exchange mutation is updated
-      const fixedOrderOrError = (
-        await fixFailedPayment({
-          input: {
-            creditCardId: order.creditCardId!,
-            offerId: order.lastOffer?.internalID,
-            orderId: order.internalID,
-          },
-        })
-      ).commerceFixFailedPayment?.orderOrError!
-
-      if (fixedOrderOrError.error) {
-        handleAcceptError(orderOrError?.error)
-        return
-      }
-
-      const scaResult = await stripe.handleCardAction(
-        fixedOrderOrError.actionData?.clientSecret!
-      )
-
-      if (scaResult.error) {
-        return dialog.showErrorDialog({
-          title: "An error occurred",
-          message: scaResult.error.message,
-        })
-      }
-
       onSubmit()
     } catch (error) {
       logger.error(error)
       dialog.showErrorDialog()
     }
-  }
-
-  const fixFailedPayment = (
-    variables: AcceptRouteSetOrderPaymentMutation["variables"]
-  ) => {
-    return commitMutation<AcceptRouteSetOrderPaymentMutation>({
-      variables,
-      mutation: graphql`
-        mutation AcceptRouteSetOrderPaymentMutation(
-          $input: CommerceFixFailedPaymentInput!
-        ) {
-          commerceFixFailedPayment(input: $input) {
-            orderOrError {
-              ... on CommerceOrderWithMutationSuccess {
-                order {
-                  state
-                  creditCard {
-                    internalID
-                    name
-                    street1
-                    street2
-                    city
-                    state
-                    country
-                    postal_code: postalCode
-                  }
-                  ... on CommerceOfferOrder {
-                    awaitingResponseFrom
-                  }
-                }
-              }
-              ... on CommerceOrderRequiresAction {
-                actionData {
-                  clientSecret
-                }
-              }
-              ... on CommerceOrderWithMutationFailure {
-                error {
-                  type
-                  code
-                  data
-                }
-              }
-            }
-          }
-        }
-      `,
-    })
   }
 
   const handleAcceptError = async (error: {
