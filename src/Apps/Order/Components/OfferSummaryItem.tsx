@@ -5,7 +5,7 @@ import {
   StepSummaryItemProps,
 } from "Components/StepSummaryItem"
 import { createFragmentContainer, graphql } from "react-relay"
-import { getOfferItemFromOrder } from "Apps/Order/Utils/offerItemExtractor"
+import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 
 const OfferSummaryItem = ({

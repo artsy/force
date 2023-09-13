@@ -12,6 +12,11 @@ import { PriceOptions_order$data } from "__generated__/PriceOptions_order.graphq
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { useTracking } from "react-tracking"
 import { Jump, useJump } from "Utils/Hooks/useJump"
+import {
+  getInitialOfferState,
+  getOfferPriceOptions,
+} from "Apps/Order/Utils/offerUtils"
+import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 
 export interface PriceOptionsProps {
   onChange: (value: number) => void
@@ -30,18 +35,35 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
 }) => {
   const tracking = useTracking()
   const { contextPageOwnerId, contextPageOwnerType } = useAnalyticsContext()
-  const [customValue, setCustomValue] = useState<number>()
-  const [toggle, setToggle] = useState(false)
-  const [selectedRadio, setSelectedRadio] = useState<string>()
+
   const listPrice = artwork?.listPrice
+  const priceOptions = getOfferPriceOptions(listPrice, artwork?.isPriceRange)
+  const {
+    lastOffer,
+    selectedPriceOption,
+    selectedPriceValue,
+  } = getInitialOfferState(
+    priceOptions,
+    Number(order?.myLastOffer?.amountCents || 0) / 100
+  )
+  const { device } = useDeviceDetection()
+
+  const [customValue, setCustomValue] = useState<number | undefined>(lastOffer)
+  const [toggle, setToggle] = useState(!!lastOffer)
+  const [selectedRadio, setSelectedRadio] = useState<string>(
+    selectedPriceOption || "price-option-max"
+  )
 
   useEffect(() => {
-    if (listPrice && !toggle && !customValue) {
-      onChange(listPrice.major ?? listPrice.maxPrice?.major!)
-      setSelectedRadio("price-option-0")
+    if (lastOffer) {
+      onChange(lastOffer)
+    } else {
+      onChange(selectedPriceValue!)
     }
+
+    // need this to run only once
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [listPrice, toggle, customValue])
+  }, [])
 
   useEffect(() => {
     if (!!customValue) onChange(customValue)
@@ -84,64 +106,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
       artwork?.priceCurrency!
     )
 
-  const getRangeOptions = () => {
-    const minPriceRange = listPrice?.minPrice?.major
-    const maxPriceRange = listPrice?.maxPrice?.major
-    const midPriceRange = Math.round(
-      (Number(minPriceRange) + Number(maxPriceRange)) / 2
-    )
-
-    const getRangeDetails = [
-      {
-        value: maxPriceRange,
-        description: "Top-end of range (high chance of acceptance)",
-      },
-      {
-        value: midPriceRange,
-        description: "Midpoint (good chance of acceptance)",
-      },
-      {
-        value: minPriceRange,
-        description: "Low-end of range (lower chance of acceptance)",
-      },
-    ]
-
-    return getRangeDetails.map((rangePrice, idx) => ({
-      key: `price-option-${idx}`,
-      value: rangePrice.value!,
-      description: rangePrice.description,
-    }))
-  }
-
-  const getPercentageOptions = () => {
-    const percentageOptions = [
-      { percentage: 0, description: "List price (high chance of acceptance)" },
-      {
-        percentage: 0.1,
-        description: "10% below the list price (good chance of acceptance)",
-      },
-      {
-        percentage: 0.2,
-        description:
-          "20% below the list price (substantial reduction, lower chance of acceptance)",
-      },
-    ]
-
-    return percentageOptions.map((option, idx) => {
-      if (listPrice?.major) {
-        return {
-          key: `price-option-${idx}`,
-          value: Math.round(listPrice.major * (1 - option.percentage)),
-          description: option.description,
-        }
-      }
-      return
-    })
-  }
-
-  const priceOptions = artwork?.isPriceRange
-    ? getRangeOptions()
-    : getPercentageOptions()
   const minPrice = priceOptions[2]?.value!
 
   const { jumpTo } = useJump()
@@ -154,7 +118,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
             value={key}
             label={asCurrency(value!)}
             onSelect={() => {
-              onChange(value!)
+              onChange(value)
               setToggle(false)
               setCustomValue(undefined)
               trackClick(description, value)
@@ -182,10 +146,12 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                   <OfferInput
                     id="OfferForm_offerValue"
                     showError={showError}
+                    value={customValue}
                     onChange={setCustomValue}
                     onFocus={() => {
                       onFocus()
-                      jumpTo("price-option-custom")
+                      if (device !== Device.iPhone)
+                        jumpTo("price-option-custom")
                     }}
                     noTitle
                   />
@@ -230,6 +196,11 @@ export const PriceOptionsFragmentContainer = createFragmentContainer(
     order: graphql`
       fragment PriceOptions_order on CommerceOrder {
         internalID
+        ... on CommerceOfferOrder {
+          myLastOffer {
+            amountCents
+          }
+        }
       }
     `,
   }
