@@ -80,21 +80,24 @@ const getRangeOptions = (listPrice: ListPriceType) => {
   )
   const getRangeDetails = [
     {
+      key: "max",
       value: maxPriceRange,
       description: "Top-end of range (high chance of acceptance)",
     },
     {
+      key: "mid",
       value: midPriceRange,
       description: "Midpoint (good chance of acceptance)",
     },
     {
+      key: "min",
       value: minPriceRange,
       description: "Low-end of range (lower chance of acceptance)",
     },
   ]
 
   return getRangeDetails.map((rangePrice, idx) => ({
-    key: `price-option-${idx}`,
+    key: `price-option-${rangePrice.key}`,
     value: rangePrice.value!,
     description: rangePrice.description,
   }))
@@ -102,12 +105,18 @@ const getRangeOptions = (listPrice: ListPriceType) => {
 
 const getPercentageOptions = (listPrice: ListPriceType) => {
   const percentageOptions = [
-    { percentage: 0, description: "List price (high chance of acceptance)" },
     {
+      key: "max",
+      percentage: 0,
+      description: "List price (high chance of acceptance)",
+    },
+    {
+      key: "mid",
       percentage: 0.1,
       description: "10% below the list price (good chance of acceptance)",
     },
     {
+      key: "min",
       percentage: 0.2,
       description:
         "20% below the list price (substantial reduction, lower chance of acceptance)",
@@ -117,7 +126,7 @@ const getPercentageOptions = (listPrice: ListPriceType) => {
   return percentageOptions.map((option, idx) => {
     if (listPrice?.major) {
       return {
-        key: `price-option-${idx}`,
+        key: `price-option-${option.key}`,
         value: Math.round(listPrice.major * (1 - option.percentage)),
         description: option.description,
       }

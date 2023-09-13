@@ -49,7 +49,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   const [customValue, setCustomValue] = useState<number | undefined>(lastOffer)
   const [toggle, setToggle] = useState(!!lastOffer)
   const [selectedRadio, setSelectedRadio] = useState<string>(
-    selectedPriceOption || "price-option-0"
+    selectedPriceOption || "price-option-max"
   )
 
   useEffect(() => {
