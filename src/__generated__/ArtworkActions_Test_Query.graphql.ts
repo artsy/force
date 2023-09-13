@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7f5a6145a0c0e8a21a1e31a3b78ecc52>>
+ * @generated SignedSource<<e15fc5a71604d2fa87c3025bad7d25e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -59,19 +59,19 @@ v5 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Int"
+  "type": "Float"
 },
 v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Float"
+  "type": "Image"
 },
 v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Image"
+  "type": "Int"
 },
 v8 = {
   "enumValues": null,
@@ -262,38 +262,11 @@ return {
             "storageKey": null
           },
           {
-            "alias": "customCollections",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "default",
-                "value": false
-              },
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 0
-              },
-              {
-                "kind": "Literal",
-                "name": "saves",
-                "value": true
-              }
-            ],
-            "concreteType": "CollectionsConnection",
-            "kind": "LinkedField",
-            "name": "collectionsConnection",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "totalCount",
-                "storageKey": null
-              }
-            ],
-            "storageKey": "collectionsConnection(default:false,first:0,saves:true)"
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isSavedToList",
+            "storageKey": null
           },
           {
             "alias": null,
@@ -488,7 +461,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fb1a219ff46eca6d6811162e227e9b9d",
+    "cacheID": "b17d19cee40aa9eac129dcdf753ee0f3",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -514,29 +487,22 @@ return {
           "type": "ArtworkMeta"
         },
         "artwork.artworkMeta.share": (v3/*: any*/),
-        "artwork.customCollections": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CollectionsConnection"
-        },
-        "artwork.customCollections.totalCount": (v5/*: any*/),
         "artwork.date": (v3/*: any*/),
         "artwork.downloadableImageUrl": (v3/*: any*/),
-        "artwork.heightCm": (v6/*: any*/),
+        "artwork.heightCm": (v5/*: any*/),
         "artwork.href": (v3/*: any*/),
         "artwork.id": (v4/*: any*/),
-        "artwork.image": (v7/*: any*/),
+        "artwork.image": (v6/*: any*/),
         "artwork.image.resized": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ResizedImageUrl"
         },
-        "artwork.image.resized.height": (v5/*: any*/),
+        "artwork.image.resized.height": (v7/*: any*/),
         "artwork.image.resized.src": (v8/*: any*/),
         "artwork.image.resized.srcSet": (v8/*: any*/),
-        "artwork.image.resized.width": (v5/*: any*/),
+        "artwork.image.resized.width": (v7/*: any*/),
         "artwork.images": {
           "enumValues": null,
           "nullable": true,
@@ -548,6 +514,12 @@ return {
         "artwork.isDownloadable": (v9/*: any*/),
         "artwork.isHangable": (v9/*: any*/),
         "artwork.isSaved": (v9/*: any*/),
+        "artwork.isSavedToList": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
@@ -556,7 +528,7 @@ return {
         },
         "artwork.partner.id": (v4/*: any*/),
         "artwork.partner.slug": (v4/*: any*/),
-        "artwork.preview": (v7/*: any*/),
+        "artwork.preview": (v6/*: any*/),
         "artwork.preview.url": (v3/*: any*/),
         "artwork.sale": {
           "enumValues": null,
@@ -582,12 +554,12 @@ return {
         "artwork.sale.slug": (v4/*: any*/),
         "artwork.slug": (v4/*: any*/),
         "artwork.title": (v3/*: any*/),
-        "artwork.widthCm": (v6/*: any*/)
+        "artwork.widthCm": (v5/*: any*/)
       }
     },
     "name": "ArtworkActions_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkActions_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkActions_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButtonV2_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n  ...ArtworkAuctionRegistrationPanel_artwork\n  ...ArtworkActionsSaveButtonV2_artwork\n}\n\nfragment ArtworkActionsWatchLotButton_artwork on Artwork {\n  sale {\n    isLiveOpen\n    isRegistrationClosed\n    liveStartAt\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n  ...ArtworkAuctionRegistrationPanel_artwork\n}\n\nfragment ArtworkActions_artwork on Artwork {\n  ...ArtworkActionsSaveButton_artwork\n  ...ArtworkDownloadButton_artwork\n  ...ArtworkSharePanel_artwork_FOvjt\n  ...ViewInRoom_artwork\n  slug\n  downloadableImageUrl\n  isDownloadable\n  isHangable\n  partner {\n    slug\n    id\n  }\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n\nfragment ArtworkDownloadButton_artwork on Artwork {\n  title\n  date\n  downloadableImageUrl\n  artists {\n    name\n    id\n  }\n}\n\nfragment ArtworkSharePanel_artwork_FOvjt on Artwork {\n  href\n  images(includeAll: false) {\n    url\n  }\n  artworkMeta: meta {\n    share\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
+    "text": "query ArtworkActions_Test_Query {\n  artwork(id: \"example\") {\n    ...ArtworkActions_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButtonV2_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n  ...ArtworkAuctionRegistrationPanel_artwork\n  ...ArtworkActionsSaveButtonV2_artwork\n}\n\nfragment ArtworkActionsWatchLotButton_artwork on Artwork {\n  sale {\n    isLiveOpen\n    isRegistrationClosed\n    liveStartAt\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n  ...ArtworkAuctionRegistrationPanel_artwork\n}\n\nfragment ArtworkActions_artwork on Artwork {\n  ...ArtworkActionsSaveButton_artwork\n  ...ArtworkDownloadButton_artwork\n  ...ArtworkSharePanel_artwork_FOvjt\n  ...ViewInRoom_artwork\n  slug\n  downloadableImageUrl\n  isDownloadable\n  isHangable\n  partner {\n    slug\n    id\n  }\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n\nfragment ArtworkDownloadButton_artwork on Artwork {\n  title\n  date\n  downloadableImageUrl\n  artists {\n    name\n    id\n  }\n}\n\nfragment ArtworkSharePanel_artwork_FOvjt on Artwork {\n  href\n  images(includeAll: false) {\n    url\n  }\n  artworkMeta: meta {\n    share\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
   }
 };
 })();

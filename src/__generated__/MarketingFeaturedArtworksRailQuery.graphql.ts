@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<050fa07f256676ca2af160c7f0dd27c2>>
+ * @generated SignedSource<<5208a69bd15711baf7c362ea0952cc0a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -450,38 +450,11 @@ return {
                             "storageKey": null
                           },
                           {
-                            "alias": "customCollections",
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "default",
-                                "value": false
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "first",
-                                "value": 0
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "saves",
-                                "value": true
-                              }
-                            ],
-                            "concreteType": "CollectionsConnection",
-                            "kind": "LinkedField",
-                            "name": "collectionsConnection",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "totalCount",
-                                "storageKey": null
-                              }
-                            ],
-                            "storageKey": "collectionsConnection(default:false,first:0,saves:true)"
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "isSavedToList",
+                            "storageKey": null
                           },
                           {
                             "alias": null,
@@ -575,12 +548,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f1a1631231d31cf63f6de67289114096",
+    "cacheID": "d39bb80a9b91462fb275c184a2c6ba39",
     "id": null,
     "metadata": {},
     "name": "MarketingFeaturedArtworksRailQuery",
     "operationKind": "query",
-    "text": "query MarketingFeaturedArtworksRailQuery {\n  viewer {\n    ...MarketingFeaturedArtworksRail_viewer\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment MarketingFeaturedArtworksRail_viewer on Viewer {\n  marketingCollections(slugs: [\"new-this-week\"]) {\n    artworksConnection(first: 25) {\n      edges {\n        node {\n          ...ShelfArtwork_artwork\n          internalID\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...Metadata_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n}\n"
+    "text": "query MarketingFeaturedArtworksRailQuery {\n  viewer {\n    ...MarketingFeaturedArtworksRail_viewer\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment MarketingFeaturedArtworksRail_viewer on Viewer {\n  marketingCollections(slugs: [\"new-this-week\"]) {\n    artworksConnection(first: 25) {\n      edges {\n        node {\n          ...ShelfArtwork_artwork\n          internalID\n          id\n        }\n      }\n      id\n    }\n    id\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...Metadata_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n}\n"
   }
 };
 })();

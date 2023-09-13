@@ -23,9 +23,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
   const tracking = useTracking()
   const { savedListId, isSavedToList } = useManageArtworkForSavesContext()
 
-  const customListsCount = artwork.customCollections?.totalCount ?? 0
   const isSavedToDefaultList = !!artwork.isSaved
-  const isSavedToCustomLists = customListsCount > 0
 
   const { isSaved, saveArtworkToLists } = useArtworkLists({
     contextModule,
@@ -38,7 +36,7 @@ const SaveArtworkToListsButton: FC<SaveArtworkToListsButtonProps> = ({
       artistNames: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,
       isSavedToDefaultList,
-      isSavedToCustomLists,
+      isSavedToCustomLists: artwork.isSavedToList,
     },
   })
 
@@ -93,13 +91,7 @@ export const SaveArtworkToListsButtonFragmentContainer = createFragmentContainer
         preview: image {
           url(version: "square")
         }
-        customCollections: collectionsConnection(
-          first: 0
-          default: false
-          saves: true
-        ) {
-          totalCount
-        }
+        isSavedToList
       }
     `,
   }
