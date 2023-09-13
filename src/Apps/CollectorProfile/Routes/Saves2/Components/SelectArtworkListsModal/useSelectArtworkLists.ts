@@ -71,25 +71,9 @@ export const useSelectArtworkLists = (artworkID: string) => {
         artwork.setValue(false, "isSaved")
       }
 
-      const entity = artwork.getLinkedRecord("collectionsConnection", {
-        first: 0,
-        default: false,
-        saves: true,
-      })
-
-      if (!entity) {
-        return
-      }
-
-      /**
-       * Update `totalCount` field, based on which we decide
-       * whether to display the manage lists for artwork modal or
-       * immediately remove artwork from "Saved Artworks"
-       */
-      const prevValue = (entity.getValue("totalCount") ?? 0) as number
-      const newValue = prevValue + addedCounts.custom - removedCounts.custom
-
-      entity.setValue(newValue, "totalCount")
+      // Update `isSavedToList` field to reflect if artwork was saved to any list
+      const hasBeenSavedToList = addedCounts.custom - removedCounts.custom > 0
+      artwork.setValue(hasBeenSavedToList, "isSavedToList")
     },
   })
 }

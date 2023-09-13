@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0083f2c92e0711c2438245f72814123b>>
+ * @generated SignedSource<<6e3f2ab65f58254804bc080e464bad50>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -156,38 +156,11 @@ return {
             "storageKey": null
           },
           {
-            "alias": "customCollections",
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "default",
-                "value": false
-              },
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 0
-              },
-              {
-                "kind": "Literal",
-                "name": "saves",
-                "value": true
-              }
-            ],
-            "concreteType": "CollectionsConnection",
-            "kind": "LinkedField",
-            "name": "collectionsConnection",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "totalCount",
-                "storageKey": null
-              }
-            ],
-            "storageKey": "collectionsConnection(default:false,first:0,saves:true)"
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "isSavedToList",
+            "storageKey": null
           }
         ],
         "storageKey": "artwork(id:\"artworkID\")"
@@ -195,7 +168,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c8a05340a97bbe9aaf86d8452361601f",
+    "cacheID": "2181a66364c06d99daf3e8ba50317abf",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -206,24 +179,18 @@ return {
           "type": "Artwork"
         },
         "artwork.artistNames": (v1/*: any*/),
-        "artwork.customCollections": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CollectionsConnection"
-        },
-        "artwork.customCollections.totalCount": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Int"
-        },
         "artwork.date": (v1/*: any*/),
         "artwork.id": (v2/*: any*/),
         "artwork.internalID": (v2/*: any*/),
         "artwork.isSaved": {
           "enumValues": null,
           "nullable": true,
+          "plural": false,
+          "type": "Boolean"
+        },
+        "artwork.isSavedToList": {
+          "enumValues": null,
+          "nullable": false,
           "plural": false,
           "type": "Boolean"
         },
@@ -240,7 +207,7 @@ return {
     },
     "name": "SaveArtworkToListsButton_Test_Query",
     "operationKind": "query",
-    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n}\n"
+    "text": "query SaveArtworkToListsButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...SaveArtworkToListsButton_artwork\n    id\n  }\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n}\n"
   }
 };
 })();

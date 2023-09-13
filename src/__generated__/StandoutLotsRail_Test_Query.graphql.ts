@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bbe00943a1b91ef387feb49345dd6594>>
+ * @generated SignedSource<<d901aad96162635b708638623c379c99>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -92,13 +92,13 @@ v10 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Int"
+  "type": "Image"
 },
 v11 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Image"
+  "type": "Int"
 };
 return {
   "fragment": {
@@ -476,38 +476,11 @@ return {
                         "storageKey": null
                       },
                       {
-                        "alias": "customCollections",
-                        "args": [
-                          {
-                            "kind": "Literal",
-                            "name": "default",
-                            "value": false
-                          },
-                          {
-                            "kind": "Literal",
-                            "name": "first",
-                            "value": 0
-                          },
-                          {
-                            "kind": "Literal",
-                            "name": "saves",
-                            "value": true
-                          }
-                        ],
-                        "concreteType": "CollectionsConnection",
-                        "kind": "LinkedField",
-                        "name": "collectionsConnection",
-                        "plural": false,
-                        "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "totalCount",
-                            "storageKey": null
-                          }
-                        ],
-                        "storageKey": "collectionsConnection(default:false,first:0,saves:true)"
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "isSavedToList",
+                        "storageKey": null
                       },
                       {
                         "alias": null,
@@ -597,7 +570,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "20412b46898675b75058347a886d05c1",
+    "cacheID": "97dba1cbf8cd0252f63ad68e4d50fc6c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -659,22 +632,21 @@ return {
         "viewer.standoutLotsRailConnection.edges.node.attributionClass.name": (v9/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.collecting_institution": (v9/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.cultural_maker": (v9/*: any*/),
-        "viewer.standoutLotsRailConnection.edges.node.customCollections": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CollectionsConnection"
-        },
-        "viewer.standoutLotsRailConnection.edges.node.customCollections.totalCount": (v10/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.date": (v9/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.href": (v9/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.id": (v7/*: any*/),
-        "viewer.standoutLotsRailConnection.edges.node.image": (v11/*: any*/),
-        "viewer.standoutLotsRailConnection.edges.node.image.height": (v10/*: any*/),
+        "viewer.standoutLotsRailConnection.edges.node.image": (v10/*: any*/),
+        "viewer.standoutLotsRailConnection.edges.node.image.height": (v11/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.image.src": (v9/*: any*/),
-        "viewer.standoutLotsRailConnection.edges.node.image.width": (v10/*: any*/),
+        "viewer.standoutLotsRailConnection.edges.node.image.width": (v11/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.internalID": (v7/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.isSaved": (v8/*: any*/),
+        "viewer.standoutLotsRailConnection.edges.node.isSavedToList": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
         "viewer.standoutLotsRailConnection.edges.node.marketPriceInsights": {
           "enumValues": null,
           "nullable": true,
@@ -710,7 +682,7 @@ return {
         "viewer.standoutLotsRailConnection.edges.node.partner.href": (v9/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.partner.id": (v7/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.partner.name": (v9/*: any*/),
-        "viewer.standoutLotsRailConnection.edges.node.preview": (v11/*: any*/),
+        "viewer.standoutLotsRailConnection.edges.node.preview": (v10/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.preview.url": (v9/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.sale": {
           "enumValues": null,
@@ -718,9 +690,9 @@ return {
           "plural": false,
           "type": "Sale"
         },
-        "viewer.standoutLotsRailConnection.edges.node.sale.cascadingEndTimeIntervalMinutes": (v10/*: any*/),
+        "viewer.standoutLotsRailConnection.edges.node.sale.cascadingEndTimeIntervalMinutes": (v11/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.sale.endAt": (v9/*: any*/),
-        "viewer.standoutLotsRailConnection.edges.node.sale.extendedBiddingIntervalMinutes": (v10/*: any*/),
+        "viewer.standoutLotsRailConnection.edges.node.sale.extendedBiddingIntervalMinutes": (v11/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.sale.id": (v7/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.sale.is_auction": (v8/*: any*/),
         "viewer.standoutLotsRailConnection.edges.node.sale.is_closed": (v8/*: any*/),
@@ -771,7 +743,7 @@ return {
     },
     "name": "StandoutLotsRail_Test_Query",
     "operationKind": "query",
-    "text": "query StandoutLotsRail_Test_Query {\n  viewer {\n    ...StandoutLotsRail_viewer\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  customCollections: collectionsConnection(first: 0, default: false, saves: true) {\n    totalCount\n  }\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...Metadata_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n}\n\nfragment StandoutLotsRail_viewer on Viewer {\n  standoutLotsRailConnection: artworksConnection(forSale: true, first: 50, geneIDs: [\"our-top-auction-lots\"]) {\n    edges {\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork\n        id\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query StandoutLotsRail_Test_Query {\n  viewer {\n    ...StandoutLotsRail_viewer\n  }\n}\n\nfragment Details_artwork on Artwork {\n  internalID\n  href\n  title\n  date\n  sale_message: saleMessage\n  cultural_maker: culturalMaker\n  artist {\n    targetSupply {\n      isP1\n    }\n    id\n  }\n  marketPriceInsights {\n    demandRank\n  }\n  artists(shallow: true) {\n    id\n    href\n    name\n  }\n  collecting_institution: collectingInstitution\n  partner(shallow: true) {\n    name\n    href\n    id\n  }\n  sale {\n    endAt\n    cascadingEndTimeIntervalMinutes\n    extendedBiddingIntervalMinutes\n    startAt\n    is_auction: isAuction\n    is_closed: isClosed\n    id\n  }\n  sale_artwork: saleArtwork {\n    lotID\n    lotLabel\n    endAt\n    extendedBiddingEndAt\n    formattedEndDateTime\n    counts {\n      bidder_positions: bidderPositions\n    }\n    highest_bid: highestBid {\n      display\n    }\n    opening_bid: openingBid {\n      display\n    }\n    id\n  }\n  ...SaveButton_artwork\n  ...SaveArtworkToListsButton_artwork\n  ...HoverDetails_artwork\n}\n\nfragment HoverDetails_artwork on Artwork {\n  internalID\n  attributionClass {\n    name\n    id\n  }\n  mediumType {\n    filterGene {\n      name\n      id\n    }\n  }\n}\n\nfragment Metadata_artwork on Artwork {\n  ...Details_artwork\n  internalID\n  href\n}\n\nfragment SaveArtworkToListsButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n}\n\nfragment SaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  title\n}\n\nfragment ShelfArtwork_artwork on Artwork {\n  ...Metadata_artwork\n  title\n  href\n  artistNames\n  image {\n    src: url(version: [\"larger\", \"large\"])\n    width\n    height\n  }\n}\n\nfragment StandoutLotsRail_viewer on Viewer {\n  standoutLotsRailConnection: artworksConnection(forSale: true, first: 50, geneIDs: [\"our-top-auction-lots\"]) {\n    edges {\n      node {\n        internalID\n        slug\n        ...ShelfArtwork_artwork\n        id\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

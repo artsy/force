@@ -20,8 +20,6 @@ export const ArtworkActionsSaveButtonV2: FC<ArtworkActionsSaveButtonV2Props> = (
 }) => {
   const { isAuction, isClosed } = artwork.sale ?? {}
   const isOpenOrUpcomingSale = isAuction && !isClosed
-  const customListsCount = artwork.customCollections?.totalCount ?? 0
-  const isSavedToCustomLists = customListsCount > 0
 
   const { isSaved, saveArtworkToLists } = useArtworkLists({
     contextModule: ContextModule.artworkImage,
@@ -34,7 +32,7 @@ export const ArtworkActionsSaveButtonV2: FC<ArtworkActionsSaveButtonV2Props> = (
       artistNames: artwork.artistNames,
       imageURL: artwork.preview?.url ?? null,
       isSavedToDefaultList: !!artwork.isSaved,
-      isSavedToCustomLists: isSavedToCustomLists,
+      isSavedToCustomLists: artwork.isSavedToList,
     },
   })
 
@@ -66,7 +64,7 @@ export const ArtworkActionsSaveButtonV2: FC<ArtworkActionsSaveButtonV2Props> = (
         isSaved={!!artwork.isSaved}
         artwork={artwork}
         onClick={handleSaveArtworkInAuction}
-        canShowRegistrationPopover={!isSavedToCustomLists}
+        canShowRegistrationPopover={!artwork.isSavedToList}
       />
     )
   }
@@ -93,13 +91,7 @@ export const ArtworkActionsSaveButtonV2FragmentContainer = createFragmentContain
         preview: image {
           url(version: "square")
         }
-        customCollections: collectionsConnection(
-          first: 0
-          default: false
-          saves: true
-        ) {
-          totalCount
-        }
+        isSavedToList
         sale {
           isAuction
           isClosed

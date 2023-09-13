@@ -144,9 +144,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
         renderWithRelay({
           Artwork: () => ({
             isSaved: false,
-            customCollections: {
-              totalCount: 2,
-            },
+            isSavedToList: true,
           }),
         })
 
@@ -157,9 +155,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
         renderWithRelay({
           Artwork: () => ({
             isSaved: true,
-            customCollections: {
-              totalCount: 2,
-            },
+            isSavedToList: true,
           }),
         })
 
@@ -184,9 +180,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
           Artwork: () => ({
             isSaved: true,
             sale,
-            customCollections: {
-              totalCount: 2,
-            },
+            isSavedToList: true,
           }),
         })
 
@@ -200,9 +194,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
           Artwork: () => ({
             isSaved: false,
             sale,
-            customCollections: {
-              totalCount: 2,
-            },
+            isSavedToList: true,
           }),
         })
 
@@ -225,9 +217,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
       renderWithRelay({
         Artwork: () => ({
           isSaved: true,
-          customCollections: {
-            totalCount: 0,
-          },
+          isSavedToList: false,
         }),
       })
 
@@ -241,9 +231,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
       renderWithRelay({
         Artwork: () => ({
           isSaved: true,
-          customCollections: {
-            totalCount: 2,
-          },
+          isSavedToList: true,
         }),
       })
 
@@ -262,16 +250,12 @@ const sale = {
 
 const unsavedArtwork = {
   isSaved: false,
-  customCollections: {
-    totalCount: 0,
-  },
+  isSavedToList: false,
 }
 
 const savedArtwork = {
   isSaved: true,
-  customCollections: {
-    totalCount: 0,
-  },
+  isSavedToList: false,
 }
 
 const unsavedAuctionArtwork = {
