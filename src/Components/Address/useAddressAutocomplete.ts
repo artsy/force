@@ -1,9 +1,11 @@
 import { AutocompleteInputOptionType } from "@artsy/palette"
 import { Address } from "Components/Address/AddressForm"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { useDebounce } from "Utils/Hooks/useDebounce"
 import { getENV } from "Utils/getENV"
 import { useCallback, useEffect, useState } from "react"
+import { throttle } from "lodash"
+
+const THROTTLE_DELAY = 500
 
 export type ProviderSuggestion = {
   city: string
@@ -75,6 +77,15 @@ export const useAddressAutocomplete = (
     [apiKey]
   )
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const throttledFetchSuggestions = useCallback(
+    throttle(fetchSuggestions, THROTTLE_DELAY, {
+      leading: true,
+      trailing: true,
+    }),
+    []
+  )
+
   const fetchForAutocomplete = useCallback(
     // these are the parameters to the Smarty API call
     async ({ search, selected }: { search: string; selected?: string }) => {
@@ -86,14 +97,14 @@ export const useAddressAutocomplete = (
       }
 
       try {
-        const response = await fetchSuggestions({ search, selected })
+        const response = await throttledFetchSuggestions({ search, selected })
 
         setResult(response.suggestions)
       } catch (e) {
         console.error(e)
       }
     },
-    [fetchSuggestions, isAddressAutocompleteEnabled]
+    [throttledFetchSuggestions, isAddressAutocompleteEnabled]
   )
 
   const fetchSecondarySuggestions = useCallback(
@@ -103,13 +114,6 @@ export const useAddressAutocomplete = (
     },
     [fetchForAutocomplete]
   )
-
-  // debounce requests
-  const debouncedFetchForAutocomplete = useDebounce({
-    // high debounce for testing to not eat up our credits
-    delay: 700,
-    callback: fetchForAutocomplete,
-  })
 
   const buildAddressText = (suggestion: ProviderSuggestion): string => {
     let buildingAddress = suggestion.street_line
@@ -147,7 +151,7 @@ export const useAddressAutocomplete = (
   return {
     autocompleteOptions,
     suggestions: result,
-    fetchForAutocomplete: debouncedFetchForAutocomplete,
+    fetchForAutocomplete,
     isAddressAutocompleteEnabled,
     fetchSecondarySuggestions,
   }
