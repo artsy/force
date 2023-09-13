@@ -61,6 +61,7 @@ describe("PriceOptions", () => {
       trackEvent,
     }))
   })
+
   describe("Range", () => {
     beforeEach(() => {
       renderWithRelay({
@@ -77,9 +78,15 @@ describe("PriceOptions", () => {
             },
           },
         }),
+        CommerceOfferOrder: () => ({
+          myLastOffer: {
+            amountCents: null,
+          },
+        }),
       })
       radios = screen.getAllByRole("radio")
     })
+
     it("renders all radio options", () => {
       expect(radios).toHaveLength(4)
     })
@@ -171,9 +178,15 @@ describe("PriceOptions", () => {
             major: 100,
           },
         }),
+        CommerceOfferOrder: () => ({
+          myLastOffer: {
+            amountCents: null,
+          },
+        }),
       })
       radios = screen.getAllByRole("radio")
     })
+
     it("renders all radio options", () => {
       expect(radios).toHaveLength(4)
     })
@@ -231,6 +244,7 @@ describe("PriceOptions", () => {
       expect(notice).toBeInTheDocument()
     })
   })
+
   describe("Error Handling", () => {
     beforeEach(() => {
       showError.mockReturnValueOnce(false).mockReturnValueOnce(true)
@@ -243,16 +257,25 @@ describe("PriceOptions", () => {
             major: 99,
           },
         }),
+        CommerceOfferOrder: () => ({
+          myLastOffer: {
+            amountCents: null,
+          },
+        }),
       })
       radios = screen.getAllByRole("radio")
     })
+
     it("doesn't display an error when none is passed", () => {
       expect(
         screen.queryByText("Offer amount missing or invalid.")
       ).not.toBeInTheDocument()
     })
     it("displays the error and automatically selects the custom value option when an error is passed", async () => {
+      await waitFor(() => expect(radios[3]).toBeChecked())
+
       const selected = await screen.findByRole("radio", { checked: true })
+
       expect(selected).toBeInTheDocument()
       expect(selected).toHaveTextContent("Different amount")
       expect(selected).toHaveTextContent("Offer amount missing or invalid.")
@@ -261,6 +284,36 @@ describe("PriceOptions", () => {
       expect(radios[0]).toHaveTextContent("A$99.00") // List price
       expect(radios[1]).toHaveTextContent("A$89.00") // %90 would be A$89.10
       expect(radios[2]).toHaveTextContent("A$79.00") // %80 would be A$79.20
+    })
+  })
+
+  describe("Custom Price Offer", () => {
+    beforeEach(() => {
+      renderWithRelay({
+        Artwork: () => ({
+          priceCurrency: "USD",
+          isPriceRange: false,
+          listPrice: {
+            __typename: "Money",
+            major: 100,
+          },
+        }),
+        CommerceOfferOrder: () => ({
+          myLastOffer: {
+            amountCents: 9500,
+          },
+        }),
+      })
+      radios = screen.getAllByRole("radio")
+    })
+
+    it("defaults to the custom value if available", async () => {
+      await waitFor(() => expect(onChange).toHaveBeenCalledWith(95))
+
+      expect(radios[3]).toBeChecked()
+
+      const input = await within(radios[3]).findByRole("textbox")
+      expect(input).toHaveValue("95")
     })
   })
 })

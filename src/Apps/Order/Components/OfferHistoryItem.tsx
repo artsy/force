@@ -7,7 +7,7 @@ import {
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { RevealButton } from "./RevealButton"
-import { getOfferItemFromOrder } from "Apps/Order/Utils/offerItemExtractor"
+import { getOfferItemFromOrder } from "Apps/Order/Utils/offerUtils"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 
 const OfferHistoryItem: React.FC<

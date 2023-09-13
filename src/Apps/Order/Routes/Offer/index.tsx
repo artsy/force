@@ -20,13 +20,18 @@ import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { offerFlowSteps } from "Apps/Order/Components/OrderStepper"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
-import { getOfferItemFromOrder } from "Apps/Order/Utils/offerItemExtractor"
+import {
+  getOfferItemFromOrder,
+  lastOfferNote,
+} from "Apps/Order/Utils/offerUtils"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 
 const logger = createLogger("Order/Routes/Offer/index.tsx")
+
+export const DEFUALT_OFFER_NOTE_PREFIX = "I sent an offer for"
 
 export interface OfferRouteProps {
   order: Offer_order$data
@@ -50,7 +55,7 @@ export const OfferRoute: FC<OfferRouteProps> = ({
   const [lowSpeedBumpEncountered, setLowSpeedBumpEncountered] = useState(false)
   const [offerNoteValue, setOfferNoteValue] = useState({
     exceedsCharacterLimit: false,
-    value: "",
+    value: lastOfferNote(order.myLastOffer?.note || ""),
   })
   const [offerValue, setOfferValue] = useState(0)
 
@@ -172,7 +177,7 @@ export const OfferRoute: FC<OfferRouteProps> = ({
 
       let note = hasNote
         ? offerNoteValue.value
-        : `I sent an offer for ${appendCurrencySymbol(
+        : `${DEFUALT_OFFER_NOTE_PREFIX} ${appendCurrencySymbol(
             offerValue.toLocaleString("en-US", {
               currency: order.currencyCode,
               minimumFractionDigits: 2,
@@ -267,6 +272,7 @@ export const OfferRoute: FC<OfferRouteProps> = ({
               <OfferNote
                 onChange={offerNoteValue => setOfferNoteValue(offerNoteValue)}
                 artworkId={artworkId!}
+                value={offerNoteValue.value}
               />
             </>
           )}
@@ -381,6 +387,9 @@ export const OfferFragmentContainer = createFragmentContainer(
         }
         ... on CommerceOfferOrder {
           isInquiryOrder
+          myLastOffer {
+            note
+          }
         }
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order

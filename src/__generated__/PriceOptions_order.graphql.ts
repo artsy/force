@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<983c3308ec93fba5322096f15e7ad8e0>>
+ * @generated SignedSource<<cafe1726258f85c2b0ffad54eb30a45f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PriceOptions_order$data = {
   readonly internalID: string;
+  readonly myLastOffer?: {
+    readonly amountCents: number;
+  } | null;
   readonly " $fragmentType": "PriceOptions_order";
 };
 export type PriceOptions_order$key = {
@@ -31,12 +34,37 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceOffer",
+          "kind": "LinkedField",
+          "name": "myLastOffer",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "amountCents",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "type": "CommerceOfferOrder",
+      "abstractKey": null
     }
   ],
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "6098d0dbc695bef9e6a4a2a9e71b3b2e";
+(node as any).hash = "42eab762247c84117e227b168dda8d63";
 
 export default node;
