@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<55db510bf954c66078d138b48601065b>>
+ * @generated SignedSource<<a5de7756b2fa3000c588df5a21960bbb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -280,6 +280,24 @@ return {
             ],
             "storageKey": null
           },
+          {
+            "alias": "myLotStandingManageAlerts",
+            "args": null,
+            "concreteType": "LotStanding",
+            "kind": "LinkedField",
+            "name": "myLotStanding",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "isHighestBidder",
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          },
           (v4/*: any*/)
         ],
         "storageKey": "artwork(id:\"emily-ludwig-shaffer-untitled-3\")"
@@ -287,7 +305,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a31251aa00900c30be346d3d7b466596",
+    "cacheID": "9afc9d9b2b296795141b590947102350",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -334,6 +352,13 @@ return {
         "artwork.mediumType.filterGene.id": (v6/*: any*/),
         "artwork.mediumType.filterGene.name": (v5/*: any*/),
         "artwork.mediumType.filterGene.slug": (v6/*: any*/),
+        "artwork.myLotStandingManageAlerts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": true,
+          "type": "LotStanding"
+        },
+        "artwork.myLotStandingManageAlerts.isHighestBidder": (v7/*: any*/),
         "artwork.sale": {
           "enumValues": null,
           "nullable": true,
@@ -377,7 +402,7 @@ return {
     },
     "name": "ArtworkAuctionCreateAlertHeader_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkAuctionCreateAlertHeader_Test_Query {\n  artwork(id: \"emily-ludwig-shaffer-untitled-3\") {\n    ...ArtworkAuctionCreateAlertHeader_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {\n  slug\n  internalID\n  title\n  isInAuction\n  artistNames\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    extendedBiddingEndAt\n    endAt\n    endedAt\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n  savedSearch {\n    suggestedArtworksConnection {\n      totalCount\n    }\n  }\n  ...ArtworkCreateAlertButton_artwork\n}\n\nfragment ArtworkCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkAuctionCreateAlertHeader_Test_Query {\n  artwork(id: \"emily-ludwig-shaffer-untitled-3\") {\n    ...ArtworkAuctionCreateAlertHeader_artwork\n    id\n  }\n}\n\nfragment ArtworkAuctionCreateAlertHeader_artwork on Artwork {\n  slug\n  internalID\n  title\n  isInAuction\n  artistNames\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  sale {\n    startAt\n    isClosed\n    id\n  }\n  saleArtwork {\n    extendedBiddingEndAt\n    endAt\n    endedAt\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n  savedSearch {\n    suggestedArtworksConnection {\n      totalCount\n    }\n  }\n  myLotStandingManageAlerts: myLotStanding {\n    isHighestBidder\n  }\n  ...ArtworkCreateAlertButton_artwork\n}\n\nfragment ArtworkCreateAlertButton_artwork on Artwork {\n  slug\n  internalID\n  title\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();

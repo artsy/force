@@ -1566,7 +1566,7 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
 
   # Whether the artist has been created by a user.
   isPersonalArtist: Boolean
-  isPublic: Boolean
+  isPublic: Boolean!
   isShareable: Boolean
   last: String
   location: String
@@ -2279,6 +2279,9 @@ type Artwork implements Node & Searchable & Sellable {
   isPriceHidden: Boolean
   isPriceRange: Boolean
   isSaved: Boolean
+
+  # Checks if artwork is saved to user's lists
+  isSavedToList(default: Boolean = false, saves: Boolean = true): Boolean!
 
   # Should the video be used as the cover image
   isSetVideoAsCover: Boolean
@@ -13710,7 +13713,7 @@ type Partner implements Node {
     highQuality: Boolean
     last: Int
     partnerID: String
-    since: Int
+    since: SearchCriteriaSinceEnum
   ): SearchCriteriaConnection
   showPromoted: Boolean
 
@@ -14614,6 +14617,9 @@ type Query {
   _unused_gravity_savedSearchesConnection(
     # Returns the elements in the list that come after the specified cursor.
     after: String
+
+    # Returns saved searches associated with the provided artist IDs
+    artistIDs: [ID!]
 
     # Returns the elements in the list that come before the specified cursor.
     before: String
@@ -15789,7 +15795,7 @@ type Query {
     highQuality: Boolean
     last: Int
     partnerID: String
-    since: Int
+    since: SearchCriteriaSinceEnum
   ): SearchCriteriaConnection
   shortcut(id: ID!): Shortcut
 
@@ -16859,7 +16865,12 @@ type SearchAggregationResults {
 # Search criteria
 type SearchCriteria {
   acquireable: Boolean
+
+  # Medium slug
   additionalGeneIDs: [String!]!
+
+  # Medium name
+  additionalGeneNames: [String!]!
   artistID: String @deprecated(reason: "Deprecated in favor of artistIDs array")
   artistIDs: [String!]
   artistsConnection(
@@ -16878,6 +16889,15 @@ type SearchCriteria {
   displayName: String!
   hasRecentlyEnabledUserSearchCriteria: Boolean!
   height: String
+  highPriceAmount(
+    decimal: String = "."
+
+    # Allows control of symbol position (%v = value, %s = symbol)
+    format: String = "%s%v"
+    precision: Int = 0
+    symbol: String
+    thousand: String = ","
+  ): String
   href: String!
   inquireableOnly: Boolean
   internalID: ID!
@@ -16886,10 +16906,20 @@ type SearchCriteria {
   # Human-friendly labels that are added by Metaphysics to the upstream SearchCriteria type coming from Gravity
   labels: [SearchCriteriaLabel!]!
   locationCities: [String!]!
+  lowPriceAmount(
+    decimal: String = "."
+
+    # Allows control of symbol position (%v = value, %s = symbol)
+    format: String = "%s%v"
+    precision: Int = 0
+    symbol: String
+    thousand: String = ","
+  ): String
   majorPeriods: [String!]!
   materialsTerms: [String!]!
   offerable: Boolean
   partnerIDs: [String!]!
+  priceArray: [Float]
   priceRange: String
   sizes: [String!]!
 
@@ -17980,6 +18010,7 @@ type UpdateArtistFailure {
 input UpdateArtistMutationInput {
   alternateNames: [String!]
   birthday: String
+  blurb: String
   clientMutationId: String
   coverArtworkId: String
   deathday: String
@@ -17993,6 +18024,7 @@ input UpdateArtistMutationInput {
   location: String
   middle: String
   nationality: String
+  public: Boolean
   targetSupplyPriority: ArtistTargetSupplyPriority
   targetSupplyType: ArtistTargetSupplyType
 }
@@ -19518,6 +19550,7 @@ type VerifyAddressPayload {
 }
 
 type VerifyAddressType {
+  addressVerificationId: String!
   inputAddress: InputAddressFields!
   suggestedAddresses: [SuggestedAddressFields]!
   verificationStatus: VerificationStatuses!
@@ -20379,7 +20412,7 @@ type Viewer {
     highQuality: Boolean
     last: Int
     partnerID: String
-    since: Int
+    since: SearchCriteriaSinceEnum
   ): SearchCriteriaConnection
   shortcut(id: ID!): Shortcut
 

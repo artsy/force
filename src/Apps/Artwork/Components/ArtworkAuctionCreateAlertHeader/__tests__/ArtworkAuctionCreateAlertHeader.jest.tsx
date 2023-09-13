@@ -49,7 +49,7 @@ describe("ArtworkAuctionCreateAlertHeader", () => {
 
       expect(screen.queryByText("Untitled")).toBeInTheDocument()
       expect(screen.queryByText(/Emily Ludwig Shaffer/)).toBeInTheDocument()
-      expect(screen.getByText("Create Alert")).toBeInTheDocument()
+      expect(screen.getByText("Manage your alerts")).toBeInTheDocument()
     })
 
     it("does not display when the auction is open", () => {
@@ -83,7 +83,7 @@ describe("ArtworkAuctionCreateAlertHeader", () => {
         SaleArtwork: () => ({}),
       })
 
-      expect(screen.queryByText("Create Alert")).not.toBeInTheDocument()
+      expect(screen.queryByText("Manage your alerts")).not.toBeInTheDocument()
     })
 
     describe("suggested artworks section", () => {

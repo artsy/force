@@ -382,6 +382,7 @@ export const AddressVerificationFlowFragmentContainer = createFragmentContainer(
               }
             }
             verificationStatus
+            addressVerificationId
           }
           ... on VerifyAddressFailureType {
             mutationError {

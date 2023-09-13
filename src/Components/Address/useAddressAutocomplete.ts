@@ -45,9 +45,6 @@ export const useAddressAutocomplete = (
   const isAddressAutocompleteEnabled =
     isAPIKeyPresent && isFeatureFlagEnabled && isUSAddress
 
-  // // TODO: Remove this console log after testing
-  // console.log({ isAPIKeyPresent, isFeatureFlagEnabled, isUSAddress })
-
   // reset suggestions if the country changes
   useEffect(() => {
     if (result.length > 0 && !isUSAddress) {
@@ -83,7 +80,7 @@ export const useAddressAutocomplete = (
     async ({ search, selected }: { search: string; selected?: string }) => {
       if (!isAddressAutocompleteEnabled) return
 
-      if (search.length < 5) {
+      if (search.length < 3) {
         setResult([])
         return
       }

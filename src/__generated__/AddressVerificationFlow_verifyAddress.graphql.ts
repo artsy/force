@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fda14fac03ad195d14bbf0c11a98629a>>
+ * @generated SignedSource<<4be697ee27e0dd1ff845805708e2528b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,7 @@ export type AddressVerificationFlow_verifyAddress$data = {
     } | null;
   } | {
     readonly __typename: "VerifyAddressType";
+    readonly addressVerificationId: string;
     readonly inputAddress: {
       readonly address: {
         readonly addressLine1: string;
@@ -182,6 +183,13 @@ return {
               "kind": "ScalarField",
               "name": "verificationStatus",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "addressVerificationId",
+              "storageKey": null
             }
           ],
           "type": "VerifyAddressType",
@@ -235,6 +243,6 @@ return {
 };
 })();
 
-(node as any).hash = "b8978b3664eccfdd5cb181d5a78e78aa";
+(node as any).hash = "b1de331dfa98716677e497189d7ce0bf";
 
 export default node;

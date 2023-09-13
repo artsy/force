@@ -15,6 +15,10 @@ jest.mock("Utils/getENV", () => ({
   }),
 }))
 
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
 describe("AddressForm", () => {
   it("preserves updated value from props after user input", () => {
     const Page: FC = () => {
@@ -104,12 +108,6 @@ describe("AddressForm", () => {
         expect(listbox).toHaveTextContent(
           "401 Broadway Fl 25, New York NY 10013"
         )
-
-        // await act(() => {
-        //   fireEvent.click(listbox)
-        // })
-        // expect(line1Input).toHaveValue("401 Broadway")
-        // expect(screen.getByPlaceholderText("City")).toHaveValue("New York")
       })
     })
   })

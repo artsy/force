@@ -15,7 +15,9 @@ let mockFetch: jest.Mock
 
 describe("useAddressAutocomplete", () => {
   const setupHook = (...args: Parameters<typeof useAddressAutocomplete>) => {
-    const result = renderHook(() => useAddressAutocomplete(...args))
+    const result = renderHook(props => useAddressAutocomplete(props), {
+      initialProps: args[0],
+    })
     return result
   }
 
@@ -108,18 +110,94 @@ describe("useAddressAutocomplete", () => {
         )
       })
 
-      it.todo("does not fetch for a query of less than 5 characters")
-      it.todo(
-        "Returns the correct single-line text for an address without multiple entries"
-      )
-      it.todo(
-        "Returns the correct single-line text for an address with multiple entries"
-      )
-      it.todo("resets the suggestions when the country changes")
-      it.todo(
-        "resets the suggestions without fetching when the search term is too short"
-      )
+      it("does not fetch for a query of less than 3 characters", async () => {
+        const { result } = setupHook({ country: "US" })
+
+        await act(() => {
+          result.current.fetchForAutocomplete({ search: "12" })
+        })
+
+        expect(mockFetch).not.toHaveBeenCalled()
+      })
+
+      it("returns the correct single-line text for an address without multiple entries", async () => {
+        const { result } = setupHook({ country: "US" })
+
+        act(() => {
+          result.current.fetchForAutocomplete({ search: "401 Broadway" })
+        })
+
+        await waitFor(() => result.current.autocompleteOptions.length > 0)
+
+        const formattedAddress = result.current.autocompleteOptions[0].text
+        expect(formattedAddress).toBe("401 Broadway Fl 25, New York NY 10013")
+      })
+
+      it("returns the correct single-line text for an address with multiple entries", async () => {
+        mockFetch.mockResolvedValue({
+          json: jest.fn().mockResolvedValue({
+            suggestions: [
+              {
+                city: "New York",
+                entries: 2,
+                secondary: "Fl 26",
+                state: "NY",
+                street_line: "402 Broadway",
+                zipcode: "10014",
+              },
+            ],
+          }),
+        })
+
+        const { result } = setupHook({ country: "US" })
+
+        act(() => {
+          result.current.fetchForAutocomplete({ search: "402 Broadway" })
+        })
+
+        await waitFor(() => result.current.autocompleteOptions.length > 0)
+
+        const formattedAddress = result.current.autocompleteOptions[0].text
+        expect(formattedAddress).toBe(
+          "402 Broadway Fl 26 (2 entries), New York NY 10014"
+        )
+      })
+
+      it("resets the suggestions when the country changes", async () => {
+        const { result, rerender } = setupHook({ country: "US" })
+
+        act(() => {
+          result.current.fetchForAutocomplete({ search: "401 Broadway" })
+        })
+
+        await waitFor(() => result.current.autocompleteOptions.length > 0)
+
+        rerender({ country: "UK" })
+
+        expect(result.current.autocompleteOptions).toEqual([])
+      })
+
+      it("resets the suggestions without fetching when the search term is too short", async () => {
+        const { result } = setupHook({ country: "US" })
+
+        act(() => {
+          result.current.fetchForAutocomplete({ search: "401 Broadway" })
+        })
+
+        expect(mockFetch).toHaveBeenCalledTimes(1)
+        await waitFor(() => result.current.autocompleteOptions.length > 0)
+
+        mockFetch.mockClear()
+
+        act(() => {
+          result.current.fetchForAutocomplete({ search: "40" })
+        })
+
+        expect(result.current.autocompleteOptions).toEqual([])
+        expect(mockFetch).not.toHaveBeenCalled()
+      })
     })
+
     describe("fetching secondary suggestions", () => {
       it("fetches secondary suggestions from the API with correct parameters", async () => {
         const selectedOption: AddressAutocompleteSuggestion = {

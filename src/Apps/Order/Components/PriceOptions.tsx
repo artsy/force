@@ -16,6 +16,7 @@ import {
   getInitialOfferState,
   getOfferPriceOptions,
 } from "Apps/Order/Utils/offerUtils"
+import { Device, useDeviceDetection } from "Utils/Hooks/useDeviceDetection"
 
 export interface PriceOptionsProps {
   onChange: (value: number) => void
@@ -45,6 +46,7 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
     priceOptions,
     Number(order?.myLastOffer?.amountCents || 0) / 100
   )
+  const { device } = useDeviceDetection()
 
   const [customValue, setCustomValue] = useState<number | undefined>(lastOffer)
   const [toggle, setToggle] = useState(!!lastOffer)
@@ -148,7 +150,8 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                     onChange={setCustomValue}
                     onFocus={() => {
                       onFocus()
-                      jumpTo("price-option-custom")
+                      if (device !== Device.iPhone)
+                        jumpTo("price-option-custom")
                     }}
                     noTitle
                   />
