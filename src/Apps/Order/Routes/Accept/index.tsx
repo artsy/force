@@ -20,11 +20,12 @@ import createLogger from "Utils/logger"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { PaymentMethodSummaryItemFragmentContainer as PaymentMethodSummaryItem } from "Apps/Order/Components/PaymentMethodSummaryItem"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { AcceptRouteSetOrderPaymentMutation } from "__generated__/AcceptRouteSetOrderPaymentMutation.graphql"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
 import { Stripe, StripeElements } from "@stripe/stripe-js"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
+import { useTracking } from "react-tracking"
 
 interface AcceptProps {
   order: Accept_order$data
@@ -54,6 +55,8 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
     route,
   } = props
 
+  const { trackEvent } = useTracking()
+
   const acceptOffer = () => {
     return commitMutation<AcceptOfferMutation>({
       variables: {
@@ -79,6 +82,11 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
                   data
                 }
               }
+              ... on CommerceOrderRequiresAction {
+                actionData {
+                  clientSecret
+                }
+              }
             }
           }
         }
@@ -91,6 +99,32 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
       const orderOrError = (await acceptOffer()).commerceBuyerAcceptOffer
         ?.orderOrError
 
+      if (orderOrError?.actionData?.clientSecret) {
+        const scaResult = await stripe.handleCardAction(
+          orderOrError.actionData.clientSecret
+        )
+
+        if (scaResult.error) {
+          trackEvent({
+            action: ActionType.errorMessageViewed,
+            context_owner_type: OwnerType.ordersAccept,
+            context_owner_id: props.order.internalID,
+            title: "An error occurred",
+            message: scaResult.error.message,
+            error_code: scaResult.error.code || null,
+            flow: "user accepts offer",
+          })
+
+          return dialog.showErrorDialog({
+            title: "An error occurred",
+            message: scaResult.error.message,
+          })
+        }
+
+        onSubmit()
+        return
+      }
+
       if (!orderOrError?.error) {
         router.push(`/orders/${order.internalID}/status`)
         return
@@ -101,6 +135,7 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
         return
       }
 
+      // TODO: Remove below fixedOrderOrError logic and fixFailedPayment once Exchange mutation is updated
       const fixedOrderOrError = (
         await fixFailedPayment({
           input: {
