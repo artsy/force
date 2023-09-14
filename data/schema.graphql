@@ -11978,7 +11978,7 @@ type Me implements Node {
     after: String
 
     # Returns saved searches associated with the provided artist IDs
-    artistIDs: [ID!]
+    artistIDs: [String!]
     before: String
     first: Int
     last: Int
