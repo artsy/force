@@ -1,7 +1,7 @@
 import * as Yup from "yup"
-import { Button, Column, GridColumns, Input, Message } from "@artsy/palette"
-import { Formik, Form, FormikConfig, useFormikContext } from "formik"
-import { FC, useEffect } from "react"
+import { Column, GridColumns, Input, Message } from "@artsy/palette"
+import { Formik, FormikConfig, useFormikContext } from "formik"
+import { FC } from "react"
 import { CountrySelect } from "Components/CountrySelect"
 
 export interface AddressFormValues {
@@ -29,6 +29,9 @@ export const EMPTY_ADDRESS = {
   region: "",
 }
 
+// A default validation schema for an address form.
+// Requires all fields except addressLine2 to be present.
+// You can override this by providing a custom validationSchema or validate prop
 export const DEFAULT_VALIDATION_SCHEMA = Yup.object().shape({
   name: Yup.string().required("Name is required"),
   country: Yup.string().required("Country is required"),
@@ -37,33 +40,6 @@ export const DEFAULT_VALIDATION_SCHEMA = Yup.object().shape({
   region: Yup.string().required("Region is required"),
   postalCode: Yup.string().required("Postal Code is required"),
 })
-
-// For debugging
-export const BasicAddressForm: FC<{
-  onChange?: (args: any) => void
-}> = props => {
-  const { values, errors, touched } = useFormikContext<AddressFormValues>()
-
-  const serializedState = JSON.stringify({ values, errors, touched })
-  // hack to inspect/debug intermediate form state before submission
-  useEffect(() => {
-    props.onChange && props.onChange({ values, errors, touched })
-
-    // really props.onChange should be wrapped in useCallback before being passed in - then we would have this guarantee
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [serializedState])
-  return (
-    <Form>
-      <AddressInputs
-        endContent={
-          <Button type="submit" variant="primaryBlack" width="50%">
-            Save and Continue
-          </Button>
-        }
-      />
-    </Form>
-  )
-}
 
 export interface AddressFormWrapperProps<T extends AddressFormValues>
   extends Omit<FormikConfig<T>, "initialValues"> {
@@ -86,12 +62,12 @@ export const AddressFormWrapper = <
   ...props
 }: AddressFormWrapperProps<T>): JSX.Element => {
   let validationRule: Pick<FormikConfig<T>, "validate" | "validationSchema">
-  if (validationSchema) {
-    validationRule = { validationSchema }
-  } else if (validate) {
+  if (validate) {
     validationRule = { validate }
   } else {
-    validationRule = { validationSchema: DEFAULT_VALIDATION_SCHEMA }
+    validationRule = {
+      validationSchema: validationSchema || DEFAULT_VALIDATION_SCHEMA,
+    }
   }
 
   return (
@@ -113,6 +89,8 @@ export const AddressFormWrapper = <
  * layout for the address fields and can be used with the `AddressFormWrapper`
  * to provide default values and validation - or you can add your own additional
  * values (include types that extend <AddressFormValues>) and override validation.
+ * **Children (additional inputs, a submit button) are optional and will be rendered after the address fields inside a GridColumns
+ * wrapper**.
  * @example
  * ```tsx
  *  const BasicExample: React.FC<{}> = () => {
@@ -124,16 +102,18 @@ export const AddressFormWrapper = <
  *       }}
  *     >
  *      <Form>
- *       <BasicAddressForm />
+ *        <AddressInputs>
+ *          <Column span={12}>
+ *            <Button type="submit">Submit</Button>
+ *          </Column>
+ *        </AddressInputs>
  *      </Form>
  *     </AddressFormWrapper>
  *   )
  *  }
  * ```
  */
-export const AddressInputs: FC<{ endContent?: JSX.Element }> = ({
-  endContent,
-}) => {
+export const AddressInputs: FC = ({ children }) => {
   const {
     values,
     errors,
@@ -255,7 +235,7 @@ export const AddressInputs: FC<{ endContent?: JSX.Element }> = ({
           </Message>
         </Column>
       )}
-      {endContent && <Column span={12}>{endContent}</Column>}
+      {children && children}
     </GridColumns>
   )
 }
