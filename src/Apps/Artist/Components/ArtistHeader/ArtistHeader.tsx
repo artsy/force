@@ -17,6 +17,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useTranslation } from "react-i18next"
 import { HeaderIcon } from "Components/HeaderIcon"
 import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
+import { formatFollowerCount } from "Utils/formatFollowerCount"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader_artist$data
@@ -162,16 +163,3 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-const formatFollowerCount = (n: number) => {
-  try {
-    const formatter = Intl.NumberFormat("en-US", {
-      notation: "compact",
-      compactDisplay: "short",
-    })
-
-    return formatter.format(n).toLocaleLowerCase()
-  } catch (error) {
-    return n
-  }
-}

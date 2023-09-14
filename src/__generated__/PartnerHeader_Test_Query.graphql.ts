@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<55000f2161f4ff2f575e7389a49c0f34>>
+ * @generated SignedSource<<a0f90cd823c76a6a51ab9181dbf101ff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,6 +30,9 @@ export type PartnerHeader_Test_Query$rawResponse = {
     } | null;
     readonly name: string | null;
     readonly profile: {
+      readonly counts: {
+        readonly follows: any | null;
+      } | null;
       readonly icon: {
         readonly resized: {
           readonly src: string;
@@ -155,6 +158,24 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "concreteType": "ProfileCounts",
+                "kind": "LinkedField",
+                "name": "counts",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "follows",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "kind": "ScalarField",
                 "name": "internalID",
                 "storageKey": null
@@ -276,7 +297,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "795f99676da85f6dcccaacde39350304",
+    "cacheID": "524ed91e14607eab719c86e65873356c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -320,6 +341,18 @@ return {
           "plural": false,
           "type": "Profile"
         },
+        "partner.profile.counts": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "ProfileCounts"
+        },
+        "partner.profile.counts.follows": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "FormattedNumber"
+        },
         "partner.profile.icon": {
           "enumValues": null,
           "nullable": true,
@@ -342,7 +375,7 @@ return {
     },
     "name": "PartnerHeader_Test_Query",
     "operationKind": "query",
-    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  profile {\n    internalID\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query PartnerHeader_Test_Query {\n  partner(id: \"white-cube\") {\n    ...PartnerHeader_partner\n    id\n  }\n}\n\nfragment PartnerHeader_partner on Partner {\n  name\n  type\n  slug\n  profile {\n    counts {\n      follows\n    }\n    internalID\n    icon {\n      resized(width: 80, height: 80, version: \"square140\") {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n  locations: locationsConnection(first: 20) {\n    totalCount\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
