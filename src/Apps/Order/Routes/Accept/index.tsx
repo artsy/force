@@ -129,7 +129,7 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
         return
       }
 
-      if (orderOrError.error.code !== "payment_requires_action") {
+      if (orderOrError.error.code) {
         handleAcceptError(orderOrError?.error)
         return
       }
