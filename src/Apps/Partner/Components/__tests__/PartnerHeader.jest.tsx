@@ -229,4 +229,34 @@ describe("PartnerHeader", () => {
 
     expect(wrapper.find(FollowProfileButtonQueryRenderer).length).toEqual(0)
   })
+
+  it("doesn't display the follow count", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({
+        name: "White cube",
+        profile: {
+          counts: {
+            follows: 100,
+          },
+        },
+      }),
+    })
+
+    expect(wrapper.text()).not.toContain("100 Followers")
+  })
+
+  it("displays the follow count", () => {
+    const wrapper = getWrapper({
+      Partner: () => ({
+        name: "White cube",
+        profile: {
+          counts: {
+            follows: 500,
+          },
+        },
+      }),
+    })
+
+    expect(wrapper.text()).toContain("500 Followers")
+  })
 })
