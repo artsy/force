@@ -116,6 +116,8 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
         frequency: values.push ? values.frequency : DEFAULT_FREQUENCY,
       }
 
+      console.log(values)
+
       await submitEditAlert({
         variables: {
           input: {

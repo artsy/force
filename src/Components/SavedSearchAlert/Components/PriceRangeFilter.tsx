@@ -9,11 +9,19 @@ import { FC } from "react"
 import { useTranslation } from "react-i18next"
 
 export const PriceRangeFilter: FC = () => {
-  const { criteria, setCriteriaValue } = useSavedSearchAlertContext()
+  const {
+    criteria,
+    setCriteriaValue,
+    removeCriteriaValue,
+  } = useSavedSearchAlertContext()
   const { t } = useTranslation()
 
   const handlePriceRangeUpdate = (updatedRange: CustomRange) => {
-    setCriteriaValue("priceRange", updatedRange.join("-"))
+    if (updatedRange[0] == "*" && updatedRange[1] == 0) {
+      removeCriteriaValue("priceRange", updatedRange.join("-"))
+    } else {
+      setCriteriaValue("priceRange", updatedRange.join("-"))
+    }
   }
 
   return (
