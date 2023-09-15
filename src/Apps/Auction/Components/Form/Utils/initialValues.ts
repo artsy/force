@@ -1,5 +1,5 @@
 import { FormikHelpers } from "formik"
-import { Address, emptyAddress } from "Components/Address/AddressForm"
+import { Address, emptyAddress } from "Components/Address/LegacyAddressForm"
 
 export interface AuctionFormValues {
   address: Address

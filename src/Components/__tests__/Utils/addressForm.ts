@@ -1,4 +1,4 @@
-import { Address } from "Components/Address/AddressForm"
+import { Address } from "Components/Address/LegacyAddressForm"
 import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
 import { screen } from "@testing-library/react"

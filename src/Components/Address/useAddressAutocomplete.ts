@@ -1,5 +1,5 @@
 import { AutocompleteInputOptionType } from "@artsy/palette"
-import { Address } from "Components/Address/AddressForm"
+import { Address } from "Components/Address/LegacyAddressForm"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useDebounce } from "Utils/Hooks/useDebounce"
 import { getENV } from "Utils/getENV"

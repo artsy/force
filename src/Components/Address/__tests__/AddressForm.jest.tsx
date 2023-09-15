@@ -1,5 +1,5 @@
 import { screen, render, fireEvent, act } from "@testing-library/react"
-import { AddressForm } from "Components/Address/AddressForm"
+import { AddressForm } from "Components/Address/LegacyAddressForm"
 import { FC, useState } from "react"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
