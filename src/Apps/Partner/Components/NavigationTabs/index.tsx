@@ -83,12 +83,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({ partner }) => {
   const tabs = routes
     .filter(route => !route.hidden)
     .map(route => (
-      <RouteTab
-        to={route.href}
-        exact={route.exact}
-        onClick={handleClick}
-        key={route.name}
-      >
+      <RouteTab to={route.href} exact={route.exact} onClick={handleClick}>
         {route.name}
       </RouteTab>
     ))
