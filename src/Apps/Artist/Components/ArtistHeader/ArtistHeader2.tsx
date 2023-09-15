@@ -29,7 +29,6 @@ import {
   isValidImage,
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
 import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
-import { formatFollowerCount } from "Utils/formatFollowerCount"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader2_artist$data
@@ -318,5 +317,18 @@ const CV = styled(RouterLink)`
     color: currentColor;
   }
 `
+
+const formatFollowerCount = (n: number) => {
+  try {
+    const formatter = Intl.NumberFormat("en-US", {
+      notation: "compact",
+      compactDisplay: "short",
+    })
+
+    return formatter.format(n).toLocaleLowerCase()
+  } catch (error) {
+    return n
+  }
+}
 
 export const ARTIST_HEADER_NUMBER_OF_INSIGHTS = 6
