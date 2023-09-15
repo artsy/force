@@ -121,9 +121,7 @@ describe("SaveArtworkToListsButton", () => {
         renderWithRelay({
           Artwork: () => ({
             isSaved: false,
-            customCollections: {
-              totalCount: 2,
-            },
+            isSavedToList: true,
           }),
         })
 
@@ -134,9 +132,7 @@ describe("SaveArtworkToListsButton", () => {
         renderWithRelay({
           Artwork: () => ({
             isSaved: false,
-            customCollections: {
-              totalCount: 2,
-            },
+            isSavedToList: true,
           }),
         })
 
@@ -159,9 +155,7 @@ describe("SaveArtworkToListsButton", () => {
       renderWithRelay({
         Artwork: () => ({
           isSaved: true,
-          customCollections: {
-            totalCount: 0,
-          },
+          isSavedToList: false,
         }),
       })
 
@@ -175,9 +169,7 @@ describe("SaveArtworkToListsButton", () => {
       renderWithRelay({
         Artwork: () => ({
           isSaved: true,
-          customCollections: {
-            totalCount: 2,
-          },
+          isSavedToList: true,
         }),
       })
 
@@ -191,14 +183,10 @@ describe("SaveArtworkToListsButton", () => {
 
 const unsavedArtwork = {
   isSaved: false,
-  customCollections: {
-    totalCount: 0,
-  },
+  isSavedToList: false,
 }
 
 const savedArtwork = {
   isSaved: true,
-  customCollections: {
-    totalCount: 0,
-  },
+  isSavedToList: false,
 }

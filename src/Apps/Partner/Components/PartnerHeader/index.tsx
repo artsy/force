@@ -9,6 +9,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { PartnerHeader_partner$data } from "__generated__/PartnerHeader_partner.graphql"
 import { themeGet } from "@styled-system/theme-get"
 import { Jump } from "Utils/Hooks/useJump"
+import { formatFollowerCount } from "Utils/formatFollowerCount"
 
 export interface PartnerHeaderProps {
   partner: PartnerHeader_partner$data
@@ -26,6 +27,8 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
   const partnerUrl = `/partner/${partner.slug}`
   const canFollow =
     partner && partner.type !== "Auction House" && !!partner.profile
+
+  const hasFollows = partner.profile?.counts?.follows >= 500
 
   return (
     <>
@@ -77,6 +80,19 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
               contextModule={ContextModule.partnerHeader}
               width="100%"
             />
+            {hasFollows && (
+              <Text
+                variant="xs"
+                color="black60"
+                textAlign="center"
+                flexShrink={0}
+                paddingTop={0.5}
+              >
+                {formatFollowerCount(partner?.profile?.counts?.follows)}{" "}
+                Follower
+                {partner?.profile?.counts?.follows === 1 ? "" : "s"}
+              </Text>
+            )}
           </Column>
         )}
       </GridColumns>
@@ -93,6 +109,9 @@ export const PartnerHeaderFragmentContainer = createFragmentContainer(
         type
         slug
         profile {
+          counts {
+            follows
+          }
           internalID
           icon {
             resized(width: 80, height: 80, version: "square140") {

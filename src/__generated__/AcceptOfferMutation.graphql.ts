@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<edea735cee6f1d24f346dbca38db616d>>
+ * @generated SignedSource<<f6fef22aa97f7a272985b4ae81428e04>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,9 @@ export type AcceptOfferMutation$data = {
   readonly commerceBuyerAcceptOffer: {
     readonly orderOrError: {
       readonly __typename: "CommerceOrderWithMutationSuccess";
+      readonly actionData?: {
+        readonly clientSecret: string;
+      };
       readonly error?: {
         readonly code: string;
         readonly data: string | null;
@@ -119,6 +122,31 @@ v5 = {
   ],
   "type": "CommerceOrderWithMutationFailure",
   "abstractKey": null
+},
+v6 = {
+  "kind": "InlineFragment",
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "CommerceOrderActionData",
+      "kind": "LinkedField",
+      "name": "actionData",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "clientSecret",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    }
+  ],
+  "type": "CommerceOrderRequiresAction",
+  "abstractKey": null
 };
 return {
   "fragment": {
@@ -164,7 +192,8 @@ return {
                 "type": "CommerceOrderWithMutationSuccess",
                 "abstractKey": null
               },
-              (v5/*: any*/)
+              (v5/*: any*/),
+              (v6/*: any*/)
             ],
             "storageKey": null
           }
@@ -226,7 +255,8 @@ return {
                 "type": "CommerceOrderWithMutationSuccess",
                 "abstractKey": null
               },
-              (v5/*: any*/)
+              (v5/*: any*/),
+              (v6/*: any*/)
             ],
             "storageKey": null
           }
@@ -236,16 +266,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5bd6cad2fd4cf41037248759d2390452",
+    "cacheID": "55e9e1f8671cbc9aeb21b346effafcbd",
     "id": null,
     "metadata": {},
     "name": "AcceptOfferMutation",
     "operationKind": "mutation",
-    "text": "mutation AcceptOfferMutation(\n  $input: CommerceBuyerAcceptOfferInput!\n) {\n  commerceBuyerAcceptOffer(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          ... on CommerceOfferOrder {\n            awaitingResponseFrom\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation AcceptOfferMutation(\n  $input: CommerceBuyerAcceptOfferInput!\n) {\n  commerceBuyerAcceptOffer(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          ... on CommerceOfferOrder {\n            awaitingResponseFrom\n          }\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n      ... on CommerceOrderRequiresAction {\n        actionData {\n          clientSecret\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "a72db42fb4cf493527dad1d4d6aa1cdc";
+(node as any).hash = "6f7ba402365c2ec78fee134be9bb8355";
 
 export default node;

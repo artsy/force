@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbc678edf02c44c06d83adf4de3c75ab>>
+ * @generated SignedSource<<4b5c1d763dbbf23a22e68fd2bcbd9db3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,11 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkActionsSaveButtonV2_artwork$data = {
   readonly artistNames: string | null;
-  readonly customCollections: {
-    readonly totalCount: number | null;
-  } | null;
   readonly date: string | null;
   readonly id: string;
   readonly internalID: string;
   readonly isSaved: boolean | null;
+  readonly isSavedToList: boolean;
   readonly preview: {
     readonly url: string | null;
   } | null;
@@ -116,38 +114,11 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "customCollections",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "default",
-          "value": false
-        },
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 0
-        },
-        {
-          "kind": "Literal",
-          "name": "saves",
-          "value": true
-        }
-      ],
-      "concreteType": "CollectionsConnection",
-      "kind": "LinkedField",
-      "name": "collectionsConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "totalCount",
-          "storageKey": null
-        }
-      ],
-      "storageKey": "collectionsConnection(default:false,first:0,saves:true)"
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isSavedToList",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -184,6 +155,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2d665cc9f917bd9c0480efcb2c5314b5";
+(node as any).hash = "a03f8f78873f859a9ad6bd843c5463fc";
 
 export default node;

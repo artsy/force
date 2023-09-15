@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<197b3082ed6a8648e1bd60add001d25e>>
+ * @generated SignedSource<<7307a26122e715cc3f94da877089e90f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,9 @@ export type PartnerHeader_partner$data = {
   } | null;
   readonly name: string | null;
   readonly profile: {
+    readonly counts: {
+      readonly follows: any | null;
+    } | null;
     readonly icon: {
       readonly resized: {
         readonly src: string;
@@ -73,6 +76,24 @@ const node: ReaderFragment = {
       "name": "profile",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ProfileCounts",
+          "kind": "LinkedField",
+          "name": "counts",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "follows",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -193,6 +214,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "7f0a97c890f8c512b9cf5a8e7837424a";
+(node as any).hash = "52e0a19ddfaa94155e29ee5d2212443e";
 
 export default node;

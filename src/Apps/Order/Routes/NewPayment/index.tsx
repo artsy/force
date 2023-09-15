@@ -23,8 +23,10 @@ import {
 import { get } from "Utils/get"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { createStripeWrapper } from "Utils/createStripeWrapper"
-import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
+import { useTracking } from "react-tracking"
+import { getErrorDialogCopy } from "Apps/Order/Utils/getErrorDialogCopy"
 
 export const ContinueButton = props => (
   <Button variant="primaryBlack" width={["100%", "50%"]} {...props}>
@@ -62,6 +64,8 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
     setCreditCardPickerResult,
   ] = useState<CreditCardPickerResultType | null>(null)
 
+  const { trackEvent } = useTracking()
+
   const {
     order,
     me,
@@ -74,6 +78,22 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
   } = props
   const isLoading = isCommittingMutation || isGettingCreditCardId
   const CreditCardPicker = createRef<CreditCardPicker>()
+
+  const trackErrorMessageEvent = (
+    title: string,
+    message: string | undefined,
+    code?: string
+  ) => {
+    return trackEvent({
+      action: ActionType.errorMessageViewed,
+      context_owner_type: OwnerType.ordersNewPayment,
+      context_owner_id: props.order.internalID,
+      title: title,
+      message: message,
+      error_code: code || null,
+      flow: "user fixes failed payment",
+    })
+  }
 
   const getCreditCardId = async (): Promise<string | null> => {
     setIsGettingCreditCardId(true)
@@ -206,6 +226,12 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
   const handleFixFailedPaymentError = async (code: string) => {
     switch (code) {
       case "capture_failed": {
+        trackErrorMessageEvent(
+          "Charge failed",
+          "Payment has been declined. Please contact your card provider or bank institution, then press “Continue” again. Alternatively, use another payment method.",
+          code
+        )
+
         dialog.showErrorDialog({
           title: "Charge failed",
           message:
@@ -214,6 +240,12 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
         break
       }
       case "insufficient_inventory": {
+        trackErrorMessageEvent(
+          "Not available",
+          "Sorry, the work is no longer available.",
+          code
+        )
+
         await dialog.showErrorDialog({
           title: "Not available",
           message: "Sorry, the work is no longer available.",
@@ -222,6 +254,10 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
         break
       }
       default: {
+        const { title, message } = getErrorDialogCopy()
+
+        trackErrorMessageEvent(title, message, code)
+
         dialog.showErrorDialog()
         break
       }
