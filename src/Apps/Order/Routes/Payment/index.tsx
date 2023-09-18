@@ -281,6 +281,25 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       setIsSavingPayment(false)
       handlePaymentError(error)
 
+      let errorCode = error.code || ""
+
+      /**
+       * Our tracking events show that many users are still seeing the generic
+       * error message when they attempt to submit this step. However, we are
+       * not receiving any error codes with these tracking events, so it has
+       * been difficult to further investigate them.
+       *
+       * This is an attempt to serialize the errors that lead users to this
+       * code path so that we can better understand what is happening.
+       */
+      if (errorCode === "") {
+        try {
+          errorCode = error.toString()
+        } catch (e) {
+          // do nothing
+        }
+      }
+
       trackEvent({
         action: ActionType.errorMessageViewed,
         context_owner_type: OwnerType.ordersPayment,
@@ -288,7 +307,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         title: "An error occurred",
         message:
           "Something went wrong. Please try again or contact orders@artsy.net",
-        error_code: null,
+        error_code: errorCode,
         flow: "user sets credit card as payment method",
       })
 

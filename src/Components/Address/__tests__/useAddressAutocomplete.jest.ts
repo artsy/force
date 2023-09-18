@@ -6,10 +6,13 @@ import {
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import { waitFor } from "@testing-library/react"
+import { throttle } from "lodash"
 
 jest.mock("react-tracking")
 jest.mock("System/useFeatureFlag")
 jest.mock("Utils/getENV")
+
+jest.mock("lodash/throttle", () => jest.fn(fn => fn))
 
 let mockFetch: jest.Mock
 
@@ -195,6 +198,20 @@ describe("useAddressAutocomplete", () => {
 
         expect(result.current.autocompleteOptions).toEqual([])
         expect(mockFetch).not.toHaveBeenCalled()
+      })
+
+      it("throttles calls to the Smarty API", async () => {
+        const { result } = setupHook({ country: "US" })
+
+        act(() => {
+          result.current.fetchForAutocomplete({ search: "401 Broadway" })
+        })
+
+        expect(throttle).toHaveBeenCalledTimes(1)
+        expect(throttle).toHaveBeenCalledWith(expect.any(Function), 500, {
+          leading: true,
+          trailing: true,
+        })
       })
     })
 

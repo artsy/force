@@ -21,7 +21,8 @@ export const ZeroState: FC<ZeroStateProps> = ({ term }) => {
           <>
             {t(`searchApp.resultsCount`, { count: 0 })}
             <Box as="span" color="blue100">
-              “ {filters?.term ?? term}”
+              {" "}
+              “{filters?.term ?? term}”
             </Box>
           </>
         )}
