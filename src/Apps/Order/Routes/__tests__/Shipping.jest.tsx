@@ -30,7 +30,7 @@ import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import {
-  fillAddressFormTL,
+  fillAddressForm,
   validAddress,
 } from "Components/__tests__/Utils/addressForm"
 import userEvent from "@testing-library/user-event"
@@ -307,7 +307,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressFormTL(validAddress)
+        fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(mockCommitMutation).toHaveBeenCalledTimes(2)
@@ -346,7 +346,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressFormTL(validAddress)
+        fillAddressForm(validAddress)
         userEvent.click(
           screen.getByRole("checkbox", { name: /Save shipping address/ })
         )
@@ -378,7 +378,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressFormTL(validAddress)
+        fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(mockCommitMutation).toHaveBeenCalledTimes(2)
@@ -403,7 +403,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressFormTL(validAddress)
+        fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(mockShowErrorDialog).toHaveBeenCalledWith()
@@ -416,7 +416,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressFormTL(validAddress)
+        fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(mockShowErrorDialog).toHaveBeenCalledWith()
@@ -431,7 +431,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressFormTL(validAddress)
+        fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(mockShowErrorDialog).toHaveBeenCalledWith({
@@ -450,7 +450,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressFormTL(validAddress)
+        fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(mockShowErrorDialog).toHaveBeenCalledWith({
@@ -469,7 +469,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressFormTL(validAddress)
+        fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(mockShowErrorDialog).toHaveBeenCalledWith({
@@ -573,7 +573,7 @@ describe("Shipping", () => {
             Me: () => meWithoutAddress,
           })
 
-          fillAddressFormTL({
+          fillAddressForm({
             name: "Erik David",
             addressLine1: "401 Broadway",
             addressLine2: "",
@@ -596,7 +596,7 @@ describe("Shipping", () => {
             Me: () => meWithoutAddress,
           })
 
-          fillAddressFormTL({
+          fillAddressForm({
             name: "Erik David",
             addressLine1: "401 Broadway",
             addressLine2: "",
@@ -672,7 +672,7 @@ describe("Shipping", () => {
               screen.queryByText("This field is required")
             ).not.toBeInTheDocument()
 
-            fillAddressFormTL(validAddress)
+            fillAddressForm(validAddress)
             userEvent.clear(screen.getByPlaceholderText("Street address"))
 
             await userEvent.click(screen.getByText("Save and Continue"))
@@ -718,7 +718,7 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            fillAddressFormTL(validAddress)
+            fillAddressForm(validAddress)
             await userEvent.click(screen.getByText("Save and Continue"))
 
             const mutation = env.mock.getMostRecentOperation()
@@ -756,7 +756,7 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            fillAddressFormTL(validAddress)
+            fillAddressForm(validAddress)
             userEvent.selectOptions(screen.getByRole("combobox"), ["TW"])
             await userEvent.click(screen.getByText("Save and Continue"))
 
@@ -788,7 +788,7 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            fillAddressFormTL(validAddress)
+            fillAddressForm(validAddress)
             await userEvent.click(screen.getByText("Save and Continue"))
 
             expect(env.mock.getAllOperations()).toHaveLength(0)
@@ -804,7 +804,7 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            fillAddressFormTL(validAddress)
+            fillAddressForm(validAddress)
             userEvent.selectOptions(screen.getByRole("combobox"), ["TW"])
             await userEvent.click(screen.getByText("Save and Continue"))
 
@@ -1081,7 +1081,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressFormTL(validAddress)
+        fillAddressForm(validAddress)
         await saveAndContinue()
 
         // FIXME: `getByRole` can be slow and cause test to time out.
@@ -1163,7 +1163,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressFormTL(validAddress)
+        fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(
@@ -1190,7 +1190,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressFormTL(validAddress)
+        fillAddressForm(validAddress)
         await saveAndContinue()
 
         // FIXME: `getByRole` can be slow and cause test to time out.
