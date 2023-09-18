@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<89021dac8c25b6f1d476eb6ffb316be0>>
+ * @generated SignedSource<<9c5c58bc02e72449b4b2d32b61fd0017>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,8 +39,19 @@ export type ArtistHeader2_artist$data = {
   readonly slug: string;
   readonly verifiedRepresentatives: ReadonlyArray<{
     readonly partner: {
+      readonly href: string | null;
+      readonly internalID: string;
       readonly name: string | null;
-      readonly slug: string;
+      readonly profile: {
+        readonly image: {
+          readonly src1x: {
+            readonly src: string;
+          } | null;
+          readonly src2x: {
+            readonly src: string;
+          } | null;
+        } | null;
+      } | null;
     };
   }>;
   readonly " $fragmentType": "ArtistHeader2_artist";
@@ -55,7 +66,7 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "internalID",
   "storageKey": null
 },
 v1 = {
@@ -64,21 +75,37 @@ v1 = {
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
-};
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v3 = [
+  {
+    "alias": null,
+    "args": null,
+    "kind": "ScalarField",
+    "name": "src",
+    "storageKey": null
+  }
+];
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "ArtistHeader2_artist",
   "selections": [
+    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "internalID",
+      "name": "slug",
       "storageKey": null
     },
-    (v0/*: any*/),
     (v1/*: any*/),
     {
       "alias": null,
@@ -189,8 +216,73 @@ return {
           "name": "partner",
           "plural": false,
           "selections": [
+            (v0/*: any*/),
             (v1/*: any*/),
-            (v0/*: any*/)
+            (v2/*: any*/),
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "Profile",
+              "kind": "LinkedField",
+              "name": "profile",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "Image",
+                  "kind": "LinkedField",
+                  "name": "image",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": "src1x",
+                      "args": [
+                        {
+                          "kind": "Literal",
+                          "name": "height",
+                          "value": 30
+                        },
+                        {
+                          "kind": "Literal",
+                          "name": "width",
+                          "value": 30
+                        }
+                      ],
+                      "concreteType": "CroppedImageUrl",
+                      "kind": "LinkedField",
+                      "name": "cropped",
+                      "plural": false,
+                      "selections": (v3/*: any*/),
+                      "storageKey": "cropped(height:30,width:30)"
+                    },
+                    {
+                      "alias": "src2x",
+                      "args": [
+                        {
+                          "kind": "Literal",
+                          "name": "height",
+                          "value": 60
+                        },
+                        {
+                          "kind": "Literal",
+                          "name": "width",
+                          "value": 60
+                        }
+                      ],
+                      "concreteType": "CroppedImageUrl",
+                      "kind": "LinkedField",
+                      "name": "cropped",
+                      "plural": false,
+                      "selections": (v3/*: any*/),
+                      "storageKey": "cropped(height:60,width:60)"
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
           ],
           "storageKey": null
         }
@@ -212,13 +304,7 @@ return {
           "name": "title",
           "storageKey": null
         },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "href",
-          "storageKey": null
-        },
+        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -269,6 +355,6 @@ return {
 };
 })();
 
-(node as any).hash = "263650363d3b9082afd0007bb4b1aa62";
+(node as any).hash = "0bff344b31ea29c891a3a9ffca67b0fd";
 
 export default node;
