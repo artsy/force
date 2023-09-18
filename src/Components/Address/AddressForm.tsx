@@ -88,8 +88,8 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const {
     autocompleteOptions,
     fetchForAutocomplete,
-    isAddressAutocompleteEnabled,
     fetchSecondarySuggestions,
+    ...autocomplete
   } = useAddressAutocomplete(address)
 
   if (!isEqual(value, prevValue)) {
@@ -102,7 +102,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const changeEventHandler = (key: keyof Address) => (
     ev: React.FormEvent<HTMLInputElement>
   ) => {
-    const shouldFetch = isAddressAutocompleteEnabled && key === "addressLine1"
+    const shouldFetch = autocomplete.enabled && key === "addressLine1"
     if (shouldFetch) {
       fetchForAutocomplete({ search: ev.currentTarget.value })
     }
@@ -193,9 +193,11 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         )}
       </Column>
       <Column span={12}>
-        {isAddressAutocompleteEnabled ? (
+        {/* Render the autocomplete input optimistically on the server to make sure we send applicable styles to the client */}
+        {!autocomplete.loaded || autocomplete.enabled ? (
           <AutocompleteInput<AddressAutocompleteSuggestion>
             tabIndex={tabIndex}
+            disabled={!autocomplete.loaded}
             id="AddressForm_addressLine1"
             placeholder="Street address"
             title="Address line 1"
