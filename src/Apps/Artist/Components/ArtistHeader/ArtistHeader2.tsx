@@ -8,11 +8,11 @@ import {
   GridColumns,
   HTML,
   HTMLProps,
+  Pill,
   ReadMore,
   Spacer,
   Text,
 } from "@artsy/palette"
-import { Fragment } from "react"
 import { ContextModule } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
@@ -180,27 +180,6 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                   </Bio>
                 )}
 
-                {hasVerifiedRepresentatives && (
-                  <Text variant="sm" color="black60">
-                    Represented by: &nbsp;
-                    {artist.verifiedRepresentatives.map(
-                      ({ partner }, index) => {
-                        return (
-                          <Fragment key={partner.slug}>
-                            {index > 0 && ", "}
-                            <RouterLink
-                              to={`/partner/${partner.slug}`}
-                              color="black100"
-                            >
-                              {partner.name}
-                            </RouterLink>
-                          </Fragment>
-                        )
-                      }
-                    )}
-                  </Text>
-                )}
-
                 <CV to={`/artist/${artist.slug}/cv`} color="black60">
                   See all past shows and fair booths
                 </CV>
@@ -208,11 +187,43 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
 
               {artist.insights.length > 0 && (
                 <Column span={4} {...(!hasImage && { start: 9 })}>
-                  <Text variant="sm" color="black60">
-                    Highlights and Achievements
-                  </Text>
+                  {hasVerifiedRepresentatives && (
+                    <>
+                      <Text variant="sm">Featured representation</Text>
 
-                  <Spacer y={1} />
+                      <Spacer y={1} />
+
+                      <Flex flexWrap="wrap" gap={1}>
+                        {artist.verifiedRepresentatives.map(({ partner }) => {
+                          return (
+                            <Pill
+                              key={partner.internalID}
+                              as={RouterLink}
+                              variant={
+                                artist.verifiedRepresentatives.length > 3
+                                  ? "gray"
+                                  : "profile"
+                              }
+                              {...(partner.profile?.image
+                                ? {
+                                    src: [
+                                      partner.profile.image.src1x!.src!,
+                                      partner.profile.image.src2x!.src!,
+                                    ],
+                                  }
+                                : {})}
+                              // @ts-ignore
+                              to={partner.href}
+                            >
+                              {partner.name}
+                            </Pill>
+                          )
+                        })}
+                      </Flex>
+
+                      <Spacer y={2} />
+                    </>
+                  )}
 
                   {artist.insights
                     .slice(0, ARTIST_HEADER_NUMBER_OF_INSIGHTS)
@@ -268,8 +279,19 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         }
         verifiedRepresentatives {
           partner {
+            internalID
             name
-            slug
+            href
+            profile {
+              image {
+                src1x: cropped(width: 30, height: 30) {
+                  src
+                }
+                src2x: cropped(width: 60, height: 60) {
+                  src
+                }
+              }
+            }
           }
         }
         coverArtwork {
@@ -319,4 +341,4 @@ const CV = styled(RouterLink)`
   }
 `
 
-export const ARTIST_HEADER_NUMBER_OF_INSIGHTS = 6
+export const ARTIST_HEADER_NUMBER_OF_INSIGHTS = 4
