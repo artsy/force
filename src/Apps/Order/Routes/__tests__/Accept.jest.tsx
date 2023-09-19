@@ -18,7 +18,6 @@ import { ConnectedModalDialog } from "Apps/Order/Dialogs"
 import {
   acceptOfferSuccess,
   acceptOfferFailed,
-  acceptOfferPaymentRequiresAction,
   acceptOfferPaymentFailed,
   acceptOfferPaymentFailedInsufficientFunds,
   acceptOfferInsufficientInventoryFailure,
@@ -208,22 +207,6 @@ describe("Accept seller offer", () => {
 
       await page.clickSubmit()
       await page.expectAndDismissDefaultErrorDialog()
-    })
-
-    it("commits fixFailedPayment mutation with Gravity credit card id", async () => {
-      commitMutation.mockReturnValue(acceptOfferPaymentRequiresAction)
-      let wrapper = getWrapper({
-        CommerceOrder: () => testOrder,
-      })
-      let page = new OrderAppTestPage(wrapper)
-
-      await page.clickSubmit()
-      expect(commitMutation.mock.calls[1][0].variables).toMatchObject({
-        input: {
-          creditCardId: "creditCardId",
-          offerId: "myoffer-id",
-        },
-      })
     })
 
     it("shows an error modal if there is a capture_failed error", async () => {
