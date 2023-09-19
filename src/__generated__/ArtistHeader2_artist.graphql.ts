@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9c5c58bc02e72449b4b2d32b61fd0017>>
+ * @generated SignedSource<<849f5b3452644a1bbad0a4cff2176f21>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,7 +43,7 @@ export type ArtistHeader2_artist$data = {
       readonly internalID: string;
       readonly name: string | null;
       readonly profile: {
-        readonly image: {
+        readonly icon: {
           readonly src1x: {
             readonly src: string;
           } | null;
@@ -232,7 +232,7 @@ return {
                   "args": null,
                   "concreteType": "Image",
                   "kind": "LinkedField",
-                  "name": "image",
+                  "name": "icon",
                   "plural": false,
                   "selections": [
                     {
@@ -355,6 +355,6 @@ return {
 };
 })();
 
-(node as any).hash = "0bff344b31ea29c891a3a9ffca67b0fd";
+(node as any).hash = "3eb792be727acf089e29143fc0e0c7de";
 
 export default node;

@@ -203,11 +203,11 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                               compact={
                                 artist.verifiedRepresentatives.length > 3
                               }
-                              {...(partner.profile?.image
+                              {...(partner.profile?.icon
                                 ? {
                                     src: [
-                                      partner.profile.image.src1x!.src!,
-                                      partner.profile.image.src2x!.src!,
+                                      partner.profile.icon.src1x!.src!,
+                                      partner.profile.icon.src2x!.src!,
                                     ],
                                   }
                                 : {})}
@@ -282,7 +282,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
             name
             href
             profile {
-              image {
+              icon {
                 src1x: cropped(width: 30, height: 30) {
                   src
                 }
