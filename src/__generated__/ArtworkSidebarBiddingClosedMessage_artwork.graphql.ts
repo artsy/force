@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<17ea08938bc70c3bd7a216b33af84ec9>>
+ * @generated SignedSource<<fc0b4fcc8824d183554fcd91dabc9451>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarBiddingClosedMessage_artwork$data = {
-  readonly artists: ReadonlyArray<{
-    readonly internalID: string;
-  } | null> | null;
+  readonly isEligibleToCreateAlert: boolean;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkCreateAlertButton_artwork">;
   readonly " $fragmentType": "ArtworkSidebarBiddingClosedMessage_artwork";
 };
@@ -29,33 +27,22 @@ const node: ReaderFragment = {
   "name": "ArtworkSidebarBiddingClosedMessage_artwork",
   "selections": [
     {
-      "alias": null,
-      "args": null,
-      "concreteType": "Artist",
-      "kind": "LinkedField",
-      "name": "artists",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "internalID",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    },
-    {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkCreateAlertButton_artwork"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isEligibleToCreateAlert",
+      "storageKey": null
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "4b29a61c94f4bc7e00ac2e100273f2d9";
+(node as any).hash = "453e2bdd38cdc1aad372f2a6c56b61a2";
 
 export default node;

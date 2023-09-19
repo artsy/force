@@ -29,6 +29,7 @@ export const ClosedAuctionArtwork: ArtworkSidebarCurrentBidInfo_Test_Query$rawRe
   artists: [],
   attributionClass: null,
   mediumType: null,
+  isEligibleToCreateAlert: false,
 }
 
 export const ClosedLotArtwork: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] = {
@@ -60,6 +61,7 @@ export const ClosedLotArtwork: ArtworkSidebarCurrentBidInfo_Test_Query$rawRespon
   artists: [],
   attributionClass: null,
   mediumType: null,
+  isEligibleToCreateAlert: false,
 }
 
 export const AuctionPreview: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] = {
@@ -91,6 +93,7 @@ export const AuctionPreview: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse
   artists: [],
   attributionClass: null,
   mediumType: null,
+  isEligibleToCreateAlert: false,
 }
 
 export const AuctionPreviewNoStartingBid: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] = {
@@ -120,6 +123,7 @@ export const AuctionPreviewNoStartingBid: ArtworkSidebarCurrentBidInfo_Test_Quer
   artists: [],
   attributionClass: null,
   mediumType: null,
+  isEligibleToCreateAlert: false,
 }
 
 export const OpenAuctionNoReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] = {
@@ -151,6 +155,7 @@ export const OpenAuctionNoReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_Query
   artists: [],
   attributionClass: null,
   mediumType: null,
+  isEligibleToCreateAlert: false,
 }
 
 export const OpenAuctionNoReserveWithBids: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] = {
@@ -182,6 +187,7 @@ export const OpenAuctionNoReserveWithBids: ArtworkSidebarCurrentBidInfo_Test_Que
   artists: [],
   attributionClass: null,
   mediumType: null,
+  isEligibleToCreateAlert: false,
 }
 
 export const OpenAuctionReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] = {
@@ -213,6 +219,7 @@ export const OpenAuctionReserveNoBids: ArtworkSidebarCurrentBidInfo_Test_Query$r
   artists: [],
   attributionClass: null,
   mediumType: null,
+  isEligibleToCreateAlert: false,
 }
 
 export const OpenAuctionReserveNotMetWithBids: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] = {
@@ -244,6 +251,7 @@ export const OpenAuctionReserveNotMetWithBids: ArtworkSidebarCurrentBidInfo_Test
   artists: [],
   attributionClass: null,
   mediumType: null,
+  isEligibleToCreateAlert: false,
 }
 
 export const OpenAuctionReserveMetWithBids: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] = {
@@ -275,6 +283,7 @@ export const OpenAuctionReserveMetWithBids: ArtworkSidebarCurrentBidInfo_Test_Qu
   artists: [],
   attributionClass: null,
   mediumType: null,
+  isEligibleToCreateAlert: false,
 }
 
 export const OpenAuctionReserveNotMetIncreasingOwnBid: ArtworkSidebarCurrentBidInfo_Test_Query$rawResponse["artwork"] = {
@@ -344,4 +353,5 @@ export const LiveAuctionInProgress: ArtworkSidebarCurrentBidInfo_Test_Query$rawR
   artists: [],
   attributionClass: null,
   mediumType: null,
+  isEligibleToCreateAlert: false,
 }

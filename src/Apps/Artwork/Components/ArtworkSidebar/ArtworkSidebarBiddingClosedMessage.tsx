@@ -13,7 +13,6 @@ const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
   artwork,
 }) => {
   const { t } = useTranslation()
-  const hasArtists = (artwork.artists?.length ?? 0) > 0
 
   return (
     <>
@@ -21,7 +20,7 @@ const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
         {t(`artworkPage.sidebar.auction.biddingClosed`)}
       </Text>
 
-      {hasArtists && (
+      {artwork.isEligibleToCreateAlert && (
         <>
           <Text variant="sm" color="black60" pt={0.5}>
             {t(`artworkPage.sidebar.createAlert.description`)}
@@ -42,10 +41,8 @@ export const ArtworkSidebarBiddingClosedMessageFragmentContainer = createFragmen
   {
     artwork: graphql`
       fragment ArtworkSidebarBiddingClosedMessage_artwork on Artwork {
-        artists {
-          internalID
-        }
         ...ArtworkCreateAlertButton_artwork
+        isEligibleToCreateAlert
       }
     `,
   }
