@@ -9,7 +9,6 @@ import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 
 export const YearCreated: React.FC = () => {
   const { setFilter, aggregations } = useAuctionResultsFilterContext()
-
   const {
     createdAfterYear,
     createdBeforeYear,
@@ -50,7 +49,7 @@ export const YearCreated: React.FC = () => {
               title="Earliest"
               options={startOptions}
               onSelect={year => setFilter?.("createdAfterYear", parseInt(year))}
-              selected={(createdAfterYear || options[0]?.value).toString()}
+              selected={(createdAfterYear || startOptions[0]?.value).toString()}
             />
             <Spacer x={1} />
 
@@ -61,7 +60,7 @@ export const YearCreated: React.FC = () => {
                 setFilter?.("createdBeforeYear", parseInt(year))
               }}
               selected={(
-                createdBeforeYear || options[options.length - 1]?.value
+                createdBeforeYear || endOptions[endOptions.length - 1]?.value
               ).toString()}
             />
           </Flex>
