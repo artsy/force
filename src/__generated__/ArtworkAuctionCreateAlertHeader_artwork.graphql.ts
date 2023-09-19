@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6adda476a2ca9be50676638e55591214>>
+ * @generated SignedSource<<4aa9fc4384b91066d4a5bfd33f3ab3cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,7 @@ export type ArtworkAuctionCreateAlertHeader_artwork$data = {
     readonly internalID: string;
   } | null;
   readonly internalID: string;
+  readonly isEligibleToCreateAlert: boolean;
   readonly isInAuction: boolean | null;
   readonly mediumType: {
     readonly filterGene: {
@@ -90,6 +91,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "title",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isEligibleToCreateAlert",
       "storageKey": null
     },
     {
@@ -271,6 +279,6 @@ return {
 };
 })();
 
-(node as any).hash = "06569c4e3013b421e25f1813b32ab119";
+(node as any).hash = "708b9c44e3e4166e329285adab57b284";
 
 export default node;
