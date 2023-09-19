@@ -199,10 +199,9 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                             <Pill
                               key={partner.internalID}
                               as={RouterLink}
-                              variant={
+                              variant="profile"
+                              compact={
                                 artist.verifiedRepresentatives.length > 3
-                                  ? "gray"
-                                  : "profile"
                               }
                               {...(partner.profile?.image
                                 ? {
