@@ -87,11 +87,11 @@ describe("ArtworkSidebarArtists", () => {
   })
 
   describe("should not display the create alert section", () => {
-    it("for bidding closed artworks if there are no associated artists", () => {
+    it("for bidding closed artworks if artwork is ineligible for alerts", () => {
       renderWithRelay({
         Artwork: () => ({
           isInAuction: true,
-          artists: [],
+          isEligibleToCreateAlert: false,
         }),
         Sale: () => ({
           isClosed: true,
