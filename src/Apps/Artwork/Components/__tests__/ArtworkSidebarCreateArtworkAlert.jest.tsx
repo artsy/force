@@ -40,9 +40,9 @@ describe("ArtworkSidebarCreateArtworkAlert", () => {
     })
   })
 
-  it("should not render when an artwork has no artists", () => {
+  it("should not render when an artwork is ineligible for alerts", () => {
     renderWithRelay({
-      Artwork: () => ({ ...Artwork, artists: [] }),
+      Artwork: () => ({ ...Artwork, isEligibleToCreateAlert: false }),
     })
 
     expect(screen.queryByText("Create Alert")).not.toBeInTheDocument()
@@ -106,6 +106,7 @@ const Artwork = {
   title: "Some artwork title",
   slug: "artwork-slug",
   internalID: "artwork-id",
+  isEligibleToCreateAlert: true,
   artists: [
     {
       internalID: "4dd1584de0091e000100207c",

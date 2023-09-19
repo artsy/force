@@ -39,7 +39,11 @@ describe("ArtworkSidebarArtists", () => {
 
   describe("should display the create alert section", () => {
     it("renders the create alert section", () => {
-      renderWithRelay()
+      renderWithRelay({
+        Artwork: () => ({
+          isEligibleToCreateAlert: true,
+        }),
+      })
 
       expect(screen.queryByText(/Create Alert/i)).toBeInTheDocument()
       expect(
@@ -50,6 +54,7 @@ describe("ArtworkSidebarArtists", () => {
     it("for artworks that are on loan", () => {
       renderWithRelay({
         Artwork: () => ({
+          isEligibleToCreateAlert: true,
           saleMessage: "On loan",
         }),
       })
@@ -66,6 +71,7 @@ describe("ArtworkSidebarArtists", () => {
     it("for artworks that are on a permanent collection", () => {
       renderWithRelay({
         Artwork: () => ({
+          isEligibleToCreateAlert: true,
           saleMessage: "Permanent collection",
         }),
       })
@@ -100,22 +106,22 @@ describe("ArtworkSidebarArtists", () => {
       expect(button).not.toBeInTheDocument()
       expect(description).not.toBeInTheDocument()
     })
-  })
 
-  it("if there are no associated artists", () => {
-    renderWithRelay({
-      Artwork: () => ({
-        artists: [],
-      }),
+    it("if artwork is ineligible for alerts", () => {
+      renderWithRelay({
+        Artwork: () => ({
+          isEligibleToCreateAlert: false,
+        }),
+      })
+
+      const button = screen.queryByText(/Create Alert/i)
+      const description = screen.queryByText(
+        /Get notifications for similar works/i
+      )
+
+      expect(button).not.toBeInTheDocument()
+      expect(description).not.toBeInTheDocument()
     })
-
-    const button = screen.queryByText(/Create Alert/i)
-    const description = screen.queryByText(
-      /Get notifications for similar works/i
-    )
-
-    expect(button).not.toBeInTheDocument()
-    expect(description).not.toBeInTheDocument()
   })
 
   describe("Artsy Guarantee section", () => {
