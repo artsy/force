@@ -153,7 +153,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
                 as={RouterLink}
                 to={"/settings/alerts"}
               >
-                Manage your alerts
+                Manage Your Alerts
               </Button>
             ) : (
               <ArtworkCreateAlertButtonFragmentContainer
