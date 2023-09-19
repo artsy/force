@@ -112,9 +112,12 @@ describe("FairOverview", () => {
   })
 
   it("displays the timer if fair is open", () => {
+    const openTime = new Date()
+    openTime.setDate(openTime.getDate() + 1)
+
     const wrapper = getWrapper({
       Fair: () => ({
-        endAt: "2023-09-19T08:00:00+00:00",
+        endAt: openTime.toISOString(),
       }),
     })
 
@@ -122,9 +125,12 @@ describe("FairOverview", () => {
   })
 
   it("don't render the timer if fair closed", () => {
+    const closeTime = new Date()
+    closeTime.setDate(closeTime.getDate() - 1)
+
     const wrapper = getWrapper({
       Fair: () => ({
-        endAt: "2020-09-19T08:00:00+00:00",
+        endAt: closeTime.toISOString(),
       }),
     })
 
