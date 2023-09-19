@@ -160,7 +160,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           value={value?.name}
           onChange={changeEventHandler("name")}
           error={getError("name")}
-          data-test="AddressForm_name"
+          data-testid="AddressForm_name"
         />
       </Column>
 
@@ -179,7 +179,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           onSelect={changeValueHandler("country")}
           disabled={lockCountryToOrigin}
           euShippingOnly={lockCountriesToEU}
-          data-test="AddressForm_country"
+          data-testid="AddressForm_country"
         />
         {(lockCountryToOrigin || lockCountriesToEU) && (
           <>
@@ -226,7 +226,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
               }
             }}
             error={getError("addressLine1")}
-            data-test="AddressForm_addressLine1"
+            data-testid="AddressForm_addressLine1"
             forwardRef={autocompleteRef}
           />
         ) : (
@@ -238,7 +238,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             value={value?.addressLine1}
             onChange={changeEventHandler("addressLine1")}
             error={getError("addressLine1")}
-            data-test="AddressForm_addressLine1"
+            data-testid="AddressForm_addressLine1"
           />
         )}
       </Column>
@@ -251,7 +251,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           value={value?.addressLine2 || ""}
           onChange={changeEventHandler("addressLine2")}
           error={getError("addressLine2")}
-          data-test="AddressForm_addressLine2"
+          data-testid="AddressForm_addressLine2"
         />
       </Column>
       <Column span={12}>
@@ -263,7 +263,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           value={value?.city}
           onChange={changeEventHandler("city")}
           error={getError("city")}
-          data-test="AddressForm_city"
+          data-testid="AddressForm_city"
         />
       </Column>
       <Column span={6}>
@@ -276,7 +276,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           value={value?.region}
           onChange={changeEventHandler("region")}
           error={getError("region")}
-          data-test="AddressForm_region"
+          data-testid="AddressForm_region"
         />
       </Column>
       <Column span={6}>
@@ -290,7 +290,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
           value={value?.postalCode}
           onChange={changeEventHandler("postalCode")}
           error={getError("postalCode")}
-          data-test="AddressForm_postalCode"
+          data-testid="AddressForm_postalCode"
         />
       </Column>
 
@@ -308,7 +308,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
               value={value?.phoneNumber}
               onChange={changeEventHandler("phoneNumber")}
               error={getError("phoneNumber")}
-              data-test="AddressForm_phoneNumber"
+              data-testid="AddressForm_phoneNumber"
             />
           </Column>
           <Spacer y={2} />
