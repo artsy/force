@@ -193,7 +193,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         )}
       </Column>
       <Column span={12}>
-        {/* Render the autocomplete input optimistically on the server to make sure we send applicable styles to the client */}
+        {/* Render the autocomplete optimistically to avoid an SSR mismatch */}
         {!autocomplete.loaded || autocomplete.enabled ? (
           <AutocompleteInput<AddressAutocompleteSuggestion>
             tabIndex={tabIndex}
