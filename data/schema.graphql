@@ -16902,6 +16902,9 @@ type SearchCriteria {
   colors: [String!]!
   dimensionRange: String
   displayName: String!
+
+  # Human readable price range value
+  formattedPriceRange: String
   hasRecentlyEnabledUserSearchCriteria: Boolean!
   height: String
   highPriceAmount(
