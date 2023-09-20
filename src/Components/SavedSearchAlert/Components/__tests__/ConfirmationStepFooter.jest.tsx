@@ -45,7 +45,7 @@ describe("ConfirmationStepFooter", () => {
       it("renders only manage your alerts button", () => {
         renderComponent(0)
 
-        expect(screen.getByText("Manage your alerts")).toBeInTheDocument()
+        expect(screen.getByText("Manage Your Alerts")).toBeInTheDocument()
       })
     })
 
@@ -53,7 +53,7 @@ describe("ConfirmationStepFooter", () => {
       it("renders only manage your alerts button", () => {
         renderComponent(NUMBER_OF_ARTWORKS_TO_SHOW)
 
-        expect(screen.getByText("Manage your alerts")).toBeInTheDocument()
+        expect(screen.getByText("Manage Your Alerts")).toBeInTheDocument()
       })
     })
 
@@ -62,7 +62,7 @@ describe("ConfirmationStepFooter", () => {
         renderComponent(NUMBER_OF_ARTWORKS_TO_SHOW + 1)
 
         expect(screen.getByText("See all matching works")).toBeInTheDocument()
-        expect(screen.getByText("Manage your alerts")).toBeInTheDocument()
+        expect(screen.getByText("Manage Your Alerts")).toBeInTheDocument()
       })
     })
 
