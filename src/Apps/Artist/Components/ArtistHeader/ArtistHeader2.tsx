@@ -131,6 +131,33 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                       <Text as="h2" variant="xl" color="black60">
                         {artist.formattedNationalityAndBirthday}
                       </Text>
+
+                      {hasSomething && (
+                        <>
+                          <Spacer y={2} />
+
+                          <Flex alignItems="center" gap={1}>
+                            <FollowArtistButtonQueryRenderer
+                              id={artist.internalID}
+                              contextModule={ContextModule.artistHeader}
+                              size="small"
+                            />
+
+                            {!!artist.counts?.follows && (
+                              <Text
+                                variant="xs"
+                                color="black60"
+                                textAlign="center"
+                                flexShrink={0}
+                              >
+                                {formatFollowerCount(artist.counts.follows)}{" "}
+                                Follower
+                                {artist.counts.follows === 1 ? "" : "s"}
+                              </Text>
+                            )}
+                          </Flex>
+                        </>
+                      )}
                     </Box>
 
                     {!hasSomething && (
@@ -142,37 +169,10 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                       />
                     )}
                   </Flex>
-
-                  {hasSomething && (
-                    <Flex
-                      flexDirection={["row", "column"]}
-                      alignItems="center"
-                      gap={1}
-                    >
-                      <FollowArtistButtonQueryRenderer
-                        id={artist.internalID}
-                        contextModule={ContextModule.artistHeader}
-                        size="small"
-                        width="100%"
-                      />
-
-                      {!!artist.counts?.follows && (
-                        <Text
-                          variant="xs"
-                          color="black60"
-                          textAlign="center"
-                          flexShrink={0}
-                        >
-                          {formatFollowerCount(artist.counts.follows)} Follower
-                          {artist.counts.follows === 1 ? "" : "s"}
-                        </Text>
-                      )}
-                    </Flex>
-                  )}
                 </Flex>
 
                 {hasBio && (
-                  <Bio variant="sm" color="black60">
+                  <Bio variant="sm">
                     <ReadMore
                       maxChars={250}
                       content={artist.biographyBlurb.text}
@@ -180,9 +180,11 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                   </Bio>
                 )}
 
-                <CV to={`/artist/${artist.slug}/cv`} color="black60">
-                  See all past shows and fair booths
-                </CV>
+                <Text variant="xs">
+                  <CV to={`/artist/${artist.slug}/cv`} color="black60">
+                    See all past shows and fair booths
+                  </CV>
+                </Text>
               </Column>
 
               {artist.insights.length > 0 && (
