@@ -11871,6 +11871,12 @@ type Me implements Node {
     first: Int
     last: Int
   ): ArtworkConnection
+
+  # Retrieve one user's notification by notification ID
+  notification(
+    # The ID of the Notification
+    id: String!
+  ): Notification
   orders(
     after: String
     before: String
