@@ -44,7 +44,10 @@ describe("Saved Addresses", () => {
 
   describe("Saved Addresses mutations", () => {
     it("edits the saved addresses after calling edit address mutation", async () => {
-      const wrapper = getWrapper({ Me: () => userAddressMutation.me })
+      const wrapper = getWrapper(
+        { Me: () => userAddressMutation.me },
+        { active: true }
+      )
       const page = new SavedAddressesTestPage(wrapper)
       page.selectEdit()
       const addresses = page.find(SavedAddressItem).first().text()
@@ -55,36 +58,46 @@ describe("Saved Addresses", () => {
   })
 
   describe("Saved Addresses", () => {
-    it("renders modal when button is clicked", () => {
-      const wrapper = getWrapper({
-        Me: () => ({
-          addressConnection: mockAddressConnection,
-        }),
-      })
+    it("add address modal with expected props", async () => {
+      const wrapper = getWrapper(
+        {
+          Me: () => ({
+            addressConnection: mockAddressConnection,
+          }),
+        },
+        { active: true }
+      )
       const button = wrapper.find("[data-test='shippingButton']").first()
-      const modal = wrapper.find(AddressModal)
-      expect(modal.props().show).toBe(false)
+      expect(wrapper.find(AddressModal).props().modalAction).toBeNull()
       button.simulate("click")
+      await wrapper.update()
 
-      expect(modal).toHaveLength(1)
+      expect(wrapper.find(AddressModal).props().modalAction).toEqual({
+        type: "createUserAddress",
+      })
     })
+    it("edit address modal with expected props", async () => {
+      const wrapper = getWrapper(
+        {
+          Me: () => ({
+            addressConnection: mockAddressConnection,
+          }),
+        },
+        { active: true }
+      )
 
-    it("add address modal with expected props", () => {
-      const wrapper = getWrapper({
-        Me: () => ({
-          addressConnection: mockAddressConnection,
+      const savedAddressItem = wrapper.find(SavedAddressItem).first()
+      expect(wrapper.find(AddressModal).props().modalAction).toBeNull()
+
+      savedAddressItem.props().handleClickEdit()
+      await wrapper.update()
+
+      expect(wrapper.find(AddressModal).props().modalAction).toEqual({
+        type: "editUserAddress",
+        address: expect.objectContaining({
+          internalID: "1",
         }),
       })
-      const button = wrapper.find("[data-test='shippingButton']").first()
-      expect(wrapper.find(AddressModal).props().show).toBe(false)
-      button.simulate("click")
-
-      setTimeout(() => {
-        expect(wrapper.find(AddressModal).props().modalDetails).toEqual({
-          addressModalTitle: "Add address",
-          addressModalAction: "createUserAddress",
-        })
-      }, 0)
     })
 
     it("render an add address button", () => {

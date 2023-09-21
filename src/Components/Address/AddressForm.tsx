@@ -44,7 +44,7 @@ export type AddressChangeHandler = (
   key: keyof Address
 ) => void
 
-export const emptyAddress: Address = {
+export const emptyAddress = {
   name: "",
   country: "",
   postalCode: "",
@@ -53,7 +53,7 @@ export const emptyAddress: Address = {
   city: "",
   region: "",
   phoneNumber: "",
-}
+} as const
 
 export const toStripeAddress = (address: Address): CreateTokenCardData => {
   return {

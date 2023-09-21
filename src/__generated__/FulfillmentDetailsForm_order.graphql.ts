@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6dd36ba6e44ada6f0f7535d5aa9191cd>>
+ * @generated SignedSource<<20cf6b24a6b761d184a87af0299d0045>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type Shipping_order$data = {
+export type FulfillmentDetailsForm_order$data = {
   readonly internalID: string;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
@@ -21,7 +21,7 @@ export type Shipping_order$data = {
           readonly artsyShippingInternational: boolean | null;
           readonly euShippingOrigin: boolean | null;
           readonly onlyShipsDomestically: boolean | null;
-          readonly pickup_available: boolean | null;
+          readonly pickupAvailable: boolean | null;
           readonly processWithArtsyShippingDomestic: boolean | null;
           readonly shippingCountry: string | null;
           readonly slug: string;
@@ -68,12 +68,12 @@ export type Shipping_order$data = {
     readonly __typename: "%other";
   } | null;
   readonly state: CommerceOrderStateEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "FulfillmentDetailsForm_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
-  readonly " $fragmentType": "Shipping_order";
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentType": "FulfillmentDetailsForm_order";
 };
-export type Shipping_order$key = {
-  readonly " $data"?: Shipping_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Shipping_order">;
+export type FulfillmentDetailsForm_order$key = {
+  readonly " $data"?: FulfillmentDetailsForm_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"FulfillmentDetailsForm_order">;
 };
 
 const node: ReaderFragment = (function(){
@@ -140,13 +140,8 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Shipping_order",
+  "name": "FulfillmentDetailsForm_order",
   "selections": [
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "FulfillmentDetailsForm_order"
-    },
     {
       "alias": null,
       "args": null,
@@ -260,7 +255,7 @@ return {
                       "storageKey": null
                     },
                     {
-                      "alias": "pickup_available",
+                      "alias": null,
                       "args": null,
                       "kind": "ScalarField",
                       "name": "pickupAvailable",
@@ -372,6 +367,6 @@ return {
 };
 })();
 
-(node as any).hash = "c6e208fb60991822ad2997fb7f4188dc";
+(node as any).hash = "2991eaa490dba17376d24869c341136b";
 
 export default node;
