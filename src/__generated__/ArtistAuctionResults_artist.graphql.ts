@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6501e2e7006fbfe28ffe9e5a738cbfc4>>
+ * @generated SignedSource<<229965aa6354dffef5b6c4fc99f8666d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,6 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistAuctionResults_artist$data = {
   readonly auctionResultsConnection: {
-    readonly createdYearRange: {
-      readonly endAt: number | null;
-      readonly startAt: number | null;
-    } | null;
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly isUpcoming: boolean | null;
@@ -378,31 +374,6 @@ return {
         {
           "alias": null,
           "args": null,
-          "concreteType": "YearRange",
-          "kind": "LinkedField",
-          "name": "createdYearRange",
-          "plural": false,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "startAt",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "endAt",
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
           "concreteType": "PageInfo",
           "kind": "LinkedField",
           "name": "pageInfo",
@@ -545,6 +516,6 @@ return {
 };
 })();
 
-(node as any).hash = "146c5a7b64762cb2d4281bb636577994";
+(node as any).hash = "d67a990e35e7b52e0a04497b9b1a59f9";
 
 export default node;

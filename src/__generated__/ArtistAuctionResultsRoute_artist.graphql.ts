@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<49e3d8c24a108a8de6f7181db17972d1>>
+ * @generated SignedSource<<00a377dde8d9361998e491aa8dbffe42>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -202,7 +202,8 @@ const node: ReaderFragment = {
           "value": [
             "SIMPLE_PRICE_HISTOGRAM",
             "CURRENCIES_COUNT",
-            "LOTS_BY_SALE_YEAR"
+            "LOTS_BY_SALE_YEAR",
+            "LOTS_BY_CREATED_YEAR"
           ]
         }
       ],
@@ -262,13 +263,13 @@ const node: ReaderFragment = {
           "storageKey": null
         }
       ],
-      "storageKey": "auctionResultsConnection(aggregations:[\"SIMPLE_PRICE_HISTOGRAM\",\"CURRENCIES_COUNT\",\"LOTS_BY_SALE_YEAR\"])"
+      "storageKey": "auctionResultsConnection(aggregations:[\"SIMPLE_PRICE_HISTOGRAM\",\"CURRENCIES_COUNT\",\"LOTS_BY_SALE_YEAR\",\"LOTS_BY_CREATED_YEAR\"])"
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "8cc699aeb92de8bbb29b0af6d247c650";
+(node as any).hash = "71527fc9d349617b8b0edff424f1e8a2";
 
 export default node;

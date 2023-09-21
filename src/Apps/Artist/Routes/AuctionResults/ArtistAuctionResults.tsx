@@ -65,6 +65,7 @@ interface AuctionResultsProps {
 const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
   artist,
   relay,
+  aggregations,
 }) => {
   const { user } = useContext(SystemContext)
 
@@ -119,11 +120,16 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
   const tracking = useTracking()
 
-  const { startAt, endAt } =
-    artist.auctionResultsConnection?.createdYearRange ?? {}
+  const lotsByCreatedYear = aggregations?.find(
+    aggregation => aggregation?.slice === "LOTS_BY_CREATED_YEAR"
+  )?.counts
+
+  const startAt = lotsByCreatedYear?.[0]?.value || null
+  const endAt = lotsByCreatedYear?.[lotsByCreatedYear.length - 1]?.value || null
+
   const auctionResultsFilterResetState = initialAuctionResultsFilterState({
-    startDate: startAt,
-    endDate: endAt,
+    startDate: startAt ? parseInt(startAt) : null,
+    endDate: endAt ? parseInt(endAt) : null,
   })
 
   // Is current filter state different from the default (reset) state?
@@ -371,8 +377,13 @@ const AuctionResultsContainer: React.FC<AuctionResultsProps> = ({
 
 export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
   (props: AuctionResultsProps) => {
-    const { startAt, endAt } =
-      props.artist.auctionResultsConnection?.createdYearRange ?? {}
+    const lotsByCreatedYear = props.aggregations?.find(
+      aggregation => aggregation?.slice === "LOTS_BY_CREATED_YEAR"
+    )?.counts
+
+    const startAt = lotsByCreatedYear?.[0]?.value || null
+    const endAt =
+      lotsByCreatedYear?.[lotsByCreatedYear.length - 1]?.value || null
 
     const { match } = useRouter()
     const { userPreferences } = useSystemContext()
@@ -383,8 +394,8 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
         aggregations={
           props.aggregations as SharedAuctionResultsFilterContextProps["aggregations"]
         }
-        earliestCreatedYear={startAt}
-        latestCreatedYear={endAt}
+        earliestCreatedYear={startAt ? parseInt(startAt) : null}
+        latestCreatedYear={endAt ? parseInt(endAt) : null}
         userPreferredMetric={userPreferences?.metric}
         filters={filters}
         onChange={filterState =>
@@ -454,10 +465,6 @@ export const ArtistAuctionResultsRefetchContainer = createRefetchContainer(
           allowEmptyCreatedDates: $allowEmptyCreatedDates
           state: $state
         ) {
-          createdYearRange {
-            startAt
-            endAt
-          }
           pageInfo {
             hasNextPage
             endCursor

@@ -1,7 +1,5 @@
-import { useMemo } from "react"
 import * as React from "react"
-import { Text, Checkbox, Clickable, Flex, Select, Spacer } from "@artsy/palette"
-import createLogger from "Utils/logger"
+import { Checkbox, Flex, Select, Spacer } from "@artsy/palette"
 import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
@@ -9,58 +7,38 @@ import {
 import { FilterExpandable } from "Components/ArtworkFilter/ArtworkFilters/FilterExpandable"
 import { ShowMore } from "Components/ArtworkFilter/ArtworkFilters/ShowMore"
 
-const log = createLogger(
-  "Artist/Routes/AuctionResults/Components/AuctionFilters/YearCreated.tsx"
-)
-
-const buildDateRange = (startYear: number, endYear: number) =>
-  [...Array(1 + endYear - startYear).keys()].map(yearNum => {
-    const year = `${yearNum + startYear}`
-    return {
-      text: year,
-      value: year,
-    }
-  })
-
 export const YearCreated: React.FC = () => {
-  const {
-    setFilter,
-    earliestCreatedYear,
-    latestCreatedYear,
-  } = useAuctionResultsFilterContext()
+  const { setFilter, aggregations } = useAuctionResultsFilterContext()
   const {
     createdAfterYear,
     createdBeforeYear,
     allowEmptyCreatedDates,
   } = useCurrentlySelectedFiltersForAuctionResults()
 
-  const hasChanges =
-    earliestCreatedYear !== createdAfterYear ||
-    latestCreatedYear !== createdBeforeYear
+  const options = (
+    aggregations
+      ?.find(aggregation => aggregation.slice === "LOTS_BY_CREATED_YEAR")
+      ?.counts.filter(c => c !== null) || []
+  ).map(c => ({
+    text: c?.name,
+    value: c?.name,
+  }))
 
-  const fullDateRange = useMemo(() => {
-    if (earliestCreatedYear && latestCreatedYear) {
-      return buildDateRange(earliestCreatedYear, latestCreatedYear)
-    } else {
-      return []
-    }
-  }, [earliestCreatedYear, latestCreatedYear])
-
-  const resetFilter = useMemo(
-    () => () => {
-      setFilter?.("createdAfterYear", earliestCreatedYear)
-      setFilter?.("createdBeforeYear", latestCreatedYear)
-    },
-    [earliestCreatedYear, latestCreatedYear, setFilter]
-  )
-
-  if (
-    typeof earliestCreatedYear !== "number" ||
-    typeof latestCreatedYear !== "number"
-  ) {
-    log.error("Couldn't display year created filter due to missing data")
+  if (options.length === 0 || (!createdAfterYear && !createdBeforeYear)) {
     return null
   }
+
+  const startOptions = options.filter(
+    option =>
+      parseInt(option.value) <=
+      (createdBeforeYear || parseInt(options[options.length - 1]?.value))
+  )
+
+  const endOptions = options.filter(
+    option =>
+      parseInt(option.value) >=
+      (createdAfterYear || parseInt(options[0]?.value))
+  )
 
   return (
     <FilterExpandable label="Year Created" expanded>
@@ -69,35 +47,23 @@ export const YearCreated: React.FC = () => {
           <Flex>
             <Select
               title="Earliest"
-              options={fullDateRange}
-              onSelect={year => {
-                setFilter?.("createdAfterYear", parseInt(year))
-              }}
-              selected={`${createdAfterYear}`}
+              options={startOptions}
+              onSelect={year => setFilter?.("createdAfterYear", parseInt(year))}
+              selected={(createdAfterYear || startOptions[0]?.value).toString()}
             />
             <Spacer x={1} />
 
             <Select
               title="Latest"
-              options={fullDateRange}
+              options={endOptions}
               onSelect={year => {
                 setFilter?.("createdBeforeYear", parseInt(year))
               }}
-              selected={`${createdBeforeYear}`}
+              selected={(
+                createdBeforeYear || endOptions[endOptions.length - 1]?.value
+              ).toString()}
             />
           </Flex>
-
-          {hasChanges && (
-            <Clickable
-              mt={0.5}
-              onClick={resetFilter}
-              textDecoration="underline"
-            >
-              <Text variant="xs" color="black60">
-                Reset
-              </Text>
-            </Clickable>
-          )}
 
           <Spacer y={2} />
 

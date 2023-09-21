@@ -61,6 +61,7 @@ export const AuctionResultsRouteFragmentContainer = createFragmentContainer(
             SIMPLE_PRICE_HISTOGRAM
             CURRENCIES_COUNT
             LOTS_BY_SALE_YEAR
+            LOTS_BY_CREATED_YEAR
           ]
         ) {
           aggregations {
