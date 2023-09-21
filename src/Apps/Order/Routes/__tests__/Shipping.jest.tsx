@@ -41,6 +41,10 @@ import * as updateUserAddress from "Apps/Order/Mutations/UpdateUserAddress"
 import { within } from "@testing-library/dom"
 import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
 
+// TODO: Optimize test performance and remove long timeout setting
+// Set longer timeout for each test _only_ for this file.
+// https://jestjs.io/docs/jest-object#jestsettimeouttimeout
+jest.setTimeout(10000)
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
