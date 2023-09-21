@@ -1,7 +1,7 @@
-import { Address, emptyAddress } from "Components/Address/AddressForm"
+import { emptyAddress } from "Components/Address/AddressForm"
 import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
 import { Shipping_order$data } from "__generated__/Shipping_order.graphql"
-import { pick, omit, compact } from "lodash"
+import { pick, omit, compact, isNil, omitBy } from "lodash"
 import {
   UpdateUserAddressMutation$data,
   UserAddressAttributes,
@@ -11,6 +11,17 @@ import {
   CommerceOrderFulfillmentTypeEnum,
   SetShippingMutation$data,
 } from "__generated__/SetShippingMutation.graphql"
+import { AddressType, EMPTY_ADDRESS } from "Components/Address/utils"
+import {
+  FulfillmentDetailsFormProps,
+  FulfillmentValues,
+  ShipValues,
+} from "Apps/Order/Routes/Shipping/FulfillmentDetailsForm"
+
+export enum FulfillmentType {
+  SHIP = "SHIP",
+  PICKUP = "PICKUP",
+}
 
 export type SavedAddressType = NonNullable<
   NonNullable<
@@ -35,6 +46,24 @@ export type ShippingQuotesType = NonNullable<
     >["node"]
   >["shippingQuoteOptions"]
 >["edges"]
+
+export const getShippingOption = (
+  // TODO: If this needs to stay in the utils file lets just write
+  // a type for it maybe?
+  order: {
+    requestedFulfillment?: Shipping_order$data["requestedFulfillment"]
+  }
+): FulfillmentType => {
+  const orderFulfillmentType = order.requestedFulfillment?.__typename
+
+  switch (orderFulfillmentType) {
+    case "CommercePickup":
+      return FulfillmentType.PICKUP
+    case "CommerceShip":
+    default:
+      return FulfillmentType.SHIP
+  }
+}
 
 export const defaultShippingAddressIndex = (
   me: Shipping_me$data,
@@ -119,10 +148,10 @@ export type MutationAddressResponse = NonNullable<
 // Gravity address has isDefault and addressLine3 but exchange does not
 export const convertShippingAddressForExchange = (
   address: SavedAddressType | MutationAddressResponse
-): Address => {
+): AddressType => {
   return Object.assign(
     {},
-    emptyAddress,
+    EMPTY_ADDRESS,
     omit(address, ["id", "isDefault", "internalID", "addressLine3", "errors"])
   )
 }
@@ -139,20 +168,17 @@ export const convertShippingAddressToMutationInput = (
   )
 }
 
-export const getShippingOption = (requestedFulfillmentType?: string) => {
-  let result: CommerceOrderFulfillmentTypeEnum
-
+export const getFulfillmentType = (
+  order: Shipping_order$data
+): FulfillmentType => {
+  const requestedFulfillmentType = order.requestedFulfillment?.__typename
   switch (requestedFulfillmentType) {
     case "CommercePickup":
-      result = "PICKUP"
-      break
+      return FulfillmentType.PICKUP
     case "CommerceShip":
     default:
-      result = "SHIP"
-      break
+      return FulfillmentType.SHIP
   }
-
-  return result
 }
 
 export const getDefaultShippingQuoteId = (order: Shipping_order$data) => {

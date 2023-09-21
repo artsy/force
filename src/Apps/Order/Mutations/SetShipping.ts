@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { SetShippingMutation } from "__generated__/SetShippingMutation.graphql"
-import { CommitMutation } from "../Utils/commitMutation"
+import { CommitMutation } from "Apps/Order/Utils/commitMutation"
 
 export const setShipping = (
   commitMutation: CommitMutation,
