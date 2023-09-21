@@ -138,6 +138,15 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
     } catch (error) {
       logger.error(error)
       dialog.showErrorDialog()
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersAccept,
+        context_owner_id: props.order.internalID,
+        title: "An error occurred",
+        message: error.message,
+        error_code: error.code || null,
+        flow: "user accepts offer",
+      })
     }
   }
 
