@@ -1,21 +1,25 @@
-import { AddressVerifiedBy } from "Apps/Order/Components/AddressVerificationFlow"
 import { createUserAddress } from "Apps/Order/Mutations/CreateUserAddress"
 import { deleteUserAddress } from "Apps/Order/Mutations/DeleteUserAddress"
 import { setShipping } from "Apps/Order/Mutations/SetShipping"
 import { updateUserAddress } from "Apps/Order/Mutations/UpdateUserAddress"
-import {
-  ShippingMutationValues,
-  ShippingProps,
-  ShippingValues,
-} from "Apps/Order/Routes/Shipping"
+import { ShippingProps } from "Apps/Order/Routes/Shipping"
 
 import { useSystemContext } from "System/useSystemContext"
 import createLogger from "Utils/logger"
 import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
-import { CommerceSetShippingInput } from "__generated__/SetShippingMutation.graphql"
-import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
-import pick from "lodash/pick"
+import {
+  CommerceSetShippingInput,
+  SetShippingMutation$data,
+} from "__generated__/SetShippingMutation.graphql"
+import {
+  UpdateUserAddressMutation$data,
+  UserAddressAttributes,
+} from "__generated__/UpdateUserAddressMutation.graphql"
 import { useCallback } from "react"
+
+export type SaveFulfillmentDetailsResponse = NonNullable<
+  SetShippingMutation$data["commerceSetShipping"]
+>["orderOrError"]
 
 export const useShippingOperations = (
   props: ShippingProps,
@@ -26,32 +30,12 @@ export const useShippingOperations = (
 
   return {
     saveFulfillmentDetails: useCallback(
-      async (
-        values: ShippingMutationValues,
-        isArtsyShipping: boolean,
-        addressVerifiedBy?: AddressVerifiedBy | null
-      ) => {
-        const address = pick(values, [
-          "name",
-          "addressLine1",
-          "addressLine2",
-          "city",
-          "region",
-          "postalCode",
-          "country",
-        ])
+      async (values: Omit<CommerceSetShippingInput, "id">) => {
         const mutationInput: CommerceSetShippingInput = {
           id: order.internalID,
-          fulfillmentType: isArtsyShipping
-            ? "SHIP_ARTA"
-            : values.fulfillmentType,
-          shipping: address,
-          phoneNumber: values.phoneNumber,
+          ...values,
         }
-        // todo: handle address verification
-        if (addressVerifiedBy) {
-          mutationInput.addressVerifiedBy = addressVerifiedBy
-        }
+
         const result = await setShipping(commitMutation, {
           input: mutationInput,
         })
@@ -63,7 +47,7 @@ export const useShippingOperations = (
     updateUserAddress: useCallback(
       async (
         existingAddressID: string,
-        values: ShippingMutationValues<ShippingValues>,
+        values: UserAddressAttributes,
         closeModal: () => void = () => null,
         onSuccess: (address: UpdateUserAddressMutation$data) => void = () =>
           null,
@@ -74,7 +58,7 @@ export const useShippingOperations = (
           existingAddressID,
           // TODO: Formik/yup validator type in Components/Address/Utils may be
           // able to coerce this
-          values as any,
+          values,
           closeModal,
           onSuccess,
           onError
@@ -85,7 +69,7 @@ export const useShippingOperations = (
 
     createUserAddress: useCallback(
       async (
-        values: ShippingMutationValues<ShippingValues>,
+        values: UserAddressAttributes,
         onSuccess: (address: CreateUserAddressMutation$data) => void = () =>
           null,
         onError: (message: string) => void = logger.error,
@@ -93,7 +77,7 @@ export const useShippingOperations = (
       ) => {
         createUserAddress(
           relayEnvironment!,
-          values as any,
+          values,
           onSuccess,
           onError,
           me,
