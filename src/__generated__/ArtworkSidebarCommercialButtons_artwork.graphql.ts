@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d26a1c3097eba9a8ec2367418831a305>>
+ * @generated SignedSource<<8b2f9eee61d9bd48d391ff641893348f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,6 +23,7 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
   } | null> | null;
   readonly internalID: string;
   readonly isAcquireable: boolean | null;
+  readonly isEligibleToCreateAlert: boolean;
   readonly isInquireable: boolean | null;
   readonly isOfferable: boolean | null;
   readonly isSold: boolean | null;
@@ -92,6 +93,13 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtworkCreateAlertButton_artwork"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isEligibleToCreateAlert",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -181,6 +189,6 @@ return {
 };
 })();
 
-(node as any).hash = "076cb2397836786f05941bff9dc0622c";
+(node as any).hash = "dd032a3a556b4fa11c613e880ea7b6c8";
 
 export default node;

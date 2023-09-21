@@ -225,6 +225,7 @@ describe("ArtworkSidebarCommercialButtons", () => {
   it("displays create alert button when artwork is sold", () => {
     renderWithRelay({
       Artwork: () => ({
+        isEligibleToCreateAlert: true,
         isSold: true,
         artists: ["artist"],
       }),
@@ -233,11 +234,11 @@ describe("ArtworkSidebarCommercialButtons", () => {
     expect(screen.queryByText("Create Alert")).toBeInTheDocument()
   })
 
-  it("hides create alert button when artwork is sold but there are no associated artists", () => {
+  it("hides create alert button when artwork is sold but ineligible for alerts", () => {
     renderWithRelay({
       Artwork: () => ({
+        isEligibleToCreateAlert: false,
         isSold: true,
-        artists: [],
       }),
     })
 

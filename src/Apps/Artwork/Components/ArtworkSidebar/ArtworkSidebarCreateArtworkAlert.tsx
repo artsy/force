@@ -28,7 +28,6 @@ const ArtworkSidebarCreateArtworkAlert: React.FC<ArtworkSidebarCreateArtworkAler
   const attributionClass = compact([artwork.attributionClass?.internalID])
   const artistIDs = artists.map(artist => artist.internalID)
   const placeholder = `Artworks like: ${artwork.title!}`
-  const hasArtists = !!artwork.artists?.length
 
   const defaultArtistsCriteria: SavedSearchEntityCriteria[] = artists.map(
     artist => ({
@@ -76,7 +75,7 @@ const ArtworkSidebarCreateArtworkAlert: React.FC<ArtworkSidebarCreateArtworkAler
   }
   const allowedCriteria = getAllowedSearchCriteria(criteria)
 
-  if (!hasArtists) return null
+  if (!artwork.isEligibleToCreateAlert) return null
 
   return (
     <>
@@ -123,6 +122,7 @@ export const ArtworkSidebarCreateArtworkAlertFragmentContainer = createFragmentC
         internalID
         title
         slug
+        isEligibleToCreateAlert
         artists {
           internalID
           name

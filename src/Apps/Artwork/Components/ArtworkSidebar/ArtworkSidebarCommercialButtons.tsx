@@ -312,7 +312,7 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
     artworkEcommerceAvailable || !!artwork.isInquireable
 
   const isCreateAlertAvailable =
-    artwork.isSold && (artwork?.artists?.length ?? 0) > 0
+    artwork.isEligibleToCreateAlert && artwork.isSold
   const isSecondaryContactGalleryButton =
     artwork.isOfferable || isCreateAlertAvailable
 
@@ -427,6 +427,7 @@ export const ArtworkSidebarCommercialButtonsFragmentContainer = createFragmentCo
       fragment ArtworkSidebarCommercialButtons_artwork on Artwork {
         ...ArtworkSidebarEditionSets_artwork
         ...ArtworkCreateAlertButton_artwork
+        isEligibleToCreateAlert
         artists {
           internalID
         }

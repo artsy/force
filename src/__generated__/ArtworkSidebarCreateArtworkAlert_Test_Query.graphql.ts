@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c78a9f962939715436d02c22dbd2bfc>>
+ * @generated SignedSource<<b9c36737f392724e25400a7f411960da>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -122,6 +122,13 @@ return {
           {
             "alias": null,
             "args": null,
+            "kind": "ScalarField",
+            "name": "isEligibleToCreateAlert",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "Artist",
             "kind": "LinkedField",
             "name": "artists",
@@ -179,7 +186,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cf4c1069590f8e58cadfdfa88d56fd17",
+    "cacheID": "242133062c8aaa143fa016ee9ca7de86",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -209,6 +216,12 @@ return {
         "artwork.attributionClass.internalID": (v5/*: any*/),
         "artwork.id": (v5/*: any*/),
         "artwork.internalID": (v5/*: any*/),
+        "artwork.isEligibleToCreateAlert": {
+          "enumValues": null,
+          "nullable": false,
+          "plural": false,
+          "type": "Boolean"
+        },
         "artwork.mediumType": {
           "enumValues": null,
           "nullable": true,
@@ -230,7 +243,7 @@ return {
     },
     "name": "ArtworkSidebarCreateArtworkAlert_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCreateArtworkAlert_Test_Query {\n  artwork(id: \"test-artwork-id\") {\n    ...ArtworkSidebarCreateArtworkAlert_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCreateArtworkAlert_artwork on Artwork {\n  internalID\n  title\n  slug\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkSidebarCreateArtworkAlert_Test_Query {\n  artwork(id: \"test-artwork-id\") {\n    ...ArtworkSidebarCreateArtworkAlert_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCreateArtworkAlert_artwork on Artwork {\n  internalID\n  title\n  slug\n  isEligibleToCreateAlert\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();
