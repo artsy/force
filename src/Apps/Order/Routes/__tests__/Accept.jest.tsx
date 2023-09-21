@@ -21,6 +21,7 @@ import {
   acceptOfferPaymentFailed,
   acceptOfferPaymentFailedInsufficientFunds,
   acceptOfferInsufficientInventoryFailure,
+  acceptOfferWithActionRequired,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/acceptOffer"
 
 jest.unmock("react-relay")
@@ -43,6 +44,8 @@ jest.mock("@stripe/stripe-js", () => {
     _mockReset: () => (mock = mockStripe()),
   }
 })
+
+const { _mockStripe } = require("@stripe/stripe-js")
 
 jest.mock("@artsy/palette", () => {
   return {
@@ -207,6 +210,17 @@ describe("Accept seller offer", () => {
 
       await page.clickSubmit()
       await page.expectAndDismissDefaultErrorDialog()
+    })
+
+    it("shows SCA modal when required", async () => {
+      commitMutation.mockReturnValue(acceptOfferWithActionRequired)
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+      let page = new OrderAppTestPage(wrapper)
+      await page.clickSubmit()
+
+      expect(_mockStripe().handleCardAction).toBeCalledWith("client-secret")
     })
 
     it("shows an error modal if there is a capture_failed error", async () => {
