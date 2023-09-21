@@ -403,7 +403,9 @@ describe("Review", () => {
       await page.clickSubmit()
 
       expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-      expect(pushMock).toBeCalledWith("/artwork/artworkId?order-submitted=true")
+      expect(pushMock).toBeCalledWith(
+        "/artwork/artworkId?order-submitted=offer-order-id"
+      )
     })
 
     it("shows an error modal when there is an error in submitOrderPayload", async () => {
