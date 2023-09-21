@@ -38,15 +38,9 @@ import {
   validatePhoneNumber,
 } from "Apps/Order/Utils/formValidators"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import {
-  Address,
-  AddressChangeHandler,
-  AddressErrors,
-  AddressForm,
-  AddressTouched,
-} from "Components/Address/AddressForm"
+
 import { Router } from "found"
-import { FC, useState, useEffect } from "react"
+import { FC, useState, useEffect, useCallback } from "react"
 import { COUNTRIES_IN_EUROPEAN_UNION } from "@artsy/commerce_helpers"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
@@ -65,6 +59,7 @@ import {
   getShippingQuotes,
   getShippingOption,
   ShippingQuotesType,
+  FulfillmentType,
 } from "Apps/Order/Utils/shippingUtils"
 import {
   NEW_ADDRESS,
@@ -99,6 +94,13 @@ import {
   ErrorDialogs,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
+import {
+  FulfillmentDetailsFormFragmentContainer as FulfillmentDetailsForm,
+  FulfillmentDetailsFormFragmentContainer,
+  FulfillmentValues,
+} from "Apps/Order/Routes/Shipping/FulfillmentDetailsForm"
+import { FormikHelpers } from "formik"
+import { useShippingOperations } from "Apps/Order/Mutations/useShippingOperations"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -114,105 +116,79 @@ export interface ShippingProps {
 
 export const ShippingRoute: FC<ShippingProps> = props => {
   const { trackEvent } = useTracking()
-  const { relayEnvironment } = useSystemContext()
+  // const { relayEnvironment } = useSystemContext()
+  const shippingOperations = useShippingOperations(props, logger)
 
-  const addressVerificationUSEnabled = !!useFeatureFlag(
-    "address_verification_us"
-  )
-  const addressVerificationIntlEnabled = !!useFeatureFlag(
-    "address_verification_intl"
-  )
+  // const addressVerificationUSEnabled = !!useFeatureFlag(
+  //   "address_verification_us"
+  // )
+  // const addressVerificationIntlEnabled = !!useFeatureFlag(
+  //   "address_verification_intl"
+  // )
 
-  // true if the current address needs to be verified
-  // TODO: Is this necessary, or can it just use the checks above?
-  const [addressNeedsVerification, setAddressNeedsVerification] = useState<
-    boolean
-  >(false)
+  const [activeStep, setActiveStep] = useState<
+    "fulfillment_details" | "shipping_quotes"
+  >("fulfillment_details")
 
-  // Presence of addressVerifiedBy indicates that the address has been verified
-  // via the address verification flow.
-  const [
-    addressVerifiedBy,
-    setAddressVerifiedBy,
-  ] = useState<AddressVerifiedBy | null>(null)
-
-  const [readyToSaveVerifiedAddress, setReadyToSaveVerifiedAddress] = useState(
-    false
-  )
-
-  const [shippingOption, setShippingOption] = useState<
-    CommerceOrderFulfillmentTypeEnum
-  >(getShippingOption(props.order.requestedFulfillment?.__typename))
+  const shippingOption = getShippingOption(props.order)
 
   const [shippingQuoteId, setShippingQuoteId] = useState<string | undefined>(
     getSelectedShippingQuoteId(props.order)
   )
-  const [shippingQuotes, setShippingQuotes] = useState<ShippingQuotesType>(
-    getShippingQuotes(props.order)
-  )
+  const shippingQuotes = getShippingQuotes(props.order)
 
-  const [address, setAddress] = useState<Address>(
-    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+  const [address, setAddress] = useState<any>(
     startingAddress(props.me, props.order)
   )
   const [selectedAddressID, setSelectedAddressID] = useState<string>(
     defaultShippingAddressIndex(props.me, props.order)
   )
-  const [addressErrors, setAddressErrors] = useState<AddressErrors | {}>({})
-  const [addressTouched, setAddressTouched] = useState<AddressTouched>({})
 
-  const [phoneNumber, setPhoneNumber] = useState<PhoneNumber>(
-    startingPhoneNumber(props.me, props.order)
-  )
-  const [phoneNumberError, setPhoneNumberError] = useState<PhoneNumberError>("")
-  const [phoneNumberTouched, setPhoneNumberTouched] = useState<
-    PhoneNumberTouched
-  >(false)
   const addressList = extractNodes(props.me?.addressConnection) ?? []
 
-  const [saveAddress, setSaveAddress] = useState(true)
-  const [deletedAddressID, setDeletedAddressID] = useState<string | undefined>()
-  const [savedAddressID, setSavedAddressID] = useState<string | undefined>(
-    undefined
-  )
+  // const [saveAddress, setSaveAddress] = useState(true)
+  // const [deletedAddressID, setDeletedAddressID] = useState<string | undefined>()
+  // const [savedAddressID, setSavedAddressID] = useState<string | undefined>(
+  //   undefined
+  // )
 
-  useEffect(() => {
-    const isAddressRemoved = !addressList.find(
-      address => address.internalID === deletedAddressID
-    )
+  // useEffect(() => {
+  //   const isAddressRemoved = !addressList.find(
+  //     address => address.internalID === deletedAddressID
+  //   )
 
-    if (deletedAddressID && isAddressRemoved) {
-      if (!addressList || addressList.length === 0) {
-        setSelectedAddressID(NEW_ADDRESS)
-        setShippingQuotes(null)
-        setShippingQuoteId(undefined)
-      } else if (selectedAddressID == deletedAddressID) {
-        selectSavedAddress(
-          addressList.find(address => address.isDefault)?.internalID!
-        )
-      }
+  //   if (deletedAddressID && isAddressRemoved) {
+  //     if (!addressList || addressList.length === 0) {
+  //       setSelectedAddressID(NEW_ADDRESS)
+  //       setShippingQuotes(null)
+  //       setShippingQuoteId(undefined)
+  //     } else if (selectedAddressID == deletedAddressID) {
+  //       selectSavedAddress(
+  //         addressList.find(address => address.isDefault)?.internalID!
+  //       )
+  //     }
 
-      setDeletedAddressID(undefined)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addressList, deletedAddressID])
+  //     setDeletedAddressID(undefined)
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [addressList, deletedAddressID])
 
-  const touchedAddress = () => {
-    return {
-      name: true,
-      country: true,
-      postalCode: true,
-      addressLine1: true,
-      addressLine2: true,
-      city: true,
-      region: true,
-      phoneNumber: true,
-    }
-  }
+  // const touchedAddress = () => {
+  //   return {
+  //     name: true,
+  //     country: true,
+  //     postalCode: true,
+  //     addressLine1: true,
+  //     addressLine2: true,
+  //     city: true,
+  //     region: true,
+  //     phoneNumber: true,
+  //   }
+  // }
 
-  const handleAddressDelete = (deletedAddressID: string) => {
-    setDeletedAddressID(deletedAddressID)
-  }
+  // const handleAddressDelete = (deletedAddressID: string) => {
+  //   setDeletedAddressID(deletedAddressID)
+  // }
 
   const getOrderArtwork = () => props.order.lineItems?.edges?.[0]?.node?.artwork
   const isCreateNewAddress = () => selectedAddressID === NEW_ADDRESS
@@ -241,21 +217,22 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     )
   }
 
-  const isAddressVerificationEnabled = (): boolean => {
-    return address.country === "US"
-      ? addressVerificationUSEnabled
-      : addressVerificationIntlEnabled
-  }
+  // const isAddressVerificationEnabled = (): boolean => {
+  //   return address.country === "US"
+  //     ? addressVerificationUSEnabled
+  //     : addressVerificationIntlEnabled
+  // }
 
   // Save shipping info on the order. If it's Artsy shipping and a quote hasn't
   // been selected, this renders the quotes for user to select and finalize
   // again.
   const finalizeFulfillment = async () => {
-    if (checkIfArtsyShipping() && !!shippingQuoteId) {
-      selectShippingQuote()
-    } else {
-      selectShipping()
-    }
+    selectShippingQuote()
+    // if (checkIfArtsyShipping() && !!shippingQuoteId) {
+    //   selectShippingQuote()
+    // } else {
+    //   selectShipping()
+    // }
   }
 
   /**
@@ -263,131 +240,111 @@ export const ShippingRoute: FC<ShippingProps> = props => {
    *
    * @returns true if both are valid; false, otherwise
    */
-  const validateAddressAndPhoneNumber = () => {
-    const {
-      errors: addressErrors,
-      hasErrors: invalidAddress,
-    } = validateAddress(address)
-    const {
-      error: phoneNumberError,
-      hasError: invalidPhoneNumber,
-    } = validatePhoneNumber(phoneNumber)
+  // const validateAddressAndPhoneNumber = () => {
+  //   const {
+  //     errors: addressErrors,
+  //     hasErrors: invalidAddress,
+  //   } = validateAddress(address)
+  //   const {
+  //     error: phoneNumberError,
+  //     hasError: invalidPhoneNumber,
+  //   } = validatePhoneNumber(phoneNumber)
 
-    if (invalidAddress) {
-      setAddressErrors(addressErrors!)
-      setAddressTouched(touchedAddress)
-    }
-    if (invalidPhoneNumber) {
-      setPhoneNumberError(phoneNumberError!)
-      setPhoneNumberTouched(true)
-    }
+  //   if (invalidAddress) {
+  //     setAddressErrors(addressErrors!)
+  //     setAddressTouched(touchedAddress)
+  //   }
+  //   if (invalidPhoneNumber) {
+  //     setPhoneNumberError(phoneNumberError!)
+  //     setPhoneNumberTouched(true)
+  //   }
 
-    return !invalidAddress && !invalidPhoneNumber
-  }
+  //   return !invalidAddress && !invalidPhoneNumber
+  // }
 
   const onContinueButtonPressed = async () => {
-    if (
-      shippingOption === "SHIP" &&
-      isCreateNewAddress() &&
-      !validateAddressAndPhoneNumber()
-    ) {
-      return
-    }
-
-    if (
-      isAddressVerificationEnabled() &&
-      !addressVerifiedBy &&
-      isCreateNewAddress()
-    ) {
-      /**
-       * Setting addressNeedsVerification to true will cause the address
-       * verification flow to be initiated on this render.
-       */
-      setAddressNeedsVerification(true)
-      return
-    }
-
     finalizeFulfillment()
   }
 
-  const selectShipping = async (editedAddress?: MutationAddressResponse) => {
-    if (shippingOption === "PICKUP") {
-      const { error, hasError } = validatePhoneNumber(phoneNumber)
-      if (hasError) {
-        setPhoneNumberError(error!)
-        setPhoneNumberTouched(true)
-        return
-      }
-    }
+  // const selectShipping = async (editedAddress?: MutationAddressResponse) => {
+  //   if (shippingOption === "PICKUP") {
+  //     const { error, hasError } = validatePhoneNumber(phoneNumber)
+  //     if (hasError) {
+  //       setPhoneNumberError(error!)
+  //       setPhoneNumberTouched(true)
+  //       return
+  //     }
+  //   }
 
-    try {
-      // if not creating a new address, use the saved address selection for shipping
-      const shipToAddress = isCreateNewAddress()
-        ? address
-        : convertShippingAddressForExchange(
-            editedAddress
-              ? editedAddress
-              : addressList.find(
-                  address => address.internalID == selectedAddressID
-                )!
-          )
+  //   try {
+  //     // if not creating a new address, use the saved address selection for shipping
+  //     const shipToAddress = isCreateNewAddress()
+  //       ? address
+  //       : convertShippingAddressForExchange(
+  //           editedAddress
+  //             ? editedAddress
+  //             : addressList.find(
+  //                 address => address.internalID == selectedAddressID
+  //               )!
+  //         )
 
-      const shipToPhoneNumber =
-        isCreateNewAddress() || shippingOption === "PICKUP"
-          ? phoneNumber
-          : addressList.find(address => address.internalID == selectedAddressID)
-              ?.phoneNumber
+  //     const shipToPhoneNumber =
+  //       isCreateNewAddress() || shippingOption === "PICKUP"
+  //         ? phoneNumber
+  //         : addressList.find(address => address.internalID == selectedAddressID)
+  //             ?.phoneNumber
 
-      setShippingQuotes(null)
-      setShippingQuoteId(undefined)
+  //     setShippingQuotes(null)
+  //     setShippingQuoteId(undefined)
 
-      const isArtsyShipping = checkIfArtsyShipping()
+  //     const isArtsyShipping = checkIfArtsyShipping()
 
-      const mutationInput: CommerceSetShippingInput = {
-        id: props.order.internalID,
-        fulfillmentType: isArtsyShipping ? "SHIP_ARTA" : shippingOption,
-        shipping: shipToAddress,
-        phoneNumber: shipToPhoneNumber,
-      }
-      if (addressVerifiedBy) {
-        mutationInput.addressVerifiedBy = addressVerifiedBy
-      }
+  //     const mutationInput: CommerceSetShippingInput = {
+  //       id: props.order.internalID,
+  //       fulfillmentType: isArtsyShipping ? "SHIP_ARTA" : shippingOption,
+  //       shipping: shipToAddress,
+  //       phoneNumber: shipToPhoneNumber,
+  //     }
+  //     if (addressVerifiedBy) {
+  //       mutationInput.addressVerifiedBy = addressVerifiedBy
+  //     }
 
-      const orderOrError = (
-        await setShipping(props.commitMutation, {
-          input: mutationInput,
-        })
-      ).commerceSetShipping?.orderOrError
+  //     const orderOrError = (
+  //       await setShipping(props.commitMutation, {
+  //         input: mutationInput,
+  //       })
+  //     ).commerceSetShipping?.orderOrError
 
-      if (orderOrError?.error) {
-        handleSubmitError(orderOrError.error)
-        return
-      }
-      // update address when user is entering new address AND save checkbox is selected
-      await updateAddress()
+  //     if (orderOrError?.error) {
+  //       handleSubmitError(orderOrError.error)
+  //       return
+  //     }
+  //     // update address when user is entering new address AND save checkbox is selected
+  //     await updateAddress()
 
-      if (isArtsyShipping) {
-        setShippingQuotes(getShippingQuotes(orderOrError?.order))
-      } else {
-        props.router.push(`/orders/${props.order.internalID}/payment`)
-      }
-    } catch (error) {
-      logger.error(error)
+  //     if (isArtsyShipping) {
+  //       setShippingQuotes(getShippingQuotes(orderOrError?.order))
+  //     } else {
+  //       props.router.push(`/orders/${props.order.internalID}/payment`)
+  //     }
+  //   } catch (error) {
+  //     logger.error(error)
 
-      trackEvent({
-        action: ActionType.errorMessageViewed,
-        context_owner_type: OwnerType.ordersShipping,
-        context_owner_id: props.order.internalID,
-        title: "An error occurred",
-        message:
-          "Something went wrong. Please try again or contact orders@artsy.net.",
-        error_code: null,
-        flow: "user selects a shipping option",
-      })
+  //   TODO (Erik): Tracking
+  //     trackEvent({
+  //       action: ActionType.errorMessageViewed,
+  //       context_owner_type: OwnerType.ordersShipping,
+  //       context_owner_id: props.order.internalID,
+  //       title: "An error occurred",
+  //       message:
+  //         "Something went wrong. Please try again or contact orders@artsy.net.",
+  //       error_code: null,
+  //       flow: "user selects a shipping option",
+  //     })
 
-      props.dialog.showErrorDialog()
-    }
-  }
+  //     props.dialog.showErrorDialog()
+  //   }
+  // }
 
   const selectShippingQuote = async () => {
     const { order } = props
@@ -403,7 +360,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           })
         ).commerceSelectShippingOption?.orderOrError
 
-        await updateAddress()
+        // TODO (Erik): Figure out why this was here
+        // await updateAddress()
 
         if (orderOrError?.error) {
           handleSubmitError(orderOrError.error)
@@ -432,64 +390,64 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }
 
-  const updateAddress = async () => {
-    const shouldCreateNewAddress = isCreateNewAddress()
+  // const updateAddress = async () => {
+  //   const shouldCreateNewAddress = isCreateNewAddress()
 
-    if (saveAddress) {
-      if (
-        shippingOption === "SHIP" &&
-        shouldCreateNewAddress &&
-        relayEnvironment
-      ) {
-        if (savedAddressID) {
-          updateUserAddress(
-            relayEnvironment,
-            savedAddressID,
-            {
-              ...address,
-              phoneNumber: phoneNumber,
-            }, // address
-            () => {},
-            () => {
-              message => {
-                logger.error(message)
-              }
-            }, // onError
-            () => {} // onSuccess
-          )
-        } else {
-          await createUserAddress(
-            relayEnvironment,
-            {
-              ...address,
-              phoneNumber: phoneNumber,
-            }, // address
-            data => {
-              setSavedAddressID(
-                data?.createUserAddress?.userAddressOrErrors.internalID
-              )
-            }, // onSuccess
-            () => {
-              message => {
-                logger.error(message)
-              }
-            }, // onError
-            props.me, // me
-            () => {}
-          )
-        }
-      }
-    } else if (savedAddressID) {
-      deleteUserAddress(
-        relayEnvironment!,
-        savedAddressID,
-        () => {},
-        message => {
-          logger.error(message)
-        }
-      )
-    }
-  }
+  //   if (saveAddress) {
+  //     if (
+  //       shippingOption === "SHIP" &&
+  //       shouldCreateNewAddress &&
+  //       relayEnvironment
+  //     ) {
+  //       if (savedAddressID) {
+  //         updateUserAddress(
+  //           relayEnvironment,
+  //           savedAddressID,
+  //           {
+  //             ...address,
+  //             phoneNumber: phoneNumber,
+  //           }, // address
+  //           () => {},
+  //           () => {
+  //             message => {
+  //               logger.error(message)
+  //             }
+  //           }, // onError
+  //           () => {} // onSuccess
+  //         )
+  //       } else {
+  //         await createUserAddress(
+  //           relayEnvironment,
+  //           {
+  //             ...address,
+  //             phoneNumber: phoneNumber,
+  //           }, // address
+  //           data => {
+  //             setSavedAddressID(
+  //               data?.createUserAddress?.userAddressOrErrors.internalID
+  //             )
+  //           }, // onSuccess
+  //           () => {
+  //             message => {
+  //               logger.error(message)
+  //             }
+  //           }, // onError
+  //           props.me, // me
+  //           () => {}
+  //         )
+  //       }
+  //     }
+  //   } else if (savedAddressID) {
+  //     deleteUserAddress(
+  //       relayEnvironment!,
+  //       savedAddressID,
+  //       () => {},
+  //       message => {
+  //         logger.error(message)
+  //       }
+  //     )
+  //   }
+  // }
 
   const handleSubmitError = (error: { code: string; data: string | null }) => {
     logger.error(error)
@@ -583,6 +541,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }
 
+  // TODO (Erik): Pass this into the fulfillment details form (according to current structure)
   const getArtaErrorMessage = () => (
     <>
       There was a problem getting shipping quotes. <br />
@@ -594,66 +553,67 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     </>
   )
 
-  const onAddressChange: AddressChangeHandler = (newAddress, key) => {
-    const { errors } = validateAddress(newAddress)
-    setAddress(newAddress)
-    setAddressErrors({
-      ...addressErrors,
-      ...errors,
-    })
-    setAddressTouched({
-      ...addressTouched,
-      [key]: true,
-    })
+  // const onAddressChange: AddressChangeHandler = (newAddress, key) => {
+  //   const { errors } = validateAddress(newAddress)
+  //   setAddress(newAddress)
+  //   setAddressErrors({
+  //     ...addressErrors,
+  //     ...errors,
+  //   })
+  //   setAddressTouched({
+  //     ...addressTouched,
+  //     [key]: true,
+  //   })
 
-    setShippingQuotes(null)
-    setShippingQuoteId(undefined)
+  //   setShippingQuotes(null)
+  //   setShippingQuoteId(undefined)
 
-    // If the address has already been verified and the user is editing the form,
-    // consider this a user-verified address (perform verification only once).
-    if (addressVerifiedBy) {
-      setAddressVerifiedBy(AddressVerifiedBy.USER)
-    }
-  }
+  //   // If the address has already been verified and the user is editing the form,
+  //   // consider this a user-verified address (perform verification only once).
+  //   if (addressVerifiedBy) {
+  //     setAddressVerifiedBy(AddressVerifiedBy.USER)
+  //   }
+  // }
 
-  const onPhoneNumberChange: PhoneNumberChangeHandler = newPhoneNumber => {
-    const { error } = validatePhoneNumber(newPhoneNumber)
+  // const onPhoneNumberChange: PhoneNumberChangeHandler = newPhoneNumber => {
+  //   const { error } = validatePhoneNumber(newPhoneNumber)
 
-    setPhoneNumber(newPhoneNumber)
-    setPhoneNumberError(error!)
-    setPhoneNumberTouched(true)
-    setShippingQuotes(null)
-    setShippingQuoteId(undefined)
-  }
+  //   setPhoneNumber(newPhoneNumber)
+  //   setPhoneNumberError(error!)
+  //   setPhoneNumberTouched(true)
+  //   setShippingQuotes(null)
+  //   setShippingQuoteId(undefined)
+  // }
 
-  useEffect(() => {
-    if (
-      addressList?.length > 0 &&
-      checkIfArtsyShipping() &&
-      !isCreateNewAddress()
-    ) {
-      selectShipping()
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [shippingOption, selectedAddressID])
+  // useEffect(() => {
+  //   if (
+  //     addressList?.length > 0 &&
+  //     checkIfArtsyShipping() &&
+  //     !isCreateNewAddress()
+  //   ) {
+  //     selectShipping()
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [shippingOption, selectedAddressID])
 
-  const onSelectShippingOption = (
-    newShippingOption: CommerceOrderFulfillmentTypeEnum
-  ) => {
-    trackEvent({
-      action_type: DeprecatedSchema.ActionType.Click,
-      subject:
-        newShippingOption === "SHIP"
-          ? DeprecatedSchema.Subject.BNMOProvideShipping
-          : DeprecatedSchema.Subject.BNMOArrangePickup,
-      flow: "buy now",
-      type: "button",
-    })
+  // const onSelectShippingOption = (
+  //   newShippingOption: CommerceOrderFulfillmentTypeEnum
+  // ) => {
+  //   TODO (Erik): Tracking
+  //   trackEvent({
+  //     action_type: DeprecatedSchema.ActionType.Click,
+  //     subject:
+  //       newShippingOption === "SHIP"
+  //         ? DeprecatedSchema.Subject.BNMOProvideShipping
+  //         : DeprecatedSchema.Subject.BNMOArrangePickup,
+  //     flow: "buy now",
+  //     type: "button",
+  //   })
 
-    if (shippingOption !== newShippingOption) {
-      setShippingOption(newShippingOption)
-    }
-  }
+  //   if (shippingOption !== newShippingOption) {
+  //     setShippingOption(newShippingOption)
+  //   }
+  // }
 
   const handleShippingQuoteSelected = (newShippingQuoteId: string) => {
     trackEvent({
@@ -667,62 +627,59 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     setShippingQuoteId(newShippingQuoteId)
   }
 
+  // TODO (Erik) - moved to SavedAddresses tracking
   const selectSavedAddressWithTracking = (value: string) => {
     trackEvent({
       action: ActionType.clickedShippingAddress,
       context_module: ContextModule.ordersShipping,
       context_page_owner_type: "orders-shipping",
     } as ClickedShippingAddress)
-    selectSavedAddress(value)
+    // selectSavedAddress(value)
   }
 
-  const selectSavedAddress = (value: string) => {
-    if (selectedAddressID !== value) {
-      setSelectedAddressID(value)
-      setShippingQuotes(null)
-      setShippingQuoteId(undefined)
-    }
-  }
+  // const selectSavedAddress = (value: string) => {
+  //   if (selectedAddressID !== value) {
+  //     setSelectedAddressID(value)
+  //     setShippingQuotes(null)
+  //     setShippingQuoteId(undefined)
+  //   }
+  // }
 
-  const handleAddressEdit = (
-    editedAddress: UpdateUserAddressMutation$data["updateUserAddress"]
-  ) => {
-    // reload shipping quotes if selected address edited
-    if (selectedAddressID === editedAddress?.userAddressOrErrors?.internalID) {
-      setShippingQuotes(null)
-      setShippingQuoteId(undefined)
+  // TODO (Erik) - we will need some way of handling the user going back.
+  // not sure if this is what's happening here, just a reminder
 
-      if (checkIfArtsyShipping()) {
-        selectShipping(editedAddress.userAddressOrErrors)
-      }
-    }
-  }
+  // const handleAddressEdit = (
+  //   editedAddress: UpdateUserAddressMutation$data["updateUserAddress"]
+  // ) => {
+  //   // reload shipping quotes if selected address edited
+  //   if (selectedAddressID === editedAddress?.userAddressOrErrors?.internalID) {
+  //     setShippingQuotes(null)
+  //     setShippingQuoteId(undefined)
 
-  const handleAddressCreate = (
-    createdAddress: CreateUserAddressMutation$data["createUserAddress"]
-  ) => {
-    if (createdAddress?.userAddressOrErrors?.internalID) {
-      selectSavedAddress(createdAddress.userAddressOrErrors.internalID)
-    }
-  }
+  //     if (checkIfArtsyShipping()) {
+  //       selectShipping(editedAddress.userAddressOrErrors)
+  //     }
+  //   }
+  // }
 
-  const isSaveAndContinueAllowed = (): boolean => {
-    if (shippingOption === "PICKUP") {
-      return !phoneNumber || !!phoneNumberError
-    }
+  // const handleAddressCreate = (
+  //   createdAddress: CreateUserAddressMutation$data["createUserAddress"]
+  // ) => {
+  //   if (createdAddress?.userAddressOrErrors?.internalID) {
+  //     selectSavedAddress(createdAddress.userAddressOrErrors.internalID)
+  //   }
+  // }
 
-    return false
-  }
+  // // Automatically proceed after address verification flow is completed.
+  // useEffect(() => {
+  //   if (readyToSaveVerifiedAddress) {
+  //     finalizeFulfillment()
+  //   }
+  //   // disabled because we only want this to run when once when readyToSaveVerifiedAddress changes to true
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [readyToSaveVerifiedAddress])
 
-  // Automatically proceed after address verification flow is completed.
-  useEffect(() => {
-    if (readyToSaveVerifiedAddress) {
-      finalizeFulfillment()
-    }
-    // disabled because we only want this to run when once when readyToSaveVerifiedAddress changes to true
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [readyToSaveVerifiedAddress])
-
+  // pass into fulfillment details
   const renderArtaErrorMessage = () => {
     return (
       <Text
@@ -755,13 +712,13 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   const { order, isCommittingMutation } = props
-  const artwork = getOrderArtwork()
-  const shippingSelected =
-    !artwork?.pickup_available || shippingOption === "SHIP"
-  const showAddressForm =
-    shippingSelected && (isCreateNewAddress() || addressList?.length === 0)
-  const showSavedAddresses =
-    shippingSelected && addressList && addressList.length > 0
+  // const artwork = getOrderArtwork()
+  // const shippingSelected =
+  //   !artwork?.pickup_available || shippingOption === "SHIP"
+  // const showAddressForm =
+  //   shippingSelected && (isCreateNewAddress() || addressList?.length === 0)
+  // const showSavedAddresses =
+  //   shippingSelected && addressList && addressList.length > 0
   const isArtsyShipping = checkIfArtsyShipping()
   const showArtsyShipping =
     isArtsyShipping && !!shippingQuotes && shippingQuotes.length > 0
@@ -780,6 +737,70 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       setShippingQuoteId(defaultShippingQuoteId)
   }
 
+  const advanceToPayment = useCallback(() => {
+    props.router.push(`/orders/${props.order.internalID}/payment`)
+  }, [props.router, props.order.internalID])
+
+  const handleSubmitFulfillmentDetails = async (
+    formValues: FulfillmentValues,
+    formikHelpers: FormikHelpers<FulfillmentValues>
+  ) => {
+    console.log("***** handleSubmitFulfillmentDetails ******", {
+      formValues,
+    })
+
+    const { setSubmitting } = formikHelpers
+
+    setSubmitting(true)
+    try {
+      let fulfillmentMutationValues
+      if (formValues.fulfillmentType === FulfillmentType.SHIP) {
+        const { saveAddress, ...mutationValues } = formValues.attributes
+        fulfillmentMutationValues = mutationValues
+      } else {
+        fulfillmentMutationValues = formValues.attributes
+      }
+
+      const orderOrError = await shippingOperations.saveFulfillmentDetails(
+        fulfillmentMutationValues,
+        isArtsyShipping,
+        addressVerifiedBy
+      )
+
+      if (orderOrError?.error) {
+        handleSubmitError(orderOrError.error)
+        return
+      }
+
+      if (
+        formValues.fulfillmentType === "SHIP" &&
+        formValues.attributes.saveAddress
+      ) {
+        await shippingOperations.createUserAddress(fulfillmentMutationValues)
+      }
+
+      if (isArtsyShipping) {
+        setActiveStep("shipping_quotes")
+        advanceToPayment()
+      }
+    } catch (error) {
+      logger.error(error)
+
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "An error occurred",
+        message:
+          "Something went wrong. Please try again or contact orders@artsy.net.",
+        error_code: null,
+        flow: "user selects a shipping option",
+      })
+
+      props.dialog.showErrorDialog()
+    }
+  }
+
   return (
     <Analytics contextPageOwnerId={order.internalID}>
       <Box data-test="orderShipping">
@@ -792,9 +813,14 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               flexDirection="column"
               style={isCommittingMutation ? { pointerEvents: "none" } : {}}
             >
-              {/* TODO: Make RadioGroup generic for the allowed values,
-              which could also ensure the children only use
-              allowed values. */}
+              <FulfillmentDetailsFormFragmentContainer
+                me={props.me}
+                active={activeStep === "fulfillment_details"}
+                order={props.order}
+                onSubmit={handleSubmitFulfillmentDetails}
+              />
+              {/* CUT FROM HERE
+              
               {artwork?.pickup_available && (
                 <>
                   <RadioGroup
@@ -823,7 +849,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 </>
               )}
 
-              {/* SAVED ADDRESSES */}
               <Collapse
                 data-test="savedAddressesCollapse"
                 open={!!showSavedAddresses}
@@ -845,7 +870,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 />
               </Collapse>
 
-              {/* NEW ADDRESS */}
+
               <Collapse data-test="addressFormCollapse" open={showAddressForm}>
                 {isArtsyShipping &&
                   shippingQuotes &&
@@ -889,7 +914,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   domesticOnly={artwork?.onlyShipsDomestically!}
                   euOrigin={artwork?.euShippingOrigin!}
                   shippingCountry={artwork?.shippingCountry!}
-                  showPhoneNumberInput={false}
+                  showphonenumberInput={false}
                 />
                 <Spacer y={2} />
                 <PhoneNumberForm
@@ -911,7 +936,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 <Spacer y={4} />
               </Collapse>
 
-              {/* PHONE NUMBER */}
+
               <Collapse
                 data-test="phoneNumberCollapse"
                 open={shippingOption === "PICKUP"}
@@ -927,7 +952,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 />
                 <Spacer y={4} />
               </Collapse>
-
+            
+            */}
               {/* SHIPPING OPTION */}
               <Collapse open={showArtsyShipping}>
                 <Text variant="sm">Artsy shipping options</Text>
@@ -944,11 +970,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               </Collapse>
               <Media greaterThan="xs">
                 <Button
-                  onClick={onContinueButtonPressed}
+                  onClick={selectShippingQuote}
                   loading={isCommittingMutation}
                   variant="primaryBlack"
                   width="50%"
-                  disabled={isSaveAndContinueAllowed()}
+                  disabled={activeStep === "fulfillment_details"}
                 >
                   Save and Continue
                 </Button>
@@ -975,7 +1001,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   loading={isCommittingMutation}
                   variant="primaryBlack"
                   width="100%"
-                  disabled={isSaveAndContinueAllowed()}
+                  disabled={activeStep === "fulfillment_details"}
                 >
                   Save and Continue
                 </Button>
@@ -993,6 +1019,7 @@ export const ShippingFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment Shipping_order on CommerceOrder {
+        ...FulfillmentDetailsForm_order
         internalID
         mode
         state
@@ -1059,13 +1086,13 @@ export const ShippingFragmentContainer = createFragmentContainer(
           after: { type: "String" }
           before: { type: "String" }
         ) {
+        ...FulfillmentDetailsForm_me
         name
         email
         id
         location {
           country
         }
-        ...SavedAddresses_me
         addressConnection(
           first: $first
           last: $last

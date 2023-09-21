@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7102afab30882e07d6a2b897d8fa9ac4>>
+ * @generated SignedSource<<29ce68f3f75ac4222ddcc2f0ced86d53>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -201,6 +201,13 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "phoneNumberCountryCode",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "postalCode",
                         "storageKey": null
                       },
@@ -288,7 +295,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e57f8261a6a58598bb2402b1a885f396",
+    "cacheID": "09975698f111448cbccaca7ba49d57bf",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -328,6 +335,7 @@ return {
         "me.addressConnection.edges.node.isDefault": (v5/*: any*/),
         "me.addressConnection.edges.node.name": (v3/*: any*/),
         "me.addressConnection.edges.node.phoneNumber": (v3/*: any*/),
+        "me.addressConnection.edges.node.phoneNumberCountryCode": (v3/*: any*/),
         "me.addressConnection.edges.node.postalCode": (v3/*: any*/),
         "me.addressConnection.edges.node.region": (v3/*: any*/),
         "me.addressConnection.pageInfo": {
@@ -351,7 +359,7 @@ return {
     },
     "name": "SavedAddressesMutation_Test_Query",
     "operationKind": "query",
-    "text": "query SavedAddressesMutation_Test_Query {\n  me {\n    ...SavedAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query SavedAddressesMutation_Test_Query {\n  me {\n    ...SavedAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
