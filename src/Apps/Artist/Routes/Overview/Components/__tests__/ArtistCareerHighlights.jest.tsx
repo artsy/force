@@ -5,6 +5,10 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
 
+jest.mock("Apps/Artist/Components/ArtistHeader/ArtistHeader2", () => ({
+  ARTIST_HEADER_NUMBER_OF_INSIGHTS: 0,
+}))
+
 const { renderWithRelay } = setupTestWrapperTL({
   Component: ArtistCareerHighlightsFragmentContainer,
   query: graphql`
