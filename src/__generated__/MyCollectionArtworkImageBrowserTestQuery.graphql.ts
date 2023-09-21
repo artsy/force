@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f4641c654abe1e2f7392392d80e56abc>>
+ * @generated SignedSource<<b3035b0c7d87b27f78c4af51ea2330f1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -64,108 +64,98 @@ v5 = {
   "name": "isDefault",
   "storageKey": null
 },
-v6 = [
-  {
-    "kind": "Literal",
-    "name": "height",
-    "value": 800
-  },
-  {
-    "kind": "Literal",
-    "name": "version",
-    "value": [
-      "main",
-      "normalized",
-      "larger",
-      "large"
-    ]
-  },
-  {
-    "kind": "Literal",
-    "name": "width",
-    "value": 800
-  }
-],
+v6 = {
+  "kind": "Literal",
+  "name": "height",
+  "value": 800
+},
 v7 = {
+  "kind": "Literal",
+  "name": "version",
+  "value": [
+    "main",
+    "normalized",
+    "larger",
+    "large"
+  ]
+},
+v8 = {
+  "kind": "Literal",
+  "name": "width",
+  "value": 800
+},
+v9 = [
+  (v6/*: any*/),
+  {
+    "kind": "Literal",
+    "name": "quality",
+    "value": 85
+  },
+  (v7/*: any*/),
+  (v8/*: any*/)
+],
+v10 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "width",
   "storageKey": null
 },
-v8 = {
+v11 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "height",
   "storageKey": null
 },
-v9 = {
+v12 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "src",
   "storageKey": null
 },
-v10 = {
+v13 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "srcSet",
   "storageKey": null
 },
-v11 = [
-  (v7/*: any*/),
-  (v8/*: any*/),
-  (v9/*: any*/),
-  (v10/*: any*/)
+v14 = [
+  (v10/*: any*/),
+  (v11/*: any*/),
+  (v12/*: any*/),
+  (v13/*: any*/)
 ],
-v12 = {
+v15 = {
   "alias": "type",
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
 },
-v13 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "String"
-},
-v14 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
-},
-v15 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
 v16 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Int"
+  "type": "String"
 },
 v17 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "ID"
 },
 v18 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
-  "type": "Boolean"
+  "type": "String"
 },
 v19 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
   "type": "Int"
 },
@@ -173,15 +163,33 @@ v20 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Float"
+  "type": "ID"
 },
 v21 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Image"
+  "type": "Boolean"
 },
 v22 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "Int"
+},
+v23 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Float"
+},
+v24 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "Image"
+},
+v25 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -432,23 +440,23 @@ return {
               },
               {
                 "alias": "fallback",
-                "args": (v6/*: any*/),
+                "args": (v9/*: any*/),
                 "concreteType": "CroppedImageUrl",
                 "kind": "LinkedField",
                 "name": "cropped",
                 "plural": false,
-                "selections": (v11/*: any*/),
-                "storageKey": "cropped(height:800,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
+                "selections": (v14/*: any*/),
+                "storageKey": "cropped(height:800,quality:85,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
               },
               {
                 "alias": null,
-                "args": (v6/*: any*/),
+                "args": (v9/*: any*/),
                 "concreteType": "ResizedImageUrl",
                 "kind": "LinkedField",
                 "name": "resized",
                 "plural": false,
-                "selections": (v11/*: any*/),
-                "storageKey": "resized(height:800,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
+                "selections": (v14/*: any*/),
+                "storageKey": "resized(height:800,quality:85,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
               },
               {
                 "alias": null,
@@ -502,16 +510,20 @@ return {
             "selections": [
               {
                 "alias": null,
-                "args": (v6/*: any*/),
+                "args": [
+                  (v6/*: any*/),
+                  (v7/*: any*/),
+                  (v8/*: any*/)
+                ],
                 "concreteType": "ResizedImageUrl",
                 "kind": "LinkedField",
                 "name": "resized",
                 "plural": false,
                 "selections": [
-                  (v9/*: any*/),
+                  (v12/*: any*/),
+                  (v13/*: any*/),
                   (v10/*: any*/),
-                  (v7/*: any*/),
-                  (v8/*: any*/)
+                  (v11/*: any*/)
                 ],
                 "storageKey": "resized(height:800,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
               }
@@ -592,7 +604,7 @@ return {
                     "storageKey": null
                   },
                   (v1/*: any*/),
-                  (v12/*: any*/)
+                  (v15/*: any*/)
                 ],
                 "type": "Video",
                 "abstractKey": null
@@ -690,10 +702,10 @@ return {
                     "name": "isZoomable",
                     "storageKey": null
                   },
-                  (v12/*: any*/),
+                  (v15/*: any*/),
                   (v5/*: any*/),
-                  (v7/*: any*/),
-                  (v8/*: any*/)
+                  (v10/*: any*/),
+                  (v11/*: any*/)
                 ],
                 "type": "Image",
                 "abstractKey": null
@@ -714,7 +726,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "8d48455add456d5c4b59d96af9e33534",
+    "cacheID": "8a63b32950cb04d8f66421f7c4d9ca0a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -724,31 +736,31 @@ return {
           "plural": false,
           "type": "Artwork"
         },
-        "artwork.artistNames": (v13/*: any*/),
+        "artwork.artistNames": (v16/*: any*/),
         "artwork.artists": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "Artist"
         },
-        "artwork.artists.id": (v14/*: any*/),
-        "artwork.artists.name": (v13/*: any*/),
+        "artwork.artists.id": (v17/*: any*/),
+        "artwork.artists.name": (v16/*: any*/),
         "artwork.artworkMeta": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkMeta"
         },
-        "artwork.artworkMeta.share": (v13/*: any*/),
-        "artwork.date": (v13/*: any*/),
-        "artwork.downloadableImageUrl": (v13/*: any*/),
+        "artwork.artworkMeta.share": (v16/*: any*/),
+        "artwork.date": (v16/*: any*/),
+        "artwork.downloadableImageUrl": (v16/*: any*/),
         "artwork.figures": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "ArtworkFigures"
         },
-        "artwork.figures.__typename": (v15/*: any*/),
+        "artwork.figures.__typename": (v18/*: any*/),
         "artwork.figures.deepZoom": {
           "enumValues": null,
           "nullable": true,
@@ -761,39 +773,39 @@ return {
           "plural": false,
           "type": "DeepZoomImage"
         },
-        "artwork.figures.deepZoom.Image.Format": (v13/*: any*/),
-        "artwork.figures.deepZoom.Image.Overlap": (v16/*: any*/),
+        "artwork.figures.deepZoom.Image.Format": (v16/*: any*/),
+        "artwork.figures.deepZoom.Image.Overlap": (v19/*: any*/),
         "artwork.figures.deepZoom.Image.Size": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "DeepZoomImageSize"
         },
-        "artwork.figures.deepZoom.Image.Size.Height": (v16/*: any*/),
-        "artwork.figures.deepZoom.Image.Size.Width": (v16/*: any*/),
-        "artwork.figures.deepZoom.Image.TileSize": (v16/*: any*/),
-        "artwork.figures.deepZoom.Image.Url": (v13/*: any*/),
-        "artwork.figures.deepZoom.Image.xmlns": (v13/*: any*/),
-        "artwork.figures.height": (v16/*: any*/),
-        "artwork.figures.id": (v14/*: any*/),
-        "artwork.figures.internalID": (v17/*: any*/),
-        "artwork.figures.isDefault": (v18/*: any*/),
-        "artwork.figures.isZoomable": (v18/*: any*/),
-        "artwork.figures.playerUrl": (v15/*: any*/),
-        "artwork.figures.type": (v15/*: any*/),
-        "artwork.figures.videoHeight": (v19/*: any*/),
-        "artwork.figures.videoWidth": (v19/*: any*/),
-        "artwork.figures.width": (v16/*: any*/),
-        "artwork.formattedMetadata": (v13/*: any*/),
-        "artwork.heightCm": (v20/*: any*/),
-        "artwork.href": (v13/*: any*/),
-        "artwork.id": (v14/*: any*/),
-        "artwork.image": (v21/*: any*/),
-        "artwork.image.resized": (v22/*: any*/),
-        "artwork.image.resized.height": (v16/*: any*/),
-        "artwork.image.resized.src": (v15/*: any*/),
-        "artwork.image.resized.srcSet": (v15/*: any*/),
-        "artwork.image.resized.width": (v16/*: any*/),
+        "artwork.figures.deepZoom.Image.Size.Height": (v19/*: any*/),
+        "artwork.figures.deepZoom.Image.Size.Width": (v19/*: any*/),
+        "artwork.figures.deepZoom.Image.TileSize": (v19/*: any*/),
+        "artwork.figures.deepZoom.Image.Url": (v16/*: any*/),
+        "artwork.figures.deepZoom.Image.xmlns": (v16/*: any*/),
+        "artwork.figures.height": (v19/*: any*/),
+        "artwork.figures.id": (v17/*: any*/),
+        "artwork.figures.internalID": (v20/*: any*/),
+        "artwork.figures.isDefault": (v21/*: any*/),
+        "artwork.figures.isZoomable": (v21/*: any*/),
+        "artwork.figures.playerUrl": (v18/*: any*/),
+        "artwork.figures.type": (v18/*: any*/),
+        "artwork.figures.videoHeight": (v22/*: any*/),
+        "artwork.figures.videoWidth": (v22/*: any*/),
+        "artwork.figures.width": (v19/*: any*/),
+        "artwork.formattedMetadata": (v16/*: any*/),
+        "artwork.heightCm": (v23/*: any*/),
+        "artwork.href": (v16/*: any*/),
+        "artwork.id": (v17/*: any*/),
+        "artwork.image": (v24/*: any*/),
+        "artwork.image.resized": (v25/*: any*/),
+        "artwork.image.resized.height": (v19/*: any*/),
+        "artwork.image.resized.src": (v18/*: any*/),
+        "artwork.image.resized.srcSet": (v18/*: any*/),
+        "artwork.image.resized.width": (v19/*: any*/),
         "artwork.images": {
           "enumValues": null,
           "nullable": true,
@@ -806,76 +818,76 @@ return {
           "plural": false,
           "type": "CroppedImageUrl"
         },
-        "artwork.images.fallback.height": (v19/*: any*/),
-        "artwork.images.fallback.src": (v15/*: any*/),
-        "artwork.images.fallback.srcSet": (v15/*: any*/),
-        "artwork.images.fallback.width": (v19/*: any*/),
-        "artwork.images.internalID": (v17/*: any*/),
-        "artwork.images.isDefault": (v18/*: any*/),
-        "artwork.images.placeholder": (v13/*: any*/),
-        "artwork.images.resized": (v22/*: any*/),
-        "artwork.images.resized.height": (v16/*: any*/),
-        "artwork.images.resized.src": (v15/*: any*/),
-        "artwork.images.resized.srcSet": (v15/*: any*/),
-        "artwork.images.resized.width": (v16/*: any*/),
-        "artwork.images.url": (v13/*: any*/),
+        "artwork.images.fallback.height": (v22/*: any*/),
+        "artwork.images.fallback.src": (v18/*: any*/),
+        "artwork.images.fallback.srcSet": (v18/*: any*/),
+        "artwork.images.fallback.width": (v22/*: any*/),
+        "artwork.images.internalID": (v20/*: any*/),
+        "artwork.images.isDefault": (v21/*: any*/),
+        "artwork.images.placeholder": (v16/*: any*/),
+        "artwork.images.resized": (v25/*: any*/),
+        "artwork.images.resized.height": (v19/*: any*/),
+        "artwork.images.resized.src": (v18/*: any*/),
+        "artwork.images.resized.srcSet": (v18/*: any*/),
+        "artwork.images.resized.width": (v19/*: any*/),
+        "artwork.images.url": (v16/*: any*/),
         "artwork.images.versions": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "String"
         },
-        "artwork.internalID": (v14/*: any*/),
-        "artwork.isDownloadable": (v18/*: any*/),
-        "artwork.isHangable": (v18/*: any*/),
-        "artwork.isSaved": (v18/*: any*/),
+        "artwork.internalID": (v17/*: any*/),
+        "artwork.isDownloadable": (v21/*: any*/),
+        "artwork.isHangable": (v21/*: any*/),
+        "artwork.isSaved": (v21/*: any*/),
         "artwork.isSavedToList": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "Boolean"
         },
-        "artwork.isSetVideoAsCover": (v18/*: any*/),
+        "artwork.isSetVideoAsCover": (v21/*: any*/),
         "artwork.partner": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Partner"
         },
-        "artwork.partner.id": (v14/*: any*/),
-        "artwork.partner.slug": (v14/*: any*/),
-        "artwork.preview": (v21/*: any*/),
-        "artwork.preview.url": (v13/*: any*/),
+        "artwork.partner.id": (v17/*: any*/),
+        "artwork.partner.slug": (v17/*: any*/),
+        "artwork.preview": (v24/*: any*/),
+        "artwork.preview.url": (v16/*: any*/),
         "artwork.sale": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Sale"
         },
-        "artwork.sale.id": (v14/*: any*/),
-        "artwork.sale.isAuction": (v18/*: any*/),
-        "artwork.sale.isClosed": (v18/*: any*/),
-        "artwork.sale.isLiveOpen": (v18/*: any*/),
-        "artwork.sale.isRegistrationClosed": (v18/*: any*/),
-        "artwork.sale.liveStartAt": (v13/*: any*/),
-        "artwork.sale.registrationEndsAt": (v13/*: any*/),
+        "artwork.sale.id": (v17/*: any*/),
+        "artwork.sale.isAuction": (v21/*: any*/),
+        "artwork.sale.isClosed": (v21/*: any*/),
+        "artwork.sale.isLiveOpen": (v21/*: any*/),
+        "artwork.sale.isRegistrationClosed": (v21/*: any*/),
+        "artwork.sale.liveStartAt": (v16/*: any*/),
+        "artwork.sale.registrationEndsAt": (v16/*: any*/),
         "artwork.sale.registrationStatus": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Bidder"
         },
-        "artwork.sale.registrationStatus.id": (v14/*: any*/),
-        "artwork.sale.registrationStatus.qualifiedForBidding": (v18/*: any*/),
-        "artwork.sale.slug": (v14/*: any*/),
-        "artwork.slug": (v14/*: any*/),
-        "artwork.title": (v13/*: any*/),
-        "artwork.widthCm": (v20/*: any*/)
+        "artwork.sale.registrationStatus.id": (v17/*: any*/),
+        "artwork.sale.registrationStatus.qualifiedForBidding": (v21/*: any*/),
+        "artwork.sale.slug": (v17/*: any*/),
+        "artwork.slug": (v17/*: any*/),
+        "artwork.title": (v16/*: any*/),
+        "artwork.widthCm": (v23/*: any*/)
       }
     },
     "name": "MyCollectionArtworkImageBrowserTestQuery",
     "operationKind": "query",
-    "text": "query MyCollectionArtworkImageBrowserTestQuery {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkImageBrowser_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButtonV2_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n  ...ArtworkAuctionRegistrationPanel_artwork\n  ...ArtworkActionsSaveButtonV2_artwork\n}\n\nfragment ArtworkActionsWatchLotButton_artwork on Artwork {\n  sale {\n    isLiveOpen\n    isRegistrationClosed\n    liveStartAt\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n  ...ArtworkAuctionRegistrationPanel_artwork\n}\n\nfragment ArtworkActions_artwork_yvCPB on Artwork {\n  ...ArtworkActionsSaveButton_artwork\n  ...ArtworkDownloadButton_artwork\n  ...ArtworkSharePanel_artwork_yvCPB\n  ...ViewInRoom_artwork\n  slug\n  downloadableImageUrl\n  isDownloadable\n  isHangable\n  partner {\n    slug\n    id\n  }\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n\nfragment ArtworkDownloadButton_artwork on Artwork {\n  title\n  date\n  downloadableImageUrl\n  artists {\n    name\n    id\n  }\n}\n\nfragment ArtworkImageBrowserLarge_artwork_yvCPB on Artwork {\n  ...ArtworkLightbox_artwork_yvCPB\n  ...ArtworkVideoPlayer_artwork_yvCPB\n  isSetVideoAsCover\n  figures(includeAll: true) {\n    __typename\n    ... on Image {\n      ...DeepZoom_image\n      __typename\n      internalID\n      isZoomable\n    }\n    ... on Video {\n      __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkImageBrowserSmall_artwork_yvCPB on Artwork {\n  ...ArtworkLightbox_artwork_yvCPB\n  ...ArtworkVideoPlayer_artwork_yvCPB\n  isSetVideoAsCover\n  figures(includeAll: true) {\n    __typename\n    ... on Image {\n      ...DeepZoom_image\n      internalID\n      isZoomable\n      type: __typename\n    }\n    ... on Video {\n      type: __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkImageBrowser_artwork_yvCPB on Artwork {\n  ...ArtworkActions_artwork_yvCPB\n  ...ArtworkImageBrowserSmall_artwork_yvCPB\n  ...ArtworkImageBrowserLarge_artwork_yvCPB\n  internalID\n  figures(includeAll: true) {\n    __typename\n    ... on Image {\n      isDefault\n      width\n      height\n    }\n    ... on Video {\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork_yvCPB on Artwork {\n  formattedMetadata\n  images(includeAll: true) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n\nfragment ArtworkSharePanel_artwork_yvCPB on Artwork {\n  href\n  images(includeAll: true) {\n    url\n  }\n  artworkMeta: meta {\n    share\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork_yvCPB on Artwork {\n  internalID\n  slug\n  figures(includeAll: true) {\n    __typename\n    ... on Video {\n      __typename\n      playerUrl\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n\nfragment MyCollectionArtworkImageBrowser_artwork on Artwork {\n  ...ArtworkImageBrowser_artwork_yvCPB\n  internalID\n  figures(includeAll: true) {\n    __typename\n    ... on Image {\n      width\n      height\n    }\n    ... on Video {\n      id\n    }\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
+    "text": "query MyCollectionArtworkImageBrowserTestQuery {\n  artwork(id: \"artwork-id\") {\n    ...MyCollectionArtworkImageBrowser_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButtonV2_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  id\n  internalID\n  slug\n  isSaved\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n  ...ArtworkAuctionRegistrationPanel_artwork\n  ...ArtworkActionsSaveButtonV2_artwork\n}\n\nfragment ArtworkActionsWatchLotButton_artwork on Artwork {\n  sale {\n    isLiveOpen\n    isRegistrationClosed\n    liveStartAt\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n  ...ArtworkAuctionRegistrationPanel_artwork\n}\n\nfragment ArtworkActions_artwork_yvCPB on Artwork {\n  ...ArtworkActionsSaveButton_artwork\n  ...ArtworkDownloadButton_artwork\n  ...ArtworkSharePanel_artwork_yvCPB\n  ...ViewInRoom_artwork\n  slug\n  downloadableImageUrl\n  isDownloadable\n  isHangable\n  partner {\n    slug\n    id\n  }\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n\nfragment ArtworkDownloadButton_artwork on Artwork {\n  title\n  date\n  downloadableImageUrl\n  artists {\n    name\n    id\n  }\n}\n\nfragment ArtworkImageBrowserLarge_artwork_yvCPB on Artwork {\n  ...ArtworkLightbox_artwork_yvCPB\n  ...ArtworkVideoPlayer_artwork_yvCPB\n  isSetVideoAsCover\n  figures(includeAll: true) {\n    __typename\n    ... on Image {\n      ...DeepZoom_image\n      __typename\n      internalID\n      isZoomable\n    }\n    ... on Video {\n      __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkImageBrowserSmall_artwork_yvCPB on Artwork {\n  ...ArtworkLightbox_artwork_yvCPB\n  ...ArtworkVideoPlayer_artwork_yvCPB\n  isSetVideoAsCover\n  figures(includeAll: true) {\n    __typename\n    ... on Image {\n      ...DeepZoom_image\n      internalID\n      isZoomable\n      type: __typename\n    }\n    ... on Video {\n      type: __typename\n      id\n    }\n  }\n}\n\nfragment ArtworkImageBrowser_artwork_yvCPB on Artwork {\n  ...ArtworkActions_artwork_yvCPB\n  ...ArtworkImageBrowserSmall_artwork_yvCPB\n  ...ArtworkImageBrowserLarge_artwork_yvCPB\n  internalID\n  figures(includeAll: true) {\n    __typename\n    ... on Image {\n      isDefault\n      width\n      height\n    }\n    ... on Video {\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n\nfragment ArtworkLightbox_artwork_yvCPB on Artwork {\n  formattedMetadata\n  images(includeAll: true) {\n    internalID\n    isDefault\n    placeholder: url(version: [\"small\", \"medium\"])\n    fallback: cropped(quality: 85, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    resized(quality: 85, width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      width\n      height\n      src\n      srcSet\n    }\n    versions\n  }\n}\n\nfragment ArtworkSharePanel_artwork_yvCPB on Artwork {\n  href\n  images(includeAll: true) {\n    url\n  }\n  artworkMeta: meta {\n    share\n  }\n}\n\nfragment ArtworkVideoPlayer_artwork_yvCPB on Artwork {\n  internalID\n  slug\n  figures(includeAll: true) {\n    __typename\n    ... on Video {\n      __typename\n      playerUrl\n      videoWidth: width\n      videoHeight: height\n      id\n    }\n  }\n}\n\nfragment DeepZoom_image on Image {\n  deepZoom {\n    Image {\n      xmlns\n      Url\n      Format\n      TileSize\n      Overlap\n      Size {\n        Width\n        Height\n      }\n    }\n  }\n}\n\nfragment MyCollectionArtworkImageBrowser_artwork on Artwork {\n  ...ArtworkImageBrowser_artwork_yvCPB\n  internalID\n  figures(includeAll: true) {\n    __typename\n    ... on Image {\n      width\n      height\n    }\n    ... on Video {\n      id\n    }\n  }\n}\n\nfragment ViewInRoomArtwork_artwork on Artwork {\n  widthCm\n  heightCm\n  image {\n    resized(width: 800, height: 800, version: [\"main\", \"normalized\", \"larger\", \"large\"]) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ViewInRoom_artwork on Artwork {\n  ...ViewInRoomArtwork_artwork\n}\n"
   }
 };
 })();

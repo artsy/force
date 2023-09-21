@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2d688dda956a2dd1f0ff104b00a96bd8>>
+ * @generated SignedSource<<d359c9e6d3462cf72d150745854f8c18>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,6 +43,11 @@ var v0 = [
     "kind": "Literal",
     "name": "height",
     "value": 800
+  },
+  {
+    "kind": "Literal",
+    "name": "quality",
+    "value": 85
   },
   {
     "kind": "Literal",
@@ -161,7 +166,7 @@ return {
           "name": "cropped",
           "plural": false,
           "selections": (v1/*: any*/),
-          "storageKey": "cropped(height:800,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
+          "storageKey": "cropped(height:800,quality:85,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
         },
         {
           "alias": null,
@@ -171,7 +176,7 @@ return {
           "name": "resized",
           "plural": false,
           "selections": (v1/*: any*/),
-          "storageKey": "resized(height:800,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
+          "storageKey": "resized(height:800,quality:85,version:[\"main\",\"normalized\",\"larger\",\"large\"],width:800)"
         },
         {
           "alias": null,
@@ -189,6 +194,6 @@ return {
 };
 })();
 
-(node as any).hash = "c185f85c1986af99798bd6d47ee7c947";
+(node as any).hash = "ea0c3a59175cb207b855121a7babc0cb";
 
 export default node;
