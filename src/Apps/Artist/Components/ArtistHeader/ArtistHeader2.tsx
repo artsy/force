@@ -13,7 +13,12 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ContextModule } from "@artsy/cohesion"
+import {
+  ActionType,
+  ClickedVerifiedRepresentative,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ArtistHeader2_artist$data } from "__generated__/ArtistHeader2_artist.graphql"
@@ -30,12 +35,17 @@ import {
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
 import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
+import { useTracking } from "react-tracking"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader2_artist$data
 }
 
 const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerType, contextPageOwnerId } = useAnalyticsContext()
+
   const [mode, setMode] = useMode<"Collapsed" | "Expanded">("Expanded")
 
   const handleClick = () => {
@@ -197,6 +207,15 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
 
                       <Flex flexWrap="wrap" gap={1}>
                         {artist.verifiedRepresentatives.map(({ partner }) => {
+                          const payload: ClickedVerifiedRepresentative = {
+                            action: ActionType.clickedVerifiedRepresentative,
+                            context_module: ContextModule.artistHeader,
+                            context_page_owner_id: contextPageOwnerId!,
+                            context_page_owner_type: contextPageOwnerType,
+                            destination_page_owner_id: partner.internalID,
+                            destination_page_owner_type: OwnerType.partner,
+                          }
+
                           return (
                             <Pill
                               key={partner.internalID}
@@ -215,6 +234,9 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                                 : {})}
                               // @ts-ignore
                               to={partner.href}
+                              onClick={() => {
+                                trackEvent(payload)
+                              }}
                             >
                               {partner.name}
                             </Pill>
