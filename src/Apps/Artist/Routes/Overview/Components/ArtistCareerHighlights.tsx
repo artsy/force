@@ -12,6 +12,7 @@ import { ArtistCareerHighlightsQuery } from "__generated__/ArtistCareerHighlight
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { FC } from "react"
 import { RailHeader } from "Components/Rail/RailHeader"
+import { ARTIST_HEADER_NUMBER_OF_INSIGHTS } from "Apps/Artist/Components/ArtistHeader/ArtistHeader2"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist$data
@@ -20,7 +21,7 @@ interface ArtistCareerHighlightsProps {
 const ArtistCareerHighlights: FC<ArtistCareerHighlightsProps> = ({
   artist,
 }) => {
-  const insights = artist.insights
+  const insights = artist.insights.slice(ARTIST_HEADER_NUMBER_OF_INSIGHTS)
   const hasCareerHighlights = insights.length > 0
 
   if (!hasCareerHighlights) {

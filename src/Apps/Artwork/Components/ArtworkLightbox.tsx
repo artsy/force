@@ -120,6 +120,7 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
           isDefault
           placeholder: url(version: ["small", "medium"])
           fallback: cropped(
+            quality: 85
             width: 800
             height: 800
             version: ["main", "normalized", "larger", "large"]
@@ -130,6 +131,7 @@ export const ArtworkLightboxFragmentContainer = createFragmentContainer(
             srcSet
           }
           resized(
+            quality: 85
             width: 800
             height: 800
             version: ["main", "normalized", "larger", "large"]
