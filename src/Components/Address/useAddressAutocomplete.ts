@@ -99,7 +99,7 @@ export const useAddressAutocomplete = (
       try {
         const response = await throttledFetchSuggestions({ search, selected })
 
-        setResult(response.suggestions)
+        setResult(response.suggestions.slice(0, 5))
       } catch (e) {
         console.error(e)
       }
