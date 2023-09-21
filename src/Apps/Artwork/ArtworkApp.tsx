@@ -156,9 +156,9 @@ export const ArtworkApp: React.FC<Props> = props => {
     trackLotView()
   }, [trackPageview, trackProductView, trackLotView])
 
-  const shouldRenderSubmittedOrderModal = !!props.match.location.query[
-    "order-submitted"
-  ]
+  const submittedOrderID = props.match.location.query["order-submitted"]
+  const shouldRenderSubmittedOrderModal =
+    submittedOrderID == undefined ? false : true
 
   /**
    * On mount, trigger a page view and product view
@@ -271,7 +271,11 @@ export const ArtworkApp: React.FC<Props> = props => {
       <RecentlyViewed />
 
       {shouldRenderSubmittedOrderModal && (
-        <SubmittedOrderModalFragmentContainer slug={artwork.slug} me={me} />
+        <SubmittedOrderModalFragmentContainer
+          slug={artwork.slug}
+          me={me}
+          orderID={submittedOrderID}
+        />
       )}
     </>
   )

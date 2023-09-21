@@ -11,13 +11,20 @@ import { SubmittedOrderModal_me$data } from "__generated__/SubmittedOrderModal_m
 interface SubmittedOrderModalProps {
   me: SubmittedOrderModal_me$data
   slug: string
+  orderID: string
 }
 
-const SubmittedOrderModal: FC<SubmittedOrderModalProps> = ({ slug, me }) => {
+const SubmittedOrderModal: FC<SubmittedOrderModalProps> = ({
+  slug,
+  me,
+  orderID,
+}) => {
+  // Fetch the order by orderID
   const submittedOrder = me!.orders!.edges![0]!.node!
   const submittedOrderArtwork = submittedOrder.lineItems!.edges![0]!.node!
     .artwork!
 
+  // No need to check if slugs are equal anymore
   const [isOpen, setIsOpen] = useState(submittedOrderArtwork.slug === slug)
 
   if (!isOpen) return null
@@ -73,3 +80,11 @@ export const SubmittedOrderModalFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+// order: graphql`
+//   query SubmittedOrderModal_OrderQuery($orderID: ID!) {
+//     order: commerceOrder(id: $orderID) {
+//       ...Offer_order
+//     }
+//   }
+// `,

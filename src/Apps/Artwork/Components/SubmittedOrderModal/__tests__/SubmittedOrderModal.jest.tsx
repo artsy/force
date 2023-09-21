@@ -23,7 +23,11 @@ const mockedResolver = {
 describe("SubmittedOrderModal", () => {
   const { renderWithRelay } = setupTestWrapperTL({
     Component: ({ me }: any) => (
-      <SubmittedOrderModalFragmentContainer slug="424242" me={me} />
+      <SubmittedOrderModalFragmentContainer
+        slug="424242"
+        me={me}
+        orderID={"123"}
+      />
     ),
     query: graphql`
       query SubmittedOrderModal_Test_Query {
