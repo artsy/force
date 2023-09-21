@@ -4,7 +4,6 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkAuctionCreateAlertHeader_artwork$data } from "__generated__/ArtworkAuctionCreateAlertHeader_artwork.graphql"
 import { ArtworkCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkCreateAlertButton"
 import { useTimer } from "Utils/Hooks/useTimer"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
 import { FC } from "react"
 import { SuggestedArtworksButton } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/SuggestedArtworksButton"
@@ -36,16 +35,9 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
     artwork?.saleArtwork?.extendedBiddingEndAt ?? artwork?.saleArtwork?.endAt
   const { hasEnded } = useTimer(biddingEndAt!, artwork?.sale?.startAt!)
 
-  const auctionHeaderAlertCTAEnabled = useFeatureFlag(
-    "onyx_auction-header-alert-cta"
-  )
-
   const isLotClosed = hasEnded || lotIsClosed(artwork.sale, artwork.saleArtwork)
   const displayAuctionCreateAlertHeader =
-    hasArtists &&
-    artwork.isInAuction &&
-    isLotClosed &&
-    auctionHeaderAlertCTAEnabled
+    hasArtists && artwork.isInAuction && isLotClosed
 
   if (!displayAuctionCreateAlertHeader) return null
 
