@@ -61,13 +61,8 @@ const NewWorksFromGalleriesYouFollowApp: FC<NewWorksFromGalleriesYouFollowAppPro
         <>
           <ArtworkGrid
             artworks={artworksConnection}
-            columnCount={[2, 3, 4, 4]}
-            showHoverDetails={false}
-            showArtworksWithoutImages
-            hideSaleInfo
+            columnCount={[2, 3, 3, 4]}
             to={artwork => `/artwork/${artwork.internalID}`}
-            showHighDemandIcon
-            showSaveButton={false}
             onLoadMore={handleLoadMore}
           />
 

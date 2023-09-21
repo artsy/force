@@ -13,7 +13,12 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { ContextModule } from "@artsy/cohesion"
+import {
+  ActionType,
+  ClickedVerifiedRepresentative,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ArtistHeader2_artist$data } from "__generated__/ArtistHeader2_artist.graphql"
@@ -30,12 +35,17 @@ import {
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
 import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
+import { useTracking } from "react-tracking"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader2_artist$data
 }
 
 const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerType, contextPageOwnerId } = useAnalyticsContext()
+
   const [mode, setMode] = useMode<"Collapsed" | "Expanded">("Expanded")
 
   const handleClick = () => {
@@ -131,6 +141,33 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                       <Text as="h2" variant="xl" color="black60">
                         {artist.formattedNationalityAndBirthday}
                       </Text>
+
+                      {hasSomething && (
+                        <>
+                          <Spacer y={2} />
+
+                          <Flex alignItems="center" gap={1}>
+                            <FollowArtistButtonQueryRenderer
+                              id={artist.internalID}
+                              contextModule={ContextModule.artistHeader}
+                              size="small"
+                            />
+
+                            {!!artist.counts?.follows && (
+                              <Text
+                                variant="xs"
+                                color="black60"
+                                textAlign="center"
+                                flexShrink={0}
+                              >
+                                {formatFollowerCount(artist.counts.follows)}{" "}
+                                Follower
+                                {artist.counts.follows === 1 ? "" : "s"}
+                              </Text>
+                            )}
+                          </Flex>
+                        </>
+                      )}
                     </Box>
 
                     {!hasSomething && (
@@ -142,37 +179,10 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                       />
                     )}
                   </Flex>
-
-                  {hasSomething && (
-                    <Flex
-                      flexDirection={["row", "column"]}
-                      alignItems="center"
-                      gap={1}
-                    >
-                      <FollowArtistButtonQueryRenderer
-                        id={artist.internalID}
-                        contextModule={ContextModule.artistHeader}
-                        size="small"
-                        width="100%"
-                      />
-
-                      {!!artist.counts?.follows && (
-                        <Text
-                          variant="xs"
-                          color="black60"
-                          textAlign="center"
-                          flexShrink={0}
-                        >
-                          {formatFollowerCount(artist.counts.follows)} Follower
-                          {artist.counts.follows === 1 ? "" : "s"}
-                        </Text>
-                      )}
-                    </Flex>
-                  )}
                 </Flex>
 
                 {hasBio && (
-                  <Bio variant="sm" color="black60">
+                  <Bio variant="sm">
                     <ReadMore
                       maxChars={250}
                       content={artist.biographyBlurb.text}
@@ -180,9 +190,11 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                   </Bio>
                 )}
 
-                <CV to={`/artist/${artist.slug}/cv`} color="black60">
-                  See all past shows and fair booths
-                </CV>
+                <Text variant="xs">
+                  <CV to={`/artist/${artist.slug}/cv`} color="black60">
+                    See all past shows and fair booths
+                  </CV>
+                </Text>
               </Column>
 
               {artist.insights.length > 0 && (
@@ -195,6 +207,15 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
 
                       <Flex flexWrap="wrap" gap={1}>
                         {artist.verifiedRepresentatives.map(({ partner }) => {
+                          const payload: ClickedVerifiedRepresentative = {
+                            action: ActionType.clickedVerifiedRepresentative,
+                            context_module: ContextModule.artistHeader,
+                            context_page_owner_id: contextPageOwnerId!,
+                            context_page_owner_type: contextPageOwnerType,
+                            destination_page_owner_id: partner.internalID,
+                            destination_page_owner_type: OwnerType.partner,
+                          }
+
                           return (
                             <Pill
                               key={partner.internalID}
@@ -203,16 +224,19 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                               compact={
                                 artist.verifiedRepresentatives.length > 3
                               }
-                              {...(partner.profile?.image
+                              {...(partner.profile?.icon
                                 ? {
                                     src: [
-                                      partner.profile.image.src1x!.src!,
-                                      partner.profile.image.src2x!.src!,
+                                      partner.profile.icon.src1x!.src!,
+                                      partner.profile.icon.src2x!.src!,
                                     ],
                                   }
                                 : {})}
                               // @ts-ignore
                               to={partner.href}
+                              onClick={() => {
+                                trackEvent(payload)
+                              }}
                             >
                               {partner.name}
                             </Pill>
@@ -282,7 +306,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
             name
             href
             profile {
-              image {
+              icon {
                 src1x: cropped(width: 30, height: 30) {
                   src
                 }
