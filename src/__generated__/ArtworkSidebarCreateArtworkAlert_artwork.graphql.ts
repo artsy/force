@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2dc9767350f40dc7a57af1ca1e5086bd>>
+ * @generated SignedSource<<9d23f55566d3f91b69709b7429aa3b19>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,6 +20,7 @@ export type ArtworkSidebarCreateArtworkAlert_artwork$data = {
     readonly internalID: string;
   } | null;
   readonly internalID: string;
+  readonly isEligibleToCreateAlert: boolean;
   readonly mediumType: {
     readonly filterGene: {
       readonly name: string | null;
@@ -72,6 +73,13 @@ return {
       "storageKey": null
     },
     (v1/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isEligibleToCreateAlert",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -128,6 +136,6 @@ return {
 };
 })();
 
-(node as any).hash = "73640b977e8487ec030eaf1ed09bc7ec";
+(node as any).hash = "400d4c5fdec360260fa06243c1dc3d9f";
 
 export default node;

@@ -50,6 +50,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
     isAcquireable,
     isInAuction,
     isEligibleForArtsyGuarantee,
+    isEligibleToCreateAlert,
     isOfferable,
     saleArtwork,
     sale,
@@ -75,7 +76,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
   const { hasEnded } = useTimer(updatedBiddingEndAt!, startAt!)
   const shouldHideDetailsCreateAlertCTA =
-    artwork.artists?.length === 0 ||
+    !isEligibleToCreateAlert ||
     (isInAuction && hasEnded) ||
     (isInAuction && lotIsClosed(sale, saleArtwork)) ||
     isSold
@@ -187,6 +188,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         saleMessage
         isBiddable
         isEligibleForArtsyGuarantee
+        isEligibleToCreateAlert
         ...ArtworkSidebarArtworkTitle_artwork
         ...ArtworkSidebarArtists_artwork
         ...ArtworkSidebarDetails_artwork

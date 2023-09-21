@@ -30,14 +30,13 @@ interface ArtworkAuctionCreateAlertHeaderProps {
 const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> = ({
   artwork,
 }) => {
-  const hasArtists = (artwork.artists?.length ?? 0) > 0
   const biddingEndAt =
     artwork?.saleArtwork?.extendedBiddingEndAt ?? artwork?.saleArtwork?.endAt
   const { hasEnded } = useTimer(biddingEndAt!, artwork?.sale?.startAt!)
 
   const isLotClosed = hasEnded || lotIsClosed(artwork.sale, artwork.saleArtwork)
   const displayAuctionCreateAlertHeader =
-    hasArtists && artwork.isInAuction && isLotClosed
+    artwork.isEligibleToCreateAlert && artwork.isInAuction && isLotClosed
 
   if (!displayAuctionCreateAlertHeader) return null
 
@@ -186,6 +185,7 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
         slug
         internalID
         title
+        isEligibleToCreateAlert
         isInAuction
         artistNames
         internalID
