@@ -40,7 +40,7 @@ import {
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 
 import { Router } from "found"
-import { FC, useState, useEffect, useCallback } from "react"
+import { FC, useState, useEffect, useCallback, useRef } from "react"
 import { COUNTRIES_IN_EUROPEAN_UNION } from "@artsy/commerce_helpers"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
@@ -198,10 +198,16 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     orderArtwork
   )
 
-  // TODO: could go back to using a single button here by using a ref.
-  const onContinueButtonPressed = async () => {
-    selectShippingQuote()
-  }
+  // Because the button is in the sidebar as well as the main form area,
+  // we need to pass the submit handler down UP from the fulfillment details
+  // form
+  const submitHandlerRef = useRef<(...args: any[]) => void>(() => {
+    console.error("empty submit handler")
+  })
+
+  const onContinueButtonPressed = useCallback((...args) => {
+    submitHandlerRef.current(...args)
+  }, [])
 
   // const selectShipping = async (editedAddress?: MutationAddressResponse) => {
   //   if (shippingOption === "PICKUP") {
@@ -283,32 +289,69 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   //   }
   // }
 
-  const selectShippingQuote = async () => {
-    const { order } = props
+  const handleSubmitError = useCallback(
+    (error: { code: string; data: string | null }) => {
+      logger.error(error)
+      const parsedData = error.data ? JSON.parse(error.data) : {}
+      if (
+        error.code === "missing_region" ||
+        error.code === "missing_country" ||
+        error.code === "missing_postal_code"
+      ) {
+        trackEvent({
+          action: ActionType.errorMessageViewed,
+          context_owner_type: OwnerType.ordersShipping,
+          context_owner_id: props.order.internalID,
+          title: "Invalid address",
+          message:
+            "There was an error processing your address. Please review and try again.",
+          error_code: error.code,
+          flow: "user submits a shipping option",
+        })
 
-    if (shippingQuoteId && order.internalID) {
-      try {
-        const orderOrError = (
-          await selectShippingOption(props.commitMutation, {
-            input: {
-              id: order.internalID,
-              selectedShippingQuoteId: shippingQuoteId,
-            },
-          })
-        ).commerceSelectShippingOption?.orderOrError
+        props.dialog.showErrorDialog({
+          title: "Invalid address",
+          message:
+            "There was an error processing your address. Please review and try again.",
+        })
+      } else if (
+        error.code === "unsupported_shipping_location" &&
+        parsedData.failure_code === "domestic_shipping_only"
+      ) {
+        trackEvent({
+          action: ActionType.errorMessageViewed,
+          context_owner_type: OwnerType.ordersShipping,
+          context_owner_id: props.order.internalID,
+          title: "Can't ship to that address",
+          message: "This work can only be shipped domestically.",
+          error_code: error.code,
+          flow: "user submits a shipping option",
+        })
 
-        // TODO (Erik): Figure out why this was here
-        // await updateAddress()
+        props.dialog.showErrorDialog({
+          title: "Can't ship to that address",
+          message: "This work can only be shipped domestically.",
+        })
+      } else if (error.code === "destination_could_not_be_geocoded") {
+        const { title, message, formattedMessage } = getErrorDialogCopy(
+          ErrorDialogs.DestinationCouldNotBeGeocoded
+        )
 
-        if (orderOrError?.error) {
-          handleSubmitError(orderOrError.error)
-          return
-        }
+        trackEvent({
+          action: ActionType.errorMessageViewed,
+          context_owner_type: OwnerType.ordersShipping,
+          context_owner_id: props.order.internalID,
+          title,
+          message,
+          error_code: error.code,
+          flow: "user submits a shipping option",
+        })
 
-        advanceToPayment()
-      } catch (error) {
-        logger.error(error)
-
+        props.dialog.showErrorDialog({
+          title,
+          message: formattedMessage,
+        })
+      } else if (isArtsyShipping && shippingQuoteId) {
         trackEvent({
           action: ActionType.errorMessageViewed,
           context_owner_type: OwnerType.ordersShipping,
@@ -317,107 +360,35 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           message:
             "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
           error_code: null,
-          flow: "user sets a shipping quote",
+          flow: "user submits a shipping option",
         })
 
         props.dialog.showErrorDialog({
           message: getArtaErrorMessage(),
         })
+      } else {
+        trackEvent({
+          action: ActionType.errorMessageViewed,
+          context_owner_type: OwnerType.ordersShipping,
+          context_owner_id: props.order.internalID,
+          title: "An error occurred",
+          message:
+            "Something went wrong. Please try again or contact orders@artsy.net.",
+          error_code: null,
+          flow: "user submits a shipping option",
+        })
+
+        props.dialog.showErrorDialog()
       }
-    }
-  }
-
-  const handleSubmitError = (error: { code: string; data: string | null }) => {
-    logger.error(error)
-    const parsedData = error.data ? JSON.parse(error.data) : {}
-    if (
-      error.code === "missing_region" ||
-      error.code === "missing_country" ||
-      error.code === "missing_postal_code"
-    ) {
-      trackEvent({
-        action: ActionType.errorMessageViewed,
-        context_owner_type: OwnerType.ordersShipping,
-        context_owner_id: props.order.internalID,
-        title: "Invalid address",
-        message:
-          "There was an error processing your address. Please review and try again.",
-        error_code: error.code,
-        flow: "user submits a shipping option",
-      })
-
-      props.dialog.showErrorDialog({
-        title: "Invalid address",
-        message:
-          "There was an error processing your address. Please review and try again.",
-      })
-    } else if (
-      error.code === "unsupported_shipping_location" &&
-      parsedData.failure_code === "domestic_shipping_only"
-    ) {
-      trackEvent({
-        action: ActionType.errorMessageViewed,
-        context_owner_type: OwnerType.ordersShipping,
-        context_owner_id: props.order.internalID,
-        title: "Can't ship to that address",
-        message: "This work can only be shipped domestically.",
-        error_code: error.code,
-        flow: "user submits a shipping option",
-      })
-
-      props.dialog.showErrorDialog({
-        title: "Can't ship to that address",
-        message: "This work can only be shipped domestically.",
-      })
-    } else if (error.code === "destination_could_not_be_geocoded") {
-      const { title, message, formattedMessage } = getErrorDialogCopy(
-        ErrorDialogs.DestinationCouldNotBeGeocoded
-      )
-
-      trackEvent({
-        action: ActionType.errorMessageViewed,
-        context_owner_type: OwnerType.ordersShipping,
-        context_owner_id: props.order.internalID,
-        title,
-        message,
-        error_code: error.code,
-        flow: "user submits a shipping option",
-      })
-
-      props.dialog.showErrorDialog({
-        title,
-        message: formattedMessage,
-      })
-    } else if (isArtsyShipping && shippingQuoteId) {
-      trackEvent({
-        action: ActionType.errorMessageViewed,
-        context_owner_type: OwnerType.ordersShipping,
-        context_owner_id: props.order.internalID,
-        title: "An error occurred",
-        message:
-          "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
-        error_code: null,
-        flow: "user submits a shipping option",
-      })
-
-      props.dialog.showErrorDialog({
-        message: getArtaErrorMessage(),
-      })
-    } else {
-      trackEvent({
-        action: ActionType.errorMessageViewed,
-        context_owner_type: OwnerType.ordersShipping,
-        context_owner_id: props.order.internalID,
-        title: "An error occurred",
-        message:
-          "Something went wrong. Please try again or contact orders@artsy.net.",
-        error_code: null,
-        flow: "user submits a shipping option",
-      })
-
-      props.dialog.showErrorDialog()
-    }
-  }
+    },
+    [
+      isArtsyShipping,
+      props.dialog,
+      props.order.internalID,
+      shippingQuoteId,
+      trackEvent,
+    ]
+  )
 
   // TODO (Erik): Pass this into the fulfillment details form (according to current structure)
   const getArtaErrorMessage = () => (
@@ -616,83 +587,146 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     props.router.push(`/orders/${props.order.internalID}/payment`)
   }, [props.router, props.order.internalID])
 
-  const handleSubmitFulfillmentDetails = async (
-    formValues: FulfillmentValues,
-    formikHelpers: FormikHelpers<FulfillmentValues>
-  ) => {
-    console.log("***** handleSubmitFulfillmentDetails ******", {
-      formValues,
-    })
-
-    const { setSubmitting } = formikHelpers
-
-    setSubmitting(true)
-    try {
-      let fulfillmentMutationValues: CommerceSetShippingInput
-      if (formValues.fulfillmentType === FulfillmentType.SHIP) {
-        const {
-          saveAddress,
-          addressVerifiedBy,
-          ...addressValues
-        } = formValues.attributes
-        fulfillmentMutationValues = {
-          id: props.order.internalID,
-          fulfillmentType: isArtsyShipping ? "SHIP_ARTA" : FulfillmentType.SHIP,
-          addressVerifiedBy,
-          phoneNumber: formValues.attributes.phoneNumber,
-          shipping: addressValues,
-        }
-      } else {
-        fulfillmentMutationValues = {
-          id: props.order.internalID,
-          fulfillmentType: FulfillmentType.PICKUP,
-          phoneNumber: formValues.attributes.phoneNumber,
-        }
-      }
-
-      const orderOrError = await shippingOperations.saveFulfillmentDetails(
-        fulfillmentMutationValues
-      )
-
-      if (orderOrError?.error) {
-        handleSubmitError(orderOrError.error)
-        return
-      }
-      const orderResult = orderOrError?.order!
-
-      if (
-        formValues.fulfillmentType === FulfillmentType.SHIP &&
-        formValues.attributes.saveAddress
-      ) {
-        await shippingOperations.createUserAddress(formValues.attributes)
-      }
-
-      const orderResultRequiresArtsyShipping = getOrderRequiresArtsyShipping(
-        orderResult,
-        orderArtwork
-      )
-      if (orderResultRequiresArtsyShipping) {
-        setActiveStep("shipping_quotes")
-      } else {
-        advanceToPayment()
-      }
-    } catch (error) {
-      logger.error(error)
-
-      trackEvent({
-        action: ActionType.errorMessageViewed,
-        context_owner_type: OwnerType.ordersShipping,
-        context_owner_id: props.order.internalID,
-        title: "An error occurred",
-        message:
-          "Something went wrong. Please try again or contact orders@artsy.net.",
-        error_code: null,
-        flow: "user selects a shipping option",
+  const handleSubmitFulfillmentDetails = useCallback(
+    async (
+      formValues: FulfillmentValues,
+      formikHelpers: FormikHelpers<FulfillmentValues>
+    ) => {
+      console.log("***** handleSubmitFulfillmentDetails ******", {
+        formValues,
       })
 
-      props.dialog.showErrorDialog()
+      const { setSubmitting } = formikHelpers
+
+      setSubmitting(true)
+      try {
+        let fulfillmentMutationValues: CommerceSetShippingInput
+        if (formValues.fulfillmentType === FulfillmentType.SHIP) {
+          const {
+            saveAddress,
+            addressVerifiedBy,
+            ...addressValues
+          } = formValues.attributes
+          fulfillmentMutationValues = {
+            id: props.order.internalID,
+            fulfillmentType: isArtsyShipping
+              ? "SHIP_ARTA"
+              : FulfillmentType.SHIP,
+            addressVerifiedBy,
+            phoneNumber: formValues.attributes.phoneNumber,
+            shipping: addressValues,
+          }
+        } else {
+          fulfillmentMutationValues = {
+            id: props.order.internalID,
+            fulfillmentType: FulfillmentType.PICKUP,
+            phoneNumber: formValues.attributes.phoneNumber,
+          }
+        }
+
+        const orderOrError = await shippingOperations.saveFulfillmentDetails(
+          fulfillmentMutationValues
+        )
+
+        if (orderOrError?.error) {
+          handleSubmitError(orderOrError.error)
+          return
+        }
+        const orderResult = orderOrError?.order!
+
+        if (
+          formValues.fulfillmentType === FulfillmentType.SHIP &&
+          formValues.attributes.saveAddress
+        ) {
+          await shippingOperations.createUserAddress(formValues.attributes)
+        }
+
+        const orderResultRequiresArtsyShipping = getOrderRequiresArtsyShipping(
+          orderResult,
+          orderArtwork
+        )
+        if (orderResultRequiresArtsyShipping) {
+          setActiveStep("shipping_quotes")
+        } else {
+          advanceToPayment()
+        }
+      } catch (error) {
+        logger.error(error)
+
+        trackEvent({
+          action: ActionType.errorMessageViewed,
+          context_owner_type: OwnerType.ordersShipping,
+          context_owner_id: props.order.internalID,
+          title: "An error occurred",
+          message:
+            "Something went wrong. Please try again or contact orders@artsy.net.",
+          error_code: null,
+          flow: "user selects a shipping option",
+        })
+
+        props.dialog.showErrorDialog()
+      }
+    },
+    [
+      advanceToPayment,
+      handleSubmitError,
+      isArtsyShipping,
+      orderArtwork,
+      props.dialog,
+      props.order.internalID,
+      shippingOperations,
+      trackEvent,
+    ]
+  )
+  const selectShippingQuote = useCallback(async () => {
+    const { order } = props
+
+    if (shippingQuoteId && order.internalID) {
+      try {
+        const orderOrError = (
+          await selectShippingOption(props.commitMutation, {
+            input: {
+              id: order.internalID,
+              selectedShippingQuoteId: shippingQuoteId,
+            },
+          })
+        ).commerceSelectShippingOption?.orderOrError
+
+        // TODO (Erik): Figure out why this was here. Probably not needed any more.
+        // await updateAddress()
+
+        if (orderOrError?.error) {
+          handleSubmitError(orderOrError.error)
+          return
+        }
+
+        advanceToPayment()
+      } catch (error) {
+        logger.error(error)
+
+        trackEvent({
+          action: ActionType.errorMessageViewed,
+          context_owner_type: OwnerType.ordersShipping,
+          context_owner_id: props.order.internalID,
+          title: "An error occurred",
+          message:
+            "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
+          error_code: null,
+          flow: "user sets a shipping quote",
+        })
+
+        props.dialog.showErrorDialog({
+          message: getArtaErrorMessage(),
+        })
+      }
     }
-  }
+  }, [advanceToPayment, handleSubmitError, props, shippingQuoteId, trackEvent])
+
+  useEffect(() => {
+    if (activeStep === "shipping_quotes") {
+      submitHandlerRef.current = selectShippingQuote
+    }
+  }, [activeStep, selectShippingQuote])
 
   return (
     <Analytics contextPageOwnerId={order.internalID}>
@@ -711,6 +745,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 active={activeStep === "fulfillment_details"}
                 order={props.order}
                 onSubmit={handleSubmitFulfillmentDetails}
+                submitHandlerRef={submitHandlerRef}
               />
               {/* CUT FROM HERE
               
@@ -860,18 +895,18 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   onSelect={handleShippingQuoteSelected}
                 />
                 <Spacer y={4} />
-                <Media greaterThan="xs">
-                  <Button
-                    onClick={selectShippingQuote}
-                    loading={isCommittingMutation}
-                    variant="primaryBlack"
-                    width="50%"
-                    disabled={activeStep === "fulfillment_details"}
-                  >
-                    Save and Continue
-                  </Button>
-                </Media>
               </Collapse>
+              <Media greaterThan="xs">
+                <Button
+                  onClick={onContinueButtonPressed}
+                  loading={isCommittingMutation}
+                  variant="primaryBlack"
+                  width="50%"
+                >
+                  {/* TODO: Remove - the * is just to show what step the button thinks it is on */}
+                  Save and Continue{activeStep === "fulfillment_details" && "*"}
+                </Button>
+              </Media>
             </Flex>
           }
           sidebar={
@@ -894,9 +929,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   loading={isCommittingMutation}
                   variant="primaryBlack"
                   width="100%"
-                  disabled={activeStep === "fulfillment_details"}
                 >
-                  Save and Continue
+                  Save and Continue{activeStep === "fulfillment_details" && "*"}
                 </Button>
               </Media>
             </Flex>

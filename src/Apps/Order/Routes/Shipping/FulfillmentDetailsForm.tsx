@@ -115,6 +115,7 @@ export interface FulfillmentDetailsFormProps {
   // hasSavedAddresses: boolean
   me: FulfillmentDetailsForm_me$data
   order: FulfillmentDetailsForm_order$data
+  submitHandlerRef: React.MutableRefObject<(...args: any[]) => void>
 }
 
 const getShippingRestrictions = (
@@ -240,6 +241,16 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
     >
       {formikProps => {
         const { values, errors, touched, handleChange } = formikProps
+
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useEffect(() => {
+          console.log("useEffect")
+          if (active) {
+            console.log({ active })
+            props.submitHandlerRef.current = formikProps.handleSubmit
+          }
+          // eslint-disable-next-line react-hooks/exhaustive-deps
+        }, [active, formikProps.handleSubmit])
 
         const {
           autocompleteOptions,
@@ -646,7 +657,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                 </>
               )}
             </Collapse>
-            <Button
+            {/* <Button
               type="submit"
               loading={formikProps.isSubmitting || undefined}
               variant="primaryBlack"
@@ -654,7 +665,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
               // disabled={formikProps.isValid}
             >
               Save and Continue (shipping)
-            </Button>
+            </Button> */}
           </Form>
         )
       }}
