@@ -2,7 +2,7 @@ import { AutocompleteInputOptionType } from "@artsy/palette"
 import { Address } from "Components/Address/AddressForm"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { getENV } from "Utils/getENV"
-import { useCallback, useEffect, useState } from "react"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { throttle } from "lodash"
 
 const THROTTLE_DELAY = 500
@@ -23,13 +23,17 @@ export interface AddressAutocompleteSuggestion
   entries: number
 }
 
+interface ServiceAvailability {
+  loaded: boolean
+  enabled?: boolean
+}
+
 export const useAddressAutocomplete = (
   address: Partial<Address> & { country: Address["country"] }
-): {
+): ServiceAvailability & {
   autocompleteOptions: AddressAutocompleteSuggestion[]
   suggestions: ProviderSuggestion[]
   fetchForAutocomplete: (args: { search: string; selected?: string }) => void
-  isAddressAutocompleteEnabled: boolean
   fetchSecondarySuggestions: (
     search: string,
     option: AddressAutocompleteSuggestion
@@ -42,10 +46,24 @@ export const useAddressAutocomplete = (
   const { key: apiKey } = getENV("SMARTY_EMBEDDED_KEY_JSON") || { key: "" }
 
   const isUSAddress = address.country === "US"
-  const isAPIKeyPresent = !!apiKey
   const isFeatureFlagEnabled = !!useFeatureFlag("address_autocomplete_us")
-  const isAddressAutocompleteEnabled =
-    isAPIKeyPresent && isFeatureFlagEnabled && isUSAddress
+
+  const [serviceAvailability, setServiceAvailability] = useState<
+    ServiceAvailability
+  >({
+    loaded: false,
+  })
+
+  const { enabled: isAddressAutocompleteEnabled } = serviceAvailability
+
+  useEffect(() => {
+    const isAPIKeyPresent = !!apiKey
+    const enabled = isAPIKeyPresent && isFeatureFlagEnabled && isUSAddress
+    setServiceAvailability({
+      loaded: true,
+      enabled,
+    })
+  }, [apiKey, isFeatureFlagEnabled, isUSAddress])
 
   // reset suggestions if the country changes
   useEffect(() => {
@@ -54,37 +72,35 @@ export const useAddressAutocomplete = (
     }
   }, [isUSAddress, result.length])
 
-  const fetchSuggestions = useCallback(
-    async ({ search, selected }: { search: string; selected?: string }) => {
-      const params = {
-        key: apiKey,
-        search: search,
+  const fetchSuggestions = useMemo(() => {
+    const throttledFetch = throttle(
+      async ({ search, selected }: { search: string; selected?: string }) => {
+        const params = {
+          key: apiKey,
+          search: search,
+        }
+
+        if (selected) {
+          params["selected"] = selected
+        }
+
+        if (!apiKey) return null
+        let url =
+          "https://us-autocomplete-pro.api.smarty.com/lookup?" +
+          new URLSearchParams(params).toString()
+
+        const response = await fetch(url)
+        const json = await response.json()
+        return json
+      },
+      THROTTLE_DELAY,
+      {
+        leading: true,
+        trailing: true,
       }
-
-      if (selected) {
-        params["selected"] = selected
-      }
-
-      if (!apiKey) return null
-      let url =
-        "https://us-autocomplete-pro.api.smarty.com/lookup?" +
-        new URLSearchParams(params).toString()
-
-      const response = await fetch(url)
-      const json = await response.json()
-      return json
-    },
-    [apiKey]
-  )
-
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const throttledFetchSuggestions = useCallback(
-    throttle(fetchSuggestions, THROTTLE_DELAY, {
-      leading: true,
-      trailing: true,
-    }),
-    []
-  )
+    )
+    return throttledFetch
+  }, [apiKey])
 
   const fetchForAutocomplete = useCallback(
     // these are the parameters to the Smarty API call
@@ -97,14 +113,14 @@ export const useAddressAutocomplete = (
       }
 
       try {
-        const response = await throttledFetchSuggestions({ search, selected })
+        const response = await fetchSuggestions({ search, selected })
 
         setResult(response.suggestions.slice(0, 5))
       } catch (e) {
         console.error(e)
       }
     },
-    [throttledFetchSuggestions, isAddressAutocompleteEnabled]
+    [fetchSuggestions, isAddressAutocompleteEnabled]
   )
 
   const fetchSecondarySuggestions = useCallback(
@@ -152,7 +168,7 @@ export const useAddressAutocomplete = (
     autocompleteOptions,
     suggestions: result,
     fetchForAutocomplete,
-    isAddressAutocompleteEnabled,
     fetchSecondarySuggestions,
+    ...serviceAvailability,
   }
 }

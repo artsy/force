@@ -1,7 +1,7 @@
 import { Address } from "Components/Address/AddressForm"
 import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 
 export const validAddress: Address = {
@@ -42,9 +42,13 @@ export const fillCountrySelect = (component, value) => {
   input.props().onSelect(value)
 }
 
-export const fillAddressForm = (address: Address) => {
+export const fillAddressForm = async (address: Address) => {
+  await waitFor(() => {
+    const line1Input = screen.getByPlaceholderText("Street address")
+    expect(line1Input).toBeEnabled()
+  })
   const name = screen.getByPlaceholderText("Full name")
-  const country = screen.getByRole("combobox")
+  const country = screen.getByTestId("AddressForm_country")
   const addressLine1 = screen.getByPlaceholderText("Street address")
   const addressLine2 = screen.getByPlaceholderText("Apt, floor, suite, etc.")
   const city = screen.getByPlaceholderText("City")

@@ -296,7 +296,7 @@ describe("useAddressAutocomplete", () => {
     })
   })
 
-  describe("isAddressAutocompleteEnabled", () => {
+  describe("enabled", () => {
     describe("feature flag is enabled", () => {
       beforeAll(() => {
         ;(useFeatureFlag as jest.Mock).mockImplementation(
@@ -316,14 +316,14 @@ describe("useAddressAutocomplete", () => {
         describe("selected country is US", () => {
           it("returns true", () => {
             const { result } = setupHook({ country: "US" })
-            expect(result.current.isAddressAutocompleteEnabled).toBe(true)
+            expect(result.current.enabled).toBe(true)
           })
         })
 
         describe("selected country is not US", () => {
           it("returns false", () => {
             const { result } = setupHook({ country: "AF" })
-            expect(result.current.isAddressAutocompleteEnabled).toBe(false)
+            expect(result.current.enabled).toBe(false)
           })
         })
       })
@@ -336,14 +336,14 @@ describe("useAddressAutocomplete", () => {
         describe("selected country is US", () => {
           it("returns false", () => {
             const { result } = setupHook({ country: "US" })
-            expect(result.current.isAddressAutocompleteEnabled).toBe(false)
+            expect(result.current.enabled).toBe(false)
           })
         })
 
         describe("selected country is not US", () => {
           it("returns false", () => {
             const { result } = setupHook({ country: "AF" })
-            expect(result.current.isAddressAutocompleteEnabled).toBe(false)
+            expect(result.current.enabled).toBe(false)
           })
         })
       })
@@ -366,14 +366,14 @@ describe("useAddressAutocomplete", () => {
         describe("selected country is US", () => {
           it("returns false", () => {
             const { result } = setupHook({ country: "US" })
-            expect(result.current.isAddressAutocompleteEnabled).toBe(false)
+            expect(result.current.enabled).toBe(false)
           })
         })
 
         describe("selected country is not US", () => {
           it("returns false", () => {
             const { result } = setupHook({ country: "AF" })
-            expect(result.current.isAddressAutocompleteEnabled).toBe(false)
+            expect(result.current.enabled).toBe(false)
           })
         })
       })
@@ -386,14 +386,14 @@ describe("useAddressAutocomplete", () => {
         describe("selected country is US", () => {
           it("returns false", () => {
             const { result } = setupHook({ country: "US" })
-            expect(result.current.isAddressAutocompleteEnabled).toBe(false)
+            expect(result.current.enabled).toBe(false)
           })
         })
 
         describe("selected country is not US", () => {
           it("returns false", () => {
             const { result } = setupHook({ country: "AF" })
-            expect(result.current.isAddressAutocompleteEnabled).toBe(false)
+            expect(result.current.enabled).toBe(false)
           })
         })
       })

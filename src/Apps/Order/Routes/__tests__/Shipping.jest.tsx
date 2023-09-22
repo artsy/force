@@ -51,6 +51,12 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
+// TODO: Turning this on causes 1 test to fail expectedly and another to also fail. What is going on here?
+const TRIGGER_LEAKY_FAILURES = false
+const triggerLeakyFailure = () => {
+  expect(TRIGGER_LEAKY_FAILURES).toBe(false)
+}
+
 jest.mock("@artsy/palette", () => {
   return {
     ...jest.requireActual("@artsy/palette"),
@@ -281,8 +287,8 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        expect(screen.getByRole("combobox")).toHaveValue("US")
-        expect(screen.getByRole("combobox")).toBeDisabled()
+        expect(screen.getByTestId("AddressForm_country")).toHaveValue("US")
+        expect(screen.getByTestId("AddressForm_country")).toBeDisabled()
       })
 
       it("sets and enables country select if artwork only ships domestically and is in the EU", async () => {
@@ -300,8 +306,8 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        expect(screen.getByRole("combobox")).toHaveValue("IT")
-        expect(screen.getByRole("combobox")).toBeEnabled()
+        expect(screen.getByTestId("AddressForm_country")).toHaveValue("IT")
+        expect(screen.getByTestId("AddressForm_country")).toBeEnabled()
       })
 
       it("sets shipping on order and saves address on user", async () => {
@@ -311,7 +317,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressForm(validAddress)
+        await fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(mockCommitMutation).toHaveBeenCalledTimes(2)
@@ -350,7 +356,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressForm(validAddress)
+        await fillAddressForm(validAddress)
         userEvent.click(
           screen.getByRole("checkbox", { name: /Save shipping address/ })
         )
@@ -382,7 +388,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressForm(validAddress)
+        await fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(mockCommitMutation).toHaveBeenCalledTimes(2)
@@ -407,7 +413,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressForm(validAddress)
+        await fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(mockShowErrorDialog).toHaveBeenCalledWith()
@@ -420,7 +426,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressForm(validAddress)
+        await fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(mockShowErrorDialog).toHaveBeenCalledWith()
@@ -435,7 +441,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressForm(validAddress)
+        await fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(mockShowErrorDialog).toHaveBeenCalledWith({
@@ -454,7 +460,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressForm(validAddress)
+        await fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(mockShowErrorDialog).toHaveBeenCalledWith({
@@ -473,7 +479,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressForm(validAddress)
+        await fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(mockShowErrorDialog).toHaveBeenCalledWith({
@@ -577,7 +583,7 @@ describe("Shipping", () => {
             Me: () => meWithoutAddress,
           })
 
-          fillAddressForm({
+          await fillAddressForm({
             name: "Erik David",
             addressLine1: "401 Broadway",
             addressLine2: "",
@@ -600,7 +606,7 @@ describe("Shipping", () => {
             Me: () => meWithoutAddress,
           })
 
-          fillAddressForm({
+          await fillAddressForm({
             name: "Erik David",
             addressLine1: "401 Broadway",
             addressLine2: "",
@@ -676,7 +682,7 @@ describe("Shipping", () => {
               screen.queryByText("This field is required")
             ).not.toBeInTheDocument()
 
-            fillAddressForm(validAddress)
+            await fillAddressForm(validAddress)
             userEvent.clear(screen.getByPlaceholderText("Street address"))
 
             await userEvent.click(screen.getByText("Save and Continue"))
@@ -722,7 +728,7 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            fillAddressForm(validAddress)
+            await fillAddressForm(validAddress)
             await userEvent.click(screen.getByText("Save and Continue"))
 
             const mutation = env.mock.getMostRecentOperation()
@@ -760,8 +766,10 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            fillAddressForm(validAddress)
-            userEvent.selectOptions(screen.getByRole("combobox"), ["TW"])
+            await fillAddressForm(validAddress)
+            userEvent.selectOptions(screen.getByTestId("AddressForm_country"), [
+              "TW",
+            ])
             await userEvent.click(screen.getByText("Save and Continue"))
 
             expect(env.mock.getAllOperations()).toHaveLength(0)
@@ -782,7 +790,7 @@ describe("Shipping", () => {
             relayEnv = undefined
           })
 
-          it("does not triggers tthe flow for US address after clicking continue", async () => {
+          it("does not trigger the flow for US address after clicking continue", async () => {
             const { env } = renderWithRelay(
               {
                 CommerceOrder: () => order,
@@ -792,7 +800,7 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            fillAddressForm(validAddress)
+            await fillAddressForm(validAddress)
             await userEvent.click(screen.getByText("Save and Continue"))
 
             expect(env.mock.getAllOperations()).toHaveLength(0)
@@ -808,8 +816,10 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            fillAddressForm(validAddress)
-            userEvent.selectOptions(screen.getByRole("combobox"), ["TW"])
+            await fillAddressForm(validAddress)
+            userEvent.selectOptions(screen.getByTestId("AddressForm_country"), [
+              "TW",
+            ])
             await userEvent.click(screen.getByText("Save and Continue"))
 
             const mutation = env.mock.getMostRecentOperation()
@@ -1085,7 +1095,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressForm(validAddress)
+        await fillAddressForm(validAddress)
         await saveAndContinue()
 
         // FIXME: `getByRole` can be slow and cause test to time out.
@@ -1095,7 +1105,7 @@ describe("Shipping", () => {
         // expect(screen.getByRole("radio", { name: /White Glove/ })).toBeVisible()
         // expect(screen.getByRole("radio", { name: /Rush/ })).toBeVisible()
         // expect(screen.getByRole("radio", { name: /Premium/ })).toBeVisible()
-
+        triggerLeakyFailure()
         expect(mockCommitMutation).toHaveBeenCalledTimes(2)
 
         let mutationArg = mockCommitMutation.mock.calls[0][0]
@@ -1167,7 +1177,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressForm(validAddress)
+        await fillAddressForm(validAddress)
         await saveAndContinue()
 
         expect(
@@ -1194,7 +1204,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        fillAddressForm(validAddress)
+        await fillAddressForm(validAddress)
         await saveAndContinue()
 
         // FIXME: `getByRole` can be slow and cause test to time out.
