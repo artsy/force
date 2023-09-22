@@ -7,11 +7,11 @@ import {
   BorderedRadio,
   RadioGroup,
   Text,
-  Collapse,
   RadioProps,
   Tooltip,
   Flex,
 } from "@artsy/palette"
+import { Collapse } from "Apps/Order/Components/Collapse"
 import { Payment_me$data } from "__generated__/Payment_me.graphql"
 import {
   Payment_order$data,

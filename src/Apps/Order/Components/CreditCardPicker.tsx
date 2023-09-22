@@ -26,13 +26,13 @@ import { CardElement } from "@stripe/react-stripe-js"
 import {
   BorderedRadio,
   Checkbox,
-  Collapse,
   Flex,
   Link,
   RadioGroup,
   Text,
   Spacer,
 } from "@artsy/palette"
+import { Collapse } from "Apps/Order/Components/Collapse"
 import { CommitMutation } from "Apps/Order/Utils/commitMutation"
 import { CreditCardDetails } from "./CreditCardDetails"
 import { SystemContextConsumer, SystemContextProps } from "System/SystemContext"

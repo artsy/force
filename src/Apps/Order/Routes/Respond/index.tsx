@@ -2,12 +2,12 @@ import {
   BorderedRadio,
   Button,
   Text,
-  Collapse,
   Flex,
   RadioGroup,
   Spacer,
   TextAreaChange,
 } from "@artsy/palette"
+import { Collapse } from "Apps/Order/Components/Collapse"
 import { Respond_order$data } from "__generated__/Respond_order.graphql"
 import { RespondCounterOfferMutation } from "__generated__/RespondCounterOfferMutation.graphql"
 import { OfferInput } from "Apps/Order/Components/OfferInput"
