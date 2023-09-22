@@ -7,7 +7,6 @@ export interface CollapseProps {
  * Collapse component for the web
  */
 export class Collapse extends React.Component<CollapseProps> {
-  // @ts-expect-error  MIGRATE_STRICT_MODE
   wrapperModifyTimeout: ReturnType<typeof setTimeout>
   wrapperRef: HTMLDivElement | null = null
 
@@ -44,7 +43,9 @@ export class Collapse extends React.Component<CollapseProps> {
       this.wrapperRef.style.height = prevHeight
       // wait for a tick before setting goal height to allow transition
       this.wrapperModifyTimeout = setTimeout(() => {
-        this.wrapperRef!.style.height = goalheight + "px"
+        if (this.wrapperRef) {
+          this.wrapperRef.style.height = goalheight + "px"
+        }
       }, 10)
     } else if (!this.props.open && this.wrapperRef.style.height !== "0px") {
       // animate closing
@@ -53,7 +54,9 @@ export class Collapse extends React.Component<CollapseProps> {
       this.wrapperRef.style.height = currentHeight + "px"
       // wait for a tick before setting it to 0 to allow transition
       this.wrapperModifyTimeout = setTimeout(() => {
-        this.wrapperRef!.style.height = "0px"
+        if (this.wrapperRef) {
+          this.wrapperRef.style.height = "0px"
+        }
       }, 10)
     }
   }
