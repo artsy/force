@@ -39,7 +39,7 @@ import {
   FormikProps,
   FormikTouched,
 } from "formik"
-import { isNil, omitBy, pick } from "lodash"
+import { isNil, omit, omitBy, pick } from "lodash"
 import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as Yup from "yup"
@@ -51,7 +51,9 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 
   attributes: Yup.object()
     .shape({
-      phoneNumber: yupPhoneValidator,
+      // Pretty much requires an input with a country code.
+      // phoneNumber: yupPhoneValidator,
+      phoneNumber: Yup.string().required("Phone number is required"),
       name: Yup.string().required("Name is required"),
     })
     .when("fulfillmentType", {
@@ -80,6 +82,7 @@ export interface ShipValues {
   attributes: {
     name: string
     phoneNumber: string
+    phoneNumberCountryCode: string
     addressLine1: string
     addressLine2?: string
     city: string
@@ -132,6 +135,11 @@ const getShippingRestrictions = (
   return { lockShippingCountryTo }
 }
 
+const ORDER_EMPTY_ADDRESS: Omit<
+  ShipValues["attributes"],
+  "addressVerifiedBy" | "saveAddress"
+> = omit(EMPTY_ADDRESS, "addressLine3", "phoneNumberCountryCode")
+
 const getInitialValues = (
   me: FulfillmentDetailsFormProps["me"],
   order: FulfillmentDetailsFormProps["order"]
@@ -139,7 +147,7 @@ const getInitialValues = (
   const orderFulfillmentType = getShippingOption(order) || FulfillmentType.SHIP
 
   const orderAddress: Partial<ShipValues["attributes"]> = omitBy(
-    pick(order.requestedFulfillment, Object.keys(EMPTY_ADDRESS)),
+    pick(order.requestedFulfillment, Object.keys(ORDER_EMPTY_ADDRESS)),
     isNil
   )
 
@@ -157,7 +165,7 @@ const getInitialValues = (
     ?.shippingCountry!
 
   const initialAddress: ShipValues["attributes"] = {
-    ...EMPTY_ADDRESS,
+    ...ORDER_EMPTY_ADDRESS,
     ...omitBy<Partial<FulfillmentValues>>(
       pick(orderAddress, Object.keys(EMPTY_ADDRESS)),
       isNil
@@ -165,6 +173,8 @@ const getInitialValues = (
     // TODO: Expose existing addressVerifiedBy from order?
     // Probably not, they go through the flow when they submit the form
     // that is desirable
+    // alternately we could set it initially, then unset it if they
+    // edit the address.
     addressVerifiedBy: null,
     saveAddress: true,
   }
@@ -221,9 +231,10 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
             : addressVerificationIntlEnabled
         ) {
           setAddressNeedsVerification(true)
+          helpers.setSubmitting(false)
           return
         } else {
-          props.onSubmit(values, helpers)
+          return props.onSubmit(values, helpers)
         }
       }}
     >
@@ -235,7 +246,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
           fetchForAutocomplete,
           isAddressAutocompleteEnabled,
           fetchSecondarySuggestions,
-          // TODO: consider extraction
+          // TODO: consider extraction into a component
           // eslint-disable-next-line react-hooks/rules-of-hooks
         } = useAddressAutocomplete(
           values.attributes as ShipValues["attributes"]
@@ -334,15 +345,14 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                   {addressNeedsVerification && (
                     <AddressVerificationFlowQueryRenderer
                       data-testid="address-verification-flow"
-                      address={
-                        values.attributes
-                        // addressLine1: values.attributes.addressLine1,
-                        // addressLine2: values.attributes.addressLine2,
-                        // country: values.attributes.country,
-                        // city: values.attributes.city,
-                        // region: values.attributes.region,
-                        // postalCode: values.attributes.postalCode,
-                      }
+                      address={{
+                        addressLine1: values.attributes.addressLine1,
+                        addressLine2: values.attributes.addressLine2,
+                        country: values.attributes.country,
+                        city: values.attributes.city,
+                        region: values.attributes.region,
+                        postalCode: values.attributes.postalCode,
+                      }}
                       onClose={() => {
                         setAddressNeedsVerification(false)
                         formikProps.setFieldValue(
@@ -425,7 +435,9 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                           title="Address line 1"
                           value={values.attributes.addressLine1}
                           onChange={e => {
-                            isAddressAutocompleteEnabled &&
+                            // TODO: !!! disable autocomplete for development
+                            false &&
+                              isAddressAutocompleteEnabled &&
                               fetchForAutocomplete({ search: e.target.value })
                             handleChange(e)
                           }}
@@ -636,7 +648,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
             </Collapse>
             <Button
               type="submit"
-              loading={formikProps.isSubmitting}
+              loading={formikProps.isSubmitting || undefined}
               variant="primaryBlack"
               width="50%"
               // disabled={formikProps.isValid}

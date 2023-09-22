@@ -506,7 +506,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     setShippingQuoteId(newShippingQuoteId)
   }
 
-  // TODO (Erik) - moved to SavedAddresses tracking
+  // TODO (Erik) - move to SavedAddresses tracking
   const selectSavedAddressWithTracking = (value: string) => {
     trackEvent({
       action: ActionType.clickedShippingAddress,
