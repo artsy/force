@@ -196,6 +196,7 @@ describe("Shipping", () => {
 
   afterEach(() => {
     jest.clearAllMocks()
+    mockCommitMutation.mockReset()
   })
 
   beforeAll(() => {
