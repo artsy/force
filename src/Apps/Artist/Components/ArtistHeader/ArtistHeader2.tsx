@@ -54,11 +54,11 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
 
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
-  const hasBio = artist.biographyBlurb?.text
+  const hasPartnerSuppliedBio = !!artist.biographyBlurb?.credit
+  const hasBio = artist.biographyBlurb?.text && !hasPartnerSuppliedBio
   const hasVerifiedRepresentatives = artist?.verifiedRepresentatives?.length > 0
   const hasInsights = artist.insights.length > 0
   const hasRightDetails = hasVerifiedRepresentatives || hasInsights
-
   const hasSomething = hasImage || hasBio || hasRightDetails
 
   if (mode === "Collapsed") {
@@ -295,6 +295,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         }
         biographyBlurb(format: HTML, partnerBio: false) {
           text
+          credit
         }
         insights {
           kind
