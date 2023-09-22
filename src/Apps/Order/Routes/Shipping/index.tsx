@@ -593,7 +593,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const { order, isCommittingMutation } = props
 
   const showArtsyShipping =
-    isArtsyShipping && !!shippingQuotes && shippingQuotes.length > 0
+    activeStep === "shipping_quotes" &&
+    isArtsyShipping &&
+    !!shippingQuotes &&
+    shippingQuotes.length > 0
   const isOffer = order.mode === "OFFER"
 
   const useDefaultArtsyShippingQuote =
@@ -844,7 +847,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               </Collapse>
             
             */}
-              {/* SHIPPING OPTION */}
+              {/* SHIPPING Quotes */}
               <Collapse open={showArtsyShipping}>
                 <Text variant="sm">Artsy shipping options</Text>
                 <Text variant="xs" mb="1" color="black60">
@@ -857,18 +860,18 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   onSelect={handleShippingQuoteSelected}
                 />
                 <Spacer y={4} />
+                <Media greaterThan="xs">
+                  <Button
+                    onClick={selectShippingQuote}
+                    loading={isCommittingMutation}
+                    variant="primaryBlack"
+                    width="50%"
+                    disabled={activeStep === "fulfillment_details"}
+                  >
+                    Save and Continue
+                  </Button>
+                </Media>
               </Collapse>
-              <Media greaterThan="xs">
-                <Button
-                  onClick={selectShippingQuote}
-                  loading={isCommittingMutation}
-                  variant="primaryBlack"
-                  width="50%"
-                  disabled={activeStep === "fulfillment_details"}
-                >
-                  Save and Continue
-                </Button>
-              </Media>
             </Flex>
           }
           sidebar={

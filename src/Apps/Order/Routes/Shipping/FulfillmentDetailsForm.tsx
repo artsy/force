@@ -436,8 +436,8 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                           value={values.attributes.addressLine1}
                           onChange={e => {
                             // TODO: !!! disable autocomplete for development
-                            false &&
-                              isAddressAutocompleteEnabled &&
+                            // false &&
+                            isAddressAutocompleteEnabled &&
                               fetchForAutocomplete({ search: e.target.value })
                             handleChange(e)
                           }}
