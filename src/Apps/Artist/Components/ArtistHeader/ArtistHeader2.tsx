@@ -54,10 +54,12 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
 
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
-  const hasInsights = artist.insights.length > 0
   const hasBio = artist.biographyBlurb?.text
-  const hasSomething = hasImage || hasInsights || hasBio
   const hasVerifiedRepresentatives = artist?.verifiedRepresentatives?.length > 0
+  const hasInsights = artist.insights.length > 0
+  const hasRightDetails = hasVerifiedRepresentatives || hasInsights
+
+  const hasSomething = hasImage || hasBio || hasRightDetails
 
   if (mode === "Collapsed") {
     return (
@@ -120,7 +122,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
               )}
 
               <Column
-                span={hasInsights ? 5 : 8}
+                span={hasRightDetails ? 5 : 8}
                 display="flex"
                 flexDirection="column"
                 gap={2}
@@ -197,7 +199,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                 </Text>
               </Column>
 
-              {artist.insights.length > 0 && (
+              {hasRightDetails && (
                 <Column span={4} {...(!hasImage && { start: 9 })}>
                   {hasVerifiedRepresentatives && (
                     <>
