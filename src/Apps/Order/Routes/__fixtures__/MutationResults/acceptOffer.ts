@@ -67,3 +67,14 @@ export const acceptOfferInsufficientInventoryFailure = {
     },
   },
 }
+
+export const acceptOfferWithActionRequired = {
+  commerceBuyerAcceptOffer: {
+    orderOrError: {
+      __typename: "CommerceOrderRequiresAction",
+      actionData: {
+        clientSecret: "client-secret",
+      },
+    },
+  },
+}

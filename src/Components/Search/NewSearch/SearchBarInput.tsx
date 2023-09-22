@@ -1,5 +1,12 @@
 import { AutocompleteInput, useUpdateEffect } from "@artsy/palette"
-import { ChangeEvent, FC, useCallback, useState } from "react"
+import {
+  ChangeEvent,
+  FC,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 import { useTranslation } from "react-i18next"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -44,15 +51,22 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
   searchTerm,
 }) => {
   const tracking = useTracking()
+
   const { t } = useTranslation()
+
   const [value, setValue] = useState(searchTerm)
   const [selectedPill, setSelectedPill] = useState<PillType>(TOP_PILL)
+
+  // FIXME: Refactor to just use callback
   // We use fetchCounter together with useUpdateEffect to track typing
   const [fetchCounter, setFetchCounter] = useState(0)
+
   const { router, match } = useRouter()
+
   const encodedSearchURL = `/search?term=${encodeURIComponent(value)}`
 
   const options = extractNodes(viewer.searchConnection)
+
   const formattedOptions: SuggestionItemOptionProps[] = [
     ...options.map(option => {
       return {
@@ -177,8 +191,33 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
     })
   }
 
+  const ref = useRef<HTMLInputElement | null>(null)
+
+  // Focus the search input on '/' keypress
+  useEffect(() => {
+    const handleKeyUp = ({ target, key }: KeyboardEvent) => {
+      if (!ref.current || key !== "/") return
+
+      const tag =
+        (target && (target as HTMLElement).tagName.toLowerCase()) || ""
+
+      // Ignore if an input has focus
+      if (["input", "textarea", "select"].includes(tag)) {
+        return
+      }
+
+      ref.current.focus()
+    }
+
+    window.addEventListener("keyup", handleKeyUp)
+    return () => {
+      window.removeEventListener("keyup", handleKeyUp)
+    }
+  }, [])
+
   return (
     <AutocompleteInput
+      forwardRef={ref}
       key={match.location.pathname}
       placeholder={t`navbar.searchBy`}
       spellCheck={false}
