@@ -52,7 +52,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 }))
 
 // TODO: Turning this on causes 1 test to fail expectedly and another to also fail. What is going on here?
-const TRIGGER_LEAKY_FAILURES = false
+const TRIGGER_LEAKY_FAILURES = true
 const triggerLeakyFailure = () => {
   expect(TRIGGER_LEAKY_FAILURES).toBe(false)
 }
