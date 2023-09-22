@@ -1,4 +1,5 @@
-import { BorderedRadio, Button, Collapse } from "@artsy/palette"
+import { BorderedRadio, Button } from "@artsy/palette"
+import { Collapse } from "Apps/Order/Components/Collapse"
 import { BankAccountPickerTestQuery$rawResponse } from "__generated__/BankAccountPickerTestQuery.graphql"
 import {
   BuyOrderPickup,

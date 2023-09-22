@@ -1,4 +1,5 @@
-import { BorderedRadio, Checkbox, Collapse, Link, Input } from "@artsy/palette"
+import { BorderedRadio, Checkbox, Link, Input } from "@artsy/palette"
+import { Collapse } from "Apps/Order/Components/Collapse"
 import { CreditCardPicker_me$data } from "__generated__/CreditCardPicker_me.graphql"
 import { CreditCardPickerTestQuery$rawResponse } from "__generated__/CreditCardPickerTestQuery.graphql"
 import {

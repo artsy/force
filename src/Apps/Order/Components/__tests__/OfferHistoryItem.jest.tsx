@@ -1,4 +1,5 @@
-import { Button, Collapse } from "@artsy/palette"
+import { Button } from "@artsy/palette"
+import { Collapse } from "Apps/Order/Components/Collapse"
 import { OfferHistoryItemTestQuery$rawResponse } from "__generated__/OfferHistoryItemTestQuery.graphql"
 import {
   OfferWithTotals,
@@ -6,7 +7,7 @@ import {
   UntouchedOfferOrder,
 } from "Apps/__tests__/Fixtures/Order"
 import { graphql } from "react-relay"
-import { OfferHistoryItemFragmentContainer } from "../OfferHistoryItem"
+import { OfferHistoryItemFragmentContainer } from "Apps/Order/Components/OfferHistoryItem"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
