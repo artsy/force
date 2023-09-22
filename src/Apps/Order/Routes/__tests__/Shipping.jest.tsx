@@ -51,12 +51,6 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-// TODO: Turning this on causes 1 test to fail expectedly and another to also fail. What is going on here?
-const TRIGGER_LEAKY_FAILURES = true
-const triggerLeakyFailure = () => {
-  expect(TRIGGER_LEAKY_FAILURES).toBe(false)
-}
-
 jest.mock("@artsy/palette", () => {
   return {
     ...jest.requireActual("@artsy/palette"),
@@ -1106,7 +1100,6 @@ describe("Shipping", () => {
         // expect(screen.getByRole("radio", { name: /White Glove/ })).toBeVisible()
         // expect(screen.getByRole("radio", { name: /Rush/ })).toBeVisible()
         // expect(screen.getByRole("radio", { name: /Premium/ })).toBeVisible()
-        triggerLeakyFailure()
         expect(mockCommitMutation).toHaveBeenCalledTimes(2)
 
         let mutationArg = mockCommitMutation.mock.calls[0][0]
