@@ -225,7 +225,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
       onClose={() => {
         handleCloseModal({ label: null, subject: modalTitle! })
       }}
-      data-test="addressVerificationModal"
+      data-testid="addressVerificationModal"
     >
       {verificationPath === VerificationPath.SUGGESTIONS ? (
         <>
