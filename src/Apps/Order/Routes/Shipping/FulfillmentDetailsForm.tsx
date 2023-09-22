@@ -40,7 +40,7 @@ import {
   FormikTouched,
 } from "formik"
 import { isNil, omit, omitBy, pick } from "lodash"
-import { FC, useState } from "react"
+import { FC, useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as Yup from "yup"
 import { extractNodes } from "Utils/extractNodes"
@@ -244,8 +244,8 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
         const {
           autocompleteOptions,
           fetchForAutocomplete,
-          isAddressAutocompleteEnabled,
           fetchSecondarySuggestions,
+          ...autocomplete
           // TODO: consider extraction into a component
           // eslint-disable-next-line react-hooks/rules-of-hooks
         } = useAddressAutocomplete(
@@ -259,7 +259,6 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
         // inputs should not be tabbable
         const addressFormTabIndex = showAddressForm ? 0 : -1
         // && isCreateNewAddress
-        console.log("HERE", { values, errors, touched })
         return (
           <Form>
             {availableFulfillmentTypes.length > 1 && (
@@ -427,17 +426,18 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                       )}
                     </Column>
                     <Column span={12}>
-                      {isAddressAutocompleteEnabled ? (
+                      {!autocomplete.loaded || autocomplete.enabled ? (
                         <AutocompleteInput<AddressAutocompleteSuggestion>
                           tabIndex={addressFormTabIndex}
+                          disabled={!autocomplete.loaded}
                           name="attributes.addressLine1"
                           placeholder="Street address"
                           title="Address line 1"
                           value={values.attributes.addressLine1}
                           onChange={e => {
-                            // TODO: !!! disable autocomplete for development
+                            // TODO: Remove- disable autocomplete for development
                             // false &&
-                            isAddressAutocompleteEnabled &&
+                            autocomplete.enabled &&
                               fetchForAutocomplete({ search: e.target.value })
                             handleChange(e)
                           }}
