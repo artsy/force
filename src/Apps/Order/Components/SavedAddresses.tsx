@@ -1,46 +1,38 @@
 import { RadioGroup, BorderedRadio, Spacer, Clickable } from "@artsy/palette"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import * as React from "react"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
 import {
   AddressModal,
   AddressModalAction,
+  AddressModalActionType,
 } from "Apps/Order/Components/AddressModal"
 import createLogger from "Utils/logger"
 import { SavedAddressItem } from "Apps/Order/Components/SavedAddressItem"
 import { deleteUserAddress } from "Apps/Order/Mutations/DeleteUserAddress"
 import { useSystemContext } from "System/SystemContext"
-import { compact } from "lodash"
 import { extractNodes } from "Utils/extractNodes"
-import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
-import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
 import { useTracking } from "react-tracking"
 import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { SavedAddressType } from "Components/Address/utils"
-import { ShippingValues } from "Apps/Order/Routes/Shipping"
+import {
+  ShippingAddressFormValues,
+  addressWithFallbackValues,
+  getDefaultUserAddress,
+} from "Apps/Order/Utils/shippingUtils"
+import { compact } from "lodash"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
 
-interface SavedAddressesProps {
+export interface SavedAddressesProps {
   relay: RelayRefetchProp
   me: SavedAddresses_me$data
-  onSelect: (
-    address: Omit<ShippingValues, "fulfillmentType" | "saveAddress">
-  ) => void
-}
-
-const getDefaultAddress = (addressList: SavedAddressType[]) => {
-  const items = compact(addressList)
-
-  if (!items || items.length == 0) {
-    return
-  }
-
-  return items.find(node => node.isDefault) || items[0]
+  active: boolean
+  onSelect: (address: ShippingAddressFormValues) => void
 }
 
 const getAddressByID = (addressList: SavedAddressType[], addressID: string) => {
@@ -53,7 +45,7 @@ const getBestAvailableAddress = (
 ) => {
   return (
     (addressID && getAddressByID(addressList, addressID)) ||
-    getDefaultAddress(addressList)
+    getDefaultUserAddress(addressList)
   )
 }
 
@@ -65,18 +57,20 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     null
   )
 
-  const showAddressModal = !!activeModal
   const { onSelect, me, relay } = props
 
-  const addressList = extractNodes(me?.addressConnection) ?? []
+  const addressList = compact<SavedAddressType>(
+    extractNodes(me?.addressConnection) ?? []
+  )
 
   const [selectedAddressID, setSelectedAddressID] = useState<
     string | undefined
-  >(getDefaultAddress(addressList)?.internalID)
+  >(getDefaultUserAddress(addressList)?.internalID)
 
   const activeAddress =
     selectedAddressID && getAddressByID(addressList, selectedAddressID)
 
+  // TODO: Review this. Is it needed?
   useEffect(() => {
     if (selectedAddressID && !activeAddress) {
       let bestAvailableAddressID = getBestAvailableAddress(
@@ -88,11 +82,20 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [addressList.length, selectedAddressID])
 
-  useEffect(() => {
-    if (!!activeAddress) {
-      onSelect(activeAddress)
-    }
-  }, [activeAddress, onSelect])
+  const handleSelectAddress = useCallback(
+    (id: string): void => {
+      setSelectedAddressID(id)
+      const selectedAddress = getAddressByID(addressList, id)
+      if (!selectedAddress) {
+        console.warn("Address not found: ", id)
+      }
+      // Set values on the fulfillment form context.
+      // Can these values be invalid? If so, maybe we could pop a form up for
+      // them to fix it. Seems unlikely.
+      onSelect(addressWithFallbackValues(selectedAddress))
+    },
+    [addressList, onSelect]
+  )
 
   const refetchAddresses = (refetchSuccessCallback?: () => void) => {
     relay.refetch(
@@ -125,14 +128,15 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     )
   }
 
-  const handleEditAddress = (address: SavedAddressType) => {
+  const handleClickEditAddress = (address: SavedAddressType) => {
     setSelectedAddressID(address.id)
-    setActiveModal(AddressModalAction.EDIT_USER_ADDRESS)
+    setActiveModal({
+      type: AddressModalActionType.EDIT_USER_ADDRESS,
+      address: address,
+    })
   }
 
-  const createOrUpdateAddressSuccess = (
-    address?: UpdateUserAddressMutation$data & CreateUserAddressMutation$data
-  ) => {
+  const createOrUpdateAddressSuccess = () => {
     refetchAddresses(() => {})
   }
 
@@ -144,58 +148,52 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     })
   }
 
-  const addAddressButton = (
+  return (
     <>
+      <RadioGroup
+        disabled={!props.active}
+        onSelect={handleSelectAddress}
+        defaultValue={selectedAddressID}
+      >
+        {addressList.map((address, index) => {
+          return (
+            <BorderedRadio
+              value={address.internalID}
+              tabIndex={props.active ? 0 : -1}
+              disabled={!props.active}
+              key={index}
+              position="relative"
+              data-test="savedAddress"
+            >
+              <SavedAddressItem
+                address={address}
+                handleClickEdit={() => handleClickEditAddress(address)}
+              />
+            </BorderedRadio>
+          )
+        })}
+      </RadioGroup>
       {addressList.length > 0 && (
         <AddAddressButton
           mt={2}
+          tabIndex={props.active ? 0 : -1}
           data-test="shippingButton"
           onClick={() => {
             trackAddAddressClick()
-            setActiveModal(AddressModalAction.CREATE_USER_ADDRESS)
+            setActiveModal({ type: AddressModalActionType.CREATE_USER_ADDRESS })
           }}
         >
           Add a new address
         </AddAddressButton>
       )}
       <AddressModal
-        show={showAddressModal}
-        modalAction={activeModal || undefined}
+        modalAction={(props.active && activeModal) || undefined}
         closeModal={() => setActiveModal(null)}
-        address={activeAddress || undefined}
         onSuccess={createOrUpdateAddressSuccess}
         onDeleteAddress={handleDeleteAddress}
         onError={onError}
         me={me}
       />
-    </>
-  )
-
-  const addressItems = compact(addressList).map((address, index) => {
-    return (
-      <BorderedRadio
-        value={address.internalID}
-        key={index}
-        position="relative"
-        data-test="savedAddress"
-      >
-        <SavedAddressItem
-          address={address}
-          handleClickEdit={() => handleEditAddress(address)}
-        />
-      </BorderedRadio>
-    )
-  })
-
-  return (
-    <>
-      <RadioGroup
-        onSelect={(id: string) => setSelectedAddressID(id)}
-        defaultValue={selectedAddressID}
-      >
-        {addressItems}
-      </RadioGroup>
-      {addAddressButton}
       <Spacer y={4} />
     </>
   )

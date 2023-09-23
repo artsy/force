@@ -166,6 +166,7 @@ const getOrderRequiresArtsyShipping = (
     order
   )
   const shipToCountry = orderAddress && orderAddress?.country
+  console.log({ orderArtwork })
   const artworkCountry = orderArtwork.shippingCountry
   const isDomesticOrder =
     (shipToCountry && shipToCountry === artworkCountry) ||
@@ -563,6 +564,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const { order, isCommittingMutation } = props
 
+  console.log({
+    activeStep,
+    isArtsyShipping,
+    shippingQuotes,
+  })
   const showArtsyShipping =
     activeStep === "shipping_quotes" &&
     isArtsyShipping &&
@@ -605,6 +611,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           const {
             saveAddress,
             addressVerifiedBy,
+            // TODO: Don't pull this out, send it to exchange too
+            // (when exchange is ready)
+            phoneNumberCountryCode,
             ...addressValues
           } = formValues.attributes
           fulfillmentMutationValues = {
@@ -728,6 +737,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }, [activeStep, selectShippingQuote])
 
+  console.log({ activeStep })
   return (
     <Analytics contextPageOwnerId={order.internalID}>
       <Box data-test="orderShipping">

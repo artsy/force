@@ -3,6 +3,7 @@ import { deleteUserAddress } from "Apps/Order/Mutations/DeleteUserAddress"
 import { setShipping } from "Apps/Order/Mutations/SetShipping"
 import { updateUserAddress } from "Apps/Order/Mutations/UpdateUserAddress"
 import { ShippingProps } from "Apps/Order/Routes/Shipping"
+import { ShippingAddressFormValues } from "Apps/Order/Utils/shippingUtils"
 
 import { useSystemContext } from "System/useSystemContext"
 import createLogger from "Utils/logger"
@@ -67,9 +68,11 @@ export const useShippingOperations = (
       [logger.error, relayEnvironment]
     ),
 
+    // TODO: these aren't used bc SavedAddresses doesn't have ShippingProps.
+    // is this file needed?
     createUserAddress: useCallback(
       async (
-        values: UserAddressAttributes,
+        values: ShippingAddressFormValues,
         onSuccess: (address: CreateUserAddressMutation$data) => void = () =>
           null,
         onError: (message: string) => void = logger.error,
@@ -77,7 +80,17 @@ export const useShippingOperations = (
       ) => {
         createUserAddress(
           relayEnvironment!,
-          values,
+          {
+            addressLine1: values.addressLine1,
+            addressLine2: values.addressLine2,
+            city: values.city,
+            country: values.country,
+            name: values.name,
+            phoneNumber: values.phoneNumber,
+            postalCode: values.postalCode,
+            region: values.region,
+            // phoneNumberCountryCode: values.phoneNumberCountryCode,
+          },
           onSuccess,
           onError,
           me,

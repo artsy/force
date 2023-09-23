@@ -7,17 +7,8 @@ import {
   UserAddressAttributes,
 } from "__generated__/UpdateUserAddressMutation.graphql"
 import { NEW_ADDRESS } from "Apps/Order/Components/SavedAddresses"
-import {
-  CommerceOrderFulfillmentTypeEnum,
-  SetShippingMutation$data,
-} from "__generated__/SetShippingMutation.graphql"
+import { SetShippingMutation$data } from "__generated__/SetShippingMutation.graphql"
 import { AddressType, EMPTY_ADDRESS } from "Components/Address/utils"
-import {
-  FulfillmentDetailsFormProps,
-  FulfillmentValues,
-  ShipValues,
-} from "Apps/Order/Routes/Shipping/FulfillmentDetailsForm"
-
 export enum FulfillmentType {
   SHIP = "SHIP",
   PICKUP = "PICKUP",
@@ -46,6 +37,48 @@ export type ShippingQuotesType = NonNullable<
     >["node"]
   >["shippingQuoteOptions"]
 >["edges"]
+
+export interface ShippingAddressFormValues {
+  name: string
+  phoneNumber: string
+  phoneNumberCountryCode: string
+  addressLine1: string
+  addressLine2?: string
+  city: string
+  region: string
+  country: string
+  postalCode: string
+}
+
+// Form values with nulls and line3 removed
+// TODO: Check line 2 special handling in exchange/gravity: does
+// it matter if we send null/""?
+export const ORDER_EMPTY_ADDRESS: ShippingAddressFormValues = omit(
+  EMPTY_ADDRESS,
+  "addressLine3"
+)
+
+// Select Shipping address form values from any object and replace
+// missing values with the empty defaults
+export const addressWithFallbackValues = (
+  address: any
+): ShippingAddressFormValues => ({
+  ...ORDER_EMPTY_ADDRESS,
+  ...omitBy<ShippingAddressFormValues>(
+    pick(address, Object.keys(EMPTY_ADDRESS)),
+    isNil
+  ),
+})
+
+export const getDefaultUserAddress = (addressList: SavedAddressType[]) => {
+  const items = compact(addressList)
+
+  if (!items || items.length == 0) {
+    return
+  }
+
+  return items.find(node => node.isDefault) || items[0]
+}
 
 export const getShippingOption = (
   // TODO: If this needs to stay in the utils file lets just write
