@@ -1,7 +1,6 @@
 import {
   AutocompleteInput,
   BorderedRadio,
-  Button,
   Checkbox,
   Collapse,
   Column,
@@ -19,6 +18,10 @@ import {
 } from "Apps/Order/Components/AddressVerificationFlow"
 import {
   FulfillmentType,
+  ORDER_EMPTY_ADDRESS,
+  addressWithFallbackValues,
+  ShippingAddressFormValues,
+  getDefaultUserAddress,
   getShippingOption,
 } from "Apps/Order/Utils/shippingUtils"
 import {
@@ -26,7 +29,6 @@ import {
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
 import {
-  EMPTY_ADDRESS,
   postalCodeValidator,
   yupPhoneValidator,
 } from "Components/Address/utils"
@@ -36,24 +38,23 @@ import {
   Formik,
   FormikErrors,
   FormikHelpers,
-  FormikProps,
   FormikTouched,
 } from "formik"
-import { isNil, omit, omitBy, pick } from "lodash"
-import { FC, useEffect, useState } from "react"
+import { compact, isNil, omitBy, pick } from "lodash"
+import { FC, useCallback, useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as Yup from "yup"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { SavedAddressesFragmentContainer as SavedAddresses } from "Apps/Order/Components/SavedAddresses"
 
 const VALIDATION_SCHEMA = Yup.object().shape({
   fulfillmentType: Yup.string().oneOf(Object.values(FulfillmentType)),
 
   attributes: Yup.object()
     .shape({
-      // Pretty much requires an input with a country code.
-      // phoneNumber: yupPhoneValidator,
-      phoneNumber: Yup.string().required("Phone number is required"),
+      phoneNumber: yupPhoneValidator,
+      phoneNumberCountryCode: Yup.string().required("Phone number is required"),
       name: Yup.string().required("Name is required"),
     })
     .when("fulfillmentType", {
@@ -79,43 +80,27 @@ interface PickupValues {
 
 export interface ShipValues {
   fulfillmentType: FulfillmentType.SHIP
-  attributes: {
-    name: string
-    phoneNumber: string
-    phoneNumberCountryCode: string
-    addressLine1: string
-    addressLine2?: string
-    city: string
-    region: string
-    country: string
-    postalCode: string
+  attributes: ShippingAddressFormValues & {
     saveAddress: boolean
+    // TODO: This could go on the real address values, with a
+    // save_ here to signal when it should be updated.
+    // currently presence of this value means it will be updated
+    // only in exchange
     addressVerifiedBy: AddressVerifiedBy | null
   }
 }
 
 export type FulfillmentValues = ShipValues | PickupValues
 
-// Delete probably - type predicate i thought about and didnt do for now
-const isShipFormValues = (
-  formikProps: FormikProps<FulfillmentValues>
-): formikProps is FormikProps<ShipValues> => {
-  return formikProps.values.fulfillmentType === FulfillmentType.SHIP
-}
-
 export interface FulfillmentDetailsFormProps {
   active: boolean
-  // availableCountries: string[]
-  // availableFulfillmentTypes: FulfillmentType[]
-  // initialValues: FulfillmentValues
   onSubmit: (
     values: FulfillmentValues,
     formikHelpers: FormikHelpers<FulfillmentValues>
   ) => void | Promise<any>
-  // hasSavedAddresses: boolean
+  submitHandlerRef: React.MutableRefObject<(...args: any[]) => void>
   me: FulfillmentDetailsForm_me$data
   order: FulfillmentDetailsForm_order$data
-  submitHandlerRef: React.MutableRefObject<(...args: any[]) => void>
 }
 
 const getShippingRestrictions = (
@@ -129,23 +114,31 @@ const getShippingRestrictions = (
   const euOrigin = !!firstArtwork.euShippingOrigin
 
   const lockShippingCountryTo = domesticOnly
-    ? null
-    : euOrigin
-    ? "EU"
-    : shippingCountry
+    ? euOrigin
+      ? "EU"
+      : shippingCountry
+    : null
   return { lockShippingCountryTo }
 }
 
-const ORDER_EMPTY_ADDRESS: Omit<
-  ShipValues["attributes"],
-  "addressVerifiedBy" | "saveAddress"
-> = omit(EMPTY_ADDRESS, "addressLine3", "phoneNumberCountryCode")
-
+// Get initial values for the form using what may already be saved
+// on the order and the user's saved addresses.
 const getInitialValues = (
   me: FulfillmentDetailsFormProps["me"],
   order: FulfillmentDetailsFormProps["order"]
 ): FulfillmentValues => {
   const orderFulfillmentType = getShippingOption(order) || FulfillmentType.SHIP
+  const { lockShippingCountryTo } = getShippingRestrictions(order)
+  const { requestedFulfillment } = order
+
+  // humble criteria for starting address if it's already saved on order:
+  // just a few values present
+  const useOrderForAddress =
+    orderFulfillmentType === FulfillmentType.SHIP &&
+    !!requestedFulfillment &&
+    ["name", "phoneNumber", "addressLine1", "city", "country"].every(
+      key => requestedFulfillment[key]
+    )
 
   const orderAddress: Partial<ShipValues["attributes"]> = omitBy(
     pick(order.requestedFulfillment, Object.keys(ORDER_EMPTY_ADDRESS)),
@@ -162,20 +155,33 @@ const getInitialValues = (
     }
   }
 
-  const defaultCountry: string = order.lineItems?.edges?.[0]?.node?.artwork
+  // TODO:
+  // - need to check if address is in a valid shipping country, incl. saved addresses
+  // - could also disable saved addresses if they don't match the country list
+  const finalStartingAddress = useOrderForAddress
+    ? orderAddress
+    : getDefaultUserAddress(extractNodes(me?.addressConnection) ?? []) ?? {}
+
+  // Todo: initial address must be in a valid shipping country
+  const artworkCountry: string = order.lineItems?.edges?.[0]?.node?.artwork
     ?.shippingCountry!
 
   const initialAddress: ShipValues["attributes"] = {
-    ...ORDER_EMPTY_ADDRESS,
-    ...omitBy<Partial<FulfillmentValues>>(
-      pick(orderAddress, Object.keys(EMPTY_ADDRESS)),
-      isNil
-    ),
+    ...addressWithFallbackValues(finalStartingAddress),
+
     // TODO: Expose existing addressVerifiedBy from order?
-    // Probably not, they go through the flow when they submit the form
-    // that is desirable
-    // alternately we could set it initially, then unset it if they
-    // edit the address.
+    // Maybe not, they go through the flow when they submit the form
+    // and that is desirable. But what if it is a SAVED USER ADDRESS?
+    // That could be a problem. Thoughts:
+    // - If the user edits a saved address, we can verify and
+    //   save to user from THAT form (in the future), then keep it in these
+    //   values for saving to the order.
+    // - If we know a user is using a saved address,
+    //   we can skip verification no matter what (new form value)
+    // - If we have an initial verifiedBy value from the relay order, we can
+    //   set it here, then unset it if they edit the address
+    // - We might want to add another non-form value similar to saveAddress
+    //   rather than relying on the boolean
     addressVerifiedBy: null,
     saveAddress: true,
   }
@@ -184,8 +190,33 @@ const getInitialValues = (
     fulfillmentType: FulfillmentType.SHIP,
     attributes: initialAddress,
   }
-  if (!!initialValues.attributes.country) {
-    initialValues.attributes.country = defaultCountry
+  if (!initialValues.attributes.country) {
+    initialValues.attributes.country = artworkCountry
+  }
+  console.log({
+    useOrderForAddress,
+    lockShippingCountryTo,
+    orderAddress,
+    defaultUserAddress: getDefaultUserAddress(
+      extractNodes(me?.addressConnection) ?? []
+    ),
+    artworkCountry,
+    initialAddress,
+    initialValues,
+  })
+  // If the existing address has a blank phone number,
+  // pre-fill the country code based on the user's location or
+  // the default country. If they do have a phone number but no
+  // country code, leave it blank for them to confirm.
+  // TODO: Should we save an address if it is already saved but lacks the
+  // country code? Adds complexity.
+  if (
+    !initialValues.attributes.phoneNumberCountryCode &&
+    !initialValues.attributes.phoneNumber
+  ) {
+    const phoneCountry = (initialValues.attributes.phoneNumberCountryCode =
+      me?.location?.country || artworkCountry)
+    initialValues.attributes.phoneNumberCountryCode = phoneCountry.toLowerCase()
   }
   return initialValues
 }
@@ -196,17 +227,15 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
 }) => {
   const orderValues = getInitialValues(props.me, props.order)
   const firstArtwork = extractNodes(props.order.lineItems)[0]!.artwork!
-  const savedAddresses = extractNodes(props.me?.addressConnection) ?? []
+  const savedAddresses = compact(
+    extractNodes(props.me?.addressConnection) ?? []
+  )
 
   const availableFulfillmentTypes: FulfillmentType[] = firstArtwork.pickupAvailable
     ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
     : [FulfillmentType.SHIP]
 
   const { lockShippingCountryTo } = getShippingRestrictions(props.order)
-
-  // const lockCountriesToEU: boolean =
-  //   !!firstArtwork.onlyShipsDomestically || firstArtwork.euShippingOrigin
-  // const lockCountryToOrigin: boolean = false
 
   const addressVerificationUSEnabled = !!useFeatureFlag(
     "address_verification_us"
@@ -257,19 +286,42 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
           fetchForAutocomplete,
           fetchSecondarySuggestions,
           ...autocomplete
-          // TODO: consider extraction into a component
+          // TODO: consider extraction into a component (everything after formikProps => )
           // eslint-disable-next-line react-hooks/rules-of-hooks
         } = useAddressAutocomplete(
           values.attributes as ShipValues["attributes"]
         )
 
-        const showAddressForm =
-          active && values.fulfillmentType === FulfillmentType.SHIP
-
-        // TODO: When not showing the form/creating a new address,
+        const showAddressForm = active
+          ? values.fulfillmentType === "SHIP"
+            ? savedAddresses.length > 0
+              ? "saved_addresses"
+              : "new_address"
+            : "pickup"
+          : null
+        active && values.fulfillmentType === FulfillmentType.SHIP
+        // When not showing the form/creating a new address,
         // inputs should not be tabbable
-        const addressFormTabIndex = showAddressForm ? 0 : -1
-        // && isCreateNewAddress
+        const tabbableFormValue = (
+          activeForm: typeof showAddressForm
+        ): 0 | -1 => (showAddressForm === activeForm ? 0 : -1)
+
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const handleSelectSavedAddress = useCallback(
+          (address: ShippingAddressFormValues) => {
+            formikProps.setValues({
+              fulfillmentType: FulfillmentType.SHIP,
+
+              attributes: {
+                ...address,
+                saveAddress: false,
+                addressVerifiedBy: null,
+              },
+            })
+          },
+          [formikProps]
+        )
+
         return (
           <Form>
             {availableFulfillmentTypes.length > 1 && (
@@ -305,14 +357,14 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
             )}
             {values.fulfillmentType === FulfillmentType.SHIP && (
               <>
+                <Text variant="lg-display" mb="1">
+                  Delivery address
+                </Text>
                 {/* SAVED ADDRESSES */}
                 <Collapse
                   data-testid="savedAddressesCollapse"
-                  open={savedAddresses.length > 0}
+                  open={showAddressForm === "saved_addresses"}
                 >
-                  <Text variant="lg-display" mb="1">
-                    Delivery address
-                  </Text>
                   {
                     // TODO: Maybe this stays in index? We render an error message
                     // here if shipping quotes are present but empty.
@@ -321,26 +373,16 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                     //   shippingQuotes.length === 0 &&
                     //   renderArtaErrorMessage()
                   }
-                  {/* LAST BIG TODO??? */}
-
-                  {/* <SavedAddresses
+                  <SavedAddresses
+                    active={showAddressForm === "saved_addresses"}
                     me={props.me}
-                    onSelect={(
-                      address: Omit<ShipValues["attributes"], "savedAddress">
-                    ) => {
-                      // TODO: Can i set the attributes object all at once?
-                      formikProps.setFieldValue("attributes", {
-                        ...address,
-                        saveAddress: false,
-                      })
-                    }}
-                  /> */}
+                    onSelect={handleSelectSavedAddress}
+                  />
                 </Collapse>
-
                 {/* NEW ADDRESS */}
                 <Collapse
                   data-testid="addressFormCollapse"
-                  open={showAddressForm}
+                  open={showAddressForm === "new_address"}
                 >
                   {
                     // TODO: Same as above
@@ -349,9 +391,6 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                     //   shippingQuotes.length === 0 &&
                     //   renderArtaErrorMessage()
                   }
-                  <Text variant="lg-display" mb="2">
-                    Delivery address
-                  </Text>
                   {addressNeedsVerification && (
                     <AddressVerificationFlowQueryRenderer
                       data-testid="address-verification-flow"
@@ -390,7 +429,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                   <GridColumns>
                     <Column span={12}>
                       <Input
-                        tabIndex={addressFormTabIndex}
+                        tabIndex={tabbableFormValue("new_address")}
                         id="attributes.name"
                         placeholder="Full name"
                         title={"Full name"}
@@ -415,7 +454,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                       </Text>
                       <CountrySelect
                         aria-labelledby="country-select"
-                        tabIndex={addressFormTabIndex}
+                        tabIndex={tabbableFormValue("new_address")}
                         selected={values.attributes.country}
                         onSelect={handleChange}
                         disabled={
@@ -439,7 +478,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                     <Column span={12}>
                       {!autocomplete.loaded || autocomplete.enabled ? (
                         <AutocompleteInput<AddressAutocompleteSuggestion>
-                          tabIndex={addressFormTabIndex}
+                          tabIndex={tabbableFormValue("new_address")}
                           disabled={!autocomplete.loaded}
                           name="attributes.addressLine1"
                           placeholder="Street address"
@@ -500,7 +539,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                         />
                       ) : (
                         <Input
-                          tabIndex={addressFormTabIndex}
+                          tabIndex={tabbableFormValue("new_address")}
                           name="attributes.addressLine1"
                           placeholder="Street address"
                           title="Address line 1"
@@ -518,7 +557,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                     </Column>
                     <Column span={12}>
                       <Input
-                        tabIndex={addressFormTabIndex}
+                        tabIndex={tabbableFormValue("new_address")}
                         name="attributes.addressLine2"
                         placeholder="Apt, floor, suite, etc."
                         title="Address line 2 (optional)"
@@ -535,7 +574,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                     </Column>
                     <Column span={12}>
                       <Input
-                        tabIndex={addressFormTabIndex}
+                        tabIndex={tabbableFormValue("new_address")}
                         name="attributes.city"
                         placeholder="City"
                         title="City"
@@ -551,7 +590,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                     </Column>
                     <Column span={6}>
                       <Input
-                        tabIndex={addressFormTabIndex}
+                        tabIndex={tabbableFormValue("new_address")}
                         name="attributes.region"
                         placeholder="State, province, or region"
                         title="State, province, or region"
@@ -569,7 +608,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                     </Column>
                     <Column span={6}>
                       <Input
-                        tabIndex={addressFormTabIndex}
+                        tabIndex={tabbableFormValue("new_address")}
                         name="attributes.postalCode"
                         placeholder="ZIP/postal code"
                         title="Postal code"
@@ -591,7 +630,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                       <>
                         <Column span={12}>
                           <Input
-                            tabIndex={addressFormTabIndex}
+                            tabIndex={tabbableFormValue("new_address")}
                             name="attributes.phoneNumber"
                             title="Phone number"
                             type="tel"
@@ -614,7 +653,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                   <Spacer y={2} />
 
                   <Checkbox
-                    tabIndex={addressFormTabIndex}
+                    tabIndex={tabbableFormValue("new_address")}
                     onSelect={selected => {
                       formikProps.setFieldValue(
                         "attributes.saveAddress",
@@ -638,7 +677,18 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
               {values.fulfillmentType === FulfillmentType.PICKUP && (
                 <>
                   <Input
-                    tabIndex={addressFormTabIndex}
+                    tabIndex={tabbableFormValue("pickup")}
+                    id="attributes.name"
+                    placeholder="Full name"
+                    title={"Full name"}
+                    autoCorrect="off"
+                    value={values.attributes.name}
+                    onChange={handleChange}
+                    error={touched.attributes?.name && errors.attributes?.name}
+                    data-testid="AddressForm_name"
+                  />
+                  <Input
+                    tabIndex={tabbableFormValue("pickup")}
                     name="attributes.phoneNumber"
                     title="Phone number"
                     type="tel"
