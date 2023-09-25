@@ -205,6 +205,10 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             value={value?.addressLine1}
             onChange={changeEventHandler("addressLine1")}
             options={autocompleteOptions}
+            onClear={() => {
+              onChangeValue("addressLine1", "")
+              fetchForAutocomplete({ search: "" })
+            }}
             onSelect={option => {
               const hasSecondarySuggestions = option.entries > 1
               if (hasSecondarySuggestions) {
