@@ -179,6 +179,65 @@ const saveAndContinue = async () => {
   await flushPromiseQueue()
 }
 
+const recommendedAddress = {
+  addressLine1: "401 Broadway Suite 25",
+  addressLine2: null,
+  city: "New York",
+  region: "NY",
+  postalCode: "10013",
+  country: "US",
+}
+
+const verifyAddressWithSuggestions = async (relayEnv, input, suggested) => {
+  const addressLines = addr => {
+    return [
+      addr.addressLine1,
+      addr.addressLine2,
+      `${addr.city}, ${addr.region} ${addr.postalCode}`,
+      addr.country,
+    ]
+  }
+
+  const verificationResult = {
+    __typename: "VerifyAddressType",
+    verificationStatus: "VERIFIED_WITH_CHANGES",
+    suggestedAddresses: [
+      {
+        lines: addressLines(recommendedAddress),
+        address: recommendedAddress,
+      },
+    ],
+    inputAddress: {
+      lines: addressLines(validAddress),
+      address: validAddress,
+    },
+  }
+
+  const mutation = relayEnv.mock.getMostRecentOperation()
+  expect(mutation.request.node.operation.name).toEqual(
+    "AddressVerificationFlowQuery"
+  )
+  expect(mutation.request.variables).toEqual({
+    address: {
+      addressLine1: input.addressLine1,
+      addressLine2: input.addressLine2,
+      city: input.city,
+      region: input.region,
+      postalCode: input.postalCode,
+      country: input.country,
+    },
+  })
+
+  relayEnv.mock.resolveMostRecentOperation(operation => {
+    return MockPayloadGenerator.generate(operation, {
+      VerifyAddressType: () => verificationResult,
+    })
+  })
+  expect(await screen.findByText("Confirm your delivery address")).toBeVisible()
+  expect(await screen.findByText("Recommended")).toBeVisible()
+  expect(await screen.findByText("What you entered")).toBeVisible()
+}
+
 describe("Shipping", () => {
   const pushMock = jest.fn()
   let isCommittingMutation
@@ -647,37 +706,6 @@ describe("Shipping", () => {
 
       describe("address verification", () => {
         describe("with US enabled and international disabled", () => {
-          const recommendedAddress = {
-            addressLine1: "401 Broadway Suite 25",
-            addressLine2: null,
-            city: "New York",
-            region: "NY",
-            postalCode: "10013",
-            country: "US",
-          }
-          const addressLines = addr => {
-            return [
-              addr.addressLine1,
-              addr.addressLine2,
-              `${addr.city}, ${addr.region} ${addr.postalCode}`,
-              addr.country,
-            ]
-          }
-          const addressVerifiedWithChangesResult = {
-            __typename: "VerifyAddressType",
-            verificationStatus: "VERIFIED_WITH_CHANGES",
-            suggestedAddresses: [
-              {
-                lines: addressLines(recommendedAddress),
-                address: recommendedAddress,
-              },
-            ],
-            inputAddress: {
-              lines: addressLines(validAddress),
-              address: validAddress,
-            },
-          }
-
           beforeEach(() => {
             ;(useFeatureFlag as jest.Mock).mockImplementation(
               (featureName: string) => featureName === "address_verification_us"
@@ -725,29 +753,13 @@ describe("Shipping", () => {
             await fillAddressForm(validAddress)
             await userEvent.click(screen.getByText("Save and Continue"))
 
-            const mutation = env.mock.getMostRecentOperation()
-            expect(mutation.request.node.operation.name).toEqual(
-              "AddressVerificationFlowQuery"
+            await verifyAddressWithSuggestions(
+              env,
+              validAddress,
+              recommendedAddress
             )
-            expect(mutation.request.variables).toEqual({
-              address: {
-                addressLine1: "401 Broadway",
-                addressLine2: "",
-                city: "New York",
-                region: "NY",
-                postalCode: "15601",
-                country: "US",
-              },
-            })
 
-            env.mock.resolveMostRecentOperation(operation => {
-              return MockPayloadGenerator.generate(operation, {
-                VerifyAddressType: () => addressVerifiedWithChangesResult,
-              })
-            })
-            expect(
-              await screen.findByText("Confirm your delivery address")
-            ).toBeVisible()
+            expect(mockCommitMutation).not.toHaveBeenCalled()
           })
 
           it("uses recommended address", async () => {
@@ -763,31 +775,11 @@ describe("Shipping", () => {
             await fillAddressForm(validAddress)
             await userEvent.click(screen.getByText("Save and Continue"))
 
-            const mutation = env.mock.getMostRecentOperation()
-            expect(mutation.request.node.operation.name).toEqual(
-              "AddressVerificationFlowQuery"
+            await verifyAddressWithSuggestions(
+              env,
+              validAddress,
+              recommendedAddress
             )
-            expect(mutation.request.variables).toEqual({
-              address: {
-                addressLine1: "401 Broadway",
-                addressLine2: "",
-                city: "New York",
-                region: "NY",
-                postalCode: "15601",
-                country: "US",
-              },
-            })
-
-            env.mock.resolveMostRecentOperation(operation => {
-              return MockPayloadGenerator.generate(operation, {
-                VerifyAddressType: () => addressVerifiedWithChangesResult,
-              })
-            })
-            expect(
-              await screen.findByText("Confirm your delivery address")
-            ).toBeVisible()
-            expect(await screen.findByText("Recommended")).toBeVisible()
-            expect(await screen.findByText("What you entered")).toBeVisible()
 
             mockCommitMutation.mockResolvedValueOnce(
               settingOrderShipmentSuccess
@@ -829,31 +821,11 @@ describe("Shipping", () => {
             await fillAddressForm(validAddress)
             await userEvent.click(screen.getByText("Save and Continue"))
 
-            const mutation = env.mock.getMostRecentOperation()
-            expect(mutation.request.node.operation.name).toEqual(
-              "AddressVerificationFlowQuery"
+            await verifyAddressWithSuggestions(
+              env,
+              validAddress,
+              recommendedAddress
             )
-            expect(mutation.request.variables).toEqual({
-              address: {
-                addressLine1: "401 Broadway",
-                addressLine2: "",
-                city: "New York",
-                region: "NY",
-                postalCode: "15601",
-                country: "US",
-              },
-            })
-
-            env.mock.resolveMostRecentOperation(operation => {
-              return MockPayloadGenerator.generate(operation, {
-                VerifyAddressType: () => addressVerifiedWithChangesResult,
-              })
-            })
-            expect(
-              await screen.findByText("Confirm your delivery address")
-            ).toBeVisible()
-            expect(await screen.findByText("Recommended")).toBeVisible()
-            expect(await screen.findByText("What you entered")).toBeVisible()
 
             // Clicking "Back to Edit" allows users to edit the address form
             // and requires clicking "Save and Continue" to proceed.
@@ -1208,37 +1180,6 @@ describe("Shipping", () => {
     describe("with no saved address", () => {
       describe("address verification", () => {
         describe("with US enabled and international disabled", () => {
-          const recommendedAddress = {
-            addressLine1: "401 Broadway Suite 25",
-            addressLine2: null,
-            city: "New York",
-            region: "NY",
-            postalCode: "10013",
-            country: "US",
-          }
-          const addressLines = addr => {
-            return [
-              addr.addressLine1,
-              addr.addressLine2,
-              `${addr.city}, ${addr.region} ${addr.postalCode}`,
-              addr.country,
-            ]
-          }
-          const addressVerifiedWithChangesResult = {
-            __typename: "VerifyAddressType",
-            verificationStatus: "VERIFIED_WITH_CHANGES",
-            suggestedAddresses: [
-              {
-                lines: addressLines(recommendedAddress),
-                address: recommendedAddress,
-              },
-            ],
-            inputAddress: {
-              lines: addressLines(validAddress),
-              address: validAddress,
-            },
-          }
-
           beforeEach(() => {
             ;(useFeatureFlag as jest.Mock).mockImplementation(
               (featureName: string) => featureName === "address_verification_us"
@@ -1264,31 +1205,11 @@ describe("Shipping", () => {
             await fillAddressForm(validAddress)
             await saveAndContinue()
 
-            const mutation = env.mock.getMostRecentOperation()
-            expect(mutation.request.node.operation.name).toEqual(
-              "AddressVerificationFlowQuery"
+            await verifyAddressWithSuggestions(
+              env,
+              validAddress,
+              recommendedAddress
             )
-            expect(mutation.request.variables).toEqual({
-              address: {
-                addressLine1: "401 Broadway",
-                addressLine2: "",
-                city: "New York",
-                region: "NY",
-                postalCode: "15601",
-                country: "US",
-              },
-            })
-
-            env.mock.resolveMostRecentOperation(operation => {
-              return MockPayloadGenerator.generate(operation, {
-                VerifyAddressType: () => addressVerifiedWithChangesResult,
-              })
-            })
-            expect(
-              await screen.findByText("Confirm your delivery address")
-            ).toBeVisible()
-            expect(await screen.findByText("Recommended")).toBeVisible()
-            expect(await screen.findByText("What you entered")).toBeVisible()
 
             mockCommitMutation
               .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
@@ -1382,31 +1303,11 @@ describe("Shipping", () => {
             await fillAddressForm(validAddress)
             await saveAndContinue()
 
-            const mutation = env.mock.getMostRecentOperation()
-            expect(mutation.request.node.operation.name).toEqual(
-              "AddressVerificationFlowQuery"
+            await verifyAddressWithSuggestions(
+              env,
+              validAddress,
+              recommendedAddress
             )
-            expect(mutation.request.variables).toEqual({
-              address: {
-                addressLine1: "401 Broadway",
-                addressLine2: "",
-                city: "New York",
-                region: "NY",
-                postalCode: "15601",
-                country: "US",
-              },
-            })
-
-            env.mock.resolveMostRecentOperation(operation => {
-              return MockPayloadGenerator.generate(operation, {
-                VerifyAddressType: () => addressVerifiedWithChangesResult,
-              })
-            })
-            expect(
-              await screen.findByText("Confirm your delivery address")
-            ).toBeVisible()
-            expect(await screen.findByText("Recommended")).toBeVisible()
-            expect(await screen.findByText("What you entered")).toBeVisible()
 
             mockCommitMutation
               .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
