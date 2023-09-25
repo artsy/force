@@ -737,7 +737,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }, [activeStep, selectShippingQuote])
 
-  console.log({ activeStep })
   return (
     <Analytics contextPageOwnerId={order.internalID}>
       <Box data-test="orderShipping">
@@ -914,7 +913,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   width="50%"
                 >
                   {/* TODO: Remove - the * is just to show what step the button thinks it is on */}
-                  Save and Continue{activeStep === "fulfillment_details" && "*"}
+                  Save and Continue
                 </Button>
               </Media>
             </Flex>
@@ -940,7 +939,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   variant="primaryBlack"
                   width="100%"
                 >
-                  Save and Continue{activeStep === "fulfillment_details" && "*"}
+                  Save and Continue
                 </Button>
               </Media>
             </Flex>
