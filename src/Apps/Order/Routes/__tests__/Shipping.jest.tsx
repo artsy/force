@@ -647,6 +647,37 @@ describe("Shipping", () => {
 
       describe("address verification", () => {
         describe("with US enabled and international disabled", () => {
+          const recommendedAddress = {
+            addressLine1: "401 Broadway Suite 25",
+            addressLine2: null,
+            city: "New York",
+            region: "NY",
+            postalCode: "10013",
+            country: "US",
+          }
+          const addressLines = addr => {
+            return [
+              addr.addressLine1,
+              addr.addressLine2,
+              `${addr.city}, ${addr.region} ${addr.postalCode}`,
+              addr.country,
+            ]
+          }
+          const addressVerifiedWithChangesResult = {
+            __typename: "VerifyAddressType",
+            verificationStatus: "VERIFIED_WITH_CHANGES",
+            suggestedAddresses: [
+              {
+                lines: addressLines(recommendedAddress),
+                address: recommendedAddress,
+              },
+            ],
+            inputAddress: {
+              lines: addressLines(validAddress),
+              address: validAddress,
+            },
+          }
+
           beforeEach(() => {
             ;(useFeatureFlag as jest.Mock).mockImplementation(
               (featureName: string) => featureName === "address_verification_us"
@@ -682,33 +713,6 @@ describe("Shipping", () => {
           })
 
           it("triggers the flow for US address after clicking continue", async () => {
-            const addressVerifiedWithChangesResult = {
-              __typename: "VerifyAddressType",
-              verificationStatus: "VERIFIED_WITH_CHANGES",
-              suggestedAddresses: [
-                {
-                  lines: ["401 Broadway Suite 25", "New York, NY 10013", "USA"],
-                  address: {
-                    addressLine1: "401 Broadway Suite 25",
-                    addressLine2: null,
-                    city: "New York",
-                    region: "NY",
-                    postalCode: "10013",
-                    country: "US",
-                  },
-                },
-              ],
-              inputAddress: {
-                lines: [
-                  "401 Broadway",
-                  "Suite 25",
-                  "New York, NY 10013",
-                  "USA",
-                ],
-                address: validAddress,
-              },
-            }
-
             const { env } = renderWithRelay(
               {
                 CommerceOrder: () => order,
@@ -744,6 +748,138 @@ describe("Shipping", () => {
             expect(
               await screen.findByText("Confirm your delivery address")
             ).toBeVisible()
+          })
+
+          it("uses recommended address", async () => {
+            const { env } = renderWithRelay(
+              {
+                CommerceOrder: () => order,
+                Me: () => meWithoutAddress,
+              },
+              undefined,
+              relayEnv
+            )
+
+            await fillAddressForm(validAddress)
+            await userEvent.click(screen.getByText("Save and Continue"))
+
+            const mutation = env.mock.getMostRecentOperation()
+            expect(mutation.request.node.operation.name).toEqual(
+              "AddressVerificationFlowQuery"
+            )
+            expect(mutation.request.variables).toEqual({
+              address: {
+                addressLine1: "401 Broadway",
+                addressLine2: "",
+                city: "New York",
+                region: "NY",
+                postalCode: "15601",
+                country: "US",
+              },
+            })
+
+            env.mock.resolveMostRecentOperation(operation => {
+              return MockPayloadGenerator.generate(operation, {
+                VerifyAddressType: () => addressVerifiedWithChangesResult,
+              })
+            })
+            expect(
+              await screen.findByText("Confirm your delivery address")
+            ).toBeVisible()
+            expect(await screen.findByText("Recommended")).toBeVisible()
+            expect(await screen.findByText("What you entered")).toBeVisible()
+
+            mockCommitMutation.mockResolvedValueOnce(
+              settingOrderShipmentSuccess
+            )
+            // Clicking "Use This Address" on verification modal automatically
+            // sets shipping on the order and proceeds to the next step.
+            userEvent.click(screen.getByText("Use This Address"))
+            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+
+            let mutationArg = mockCommitMutation.mock.calls[0][0]
+            expect(mutationArg.mutation.default.operation.name).toEqual(
+              "SetShippingMutation"
+            )
+            expect(mutationArg.variables).toEqual({
+              input: {
+                id: "1234",
+                fulfillmentType: "SHIP",
+                addressVerifiedBy: "ARTSY",
+                phoneNumber: validAddress.phoneNumber,
+                shipping: {
+                  ...recommendedAddress,
+                  name: "Erik David",
+                  phoneNumber: "",
+                },
+              },
+            })
+          })
+
+          it("goes back and edits address after verification", async () => {
+            const { env } = renderWithRelay(
+              {
+                CommerceOrder: () => order,
+                Me: () => meWithoutAddress,
+              },
+              undefined,
+              relayEnv
+            )
+
+            await fillAddressForm(validAddress)
+            await userEvent.click(screen.getByText("Save and Continue"))
+
+            const mutation = env.mock.getMostRecentOperation()
+            expect(mutation.request.node.operation.name).toEqual(
+              "AddressVerificationFlowQuery"
+            )
+            expect(mutation.request.variables).toEqual({
+              address: {
+                addressLine1: "401 Broadway",
+                addressLine2: "",
+                city: "New York",
+                region: "NY",
+                postalCode: "15601",
+                country: "US",
+              },
+            })
+
+            env.mock.resolveMostRecentOperation(operation => {
+              return MockPayloadGenerator.generate(operation, {
+                VerifyAddressType: () => addressVerifiedWithChangesResult,
+              })
+            })
+            expect(
+              await screen.findByText("Confirm your delivery address")
+            ).toBeVisible()
+            expect(await screen.findByText("Recommended")).toBeVisible()
+            expect(await screen.findByText("What you entered")).toBeVisible()
+
+            // Clicking "Back to Edit" allows users to edit the address form
+            // and requires clicking "Save and Continue" to proceed.
+            userEvent.click(screen.getByText("Back to Edit"))
+            await userEvent.click(screen.getByText("Save and Continue"))
+            mockCommitMutation.mockResolvedValueOnce(
+              settingOrderShipmentSuccess
+            )
+            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+
+            let mutationArg = mockCommitMutation.mock.calls[0][0]
+            expect(mutationArg.mutation.default.operation.name).toEqual(
+              "SetShippingMutation"
+            )
+            expect(mutationArg.variables).toEqual({
+              input: {
+                id: "1234",
+                fulfillmentType: "SHIP",
+                addressVerifiedBy: "USER",
+                phoneNumber: validAddress.phoneNumber,
+                shipping: {
+                  ...validAddress,
+                  phoneNumber: "",
+                },
+              },
+            })
           })
 
           it("does not triggers the flow for international address after clicking continue", async () => {
@@ -1070,6 +1206,286 @@ describe("Shipping", () => {
 
   describe("with Artsy shipping", () => {
     describe("with no saved address", () => {
+      describe("address verification", () => {
+        describe("with US enabled and international disabled", () => {
+          const recommendedAddress = {
+            addressLine1: "401 Broadway Suite 25",
+            addressLine2: null,
+            city: "New York",
+            region: "NY",
+            postalCode: "10013",
+            country: "US",
+          }
+          const addressLines = addr => {
+            return [
+              addr.addressLine1,
+              addr.addressLine2,
+              `${addr.city}, ${addr.region} ${addr.postalCode}`,
+              addr.country,
+            ]
+          }
+          const addressVerifiedWithChangesResult = {
+            __typename: "VerifyAddressType",
+            verificationStatus: "VERIFIED_WITH_CHANGES",
+            suggestedAddresses: [
+              {
+                lines: addressLines(recommendedAddress),
+                address: recommendedAddress,
+              },
+            ],
+            inputAddress: {
+              lines: addressLines(validAddress),
+              address: validAddress,
+            },
+          }
+
+          beforeEach(() => {
+            ;(useFeatureFlag as jest.Mock).mockImplementation(
+              (featureName: string) => featureName === "address_verification_us"
+            )
+            relayEnv = createMockEnvironment()
+          })
+
+          afterEach(() => {
+            relayEnv = undefined
+          })
+
+          it("uses recommended address", async () => {
+            const { env } = renderWithRelay(
+              {
+                CommerceOrder: () =>
+                  UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+                Me: () => meWithoutAddress,
+              },
+              undefined,
+              relayEnv
+            )
+
+            await fillAddressForm(validAddress)
+            await saveAndContinue()
+
+            const mutation = env.mock.getMostRecentOperation()
+            expect(mutation.request.node.operation.name).toEqual(
+              "AddressVerificationFlowQuery"
+            )
+            expect(mutation.request.variables).toEqual({
+              address: {
+                addressLine1: "401 Broadway",
+                addressLine2: "",
+                city: "New York",
+                region: "NY",
+                postalCode: "15601",
+                country: "US",
+              },
+            })
+
+            env.mock.resolveMostRecentOperation(operation => {
+              return MockPayloadGenerator.generate(operation, {
+                VerifyAddressType: () => addressVerifiedWithChangesResult,
+              })
+            })
+            expect(
+              await screen.findByText("Confirm your delivery address")
+            ).toBeVisible()
+            expect(await screen.findByText("Recommended")).toBeVisible()
+            expect(await screen.findByText("What you entered")).toBeVisible()
+
+            mockCommitMutation
+              .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
+              .mockImplementationOnce(relayProps => {
+                relayProps[1].onCompleted(saveAddressSuccess)
+              })
+              .mockResolvedValueOnce(selectShippingQuoteSuccess)
+
+            // Clicking "Use This Address" on verification modal automatically
+            // sets shipping on the order and fetching quotes.
+            userEvent.click(screen.getByText("Use This Address"))
+            await flushPromiseQueue()
+
+            expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+
+            let mutationArg = mockCommitMutation.mock.calls[0][0]
+            expect(mutationArg.mutation.default.operation.name).toEqual(
+              "SetShippingMutation"
+            )
+            expect(mutationArg.variables).toEqual({
+              input: {
+                id: "2939023",
+                fulfillmentType: "SHIP_ARTA",
+                addressVerifiedBy: "ARTSY",
+                phoneNumber: validAddress.phoneNumber,
+                shipping: {
+                  ...recommendedAddress,
+                  name: "Erik David",
+                  phoneNumber: "",
+                },
+              },
+            })
+
+            mutationArg = mockCommitMutation.mock.calls[1][0][1]
+            expect(mutationArg.mutation.default.operation.name).toEqual(
+              "CreateUserAddressMutation"
+            )
+            expect(mutationArg.variables).toEqual({
+              input: {
+                attributes: {
+                  ...recommendedAddress,
+                  name: "Erik David",
+                  phoneNumber: "5555937743",
+                },
+              },
+            })
+
+            userEvent.click(screen.getByText(/^Premium/))
+            await saveAndContinue()
+
+            expect(mockCommitMutation).toHaveBeenCalledTimes(4)
+
+            mutationArg = mockCommitMutation.mock.calls[2][0]
+            expect(mutationArg.mutation.default.operation.name).toEqual(
+              "SelectShippingOptionMutation"
+            )
+            expect(mutationArg.variables).toEqual({
+              input: {
+                id: "2939023",
+                selectedShippingQuoteId: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+              },
+            })
+
+            mutationArg = mockCommitMutation.mock.calls[3][0][1]
+            expect(mutationArg.mutation.default.operation.name).toEqual(
+              "UpdateUserAddressMutation"
+            )
+            expect(mutationArg.variables).toEqual({
+              input: {
+                userAddressID: "address-id",
+                attributes: {
+                  ...recommendedAddress,
+                  name: "Erik David",
+                  phoneNumber: "5555937743",
+                },
+              },
+            })
+          })
+
+          it("goes back and edits address after verification", async () => {
+            const { env } = renderWithRelay(
+              {
+                CommerceOrder: () =>
+                  UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+                Me: () => meWithoutAddress,
+              },
+              undefined,
+              relayEnv
+            )
+
+            await fillAddressForm(validAddress)
+            await saveAndContinue()
+
+            const mutation = env.mock.getMostRecentOperation()
+            expect(mutation.request.node.operation.name).toEqual(
+              "AddressVerificationFlowQuery"
+            )
+            expect(mutation.request.variables).toEqual({
+              address: {
+                addressLine1: "401 Broadway",
+                addressLine2: "",
+                city: "New York",
+                region: "NY",
+                postalCode: "15601",
+                country: "US",
+              },
+            })
+
+            env.mock.resolveMostRecentOperation(operation => {
+              return MockPayloadGenerator.generate(operation, {
+                VerifyAddressType: () => addressVerifiedWithChangesResult,
+              })
+            })
+            expect(
+              await screen.findByText("Confirm your delivery address")
+            ).toBeVisible()
+            expect(await screen.findByText("Recommended")).toBeVisible()
+            expect(await screen.findByText("What you entered")).toBeVisible()
+
+            mockCommitMutation
+              .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
+              .mockImplementationOnce(relayProps => {
+                relayProps[1].onCompleted(saveAddressSuccess)
+              })
+              .mockResolvedValueOnce(selectShippingQuoteSuccess)
+
+            // Clicking "Back to Edit" allows users to edit the address form
+            // and requires clicking "Save and Continue" to proceed.
+            userEvent.click(screen.getByText("Back to Edit"))
+            await userEvent.click(screen.getByText("Save and Continue"))
+            await flushPromiseQueue()
+
+            expect(mockCommitMutation).toHaveBeenCalledTimes(2)
+
+            let mutationArg = mockCommitMutation.mock.calls[0][0]
+            expect(mutationArg.mutation.default.operation.name).toEqual(
+              "SetShippingMutation"
+            )
+            expect(mutationArg.variables).toEqual({
+              input: {
+                id: "2939023",
+                fulfillmentType: "SHIP_ARTA",
+                addressVerifiedBy: "USER",
+                phoneNumber: validAddress.phoneNumber,
+                shipping: {
+                  ...validAddress,
+                  phoneNumber: "",
+                },
+              },
+            })
+
+            mutationArg = mockCommitMutation.mock.calls[1][0][1]
+            expect(mutationArg.mutation.default.operation.name).toEqual(
+              "CreateUserAddressMutation"
+            )
+            expect(mutationArg.variables).toEqual({
+              input: {
+                attributes: {
+                  ...validAddress,
+                  phoneNumber: "5555937743",
+                },
+              },
+            })
+
+            userEvent.click(screen.getByText(/^Premium/))
+            await saveAndContinue()
+
+            expect(mockCommitMutation).toHaveBeenCalledTimes(4)
+
+            mutationArg = mockCommitMutation.mock.calls[2][0]
+            expect(mutationArg.mutation.default.operation.name).toEqual(
+              "SelectShippingOptionMutation"
+            )
+            expect(mutationArg.variables).toEqual({
+              input: {
+                id: "2939023",
+                selectedShippingQuoteId: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+              },
+            })
+
+            mutationArg = mockCommitMutation.mock.calls[3][0][1]
+            expect(mutationArg.mutation.default.operation.name).toEqual(
+              "UpdateUserAddressMutation"
+            )
+            expect(mutationArg.variables).toEqual({
+              input: {
+                userAddressID: "address-id",
+                attributes: {
+                  ...validAddress,
+                  phoneNumber: "5555937743",
+                },
+              },
+            })
+          })
+        })
+      })
+
       it("sets shipping on order, selects shipping quote, and save address on user", async () => {
         mockCommitMutation
           .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
