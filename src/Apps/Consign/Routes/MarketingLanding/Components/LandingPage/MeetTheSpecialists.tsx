@@ -132,42 +132,42 @@ export const MeetTheSpecialists: React.FC = () => {
                 justifyContent="flex-end"
                 flexDirection="column"
               >
-                <Box position="absolute" width="100%" height="100%">
-                  <LinearGradient />
-                  <Image
-                    width="100%"
-                    height="100%"
-                    {...resized(i.imageUrl, {
-                      width: CARD_WIDTH,
-                      height: CARD_HEIGHT,
-                    })}
-                    lazyLoad
-                    alt={`specialist ${i.firstName}`}
-                  />
-                </Box>
+                <Image
+                  width="100%"
+                  height="100%"
+                  {...resized(i.imageUrl, {
+                    width: CARD_WIDTH,
+                    height: CARD_HEIGHT,
+                  })}
+                  lazyLoad
+                  alt={`specialist ${i.firstName}`}
+                />
+                <LinearGradient />
 
-                <Box pl={2} pr={2} zIndex={10}>
-                  <Text variant={["lg-display", "xl"]} color="white100">
-                    {i.name}
-                  </Text>
-                  <Text mb={1} variant={["xs", "xs"]} color="white100">
-                    {i.jobTitle}
-                  </Text>
-                  <Text mb={2} variant={["xs", "sm"]} color="white100">
-                    <ReadMore content={i.bio} maxChars={88} />
-                  </Text>
-                  <Button
-                    // @ts-ignore
-                    as={RouterLink}
-                    variant="secondaryWhite"
-                    size="small"
-                    mb={2}
-                    onClick={clickContactSpecialist}
-                    data-testid={`get-in-touch-button-${i.firstName}`}
-                    to={`/sell/inquiry/${i.email}`}
-                  >
-                    Contact {i.firstName}
-                  </Button>
+                <Box position="absolute" width="100%">
+                  <Box pl={2} pr={2} zIndex={10}>
+                    <Text variant={["lg-display", "xl"]} color="white100">
+                      {i.name}
+                    </Text>
+                    <Text mb={1} variant={["xs", "xs"]} color="white100">
+                      {i.jobTitle}
+                    </Text>
+                    <Text mb={2} variant={["xs", "sm"]} color="white100">
+                      <ReadMore content={i.bio} maxChars={88} />
+                    </Text>
+                    <Button
+                      // @ts-ignore
+                      as={RouterLink}
+                      variant="secondaryWhite"
+                      size="small"
+                      mb={2}
+                      onClick={clickContactSpecialist}
+                      data-testid={`get-in-touch-button-${i.firstName}`}
+                      to={`/sell/inquiry/${i.email}`}
+                    >
+                      Contact {i.firstName}
+                    </Button>
+                  </Box>
                 </Box>
               </Box>
             </ResponsiveBox>
