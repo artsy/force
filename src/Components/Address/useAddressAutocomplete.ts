@@ -154,7 +154,7 @@ export const useAddressAutocomplete = (
         entries: suggestion.entries,
         address: {
           addressLine1: suggestion.street_line,
-          addressLine2: suggestion.secondary,
+          addressLine2: suggestion.secondary || "",
           city: suggestion.city,
           region: suggestion.state,
           postalCode: suggestion.zipcode,

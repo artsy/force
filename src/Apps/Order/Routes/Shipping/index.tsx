@@ -3,7 +3,6 @@ import {
   Box,
   Button,
   Checkbox,
-  Collapse,
   Flex,
   RadioGroup,
   Spacer,
@@ -53,6 +52,7 @@ import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
+import { Collapse } from "Apps/Order/Components/Collapse"
 import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
 import {
   startingPhoneNumber,

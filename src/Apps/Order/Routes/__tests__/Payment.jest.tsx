@@ -1,4 +1,5 @@
-import { BorderedRadio, Checkbox, Collapse } from "@artsy/palette"
+import { BorderedRadio, Checkbox } from "@artsy/palette"
+import { Collapse } from "Apps/Order/Components/Collapse"
 import { PaymentTestQuery$rawResponse } from "__generated__/PaymentTestQuery.graphql"
 import {
   BuyOrderWithShippingDetails,

@@ -92,6 +92,7 @@ describe("useAddressAutocomplete", () => {
           "https://us-autocomplete-pro.api.smarty.com/lookup?key=smarty-api-key&search=401+Broadway"
         )
       })
+
       it("returns the first 5 results in the correct shape", async () => {
         const { result } = setupHook({ country: "US" })
 
@@ -150,6 +151,33 @@ describe("useAddressAutocomplete", () => {
 
         const formattedAddress = result.current.autocompleteOptions[0].text
         expect(formattedAddress).toBe("401 Broadway Fl 13, New York NY 10013")
+      })
+
+      it("sets line 2 to an empty string if the value is missing", async () => {
+        mockFetch.mockResolvedValue({
+          json: jest.fn().mockResolvedValue({
+            suggestions: [
+              {
+                city: "New York",
+                entries: 2,
+                state: "NY",
+                street_line: "402 Broadway",
+                zipcode: "10014",
+              },
+            ],
+          }),
+        })
+
+        const { result } = setupHook({ country: "US" })
+
+        act(() => {
+          result.current.fetchForAutocomplete({ search: "402 Broadway" })
+        })
+
+        await waitFor(() => result.current.autocompleteOptions.length > 0)
+
+        const option = result.current.autocompleteOptions[0]
+        expect(option.address.addressLine2).toEqual("")
       })
 
       it("returns the correct single-line text for an address with multiple entries", async () => {
