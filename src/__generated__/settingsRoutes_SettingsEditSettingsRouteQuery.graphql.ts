@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fed133f440b89018dd9885654a8e087f>>
+ * @generated SignedSource<<e17b71f2b247907c661ac312216919c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -111,6 +111,24 @@ return {
             "args": null,
             "kind": "ScalarField",
             "name": "phone",
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "PhoneNumberType",
+            "kind": "LinkedField",
+            "name": "phoneNumber",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "regionCode",
+                "storageKey": null
+              }
+            ],
             "storageKey": null
           },
           {
@@ -258,12 +276,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "dae5408d31d9afd2798b8fae7ce0b526",
+    "cacheID": "75062f3173be9c0b26ee583a777d3b24",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_SettingsEditSettingsRouteQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SettingsEditSettingsRouteQuery {\n  me {\n    ...SettingsEditSettingsRoute_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n\nfragment SettingsEditSettingsLinkedAccounts_me on Me {\n  authentications {\n    provider\n    id\n  }\n}\n\nfragment SettingsEditSettingsPassword_me on Me {\n  hasPassword\n}\n\nfragment SettingsEditSettingsRoute_me on Me {\n  ...SettingsEditSettingsInformation_me\n  ...SettingsEditSettingsPassword_me\n  ...SettingsEditSettingsTwoFactor_me\n  ...SettingsEditSettingsLinkedAccounts_me\n}\n\nfragment SettingsEditSettingsTwoFactorBackupCodes_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactor_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...SettingsEditSettingsTwoFactorBackupCodes_me\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
+    "text": "query settingsRoutes_SettingsEditSettingsRouteQuery {\n  me {\n    ...SettingsEditSettingsRoute_me\n    id\n  }\n}\n\nfragment AppSecondFactor_me on Me {\n  hasSecondFactorEnabled\n  appSecondFactors: secondFactors(kinds: [app]) {\n    __typename\n    ... on AppSecondFactor {\n      __typename\n      internalID\n      name\n    }\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n  phoneNumber {\n    regionCode\n  }\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n\nfragment SettingsEditSettingsLinkedAccounts_me on Me {\n  authentications {\n    provider\n    id\n  }\n}\n\nfragment SettingsEditSettingsPassword_me on Me {\n  hasPassword\n}\n\nfragment SettingsEditSettingsRoute_me on Me {\n  ...SettingsEditSettingsInformation_me\n  ...SettingsEditSettingsPassword_me\n  ...SettingsEditSettingsTwoFactor_me\n  ...SettingsEditSettingsLinkedAccounts_me\n}\n\nfragment SettingsEditSettingsTwoFactorBackupCodes_me on Me {\n  backupSecondFactors: secondFactors(kinds: [backup]) {\n    __typename\n    ... on BackupSecondFactor {\n      __typename\n    }\n  }\n}\n\nfragment SettingsEditSettingsTwoFactor_me on Me {\n  hasSecondFactorEnabled\n  ...AppSecondFactor_me\n  ...SmsSecondFactor_me\n  ...SettingsEditSettingsTwoFactorBackupCodes_me\n}\n\nfragment SmsSecondFactor_me on Me {\n  email\n  hasSecondFactorEnabled\n  smsSecondFactors: secondFactors(kinds: [sms]) {\n    __typename\n    ... on SmsSecondFactor {\n      __typename\n      internalID\n      formattedPhoneNumber\n    }\n  }\n}\n"
   }
 };
 })();
