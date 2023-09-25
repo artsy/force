@@ -160,12 +160,6 @@ const COLLECTOR_SALES_SPECIALISTS: Specialist[] = [
     image: "https://files.artsy.net/images/isabel_telonis.png",
   },
   {
-    name: "Vanessa Zingale",
-    title: "Senior Manager, Collector Services",
-    email: "vanessa.zingale@artsy.net",
-    image: "https://files.artsy.net/images/vanessa_zingale.png",
-  },
-  {
     name: "Dana Rodriguez",
     title: "Associate, Collector Services",
     email: "dana.rodriguez@artsy.net",
@@ -239,13 +233,6 @@ const AUCTION_SPECIALISTS: Specialist[] = [
     location: "Los Angeles",
     email: "laura.martin@artsy.net",
     image: "https://files.artsy.net/images/laura.jpg",
-  },
-  {
-    name: "Adam McCoy",
-    title: "Senior Specialist and Head of Prints",
-    location: "New York",
-    email: "adam.mccoy@artsy.net",
-    image: "https://files.artsy.net/images/adam2.jpg",
   },
   {
     name: "Alan Zeng",
