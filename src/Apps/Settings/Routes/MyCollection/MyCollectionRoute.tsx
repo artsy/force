@@ -5,15 +5,15 @@ import { useMyCollectionTracking } from "Apps/MyCollection/Routes/Hooks/useMyCol
 import { MyCollectionArtworkGrid } from "Apps/Settings/Routes/MyCollection/Components/MyCollectionArtworkGrid"
 import { MetaTags } from "Components/MetaTags"
 import { Sticky } from "Components/Sticky"
-import { FC, useEffect, useState } from "react"
-import {
-  createPaginationContainer,
-  graphql,
-  RelayPaginationProp,
-} from "react-relay"
 import { RouterLink } from "System/Router/RouterLink"
 import { cleanLocalImages } from "Utils/localImageHelpers"
 import { MyCollectionRoute_me$data } from "__generated__/MyCollectionRoute_me.graphql"
+import { FC, useEffect, useState } from "react"
+import {
+  RelayPaginationProp,
+  createPaginationContainer,
+  graphql,
+} from "react-relay"
 import { EmptyMyCollectionPage } from "./Components/EmptyMyCollectionPage"
 
 export interface MyCollectionRouteProps {
@@ -95,7 +95,6 @@ const MyCollectionRoute: FC<MyCollectionRouteProps> = ({ me, relay }) => {
 
           <MyCollectionArtworkGrid
             artworks={myCollectionConnection}
-            columnCount={[2, 3, 4, 4]}
             showHoverDetails={false}
             showArtworksWithoutImages
             hideSaleInfo
