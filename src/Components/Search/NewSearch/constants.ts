@@ -35,7 +35,7 @@ export const ARTICLE_PILL: PillType = {
 }
 
 export const SALE_PILL: PillType = {
-  displayName: "Sale",
+  displayName: "Auction",
   key: "sale",
   searchEntityName: "SALE",
   analyticsContextModule: ContextModule.auctionTab,
