@@ -186,18 +186,14 @@ describe("Shipping", () => {
 
   beforeEach(() => {
     isCommittingMutation = false
-  })
-
-  afterEach(() => {
-    jest.clearAllMocks()
-    mockCommitMutation.mockReset()
-  })
-
-  beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent: jest.fn(),
     }))
     ;(useFeatureFlag as jest.Mock).mockImplementation(() => false)
+  })
+
+  afterEach(() => {
+    jest.restoreAllMocks()
   })
 
   const { renderWithRelay } = setupTestWrapperTL({
@@ -659,7 +655,6 @@ describe("Shipping", () => {
           })
 
           afterEach(() => {
-            ;(useFeatureFlag as jest.Mock).mockReset()
             relayEnv = undefined
           })
 
@@ -781,7 +776,6 @@ describe("Shipping", () => {
           })
 
           afterEach(() => {
-            ;(useFeatureFlag as jest.Mock).mockReset()
             relayEnv = undefined
           })
 
@@ -944,7 +938,6 @@ describe("Shipping", () => {
           })
 
           afterEach(() => {
-            ;(useFeatureFlag as jest.Mock).mockReset()
             relayEnv = undefined
           })
 
