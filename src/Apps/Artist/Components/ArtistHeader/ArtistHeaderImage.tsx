@@ -1,6 +1,7 @@
-import { BoxProps, FullBleed, Image, ResponsiveBox } from "@artsy/palette"
+import { BoxProps, Image, ResponsiveBox } from "@artsy/palette"
+import { FullBleedHeader } from "Components/FullBleedHeader/FullBleedHeader"
 import { FC } from "react"
-import { cropped, maxDimensionsByArea, resized } from "Utils/resized"
+import { maxDimensionsByArea, resized } from "Utils/resized"
 import { Media } from "Utils/Responsive"
 
 interface ArtistHeaderImageProps
@@ -19,31 +20,11 @@ export const ArtistHeaderImage: FC<ArtistHeaderImageProps> = ({
   })
 
   const desktop = resized(image.src, { width: max.width, height: max.height })
-  const mobile = cropped(image.src, { width: 430, height: 430 })
 
   return (
     <>
       <Media at="xs">
-        <FullBleed
-          // FIXME: Remove this negative margin once the `diamond_revised-artist-header` feature flag is removed
-          mt={-6}
-        >
-          <ResponsiveBox
-            aspectWidth={1}
-            aspectHeight={1}
-            maxWidth="100%"
-            bg="black5"
-            {...rest}
-          >
-            <Image
-              src={mobile.src}
-              srcSet={mobile.srcSet}
-              width="100%"
-              height="100%"
-              style={{ objectFit: "cover" }}
-            />
-          </ResponsiveBox>
-        </FullBleed>
+        <FullBleedHeader src={image.src} />
       </Media>
 
       <Media greaterThan="xs">
