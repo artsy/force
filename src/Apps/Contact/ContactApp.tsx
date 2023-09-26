@@ -167,12 +167,12 @@ export const ContactApp: React.FC = () => {
             Staff Writer
           </Text>
 
-          <Text variant="sm">Ayanna Dozier</Text>
+          <Text variant="sm">Maxwell Rabb</Text>
         </Column>
 
         <Column span={2}>
           <Text as="h3" variant="xs">
-            Production Editor
+            Associate Managing Editor
           </Text>
 
           <Text variant="sm">Olivia Horn</Text>

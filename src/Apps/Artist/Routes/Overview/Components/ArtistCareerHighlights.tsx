@@ -4,7 +4,6 @@ import {
   Expandable,
   GridColumns,
   SkeletonText,
-  Text,
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistCareerHighlights_artist$data } from "__generated__/ArtistCareerHighlights_artist.graphql"
@@ -13,6 +12,8 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { FC } from "react"
 import { RailHeader } from "Components/Rail/RailHeader"
 import { ARTIST_HEADER_NUMBER_OF_INSIGHTS } from "Apps/Artist/Components/ArtistHeader/ArtistHeader2"
+import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
+import { Media } from "Utils/Responsive"
 
 interface ArtistCareerHighlightsProps {
   artist: ArtistCareerHighlights_artist$data
@@ -22,12 +23,6 @@ const ArtistCareerHighlights: FC<ArtistCareerHighlightsProps> = ({
   artist,
 }) => {
   const insights = artist.insights.slice(ARTIST_HEADER_NUMBER_OF_INSIGHTS)
-  const hasCareerHighlights = insights.length > 0
-
-  if (!hasCareerHighlights) {
-    return null
-  }
-
   const numOfColumns = insights.length > 4 ? 2 : 1
   const mid = Math.ceil(insights.length / 2)
   const columns =
@@ -36,39 +31,58 @@ const ArtistCareerHighlights: FC<ArtistCareerHighlightsProps> = ({
       : [insights]
 
   return (
-    <Box display="flex" gap={4} flexDirection="column">
-      <RailHeader
-        title="Highlights and Achievements"
-        viewAllHref={`${artist.href}/cv`}
-        viewAllLabel="View CV"
-      />
+    <>
+      {artist.insights.length > 0 && (
+        <Media at="xs">
+          <Box display="flex" gap={4} flexDirection="column">
+            <RailHeader
+              title="Highlights and Achievements"
+              viewAllHref={`${artist.href}/cv`}
+              viewAllLabel="View CV"
+            />
 
-      <GridColumns gridRowGap={0}>
-        {columns.map((column, index) => {
-          return (
-            <Column span={6} key={index}>
-              {column.map((insight, index) => {
+            <Box>
+              {artist.insights.map((insight, index) => {
                 return (
-                  <Expandable
+                  <ArtistCareerHighlightFragmentContainer
                     key={insight.kind ?? index}
-                    label={insight.label}
-                    pb={1}
-                  >
-                    <Text variant="xs">
-                      {insight.entities.length > 0
-                        ? insight.entities
-                            .join(", ")
-                            .replace(/,\s([^,]+)$/, ", and $1")
-                        : insight.description}
-                    </Text>
-                  </Expandable>
+                    insight={insight}
+                  />
                 )
               })}
-            </Column>
-          )
-        })}
-      </GridColumns>
-    </Box>
+            </Box>
+          </Box>
+        </Media>
+      )}
+
+      {insights.length > 0 && (
+        <Media greaterThan="xs">
+          <Box display="flex" gap={4} flexDirection="column">
+            <RailHeader
+              title="Highlights and Achievements"
+              viewAllHref={`${artist.href}/cv`}
+              viewAllLabel="View CV"
+            />
+            <GridColumns gridRowGap={0}>
+              {columns.map((column, index) => {
+                return (
+                  <Column span={6} key={index}>
+                    {column.map((insight, index) => {
+                      return (
+                        <ArtistCareerHighlightFragmentContainer
+                          key={insight.kind ?? index}
+                          insight={insight}
+                        />
+                      )
+                    })}
+                  </Column>
+                )
+              })}
+            </GridColumns>
+          </Box>
+        </Media>
+      )}
+    </>
   )
 }
 
@@ -80,9 +94,7 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
         name
         href
         insights {
-          entities
-          description
-          label
+          ...ArtistCareerHighlight_insight
           kind
         }
       }

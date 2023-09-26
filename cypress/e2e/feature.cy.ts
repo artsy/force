@@ -1,9 +1,9 @@
 import { visitWithStatusRetries } from "../helpers/visitWithStatusRetries"
 
 describe("Features", () => {
-  it("/feature/anti-racism-resources-in-the-art-world", () => {
-    visitWithStatusRetries("feature/anti-racism-resources-in-the-art-world")
-    cy.get("h1").should("contain", "Anti-Racism Resources in the Art World")
-    cy.title().should("eq", "Anti-Racism Resources in the Art World | Artsy")
+  it("/feature/the-artsy-vanguard-2020", () => {
+    visitWithStatusRetries("feature/the-artsy-vanguard-2020")
+    cy.get("h1").should("contain", "The Artsy Vanguard 2020")
+    cy.title().should("eq", "The Artsy Vanguard 2020 | Artsy")
   })
 })

@@ -110,6 +110,7 @@ const ArtistEditorialNewsGrid: FC<ArtistEditorialNewsGridProps> = ({
               aspectWidth={firstImage.width}
               aspectHeight={firstImage.height}
               maxWidth="100%"
+              bg="black10"
             >
               <Image
                 src={firstImage.src}

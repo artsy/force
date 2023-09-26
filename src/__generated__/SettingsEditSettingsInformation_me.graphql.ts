@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<89af01036aa0d6337cab0148a4d9f65e>>
+ * @generated SignedSource<<c187c938c6eb8987979db3e146a4ceeb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,9 @@ export type SettingsEditSettingsInformation_me$data = {
   readonly name: string | null;
   readonly paddleNumber: string | null;
   readonly phone: string | null;
+  readonly phoneNumber: {
+    readonly regionCode: string | null;
+  } | null;
   readonly priceRange: string | null;
   readonly priceRangeMax: number | null;
   readonly priceRangeMin: number | null;
@@ -62,6 +65,24 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "concreteType": "PhoneNumberType",
+      "kind": "LinkedField",
+      "name": "phoneNumber",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "regionCode",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
       "kind": "ScalarField",
       "name": "priceRange",
       "storageKey": null
@@ -85,6 +106,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "472799a84214c4526123d3aa93cd73ad";
+(node as any).hash = "dd431d2be14132d3807372cffd2d676f";
 
 export default node;

@@ -1,10 +1,8 @@
 import {
   Box,
-  Clickable,
   Column,
   Expandable,
   Flex,
-  FullBleed,
   GridColumns,
   HTML,
   HTMLProps,
@@ -22,21 +20,16 @@ import {
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
 import { ArtistHeader2_artist$data } from "__generated__/ArtistHeader2_artist.graphql"
-import { AppContainer } from "Apps/Components/AppContainer"
-import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
-import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
-import { useMode } from "Utils/Hooks/useMode"
 import { RouterLink } from "System/Router/RouterLink"
 import {
   ArtistHeaderImage,
   isValidImage,
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
-import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader2_artist$data
@@ -45,12 +38,6 @@ interface ArtistHeaderProps {
 const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType, contextPageOwnerId } = useAnalyticsContext()
-
-  const [mode, setMode] = useMode<"Collapsed" | "Expanded">("Expanded")
-
-  const handleClick = () => {
-    setMode(mode === "Collapsed" ? "Expanded" : "Collapsed")
-  }
 
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
@@ -61,223 +48,173 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
   const hasRightDetails = hasVerifiedRepresentatives || hasInsights
   const hasSomething = hasImage || hasBio || hasRightDetails
 
-  if (mode === "Collapsed") {
-    return (
-      <>
-        <Spacer y={[2, 4]} />
-
-        <GridColumns>
-          <Column
-            span={8}
-            display="flex"
-            alignItems={["left", "center"]}
-            gap={2}
-            flexDirection={["column", "row"]}
-          >
-            <Text as="h1" variant="xl">
-              {artist.name}
-            </Text>
-
-            <ProgressiveOnboardingFollowArtist>
-              <FollowArtistButtonQueryRenderer
-                id={artist.internalID}
-                contextModule={ContextModule.artistHeader}
-                size="small"
-                width="fit-content"
-              />
-            </ProgressiveOnboardingFollowArtist>
-          </Column>
-
-          <Column span={4} display="flex" justifyContent="flex-end">
-            <Clickable
-              onClick={handleClick}
-              title="Show additional information"
-              textDecoration="underline"
-            >
-              <Text variant="sm-display">Expand</Text>
-            </Clickable>
-          </Column>
-        </GridColumns>
-      </>
-    )
-  }
-
   return (
-    <FullBleed key={artist.internalID} data-test="artistHeader">
-      <Box width="100%" height="100%">
-        <AppContainer>
-          <HorizontalPadding pt={4} position="relative">
-            <GridColumns gridRowGap={2} gridColumnGap={[0, 4]}>
-              {artist.coverArtwork && hasImage && (
-                <Column
-                  span={3}
-                  display="flex"
-                  flexDirection="column"
-                  alignItems="center"
-                >
-                  <RouterLink to={artist.coverArtwork.href} display="block">
-                    <ArtistHeaderImage image={image} />
-                  </RouterLink>
-                </Column>
-              )}
+    <GridColumns gridRowGap={2} gridColumnGap={[0, 4]} data-test="artistHeader">
+      {artist.coverArtwork && hasImage && (
+        <Column
+          span={3}
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+        >
+          <RouterLink to={artist.coverArtwork.href} display="block">
+            <ArtistHeaderImage image={image} />
+          </RouterLink>
+        </Column>
+      )}
 
-              <Column
-                span={hasRightDetails ? 5 : 8}
-                display="flex"
-                flexDirection="column"
-                gap={2}
-                textAlign={["center", "left"]}
-              >
-                <Flex
-                  alignItems="center"
-                  flexDirection={["column", "row"]}
-                  justifyContent={["center", "space-between"]}
-                  gap={2}
-                >
-                  <Flex flexDirection="column" gap={2}>
-                    <Box flex={1}>
-                      <Text as="h1" variant="xl">
-                        {artist.name}
-                      </Text>
+      <Column
+        span={hasRightDetails ? 5 : 8}
+        display="flex"
+        flexDirection="column"
+        gap={2}
+      >
+        <Flex
+          alignItems={["flex-start", "center"]}
+          flexDirection={["column", "row"]}
+          justifyContent={["center", "space-between"]}
+          gap={2}
+        >
+          <Flex flexDirection="column" gap={2} width="100%">
+            <Box flex={1}>
+              <Text as="h1" variant="xl">
+                {artist.name}
+              </Text>
 
-                      <Text as="h2" variant="xl" color="black60">
-                        {artist.formattedNationalityAndBirthday}
-                      </Text>
+              <Text as="h2" variant={["md", "xl"]} color="black60">
+                {artist.formattedNationalityAndBirthday}
+              </Text>
 
-                      {hasSomething && (
-                        <>
-                          <Spacer y={2} />
+              {hasSomething && (
+                <>
+                  <Spacer y={2} />
 
-                          <Flex alignItems="center" gap={1}>
-                            <FollowArtistButtonQueryRenderer
-                              id={artist.internalID}
-                              contextModule={ContextModule.artistHeader}
-                              size="small"
-                            />
-
-                            {!!artist.counts?.follows && (
-                              <Text
-                                variant="xs"
-                                color="black60"
-                                textAlign="center"
-                                flexShrink={0}
-                              >
-                                {formatFollowerCount(artist.counts.follows)}{" "}
-                                Follower
-                                {artist.counts.follows === 1 ? "" : "s"}
-                              </Text>
-                            )}
-                          </Flex>
-                        </>
-                      )}
-                    </Box>
-
-                    {!hasSomething && (
+                  <Flex alignItems="center" gap={1}>
+                    <ProgressiveOnboardingFollowArtist>
                       <FollowArtistButtonQueryRenderer
                         id={artist.internalID}
                         contextModule={ContextModule.artistHeader}
-                        size="small"
-                        width="fit-content"
+                        size={["large", "small"]}
+                        width={["100%", "fit-content"]}
                       />
+                    </ProgressiveOnboardingFollowArtist>
+
+                    {!!artist.counts?.follows && (
+                      <Text
+                        display={["none", "block"]}
+                        variant="xs"
+                        color="black60"
+                        textAlign="center"
+                        flexShrink={0}
+                      >
+                        {formatFollowerCount(artist.counts.follows)} Follower
+                        {artist.counts.follows === 1 ? "" : "s"}
+                      </Text>
                     )}
                   </Flex>
-                </Flex>
-
-                {hasBio && (
-                  <Bio variant="sm">
-                    <ReadMore
-                      maxChars={250}
-                      content={artist.biographyBlurb.text}
-                    />
-                  </Bio>
-                )}
-
-                <Text variant="xs">
-                  <CV to={`/artist/${artist.slug}/cv`} color="black60">
-                    See all past shows and fair booths
-                  </CV>
-                </Text>
-              </Column>
-
-              {hasRightDetails && (
-                <Column span={4} {...(!hasImage && { start: 9 })}>
-                  {hasVerifiedRepresentatives && (
-                    <>
-                      <Text variant="sm">Featured representation</Text>
-
-                      <Spacer y={1} />
-
-                      <Flex flexWrap="wrap" gap={1}>
-                        {artist.verifiedRepresentatives.map(({ partner }) => {
-                          const payload: ClickedVerifiedRepresentative = {
-                            action: ActionType.clickedVerifiedRepresentative,
-                            context_module: ContextModule.artistHeader,
-                            context_page_owner_id: contextPageOwnerId!,
-                            context_page_owner_type: contextPageOwnerType,
-                            destination_page_owner_id: partner.internalID,
-                            destination_page_owner_type: OwnerType.partner,
-                          }
-
-                          return (
-                            <Pill
-                              key={partner.internalID}
-                              as={RouterLink}
-                              variant="profile"
-                              compact={
-                                artist.verifiedRepresentatives.length > 3
-                              }
-                              {...(partner.profile?.icon
-                                ? {
-                                    src: [
-                                      partner.profile.icon.src1x!.src!,
-                                      partner.profile.icon.src2x!.src!,
-                                    ],
-                                  }
-                                : {})}
-                              // @ts-ignore
-                              to={partner.href}
-                              onClick={() => {
-                                trackEvent(payload)
-                              }}
-                            >
-                              {partner.name}
-                            </Pill>
-                          )
-                        })}
-                      </Flex>
-
-                      <Spacer y={2} />
-                    </>
-                  )}
-
-                  {artist.insights
-                    .slice(0, ARTIST_HEADER_NUMBER_OF_INSIGHTS)
-                    .map((insight, index) => {
-                      return (
-                        <Expandable
-                          key={insight.kind ?? index}
-                          label={insight.label}
-                          pb={1}
-                        >
-                          <Text variant="sm" color="black60" pb={1}>
-                            {insight.entities.length > 0
-                              ? insight.entities.join(", ")
-                              : insight.description}
-                          </Text>
-                        </Expandable>
-                      )
-                    })}
-                </Column>
+                </>
               )}
-            </GridColumns>
+            </Box>
 
-            <Collapse title="Hide additional information" onClick={handleClick}>
-              <ChevronUpIcon m="auto" />
-            </Collapse>
-          </HorizontalPadding>
-        </AppContainer>
-      </Box>
-    </FullBleed>
+            {!hasSomething && (
+              <ProgressiveOnboardingFollowArtist>
+                <FollowArtistButtonQueryRenderer
+                  id={artist.internalID}
+                  contextModule={ContextModule.artistHeader}
+                  size="small"
+                  width="fit-content"
+                />
+              </ProgressiveOnboardingFollowArtist>
+            )}
+          </Flex>
+        </Flex>
+
+        {hasBio && (
+          <Bio variant="sm">
+            <ReadMore maxChars={250} content={artist.biographyBlurb.text} />
+          </Bio>
+        )}
+
+        <Text variant="xs" display={["none", "block"]}>
+          <CV to={`/artist/${artist.slug}/cv`} color="black60">
+            See all past shows and fair booths
+          </CV>
+        </Text>
+      </Column>
+
+      {hasRightDetails && (
+        <Column span={4} {...(!hasImage && { start: 9 })}>
+          {hasVerifiedRepresentatives && (
+            <>
+              <Text variant={["xs", "sm"]} textColor={["black60", "black100"]}>
+                Featured representation
+              </Text>
+
+              <Spacer y={1} />
+
+              <Flex flexWrap="wrap" gap={1}>
+                {artist.verifiedRepresentatives.map(({ partner }) => {
+                  const payload: ClickedVerifiedRepresentative = {
+                    action: ActionType.clickedVerifiedRepresentative,
+                    context_module: ContextModule.artistHeader,
+                    context_page_owner_id: contextPageOwnerId!,
+                    context_page_owner_type: contextPageOwnerType,
+                    destination_page_owner_id: partner.internalID,
+                    destination_page_owner_type: OwnerType.partner,
+                  }
+
+                  return (
+                    <Pill
+                      key={partner.internalID}
+                      as={RouterLink}
+                      variant="profile"
+                      compact={artist.verifiedRepresentatives.length > 3}
+                      {...(partner.profile?.icon
+                        ? {
+                            src: [
+                              partner.profile.icon.src1x!.src!,
+                              partner.profile.icon.src2x!.src!,
+                            ],
+                          }
+                        : {})}
+                      // @ts-ignore
+                      to={partner.href}
+                      onClick={() => {
+                        trackEvent(payload)
+                      }}
+                    >
+                      {partner.name}
+                    </Pill>
+                  )
+                })}
+              </Flex>
+
+              <Spacer y={2} />
+            </>
+          )}
+
+          <Box display={["none", "block"]}>
+            {artist.insights
+              .slice(0, ARTIST_HEADER_NUMBER_OF_INSIGHTS)
+              .map((insight, index) => {
+                return (
+                  <Expandable
+                    key={insight.kind ?? index}
+                    label={insight.label}
+                    pb={1}
+                  >
+                    <Text variant="sm" color="black60" pb={1}>
+                      {insight.entities.length > 0
+                        ? insight.entities.join(", ")
+                        : insight.description}
+                    </Text>
+                  </Expandable>
+                )
+              })}
+          </Box>
+        </Column>
+      )}
+    </GridColumns>
   )
 }
 
@@ -333,25 +270,6 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-const Collapse = styled(Clickable)`
-  display: flex;
-  margin: auto;
-  height: ${themeGet("space.6")};
-  padding: 0 ${themeGet("space.4")};
-
-  svg {
-    transition: transform 200ms, opacity 200ms;
-    opacity: 0.6;
-  }
-
-  &:hover {
-    svg {
-      transform: translateY(-0.25em);
-      opacity: 1;
-    }
-  }
-`
 
 const Bio = styled(HTML)<HTMLProps>`
   text-align: left;

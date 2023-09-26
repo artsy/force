@@ -16,6 +16,10 @@ import { createFragmentContainer, graphql } from "react-relay"
 import * as Yup from "yup"
 import { SettingsEditSettingsInformation_me$data } from "__generated__/SettingsEditSettingsInformation_me.graphql"
 import { useUpdateSettingsInformation } from "./useUpdateSettingsInformation"
+import {
+  PhoneNumberInput,
+  validatePhoneNumber,
+} from "Components/PhoneNumberInput"
 
 interface SettingsEditSettingsInformationProps {
   me: SettingsEditSettingsInformation_me$data
@@ -36,6 +40,7 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
         initialValues={{
           email: me.email ?? "",
           phone: me.phone ?? "",
+          phoneNumberCountryCode: me.phoneNumber?.regionCode ?? "us",
           priceRange: me.priceRange ?? "",
           priceRangeMax: me.priceRangeMax,
           priceRangeMin: me.priceRangeMin,
@@ -50,17 +55,23 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
             is: email => email !== me.email,
             otherwise: field => field.notRequired(),
           }),
-          phone: Yup.string().test(
-            "Phone must be valid",
-            "Phone number must be valid",
-            value => {
-              // https://github.com/artsy/gravity/blob/a8227694da735dc03c8ba50928325d84e4b2846b/app/models/util/phone_validation.rb#L2
-              if (!value) return true
-              const digits = (value.match(/\d/g) ?? []).length
-              const validChars = /^[+\/\-()\.\s0-9A-Za-z]+$/g.test(value)
-              return digits >= 3 && validChars
-            }
-          ),
+          phone: Yup.string()
+            .test({
+              name: "phone-number-is-valid",
+              message: "Please enter a valid phone number",
+              test: (national, context) => {
+                if (!national || !national.length) {
+                  return true
+                }
+
+                return validatePhoneNumber({
+                  national: `${national}`,
+                  regionCode: `${context.parent.phoneNumberCountryCode}`,
+                })
+              },
+            })
+            .notRequired(),
+          phoneNumberCountryCode: Yup.string().notRequired(),
         })}
         onSubmit={async (
           { email, password, phone, priceRangeMin, priceRangeMax },
@@ -117,6 +128,7 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
       >
         {({
           errors,
+          touched,
           handleBlur,
           handleChange,
           setFieldValue,
@@ -139,19 +151,34 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
                 autoComplete="email"
               />
 
-              <Input
+              <PhoneNumberInput
                 title="Mobile Number"
-                name="phone"
-                placeholder="Enter your mobile phone number"
-                value={values.phone}
-                onChange={handleChange}
-                onBlur={handleBlur}
-                type="tel"
-                autoComplete="tel"
-                error={errors.phone}
+                mt={4}
+                inputProps={{
+                  name: "phone",
+                  onBlur: handleBlur,
+                  onChange: handleChange,
+                  placeholder: "Enter your mobile phone number",
+                  value: values.phone,
+                }}
+                selectProps={{
+                  name: "phoneNumberCountryCode",
+                  onBlur: handleBlur,
+                  selected: values.phoneNumberCountryCode,
+                  onSelect: value => {
+                    setFieldValue("phoneNumberCountryCode", value)
+                  },
+                }}
+                required
+                error={
+                  (touched.phoneNumberCountryCode &&
+                    errors.phoneNumberCountryCode) ||
+                  (touched.phone && errors.phone)
+                }
               />
 
               <Select
+                name="priceRange"
                 title="Price Range"
                 options={PRICE_BUCKETS}
                 selected={values.priceRange}
@@ -219,6 +246,9 @@ export const SettingsEditSettingsInformationFragmentContainer = createFragmentCo
         name
         paddleNumber
         phone
+        phoneNumber {
+          regionCode
+        }
         priceRange
         priceRangeMin
         priceRangeMax

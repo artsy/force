@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4c44d97626ab9ecbbfc10b385c3e6571>>
+ * @generated SignedSource<<cee6d8592dad113c4a215c072e75fa04>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -328,6 +328,24 @@ return {
               {
                 "alias": null,
                 "args": null,
+                "concreteType": "PhoneNumberType",
+                "kind": "LinkedField",
+                "name": "phoneNumber",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "regionCode",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
                 "kind": "ScalarField",
                 "name": "priceRange",
                 "storageKey": null
@@ -383,12 +401,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fbad94103a650700d2a8a721d7efcb76",
+    "cacheID": "d515c974e2bc0de9afca94c5f633fb94",
     "id": null,
     "metadata": {},
     "name": "useUpdateSettingsInformationMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateSettingsInformationMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    me {\n      ...SettingsEditSettingsInformation_me\n      email\n      name\n      phone\n      priceRangeMin\n      priceRangeMax\n      id\n    }\n    userOrError {\n      __typename\n      ... on UpdateMyProfileMutationSuccess {\n        user {\n          internalID\n          id\n        }\n      }\n      ... on UpdateMyProfileMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n          error\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n"
+    "text": "mutation useUpdateSettingsInformationMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    me {\n      ...SettingsEditSettingsInformation_me\n      email\n      name\n      phone\n      priceRangeMin\n      priceRangeMax\n      id\n    }\n    userOrError {\n      __typename\n      ... on UpdateMyProfileMutationSuccess {\n        user {\n          internalID\n          id\n        }\n      }\n      ... on UpdateMyProfileMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n          error\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n  phoneNumber {\n    regionCode\n  }\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n"
   }
 };
 })();
