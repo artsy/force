@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb83464aa0425a9395f10af6fe1678bc>>
+ * @generated SignedSource<<a8941768bfa00d24be0e31bc7f8eb147>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -177,13 +177,6 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
-                        "name": "phoneNumberCountryCode",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
                         "name": "postalCode",
                         "storageKey": null
                       },
@@ -271,12 +264,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5b1cd22c776f32cb7c90ce3f850dd940",
+    "cacheID": "3ced6617eadc1a3be5c059d8ca46475d",
     "id": null,
     "metadata": {},
     "name": "SavedAddressesRefetchQuery",
     "operationKind": "query",
-    "text": "query SavedAddressesRefetchQuery {\n  me {\n    ...SavedAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        phoneNumberCountryCode\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query SavedAddressesRefetchQuery {\n  me {\n    ...SavedAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();

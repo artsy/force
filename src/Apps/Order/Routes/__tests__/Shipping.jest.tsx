@@ -2237,7 +2237,7 @@ describe("Shipping", () => {
     })
   })
 
-  describe.only("with pickup", () => {
+  describe("with pickup", () => {
     it("shows an empty phone number input with saved addresses", async () => {
       renderWithRelay({
         CommerceOrder: () => order,

@@ -187,8 +187,10 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         </AddAddressButton>
       )}
       <AddressModal
-        modalAction={(props.active && activeModal) || undefined}
-        closeModal={() => setActiveModal(null)}
+        modalAction={(props.active && activeModal) || null}
+        closeModal={() => {
+          setActiveModal(null)
+        }}
         onSuccess={createOrUpdateAddressSuccess}
         onDeleteAddress={handleDeleteAddress}
         onError={onError}
@@ -230,7 +232,6 @@ export const SavedAddressesFragmentContainer = createRefetchContainer(
               isDefault
               name
               phoneNumber
-              phoneNumberCountryCode
               postalCode
               region
             }

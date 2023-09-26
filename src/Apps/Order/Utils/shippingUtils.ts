@@ -41,7 +41,6 @@ export type ShippingQuotesType = NonNullable<
 export interface ShippingAddressFormValues {
   name: string
   phoneNumber: string
-  phoneNumberCountryCode: string
   addressLine1: string
   addressLine2?: string
   city: string
@@ -50,12 +49,13 @@ export interface ShippingAddressFormValues {
   postalCode: string
 }
 
-// Form values with nulls and line3 removed
+// Form values with nulls, phoneNumberCountryCode and addressLine3 removed
 // TODO: Check line 2 special handling in exchange/gravity: does
 // it matter if we send null/""?
 export const ORDER_EMPTY_ADDRESS: ShippingAddressFormValues = omit(
   EMPTY_ADDRESS,
-  "addressLine3"
+  "addressLine3",
+  "phoneNumberCountryCode"
 )
 
 // Select Shipping address form values from any object and replace

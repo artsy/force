@@ -89,7 +89,6 @@ export const useShippingOperations = (
             phoneNumber: values.phoneNumber,
             postalCode: values.postalCode,
             region: values.region,
-            // phoneNumberCountryCode: values.phoneNumberCountryCode,
           },
           onSuccess,
           onError,

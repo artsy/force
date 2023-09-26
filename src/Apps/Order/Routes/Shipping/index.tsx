@@ -142,41 +142,31 @@ const getOrderFulfillmentDetails = (
   }
 }
 
+const getOrderIsArtsyShipping = (order: any) =>
+  order.requestedFulfillment?.__typename === "CommerceShipArta"
+
 // This helper lives outside the component because it operates on both
 // an order relay prop and the result of the setShipping mutation
 const getOrderRequiresArtsyShipping = (
-  order:
-    | ShippingProps["order"]
-    | NonNullable<SaveFulfillmentDetailsResponse["order"]>,
-  orderArtwork: NonNullable<
-    NonNullable<
-      NonNullable<
-        NonNullable<
-          NonNullable<ShippingProps["order"]["lineItems"]>["edges"]
-        >[0]
-      >["node"]
-    >["artwork"]
-  >
+  order: ShippingProps["order"],
+  shipToCountry: string
 ) => {
   // technically if pickup is not available, and the address limitations
   // require artsy shipping, then it requires artsy shipping. But we don't
   // need that today... Do we? TODO
 
-  const { orderFulfillmentType, orderAddress } = getOrderFulfillmentDetails(
-    order
-  )
-  const shipToCountry = orderAddress && orderAddress?.country
+  const orderArtwork = order.lineItems?.edges?.[0]?.node?.artwork
   console.log({ orderArtwork })
-  const artworkCountry = orderArtwork.shippingCountry
+  const artworkCountry = orderArtwork?.shippingCountry
   const isDomesticOrder =
     (shipToCountry && shipToCountry === artworkCountry) ||
     (COUNTRIES_IN_EUROPEAN_UNION.includes(shipToCountry) &&
       COUNTRIES_IN_EUROPEAN_UNION.includes(artworkCountry))
   // Shipping is set on the order and it needs to use Artsy shipping
+
   const isArtsyShipping =
-    orderFulfillmentType === FulfillmentType.SHIP &&
-    ((isDomesticOrder && !!orderArtwork?.processWithArtsyShippingDomestic) ||
-      (!isDomesticOrder && !!orderArtwork?.artsyShippingInternational))
+    (isDomesticOrder && !!orderArtwork?.processWithArtsyShippingDomestic) ||
+    (!isDomesticOrder && !!orderArtwork?.artsyShippingInternational)
   return isArtsyShipping
 }
 
@@ -193,12 +183,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   )
   const shippingQuotes = getShippingQuotes(props.order)
 
-  const orderArtwork = props.order.lineItems?.edges?.[0]?.node?.artwork!
-  const isArtsyShipping = getOrderRequiresArtsyShipping(
-    props.order,
-    orderArtwork
-  )
-
+  const orderIsArtsyShipping = getOrderIsArtsyShipping(props.order)
   // Because the button is in the sidebar as well as the main form area,
   // we need to pass the submit handler down UP from the fulfillment details
   // form
@@ -352,7 +337,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           title,
           message: formattedMessage,
         })
-      } else if (isArtsyShipping && shippingQuoteId) {
+      } else if (orderIsArtsyShipping && shippingQuoteId) {
         trackEvent({
           action: ActionType.errorMessageViewed,
           context_owner_type: OwnerType.ordersShipping,
@@ -383,7 +368,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       }
     },
     [
-      isArtsyShipping,
+      orderIsArtsyShipping,
       props.dialog,
       props.order.internalID,
       shippingQuoteId,
@@ -564,20 +549,15 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const { order, isCommittingMutation } = props
 
-  console.log({
-    activeStep,
-    isArtsyShipping,
-    shippingQuotes,
-  })
   const showArtsyShipping =
     activeStep === "shipping_quotes" &&
-    isArtsyShipping &&
+    orderIsArtsyShipping &&
     !!shippingQuotes &&
     shippingQuotes.length > 0
   const isOffer = order.mode === "OFFER"
 
   const useDefaultArtsyShippingQuote =
-    isArtsyShipping &&
+    orderIsArtsyShipping &&
     shippingQuotes &&
     shippingQuotes.length > 0 &&
     !shippingQuoteId
@@ -611,14 +591,15 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           const {
             saveAddress,
             addressVerifiedBy,
-            // TODO: Don't pull this out, send it to exchange too
-            // (when exchange is ready)
-            phoneNumberCountryCode,
             ...addressValues
           } = formValues.attributes
+          const requiresArtsyShipping = getOrderRequiresArtsyShipping(
+            props.order,
+            addressValues.country
+          )
           fulfillmentMutationValues = {
             id: props.order.internalID,
-            fulfillmentType: isArtsyShipping
+            fulfillmentType: requiresArtsyShipping
               ? "SHIP_ARTA"
               : FulfillmentType.SHIP,
             addressVerifiedBy,
@@ -650,10 +631,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           await shippingOperations.createUserAddress(formValues.attributes)
         }
 
-        const orderResultRequiresArtsyShipping = getOrderRequiresArtsyShipping(
-          orderResult,
-          orderArtwork
+        const orderResultRequiresArtsyShipping = getOrderIsArtsyShipping(
+          orderResult
         )
+
         if (orderResultRequiresArtsyShipping) {
           setActiveStep("shipping_quotes")
         } else {
@@ -677,13 +658,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       }
     },
     [
-      advanceToPayment,
-      handleSubmitError,
-      isArtsyShipping,
-      orderArtwork,
-      props.dialog,
-      props.order.internalID,
       shippingOperations,
+      props.order,
+      props.dialog,
+      handleSubmitError,
+      advanceToPayment,
       trackEvent,
     ]
   )

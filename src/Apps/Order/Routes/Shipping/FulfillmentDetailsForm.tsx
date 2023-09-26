@@ -53,8 +53,9 @@ const VALIDATION_SCHEMA = Yup.object().shape({
 
   attributes: Yup.object()
     .shape({
-      phoneNumber: yupPhoneValidator,
-      phoneNumberCountryCode: Yup.string().required("Phone number is required"),
+      phoneNumber: Yup.string()
+        .required()
+        .matches(/^[+\-\d]*$/, {}),
       name: Yup.string().required("Name is required"),
     })
     .when("fulfillmentType", {
@@ -133,11 +134,13 @@ const getInitialValues = (
 
   // humble criteria for starting address if it's already saved on order:
   // just a few values present
+  // TODO: could be shared logic later when determining
+  // shipping route activeStep
   const useOrderForAddress =
     orderFulfillmentType === FulfillmentType.SHIP &&
     !!requestedFulfillment &&
     ["name", "phoneNumber", "addressLine1", "city", "country"].every(
-      key => requestedFulfillment[key]
+      key => !!requestedFulfillment[key]
     )
 
   const orderAddress: Partial<ShipValues["attributes"]> = omitBy(
@@ -154,6 +157,13 @@ const getInitialValues = (
       },
     }
   }
+
+  // TODO: Maybe we don't need to look too hard at saved addresses here - let the SavedAddresses automatically
+  // set the default user address when they mount
+
+  // TODO: If the initial address is US but the country select doesn't show it bc is it EU only
+  // (as one example) then the form state will stay on US (invalid) until the user updates the
+  // country input
 
   // TODO:
   // - need to check if address is in a valid shipping country, incl. saved addresses
@@ -183,6 +193,7 @@ const getInitialValues = (
     // - We might want to add another non-form value similar to saveAddress
     //   rather than relying on the boolean
     addressVerifiedBy: null,
+    // TODO: only if they have no saved addresses
     saveAddress: true,
   }
 
@@ -193,31 +204,18 @@ const getInitialValues = (
   if (!initialValues.attributes.country) {
     initialValues.attributes.country = artworkCountry
   }
-  console.log({
-    useOrderForAddress,
-    lockShippingCountryTo,
-    orderAddress,
-    defaultUserAddress: getDefaultUserAddress(
-      extractNodes(me?.addressConnection) ?? []
-    ),
-    artworkCountry,
-    initialAddress,
-    initialValues,
-  })
-  // If the existing address has a blank phone number,
-  // pre-fill the country code based on the user's location or
-  // the default country. If they do have a phone number but no
-  // country code, leave it blank for them to confirm.
-  // TODO: Should we save an address if it is already saved but lacks the
-  // country code? Adds complexity.
-  if (
-    !initialValues.attributes.phoneNumberCountryCode &&
-    !initialValues.attributes.phoneNumber
-  ) {
-    const phoneCountry = (initialValues.attributes.phoneNumberCountryCode =
-      me?.location?.country || artworkCountry)
-    initialValues.attributes.phoneNumberCountryCode = phoneCountry.toLowerCase()
-  }
+  // console.log({
+  //   useOrderForAddress,
+  //   lockShippingCountryTo,
+  //   orderAddress,
+  //   defaultUserAddress: getDefaultUserAddress(
+  //     extractNodes(me?.addressConnection) ?? []
+  //   ),
+  //   artworkCountry,
+  //   initialAddress,
+  //   initialValues,
+  // })
+
   return initialValues
 }
 
@@ -292,7 +290,11 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
           values.attributes as ShipValues["attributes"]
         )
 
-        const showAddressForm = active
+        const showAddressForm:
+          | "saved_addresses"
+          | "new_address"
+          | "pickup"
+          | null = active
           ? values.fulfillmentType === "SHIP"
             ? savedAddresses.length > 0
               ? "saved_addresses"
@@ -456,7 +458,12 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                         aria-labelledby="country-select"
                         tabIndex={tabbableFormValue("new_address")}
                         selected={values.attributes.country}
-                        onSelect={handleChange}
+                        onSelect={selected =>
+                          formikProps.setFieldValue(
+                            `attributes.country`,
+                            selected
+                          )
+                        }
                         disabled={
                           !!lockShippingCountryTo &&
                           lockShippingCountryTo !== "EU"

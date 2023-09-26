@@ -47,16 +47,13 @@ export const yupPhoneValidator = Yup.string()
   })
 
 const usPostalCodeRegexp = /^\d{5}(-\d{4})?$/
-const intlPostalCodeRegexp = /^([A-Z][0-9][A-Z])\s*([0-9][A-Z][0-9])$/
 
 export const postalCodeValidator = Yup.string().when("country", {
   is: country => country === "US",
   then: Yup.string()
     .required("Postal code is required")
     .matches(usPostalCodeRegexp, "Invalid postal code"),
-  otherwise: Yup.string()
-    .required("Postal code is required")
-    .matches(intlPostalCodeRegexp, "Invalid postal code"),
+  otherwise: Yup.string().required(),
 })
 
 export const getYupAddressSchema = ({

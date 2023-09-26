@@ -55,7 +55,7 @@ export interface Props {
   ) => void
   onDeleteAddress: (addressID: string) => void
   onError: (message: string) => void
-  modalAction?: AddressModalAction
+  modalAction: AddressModalAction | null
   me: SavedAddresses_me$data
 }
 
@@ -80,7 +80,6 @@ export const GENERIC_FAIL_MESSAGE =
 
 export const AddressModal: React.FC<Props> = ({
   closeModal,
-  // address,
   onSuccess,
   onDeleteAddress,
   onError,
