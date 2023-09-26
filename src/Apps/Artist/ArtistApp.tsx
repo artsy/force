@@ -24,16 +24,18 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children }) => {
       <ArtistMetaFragmentContainer artist={artist} />
 
       <Analytics contextPageOwnerId={artist.internalID}>
-        <Spacer y={[2, 4]} />
-
         {isRevisedArtistHeader ? (
           <>
+            <Spacer y={[0, 4]} />
+
             <ArtistHeader2FragmentContainer artist={artist} />
 
             <Spacer y={4} />
           </>
         ) : (
           <>
+            <Spacer y={[2, 4]} />
+
             <ArtistHeaderFragmentContainer artist={artist} />
 
             <Spacer y={[4, 6]} />
