@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0118ccf5929d9988469cf8870c40c53>>
+ * @generated SignedSource<<7d7704078ab58518a424bab868923e53>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type collectorProfileRoutes_SavesAndFollowsRouteQuery$variables = {};
 export type collectorProfileRoutes_SavesAndFollowsRouteQuery$data = {
   readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileSavesAndFollowsRoute_me">;
+    readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileSaves2Route_me">;
   } | null;
 };
 export type collectorProfileRoutes_SavesAndFollowsRouteQuery = {
@@ -157,7 +157,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "CollectorProfileSavesAndFollowsRoute_me"
+            "name": "CollectorProfileSaves2Route_me"
           }
         ],
         "storageKey": null
@@ -326,16 +326,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "af74f1c4096071fc7f3a89b931d38d22",
+    "cacheID": "0b8dbc4cd492727a0f2012a0ad3669db",
     "id": null,
     "metadata": {},
     "name": "collectorProfileRoutes_SavesAndFollowsRouteQuery",
     "operationKind": "query",
-    "text": "query collectorProfileRoutes_SavesAndFollowsRouteQuery {\n  me {\n    ...CollectorProfileSavesAndFollowsRoute_me\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    ...ArtworkListItem_item\n    artworksConnection(first: 4) {\n      totalCount\n    }\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...ArtworkListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment CollectorProfileSavesAndFollowsRoute_me on Me {\n  ...CollectorProfileSaves2Route_me\n}\n"
+    "text": "query collectorProfileRoutes_SavesAndFollowsRouteQuery {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    ...ArtworkListItem_item\n    artworksConnection(first: 4) {\n      totalCount\n    }\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...ArtworkListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f0e0b1013ccf061a1e794c0e3952d8e7";
+(node as any).hash = "a35eba6ef6f2fe6df72d5adaa4440f8c";
 
 export default node;
