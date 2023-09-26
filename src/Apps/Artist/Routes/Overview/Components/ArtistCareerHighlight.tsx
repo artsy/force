@@ -8,13 +8,18 @@ interface ArtistCareerHighlightProps {
 }
 
 const ArtistCareerHighlight: FC<ArtistCareerHighlightProps> = ({ insight }) => {
+  const buildInsight = insight => {
+    return insight.entities.length > 0
+      ? insight.entities.join(", ").replace(/,\s([^,]+)$/, ", and $1")
+      : insight.description
+  }
+
   return (
     <Expandable label={insight.label} pb={1}>
-      <Text variant="xs">
-        {insight.entities.length > 0
-          ? insight.entities.join(", ").replace(/,\s([^,]+)$/, ", and $1")
-          : insight.description}
-      </Text>
+      <Text
+        variant="xs"
+        dangerouslySetInnerHTML={{ __html: buildInsight(insight) }}
+      ></Text>
     </Expandable>
   )
 }
