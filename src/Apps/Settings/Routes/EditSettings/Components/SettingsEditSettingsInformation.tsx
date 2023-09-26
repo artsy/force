@@ -178,6 +178,7 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
               />
 
               <Select
+                name="priceRange"
                 title="Price Range"
                 options={PRICE_BUCKETS}
                 selected={values.priceRange}
