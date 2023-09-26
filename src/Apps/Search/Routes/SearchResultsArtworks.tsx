@@ -11,6 +11,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useSystemContext } from "System/useSystemContext"
 import { SearchResultsArtworksFilters } from "Apps/Search/Components/SearchResultsArtworksFilters"
+import { useEffect, useState } from "react"
 
 interface SearchResultsRouteProps {
   viewer: SearchResultsArtworks_viewer$data
@@ -19,11 +20,20 @@ interface SearchResultsRouteProps {
 export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = props => {
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
+  const [searchFitlerKey, setSearchFilterKey] = useState(
+    match.location.query.term
+  )
   const { viewer } = props
   const { sidebar } = viewer
 
+  useEffect(() => {
+    // refresh artwork filter on query change
+    setSearchFilterKey(match.location.query.term)
+  }, [match.location.query.term])
+
   return (
     <ArtworkFilter
+      key={searchFitlerKey}
       mt={4}
       viewer={viewer}
       filters={match.location.query}
