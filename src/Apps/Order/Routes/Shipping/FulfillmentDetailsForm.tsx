@@ -47,7 +47,6 @@ import * as Yup from "yup"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { SavedAddressesFragmentContainer as SavedAddresses } from "Apps/Order/Components/SavedAddresses"
-import { isValid } from "Utils/Hooks/useAuthIntent"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Collapse } from "Apps/Order/Components/Collapse"
 
@@ -57,18 +56,20 @@ const VALIDATION_SCHEMA = Yup.object().shape({
   attributes: Yup.object()
     .shape({
       phoneNumber: Yup.string()
-        .required()
-        .matches(/^[+\-\d]*$/, {}),
-      name: Yup.string().required("Name is required"),
+        .required("Phone number is required")
+        .matches(/^[+\-\d]+$/, "Phone number is required"),
+      name: Yup.string().required("Full name is required"),
     })
     .when("fulfillmentType", {
       is: FulfillmentType.SHIP,
       then: schema =>
         schema.shape({
-          addressLine1: Yup.string().required("Address is required"),
+          addressLine1: Yup.string().required("Street address is required"),
           city: Yup.string().required("City is required"),
           postalCode: postalCodeValidator,
-          region: Yup.string().required("Region is required"),
+          region: Yup.string().required(
+            "State, province or region is required"
+          ),
           country: Yup.string().required("Country is required"),
         }),
     }),
@@ -132,10 +133,6 @@ const getShippingRestrictions = (
   return { lockShippingCountryTo }
 }
 
-const EMPTY_PICKUP_VALUES = {
-  name: "",
-  phoneNumber: "",
-}
 // Get initial values for the form using what may already be saved
 // on the order and the user's saved addresses.
 const getInitialValues = (

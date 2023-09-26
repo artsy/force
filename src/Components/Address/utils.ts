@@ -51,9 +51,9 @@ const usPostalCodeRegexp = /^\d{5}(-\d{4})?$/
 export const postalCodeValidator = Yup.string().when("country", {
   is: country => country === "US",
   then: Yup.string()
-    .required("Postal code is required")
+    .required("ZIP code is required")
     .matches(usPostalCodeRegexp, "Invalid postal code"),
-  otherwise: Yup.string().required(),
+  otherwise: Yup.string().required("Postal code is required"),
 })
 
 export const getYupAddressSchema = ({

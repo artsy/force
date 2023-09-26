@@ -693,7 +693,7 @@ describe("Shipping", () => {
           expect(screen.getByText("This field is required")).toBeInTheDocument()
         })
 
-        it("shows all validation erros including untouched inputs after submission", async () => {
+        it("shows all validation errors including untouched inputs after submission", async () => {
           renderWithRelay({
             CommerceOrder: () => order,
             Me: () => meWithoutAddress,
@@ -704,9 +704,16 @@ describe("Shipping", () => {
           userEvent.clear(name)
 
           await saveAndContinue()
-          expect(
-            screen.getAllByText("This field is required").length
-          ).toBeGreaterThan(1)
+          await waitFor(() => {
+            expect(screen.getByText("Full name is required")).toBeVisible()
+            expect(screen.getByText("Street address is required")).toBeVisible()
+            expect(screen.getByText("City is required")).toBeVisible()
+            expect(
+              screen.getByText("State, province or region is required")
+            ).toBeVisible()
+            expect(screen.getByText("ZIP code is required")).toBeVisible()
+            expect(screen.getByText("Phone number is required")).toBeVisible()
+          })
         })
       })
 
@@ -742,7 +749,7 @@ describe("Shipping", () => {
 
             await saveAndContinue()
 
-            expect(screen.getByText("This field is required")).toBeVisible()
+            expect(screen.getByText("Street address is required")).toBeVisible()
             expect(env.mock.getAllOperations()).toHaveLength(0)
           })
 
