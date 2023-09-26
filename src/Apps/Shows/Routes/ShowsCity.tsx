@@ -97,7 +97,7 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
   }
 
   const isOnlinePage = city.slug === "online"
-  const showOpeningThisWeek = openingThisWeek.length > 0
+  const showOpeningThisWeek = openingThisWeek.length > 0 && !isOnlinePage
 
   return (
     <>
@@ -111,10 +111,7 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
         {showOpeningThisWeek && (
           <>
             <Text as="h2" variant="xl">
-              {isOnlinePage
-                ? "Opening This Week"
-                : `Opening This Week in ${city.name}`}
-
+              Opening This Week in {city.name}
               <>
                 &nbsp;
                 <Sup color="brand">{openingThisWeek.length}</Sup>
