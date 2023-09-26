@@ -740,7 +740,7 @@ describe("Shipping", () => {
             await fillAddressForm(validAddress)
             userEvent.clear(screen.getByPlaceholderText("Street address"))
 
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await saveAndContinue()
 
             expect(screen.getByText("This field is required")).toBeVisible()
             expect(env.mock.getAllOperations()).toHaveLength(0)
@@ -757,7 +757,7 @@ describe("Shipping", () => {
             )
 
             await fillAddressForm(validAddress)
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await saveAndContinue()
 
             await verifyAddressWithSuggestions(
               env,
@@ -874,7 +874,7 @@ describe("Shipping", () => {
             userEvent.selectOptions(screen.getByTestId("AddressForm_country"), [
               "TW",
             ])
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await saveAndContinue()
 
             expect(env.mock.getAllOperations()).toHaveLength(0)
           })
@@ -904,7 +904,7 @@ describe("Shipping", () => {
             )
 
             await fillAddressForm(validAddress)
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await saveAndContinue()
 
             expect(env.mock.getAllOperations()).toHaveLength(0)
           })
@@ -923,8 +923,7 @@ describe("Shipping", () => {
             userEvent.selectOptions(screen.getByTestId("AddressForm_country"), [
               "TW",
             ])
-            await userEvent.click(screen.getByText("Save and Continue"))
-            await flushPromiseQueue()
+            await saveAndContinue()
 
             const mutation = env.mock.getMostRecentOperation()
             expect(mutation.request.node.operation.name).toEqual(
@@ -1066,7 +1065,7 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await saveAndContinue()
 
             // Address verification flow is not triggered.
             expect(env.mock.getAllOperations()).toHaveLength(0)
