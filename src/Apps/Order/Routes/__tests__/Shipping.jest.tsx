@@ -26,7 +26,7 @@ import {
   updateAddressSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
 import { ShippingTestQuery$rawResponse } from "__generated__/ShippingTestQuery.graphql"
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import {
@@ -175,7 +175,9 @@ const meWithAddresses: ShippingTestQuery$rawResponse["me"] = Object.assign(
 )
 
 const saveAndContinue = async () => {
-  await userEvent.click(screen.getByText("Save and Continue"))
+  await waitFor(() => {
+    userEvent.click(screen.getByText("Save and Continue"))
+  })
   await flushPromiseQueue()
 }
 
@@ -2245,9 +2247,9 @@ describe("Shipping", () => {
       })
 
       userEvent.click(screen.getByRole("radio", { name: /Arrange for pickup/ }))
-      const phoneNumber = screen.getAllByPlaceholderText(
+      const phoneNumber = screen.getByPlaceholderText(
         "Add phone number including country code"
-      )[1]
+      )
       // TODO: need a better way to check the input is displayed/expanded (height > 0)
       expect(phoneNumber).toHaveAttribute("tabindex", "0")
       expect(phoneNumber).toHaveValue("")
@@ -2261,12 +2263,13 @@ describe("Shipping", () => {
       })
 
       userEvent.click(screen.getByRole("radio", { name: /Arrange for pickup/ }))
-      userEvent.type(
-        screen.getAllByPlaceholderText(
-          "Add phone number including country code"
-        )[0],
+      userEvent.paste(screen.getByPlaceholderText("Full name"), "Erik test")
+      userEvent.paste(
+        screen.getByPlaceholderText("Add phone number including country code"),
         "2813308004"
       )
+      await flushPromiseQueue()
+
       await saveAndContinue()
 
       expect(mockCommitMutation).toHaveBeenCalledTimes(1)
@@ -2279,16 +2282,7 @@ describe("Shipping", () => {
         input: {
           id: "1234",
           fulfillmentType: "PICKUP",
-          shipping: {
-            addressLine1: "",
-            addressLine2: "",
-            country: "US",
-            name: "",
-            city: "",
-            postalCode: "",
-            region: "",
-            phoneNumber: "",
-          },
+
           phoneNumber: "2813308004",
         },
       })
@@ -2300,7 +2294,9 @@ describe("Shipping", () => {
         Me: () => meWithoutAddress,
       })
 
+      userEvent.paste(screen.getByPlaceholderText("Full name"), "Erik test")
       userEvent.click(screen.getByRole("radio", { name: /Arrange for pickup/ }))
+      await flushPromiseQueue()
       expect(
         screen.getByRole("button", {
           name: "Save and Continue",

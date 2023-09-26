@@ -2,7 +2,6 @@ import {
   AutocompleteInput,
   BorderedRadio,
   Checkbox,
-  Collapse,
   Column,
   GridColumns,
   Input,
@@ -38,6 +37,7 @@ import {
   Formik,
   FormikErrors,
   FormikHelpers,
+  FormikProps,
   FormikTouched,
 } from "formik"
 import { compact, isNil, omitBy, pick } from "lodash"
@@ -47,6 +47,9 @@ import * as Yup from "yup"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { SavedAddressesFragmentContainer as SavedAddresses } from "Apps/Order/Components/SavedAddresses"
+import { isValid } from "Utils/Hooks/useAuthIntent"
+import { usePrevious } from "Utils/Hooks/usePrevious"
+import { Collapse } from "Apps/Order/Components/Collapse"
 
 const VALIDATION_SCHEMA = Yup.object().shape({
   fulfillmentType: Yup.string().oneOf(Object.values(FulfillmentType)),
@@ -99,7 +102,14 @@ export interface FulfillmentDetailsFormProps {
     values: FulfillmentValues,
     formikHelpers: FormikHelpers<FulfillmentValues>
   ) => void | Promise<any>
-  submitHandlerRef: React.MutableRefObject<(...args: any[]) => void>
+  setFulfillmentFormHelpers: React.Dispatch<
+    React.SetStateAction<
+      Pick<
+        FormikProps<FulfillmentValues>,
+        "handleSubmit" | "isValid" | "values"
+      >
+    >
+  >
   me: FulfillmentDetailsForm_me$data
   order: FulfillmentDetailsForm_order$data
 }
@@ -122,6 +132,10 @@ const getShippingRestrictions = (
   return { lockShippingCountryTo }
 }
 
+const EMPTY_PICKUP_VALUES = {
+  name: "",
+  phoneNumber: "",
+}
 // Get initial values for the form using what may already be saved
 // on the order and the user's saved addresses.
 const getInitialValues = (
@@ -246,7 +260,6 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
     boolean
   >(false)
 
-  console.log("HERE", { orderValues, props })
   return (
     <Formik<FulfillmentValues>
       initialValues={orderValues}
@@ -269,16 +282,43 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
       {formikProps => {
         const { values, errors, touched, handleChange } = formikProps
 
+        // Pass some key formik bits up to the shipping route
         // eslint-disable-next-line react-hooks/rules-of-hooks
         useEffect(() => {
-          console.log("useEffect")
           if (active) {
-            console.log({ active })
-            props.submitHandlerRef.current = formikProps.handleSubmit
+            props.setFulfillmentFormHelpers({
+              handleSubmit: formikProps.handleSubmit,
+              isValid: formikProps.isValid,
+              values: formikProps.values,
+            })
           }
           // eslint-disable-next-line react-hooks/exhaustive-deps
-        }, [active, formikProps.handleSubmit])
+        }, [
+          active,
+          formikProps.handleSubmit,
+          formikProps.isValid,
+          formikProps.values,
+        ])
 
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        const previousFulfillmentType = usePrevious(values.fulfillmentType)
+
+        // eslint-disable-next-line react-hooks/rules-of-hooks
+        useEffect(() => {
+          if (
+            values.fulfillmentType === FulfillmentType.PICKUP &&
+            previousFulfillmentType !== FulfillmentType.PICKUP
+          ) {
+            formikProps.setValues({
+              fulfillmentType: FulfillmentType.PICKUP,
+              attributes: {
+                name: "",
+                phoneNumber: "",
+              },
+            })
+            return
+          }
+        }, [formikProps, previousFulfillmentType, values.fulfillmentType])
         const {
           autocompleteOptions,
           fetchForAutocomplete,
@@ -325,7 +365,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
         )
 
         return (
-          <Form>
+          <Form data-testid="FulfillmentDetails_form">
             {availableFulfillmentTypes.length > 1 && (
               <>
                 <RadioGroup

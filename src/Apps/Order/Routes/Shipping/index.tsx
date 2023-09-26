@@ -40,7 +40,7 @@ import {
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 
 import { Router } from "found"
-import { FC, useState, useEffect, useCallback, useRef } from "react"
+import { FC, useState, useEffect, useCallback, useRef, useMemo } from "react"
 import { COUNTRIES_IN_EUROPEAN_UNION } from "@artsy/commerce_helpers"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
@@ -100,7 +100,7 @@ import {
   FulfillmentValues,
   ShipValues,
 } from "Apps/Order/Routes/Shipping/FulfillmentDetailsForm"
-import { FormikHelpers } from "formik"
+import { FormikHelpers, FormikProps } from "formik"
 import {
   SaveFulfillmentDetailsResponse,
   useShippingOperations,
@@ -156,7 +156,6 @@ const getOrderRequiresArtsyShipping = (
   // need that today... Do we? TODO
 
   const orderArtwork = order.lineItems?.edges?.[0]?.node?.artwork
-  console.log({ orderArtwork })
   const artworkCountry = orderArtwork?.shippingCountry
   const isDomesticOrder =
     (shipToCountry && shipToCountry === artworkCountry) ||
@@ -184,16 +183,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const shippingQuotes = getShippingQuotes(props.order)
 
   const orderIsArtsyShipping = getOrderIsArtsyShipping(props.order)
-  // Because the button is in the sidebar as well as the main form area,
-  // we need to pass the submit handler down UP from the fulfillment details
-  // form
-  const submitHandlerRef = useRef<(...args: any[]) => void>(() => {
-    console.error("empty submit handler")
-  })
-
-  const onContinueButtonPressed = useCallback((...args) => {
-    submitHandlerRef.current(...args)
-  }, [])
 
   // const selectShipping = async (editedAddress?: MutationAddressResponse) => {
   //   if (shippingOption === "PICKUP") {
@@ -578,10 +567,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       formValues: FulfillmentValues,
       formikHelpers: FormikHelpers<FulfillmentValues>
     ) => {
-      console.log("***** handleSubmitFulfillmentDetails ******", {
-        formValues,
-      })
-
       const { setSubmitting } = formikHelpers
 
       setSubmitting(true)
@@ -710,11 +695,41 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }, [advanceToPayment, handleSubmitError, props, shippingQuoteId, trackEvent])
 
-  useEffect(() => {
-    if (activeStep === "shipping_quotes") {
-      submitHandlerRef.current = selectShippingQuote
+  // Because the button is in the sidebar as well as the main form area,
+  // we need to hack some formik values UP from the fulfillment details
+  // form.
+  // handleSubmit: Used to submit the form
+  // isValid: Used to disable the button
+  // values: Used to get the form values for un-saving the address if the user
+  //   unchecks it after saving it in the fulfillment details step.
+  const [fulfillmentFormHelpers, setFulfillmentFormHelpers] = useState<
+    Pick<FormikProps<FulfillmentValues>, "handleSubmit" | "isValid" | "values">
+  >({
+    handleSubmit: () => {},
+    isValid: false,
+    values: {
+      attributes: {
+        saveAddress: false,
+      },
+    } as any,
+  })
+
+  const onContinueButtonPressed = useMemo(() => {
+    if (activeStep === "fulfillment_details") {
+      return (...args) => fulfillmentFormHelpers.handleSubmit(...args)
     }
-  }, [activeStep, selectShippingQuote])
+    if (activeStep === "shipping_quotes") {
+      return selectShippingQuote
+    }
+  }, [activeStep, fulfillmentFormHelpers, selectShippingQuote])
+
+  const disableSubmit = useMemo(() => {
+    if (activeStep === "fulfillment_details") {
+      return !fulfillmentFormHelpers.isValid
+    } else if (activeStep === "shipping_quotes") {
+      return !shippingQuoteId
+    }
+  }, [activeStep, fulfillmentFormHelpers.isValid, shippingQuoteId])
 
   return (
     <Analytics contextPageOwnerId={order.internalID}>
@@ -733,7 +748,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 active={activeStep === "fulfillment_details"}
                 order={props.order}
                 onSubmit={handleSubmitFulfillmentDetails}
-                submitHandlerRef={submitHandlerRef}
+                setFulfillmentFormHelpers={setFulfillmentFormHelpers}
               />
               {/* CUT FROM HERE
               
@@ -887,6 +902,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <Media greaterThan="xs">
                 <Button
                   onClick={onContinueButtonPressed}
+                  disabled={disableSubmit}
                   loading={isCommittingMutation}
                   variant="primaryBlack"
                   width="50%"
@@ -914,6 +930,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
               <Media at="xs">
                 <Button
                   onClick={onContinueButtonPressed}
+                  disabled={disableSubmit}
                   loading={isCommittingMutation}
                   variant="primaryBlack"
                   width="100%"
