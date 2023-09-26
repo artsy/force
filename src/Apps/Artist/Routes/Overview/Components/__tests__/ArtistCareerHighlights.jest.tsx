@@ -2,6 +2,7 @@ import { graphql } from "react-relay"
 import { ArtistCareerHighlightsFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlights"
 import { screen, fireEvent } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
+import { MockBoot } from "DevTools/MockBoot"
 
 jest.unmock("react-relay")
 
@@ -10,7 +11,13 @@ jest.mock("Apps/Artist/Components/ArtistHeader/ArtistHeader2", () => ({
 }))
 
 const { renderWithRelay } = setupTestWrapperTL({
-  Component: ArtistCareerHighlightsFragmentContainer,
+  Component: props => {
+    return (
+      <MockBoot breakpoint="lg">
+        <ArtistCareerHighlightsFragmentContainer {...(props as any)} />
+      </MockBoot>
+    )
+  },
   query: graphql`
     query ArtistCareerHighlights_Test_Query @relay_test_operation {
       artist(id: "example") {

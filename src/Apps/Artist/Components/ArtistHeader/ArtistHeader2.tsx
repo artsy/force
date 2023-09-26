@@ -1,6 +1,5 @@
 import {
   Box,
-  Clickable,
   Column,
   Expandable,
   Flex,
@@ -25,18 +24,15 @@ import { ArtistHeader2_artist$data } from "__generated__/ArtistHeader2_artist.gr
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import styled from "styled-components"
-import { themeGet } from "@styled-system/theme-get"
-import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
-import { useMode } from "Utils/Hooks/useMode"
 import { RouterLink } from "System/Router/RouterLink"
 import {
   ArtistHeaderImage,
   isValidImage,
 } from "Apps/Artist/Components/ArtistHeader/ArtistHeaderImage"
-import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader2_artist$data
@@ -46,12 +42,6 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
   const { trackEvent } = useTracking()
   const { contextPageOwnerType, contextPageOwnerId } = useAnalyticsContext()
 
-  const [mode, setMode] = useMode<"Collapsed" | "Expanded">("Expanded")
-
-  const handleClick = () => {
-    setMode(mode === "Collapsed" ? "Expanded" : "Collapsed")
-  }
-
   const image = artist.coverArtwork?.image
   const hasImage = isValidImage(image)
   const hasPartnerSuppliedBio = !!artist.biographyBlurb?.credit
@@ -60,47 +50,6 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
   const hasInsights = artist.insights.length > 0
   const hasRightDetails = hasVerifiedRepresentatives || hasInsights
   const hasSomething = hasImage || hasBio || hasRightDetails
-
-  if (mode === "Collapsed") {
-    return (
-      <>
-        <Spacer y={[2, 4]} />
-
-        <GridColumns>
-          <Column
-            span={8}
-            display="flex"
-            alignItems={["left", "center"]}
-            gap={2}
-            flexDirection={["column", "row"]}
-          >
-            <Text as="h1" variant="xl">
-              {artist.name}
-            </Text>
-
-            <ProgressiveOnboardingFollowArtist>
-              <FollowArtistButtonQueryRenderer
-                id={artist.internalID}
-                contextModule={ContextModule.artistHeader}
-                size="small"
-                width="fit-content"
-              />
-            </ProgressiveOnboardingFollowArtist>
-          </Column>
-
-          <Column span={4} display="flex" justifyContent="flex-end">
-            <Clickable
-              onClick={handleClick}
-              title="Show additional information"
-              textDecoration="underline"
-            >
-              <Text variant="sm-display">Expand</Text>
-            </Clickable>
-          </Column>
-        </GridColumns>
-      </>
-    )
-  }
 
   return (
     <FullBleed key={artist.internalID} data-test="artistHeader">
@@ -126,21 +75,20 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                 display="flex"
                 flexDirection="column"
                 gap={2}
-                textAlign={["center", "left"]}
               >
                 <Flex
-                  alignItems="center"
+                  alignItems={["flex-start", "center"]}
                   flexDirection={["column", "row"]}
                   justifyContent={["center", "space-between"]}
                   gap={2}
                 >
-                  <Flex flexDirection="column" gap={2}>
+                  <Flex flexDirection="column" gap={2} width="100%">
                     <Box flex={1}>
                       <Text as="h1" variant="xl">
                         {artist.name}
                       </Text>
 
-                      <Text as="h2" variant="xl" color="black60">
+                      <Text as="h2" variant={["md", "xl"]} color="black60">
                         {artist.formattedNationalityAndBirthday}
                       </Text>
 
@@ -149,14 +97,18 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                           <Spacer y={2} />
 
                           <Flex alignItems="center" gap={1}>
-                            <FollowArtistButtonQueryRenderer
-                              id={artist.internalID}
-                              contextModule={ContextModule.artistHeader}
-                              size="small"
-                            />
+                            <ProgressiveOnboardingFollowArtist>
+                              <FollowArtistButtonQueryRenderer
+                                id={artist.internalID}
+                                contextModule={ContextModule.artistHeader}
+                                size={["large", "small"]}
+                                width={["100%", "fit-content"]}
+                              />
+                            </ProgressiveOnboardingFollowArtist>
 
                             {!!artist.counts?.follows && (
                               <Text
+                                display={["none", "block"]}
                                 variant="xs"
                                 color="black60"
                                 textAlign="center"
@@ -173,12 +125,14 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                     </Box>
 
                     {!hasSomething && (
-                      <FollowArtistButtonQueryRenderer
-                        id={artist.internalID}
-                        contextModule={ContextModule.artistHeader}
-                        size="small"
-                        width="fit-content"
-                      />
+                      <ProgressiveOnboardingFollowArtist>
+                        <FollowArtistButtonQueryRenderer
+                          id={artist.internalID}
+                          contextModule={ContextModule.artistHeader}
+                          size="small"
+                          width="fit-content"
+                        />
+                      </ProgressiveOnboardingFollowArtist>
                     )}
                   </Flex>
                 </Flex>
@@ -192,7 +146,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                   </Bio>
                 )}
 
-                <Text variant="xs">
+                <Text variant="xs" display={["none", "block"]}>
                   <CV to={`/artist/${artist.slug}/cv`} color="black60">
                     See all past shows and fair booths
                   </CV>
@@ -203,7 +157,12 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                 <Column span={4} {...(!hasImage && { start: 9 })}>
                   {hasVerifiedRepresentatives && (
                     <>
-                      <Text variant="sm">Featured representation</Text>
+                      <Text
+                        variant={["xs", "sm"]}
+                        textColor={["black60", "black100"]}
+                      >
+                        Featured representation
+                      </Text>
 
                       <Spacer y={1} />
 
@@ -250,30 +209,28 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                     </>
                   )}
 
-                  {artist.insights
-                    .slice(0, ARTIST_HEADER_NUMBER_OF_INSIGHTS)
-                    .map((insight, index) => {
-                      return (
-                        <Expandable
-                          key={insight.kind ?? index}
-                          label={insight.label}
-                          pb={1}
-                        >
-                          <Text variant="sm" color="black60" pb={1}>
-                            {insight.entities.length > 0
-                              ? insight.entities.join(", ")
-                              : insight.description}
-                          </Text>
-                        </Expandable>
-                      )
-                    })}
+                  <Box display={["none", "block"]}>
+                    {artist.insights
+                      .slice(0, ARTIST_HEADER_NUMBER_OF_INSIGHTS)
+                      .map((insight, index) => {
+                        return (
+                          <Expandable
+                            key={insight.kind ?? index}
+                            label={insight.label}
+                            pb={1}
+                          >
+                            <Text variant="sm" color="black60" pb={1}>
+                              {insight.entities.length > 0
+                                ? insight.entities.join(", ")
+                                : insight.description}
+                            </Text>
+                          </Expandable>
+                        )
+                      })}
+                  </Box>
                 </Column>
               )}
             </GridColumns>
-
-            <Collapse title="Hide additional information" onClick={handleClick}>
-              <ChevronUpIcon m="auto" />
-            </Collapse>
           </HorizontalPadding>
         </AppContainer>
       </Box>
@@ -333,25 +290,6 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-const Collapse = styled(Clickable)`
-  display: flex;
-  margin: auto;
-  height: ${themeGet("space.6")};
-  padding: 0 ${themeGet("space.4")};
-
-  svg {
-    transition: transform 200ms, opacity 200ms;
-    opacity: 0.6;
-  }
-
-  &:hover {
-    svg {
-      transform: translateY(-0.25em);
-      opacity: 1;
-    }
-  }
-`
 
 const Bio = styled(HTML)<HTMLProps>`
   text-align: left;
