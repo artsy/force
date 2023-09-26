@@ -924,6 +924,7 @@ describe("Shipping", () => {
               "TW",
             ])
             await userEvent.click(screen.getByText("Save and Continue"))
+            await flushPromiseQueue()
 
             const mutation = env.mock.getMostRecentOperation()
             expect(mutation.request.node.operation.name).toEqual(
