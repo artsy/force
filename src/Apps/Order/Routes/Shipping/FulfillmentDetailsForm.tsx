@@ -277,7 +277,13 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
       }}
     >
       {formikProps => {
-        const { values, errors, touched, handleChange } = formikProps
+        const {
+          values,
+          errors,
+          touched,
+          handleChange,
+          handleBlur,
+        } = formikProps
 
         // Pass some key formik bits up to the shipping route
         // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -475,6 +481,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                         autoCorrect="off"
                         value={values.attributes.name}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={
                           touched.attributes?.name && errors.attributes?.name
                         }
@@ -535,6 +542,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                               fetchForAutocomplete({ search: e.target.value })
                             handleChange(e)
                           }}
+                          onBlur={handleBlur}
                           options={autocompleteOptions}
                           onSelect={option => {
                             const hasSecondarySuggestions = option.entries > 1
@@ -589,6 +597,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                           title="Address line 1"
                           value={values.attributes.addressLine1}
                           onChange={handleChange}
+                          onBlur={handleBlur}
                           error={
                             (touched as FormikTouched<ShipValues>).attributes
                               ?.addressLine1 &&
@@ -607,6 +616,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                         title="Address line 2 (optional)"
                         value={values.attributes.addressLine2}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={
                           (touched as FormikTouched<ShipValues>).attributes
                             ?.addressLine2 &&
@@ -624,6 +634,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                         title="City"
                         value={values.attributes.city}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={
                           (touched as FormikTouched<ShipValues>).attributes
                             ?.city &&
@@ -641,6 +652,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                         autoCorrect="off"
                         value={values.attributes.region}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={
                           (touched as FormikTouched<ShipValues>).attributes
                             ?.region &&
@@ -660,6 +672,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                         autoCorrect="off"
                         value={values.attributes.postalCode}
                         onChange={handleChange}
+                        onBlur={handleBlur}
                         error={
                           (touched as FormikTouched<ShipValues>).attributes
                             ?.postalCode &&
@@ -683,6 +696,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                             pattern="[^a-z]+"
                             value={values.attributes.phoneNumber}
                             onChange={handleChange}
+                            onBlur={handleBlur}
                             error={
                               touched.attributes?.phoneNumber &&
                               errors.attributes?.phoneNumber
@@ -728,6 +742,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                     autoCorrect="off"
                     value={values.attributes.name}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     error={touched.attributes?.name && errors.attributes?.name}
                     data-testid="AddressForm_name"
                   />
@@ -741,6 +756,7 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                     pattern="[^a-z]+"
                     value={values.attributes.phoneNumber}
                     onChange={handleChange}
+                    onBlur={handleBlur}
                     error={
                       touched.attributes?.phoneNumber &&
                       errors.attributes?.phoneNumber

@@ -282,7 +282,7 @@ describe("Shipping", () => {
   })
 
   describe("with partner shipping", () => {
-    describe.only("with no saved address", () => {
+    describe("with no saved address", () => {
       it("shows an active offer stepper if it's an offer order", async () => {
         renderWithRelay({
           CommerceOrder: () => UntouchedOfferOrder,
@@ -680,7 +680,7 @@ describe("Shipping", () => {
           expect(mockCommitMutation).toHaveBeenCalled()
         })
 
-        it("only shows validation erros on touched inputs before submission", async () => {
+        it("only shows validation errors on touched inputs before submission", async () => {
           renderWithRelay({
             CommerceOrder: () => order,
             Me: () => meWithoutAddress,
@@ -689,8 +689,16 @@ describe("Shipping", () => {
           const name = screen.getByPlaceholderText("Full name")
           userEvent.type(name, "First Last")
           userEvent.clear(name)
+          userEvent.tab()
 
-          expect(screen.getByText("This field is required")).toBeInTheDocument()
+          await waitFor(() => {
+            expect(
+              screen.getByText("Full name is required")
+            ).toBeInTheDocument()
+          })
+          expect(
+            screen.queryByPlaceholderText("Phone number is required")
+          ).not.toBeInTheDocument()
         })
 
         it("shows all validation errors including untouched inputs after submission", async () => {
