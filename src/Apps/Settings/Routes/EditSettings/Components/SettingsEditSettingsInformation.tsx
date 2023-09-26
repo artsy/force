@@ -169,7 +169,6 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
                     setFieldValue("phoneNumberCountryCode", value)
                   },
                 }}
-                required
                 error={
                   (touched.phoneNumberCountryCode &&
                     errors.phoneNumberCountryCode) ||

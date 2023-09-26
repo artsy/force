@@ -36,7 +36,7 @@ describe("Details", () => {
   ) => {
     return await renderRelayTree({
       Component: props => (
-        <ArtworkGridContextProvider isAuctionArtwork>
+        <ArtworkGridContextProvider isAuctionArtwork saveOnlyToDefaultList>
           <DetailsFragmentContainer {...(props as any)} {...restProps} />
         </ArtworkGridContextProvider>
       ),
