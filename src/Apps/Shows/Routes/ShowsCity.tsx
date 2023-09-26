@@ -96,6 +96,8 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
     handleClick(endCursor, page)
   }
 
+  const showOpeningThisWeek = openingThisWeek.length > 0
+
   return (
     <>
       <ShowsMeta cityName={city.name} />
@@ -105,14 +107,14 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
       <Join separator={<Spacer y={6} />}>
         <ShowsHeaderFragmentContainer viewer={viewer} />
 
-        {openingThisWeek.length > 0 && (
+        {showOpeningThisWeek && (
           <>
             <Text as="h2" variant="xl">
               {city.slug === "online"
                 ? "Opening This Week"
                 : `Opening This Week in ${city.name}`}
 
-              {openingThisWeek.length > 0 && (
+              {showOpeningThisWeek && (
                 <>
                   &nbsp;
                   <Sup color="brand">{openingThisWeek.length}</Sup>
