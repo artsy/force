@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b4365ab23abe2c5467ce02624637cb3b>>
+ * @generated SignedSource<<dd5b41e964f8cd360e34312d1dbaf52c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type Shipping_order$data = {
+export type Shipping2_order$data = {
   readonly internalID: string;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
@@ -68,12 +68,12 @@ export type Shipping_order$data = {
     readonly __typename: "%other";
   } | null;
   readonly state: CommerceOrderStateEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
-  readonly " $fragmentType": "Shipping_order";
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "FulfillmentDetailsForm_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentType": "Shipping2_order";
 };
-export type Shipping_order$key = {
-  readonly " $data"?: Shipping_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Shipping_order">;
+export type Shipping2_order$key = {
+  readonly " $data"?: Shipping2_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Shipping2_order">;
 };
 
 const node: ReaderFragment = (function(){
@@ -140,8 +140,13 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Shipping_order",
+  "name": "Shipping2_order",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FulfillmentDetailsForm_order"
+    },
     {
       "alias": null,
       "args": null,
@@ -367,6 +372,6 @@ return {
 };
 })();
 
-(node as any).hash = "3720bc2915f2de540a7e198c5122956d";
+(node as any).hash = "e923e6687fa5c656399b78e71c9a433d";
 
 export default node;

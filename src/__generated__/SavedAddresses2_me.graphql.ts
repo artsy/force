@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d2bb290d6cbde4fa109c495ca9bb2d18>>
+ * @generated SignedSource<<cc7f3d1c6b4a9c101c9d97eea989d38e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Shipping_me$data = {
+export type SavedAddresses2_me$data = {
   readonly addressConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -28,19 +28,14 @@ export type Shipping_me$data = {
         readonly region: string | null;
       } | null;
     } | null> | null;
+    readonly totalCount: number;
   } | null;
-  readonly email: string | null;
   readonly id: string;
-  readonly location: {
-    readonly country: string | null;
-  } | null;
-  readonly name: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses_me">;
-  readonly " $fragmentType": "Shipping_me";
+  readonly " $fragmentType": "SavedAddresses2_me";
 };
-export type Shipping_me$key = {
-  readonly " $data"?: Shipping_me$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Shipping_me">;
+export type SavedAddresses2_me$key = {
+  readonly " $data"?: SavedAddresses2_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses2_me">;
 };
 
 const node: ReaderFragment = (function(){
@@ -48,21 +43,7 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "id",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "country",
   "storageKey": null
 };
 return {
@@ -89,64 +70,36 @@ return {
     }
   ],
   "kind": "Fragment",
-  "metadata": null,
-  "name": "Shipping_me",
+  "metadata": {
+    "connection": [
+      {
+        "count": null,
+        "cursor": null,
+        "direction": "bidirectional",
+        "path": [
+          "addressConnection"
+        ]
+      }
+    ]
+  },
+  "name": "SavedAddresses2_me",
   "selections": [
     (v0/*: any*/),
     {
-      "alias": null,
+      "alias": "addressConnection",
       "args": null,
-      "kind": "ScalarField",
-      "name": "email",
-      "storageKey": null
-    },
-    (v1/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "MyLocation",
-      "kind": "LinkedField",
-      "name": "location",
-      "plural": false,
-      "selections": [
-        (v2/*: any*/)
-      ],
-      "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "SavedAddresses_me"
-    },
-    {
-      "alias": null,
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "after",
-          "variableName": "after"
-        },
-        {
-          "kind": "Variable",
-          "name": "before",
-          "variableName": "before"
-        },
-        {
-          "kind": "Variable",
-          "name": "first",
-          "variableName": "first"
-        },
-        {
-          "kind": "Variable",
-          "name": "last",
-          "variableName": "last"
-        }
-      ],
       "concreteType": "UserAddressConnection",
       "kind": "LinkedField",
-      "name": "addressConnection",
+      "name": "__SavedAddresses_addressConnection_connection",
       "plural": false,
       "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "totalCount",
+          "storageKey": null
+        },
         {
           "alias": null,
           "args": null,
@@ -163,7 +116,7 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v1/*: any*/),
+                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -199,7 +152,13 @@ return {
                   "name": "city",
                   "storageKey": null
                 },
-                (v2/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "country",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -207,7 +166,13 @@ return {
                   "name": "isDefault",
                   "storageKey": null
                 },
-                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "name",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -228,8 +193,61 @@ return {
                   "kind": "ScalarField",
                   "name": "region",
                   "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "__typename",
+                  "storageKey": null
                 }
               ],
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "cursor",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "PageInfo",
+          "kind": "LinkedField",
+          "name": "pageInfo",
+          "plural": false,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "endCursor",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasNextPage",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "hasPreviousPage",
+              "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "startCursor",
               "storageKey": null
             }
           ],
@@ -244,6 +262,6 @@ return {
 };
 })();
 
-(node as any).hash = "e31c45b18a2f038be369d1101419baaa";
+(node as any).hash = "0f7178f7033b8a9711893f215d6ae5e2";
 
 export default node;

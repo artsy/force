@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d2bb290d6cbde4fa109c495ca9bb2d18>>
+ * @generated SignedSource<<a13677cc63d0c2d4e3b8dbb1c18bd9ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Shipping_me$data = {
+export type Shipping2_me$data = {
   readonly addressConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -35,12 +35,12 @@ export type Shipping_me$data = {
     readonly country: string | null;
   } | null;
   readonly name: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses_me">;
-  readonly " $fragmentType": "Shipping_me";
+  readonly " $fragmentSpreads": FragmentRefs<"FulfillmentDetailsForm_me" | "SavedAddresses2_me">;
+  readonly " $fragmentType": "Shipping2_me";
 };
-export type Shipping_me$key = {
-  readonly " $data"?: Shipping_me$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Shipping_me">;
+export type Shipping2_me$key = {
+  readonly " $data"?: Shipping2_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Shipping2_me">;
 };
 
 const node: ReaderFragment = (function(){
@@ -90,8 +90,18 @@ return {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Shipping_me",
+  "name": "Shipping2_me",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "FulfillmentDetailsForm_me"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SavedAddresses2_me"
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -112,11 +122,6 @@ return {
         (v2/*: any*/)
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "SavedAddresses_me"
     },
     {
       "alias": null,
@@ -244,6 +249,6 @@ return {
 };
 })();
 
-(node as any).hash = "e31c45b18a2f038be369d1101419baaa";
+(node as any).hash = "64fdd35ca689ad9879684032c9f7dd60";
 
 export default node;

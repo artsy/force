@@ -34,34 +34,22 @@ import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressM
 import { countries } from "Utils/countries"
 import { userHasLabFeature } from "Utils/user"
 
-export enum AddressModalActionType {
-  EDIT_USER_ADDRESS = "editUserAddress",
-  CREATE_USER_ADDRESS = "createUserAddress",
+export interface ModalDetails {
+  addressModalTitle: string
+  addressModalAction: AddressModalAction
 }
 
-export type AddressModalAction =
-  | {
-      type: AddressModalActionType.CREATE_USER_ADDRESS
-    }
-  | {
-      type: AddressModalActionType.EDIT_USER_ADDRESS
-      address: SavedAddressType
-    }
-
 export interface Props {
+  show: boolean
   closeModal: () => void
+  address?: SavedAddressType
   onSuccess: (
     address?: UpdateUserAddressMutation$data & CreateUserAddressMutation$data
   ) => void
   onDeleteAddress: (addressID: string) => void
   onError: (message: string) => void
-  modalAction: AddressModalAction | null
+  modalDetails?: ModalDetails
   me: SavedAddresses_me$data
-}
-
-const MODAL_TITLE_MAP: Record<AddressModalActionType, string> = {
-  createUserAddress: "Add address",
-  editUserAddress: "Edit address",
 }
 
 const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
@@ -78,31 +66,23 @@ const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
 export const GENERIC_FAIL_MESSAGE =
   "Sorry there has been an issue saving your address. Please try again."
 
+export type AddressModalAction = "editUserAddress" | "createUserAddress"
+
 export const AddressModal: React.FC<Props> = ({
+  show,
   closeModal,
+  address,
   onSuccess,
   onDeleteAddress,
   onError,
-  modalAction,
+  modalDetails,
   me,
 }) => {
-  const { relayEnvironment, user } = useSystemContext()
   const [_countryCode, setCountryCode] = useState<string>("us")
 
-  const [createUpdateError, setCreateUpdateError] = useState<string | null>(
-    null
-  )
-  const [showDialog, setShowDialog] = useState<boolean>(false)
-  if (!relayEnvironment) return null
-  if (!modalAction) return null
-
-  const title = (modalAction && MODAL_TITLE_MAP[modalAction.type]) || ""
-  const initialAddress =
-    modalAction.type === "editUserAddress"
-      ? modalAction.address
-      : { country: "US", internalID: undefined, isDefault: false }
-
-  // TODO: Yup validator
+  const title = modalDetails?.addressModalTitle
+  const createMutation =
+    modalDetails?.addressModalAction === "createUserAddress"
   const validator = (values: any) => {
     const validationResult = validateAddress(values)
     const phoneValidation = validatePhoneNumber(values.phoneNumber)
@@ -112,6 +92,14 @@ export const AddressModal: React.FC<Props> = ({
     const errorsTrimmed = removeEmptyKeys(errors)
     return errorsTrimmed
   }
+  const { relayEnvironment, user } = useSystemContext()
+
+  const [createUpdateError, setCreateUpdateError] = useState<string | null>(
+    null
+  )
+  const [showDialog, setShowDialog] = useState<boolean>(false)
+
+  if (!relayEnvironment) return null
 
   const handleModalClose = () => {
     closeModal()
@@ -120,184 +108,185 @@ export const AddressModal: React.FC<Props> = ({
 
   return (
     <>
-      <ModalDialog title={title} onClose={handleModalClose} width={900}>
-        <Formik
-          validateOnMount
-          initialValues={initialAddress}
-          validate={validator}
-          onSubmit={(
-            values: SavedAddressType,
-            actions: FormikHelpers<SavedAddressType>
-          ) => {
-            const handleError = message => {
-              const userMessage: Record<string, string> | null =
-                SERVER_ERROR_MAP[message]
+      {show && (
+        <ModalDialog title={title} onClose={handleModalClose} width={900}>
+          <Formik
+            validateOnMount
+            initialValues={createMutation ? { country: "US" } : { ...address }}
+            validate={validator}
+            onSubmit={(
+              values: SavedAddressType,
+              actions: FormikHelpers<SavedAddressType>
+            ) => {
+              const handleError = message => {
+                const userMessage: Record<string, string> | null =
+                  SERVER_ERROR_MAP[message]
 
-              if (userMessage) {
-                actions.setFieldError(userMessage.field, userMessage.message)
-              } else {
-                setCreateUpdateError(GENERIC_FAIL_MESSAGE)
-              }
-              actions?.setSubmitting(false)
-              onError && onError(message)
-            }
-
-            const handleSuccess = savedAddress => {
-              // update default address only if isDefault changed or new
-              // address marked ad default
-              if (
-                savedAddress?.createUserAddress?.userAddressOrErrors
-                  ?.internalID &&
-                values?.isDefault &&
-                values?.isDefault !==
-                  (initialAddress as SavedAddressType)?.isDefault
-              ) {
-                updateUserDefaultAddress(
-                  relayEnvironment,
-                  savedAddress.createUserAddress.userAddressOrErrors.internalID,
-                  () => {
-                    onSuccess(savedAddress)
-                  },
-                  onError
-                )
-              } else {
-                onSuccess && onSuccess(savedAddress)
+                if (userMessage) {
+                  actions.setFieldError(userMessage.field, userMessage.message)
+                } else {
+                  setCreateUpdateError(GENERIC_FAIL_MESSAGE)
+                }
+                actions?.setSubmitting(false)
+                onError && onError(message)
               }
 
-              setCreateUpdateError(null)
-            }
-            const addressInput = convertShippingAddressToMutationInput(values)
-            if (modalAction.type === "createUserAddress") {
-              createUserAddress(
-                relayEnvironment,
-                addressInput,
-                handleSuccess,
-                handleError,
-                me,
-                closeModal
-              )
-            } else {
-              if (modalAction.type === "editUserAddress") {
-                updateUserAddress(
+              const handleSuccess = savedAddress => {
+                // update default address only if isDefault changed or new
+                // address marked ad default
+                if (
+                  values?.isDefault &&
+                  values?.isDefault !== address?.isDefault
+                ) {
+                  updateUserDefaultAddress(
+                    relayEnvironment,
+                    savedAddress?.createUserAddress?.userAddressOrErrors
+                      ?.internalID || address?.internalID,
+                    () => {
+                      onSuccess(savedAddress)
+                    },
+                    onError
+                  )
+                } else {
+                  onSuccess && onSuccess(savedAddress)
+                }
+
+                setCreateUpdateError(null)
+              }
+              const addressInput = convertShippingAddressToMutationInput(values)
+              if (createMutation) {
+                createUserAddress(
                   relayEnvironment,
-                  initialAddress.internalID!,
                   addressInput,
-                  closeModal,
                   handleSuccess,
-                  handleError
+                  handleError,
+                  me,
+                  closeModal
                 )
+              } else {
+                if (address?.internalID) {
+                  updateUserAddress(
+                    relayEnvironment,
+                    address.internalID,
+                    addressInput,
+                    closeModal,
+                    handleSuccess,
+                    handleError
+                  )
+                }
               }
-            }
-          }}
-        >
-          {(formik: FormikProps<SavedAddressType>) => (
-            <form onSubmit={formik.handleSubmit}>
-              {createUpdateError && (
-                <Banner my={2} data-test="credit-card-error" variant="error">
-                  {createUpdateError}
-                </Banner>
-              )}
-              <AddressModalFields />
-              <Spacer y={2} />
-              {user && !userHasLabFeature(user, "Phone Number Validation") && (
-                <Input
-                  title="Phone number"
-                  description="Required for shipping logistics"
-                  placeholder="Add phone number"
-                  name="phoneNumber"
-                  type="tel"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.phoneNumber && formik.errors.phoneNumber
-                  }
-                  value={formik.values?.phoneNumber || ""}
-                  data-test="phoneInputWithoutValidationFlag"
-                />
-              )}
-              {user && userHasLabFeature(user, "Phone Number Validation") && (
-                <Flex>
-                  <Box style={{ maxWidth: "35%" }}>
-                    <Select
-                      title="Phone number"
-                      description="Only used for shipping purposes"
-                      options={countries}
-                      onSelect={cc => {
-                        setCountryCode(cc)
-                      }}
-                      style={{
-                        letterSpacing: "1px",
-                        borderRight: "none",
-                      }}
-                      data-test="countryDropdown"
-                    />
-                  </Box>
-                  <Flex
-                    flexDirection="column"
-                    style={{
-                      width: "100%",
-                    }}
-                  >
-                    <Box height="100%"></Box>
+            }}
+          >
+            {(formik: FormikProps<SavedAddressType>) => (
+              <form onSubmit={formik.handleSubmit}>
+                {createUpdateError && (
+                  <Banner my={2} data-test="credit-card-error" variant="error">
+                    {createUpdateError}
+                  </Banner>
+                )}
+                <AddressModalFields />
+                <Spacer y={2} />
+                {user &&
+                  !userHasLabFeature(user, "Phone Number Validation") && (
                     <Input
-                      title=""
-                      description=""
-                      placeholder={"Add phone number"}
+                      title="Phone number"
+                      description="Required for shipping logistics"
+                      placeholder="Add phone number"
                       name="phoneNumber"
                       type="tel"
                       onChange={formik.handleChange}
-                      onBlur={e => {
-                        formik.handleBlur
-                      }}
+                      onBlur={formik.handleBlur}
                       error={
                         formik.touched.phoneNumber && formik.errors.phoneNumber
                       }
-                      value={formik.values?.phoneNumber ?? ""}
-                      style={{ borderLeft: "none" }}
+                      value={formik.values?.phoneNumber || ""}
+                      data-test="phoneInputWithoutValidationFlag"
                     />
+                  )}
+                {user && userHasLabFeature(user, "Phone Number Validation") && (
+                  <Flex>
+                    <Box style={{ maxWidth: "35%" }}>
+                      <Select
+                        title="Phone number"
+                        description="Only used for shipping purposes"
+                        options={countries}
+                        onSelect={cc => {
+                          setCountryCode(cc)
+                        }}
+                        style={{
+                          letterSpacing: "1px",
+                          borderRight: "none",
+                        }}
+                        data-test="countryDropdown"
+                      />
+                    </Box>
+                    <Flex
+                      flexDirection="column"
+                      style={{
+                        width: "100%",
+                      }}
+                    >
+                      <Box height="100%"></Box>
+                      <Input
+                        title=""
+                        description=""
+                        placeholder={"Add phone number"}
+                        name="phoneNumber"
+                        type="tel"
+                        onChange={formik.handleChange}
+                        onBlur={e => {
+                          formik.handleBlur
+                        }}
+                        error={
+                          formik.touched.phoneNumber &&
+                          formik.errors.phoneNumber
+                        }
+                        value={formik.values?.phoneNumber ?? ""}
+                        style={{ borderLeft: "none" }}
+                      />
+                    </Flex>
                   </Flex>
-                </Flex>
-              )}
-              <Spacer y={2} />
-              {!initialAddress?.isDefault && (
-                <Checkbox
-                  onSelect={selected => {
-                    formik.setFieldValue("isDefault", selected)
-                  }}
-                  selected={formik.values?.isDefault}
-                  data-test="setAsDefault"
-                >
-                  Set as default
-                </Checkbox>
-              )}
-              {modalAction.type === "editUserAddress" && (
-                <Flex mt={2} flexDirection="column" alignItems="center">
-                  <Clickable
-                    data-test="deleteButton"
-                    onClick={() => setShowDialog(true)}
+                )}
+                <Spacer y={2} />
+                {(!address?.isDefault || createMutation) && (
+                  <Checkbox
+                    onSelect={selected => {
+                      formik.setFieldValue("isDefault", selected)
+                    }}
+                    selected={formik.values?.isDefault}
+                    data-test="setAsDefault"
                   >
-                    <Text variant="xs" color="red100">
-                      Delete address
-                    </Text>
-                  </Clickable>
-                </Flex>
-              )}
-              <Button
-                data-test="saveButton"
-                type="submit"
-                variant="primaryBlack"
-                loading={formik.isSubmitting}
-                disabled={Object.keys(formik.errors).length > 0}
-                width="100%"
-                mt={2}
-              >
-                Save
-              </Button>
-            </form>
-          )}
-        </Formik>
-      </ModalDialog>
-
+                    Set as default
+                  </Checkbox>
+                )}
+                {!createMutation && (
+                  <Flex mt={2} flexDirection="column" alignItems="center">
+                    <Clickable
+                      data-test="deleteButton"
+                      onClick={() => setShowDialog(true)}
+                    >
+                      <Text variant="xs" color="red100">
+                        Delete address
+                      </Text>
+                    </Clickable>
+                  </Flex>
+                )}
+                <Button
+                  data-test="saveButton"
+                  type="submit"
+                  variant="primaryBlack"
+                  loading={formik.isSubmitting}
+                  disabled={Object.keys(formik.errors).length > 0}
+                  width="100%"
+                  mt={2}
+                >
+                  Save
+                </Button>
+              </form>
+            )}
+          </Formik>
+        </ModalDialog>
+      )}
       {showDialog && (
         <ModalDialog
           data-test="deleteAddressDialog"
@@ -323,8 +312,8 @@ export const AddressModal: React.FC<Props> = ({
               onClick={() => {
                 setShowDialog(false)
                 closeModal()
-                if (initialAddress.internalID) {
-                  onDeleteAddress(initialAddress.internalID)
+                if (address?.internalID) {
+                  onDeleteAddress(address.internalID)
                 }
               }}
             >

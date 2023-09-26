@@ -26,7 +26,7 @@ import {
   updateAddressSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
 import { ShippingTestQuery$rawResponse } from "__generated__/ShippingTestQuery.graphql"
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import {
@@ -175,7 +175,9 @@ const meWithAddresses: ShippingTestQuery$rawResponse["me"] = Object.assign(
 )
 
 const saveAndContinue = async () => {
-  await userEvent.click(screen.getByText("Save and Continue"))
+  await waitFor(() => {
+    userEvent.click(screen.getByText("Save and Continue"))
+  })
   await flushPromiseQueue()
 }
 
@@ -370,6 +372,11 @@ describe("Shipping", () => {
         await fillAddressForm(validAddress)
         await saveAndContinue()
 
+        const {
+          phoneNumber: validPhoneNumber,
+          ...validAddressWithoutPhone
+        } = validAddress
+
         expect(mockCommitMutation).toHaveBeenCalledTimes(2)
 
         let mutationArg = mockCommitMutation.mock.calls[0][0]
@@ -380,10 +387,9 @@ describe("Shipping", () => {
           input: {
             id: "1234",
             fulfillmentType: "SHIP",
-            phoneNumber: validAddress.phoneNumber,
+            phoneNumber: validPhoneNumber,
             shipping: {
-              ...validAddress,
-              phoneNumber: "",
+              ...validAddressWithoutPhone,
             },
           },
         })
@@ -425,7 +431,6 @@ describe("Shipping", () => {
             phoneNumber: validAddress.phoneNumber,
             shipping: {
               ...validAddress,
-              phoneNumber: "",
             },
           },
         })
@@ -674,7 +679,7 @@ describe("Shipping", () => {
           expect(mockCommitMutation).toHaveBeenCalled()
         })
 
-        it("only shows validation erros on touched inputs before submission", async () => {
+        it("only shows validation errors on touched inputs before submission", async () => {
           renderWithRelay({
             CommerceOrder: () => order,
             Me: () => meWithoutAddress,
@@ -683,11 +688,19 @@ describe("Shipping", () => {
           const name = screen.getByPlaceholderText("Full name")
           userEvent.type(name, "First Last")
           userEvent.clear(name)
+          userEvent.tab()
 
-          expect(screen.getByText("This field is required")).toBeInTheDocument()
+          await waitFor(() => {
+            expect(
+              screen.getByText("Full name is required")
+            ).toBeInTheDocument()
+          })
+          expect(
+            screen.queryByPlaceholderText("Phone number is required")
+          ).not.toBeInTheDocument()
         })
 
-        it("shows all validation erros including untouched inputs after submission", async () => {
+        it("shows all validation errors including untouched inputs after submission", async () => {
           renderWithRelay({
             CommerceOrder: () => order,
             Me: () => meWithoutAddress,
@@ -698,9 +711,16 @@ describe("Shipping", () => {
           userEvent.clear(name)
 
           await saveAndContinue()
-          expect(
-            screen.getAllByText("This field is required").length
-          ).toBeGreaterThan(1)
+          await waitFor(() => {
+            expect(screen.getByText("Full name is required")).toBeVisible()
+            expect(screen.getByText("Street address is required")).toBeVisible()
+            expect(screen.getByText("City is required")).toBeVisible()
+            expect(
+              screen.getByText("State, province or region is required")
+            ).toBeVisible()
+            expect(screen.getByText("ZIP code is required")).toBeVisible()
+            expect(screen.getByText("Phone number is required")).toBeVisible()
+          })
         })
       })
 
@@ -734,9 +754,9 @@ describe("Shipping", () => {
             await fillAddressForm(validAddress)
             userEvent.clear(screen.getByPlaceholderText("Street address"))
 
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await saveAndContinue()
 
-            expect(screen.getByText("This field is required")).toBeVisible()
+            expect(screen.getByText("Street address is required")).toBeVisible()
             expect(env.mock.getAllOperations()).toHaveLength(0)
           })
 
@@ -751,7 +771,7 @@ describe("Shipping", () => {
             )
 
             await fillAddressForm(validAddress)
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await saveAndContinue()
 
             await verifyAddressWithSuggestions(
               env,
@@ -807,7 +827,6 @@ describe("Shipping", () => {
               },
             })
           })
-
           it("goes back and edits address after verification", async () => {
             const { env } = renderWithRelay(
               {
@@ -868,7 +887,7 @@ describe("Shipping", () => {
             userEvent.selectOptions(screen.getByTestId("AddressForm_country"), [
               "TW",
             ])
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await saveAndContinue()
 
             expect(env.mock.getAllOperations()).toHaveLength(0)
           })
@@ -898,7 +917,7 @@ describe("Shipping", () => {
             )
 
             await fillAddressForm(validAddress)
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await saveAndContinue()
 
             expect(env.mock.getAllOperations()).toHaveLength(0)
           })
@@ -917,7 +936,7 @@ describe("Shipping", () => {
             userEvent.selectOptions(screen.getByTestId("AddressForm_country"), [
               "TW",
             ])
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await saveAndContinue()
 
             const mutation = env.mock.getMostRecentOperation()
             expect(mutation.request.node.operation.name).toEqual(
@@ -1002,6 +1021,7 @@ describe("Shipping", () => {
         })
       })
 
+      // TODO: next Revisit initial address and selecting default saved address.
       it("sets shipping with the selected saved address and phone number", async () => {
         renderWithRelay({
           CommerceOrder: () => order,
@@ -1011,7 +1031,9 @@ describe("Shipping", () => {
         userEvent.click(screen.getByRole("radio", { name: /1 Main St/ }))
         await saveAndContinue()
 
-        expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+        await waitFor(() => {
+          expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+        })
 
         const mutationArg = mockCommitMutation.mock.calls[0][0]
         expect(mutationArg.mutation.default.operation.name).toEqual(
@@ -1059,7 +1081,7 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await saveAndContinue()
 
             // Address verification flow is not triggered.
             expect(env.mock.getAllOperations()).toHaveLength(0)
@@ -1577,6 +1599,10 @@ describe("Shipping", () => {
       })
     })
 
+    // TODO: Need to clarify behavior here. Do we want to call SetShippingMutation
+    // automatically whenever a page loads with a default saved address, when the user
+    // edits a saved address, etc? Current modeling keeps these things somewhat separate.
+    // However, if we want to do it it shouldn't be hard - just call handleSubmit imperatively.
     describe("with saved addresses", () => {
       describe("Artsy shipping international only", () => {
         describe("with artwork located in the US", () => {
@@ -2245,9 +2271,9 @@ describe("Shipping", () => {
       })
 
       userEvent.click(screen.getByRole("radio", { name: /Arrange for pickup/ }))
-      const phoneNumber = screen.getAllByPlaceholderText(
+      const phoneNumber = screen.getByPlaceholderText(
         "Add phone number including country code"
-      )[1]
+      )
       // TODO: need a better way to check the input is displayed/expanded (height > 0)
       expect(phoneNumber).toHaveAttribute("tabindex", "0")
       expect(phoneNumber).toHaveValue("")
@@ -2261,12 +2287,13 @@ describe("Shipping", () => {
       })
 
       userEvent.click(screen.getByRole("radio", { name: /Arrange for pickup/ }))
-      userEvent.type(
-        screen.getAllByPlaceholderText(
-          "Add phone number including country code"
-        )[0],
+      userEvent.paste(screen.getByPlaceholderText("Full name"), "Erik test")
+      userEvent.paste(
+        screen.getByPlaceholderText("Add phone number including country code"),
         "2813308004"
       )
+      await flushPromiseQueue()
+
       await saveAndContinue()
 
       expect(mockCommitMutation).toHaveBeenCalledTimes(1)
@@ -2279,16 +2306,7 @@ describe("Shipping", () => {
         input: {
           id: "1234",
           fulfillmentType: "PICKUP",
-          shipping: {
-            addressLine1: "",
-            addressLine2: "",
-            country: "US",
-            name: "",
-            city: "",
-            postalCode: "",
-            region: "",
-            phoneNumber: "",
-          },
+
           phoneNumber: "2813308004",
         },
       })
@@ -2300,7 +2318,9 @@ describe("Shipping", () => {
         Me: () => meWithoutAddress,
       })
 
+      userEvent.paste(screen.getByPlaceholderText("Full name"), "Erik test")
       userEvent.click(screen.getByRole("radio", { name: /Arrange for pickup/ }))
+      await flushPromiseQueue()
       expect(
         screen.getByRole("button", {
           name: "Save and Continue",

@@ -1,4 +1,4 @@
-import { Flex, Text, RadioProps } from "@artsy/palette"
+import { Flex, Text, RadioProps, BoxProps } from "@artsy/palette"
 import * as React from "react"
 import styled from "styled-components"
 import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
@@ -11,18 +11,16 @@ type AddressNode = NonNullable<
   >["node"]
 >
 
-interface SavedAddressItemProps {
+interface SavedAddressItemProps extends BoxProps {
   address: AddressNode
-  handleClickEdit: (number) => void
-  index: number
+  handleClickEdit: (event: any) => void
 }
 
 export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
   props
 ): React.ReactElement<RadioProps> => {
   const handleClickEdit = props?.handleClickEdit
-  const index = props.index
-  const address = props.address
+  const address = props?.address
   const addressLine1 = address?.addressLine1
   const addressLine2 = address?.addressLine2
   const addressLine3 = address?.addressLine3
@@ -75,17 +73,12 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
         top={2}
         right={2}
         tabIndex={0}
-        onClick={event => {
-          event.preventDefault()
-          event.stopPropagation()
-
-          handleClickEdit(index)
-        }}
+        onClick={handleClickEdit}
         onKeyPress={event => {
-          event.preventDefault()
-          event.stopPropagation()
-
-          event.key === "Enter" && handleClickEdit(index)
+          if (event.key !== "Enter") {
+            return
+          }
+          handleClickEdit(event)
         }}
         data-test="editAddressInShipping"
       >

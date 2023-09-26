@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5f3b379349019607110bcd2786cac9fc>>
+ * @generated SignedSource<<8ea1f1a7e00ee61d8d2360cbe7c45a82>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,7 +35,7 @@ export type FulfillmentDetailsForm_me$data = {
     readonly country: string | null;
   } | null;
   readonly name: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses2_me">;
   readonly " $fragmentType": "FulfillmentDetailsForm_me";
 };
 export type FulfillmentDetailsForm_me$key = {
@@ -116,7 +116,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "SavedAddresses_me"
+      "name": "SavedAddresses2_me"
     },
     {
       "alias": null,
@@ -244,6 +244,6 @@ return {
 };
 })();
 
-(node as any).hash = "2127145b01acbbef1f85782d9f781a17";
+(node as any).hash = "9b2480f681205ee128c09e100cf9fb85";
 
 export default node;
