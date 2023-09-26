@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d27f572da73134a4941657628475d497>>
+ * @generated SignedSource<<3046d1839e920192f1347990ae6ab6b9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -102,6 +102,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "label",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "entities",
                 "storageKey": null
               },
@@ -110,13 +117,6 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "description",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "label",
                 "storageKey": null
               },
               {
@@ -142,7 +142,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "acfe7df1995aebde0b67bd121b16ddf5",
+    "cacheID": "a328c4265c3dcc4d47f5a6cdae9301e8",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -206,7 +206,7 @@ return {
     },
     "name": "ArtistCareerHighlights_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  insights {\n    entities\n    description\n    label\n    kind\n  }\n}\n"
+    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  insights {\n    ...ArtistCareerHighlight_insight\n    kind\n  }\n}\n"
   }
 };
 })();
