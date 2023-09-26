@@ -25,6 +25,7 @@ import {
 import { BankAccountPickerFragmentContainer } from "Apps/Order/Components/BankAccountPicker"
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
+import { RouterLink } from "System/Router/RouterLink"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import UnknownCardIcon from "@artsy/icons/UnknownCardIcon"
@@ -316,9 +317,9 @@ const getPaymentMethodInfo = (
           </Text>
           <Text color="black60" variant="sm">
             • Questions? Email{" "}
-            <Clickable cursor="text" textDecoration="underline">
+            <RouterLink inline to="mailto:orders@artsy.net">
               orders@artsy.net
-            </Clickable>
+            </RouterLink>
           </Text>
         </>
       )
