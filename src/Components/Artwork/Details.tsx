@@ -16,7 +16,6 @@ import { useTimer } from "Utils/Hooks/useTimer"
 import { Details_artwork$data } from "__generated__/Details_artwork.graphql"
 import { HoverDetailsFragmentContainer } from "./HoverDetails"
 import { SaveButtonFragmentContainer } from "./SaveButton"
-import { useCheckIfArtworkListsEnabled } from "Apps/CollectorProfile/Routes/Saves2/useCheckIfArtworkListsEnabled"
 
 interface DetailsProps {
   artwork: Details_artwork$data
@@ -217,7 +216,6 @@ export const Details: React.FC<DetailsProps> = ({
   const isHighDemand =
     Number((rest?.artwork.marketPriceInsights?.demandRank || 0) * 10) >= 9
 
-  const isArtworksListEnabled = useCheckIfArtworkListsEnabled()
   const showHighDemandInfo = !!isP1Artist && isHighDemand && showHighDemandIcon
 
   const renderSaveButtonComponent = () => {
@@ -229,7 +227,7 @@ export const Details: React.FC<DetailsProps> = ({
       return renderSaveButton(rest.artwork.internalID)
     }
 
-    if (isArtworksListEnabled && !saveOnlyToDefaultList) {
+    if (!saveOnlyToDefaultList) {
       return (
         <SaveArtworkToListsButtonFragmentContainer
           contextModule={contextModule!}
