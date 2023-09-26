@@ -114,12 +114,10 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
                 ? "Opening This Week"
                 : `Opening This Week in ${city.name}`}
 
-              {showOpeningThisWeek && (
-                <>
-                  &nbsp;
-                  <Sup color="brand">{openingThisWeek.length}</Sup>
-                </>
-              )}
+              <>
+                &nbsp;
+                <Sup color="brand">{openingThisWeek.length}</Sup>
+              </>
             </Text>
 
             <GridColumns gridRowGap={4}>
