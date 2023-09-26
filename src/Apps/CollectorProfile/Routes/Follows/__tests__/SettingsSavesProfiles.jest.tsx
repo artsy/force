@@ -1,7 +1,7 @@
 import { screen } from "@testing-library/react"
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { SettingsSavesProfilesPaginationContainer } from "Apps/Settings/Routes/Saves/Components/SettingsSavesProfiles"
+import { SettingsSavesProfilesPaginationContainer } from "Apps/CollectorProfile/Routes/Follows/SettingsSavesProfiles"
 
 jest.unmock("react-relay")
 

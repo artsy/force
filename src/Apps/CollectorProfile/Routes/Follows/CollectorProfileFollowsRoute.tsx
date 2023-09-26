@@ -3,9 +3,9 @@ import { CollectorProfileFollowsRoute_me$data } from "__generated__/CollectorPro
 import React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 
-import { SettingsSavesArtistsQueryRenderer } from "Apps/Settings/Routes/Saves/Components/SettingsSavesArtists"
-import { SettingsSavesCategoriesQueryRenderer } from "Apps/Settings/Routes/Saves/Components/SettingsSavesCategories"
-import { SettingsSavesProfilesQueryRenderer } from "Apps/Settings/Routes/Saves/Components/SettingsSavesProfiles"
+import { SettingsSavesArtistsQueryRenderer } from "Apps/CollectorProfile/Routes/Follows/SettingsSavesArtists"
+import { SettingsSavesCategoriesQueryRenderer } from "Apps/CollectorProfile/Routes/Follows/SettingsSavesCategories"
+import { SettingsSavesProfilesQueryRenderer } from "Apps/CollectorProfile/Routes/Follows/SettingsSavesProfiles"
 import { MetaTags } from "Components/MetaTags"
 interface CollectorProfileFollowsRouteProps {
   me: CollectorProfileFollowsRoute_me$data
