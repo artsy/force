@@ -576,6 +576,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           const {
             saveAddress,
             addressVerifiedBy,
+            phoneNumber,
             ...addressValues
           } = formValues.attributes
           const requiresArtsyShipping = getOrderRequiresArtsyShipping(
@@ -587,9 +588,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             fulfillmentType: requiresArtsyShipping
               ? "SHIP_ARTA"
               : FulfillmentType.SHIP,
-            addressVerifiedBy,
-            phoneNumber: formValues.attributes.phoneNumber,
+            phoneNumber,
             shipping: addressValues,
+          }
+          if (addressVerifiedBy) {
+            fulfillmentMutationValues.addressVerifiedBy = addressVerifiedBy
           }
         } else {
           fulfillmentMutationValues = {

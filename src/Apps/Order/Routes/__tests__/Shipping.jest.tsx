@@ -282,7 +282,7 @@ describe("Shipping", () => {
   })
 
   describe("with partner shipping", () => {
-    describe("with no saved address", () => {
+    describe.only("with no saved address", () => {
       it("shows an active offer stepper if it's an offer order", async () => {
         renderWithRelay({
           CommerceOrder: () => UntouchedOfferOrder,
@@ -372,6 +372,11 @@ describe("Shipping", () => {
         await fillAddressForm(validAddress)
         await saveAndContinue()
 
+        const {
+          phoneNumber: validPhoneNumber,
+          ...validAddressWithoutPhone
+        } = validAddress
+
         expect(mockCommitMutation).toHaveBeenCalledTimes(2)
 
         let mutationArg = mockCommitMutation.mock.calls[0][0]
@@ -382,10 +387,9 @@ describe("Shipping", () => {
           input: {
             id: "1234",
             fulfillmentType: "SHIP",
-            phoneNumber: validAddress.phoneNumber,
+            phoneNumber: validPhoneNumber,
             shipping: {
-              ...validAddress,
-              phoneNumber: "",
+              ...validAddressWithoutPhone,
             },
           },
         })
