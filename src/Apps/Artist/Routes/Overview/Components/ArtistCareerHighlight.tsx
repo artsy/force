@@ -39,6 +39,7 @@ export const ArtistCareerHighlightFragmentContainer = createFragmentContainer(
         label
         entities
         description(format: HTML)
+        kind
       }
     `,
   }

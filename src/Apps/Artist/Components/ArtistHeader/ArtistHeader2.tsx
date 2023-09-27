@@ -229,7 +229,6 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         }
         insights {
           ...ArtistCareerHighlight_insight
-          kind
         }
         verifiedRepresentatives {
           partner {

@@ -95,7 +95,6 @@ export const ArtistCareerHighlightsFragmentContainer = createFragmentContainer(
         href
         insights {
           ...ArtistCareerHighlight_insight
-          kind
         }
       }
     `,

@@ -36,6 +36,7 @@ describe("ArtistCareerHighlights", () => {
             label: "Solo show at a major institution",
             entities: ["Foo Museum"],
             kind: "SOLO_SHOW",
+            description: null,
           },
         ],
         name: "Test Artist",
@@ -62,6 +63,7 @@ describe("ArtistCareerHighlights", () => {
             label: "Solo show at 2 major institutions",
             entities: ["Foo Museum", "Bar Museum"],
             kind: "SOLO_SHOW",
+            description: null,
           },
         ],
         name: "Test Artist",
@@ -76,7 +78,7 @@ describe("ArtistCareerHighlights", () => {
     expect(
       screen.getByText("Solo show at 2 major institutions")
     ).toBeInTheDocument()
-    expect(screen.getByText("Foo Museum, Bar Museum")).toBeInTheDocument()
+    expect(screen.getByText("Foo Museum, and Bar Museum")).toBeInTheDocument()
     expect(screen.getByText("View CV")).toBeInTheDocument()
   })
 
