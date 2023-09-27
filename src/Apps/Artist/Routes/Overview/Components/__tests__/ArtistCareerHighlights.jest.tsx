@@ -76,7 +76,7 @@ describe("ArtistCareerHighlights", () => {
     expect(
       screen.getByText("Solo show at 2 major institutions")
     ).toBeInTheDocument()
-    expect(screen.getByText("Foo Museum, and Bar Museum")).toBeInTheDocument()
+    expect(screen.getByText("Foo Museum, Bar Museum")).toBeInTheDocument()
     expect(screen.getByText("View CV")).toBeInTheDocument()
   })
 
