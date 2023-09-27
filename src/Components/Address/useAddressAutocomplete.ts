@@ -29,7 +29,10 @@ interface ServiceAvailability {
 }
 
 export const useAddressAutocomplete = (
-  address: Partial<Address> & { country: Address["country"] }
+  address: Partial<Address> & { country: Address["country"] },
+  {
+    enableSecondarySuggestions = false,
+  }: { enableSecondarySuggestions?: boolean } = {}
 ): ServiceAvailability & {
   autocompleteOptions: AddressAutocompleteSuggestion[]
   suggestions: ProviderSuggestion[]
@@ -125,16 +128,19 @@ export const useAddressAutocomplete = (
 
   const fetchSecondarySuggestions = useCallback(
     async (search: string, option: AddressAutocompleteSuggestion) => {
+      if (!enableSecondarySuggestions) {
+        return
+      }
       const selectedParam = `${option.address.addressLine1} ${option.address.addressLine2} (${option.entries}) ${option.address.city} ${option.address.region} ${option.address.postalCode}`
       fetchForAutocomplete({ search, selected: selectedParam })
     },
-    [fetchForAutocomplete]
+    [fetchForAutocomplete, enableSecondarySuggestions]
   )
 
   const buildAddressText = (suggestion: ProviderSuggestion): string => {
     let buildingAddress = suggestion.street_line
     if (suggestion.secondary) buildingAddress += ` ${suggestion.secondary}`
-    if (suggestion.entries > 1)
+    if (enableSecondarySuggestions && suggestion.entries > 1)
       buildingAddress += ` (${suggestion.entries} entries)`
 
     return [

@@ -16,10 +16,12 @@ jest.mock("lodash/throttle", () => jest.fn(fn => fn))
 
 let mockFetch: jest.Mock
 
+type HookProps = Parameters<typeof useAddressAutocomplete>
+
 describe("useAddressAutocomplete", () => {
-  const setupHook = (...args: Parameters<typeof useAddressAutocomplete>) => {
-    const result = renderHook(props => useAddressAutocomplete(props), {
-      initialProps: args[0],
+  const setupHook = (...args: HookProps) => {
+    const result = renderHook(props => useAddressAutocomplete(...props), {
+      initialProps: args,
     })
     return result
   }
@@ -205,9 +207,7 @@ describe("useAddressAutocomplete", () => {
         await waitFor(() => result.current.autocompleteOptions.length > 0)
 
         const formattedAddress = result.current.autocompleteOptions[0].text
-        expect(formattedAddress).toBe(
-          "402 Broadway Fl 26 (2 entries), New York NY 10014"
-        )
+        expect(formattedAddress).toBe("402 Broadway Fl 26, New York NY 10014")
       })
 
       it("resets the suggestions when the country changes", async () => {
@@ -219,7 +219,7 @@ describe("useAddressAutocomplete", () => {
 
         await waitFor(() => result.current.autocompleteOptions.length > 0)
 
-        rerender({ country: "UK" })
+        rerender([{ country: "UK" }])
 
         expect(result.current.autocompleteOptions).toEqual([])
       })
@@ -259,7 +259,34 @@ describe("useAddressAutocomplete", () => {
       })
     })
 
-    describe("fetching secondary suggestions", () => {
+    describe("fetching secondary suggestions not enabled", () => {
+      it("fetchSecondaySuggestions() does nothing", async () => {
+        const selectedOption: AddressAutocompleteSuggestion = {
+          address: {
+            addressLine1: "401 Broadway",
+            addressLine2: "Fl 13",
+            city: "New York",
+            country: "US",
+            postalCode: "10013",
+            region: "NY",
+          },
+          entries: 2,
+          value: "401 Broadway, New York NY 10013",
+          text: "401 Broadway, New York NY 10013",
+        }
+
+        const { result } = setupHook({ country: "US" })
+        await act(() => {
+          result.current.fetchSecondarySuggestions(
+            "401 Broadway",
+            selectedOption
+          )
+        })
+
+        expect(mockFetch).not.toHaveBeenCalled()
+      })
+    })
+    describe("fetching secondary suggestions enabled", () => {
       it("fetches secondary suggestions from the API with correct parameters", async () => {
         const selectedOption: AddressAutocompleteSuggestion = {
           address: {
@@ -288,7 +315,10 @@ describe("useAddressAutocomplete", () => {
           }),
         })
 
-        const { result } = setupHook({ country: "US" })
+        const { result } = setupHook(
+          { country: "US" },
+          { enableSecondarySuggestions: true }
+        )
         await act(() => {
           result.current.fetchSecondarySuggestions(
             "401 Broadway",
@@ -320,6 +350,38 @@ describe("useAddressAutocomplete", () => {
             value: "401 Broadway Fl 10, New York NY 10013",
           })
         })
+      })
+      it("returns the correct single-line text for an address with multiple entries", async () => {
+        mockFetch.mockResolvedValue({
+          json: jest.fn().mockResolvedValue({
+            suggestions: [
+              {
+                city: "New York",
+                entries: 2,
+                secondary: "Fl 26",
+                state: "NY",
+                street_line: "402 Broadway",
+                zipcode: "10014",
+              },
+            ],
+          }),
+        })
+
+        const { result } = setupHook(
+          { country: "US" },
+          { enableSecondarySuggestions: true }
+        )
+
+        act(() => {
+          result.current.fetchForAutocomplete({ search: "402 Broadway" })
+        })
+
+        await waitFor(() => result.current.autocompleteOptions.length > 0)
+
+        const formattedAddress = result.current.autocompleteOptions[0].text
+        expect(formattedAddress).toBe(
+          "402 Broadway Fl 26 (2 entries), New York NY 10014"
+        )
       })
     })
   })
