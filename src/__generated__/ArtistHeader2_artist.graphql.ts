@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<31fe477903098261ae1d628aa634510b>>
+ * @generated SignedSource<<8f7ce01cc40ff9eabf214db03194bc8c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,10 +30,8 @@ export type ArtistHeader2_artist$data = {
   } | null;
   readonly formattedNationalityAndBirthday: string | null;
   readonly insights: ReadonlyArray<{
-    readonly description: string | null;
-    readonly entities: ReadonlyArray<string>;
     readonly kind: ArtistInsightKind | null;
-    readonly label: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCareerHighlight_insight">;
   }>;
   readonly internalID: string;
   readonly name: string | null;
@@ -78,18 +76,13 @@ v1 = {
   "storageKey": null
 },
 v2 = {
-  "kind": "Literal",
-  "name": "format",
-  "value": "HTML"
-},
-v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v4 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -141,7 +134,11 @@ return {
     {
       "alias": null,
       "args": [
-        (v2/*: any*/),
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        },
         {
           "kind": "Literal",
           "name": "partnerBio",
@@ -179,33 +176,15 @@ return {
       "plural": true,
       "selections": [
         {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArtistCareerHighlight_insight"
+        },
+        {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "kind",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "label",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": [
-            (v2/*: any*/)
-          ],
-          "kind": "ScalarField",
-          "name": "description",
-          "storageKey": "description(format:\"HTML\")"
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "entities",
           "storageKey": null
         }
       ],
@@ -229,7 +208,7 @@ return {
           "selections": [
             (v0/*: any*/),
             (v1/*: any*/),
-            (v3/*: any*/),
+            (v2/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -264,7 +243,7 @@ return {
                       "kind": "LinkedField",
                       "name": "cropped",
                       "plural": false,
-                      "selections": (v4/*: any*/),
+                      "selections": (v3/*: any*/),
                       "storageKey": "cropped(height:30,width:30)"
                     },
                     {
@@ -285,7 +264,7 @@ return {
                       "kind": "LinkedField",
                       "name": "cropped",
                       "plural": false,
-                      "selections": (v4/*: any*/),
+                      "selections": (v3/*: any*/),
                       "storageKey": "cropped(height:60,width:60)"
                     }
                   ],
@@ -315,7 +294,7 @@ return {
           "name": "title",
           "storageKey": null
         },
-        (v3/*: any*/),
+        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -366,6 +345,6 @@ return {
 };
 })();
 
-(node as any).hash = "21e37ff979f9e48dded10fa734e0a6a9";
+(node as any).hash = "c2ad5d1119e65ae39904cfa09b5e3dde";
 
 export default node;

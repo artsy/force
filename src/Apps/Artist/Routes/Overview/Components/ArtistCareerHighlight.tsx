@@ -8,18 +8,25 @@ interface ArtistCareerHighlightProps {
   insight: ArtistCareerHighlight_insight$data
 }
 
-const ArtistCareerHighlight: FC<ArtistCareerHighlightProps> = ({ insight }) => {
+export const ArtistCareerHighlight: FC<ArtistCareerHighlightProps> = ({
+  insight,
+}) => {
   return (
     <Expandable label={insight.label} pb={1}>
       <Description
         variant="xs"
-        dangerouslySetInnerHTML={{
-          __html:
-            insight.entities.length > 0
-              ? insight.entities.join(", ")
-              : insight.description ?? "",
-        }}
-      ></Description>
+        {...(insight.description
+          ? {
+              dangerouslySetInnerHTML: {
+                __html: insight.description,
+              },
+            }
+          : {
+              children: insight.entities
+                .join(", ")
+                .replace(/,\s([^,]+)$/, ", and $1"),
+            })}
+      />
     </Expandable>
   )
 }

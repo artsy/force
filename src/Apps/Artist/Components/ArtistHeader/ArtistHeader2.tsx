@@ -30,6 +30,7 @@ import { formatFollowerCount } from "Utils/formatFollowerCount"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
+import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader2_artist$data
@@ -198,23 +199,10 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
               .slice(0, ARTIST_HEADER_NUMBER_OF_INSIGHTS)
               .map((insight, index) => {
                 return (
-                  <Expandable
+                  <ArtistCareerHighlightFragmentContainer
                     key={insight.kind ?? index}
-                    label={insight.label}
-                    pb={1}
-                  >
-                    <Description
-                      variant="sm"
-                      color="black60"
-                      pb={1}
-                      dangerouslySetInnerHTML={{
-                        __html:
-                          insight.entities.length > 0
-                            ? insight.entities.join(", ")
-                            : insight.description ?? "",
-                      }}
-                    ></Description>
-                  </Expandable>
+                    insight={insight}
+                  />
                 )
               })}
           </Box>
@@ -241,10 +229,8 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           credit
         }
         insights {
+          ...ArtistCareerHighlight_insight
           kind
-          label
-          description(format: HTML)
-          entities
         }
         verifiedRepresentatives {
           partner {
@@ -288,13 +274,6 @@ const Bio = styled(HTML)<HTMLProps>`
 const CV = styled(RouterLink)`
   &:hover {
     color: currentColor;
-  }
-`
-
-// remove paragraph margins from markdown
-const Description = styled(Text)`
-  p {
-    margin: 0;
   }
 `
 
