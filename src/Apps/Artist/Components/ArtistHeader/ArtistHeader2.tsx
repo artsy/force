@@ -228,6 +228,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
           credit
         }
         insights {
+          kind
           ...ArtistCareerHighlight_insight
         }
         verifiedRepresentatives {

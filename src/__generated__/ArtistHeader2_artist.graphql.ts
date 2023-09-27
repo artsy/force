@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8f7ce01cc40ff9eabf214db03194bc8c>>
+ * @generated SignedSource<<04474c105d96aa898e0724d7836dfeb8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -176,16 +176,16 @@ return {
       "plural": true,
       "selections": [
         {
-          "args": null,
-          "kind": "FragmentSpread",
-          "name": "ArtistCareerHighlight_insight"
-        },
-        {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
           "name": "kind",
           "storageKey": null
+        },
+        {
+          "args": null,
+          "kind": "FragmentSpread",
+          "name": "ArtistCareerHighlight_insight"
         }
       ],
       "storageKey": null
@@ -345,6 +345,6 @@ return {
 };
 })();
 
-(node as any).hash = "c2ad5d1119e65ae39904cfa09b5e3dde";
+(node as any).hash = "0ab0ef7edae5388ac910543e2bf1837f";
 
 export default node;

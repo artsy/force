@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7082a44ade03e583616c62b296c10fc3>>
+ * @generated SignedSource<<cea35880bf0b8bcb695139ab659624f5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,12 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "ARTSY_VANGUARD_YEAR" | "AWARDS" | "BIENNIAL" | "COLLECTED" | "CRITICALLY_ACCLAIMED" | "CURATORS_PICK_EMERGING" | "GAINING_FOLLOWERS" | "GROUP_SHOW" | "HIGH_AUCTION_RECORD" | "PRIVATE_COLLECTIONS" | "RECENT_CAREER_EVENT" | "RESIDENCIES" | "REVIEWED" | "SOLO_SHOW" | "TRENDING_NOW" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtistCareerHighlight_insight$data = {
   readonly description: string | null;
   readonly entities: ReadonlyArray<string>;
+  readonly kind: ArtistInsightKind | null;
   readonly label: string;
   readonly " $fragmentType": "ArtistCareerHighlight_insight";
 };
@@ -53,12 +55,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "description",
       "storageKey": "description(format:\"HTML\")"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "kind",
+      "storageKey": null
     }
   ],
   "type": "ArtistInsight",
   "abstractKey": null
 };
 
-(node as any).hash = "e5d94b27789f176069d79a2c94fda745";
+(node as any).hash = "3e9f14468c61772dd2579658017a5d3c";
 
 export default node;

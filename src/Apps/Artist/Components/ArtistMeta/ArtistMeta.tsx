@@ -16,31 +16,31 @@ export const ArtistMeta: React.FC<Props> = ({ artist }) => {
   return (
     <>
       <MetaTags
-        title={artist.meta.title}
-        description={artist.meta.description}
-        imageURL={artist.image?.large}
-        pathname={artist.href}
+        title={artist?.meta?.title}
+        description={artist?.meta?.description}
+        imageURL={artist?.image?.large}
+        pathname={artist?.href}
       />
 
       <Meta
         property="og:url"
-        href={`${getENV("APP_URL")}/artist/${artist.slug}`}
+        href={`${getENV("APP_URL")}/artist/${artist?.slug}`}
       />
       <Meta
         property="og:type"
         href={`${getENV("FACEBOOK_APP_NAMESPACE")}:artist`}
       />
 
-      {artist.nationality && (
-        <Meta property="og:nationality" content={artist.nationality} />
+      {artist?.nationality && (
+        <Meta property="og:nationality" content={artist?.nationality} />
       )}
 
-      {artist.birthday && (
+      {artist?.birthday && (
         <Meta property="og:birthyear" content={artist.birthday} />
       )}
 
-      {artist.deathday && (
-        <Meta property="og:deathyear" content={artist.deathday} />
+      {artist?.deathday && (
+        <Meta property="og:deathyear" content={artist?.deathday} />
       )}
 
       {alternateNames.length > 0 && (

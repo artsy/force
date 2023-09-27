@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<da4990ac5c7ca344f07e92e4d04a1e23>>
+ * @generated SignedSource<<fb53412d394a301124d8aafe4f9f82cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -151,12 +151,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5f11a8145d8fa946bc81527a2e226fd0",
+    "cacheID": "429249eabe270dbaf4a4968f9932a877",
     "id": null,
     "metadata": {},
     "name": "ArtistCareerHighlightsQuery",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlightsQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  insights {\n    ...ArtistCareerHighlight_insight\n    kind\n  }\n}\n"
+    "text": "query ArtistCareerHighlightsQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description(format: HTML)\n  kind\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  insights {\n    ...ArtistCareerHighlight_insight\n    kind\n  }\n}\n"
   }
 };
 })();
