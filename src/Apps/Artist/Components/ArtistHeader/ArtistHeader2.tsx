@@ -1,7 +1,6 @@
 import {
   Box,
   Column,
-  Expandable,
   Flex,
   GridColumns,
   HTML,
