@@ -203,11 +203,17 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                     label={insight.label}
                     pb={1}
                   >
-                    <Text variant="sm" color="black60" pb={1}>
-                      {insight.entities.length > 0
-                        ? insight.entities.join(", ")
-                        : insight.description}
-                    </Text>
+                    <Description
+                      variant="sm"
+                      color="black60"
+                      pb={1}
+                      dangerouslySetInnerHTML={{
+                        __html:
+                          insight.entities.length > 0
+                            ? insight.entities.join(", ")
+                            : insight.description ?? "",
+                      }}
+                    ></Description>
                   </Expandable>
                 )
               })}
@@ -237,7 +243,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         insights {
           kind
           label
-          description
+          description(format: HTML)
           entities
         }
         verifiedRepresentatives {
@@ -282,6 +288,13 @@ const Bio = styled(HTML)<HTMLProps>`
 const CV = styled(RouterLink)`
   &:hover {
     color: currentColor;
+  }
+`
+
+// remove paragraph margins from markdown
+const Description = styled(Text)`
+  p {
+    margin: 0;
   }
 `
 

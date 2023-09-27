@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3046d1839e920192f1347990ae6ab6b9>>
+ * @generated SignedSource<<11e0a5ce8f86fd60bb0d8b60e147d4be>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -114,10 +114,16 @@ return {
               },
               {
                 "alias": null,
-                "args": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "format",
+                    "value": "HTML"
+                  }
+                ],
                 "kind": "ScalarField",
                 "name": "description",
-                "storageKey": null
+                "storageKey": "description(format:\"HTML\")"
               },
               {
                 "alias": null,
@@ -142,7 +148,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a328c4265c3dcc4d47f5a6cdae9301e8",
+    "cacheID": "a44e0c4c9e5f4d88598d82320b159466",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -206,7 +212,7 @@ return {
     },
     "name": "ArtistCareerHighlights_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  insights {\n    ...ArtistCareerHighlight_insight\n    kind\n  }\n}\n"
+    "text": "query ArtistCareerHighlights_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  insights {\n    ...ArtistCareerHighlight_insight\n    kind\n  }\n}\n"
   }
 };
 })();

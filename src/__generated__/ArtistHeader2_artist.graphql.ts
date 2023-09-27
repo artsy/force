@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0767709bebb869788c6c9e4ca25f68e0>>
+ * @generated SignedSource<<31fe477903098261ae1d628aa634510b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -78,13 +78,18 @@ v1 = {
   "storageKey": null
 },
 v2 = {
+  "kind": "Literal",
+  "name": "format",
+  "value": "HTML"
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "href",
   "storageKey": null
 },
-v3 = [
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -136,11 +141,7 @@ return {
     {
       "alias": null,
       "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "HTML"
-        },
+        (v2/*: any*/),
         {
           "kind": "Literal",
           "name": "partnerBio",
@@ -193,10 +194,12 @@ return {
         },
         {
           "alias": null,
-          "args": null,
+          "args": [
+            (v2/*: any*/)
+          ],
           "kind": "ScalarField",
           "name": "description",
-          "storageKey": null
+          "storageKey": "description(format:\"HTML\")"
         },
         {
           "alias": null,
@@ -226,7 +229,7 @@ return {
           "selections": [
             (v0/*: any*/),
             (v1/*: any*/),
-            (v2/*: any*/),
+            (v3/*: any*/),
             {
               "alias": null,
               "args": null,
@@ -261,7 +264,7 @@ return {
                       "kind": "LinkedField",
                       "name": "cropped",
                       "plural": false,
-                      "selections": (v3/*: any*/),
+                      "selections": (v4/*: any*/),
                       "storageKey": "cropped(height:30,width:30)"
                     },
                     {
@@ -282,7 +285,7 @@ return {
                       "kind": "LinkedField",
                       "name": "cropped",
                       "plural": false,
-                      "selections": (v3/*: any*/),
+                      "selections": (v4/*: any*/),
                       "storageKey": "cropped(height:60,width:60)"
                     }
                   ],
@@ -312,7 +315,7 @@ return {
           "name": "title",
           "storageKey": null
         },
-        (v2/*: any*/),
+        (v3/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -363,6 +366,6 @@ return {
 };
 })();
 
-(node as any).hash = "af2adb6df1ae0203ba6ccca830e9f68b";
+(node as any).hash = "21e37ff979f9e48dded10fa734e0a6a9";
 
 export default node;
