@@ -143,16 +143,20 @@ export const BankDebitProvider: FC<Props> = ({ order, onError }) => {
         camelCase(selectedPaymentMethod)
       )}`}
     >
-      <LoadingArea isLoading={isStripePaymentElementLoading}>
-        {isStripePaymentElementLoading && <Box height={300}></Box>}
+      <LoadingArea
+        isLoading={isStripePaymentElementLoading && !bankDebitSetupError}
+      >
+        {isStripePaymentElementLoading && !bankDebitSetupError && (
+          <Box height={300}></Box>
+        )}
         <Spacer y={2} />
         {stripeClient && (
           <Elements options={options} stripe={stripePromise}>
             <BankDebitForm order={order} onError={onError} />
           </Elements>
         )}
-        {bankDebitSetupError && <BankSetupErrorMessage />}
       </LoadingArea>
+      {bankDebitSetupError && <BankSetupErrorMessage />}
     </div>
   )
 }
