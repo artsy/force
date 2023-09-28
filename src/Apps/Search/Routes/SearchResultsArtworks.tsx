@@ -20,7 +20,7 @@ interface SearchResultsRouteProps {
 export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = props => {
   const { match } = useRouter()
   const { userPreferences } = useSystemContext()
-  const [searchFitlerKey, setSearchFilterKey] = useState(
+  const [searchFilterKey, setSearchFilterKey] = useState(
     match.location.query.term
   )
   const { viewer } = props
@@ -33,7 +33,7 @@ export const SearchResultsArtworksRoute: React.FC<SearchResultsRouteProps> = pro
 
   return (
     <ArtworkFilter
-      key={searchFitlerKey}
+      key={searchFilterKey}
       mt={4}
       viewer={viewer}
       filters={match.location.query}
