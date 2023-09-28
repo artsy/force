@@ -96,6 +96,9 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
     handleClick(endCursor, page)
   }
 
+  const isOnlinePage = city.slug === "online"
+  const showOpeningThisWeek = openingThisWeek.length > 0 && !isOnlinePage
+
   return (
     <>
       <ShowsMeta cityName={city.name} />
@@ -105,19 +108,14 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
       <Join separator={<Spacer y={6} />}>
         <ShowsHeaderFragmentContainer viewer={viewer} />
 
-        {openingThisWeek.length > 0 && (
+        {showOpeningThisWeek && (
           <>
             <Text as="h2" variant="xl">
-              {city.slug === "online"
-                ? "Opening This Week"
-                : `Opening This Week in ${city.name}`}
-
-              {openingThisWeek.length > 0 && (
-                <>
-                  &nbsp;
-                  <Sup color="brand">{openingThisWeek.length}</Sup>
-                </>
-              )}
+              Opening This Week in {city.name}
+              <>
+                &nbsp;
+                <Sup color="brand">{openingThisWeek.length}</Sup>
+              </>
             </Text>
 
             <GridColumns gridRowGap={4}>
@@ -138,9 +136,7 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
         <Jump id={CURRENT_SHOWS_JUMP_ID} />
 
         <Text as="h2" variant="xl">
-          {city.slug === "online"
-            ? "Current Shows"
-            : `Current Shows in ${city.name}`}
+          {isOnlinePage ? "Current Shows" : `Current Shows in ${city.name}`}
 
           {(city.currentShows?.totalCount ?? 0) > 0 && (
             <>

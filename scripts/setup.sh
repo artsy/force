@@ -15,6 +15,7 @@ fi
 echo "Installing dependencies from Homebrew..."
 brew bundle --file=- <<EOF
 brew 'redis', restart_service: true
+brew 'watchman'
 EOF
 
 echo "Installing dependencies..."
