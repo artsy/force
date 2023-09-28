@@ -10,11 +10,12 @@ interface ArtistCareerHighlightProps {
 
 export const ArtistCareerHighlight: FC<ArtistCareerHighlightProps> = ({
   insight,
+  ...props
 }) => {
   return (
     <Expandable label={insight.label} pb={1}>
       <Description
-        variant="xs"
+        {...props}
         {...(insight.description
           ? {
               dangerouslySetInnerHTML: {
