@@ -156,10 +156,7 @@ export const ArtworkApp: React.FC<Props> = props => {
     trackLotView()
   }, [trackPageview, trackProductView, trackLotView])
 
-  const submittedOrderID = props.match.location.query["order-submitted"]
-  const shouldRenderSubmittedOrderModal =
-    submittedOrderID == undefined ? false : true
-
+  const submittedOrderId = props.match.location.query["order-submitted"]
   /**
    * On mount, trigger a page view and product view
    *
@@ -168,7 +165,7 @@ export const ArtworkApp: React.FC<Props> = props => {
    *
    */
   useEffect(() => {
-    if (shouldRenderSubmittedOrderModal) {
+    if (!!submittedOrderId) {
       // TODO: Look into using router push
       // this.props.router.replace(this.props.match.location.pathname)
       window.history.pushState({}, null, props.match.location.pathname)
@@ -270,11 +267,11 @@ export const ArtworkApp: React.FC<Props> = props => {
 
       <RecentlyViewed />
 
-      {shouldRenderSubmittedOrderModal && (
+      {!!submittedOrderId && (
         <SubmittedOrderModalFragmentContainer
           slug={artwork.slug}
           me={me}
-          orderID={submittedOrderID}
+          orderId={submittedOrderId}
         />
       )}
     </>

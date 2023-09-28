@@ -11,15 +11,15 @@ import { SubmittedOrderModal_me$data } from "__generated__/SubmittedOrderModal_m
 interface SubmittedOrderModalProps {
   me: SubmittedOrderModal_me$data
   slug: string
-  orderID: string
+  orderId: string
 }
 
 const SubmittedOrderModal: FC<SubmittedOrderModalProps> = ({
   slug,
   me,
-  orderID,
+  orderId,
 }) => {
-  // Fetch the order by orderID
+  // Fetch the order by orderId
   const submittedOrder = me!.orders!.edges![0]!.node!
   const submittedOrderArtwork = submittedOrder.lineItems!.edges![0]!.node!
     .artwork!
@@ -82,8 +82,8 @@ export const SubmittedOrderModalFragmentContainer = createFragmentContainer(
 )
 
 // order: graphql`
-//   query SubmittedOrderModal_OrderQuery($orderID: ID!) {
-//     order: commerceOrder(id: $orderID) {
+//   query SubmittedOrderModal_OrderQuery($orderId: ID!) {
+//     order: commerceOrder(id: $orderId) {
 //       ...Offer_order
 //     }
 //   }

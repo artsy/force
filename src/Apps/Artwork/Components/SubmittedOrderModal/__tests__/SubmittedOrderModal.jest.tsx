@@ -26,7 +26,7 @@ describe("SubmittedOrderModal", () => {
       <SubmittedOrderModalFragmentContainer
         slug="424242"
         me={me}
-        orderID={"123"}
+        orderId={"123"}
       />
     ),
     query: graphql`
