@@ -6,26 +6,18 @@ import {
   continueToInboxText,
 } from "Apps/Order/Utils/getStatusCopy"
 import { RouterLink } from "System/Router/RouterLink"
-import { SubmittedOrderModal_me$data } from "__generated__/SubmittedOrderModal_me.graphql"
+import { SubmittedOrderModal_submittedOrder$data } from "__generated__/SubmittedOrderModal_submittedOrder.graphql"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { SubmittedOrderModalQuery } from "__generated__/SubmittedOrderModalQuery.graphql"
 
 interface SubmittedOrderModalProps {
-  me: SubmittedOrderModal_me$data
-  slug: string
-  orderId: string
+  submittedOrder: SubmittedOrderModal_submittedOrder$data
 }
 
 const SubmittedOrderModal: FC<SubmittedOrderModalProps> = ({
-  slug,
-  me,
-  orderId,
+  submittedOrder,
 }) => {
-  // Fetch the order by orderId
-  const submittedOrder = me!.orders!.edges![0]!.node!
-  const submittedOrderArtwork = submittedOrder.lineItems!.edges![0]!.node!
-    .artwork!
-
-  // No need to check if slugs are equal anymore
-  const [isOpen, setIsOpen] = useState(submittedOrderArtwork.slug === slug)
+  const [isOpen, setIsOpen] = useState(true)
 
   if (!isOpen) return null
 
@@ -53,38 +45,38 @@ const SubmittedOrderModal: FC<SubmittedOrderModalProps> = ({
 export const SubmittedOrderModalFragmentContainer = createFragmentContainer(
   SubmittedOrderModal,
   {
-    me: graphql`
-      fragment SubmittedOrderModal_me on Me {
-        orders(
-          states: [SUBMITTED]
-          mode: OFFER
-          first: 1
-          sort: UPDATED_AT_DESC
-        ) {
-          edges {
-            node {
-              stateExpiresAt(format: "MMM D")
-              lineItems {
-                edges {
-                  node {
-                    artwork {
-                      slug
-                    }
-                  }
-                }
-              }
-            }
-          }
-        }
+    submittedOrder: graphql`
+      fragment SubmittedOrderModal_submittedOrder on CommerceOrder {
+        stateExpiresAt(format: "MMM D")
       }
     `,
   }
 )
 
-// order: graphql`
-//   query SubmittedOrderModal_OrderQuery($orderId: ID!) {
-//     order: commerceOrder(id: $orderId) {
-//       ...Offer_order
-//     }
-//   }
-// `,
+export const SubmittedOrderModalQueryRenderer: FC<{ orderId: string }> = ({
+  orderId,
+}) => {
+  return (
+    <SystemQueryRenderer<SubmittedOrderModalQuery>
+      variables={{ orderId }}
+      render={({ props }) => {
+        if (!props?.submittedOrder) {
+          return null
+        }
+
+        return (
+          <SubmittedOrderModalFragmentContainer
+            submittedOrder={props.submittedOrder}
+          />
+        )
+      }}
+      query={graphql`
+        query SubmittedOrderModalQuery($orderId: ID!) {
+          submittedOrder: commerceOrder(id: $orderId) {
+            ...SubmittedOrderModal_submittedOrder
+          }
+        }
+      `}
+    />
+  )
+}

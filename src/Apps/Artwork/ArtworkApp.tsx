@@ -21,7 +21,7 @@ import { ArtworkRelatedArtistsQueryRenderer } from "./Components/ArtworkRelatedA
 import { OtherWorksQueryRenderer } from "./Components/OtherWorks"
 import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
 import { PricingContextQueryRenderer } from "./Components/PricingContext"
-import { SubmittedOrderModalFragmentContainer } from "./Components/SubmittedOrderModal"
+import { SubmittedOrderModalQueryRenderer } from "./Components/SubmittedOrderModal"
 import { withSystemContext } from "System/SystemContext"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { RecentlyViewed } from "Components/RecentlyViewed"
@@ -268,11 +268,7 @@ export const ArtworkApp: React.FC<Props> = props => {
       <RecentlyViewed />
 
       {!!submittedOrderId && (
-        <SubmittedOrderModalFragmentContainer
-          slug={artwork.slug}
-          me={me}
-          orderId={submittedOrderId}
-        />
+        <SubmittedOrderModalQueryRenderer orderId={submittedOrderId} />
       )}
     </>
   )
@@ -372,7 +368,6 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtworkApp_me on Me {
         ...ArtworkSidebar_me
-        ...SubmittedOrderModal_me
       }
     `,
   }
