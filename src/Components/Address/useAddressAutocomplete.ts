@@ -3,7 +3,7 @@ import { Address } from "Components/Address/AddressForm"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { throttle } from "lodash"
+import { throttle, uniqBy } from "lodash"
 
 const THROTTLE_DELAY = 500
 
@@ -20,7 +20,8 @@ export type ProviderSuggestion = {
 export interface AddressAutocompleteSuggestion
   extends AutocompleteInputOptionType {
   address: Omit<Address, "name">
-  entries: number
+  // entries are null if secondary suggestions are not enabled
+  entries: number | null
 }
 
 interface ServiceAvailability {
@@ -105,6 +106,37 @@ export const useAddressAutocomplete = (
     return throttledFetch
   }, [apiKey])
 
+  const buildAddressText = useCallback(
+    (suggestion: ProviderSuggestion): string => {
+      let buildingAddress = suggestion.street_line
+      if (suggestion.secondary) buildingAddress += ` ${suggestion.secondary}`
+      if (enableSecondarySuggestions && suggestion.entries > 1)
+        buildingAddress += ` (${suggestion.entries} entries)`
+
+      return [
+        `${buildingAddress}, ${suggestion.city}`,
+        suggestion.state,
+        suggestion.zipcode,
+      ].join(" ")
+    },
+    [enableSecondarySuggestions]
+  )
+  const filterSecondarySuggestions = useCallback(
+    (suggestions: ProviderSuggestion[]) => {
+      if (enableSecondarySuggestions) return suggestions
+      const noSecondaryData = suggestions.map(
+        ({ secondary, ...suggestion }) => ({
+          ...suggestion,
+          secondary: "",
+        })
+      )
+      return uniqBy(noSecondaryData, (suggestion: ProviderSuggestion) =>
+        buildAddressText(suggestion)
+      )
+    },
+    [buildAddressText, enableSecondarySuggestions]
+  )
+
   const fetchForAutocomplete = useCallback(
     // these are the parameters to the Smarty API call
     async ({ search, selected }: { search: string; selected?: string }) => {
@@ -117,13 +149,21 @@ export const useAddressAutocomplete = (
 
       try {
         const response = await fetchSuggestions({ search, selected })
+        const finalSuggestions = enableSecondarySuggestions
+          ? response.suggestions
+          : filterSecondarySuggestions(response.suggestions)
 
-        setResult(response.suggestions.slice(0, 5))
+        setResult(finalSuggestions.slice(0, 5))
       } catch (e) {
         console.error(e)
       }
     },
-    [fetchSuggestions, isAddressAutocompleteEnabled]
+    [
+      enableSecondarySuggestions,
+      fetchSuggestions,
+      filterSecondarySuggestions,
+      isAddressAutocompleteEnabled,
+    ]
   )
 
   const fetchSecondarySuggestions = useCallback(
@@ -137,19 +177,6 @@ export const useAddressAutocomplete = (
     [fetchForAutocomplete, enableSecondarySuggestions]
   )
 
-  const buildAddressText = (suggestion: ProviderSuggestion): string => {
-    let buildingAddress = suggestion.street_line
-    if (suggestion.secondary) buildingAddress += ` ${suggestion.secondary}`
-    if (enableSecondarySuggestions && suggestion.entries > 1)
-      buildingAddress += ` (${suggestion.entries} entries)`
-
-    return [
-      `${buildingAddress}, ${suggestion.city}`,
-      suggestion.state,
-      suggestion.zipcode,
-    ].join(" ")
-  }
-
   const autocompleteOptions = result.map(
     (suggestion: ProviderSuggestion): AddressAutocompleteSuggestion => {
       const text = buildAddressText(suggestion)
@@ -157,7 +184,7 @@ export const useAddressAutocomplete = (
       return {
         text,
         value: text,
-        entries: suggestion.entries,
+        entries: enableSecondarySuggestions ? suggestion.entries : null,
         address: {
           addressLine1: suggestion.street_line,
           addressLine2: suggestion.secondary || "",
