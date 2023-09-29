@@ -219,7 +219,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         }
         // Make offer from the artwork page redirects to the artwork page with a confirmation modal
         if (order.mode === "OFFER") {
-          return router.push(`/artwork/${artworkId}?order-submitted=true`)
+          return router.push(`/artwork/${artworkId}?order-submitted=${orderId}`)
         }
         // Purchase from the artwork page redirects to the status page
         return router.push(`/orders/${orderId}/status`)

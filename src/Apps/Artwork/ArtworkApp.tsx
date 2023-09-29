@@ -21,7 +21,7 @@ import { ArtworkRelatedArtistsQueryRenderer } from "./Components/ArtworkRelatedA
 import { OtherWorksQueryRenderer } from "./Components/OtherWorks"
 import { ArtworkArtistSeriesQueryRenderer } from "./Components/ArtworkArtistSeries"
 import { PricingContextQueryRenderer } from "./Components/PricingContext"
-import { SubmittedOrderModalFragmentContainer } from "./Components/SubmittedOrderModal"
+import { SubmittedOrderModalQueryRenderer } from "./Components/SubmittedOrderModal"
 import { withSystemContext } from "System/SystemContext"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { RecentlyViewed } from "Components/RecentlyViewed"
@@ -156,10 +156,7 @@ export const ArtworkApp: React.FC<Props> = props => {
     trackLotView()
   }, [trackPageview, trackProductView, trackLotView])
 
-  const shouldRenderSubmittedOrderModal = !!props.match.location.query[
-    "order-submitted"
-  ]
-
+  const submittedOrderId = props.match.location.query["order-submitted"]
   /**
    * On mount, trigger a page view and product view
    *
@@ -168,7 +165,7 @@ export const ArtworkApp: React.FC<Props> = props => {
    *
    */
   useEffect(() => {
-    if (shouldRenderSubmittedOrderModal) {
+    if (!!submittedOrderId) {
       // TODO: Look into using router push
       // this.props.router.replace(this.props.match.location.pathname)
       window.history.pushState({}, null, props.match.location.pathname)
@@ -270,8 +267,8 @@ export const ArtworkApp: React.FC<Props> = props => {
 
       <RecentlyViewed />
 
-      {shouldRenderSubmittedOrderModal && (
-        <SubmittedOrderModalFragmentContainer slug={artwork.slug} me={me} />
+      {!!submittedOrderId && (
+        <SubmittedOrderModalQueryRenderer orderId={submittedOrderId} />
       )}
     </>
   )
@@ -371,7 +368,6 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
     me: graphql`
       fragment ArtworkApp_me on Me {
         ...ArtworkSidebar_me
-        ...SubmittedOrderModal_me
       }
     `,
   }
