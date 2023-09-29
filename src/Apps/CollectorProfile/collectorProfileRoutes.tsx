@@ -38,7 +38,7 @@ const InsightsRoute = loadable(
 const SavesRoute = loadable(
   () =>
     import(
-      /* webpackChunkName: "collectorProfileBundle" */ "./Routes/Saves2/CollectorProfileSaves2Route"
+      /* webpackChunkName: "collectorProfileBundle" */ "./Routes/Saves/CollectorProfileSaves2Route"
     ),
   {
     resolveComponent: component =>
