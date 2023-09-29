@@ -1,12 +1,12 @@
 import { fireEvent, screen } from "@testing-library/react"
-import { ArtworkActionsSaveButtonV2FragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsSaveButtonV2"
+import { ArtworkActionsSaveButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsSaveButton"
 import { AppToasts } from "Apps/Components/AppToasts"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 import { SaveArtwork } from "Components/Artwork/SaveButton/SaveArtworkMutation"
 import { MockBoot } from "DevTools/MockBoot"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { ArtworkActionsSaveButtonV2_Test_Query } from "__generated__/ArtworkActionsSaveButtonV2_Test_Query.graphql"
+import { ArtworkActionsSaveButton_Test_Query } from "__generated__/ArtworkActionsSaveButton_Test_Query.graphql"
 import { wait } from "Utils/wait"
 
 jest.unmock("react-relay")
@@ -16,7 +16,7 @@ jest.mock("Utils/getENV", () => ({
   getENV: () => "test",
 }))
 
-describe("ArtworkActionsSaveButtonV2", () => {
+describe("ArtworkActionsSaveButton", () => {
   const mockSaveArtwork = SaveArtwork as jest.Mock
 
   beforeEach(() => {
@@ -24,7 +24,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
   })
 
   const { renderWithRelay } = setupTestWrapperTL<
-    ArtworkActionsSaveButtonV2_Test_Query
+    ArtworkActionsSaveButton_Test_Query
   >({
     Component: props => {
       if (!props.artwork) {
@@ -36,7 +36,7 @@ describe("ArtworkActionsSaveButtonV2", () => {
           <AppToasts />
 
           <ManageArtworkForSavesProvider>
-            <ArtworkActionsSaveButtonV2FragmentContainer
+            <ArtworkActionsSaveButtonFragmentContainer
               artwork={props.artwork}
             />
           </ManageArtworkForSavesProvider>
@@ -44,9 +44,9 @@ describe("ArtworkActionsSaveButtonV2", () => {
       )
     },
     query: graphql`
-      query ArtworkActionsSaveButtonV2_Test_Query @relay_test_operation {
+      query ArtworkActionsSaveButton_Test_Query @relay_test_operation {
         artwork(id: "artworkID") {
-          ...ArtworkActionsSaveButtonV2_artwork
+          ...ArtworkActionsSaveButton_artwork
         }
       }
     `,

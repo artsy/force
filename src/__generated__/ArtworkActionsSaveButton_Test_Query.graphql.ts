@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<487e0c04deaf374badefcf6f60fda01b>>
+ * @generated SignedSource<<bcbd3f63b992b98995ca9e404b97b419>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkActionsSaveButtonV2_Test_Query$variables = {};
-export type ArtworkActionsSaveButtonV2_Test_Query$data = {
+export type ArtworkActionsSaveButton_Test_Query$variables = {};
+export type ArtworkActionsSaveButton_Test_Query$data = {
   readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtworkActionsSaveButtonV2_artwork">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkActionsSaveButton_artwork">;
   } | null;
 };
-export type ArtworkActionsSaveButtonV2_Test_Query = {
-  response: ArtworkActionsSaveButtonV2_Test_Query$data;
-  variables: ArtworkActionsSaveButtonV2_Test_Query$variables;
+export type ArtworkActionsSaveButton_Test_Query = {
+  response: ArtworkActionsSaveButton_Test_Query$data;
+  variables: ArtworkActionsSaveButton_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -66,7 +66,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtworkActionsSaveButtonV2_Test_Query",
+    "name": "ArtworkActionsSaveButton_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -79,7 +79,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkActionsSaveButtonV2_artwork"
+            "name": "ArtworkActionsSaveButton_artwork"
           }
         ],
         "storageKey": "artwork(id:\"artworkID\")"
@@ -92,7 +92,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ArtworkActionsSaveButtonV2_Test_Query",
+    "name": "ArtworkActionsSaveButton_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -250,7 +250,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "cdf4578602ec99a1b69465510cc1c22a",
+    "cacheID": "cb3f1de331a673289f4343075bd2e55b",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -304,13 +304,13 @@ return {
         "artwork.title": (v3/*: any*/)
       }
     },
-    "name": "ArtworkActionsSaveButtonV2_Test_Query",
+    "name": "ArtworkActionsSaveButton_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkActionsSaveButtonV2_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...ArtworkActionsSaveButtonV2_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButtonV2_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n}\n\nfragment ArtworkActionsWatchLotButton_artwork on Artwork {\n  sale {\n    isLiveOpen\n    isRegistrationClosed\n    liveStartAt\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n  ...ArtworkAuctionRegistrationPanel_artwork\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n"
+    "text": "query ArtworkActionsSaveButton_Test_Query {\n  artwork(id: \"artworkID\") {\n    ...ArtworkActionsSaveButton_artwork\n    id\n  }\n}\n\nfragment ArtworkActionsSaveButton_artwork on Artwork {\n  id\n  internalID\n  isSaved\n  slug\n  title\n  date\n  artistNames\n  preview: image {\n    url(version: \"square\")\n  }\n  isSavedToList\n  sale {\n    isAuction\n    isClosed\n    id\n  }\n  ...ArtworkActionsWatchLotButton_artwork\n}\n\nfragment ArtworkActionsWatchLotButton_artwork on Artwork {\n  sale {\n    isLiveOpen\n    isRegistrationClosed\n    liveStartAt\n    registrationStatus {\n      qualifiedForBidding\n      id\n    }\n    id\n  }\n  ...ArtworkAuctionRegistrationPanel_artwork\n}\n\nfragment ArtworkAuctionRegistrationPanel_artwork on Artwork {\n  sale {\n    slug\n    registrationEndsAt\n    isRegistrationClosed\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ac0317764eff3dbb503f31e06ebecf4c";
+(node as any).hash = "1921af3d5068e4b6cac8dae968eae812";
 
 export default node;

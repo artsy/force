@@ -6,16 +6,16 @@ import { ProgressiveOnboardingSaveArtwork } from "Components/ProgressiveOnboardi
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
-import { ArtworkActionsSaveButtonV2_artwork$data } from "__generated__/ArtworkActionsSaveButtonV2_artwork.graphql"
+import { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActionsSaveButton_artwork.graphql"
 import { useSaveArtwork } from "Components/Artwork/SaveButton/useSaveArtwork"
 
-const logger = createLogger("ArtworkActionsSaveButtonV2")
+const logger = createLogger("ArtworkActionsSaveButton")
 
-interface ArtworkActionsSaveButtonV2Props {
-  artwork: ArtworkActionsSaveButtonV2_artwork$data
+interface ArtworkActionsSaveButtonProps {
+  artwork: ArtworkActionsSaveButton_artwork$data
 }
 
-export const ArtworkActionsSaveButtonV2: FC<ArtworkActionsSaveButtonV2Props> = ({
+export const ArtworkActionsSaveButton: FC<ArtworkActionsSaveButtonProps> = ({
   artwork,
 }) => {
   const { isAuction, isClosed } = artwork.sale ?? {}
@@ -76,11 +76,11 @@ export const ArtworkActionsSaveButtonV2: FC<ArtworkActionsSaveButtonV2Props> = (
   )
 }
 
-export const ArtworkActionsSaveButtonV2FragmentContainer = createFragmentContainer(
-  ArtworkActionsSaveButtonV2,
+export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer(
+  ArtworkActionsSaveButton,
   {
     artwork: graphql`
-      fragment ArtworkActionsSaveButtonV2_artwork on Artwork {
+      fragment ArtworkActionsSaveButton_artwork on Artwork {
         id
         internalID
         isSaved

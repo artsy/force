@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d86559f008300b03da2bf00c2697552b>>
+ * @generated SignedSource<<d2cb91eacb761aeaab50a1da5fdeeb84>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkActionsSaveButtonOld_artwork$data = {
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkActionsSaveButtonV2_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkActionsSaveButton_artwork">;
   readonly " $fragmentType": "ArtworkActionsSaveButtonOld_artwork";
 };
 export type ArtworkActionsSaveButtonOld_artwork$key = {
@@ -28,13 +28,13 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkActionsSaveButtonV2_artwork"
+      "name": "ArtworkActionsSaveButton_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "95fdb1b133257ce192fdfda3e9d2fbbf";
+(node as any).hash = "c9e19ae4577641a40b562fe424556468";
 
 export default node;
