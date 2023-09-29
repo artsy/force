@@ -16,10 +16,13 @@ jest.mock("lodash/throttle", () => jest.fn(fn => fn))
 
 let mockFetch: jest.Mock
 
+type HookProps = Parameters<typeof useAddressAutocomplete>
+let hookOptions = { enableSecondarySuggestions: false }
+
 describe("useAddressAutocomplete", () => {
-  const setupHook = (...args: Parameters<typeof useAddressAutocomplete>) => {
-    const result = renderHook(props => useAddressAutocomplete(props), {
-      initialProps: args[0],
+  const setupHook = (...args: HookProps) => {
+    const result = renderHook(props => useAddressAutocomplete(...props), {
+      initialProps: args,
     })
     return result
   }
@@ -66,67 +69,229 @@ describe("useAddressAutocomplete", () => {
     afterAll(jest.resetAllMocks)
 
     describe("fetching for autocomplete suggestions", () => {
-      beforeEach(() => {
-        const suggestions = Array.from({ length: 10 }, (_, i) => ({
-          city: "New York",
-          entries: 0,
-          secondary: `Fl 13`,
-          state: "NY",
-          street_line: `40${i + 1} Broadway`,
-          zipcode: "10013",
-        }))
-        mockFetch.mockResolvedValue({
-          json: jest.fn().mockResolvedValue({
-            suggestions,
-          }),
+      describe("fetching secondary suggestions enabled", () => {
+        beforeEach(() => {
+          hookOptions = { enableSecondarySuggestions: true }
         })
-      })
-      it("fetches top-level suggestions from the API with correct parameters", async () => {
-        const { result } = setupHook({ country: "US" })
-
-        await act(() => {
-          result.current.fetchForAutocomplete({ search: "401 Broadway" })
-        })
-
-        expect(mockFetch).toHaveBeenCalledWith(
-          "https://us-autocomplete-pro.api.smarty.com/lookup?key=smarty-api-key&search=401+Broadway"
-        )
-      })
-
-      it("returns the first 5 results in the correct shape", async () => {
-        const { result } = setupHook({ country: "US" })
-
-        await act(() => {
-          result.current.fetchForAutocomplete({ search: "401 Broadway" })
-        })
-        // Assert basic parsed result
-        await waitFor(() => {
-          expect(result.current.autocompleteOptions.length).toBe(5)
-          expect(
-            result.current.autocompleteOptions.map(
-              ao => ao.address.addressLine1
-            )
-          ).toEqual([
-            "401 Broadway",
-            "402 Broadway",
-            "403 Broadway",
-            "404 Broadway",
-            "405 Broadway",
-          ])
-
-          expect(result.current.autocompleteOptions[0]).toEqual({
-            address: {
-              addressLine1: "401 Broadway",
-              addressLine2: "Fl 13",
-              city: "New York",
-              country: "US",
-              postalCode: "10013",
-              region: "NY",
-            },
+        it("returns the first 5 results in the correct shape", async () => {
+          const suggestions = Array.from({ length: 10 }, (_, i) => ({
+            city: "New York",
             entries: 0,
-            text: "401 Broadway Fl 13, New York NY 10013",
-            value: "401 Broadway Fl 13, New York NY 10013",
+            secondary: `Fl 13`,
+            state: "NY",
+            street_line: `40${i + 1} Broadway`,
+            zipcode: "10013",
+          }))
+          mockFetch.mockResolvedValue({
+            json: jest.fn().mockResolvedValue({
+              suggestions,
+            }),
           })
+          const { result } = setupHook({ country: "US" }, hookOptions)
+
+          await act(() => {
+            result.current.fetchForAutocomplete({ search: "401 Broadway" })
+          })
+          // Assert basic parsed result
+          await waitFor(() => {
+            expect(result.current.autocompleteOptions.length).toBe(5)
+            expect(
+              result.current.autocompleteOptions.map(
+                ao => ao.address.addressLine1
+              )
+            ).toEqual([
+              "401 Broadway",
+              "402 Broadway",
+              "403 Broadway",
+              "404 Broadway",
+              "405 Broadway",
+            ])
+
+            expect(result.current.autocompleteOptions[0]).toEqual({
+              address: {
+                addressLine1: "401 Broadway",
+                addressLine2: "Fl 13",
+                city: "New York",
+                country: "US",
+                postalCode: "10013",
+                region: "NY",
+              },
+              entries: 0,
+              text: "401 Broadway Fl 13, New York NY 10013",
+              value: "401 Broadway Fl 13, New York NY 10013",
+            })
+          })
+        })
+      })
+
+      describe("fetching secondary suggestions not enabled", () => {
+        beforeEach(() => {
+          hookOptions = { enableSecondarySuggestions: false }
+          const suggestions = Array.from({ length: 10 }, (_, i) => ({
+            city: "New York",
+            entries: 10,
+            secondary: `Fl`,
+            state: "NY",
+            street_line: `401 Broadway`,
+            zipcode: "10013",
+          })).concat(
+            {
+              city: "New York",
+              entries: 10,
+              secondary: `Fl 1`,
+              state: "NY",
+              street_line: `402 Broadway`,
+              zipcode: "10013",
+            },
+            {
+              city: "New York",
+              entries: 0,
+              secondary: `Basement`,
+              state: "NY",
+              street_line: `401 Broadway`,
+              zipcode: "10013",
+            }
+          )
+
+          mockFetch.mockResolvedValue({
+            json: jest.fn().mockResolvedValue({
+              suggestions,
+            }),
+          })
+        })
+
+        it("returns simplified, deduplicated results without considering secondary information", async () => {
+          const { result } = setupHook({ country: "US" }, hookOptions)
+
+          await act(() => {
+            result.current.fetchForAutocomplete({ search: "401 Broadway" })
+          })
+
+          await waitFor(() => {
+            expect(result.current.autocompleteOptions.length).toBe(2)
+            expect(
+              result.current.autocompleteOptions.map(
+                ao => ao.address.addressLine1
+              )
+            ).toEqual(["401 Broadway", "402 Broadway"])
+
+            expect(result.current.autocompleteOptions[0]).toEqual({
+              address: {
+                addressLine1: "401 Broadway",
+                addressLine2: "",
+                city: "New York",
+                country: "US",
+                postalCode: "10013",
+                region: "NY",
+              },
+              entries: null,
+              text: "401 Broadway, New York NY 10013",
+              value: "401 Broadway, New York NY 10013",
+            })
+            expect(result.current.autocompleteOptions[1]).toEqual({
+              address: {
+                addressLine1: "402 Broadway",
+                addressLine2: "",
+                city: "New York",
+                country: "US",
+                postalCode: "10013",
+                region: "NY",
+              },
+              entries: null,
+              text: "402 Broadway, New York NY 10013",
+              value: "402 Broadway, New York NY 10013",
+            })
+          })
+        })
+
+        it("returns the correct single-line text for an address with multiple entries", async () => {
+          mockFetch.mockResolvedValue({
+            json: jest.fn().mockResolvedValue({
+              suggestions: [
+                {
+                  city: "New York",
+                  entries: 0,
+                  secondary: "Fl 26",
+                  state: "NY",
+                  street_line: "402 Broadway",
+                  zipcode: "10014",
+                },
+              ],
+            }),
+          })
+
+          const { result } = setupHook({ country: "US" })
+
+          act(() => {
+            result.current.fetchForAutocomplete({ search: "402 Broadway" })
+          })
+
+          await waitFor(() => result.current.autocompleteOptions.length > 0)
+
+          const formattedAddress = result.current.autocompleteOptions[0].text
+          expect(formattedAddress).toBe("402 Broadway, New York NY 10014")
+        })
+
+        it("returns the first 5 results in the correct shape", async () => {
+          mockFetch.mockResolvedValue({
+            json: jest.fn().mockResolvedValue({
+              suggestions: Array.from({ length: 10 }, (_, i) => ({
+                city: "New York",
+                entries: 1,
+                secondary: `Fl 1${i + 10}`,
+                state: "NY",
+                street_line: `40${i + 1} Broadway`,
+                zipcode: "10013",
+              })),
+            }),
+          })
+          const { result } = setupHook({ country: "US" }, hookOptions)
+
+          await act(() => {
+            result.current.fetchForAutocomplete({ search: "401 Broadway" })
+          })
+          // Assert basic parsed result
+          await waitFor(() => {
+            expect(result.current.autocompleteOptions.length).toBe(5)
+            expect(
+              result.current.autocompleteOptions.map(
+                ao => ao.address.addressLine1
+              )
+            ).toEqual([
+              "401 Broadway",
+              "402 Broadway",
+              "403 Broadway",
+              "404 Broadway",
+              "405 Broadway",
+            ])
+
+            expect(result.current.autocompleteOptions[0]).toEqual({
+              address: {
+                addressLine1: "401 Broadway",
+                addressLine2: "",
+                city: "New York",
+                country: "US",
+                postalCode: "10013",
+                region: "NY",
+              },
+              entries: null,
+              text: "401 Broadway, New York NY 10013",
+              value: "401 Broadway, New York NY 10013",
+            })
+          })
+        })
+
+        it("returns the correct single-line text for an address without multiple entries", async () => {
+          const { result } = setupHook({ country: "US" }, hookOptions)
+
+          act(() => {
+            result.current.fetchForAutocomplete({ search: "401 Broadway" })
+          })
+
+          await waitFor(() => result.current.autocompleteOptions.length > 0)
+
+          const formattedAddress = result.current.autocompleteOptions[0].text
+          expect(formattedAddress).toBe("401 Broadway, New York NY 10013")
         })
       })
 
@@ -140,17 +305,16 @@ describe("useAddressAutocomplete", () => {
         expect(mockFetch).not.toHaveBeenCalled()
       })
 
-      it("returns the correct single-line text for an address without multiple entries", async () => {
-        const { result } = setupHook({ country: "US" })
+      it("fetches top-level suggestions from the API with correct parameters", async () => {
+        const { result } = setupHook({ country: "US" }, hookOptions)
 
-        act(() => {
+        await act(() => {
           result.current.fetchForAutocomplete({ search: "401 Broadway" })
         })
 
-        await waitFor(() => result.current.autocompleteOptions.length > 0)
-
-        const formattedAddress = result.current.autocompleteOptions[0].text
-        expect(formattedAddress).toBe("401 Broadway Fl 13, New York NY 10013")
+        expect(mockFetch).toHaveBeenCalledWith(
+          "https://us-autocomplete-pro.api.smarty.com/lookup?key=smarty-api-key&search=401+Broadway"
+        )
       })
 
       it("sets line 2 to an empty string if the value is missing", async () => {
@@ -180,36 +344,6 @@ describe("useAddressAutocomplete", () => {
         expect(option.address.addressLine2).toEqual("")
       })
 
-      it("returns the correct single-line text for an address with multiple entries", async () => {
-        mockFetch.mockResolvedValue({
-          json: jest.fn().mockResolvedValue({
-            suggestions: [
-              {
-                city: "New York",
-                entries: 2,
-                secondary: "Fl 26",
-                state: "NY",
-                street_line: "402 Broadway",
-                zipcode: "10014",
-              },
-            ],
-          }),
-        })
-
-        const { result } = setupHook({ country: "US" })
-
-        act(() => {
-          result.current.fetchForAutocomplete({ search: "402 Broadway" })
-        })
-
-        await waitFor(() => result.current.autocompleteOptions.length > 0)
-
-        const formattedAddress = result.current.autocompleteOptions[0].text
-        expect(formattedAddress).toBe(
-          "402 Broadway Fl 26 (2 entries), New York NY 10014"
-        )
-      })
-
       it("resets the suggestions when the country changes", async () => {
         const { result, rerender } = setupHook({ country: "US" })
 
@@ -219,7 +353,7 @@ describe("useAddressAutocomplete", () => {
 
         await waitFor(() => result.current.autocompleteOptions.length > 0)
 
-        rerender({ country: "UK" })
+        rerender([{ country: "UK" }])
 
         expect(result.current.autocompleteOptions).toEqual([])
       })
@@ -259,7 +393,37 @@ describe("useAddressAutocomplete", () => {
       })
     })
 
-    describe("fetching secondary suggestions", () => {
+    describe("fetching secondary suggestions not enabled", () => {
+      it("fetchSecondaySuggestions() does nothing", async () => {
+        const selectedOption: AddressAutocompleteSuggestion = {
+          address: {
+            addressLine1: "401 Broadway",
+            addressLine2: "Fl 13",
+            city: "New York",
+            country: "US",
+            postalCode: "10013",
+            region: "NY",
+          },
+          entries: 2,
+          value: "401 Broadway, New York NY 10013",
+          text: "401 Broadway, New York NY 10013",
+        }
+
+        const { result } = setupHook({ country: "US" })
+        await act(() => {
+          result.current.fetchSecondarySuggestions(
+            "401 Broadway",
+            selectedOption
+          )
+        })
+
+        expect(mockFetch).not.toHaveBeenCalled()
+      })
+    })
+    describe("fetching secondary suggestions enabled", () => {
+      beforeEach(() => {
+        hookOptions = { enableSecondarySuggestions: true }
+      })
       it("fetches secondary suggestions from the API with correct parameters", async () => {
         const selectedOption: AddressAutocompleteSuggestion = {
           address: {
@@ -288,7 +452,7 @@ describe("useAddressAutocomplete", () => {
           }),
         })
 
-        const { result } = setupHook({ country: "US" })
+        const { result } = setupHook({ country: "US" }, hookOptions)
         await act(() => {
           result.current.fetchSecondarySuggestions(
             "401 Broadway",
@@ -320,6 +484,35 @@ describe("useAddressAutocomplete", () => {
             value: "401 Broadway Fl 10, New York NY 10013",
           })
         })
+      })
+      it("returns the correct single-line text for an address with multiple entries", async () => {
+        mockFetch.mockResolvedValue({
+          json: jest.fn().mockResolvedValue({
+            suggestions: [
+              {
+                city: "New York",
+                entries: 2,
+                secondary: "Fl 26",
+                state: "NY",
+                street_line: "402 Broadway",
+                zipcode: "10014",
+              },
+            ],
+          }),
+        })
+
+        const { result } = setupHook({ country: "US" }, hookOptions)
+
+        act(() => {
+          result.current.fetchForAutocomplete({ search: "402 Broadway" })
+        })
+
+        await waitFor(() => result.current.autocompleteOptions.length > 0)
+
+        const formattedAddress = result.current.autocompleteOptions[0].text
+        expect(formattedAddress).toBe(
+          "402 Broadway Fl 26 (2 entries), New York NY 10014"
+        )
       })
     })
   })
