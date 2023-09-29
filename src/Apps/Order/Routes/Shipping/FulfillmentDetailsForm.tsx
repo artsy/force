@@ -27,10 +27,7 @@ import {
   AddressAutocompleteSuggestion,
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
-import {
-  postalCodeValidator,
-  yupPhoneValidator,
-} from "Components/Address/utils"
+import { postalCodeValidator } from "Components/Address/utils"
 import { CountrySelect } from "Components/CountrySelect"
 import {
   Form,
@@ -536,8 +533,6 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                           title="Address line 1"
                           value={values.attributes.addressLine1}
                           onChange={e => {
-                            // TODO: Remove- disable autocomplete for development
-                            // false &&
                             autocomplete.enabled &&
                               fetchForAutocomplete({ search: e.target.value })
                             handleChange(e)
@@ -545,40 +540,14 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                           onBlur={handleBlur}
                           options={autocompleteOptions}
                           onSelect={option => {
-                            const hasSecondarySuggestions = option.entries > 1
-                            if (hasSecondarySuggestions) {
-                              // Fill in the address form with the selection, but skip line 2
-                              Object.entries(option.address).forEach(
-                                ([key, value]) => {
-                                  if (key === "addressLine2") return
-                                  formikProps.setFieldValue(
-                                    `attributes.${key}`,
-                                    value
-                                  )
-                                }
-                              )
-                              fetchSecondarySuggestions(
-                                values.attributes.addressLine1,
-                                option
-                              )
-
-                              // TODO: make the secondary options appear
-                              // Disabled because it doesn't work and never did.
-                              //
-                              // console.log({ autocompleteRefCurrent: autocompleteRef.current })
-                              // setTimeout(() => {
-                              //   autocompleteRef.current?.focus()
-                              // }, 1000)
-                            } else {
-                              Object.entries(option.address).forEach(
-                                ([key, value]) => {
-                                  formikProps.setFieldValue(
-                                    `attributes.${key}`,
-                                    value
-                                  )
-                                }
-                              )
-                            }
+                            Object.entries(option.address).forEach(
+                              ([key, value]) => {
+                                formikProps.setFieldValue(
+                                  `attributes.${key}`,
+                                  value
+                                )
+                              }
+                            )
                           }}
                           error={
                             (touched as FormikTouched<ShipValues>).attributes
