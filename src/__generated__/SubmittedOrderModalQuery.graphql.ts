@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<63bc7b0412580d2233b9a8042bb58649>>
+ * @generated SignedSource<<3e81f243dbf0565abd311225018d1168>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,41 +10,44 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SubmittedOrderModal_Test_Query$variables = {};
-export type SubmittedOrderModal_Test_Query$data = {
+export type SubmittedOrderModalQuery$variables = {
+  orderId: string;
+};
+export type SubmittedOrderModalQuery$data = {
   readonly submittedOrder: {
     readonly " $fragmentSpreads": FragmentRefs<"SubmittedOrderModal_submittedOrder">;
   } | null;
 };
-export type SubmittedOrderModal_Test_Query = {
-  response: SubmittedOrderModal_Test_Query$data;
-  variables: SubmittedOrderModal_Test_Query$variables;
+export type SubmittedOrderModalQuery = {
+  response: SubmittedOrderModalQuery$data;
+  variables: SubmittedOrderModalQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
 var v0 = [
   {
-    "kind": "Literal",
-    "name": "id",
-    "value": "some-id"
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "orderId"
   }
 ],
-v1 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-};
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "orderId"
+  }
+];
 return {
   "fragment": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "SubmittedOrderModal_Test_Query",
+    "name": "SubmittedOrderModalQuery",
     "selections": [
       {
         "alias": "submittedOrder",
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": null,
         "kind": "LinkedField",
         "name": "commerceOrder",
@@ -56,7 +59,7 @@ return {
             "name": "SubmittedOrderModal_submittedOrder"
           }
         ],
-        "storageKey": "commerceOrder(id:\"some-id\")"
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -64,13 +67,13 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "SubmittedOrderModal_Test_Query",
+    "name": "SubmittedOrderModalQuery",
     "selections": [
       {
         "alias": "submittedOrder",
-        "args": (v0/*: any*/),
+        "args": (v1/*: any*/),
         "concreteType": null,
         "kind": "LinkedField",
         "name": "commerceOrder",
@@ -108,44 +111,21 @@ return {
             "storageKey": null
           }
         ],
-        "storageKey": "commerceOrder(id:\"some-id\")"
+        "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "4444e17f70c00a9bb4533e0f8206fd37",
+    "cacheID": "cbe9dd80a69d5b0f4bbe57cf87a31c04",
     "id": null,
-    "metadata": {
-      "relayTestingSelectionTypeInfo": {
-        "submittedOrder": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CommerceOrder"
-        },
-        "submittedOrder.__isCommerceOrder": (v1/*: any*/),
-        "submittedOrder.__typename": (v1/*: any*/),
-        "submittedOrder.id": {
-          "enumValues": null,
-          "nullable": false,
-          "plural": false,
-          "type": "ID"
-        },
-        "submittedOrder.stateExpiresAt": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        }
-      }
-    },
-    "name": "SubmittedOrderModal_Test_Query",
+    "metadata": {},
+    "name": "SubmittedOrderModalQuery",
     "operationKind": "query",
-    "text": "query SubmittedOrderModal_Test_Query {\n  submittedOrder: commerceOrder(id: \"some-id\") {\n    __typename\n    ...SubmittedOrderModal_submittedOrder\n    id\n  }\n}\n\nfragment SubmittedOrderModal_submittedOrder on CommerceOrder {\n  __isCommerceOrder: __typename\n  stateExpiresAt(format: \"MMM D\")\n}\n"
+    "text": "query SubmittedOrderModalQuery(\n  $orderId: ID!\n) {\n  submittedOrder: commerceOrder(id: $orderId) {\n    __typename\n    ...SubmittedOrderModal_submittedOrder\n    id\n  }\n}\n\nfragment SubmittedOrderModal_submittedOrder on CommerceOrder {\n  __isCommerceOrder: __typename\n  stateExpiresAt(format: \"MMM D\")\n}\n"
   }
 };
 })();
 
-(node as any).hash = "d5c449c2cd5863767bb3df9ed201d46b";
+(node as any).hash = "cca4549f309c54f7c8f3655e1c6ca730";
 
 export default node;
