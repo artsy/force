@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<736b05827e36b78f449cd2c36917eb6c>>
+ * @generated SignedSource<<da4990ac5c7ca344f07e92e4d04a1e23>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -117,10 +117,16 @@ return {
               },
               {
                 "alias": null,
-                "args": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "format",
+                    "value": "HTML"
+                  }
+                ],
                 "kind": "ScalarField",
                 "name": "description",
-                "storageKey": null
+                "storageKey": "description(format:\"HTML\")"
               },
               {
                 "alias": null,
@@ -145,12 +151,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "b1cae9a1f649eefb322ee07def2d9720",
+    "cacheID": "5f11a8145d8fa946bc81527a2e226fd0",
     "id": null,
     "metadata": {},
     "name": "ArtistCareerHighlightsQuery",
     "operationKind": "query",
-    "text": "query ArtistCareerHighlightsQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  insights {\n    ...ArtistCareerHighlight_insight\n    kind\n  }\n}\n"
+    "text": "query ArtistCareerHighlightsQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...ArtistCareerHighlights_artist\n    id\n  }\n}\n\nfragment ArtistCareerHighlight_insight on ArtistInsight {\n  label\n  entities\n  description(format: HTML)\n}\n\nfragment ArtistCareerHighlights_artist on Artist {\n  name\n  href\n  insights {\n    ...ArtistCareerHighlight_insight\n    kind\n  }\n}\n"
   }
 };
 })();

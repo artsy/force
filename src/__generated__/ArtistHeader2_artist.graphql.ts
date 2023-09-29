@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0767709bebb869788c6c9e4ca25f68e0>>
+ * @generated SignedSource<<04474c105d96aa898e0724d7836dfeb8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,10 +30,8 @@ export type ArtistHeader2_artist$data = {
   } | null;
   readonly formattedNationalityAndBirthday: string | null;
   readonly insights: ReadonlyArray<{
-    readonly description: string | null;
-    readonly entities: ReadonlyArray<string>;
     readonly kind: ArtistInsightKind | null;
-    readonly label: string;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtistCareerHighlight_insight">;
   }>;
   readonly internalID: string;
   readonly name: string | null;
@@ -185,25 +183,9 @@ return {
           "storageKey": null
         },
         {
-          "alias": null,
           "args": null,
-          "kind": "ScalarField",
-          "name": "label",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "description",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "entities",
-          "storageKey": null
+          "kind": "FragmentSpread",
+          "name": "ArtistCareerHighlight_insight"
         }
       ],
       "storageKey": null
@@ -363,6 +345,6 @@ return {
 };
 })();
 
-(node as any).hash = "af2adb6df1ae0203ba6ccca830e9f68b";
+(node as any).hash = "0ab0ef7edae5388ac910543e2bf1837f";
 
 export default node;

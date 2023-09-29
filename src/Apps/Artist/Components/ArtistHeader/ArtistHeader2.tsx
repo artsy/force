@@ -1,7 +1,6 @@
 import {
   Box,
   Column,
-  Expandable,
   Flex,
   GridColumns,
   HTML,
@@ -30,6 +29,7 @@ import { formatFollowerCount } from "Utils/formatFollowerCount"
 import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
+import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader2_artist$data
@@ -198,17 +198,10 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
               .slice(0, ARTIST_HEADER_NUMBER_OF_INSIGHTS)
               .map((insight, index) => {
                 return (
-                  <Expandable
+                  <ArtistCareerHighlightFragmentContainer
                     key={insight.kind ?? index}
-                    label={insight.label}
-                    pb={1}
-                  >
-                    <Text variant="sm" color="black60" pb={1}>
-                      {insight.entities.length > 0
-                        ? insight.entities.join(", ")
-                        : insight.description}
-                    </Text>
-                  </Expandable>
+                    insight={insight}
+                  />
                 )
               })}
           </Box>
@@ -236,9 +229,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
         }
         insights {
           kind
-          label
-          description
-          entities
+          ...ArtistCareerHighlight_insight
         }
         verifiedRepresentatives {
           partner {
