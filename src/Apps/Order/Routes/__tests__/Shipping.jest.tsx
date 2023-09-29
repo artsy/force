@@ -951,20 +951,19 @@ describe("Shipping", () => {
         })
       })
       describe("address autocomplete", () => {
-        describe("US address autocopmlete enabled", () => {
+        describe("US address autocomplete enabled", () => {
           beforeEach(() => {
             ;(useFeatureFlag as jest.Mock).mockImplementation(
               (featureName: string) => featureName === "address_autocomplete_us"
             )
             relayEnv = createMockEnvironment()
-            global.fetch = jest.fn()
           })
           afterEach(() => {
             relayEnv = undefined
           })
           describe("with no saved addresses", () => {
             it("fills in the address from an autocomplete option on a US address", async () => {
-              ;(global.fetch as jest.Mock).mockResolvedValue({
+              mockFetch.mockResolvedValue({
                 json: jest.fn().mockResolvedValue({
                   suggestions: [
                     {
@@ -994,8 +993,7 @@ describe("Shipping", () => {
               await userEvent.type(addressLine1, "401 Broad", { delay: 1 })
               // await flushPromiseQueue()
 
-              // await waitFor(
-              // () => {
+              // await waitFor(() => {
               // Note: Due to implementation of _.throttle we can't reliably test
               // timed throttling behavior. Instead we test that the fetch is called
               // for the start (3-char min) and end of the query
@@ -1005,9 +1003,7 @@ describe("Shipping", () => {
               expect(mockFetch).toHaveBeenCalledWith(
                 "https://us-autocomplete-pro.api.smarty.com/lookup?key=foo&search=401+Broad"
               )
-              // },
-              // { timeout: 1000 }
-              // )
+              // })
 
               userEvent.click(
                 screen.getByText("401 Broadway, New York NY 10013")
