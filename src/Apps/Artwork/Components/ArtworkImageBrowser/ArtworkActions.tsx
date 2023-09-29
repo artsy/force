@@ -17,6 +17,7 @@ import { ArtworkActions_artwork$data } from "__generated__/ArtworkActions_artwor
 import { ArtworkActionsSaveButtonOldFragmentContainer } from "./ArtworkActionsSaveButtonOld"
 import { ArtworkSharePanelFragmentContainer } from "./ArtworkSharePanel"
 import { UtilButton, UtilButtonLink } from "./UtilButton"
+import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 
 interface ArtworkActionsProps {
   artwork: ArtworkActions_artwork$data
@@ -107,7 +108,9 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
   )
 
   const SaveButton = (
-    <ArtworkActionsSaveButtonOldFragmentContainer artwork={artwork} />
+    <ManageArtworkForSavesProvider>
+      <ArtworkActionsSaveButtonOldFragmentContainer artwork={artwork} />
+    </ManageArtworkForSavesProvider>
   )
 
   const actions = [
