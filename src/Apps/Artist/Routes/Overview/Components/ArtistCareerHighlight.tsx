@@ -10,12 +10,13 @@ interface ArtistCareerHighlightProps {
 
 export const ArtistCareerHighlight: FC<ArtistCareerHighlightProps> = ({
   insight,
-  ...props
 }) => {
   return (
     <Expandable label={insight.label} pb={1}>
       <Description
-        {...props}
+        variant="sm"
+        color="black60"
+        pb={1}
         {...(insight.description
           ? {
               dangerouslySetInnerHTML: {
@@ -40,7 +41,6 @@ export const ArtistCareerHighlightFragmentContainer = createFragmentContainer(
         label
         entities
         description(format: HTML)
-        kind
       }
     `,
   }
