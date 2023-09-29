@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f9a2e8230a619e172e90c32f72703877>>
+ * @generated SignedSource<<700b105344a4568835261417b715fe65>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CollectorProfileSaves2Route_me$data = {
+export type CollectorProfileSavesRoute_me$data = {
   readonly customArtworkLists: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -27,11 +27,11 @@ export type CollectorProfileSaves2Route_me$data = {
     readonly internalID: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
   } | null;
-  readonly " $fragmentType": "CollectorProfileSaves2Route_me";
+  readonly " $fragmentType": "CollectorProfileSavesRoute_me";
 };
-export type CollectorProfileSaves2Route_me$key = {
-  readonly " $data"?: CollectorProfileSaves2Route_me$data;
-  readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileSaves2Route_me">;
+export type CollectorProfileSavesRoute_me$key = {
+  readonly " $data"?: CollectorProfileSavesRoute_me$data;
+  readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileSavesRoute_me">;
 };
 
 const node: ReaderFragment = (function(){
@@ -62,7 +62,7 @@ return {
       }
     ]
   },
-  "name": "CollectorProfileSaves2Route_me",
+  "name": "CollectorProfileSavesRoute_me",
   "selections": [
     {
       "alias": "savedArtworksArtworkList",
@@ -112,7 +112,7 @@ return {
       "args": null,
       "concreteType": "CollectionsConnection",
       "kind": "LinkedField",
-      "name": "__CollectorProfileSaves2Route_customArtworkLists_connection",
+      "name": "__CollectorProfileSavesRoute_customArtworkLists_connection",
       "plural": false,
       "selections": [
         {
@@ -194,6 +194,6 @@ return {
 };
 })();
 
-(node as any).hash = "cdee1f27a302d03d7a6befb8f80359ef";
+(node as any).hash = "8eddbc82ae1dae7923e32d332d5f21c6";
 
 export default node;

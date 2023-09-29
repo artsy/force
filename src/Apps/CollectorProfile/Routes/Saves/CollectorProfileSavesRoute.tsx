@@ -6,7 +6,7 @@ import { FC, useEffect, useMemo, useRef } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { extractNodes } from "Utils/extractNodes"
-import { CollectorProfileSaves2Route_me$data } from "__generated__/CollectorProfileSaves2Route_me.graphql"
+import { CollectorProfileSavesRoute_me$data } from "__generated__/CollectorProfileSavesRoute_me.graphql"
 import { useTracking } from "react-tracking"
 import { ActionType, OwnerType, ViewedArtworkList } from "@artsy/cohesion"
 import { Analytics } from "System/Analytics/AnalyticsContext"
@@ -17,11 +17,11 @@ import { ArtworkListVisibilityProvider } from "Apps/CollectorProfile/Routes/Save
 
 export const ARTWORK_LIST_SCROLL_TARGET_ID = "ArtworkListScrollTarget"
 
-interface CollectorProfileSaves2RouteProps {
-  me: CollectorProfileSaves2Route_me$data
+interface CollectorProfileSavesRouteProps {
+  me: CollectorProfileSavesRoute_me$data
 }
 
-const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
+const CollectorProfileSavesRoute: FC<CollectorProfileSavesRouteProps> = ({
   me,
 }) => {
   const { match } = useRouter()
@@ -119,21 +119,21 @@ const CollectorProfileSaves2Route: FC<CollectorProfileSaves2RouteProps> = ({
   )
 }
 
-const PageWrapper: FC<CollectorProfileSaves2RouteProps> = props => {
+const PageWrapper: FC<CollectorProfileSavesRouteProps> = props => {
   const { match } = useRouter()
 
   return (
     <Analytics contextPageOwnerId={match.params.id}>
-      <CollectorProfileSaves2Route {...props} />
+      <CollectorProfileSavesRoute {...props} />
     </Analytics>
   )
 }
 
-export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContainer(
+export const CollectorProfileSavesRouteFragmentContainer = createFragmentContainer(
   PageWrapper,
   {
     me: graphql`
-      fragment CollectorProfileSaves2Route_me on Me {
+      fragment CollectorProfileSavesRoute_me on Me {
         savedArtworksArtworkList: collection(id: "saved-artwork") {
           internalID
           ...ArtworkListItem_item
@@ -150,7 +150,7 @@ export const CollectorProfileSaves2RouteFragmentContainer = createFragmentContai
           sort: CREATED_AT_DESC
         )
           @connection(
-            key: "CollectorProfileSaves2Route_customArtworkLists"
+            key: "CollectorProfileSavesRoute_customArtworkLists"
             filters: []
           ) {
           edges {

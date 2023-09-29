@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<80db98c49193464d5fa8c9f55b723726>>
+ * @generated SignedSource<<645dcb2fdea75762b0cf1ae8593d0576>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CollectorProfileSaves2Route_Test_Query$variables = {};
-export type CollectorProfileSaves2Route_Test_Query$data = {
+export type CollectorProfileSavesRoute_Test_Query$variables = {};
+export type CollectorProfileSavesRoute_Test_Query$data = {
   readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileSaves2Route_me">;
+    readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileSavesRoute_me">;
   } | null;
 };
-export type CollectorProfileSaves2Route_Test_Query = {
-  response: CollectorProfileSaves2Route_Test_Query$data;
-  variables: CollectorProfileSaves2Route_Test_Query$variables;
+export type CollectorProfileSavesRoute_Test_Query = {
+  response: CollectorProfileSavesRoute_Test_Query$data;
+  variables: CollectorProfileSavesRoute_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -204,7 +204,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "CollectorProfileSaves2Route_Test_Query",
+    "name": "CollectorProfileSavesRoute_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -217,7 +217,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "CollectorProfileSaves2Route_me"
+            "name": "CollectorProfileSavesRoute_me"
           }
         ],
         "storageKey": null
@@ -230,7 +230,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "CollectorProfileSaves2Route_Test_Query",
+    "name": "CollectorProfileSavesRoute_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -375,7 +375,7 @@ return {
             "args": (v7/*: any*/),
             "filters": [],
             "handle": "connection",
-            "key": "CollectorProfileSaves2Route_customArtworkLists",
+            "key": "CollectorProfileSavesRoute_customArtworkLists",
             "kind": "LinkedHandle",
             "name": "collectionsConnection"
           },
@@ -386,7 +386,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "88b3e1cc5d853c59c22856c483b03d1e",
+    "cacheID": "dc074d31d5ec6772ca207cf951c0c779",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -451,13 +451,13 @@ return {
         "me.savedArtworksArtworkList.name": (v8/*: any*/)
       }
     },
-    "name": "CollectorProfileSaves2Route_Test_Query",
+    "name": "CollectorProfileSavesRoute_Test_Query",
     "operationKind": "query",
-    "text": "query CollectorProfileSaves2Route_Test_Query {\n  me {\n    ...CollectorProfileSaves2Route_me\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSaves2Route_me on Me {\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    ...ArtworkListItem_item\n    artworksConnection(first: 4) {\n      totalCount\n    }\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...ArtworkListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query CollectorProfileSavesRoute_Test_Query {\n  me {\n    ...CollectorProfileSavesRoute_me\n    id\n  }\n}\n\nfragment ArtworkListItem_item on Collection {\n  default\n  name\n  internalID\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment CollectorProfileSavesRoute_me on Me {\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    ...ArtworkListItem_item\n    artworksConnection(first: 4) {\n      totalCount\n    }\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        default\n        ...ArtworkListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "faa377c58f63688c07edf6968b891343";
+(node as any).hash = "02cfd934947b026cfd085f509f1ff279";
 
 export default node;

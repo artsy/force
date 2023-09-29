@@ -1,8 +1,8 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { screen, waitFor } from "@testing-library/react"
-import { CollectorProfileSaves2Route_Test_Query } from "__generated__/CollectorProfileSaves2Route_Test_Query.graphql"
-import { CollectorProfileSaves2RouteFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/CollectorProfileSaves2Route"
+import { CollectorProfileSavesRoute_Test_Query } from "__generated__/CollectorProfileSavesRoute_Test_Query.graphql"
+import { CollectorProfileSavesRouteFragmentContainer } from "Apps/CollectorProfile/Routes/Saves/CollectorProfileSavesRoute"
 import { useRouter } from "System/Router/useRouter"
 import { useTracking } from "react-tracking"
 import { HttpError } from "found"
@@ -17,19 +17,19 @@ jest.mock("react-head", () => ({
 }))
 
 const { renderWithRelay } = setupTestWrapperTL<
-  CollectorProfileSaves2Route_Test_Query
+  CollectorProfileSavesRoute_Test_Query
 >({
-  Component: CollectorProfileSaves2RouteFragmentContainer,
+  Component: CollectorProfileSavesRouteFragmentContainer,
   query: graphql`
-    query CollectorProfileSaves2Route_Test_Query @relay_test_operation {
+    query CollectorProfileSavesRoute_Test_Query @relay_test_operation {
       me {
-        ...CollectorProfileSaves2Route_me
+        ...CollectorProfileSavesRoute_me
       }
     }
   `,
 })
 
-describe("CollectorProfileSaves2Route", () => {
+describe("CollectorProfileSavesRoute", () => {
   const mockUseRouter = useRouter as jest.Mock
   const mockUseTracking = useTracking as jest.Mock
   const mockHttpError = HttpError as jest.Mock
