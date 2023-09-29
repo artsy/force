@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2d18eddf4c0aa264db25d6ed5a7a4489>>
+ * @generated SignedSource<<afd20ca1a76a72129a669546957b3971>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,7 +22,33 @@ export type articlesRoutes_ArticlesQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = [
+var v0 = {
+  "kind": "Literal",
+  "name": "sort",
+  "value": "PUBLISHED_AT_DESC"
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "href",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v4 = [
   {
     "kind": "Literal",
     "name": "featured",
@@ -33,11 +59,7 @@ var v0 = [
     "name": "first",
     "value": 15
   },
-  {
-    "kind": "Literal",
-    "name": "sort",
-    "value": "PUBLISHED_AT_DESC"
-  }
+  (v0/*: any*/)
 ];
 return {
   "fragment": {
@@ -82,7 +104,45 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v0/*: any*/),
+            "args": [
+              {
+                "kind": "Literal",
+                "name": "layout",
+                "value": "NEWS"
+              },
+              {
+                "kind": "Literal",
+                "name": "limit",
+                "value": 3
+              },
+              {
+                "kind": "Literal",
+                "name": "published",
+                "value": true
+              },
+              (v0/*: any*/)
+            ],
+            "concreteType": "Article",
+            "kind": "LinkedField",
+            "name": "articles",
+            "plural": true,
+            "selections": [
+              (v1/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "title",
+                "storageKey": null
+              },
+              (v2/*: any*/),
+              (v3/*: any*/)
+            ],
+            "storageKey": "articles(layout:\"NEWS\",limit:3,published:true,sort:\"PUBLISHED_AT_DESC\")"
+          },
+          {
+            "alias": null,
+            "args": (v4/*: any*/),
             "concreteType": "ArticleConnection",
             "kind": "LinkedField",
             "name": "articlesConnection",
@@ -104,20 +164,8 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "href",
-                        "storageKey": null
-                      },
+                      (v1/*: any*/),
+                      (v2/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -206,13 +254,7 @@ return {
                         ],
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "id",
-                        "storageKey": null
-                      },
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -263,7 +305,7 @@ return {
           },
           {
             "alias": null,
-            "args": (v0/*: any*/),
+            "args": (v4/*: any*/),
             "filters": [
               "sort",
               "featured"
@@ -279,12 +321,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0e6fb91de9319b2fce3e77264bb5222f",
+    "cacheID": "9f6b88922cedacb6f93c9a47fe7989b5",
     "id": null,
     "metadata": {},
     "name": "articlesRoutes_ArticlesQuery",
     "operationKind": "query",
-    "text": "query articlesRoutes_ArticlesQuery {\n  viewer {\n    ...ArticlesApp_viewer\n  }\n}\n\nfragment ArticlesApp_viewer on Viewer {\n  ...ArticlesIndexArticles_viewer\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  thumbnailTitle\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 607) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer on Viewer {\n  articlesConnection(first: 15, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query articlesRoutes_ArticlesQuery {\n  viewer {\n    ...ArticlesApp_viewer\n  }\n}\n\nfragment ArticlesApp_viewer on Viewer {\n  ...ArticlesIndexNews_viewer\n  ...ArticlesIndexArticles_viewer\n}\n\nfragment ArticlesIndexArticle_article on Article {\n  href\n  thumbnailTitle\n  byline\n  publishedAt(format: \"MMMM Do YYYY\")\n  thumbnailImage {\n    cropped(width: 910, height: 607) {\n      src\n      srcSet\n      width\n      height\n    }\n  }\n}\n\nfragment ArticlesIndexArticles_viewer on Viewer {\n  articlesConnection(first: 15, sort: PUBLISHED_AT_DESC, featured: true) {\n    edges {\n      node {\n        internalID\n        ...ArticlesIndexArticle_article\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n\nfragment ArticlesIndexNews_viewer on Viewer {\n  articles(published: true, limit: 3, sort: PUBLISHED_AT_DESC, layout: NEWS) {\n    internalID\n    title\n    href\n    id\n  }\n}\n"
   }
 };
 })();

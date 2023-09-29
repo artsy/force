@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
 
@@ -50,17 +51,6 @@ const PurchasesRoute = loadable(
   {
     resolveComponent: component =>
       component.SettingsPurchasesRouteFragmentContainer,
-  }
-)
-
-const SavesRoute = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/Saves/SettingsSavesRoute"
-    ),
-  {
-    resolveComponent: component =>
-      component.SettingsSavesRouteFragmentContainer,
   }
 )
 
@@ -201,18 +191,9 @@ export const settingsRoutes: AppRouteConfig[] = [
       },
       {
         path: "saves",
-        getComponent: () => SavesRoute,
-        onClientSideRender: () => {
-          SavesRoute.preload()
+        render: () => {
+          throw new RedirectException(`/collector-profile/saves`, 301)
         },
-        onServerSideRender: handleServerSideRender,
-        query: graphql`
-          query settingsRoutes_SavesRouteQuery {
-            me {
-              ...SettingsSavesRoute_me
-            }
-          }
-        `,
       },
       {
         path: "insights",

@@ -1,12 +1,13 @@
 import { FC } from "react"
 import { Link } from "react-head"
-import { Spacer, Text } from "@artsy/palette"
+import { Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { MetaTags } from "Components/MetaTags"
 import { ArticlesIndexArticlesPaginationContainer } from "./Components/ArticlesIndexArticles"
 import { getENV } from "Utils/getENV"
 import { ArticlesApp_viewer$data } from "__generated__/ArticlesApp_viewer.graphql"
 import { useScrollToOpenEditorialAuthModal } from "Utils/Hooks/useScrollToOpenEditorialAuthModal"
+import { ArticlesIndexNewsFragmentContainer } from "Apps/Articles/Components/ArticlesIndexNews"
 
 interface ArticlesAppProps {
   viewer: ArticlesApp_viewer$data
@@ -32,7 +33,17 @@ const ArticlesApp: FC<ArticlesAppProps> = ({ viewer }) => {
 
       <Spacer y={[2, 4]} />
 
-      <Text variant="xl">Editorial</Text>
+      <GridColumns gridRowGap={4}>
+        <Column span={[12, 4, 6]}>
+          <Text as="h1" variant="xl">
+            Editorial
+          </Text>
+        </Column>
+
+        <Column span={[12, 8, 6]}>
+          <ArticlesIndexNewsFragmentContainer viewer={viewer} />
+        </Column>
+      </GridColumns>
 
       <Spacer y={6} />
 
@@ -46,6 +57,7 @@ export const ArticlesAppFragmentContainer = createFragmentContainer(
   {
     viewer: graphql`
       fragment ArticlesApp_viewer on Viewer {
+        ...ArticlesIndexNews_viewer
         ...ArticlesIndexArticles_viewer
       }
     `,

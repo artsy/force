@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e8e909537a6bf3e8effe7a06a50ca3a9>>
+ * @generated SignedSource<<7082a44ade03e583616c62b296c10fc3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,16 +43,22 @@ const node: ReaderFragment = {
     },
     {
       "alias": null,
-      "args": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "HTML"
+        }
+      ],
       "kind": "ScalarField",
       "name": "description",
-      "storageKey": null
+      "storageKey": "description(format:\"HTML\")"
     }
   ],
   "type": "ArtistInsight",
   "abstractKey": null
 };
 
-(node as any).hash = "5e3af9da6038a7a9644ee7fbd859f17f";
+(node as any).hash = "e5d94b27789f176069d79a2c94fda745";
 
 export default node;
