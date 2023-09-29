@@ -35,7 +35,9 @@ const ArticlesApp: FC<ArticlesAppProps> = ({ viewer }) => {
 
       <GridColumns gridRowGap={4}>
         <Column span={[12, 4, 6]}>
-          <Text variant="xl">Editorial</Text>
+          <Text as="h1" variant="xl">
+            Editorial
+          </Text>
         </Column>
 
         <Column span={[12, 8, 6]}>

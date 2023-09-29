@@ -22,14 +22,21 @@ const ArticlesIndexArticle: FC<ArticlesIndexArticleProps> = ({ article }) => {
   return (
     <GridColumns gridRowGap={2}>
       <Column span={6}>
-        <RouterLink to={article.href} display="block" textDecoration="none">
+        <RouterLink
+          data-testid="ArticlesIndexArticle"
+          to={article.href}
+          display="block"
+          textDecoration="none"
+        >
           <Text variant="xs" mb={1}>
             {article.publishedAt}
           </Text>
 
-          <Text variant="xl">{article.thumbnailTitle}</Text>
+          <Text as="h2" variant="xl">
+            {article.thumbnailTitle}
+          </Text>
 
-          <Text variant="xl" color="black60">
+          <Text as="h3" variant="xl" color="black60">
             {article.byline}
           </Text>
         </RouterLink>
