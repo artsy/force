@@ -6,7 +6,6 @@ import { CreativeWork } from "Components/Seo/CreativeWork"
 import { Product } from "Components/Seo/Product"
 import { createFragmentContainer, graphql } from "react-relay"
 import { getENV } from "Utils/getENV"
-
 import { get } from "Utils/get"
 
 const APP_URL = getENV("APP_URL")
