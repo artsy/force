@@ -1,12 +1,12 @@
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkActionsSaveButton_artwork$data } from "__generated__/ArtworkActionsSaveButton_artwork.graphql"
+import { ArtworkActionsSaveButtonOld_artwork$data } from "__generated__/ArtworkActionsSaveButtonOld_artwork.graphql"
 import { ArtworkActionsSaveButtonV2FragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsSaveButtonV2"
 import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
 
 interface ArtworkActionsSaveButtonProps {
-  artwork: ArtworkActionsSaveButton_artwork$data
+  artwork: ArtworkActionsSaveButtonOld_artwork$data
 }
-const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
+const ArtworkActionsSaveButtonOld: React.FC<ArtworkActionsSaveButtonProps> = ({
   artwork,
 }) => {
   return (
@@ -16,19 +16,11 @@ const ArtworkActionsSaveButton: React.FC<ArtworkActionsSaveButtonProps> = ({
   )
 }
 
-export const ArtworkActionsSaveButtonFragmentContainer = createFragmentContainer(
-  ArtworkActionsSaveButton,
+export const ArtworkActionsSaveButtonOldFragmentContainer = createFragmentContainer(
+  ArtworkActionsSaveButtonOld,
   {
     artwork: graphql`
-      fragment ArtworkActionsSaveButton_artwork on Artwork {
-        id
-        internalID
-        slug
-        isSaved
-        sale {
-          isAuction
-          isClosed
-        }
+      fragment ArtworkActionsSaveButtonOld_artwork on Artwork {
         ...ArtworkActionsSaveButtonV2_artwork
       }
     `,

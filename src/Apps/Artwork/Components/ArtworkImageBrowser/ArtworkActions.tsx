@@ -14,7 +14,7 @@ import { getENV } from "Utils/getENV"
 import { Media } from "Utils/Responsive"
 import { userIsAdmin, userIsTeam } from "Utils/user"
 import { ArtworkActions_artwork$data } from "__generated__/ArtworkActions_artwork.graphql"
-import { ArtworkActionsSaveButtonFragmentContainer } from "./ArtworkActionsSaveButton"
+import { ArtworkActionsSaveButtonOldFragmentContainer } from "./ArtworkActionsSaveButtonOld"
 import { ArtworkSharePanelFragmentContainer } from "./ArtworkSharePanel"
 import { UtilButton, UtilButtonLink } from "./UtilButton"
 
@@ -107,7 +107,7 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
   )
 
   const SaveButton = (
-    <ArtworkActionsSaveButtonFragmentContainer artwork={artwork} />
+    <ArtworkActionsSaveButtonOldFragmentContainer artwork={artwork} />
   )
 
   const actions = [
@@ -218,7 +218,7 @@ export const ArtworkActionsFragmentContainer = createFragmentContainer(
         @argumentDefinitions(
           includeAllImages: { type: "Boolean", defaultValue: false }
         ) {
-        ...ArtworkActionsSaveButton_artwork
+        ...ArtworkActionsSaveButtonOld_artwork
         ...ArtworkDownloadButton_artwork
         ...ArtworkSharePanel_artwork
           @arguments(includeAllImages: $includeAllImages)
