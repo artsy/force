@@ -5,10 +5,11 @@ import { SeoDataForArtwork_artwork$data } from "__generated__/SeoDataForArtwork_
 import { CreativeWork } from "Components/Seo/CreativeWork"
 import { Product } from "Components/Seo/Product"
 import { createFragmentContainer, graphql } from "react-relay"
-import { data as sd } from "sharify"
+import { getENV } from "Utils/getENV"
+
 import { get } from "Utils/get"
 
-const { APP_URL } = sd
+const APP_URL = getENV("APP_URL")
 
 interface SeoDataForArtworkProps {
   artwork: SeoDataForArtwork_artwork$data
@@ -40,6 +41,7 @@ export const SeoDataForArtwork: React.FC<SeoDataForArtworkProps> = ({
       "@type": "Person",
       name: artistsName,
     },
+    condition: "used",
   }
 
   // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
