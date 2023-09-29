@@ -26,7 +26,7 @@ import {
   updateAddressSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
 import { ShippingTestQuery$rawResponse } from "__generated__/ShippingTestQuery.graphql"
-import { screen } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import {
@@ -40,6 +40,7 @@ import { ErrorDialogMessage } from "Apps/Order/Utils/getErrorDialogCopy"
 import * as updateUserAddress from "Apps/Order/Mutations/UpdateUserAddress"
 import { within } from "@testing-library/dom"
 import { createMockEnvironment, MockPayloadGenerator } from "relay-test-utils"
+import { getENV } from "Utils/getENV"
 
 // TODO: Optimize test performance and remove long timeout setting
 // Set longer timeout for each test _only_ for this file.
@@ -49,6 +50,11 @@ jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
+}))
+
+const mockGetENV = getENV as jest.Mock
+jest.mock("Utils/getENV", () => ({
+  getENV: jest.fn(),
 }))
 
 jest.mock("@artsy/palette", () => {
@@ -240,10 +246,17 @@ const verifyAddressWithSuggestions = async (relayEnv, input, suggested) => {
 
 describe("Shipping", () => {
   const pushMock = jest.fn()
+  const mockFetch = jest.fn()
   let isCommittingMutation
   let relayEnv
 
+  beforeAll(() => {
+    global.fetch = mockFetch
+  })
   beforeEach(() => {
+    mockGetENV.mockImplementation(
+      name => ({ SMARTY_EMBEDDED_KEY_JSON: { key: "foo" } }[name])
+    )
     isCommittingMutation = false
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent: jest.fn(),
@@ -252,6 +265,7 @@ describe("Shipping", () => {
   })
 
   afterEach(() => {
+    mockFetch.mockRestore()
     jest.restoreAllMocks()
   })
 
@@ -932,6 +946,85 @@ describe("Shipping", () => {
                 postalCode: "15601",
                 country: "TW",
               },
+            })
+          })
+        })
+      })
+      describe("address autocomplete", () => {
+        describe("US address autocopmlete enabled", () => {
+          beforeEach(() => {
+            ;(useFeatureFlag as jest.Mock).mockImplementation(
+              (featureName: string) => featureName === "address_autocomplete_us"
+            )
+            relayEnv = createMockEnvironment()
+            global.fetch = jest.fn()
+          })
+          afterEach(() => {
+            relayEnv = undefined
+          })
+          describe("with no saved addresses", () => {
+            it("fills in the address from an autocomplete option on a US address", async () => {
+              ;(global.fetch as jest.Mock).mockResolvedValue({
+                json: jest.fn().mockResolvedValue({
+                  suggestions: [
+                    {
+                      city: "New York",
+                      entries: 0,
+                      secondary: "",
+                      state: "NY",
+                      street_line: "401 Broadway",
+                      zipcode: "10013",
+                    },
+                  ],
+                }),
+              })
+              renderWithRelay(
+                {
+                  CommerceOrder: () => order,
+                  Me: () => meWithoutAddress,
+                },
+                undefined,
+                relayEnv
+              )
+              await waitFor(() => {
+                const line1Input = screen.getByPlaceholderText("Street address")
+                expect(line1Input).toBeEnabled()
+              })
+              const addressLine1 = screen.getByPlaceholderText("Street address")
+              await userEvent.type(addressLine1, "401 Broad", { delay: 1 })
+              // await flushPromiseQueue()
+
+              // await waitFor(
+              // () => {
+              // Note: Due to implementation of _.throttle we can't reliably test
+              // timed throttling behavior. Instead we test that the fetch is called
+              // for the start (3-char min) and end of the query
+              expect(mockFetch).toHaveBeenCalledWith(
+                "https://us-autocomplete-pro.api.smarty.com/lookup?key=foo&search=401"
+              )
+              expect(mockFetch).toHaveBeenCalledWith(
+                "https://us-autocomplete-pro.api.smarty.com/lookup?key=foo&search=401+Broad"
+              )
+              // },
+              // { timeout: 1000 }
+              // )
+
+              userEvent.click(
+                screen.getByText("401 Broadway, New York NY 10013")
+              )
+              const addressLine2 = screen.getByPlaceholderText(
+                "Apt, floor, suite, etc."
+              )
+              const city = screen.getByPlaceholderText("City")
+              const region = screen.getByPlaceholderText(
+                "State, province, or region"
+              )
+              const postalCode = screen.getByPlaceholderText("ZIP/postal code")
+              expect(addressLine1).toHaveValue("401 Broadway")
+              expect(addressLine2).toHaveValue("")
+              expect(city).toHaveValue("New York")
+              expect(region).toHaveValue("NY")
+              expect(postalCode).toHaveValue("10013")
             })
           })
         })

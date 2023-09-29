@@ -153,7 +153,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const autocompleteRef = React.createRef<HTMLInputElement>()
 
   return (
-    <GridColumns>
+    <GridColumns data-testid="AddressForm_inputs">
       <Column span={12}>
         <Input
           tabIndex={tabIndex}

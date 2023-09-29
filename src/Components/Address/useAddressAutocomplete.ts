@@ -63,6 +63,7 @@ export const useAddressAutocomplete = (
   useEffect(() => {
     const isAPIKeyPresent = !!apiKey
     const enabled = isAPIKeyPresent && isFeatureFlagEnabled && isUSAddress
+
     setServiceAvailability({
       loaded: true,
       enabled,
