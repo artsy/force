@@ -69,6 +69,7 @@ describe("SeoDataForArtwork", () => {
           "@type": "Person",
           name: "Artist McArtist",
         },
+        condition: "used",
         description: "artwork description",
         image: "artwork-image",
         name: "artwork title",
@@ -94,6 +95,7 @@ describe("SeoDataForArtwork", () => {
       const data = wrapper.find(Product).first().props().data
       expect(data).toEqual({
         brand: { "@type": "Person", name: "Artist McArtist" },
+        condition: "used",
         category: "Design/Decorative Art",
         description: "artwork description",
         image: "artwork-image",
