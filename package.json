@@ -76,7 +76,7 @@
     "superagent": "3.8.3"
   },
   "dependencies": {
-    "@artsy/cohesion": "4.149.0",
+    "@artsy/cohesion": "4.151.0",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.1.0",
     "@artsy/eigen-web-association": "^1.6.0",
