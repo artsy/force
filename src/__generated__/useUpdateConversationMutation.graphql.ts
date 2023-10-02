@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bdf8f7f3e12de813cb6ce49cbdcadbe8>>
+ * @generated SignedSource<<b904fe95725ea24a147efc5a5cf9902e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type UpdateConversationMutationInput = {
   fromLastViewedMessageId?: string | null;
   sellerOutcome?: string | null;
   sellerOutcomeComment?: string | null;
+  toLastViewedMessageId?: string | null;
 };
 export type useUpdateConversationMutation$variables = {
   input: UpdateConversationMutationInput;

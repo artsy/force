@@ -1,8 +1,9 @@
 import PersonIcon from "@artsy/icons/PersonIcon"
-import { Avatar, Box, CheckIcon, Flex, Text } from "@artsy/palette"
+import { Avatar, Box, Flex, Text } from "@artsy/palette"
 import { FC, isValidElement } from "react"
 import Linkify from "react-linkify"
 import { ConversationMessageImage } from "./ConversationMessageImage"
+import CheckmarkIcon from "@artsy/icons/CheckmarkIcon"
 
 const DROP_SHADOW = "0 2px 10px 0 rgba(0, 0, 0, 0.06)"
 
@@ -103,7 +104,7 @@ export const ConversationMessageBubble: FC<ConversationMessageBubbleProps> = ({
             <Text variant="xs" color="black60">
               Seen by {` ${seenBy} `}
             </Text>
-            <CheckIcon fill="black60" />
+            <CheckmarkIcon fill="black60" />
           </Flex>
         )}
       </Flex>

@@ -1,4 +1,4 @@
-import { Flex, FlexProps, GuaranteeIcon, Text } from "@artsy/palette"
+import { Flex, FlexProps, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { ConversationMakeOfferButton } from "Apps/Conversations2/Routes/Conversation/Components/ConversationCTA/ConversationMakeOfferButton"
 import { ConversationPurchaseButton } from "Apps/Conversations2/Routes/Conversation/Components/ConversationCTA/ConversationPurchaseButton"
@@ -7,6 +7,7 @@ import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
 import { Conversation2CTA_conversation$key } from "__generated__/Conversation2CTA_conversation.graphql"
 import { extractNodes } from "Utils/extractNodes"
+import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 
 interface Conversation2CTAProps extends FlexProps {
   conversation: Conversation2CTA_conversation$key
@@ -143,8 +144,8 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
   )
 }
 
-const GuaranteeIconBlue = styled(GuaranteeIcon)`
-  .guarantee-checkmark {
+const GuaranteeIconBlue = styled(VerifiedIcon)`
+  .verified-checkmark {
     fill: ${themeGet("colors.brand")};
   }
 `

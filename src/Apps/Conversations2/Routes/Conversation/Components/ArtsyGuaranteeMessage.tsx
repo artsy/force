@@ -1,4 +1,5 @@
-import { Banner, GuaranteeIcon } from "@artsy/palette"
+import VerifiedIcon from "@artsy/icons/VerifiedIcon"
+import { Banner } from "@artsy/palette"
 import { useEffect, useState } from "react"
 import { useRouter } from "System/Router/useRouter"
 
@@ -24,7 +25,7 @@ export const ArtsyGuaranteeMessage: React.FC = () => {
 
   return (
     <Banner variant="brand">
-      <GuaranteeIcon mr={1} fill="white100" />
+      <VerifiedIcon mr={1} fill="white100" />
       To be covered by the Artsy Guarantee, always communicate and pay through
       the Artsy platform.
     </Banner>
