@@ -71,7 +71,7 @@ describe("AddressForm", () => {
           suggestions: [
             {
               city: "New York",
-              entries: 0,
+              entries: 2,
               secondary: "Fl 25",
               state: "NY",
               street_line: "401 Broadway",
@@ -105,9 +105,7 @@ describe("AddressForm", () => {
 
         const listbox = await screen.findByRole("listbox", { hidden: true })
 
-        expect(listbox).toHaveTextContent(
-          "401 Broadway Fl 25, New York NY 10013"
-        )
+        expect(listbox).toHaveTextContent("401 Broadway, New York NY 10013")
       })
 
       // Skipped because it's not working even though I see it working in manual testing

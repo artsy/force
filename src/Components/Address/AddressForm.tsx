@@ -15,6 +15,8 @@ import {
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
 
+const ENABLE_SECONDARY_SUGGESTIONS = false
+
 export interface Address {
   name: string
   country: string
@@ -90,7 +92,9 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     fetchForAutocomplete,
     fetchSecondarySuggestions,
     ...autocomplete
-  } = useAddressAutocomplete(address)
+  } = useAddressAutocomplete(address, {
+    enableSecondarySuggestions: ENABLE_SECONDARY_SUGGESTIONS,
+  })
 
   if (!isEqual(value, prevValue)) {
     setPrevValue(value)
@@ -210,25 +214,9 @@ export const AddressForm: React.FC<AddressFormProps> = ({
               fetchForAutocomplete({ search: "" })
             }}
             onSelect={option => {
-              const hasSecondarySuggestions = option.entries > 1
-              if (hasSecondarySuggestions) {
-                // Fill in the address form with the selection, but skip line 2
-                Object.entries(option.address).forEach(([key, value]) => {
-                  if (key === "addressLine2") return
-                  changeValueHandler(key as keyof Address)(value)
-                })
-                fetchSecondarySuggestions(value!.addressLine1!, option)
-
-                // TODO: make the secondary options appear
-                // console.log({ autocompleteRefCurrent: autocompleteRef.current })
-                setTimeout(() => {
-                  autocompleteRef.current?.focus()
-                }, 1000)
-              } else {
-                Object.entries(option.address).forEach(([key, value]) => {
-                  changeValueHandler(key as keyof Address)(value)
-                })
-              }
+              Object.entries(option.address).forEach(([key, value]) => {
+                changeValueHandler(key as keyof Address)(value)
+              })
             }}
             error={getError("addressLine1")}
             data-testid="AddressForm_addressLine1"
