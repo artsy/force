@@ -94,6 +94,7 @@ const ArtworkSidebarCreateArtworkAlert: React.FC<ArtworkSidebarCreateArtworkAler
           entity={entity}
           criteria={allowedCriteria}
           aggregations={aggregations}
+          currentArtworkID={artwork.internalID}
           authDialogOptions={{
             options: {
               title: "Sign up to create your alert",
