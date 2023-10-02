@@ -63,6 +63,11 @@ export interface SavedSearchAlertFormValues {
   frequency: SavedSearchFrequency
 }
 
+export interface HearFromArtsyAdvisorFormValues {
+  hearFromArtsyAdvisor: boolean
+  message: string
+}
+
 export interface SavedSearchAlertMutationResult {
   id: string
 }

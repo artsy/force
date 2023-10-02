@@ -10,8 +10,10 @@ import {
   Separator,
   Spacer,
   Text,
+  TextArea,
 } from "@artsy/palette"
 import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
+import { createAdvisoryOpportunity } from "./Mutations/createAdvisoryOpportunity"
 import { useSystemContext } from "System/useSystemContext"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import createLogger from "Utils/logger"
@@ -21,6 +23,7 @@ import {
 } from "./SavedSearchAlertContext"
 import {
   FilterPill,
+  HearFromArtsyAdvisorFormValues,
   SavedSearchAlertFormValues,
   SavedSearchAlertMutationResult,
   SavedSearchEntity,
@@ -65,6 +68,9 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
   const isFallbackToGeneratedAlertNamesEnabled = useFeatureFlag(
     "onyx_force-fallback-to-generated-alert-names"
   )
+  const isHearFromArtsyAdvisorEnabled = useFeatureFlag(
+    "onyx_advisory-opportunity-in-saved-search"
+  )
 
   const handleRemovePillPress = (pill: FilterPill) => {
     if (pill.isDefault) {
@@ -74,7 +80,9 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
     removeCriteriaValue(pill.field as SearchCriteriaAttributeKeys, pill.value)
   }
 
-  const handleSubmit = async (values: SavedSearchAlertFormValues) => {
+  const handleSubmit = async (
+    values: SavedSearchAlertFormValues & HearFromArtsyAdvisorFormValues
+  ) => {
     if (!relayEnvironment) {
       return null
     }
@@ -97,6 +105,13 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
       const result = {
         id: response.createSavedSearch?.savedSearchOrErrors.internalID!,
       }
+
+      if (values.hearFromArtsyAdvisor) {
+        await createAdvisoryOpportunity(relayEnvironment, {
+          searchCriteriaID: result.id,
+          message: values.message,
+        })
+      }
       onCreateAlert?.(result)
     } catch (error) {
       logger.error(error)
@@ -104,8 +119,12 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
   }
 
   return (
-    <Formik<SavedSearchAlertFormValues>
-      initialValues={initialValues}
+    <Formik<SavedSearchAlertFormValues & HearFromArtsyAdvisorFormValues>
+      initialValues={{
+        message: "",
+        hearFromArtsyAdvisor: false,
+        ...initialValues,
+      }}
       onSubmit={handleSubmit}
     >
       {({
@@ -117,7 +136,12 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
         handleBlur,
         setFieldValue,
       }) => {
-        const isSaveAlertButtonDisabled = !values.email && !values.push
+        // Require one method of contact to be selected
+        const isSaveAlertButtonDisabled = !(
+          values.email ||
+          values.push ||
+          values.hearFromArtsyAdvisor
+        )
 
         return (
           <ModalDialog
@@ -178,15 +202,48 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
                   />
                 </Box>
 
+                {values.push && (
+                  <>
+                    <Spacer y={2} />
+                    <FrequenceRadioButtons
+                      defaultFrequence={values.frequency}
+                      onSelect={selectedOption =>
+                        setFieldValue("frequency", selectedOption)
+                      }
+                    />
+                  </>
+                )}
+
                 <Spacer y={2} />
 
-                {values.push && (
-                  <FrequenceRadioButtons
-                    defaultFrequence={values.frequency}
-                    onSelect={selectedOption =>
-                      setFieldValue("frequency", selectedOption)
-                    }
-                  />
+                {isHearFromArtsyAdvisorEnabled && (
+                  <>
+                    <Spacer y={4} />
+                    <Box display="flex" justifyContent="space-between">
+                      <Text variant="sm-display">
+                        Hear from an Artsy Advisor
+                      </Text>
+                      <Checkbox
+                        onSelect={selected => {
+                          setFieldValue("hearFromArtsyAdvisor", selected)
+                        }}
+                        selected={values.hearFromArtsyAdvisor}
+                      />
+                    </Box>
+
+                    {values.hearFromArtsyAdvisor && (
+                      <>
+                        <Spacer y={2} />
+                        <TextArea
+                          onChange={({ value }) => {
+                            setFieldValue("message", value)
+                          }}
+                          placeholder="Tell us more about what you're looking for."
+                          value={values.message}
+                        />
+                      </>
+                    )}
+                  </>
                 )}
               </Box>
             </Join>
