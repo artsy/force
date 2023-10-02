@@ -145,6 +145,13 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
       ) : (
         conditionDescription && conditionDescription.details
       ),
+      onReadMoreClicked: () => {
+        trackEvent({
+          action_type: "Click",
+          context_module: "Condition",
+          subject: "Read more",
+        })
+      },
     },
 
     {
@@ -174,14 +181,18 @@ export const ArtworkDetailsAdditionalInfo: React.FC<ArtworkDetailsAdditionalInfo
   return (
     <StackableBorderBox flexDirection="column">
       <Join separator={<Spacer y={1} />}>
-        {displayItems.map(({ title, value }, index) => (
+        {displayItems.map(({ title, value, onReadMoreClicked }, index) => (
           <ArtworkDefinitionList key={title + index} term={title}>
             <HTML variant="xs" color="black60">
               {/* TODO: not sure why this check is here */}
               {React.isValidElement(value) ? (
                 value
               ) : (
-                <ReadMore maxChars={140} content={value as string} />
+                <ReadMore
+                  onReadMoreClicked={onReadMoreClicked}
+                  maxChars={140}
+                  content={value as string}
+                />
               )}
             </HTML>
           </ArtworkDefinitionList>
