@@ -32,10 +32,9 @@ import { Jump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
 import { isEqual } from "lodash"
-import React, { useRef, useState } from "react"
+import React, { useState } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
-import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import useDeepCompareEffect from "use-deep-compare-effect"
 import { ArtworkFilterArtworkGridRefetchContainer as ArtworkFilterArtworkGrid } from "./ArtworkFilterArtworkGrid"
 import {
@@ -46,7 +45,6 @@ import {
 import { ArtworkFilterMobileOverlay } from "./ArtworkFilterMobileOverlay"
 import { ArtworkFilters } from "./ArtworkFilters"
 import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
-import { ScrollRefContext } from "./ArtworkFilters/useScrollContext"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
@@ -331,11 +329,20 @@ export const BaseArtworkFilter: React.FC<
 
                         {isOpen && (
                           <ArtworkFilterMobileOverlay onClose={handleClose}>
-                            <FiltersWithScrollIntoView
-                              Filters={Filters}
-                              user={user}
-                              relayEnvironment={relay.environment}
-                            />
+                            <Box
+                              overflowY="scroll"
+                              height="100%"
+                              data-testid="FiltersWithScrollIntoView"
+                            >
+                              {Filters ? (
+                                Filters
+                              ) : (
+                                <ArtworkFilters
+                                  relayEnvironment={relay.environment}
+                                  user={user}
+                                />
+                              )}
+                            </Box>
                           </ArtworkFilterMobileOverlay>
                         )}
                       </ProgressiveOnboardingAlertSelectFilter>
@@ -542,31 +549,6 @@ export const ArtworkFilterRefetchContainer = createRefetchContainer(
   },
   ArtworkQueryFilter
 )
-
-const FiltersWithScrollIntoView: React.FC<{
-  Filters?: JSX.Element
-  user?: User
-  relayEnvironment?: RelayModernEnvironment
-}> = ({ Filters, relayEnvironment, user }) => {
-  const scrollRef = useRef<HTMLDivElement | null>(null)
-
-  return (
-    <Box
-      ref={scrollRef as any}
-      overflowY="scroll"
-      height="100%"
-      data-testid="FiltersWithScrollIntoView"
-    >
-      <ScrollRefContext.Provider value={{ scrollRef }}>
-        {Filters ? (
-          Filters
-        ) : (
-          <ArtworkFilters relayEnvironment={relayEnvironment} user={user} />
-        )}
-      </ScrollRefContext.Provider>
-    </Box>
-  )
-}
 
 export const getTotalCountLabel = ({
   total = "0",
