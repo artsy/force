@@ -1,16 +1,9 @@
 import loadable from "@loadable/component"
 import { AppRouteConfig } from "System/Router/Route"
+import { extractNodes } from "Utils/extractNodes"
+import { getENV } from "Utils/getENV"
+import { RedirectException } from "found"
 import { graphql } from "react-relay"
-
-const Conversations2App = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "conversations2Bundle" */ "./Conversations2App"
-    ),
-  {
-    resolveComponent: component => component.Conversations2AppFragmentContainer,
-  }
-)
 
 const Conversation2Route = loadable(
   () =>
@@ -25,13 +18,34 @@ const Conversation2Route = loadable(
 
 export const conversations2Routes: AppRouteConfig[] = [
   {
-    path: "/user/conversations2",
-    layout: "NavOnly",
-    getComponent: () => Conversations2App,
+    path: "/user/conversations2", // Serves only as a redirect route
+    layout: "Default",
+    render: ({ props }) => {
+      if (!props) {
+        return null
+      }
+
+      const initialConversationID = extractNodes<any>(
+        // @ts-ignore
+        props.conversationsConnection
+      )[0]?.internalID
+
+      let conversationUrl = `/user/conversations2/${initialConversationID}`
+
+      if (getENV("IS_MOBILE")) {
+        conversationUrl = `${conversationUrl}?showAllConversations=true`
+      }
+
+      throw new RedirectException(conversationUrl)
+    },
     query: graphql`
       query conversations2Routes_ConversationQuery {
-        viewer {
-          ...Conversations2App_viewer
+        conversationsConnection(first: 1) {
+          edges {
+            node {
+              internalID
+            }
+          }
         }
       }
     `,
@@ -41,7 +55,7 @@ export const conversations2Routes: AppRouteConfig[] = [
   },
   {
     path: "/user/conversations2/:conversationId",
-    layout: "NavOnly",
+    layout: "Default",
     ignoreScrollBehavior: true,
     getComponent: () => Conversation2Route,
     prepareVariables: (params, { location }) => {

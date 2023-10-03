@@ -1,28 +1,42 @@
-import { DEFAULT_CONVERSATION_ID } from "Apps/Conversations2/Conversations2App"
-import { useEffect, useState, useCallback } from "react"
 import { useRouter } from "System/Router/useRouter"
+import { omit } from "lodash"
+import { useEffect, useState, useCallback } from "react"
 
-// Controls which column we are currently display
-// and exposes methods to change in between these columns
+/**
+ * Controls which column we are currently display and exposes methods to change
+ * in between these columns.
+ */
 export const useMobileLayoutActions = () => {
-  const { match } = useRouter()
+  const { match, router } = useRouter()
+
+  const {
+    location: { query },
+    params,
+  } = match
+
   const [currentColumn, setCurrentColumn] = useState<
     "sidebar" | "conversation" | "detail"
   >("sidebar")
 
   useEffect(() => {
-    if (match.params.conversationId) {
-      const view =
-        match.params.conversationId !== DEFAULT_CONVERSATION_ID
-          ? "conversation"
-          : "sidebar"
-      setCurrentColumn(view)
+    if (query.showAllConversations) {
+      setCurrentColumn("sidebar")
+    } else {
+      setCurrentColumn("conversation")
     }
-  }, [match.params.conversationId])
+  }, [query.showAllConversations])
 
   const goToSidebar = useCallback(() => {
     setCurrentColumn("sidebar")
-  }, [])
+
+    router.push({
+      pathname: `/user/conversations2/${params.conversationId}`,
+      query: {
+        showAllConversations: true,
+        ...omit(query, ["conversationId"]),
+      },
+    })
+  }, [router, query, params])
 
   const goToDetails = useCallback(() => {
     setCurrentColumn("detail")
@@ -32,5 +46,10 @@ export const useMobileLayoutActions = () => {
     setCurrentColumn("conversation")
   }, [])
 
-  return { currentColumn, goToSidebar, goToDetails, goToConversation }
+  return {
+    currentColumn,
+    goToSidebar,
+    goToDetails,
+    goToConversation,
+  }
 }

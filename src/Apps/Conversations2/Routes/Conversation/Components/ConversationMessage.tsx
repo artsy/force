@@ -2,16 +2,24 @@ import { ConversationMessageBubble } from "./Message/ConversationMessageBubble"
 import { ConversationMessageImage } from "./Message/ConversationMessageImage"
 import { ConversationMessageFile } from "./Message/ConversationMessageFile"
 import { graphql, useFragment } from "react-relay"
-import { Spacer, Text } from "@artsy/palette"
+import { Box, Spacer, Text } from "@artsy/palette"
+import { format, differenceInDays, isSameDay, isSameMinute } from "date-fns"
 import React from "react"
 import {
   ConversationMessage_message$data,
   ConversationMessage_message$key,
 } from "__generated__/ConversationMessage_message.graphql"
 import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
+import { useScrollPagination } from "Apps/Conversations2/hooks/useScrollPagination"
+import Linkify from "react-linkify"
 
 interface ConversationMessageProps {
+  messageIndex: number
   message: ConversationMessage_message$key
+  messages: Pick<
+    NonNullable<ConversationMessage_message$data>,
+    "isFromUser" | "internalID" | "createdAt"
+  >[]
   simplified?: boolean
   isLastGroupedPartnerMessage?: boolean
   formattedFirstMessage?: NonNullable<
@@ -20,14 +28,18 @@ interface ConversationMessageProps {
 }
 
 export const ConversationMessage: React.FC<ConversationMessageProps> = ({
+  messageIndex,
   message,
-  simplified,
-  isLastGroupedPartnerMessage,
+  messages,
   formattedFirstMessage,
 }) => {
+  const { appendElementRef } = useScrollPagination()
+
   const data = useFragment(
     graphql`
       fragment ConversationMessage_message on Message {
+        id
+        internalID
         attachments {
           internalID
           contentType
@@ -35,6 +47,7 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
           fileName
         }
         body
+        createdAt
         createdAtTime: createdAt(format: "h:mmA") @required(action: NONE)
         deliveries @required(action: NONE) {
           openedAt
@@ -56,6 +69,26 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
     return null
   }
 
+  const prevMessage = messages[messageIndex - 1]
+  const nextMessage = messages[messageIndex + 1]
+
+  const messageDate = new Date(data.createdAt!)
+  const prevMessageDate = new Date(prevMessage?.createdAt!)
+  const nextMessageDate = new Date(nextMessage?.createdAt!)
+
+  const simplified =
+    data.isFromUser === prevMessage?.isFromUser
+      ? isSameMinute(messageDate, prevMessageDate)
+      : false
+
+  const displayDaySeparator = prevMessage
+    ? !isSameDay(messageDate, prevMessageDate)
+    : true
+
+  const isLastGroupedPartnerMessage =
+    !data.isFromUser &&
+    (nextMessage?.isFromUser || !isSameMinute(messageDate, nextMessageDate))
+
   const seenBy =
     !!data.deliveries.length && isLastGroupedPartnerMessage
       ? defineSeenBy(data)
@@ -63,6 +96,26 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
 
   return (
     <>
+      <Box
+        ref={(ref: any) => {
+          if (messageIndex === 0) {
+            appendElementRef(ref, data.internalID)
+          }
+        }}
+      />
+
+      {displayDaySeparator && (
+        <>
+          {messageIndex > 0 && <Spacer y={4} />}
+          <Text color="black60" alignSelf="center">
+            {getDayAsText(messageDate)}
+          </Text>
+          <Spacer y={1} />
+        </>
+      )}
+
+      <Spacer y={simplified ? 0.5 : 2} />
+
       <ConversationMessageBubble
         fromViewer={!data.isFromUser}
         simplified={simplified}
@@ -109,15 +162,47 @@ const Message: React.FC<{
   data: NonNullable<ConversationMessage_message$data>
   formattedFirstMessage: string | null | undefined
 }> = ({ data, formattedFirstMessage }) => {
+  // react-linkify v1.0.0-alpha with @types v1.0.1 - adding `properties` still doesn't work.
+  // This is a workaround to specify target for now.(same as in Force v1.0.0-alpha, in Message.tsx)
+  // https://github.com/tasti/react-linkify/issues/78#issuecomment-514754050
+  const linkTargetDecorator = (href: string, text: string, key: number) => (
+    <a href={href} key={key} target="_blank" rel="noreferrer">
+      {text}
+    </a>
+  )
+
   if (data.isFirstMessage && formattedFirstMessage) {
-    return <Text>{formattedFirstMessage}</Text>
+    return (
+      <Text>
+        <Linkify componentDecorator={linkTargetDecorator}>
+          {formattedFirstMessage}
+        </Linkify>
+      </Text>
+    )
   }
 
   if (data.body) {
-    return <Text>{data.body}</Text>
+    return (
+      <Text>
+        <Linkify componentDecorator={linkTargetDecorator}>{data.body}</Linkify>
+      </Text>
+    )
   }
 
-  return <Text fontStyle="italic">This message is no longer available.</Text>
+  return (
+    <Text fontStyle="italic">
+      <Linkify componentDecorator={linkTargetDecorator}>
+        This message is no longer available.
+      </Linkify>
+    </Text>
+  )
+}
+
+const getDayAsText = (messageDate: Date): string => {
+  const daysSinceCreated = differenceInDays(messageDate, new Date())
+  if (daysSinceCreated === 0) return "Today"
+  if (daysSinceCreated === -1) return "Yesterday"
+  return format(messageDate, "PP")
 }
 
 export const defineSeenBy = (

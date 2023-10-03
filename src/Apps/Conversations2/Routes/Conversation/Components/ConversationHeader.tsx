@@ -10,24 +10,22 @@ import {
 import { graphql, useFragment } from "react-relay"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import { useTracking } from "react-tracking"
-import { extractNodes } from "Utils/extractNodes"
 import { Media } from "Utils/Responsive"
 import { RouterLink } from "System/Router/RouterLink"
 import { ConversationHeader_conversation$key } from "__generated__/ConversationHeader_conversation.graphql"
+import { useMobileLayoutActions } from "Apps/Conversations2/hooks/useMobileLayoutActions"
 
 const DROP_SHADOW = "0 2px 10px rgba(0, 0, 0, .08)"
 
 interface ConversationHeaderProps {
   conversation: ConversationHeader_conversation$key
-  onGoToConversations?: () => void
-  onGoToDetails?: () => void
 }
 
 export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
   conversation,
-  onGoToConversations,
-  onGoToDetails,
 }) => {
+  const { goToDetails, goToSidebar } = useMobileLayoutActions()
+
   const { trackEvent } = useTracking()
 
   const data = useFragment(
@@ -83,8 +81,6 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
   if (!item || item?.__typename !== "Artwork") {
     return null
   }
-
-  const order = extractNodes(data.orderConnection)[0]
 
   return (
     <>
@@ -155,7 +151,7 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
             justifyContent="space-between"
           >
             <Clickable
-              onClick={onGoToConversations}
+              onClick={goToSidebar}
               display="flex"
               alignItems="center"
               data-testid="go-to-conversation-button"
@@ -164,24 +160,6 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
               <Spacer x={1} />
               <Text variant="xs">To {data.to.name}</Text>
             </Clickable>
-
-            <Button
-              variant={
-                order?.state === "SUBMITTED" ? "primaryBlack" : "secondaryBlack"
-              }
-              size="small"
-              onClick={() => {
-                trackEvent({
-                  action: "Click",
-                  label: "Review",
-                  context_module: "conversations",
-                  artwork_id: item.id,
-                })
-                onGoToDetails?.()
-              }}
-            >
-              Details
-            </Button>
           </Flex>
 
           <Spacer y={1} />
@@ -197,7 +175,7 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
                   context_module: "conversations",
                   artwork_id: item.id,
                 })
-                onGoToDetails?.()
+                goToDetails?.()
               }}
             >
               <Flex alignItems="center" minWidth={0}>

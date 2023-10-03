@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<39bb3973e795e8f38dbb429ac9a52d97>>
+ * @generated SignedSource<<cf70fc5d1de8438ae0b110a70d084fd9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -84,6 +84,13 @@ v4 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 };
 return {
@@ -211,6 +218,7 @@ return {
                         "plural": false,
                         "selections": [
                           (v4/*: any*/),
+                          (v5/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -233,13 +241,7 @@ return {
                             "name": "attachments",
                             "plural": true,
                             "selections": [
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "internalID",
-                                "storageKey": null
-                              },
+                              (v5/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -414,12 +416,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "db3c2bb15d229565d145d476ab12fd44",
+    "cacheID": "d5fcd664c7590c3d9d6711e1c137fbf0",
     "id": null,
     "metadata": {},
     "name": "useSendConversationMessageMutation",
     "operationKind": "mutation",
-    "text": "mutation useSendConversationMessageMutation(\n  $input: SendConversationMessageMutationInput!\n) {\n  sendConversationMessage(input: $input) {\n    conversation {\n      ...ConversationMessages_conversation\n      lastMessageID\n      id\n    }\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAtTime: createdAt(format: \"h:mmA\")\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n\nfragment ConversationMessages_conversation on Conversation {\n  messagesConnection(first: 10, sort: DESC) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        createdAt\n        isFromUser\n        ...ConversationMessage_message\n        __typename\n      }\n      cursor\n    }\n  }\n  inquiryRequest {\n    formattedFirstMessage\n    id\n  }\n}\n"
+    "text": "mutation useSendConversationMessageMutation(\n  $input: SendConversationMessageMutationInput!\n) {\n  sendConversationMessage(input: $input) {\n    conversation {\n      ...ConversationMessages_conversation\n      lastMessageID\n      id\n    }\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  id\n  internalID\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAt\n  createdAtTime: createdAt(format: \"h:mmA\")\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n\nfragment ConversationMessages_conversation on Conversation {\n  messagesConnection(first: 10, sort: DESC) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        internalID\n        createdAt\n        isFromUser\n        ...ConversationMessage_message\n        __typename\n      }\n      cursor\n    }\n  }\n  inquiryRequest {\n    formattedFirstMessage\n    id\n  }\n}\n"
   }
 };
 })();

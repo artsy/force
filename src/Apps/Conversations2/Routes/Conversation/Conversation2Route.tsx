@@ -11,7 +11,7 @@ import { ConversationReply } from "Apps/Conversations2/Routes/Conversation/Compo
 import { ConversationDetails } from "Apps/Conversations2/components/Details/ConversationDetails"
 import { Conversation2Route_viewer$data } from "__generated__/Conversation2Route_viewer.graphql"
 import { Conversation2Route_conversation$data } from "__generated__/Conversation2Route_conversation.graphql"
-import { Fragment, Suspense } from "react"
+import { Fragment, Suspense, useEffect } from "react"
 import { ConversationsSidebarSkeleton } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarSkeleton"
 
 const COLUMN_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
@@ -26,19 +26,39 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
   viewer,
   conversation,
 }) => {
-  const {
-    currentColumn,
-    goToDetails,
-    goToSidebar,
-    goToConversation,
-  } = useMobileLayoutActions()
+  const { currentColumn } = useMobileLayoutActions()
+
+  // Work around to ensure that we don't get page transition jank by due to
+  // navigating between different types of page layouts. Since convos fills
+  // the screen, disable scrolling to hide the footer.
+  useEffect(() => {
+    window.scrollTo(0, 0)
+
+    document.body.style.setProperty("overflow", "hidden")
+
+    return () => {
+      document.body.style.setProperty("overflow", "scroll")
+    }
+  })
 
   const ClientOnlySuspense = (typeof window !== "undefined"
     ? Suspense
     : Fragment) as typeof Suspense
 
   return (
-    <Flex flex={1} flexGrow={1} height="100%">
+    <Flex
+      flex={1}
+      flexGrow={1}
+      mx={[-2, 0]}
+      position="relative"
+      height={MOBILE_HEIGHT}
+      zIndex={1}
+      overflow={"hidden"}
+    >
+      {/*
+        Desktop View
+      */}
+
       <Media greaterThan="sm">
         <Flex display={["none", "flex"]}>
           <Resizer split="vertical" minSize={200} defaultSizes={[1, 2, 1]}>
@@ -71,9 +91,6 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
                 flex={1}
                 width="100%"
               >
-                {/* TODO: Do we need a header? We have the details sidebar */}
-                {/* <ConversationHeader conversation={conversation} /> */}
-
                 <Flex height="90%">
                   <ClientOnlySuspense fallback={null}>
                     <ConversationMessagesPaginationContainer
@@ -104,56 +121,43 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
         </Flex>
       </Media>
 
-      {/* Mobile View */}
-      <Media lessThan="md">
+      {/*
+        Mobile View
+      */}
+
+      <Media lessThan="md" style={{ width: "100%", margin: 0 }}>
         <Flex
           display={currentColumn === "sidebar" ? "flex" : "none"}
           height={MOBILE_HEIGHT}
           flexDirection="column"
+          width="100%"
+          margin={0}
         >
           <ConversationsSidebar viewer={viewer} />
         </Flex>
 
-        <Flex
-          display={currentColumn === "conversation" ? "flex" : "none"}
-          height={MOBILE_HEIGHT}
-          flexGrow={1}
-          position="sticky"
-          justifyContent="space-between"
-          flexDirection="column"
-          top={0}
-          overflowY="auto"
-        >
-          <ConversationHeader
-            conversation={conversation}
-            onGoToConversations={goToSidebar}
-            onGoToDetails={goToDetails}
-          />
+        {currentColumn === "conversation" && (
+          <Flex
+            display={currentColumn === "conversation" ? "flex" : "none"}
+            height={MOBILE_HEIGHT}
+            flexGrow={1}
+            position="sticky"
+            justifyContent="space-between"
+            flexDirection="column"
+            top={0}
+            overflowY="auto"
+          >
+            <ConversationHeader conversation={conversation} />
 
-          <ClientOnlySuspense fallback={null}>
-            <ConversationMessagesPaginationContainer
-              conversation={conversation}
-            />
-          </ClientOnlySuspense>
+            <ClientOnlySuspense fallback={null}>
+              <ConversationMessagesPaginationContainer
+                conversation={conversation}
+              />
+            </ClientOnlySuspense>
 
-          <ConversationReply conversation={conversation} />
-        </Flex>
-
-        <Flex
-          display={currentColumn === "detail" ? "flex" : "none"}
-          height={MOBILE_HEIGHT}
-          flexGrow={1}
-          position="sticky"
-          top={0}
-          overflowY="auto"
-          p={2}
-          pb={6}
-        >
-          <ConversationDetails
-            conversation={conversation}
-            onClose={goToConversation}
-          />
-        </Flex>
+            <ConversationReply conversation={conversation} />
+          </Flex>
+        )}
       </Media>
     </Flex>
   )

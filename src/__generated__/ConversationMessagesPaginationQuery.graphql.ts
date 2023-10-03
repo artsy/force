@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8cffcc2ae199c1a9ed7b7c0966978997>>
+ * @generated SignedSource<<393de05047be13824e421227dbd4c60a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -72,6 +72,13 @@ v7 = {
   "args": null,
   "kind": "ScalarField",
   "name": "id",
+  "storageKey": null
+},
+v8 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
   "storageKey": null
 };
 return {
@@ -190,6 +197,7 @@ return {
                     "plural": false,
                     "selections": [
                       (v7/*: any*/),
+                      (v8/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -212,13 +220,7 @@ return {
                         "name": "attachments",
                         "plural": true,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "internalID",
-                            "storageKey": null
-                          },
+                          (v8/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -389,12 +391,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f1419f85cef9621fd0330cae3d89f767",
+    "cacheID": "2b3baf31ed09220e06537d82ead911f3",
     "id": null,
     "metadata": {},
     "name": "ConversationMessagesPaginationQuery",
     "operationKind": "query",
-    "text": "query ConversationMessagesPaginationQuery(\n  $conversationId: String!\n  $first: Int!\n  $after: String\n) {\n  conversation(id: $conversationId) {\n    ...ConversationMessages_conversation_2HEEH6\n    id\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAtTime: createdAt(format: \"h:mmA\")\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n\nfragment ConversationMessages_conversation_2HEEH6 on Conversation {\n  messagesConnection(first: $first, after: $after, sort: DESC) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        createdAt\n        isFromUser\n        ...ConversationMessage_message\n        __typename\n      }\n      cursor\n    }\n  }\n  inquiryRequest {\n    formattedFirstMessage\n    id\n  }\n}\n"
+    "text": "query ConversationMessagesPaginationQuery(\n  $conversationId: String!\n  $first: Int!\n  $after: String\n) {\n  conversation(id: $conversationId) {\n    ...ConversationMessages_conversation_2HEEH6\n    id\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  id\n  internalID\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAt\n  createdAtTime: createdAt(format: \"h:mmA\")\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n\nfragment ConversationMessages_conversation_2HEEH6 on Conversation {\n  messagesConnection(first: $first, after: $after, sort: DESC) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        internalID\n        createdAt\n        isFromUser\n        ...ConversationMessage_message\n        __typename\n      }\n      cursor\n    }\n  }\n  inquiryRequest {\n    formattedFirstMessage\n    id\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<199acf9e6f421d53141f2f5a2809f013>>
+ * @generated SignedSource<<c19318f22a416dda00aaf21142378a34>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type ConversationMessage_message$data = {
   } | null> | null;
   readonly body: string | null;
   readonly cc: ReadonlyArray<string>;
+  readonly createdAt: string | null;
   readonly createdAtTime: string;
   readonly deliveries: ReadonlyArray<{
     readonly fullTransformedEmail: string;
@@ -27,6 +28,8 @@ export type ConversationMessage_message$data = {
   readonly from: {
     readonly name: string | null;
   };
+  readonly id: string;
+  readonly internalID: string;
   readonly isFirstMessage: boolean | null;
   readonly isFromUser: boolean | null;
   readonly to: ReadonlyArray<string>;
@@ -37,7 +40,15 @@ export type ConversationMessage_message$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ConversationMessage_message">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
@@ -46,18 +57,20 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
+    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
       "concreteType": "Attachment",
       "kind": "LinkedField",
       "name": "attachments",
       "plural": true,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "internalID",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -87,6 +100,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "body",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "createdAt",
       "storageKey": null
     },
     {
@@ -202,7 +222,8 @@ const node: ReaderFragment = {
   "type": "Message",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "387f83da1edab44f60a115e2456ef758";
+(node as any).hash = "8af28f2432bfb55dede921f1c02a89bb";
 
 export default node;

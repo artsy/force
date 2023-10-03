@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7570a05882856f2572d4df177bb9af54>>
+ * @generated SignedSource<<f1a5706afbea55f6f6a74eeac8f02b49>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,14 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
 export type conversations2Routes_ConversationQuery$variables = {};
 export type conversations2Routes_ConversationQuery$data = {
-  readonly viewer: {
-    readonly " $fragmentSpreads": FragmentRefs<"Conversations2App_viewer">;
+  readonly conversationsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly internalID: string | null;
+      } | null;
+    } | null> | null;
   } | null;
 };
 export type conversations2Routes_ConversationQuery = {
@@ -21,7 +24,22 @@ export type conversations2Routes_ConversationQuery = {
   variables: conversations2Routes_ConversationQuery$variables;
 };
 
-const node: ConcreteRequest = {
+const node: ConcreteRequest = (function(){
+var v0 = [
+  {
+    "kind": "Literal",
+    "name": "first",
+    "value": 1
+  }
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+};
+return {
   "fragment": {
     "argumentDefinitions": [],
     "kind": "Fragment",
@@ -30,19 +48,37 @@ const node: ConcreteRequest = {
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "Viewer",
+        "args": (v0/*: any*/),
+        "concreteType": "ConversationConnection",
         "kind": "LinkedField",
-        "name": "viewer",
+        "name": "conversationsConnection",
         "plural": false,
         "selections": [
           {
+            "alias": null,
             "args": null,
-            "kind": "FragmentSpread",
-            "name": "Conversations2App_viewer"
+            "concreteType": "ConversationEdge",
+            "kind": "LinkedField",
+            "name": "edges",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": "Conversation",
+                "kind": "LinkedField",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  (v1/*: any*/)
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
           }
         ],
-        "storageKey": null
+        "storageKey": "conversationsConnection(first:1)"
       }
     ],
     "type": "Query",
@@ -56,85 +92,58 @@ const node: ConcreteRequest = {
     "selections": [
       {
         "alias": null,
-        "args": null,
-        "concreteType": "Viewer",
+        "args": (v0/*: any*/),
+        "concreteType": "ConversationConnection",
         "kind": "LinkedField",
-        "name": "viewer",
+        "name": "conversationsConnection",
         "plural": false,
         "selections": [
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 1
-              },
-              {
-                "kind": "Literal",
-                "name": "type",
-                "value": "USER"
-              }
-            ],
-            "concreteType": "ConversationConnection",
+            "args": null,
+            "concreteType": "ConversationEdge",
             "kind": "LinkedField",
-            "name": "conversationsConnection",
-            "plural": false,
+            "name": "edges",
+            "plural": true,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "ConversationEdge",
+                "concreteType": "Conversation",
                 "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
+                "name": "node",
+                "plural": false,
                 "selections": [
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Conversation",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "internalID",
-                        "storageKey": null
-                      },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "id",
-                        "storageKey": null
-                      }
-                    ],
+                    "kind": "ScalarField",
+                    "name": "id",
                     "storageKey": null
                   }
                 ],
                 "storageKey": null
               }
             ],
-            "storageKey": "conversationsConnection(first:1,type:\"USER\")"
+            "storageKey": null
           }
         ],
-        "storageKey": null
+        "storageKey": "conversationsConnection(first:1)"
       }
     ]
   },
   "params": {
-    "cacheID": "85ffadbba4a105277f93303e5a8d94e4",
+    "cacheID": "994f749afb5a5334103a31d3b3ff8e5f",
     "id": null,
     "metadata": {},
     "name": "conversations2Routes_ConversationQuery",
     "operationKind": "query",
-    "text": "query conversations2Routes_ConversationQuery {\n  viewer {\n    ...Conversations2App_viewer\n  }\n}\n\nfragment Conversations2App_viewer on Viewer {\n  conversationsConnection(first: 1, type: USER) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query conversations2Routes_ConversationQuery {\n  conversationsConnection(first: 1) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n  }\n}\n"
   }
 };
+})();
 
-(node as any).hash = "a799d748e3d05c097bf68d046df541f6";
+(node as any).hash = "657d7021b4b60d786c4954456bed2bf3";
 
 export default node;

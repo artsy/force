@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<50a607d5ea6c4e0da8a304e1185a4908>>
+ * @generated SignedSource<<264b0d43cdcc85d3616705cdcde020b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type ConversationMessages_conversation$data = {
       readonly node: {
         readonly createdAt: string | null;
         readonly id: string;
+        readonly internalID: string;
         readonly isFromUser: boolean | null;
         readonly " $fragmentSpreads": FragmentRefs<"ConversationMessage_message">;
       } | null;
@@ -146,6 +147,13 @@ const node: ReaderFragment = {
                     "alias": null,
                     "args": null,
                     "kind": "ScalarField",
+                    "name": "internalID",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
                     "name": "createdAt",
                     "storageKey": null
                   },
@@ -210,6 +218,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "68843758a0e1d9724ab86bfc7400634b";
+(node as any).hash = "aebc6e389059be4455b62e7a3ba34c35";
 
 export default node;

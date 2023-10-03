@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2b16917531f15966bf215924abf512c3>>
+ * @generated SignedSource<<5a39f099b79027a1b15c9b0322241319>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type ConversationDetails_conversation$data = {
       } | null;
     } | null>;
   } | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ConversationArtwork_conversation" | "ConversationHelpCenter_conversation">;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationArtwork_conversation">;
   readonly " $fragmentType": "ConversationDetails_conversation";
 };
 export type ConversationDetails_conversation$key = {
@@ -105,17 +105,12 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ConversationArtwork_conversation"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ConversationHelpCenter_conversation"
     }
   ],
   "type": "Conversation",
   "abstractKey": null
 };
 
-(node as any).hash = "32a79da268421b83ab3cbeceedb473fe";
+(node as any).hash = "5e842396e39eec7e2d15177ae8381588";
 
 export default node;

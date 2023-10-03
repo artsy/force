@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e852ad886ef1b3ec13b2a7e5440beea6>>
+ * @generated SignedSource<<43034a64fbdab55307acd8062f686fb2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -50,30 +50,37 @@ v2 = {
   "storageKey": null
 },
 v3 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "ID"
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
 },
 v4 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
-  "type": "String"
+  "type": "ID"
 },
 v5 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "String"
 },
 v6 = {
   "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
+},
+v7 = {
+  "enumValues": null,
   "nullable": false,
   "plural": true,
   "type": "String"
 },
-v7 = {
+v8 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -192,6 +199,8 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
+                      (v2/*: any*/),
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -200,13 +209,7 @@ return {
                         "name": "attachments",
                         "plural": true,
                         "selections": [
-                          {
-                            "alias": null,
-                            "args": null,
-                            "kind": "ScalarField",
-                            "name": "internalID",
-                            "storageKey": null
-                          },
+                          (v3/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -237,6 +240,13 @@ return {
                         "args": null,
                         "kind": "ScalarField",
                         "name": "body",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "createdAt",
                         "storageKey": null
                       },
                       {
@@ -323,8 +333,7 @@ return {
                         "kind": "ScalarField",
                         "name": "cc",
                         "storageKey": null
-                      },
-                      (v2/*: any*/)
+                      }
                     ],
                     "storageKey": null
                   }
@@ -341,7 +350,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "694180b1958fc7e3ee117cb41907501d",
+    "cacheID": "6f1fd551de91c324b8344cfefc3ba34c",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -351,7 +360,7 @@ return {
           "plural": false,
           "type": "Conversation"
         },
-        "conversation.id": (v3/*: any*/),
+        "conversation.id": (v4/*: any*/),
         "conversation.messagesConnection": {
           "enumValues": null,
           "nullable": true,
@@ -376,39 +385,41 @@ return {
           "plural": true,
           "type": "Attachment"
         },
-        "conversation.messagesConnection.edges.node.attachments.contentType": (v4/*: any*/),
-        "conversation.messagesConnection.edges.node.attachments.downloadURL": (v4/*: any*/),
-        "conversation.messagesConnection.edges.node.attachments.fileName": (v4/*: any*/),
-        "conversation.messagesConnection.edges.node.attachments.id": (v3/*: any*/),
-        "conversation.messagesConnection.edges.node.attachments.internalID": (v3/*: any*/),
-        "conversation.messagesConnection.edges.node.body": (v5/*: any*/),
-        "conversation.messagesConnection.edges.node.cc": (v6/*: any*/),
-        "conversation.messagesConnection.edges.node.createdAtTime": (v5/*: any*/),
+        "conversation.messagesConnection.edges.node.attachments.contentType": (v5/*: any*/),
+        "conversation.messagesConnection.edges.node.attachments.downloadURL": (v5/*: any*/),
+        "conversation.messagesConnection.edges.node.attachments.fileName": (v5/*: any*/),
+        "conversation.messagesConnection.edges.node.attachments.id": (v4/*: any*/),
+        "conversation.messagesConnection.edges.node.attachments.internalID": (v4/*: any*/),
+        "conversation.messagesConnection.edges.node.body": (v6/*: any*/),
+        "conversation.messagesConnection.edges.node.cc": (v7/*: any*/),
+        "conversation.messagesConnection.edges.node.createdAt": (v6/*: any*/),
+        "conversation.messagesConnection.edges.node.createdAtTime": (v6/*: any*/),
         "conversation.messagesConnection.edges.node.deliveries": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "Delivery"
         },
-        "conversation.messagesConnection.edges.node.deliveries.fullTransformedEmail": (v4/*: any*/),
-        "conversation.messagesConnection.edges.node.deliveries.id": (v3/*: any*/),
-        "conversation.messagesConnection.edges.node.deliveries.openedAt": (v5/*: any*/),
+        "conversation.messagesConnection.edges.node.deliveries.fullTransformedEmail": (v5/*: any*/),
+        "conversation.messagesConnection.edges.node.deliveries.id": (v4/*: any*/),
+        "conversation.messagesConnection.edges.node.deliveries.openedAt": (v6/*: any*/),
         "conversation.messagesConnection.edges.node.from": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "MessageInitiator"
         },
-        "conversation.messagesConnection.edges.node.from.name": (v5/*: any*/),
-        "conversation.messagesConnection.edges.node.id": (v3/*: any*/),
-        "conversation.messagesConnection.edges.node.isFirstMessage": (v7/*: any*/),
-        "conversation.messagesConnection.edges.node.isFromUser": (v7/*: any*/),
-        "conversation.messagesConnection.edges.node.to": (v6/*: any*/)
+        "conversation.messagesConnection.edges.node.from.name": (v6/*: any*/),
+        "conversation.messagesConnection.edges.node.id": (v4/*: any*/),
+        "conversation.messagesConnection.edges.node.internalID": (v4/*: any*/),
+        "conversation.messagesConnection.edges.node.isFirstMessage": (v8/*: any*/),
+        "conversation.messagesConnection.edges.node.isFromUser": (v8/*: any*/),
+        "conversation.messagesConnection.edges.node.to": (v7/*: any*/)
       }
     },
     "name": "ConversationMessageTestQuery",
     "operationKind": "query",
-    "text": "query ConversationMessageTestQuery {\n  conversation(id: \"123\") {\n    messagesConnection(first: 1) {\n      edges {\n        node {\n          ...ConversationMessage_message\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAtTime: createdAt(format: \"h:mmA\")\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n"
+    "text": "query ConversationMessageTestQuery {\n  conversation(id: \"123\") {\n    messagesConnection(first: 1) {\n      edges {\n        node {\n          ...ConversationMessage_message\n          id\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  id\n  internalID\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAt\n  createdAtTime: createdAt(format: \"h:mmA\")\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n"
   }
 };
 })();

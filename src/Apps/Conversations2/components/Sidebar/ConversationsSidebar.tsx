@@ -5,8 +5,8 @@ import { extractNodes } from "Utils/extractNodes"
 import { ConversationsSidebarHeader } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarHeader"
 import { ConversationsSidebarEmpty } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarEmpty"
 import { ConversationsSidebarItem } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarItem"
-import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { ConversationsSidebar_viewer$key } from "__generated__/ConversationsSidebar_viewer.graphql"
+import { Sentinel } from "Components/Sentinal"
 
 interface ConversationsSidebarProps {
   viewer: ConversationsSidebar_viewer$key
@@ -81,16 +81,7 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
         </Box>
       )}
 
-      <InfiniteScrollSentinel onNext={loadMore} />
+      <Sentinel onEnterView={loadMore} />
     </Flex>
   )
-}
-
-const InfiniteScrollSentinel: React.FC<{ onNext(): void }> = ({ onNext }) => {
-  const { ref } = useIntersectionObserver({
-    once: false,
-    options: { threshold: 0.2 },
-    onIntersection: onNext,
-  })
-  return <Box ref={ref as any} height={1} />
 }

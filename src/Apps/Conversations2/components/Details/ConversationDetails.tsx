@@ -1,5 +1,4 @@
 import { Clickable, Flex, Separator } from "@artsy/palette"
-import { ConversationHelpCenter } from "./ConversationHelpCenter"
 import { graphql, useFragment } from "react-relay"
 import { OrderInformation } from "./OrderInformation/OrderInformation"
 import { ConversationArtwork } from "./ConversationArtwork"
@@ -40,7 +39,6 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
           }
         }
         ...ConversationArtwork_conversation
-        ...ConversationHelpCenter_conversation
       }
     `,
     conversation
@@ -68,11 +66,6 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
       )}
 
       <ConversationArtwork conversation={data} />
-      <Separator borderWidth={2} my={4} />
-
-      {/* <ConversationManageThisInquiry conversation={data} /> */}
-      {/* <Separator borderWidth={2} my={4} /> */}
-      <ConversationHelpCenter conversation={data} />
     </Flex>
   )
 }
