@@ -14,6 +14,8 @@ import {
   AddressAutocompleteSuggestion,
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
+import { trackEvent } from "Server/analytics/helpers"
+import { ActionType, AddressAutoCompletionResult } from "@artsy/cohesion"
 
 const ENABLE_SECONDARY_SUGGESTIONS = false
 
@@ -151,6 +153,16 @@ export const AddressForm: React.FC<AddressFormProps> = ({
 
   /* TODO: Make this work with autocomplete input */
   const autocompleteRef = React.createRef<HTMLInputElement>()
+
+  // useEffect(() => {
+  //   if (autocompleteOptions.length === 0) {
+  //     return
+  //   }
+  //   trackEvent({
+  //     action: ActionType.addressAutoCompletionResult,
+  //     input:
+  //   } as AddressAutoCompletionResult)
+  // })
 
   return (
     <GridColumns data-testid="AddressForm_inputs">
