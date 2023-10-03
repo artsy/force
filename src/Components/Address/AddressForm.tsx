@@ -91,7 +91,10 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const [prevValue, setPrevValue] = React.useState(value)
   const { trackEvent } = useTracking()
   const { contextPageOwnerId } = useAnalyticsContext()
-  const [selectedAddressOption, setSelectedAddressOption] = React.useState({
+  const [selectedAddressOption, setSelectedAddressOption] = React.useState<{
+    option: string
+    edited: boolean
+  }>({
     option: "",
     edited: false,
   })
