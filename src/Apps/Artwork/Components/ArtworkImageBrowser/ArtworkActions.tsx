@@ -14,9 +14,10 @@ import { getENV } from "Utils/getENV"
 import { Media } from "Utils/Responsive"
 import { userIsAdmin, userIsTeam } from "Utils/user"
 import { ArtworkActions_artwork$data } from "__generated__/ArtworkActions_artwork.graphql"
-import { ArtworkActionsSaveButtonFragmentContainer } from "./ArtworkActionsSaveButton"
 import { ArtworkSharePanelFragmentContainer } from "./ArtworkSharePanel"
 import { UtilButton, UtilButtonLink } from "./UtilButton"
+import { ManageArtworkForSavesProvider } from "Components/Artwork/ManageArtworkForSaves"
+import { ArtworkActionsSaveButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkImageBrowser/ArtworkActionsSaveButton"
 
 interface ArtworkActionsProps {
   artwork: ArtworkActions_artwork$data
@@ -107,7 +108,9 @@ export const ArtworkActions: React.FC<ArtworkActionsProps> = ({
   )
 
   const SaveButton = (
-    <ArtworkActionsSaveButtonFragmentContainer artwork={artwork} />
+    <ManageArtworkForSavesProvider>
+      <ArtworkActionsSaveButtonFragmentContainer artwork={artwork} />
+    </ManageArtworkForSavesProvider>
   )
 
   const actions = [

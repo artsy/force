@@ -1,8 +1,8 @@
 import { useToasts } from "@artsy/palette"
 import { BASE_SAVES_PATH } from "Apps/CollectorProfile/constants"
-import { ArtworkList } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModal"
-import { CreateNewListModalForManageArtwork } from "Apps/CollectorProfile/Routes/Saves2/Components/CreateNewListModal/CreateNewListModalForManageArtwork"
-import { SelectArtworkListsModalQueryRender } from "Apps/CollectorProfile/Routes/Saves2/Components/SelectArtworkListsModal/SelectArtworkListsModal"
+import { ArtworkList } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModal"
+import { CreateNewListModalForManageArtwork } from "Apps/CollectorProfile/Routes/Saves/Components/CreateNewListModal/CreateNewListModalForManageArtwork"
+import { SelectArtworkListsModalQueryRender } from "Apps/CollectorProfile/Routes/Saves/Components/SelectArtworkListsModal/SelectArtworkListsModal"
 import {
   createContext,
   Dispatch,
