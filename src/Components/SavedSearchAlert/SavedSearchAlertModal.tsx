@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { Formik } from "formik"
 import {
   Box,
@@ -12,6 +12,7 @@ import {
   Text,
   TextArea,
 } from "@artsy/palette"
+import * as Yup from "yup"
 import { createSavedSearchAlert } from "./Mutations/createSavedSearchAlert"
 import { createAdvisoryOpportunity } from "./Mutations/createAdvisoryOpportunity"
 import { useSystemContext } from "System/useSystemContext"
@@ -38,6 +39,12 @@ import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRa
 import { ConfirmationStepModal } from "Components/SavedSearchAlert/ConfirmationStepModal"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { SavedSearchAlertNameInputQueryRenderer } from "Components/SavedSearchAlert/Components/SavedSearchAlertNameInput"
+import {
+  PhoneNumberInput,
+  validatePhoneNumber,
+} from "Components/PhoneNumberInput"
+import { Environment, fetchQuery, graphql } from "react-relay"
+import { SavedSearchAlertModalPhoneQuery } from "__generated__/SavedSearchAlertModalPhoneQuery.graphql"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -57,6 +64,66 @@ export interface SavedSearchAlertFormContainerProps
 
 const logger = createLogger("Components/SavedSearchAlert/SavedSearchAlertModal")
 
+export async function getUserPhoneNumber(
+  relayEnvironment: Environment
+): Promise<{ phone: string; regionCode: string }> {
+  const query = graphql`
+    query SavedSearchAlertModalPhoneQuery {
+      me {
+        phoneNumber {
+          regionCode
+        }
+        phone
+      }
+    }
+  `
+
+  const fetchUserPhoneNumber = () => {
+    return fetchQuery<SavedSearchAlertModalPhoneQuery>(
+      relayEnvironment,
+      query,
+      {},
+      {
+        fetchPolicy: "network-only",
+      }
+    ).toPromise()
+  }
+
+  try {
+    const data = await fetchUserPhoneNumber()
+
+    return {
+      phone: data?.me?.phone ?? "",
+      regionCode: data?.me?.phoneNumber?.regionCode ?? "us",
+    }
+  } catch (error) {
+    return {
+      phone: "",
+      regionCode: "us",
+    }
+  }
+}
+
+const useUserPhoneNumber = () => {
+  const { relayEnvironment } = useSystemContext()
+
+  const [currentPhoneInfo, setCurrentPhoneInfo] = useState<{
+    phone: string
+    regionCode: string
+  }>({ phone: "", regionCode: "" })
+
+  useEffect(() => {
+    if (!relayEnvironment) {
+      return
+    }
+    getUserPhoneNumber(relayEnvironment).then(phoneInfo => {
+      setCurrentPhoneInfo(phoneInfo)
+    })
+  }, [relayEnvironment])
+
+  return currentPhoneInfo
+}
+
 export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
   entity,
   initialValues,
@@ -71,6 +138,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
   const isHearFromArtsyAdvisorEnabled = useFeatureFlag(
     "onyx_advisory-opportunity-in-saved-search"
   )
+  const { phone, regionCode } = useUserPhoneNumber()
 
   const handleRemovePillPress = (pill: FilterPill) => {
     if (pill.isDefault) {
@@ -110,6 +178,8 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
         await createAdvisoryOpportunity(relayEnvironment, {
           searchCriteriaID: result.id,
           message: values.message,
+          phoneNumber: values.phoneNumber,
+          phoneCountryCode: values.phoneCountryCode,
         })
       }
       onCreateAlert?.(result)
@@ -123,9 +193,33 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
       initialValues={{
         message: "",
         hearFromArtsyAdvisor: false,
+        phoneNumber: phone,
+        phoneCountryCode: regionCode,
         ...initialValues,
       }}
+      enableReinitialize
       onSubmit={handleSubmit}
+      validationSchema={Yup.object().shape({
+        phoneNumber: Yup.string()
+          .test({
+            name: "phone-number-is-valid",
+            message: "Please enter a valid phone number",
+            test: (national, context) => {
+              if (!national || !national.length) {
+                return true
+              }
+
+              if (!context.parent.hearFromArtsyAdvisor) return true
+
+              return validatePhoneNumber({
+                national: `${national}`,
+                regionCode: `${context.parent.phoneCountryCode || "US"}`,
+              })
+            },
+          })
+          .notRequired(),
+        phoneCountryCode: Yup.string().notRequired(),
+      })}
     >
       {({
         values,
@@ -134,14 +228,13 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
         handleSubmit,
         handleChange,
         handleBlur,
+        touched,
         setFieldValue,
+        isValid: isPhoneValid,
       }) => {
         // Require one method of contact to be selected
-        const isSaveAlertButtonDisabled = !(
-          values.email ||
-          values.push ||
-          values.hearFromArtsyAdvisor
-        )
+        const hasSelectedContactMethod =
+          values.email || values.push || values.hearFromArtsyAdvisor
 
         return (
           <ModalDialog
@@ -150,7 +243,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
             data-testid="CreateAlertModal"
             footer={
               <Button
-                disabled={isSaveAlertButtonDisabled}
+                disabled={!hasSelectedContactMethod || !isPhoneValid}
                 loading={isSubmitting}
                 onClick={() => handleSubmit()}
                 width="100%"
@@ -234,6 +327,33 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
                     {values.hearFromArtsyAdvisor && (
                       <>
                         <Spacer y={2} />
+
+                        <PhoneNumberInput
+                          mt={4}
+                          inputProps={{
+                            name: "phoneNumber",
+                            onBlur: handleBlur,
+                            onChange: handleChange,
+                            placeholder: "(000) 000 0000",
+                            value: values.phoneNumber,
+                          }}
+                          selectProps={{
+                            name: "phoneCountryCode",
+                            onBlur: handleBlur,
+                            selected: values.phoneCountryCode,
+                            onSelect: value => {
+                              setFieldValue("phoneCountryCode", value)
+                            },
+                          }}
+                          error={
+                            (touched.phoneCountryCode &&
+                              errors.phoneCountryCode) ||
+                            (touched.phoneNumber && errors.phoneNumber)
+                          }
+                        />
+
+                        <Spacer y={2} />
+
                         <TextArea
                           onChange={({ value }) => {
                             setFieldValue("message", value)

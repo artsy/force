@@ -7,6 +7,8 @@ import { commitMutation, Environment, graphql } from "relay-runtime"
 interface MutationInput {
   searchCriteriaID: string
   message: string
+  phoneNumber: string
+  phoneCountryCode: string
 }
 
 export const createAdvisoryOpportunity = (

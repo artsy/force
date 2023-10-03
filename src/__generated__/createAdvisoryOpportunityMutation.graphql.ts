@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e0711365419eacb5fd66d61fc6cd87eb>>
+ * @generated SignedSource<<de27bbbc76928c966a5ab8159982f743>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,8 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type createAdvisoryOpportunityMutationInput = {
   clientMutationId?: string | null;
   message?: string | null;
+  phoneCountryCode?: string | null;
+  phoneNumber?: string | null;
   searchCriteriaID: string;
 };
 export type createAdvisoryOpportunityMutation$variables = {
