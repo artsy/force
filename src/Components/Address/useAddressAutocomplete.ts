@@ -5,7 +5,12 @@ import { getENV } from "Utils/getENV"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { throttle, uniqBy } from "lodash"
 import { useTracking } from "react-tracking"
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import {
+  ActionType,
+  AddressAutoCompletionResult,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 const THROTTLE_DELAY = 500
@@ -160,14 +165,16 @@ export const useAddressAutocomplete = (
 
         setResult(finalSuggestions.slice(0, 5))
 
-        trackEvent({
+        const event: AddressAutoCompletionResult = {
           action: ActionType.addressAutoCompletionResult,
           context_module: ContextModule.ordersShipping,
-          context_page_owner_type: OwnerType.ordersShipping,
-          context_page_owner_id: contextPageOwnerId,
+          context_owner_type: OwnerType.ordersShipping,
+          context_owner_id: contextPageOwnerId,
           input: search,
           suggested_addresses_results: finalSuggestions.length,
-        })
+        }
+
+        trackEvent(event)
       } catch (e) {
         console.error(e)
       }

@@ -15,7 +15,13 @@ import {
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
 import { useTracking } from "react-tracking"
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
+import {
+  ActionType,
+  ContextModule,
+  EditedAutocompletedAddress,
+  OwnerType,
+  SelectedItemFromAddressAutoCompletion,
+} from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 const ENABLE_SECONDARY_SUGGESTIONS = false
@@ -175,13 +181,15 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const autocompleteRef = React.createRef<HTMLInputElement>()
 
   const trackAutoCompleteEdit = field => {
-    trackEvent({
+    const event: EditedAutocompletedAddress = {
       action: ActionType.editedAutocompletedAddress,
       context_module: ContextModule.ordersShipping,
-      context_page_owner_type: OwnerType.ordersShipping,
-      context_page_owner_id: contextPageOwnerId,
+      context_owner_type: OwnerType.ordersShipping,
+      context_owner_id: contextPageOwnerId,
       field: field,
-    })
+    }
+
+    trackEvent(event)
   }
 
   return (
@@ -252,14 +260,16 @@ export const AddressForm: React.FC<AddressFormProps> = ({
 
               setSelectedAddressOption({ option: option.value, edited: false })
 
-              trackEvent({
+              const event: SelectedItemFromAddressAutoCompletion = {
                 action: ActionType.selectedItemFromAddressAutoCompletion,
                 context_module: ContextModule.ordersShipping,
-                context_page_owner_type: OwnerType.ordersShipping,
-                context_page_owner_id: contextPageOwnerId,
-                input: value?.addressLine1,
+                context_owner_type: OwnerType.ordersShipping,
+                context_owner_id: contextPageOwnerId,
+                input: value?.addressLine1 || "",
                 item: option.value,
-              })
+              }
+
+              trackEvent(event)
             }}
             error={getError("addressLine1")}
             data-testid="AddressForm_addressLine1"
