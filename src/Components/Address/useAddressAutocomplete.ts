@@ -88,33 +88,31 @@ export const useAddressAutocomplete = (
   }, [isUSAddress, result.length])
 
   const fetchSuggestions = useMemo(() => {
-    const throttledFetch = throttle(
-      async ({ search, selected }: { search: string; selected?: string }) => {
-        const params = {
-          key: apiKey,
-          search: search,
-        }
-
-        if (selected) {
-          params["selected"] = selected
-        }
-
-        if (!apiKey) return null
-        let url =
-          "https://us-autocomplete-pro.api.smarty.com/lookup?" +
-          new URLSearchParams(params).toString()
-
-        const response = await fetch(url)
-        const json = await response.json()
-        return json
-      },
-      THROTTLE_DELAY,
-      {
-        leading: true,
-        trailing: true,
+    return async ({
+      search,
+      selected,
+    }: {
+      search: string
+      selected?: string
+    }) => {
+      const params = {
+        key: apiKey,
+        search: search,
       }
-    )
-    return throttledFetch
+
+      if (selected) {
+        params["selected"] = selected
+      }
+
+      if (!apiKey) return null
+      let url =
+        "https://us-autocomplete-pro.api.smarty.com/lookup?" +
+        new URLSearchParams(params).toString()
+
+      const response = await fetch(url)
+      const json = await response.json()
+      return json
+    }
   }, [apiKey])
 
   const buildAddressText = useCallback(
