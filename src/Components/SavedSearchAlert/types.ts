@@ -66,6 +66,8 @@ export interface SavedSearchAlertFormValues {
 export interface HearFromArtsyAdvisorFormValues {
   hearFromArtsyAdvisor: boolean
   message: string
+  phoneNumber: string
+  phoneCountryCode: string
 }
 
 export interface SavedSearchAlertMutationResult {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e0711365419eacb5fd66d61fc6cd87eb>>
+ * @generated SignedSource<<b4573ac3f4a332b2e6b9cfdfa8ddc487>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,23 +12,28 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type createAdvisoryOpportunityMutationInput = {
   clientMutationId?: string | null;
   message?: string | null;
+  phoneCountryCode?: string | null;
+  phoneNumber?: string | null;
   searchCriteriaID: string;
 };
-export type createAdvisoryOpportunityMutation$variables = {
+export type useCreateAdvisoryOpportunityMutation$variables = {
   input: createAdvisoryOpportunityMutationInput;
 };
-export type createAdvisoryOpportunityMutation$data = {
+export type useCreateAdvisoryOpportunityMutation$data = {
   readonly createAdvisoryOpportunity: {
     readonly advisoryOpportunityOrError: {
       readonly advisoryOpportunity?: {
         readonly internalID: string;
       };
+      readonly mutationError?: {
+        readonly message: string;
+      } | null;
     } | null;
   } | null;
 };
-export type createAdvisoryOpportunityMutation = {
-  response: createAdvisoryOpportunityMutation$data;
-  variables: createAdvisoryOpportunityMutation$variables;
+export type useCreateAdvisoryOpportunityMutation = {
+  response: useCreateAdvisoryOpportunityMutation$data;
+  variables: useCreateAdvisoryOpportunityMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -52,13 +57,38 @@ v2 = {
   "kind": "ScalarField",
   "name": "internalID",
   "storageKey": null
+},
+v3 = {
+  "kind": "InlineFragment",
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "GravityMutationError",
+      "kind": "LinkedField",
+      "name": "mutationError",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "message",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    }
+  ],
+  "type": "createAdvisoryOpportunityFailure",
+  "abstractKey": null
 };
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "createAdvisoryOpportunityMutation",
+    "name": "useCreateAdvisoryOpportunityMutation",
     "selections": [
       {
         "alias": null,
@@ -94,7 +124,8 @@ return {
                 ],
                 "type": "createAdvisoryOpportunitySuccess",
                 "abstractKey": null
-              }
+              },
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -109,7 +140,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "createAdvisoryOpportunityMutation",
+    "name": "useCreateAdvisoryOpportunityMutation",
     "selections": [
       {
         "alias": null,
@@ -159,7 +190,8 @@ return {
                 ],
                 "type": "createAdvisoryOpportunitySuccess",
                 "abstractKey": null
-              }
+              },
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -169,16 +201,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5d913be236b97556bf33cca432983d27",
+    "cacheID": "831699e5690e39a41fe93ba5e9bd2fcc",
     "id": null,
     "metadata": {},
-    "name": "createAdvisoryOpportunityMutation",
+    "name": "useCreateAdvisoryOpportunityMutation",
     "operationKind": "mutation",
-    "text": "mutation createAdvisoryOpportunityMutation(\n  $input: createAdvisoryOpportunityMutationInput!\n) {\n  createAdvisoryOpportunity(input: $input) {\n    advisoryOpportunityOrError {\n      __typename\n      ... on createAdvisoryOpportunitySuccess {\n        advisoryOpportunity {\n          internalID\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useCreateAdvisoryOpportunityMutation(\n  $input: createAdvisoryOpportunityMutationInput!\n) {\n  createAdvisoryOpportunity(input: $input) {\n    advisoryOpportunityOrError {\n      __typename\n      ... on createAdvisoryOpportunitySuccess {\n        advisoryOpportunity {\n          internalID\n          id\n        }\n      }\n      ... on createAdvisoryOpportunityFailure {\n        mutationError {\n          message\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "4bd9a1d3c3839f53ee07aa98bb93f083";
+(node as any).hash = "dcc29136ff3fb3beb24b2206e6a6c7f9";
 
 export default node;
