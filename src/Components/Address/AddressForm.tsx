@@ -14,6 +14,9 @@ import {
   AddressAutocompleteSuggestion,
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
+import { useTracking } from "react-tracking"
+import { ActionType, ContextModule } from "@artsy/cohesion"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 const ENABLE_SECONDARY_SUGGESTIONS = false
 
@@ -86,6 +89,12 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const addressFromProp = { ...emptyAddress, ...value }
   const [address, setAddress] = React.useState(addressFromProp)
   const [prevValue, setPrevValue] = React.useState(value)
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerId } = useAnalyticsContext()
+  const [
+    userSelectedAddressOption,
+    setUserSelectedAddressOption,
+  ] = React.useState(false)
 
   const {
     autocompleteOptions,
@@ -112,6 +121,10 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     }
     setKey(key)
     onChangeValue(key, ev.currentTarget.value)
+
+    if (userSelectedAddressOption && key !== "name" && key !== "phoneNumber") {
+      trackAutoCompleteEdit(key)
+    }
   }
 
   const changeValueHandler = (key: keyof Address) => (value: string) => {
@@ -151,6 +164,16 @@ export const AddressForm: React.FC<AddressFormProps> = ({
 
   /* TODO: Make this work with autocomplete input */
   const autocompleteRef = React.createRef<HTMLInputElement>()
+
+  const trackAutoCompleteEdit = field => {
+    trackEvent({
+      action: ActionType.editedAutocompletedAddress,
+      context_module: ContextModule.ordersShipping,
+      context_page_owner_type: "orders-shipping",
+      context_page_owner_id: contextPageOwnerId,
+      field: field,
+    })
+  }
 
   return (
     <GridColumns>
@@ -216,6 +239,17 @@ export const AddressForm: React.FC<AddressFormProps> = ({
             onSelect={option => {
               Object.entries(option.address).forEach(([key, value]) => {
                 changeValueHandler(key as keyof Address)(value)
+              })
+
+              setUserSelectedAddressOption(true)
+
+              trackEvent({
+                action: ActionType.selectedItemFromAddressAutoCompletion,
+                context_module: ContextModule.ordersShipping,
+                context_page_owner_type: "orders-shipping",
+                context_page_owner_id: contextPageOwnerId,
+                input: value,
+                item: option.address,
               })
             }}
             error={getError("addressLine1")}
