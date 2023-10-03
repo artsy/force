@@ -91,14 +91,10 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const [prevValue, setPrevValue] = React.useState(value)
   const { trackEvent } = useTracking()
   const { contextPageOwnerId } = useAnalyticsContext()
-  const [
-    userSelectedAddressOption,
-    setUserSelectedAddressOption,
-  ] = React.useState(false)
-  const [
-    userEditedSelectedAddress,
-    setUserEditedSelectedAddress,
-  ] = React.useState(false)
+  const [selectedAddressOption, setSelectedAddressOption] = React.useState({
+    option: "",
+    edited: false,
+  })
 
   const {
     autocompleteOptions,
@@ -127,13 +123,13 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     onChangeValue(key, ev.currentTarget.value)
 
     if (
-      !userEditedSelectedAddress &&
-      userSelectedAddressOption &&
+      selectedAddressOption.option &&
+      !selectedAddressOption.edited &&
       key !== "name" &&
       key !== "phoneNumber"
     ) {
       trackAutoCompleteEdit(key)
-      setUserEditedSelectedAddress(true)
+      setSelectedAddressOption({ ...selectedAddressOption, edited: true })
     }
   }
 
@@ -251,8 +247,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
                 changeValueHandler(key as keyof Address)(value)
               })
 
-              setUserSelectedAddressOption(true)
-              setUserEditedSelectedAddress(false)
+              setSelectedAddressOption({ option: option.value, edited: false })
 
               trackEvent({
                 action: ActionType.selectedItemFromAddressAutoCompletion,
