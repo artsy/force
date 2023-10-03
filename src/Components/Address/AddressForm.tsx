@@ -15,7 +15,7 @@ import {
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
 import { useTracking } from "react-tracking"
-import { ActionType, ContextModule } from "@artsy/cohesion"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 const ENABLE_SECONDARY_SUGGESTIONS = false
@@ -95,6 +95,10 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     userSelectedAddressOption,
     setUserSelectedAddressOption,
   ] = React.useState(false)
+  const [
+    userEditedSelectedAddress,
+    setUserEditedSelectedAddress,
+  ] = React.useState(false)
 
   const {
     autocompleteOptions,
@@ -122,8 +126,14 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     setKey(key)
     onChangeValue(key, ev.currentTarget.value)
 
-    if (userSelectedAddressOption && key !== "name" && key !== "phoneNumber") {
+    if (
+      !userEditedSelectedAddress &&
+      userSelectedAddressOption &&
+      key !== "name" &&
+      key !== "phoneNumber"
+    ) {
       trackAutoCompleteEdit(key)
+      setUserEditedSelectedAddress(true)
     }
   }
 
@@ -169,7 +179,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     trackEvent({
       action: ActionType.editedAutocompletedAddress,
       context_module: ContextModule.ordersShipping,
-      context_page_owner_type: "orders-shipping",
+      context_page_owner_type: OwnerType.ordersShipping,
       context_page_owner_id: contextPageOwnerId,
       field: field,
     })
@@ -242,14 +252,15 @@ export const AddressForm: React.FC<AddressFormProps> = ({
               })
 
               setUserSelectedAddressOption(true)
+              setUserEditedSelectedAddress(false)
 
               trackEvent({
                 action: ActionType.selectedItemFromAddressAutoCompletion,
                 context_module: ContextModule.ordersShipping,
-                context_page_owner_type: "orders-shipping",
+                context_page_owner_type: OwnerType.ordersShipping,
                 context_page_owner_id: contextPageOwnerId,
-                input: value,
-                item: option.address,
+                input: value?.addressLine1,
+                item: option.value,
               })
             }}
             error={getError("addressLine1")}

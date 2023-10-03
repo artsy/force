@@ -5,7 +5,7 @@ import { getENV } from "Utils/getENV"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { throttle, uniqBy } from "lodash"
 import { useTracking } from "react-tracking"
-import { ActionType, ContextModule } from "@artsy/cohesion"
+import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 const THROTTLE_DELAY = 500
@@ -163,7 +163,7 @@ export const useAddressAutocomplete = (
         trackEvent({
           action: ActionType.addressAutoCompletionResult,
           context_module: ContextModule.ordersShipping,
-          context_page_owner_type: "orders-shipping",
+          context_page_owner_type: OwnerType.ordersShipping,
           context_page_owner_id: contextPageOwnerId,
           input: search,
           suggested_addresses_results: finalSuggestions.length,
