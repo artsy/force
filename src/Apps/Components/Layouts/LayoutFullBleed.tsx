@@ -1,8 +1,7 @@
 import { FC } from "react"
-import { Flex, Spacer } from "@artsy/palette"
+import { Flex } from "@artsy/palette"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { AppToasts } from "Apps/Components/AppToasts"
-import { LayoutFooter } from "Apps/Components/Layouts/Components/LayoutFooter"
 import { LayoutNav } from "Apps/Components/Layouts/Components/LayoutNav"
 import { BaseLayoutProps } from "Apps/Components/Layouts"
 
@@ -25,10 +24,6 @@ export const LayoutFullBleed: FC<BaseLayoutProps> = ({ children }) => {
         <AppContainer as="main" id="main" flex={1}>
           {children}
         </AppContainer>
-
-        <Spacer y={4} />
-
-        <LayoutFooter />
       </Flex>
     </>
   )

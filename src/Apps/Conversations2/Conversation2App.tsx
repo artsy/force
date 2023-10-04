@@ -11,7 +11,7 @@ import { ConversationReply } from "Apps/Conversations2/components/ConversationRe
 import { ConversationDetails } from "Apps/Conversations2/components/Details/ConversationDetails"
 import { Conversation2App_viewer$data } from "__generated__/Conversation2App_viewer.graphql"
 import { Conversation2App_conversation$data } from "__generated__/Conversation2App_conversation.graphql"
-import { Fragment, Suspense, useEffect } from "react"
+import { Fragment, Suspense } from "react"
 import { ConversationsSidebarSkeleton } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarSkeleton"
 
 const COLUMN_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
@@ -28,18 +28,18 @@ const Conversation2App: React.FC<Conversation2RouteProps> = ({
 }) => {
   const { currentColumn } = useMobileLayoutActions()
 
-  // Work around to ensure that we don't get page transition jank by due to
-  // navigating between different types of page layouts. Since convos fills
-  // the screen, disable scrolling to hide the footer.
-  useEffect(() => {
-    window.scrollTo(0, 0)
+  // // Work around to ensure that we don't get page transition jank by due to
+  // // navigating between different types of page layouts. Since convos fills
+  // // the screen, disable scrolling to hide the footer.
+  // useEffect(() => {
+  //   window.scrollTo(0, 0)
 
-    document.body.style.setProperty("overflow", "hidden")
+  //   document.body.style.setProperty("overflow", "hidden")
 
-    return () => {
-      document.body.style.setProperty("overflow", "scroll")
-    }
-  })
+  //   return () => {
+  //     document.body.style.setProperty("overflow", "scroll")
+  //   }
+  // })
 
   const ClientOnlySuspense = (typeof window !== "undefined"
     ? Suspense
