@@ -14,7 +14,7 @@ import { useRouter } from "System/Router/useRouter"
 import { useSendConversationMessage } from "Apps/Conversations2/mutations/useSendConversationMessage"
 import { useSendConversationMessageMutation$data } from "__generated__/useSendConversationMessageMutation.graphql"
 import { ConversationReply_conversation$key } from "__generated__/ConversationReply_conversation.graphql"
-import { Conversation2CTA } from "Apps/Conversations2/Routes/Conversation/Components/ConversationCTA/Conversation2CTA"
+import { Conversation2CTA } from "Apps/Conversations2/components/ConversationCTA/Conversation2CTA"
 
 interface ConversationReplyProps {
   conversation: ConversationReply_conversation$key

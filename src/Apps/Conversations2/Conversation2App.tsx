@@ -5,12 +5,12 @@ import { Resizer } from "Apps/Conversations2/components/Resizer"
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 import { useMobileLayoutActions } from "Apps/Conversations2/hooks/useMobileLayoutActions"
 import { ConversationsSidebar } from "Apps/Conversations2/components/Sidebar/ConversationsSidebar"
-import { ConversationHeader } from "Apps/Conversations2/Routes/Conversation/Components/ConversationHeader"
-import { ConversationMessagesPaginationContainer } from "Apps/Conversations2/Routes/Conversation/Components/ConversationMessages"
-import { ConversationReply } from "Apps/Conversations2/Routes/Conversation/Components/ConversationReply"
+import { ConversationHeader } from "Apps/Conversations2/components/ConversationHeader"
+import { ConversationMessagesPaginationContainer } from "Apps/Conversations2/components/ConversationMessages"
+import { ConversationReply } from "Apps/Conversations2/components/ConversationReply"
 import { ConversationDetails } from "Apps/Conversations2/components/Details/ConversationDetails"
-import { Conversation2Route_viewer$data } from "__generated__/Conversation2Route_viewer.graphql"
-import { Conversation2Route_conversation$data } from "__generated__/Conversation2Route_conversation.graphql"
+import { Conversation2App_viewer$data } from "__generated__/Conversation2App_viewer.graphql"
+import { Conversation2App_conversation$data } from "__generated__/Conversation2App_conversation.graphql"
 import { Fragment, Suspense, useEffect } from "react"
 import { ConversationsSidebarSkeleton } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarSkeleton"
 
@@ -18,11 +18,11 @@ const COLUMN_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 const MOBILE_HEIGHT = `calc(100dvh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 
 interface Conversation2RouteProps {
-  viewer: Conversation2Route_viewer$data
-  conversation: Conversation2Route_conversation$data
+  viewer: Conversation2App_viewer$data
+  conversation: Conversation2App_conversation$data
 }
 
-const Conversation2Route: React.FC<Conversation2RouteProps> = ({
+const Conversation2App: React.FC<Conversation2RouteProps> = ({
   viewer,
   conversation,
 }) => {
@@ -49,7 +49,6 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
     <Flex
       flex={1}
       flexGrow={1}
-      mx={[-2, 0]}
       position="relative"
       height={MOBILE_HEIGHT}
       zIndex={1}
@@ -163,11 +162,11 @@ const Conversation2Route: React.FC<Conversation2RouteProps> = ({
   )
 }
 
-export const Conversation2RouteFragmentContainer = createFragmentContainer(
-  Conversation2Route,
+export const Conversation2AppFragmentContainer = createFragmentContainer(
+  Conversation2App,
   {
     viewer: graphql`
-      fragment Conversation2Route_viewer on Viewer
+      fragment Conversation2App_viewer on Viewer
         @argumentDefinitions(
           toBeReplied: { type: "Boolean" }
           hasReply: { type: "Boolean" }
@@ -177,7 +176,7 @@ export const Conversation2RouteFragmentContainer = createFragmentContainer(
       }
     `,
     conversation: graphql`
-      fragment Conversation2Route_conversation on Conversation {
+      fragment Conversation2App_conversation on Conversation {
         ...ConversationHeader_conversation
         ...ConversationDetails_conversation
         ...ConversationReply_conversation

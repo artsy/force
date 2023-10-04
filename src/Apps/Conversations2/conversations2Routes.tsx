@@ -5,28 +5,24 @@ import { getENV } from "Utils/getENV"
 import { RedirectException } from "found"
 import { graphql } from "react-relay"
 
-const Conversation2Route = loadable(
+const Conversation2App = loadable(
   () =>
-    import(
-      /* webpackChunkName: "conversations2Bundle" */ "./Routes/Conversation/Conversation2Route"
-    ),
+    import(/* webpackChunkName: "conversations2Bundle" */ "./Conversation2App"),
   {
-    resolveComponent: component =>
-      component.Conversation2RouteFragmentContainer,
+    resolveComponent: component => component.Conversation2AppFragmentContainer,
   }
 )
 
 export const conversations2Routes: AppRouteConfig[] = [
   {
     path: "/user/conversations2", // Serves only as a redirect route
-    layout: "Default",
-    render: ({ props }) => {
+    layout: "FullBleed",
+    render: ({ props }: any) => {
       if (!props) {
         return null
       }
 
       const initialConversationID = extractNodes<any>(
-        // @ts-ignore
         props.conversationsConnection
       )[0]?.internalID
 
@@ -55,9 +51,9 @@ export const conversations2Routes: AppRouteConfig[] = [
   },
   {
     path: "/user/conversations2/:conversationId",
-    layout: "Default",
+    layout: "FullBleed",
     ignoreScrollBehavior: true,
-    getComponent: () => Conversation2Route,
+    getComponent: () => Conversation2App,
     prepareVariables: (params, { location }) => {
       const conversationsFilter: {
         toBeReplied?: boolean
@@ -86,11 +82,11 @@ export const conversations2Routes: AppRouteConfig[] = [
         $hasReply: Boolean
       ) {
         viewer {
-          ...Conversation2Route_viewer
+          ...Conversation2App_viewer
             @arguments(toBeReplied: $toBeReplied, hasReply: $hasReply)
         }
         conversation(id: $conversationId) @required(action: NONE) {
-          ...Conversation2Route_conversation
+          ...Conversation2App_conversation
         }
       }
     `,

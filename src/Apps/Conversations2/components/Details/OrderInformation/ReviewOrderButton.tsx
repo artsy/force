@@ -4,6 +4,7 @@ import { ReviewOrderButton_order$key } from "__generated__/ReviewOrderButton_ord
 import { CounterOfferState } from "./OrderState"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
+import { useRouter } from "System/Router/useRouter"
 
 interface ReviewOrderButtonProps {
   order: ReviewOrderButton_order$key
@@ -12,6 +13,7 @@ interface ReviewOrderButtonProps {
 export const ReviewOrderButton: React.FC<ReviewOrderButtonProps> = ({
   order,
 }) => {
+  const { match } = useRouter()
   const { trackEvent } = useTracking()
 
   const data = useFragment(
@@ -81,7 +83,7 @@ export const ReviewOrderButton: React.FC<ReviewOrderButtonProps> = ({
 
   return (
     <RouterLink
-      to={`/orders/${data.id}`}
+      to={`/orders/${data.id}/status?backToConversationId=${match.params.conversationId}`}
       onClick={() =>
         trackEvent({
           action: "Click",

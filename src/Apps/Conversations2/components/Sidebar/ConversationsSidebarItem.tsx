@@ -125,7 +125,7 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
           })
         }
       >
-        <Flex alignItems="center">
+        <Flex alignItems="center" px={2}>
           <Image
             src={item.image?.url}
             height={50}

@@ -1,7 +1,7 @@
 import { graphql } from "relay-runtime"
 import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { ConversationHeader } from "Apps/Conversations2/Routes/Conversation/Components/ConversationHeader"
+import { ConversationHeader } from "Apps/Conversations2/components/ConversationHeader"
 import { ConversationHeaderTestQuery } from "__generated__/ConversationHeaderTestQuery.graphql"
 import { MediaContextProvider } from "Utils/Responsive"
 import { useTracking } from "react-tracking"
@@ -26,11 +26,7 @@ describe("ConversationDetails", () => {
   const { renderWithRelay } = setupTestWrapperTL<ConversationHeaderTestQuery>({
     Component: ({ conversation }) => (
       <MediaContextProvider onlyMatch={[breakpoint]}>
-        <ConversationHeader
-          conversation={conversation!}
-          onGoToConversations={onGoToConversations}
-          onGoToDetails={onGoToDetails}
-        />
+        <ConversationHeader conversation={conversation!} />
       </MediaContextProvider>
     ),
     query: graphql`

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<33a47322cf84e42127fd19544158b8b3>>
+ * @generated SignedSource<<facdc371264ce5af6c3a4a5e4ade7bea>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,13 +10,13 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Conversation2Route_viewer$data = {
+export type Conversation2App_viewer$data = {
   readonly " $fragmentSpreads": FragmentRefs<"ConversationsSidebar_viewer">;
-  readonly " $fragmentType": "Conversation2Route_viewer";
+  readonly " $fragmentType": "Conversation2App_viewer";
 };
-export type Conversation2Route_viewer$key = {
-  readonly " $data"?: Conversation2Route_viewer$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Conversation2Route_viewer">;
+export type Conversation2App_viewer$key = {
+  readonly " $data"?: Conversation2App_viewer$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Conversation2App_viewer">;
 };
 
 const node: ReaderFragment = {
@@ -34,7 +34,7 @@ const node: ReaderFragment = {
   ],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Conversation2Route_viewer",
+  "name": "Conversation2App_viewer",
   "selections": [
     {
       "args": [
@@ -57,6 +57,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "f3aeaef9bf6a3feb65b9f120435c27b8";
+(node as any).hash = "f35b00253a40703f1851be907dfdc057";
 
 export default node;

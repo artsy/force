@@ -1,8 +1,8 @@
 import { graphql } from "relay-runtime"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { ConversationMessage } from "../ConversationMessage"
 import { ConversationMessageTestQuery } from "__generated__/ConversationMessageTestQuery.graphql"
+import { ConversationMessage } from "Apps/Conversations2/components/ConversationMessage"
 
 jest.mock("next/router", () => require("next-router-mock"))
 
@@ -11,6 +11,8 @@ describe("ConversationMessage", () => {
     Component: ({ conversation }) => (
       <ConversationMessage
         message={conversation.messagesConnection.edges[0]?.node!}
+        messages={[conversation.messagesConnection.edges[0]?.node as any]}
+        messageIndex={1}
         // Serves to the tests related to "Seen by"
         isLastGroupedPartnerMessage={true}
       />

@@ -71,6 +71,7 @@ export const ConversationsSidebarHeader: React.FC = () => {
   return (
     <Box
       p={2}
+      px={4}
       position="sticky"
       top={0}
       flexDirection="column"

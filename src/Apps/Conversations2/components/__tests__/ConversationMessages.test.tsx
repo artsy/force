@@ -1,6 +1,6 @@
 import { graphql } from "relay-runtime"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { ConversationMessagesPaginationContainer } from "Apps/Conversations2/Routes/Conversation/Components/ConversationMessages"
+import { ConversationMessagesPaginationContainer } from "Apps/Conversations2/components/ConversationMessages"
 import { ConversationMessagesTestQuery } from "__generated__/ConversationMessagesTestQuery.graphql"
 import { format, subDays } from "date-fns"
 import { act, fireEvent, screen } from "@testing-library/react"
