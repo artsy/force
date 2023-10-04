@@ -4,6 +4,20 @@ import Adapter from "@wojtekmaj/enzyme-adapter-react-17"
 import "regenerator-runtime/runtime"
 import { format } from "util"
 import "@testing-library/jest-dom"
+import { configure } from "@testing-library/react"
+
+configure({
+  // Fixes issue where testing-library react await would time out on CI
+  asyncUtilTimeout: 10000,
+  // Don't spit out html output on failed tests by default. If needing to see
+  // html, use screen.debug(undefined, Infinity)
+  getElementError: (message: string) => {
+    const error = new Error(message)
+    error.name = "TestingLibraryElementError"
+    error.stack = null as any
+    return error
+  },
+})
 
 jest.mock("react-tracking")
 import _track, { useTracking as _useTracking } from "react-tracking"
