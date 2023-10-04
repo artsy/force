@@ -1,56 +1,40 @@
-import React, { useEffect, useRef, useState } from "react"
+import React, { useRef } from "react"
 import { Box, Expandable, ExpandableProps } from "@artsy/palette"
-import { useScrollRefContext } from "./useScrollContext"
-// eslint-disable-next-line no-restricted-imports
-import { data as sd } from "sharify"
-import { getElementParams } from "../Utils/getElementParams"
+import { getENV } from "Utils/getENV"
 
 export const FilterExpandable: React.FC<ExpandableProps> = ({
   expanded,
   ...rest
 }) => {
-  const ctx = useScrollRefContext()
-  const scrollRef = ctx?.scrollRef
+  const ref = useRef<HTMLDivElement | null>(null)
 
-  const filterRef = useRef<HTMLDivElement | null>(null)
-  const anchorRef = useRef<HTMLDivElement | null>(null)
+  // Note: `IS_MOBILE` requires a full page load
+  const isExpanded = !getENV("IS_MOBILE") && Boolean(expanded)
 
-  const isExpanded = sd.IS_MOBILE ? false : !!expanded
-  const [open, setOpen] = useState(isExpanded)
+  const handleToggle = (expanded: boolean) => {
+    if (!expanded) return
 
-  useEffect(() => {
-    if (open && scrollRef?.current) {
-      const { height: containerHeight, top: containerTop } = getElementParams(
-        scrollRef.current
-      )
-      const { height: filterHeight, top: filterTop } = getElementParams(
-        filterRef.current
-      )
-      const visiblePartHeight = containerHeight - filterTop + containerTop
-
-      if (visiblePartHeight < filterHeight) {
-        anchorRef.current?.scrollIntoView({ block: "end" })
-      }
-    }
-  }, [open, scrollRef])
-
-  const onClick = () => {
-    if (sd.IS_MOBILE) {
-      setOpen(open => !open)
-    }
+    // Scroll bottom of filter into view, when expanded, if off screen
+    requestAnimationFrame(() => {
+      const anchor = ref.current
+      if (!anchor) return
+      const { top } = anchor.getBoundingClientRect()
+      if (top < window.innerHeight) return
+      anchor.scrollIntoView({ block: "end" })
+    })
   }
 
   return (
-    <Box ref={filterRef as any}>
+    <Box>
       <Expandable
         // TODO: Should not have external margin
         mb={1}
         expanded={isExpanded}
-        onClick={onClick}
+        onToggle={handleToggle}
         {...rest}
       />
 
-      <div ref={anchorRef}></div>
+      <div ref={ref}></div>
     </Box>
   )
 }

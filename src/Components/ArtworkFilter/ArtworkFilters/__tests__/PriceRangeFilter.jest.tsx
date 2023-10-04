@@ -39,7 +39,8 @@ describe("PriceRangeFilterNew", () => {
   const mockGetENV = getENV as jest.Mock
 
   beforeAll(() => {
-    mockGetENV.mockImplementation(() => {
+    mockGetENV.mockImplementation((key: string) => {
+      if (key === "IS_MOBILE") return false
       return true
     })
   })

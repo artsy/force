@@ -198,7 +198,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
       </Column>
       <Column span={12}>
         {/* Render the autocomplete optimistically to avoid an SSR mismatch */}
-        {!autocomplete.loaded || autocomplete.enabled ? (
+        {(!billing && !autocomplete.loaded) || autocomplete.enabled ? (
           <AutocompleteInput<AddressAutocompleteSuggestion>
             tabIndex={tabIndex}
             disabled={!autocomplete.loaded}

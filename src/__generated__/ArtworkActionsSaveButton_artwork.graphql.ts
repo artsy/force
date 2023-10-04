@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<516f1766a6f019f962f6404a2337a159>>
+ * @generated SignedSource<<f704e388d04f820514f2633c5b6e4e36>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,22 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkActionsSaveButton_artwork$data = {
+  readonly artistNames: string | null;
+  readonly date: string | null;
   readonly id: string;
   readonly internalID: string;
   readonly isSaved: boolean | null;
+  readonly isSavedToList: boolean;
+  readonly preview: {
+    readonly url: string | null;
+  } | null;
   readonly sale: {
     readonly isAuction: boolean | null;
     readonly isClosed: boolean | null;
   } | null;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkActionsSaveButtonV2_artwork">;
+  readonly title: string | null;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkActionsWatchLotButton_artwork">;
   readonly " $fragmentType": "ArtworkActionsSaveButton_artwork";
 };
 export type ArtworkActionsSaveButton_artwork$key = {
@@ -51,6 +58,13 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
+      "name": "isSaved",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
       "name": "slug",
       "storageKey": null
     },
@@ -58,7 +72,52 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "isSaved",
+      "name": "title",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "date",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "artistNames",
+      "storageKey": null
+    },
+    {
+      "alias": "preview",
+      "args": null,
+      "concreteType": "Image",
+      "kind": "LinkedField",
+      "name": "image",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "version",
+              "value": "square"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "url",
+          "storageKey": "url(version:\"square\")"
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "isSavedToList",
       "storageKey": null
     },
     {
@@ -89,13 +148,13 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkActionsSaveButtonV2_artwork"
+      "name": "ArtworkActionsWatchLotButton_artwork"
     }
   ],
   "type": "Artwork",
   "abstractKey": null
 };
 
-(node as any).hash = "42baa5075e73d064a29ad0da6b7469fe";
+(node as any).hash = "95cc4686f70f62078546027b939618ff";
 
 export default node;
