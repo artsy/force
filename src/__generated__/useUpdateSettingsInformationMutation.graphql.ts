@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cee6d8592dad113c4a215c072e75fa04>>
+ * @generated SignedSource<<9374c943bf0ed9bfa3e93233d59ddcaf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,6 +32,8 @@ export type UpdateMyProfileInput = {
   otherRelevantPositions?: string | null;
   password?: string | null;
   phone?: string | null;
+  phoneCountryCode?: string | null;
+  phoneNumber?: string | null;
   priceRangeMax?: number | null;
   priceRangeMin?: number | null;
   privacy?: string | null;

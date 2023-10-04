@@ -18546,6 +18546,8 @@ input UpdateMyProfileInput {
 
   # The given phone number of the user.
   phone: String
+  phoneCountryCode: String
+  phoneNumber: String
 
   # The maximum price collector has selected
   priceRangeMax: Float
