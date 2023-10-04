@@ -10,28 +10,15 @@ import { PageLoader } from "./PageLoader"
 import { AppShell } from "Apps/Components/AppShell"
 import { getENV } from "Utils/getENV"
 import { HttpError } from "found"
-import { FC, useRef } from "react"
 
 const logger = createLogger("Artsy/Router/Utils/RenderStatus")
 
 export const RenderPending = () => {
-  const { isFetching, setFetching } = useSystemContext()
-
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
-
-  /**
-   * First, set fetching to ensure that components that are listening for this
-   * value have a chance to respond to the fetching state. This is necessary
-   * because the `<Renderer>` component below will freeze all updates for the
-   * duration of the fetch.
-   */
+  const { isFetching } = useSystemContext()
 
   if (!isFetching) {
-    timeoutRef.current = setTimeout(() => setFetching?.(true), 0)
     return undefined
   }
-
-  if (timeoutRef.current) clearTimeout(timeoutRef.current)
 
   return (
     <>
@@ -56,16 +43,11 @@ export const RenderPending = () => {
 }
 
 export const RenderReady = ({ elements }: { elements: React.ReactNode }) => {
-  const { isFetching, setFetching } = useSystemContext()
-
-  const timeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null)
+  const { isFetching } = useSystemContext()
 
   if (isFetching) {
-    timeoutRef.current = setTimeout(() => setFetching?.(false), 0)
     return undefined
   }
-
-  if (timeoutRef.current) clearTimeout(timeoutRef.current)
 
   return (
     <Renderer shouldUpdate>
@@ -74,7 +56,7 @@ export const RenderReady = ({ elements }: { elements: React.ReactNode }) => {
   )
 }
 
-export const RenderError: FC<{
+export const RenderError: React.FC<{
   error: { status?: number; data?: any }
 }> = ({ error }) => {
   logger.error(error.data)

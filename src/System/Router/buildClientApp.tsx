@@ -28,6 +28,7 @@ import { trackingMiddleware } from "System/Analytics/trackingMiddleware"
 import { RenderError, RenderPending, RenderReady } from "./RenderStatus"
 import { shouldUpdateScroll } from "./Utils/shouldUpdateScroll"
 import { buildClientAppContext } from "System/Router/buildClientAppContext"
+import { loadingIndicatorMiddleware } from "System/Router/loadingIndicatorMiddleware"
 
 interface Resolve {
   ClientApp: ComponentType<any>
@@ -67,6 +68,7 @@ export function buildClientApp(config: RouterConfig): Promise<Resolve> {
         }
 
         const historyMiddlewares = [
+          loadingIndicatorMiddleware(),
           createQueryMiddleware({
             parse: queryStringParsing,
             stringify: qs.stringify,
