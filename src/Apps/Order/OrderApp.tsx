@@ -1,9 +1,8 @@
 import { FC, useEffect, useRef } from "react"
-import { Box } from "@artsy/palette"
+import { Box, useToasts } from "@artsy/palette"
 import { OrderApp_order$data } from "__generated__/OrderApp_order.graphql"
 import { StickyFooterWithInquiry } from "Apps/Order/Components/StickyFooter"
 import { findCurrentRoute } from "System/Router/Utils/findCurrentRoute"
-import { ErrorPage } from "Components/ErrorPage"
 import { RouterState } from "found"
 import { Meta, Title } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -40,6 +39,7 @@ export const preventHardReload = event => {
 const OrderApp: FC<OrderAppProps> = props => {
   const { order, children, match, router } = props
   const { isEigen } = useSystemContext()
+  const { sendToast } = useToasts()
 
   const removeNavigationListenerRef = useRef<null | (() => void)>(null)
 
@@ -80,8 +80,13 @@ const OrderApp: FC<OrderAppProps> = props => {
     return true
   }
 
+  // CHANGE HERE
   if (!order) {
-    return <ErrorPage code={404} />
+    return sendToast({
+      variant: "error",
+      message:
+        "Something went wrong. Please try again or contact support@artsy.net.",
+    })
   }
 
   const renderChatSupportScript = () => {
