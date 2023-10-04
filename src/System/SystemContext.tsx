@@ -1,5 +1,5 @@
 import { Router } from "found"
-import { createContext, FC, useState } from "react"
+import { createContext, FC, useMemo, useState } from "react"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 import { Environment } from "relay-runtime"
@@ -79,6 +79,8 @@ export interface SystemContextProps extends SystemContextState {
 
 export const SystemContext = createContext<SystemContextProps>({})
 
+export let setRouteFetching
+
 /**
  * Creates a new Context.Provider with a user and Relay environment, or defaults
  * if not passed in as props.
@@ -92,6 +94,10 @@ export const SystemContextProvider: FC<SystemContextProps> = ({
   const [user, setUser] = useState<SystemContextProps["user"]>(
     getUser(props.user!)
   )
+
+  // Globally export the fetch toggle so that we can access it from the router's
+  // loadingIndicatorMiddleware actions
+  setRouteFetching = useMemo(() => setFetching, [setFetching])
 
   const relayEnvironment =
     props.relayEnvironment || createRelaySSREnvironment({ user })
