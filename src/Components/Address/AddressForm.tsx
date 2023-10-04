@@ -14,6 +14,15 @@ import {
   AddressAutocompleteSuggestion,
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
+import { useTracking } from "react-tracking"
+import {
+  ActionType,
+  ContextModule,
+  EditedAutocompletedAddress,
+  OwnerType,
+  SelectedItemFromAddressAutoCompletion,
+} from "@artsy/cohesion"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 const ENABLE_SECONDARY_SUGGESTIONS = false
 
@@ -86,6 +95,15 @@ export const AddressForm: React.FC<AddressFormProps> = ({
   const addressFromProp = { ...emptyAddress, ...value }
   const [address, setAddress] = React.useState(addressFromProp)
   const [prevValue, setPrevValue] = React.useState(value)
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerId } = useAnalyticsContext()
+  const [selectedAddressOption, setSelectedAddressOption] = React.useState<{
+    option: string
+    edited: boolean
+  }>({
+    option: "",
+    edited: false,
+  })
 
   const {
     autocompleteOptions,
@@ -112,6 +130,16 @@ export const AddressForm: React.FC<AddressFormProps> = ({
     }
     setKey(key)
     onChangeValue(key, ev.currentTarget.value)
+
+    if (
+      selectedAddressOption.option &&
+      !selectedAddressOption.edited &&
+      key !== "name" &&
+      key !== "phoneNumber"
+    ) {
+      trackAutoCompleteEdit(key)
+      setSelectedAddressOption({ ...selectedAddressOption, edited: true })
+    }
   }
 
   const changeValueHandler = (key: keyof Address) => (value: string) => {
@@ -151,6 +179,18 @@ export const AddressForm: React.FC<AddressFormProps> = ({
 
   /* TODO: Make this work with autocomplete input */
   const autocompleteRef = React.createRef<HTMLInputElement>()
+
+  const trackAutoCompleteEdit = field => {
+    const event: EditedAutocompletedAddress = {
+      action: ActionType.editedAutocompletedAddress,
+      context_module: ContextModule.ordersShipping,
+      context_owner_type: OwnerType.ordersShipping,
+      context_owner_id: contextPageOwnerId,
+      field: field,
+    }
+
+    trackEvent(event)
+  }
 
   return (
     <GridColumns>
@@ -217,6 +257,19 @@ export const AddressForm: React.FC<AddressFormProps> = ({
               Object.entries(option.address).forEach(([key, value]) => {
                 changeValueHandler(key as keyof Address)(value)
               })
+
+              setSelectedAddressOption({ option: option.value, edited: false })
+
+              const event: SelectedItemFromAddressAutoCompletion = {
+                action: ActionType.selectedItemFromAddressAutoCompletion,
+                context_module: ContextModule.ordersShipping,
+                context_owner_type: OwnerType.ordersShipping,
+                context_owner_id: contextPageOwnerId,
+                input: value?.addressLine1 || "",
+                item: option.value,
+              }
+
+              trackEvent(event)
             }}
             error={getError("addressLine1")}
             data-testid="AddressForm_addressLine1"

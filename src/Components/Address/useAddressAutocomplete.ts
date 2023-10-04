@@ -4,6 +4,14 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { throttle, uniqBy } from "lodash"
+import { useTracking } from "react-tracking"
+import {
+  ActionType,
+  AddressAutoCompletionResult,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 const THROTTLE_DELAY = 500
 
@@ -51,6 +59,8 @@ export const useAddressAutocomplete = (
 
   const isUSAddress = address.country === "US"
   const isFeatureFlagEnabled = !!useFeatureFlag("address_autocomplete_us")
+  const { trackEvent } = useTracking()
+  const { contextPageOwnerId } = useAnalyticsContext()
 
   const [serviceAvailability, setServiceAvailability] = useState<
     ServiceAvailability
@@ -154,15 +164,28 @@ export const useAddressAutocomplete = (
           : filterSecondarySuggestions(response.suggestions)
 
         setResult(finalSuggestions.slice(0, 5))
+
+        const event: AddressAutoCompletionResult = {
+          action: ActionType.addressAutoCompletionResult,
+          context_module: ContextModule.ordersShipping,
+          context_owner_type: OwnerType.ordersShipping,
+          context_owner_id: contextPageOwnerId,
+          input: search,
+          suggested_addresses_results: finalSuggestions.length,
+        }
+
+        trackEvent(event)
       } catch (e) {
         console.error(e)
       }
     },
     [
+      contextPageOwnerId,
       enableSecondarySuggestions,
       fetchSuggestions,
       filterSecondarySuggestions,
       isAddressAutocompleteEnabled,
+      trackEvent,
     ]
   )
 

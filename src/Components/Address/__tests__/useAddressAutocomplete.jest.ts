@@ -7,12 +7,15 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { getENV } from "Utils/getENV"
 import { waitFor } from "@testing-library/react"
 import { throttle } from "lodash"
+import { useTracking } from "react-tracking"
 
 jest.mock("react-tracking")
 jest.mock("System/useFeatureFlag")
 jest.mock("Utils/getENV")
-
 jest.mock("lodash/throttle", () => jest.fn(fn => fn))
+
+const mockuseTracking = useTracking as jest.Mock
+const trackingSpy = jest.fn()
 
 let mockFetch: jest.Mock
 
@@ -53,6 +56,10 @@ describe("useAddressAutocomplete", () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
+
+    mockuseTracking.mockImplementation(() => ({
+      trackEvent: trackingSpy,
+    }))
   })
 
   describe("when the US address autocomplete feature flag is enabled", () => {
