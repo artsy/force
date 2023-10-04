@@ -78,6 +78,7 @@ const ArtworkCreateAlertButton: FC<ArtworkCreateAlertButtonProps> = ({
       entity={entity}
       criteria={criteria}
       aggregations={aggregations}
+      currentArtworkID={artwork.internalID}
       authDialogOptions={{
         options: {
           title: "Sign up to create your alert",

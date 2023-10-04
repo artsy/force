@@ -58,6 +58,8 @@ export interface SavedSearchAlertFormContainerProps
   criteria: SearchCriteriaAttributes
   metric?: Metric
   aggregations: Aggregations | undefined
+  /** Artwork ID, if the current saved search alert is being set from an artwork */
+  currentArtworkID?: string
   onComplete?: () => void
 }
 
@@ -341,6 +343,7 @@ export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContai
     criteria,
     metric,
     aggregations,
+    currentArtworkID,
     onCreateAlert,
     onComplete,
   } = props
@@ -371,6 +374,7 @@ export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContai
           aggregations={aggregations}
           entity={entity}
           metric={metric}
+          currentArtworkID={currentArtworkID}
         >
           <SavedSearchAlertModal {...props} onCreateAlert={handleCreateAlert} />
         </SavedSearchAlertContextProvider>
@@ -382,6 +386,7 @@ export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContai
           aggregations={aggregations}
           entity={entity}
           metric={metric}
+          currentArtworkID={currentArtworkID}
         >
           <ConfirmationStepModal
             onClose={handleComplete}

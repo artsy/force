@@ -14,7 +14,7 @@ export const ConfirmationStepModal: FC<ConfirmationStepModalProps> = ({
   searchCriteriaId,
   onClose,
 }) => {
-  const { criteria } = useSavedSearchAlertContext()
+  const { criteria, currentArtworkID } = useSavedSearchAlertContext()
   const { t } = useTranslation()
 
   return (
@@ -29,6 +29,7 @@ export const ConfirmationStepModal: FC<ConfirmationStepModalProps> = ({
           searchCriteriaId={searchCriteriaId}
           onClose={onClose}
           {...criteria}
+          excludeArtworkIDs={currentArtworkID ? [currentArtworkID] : undefined}
         />
       </Join>
     </ModalDialog>
