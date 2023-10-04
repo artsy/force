@@ -7,8 +7,9 @@ const QUERY = graphql`
     me {
       phoneNumber {
         regionCode
+        display(format: NATIONAL)
+        originalNumber # Used as a fallback for 'display'
       }
-      phone
     }
   }
 `
@@ -26,8 +27,11 @@ export const useUserPhoneNumber = () => {
     return { phone: "", regionCode: "us" }
   }
 
+  const phone =
+    data?.me?.phoneNumber?.display ?? data?.me?.phoneNumber?.originalNumber
+
   return {
-    phone: data?.me?.phone ?? "",
+    phone: phone ?? "",
     regionCode: data?.me?.phoneNumber?.regionCode ?? "us",
   }
 }

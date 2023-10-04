@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0decb71fd825b7084aae11651253ff08>>
+ * @generated SignedSource<<be328b8ac1c1eef0c55701e6ed20b87a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,9 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 export type useUserPhoneNumberQuery$variables = {};
 export type useUserPhoneNumberQuery$data = {
   readonly me: {
-    readonly phone: string | null;
     readonly phoneNumber: {
+      readonly display: string | null;
+      readonly originalNumber: string | null;
       readonly regionCode: string | null;
     } | null;
   } | null;
@@ -38,15 +39,28 @@ var v0 = {
       "kind": "ScalarField",
       "name": "regionCode",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "NATIONAL"
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "display",
+      "storageKey": "display(format:\"NATIONAL\")"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "originalNumber",
+      "storageKey": null
     }
   ],
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "phone",
   "storageKey": null
 };
 return {
@@ -64,8 +78,7 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v0/*: any*/),
-          (v1/*: any*/)
+          (v0/*: any*/)
         ],
         "storageKey": null
       }
@@ -88,7 +101,6 @@ return {
         "plural": false,
         "selections": [
           (v0/*: any*/),
-          (v1/*: any*/),
           {
             "alias": null,
             "args": null,
@@ -102,16 +114,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9117eab76f23015a33645a1531de8a22",
+    "cacheID": "362cfcd4148434d763b27e9bf7a3da32",
     "id": null,
     "metadata": {},
     "name": "useUserPhoneNumberQuery",
     "operationKind": "query",
-    "text": "query useUserPhoneNumberQuery {\n  me {\n    phoneNumber {\n      regionCode\n    }\n    phone\n    id\n  }\n}\n"
+    "text": "query useUserPhoneNumberQuery {\n  me {\n    phoneNumber {\n      regionCode\n      display(format: NATIONAL)\n      originalNumber\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2cabf51beaa691d4d1d18ccbca7d75ea";
+(node as any).hash = "63ecd80243873a9e6b2db42c98268e7e";
 
 export default node;
