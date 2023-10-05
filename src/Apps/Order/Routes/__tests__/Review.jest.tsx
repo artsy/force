@@ -337,6 +337,31 @@ describe("Review", () => {
       })
     })
 
+    it("shows a modal when the buyer's credit card is deactivated", async () => {
+      mockCommitMutation.mockResolvedValue({
+        commerceSubmitOrder: {
+          orderOrError: {
+            error: {
+              code: "credit_card_deactivated",
+            },
+          },
+        },
+      })
+
+      const wrapper = getWrapper({
+        CommerceOrder: () => testOrder,
+      })
+
+      const page = new ReviewTestPage(wrapper)
+      await page.clickSubmit()
+
+      expect(mockShowErrorDialog).toHaveBeenCalledWith({
+        title: "Unable to process card",
+        message:
+          "This card is inactive or no longer available. Please confirm with your card issuer if this card is active, try another payment method, or contact orders@artsy.net.",
+      })
+    })
+
     it("shows SCA modal when required", async () => {
       mockCommitMutation.mockResolvedValue(submitOrderWithActionRequired)
       const wrapper = getWrapper({

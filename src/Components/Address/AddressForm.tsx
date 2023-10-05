@@ -238,10 +238,10 @@ export const AddressForm: React.FC<AddressFormProps> = ({
       </Column>
       <Column span={12}>
         {/* Render the autocomplete optimistically to avoid an SSR mismatch */}
-        {(!billing && !autocomplete.loaded) || autocomplete.enabled ? (
+        {!billing && (!autocomplete.loaded || autocomplete.enabled) ? (
           <AutocompleteInput<AddressAutocompleteSuggestion>
             tabIndex={tabIndex}
-            disabled={!autocomplete.loaded}
+            loading={!autocomplete.loaded}
             flip={false}
             id="AddressForm_addressLine1"
             placeholder="Street address"
