@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9120194e62b6f997f9cc69f86f7a270c>>
+ * @generated SignedSource<<a6cefa21147255fc4d6f6ae31e86fb9a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -99,13 +99,6 @@ return {
           {
             "alias": null,
             "args": null,
-            "kind": "ScalarField",
-            "name": "phone",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
             "concreteType": "PhoneNumberType",
             "kind": "LinkedField",
             "name": "phoneNumber",
@@ -116,6 +109,26 @@ return {
                 "args": null,
                 "kind": "ScalarField",
                 "name": "regionCode",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "format",
+                    "value": "NATIONAL"
+                  }
+                ],
+                "kind": "ScalarField",
+                "name": "display",
+                "storageKey": "display(format:\"NATIONAL\")"
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "originalNumber",
                 "storageKey": null
               }
             ],
@@ -155,7 +168,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d718012167c209a686eae933b844f6c7",
+    "cacheID": "c9072bdccf0e6d6364977b9f61f4670e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -174,13 +187,14 @@ return {
         },
         "me.name": (v0/*: any*/),
         "me.paddleNumber": (v0/*: any*/),
-        "me.phone": (v0/*: any*/),
         "me.phoneNumber": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "PhoneNumberType"
         },
+        "me.phoneNumber.display": (v0/*: any*/),
+        "me.phoneNumber.originalNumber": (v0/*: any*/),
         "me.phoneNumber.regionCode": (v0/*: any*/),
         "me.priceRange": (v0/*: any*/),
         "me.priceRangeMax": (v1/*: any*/),
@@ -189,7 +203,7 @@ return {
     },
     "name": "SettingsEditSettingsInformation_Test_Query",
     "operationKind": "query",
-    "text": "query SettingsEditSettingsInformation_Test_Query {\n  me {\n    ...SettingsEditSettingsInformation_me\n    id\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n  phoneNumber {\n    regionCode\n  }\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n"
+    "text": "query SettingsEditSettingsInformation_Test_Query {\n  me {\n    ...SettingsEditSettingsInformation_me\n    id\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phoneNumber {\n    regionCode\n    display(format: NATIONAL)\n    originalNumber\n  }\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n"
   }
 };
 })();
