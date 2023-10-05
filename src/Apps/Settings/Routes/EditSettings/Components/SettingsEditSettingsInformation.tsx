@@ -30,6 +30,8 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
 }) => {
   const { sendToast } = useToasts()
   const { submitMutation } = useUpdateSettingsInformation()
+  const phoneNumber = me.phoneNumber?.display ?? me.phoneNumber?.originalNumber
+  const phoneCountryCode = me.phoneNumber?.regionCode ?? "us"
 
   return (
     <>
@@ -39,8 +41,8 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
       <Formik
         initialValues={{
           email: me.email ?? "",
-          phone: me.phone ?? "",
-          phoneNumberCountryCode: me.phoneNumber?.regionCode ?? "us",
+          phoneNumber: phoneNumber ?? "",
+          phoneCountryCode,
           priceRange: me.priceRange ?? "",
           priceRangeMax: me.priceRangeMax,
           priceRangeMin: me.priceRangeMin,
@@ -55,18 +57,19 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
             is: email => email !== me.email,
             otherwise: field => field.notRequired(),
           }),
-          phone: Yup.string()
+          phoneNumber: Yup.string()
             .test({
               name: "phone-number-is-valid",
               message: "Please enter a valid phone number",
               test: (national, context) => {
+                // Phone number not required so allow blank
                 if (!national || !national.length) {
                   return true
                 }
 
                 return validatePhoneNumber({
                   national: `${national}`,
-                  regionCode: `${context.parent.phoneNumberCountryCode}`,
+                  regionCode: `${context.parent.phoneCountryCode}`,
                 })
               },
             })
@@ -74,7 +77,14 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
           phoneNumberCountryCode: Yup.string().notRequired(),
         })}
         onSubmit={async (
-          { email, password, phone, priceRangeMin, priceRangeMax },
+          {
+            email,
+            password,
+            phoneNumber,
+            phoneCountryCode,
+            priceRangeMin,
+            priceRangeMax,
+          },
           { setFieldValue }
         ) => {
           try {
@@ -83,7 +93,8 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
                 input: {
                   email,
                   password,
-                  phone,
+                  phoneNumber,
+                  phoneCountryCode,
                   priceRangeMin,
                   priceRangeMax,
                 },
@@ -111,7 +122,17 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
             const updatedMe = updateMyUserProfile?.me
 
             setFieldValue("email", updatedMe?.email ?? email)
-            setFieldValue("phone", updatedMe?.phone ?? phone)
+
+            const updatedPhoneNumber =
+              updatedMe?.phoneNumber?.display ??
+              updatedMe?.phoneNumber?.originalNumber
+            const updatedPhoneCountryCode = updatedMe?.phoneNumber?.regionCode
+            setFieldValue("phoneNumber", updatedPhoneNumber ?? phoneNumber)
+            setFieldValue(
+              "phoneCountryCode",
+              updatedPhoneCountryCode ?? phoneCountryCode
+            )
+
             setFieldValue("password", "")
           } catch (err) {
             console.error(err)
@@ -155,24 +176,23 @@ export const SettingsEditSettingsInformation: React.FC<SettingsEditSettingsInfor
                 title="Mobile Number"
                 mt={4}
                 inputProps={{
-                  name: "phone",
+                  name: "phoneNumber",
                   onBlur: handleBlur,
                   onChange: handleChange,
                   placeholder: "Enter your mobile phone number",
-                  value: values.phone,
+                  value: values.phoneNumber,
                 }}
                 selectProps={{
-                  name: "phoneNumberCountryCode",
+                  name: "phoneCountryCode",
                   onBlur: handleBlur,
-                  selected: values.phoneNumberCountryCode,
+                  selected: values.phoneCountryCode,
                   onSelect: value => {
-                    setFieldValue("phoneNumberCountryCode", value)
+                    setFieldValue("phoneCountryCode", value)
                   },
                 }}
                 error={
-                  (touched.phoneNumberCountryCode &&
-                    errors.phoneNumberCountryCode) ||
-                  (touched.phone && errors.phone)
+                  (touched.phoneCountryCode && errors.phoneCountryCode) ||
+                  (touched.phoneNumber && errors.phoneNumber)
                 }
               />
 
@@ -244,9 +264,10 @@ export const SettingsEditSettingsInformationFragmentContainer = createFragmentCo
         email
         name
         paddleNumber
-        phone
         phoneNumber {
           regionCode
+          display(format: NATIONAL)
+          originalNumber
         }
         priceRange
         priceRangeMin

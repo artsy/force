@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c187c938c6eb8987979db3e146a4ceeb>>
+ * @generated SignedSource<<73ec2790a21a188ccb0f4fb264569df4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,9 @@ export type SettingsEditSettingsInformation_me$data = {
   readonly email: string | null;
   readonly name: string | null;
   readonly paddleNumber: string | null;
-  readonly phone: string | null;
   readonly phoneNumber: {
+    readonly display: string | null;
+    readonly originalNumber: string | null;
     readonly regionCode: string | null;
   } | null;
   readonly priceRange: string | null;
@@ -58,13 +59,6 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "phone",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": "PhoneNumberType",
       "kind": "LinkedField",
       "name": "phoneNumber",
@@ -75,6 +69,26 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "regionCode",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": [
+            {
+              "kind": "Literal",
+              "name": "format",
+              "value": "NATIONAL"
+            }
+          ],
+          "kind": "ScalarField",
+          "name": "display",
+          "storageKey": "display(format:\"NATIONAL\")"
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "originalNumber",
           "storageKey": null
         }
       ],
@@ -106,6 +120,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "dd431d2be14132d3807372cffd2d676f";
+(node as any).hash = "fbb818810bac72dbd9d8a6ce15e57002";
 
 export default node;

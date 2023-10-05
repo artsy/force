@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9374c943bf0ed9bfa3e93233d59ddcaf>>
+ * @generated SignedSource<<8a7ac7dfee398a39711ead3c73a0ebf0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -70,7 +70,11 @@ export type useUpdateSettingsInformationMutation$data = {
     readonly me: {
       readonly email: string | null;
       readonly name: string | null;
-      readonly phone: string | null;
+      readonly phoneNumber: {
+        readonly display: string | null;
+        readonly originalNumber: string | null;
+        readonly regionCode: string | null;
+      } | null;
       readonly priceRangeMax: number | null;
       readonly priceRangeMin: number | null;
       readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsInformation_me">;
@@ -129,8 +133,39 @@ v3 = {
 v4 = {
   "alias": null,
   "args": null,
-  "kind": "ScalarField",
-  "name": "phone",
+  "concreteType": "PhoneNumberType",
+  "kind": "LinkedField",
+  "name": "phoneNumber",
+  "plural": false,
+  "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "regionCode",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "NATIONAL"
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "display",
+      "storageKey": "display(format:\"NATIONAL\")"
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "originalNumber",
+      "storageKey": null
+    }
+  ],
   "storageKey": null
 },
 v5 = {
@@ -330,24 +365,6 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "PhoneNumberType",
-                "kind": "LinkedField",
-                "name": "phoneNumber",
-                "plural": false,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "regionCode",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
                 "kind": "ScalarField",
                 "name": "priceRange",
                 "storageKey": null
@@ -403,16 +420,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d515c974e2bc0de9afca94c5f633fb94",
+    "cacheID": "dfe330fe06ae5e2676293a9887aa1969",
     "id": null,
     "metadata": {},
     "name": "useUpdateSettingsInformationMutation",
     "operationKind": "mutation",
-    "text": "mutation useUpdateSettingsInformationMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    me {\n      ...SettingsEditSettingsInformation_me\n      email\n      name\n      phone\n      priceRangeMin\n      priceRangeMax\n      id\n    }\n    userOrError {\n      __typename\n      ... on UpdateMyProfileMutationSuccess {\n        user {\n          internalID\n          id\n        }\n      }\n      ... on UpdateMyProfileMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n          error\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phone\n  phoneNumber {\n    regionCode\n  }\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n"
+    "text": "mutation useUpdateSettingsInformationMutation(\n  $input: UpdateMyProfileInput!\n) {\n  updateMyUserProfile(input: $input) {\n    me {\n      ...SettingsEditSettingsInformation_me\n      email\n      name\n      phoneNumber {\n        regionCode\n        display(format: NATIONAL)\n        originalNumber\n      }\n      priceRangeMin\n      priceRangeMax\n      id\n    }\n    userOrError {\n      __typename\n      ... on UpdateMyProfileMutationSuccess {\n        user {\n          internalID\n          id\n        }\n      }\n      ... on UpdateMyProfileMutationFailure {\n        mutationError {\n          type\n          message\n          detail\n          error\n          fieldErrors {\n            name\n            message\n          }\n        }\n      }\n    }\n  }\n}\n\nfragment SettingsEditSettingsInformation_me on Me {\n  email\n  name\n  paddleNumber\n  phoneNumber {\n    regionCode\n    display(format: NATIONAL)\n    originalNumber\n  }\n  priceRange\n  priceRangeMin\n  priceRangeMax\n}\n"
   }
 };
 })();
 
-(node as any).hash = "65ca00baec1f5255d94c86ca12840e11";
+(node as any).hash = "f8de9f88d9339ef766c0b79d4ace2978";
 
 export default node;
