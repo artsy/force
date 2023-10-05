@@ -28,7 +28,11 @@ import {
   useAddressAutocomplete,
 } from "Components/Address/useAddressAutocomplete"
 import { postalCodeValidator } from "Components/Address/utils"
-import { CountrySelect } from "Components/CountrySelect"
+import {
+  COUNTRY_SELECT_OPTIONS,
+  CountrySelect,
+  EU_COUNTRY_SELECT_OPTIONS,
+} from "Components/CountrySelect"
 import {
   Form,
   Formik,
@@ -116,18 +120,25 @@ const getShippingRestrictions = (
   order: FulfillmentDetailsFormProps["order"]
 ): {
   lockShippingCountryTo: "EU" | string | null
+  shipsFrom: string
 } => {
   const firstArtwork = extractNodes(order.lineItems)[0]!.artwork!
-  const shippingCountry = firstArtwork.shippingCountry!
+  const shipsFrom = firstArtwork.shippingCountry!
   const domesticOnly = !!firstArtwork.onlyShipsDomestically
   const euOrigin = !!firstArtwork.euShippingOrigin
 
   const lockShippingCountryTo = domesticOnly
     ? euOrigin
       ? "EU"
-      : shippingCountry
+      : shipsFrom
     : null
-  return { lockShippingCountryTo }
+
+  const availableShippingCountries = !!lockShippingCountryTo
+    ? lockShippingCountryTo === "EU"
+      ? EU_COUNTRY_SELECT_OPTIONS
+      : [lockShippingCountryTo]
+    : COUNTRY_SELECT_OPTIONS
+  return { lockShippingCountryTo, shipsFrom, availableShippingCountries }
 }
 
 // Get initial values for the form using what may already be saved
@@ -137,20 +148,7 @@ const getInitialValues = (
   order: FulfillmentDetailsFormProps["order"]
 ): FulfillmentValues => {
   const orderFulfillmentType = getShippingOption(order) || FulfillmentType.SHIP
-  const { lockShippingCountryTo } = getShippingRestrictions(order)
   const { requestedFulfillment } = order
-
-  // humble criteria for starting address if it's already saved on order:
-  // just a few values present
-  // TODO: could be shared logic later when determining
-  // shipping route activeStep
-  const useOrderForAddress =
-    orderFulfillmentType === FulfillmentType.SHIP &&
-    !!requestedFulfillment &&
-    ["name", "phoneNumber", "addressLine1", "city", "country"].every(
-      key => !!requestedFulfillment[key]
-    )
-
   const orderAddress: Partial<ShipValues["attributes"]> = omitBy(
     pick(order.requestedFulfillment, Object.keys(ORDER_EMPTY_ADDRESS)),
     isNil
@@ -165,6 +163,22 @@ const getInitialValues = (
       },
     }
   }
+
+  const { lockShippingCountryTo, shipsFrom } = getShippingRestrictions(order)
+
+  // humble criteria for starting address if it's already saved on order:
+  // just a few values present. Maybe there is a better way?
+  // TODO: w/e it is, could be shared logic later when determining
+  // shipping route activeStep and automatically loading shipping quotes.
+  const useOrderForAddress =
+    orderFulfillmentType === FulfillmentType.SHIP &&
+    !!requestedFulfillment &&
+    ["name", "phoneNumber", "addressLine1", "city", "country"].every(
+      key => !!requestedFulfillment[key]
+    )
+
+  const savedAddresses = extractNodes(me?.addressConnection) ?? []
+  const defaultUserAddress = getDefaultUserAddress(savedAddresses)
 
   // TODO: Maybe we don't need to look too hard at saved addresses here - let the SavedAddresses automatically
   // set the default user address when they mount
@@ -533,6 +547,8 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                           title="Address line 1"
                           value={values.attributes.addressLine1}
                           onChange={e => {
+                            // TODO: Remove- disable autocomplete for development
+                            // false &&
                             autocomplete.enabled &&
                               fetchForAutocomplete({ search: e.target.value })
                             handleChange(e)
@@ -540,14 +556,40 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                           onBlur={handleBlur}
                           options={autocompleteOptions}
                           onSelect={option => {
-                            Object.entries(option.address).forEach(
-                              ([key, value]) => {
-                                formikProps.setFieldValue(
-                                  `attributes.${key}`,
-                                  value
-                                )
-                              }
-                            )
+                            const hasSecondarySuggestions = option.entries > 1
+                            if (hasSecondarySuggestions) {
+                              // Fill in the address form with the selection, but skip line 2
+                              Object.entries(option.address).forEach(
+                                ([key, value]) => {
+                                  if (key === "addressLine2") return
+                                  formikProps.setFieldValue(
+                                    `attributes.${key}`,
+                                    value
+                                  )
+                                }
+                              )
+                              fetchSecondarySuggestions(
+                                values.attributes.addressLine1,
+                                option
+                              )
+
+                              // TODO: make the secondary options appear
+                              // Disabled because it doesn't work and never did.
+                              //
+                              // console.log({ autocompleteRefCurrent: autocompleteRef.current })
+                              // setTimeout(() => {
+                              //   autocompleteRef.current?.focus()
+                              // }, 1000)
+                            } else {
+                              Object.entries(option.address).forEach(
+                                ([key, value]) => {
+                                  formikProps.setFieldValue(
+                                    `attributes.${key}`,
+                                    value
+                                  )
+                                }
+                              )
+                            }
                           }}
                           error={
                             (touched as FormikTouched<ShipValues>).attributes
