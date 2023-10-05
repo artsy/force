@@ -25,6 +25,8 @@ export interface SavedSearchCreateAlertButtonContainerProps {
   metric?: Metric
   aggregations?: Aggregations
   authDialogOptions: Omit<ShowAuthDialogOptions, "mode">
+  /** Artwork ID, if the current saved search alert is being set from an artwork */
+  currentArtworkID?: string
 }
 
 interface Props extends SavedSearchCreateAlertButtonContainerProps {
@@ -38,6 +40,7 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
   aggregations,
   authDialogOptions,
   renderButton,
+  currentArtworkID,
 }) => {
   const tracking = useTracking()
   const { isLoggedIn } = useSystemContext()
@@ -110,6 +113,7 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
         criteria={criteria}
         metric={metric}
         aggregations={aggregations}
+        currentArtworkID={currentArtworkID}
         onClose={() => setVisibleForm(false)}
         onCreateAlert={handleCreateAlert}
         onComplete={handleComplete}

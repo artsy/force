@@ -32,6 +32,7 @@
     "docker:clean": "docker rmi force force:builder force:electron",
     "jest": "node_modules/.bin/jest --config jest.config.js",
     "jest:debug": "node --inspect node_modules/.bin/jest --runInBand",
+    "jest:terse": "TERSE_RTL_OUTPUT=true jest",
     "lint": "eslint --cache --cache-location '.cache/eslint/' --ext ts,tsx --ignore-pattern 'src/__generated__'",
     "local-palette-dev": "./scripts/yalc-link-local-palette",
     "local-palette-dev:stop": "./scripts/yalc-unlink-local-palette",
@@ -76,7 +77,7 @@
     "superagent": "3.8.3"
   },
   "dependencies": {
-    "@artsy/cohesion": "4.151.0",
+    "@artsy/cohesion": "4.152.0",
     "@artsy/commerce_helpers": "artsy/commerce_helpers",
     "@artsy/detect-responsive-traits": "^0.1.0",
     "@artsy/eigen-web-association": "^1.6.0",

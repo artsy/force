@@ -19,6 +19,9 @@ interface SavedSearchAlertContextProps {
   entity: SavedSearchEntity
   criteria: SearchCriteriaAttributes
   isCriteriaChanged: boolean
+  /** Artwork ID, if the current saved search alert is being set from an artwork */
+  currentArtworkID?: string
+
   removeCriteriaValue: (
     key: SearchCriteriaAttributeKeys,
     value: string | number | boolean
@@ -37,6 +40,8 @@ export interface SavedSearchAlertContextProviderProps {
   criteria: SearchCriteriaAttributes
   metric?: Metric
   artistSlug?: string
+  /** Artwork ID, if the current saved search alert is being set from an artwork */
+  currentArtworkID?: string
 }
 
 const SavedSearchAlertContext = createContext<SavedSearchAlertContextProps>({
@@ -56,6 +61,7 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
   criteria: criteriaFromArgument,
   metric,
   artistSlug,
+  currentArtworkID,
   children,
 }) => {
   const [criteria, setCriteria] = useState(criteriaFromArgument)
@@ -125,6 +131,7 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
     entity,
     criteria,
     isCriteriaChanged,
+    currentArtworkID,
     removeCriteriaValue,
     setCriteriaValue,
     removePill,

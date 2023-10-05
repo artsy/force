@@ -22,10 +22,10 @@
   dependencies:
     tslib "~2.0.1"
 
-"@artsy/cohesion@4.151.0":
-  version "4.151.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.151.0.tgz#e72230bf59bd2dafb1853a2949ece4560cefc988"
-  integrity sha512-683jEWHbQNR84gg/ox5/ZXgQtp6UJPEtFEXK1L23OtqVKsV7GFKz51HChTGpsZXfEMCS3eoR2W3OGKu5xQDpSQ==
+"@artsy/cohesion@4.152.0":
+  version "4.152.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.152.0.tgz#6ec4c7deb9e0b9e947ae768b5f3ad1443a105ba5"
+  integrity sha512-6ED1sQ1YVupJ1qPIBFEvIBl8VJFGZWZmcHzffTPrL/0ik3zy7VMg2QBTjxkS+iZEK2BNv89Srr8T6XDjwY7VCQ==
   dependencies:
     core-js "3"
 
@@ -11612,9 +11612,9 @@ get-caller-file@^2.0.1, get-caller-file@^2.0.5:
   integrity sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==
 
 get-func-name@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/get-func-name/-/get-func-name-2.0.0.tgz#ead774abee72e20409433a066366023dd6887a41"
-  integrity sha1-6td0q+5y4gQJQzoGY2YCPdaIekE=
+  version "2.0.2"
+  resolved "https://registry.yarnpkg.com/get-func-name/-/get-func-name-2.0.2.tgz#0d7cf20cd13fda808669ffa88f4ffc7a3943fc41"
+  integrity sha512-8vXOvuE167CtIc3OyItco7N/dpRtBbYOsPsXCz7X/PMnlGjYjSGuZJgM1Y7mmew7BKf9BqvLX2tnOVy1BBUsxQ==
 
 get-intrinsic@^1.0.2, get-intrinsic@^1.1.0, get-intrinsic@^1.1.1:
   version "1.1.1"

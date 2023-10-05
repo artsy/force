@@ -104,10 +104,11 @@ interface ConfirmationArtworksGridQueryRendererProps
   extends SearchCriteriaAttributes {
   searchCriteriaId: string
   onClose: () => void
+  excludeArtworkIDs?: string[]
 }
 
 export const ConfirmationArtworksGridQueryRenderer: FC<ConfirmationArtworksGridQueryRendererProps> = props => {
-  const { searchCriteriaId, onClose, ...inputProps } = props
+  const { searchCriteriaId, onClose, excludeArtworkIDs, ...inputProps } = props
 
   return (
     <SystemQueryRenderer<ConfirmationArtworksGridQuery>
@@ -127,6 +128,7 @@ export const ConfirmationArtworksGridQueryRenderer: FC<ConfirmationArtworksGridQ
           first: NUMBER_OF_ARTWORKS_TO_SHOW,
           sort: "-published_at",
           forSale: true,
+          excludeArtworkIDs: excludeArtworkIDs ?? [],
           ...inputProps,
         },
       }}
