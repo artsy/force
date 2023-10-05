@@ -241,7 +241,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
         {!billing && (!autocomplete.loaded || autocomplete.enabled) ? (
           <AutocompleteInput<AddressAutocompleteSuggestion>
             tabIndex={tabIndex}
-            disabled={!autocomplete.loaded}
+            loading={!autocomplete.loaded}
             flip={false}
             id="AddressForm_addressLine1"
             placeholder="Street address"
