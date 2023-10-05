@@ -416,6 +416,19 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         })
         break
       }
+      case "credit_card_deactivated": {
+        const title = "Unable to process card"
+        const message =
+          "This card is inactive or no longer available. Please confirm with your card issuer if this card is active, try another payment method, or contact orders@artsy.net."
+
+        trackErrorMessageEvent(title, message, error.code)
+
+        await props.dialog.showErrorDialog({
+          title: title,
+          message: message,
+        })
+        break
+      }
       default: {
         const { title, message } = getErrorDialogCopy()
         let errorCode = error.code || ""
