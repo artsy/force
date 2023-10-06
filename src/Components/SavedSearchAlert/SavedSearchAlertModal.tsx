@@ -1,4 +1,4 @@
-import React, { FC, useState } from "react"
+import React, { FC, useRef, useState } from "react"
 import { Formik, FormikHelpers } from "formik"
 import {
   Box,
@@ -80,6 +80,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
     "onyx_advisory-opportunity-in-saved-search"
   )
   const { phone, regionCode } = useUserPhoneNumber()
+  const advisoryOpportunitySectionScrollRef = useRef<HTMLDivElement>(null)
   const {
     submitMutation: submitCreateAdvisoryOpportunity,
   } = useCreateAdvisoryOpportunity()
@@ -284,6 +285,18 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
                       <Checkbox
                         onSelect={selected => {
                           setFieldValue("hearFromArtsyAdvisor", selected)
+                          // Scroll the newly revealed (or not) section into view.
+                          // Use `setTimeout` to ensure the scroll happens after
+                          // the section is rendered.
+                          setTimeout(() => {
+                            if (advisoryOpportunitySectionScrollRef?.current) {
+                              advisoryOpportunitySectionScrollRef.current.scrollIntoView(
+                                {
+                                  behavior: "smooth",
+                                }
+                              )
+                            }
+                          })
                         }}
                         selected={values.hearFromArtsyAdvisor}
                       />
@@ -323,6 +336,8 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
                           placeholder="Tell us more about what you're looking for."
                           value={values.message}
                         />
+
+                        <Box ref={advisoryOpportunitySectionScrollRef as any} />
                       </>
                     )}
                   </>
