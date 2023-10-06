@@ -33,12 +33,18 @@ export const OrderInformation: React.FC<OrderInformationProps> = ({
   return (
     <>
       <Text variant="lg">Order Information</Text>
+
       <Spacer y={2} />
+
       <Text variant="sm">Order #{code}</Text>
       <Text variant="xl">{lastOffer?.amount}</Text>
+
       <Spacer y={2} />
+
       <OrderState order={data} />
+
       <Spacer y={2} />
+
       <ReviewOrderButton order={data} />
     </>
   )

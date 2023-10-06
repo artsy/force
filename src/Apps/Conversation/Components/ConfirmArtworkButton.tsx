@@ -5,10 +5,10 @@ import { Button, ButtonProps } from "@artsy/palette"
 import { TappedConfirmArtwork } from "@artsy/cohesion"
 
 import createLogger from "Utils/logger"
-import { MakeInquiryOffer } from "Apps/Conversation/Mutation/MakeInquiryOfferMutation"
-import { MakeInquiryOrder } from "Apps/Conversation/Mutation/MakeInquiryOrderMutation"
 
 import { ConfirmArtworkButton_artwork$data } from "__generated__/ConfirmArtworkButton_artwork.graphql"
+import { MakeInquiryOffer } from "Apps/Conversation/Mutation/MakeInquiryOfferMutation"
+import { MakeInquiryOrder } from "Apps/Conversation/Mutation/MakeInquiryOrderMutation"
 
 const logger = createLogger("Conversation/Components/ConfirmArtworkButton.tsx")
 

@@ -13,13 +13,14 @@ import { Conversation2App_viewer$data } from "__generated__/Conversation2App_vie
 import { Conversation2App_conversation$data } from "__generated__/Conversation2App_conversation.graphql"
 import { Fragment, Suspense } from "react"
 import { ConversationsSidebarSkeleton } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarSkeleton"
+import { ConversationsProvider } from "Apps/Conversations2/ConversationsContext"
 
 const COLUMN_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 const MOBILE_HEIGHT = `calc(100dvh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 
 interface Conversation2RouteProps {
-  viewer: Conversation2App_viewer$data
   conversation: Conversation2App_conversation$data
+  viewer: Conversation2App_viewer$data
 }
 
 const Conversation2App: React.FC<Conversation2RouteProps> = ({
@@ -27,19 +28,6 @@ const Conversation2App: React.FC<Conversation2RouteProps> = ({
   conversation,
 }) => {
   const { currentColumn } = useMobileLayoutActions()
-
-  // // Work around to ensure that we don't get page transition jank by due to
-  // // navigating between different types of page layouts. Since convos fills
-  // // the screen, disable scrolling to hide the footer.
-  // useEffect(() => {
-  //   window.scrollTo(0, 0)
-
-  //   document.body.style.setProperty("overflow", "hidden")
-
-  //   return () => {
-  //     document.body.style.setProperty("overflow", "scroll")
-  //   }
-  // })
 
   const ClientOnlySuspense = (typeof window !== "undefined"
     ? Suspense
@@ -163,7 +151,11 @@ const Conversation2App: React.FC<Conversation2RouteProps> = ({
 }
 
 export const Conversation2AppFragmentContainer = createFragmentContainer(
-  Conversation2App,
+  (props: Conversation2RouteProps) => (
+    <ConversationsProvider>
+      <Conversation2App {...props} />
+    </ConversationsProvider>
+  ),
   {
     viewer: graphql`
       fragment Conversation2App_viewer on Viewer

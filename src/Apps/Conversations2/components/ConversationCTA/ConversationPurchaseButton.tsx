@@ -3,47 +3,64 @@ import { useMakeInquiryOrder } from "Apps/Conversations2/mutations/useMakeInquir
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
-import { ConversationPurchaseButton_conversation$key } from "__generated__/ConversationPurchaseButton_conversation.graphql"
+import {
+  ConversationPurchaseButton_conversation$data,
+  ConversationPurchaseButton_conversation$key,
+} from "__generated__/ConversationPurchaseButton_conversation.graphql"
+import { useTracking } from "react-tracking"
+import { ActionType, OwnerType, TappedBuyNow } from "@artsy/cohesion"
+import { useConversationsContext } from "Apps/Conversations2/ConversationsContext"
+import { useConversationPurchaseButtonData } from "Apps/Conversations2/components/ConversationCTA/useConversationPurchaseButtonData"
+import { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
 
 interface ConversationPurchaseButtonProps {
-  conversation: ConversationPurchaseButton_conversation$key
+  conversation: useConversationPurchaseButtonData_conversation$key
 }
 
 export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProps> = ({
   conversation,
 }) => {
+  const tracking = useTracking()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { router } = useRouter()
   const { submitMutation } = useMakeInquiryOrder()
-
-  const data = useFragment(
-    graphql`
-      fragment ConversationPurchaseButton_conversation on Conversation {
-        internalID
-        items {
-          liveArtwork {
-            ... on Artwork {
-              __typename
-              isEdition
-              internalID
-              slug
-              editionSets {
-                internalID
-              }
-              ...ConfirmArtworkButton_artwork
-            }
-          }
-        }
-      }
-    `,
-    conversation
-  )
+  const { showSelectEditionSetModal } = useConversationsContext()
+  const data = useConversationPurchaseButtonData(conversation)
 
   if (!data) {
     return null
   }
 
-  const artwork = data?.items?.[0]?.liveArtwork as any
+  const trackPurchaseEvent = () => {
+    const tappedPurchaseEvent: TappedBuyNow = {
+      action: ActionType.tappedBuyNow,
+      context_owner_type: OwnerType.conversation,
+      context_owner_id: data.artwork.internalID,
+      context_owner_slug: data.artwork.slug,
+      impulse_conversation_id: data.conversation.internalID as string,
+    }
+
+    tracking.trackEvent(tappedPurchaseEvent)
+  }
+
+  // Opens a modal window to select an edition set on non-unique artworks
+  if (!data.isUniqueArtwork) {
+    return (
+      <Button
+        size="large"
+        flexGrow={1}
+        onClick={() => {
+          trackPurchaseEvent()
+
+          showSelectEditionSetModal({
+            isCreatingOfferOrder: false,
+          })
+        }}
+      >
+        Purchase
+      </Button>
+    )
+  }
 
   const handleClick = async () => {
     setIsSubmitting(true)
@@ -52,9 +69,9 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
       const response = await submitMutation({
         variables: {
           input: {
-            artworkId: artwork.internalID,
-            editionSetId: artwork.editionSets?.[0]?.internalID,
-            impulseConversationId: data.internalID as string,
+            artworkId: data.artwork.internalID,
+            editionSetId: data.artwork.editionSets?.[0]?.internalID,
+            impulseConversationId: data.conversation.internalID as string,
           },
         },
         rejectIf: res => {
@@ -64,6 +81,8 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
           )
         },
       })
+
+      trackPurchaseEvent()
 
       if (
         response.createInquiryOrder?.orderOrError.__typename ===

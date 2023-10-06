@@ -1,4 +1,4 @@
-import { ConfirmArtworkModalFragmentContainer } from "Apps/Conversation/Components/ConfirmArtworkModal"
+import { ConfirmArtworkModalFragmentContainer } from "Apps/Conversation/Components/ConfirmArtworkModal/ConfirmArtworkModal"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { screen, fireEvent, waitFor } from "@testing-library/react"

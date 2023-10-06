@@ -80,21 +80,13 @@ export const ConversationArtwork: React.FC<ConversationArtworkProps> = ({
 
       <RouterLink
         to={`/artwork/${item?.slug}`}
-        onClick={event => {
-          // event.preventDefault()
-
+        onClick={() => {
           trackEvent({
             action: "Click",
             label: "View artwork",
             context_module: "conversations",
             artwork_id: item?.id,
           })
-
-          setTimeout(() => {
-            throw new Error("sdkfj")
-          })
-
-          // window.location.assign(`/artwork/${item?.slug}`)
         }}
       >
         <Button variant="secondaryBlack" size="small">

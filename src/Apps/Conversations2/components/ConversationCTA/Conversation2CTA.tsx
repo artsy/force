@@ -8,6 +8,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import { Conversation2CTA_conversation$key } from "__generated__/Conversation2CTA_conversation.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
+import { ConversationConfirmModal } from "Apps/Conversations2/components/ConversationCTA/ConversationConfirmModal"
 
 interface Conversation2CTAProps extends FlexProps {
   conversation: Conversation2CTA_conversation$key
@@ -20,8 +21,7 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
   const data = useFragment(
     graphql`
       fragment Conversation2CTA_conversation on Conversation {
-        ...ConversationPurchaseButton_conversation
-        ...ConversationMakeOfferButton_conversation
+        ...useConversationPurchaseButtonData_conversation
 
         internalID
         items {
@@ -89,6 +89,11 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
     return null
   }
 
+  const isActionable =
+    !!artwork?.isOfferable ||
+    !!artwork?.isOfferableFromInquiry ||
+    !!artwork?.isAcquireable
+
   return (
     <Flex {...flexProps} flexDirection="column">
       <Flex
@@ -98,6 +103,7 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
         mb={1}
       >
         <GuaranteeIconBlue mr={1} />
+
         <Flex>
           <Text color="black60" variant="xs">
             Always complete purchases with our secure checkout in order to be
@@ -109,6 +115,11 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
           </Text>
         </Flex>
       </Flex>
+
+      {/* TODO:
+        https://github.com/artsy/force/blob/e08c99819443c2e044a0306c6b5b43d4d64ce332/src/Apps/Conversation/Components/Conversation.tsx#L271-L278
+      */}
+      {isActionable && <ConversationConfirmModal />}
 
       {/* TODO:
       {isActionable && (
@@ -124,20 +135,10 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
 
       <Flex flexDirection="row">
         {artwork.isAcquireable && (
-          <ConversationPurchaseButton
-            // TODO
-            // openInquiryModal={() =>
-            //   openInquiryModal({ createsOfferOrder: false })
-            // }
-            conversation={data}
-          />
+          <ConversationPurchaseButton conversation={data} />
         )}
         {(artwork.isOfferable || artwork.isOfferableFromInquiry) && (
-          <ConversationMakeOfferButton
-            // TODO
-            // openInquiryModal={() => openInquiryModal({ createsOfferOrder: true })}
-            conversation={data}
-          />
+          <ConversationMakeOfferButton conversation={data} />
         )}
       </Flex>
     </Flex>

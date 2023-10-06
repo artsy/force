@@ -6,7 +6,6 @@ import { useSystemContext } from "System/useSystemContext"
 import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { OwnerType } from "@artsy/cohesion"
-import { ConfirmArtworkButtonFragmentContainer } from "./ConfirmArtworkButton"
 import { CollapsibleArtworkDetailsFragmentContainer } from "./CollapsibleArtworkDetails"
 import { EditionSelectBoxFragmentContainer } from "./EditionSelectBox"
 
@@ -16,6 +15,7 @@ import {
 } from "__generated__/ConfirmArtworkModalQuery.graphql"
 import { ConfirmArtworkModal_artwork$data } from "__generated__/ConfirmArtworkModal_artwork.graphql"
 import { useTracking } from "react-tracking"
+import { ConfirmArtworkButtonFragmentContainer } from "Apps/Conversation/Components/ConfirmArtworkButton"
 
 export interface ConfirmArtworkModalProps {
   artwork: ConfirmArtworkModal_artwork$data

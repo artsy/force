@@ -1,16 +1,4 @@
-import { Pill, Flex, Text, Box } from "@artsy/palette"
-import { useEffect, useState } from "react"
-import {
-  ActionType,
-  ClickedConversationsFilter,
-  PageOwnerType,
-  OwnerType,
-} from "@artsy/cohesion"
-import { useTracking } from "react-tracking"
-import { useSystemContext } from "System/useSystemContext"
-import { useRouter } from "found"
-
-type Filters = "" | "new_inquiries" | "replied"
+import { Text, Box } from "@artsy/palette"
 
 export const ConversationsSidebarHeader: React.FC = () => {
   return (

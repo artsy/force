@@ -149,6 +149,7 @@ const StatusWithCounter: React.FC<StatusWithCounterProps> = ({
   let text = "Review offer"
   let expiryText = "until offer expires"
   let respondByText = `Respond by ${formattedStateExpiresAt}`
+
   switch (status) {
     case "buy":
       text = "Confirm order"

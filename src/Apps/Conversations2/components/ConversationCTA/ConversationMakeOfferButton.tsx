@@ -3,50 +3,63 @@ import { useMakeInquiryOffer } from "Apps/Conversations2/mutations/useMakeInquir
 import { useState } from "react"
 import { graphql, useFragment } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
-import { ConversationMakeOfferButton_conversation$key } from "__generated__/ConversationMakeOfferButton_conversation.graphql"
+import { ActionType, OwnerType, TappedMakeOffer } from "@artsy/cohesion"
+import { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
+import { useConversationPurchaseButtonData } from "Apps/Conversations2/components/ConversationCTA/useConversationPurchaseButtonData"
+import { useConversationsContext } from "Apps/Conversations2/ConversationsContext"
+import { useTracking } from "react-tracking"
 
 interface ConversationMakeOfferButtonProps {
-  conversation: ConversationMakeOfferButton_conversation$key
+  conversation: useConversationPurchaseButtonData_conversation$key
 }
 
 export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonProps> = ({
   conversation,
 }) => {
+  const tracking = useTracking()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { router } = useRouter()
   const { submitMutation } = useMakeInquiryOffer()
-
-  const data = useFragment(
-    graphql`
-      fragment ConversationMakeOfferButton_conversation on Conversation {
-        internalID
-        items {
-          liveArtwork {
-            ... on Artwork {
-              __typename
-              is_acquireable: isAcquireable
-              isEdition
-              internalID
-              slug
-              editionSets {
-                internalID
-              }
-              ...ConfirmArtworkButton_artwork
-            }
-          }
-        }
-      }
-    `,
-    conversation
-  )
+  const { showSelectEditionSetModal } = useConversationsContext()
+  const data = useConversationPurchaseButtonData(conversation)
 
   if (!data) {
     return null
   }
 
-  const artwork = data?.items?.[0]?.liveArtwork as any
-  const isPurchaseButtonPresent = artwork.is_acquireable
-  const variant = isPurchaseButtonPresent ? "secondaryBlack" : "primaryBlack"
+  const trackMakeOfferEvent = () => {
+    const tappedMakeOfferEvent: TappedMakeOffer = {
+      action: ActionType.tappedMakeOffer,
+      context_owner_type: OwnerType.conversation,
+      impulse_conversation_id: data.conversation.internalID as string,
+    }
+
+    tracking.trackEvent(tappedMakeOfferEvent)
+  }
+
+  const variant = data.isPurchaseButtonPresent
+    ? "secondaryBlack"
+    : "primaryBlack"
+
+  // Opens a modal window to select an edition set on non-unique artworks
+  if (!data.isUniqueArtwork) {
+    return (
+      <Button
+        size="large"
+        variant={variant}
+        flexGrow={1}
+        onClick={() => {
+          trackMakeOfferEvent()
+
+          showSelectEditionSetModal({
+            isCreatingOfferOrder: true,
+          })
+        }}
+      >
+        Make an Offer
+      </Button>
+    )
+  }
 
   const handleClick = async () => {
     setIsSubmitting(true)
@@ -55,9 +68,9 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
       const response = await submitMutation({
         variables: {
           input: {
-            artworkId: artwork.internalID,
-            editionSetId: artwork.editionSets?.[0]?.internalID,
-            impulseConversationId: data.internalID as string,
+            artworkId: data.artwork.internalID,
+            editionSetId: data.artwork.editionSets?.[0]?.internalID,
+            impulseConversationId: data.conversation.internalID as string,
           },
         },
         rejectIf: res => {
@@ -67,6 +80,8 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
           )
         },
       })
+
+      trackMakeOfferEvent()
 
       if (
         response.createInquiryOfferOrder?.orderOrError.__typename ===
@@ -85,8 +100,11 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
 
   return (
     <>
-      <Spacer x={isPurchaseButtonPresent ? 1 : 0} />
-      <p>{isPurchaseButtonPresent}</p>
+      <Spacer
+        x={data.isPurchaseButtonPresent ? 1 : 0}
+        y={data.isPurchaseButtonPresent ? 1 : 0}
+      />
+
       <Button
         width="100%"
         onClick={handleClick}

@@ -17,7 +17,6 @@ import { ItemFragmentContainer } from "./Item"
 import { Reply } from "./Reply"
 import { ConversationMessagesFragmentContainer as ConversationMessages } from "./ConversationMessages"
 import { ConversationHeader } from "./ConversationHeader"
-import { ConfirmArtworkModalQueryRenderer } from "./ConfirmArtworkModal"
 import { returnOrderModalDetails } from "Apps/Conversation/Utils/returnOrderModalDetails"
 import { OrderModal } from "./OrderModal"
 import { UnreadMessagesToastQueryRenderer } from "./UnreadMessagesToast"
@@ -26,6 +25,7 @@ import { UpdateConversation } from "Apps/Conversation/Mutation/UpdateConversatio
 import { Conversation_conversation$data } from "__generated__/Conversation_conversation.graphql"
 import { useRouter } from "System/Router/useRouter"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
+import { ConfirmArtworkModalQueryRenderer } from "Apps/Conversation/Components/ConfirmArtworkModal/ConfirmArtworkModal"
 
 export interface ConversationProps {
   conversation: Conversation_conversation$data

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2d8f5be6fb4d40631ae7527982011f5c>>
+ * @generated SignedSource<<f2a528a4b97dee5125dd4489a5edfbc6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -52,7 +52,7 @@ export type Conversation2CTA_conversation$data = {
       readonly __typename: "%other";
     } | null;
   } | null> | null;
-  readonly " $fragmentSpreads": FragmentRefs<"ConversationMakeOfferButton_conversation" | "ConversationPurchaseButton_conversation">;
+  readonly " $fragmentSpreads": FragmentRefs<"useConversationPurchaseButtonData_conversation">;
   readonly " $fragmentType": "Conversation2CTA_conversation";
 };
 export type Conversation2CTA_conversation$key = {
@@ -87,12 +87,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ConversationPurchaseButton_conversation"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ConversationMakeOfferButton_conversation"
+      "name": "useConversationPurchaseButtonData_conversation"
     },
     (v0/*: any*/),
     {
@@ -294,6 +289,6 @@ return {
 };
 })();
 
-(node as any).hash = "ba780e4da3ea40d93483ff55514318e0";
+(node as any).hash = "5197af90bf7e48e87a7e32f7d274a607";
 
 export default node;

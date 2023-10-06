@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bb46a8c5ef15d3339969fd0bde0d915f>>
+ * @generated SignedSource<<d5a2a7cad1f14291b5ed00d6067c348a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConversationPurchaseButton_conversation$data = {
+export type useConversationPurchaseButtonData_conversation$data = {
   readonly internalID: string | null;
   readonly items: ReadonlyArray<{
     readonly liveArtwork: {
@@ -19,6 +19,7 @@ export type ConversationPurchaseButton_conversation$data = {
         readonly internalID: string;
       } | null> | null;
       readonly internalID: string;
+      readonly isAcquireable: boolean | null;
       readonly isEdition: boolean | null;
       readonly slug: string;
       readonly " $fragmentSpreads": FragmentRefs<"ConfirmArtworkButton_artwork">;
@@ -28,11 +29,11 @@ export type ConversationPurchaseButton_conversation$data = {
       readonly __typename: "%other";
     } | null;
   } | null> | null;
-  readonly " $fragmentType": "ConversationPurchaseButton_conversation";
+  readonly " $fragmentType": "useConversationPurchaseButtonData_conversation";
 };
-export type ConversationPurchaseButton_conversation$key = {
-  readonly " $data"?: ConversationPurchaseButton_conversation$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ConversationPurchaseButton_conversation">;
+export type useConversationPurchaseButtonData_conversation$key = {
+  readonly " $data"?: useConversationPurchaseButtonData_conversation$data;
+  readonly " $fragmentSpreads": FragmentRefs<"useConversationPurchaseButtonData_conversation">;
 };
 
 const node: ReaderFragment = (function(){
@@ -47,7 +48,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ConversationPurchaseButton_conversation",
+  "name": "useConversationPurchaseButtonData_conversation",
   "selections": [
     (v0/*: any*/),
     {
@@ -74,6 +75,13 @@ return {
                   "args": null,
                   "kind": "ScalarField",
                   "name": "__typename",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isAcquireable",
                   "storageKey": null
                 },
                 {
@@ -124,6 +132,6 @@ return {
 };
 })();
 
-(node as any).hash = "f66ea2eb9134a2efec42409b5d7bbb28";
+(node as any).hash = "0905ce92a96caf29d9369b7179c1372f";
 
 export default node;
