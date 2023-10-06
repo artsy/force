@@ -13,7 +13,11 @@ export const useUpdateSettingsInformation = () => {
             ...SettingsEditSettingsInformation_me
             email
             name
-            phone
+            phoneNumber {
+              regionCode
+              display(format: NATIONAL)
+              originalNumber
+            }
             priceRangeMin
             priceRangeMax
           }

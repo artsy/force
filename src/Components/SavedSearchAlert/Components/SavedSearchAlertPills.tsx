@@ -24,7 +24,12 @@ export const SavedSearchAlertPills: React.FC<SavedSearchAlertPillsProps> = props
         }
 
         return (
-          <Pill key={key} variant="filter" onClick={() => onDeletePress(item)}>
+          <Pill
+            key={key}
+            variant="filter"
+            selected
+            onClick={() => onDeletePress(item)}
+          >
             {item.displayValue}
           </Pill>
         )
