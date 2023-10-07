@@ -158,13 +158,8 @@ export const Conversation2AppFragmentContainer = createFragmentContainer(
   ),
   {
     viewer: graphql`
-      fragment Conversation2App_viewer on Viewer
-        @argumentDefinitions(
-          toBeReplied: { type: "Boolean" }
-          hasReply: { type: "Boolean" }
-        ) {
+      fragment Conversation2App_viewer on Viewer {
         ...ConversationsSidebar_viewer
-          @arguments(toBeReplied: $toBeReplied, hasReply: $hasReply)
       }
     `,
     conversation: graphql`

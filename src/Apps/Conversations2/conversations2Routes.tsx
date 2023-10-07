@@ -54,36 +54,11 @@ export const conversations2Routes: AppRouteConfig[] = [
     layout: "FullBleed",
     ignoreScrollBehavior: true,
     getComponent: () => Conversation2App,
-    prepareVariables: (params, { location }) => {
-      const conversationsFilter: {
-        toBeReplied?: boolean
-        hasReply?: boolean
-      } = {}
 
-      switch (location.query.conversationsFilter) {
-        case "new_inquiries":
-          conversationsFilter.toBeReplied = true
-          break
-        case "replied":
-          conversationsFilter.hasReply = true
-          break
-      }
-
-      return {
-        conversationId: params.conversationId,
-        toBeReplied: conversationsFilter.toBeReplied,
-        hasReply: conversationsFilter.hasReply,
-      }
-    },
     query: graphql`
-      query conversations2Routes_DetailQuery(
-        $conversationId: String!
-        $toBeReplied: Boolean
-        $hasReply: Boolean
-      ) {
+      query conversations2Routes_DetailQuery($conversationId: String!) {
         viewer {
           ...Conversation2App_viewer
-            @arguments(toBeReplied: $toBeReplied, hasReply: $hasReply)
         }
         conversation(id: $conversationId) @required(action: NONE) {
           ...Conversation2App_conversation

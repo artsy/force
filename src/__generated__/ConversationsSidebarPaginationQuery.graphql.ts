@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ff4c42ca21d1556418554001b0fe1f7a>>
+ * @generated SignedSource<<969320bddf487f083df1487642b11feb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,8 +13,6 @@ import { FragmentRefs } from "relay-runtime";
 export type ConversationsSidebarPaginationQuery$variables = {
   after?: string | null;
   first?: number | null;
-  hasReply?: boolean | null;
-  toBeReplied?: boolean | null;
 };
 export type ConversationsSidebarPaginationQuery$data = {
   readonly viewer: {
@@ -37,16 +35,6 @@ var v0 = [
     "defaultValue": 10,
     "kind": "LocalArgument",
     "name": "first"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "hasReply"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "toBeReplied"
   }
 ],
 v1 = {
@@ -59,35 +47,23 @@ v2 = {
   "name": "first",
   "variableName": "first"
 },
-v3 = {
-  "kind": "Variable",
-  "name": "hasReply",
-  "variableName": "hasReply"
-},
-v4 = {
-  "kind": "Variable",
-  "name": "toBeReplied",
-  "variableName": "toBeReplied"
-},
-v5 = [
+v3 = [
   (v1/*: any*/),
   (v2/*: any*/),
-  (v3/*: any*/),
-  (v4/*: any*/),
   {
     "kind": "Literal",
     "name": "type",
     "value": "USER"
   }
 ],
-v6 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v7 = [
+v5 = [
   {
     "alias": null,
     "args": null,
@@ -95,9 +71,9 @@ v7 = [
     "name": "name",
     "storageKey": null
   },
-  (v6/*: any*/)
+  (v4/*: any*/)
 ],
-v8 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -122,9 +98,7 @@ return {
           {
             "args": [
               (v1/*: any*/),
-              (v2/*: any*/),
-              (v3/*: any*/),
-              (v4/*: any*/)
+              (v2/*: any*/)
             ],
             "kind": "FragmentSpread",
             "name": "ConversationsSidebar_viewer"
@@ -152,7 +126,7 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v3/*: any*/),
             "concreteType": "ConversationConnection",
             "kind": "LinkedField",
             "name": "conversationsConnection",
@@ -195,7 +169,7 @@ return {
                         "kind": "LinkedField",
                         "name": "from",
                         "plural": false,
-                        "selections": (v7/*: any*/),
+                        "selections": (v5/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -221,11 +195,11 @@ return {
                                 "name": "confirmedBuyerAt",
                                 "storageKey": null
                               },
-                              (v6/*: any*/)
+                              (v4/*: any*/)
                             ],
                             "storageKey": null
                           },
-                          (v6/*: any*/)
+                          (v4/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -236,7 +210,7 @@ return {
                         "kind": "LinkedField",
                         "name": "to",
                         "plural": false,
-                        "selections": (v7/*: any*/),
+                        "selections": (v5/*: any*/),
                         "storageKey": null
                       },
                       {
@@ -293,8 +267,8 @@ return {
                                 "name": "node",
                                 "plural": false,
                                 "selections": [
-                                  (v8/*: any*/),
-                                  (v6/*: any*/)
+                                  (v6/*: any*/),
+                                  (v4/*: any*/)
                                 ],
                                 "storageKey": null
                               }
@@ -320,11 +294,11 @@ return {
                             "name": "item",
                             "plural": false,
                             "selections": [
-                              (v8/*: any*/),
+                              (v6/*: any*/),
                               {
                                 "kind": "InlineFragment",
                                 "selections": [
-                                  (v6/*: any*/),
+                                  (v4/*: any*/),
                                   {
                                     "alias": null,
                                     "args": null,
@@ -346,7 +320,7 @@ return {
                                     "kind": "LinkedField",
                                     "name": "artist",
                                     "plural": false,
-                                    "selections": (v7/*: any*/),
+                                    "selections": (v5/*: any*/),
                                     "storageKey": null
                                   },
                                   {
@@ -383,7 +357,7 @@ return {
                               {
                                 "kind": "InlineFragment",
                                 "selections": [
-                                  (v6/*: any*/)
+                                  (v4/*: any*/)
                                 ],
                                 "type": "Node",
                                 "abstractKey": "__isNode"
@@ -394,8 +368,8 @@ return {
                         ],
                         "storageKey": null
                       },
-                      (v6/*: any*/),
-                      (v8/*: any*/)
+                      (v4/*: any*/),
+                      (v6/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -432,11 +406,9 @@ return {
           },
           {
             "alias": null,
-            "args": (v5/*: any*/),
+            "args": (v3/*: any*/),
             "filters": [
-              "type",
-              "toBeReplied",
-              "hasReply"
+              "type"
             ],
             "handle": "connection",
             "key": "ConversationsSidebar_viewer_conversationsConnection",
@@ -449,16 +421,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "880b19143fdd79f11f012357211d5d97",
+    "cacheID": "713a9a2009126e644c9fa1cc0197024a",
     "id": null,
     "metadata": {},
     "name": "ConversationsSidebarPaginationQuery",
     "operationKind": "query",
-    "text": "query ConversationsSidebarPaginationQuery(\n  $after: String\n  $first: Int = 10\n  $hasReply: Boolean\n  $toBeReplied: Boolean\n) {\n  viewer {\n    ...ConversationsSidebar_viewer_ewv5K\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer_ewv5K on Viewer {\n  conversationsConnection(first: $first, after: $after, type: USER, toBeReplied: $toBeReplied, hasReply: $hasReply) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query ConversationsSidebarPaginationQuery(\n  $after: String\n  $first: Int = 10\n) {\n  viewer {\n    ...ConversationsSidebar_viewer_2HEEH6\n  }\n}\n\nfragment ConversationsSidebarItem_conversation on Conversation {\n  internalID\n  from {\n    name\n    id\n  }\n  fromUser {\n    collectorProfile {\n      confirmedBuyerAt\n      id\n    }\n    id\n  }\n  to {\n    name\n    id\n  }\n  lastMessageAt(format: \"MMM D\")\n  orderConnection(last: 1, states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]) {\n    edges {\n      node {\n        __typename\n        id\n      }\n    }\n  }\n  items {\n    item {\n      __typename\n      ... on Artwork {\n        id\n        title\n        date\n        artist {\n          name\n          id\n        }\n        image {\n          url(version: [\"small\", \"square\"])\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationsSidebar_viewer_2HEEH6 on Viewer {\n  conversationsConnection(first: $first, after: $after, type: USER) {\n    edges {\n      cursor\n      node {\n        internalID\n        ...ConversationsSidebarItem_conversation\n        id\n        __typename\n      }\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b8034dba33527a2d376f8720e9d281a4";
+(node as any).hash = "92b36f72da0dcaba8e8049888a9b5380";
 
 export default node;

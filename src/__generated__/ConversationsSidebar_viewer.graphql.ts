@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8587aa6a473645281e146c177d351a2>>
+ * @generated SignedSource<<c12ad5db3fc9384867c743dfe725d2c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,16 +42,6 @@ return {
       "defaultValue": 10,
       "kind": "LocalArgument",
       "name": "first"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "hasReply"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "toBeReplied"
     }
   ],
   "kind": "Fragment",
@@ -84,16 +74,6 @@ return {
     {
       "alias": "conversationsConnection",
       "args": [
-        {
-          "kind": "Variable",
-          "name": "hasReply",
-          "variableName": "hasReply"
-        },
-        {
-          "kind": "Variable",
-          "name": "toBeReplied",
-          "variableName": "toBeReplied"
-        },
         {
           "kind": "Literal",
           "name": "type",
@@ -179,7 +159,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": null
+      "storageKey": "__ConversationsSidebar_viewer_conversationsConnection_connection(type:\"USER\")"
     }
   ],
   "type": "Viewer",
@@ -187,6 +167,6 @@ return {
 };
 })();
 
-(node as any).hash = "b8034dba33527a2d376f8720e9d281a4";
+(node as any).hash = "92b36f72da0dcaba8e8049888a9b5380";
 
 export default node;

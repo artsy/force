@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f2a528a4b97dee5125dd4489a5edfbc6>>
+ * @generated SignedSource<<ccef3c6d528f6911353442976bfacdf9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,28 +9,8 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type CommerceBuyerOfferActionEnum = "OFFER_ACCEPTED" | "OFFER_ACCEPTED_CONFIRM_NEEDED" | "OFFER_RECEIVED" | "OFFER_RECEIVED_CONFIRM_NEEDED" | "PAYMENT_FAILED" | "PROVISIONAL_OFFER_ACCEPTED" | "%future added value";
-export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Conversation2CTA_conversation$data = {
-  readonly activeOrders: {
-    readonly edges: ReadonlyArray<{
-      readonly node: {
-        readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
-        readonly internalID: string;
-        readonly offers?: {
-          readonly edges: ReadonlyArray<{
-            readonly node: {
-              readonly internalID: string;
-            } | null;
-          } | null> | null;
-        } | null;
-        readonly state: CommerceOrderStateEnum;
-        readonly stateExpiresAt: string | null;
-        readonly stateReason: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
   readonly internalID: string | null;
   readonly items: ReadonlyArray<{
     readonly item: {
@@ -46,13 +26,14 @@ export type Conversation2CTA_conversation$data = {
       readonly isAcquireable: boolean | null;
       readonly isOfferable: boolean | null;
       readonly isOfferableFromInquiry: boolean | null;
+      readonly " $fragmentSpreads": FragmentRefs<"ConversationConfirmModal_artwork">;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     } | null;
   } | null> | null;
-  readonly " $fragmentSpreads": FragmentRefs<"useConversationPurchaseButtonData_conversation">;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationReviewOfferCTA_conversation" | "useConversationPurchaseButtonData_conversation">;
   readonly " $fragmentType": "Conversation2CTA_conversation";
 };
 export type Conversation2CTA_conversation$key = {
@@ -74,10 +55,7 @@ v1 = {
   "kind": "ScalarField",
   "name": "__typename",
   "storageKey": null
-},
-v2 = [
-  (v0/*: any*/)
-];
+};
 return {
   "argumentDefinitions": [],
   "kind": "Fragment",
@@ -88,6 +66,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "useConversationPurchaseButtonData_conversation"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ConversationReviewOfferCTA_conversation"
     },
     (v0/*: any*/),
     {
@@ -109,6 +92,11 @@ return {
             {
               "kind": "InlineFragment",
               "selections": [
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ConversationConfirmModal_artwork"
+                },
                 (v1/*: any*/),
                 {
                   "alias": null,
@@ -149,7 +137,9 @@ return {
             (v1/*: any*/),
             {
               "kind": "InlineFragment",
-              "selections": (v2/*: any*/),
+              "selections": [
+                (v0/*: any*/)
+              ],
               "type": "Artwork",
               "abstractKey": null
             }
@@ -158,130 +148,6 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "alias": "activeOrders",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 10
-        },
-        {
-          "kind": "Literal",
-          "name": "states",
-          "value": [
-            "APPROVED",
-            "PROCESSING_APPROVAL",
-            "FULFILLED",
-            "SUBMITTED",
-            "REFUNDED"
-          ]
-        }
-      ],
-      "concreteType": "CommerceOrderConnectionWithTotalCount",
-      "kind": "LinkedField",
-      "name": "orderConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "CommerceOrderEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": null,
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                (v0/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "state",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "stateReason",
-                  "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "stateExpiresAt",
-                  "storageKey": null
-                },
-                {
-                  "kind": "InlineFragment",
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "buyerAction",
-                      "storageKey": null
-                    },
-                    {
-                      "alias": null,
-                      "args": [
-                        {
-                          "kind": "Literal",
-                          "name": "first",
-                          "value": 5
-                        }
-                      ],
-                      "concreteType": "CommerceOfferConnection",
-                      "kind": "LinkedField",
-                      "name": "offers",
-                      "plural": false,
-                      "selections": [
-                        {
-                          "alias": null,
-                          "args": null,
-                          "concreteType": "CommerceOfferEdge",
-                          "kind": "LinkedField",
-                          "name": "edges",
-                          "plural": true,
-                          "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "concreteType": "CommerceOffer",
-                              "kind": "LinkedField",
-                              "name": "node",
-                              "plural": false,
-                              "selections": (v2/*: any*/),
-                              "storageKey": null
-                            }
-                          ],
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": "offers(first:5)"
-                    }
-                  ],
-                  "type": "CommerceOfferOrder",
-                  "abstractKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "orderConnection(first:10,states:[\"APPROVED\",\"PROCESSING_APPROVAL\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
     }
   ],
   "type": "Conversation",
@@ -289,6 +155,6 @@ return {
 };
 })();
 
-(node as any).hash = "5197af90bf7e48e87a7e32f7d274a607";
+(node as any).hash = "a2ea8d10ded9037a13b77522346860c5";
 
 export default node;

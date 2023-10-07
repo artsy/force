@@ -18,61 +18,71 @@ import {
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 import { useState } from "react"
+import { useConversationsContext } from "Apps/Conversations2/ConversationsContext"
+import { ConversationMakeOfferButton } from "Apps/Conversations2/components/ConversationCTA/ConversationMakeOfferButton"
+import { ConversationPurchaseButton } from "Apps/Conversations2/components/ConversationCTA/ConversationPurchaseButton"
+import { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
 
 interface ConversationConfirmModalProps {
   artwork: ConversationConfirmModal_artwork$key
-  onCloseModal: () => void
-  show: boolean
+  conversation: useConversationPurchaseButtonData_conversation$key
 }
 
 export const ConversationConfirmModal: React.FC<ConversationConfirmModalProps> = ({
-  show,
-  onCloseModal,
   artwork,
+  conversation,
 }) => {
   const data = useFragment(FRAGMENT, artwork)
+
+  const {
+    isCreatingOfferOrder,
+    isConfirmModalVisible,
+    hideSelectEditionSetModal,
+  } = useConversationsContext()
 
   const [selectedEdition, setSelectedEdition] = useState<string | null>(
     data.editionSets?.length === 1 ? data.editionSets[0]!.internalID : null
   )
 
-  // const { submitMutation } =
+  const isActionable =
+    !!data?.isOfferable ||
+    !!data?.isOfferableFromInquiry ||
+    !!data?.isAcquireable
 
-  if (!show) {
+  if (!isActionable) {
+    return null
+  }
+
+  if (!isConfirmModalVisible) {
     return null
   }
 
   const detailItems = getArtworkDetailItems(data)
 
-  const showEditionSetsSelectBox = data.isEdition && data.editionSets?.length
-  // createsOfferOrder
+  const showEditionSetsSelectBox = Boolean(
+    data.isEdition && data.editionSets?.length
+  )
 
   return (
     <ModalDialog
-      onClose={onCloseModal}
+      onClose={hideSelectEditionSetModal}
       title="Select edition set"
       footer={
         <Flex flexGrow={1}>
-          <Button variant="secondaryBlack" flexGrow={1} onClick={onCloseModal}>
+          <Button
+            variant="secondaryBlack"
+            flexGrow={1}
+            onClick={hideSelectEditionSetModal}
+          >
             Cancel
           </Button>
           <Spacer x={1} y={1} />
-          {/* TODO:
-            https://github.com/artsy/force/blob/e08c99819443c2e044a0306c6b5b43d4d64ce332/src/Apps/Conversation/Components/Conversation.tsx#L271-L278
-          */}
-          <Button
-            onClick={event => {
-              // onClick?.(event)
-              // handleCreateInquiryOrder()
-            }}
-            loading={isCommittingMutation}
-            disabled={disabled}
-            variant={variant}
-            flexGrow={1}
-          >
-            {children}
-          </Button>
-          ){/* <ConfirmArtworkButtonFragmentContainer */}
+
+          {isCreatingOfferOrder ? (
+            <ConversationMakeOfferButton conversation={conversation} />
+          ) : (
+            <ConversationPurchaseButton conversation={conversation} />
+          )}
         </Flex>
       }
     >
@@ -121,7 +131,7 @@ export const ConversationConfirmModal: React.FC<ConversationConfirmModalProps> =
 
       {showEditionSetsSelectBox && (
         <Flex flexDirection="column">
-          {data.editionSets.map((edition, index) => {
+          {data.editionSets?.map((edition, index) => {
             if (!edition) {
               return null
             }
@@ -187,6 +197,9 @@ const FRAGMENT = graphql`
     publisher
     saleMessage
     title
+    isOfferable
+    isAcquireable
+    isOfferableFromInquiry
     attributionClass {
       name
     }

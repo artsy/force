@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e16339cf1455f438ef4194c78f3cb38e>>
+ * @generated SignedSource<<660c35beefcef20e228511e4b05c1d72>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -401,9 +401,7 @@ return {
             "alias": null,
             "args": (v0/*: any*/),
             "filters": [
-              "type",
-              "toBeReplied",
-              "hasReply"
+              "type"
             ],
             "handle": "connection",
             "key": "ConversationsSidebar_viewer_conversationsConnection",

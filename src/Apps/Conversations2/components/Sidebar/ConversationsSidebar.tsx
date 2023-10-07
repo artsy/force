@@ -23,17 +23,9 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 10 }
           after: { type: "String" }
-          toBeReplied: { type: "Boolean" }
-          hasReply: { type: "Boolean" }
         )
         @refetchable(queryName: "ConversationsSidebarPaginationQuery") {
-        conversationsConnection(
-          first: $first
-          after: $after
-          type: USER
-          toBeReplied: $toBeReplied
-          hasReply: $hasReply
-        )
+        conversationsConnection(first: $first, after: $after, type: USER)
           @connection(
             key: "ConversationsSidebar_viewer_conversationsConnection"
           ) {

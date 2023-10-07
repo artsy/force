@@ -1,7 +1,6 @@
 import { Button, Spacer } from "@artsy/palette"
 import { useMakeInquiryOffer } from "Apps/Conversations2/mutations/useMakeInquiryOfferMutation"
 import { useState } from "react"
-import { graphql, useFragment } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
 import { ActionType, OwnerType, TappedMakeOffer } from "@artsy/cohesion"
 import { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"

@@ -1,12 +1,7 @@
 import { Button } from "@artsy/palette"
 import { useMakeInquiryOrder } from "Apps/Conversations2/mutations/useMakeInquiryOrderMutation"
 import { useState } from "react"
-import { graphql, useFragment } from "react-relay"
 import { useRouter } from "System/Router/useRouter"
-import {
-  ConversationPurchaseButton_conversation$data,
-  ConversationPurchaseButton_conversation$key,
-} from "__generated__/ConversationPurchaseButton_conversation.graphql"
 import { useTracking } from "react-tracking"
 import { ActionType, OwnerType, TappedBuyNow } from "@artsy/cohesion"
 import { useConversationsContext } from "Apps/Conversations2/ConversationsContext"

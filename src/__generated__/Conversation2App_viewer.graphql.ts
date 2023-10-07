@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<facdc371264ce5af6c3a4a5e4ade7bea>>
+ * @generated SignedSource<<1fa975d7d3474348ac59b0bf88800001>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,35 +20,13 @@ export type Conversation2App_viewer$key = {
 };
 
 const node: ReaderFragment = {
-  "argumentDefinitions": [
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "hasReply"
-    },
-    {
-      "defaultValue": null,
-      "kind": "LocalArgument",
-      "name": "toBeReplied"
-    }
-  ],
+  "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
   "name": "Conversation2App_viewer",
   "selections": [
     {
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "hasReply",
-          "variableName": "hasReply"
-        },
-        {
-          "kind": "Variable",
-          "name": "toBeReplied",
-          "variableName": "toBeReplied"
-        }
-      ],
+      "args": null,
       "kind": "FragmentSpread",
       "name": "ConversationsSidebar_viewer"
     }
@@ -57,6 +35,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "f35b00253a40703f1851be907dfdc057";
+(node as any).hash = "87e26f14718747b72e5b449b1ab38e85";
 
 export default node;

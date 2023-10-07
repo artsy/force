@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<18bd0be2c4199cbf188810b48d065227>>
+ * @generated SignedSource<<778938ac0d2d2983b75419ea350e2939>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -53,7 +53,10 @@ export type ConversationConfirmModal_artwork$data = {
     } | null;
   } | null;
   readonly internalID: string;
+  readonly isAcquireable: boolean | null;
   readonly isEdition: boolean | null;
+  readonly isOfferable: boolean | null;
+  readonly isOfferableFromInquiry: boolean | null;
   readonly manufacturer: string | null;
   readonly medium: string | null;
   readonly publisher: string | null;
@@ -77,7 +80,28 @@ var v0 = {
   "name": "internalID",
   "storageKey": null
 },
-v1 = [
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isOfferable",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isAcquireable",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isOfferableFromInquiry",
+  "storageKey": null
+},
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -86,21 +110,21 @@ v1 = [
     "storageKey": null
   }
 ],
-v2 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "in",
   "storageKey": null
 },
-v3 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "cm",
   "storageKey": null
 },
-v4 = [
+v7 = [
   {
     "alias": null,
     "args": null,
@@ -179,6 +203,9 @@ return {
       "name": "title",
       "storageKey": null
     },
+    (v1/*: any*/),
+    (v2/*: any*/),
+    (v3/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -265,7 +292,7 @@ return {
       "kind": "LinkedField",
       "name": "conditionDescription",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v4/*: any*/),
       "storageKey": null
     },
     {
@@ -275,7 +302,7 @@ return {
       "kind": "LinkedField",
       "name": "certificateOfAuthenticity",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v4/*: any*/),
       "storageKey": null
     },
     {
@@ -285,7 +312,7 @@ return {
       "kind": "LinkedField",
       "name": "framed",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v4/*: any*/),
       "storageKey": null
     },
     {
@@ -296,8 +323,8 @@ return {
       "name": "dimensions",
       "plural": false,
       "selections": [
-        (v2/*: any*/),
-        (v3/*: any*/)
+        (v5/*: any*/),
+        (v6/*: any*/)
       ],
       "storageKey": null
     },
@@ -308,7 +335,7 @@ return {
       "kind": "LinkedField",
       "name": "signatureInfo",
       "plural": false,
-      "selections": (v1/*: any*/),
+      "selections": (v4/*: any*/),
       "storageKey": null
     },
     {
@@ -327,27 +354,9 @@ return {
           "name": "editionOf",
           "storageKey": null
         },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isOfferableFromInquiry",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isOfferable",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "isAcquireable",
-          "storageKey": null
-        },
+        (v3/*: any*/),
+        (v1/*: any*/),
+        (v2/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -358,13 +367,13 @@ return {
           "selections": [
             {
               "kind": "InlineFragment",
-              "selections": (v4/*: any*/),
+              "selections": (v7/*: any*/),
               "type": "Money",
               "abstractKey": null
             },
             {
               "kind": "InlineFragment",
-              "selections": (v4/*: any*/),
+              "selections": (v7/*: any*/),
               "type": "PriceRange",
               "abstractKey": null
             }
@@ -379,8 +388,8 @@ return {
           "name": "dimensions",
           "plural": false,
           "selections": [
-            (v3/*: any*/),
-            (v2/*: any*/)
+            (v6/*: any*/),
+            (v5/*: any*/)
           ],
           "storageKey": null
         }
@@ -393,6 +402,6 @@ return {
 };
 })();
 
-(node as any).hash = "75c2a40635f4620c37c63ab118c71b46";
+(node as any).hash = "2cd94f3c3e9d16dc774846edcea888b7";
 
 export default node;
