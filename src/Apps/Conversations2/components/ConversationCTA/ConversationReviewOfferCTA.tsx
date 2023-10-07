@@ -25,15 +25,23 @@ export const ConversationReviewOfferCTA: React.FC<ConversationReviewOfferCTAProp
   const [showOrderModal, setShowOrderModal] = useState(false)
   const { trackEvent } = useTracking()
 
-  const {
-    message,
-    subMessage,
-    backgroundColor,
-    modalTitle,
-    modalUrl,
-    Icon,
-  } = useComputeProps({
+  const { hoursTillEnd, minutes } = useEventTiming({
+    currentTime: DateTime.local().toString(),
+    startAt: activeOrder?.lastOffer?.createdAt!,
+    endAt: activeOrder?.stateExpiresAt!,
+  })
+
+  if (!activeOrder) {
+    return null
+  }
+  if (!activeOrder.buyerAction) {
+    return null
+  }
+
+  const props = getProps({
     activeOrder,
+    hoursTillEnd,
+    minutes,
   })
 
   const handleCTAClick = () => {
@@ -41,7 +49,7 @@ export const ConversationReviewOfferCTA: React.FC<ConversationReviewOfferCTAProp
       action: ActionType.tappedViewOffer,
       context_owner_type: OwnerType.conversation,
       impulse_conversation_id: data.internalID as string,
-      subject: message,
+      subject: props.message,
     }
 
     trackEvent(trackingProps)
@@ -55,9 +63,9 @@ export const ConversationReviewOfferCTA: React.FC<ConversationReviewOfferCTAProp
         <ModalDialog
           width={900}
           onClose={() => setShowOrderModal(false)}
-          title={modalTitle}
+          title={props.modalTitle}
         >
-          <IFrame src={`${modalUrl}?isModal=true`}></IFrame>
+          <IFrame src={`${props.modalUrl}?isModal=true`}></IFrame>
         </ModalDialog>
       )}
 
@@ -66,22 +74,22 @@ export const ConversationReviewOfferCTA: React.FC<ConversationReviewOfferCTAProp
         py={1}
         justifyContent="space-between"
         alignItems="center"
-        bg={backgroundColor}
+        bg={props.backgroundColor}
         flexDirection="row"
         minHeight={60}
         style={{ cursor: "pointer" }}
         onClick={handleCTAClick}
       >
         <Flex flexDirection="row">
-          <Icon mt={0.5} fill="white100" />
+          {/* <props.Icon mt={0.5} fill="white100" /> */}
 
           <Flex flexDirection="column" pl={1}>
             <Text color="white100" variant="sm">
-              {message}
+              {props.message}
             </Text>
 
             <Text color="white100" variant="xs">
-              {subMessage}
+              {props.subMessage}
             </Text>
           </Flex>
         </Flex>
@@ -94,10 +102,14 @@ export const ConversationReviewOfferCTA: React.FC<ConversationReviewOfferCTAProp
 
 interface GetCTAAttributesProps {
   activeOrder: any
+  hoursTillEnd: number
+  minutes: string
 }
 
-const useComputeProps = ({
+const getProps = ({
   activeOrder,
+  hoursTillEnd,
+  minutes,
 }: GetCTAAttributesProps): {
   backgroundColor: Color
   message: string
@@ -106,12 +118,6 @@ const useComputeProps = ({
   modalTitle: string
   Icon: React.FC<any>
 } => {
-  const { hoursTillEnd, minutes } = useEventTiming({
-    currentTime: DateTime.local().toString(),
-    startAt: activeOrder.lastOffer?.createdAt!,
-    endAt: activeOrder.stateExpiresAt!,
-  })
-
   const expiresIn =
     Number(hoursTillEnd) < 1 ? `${minutes}m` : `${Math.round(hoursTillEnd)}hr`
 

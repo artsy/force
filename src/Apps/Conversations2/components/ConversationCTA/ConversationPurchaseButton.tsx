@@ -38,12 +38,13 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
     tracking.trackEvent(tappedPurchaseEvent)
   }
 
+  // TODO: Fix display of this
   // Opens a modal window to select an edition set on non-unique artworks
   if (!data.isUniqueArtwork) {
     return (
       <Button
         size="large"
-        flexGrow={1}
+        // flexGrow={1}
         onClick={() => {
           trackPurchaseEvent()
 

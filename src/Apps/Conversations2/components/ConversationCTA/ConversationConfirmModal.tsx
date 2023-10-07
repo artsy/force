@@ -53,9 +53,10 @@ export const ConversationConfirmModal: React.FC<ConversationConfirmModalProps> =
     return null
   }
 
-  if (!isConfirmModalVisible) {
-    return null
-  }
+  // TODO: Fix show / hide visibility
+  // if (!isConfirmModalVisible) {
+  //   return null
+  // }
 
   const detailItems = getArtworkDetailItems(data)
 

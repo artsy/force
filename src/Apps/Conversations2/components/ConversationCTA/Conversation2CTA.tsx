@@ -1,4 +1,4 @@
-import { Flex, FlexProps, Text } from "@artsy/palette"
+import { Box, Flex, FlexProps, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { ConversationMakeOfferButton } from "Apps/Conversations2/components/ConversationCTA/ConversationMakeOfferButton"
 import { ConversationPurchaseButton } from "Apps/Conversations2/components/ConversationCTA/ConversationPurchaseButton"
@@ -6,7 +6,6 @@ import { graphql, useFragment } from "react-relay"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
 import { Conversation2CTA_conversation$key } from "__generated__/Conversation2CTA_conversation.graphql"
-import { extractNodes } from "Utils/extractNodes"
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { ConversationConfirmModal } from "Apps/Conversations2/components/ConversationCTA/ConversationConfirmModal"
 import { ConversationReviewOfferCTA } from "Apps/Conversations2/components/ConversationCTA/ConversationReviewOfferCTA"
@@ -53,7 +52,9 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
           </Flex>
         </Flex>
 
-        <ConversationConfirmModal conversation={data} artwork={artwork} />
+        <Box position="absolute">
+          <ConversationConfirmModal conversation={data} artwork={artwork} />
+        </Box>
 
         <Flex flexDirection="row">
           {artwork.isAcquireable && (
