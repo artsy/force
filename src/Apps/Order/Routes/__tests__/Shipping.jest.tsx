@@ -1603,7 +1603,7 @@ describe("Shipping", () => {
     // automatically whenever a page loads with a default saved address, when the user
     // edits a saved address, etc? Current modeling keeps these things somewhat separate.
     // However, if we want to do it it shouldn't be hard - just call handleSubmit imperatively.
-    describe.skip("with saved addresses", () => {
+    describe("with saved addresses", () => {
       describe("Artsy shipping international only", () => {
         describe("with artwork located in the US", () => {
           it("sets shipping on order if the collector is in the EU", async () => {

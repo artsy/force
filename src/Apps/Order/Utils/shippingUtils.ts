@@ -9,6 +9,14 @@ import {
 import { NEW_ADDRESS } from "Apps/Order/Components/SavedAddresses"
 import { SetShippingMutation$data } from "__generated__/SetShippingMutation.graphql"
 import { AddressType, EMPTY_ADDRESS } from "Components/Address/utils"
+import { extractNodes } from "Utils/extractNodes"
+import {
+  FulfillmentDetailsFormProps,
+  FulfillmentValues,
+} from "Apps/Order/Routes/Shipping/FulfillmentDetailsForm"
+import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
+import { ShippingProps } from "Apps/Order/Routes/Shipping"
+
 export enum FulfillmentType {
   SHIP = "SHIP",
   PICKUP = "PICKUP",
@@ -98,96 +106,9 @@ export const getShippingOption = (
   }
 }
 
-export const defaultShippingAddressIndex = (
-  me: Shipping_me$data,
-  order: Shipping_order$data
-): string => {
-  const addressList = me.addressConnection?.edges
-
-  if (addressList && addressList.length > 0) {
-    let defaultAddressID: string
-
-    if (
-      order.requestedFulfillment &&
-      (order.requestedFulfillment.__typename === "CommerceShip" ||
-        order.requestedFulfillment.__typename === "CommerceShipArta")
-    ) {
-      const {
-        addressLine1,
-        addressLine2,
-        city,
-        country,
-        name,
-        phoneNumber,
-        postalCode,
-        region,
-      } = order.requestedFulfillment
-      defaultAddressID = addressList?.find(
-        address =>
-          address?.node?.addressLine1 == addressLine1 &&
-          address?.node?.addressLine2 == addressLine2 &&
-          address?.node?.city == city &&
-          address?.node?.country == country &&
-          address?.node?.name == name &&
-          address?.node?.postalCode == postalCode &&
-          address?.node?.region == region &&
-          address?.node?.phoneNumber == phoneNumber
-      )?.node?.internalID!
-    } else {
-      defaultAddressID = addressList.find(address => address?.node?.isDefault)
-        ?.node?.internalID!
-    }
-
-    return defaultAddressID
-      ? defaultAddressID
-      : addressList[0]?.node?.internalID!
-  } else {
-    return NEW_ADDRESS
-  }
-}
-
-export const startingPhoneNumber = (
-  me: Shipping_me$data,
-  order: Shipping_order$data
-) => {
-  return order.requestedFulfillment &&
-    (order.requestedFulfillment.__typename === "CommerceShip" ||
-      order.requestedFulfillment.__typename === "CommerceShipArta" ||
-      order.requestedFulfillment.__typename === "CommercePickup")
-    ? order.requestedFulfillment.phoneNumber!
-    : ""
-}
-
-export const startingAddress = (
-  me: Shipping_me$data,
-  order: Shipping_order$data
-) => {
-  const initialAddress = {
-    ...emptyAddress,
-    country: order.lineItems?.edges?.[0]?.node?.artwork?.shippingCountry!,
-
-    // We need to pull out _only_ the values specified by the Address type,
-    // since our state will be used for Relay variables later on. The
-    // easiest way to do this is with the emptyAddress.
-    ...pick(order.requestedFulfillment, Object.keys(emptyAddress)),
-  }
-  return initialAddress
-}
-
 export type MutationAddressResponse = NonNullable<
   UpdateUserAddressMutation$data["updateUserAddress"]
 >["userAddressOrErrors"]
-
-// Gravity address has isDefault and addressLine3 but exchange does not
-export const convertShippingAddressForExchange = (
-  address: SavedAddressType | MutationAddressResponse
-): AddressType => {
-  return Object.assign(
-    {},
-    EMPTY_ADDRESS,
-    omit(address, ["id", "isDefault", "internalID", "addressLine3", "errors"])
-  )
-}
 
 export const convertShippingAddressToMutationInput = (
   address: SavedAddressType
@@ -199,19 +120,6 @@ export const convertShippingAddressToMutationInput = (
     },
     ["isDefault", "internalID", "id", "__typename"]
   )
-}
-
-export const getFulfillmentType = (
-  order: Shipping_order$data
-): FulfillmentType => {
-  const requestedFulfillmentType = order.requestedFulfillment?.__typename
-  switch (requestedFulfillmentType) {
-    case "CommercePickup":
-      return FulfillmentType.PICKUP
-    case "CommerceShip":
-    default:
-      return FulfillmentType.SHIP
-  }
 }
 
 export const getDefaultShippingQuoteId = (order: Shipping_order$data) => {

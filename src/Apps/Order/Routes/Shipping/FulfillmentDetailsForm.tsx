@@ -18,7 +18,6 @@ import {
 import {
   FulfillmentType,
   ORDER_EMPTY_ADDRESS,
-  addressWithFallbackValues,
   ShippingAddressFormValues,
   getDefaultUserAddress,
   getShippingOption,
@@ -29,9 +28,9 @@ import {
 } from "Components/Address/useAddressAutocomplete"
 import { postalCodeValidator } from "Components/Address/utils"
 import {
-  COUNTRY_SELECT_OPTIONS,
+  // ALL_COUNTRY_SELECT_OPTIONS,
   CountrySelect,
-  EU_COUNTRY_SELECT_OPTIONS,
+  // EU_COUNTRY_SELECT_OPTIONS,
 } from "Components/CountrySelect"
 import {
   Form,
@@ -50,6 +49,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { SavedAddressesFragmentContainer as SavedAddresses } from "Apps/Order/Components/SavedAddresses"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Collapse } from "Apps/Order/Components/Collapse"
+import { useShippingContext } from "Apps/Order/Routes/Shipping/ShippingContext"
 
 const VALIDATION_SCHEMA = Yup.object().shape({
   fulfillmentType: Yup.string().oneOf(Object.values(FulfillmentType)),
@@ -112,150 +112,25 @@ export interface FulfillmentDetailsFormProps {
       >
     >
   >
+  initialFulfillmentValues: FulfillmentValues
   me: FulfillmentDetailsForm_me$data
   order: FulfillmentDetailsForm_order$data
 }
 
-const getShippingRestrictions = (
-  order: FulfillmentDetailsFormProps["order"]
-): {
-  lockShippingCountryTo: "EU" | string | null
-  shipsFrom: string
-} => {
-  const firstArtwork = extractNodes(order.lineItems)[0]!.artwork!
-  const shipsFrom = firstArtwork.shippingCountry!
-  const domesticOnly = !!firstArtwork.onlyShipsDomestically
-  const euOrigin = !!firstArtwork.euShippingOrigin
-
-  const lockShippingCountryTo = domesticOnly
-    ? euOrigin
-      ? "EU"
-      : shipsFrom
-    : null
-
-  const availableShippingCountries = !!lockShippingCountryTo
-    ? lockShippingCountryTo === "EU"
-      ? EU_COUNTRY_SELECT_OPTIONS
-      : [lockShippingCountryTo]
-    : COUNTRY_SELECT_OPTIONS
-  return { lockShippingCountryTo, shipsFrom, availableShippingCountries }
-}
-
-// Get initial values for the form using what may already be saved
-// on the order and the user's saved addresses.
-const getInitialValues = (
-  me: FulfillmentDetailsFormProps["me"],
-  order: FulfillmentDetailsFormProps["order"]
-): FulfillmentValues => {
-  const orderFulfillmentType = getShippingOption(order) || FulfillmentType.SHIP
-  const { requestedFulfillment } = order
-  const orderAddress: Partial<ShipValues["attributes"]> = omitBy(
-    pick(order.requestedFulfillment, Object.keys(ORDER_EMPTY_ADDRESS)),
-    isNil
-  )
-
-  if (orderFulfillmentType === FulfillmentType.PICKUP) {
-    return {
-      fulfillmentType: FulfillmentType.PICKUP,
-      attributes: {
-        name: orderAddress.name || "",
-        phoneNumber: orderAddress.phoneNumber || "",
-      },
-    }
-  }
-
-  const { lockShippingCountryTo, shipsFrom } = getShippingRestrictions(order)
-
-  // humble criteria for starting address if it's already saved on order:
-  // just a few values present. Maybe there is a better way?
-  // TODO: w/e it is, could be shared logic later when determining
-  // shipping route activeStep and automatically loading shipping quotes.
-  const useOrderForAddress =
-    orderFulfillmentType === FulfillmentType.SHIP &&
-    !!requestedFulfillment &&
-    ["name", "phoneNumber", "addressLine1", "city", "country"].every(
-      key => !!requestedFulfillment[key]
-    )
-
-  const savedAddresses = extractNodes(me?.addressConnection) ?? []
-  const defaultUserAddress = getDefaultUserAddress(savedAddresses)
-
-  // TODO: Maybe we don't need to look too hard at saved addresses here - let the SavedAddresses automatically
-  // set the default user address when they mount
-
-  // TODO: If the initial address is US but the country select doesn't show it bc is it EU only
-  // (as one example) then the form state will stay on US (invalid) until the user updates the
-  // country input
-
-  // TODO:
-  // - need to check if address is in a valid shipping country, incl. saved addresses
-  // - could also disable saved addresses if they don't match the country list
-  const finalStartingAddress = useOrderForAddress
-    ? orderAddress
-    : getDefaultUserAddress(extractNodes(me?.addressConnection) ?? []) ?? {}
-
-  // Todo: initial address must be in a valid shipping country
-  const artworkCountry: string = order.lineItems?.edges?.[0]?.node?.artwork
-    ?.shippingCountry!
-
-  const initialAddress: ShipValues["attributes"] = {
-    ...addressWithFallbackValues(finalStartingAddress),
-
-    // TODO: Expose existing addressVerifiedBy from order?
-    // Maybe not, they go through the flow when they submit the form
-    // and that is desirable. But what if it is a SAVED USER ADDRESS?
-    // That could be a problem. Thoughts:
-    // - If the user edits a saved address, we can verify and
-    //   save to user from THAT form (in the future), then keep it in these
-    //   values for saving to the order.
-    // - If we know a user is using a saved address,
-    //   we can skip verification no matter what (new form value)
-    // - If we have an initial verifiedBy value from the relay order, we can
-    //   set it here, then unset it if they edit the address
-    // - We might want to add another non-form value similar to saveAddress
-    //   rather than relying on the boolean
-    addressVerifiedBy: null,
-    // TODO: only if they have no saved addresses
-    saveAddress: true,
-  }
-
-  const initialValues = {
-    fulfillmentType: FulfillmentType.SHIP,
-    attributes: initialAddress,
-  }
-  if (!initialValues.attributes.country) {
-    initialValues.attributes.country = artworkCountry
-  }
-  // console.log({
-  //   useOrderForAddress,
-  //   lockShippingCountryTo,
-  //   orderAddress,
-  //   defaultUserAddress: getDefaultUserAddress(
-  //     extractNodes(me?.addressConnection) ?? []
-  //   ),
-  //   artworkCountry,
-  //   initialAddress,
-  //   initialValues,
-  // })
-
-  return initialValues
-}
-
 export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
   active,
+  initialFulfillmentValues,
   ...props
 }) => {
-  const orderValues = getInitialValues(props.me, props.order)
   const firstArtwork = extractNodes(props.order.lineItems)[0]!.artwork!
   const savedAddresses = compact(
     extractNodes(props.me?.addressConnection) ?? []
   )
+  const { lockShippingCountryTo } = useShippingContext()
 
   const availableFulfillmentTypes: FulfillmentType[] = firstArtwork.pickupAvailable
     ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
     : [FulfillmentType.SHIP]
-
-  const { lockShippingCountryTo } = getShippingRestrictions(props.order)
 
   const addressVerificationUSEnabled = !!useFeatureFlag(
     "address_verification_us"
@@ -268,9 +143,12 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
     boolean
   >(false)
 
+  // TODO: Switching between ship/pickup resets form + country
+  console.log({ initialFulfillmentValues })
+
   return (
     <Formik<FulfillmentValues>
-      initialValues={orderValues}
+      initialValues={initialFulfillmentValues}
       validationSchema={VALIDATION_SCHEMA}
       onSubmit={(values, helpers) => {
         if (
@@ -556,40 +434,30 @@ export const FulfillmentDetailsForm: FC<FulfillmentDetailsFormProps> = ({
                           onBlur={handleBlur}
                           options={autocompleteOptions}
                           onSelect={option => {
-                            const hasSecondarySuggestions = option.entries > 1
-                            if (hasSecondarySuggestions) {
-                              // Fill in the address form with the selection, but skip line 2
-                              Object.entries(option.address).forEach(
-                                ([key, value]) => {
-                                  if (key === "addressLine2") return
-                                  formikProps.setFieldValue(
-                                    `attributes.${key}`,
-                                    value
-                                  )
-                                }
-                              )
-                              fetchSecondarySuggestions(
-                                values.attributes.addressLine1,
-                                option
-                              )
+                            Object.entries(option.address).forEach(
+                              ([key, value]) => {
+                                formikProps.setFieldValue(
+                                  `attributes.${key}`,
+                                  value
+                                )
+                              }
+                            )
+                            // TODO: Update w latest autocomplete code
+                            // setSelectedAddressOption({
+                            //   option: option.value,
+                            //   edited: false,
+                            // })
+                            // const event: SelectedItemFromAddressAutoCompletion = {
+                            //   action:
+                            //     ActionType.selectedItemFromAddressAutoCompletion,
+                            //   context_module: ContextModule.ordersShipping,
+                            //   context_owner_type: OwnerType.ordersShipping,
+                            //   context_owner_id: contextPageOwnerId,
+                            //   input: values.attributes.addressLine1,
+                            //   item: option.value,
+                            // }
 
-                              // TODO: make the secondary options appear
-                              // Disabled because it doesn't work and never did.
-                              //
-                              // console.log({ autocompleteRefCurrent: autocompleteRef.current })
-                              // setTimeout(() => {
-                              //   autocompleteRef.current?.focus()
-                              // }, 1000)
-                            } else {
-                              Object.entries(option.address).forEach(
-                                ([key, value]) => {
-                                  formikProps.setFieldValue(
-                                    `attributes.${key}`,
-                                    value
-                                  )
-                                }
-                              )
-                            }
+                            // trackEvent(event)
                           }}
                           error={
                             (touched as FormikTouched<ShipValues>).attributes
