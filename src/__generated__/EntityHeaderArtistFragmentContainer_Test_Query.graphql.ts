@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<409c7e330251fefa1cc81b89be719f11>>
+ * @generated SignedSource<<22174615c8e0e6df7297b994caddc19b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -30,10 +30,11 @@ var v0 = [
   }
 ],
 v1 = {
-  "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
 },
 v2 = {
   "enumValues": null,
@@ -43,7 +44,7 @@ v2 = {
 },
 v3 = {
   "enumValues": null,
-  "nullable": true,
+  "nullable": false,
   "plural": false,
   "type": "String"
 },
@@ -52,6 +53,12 @@ v4 = {
   "nullable": false,
   "plural": false,
   "type": "ID"
+},
+v5 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "String"
 };
 return {
   "fragment": {
@@ -162,66 +169,72 @@ return {
             "storageKey": null
           },
           {
-            "alias": "avatar",
+            "alias": null,
             "args": null,
-            "concreteType": "Image",
+            "concreteType": "Artwork",
             "kind": "LinkedField",
-            "name": "image",
+            "name": "coverArtwork",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 45
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 45
-                  }
-                ],
-                "concreteType": "CroppedImageUrl",
+                "alias": "avatar",
+                "args": null,
+                "concreteType": "Image",
                 "kind": "LinkedField",
-                "name": "cropped",
+                "name": "image",
                 "plural": false,
                 "selections": [
                   {
                     "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "src",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "srcSet",
-                    "storageKey": null
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 45
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 45
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "src",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "srcSet",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": "cropped(height:45,width:45)"
                   }
                 ],
-                "storageKey": "cropped(height:45,width:45)"
-              }
+                "storageKey": null
+              },
+              (v1/*: any*/)
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v1/*: any*/)
         ],
         "storageKey": "artist(id:\"example\")"
       }
     ]
   },
   "params": {
-    "cacheID": "948bdb1f7d5183c906dc380b4585ee5c",
+    "cacheID": "b1018a660079dde863738982dcb5aa2a",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -231,20 +244,6 @@ return {
           "plural": false,
           "type": "Artist"
         },
-        "artist.avatar": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "artist.avatar.cropped": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CroppedImageUrl"
-        },
-        "artist.avatar.cropped.src": (v1/*: any*/),
-        "artist.avatar.cropped.srcSet": (v1/*: any*/),
         "artist.counts": {
           "enumValues": null,
           "nullable": true,
@@ -253,18 +252,39 @@ return {
         },
         "artist.counts.artworks": (v2/*: any*/),
         "artist.counts.forSaleArtworks": (v2/*: any*/),
-        "artist.formattedNationalityAndBirthday": (v3/*: any*/),
-        "artist.href": (v3/*: any*/),
+        "artist.coverArtwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artist.coverArtwork.avatar": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "artist.coverArtwork.avatar.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "artist.coverArtwork.avatar.cropped.src": (v3/*: any*/),
+        "artist.coverArtwork.avatar.cropped.srcSet": (v3/*: any*/),
+        "artist.coverArtwork.id": (v4/*: any*/),
+        "artist.formattedNationalityAndBirthday": (v5/*: any*/),
+        "artist.href": (v5/*: any*/),
         "artist.id": (v4/*: any*/),
-        "artist.initials": (v3/*: any*/),
+        "artist.initials": (v5/*: any*/),
         "artist.internalID": (v4/*: any*/),
-        "artist.name": (v3/*: any*/),
+        "artist.name": (v5/*: any*/),
         "artist.slug": (v4/*: any*/)
       }
     },
     "name": "EntityHeaderArtistFragmentContainer_Test_Query",
     "operationKind": "query",
-    "text": "query EntityHeaderArtistFragmentContainer_Test_Query {\n  artist(id: \"example\") {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query EntityHeaderArtistFragmentContainer_Test_Query {\n  artist(id: \"example\") {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

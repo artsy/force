@@ -34,7 +34,7 @@ describe("CellArtist", () => {
     it("renders the initials instead", () => {
       renderWithRelay({
         Artist: () => ({
-          image: null,
+          coverArtwork: null,
           initials: "EA",
         }),
       })

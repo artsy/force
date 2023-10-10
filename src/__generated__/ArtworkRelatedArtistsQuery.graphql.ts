@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8e18d2466c9e628388b64b5f8c3d952d>>
+ * @generated SignedSource<<4e8d368bcc586744e3b778bea73e23b4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -240,49 +240,61 @@ return {
                                 "storageKey": null
                               },
                               {
-                                "alias": "avatar",
+                                "alias": null,
                                 "args": null,
-                                "concreteType": "Image",
+                                "concreteType": "Artwork",
                                 "kind": "LinkedField",
-                                "name": "image",
+                                "name": "coverArtwork",
                                 "plural": false,
                                 "selections": [
                                   {
-                                    "alias": null,
-                                    "args": [
-                                      {
-                                        "kind": "Literal",
-                                        "name": "height",
-                                        "value": 45
-                                      },
-                                      {
-                                        "kind": "Literal",
-                                        "name": "width",
-                                        "value": 45
-                                      }
-                                    ],
-                                    "concreteType": "CroppedImageUrl",
+                                    "alias": "avatar",
+                                    "args": null,
+                                    "concreteType": "Image",
                                     "kind": "LinkedField",
-                                    "name": "cropped",
+                                    "name": "image",
                                     "plural": false,
                                     "selections": [
                                       {
                                         "alias": null,
-                                        "args": null,
-                                        "kind": "ScalarField",
-                                        "name": "src",
-                                        "storageKey": null
-                                      },
-                                      {
-                                        "alias": null,
-                                        "args": null,
-                                        "kind": "ScalarField",
-                                        "name": "srcSet",
-                                        "storageKey": null
+                                        "args": [
+                                          {
+                                            "kind": "Literal",
+                                            "name": "height",
+                                            "value": 45
+                                          },
+                                          {
+                                            "kind": "Literal",
+                                            "name": "width",
+                                            "value": 45
+                                          }
+                                        ],
+                                        "concreteType": "CroppedImageUrl",
+                                        "kind": "LinkedField",
+                                        "name": "cropped",
+                                        "plural": false,
+                                        "selections": [
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "kind": "ScalarField",
+                                            "name": "src",
+                                            "storageKey": null
+                                          },
+                                          {
+                                            "alias": null,
+                                            "args": null,
+                                            "kind": "ScalarField",
+                                            "name": "srcSet",
+                                            "storageKey": null
+                                          }
+                                        ],
+                                        "storageKey": "cropped(height:45,width:45)"
                                       }
                                     ],
-                                    "storageKey": "cropped(height:45,width:45)"
-                                  }
+                                    "storageKey": null
+                                  },
+                                  (v5/*: any*/)
                                 ],
                                 "storageKey": null
                               },
@@ -335,12 +347,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0602d02e693b4d4535abb0b0ea101027",
+    "cacheID": "f32020bfc41868b3a6fefc5c3f69cf19",
     "id": null,
     "metadata": {},
     "name": "ArtworkRelatedArtistsQuery",
     "operationKind": "query",
-    "text": "query ArtworkRelatedArtistsQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkRelatedArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkRelatedArtists_artwork on Artwork {\n  slug\n  artist {\n    href\n    related {\n      artistsConnection(kind: MAIN, first: 6, after: \"\") {\n        pageInfo {\n          hasNextPage\n          endCursor\n        }\n        edges {\n          node {\n            ...EntityHeaderArtist_artist\n            id\n            __typename\n          }\n          cursor\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtworkRelatedArtistsQuery(\n  $slug: String!\n) {\n  artwork(id: $slug) {\n    ...ArtworkRelatedArtists_artwork\n    id\n  }\n}\n\nfragment ArtworkRelatedArtists_artwork on Artwork {\n  slug\n  artist {\n    href\n    related {\n      artistsConnection(kind: MAIN, first: 6, after: \"\") {\n        pageInfo {\n          hasNextPage\n          endCursor\n        }\n        edges {\n          node {\n            ...EntityHeaderArtist_artist\n            id\n            __typename\n          }\n          cursor\n        }\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

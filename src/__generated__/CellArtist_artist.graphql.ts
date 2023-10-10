@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7bd6f3b8b95c26f701721a10a6071d6f>>
+ * @generated SignedSource<<a237ddef5b7f33d207095c65dcd04e66>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,15 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CellArtist_artist$data = {
-  readonly href: string | null;
-  readonly image: {
-    readonly cropped: {
-      readonly src: string;
-      readonly srcSet: string;
+  readonly coverArtwork: {
+    readonly image: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
     } | null;
   } | null;
+  readonly href: string | null;
   readonly initials: string | null;
   readonly internalID: string;
   readonly name: string | null;
@@ -79,54 +81,65 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": null,
-      "concreteType": "Image",
+      "concreteType": "Artwork",
       "kind": "LinkedField",
-      "name": "image",
+      "name": "coverArtwork",
       "plural": false,
       "selections": [
         {
           "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "height",
-              "value": 334
-            },
-            {
-              "kind": "Literal",
-              "name": "version",
-              "value": [
-                "larger",
-                "large"
-              ]
-            },
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 445
-            }
-          ],
-          "concreteType": "CroppedImageUrl",
+          "args": null,
+          "concreteType": "Image",
           "kind": "LinkedField",
-          "name": "cropped",
+          "name": "image",
           "plural": false,
           "selections": [
             {
               "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "src",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "srcSet",
-              "storageKey": null
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "height",
+                  "value": 334
+                },
+                {
+                  "kind": "Literal",
+                  "name": "version",
+                  "value": [
+                    "larger",
+                    "large"
+                  ]
+                },
+                {
+                  "kind": "Literal",
+                  "name": "width",
+                  "value": 445
+                }
+              ],
+              "concreteType": "CroppedImageUrl",
+              "kind": "LinkedField",
+              "name": "cropped",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "src",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "srcSet",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
             }
           ],
-          "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -136,6 +149,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a634b853c479acee4d8244440229e4d1";
+(node as any).hash = "fa837b3e4d696b81b95128563de55e95";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<03a9239c8d6bd591e64197cb6bdeaf52>>
+ * @generated SignedSource<<c02410a81ed18f864770b9bad095abe3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -282,7 +282,19 @@ return {
                             ],
                             "storageKey": null
                           },
-                          (v13/*: any*/)
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "Artwork",
+                            "kind": "LinkedField",
+                            "name": "coverArtwork",
+                            "plural": false,
+                            "selections": [
+                              (v13/*: any*/),
+                              (v14/*: any*/)
+                            ],
+                            "storageKey": null
+                          }
                         ],
                         "type": "Artist",
                         "abstractKey": null
@@ -470,12 +482,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7375c06611ca2f897b12d13f9e73a438",
+    "cacheID": "b221e1646b4bd5ddcd067838e4eff78c",
     "id": null,
     "metadata": {},
     "name": "OnboardingSearchResultsQuery",
     "operationKind": "query",
-    "text": "query OnboardingSearchResultsQuery(\n  $term: String!\n  $entities: [SearchEntity!]!\n) {\n  viewer {\n    ...OnboardingSearchResults_viewer_plJt2\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment OnboardingSearchResults_viewer_plJt2 on Viewer {\n  matchConnection(term: $term, entities: $entities, first: 10, mode: AUTOSUGGEST) {\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          internalID\n          ...EntityHeaderArtist_artist\n        }\n        ... on Profile {\n          internalID\n          owner {\n            __typename\n            ... on Partner {\n              ...EntityHeaderPartner_partner\n            }\n            ... on Node {\n              __isNode: __typename\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on Feature {\n          id\n        }\n        ... on Page {\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "query OnboardingSearchResultsQuery(\n  $term: String!\n  $entities: [SearchEntity!]!\n) {\n  viewer {\n    ...OnboardingSearchResults_viewer_plJt2\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderPartner_partner on Partner {\n  internalID\n  type\n  slug\n  href\n  name\n  initials\n  locationsConnection(first: 15) {\n    edges {\n      node {\n        city\n        id\n      }\n    }\n  }\n  categories {\n    name\n    slug\n    id\n  }\n  profile {\n    internalID\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    icon {\n      cropped(width: 45, height: 45, version: [\"untouched-png\", \"large\", \"square\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment OnboardingSearchResults_viewer_plJt2 on Viewer {\n  matchConnection(term: $term, entities: $entities, first: 10, mode: AUTOSUGGEST) {\n    edges {\n      node {\n        __typename\n        ... on Artist {\n          internalID\n          ...EntityHeaderArtist_artist\n        }\n        ... on Profile {\n          internalID\n          owner {\n            __typename\n            ... on Partner {\n              ...EntityHeaderPartner_partner\n            }\n            ... on Node {\n              __isNode: __typename\n              id\n            }\n            ... on FairOrganizer {\n              id\n            }\n          }\n          id\n        }\n        ... on Node {\n          __isNode: __typename\n          id\n        }\n        ... on Feature {\n          id\n        }\n        ... on Page {\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

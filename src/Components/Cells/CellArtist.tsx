@@ -30,7 +30,7 @@ const CellArtist: FC<CellArtistProps> = ({
   ...rest
 }) => {
   const width = mode === "GRID" ? "100%" : DEFAULT_CELL_WIDTH
-  const image = artist.image?.cropped
+  const image = artist.coverArtwork?.image?.cropped
 
   return (
     <RouterLink
@@ -114,10 +114,12 @@ export const CellArtistFragmentContainer = createFragmentContainer(CellArtist, {
       name
       href
       initials
-      image {
-        cropped(width: 445, height: 334, version: ["larger", "large"]) {
-          src
-          srcSet
+      coverArtwork {
+        image {
+          cropped(width: 445, height: 334, version: ["larger", "large"]) {
+            src
+            srcSet
+          }
         }
       }
     }
