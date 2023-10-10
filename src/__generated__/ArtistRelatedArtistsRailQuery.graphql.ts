@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fed2117f1196296cf95ec90cffb170c1>>
+ * @generated SignedSource<<ec5afa311337eec0113108eafdfed76d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -247,40 +247,52 @@ return {
                           {
                             "alias": null,
                             "args": null,
-                            "concreteType": "Image",
+                            "concreteType": "Artwork",
                             "kind": "LinkedField",
-                            "name": "image",
+                            "name": "coverArtwork",
                             "plural": false,
                             "selections": [
                               {
                                 "alias": null,
-                                "args": [
+                                "args": null,
+                                "concreteType": "Image",
+                                "kind": "LinkedField",
+                                "name": "image",
+                                "plural": false,
+                                "selections": [
                                   {
-                                    "kind": "Literal",
-                                    "name": "height",
-                                    "value": 334
-                                  },
-                                  {
-                                    "kind": "Literal",
-                                    "name": "version",
-                                    "value": [
-                                      "larger",
-                                      "large"
-                                    ]
-                                  },
-                                  {
-                                    "kind": "Literal",
-                                    "name": "width",
-                                    "value": 445
+                                    "alias": null,
+                                    "args": [
+                                      {
+                                        "kind": "Literal",
+                                        "name": "height",
+                                        "value": 334
+                                      },
+                                      {
+                                        "kind": "Literal",
+                                        "name": "version",
+                                        "value": [
+                                          "larger",
+                                          "large"
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Literal",
+                                        "name": "width",
+                                        "value": 445
+                                      }
+                                    ],
+                                    "concreteType": "CroppedImageUrl",
+                                    "kind": "LinkedField",
+                                    "name": "cropped",
+                                    "plural": false,
+                                    "selections": (v2/*: any*/),
+                                    "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
                                   }
                                 ],
-                                "concreteType": "CroppedImageUrl",
-                                "kind": "LinkedField",
-                                "name": "cropped",
-                                "plural": false,
-                                "selections": (v2/*: any*/),
-                                "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
-                              }
+                                "storageKey": null
+                              },
+                              (v3/*: any*/)
                             ],
                             "storageKey": null
                           },
@@ -304,12 +316,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "0cf4ade26026b70fc705529dd076e0f7",
+    "cacheID": "03dc8b39b7e079c185e6eef56dbf4d2f",
     "id": null,
     "metadata": {},
     "name": "ArtistRelatedArtistsRailQuery",
     "operationKind": "query",
-    "text": "query ArtistRelatedArtistsRailQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistRelatedArtistsRail_artist\n    id\n  }\n}\n\nfragment ArtistRelatedArtistsRail_artist on Artist {\n  related {\n    artistsConnection(kind: MAIN, first: 12) {\n      edges {\n        node {\n          ...CellArtist_artist\n          internalID\n          slug\n          href\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtistRelatedArtistsRailQuery(\n  $slug: String!\n) {\n  artist(id: $slug) {\n    ...ArtistRelatedArtistsRail_artist\n    id\n  }\n}\n\nfragment ArtistRelatedArtistsRail_artist on Artist {\n  related {\n    artistsConnection(kind: MAIN, first: 12) {\n      edges {\n        node {\n          ...CellArtist_artist\n          internalID\n          slug\n          href\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  coverArtwork {\n    image {\n      cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();

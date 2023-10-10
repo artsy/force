@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4e903951829dff1d1b2afe0eab457fb6>>
+ * @generated SignedSource<<13889189b27b37486b241a7d02649c77>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,7 +37,14 @@ var v0 = [
     "name": "srcSet",
     "storageKey": null
   }
-];
+],
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": [],
@@ -211,50 +218,56 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "Image",
+                        "concreteType": "Artwork",
                         "kind": "LinkedField",
-                        "name": "image",
+                        "name": "coverArtwork",
                         "plural": false,
                         "selections": [
                           {
                             "alias": null,
-                            "args": [
+                            "args": null,
+                            "concreteType": "Image",
+                            "kind": "LinkedField",
+                            "name": "image",
+                            "plural": false,
+                            "selections": [
                               {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 334
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "version",
-                                "value": [
-                                  "larger",
-                                  "large"
-                                ]
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "width",
-                                "value": 445
+                                "alias": null,
+                                "args": [
+                                  {
+                                    "kind": "Literal",
+                                    "name": "height",
+                                    "value": 334
+                                  },
+                                  {
+                                    "kind": "Literal",
+                                    "name": "version",
+                                    "value": [
+                                      "larger",
+                                      "large"
+                                    ]
+                                  },
+                                  {
+                                    "kind": "Literal",
+                                    "name": "width",
+                                    "value": 445
+                                  }
+                                ],
+                                "concreteType": "CroppedImageUrl",
+                                "kind": "LinkedField",
+                                "name": "cropped",
+                                "plural": false,
+                                "selections": (v0/*: any*/),
+                                "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
                               }
                             ],
-                            "concreteType": "CroppedImageUrl",
-                            "kind": "LinkedField",
-                            "name": "cropped",
-                            "plural": false,
-                            "selections": (v0/*: any*/),
-                            "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
-                          }
+                            "storageKey": null
+                          },
+                          (v1/*: any*/)
                         ],
                         "storageKey": null
                       },
-                      {
-                        "alias": null,
-                        "args": null,
-                        "kind": "ScalarField",
-                        "name": "id",
-                        "storageKey": null
-                      }
+                      (v1/*: any*/)
                     ],
                     "storageKey": null
                   }
@@ -270,12 +283,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "aaf58b8cb9fe515031c69e0c56061ddb",
+    "cacheID": "c518bcc5f9c0b3badf55482ffa84e225",
     "id": null,
     "metadata": {},
     "name": "HomeTrendingArtistsRailQuery",
     "operationKind": "query",
-    "text": "query HomeTrendingArtistsRailQuery {\n  viewer {\n    ...HomeTrendingArtistsRail_viewer\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeTrendingArtistsRail_viewer on Viewer {\n  curatedTrendingArtists(first: 20) {\n    edges {\n      node {\n        ...CellArtist_artist\n        internalID\n        slug\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query HomeTrendingArtistsRailQuery {\n  viewer {\n    ...HomeTrendingArtistsRail_viewer\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  coverArtwork {\n    image {\n      cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment HomeTrendingArtistsRail_viewer on Viewer {\n  curatedTrendingArtists(first: 20) {\n    edges {\n      node {\n        ...CellArtist_artist\n        internalID\n        slug\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

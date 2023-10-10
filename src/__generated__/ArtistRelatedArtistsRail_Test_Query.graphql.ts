@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f9c115edc08ec51c72a0e7c9b6b59d2b>>
+ * @generated SignedSource<<c4a34055c30eab996d67dd0a063eea9f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -280,40 +280,52 @@ return {
                           {
                             "alias": null,
                             "args": null,
-                            "concreteType": "Image",
+                            "concreteType": "Artwork",
                             "kind": "LinkedField",
-                            "name": "image",
+                            "name": "coverArtwork",
                             "plural": false,
                             "selections": [
                               {
                                 "alias": null,
-                                "args": [
+                                "args": null,
+                                "concreteType": "Image",
+                                "kind": "LinkedField",
+                                "name": "image",
+                                "plural": false,
+                                "selections": [
                                   {
-                                    "kind": "Literal",
-                                    "name": "height",
-                                    "value": 334
-                                  },
-                                  {
-                                    "kind": "Literal",
-                                    "name": "version",
-                                    "value": [
-                                      "larger",
-                                      "large"
-                                    ]
-                                  },
-                                  {
-                                    "kind": "Literal",
-                                    "name": "width",
-                                    "value": 445
+                                    "alias": null,
+                                    "args": [
+                                      {
+                                        "kind": "Literal",
+                                        "name": "height",
+                                        "value": 334
+                                      },
+                                      {
+                                        "kind": "Literal",
+                                        "name": "version",
+                                        "value": [
+                                          "larger",
+                                          "large"
+                                        ]
+                                      },
+                                      {
+                                        "kind": "Literal",
+                                        "name": "width",
+                                        "value": 445
+                                      }
+                                    ],
+                                    "concreteType": "CroppedImageUrl",
+                                    "kind": "LinkedField",
+                                    "name": "cropped",
+                                    "plural": false,
+                                    "selections": (v1/*: any*/),
+                                    "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
                                   }
                                 ],
-                                "concreteType": "CroppedImageUrl",
-                                "kind": "LinkedField",
-                                "name": "cropped",
-                                "plural": false,
-                                "selections": (v1/*: any*/),
-                                "storageKey": "cropped(height:334,version:[\"larger\",\"large\"],width:445)"
-                              }
+                                "storageKey": null
+                              },
+                              (v2/*: any*/)
                             ],
                             "storageKey": null
                           },
@@ -337,7 +349,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "9164775b8d3d1965c2c2894a509fe300",
+    "cacheID": "a027b3204d37ef8b2ef7c17ef6d71398",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -374,13 +386,20 @@ return {
         },
         "artist.related.artistsConnection.edges.node.counts.artworks": (v8/*: any*/),
         "artist.related.artistsConnection.edges.node.counts.forSaleArtworks": (v8/*: any*/),
+        "artist.related.artistsConnection.edges.node.coverArtwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "artist.related.artistsConnection.edges.node.coverArtwork.id": (v4/*: any*/),
+        "artist.related.artistsConnection.edges.node.coverArtwork.image": (v5/*: any*/),
+        "artist.related.artistsConnection.edges.node.coverArtwork.image.cropped": (v6/*: any*/),
+        "artist.related.artistsConnection.edges.node.coverArtwork.image.cropped.src": (v7/*: any*/),
+        "artist.related.artistsConnection.edges.node.coverArtwork.image.cropped.srcSet": (v7/*: any*/),
         "artist.related.artistsConnection.edges.node.formattedNationalityAndBirthday": (v9/*: any*/),
         "artist.related.artistsConnection.edges.node.href": (v9/*: any*/),
         "artist.related.artistsConnection.edges.node.id": (v4/*: any*/),
-        "artist.related.artistsConnection.edges.node.image": (v5/*: any*/),
-        "artist.related.artistsConnection.edges.node.image.cropped": (v6/*: any*/),
-        "artist.related.artistsConnection.edges.node.image.cropped.src": (v7/*: any*/),
-        "artist.related.artistsConnection.edges.node.image.cropped.srcSet": (v7/*: any*/),
         "artist.related.artistsConnection.edges.node.initials": (v9/*: any*/),
         "artist.related.artistsConnection.edges.node.internalID": (v4/*: any*/),
         "artist.related.artistsConnection.edges.node.name": (v9/*: any*/),
@@ -389,7 +408,7 @@ return {
     },
     "name": "ArtistRelatedArtistsRail_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistRelatedArtistsRail_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistRelatedArtistsRail_artist\n    id\n  }\n}\n\nfragment ArtistRelatedArtistsRail_artist on Artist {\n  related {\n    artistsConnection(kind: MAIN, first: 12) {\n      edges {\n        node {\n          ...CellArtist_artist\n          internalID\n          slug\n          href\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  image {\n    cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtistRelatedArtistsRail_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistRelatedArtistsRail_artist\n    id\n  }\n}\n\nfragment ArtistRelatedArtistsRail_artist on Artist {\n  related {\n    artistsConnection(kind: MAIN, first: 12) {\n      edges {\n        node {\n          ...CellArtist_artist\n          internalID\n          slug\n          href\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  coverArtwork {\n    image {\n      cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
