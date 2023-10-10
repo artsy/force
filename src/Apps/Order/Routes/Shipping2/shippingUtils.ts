@@ -17,11 +17,6 @@ import {
 import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
 import { ShippingProps } from "Apps/Order/Routes/Shipping"
 
-export enum FulfillmentType {
-  SHIP = "SHIP",
-  PICKUP = "PICKUP",
-}
-
 // export type SavedAddressType = NonNullable<
 //   NonNullable<
 //     NonNullable<

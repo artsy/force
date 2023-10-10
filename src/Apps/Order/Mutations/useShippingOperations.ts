@@ -57,8 +57,6 @@ export const useShippingOperations = (
         return updateUserAddress(
           relayEnvironment!,
           existingAddressID,
-          // TODO: Formik/yup validator type in Components/Address/Utils may be
-          // able to coerce this
           values,
           closeModal,
           onSuccess,
@@ -68,8 +66,6 @@ export const useShippingOperations = (
       [logger.error, relayEnvironment]
     ),
 
-    // TODO: these aren't used bc SavedAddresses doesn't have ShippingProps.
-    // is this file needed?
     createUserAddress: useCallback(
       async (
         values: ShippingAddressFormValues,
