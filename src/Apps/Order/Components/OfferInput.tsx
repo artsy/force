@@ -20,6 +20,13 @@ export const OfferInput: FC<OfferInputProps> = ({
   onChange,
   value,
 }) => {
+  const formatValueForDisplay = (val: number | undefined) => {
+    if (val !== undefined) {
+      return val.toLocaleString()
+    }
+    return ""
+  }
+
   return (
     <Input
       id={id}
@@ -27,21 +34,14 @@ export const OfferInput: FC<OfferInputProps> = ({
       type="text"
       pattern="[0-9]"
       error={showError ? "Offer amount missing or invalid." : false}
+      inputMode={"numeric"}
       onFocus={onFocus}
       onBlur={onBlur}
-      value={value}
+      value={formatValueForDisplay(value)}
       onChange={ev => {
         const currentValue = ev.currentTarget.value
-        const nonDigitMatch = currentValue.match(/\D/)
-
-        if (nonDigitMatch) {
-          const cursorOffset = currentValue.indexOf(nonDigitMatch[0])
-          const nextValue = currentValue.replace(/\D/g, "")
-          ev.currentTarget.value = nextValue
-          ev.currentTarget.setSelectionRange(cursorOffset, cursorOffset)
-        }
-
-        onChange(Number(ev.currentTarget.value || "0"))
+        const cleanedValue = currentValue.replace(/[^\d]/g, "") // Remove non-digits
+        onChange(Number(cleanedValue))
       }}
     />
   )
