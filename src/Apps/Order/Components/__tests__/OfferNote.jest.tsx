@@ -62,12 +62,11 @@ describe("OfferNote", () => {
     })
   })
 
-  it("has a title and description and a character limit", () => {
+  it("has a title and description", () => {
     const text = getWrapper().text()
     expect(text).toContain("Note (recommended)")
     expect(text).toContain(
       "Add additional information to help the gallery to evaluate your offer."
     )
-    expect(text).toContain("1000 characters remaining")
   })
 })
