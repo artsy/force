@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c4a34055c30eab996d67dd0a063eea9f>>
+ * @generated SignedSource<<b71b812063fdff58e1363846b451cd7d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -68,25 +68,25 @@ v5 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "Image"
+  "type": "FormattedNumber"
 },
 v6 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
-  "type": "CroppedImageUrl"
+  "type": "Image"
 },
 v7 = {
+  "enumValues": null,
+  "nullable": true,
+  "plural": false,
+  "type": "CroppedImageUrl"
+},
+v8 = {
   "enumValues": null,
   "nullable": false,
   "plural": false,
   "type": "String"
-},
-v8 = {
-  "enumValues": null,
-  "nullable": true,
-  "plural": false,
-  "type": "FormattedNumber"
 },
 v9 = {
   "enumValues": null,
@@ -246,38 +246,6 @@ return {
                             "storageKey": null
                           },
                           {
-                            "alias": "avatar",
-                            "args": null,
-                            "concreteType": "Image",
-                            "kind": "LinkedField",
-                            "name": "image",
-                            "plural": false,
-                            "selections": [
-                              {
-                                "alias": null,
-                                "args": [
-                                  {
-                                    "kind": "Literal",
-                                    "name": "height",
-                                    "value": 45
-                                  },
-                                  {
-                                    "kind": "Literal",
-                                    "name": "width",
-                                    "value": 45
-                                  }
-                                ],
-                                "concreteType": "CroppedImageUrl",
-                                "kind": "LinkedField",
-                                "name": "cropped",
-                                "plural": false,
-                                "selections": (v1/*: any*/),
-                                "storageKey": "cropped(height:45,width:45)"
-                              }
-                            ],
-                            "storageKey": null
-                          },
-                          {
                             "alias": null,
                             "args": null,
                             "concreteType": "Artwork",
@@ -285,6 +253,39 @@ return {
                             "name": "coverArtwork",
                             "plural": false,
                             "selections": [
+                              {
+                                "alias": "avatar",
+                                "args": null,
+                                "concreteType": "Image",
+                                "kind": "LinkedField",
+                                "name": "image",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": [
+                                      {
+                                        "kind": "Literal",
+                                        "name": "height",
+                                        "value": 45
+                                      },
+                                      {
+                                        "kind": "Literal",
+                                        "name": "width",
+                                        "value": 45
+                                      }
+                                    ],
+                                    "concreteType": "CroppedImageUrl",
+                                    "kind": "LinkedField",
+                                    "name": "cropped",
+                                    "plural": false,
+                                    "selections": (v1/*: any*/),
+                                    "storageKey": "cropped(height:45,width:45)"
+                                  }
+                                ],
+                                "storageKey": null
+                              },
+                              (v2/*: any*/),
                               {
                                 "alias": null,
                                 "args": null,
@@ -324,8 +325,7 @@ return {
                                   }
                                 ],
                                 "storageKey": null
-                              },
-                              (v2/*: any*/)
+                              }
                             ],
                             "storageKey": null
                           },
@@ -349,7 +349,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a027b3204d37ef8b2ef7c17ef6d71398",
+    "cacheID": "a1bed3897a7925620f96d7e2d998ddd9",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -374,29 +374,29 @@ return {
           "type": "ArtistEdge"
         },
         "artist.related.artistsConnection.edges.node": (v3/*: any*/),
-        "artist.related.artistsConnection.edges.node.avatar": (v5/*: any*/),
-        "artist.related.artistsConnection.edges.node.avatar.cropped": (v6/*: any*/),
-        "artist.related.artistsConnection.edges.node.avatar.cropped.src": (v7/*: any*/),
-        "artist.related.artistsConnection.edges.node.avatar.cropped.srcSet": (v7/*: any*/),
         "artist.related.artistsConnection.edges.node.counts": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtistCounts"
         },
-        "artist.related.artistsConnection.edges.node.counts.artworks": (v8/*: any*/),
-        "artist.related.artistsConnection.edges.node.counts.forSaleArtworks": (v8/*: any*/),
+        "artist.related.artistsConnection.edges.node.counts.artworks": (v5/*: any*/),
+        "artist.related.artistsConnection.edges.node.counts.forSaleArtworks": (v5/*: any*/),
         "artist.related.artistsConnection.edges.node.coverArtwork": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Artwork"
         },
+        "artist.related.artistsConnection.edges.node.coverArtwork.avatar": (v6/*: any*/),
+        "artist.related.artistsConnection.edges.node.coverArtwork.avatar.cropped": (v7/*: any*/),
+        "artist.related.artistsConnection.edges.node.coverArtwork.avatar.cropped.src": (v8/*: any*/),
+        "artist.related.artistsConnection.edges.node.coverArtwork.avatar.cropped.srcSet": (v8/*: any*/),
         "artist.related.artistsConnection.edges.node.coverArtwork.id": (v4/*: any*/),
-        "artist.related.artistsConnection.edges.node.coverArtwork.image": (v5/*: any*/),
-        "artist.related.artistsConnection.edges.node.coverArtwork.image.cropped": (v6/*: any*/),
-        "artist.related.artistsConnection.edges.node.coverArtwork.image.cropped.src": (v7/*: any*/),
-        "artist.related.artistsConnection.edges.node.coverArtwork.image.cropped.srcSet": (v7/*: any*/),
+        "artist.related.artistsConnection.edges.node.coverArtwork.image": (v6/*: any*/),
+        "artist.related.artistsConnection.edges.node.coverArtwork.image.cropped": (v7/*: any*/),
+        "artist.related.artistsConnection.edges.node.coverArtwork.image.cropped.src": (v8/*: any*/),
+        "artist.related.artistsConnection.edges.node.coverArtwork.image.cropped.srcSet": (v8/*: any*/),
         "artist.related.artistsConnection.edges.node.formattedNationalityAndBirthday": (v9/*: any*/),
         "artist.related.artistsConnection.edges.node.href": (v9/*: any*/),
         "artist.related.artistsConnection.edges.node.id": (v4/*: any*/),
@@ -408,7 +408,7 @@ return {
     },
     "name": "ArtistRelatedArtistsRail_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistRelatedArtistsRail_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistRelatedArtistsRail_artist\n    id\n  }\n}\n\nfragment ArtistRelatedArtistsRail_artist on Artist {\n  related {\n    artistsConnection(kind: MAIN, first: 12) {\n      edges {\n        node {\n          ...CellArtist_artist\n          internalID\n          slug\n          href\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  coverArtwork {\n    image {\n      cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtistRelatedArtistsRail_Test_Query {\n  artist(id: \"example\") {\n    ...ArtistRelatedArtistsRail_artist\n    id\n  }\n}\n\nfragment ArtistRelatedArtistsRail_artist on Artist {\n  related {\n    artistsConnection(kind: MAIN, first: 12) {\n      edges {\n        node {\n          ...CellArtist_artist\n          internalID\n          slug\n          href\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment CellArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  internalID\n  slug\n  name\n  href\n  initials\n  coverArtwork {\n    image {\n      cropped(width: 445, height: 334, version: [\"larger\", \"large\"]) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

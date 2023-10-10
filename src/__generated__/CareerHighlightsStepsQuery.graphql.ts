@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c47e80cfd40a6a14f94fe6263e009830>>
+ * @generated SignedSource<<b21dc9b35dc0623da1793b4534003e07>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -164,49 +164,61 @@ v7 = [
         "storageKey": null
       },
       {
-        "alias": "avatar",
+        "alias": null,
         "args": null,
-        "concreteType": "Image",
+        "concreteType": "Artwork",
         "kind": "LinkedField",
-        "name": "image",
+        "name": "coverArtwork",
         "plural": false,
         "selections": [
           {
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "height",
-                "value": 45
-              },
-              {
-                "kind": "Literal",
-                "name": "width",
-                "value": 45
-              }
-            ],
-            "concreteType": "CroppedImageUrl",
+            "alias": "avatar",
+            "args": null,
+            "concreteType": "Image",
             "kind": "LinkedField",
-            "name": "cropped",
+            "name": "image",
             "plural": false,
             "selections": [
               {
                 "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "src",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "srcSet",
-                "storageKey": null
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "height",
+                    "value": 45
+                  },
+                  {
+                    "kind": "Literal",
+                    "name": "width",
+                    "value": 45
+                  }
+                ],
+                "concreteType": "CroppedImageUrl",
+                "kind": "LinkedField",
+                "name": "cropped",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "src",
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "srcSet",
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "cropped(height:45,width:45)"
               }
             ],
-            "storageKey": "cropped(height:45,width:45)"
-          }
+            "storageKey": null
+          },
+          (v6/*: any*/)
         ],
         "storageKey": null
       },
@@ -380,12 +392,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "fc57b06c40dd83066844b40d511110d5",
+    "cacheID": "c8a99fb2163a08f786687999d7d002c4",
     "id": null,
     "metadata": {},
     "name": "CareerHighlightsStepsQuery",
     "operationKind": "query",
-    "text": "query CareerHighlightsStepsQuery {\n  me {\n    myCollectionInfo {\n      BIENNIAL: artistInsights(kind: BIENNIAL) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      COLLECTED: artistInsights(kind: COLLECTED) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      GROUP_SHOW: artistInsights(kind: GROUP_SHOW) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      REVIEWED: artistInsights(kind: REVIEWED) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      SOLO_SHOW: artistInsights(kind: SOLO_SHOW) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n    }\n    id\n  }\n}\n\nfragment CareerHighlightModalStep_careerHighlight on ArtistInsight {\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CareerHighlightsStepsQuery {\n  me {\n    myCollectionInfo {\n      BIENNIAL: artistInsights(kind: BIENNIAL) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      COLLECTED: artistInsights(kind: COLLECTED) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      GROUP_SHOW: artistInsights(kind: GROUP_SHOW) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      REVIEWED: artistInsights(kind: REVIEWED) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n      SOLO_SHOW: artistInsights(kind: SOLO_SHOW) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n    }\n    id\n  }\n}\n\nfragment CareerHighlightModalStep_careerHighlight on ArtistInsight {\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
