@@ -20,16 +20,34 @@ import {
   buyNowFlowSteps,
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
-
+import {
+  PhoneNumber,
+  PhoneNumberChangeHandler,
+  PhoneNumberError,
+  PhoneNumberForm,
+  PhoneNumberTouched,
+} from "Apps/Order/Components/PhoneNumberForm"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import {
   CommitMutation,
   injectCommitMutation,
 } from "Apps/Order/Utils/commitMutation"
-
+import {
+  validateAddress,
+  validatePhoneNumber,
+} from "Apps/Order/Utils/formValidators"
+import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
+import {
+  Address,
+  AddressChangeHandler,
+  AddressErrors,
+  AddressForm,
+  AddressTouched,
+} from "Components/Address/AddressForm"
 import { Router } from "found"
-import { FC, useState, useCallback, useMemo, createContext } from "react"
+import { FC, useState, useEffect } from "react"
+import { COUNTRIES_IN_EUROPEAN_UNION } from "@artsy/commerce_helpers"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
@@ -37,14 +55,16 @@ import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
 import {
+  startingPhoneNumber,
+  startingAddress,
   MutationAddressResponse,
+  convertShippingAddressForExchange,
+  defaultShippingAddressIndex,
   getDefaultShippingQuoteId,
   getSelectedShippingQuoteId,
   getShippingQuotes,
+  getShippingOption,
   ShippingQuotesType,
-  FulfillmentType,
-  getDefaultUserAddress,
-  addressWithFallbackValues,
 } from "Apps/Order/Utils/shippingUtils"
 import {
   NEW_ADDRESS,
@@ -53,7 +73,7 @@ import {
 import { createUserAddress } from "Apps/Order/Mutations/CreateUserAddress"
 import { setShipping } from "Apps/Order/Mutations/SetShipping"
 import { ShippingQuotesFragmentContainer } from "Apps/Order/Components/ShippingQuotes"
-import { compact, omit } from "lodash"
+import { compact } from "lodash"
 import { selectShippingOption } from "Apps/Order/Mutations/SelectShippingOption"
 import { updateUserAddress } from "Apps/Order/Mutations/UpdateUserAddress"
 import { deleteUserAddress } from "Apps/Order/Mutations/DeleteUserAddress"
@@ -69,27 +89,16 @@ import {
 import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { extractNodes } from "Utils/extractNodes"
-
+import { useFeatureFlag } from "System/useFeatureFlag"
+import {
+  AddressVerificationFlowQueryRenderer,
+  AddressVerifiedBy,
+} from "Apps/Order/Components/AddressVerificationFlow"
 import { Analytics } from "System/Analytics/AnalyticsContext"
 import {
   ErrorDialogs,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
-import {
-  FulfillmentDetailsFormFragmentContainer,
-  FulfillmentValues,
-  ShipValues,
-} from "Apps/Order/Routes/Shipping/FulfillmentDetailsForm"
-import { FormikHelpers, FormikProps } from "formik"
-import {
-  SaveFulfillmentDetailsResponse,
-  useShippingOperations,
-} from "Apps/Order/Mutations/useShippingOperations"
-import {
-  ShippingContextProps,
-  ShippingContext,
-  useLoadOrderContext,
-} from "Apps/Order/Routes/Shipping/ShippingContext"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -103,330 +112,308 @@ export interface ShippingProps {
   isCommittingMutation: boolean
 }
 
-const getSavedFulfillment = (
-  order:
-    | ShippingProps["order"]
-    | NonNullable<SaveFulfillmentDetailsResponse["order"]>
-): {
-  fulfillmentType: FulfillmentType
-  isArtsyShipping: boolean
-  fulfillmentDetails: FulfillmentValues["attributes"]
-} | null => {
-  if (
-    !order.requestedFulfillment ||
-    Object.keys(order.requestedFulfillment).length === 0
-  ) {
-    return null
-  }
-
-  const requestedFulfillmentType = order.requestedFulfillment.__typename
-  if (requestedFulfillmentType === "CommercePickup") {
-    const phoneNumber = order.requestedFulfillment.phoneNumber!
-    return {
-      fulfillmentType: FulfillmentType.PICKUP,
-      isArtsyShipping: false,
-      // TODO: [When things are working again] - fix types, figure out what `name` is used for w/ pickup.
-      fulfillmentDetails: { phoneNumber } as FulfillmentValues["attributes"],
-    }
-  }
-  const fulfillmentDetails: Omit<
-    FulfillmentValues["attributes"],
-    "saveAddress" | "addressVerifiedBy"
-  > = addressWithFallbackValues(omit(order.requestedFulfillment, "__typename"))
-
-  if (requestedFulfillmentType === "CommerceShipArta") {
-    return {
-      fulfillmentType: FulfillmentType.SHIP,
-      isArtsyShipping: true,
-      fulfillmentDetails,
-    }
-  }
-  if (requestedFulfillmentType === "CommerceShip") {
-    return {
-      fulfillmentType: FulfillmentType.SHIP,
-      isArtsyShipping: false,
-      fulfillmentDetails,
-    }
-  }
-  // Should never happen. Log it?
-  return null
-}
-
-// Get information from the order and user, including shared context and initial
-// values for forms
-const useLoadOrder = (
-  me: ShippingProps["me"],
-  order: ShippingProps["order"]
-): {
-  orderContext: ShippingContextProps
-  initialValues: {
-    fulfillmentDetails: FulfillmentValues
-  }
-} => {
-  const {
-    fulfillmentType: savedFulfillmentType,
-    fulfillmentDetails: savedFulfillmentDetails,
-  } = getSavedFulfillment(order) || {}
-
-  const orderContext = useLoadOrderContext(order)
-
-  const savedAddresses = extractNodes(me?.addressConnection) ?? []
-
-  // TODO: How to render this as a saved address vs new address? Need to detect & match somehow
-  // - return saved address values
-  // - move command attributes into a meta property like { meta: { saveAddress: boolean, verifyAddress boolean } }
-  // - when savedAddresses mount, somehow detect if the form values match a saved address and select it
-  //   - Maybe we can just return a saved address index as part of this and let the form select it
-  //     similar to before
-  // - saved addresses should disable countries that are not supported by the shipping location
-
-  // what if available shipping locations no longer support saved address?
-  // TODO: If the initial address is US but the country select doesn't show it bc is it EU only
-  // (as one example) then the form state will stay on US (invalid) until the user updates the
-  // country input
-
-  if (savedFulfillmentType) {
-    return {
-      orderContext,
-      initialValues: {
-        fulfillmentDetails: {
-          fulfillmentType: savedFulfillmentType,
-          attributes: {
-            ...addressWithFallbackValues(savedFulfillmentDetails),
-            saveAddress: false,
-            addressVerifiedBy: null,
-          },
-        } as FulfillmentValues, // ???
-      },
-    }
-  }
-
-  // if user has a valid default ship-to address, set it in the form.
-  // otherwise set the initial country to the artwork's country
-  const defaultUserAddress = getDefaultUserAddress(savedAddresses)
-
-  const shippableDefaultAddress =
-    defaultUserAddress &&
-    orderContext.availableShippingCountries.includes(defaultUserAddress.country)
-      ? addressWithFallbackValues(defaultUserAddress)
-      : null
-
-  if (shippableDefaultAddress) {
-    return {
-      orderContext,
-      initialValues: {
-        fulfillmentDetails: {
-          fulfillmentType: FulfillmentType.SHIP,
-          attributes: {
-            ...shippableDefaultAddress,
-            saveAddress: false,
-            addressVerifiedBy: null,
-          },
-        },
-      },
-    }
-  }
-
-  // TODO: Expose existing addressVerifiedBy from order?
-  // Maybe not, they go through the flow when they submit the form
-  // and that is desirable. But what if it is a SAVED USER ADDRESS?
-  // That could be a problem. Thoughts:
-  // - If the user edits a saved address, we can verify and
-  //   save to user from THAT form (in the future), then keep it in these
-  //   values for saving to the order.
-  // - If we know a user is using a saved address,
-  //   we can skip verification no matter what (new form value)
-  // - If we have an initial verifiedBy value from the relay order, we can
-  //   set it here, then unset it if they edit the address
-  // - We might want to add another non-form value similar to saveAddress
-  //   rather than relying on the boolean
-  const initialFulfillmentValues: ShipValues["attributes"] = {
-    ...addressWithFallbackValues({ country: orderContext.shipsFrom }),
-
-    addressVerifiedBy: null,
-    // TODO: only if they have no saved addresses
-    saveAddress: true,
-  }
-
-  return {
-    orderContext,
-    initialValues: {
-      fulfillmentDetails: {
-        fulfillmentType: FulfillmentType.SHIP,
-        attributes: initialFulfillmentValues,
-      },
-    },
-  }
-}
-
 export const ShippingRoute: FC<ShippingProps> = props => {
   const { trackEvent } = useTracking()
-  const shippingOperations = useShippingOperations(props, logger)
+  const { relayEnvironment } = useSystemContext()
 
-  const { initialValues, orderContext } = useLoadOrder(props.me, props.order)
+  const addressVerificationUSEnabled = !!useFeatureFlag(
+    "address_verification_us"
+  )
+  const addressVerificationIntlEnabled = !!useFeatureFlag(
+    "address_verification_intl"
+  )
 
-  const { isArtsyShipping, requiresArtsyShippingTo } = orderContext
-  /* TODO:  possible states:
-  - fulfillment_details
-    - fulfillment details are not saved
-    - editing fulfillment details
-  - shipping_quotes
-    - shipping quotes are present, but not selected
-  - click to continue on to payment
-    - can still change fulfillment details
-  */
-  const [activeStep, setActiveStep] = useState<
-    "fulfillment_details" | "shipping_quotes"
-  >("fulfillment_details")
+  // true if the current address needs to be verified
+  // TODO: Is this necessary, or can it just use the checks above?
+  const [addressNeedsVerification, setAddressNeedsVerification] = useState<
+    boolean
+  >(false)
+
+  // Presence of addressVerifiedBy indicates that the address has been verified
+  // via the address verification flow.
+  const [
+    addressVerifiedBy,
+    setAddressVerifiedBy,
+  ] = useState<AddressVerifiedBy | null>(null)
+
+  const [readyToSaveVerifiedAddress, setReadyToSaveVerifiedAddress] = useState(
+    false
+  )
+
+  const [shippingOption, setShippingOption] = useState<
+    CommerceOrderFulfillmentTypeEnum
+  >(getShippingOption(props.order.requestedFulfillment?.__typename))
 
   const [shippingQuoteId, setShippingQuoteId] = useState<string | undefined>(
     getSelectedShippingQuoteId(props.order)
   )
-  const shippingQuotes = getShippingQuotes(props.order)
+  const [shippingQuotes, setShippingQuotes] = useState<ShippingQuotesType>(
+    getShippingQuotes(props.order)
+  )
 
-  // const selectShipping = async (editedAddress?: MutationAddressResponse) => {
-  //   if (shippingOption === "PICKUP") {
-  //     const { error, hasError } = validatePhoneNumber(phoneNumber)
-  //     if (hasError) {
-  //       setPhoneNumberError(error!)
-  //       setPhoneNumberTouched(true)
-  //       return
-  //     }
-  //   }
+  const [address, setAddress] = useState<Address>(
+    // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+    startingAddress(props.me, props.order)
+  )
+  const [selectedAddressID, setSelectedAddressID] = useState<string>(
+    defaultShippingAddressIndex(props.me, props.order)
+  )
+  const [addressErrors, setAddressErrors] = useState<AddressErrors | {}>({})
+  const [addressTouched, setAddressTouched] = useState<AddressTouched>({})
 
-  //   try {
-  //     // if not creating a new address, use the saved address selection for shipping
-  //     const shipToAddress = isCreateNewAddress()
-  //       ? address
-  //       : convertShippingAddressForExchange(
-  //           editedAddress
-  //             ? editedAddress
-  //             : addressList.find(
-  //                 address => address.internalID == selectedAddressID
-  //               )!
-  //         )
+  const [phoneNumber, setPhoneNumber] = useState<PhoneNumber>(
+    startingPhoneNumber(props.me, props.order)
+  )
+  const [phoneNumberError, setPhoneNumberError] = useState<PhoneNumberError>("")
+  const [phoneNumberTouched, setPhoneNumberTouched] = useState<
+    PhoneNumberTouched
+  >(false)
+  const addressList = extractNodes(props.me?.addressConnection) ?? []
 
-  //     const shipToPhoneNumber =
-  //       isCreateNewAddress() || shippingOption === "PICKUP"
-  //         ? phoneNumber
-  //         : addressList.find(address => address.internalID == selectedAddressID)
-  //             ?.phoneNumber
+  const [saveAddress, setSaveAddress] = useState(true)
+  const [deletedAddressID, setDeletedAddressID] = useState<string | undefined>()
+  const [savedAddressID, setSavedAddressID] = useState<string | undefined>(
+    undefined
+  )
 
-  //     setShippingQuotes(null)
-  //     setShippingQuoteId(undefined)
+  useEffect(() => {
+    const isAddressRemoved = !addressList.find(
+      address => address.internalID === deletedAddressID
+    )
 
-  //     const isArtsyShipping = checkIfArtsyShipping()
-
-  //     const mutationInput: CommerceSetShippingInput = {
-  //       id: props.order.internalID,
-  //       fulfillmentType: isArtsyShipping ? "SHIP_ARTA" : shippingOption,
-  //       shipping: shipToAddress,
-  //       phoneNumber: shipToPhoneNumber,
-  //     }
-  //     if (addressVerifiedBy) {
-  //       mutationInput.addressVerifiedBy = addressVerifiedBy
-  //     }
-
-  //     const orderOrError = (
-  //       await setShipping(props.commitMutation, {
-  //         input: mutationInput,
-  //       })
-  //     ).commerceSetShipping?.orderOrError
-
-  //     if (orderOrError?.error) {
-  //       handleSubmitError(orderOrError.error)
-  //       return
-  //     }
-  //     // update address when user is entering new address AND save checkbox is selected
-  //     await updateAddress()
-
-  //     if (isArtsyShipping) {
-  //       setShippingQuotes(getShippingQuotes(orderOrError?.order))
-  //     } else {
-  //       props.router.push(`/orders/${props.order.internalID}/payment`)
-  //     }
-  //   } catch (error) {
-  //     logger.error(error)
-
-  //   TODO: (Erik): Tracking
-  //     trackEvent({
-  //       action: ActionType.errorMessageViewed,
-  //       context_owner_type: OwnerType.ordersShipping,
-  //       context_owner_id: props.order.internalID,
-  //       title: "An error occurred",
-  //       message:
-  //         "Something went wrong. Please try again or contact orders@artsy.net.",
-  //       error_code: null,
-  //       flow: "user selects a shipping option",
-  //     })
-
-  //     props.dialog.showErrorDialog()
-  //   }
-  // }
-
-  const handleSubmitError = useCallback(
-    (error: { code: string; data: string | null }) => {
-      logger.error(error)
-      const parsedData = error.data ? JSON.parse(error.data) : {}
-      if (
-        error.code === "missing_region" ||
-        error.code === "missing_country" ||
-        error.code === "missing_postal_code"
-      ) {
-        trackEvent({
-          action: ActionType.errorMessageViewed,
-          context_owner_type: OwnerType.ordersShipping,
-          context_owner_id: props.order.internalID,
-          title: "Invalid address",
-          message:
-            "There was an error processing your address. Please review and try again.",
-          error_code: error.code,
-          flow: "user submits a shipping option",
-        })
-
-        props.dialog.showErrorDialog({
-          title: "Invalid address",
-          message:
-            "There was an error processing your address. Please review and try again.",
-        })
-      } else if (
-        error.code === "unsupported_shipping_location" &&
-        parsedData.failure_code === "domestic_shipping_only"
-      ) {
-        trackEvent({
-          action: ActionType.errorMessageViewed,
-          context_owner_type: OwnerType.ordersShipping,
-          context_owner_id: props.order.internalID,
-          title: "Can't ship to that address",
-          message: "This work can only be shipped domestically.",
-          error_code: error.code,
-          flow: "user submits a shipping option",
-        })
-
-        props.dialog.showErrorDialog({
-          title: "Can't ship to that address",
-          message: "This work can only be shipped domestically.",
-        })
-      } else if (error.code === "destination_could_not_be_geocoded") {
-        const { title, message, formattedMessage } = getErrorDialogCopy(
-          ErrorDialogs.DestinationCouldNotBeGeocoded
+    if (deletedAddressID && isAddressRemoved) {
+      if (!addressList || addressList.length === 0) {
+        setSelectedAddressID(NEW_ADDRESS)
+        setShippingQuotes(null)
+        setShippingQuoteId(undefined)
+      } else if (selectedAddressID == deletedAddressID) {
+        selectSavedAddress(
+          addressList.find(address => address.isDefault)?.internalID!
         )
+      }
 
-        trackEvent({
-          action: ActionType.errorMessageViewed,
-          context_owner_type: OwnerType.ordersShipping,
-          context_owner_id: props.order.internalID,
-          title,
-          message,
-          error_code: error.code,
-          flow: "user submits a shipping option",
-        })
+      setDeletedAddressID(undefined)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [addressList, deletedAddressID])
 
-        props.dialog.showErrorDialog({
-          title,
-          message: formattedMessage,
+  const touchedAddress = () => {
+    return {
+      name: true,
+      country: true,
+      postalCode: true,
+      addressLine1: true,
+      addressLine2: true,
+      city: true,
+      region: true,
+      phoneNumber: true,
+    }
+  }
+
+  const handleAddressDelete = (deletedAddressID: string) => {
+    setDeletedAddressID(deletedAddressID)
+  }
+
+  const getOrderArtwork = () => props.order.lineItems?.edges?.[0]?.node?.artwork
+  const isCreateNewAddress = () => selectedAddressID === NEW_ADDRESS
+
+  const checkIfArtsyShipping = () => {
+    const artwork = getOrderArtwork()
+    const processWithArtsyShippingDomestic = !!artwork?.processWithArtsyShippingDomestic
+    const artsyShippingInternational = !!artwork?.artsyShippingInternational
+
+    const shippingCountry = isCreateNewAddress()
+      ? address.country
+      : addressList &&
+        addressList.find(address => address.internalID == selectedAddressID)
+          ?.country
+
+    const isDomesticOrder =
+      (COUNTRIES_IN_EUROPEAN_UNION.includes(shippingCountry) &&
+        COUNTRIES_IN_EUROPEAN_UNION.includes(artwork?.shippingCountry)) ||
+      artwork?.shippingCountry == shippingCountry
+    const isInternationalOrder = !isDomesticOrder
+
+    return (
+      shippingOption === "SHIP" &&
+      ((processWithArtsyShippingDomestic && isDomesticOrder) ||
+        (artsyShippingInternational && isInternationalOrder))
+    )
+  }
+
+  const isAddressVerificationEnabled = (): boolean => {
+    return address.country === "US"
+      ? addressVerificationUSEnabled
+      : addressVerificationIntlEnabled
+  }
+
+  // Save shipping info on the order. If it's Artsy shipping and a quote hasn't
+  // been selected, this renders the quotes for user to select and finalize
+  // again.
+  const finalizeFulfillment = async () => {
+    if (checkIfArtsyShipping() && !!shippingQuoteId) {
+      selectShippingQuote()
+    } else {
+      selectShipping()
+    }
+  }
+
+  /**
+   * Perform basic form validation for address and phone number.
+   *
+   * @returns true if both are valid; false, otherwise
+   */
+  const validateAddressAndPhoneNumber = () => {
+    const {
+      errors: addressErrors,
+      hasErrors: invalidAddress,
+    } = validateAddress(address)
+    const {
+      error: phoneNumberError,
+      hasError: invalidPhoneNumber,
+    } = validatePhoneNumber(phoneNumber)
+
+    if (invalidAddress) {
+      setAddressErrors(addressErrors!)
+      setAddressTouched(touchedAddress)
+    }
+    if (invalidPhoneNumber) {
+      setPhoneNumberError(phoneNumberError!)
+      setPhoneNumberTouched(true)
+    }
+
+    return !invalidAddress && !invalidPhoneNumber
+  }
+
+  const onContinueButtonPressed = async () => {
+    if (
+      shippingOption === "SHIP" &&
+      isCreateNewAddress() &&
+      !validateAddressAndPhoneNumber()
+    ) {
+      return
+    }
+
+    if (
+      isAddressVerificationEnabled() &&
+      !addressVerifiedBy &&
+      isCreateNewAddress()
+    ) {
+      /**
+       * Setting addressNeedsVerification to true will cause the address
+       * verification flow to be initiated on this render.
+       */
+      setAddressNeedsVerification(true)
+      return
+    }
+
+    finalizeFulfillment()
+  }
+
+  const selectShipping = async (editedAddress?: MutationAddressResponse) => {
+    if (shippingOption === "PICKUP") {
+      const { error, hasError } = validatePhoneNumber(phoneNumber)
+      if (hasError) {
+        setPhoneNumberError(error!)
+        setPhoneNumberTouched(true)
+        return
+      }
+    }
+
+    try {
+      // if not creating a new address, use the saved address selection for shipping
+      const shipToAddress = isCreateNewAddress()
+        ? address
+        : convertShippingAddressForExchange(
+            editedAddress
+              ? editedAddress
+              : addressList.find(
+                  address => address.internalID == selectedAddressID
+                )!
+          )
+
+      const shipToPhoneNumber =
+        isCreateNewAddress() || shippingOption === "PICKUP"
+          ? phoneNumber
+          : addressList.find(address => address.internalID == selectedAddressID)
+              ?.phoneNumber
+
+      setShippingQuotes(null)
+      setShippingQuoteId(undefined)
+
+      const isArtsyShipping = checkIfArtsyShipping()
+
+      const mutationInput: CommerceSetShippingInput = {
+        id: props.order.internalID,
+        fulfillmentType: isArtsyShipping ? "SHIP_ARTA" : shippingOption,
+        shipping: shipToAddress,
+        phoneNumber: shipToPhoneNumber,
+      }
+      if (addressVerifiedBy) {
+        mutationInput.addressVerifiedBy = addressVerifiedBy
+      }
+
+      const orderOrError = (
+        await setShipping(props.commitMutation, {
+          input: mutationInput,
         })
-      } else if (isArtsyShipping && shippingQuoteId) {
+      ).commerceSetShipping?.orderOrError
+
+      if (orderOrError?.error) {
+        handleSubmitError(orderOrError.error)
+        return
+      }
+      // update address when user is entering new address AND save checkbox is selected
+      await updateAddress()
+
+      if (isArtsyShipping) {
+        setShippingQuotes(getShippingQuotes(orderOrError?.order))
+      } else {
+        props.router.push(`/orders/${props.order.internalID}/payment`)
+      }
+    } catch (error) {
+      logger.error(error)
+
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "An error occurred",
+        message:
+          "Something went wrong. Please try again or contact orders@artsy.net.",
+        error_code: null,
+        flow: "user selects a shipping option",
+      })
+
+      props.dialog.showErrorDialog()
+    }
+  }
+
+  const selectShippingQuote = async () => {
+    const { order } = props
+
+    if (shippingQuoteId && order.internalID) {
+      try {
+        const orderOrError = (
+          await selectShippingOption(props.commitMutation, {
+            input: {
+              id: order.internalID,
+              selectedShippingQuoteId: shippingQuoteId,
+            },
+          })
+        ).commerceSelectShippingOption?.orderOrError
+
+        await updateAddress()
+
+        if (orderOrError?.error) {
+          handleSubmitError(orderOrError.error)
+          return
+        }
+
+        props.router.push(`/orders/${props.order.internalID}/payment`)
+      } catch (error) {
+        logger.error(error)
+
         trackEvent({
           action: ActionType.errorMessageViewed,
           context_owner_type: OwnerType.ordersShipping,
@@ -435,37 +422,167 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           message:
             "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
           error_code: null,
-          flow: "user submits a shipping option",
+          flow: "user sets a shipping quote",
         })
 
         props.dialog.showErrorDialog({
           message: getArtaErrorMessage(),
         })
-      } else {
-        trackEvent({
-          action: ActionType.errorMessageViewed,
-          context_owner_type: OwnerType.ordersShipping,
-          context_owner_id: props.order.internalID,
-          title: "An error occurred",
-          message:
-            "Something went wrong. Please try again or contact orders@artsy.net.",
-          error_code: null,
-          flow: "user submits a shipping option",
-        })
-
-        props.dialog.showErrorDialog()
       }
-    },
-    [
-      isArtsyShipping,
-      props.dialog,
-      props.order.internalID,
-      shippingQuoteId,
-      trackEvent,
-    ]
-  )
+    }
+  }
 
-  // TODO: (Erik): Pass this into the fulfillment details form (according to current structure)
+  const updateAddress = async () => {
+    const shouldCreateNewAddress = isCreateNewAddress()
+
+    if (saveAddress) {
+      if (
+        shippingOption === "SHIP" &&
+        shouldCreateNewAddress &&
+        relayEnvironment
+      ) {
+        if (savedAddressID) {
+          updateUserAddress(
+            relayEnvironment,
+            savedAddressID,
+            {
+              ...address,
+              phoneNumber: phoneNumber,
+            }, // address
+            () => {},
+            () => {
+              message => {
+                logger.error(message)
+              }
+            }, // onError
+            () => {} // onSuccess
+          )
+        } else {
+          await createUserAddress(
+            relayEnvironment,
+            {
+              ...address,
+              phoneNumber: phoneNumber,
+            }, // address
+            data => {
+              setSavedAddressID(
+                data?.createUserAddress?.userAddressOrErrors.internalID
+              )
+            }, // onSuccess
+            () => {
+              message => {
+                logger.error(message)
+              }
+            }, // onError
+            props.me, // me
+            () => {}
+          )
+        }
+      }
+    } else if (savedAddressID) {
+      deleteUserAddress(
+        relayEnvironment!,
+        savedAddressID,
+        () => {},
+        message => {
+          logger.error(message)
+        }
+      )
+    }
+  }
+
+  const handleSubmitError = (error: { code: string; data: string | null }) => {
+    logger.error(error)
+    const parsedData = error.data ? JSON.parse(error.data) : {}
+    if (
+      error.code === "missing_region" ||
+      error.code === "missing_country" ||
+      error.code === "missing_postal_code"
+    ) {
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "Invalid address",
+        message:
+          "There was an error processing your address. Please review and try again.",
+        error_code: error.code,
+        flow: "user submits a shipping option",
+      })
+
+      props.dialog.showErrorDialog({
+        title: "Invalid address",
+        message:
+          "There was an error processing your address. Please review and try again.",
+      })
+    } else if (
+      error.code === "unsupported_shipping_location" &&
+      parsedData.failure_code === "domestic_shipping_only"
+    ) {
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "Can't ship to that address",
+        message: "This work can only be shipped domestically.",
+        error_code: error.code,
+        flow: "user submits a shipping option",
+      })
+
+      props.dialog.showErrorDialog({
+        title: "Can't ship to that address",
+        message: "This work can only be shipped domestically.",
+      })
+    } else if (error.code === "destination_could_not_be_geocoded") {
+      const { title, message, formattedMessage } = getErrorDialogCopy(
+        ErrorDialogs.DestinationCouldNotBeGeocoded
+      )
+
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title,
+        message,
+        error_code: error.code,
+        flow: "user submits a shipping option",
+      })
+
+      props.dialog.showErrorDialog({
+        title,
+        message: formattedMessage,
+      })
+    } else if (checkIfArtsyShipping() && shippingQuoteId) {
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "An error occurred",
+        message:
+          "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
+        error_code: null,
+        flow: "user submits a shipping option",
+      })
+
+      props.dialog.showErrorDialog({
+        message: getArtaErrorMessage(),
+      })
+    } else {
+      trackEvent({
+        action: ActionType.errorMessageViewed,
+        context_owner_type: OwnerType.ordersShipping,
+        context_owner_id: props.order.internalID,
+        title: "An error occurred",
+        message:
+          "Something went wrong. Please try again or contact orders@artsy.net.",
+        error_code: null,
+        flow: "user submits a shipping option",
+      })
+
+      props.dialog.showErrorDialog()
+    }
+  }
+
   const getArtaErrorMessage = () => (
     <>
       There was a problem getting shipping quotes. <br />
@@ -477,68 +594,66 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     </>
   )
 
-  // const onAddressChange: AddressChangeHandler = (newAddress, key) => {
-  //   const { errors } = validateAddress(newAddress)
-  //   setAddress(newAddress)
-  //   setAddressErrors({
-  //     ...addressErrors,
-  //     ...errors,
-  //   })
-  //   setAddressTouched({
-  //     ...addressTouched,
-  //     [key]: true,
-  //   })
+  const onAddressChange: AddressChangeHandler = (newAddress, key) => {
+    const { errors } = validateAddress(newAddress)
+    setAddress(newAddress)
+    setAddressErrors({
+      ...addressErrors,
+      ...errors,
+    })
+    setAddressTouched({
+      ...addressTouched,
+      [key]: true,
+    })
 
-  //   setShippingQuotes(null)
-  //   setShippingQuoteId(undefined)
+    setShippingQuotes(null)
+    setShippingQuoteId(undefined)
 
-  // TODO: (Erik): Make sure we re-set address verified by in the fulfillment details form
-  //   // If the address has already been verified and the user is editing the form,
-  //   // consider this a user-verified address (perform verification only once).
-  //   if (addressVerifiedBy) {
-  //     setAddressVerifiedBy(AddressVerifiedBy.USER)
-  //   }
-  // }
+    // If the address has already been verified and the user is editing the form,
+    // consider this a user-verified address (perform verification only once).
+    if (addressVerifiedBy) {
+      setAddressVerifiedBy(AddressVerifiedBy.USER)
+    }
+  }
 
-  // const onPhoneNumberChange: PhoneNumberChangeHandler = newPhoneNumber => {
-  //   const { error } = validatePhoneNumber(newPhoneNumber)
+  const onPhoneNumberChange: PhoneNumberChangeHandler = newPhoneNumber => {
+    const { error } = validatePhoneNumber(newPhoneNumber)
 
-  //   setPhoneNumber(newPhoneNumber)
-  //   setPhoneNumberError(error!)
-  //   setPhoneNumberTouched(true)
-  //   setShippingQuotes(null)
-  //   setShippingQuoteId(undefined)
-  // }
+    setPhoneNumber(newPhoneNumber)
+    setPhoneNumberError(error!)
+    setPhoneNumberTouched(true)
+    setShippingQuotes(null)
+    setShippingQuoteId(undefined)
+  }
 
-  // useEffect(() => {
-  //   if (
-  //     addressList?.length > 0 &&
-  //     checkIfArtsyShipping() &&
-  //     !isCreateNewAddress()
-  //   ) {
-  //     selectShipping()
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [shippingOption, selectedAddressID])
+  useEffect(() => {
+    if (
+      addressList?.length > 0 &&
+      checkIfArtsyShipping() &&
+      !isCreateNewAddress()
+    ) {
+      selectShipping()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [shippingOption, selectedAddressID])
 
-  // const onSelectShippingOption = (
-  //   newShippingOption: CommerceOrderFulfillmentTypeEnum
-  // ) => {
-  //   TODO: (Erik): Tracking
-  //   trackEvent({
-  //     action_type: DeprecatedSchema.ActionType.Click,
-  //     subject:
-  //       newShippingOption === "SHIP"
-  //         ? DeprecatedSchema.Subject.BNMOProvideShipping
-  //         : DeprecatedSchema.Subject.BNMOArrangePickup,
-  //     flow: "buy now",
-  //     type: "button",
-  //   })
+  const onSelectShippingOption = (
+    newShippingOption: CommerceOrderFulfillmentTypeEnum
+  ) => {
+    trackEvent({
+      action_type: DeprecatedSchema.ActionType.Click,
+      subject:
+        newShippingOption === "SHIP"
+          ? DeprecatedSchema.Subject.BNMOProvideShipping
+          : DeprecatedSchema.Subject.BNMOArrangePickup,
+      flow: "buy now",
+      type: "button",
+    })
 
-  //   if (shippingOption !== newShippingOption) {
-  //     setShippingOption(newShippingOption)
-  //   }
-  // }
+    if (shippingOption !== newShippingOption) {
+      setShippingOption(newShippingOption)
+    }
+  }
 
   const handleShippingQuoteSelected = (newShippingQuoteId: string) => {
     trackEvent({
@@ -552,51 +667,62 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     setShippingQuoteId(newShippingQuoteId)
   }
 
-  // TODO: (Erik) - move to SavedAddresses tracking
   const selectSavedAddressWithTracking = (value: string) => {
     trackEvent({
       action: ActionType.clickedShippingAddress,
       context_module: ContextModule.ordersShipping,
       context_page_owner_type: "orders-shipping",
     } as ClickedShippingAddress)
-    // selectSavedAddress(value)
+    selectSavedAddress(value)
   }
 
-  // TODO: (Erik) - we will need some way of handling the user going back.
-  // not sure if this is what's happening here, just a reminder
+  const selectSavedAddress = (value: string) => {
+    if (selectedAddressID !== value) {
+      setSelectedAddressID(value)
+      setShippingQuotes(null)
+      setShippingQuoteId(undefined)
+    }
+  }
 
-  // const handleAddressEdit = (
-  //   editedAddress: UpdateUserAddressMutation$data["updateUserAddress"]
-  // ) => {
-  //   // reload shipping quotes if selected address edited
-  //   if (selectedAddressID === editedAddress?.userAddressOrErrors?.internalID) {
-  //     setShippingQuotes(null)
-  //     setShippingQuoteId(undefined)
+  const handleAddressEdit = (
+    editedAddress: UpdateUserAddressMutation$data["updateUserAddress"]
+  ) => {
+    // reload shipping quotes if selected address edited
+    if (selectedAddressID === editedAddress?.userAddressOrErrors?.internalID) {
+      setShippingQuotes(null)
+      setShippingQuoteId(undefined)
 
-  //     if (checkIfArtsyShipping()) {
-  //       selectShipping(editedAddress.userAddressOrErrors)
-  //     }
-  //   }
-  // }
+      if (checkIfArtsyShipping()) {
+        selectShipping(editedAddress.userAddressOrErrors)
+      }
+    }
+  }
 
-  // const handleAddressCreate = (
-  //   createdAddress: CreateUserAddressMutation$data["createUserAddress"]
-  // ) => {
-  //   if (createdAddress?.userAddressOrErrors?.internalID) {
-  //     selectSavedAddress(createdAddress.userAddressOrErrors.internalID)
-  //   }
-  // }
+  const handleAddressCreate = (
+    createdAddress: CreateUserAddressMutation$data["createUserAddress"]
+  ) => {
+    if (createdAddress?.userAddressOrErrors?.internalID) {
+      selectSavedAddress(createdAddress.userAddressOrErrors.internalID)
+    }
+  }
 
-  // // Automatically proceed after address verification flow is completed.
-  // useEffect(() => {
-  //   if (readyToSaveVerifiedAddress) {
-  //     finalizeFulfillment()
-  //   }
-  //   // disabled because we only want this to run when once when readyToSaveVerifiedAddress changes to true
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [readyToSaveVerifiedAddress])
+  const isSaveAndContinueAllowed = (): boolean => {
+    if (shippingOption === "PICKUP") {
+      return !phoneNumber || !!phoneNumberError
+    }
 
-  // pass into fulfillment details
+    return false
+  }
+
+  // Automatically proceed after address verification flow is completed.
+  useEffect(() => {
+    if (readyToSaveVerifiedAddress) {
+      finalizeFulfillment()
+    }
+    // disabled because we only want this to run when once when readyToSaveVerifiedAddress changes to true
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [readyToSaveVerifiedAddress])
+
   const renderArtaErrorMessage = () => {
     return (
       <Text
@@ -629,16 +755,20 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   const { order, isCommittingMutation } = props
-
+  const artwork = getOrderArtwork()
+  const shippingSelected =
+    !artwork?.pickup_available || shippingOption === "SHIP"
+  const showAddressForm =
+    shippingSelected && (isCreateNewAddress() || addressList?.length === 0)
+  const showSavedAddresses =
+    shippingSelected && addressList && addressList.length > 0
+  const isArtsyShipping = checkIfArtsyShipping()
   const showArtsyShipping =
-    activeStep === "shipping_quotes" &&
-    !!isArtsyShipping &&
-    !!shippingQuotes &&
-    shippingQuotes.length > 0
+    isArtsyShipping && !!shippingQuotes && shippingQuotes.length > 0
   const isOffer = order.mode === "OFFER"
 
   const useDefaultArtsyShippingQuote =
-    !!isArtsyShipping &&
+    isArtsyShipping &&
     shippingQuotes &&
     shippingQuotes.length > 0 &&
     !shippingQuoteId
@@ -650,205 +780,21 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       setShippingQuoteId(defaultShippingQuoteId)
   }
 
-  const advanceToPayment = useCallback(() => {
-    props.router.push(`/orders/${props.order.internalID}/payment`)
-  }, [props.router, props.order.internalID])
-
-  const handleSubmitFulfillmentDetails = useCallback(
-    async (
-      formValues: FulfillmentValues,
-      formikHelpers: FormikHelpers<FulfillmentValues>
-    ) => {
-      const { setSubmitting } = formikHelpers
-
-      setSubmitting(true)
-      try {
-        let fulfillmentMutationValues: CommerceSetShippingInput
-        if (formValues.fulfillmentType === FulfillmentType.SHIP) {
-          const {
-            saveAddress,
-            addressVerifiedBy,
-            phoneNumber,
-            ...addressValues
-          } = formValues.attributes
-          const requiresArtsyShipping = requiresArtsyShippingTo(
-            addressValues.country
-          )
-          fulfillmentMutationValues = {
-            id: props.order.internalID,
-            fulfillmentType: requiresArtsyShipping
-              ? "SHIP_ARTA"
-              : FulfillmentType.SHIP,
-            phoneNumber,
-            shipping: addressValues,
-          }
-          if (addressVerifiedBy) {
-            fulfillmentMutationValues.addressVerifiedBy = addressVerifiedBy
-          }
-        } else {
-          fulfillmentMutationValues = {
-            id: props.order.internalID,
-            fulfillmentType: FulfillmentType.PICKUP,
-            phoneNumber: formValues.attributes.phoneNumber,
-          }
-        }
-
-        const orderOrError = await shippingOperations.saveFulfillmentDetails(
-          fulfillmentMutationValues
-        )
-
-        if (orderOrError?.error) {
-          handleSubmitError(orderOrError.error)
-          return
-        }
-        const orderResult = orderOrError?.order!
-
-        if (
-          formValues.fulfillmentType === FulfillmentType.SHIP &&
-          formValues.attributes.saveAddress
-        ) {
-          await shippingOperations.createUserAddress(formValues.attributes)
-        }
-
-        const {
-          isArtsyShipping: orderResultRequiresArtsyShipping,
-        } = getSavedFulfillment(orderResult)!
-
-        if (orderResultRequiresArtsyShipping) {
-          setActiveStep("shipping_quotes")
-        } else {
-          advanceToPayment()
-        }
-      } catch (error) {
-        logger.error(error)
-
-        trackEvent({
-          action: ActionType.errorMessageViewed,
-          context_owner_type: OwnerType.ordersShipping,
-          context_owner_id: props.order.internalID,
-          title: "An error occurred",
-          message:
-            "Something went wrong. Please try again or contact orders@artsy.net.",
-          error_code: null,
-          flow: "user selects a shipping option",
-        })
-
-        props.dialog.showErrorDialog()
-      }
-    },
-    [
-      shippingOperations,
-      requiresArtsyShippingTo,
-      props.order.internalID,
-      props.dialog,
-      handleSubmitError,
-      advanceToPayment,
-      trackEvent,
-    ]
-  )
-  const selectShippingQuote = useCallback(async () => {
-    const { order } = props
-
-    if (shippingQuoteId && order.internalID) {
-      try {
-        const orderOrError = (
-          await selectShippingOption(props.commitMutation, {
-            input: {
-              id: order.internalID,
-              selectedShippingQuoteId: shippingQuoteId,
-            },
-          })
-        ).commerceSelectShippingOption?.orderOrError
-
-        // TODO: (Erik): Figure out why this was here. Probably not needed any more.
-        // await updateAddress()
-
-        if (orderOrError?.error) {
-          handleSubmitError(orderOrError.error)
-          return
-        }
-
-        advanceToPayment()
-      } catch (error) {
-        logger.error(error)
-
-        trackEvent({
-          action: ActionType.errorMessageViewed,
-          context_owner_type: OwnerType.ordersShipping,
-          context_owner_id: props.order.internalID,
-          title: "An error occurred",
-          message:
-            "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
-          error_code: null,
-          flow: "user sets a shipping quote",
-        })
-
-        props.dialog.showErrorDialog({
-          message: getArtaErrorMessage(),
-        })
-      }
-    }
-  }, [advanceToPayment, handleSubmitError, props, shippingQuoteId, trackEvent])
-
-  // Because the button is in the sidebar as well as the main form area,
-  // we need to hack some formik values UP from the fulfillment details
-  // form.
-  // handleSubmit: Used to submit the form
-  // isValid: Used to disable the button
-  // values: Used to get the form values for un-saving the address if the user
-  //   unchecks it after saving it in the fulfillment details step.
-  const [fulfillmentFormHelpers, setFulfillmentFormHelpers] = useState<
-    Pick<FormikProps<FulfillmentValues>, "handleSubmit" | "isValid" | "values">
-  >({
-    handleSubmit: () => {},
-    isValid: false,
-    values: {
-      attributes: {
-        saveAddress: false,
-      },
-    } as any,
-  })
-
-  const onContinueButtonPressed = useMemo(() => {
-    if (activeStep === "fulfillment_details") {
-      return (...args) => fulfillmentFormHelpers.handleSubmit(...args)
-    }
-    if (activeStep === "shipping_quotes") {
-      return selectShippingQuote
-    }
-  }, [activeStep, fulfillmentFormHelpers, selectShippingQuote])
-
-  const disableSubmit = useMemo(() => {
-    if (activeStep === "fulfillment_details") {
-      return !fulfillmentFormHelpers.isValid
-    } else if (activeStep === "shipping_quotes") {
-      return !shippingQuoteId
-    }
-  }, [activeStep, fulfillmentFormHelpers.isValid, shippingQuoteId])
-
   return (
     <Analytics contextPageOwnerId={order.internalID}>
       <Box data-test="orderShipping">
-        <ShippingContext.Provider value={orderContext}>
-          <OrderRouteContainer
-            order={order}
-            currentStep="Shipping"
-            steps={isOffer ? offerFlowSteps : buyNowFlowSteps}
-            content={
-              <Flex
-                flexDirection="column"
-                style={isCommittingMutation ? { pointerEvents: "none" } : {}}
-              >
-                <FulfillmentDetailsFormFragmentContainer
-                  me={props.me}
-                  initialFulfillmentValues={initialValues.fulfillmentDetails}
-                  active={activeStep === "fulfillment_details"}
-                  order={props.order}
-                  onSubmit={handleSubmitFulfillmentDetails}
-                  setFulfillmentFormHelpers={setFulfillmentFormHelpers}
-                />
-                {/* CUT FROM HERE
-              
+        <OrderRouteContainer
+          order={order}
+          currentStep="Shipping"
+          steps={isOffer ? offerFlowSteps : buyNowFlowSteps}
+          content={
+            <Flex
+              flexDirection="column"
+              style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+            >
+              {/* TODO: Make RadioGroup generic for the allowed values,
+              which could also ensure the children only use
+              allowed values. */}
               {artwork?.pickup_available && (
                 <>
                   <RadioGroup
@@ -877,6 +823,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 </>
               )}
 
+              {/* SAVED ADDRESSES */}
               <Collapse
                 data-test="savedAddressesCollapse"
                 open={!!showSavedAddresses}
@@ -898,7 +845,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 />
               </Collapse>
 
-
+              {/* NEW ADDRESS */}
               <Collapse data-test="addressFormCollapse" open={showAddressForm}>
                 {isArtsyShipping &&
                   shippingQuotes &&
@@ -942,7 +889,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   domesticOnly={artwork?.onlyShipsDomestically!}
                   euOrigin={artwork?.euShippingOrigin!}
                   shippingCountry={artwork?.shippingCountry!}
-                  showphonenumberInput={false}
+                  showPhoneNumberInput={false}
                 />
                 <Spacer y={2} />
                 <PhoneNumberForm
@@ -964,7 +911,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 <Spacer y={4} />
               </Collapse>
 
-
+              {/* PHONE NUMBER */}
               <Collapse
                 data-test="phoneNumberCollapse"
                 open={shippingOption === "PICKUP"}
@@ -980,65 +927,62 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 />
                 <Spacer y={4} />
               </Collapse>
-            
-            */}
-                {/* SHIPPING Quotes */}
-                <Collapse open={showArtsyShipping}>
-                  <Text variant="sm">Artsy shipping options</Text>
-                  <Text variant="xs" mb="1" color="black60">
-                    {renderArtsyShippingOptionText()}
-                  </Text>
-                  <ShippingQuotesFragmentContainer
-                    mb={3}
-                    selectedShippingQuoteId={shippingQuoteId}
-                    shippingQuotes={compact(shippingQuotes)}
-                    onSelect={handleShippingQuoteSelected}
-                  />
-                  <Spacer y={4} />
-                </Collapse>
-                <Media greaterThan="xs">
-                  <Button
-                    onClick={onContinueButtonPressed}
-                    disabled={disableSubmit}
-                    loading={isCommittingMutation}
-                    variant="primaryBlack"
-                    width="50%"
-                  >
-                    {/* TODO: Remove - the * is just to show what step the button thinks it is on */}
-                    Save and Continue
-                  </Button>
-                </Media>
-              </Flex>
-            }
-            sidebar={
-              <Flex flexDirection="column">
-                <Flex flexDirection="column">
-                  <ArtworkSummaryItem order={order} />
-                  <TransactionDetailsSummaryItem
-                    order={order}
-                    transactionStep="shipping"
-                  />
-                </Flex>
-                <BuyerGuarantee
-                  contextModule={ContextModule.ordersShipping}
-                  contextPageOwnerType={OwnerType.ordersShipping}
+
+              {/* SHIPPING OPTION */}
+              <Collapse open={showArtsyShipping}>
+                <Text variant="sm">Artsy shipping options</Text>
+                <Text variant="xs" mb="1" color="black60">
+                  {renderArtsyShippingOptionText()}
+                </Text>
+                <ShippingQuotesFragmentContainer
+                  mb={3}
+                  selectedShippingQuoteId={shippingQuoteId}
+                  shippingQuotes={compact(shippingQuotes)}
+                  onSelect={handleShippingQuoteSelected}
                 />
-                <Spacer y={[2, 4]} />
-                <Media at="xs">
-                  <Button
-                    onClick={onContinueButtonPressed}
-                    disabled={disableSubmit}
-                    loading={isCommittingMutation}
-                    variant="primaryBlack"
-                    width="100%"
-                  >
-                    Save and Continue
-                  </Button>
-                </Media>
+                <Spacer y={4} />
+              </Collapse>
+              <Media greaterThan="xs">
+                <Button
+                  onClick={onContinueButtonPressed}
+                  loading={isCommittingMutation}
+                  variant="primaryBlack"
+                  width="50%"
+                  disabled={isSaveAndContinueAllowed()}
+                >
+                  Save and Continue
+                </Button>
+              </Media>
+            </Flex>
+          }
+          sidebar={
+            <Flex flexDirection="column">
+              <Flex flexDirection="column">
+                <ArtworkSummaryItem order={order} />
+                <TransactionDetailsSummaryItem
+                  order={order}
+                  transactionStep="shipping"
+                />
               </Flex>
-            }
-          />
-        </ShippingContext.Provider>
+              <BuyerGuarantee
+                contextModule={ContextModule.ordersShipping}
+                contextPageOwnerType={OwnerType.ordersShipping}
+              />
+              <Spacer y={[2, 4]} />
+              <Media at="xs">
+                <Button
+                  onClick={onContinueButtonPressed}
+                  loading={isCommittingMutation}
+                  variant="primaryBlack"
+                  width="100%"
+                  disabled={isSaveAndContinueAllowed()}
+                >
+                  Save and Continue
+                </Button>
+              </Media>
+            </Flex>
+          }
+        />
       </Box>
     </Analytics>
   )
@@ -1049,7 +993,6 @@ export const ShippingFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment Shipping_order on CommerceOrder {
-        ...FulfillmentDetailsForm_order
         internalID
         mode
         state
@@ -1116,13 +1059,13 @@ export const ShippingFragmentContainer = createFragmentContainer(
           after: { type: "String" }
           before: { type: "String" }
         ) {
-        ...FulfillmentDetailsForm_me
         name
         email
         id
         location {
           country
         }
+        ...SavedAddresses_me
         addressConnection(
           first: $first
           last: $last

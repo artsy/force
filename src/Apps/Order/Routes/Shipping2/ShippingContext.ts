@@ -1,4 +1,4 @@
-import { ShippingProps } from "Apps/Order/Routes/Shipping"
+import { ShippingProps } from "Apps/Order/Routes/Shipping2"
 // FIXME: Duplicate sources of truth in country lists
 import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
 import { COUNTRIES_IN_EUROPEAN_UNION } from "@artsy/commerce_helpers"

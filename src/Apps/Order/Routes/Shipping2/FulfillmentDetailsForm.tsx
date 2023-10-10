@@ -49,7 +49,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { SavedAddressesFragmentContainer as SavedAddresses } from "Apps/Order/Components/SavedAddresses"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import { useShippingContext } from "Apps/Order/Routes/Shipping/ShippingContext"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
 
 const VALIDATION_SCHEMA = Yup.object().shape({
   fulfillmentType: Yup.string().oneOf(Object.values(FulfillmentType)),
