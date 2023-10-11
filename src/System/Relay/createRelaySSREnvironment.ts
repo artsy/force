@@ -1,9 +1,10 @@
+import { getENV } from "Utils/getENV"
+import { getTimeZone } from "Utils/getTimeZone"
+import createLogger from "Utils/logger"
 import "isomorphic-fetch"
-import "regenerator-runtime/runtime"
 import { isEmpty } from "lodash"
 import RelayClientSSR from "react-relay-network-modern-ssr/lib/client"
 import RelayServerSSR from "react-relay-network-modern-ssr/lib/server"
-import { Environment, INetwork, RecordSource, Store } from "relay-runtime"
 import {
   RelayNetworkLayer,
   batchMiddleware,
@@ -11,13 +12,13 @@ import {
   loggerMiddleware,
   urlMiddleware,
 } from "react-relay-network-modern/node8"
+import "regenerator-runtime/runtime"
+import { Environment, INetwork, RecordSource, Store } from "relay-runtime"
 import { cacheMiddleware } from "./middleware/cache/cacheMiddleware"
 import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsErrorHandlerMiddleware"
 import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsExtensionsLoggerMiddleware"
 import { principalFieldErrorHandlerMiddleware } from "./middleware/principalFieldErrorHandlerMiddleware"
 import { searchBarImmediateResolveMiddleware } from "./middleware/searchBarImmediateResolveMiddleware"
-import createLogger from "Utils/logger"
-import { getENV } from "Utils/getENV"
 
 const logger = createLogger("System/Relay/createRelaySSREnvironment")
 
@@ -82,7 +83,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
 
   let timeZone
   try {
-    timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone
+    timeZone = getTimeZone()
     headers["X-TIMEZONE"] = timeZone
   } catch (error) {
     logger.warn("Browser does not support i18n API, not setting TZ header.")
