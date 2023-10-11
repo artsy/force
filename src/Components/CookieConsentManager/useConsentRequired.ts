@@ -4,6 +4,7 @@ import {
   DEFAULT_OPT_OUT_PREFERENCES,
 } from "Components/CookieConsentManager/categories"
 import { useDidMount } from "Utils/Hooks/useDidMount"
+import { getTimeZone } from "Utils/getTimeZone"
 import qs from "qs"
 
 /**
@@ -32,7 +33,7 @@ export const useConsentRequired = (): {
     ignoreQueryPrefix: true,
   })
 
-  const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone
+  const timezone = getTimeZone()
 
   const isEU =
     timezone.startsWith("Europe") ||
