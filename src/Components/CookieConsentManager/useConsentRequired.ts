@@ -36,7 +36,7 @@ export const useConsentRequired = (): {
   const timezone = getTimeZone()
 
   const isEU =
-    timezone.startsWith("Europe") ||
+    !!timezone?.startsWith("Europe") ||
     AMBIGUOUS_TIMEZONES.includes(timezone) ||
     query.geo === "eu"
   const isCA = CALIFORNIA_TIMEZONES.includes(timezone) || query.geo === "ca"
