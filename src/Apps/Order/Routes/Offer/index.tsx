@@ -245,6 +245,7 @@ export const OfferRoute: FC<OfferRouteProps> = ({
                   showError={formIsDirty && offerValue <= 0}
                   onChange={offerValue => setOfferValue(offerValue)}
                   onFocus={onOfferInputFocus}
+                  value={offerValue}
                 />
               </Flex>
               {priceNote}

@@ -258,6 +258,7 @@ export const RespondRoute: FC<RespondProps> = ({
                   showError={isFormDirty && offerValue <= 0}
                   onChange={setOfferValue}
                   onFocus={onOfferInputFocus}
+                  value={offerValue}
                 />
                 {!order.isInquiryOrder && (
                   <>
