@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<08198f107e84dbbe973ae98caa1725b2>>
+ * @generated SignedSource<<28defe8621c9ae14b2b3a520b42f320d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -51,9 +51,9 @@ v3 = {
 },
 v4 = {
   "enumValues": null,
-  "nullable": false,
+  "nullable": true,
   "plural": false,
-  "type": "String"
+  "type": "Artwork"
 },
 v5 = {
   "enumValues": null,
@@ -62,6 +62,12 @@ v5 = {
   "type": "FormattedNumber"
 },
 v6 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v7 = {
   "enumValues": null,
   "nullable": true,
   "plural": false,
@@ -234,49 +240,61 @@ return {
                             "storageKey": null
                           },
                           {
-                            "alias": "avatar",
+                            "alias": null,
                             "args": null,
-                            "concreteType": "Image",
+                            "concreteType": "Artwork",
                             "kind": "LinkedField",
-                            "name": "image",
+                            "name": "coverArtwork",
                             "plural": false,
                             "selections": [
                               {
-                                "alias": null,
-                                "args": [
-                                  {
-                                    "kind": "Literal",
-                                    "name": "height",
-                                    "value": 45
-                                  },
-                                  {
-                                    "kind": "Literal",
-                                    "name": "width",
-                                    "value": 45
-                                  }
-                                ],
-                                "concreteType": "CroppedImageUrl",
+                                "alias": "avatar",
+                                "args": null,
+                                "concreteType": "Image",
                                 "kind": "LinkedField",
-                                "name": "cropped",
+                                "name": "image",
                                 "plural": false,
                                 "selections": [
                                   {
                                     "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "src",
-                                    "storageKey": null
-                                  },
-                                  {
-                                    "alias": null,
-                                    "args": null,
-                                    "kind": "ScalarField",
-                                    "name": "srcSet",
-                                    "storageKey": null
+                                    "args": [
+                                      {
+                                        "kind": "Literal",
+                                        "name": "height",
+                                        "value": 45
+                                      },
+                                      {
+                                        "kind": "Literal",
+                                        "name": "width",
+                                        "value": 45
+                                      }
+                                    ],
+                                    "concreteType": "CroppedImageUrl",
+                                    "kind": "LinkedField",
+                                    "name": "cropped",
+                                    "plural": false,
+                                    "selections": [
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "kind": "ScalarField",
+                                        "name": "src",
+                                        "storageKey": null
+                                      },
+                                      {
+                                        "alias": null,
+                                        "args": null,
+                                        "kind": "ScalarField",
+                                        "name": "srcSet",
+                                        "storageKey": null
+                                      }
+                                    ],
+                                    "storageKey": "cropped(height:45,width:45)"
                                   }
                                 ],
-                                "storageKey": "cropped(height:45,width:45)"
-                              }
+                                "storageKey": null
+                              },
+                              (v2/*: any*/)
                             ],
                             "storageKey": null
                           },
@@ -319,7 +337,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7f52549e0c3161b7e7f8df2aff9cfa18",
+    "cacheID": "e12dd738085e7b2bab9f1e2b61a88e00",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -342,32 +360,13 @@ return {
           "plural": true,
           "type": "MyCollectionEdge"
         },
-        "me.medianSalePrices.edges.node": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Artwork"
-        },
+        "me.medianSalePrices.edges.node": (v4/*: any*/),
         "me.medianSalePrices.edges.node.artist": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "Artist"
         },
-        "me.medianSalePrices.edges.node.artist.avatar": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "me.medianSalePrices.edges.node.artist.avatar.cropped": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CroppedImageUrl"
-        },
-        "me.medianSalePrices.edges.node.artist.avatar.cropped.src": (v4/*: any*/),
-        "me.medianSalePrices.edges.node.artist.avatar.cropped.srcSet": (v4/*: any*/),
         "me.medianSalePrices.edges.node.artist.counts": {
           "enumValues": null,
           "nullable": true,
@@ -376,12 +375,28 @@ return {
         },
         "me.medianSalePrices.edges.node.artist.counts.artworks": (v5/*: any*/),
         "me.medianSalePrices.edges.node.artist.counts.forSaleArtworks": (v5/*: any*/),
-        "me.medianSalePrices.edges.node.artist.formattedNationalityAndBirthday": (v6/*: any*/),
-        "me.medianSalePrices.edges.node.artist.href": (v6/*: any*/),
+        "me.medianSalePrices.edges.node.artist.coverArtwork": (v4/*: any*/),
+        "me.medianSalePrices.edges.node.artist.coverArtwork.avatar": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "me.medianSalePrices.edges.node.artist.coverArtwork.avatar.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "me.medianSalePrices.edges.node.artist.coverArtwork.avatar.cropped.src": (v6/*: any*/),
+        "me.medianSalePrices.edges.node.artist.coverArtwork.avatar.cropped.srcSet": (v6/*: any*/),
+        "me.medianSalePrices.edges.node.artist.coverArtwork.id": (v3/*: any*/),
+        "me.medianSalePrices.edges.node.artist.formattedNationalityAndBirthday": (v7/*: any*/),
+        "me.medianSalePrices.edges.node.artist.href": (v7/*: any*/),
         "me.medianSalePrices.edges.node.artist.id": (v3/*: any*/),
-        "me.medianSalePrices.edges.node.artist.initials": (v6/*: any*/),
+        "me.medianSalePrices.edges.node.artist.initials": (v7/*: any*/),
         "me.medianSalePrices.edges.node.artist.internalID": (v3/*: any*/),
-        "me.medianSalePrices.edges.node.artist.name": (v6/*: any*/),
+        "me.medianSalePrices.edges.node.artist.name": (v7/*: any*/),
         "me.medianSalePrices.edges.node.artist.slug": (v3/*: any*/),
         "me.medianSalePrices.edges.node.id": (v3/*: any*/),
         "me.medianSalePrices.edges.node.internalID": (v3/*: any*/),
@@ -391,21 +406,21 @@ return {
           "plural": false,
           "type": "ArtworkPriceInsights"
         },
-        "me.medianSalePrices.edges.node.marketPriceInsights.medianSalePriceDisplayText": (v6/*: any*/),
-        "me.medianSalePrices.edges.node.medium": (v6/*: any*/),
+        "me.medianSalePrices.edges.node.marketPriceInsights.medianSalePriceDisplayText": (v7/*: any*/),
+        "me.medianSalePrices.edges.node.medium": (v7/*: any*/),
         "me.medianSalePrices.edges.node.mediumType": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtworkMedium"
         },
-        "me.medianSalePrices.edges.node.mediumType.name": (v6/*: any*/),
-        "me.medianSalePrices.edges.node.title": (v6/*: any*/)
+        "me.medianSalePrices.edges.node.mediumType.name": (v7/*: any*/),
+        "me.medianSalePrices.edges.node.title": (v7/*: any*/)
       }
     },
     "name": "InsightsMedianSalePriceTestQuery",
     "operationKind": "query",
-    "text": "query InsightsMedianSalePriceTestQuery {\n  me {\n    ...InsightsMedianSalePrice_me\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment InsightsMedianSalePrice_me on Me {\n  medianSalePrices: myCollectionConnection(first: 3, sortByLastAuctionResultDate: true) {\n    edges {\n      node {\n        internalID\n        medium\n        mediumType {\n          name\n        }\n        title\n        artist {\n          internalID\n          ...EntityHeaderArtist_artist\n          id\n        }\n        marketPriceInsights {\n          medianSalePriceDisplayText\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query InsightsMedianSalePriceTestQuery {\n  me {\n    ...InsightsMedianSalePrice_me\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment InsightsMedianSalePrice_me on Me {\n  medianSalePrices: myCollectionConnection(first: 3, sortByLastAuctionResultDate: true) {\n    edges {\n      node {\n        internalID\n        medium\n        mediumType {\n          name\n        }\n        title\n        artist {\n          internalID\n          ...EntityHeaderArtist_artist\n          id\n        }\n        marketPriceInsights {\n          medianSalePriceDisplayText\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

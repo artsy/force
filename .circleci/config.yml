@@ -11,7 +11,7 @@ orbs:
 jobs:
   validate_production_schema:
     docker:
-      - image: cimg/node:18.18.0
+      - image: cimg/node:18.18.1
     parameters:
       # find channel ID at the botton of channel details view (slack app) or by right clicking on channel, and copying the link. The ID will be visible at the end of that URL.
       dev:
@@ -192,7 +192,7 @@ jobs:
 
   upload-docs:
     docker:
-      - image: "cimg/python:3.11"
+      - image: "cimg/python:3.12"
     steps:
       - aws-s3/sync:
           arguments: --acl public-read

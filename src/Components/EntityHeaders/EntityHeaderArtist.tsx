@@ -29,7 +29,7 @@ const EntityHeaderArtist: FC<EntityHeaderArtistProps> = ({
   ...rest
 }) => {
   const initials = artist.initials ?? artist.name?.[0]
-  const image = artist.avatar?.cropped
+  const image = artist.coverArtwork?.avatar?.cropped
   const counts = artist.counts
 
   return (
@@ -100,10 +100,12 @@ export const EntityHeaderArtistFragmentContainer = createFragmentContainer(
           artworks
           forSaleArtworks
         }
-        avatar: image {
-          cropped(width: 45, height: 45) {
-            src
-            srcSet
+        coverArtwork {
+          avatar: image {
+            cropped(width: 45, height: 45) {
+              src
+              srcSet
+            }
           }
         }
       }

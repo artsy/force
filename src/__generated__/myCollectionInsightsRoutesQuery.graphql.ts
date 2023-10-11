@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<01318da1edc16725dc1eb786e4e7db8b>>
+ * @generated SignedSource<<48f628ed1587aee4f71c218a7ae8425e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,7 +37,14 @@ v1 = [
     "name": "id",
     "variableName": "artistID"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -147,71 +154,77 @@ return {
             "storageKey": null
           },
           {
-            "alias": "avatar",
+            "alias": null,
             "args": null,
-            "concreteType": "Image",
+            "concreteType": "Artwork",
             "kind": "LinkedField",
-            "name": "image",
+            "name": "coverArtwork",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 45
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 45
-                  }
-                ],
-                "concreteType": "CroppedImageUrl",
+                "alias": "avatar",
+                "args": null,
+                "concreteType": "Image",
                 "kind": "LinkedField",
-                "name": "cropped",
+                "name": "image",
                 "plural": false,
                 "selections": [
                   {
                     "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "src",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "srcSet",
-                    "storageKey": null
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 45
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 45
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "src",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "srcSet",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": "cropped(height:45,width:45)"
                   }
                 ],
-                "storageKey": "cropped(height:45,width:45)"
-              }
+                "storageKey": null
+              },
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "487050601670ad71eb0d41baf8f479ae",
+    "cacheID": "7fec67d0e5123ba6dd34cdba33cad4ca",
     "id": null,
     "metadata": {},
     "name": "myCollectionInsightsRoutesQuery",
     "operationKind": "query",
-    "text": "query myCollectionInsightsRoutesQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) @principalField {\n    ...MyCollectionInsightsMedianSalePriceAtAuction_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment MyCollectionInsightsMedianSalePriceAtAuction_artist on Artist {\n  ...EntityHeaderArtist_artist\n}\n"
+    "text": "query myCollectionInsightsRoutesQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) @principalField {\n    ...MyCollectionInsightsMedianSalePriceAtAuction_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment MyCollectionInsightsMedianSalePriceAtAuction_artist on Artist {\n  ...EntityHeaderArtist_artist\n}\n"
   }
 };
 })();

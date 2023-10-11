@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<12270ce063ac4a95440df2dfb19fc3d3>>
+ * @generated SignedSource<<0d255a99953c7854d78bc93429ec45af>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -219,13 +219,25 @@ return {
                             "storageKey": null
                           },
                           {
-                            "alias": "avatar",
+                            "alias": null,
                             "args": null,
-                            "concreteType": "Image",
+                            "concreteType": "Artwork",
                             "kind": "LinkedField",
-                            "name": "image",
+                            "name": "coverArtwork",
                             "plural": false,
-                            "selections": (v0/*: any*/),
+                            "selections": [
+                              {
+                                "alias": "avatar",
+                                "args": null,
+                                "concreteType": "Image",
+                                "kind": "LinkedField",
+                                "name": "image",
+                                "plural": false,
+                                "selections": (v0/*: any*/),
+                                "storageKey": null
+                              },
+                              (v1/*: any*/)
+                            ],
                             "storageKey": null
                           },
                           {
@@ -290,12 +302,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "559f30d352fbeccf8eb2322aa98435f1",
+    "cacheID": "729eda4ff90595236a425de6d6579193",
     "id": null,
     "metadata": {},
     "name": "myCollectionRoutes_MyCollectionArtworkUploadQuery",
     "operationKind": "query",
-    "text": "query myCollectionRoutes_MyCollectionArtworkUploadQuery {\n  me {\n    ...MyCollectionCreateArtwork_me\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment MyCollectionArtworkFormArtistStep_me on Me {\n  myCollectionInfo {\n    collectedArtistsConnection(first: 100, includePersonalArtists: true) {\n      edges {\n        node {\n          ...EntityHeaderArtist_artist\n          counts {\n            artworks\n          }\n          displayLabel\n          formattedNationalityAndBirthday\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          initials\n          internalID\n          isPersonalArtist\n          name\n          slug\n          targetSupply {\n            isP1\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment MyCollectionCreateArtwork_me on Me {\n  ...MyCollectionArtworkFormArtistStep_me\n}\n"
+    "text": "query myCollectionRoutes_MyCollectionArtworkUploadQuery {\n  me {\n    ...MyCollectionCreateArtwork_me\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment MyCollectionArtworkFormArtistStep_me on Me {\n  myCollectionInfo {\n    collectedArtistsConnection(first: 100, includePersonalArtists: true) {\n      edges {\n        node {\n          ...EntityHeaderArtist_artist\n          counts {\n            artworks\n          }\n          displayLabel\n          formattedNationalityAndBirthday\n          image {\n            cropped(width: 45, height: 45) {\n              src\n              srcSet\n            }\n          }\n          initials\n          internalID\n          isPersonalArtist\n          name\n          slug\n          targetSupply {\n            isP1\n          }\n          id\n        }\n      }\n    }\n  }\n}\n\nfragment MyCollectionCreateArtwork_me on Me {\n  ...MyCollectionArtworkFormArtistStep_me\n}\n"
   }
 };
 })();

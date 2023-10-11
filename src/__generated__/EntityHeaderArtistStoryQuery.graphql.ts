@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4bd5c1f825e4122ff9e9e98c0aa43b7a>>
+ * @generated SignedSource<<e8b1864091e1e1485a8eef976c8b466e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -37,7 +37,14 @@ v1 = [
     "name": "id",
     "variableName": "id"
   }
-];
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -147,71 +154,77 @@ return {
             "storageKey": null
           },
           {
-            "alias": "avatar",
+            "alias": null,
             "args": null,
-            "concreteType": "Image",
+            "concreteType": "Artwork",
             "kind": "LinkedField",
-            "name": "image",
+            "name": "coverArtwork",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 45
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 45
-                  }
-                ],
-                "concreteType": "CroppedImageUrl",
+                "alias": "avatar",
+                "args": null,
+                "concreteType": "Image",
                 "kind": "LinkedField",
-                "name": "cropped",
+                "name": "image",
                 "plural": false,
                 "selections": [
                   {
                     "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "src",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "srcSet",
-                    "storageKey": null
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 45
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 45
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "src",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "srcSet",
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": "cropped(height:45,width:45)"
                   }
                 ],
-                "storageKey": "cropped(height:45,width:45)"
-              }
+                "storageKey": null
+              },
+              (v2/*: any*/)
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v2/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "e61d3f4901db276aac70d4f2170f38f0",
+    "cacheID": "7ca5580ed4893769594810cb06e0cfbc",
     "id": null,
     "metadata": {},
     "name": "EntityHeaderArtistStoryQuery",
     "operationKind": "query",
-    "text": "query EntityHeaderArtistStoryQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query EntityHeaderArtistStoryQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();

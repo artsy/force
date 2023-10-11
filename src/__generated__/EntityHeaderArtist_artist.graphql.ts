@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<32f0846ba361ca7a211f0deae9a24b23>>
+ * @generated SignedSource<<e2872bae6e3bb2b6f18befeadb837771>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderArtist_artist$data = {
-  readonly avatar: {
-    readonly cropped: {
-      readonly src: string;
-      readonly srcSet: string;
-    } | null;
-  } | null;
   readonly counts: {
     readonly artworks: any | null;
     readonly forSaleArtworks: any | null;
+  } | null;
+  readonly coverArtwork: {
+    readonly avatar: {
+      readonly cropped: {
+        readonly src: string;
+        readonly srcSet: string;
+      } | null;
+    } | null;
   } | null;
   readonly formattedNationalityAndBirthday: string | null;
   readonly href: string | null;
@@ -108,48 +110,59 @@ const node: ReaderFragment = {
       "storageKey": null
     },
     {
-      "alias": "avatar",
+      "alias": null,
       "args": null,
-      "concreteType": "Image",
+      "concreteType": "Artwork",
       "kind": "LinkedField",
-      "name": "image",
+      "name": "coverArtwork",
       "plural": false,
       "selections": [
         {
-          "alias": null,
-          "args": [
-            {
-              "kind": "Literal",
-              "name": "height",
-              "value": 45
-            },
-            {
-              "kind": "Literal",
-              "name": "width",
-              "value": 45
-            }
-          ],
-          "concreteType": "CroppedImageUrl",
+          "alias": "avatar",
+          "args": null,
+          "concreteType": "Image",
           "kind": "LinkedField",
-          "name": "cropped",
+          "name": "image",
           "plural": false,
           "selections": [
             {
               "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "src",
-              "storageKey": null
-            },
-            {
-              "alias": null,
-              "args": null,
-              "kind": "ScalarField",
-              "name": "srcSet",
-              "storageKey": null
+              "args": [
+                {
+                  "kind": "Literal",
+                  "name": "height",
+                  "value": 45
+                },
+                {
+                  "kind": "Literal",
+                  "name": "width",
+                  "value": 45
+                }
+              ],
+              "concreteType": "CroppedImageUrl",
+              "kind": "LinkedField",
+              "name": "cropped",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "src",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "srcSet",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": "cropped(height:45,width:45)"
             }
           ],
-          "storageKey": "cropped(height:45,width:45)"
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -159,6 +172,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2d83c72ea73ba22c6674603767f1322d";
+(node as any).hash = "b1020d205ad6ababd42ddfc2f30e2d1b";
 
 export default node;

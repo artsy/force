@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dee00462329699305185feac1f97ee11>>
+ * @generated SignedSource<<38bb7ad625e6b9c7c6ab151d45e9c455>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -50,6 +50,13 @@ v3 = {
   "args": null,
   "kind": "ScalarField",
   "name": "srcSet",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 };
 return {
@@ -161,37 +168,49 @@ return {
             "storageKey": null
           },
           {
-            "alias": "avatar",
+            "alias": null,
             "args": null,
-            "concreteType": "Image",
+            "concreteType": "Artwork",
             "kind": "LinkedField",
-            "name": "image",
+            "name": "coverArtwork",
             "plural": false,
             "selections": [
               {
-                "alias": null,
-                "args": [
-                  {
-                    "kind": "Literal",
-                    "name": "height",
-                    "value": 45
-                  },
-                  {
-                    "kind": "Literal",
-                    "name": "width",
-                    "value": 45
-                  }
-                ],
-                "concreteType": "CroppedImageUrl",
+                "alias": "avatar",
+                "args": null,
+                "concreteType": "Image",
                 "kind": "LinkedField",
-                "name": "cropped",
+                "name": "image",
                 "plural": false,
                 "selections": [
-                  (v2/*: any*/),
-                  (v3/*: any*/)
+                  {
+                    "alias": null,
+                    "args": [
+                      {
+                        "kind": "Literal",
+                        "name": "height",
+                        "value": 45
+                      },
+                      {
+                        "kind": "Literal",
+                        "name": "width",
+                        "value": 45
+                      }
+                    ],
+                    "concreteType": "CroppedImageUrl",
+                    "kind": "LinkedField",
+                    "name": "cropped",
+                    "plural": false,
+                    "selections": [
+                      (v2/*: any*/),
+                      (v3/*: any*/)
+                    ],
+                    "storageKey": "cropped(height:45,width:45)"
+                  }
                 ],
-                "storageKey": "cropped(height:45,width:45)"
-              }
+                "storageKey": null
+              },
+              (v4/*: any*/)
             ],
             "storageKey": null
           },
@@ -263,25 +282,19 @@ return {
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v4/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "c1fde7f74fd0976dfe0ffe76837d7a0e",
+    "cacheID": "54eb2b6ed6940dd1777b0e6b6d3dd048",
     "id": null,
     "metadata": {},
     "name": "EntityTooltipArtistQuery",
     "operationKind": "query",
-    "text": "query EntityTooltipArtistQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...EntityTooltipArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n\nfragment EntityTooltipArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  href\n  blurb(format: PLAIN)\n  carousel {\n    images {\n      resized(height: 100) {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n}\n"
+    "text": "query EntityTooltipArtistQuery(\n  $id: String!\n) {\n  artist(id: $id) {\n    ...EntityTooltipArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n\nfragment EntityTooltipArtist_artist on Artist {\n  ...EntityHeaderArtist_artist\n  href\n  blurb(format: PLAIN)\n  carousel {\n    images {\n      resized(height: 100) {\n        src\n        srcSet\n        height\n        width\n      }\n    }\n  }\n}\n"
   }
 };
 })();

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd7d828ccb7cc06d6659fcedab97a3c1>>
+ * @generated SignedSource<<8fa0fc81cfb1726591bf076753e5ffa6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -48,15 +48,15 @@ v2 = {
 },
 v3 = {
   "enumValues": null,
-  "nullable": false,
-  "plural": false,
-  "type": "String"
-},
-v4 = {
-  "enumValues": null,
   "nullable": true,
   "plural": false,
   "type": "FormattedNumber"
+},
+v4 = {
+  "enumValues": null,
+  "nullable": false,
+  "plural": false,
+  "type": "String"
 },
 v5 = {
   "enumValues": null,
@@ -219,49 +219,61 @@ return {
                         "storageKey": null
                       },
                       {
-                        "alias": "avatar",
+                        "alias": null,
                         "args": null,
-                        "concreteType": "Image",
+                        "concreteType": "Artwork",
                         "kind": "LinkedField",
-                        "name": "image",
+                        "name": "coverArtwork",
                         "plural": false,
                         "selections": [
                           {
-                            "alias": null,
-                            "args": [
-                              {
-                                "kind": "Literal",
-                                "name": "height",
-                                "value": 45
-                              },
-                              {
-                                "kind": "Literal",
-                                "name": "width",
-                                "value": 45
-                              }
-                            ],
-                            "concreteType": "CroppedImageUrl",
+                            "alias": "avatar",
+                            "args": null,
+                            "concreteType": "Image",
                             "kind": "LinkedField",
-                            "name": "cropped",
+                            "name": "image",
                             "plural": false,
                             "selections": [
                               {
                                 "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "src",
-                                "storageKey": null
-                              },
-                              {
-                                "alias": null,
-                                "args": null,
-                                "kind": "ScalarField",
-                                "name": "srcSet",
-                                "storageKey": null
+                                "args": [
+                                  {
+                                    "kind": "Literal",
+                                    "name": "height",
+                                    "value": 45
+                                  },
+                                  {
+                                    "kind": "Literal",
+                                    "name": "width",
+                                    "value": 45
+                                  }
+                                ],
+                                "concreteType": "CroppedImageUrl",
+                                "kind": "LinkedField",
+                                "name": "cropped",
+                                "plural": false,
+                                "selections": [
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "src",
+                                    "storageKey": null
+                                  },
+                                  {
+                                    "alias": null,
+                                    "args": null,
+                                    "kind": "ScalarField",
+                                    "name": "srcSet",
+                                    "storageKey": null
+                                  }
+                                ],
+                                "storageKey": "cropped(height:45,width:45)"
                               }
                             ],
-                            "storageKey": "cropped(height:45,width:45)"
-                          }
+                            "storageKey": null
+                          },
+                          (v1/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -282,7 +294,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "4736ee3f2ba27cd49be1d30907d6fe30",
+    "cacheID": "9736ad43e1b18dfecef049590e7ad505",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -311,28 +323,35 @@ return {
           "plural": false,
           "type": "Artist"
         },
-        "me.myCollectionInfo.BIENNIAL.artist.avatar": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "Image"
-        },
-        "me.myCollectionInfo.BIENNIAL.artist.avatar.cropped": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "CroppedImageUrl"
-        },
-        "me.myCollectionInfo.BIENNIAL.artist.avatar.cropped.src": (v3/*: any*/),
-        "me.myCollectionInfo.BIENNIAL.artist.avatar.cropped.srcSet": (v3/*: any*/),
         "me.myCollectionInfo.BIENNIAL.artist.counts": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "ArtistCounts"
         },
-        "me.myCollectionInfo.BIENNIAL.artist.counts.artworks": (v4/*: any*/),
-        "me.myCollectionInfo.BIENNIAL.artist.counts.forSaleArtworks": (v4/*: any*/),
+        "me.myCollectionInfo.BIENNIAL.artist.counts.artworks": (v3/*: any*/),
+        "me.myCollectionInfo.BIENNIAL.artist.counts.forSaleArtworks": (v3/*: any*/),
+        "me.myCollectionInfo.BIENNIAL.artist.coverArtwork": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Artwork"
+        },
+        "me.myCollectionInfo.BIENNIAL.artist.coverArtwork.avatar": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "Image"
+        },
+        "me.myCollectionInfo.BIENNIAL.artist.coverArtwork.avatar.cropped": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "CroppedImageUrl"
+        },
+        "me.myCollectionInfo.BIENNIAL.artist.coverArtwork.avatar.cropped.src": (v4/*: any*/),
+        "me.myCollectionInfo.BIENNIAL.artist.coverArtwork.avatar.cropped.srcSet": (v4/*: any*/),
+        "me.myCollectionInfo.BIENNIAL.artist.coverArtwork.id": (v2/*: any*/),
         "me.myCollectionInfo.BIENNIAL.artist.formattedNationalityAndBirthday": (v5/*: any*/),
         "me.myCollectionInfo.BIENNIAL.artist.href": (v5/*: any*/),
         "me.myCollectionInfo.BIENNIAL.artist.id": (v2/*: any*/),
@@ -344,7 +363,7 @@ return {
     },
     "name": "CareerHighlightModalStepTestQuery",
     "operationKind": "query",
-    "text": "query CareerHighlightModalStepTestQuery {\n  me {\n    myCollectionInfo {\n      BIENNIAL: artistInsights(kind: BIENNIAL) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n    }\n    id\n  }\n}\n\nfragment CareerHighlightModalStep_careerHighlight on ArtistInsight {\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  avatar: image {\n    cropped(width: 45, height: 45) {\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query CareerHighlightModalStepTestQuery {\n  me {\n    myCollectionInfo {\n      BIENNIAL: artistInsights(kind: BIENNIAL) {\n        ...CareerHighlightModalStep_careerHighlight\n      }\n    }\n    id\n  }\n}\n\nfragment CareerHighlightModalStep_careerHighlight on ArtistInsight {\n  artist {\n    ...EntityHeaderArtist_artist\n    id\n  }\n}\n\nfragment EntityHeaderArtist_artist on Artist {\n  internalID\n  href\n  slug\n  name\n  initials\n  formattedNationalityAndBirthday\n  counts {\n    artworks\n    forSaleArtworks\n  }\n  coverArtwork {\n    avatar: image {\n      cropped(width: 45, height: 45) {\n        src\n        srcSet\n      }\n    }\n    id\n  }\n}\n"
   }
 };
 })();
