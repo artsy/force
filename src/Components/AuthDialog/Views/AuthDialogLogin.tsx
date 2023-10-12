@@ -154,6 +154,7 @@ export const AuthDialogLogin: FC = () => {
                   name="authenticationCode"
                   title="Authentication Code"
                   placeholder="Enter an authentication code"
+                  inputMode={"numeric"}
                   onChange={handleChange}
                   onBlur={handleBlur}
                   autoFocus
