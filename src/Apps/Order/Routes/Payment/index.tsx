@@ -97,6 +97,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
 
   const artworkVersion = extractNodes(order.lineItems)[0]?.artworkVersion
 
+  const paymentDetailsRef = createRef<HTMLDivElement>()
+
   useEffect(() => {
     const bankAccountsArray =
       selectedPaymentMethod !== "SEPA_DEBIT"
@@ -218,8 +220,10 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     try {
       const result = await CreditCardPicker?.current?.getCreditCardId()
 
-      if (result?.type === "invalid_form") return
-
+      if (result?.type === "invalid_form") {
+        paymentDetailsRef.current?.scrollIntoView({ behavior: "smooth" })
+        return
+      }
       if (result?.type === "error") {
         trackEvent({
           action: ActionType.errorMessageViewed,
@@ -474,6 +478,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
               <Flex
                 flexDirection="column"
                 style={displayLoading ? { display: "none" } : {}}
+                ref={paymentDetailsRef as any}
               >
                 <PaymentContent
                   commitMutation={props.commitMutation}
