@@ -46,7 +46,7 @@ import {
   AddressTouched,
 } from "Components/Address/AddressForm"
 import { Router } from "found"
-import { FC, useState, useEffect } from "react"
+import { FC, useState, useEffect, useRef } from "react"
 import { COUNTRIES_IN_EUROPEAN_UNION } from "@artsy/commerce_helpers"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import createLogger from "Utils/logger"
@@ -276,6 +276,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     if (invalidAddress) {
       setAddressErrors(addressErrors!)
       setAddressTouched(touchedAddress)
+      addressFormRef.current?.scrollIntoView({ behavior: "smooth" })
     }
     if (invalidPhoneNumber) {
       setPhoneNumberError(phoneNumberError!)
@@ -391,6 +392,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const selectShippingQuote = async () => {
     const { order } = props
+
+    if (!shippingQuoteId)
+      shippingOptionsRef.current?.scrollIntoView({ behavior: "smooth" })
 
     if (shippingQuoteId && order.internalID) {
       try {
@@ -766,12 +770,13 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const showArtsyShipping =
     isArtsyShipping && !!shippingQuotes && shippingQuotes.length > 0
   const isOffer = order.mode === "OFFER"
-
   const useDefaultArtsyShippingQuote =
     isArtsyShipping &&
     shippingQuotes &&
     shippingQuotes.length > 0 &&
     !shippingQuoteId
+  const addressFormRef = useRef<HTMLDivElement>(null)
+  const shippingOptionsRef = useRef<HTMLDivElement>(null)
 
   // TODO: consider to move this block to a useEffect
   if (useDefaultArtsyShippingQuote) {
@@ -851,7 +856,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   shippingQuotes &&
                   shippingQuotes.length === 0 &&
                   renderArtaErrorMessage()}
-                <Text variant="lg-display" mb="2">
+                <Text ref={addressFormRef as any} variant="lg-display" mb="2">
                   Delivery address
                 </Text>
                 {addressNeedsVerification && (
@@ -930,7 +935,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
               {/* SHIPPING OPTION */}
               <Collapse open={showArtsyShipping}>
-                <Text variant="sm">Artsy shipping options</Text>
+                <Text ref={shippingOptionsRef as any} variant="sm">
+                  Artsy shipping options
+                </Text>
                 <Text variant="xs" mb="1" color="black60">
                   {renderArtsyShippingOptionText()}
                 </Text>
