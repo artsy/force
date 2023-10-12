@@ -11,7 +11,7 @@ import {
   MobileSearchBarSuggestQuery,
   MobileSearchBarSuggestQuery$data,
 } from "__generated__/MobileSearchBarSuggestQuery.graphql"
-import { StaticSearchContainer } from "Components/Search/NewSearch/StaticSearchContainer"
+import { StaticSearchContainer } from "Components/Search/StaticSearchContainer"
 
 interface MobileSearchBarProps {
   viewer: NonNullable<MobileSearchBarSuggestQuery$data["viewer"]>

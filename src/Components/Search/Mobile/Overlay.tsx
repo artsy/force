@@ -6,23 +6,23 @@ import {
   PillType,
   TOP_PILL,
   SEARCH_DEBOUNCE_DELAY,
-} from "Components/Search/NewSearch/constants"
+} from "Components/Search/constants"
 import { createRefetchContainer, RelayRefetchProp, graphql } from "react-relay"
 import createLogger from "Utils/logger"
-import { SearchInputPillsFragmentContainer } from "Components/Search/NewSearch/SearchInputPills"
-import { reportPerformanceMeasurement } from "Components/Search/NewSearch/utils/reportPerformanceMeasurement"
-import { shouldStartSearching } from "Components/Search/NewSearch/utils/shouldStartSearching"
+import { SearchInputPillsFragmentContainer } from "Components/Search/SearchInputPills"
+import { reportPerformanceMeasurement } from "Components/Search/utils/reportPerformanceMeasurement"
+import { shouldStartSearching } from "Components/Search/utils/shouldStartSearching"
 import { useDebounce } from "Utils/Hooks/useDebounce"
 import { Overlay_viewer$data } from "__generated__/Overlay_viewer.graphql"
 import {
   OVERLAY_CONTENT_ID,
   OverlayBase,
-} from "Components/Search/NewSearch/Mobile/OverlayBase"
-import { SearchResultsListPaginationContainer } from "Components/Search/NewSearch/Mobile/SearchResultsList"
+} from "Components/Search/Mobile/OverlayBase"
+import { SearchResultsListPaginationContainer } from "./SearchResultsList"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 
-const logger = createLogger("Components/Search/NewSearch/Mobile")
+const logger = createLogger("Components/Search/Mobile")
 
 const scrollToTop = () => {
   document.querySelector(`#${OVERLAY_CONTENT_ID}`)?.scrollTo(0, 0)

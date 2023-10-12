@@ -3,7 +3,7 @@ import { FC } from "react"
 import { SuggestionItemLink } from "./SuggestionItemLink"
 import { DefaultSuggestion } from "./DefaultSuggestion"
 import { Box, Pill } from "@artsy/palette"
-import { QuickNavigationItem } from "Components/Search/NewSearch/SuggestionItem/QuickNavigationItem"
+import { QuickNavigationItem } from "Components/Search/SuggestionItem/QuickNavigationItem"
 
 export interface SuggestionItemOptionProps {
   text: string

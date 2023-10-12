@@ -5,7 +5,7 @@ import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 import { SuggestionItemLink } from "./SuggestionItem/SuggestionItemLink"
 import { Highlight } from "./SuggestionItem/Highlight"
-import { PillType } from "Components/Search/NewSearch/constants"
+import { PillType } from "./constants"
 
 interface SuggestionItemProps {
   href: string

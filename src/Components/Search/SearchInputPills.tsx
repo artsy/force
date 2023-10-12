@@ -10,11 +10,7 @@ import { FC, useEffect, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import styled, { css } from "styled-components"
 import { SearchInputPills_viewer$data } from "__generated__/SearchInputPills_viewer.graphql"
-import {
-  PILLS,
-  PillType,
-  TOP_PILL,
-} from "Components/Search/NewSearch/constants"
+import { PILLS, PillType, TOP_PILL } from "./constants"
 
 const ChevronStyle = css`
   position: absolute;
