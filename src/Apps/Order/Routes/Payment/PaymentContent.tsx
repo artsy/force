@@ -239,7 +239,7 @@ const getAvailablePaymentMethods = (
           <>
             <InstitutionIcon fill="green100" />
             <Text variant="sm-display" ml={0.5}>
-              Bank transfer
+              ACH bank transfer
             </Text>
           </>
         }
