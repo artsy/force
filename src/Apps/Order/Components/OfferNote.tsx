@@ -18,7 +18,7 @@ export const OfferNote: React.FC<{
 
       <TextArea
         title="Note (recommended)"
-        characterLimit={1000}
+        maxLength={1000}
         description="Add additional information to help the gallery to evaluate your offer."
         placeholder="E.g. memberships of art institutions, artists or genres you collect, interest in the artist, etc."
         onChange={onChange}

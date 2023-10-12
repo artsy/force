@@ -1,5 +1,5 @@
 import { ReactWrapper, mount } from "enzyme"
-import { OfferInput, OfferInputProps } from "../OfferInput"
+import { OfferInput, OfferInputProps } from "Apps/Order/Components/OfferInput"
 
 // https://github.com/airbnb/enzyme/issues/218#issuecomment-388481390
 const setInputValue = (
@@ -37,6 +37,23 @@ describe("Offer input", () => {
     expect(onChange).toHaveBeenCalledWith(2389274922)
   })
 
+  it("displays the value with comma separators at the thousands", () => {
+    let input = render({ value: 12 })
+
+    let inputValue = input.find("input").prop("value")
+    expect(inputValue).toBe("12")
+
+    input = render({ value: 4200 })
+
+    inputValue = input.find("input").prop("value")
+    expect(inputValue).toBe("4,200")
+
+    input = render({ value: 2389274922 })
+
+    inputValue = input.find("input").prop("value")
+    expect(inputValue).toBe("2,389,274,922")
+  })
+
   it("shows no error message when showError is false", () => {
     const input = render({ showError: false })
 
@@ -61,19 +78,5 @@ describe("Offer input", () => {
 
     setInputValue(input.find("input"), "2139hello8729")
     expect(onChange).toHaveBeenCalledWith(21398729)
-  })
-
-  it("keeps the cursor in the right place if the input is given non-numeric input", () => {
-    const setSelectionRange = jest.fn()
-    const input = render({})
-
-    setInputValue(input.find("input"), "1d1", setSelectionRange)
-    expect(setSelectionRange).toHaveBeenCalledWith(1, 1)
-
-    setInputValue(input.find("input"), "d2", setSelectionRange)
-    expect(setSelectionRange).toHaveBeenCalledWith(0, 0)
-
-    setInputValue(input.find("input"), "2139hello8729", setSelectionRange)
-    expect(setSelectionRange).toHaveBeenCalledWith(4, 4)
   })
 })

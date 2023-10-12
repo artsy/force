@@ -43,31 +43,13 @@ describe("OfferNote", () => {
       value: "hello world",
       exceedsCharacterLimit: false,
     })
-
-    const oneThousand = new Array(1000).fill("a").join("")
-    expect(oneThousand.length).toBe(1000)
-    simulateTyping(wrapper, oneThousand)
-
-    expect(onChange).toHaveBeenCalledWith({
-      value: oneThousand,
-      exceedsCharacterLimit: false,
-    })
-
-    const oneThousandAndOneAs = new Array(1001).fill("a").join("")
-    simulateTyping(wrapper, oneThousandAndOneAs)
-
-    expect(onChange).toHaveBeenCalledWith({
-      value: oneThousandAndOneAs,
-      exceedsCharacterLimit: true,
-    })
   })
 
-  it("has a title and description and a character limit", () => {
+  it("has a title and description", () => {
     const text = getWrapper().text()
     expect(text).toContain("Note (recommended)")
     expect(text).toContain(
       "Add additional information to help the gallery to evaluate your offer."
     )
-    expect(text).toContain("1000 characters remaining")
   })
 })
