@@ -181,6 +181,7 @@ export const InquiryLogin: React.FC = () => {
             name="authenticationCode"
             title="Authentication Code"
             placeholder="Enter an authentication code"
+            inputMode={"numeric"}
             onChange={handleInputChange("authenticationCode")}
             required
             autoFocus
