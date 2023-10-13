@@ -92,6 +92,9 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
 }))
 const trackEvent = jest.fn()
 
+const scrollIntoViewMock = jest.fn()
+window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock
+
 const testOrder: PaymentTestQuery$rawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
   availablePaymentMethods: [
@@ -174,6 +177,7 @@ describe("Payment", () => {
         return {
           selectedPaymentMethod: "CREDIT_CARD",
           setIsSavingPayment: mockSetIsSavingPayment,
+          setSelectedPaymentMethod: jest.fn(),
         }
       })
       const mockTracking = useTracking as jest.Mock
@@ -226,6 +230,13 @@ describe("Payment", () => {
       expect(mockShowErrorDialog).toHaveBeenCalledWith({
         title: "An internal error occurred",
       })
+    })
+
+    it("scrolls to top of address form when payment picker returns 'invalid_form'", async () => {
+      CreditCardPickerMock.useInvalidFormResult()
+      await page.clickSubmit()
+
+      expect(scrollIntoViewMock).toHaveBeenCalled()
     })
 
     it("tracks when the user selects Credit Card payment method", async () => {

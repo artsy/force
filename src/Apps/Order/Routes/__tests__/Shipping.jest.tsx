@@ -97,6 +97,9 @@ jest.mock("react-relay", () => ({
   commitMutation: (...args) => mockCommitMutation(args),
 }))
 
+const scrollIntoViewMock = jest.fn()
+window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock
+
 const order: ShippingTestQuery$rawResponse["order"] = {
   ...UntouchedBuyOrder,
   internalID: "1234",
@@ -935,6 +938,17 @@ describe("Shipping", () => {
             })
           })
         })
+      })
+
+      it("scrolls to top of address form when there are address form errors", async () => {
+        renderWithRelay({
+          CommerceOrder: () => UntouchedOfferOrder,
+          Me: () => meWithoutAddress,
+        })
+
+        await saveAndContinue()
+
+        expect(scrollIntoViewMock).toBeCalled()
       })
     })
 
