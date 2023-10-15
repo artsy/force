@@ -1,10 +1,10 @@
 import { graphql } from "react-relay"
 import { SavedAddressesFragmentContainer } from "./SavedAddresses2"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { AddressModal } from "Apps/Order/Components/AddressModal"
+import { AddressModal } from "Apps/Order/Routes/Shipping2/AddressModal2"
 import { RootTestPage } from "DevTools/RootTestPage"
 import { userAddressMutation } from "Apps/__tests__/Fixtures/Order/MutationResults"
-import { SavedAddressItem } from "Apps/Order/Components/SavedAddressItem"
+import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/SavedAddressItem2"
 import { useTracking } from "react-tracking"
 
 jest.unmock("react-relay")
@@ -36,7 +36,7 @@ describe("Saved Addresses", () => {
     query: graphql`
       query SavedAddresses2Mutation_Test_Query @relay_test_operation {
         me {
-          ...SavedAddresses_me
+          ...SavedAddresses2_me
         }
       }
     `,
@@ -112,13 +112,14 @@ describe("Saved Addresses", () => {
     })
 
     describe("when clicking on the add address button", () => {
-      it("tracks an analytics event", () => {
+      it("tracks an analytics event", async () => {
         const wrapper = getWrapper({
           Me: () => ({
             addressConnection: mockAddressConnection,
           }),
         })
 
+        await wrapper.update()
         wrapper.find("[data-test='shippingButton']").first().simulate("click")
 
         expect(trackEvent).toHaveBeenCalled()

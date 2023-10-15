@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<359d89b09818c9280a4aec3dc312d39f>>
+ * @generated SignedSource<<b3e1c121f9155ccdbfcb926e7715ac91>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type SavedAddresses2Mutation_Test_Query$variables = {};
 export type SavedAddresses2Mutation_Test_Query$data = {
   readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses_me">;
+    readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses2_me">;
   } | null;
 };
 export type SavedAddresses2Mutation_Test_Query = {
@@ -78,7 +78,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "SavedAddresses_me"
+            "name": "SavedAddresses2_me"
           }
         ],
         "storageKey": null
@@ -288,7 +288,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e5aea4dbc2a8a2fa0d9643b1df1bbd0d",
+    "cacheID": "470da9e59f3c08d04092160f164c773f",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -351,11 +351,11 @@ return {
     },
     "name": "SavedAddresses2Mutation_Test_Query",
     "operationKind": "query",
-    "text": "query SavedAddresses2Mutation_Test_Query {\n  me {\n    ...SavedAddresses_me\n    id\n  }\n}\n\nfragment SavedAddresses_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query SavedAddresses2Mutation_Test_Query {\n  me {\n    ...SavedAddresses2_me\n    id\n  }\n}\n\nfragment SavedAddresses2_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f2f0b92fd741a315e2b9cb0fe0ecbe9e";
+(node as any).hash = "e9ad32612f2734769d1b219ed7961dc9";
 
 export default node;

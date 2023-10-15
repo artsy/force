@@ -13,6 +13,7 @@ import {
   updateAddressFailure,
   updateAddressSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 jest.mock("System/useSystemContext")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
@@ -136,7 +137,7 @@ describe("AddressModal", () => {
     }, 0)
   })
 
-  it("when the dialog is confirmed, the delete action happens", () => {
+  it("when the dialog is confirmed, the delete action happens", async () => {
     const wrapper = getWrapper(testAddressModalProps)
     const deleteButton = wrapper.find("Clickable[data-test='deleteButton']")
     deleteButton.simulate("click")
@@ -144,13 +145,14 @@ describe("AddressModal", () => {
     const dialogDelete = dialog.find("Button").at(1)
     dialogDelete.simulate("click")
 
-    setTimeout(() => {
-      expect(wrapper.find(AddressModal).props().onDeleteAddress).toBeCalled()
-      expect(wrapper.find(AddressModal).props().closeModal).toBeCalled()
-    }, 0)
+    await flushPromiseQueue()
+    expect(
+      wrapper.find(AddressModal).props().onDeleteAddress
+    ).toHaveBeenCalled()
+    expect(wrapper.find(AddressModal).props().closeModal).toHaveBeenCalled()
   })
 
-  it("when the dialog is cancelled, the delete action doesn't happen", () => {
+  it("when the dialog is cancelled, the delete action doesn't happen", async () => {
     const wrapper = getWrapper(testAddressModalProps)
     const deleteButton = wrapper.find("Clickable[data-test='deleteButton']")
     deleteButton.simulate("click")
@@ -158,12 +160,9 @@ describe("AddressModal", () => {
     const dialogCancel = dialog.find("Button").at(0)
     dialogCancel.simulate("click")
 
-    setTimeout(() => {
-      expect(
-        wrapper.find(AddressModal).props().onDeleteAddress
-      ).not.toBeCalled()
-      expect(wrapper.find(AddressModal).props().closeModal).not.toBeCalled()
-    }, 0)
+    await flushPromiseQueue()
+    expect(wrapper.find(AddressModal).props().onDeleteAddress).not.toBeCalled()
+    expect(wrapper.find(AddressModal).props().closeModal).not.toBeCalled()
   })
 
   describe("update mode", () => {

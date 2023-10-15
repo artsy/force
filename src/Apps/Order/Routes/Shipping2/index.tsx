@@ -39,11 +39,6 @@ import {
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
-import { extractNodes } from "Utils/extractNodes"
-import { COUNTRIES_IN_EUROPEAN_UNION } from "@artsy/commerce_helpers"
-// TODO: Duplicated list ^
-import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
-
 import { Analytics } from "System/Analytics/AnalyticsContext"
 import {
   ErrorDialogs,
@@ -66,188 +61,62 @@ import {
   addressWithFallbackValues,
   FulfillmentType,
   getDefaultUserAddress,
-  SavedAddressType,
   ShippingAddressFormValues,
+  useLoadComputedData,
 } from "Apps/Order/Routes/Shipping2/shippingUtils"
+import { extractNodes } from "Utils/extractNodes"
+import { usePrevious } from "Utils/Hooks/usePrevious"
 
-export const matchAddressFields = (...addressPair: [object, object]) => {
-  const [a1, a2] = addressPair.map(a => addressWithFallbackValues(a))
-  return (
-    a1.addressLine1 === a2.addressLine1 &&
-    a1.addressLine2 === a2.addressLine2 &&
-    a1.city === a2.city &&
-    a1.country === a2.country &&
-    a1.name === a2.name &&
-    a1.phoneNumber === a2.phoneNumber &&
-    a1.postalCode === a2.postalCode &&
-    a1.region === a2.region
-  )
+const logger = createLogger("Order/Routes/Shipping/index.tsx")
+
+export interface ShippingProps {
+  order: Shipping2_order$data
+  me: Shipping2_me$data
+  relay?: RelayProp
+  router: Router
+  dialog: Dialog
+  commitMutation: CommitMutation
+  isCommittingMutation: boolean
 }
 
-const getSavedFulfillmentData = (
-  order: ShippingProps["order"],
-  me: ShippingProps["me"]
-): {
-  fulfillmentType: FulfillmentType
-  isArtsyShipping: boolean
-  fulfillmentDetails: FulfillmentValues["attributes"]
-  selectedSavedAddressId: string | null
-} | null => {
-  if (
-    !order.requestedFulfillment ||
-    Object.keys(order.requestedFulfillment).length === 0
-  ) {
-    return null
-  }
-
-  const requestedFulfillmentType = order.requestedFulfillment.__typename
-  if (requestedFulfillmentType === "CommercePickup") {
-    const phoneNumber = order.requestedFulfillment.phoneNumber!
-    return {
-      fulfillmentType: FulfillmentType.PICKUP,
-      isArtsyShipping: false,
-      // TODO: [When things are working again]
-      // figure out what `name` is used for w/ pickup, where to get it from
-      fulfillmentDetails: { phoneNumber } as FulfillmentValues["attributes"],
-      selectedSavedAddressId: null,
-    }
-  }
-  const fulfillmentDetails: ShippingAddressFormValues = addressWithFallbackValues(
-    order.requestedFulfillment
-  )
-
-  const addressList =
-    extractNodes(me?.addressConnection) ??
-    ([] as SavedAddressType[]).filter(a => !!a)
-
-  // we don't store the address id on exchange orders, so we need to match every field
-  const selectedSavedAddressId =
-    addressList.find(node => matchAddressFields(node, fulfillmentDetails))
-      ?.internalID || null
-
-  if (requestedFulfillmentType === "CommerceShipArta") {
-    return {
-      fulfillmentType: FulfillmentType.SHIP,
-      isArtsyShipping: true,
-      fulfillmentDetails,
-      selectedSavedAddressId,
-    }
-  }
-  if (requestedFulfillmentType === "CommerceShip") {
-    return {
-      fulfillmentType: FulfillmentType.SHIP,
-      isArtsyShipping: false,
-      fulfillmentDetails,
-      selectedSavedAddressId,
-    }
-  }
-  // Should never happen. Log it?
-  return null
-}
-
-type ShippingQuotesConnectionEdges = NonNullable<
-  NonNullable<
-    NonNullable<
-      NonNullable<
-        NonNullable<
-          NonNullable<
-            NonNullable<Shipping2_order$data["lineItems"]>["edges"]
-          >[number]
-        >
-      >["node"]
-    >["shippingQuoteOptions"]
-  >["edges"]
->
-
-// Interface to separate local values from what we want to expose
-// in the react context.
-interface OrderData extends ShippingContextProps {
-  shippingQuotesEdges: ShippingQuotesConnectionEdges
-  selectedShippingQuoteId?: string
-}
-
-// Compute and memoize data from the saved order.
-const useLoadComputedData = (
-  props: ShippingProps
-): Omit<OrderData, "operations"> => {
-  const { me, order } = props
-  const firstArtwork = extractNodes(order.lineItems)[0]!.artwork!
-  const artworkCountry = firstArtwork?.shippingCountry
-  const savedFulfillmentData = getSavedFulfillmentData(order, me)
-
-  const shipsFrom = firstArtwork.shippingCountry!
-  const domesticOnly = !!firstArtwork.onlyShipsDomestically
-  const euOrigin = !!firstArtwork.euShippingOrigin
-
-  const lockShippingCountryTo = domesticOnly
-    ? euOrigin
-      ? "EU"
-      : shipsFrom
-    : null
-
-  const availableShippingCountries = !lockShippingCountryTo
-    ? ALL_COUNTRY_CODES
-    : lockShippingCountryTo === "EU"
-    ? EU_COUNTRY_CODES
-    : [lockShippingCountryTo]
-
-  const requiresArtsyShippingTo = useCallback(
-    (shipToCountry: string) => {
-      const isDomesticShipping =
-        (shipToCountry && shipToCountry === artworkCountry) ||
-        (COUNTRIES_IN_EUROPEAN_UNION.includes(shipToCountry) &&
-          COUNTRIES_IN_EUROPEAN_UNION.includes(artworkCountry))
-
-      const requiresArtsyShipping =
-        (isDomesticShipping &&
-          firstArtwork?.processWithArtsyShippingDomestic) ||
-        (!isDomesticShipping && firstArtwork?.artsyShippingInternational)
-      return requiresArtsyShipping
-    },
-    [
-      artworkCountry,
-      firstArtwork.artsyShippingInternational,
-      firstArtwork.processWithArtsyShippingDomestic,
-    ]
-  )
-  const shippingQuotesEdges: ShippingQuotesConnectionEdges =
-    (order?.lineItems?.edges &&
-      order.lineItems.edges[0]?.node?.shippingQuoteOptions?.edges) ||
-    (([] as unknown) as ShippingQuotesConnectionEdges)
-
-  const selectedShippingQuote =
-    shippingQuotesEdges.find(quote => quote?.node?.isSelected) || null
-
-  return {
-    fulfillmentDetails: savedFulfillmentData?.fulfillmentDetails || null,
-    fulfillmentType: savedFulfillmentData?.fulfillmentType || null,
-    selectedSavedAddressId:
-      savedFulfillmentData?.selectedSavedAddressId || null,
-    isArtsyShipping: savedFulfillmentData?.isArtsyShipping,
-    selectedShippingQuoteId: selectedShippingQuote?.node?.id,
-    shippingQuotesEdges,
-    availableShippingCountries,
-    lockShippingCountryTo,
-    requiresArtsyShippingTo,
-    shipsFrom,
-  }
-}
-
+type ShippingRouteStep =
+  | "fulfillment_details"
+  | "shipping_quotes"
+  | "ready_to_proceed"
 // Get information from the order and user, including shared context and initial
 // values for forms
-const useLoadOrder = (
+export const useLoadOrder = (
   props: ShippingProps
 ): {
-  savedOrderData: Omit<OrderData, "operations">
+  savedOrderData: ReturnType<typeof useLoadComputedData>
   initialValues: {
     fulfillmentDetails: FulfillmentValues
   }
+  targetStep: ShippingRouteStep
 } => {
   const orderData = useLoadComputedData(props)
   const {
     fulfillmentType: savedFulfillmentType,
     fulfillmentDetails: savedFulfillmentDetails,
+    selectedShippingQuoteId,
+    isArtsyShipping,
   } = orderData
+
+  const targetStep: ShippingRouteStep = useMemo(() => {
+    if (!savedFulfillmentType) {
+      return "fulfillment_details"
+    }
+    if (isArtsyShipping && !selectedShippingQuoteId) {
+      return "shipping_quotes"
+    }
+    if (isArtsyShipping && selectedShippingQuoteId) {
+      return "ready_to_proceed"
+    }
+    if (!!savedFulfillmentType && !isArtsyShipping) {
+      return "ready_to_proceed"
+    }
+    return "fulfillment_details"
+  }, [isArtsyShipping, savedFulfillmentType, selectedShippingQuoteId])
 
   const { me } = props
 
@@ -261,6 +130,7 @@ const useLoadOrder = (
   if (savedFulfillmentType) {
     return {
       savedOrderData: orderData,
+      targetStep,
       initialValues: {
         fulfillmentDetails: {
           fulfillmentType: savedFulfillmentType,
@@ -287,6 +157,7 @@ const useLoadOrder = (
   if (shippableDefaultAddress) {
     return {
       savedOrderData: orderData,
+      targetStep,
       initialValues: {
         fulfillmentDetails: {
           fulfillmentType: FulfillmentType.SHIP,
@@ -300,19 +171,6 @@ const useLoadOrder = (
     }
   }
 
-  // TODO: Expose existing addressVerifiedBy from order?
-  // Maybe not, they go through the flow when they submit the form
-  // and that is desirable. But what if it is a SAVED USER ADDRESS?
-  // That could be a problem. Thoughts:
-  // - If the user edits a saved address, we can verify and
-  //   save to user from THAT form (in the future), then keep it in these
-  //   values for saving to the order.
-  // - If we know a user is using a saved address,
-  //   we can skip verification no matter what (new form value)
-  // - If we have an initial verifiedBy value from the relay order, we can
-  //   set it here, then unset it if they edit the address
-  // - We might want to add another non-form value similar to saveAddress
-  //   rather than relying on the boolean
   const initialFulfillmentValues: ShipValues["attributes"] = {
     ...addressWithFallbackValues({ country: orderData.shipsFrom }),
 
@@ -322,6 +180,7 @@ const useLoadOrder = (
 
   return {
     savedOrderData: orderData,
+    targetStep,
     initialValues: {
       fulfillmentDetails: {
         fulfillmentType: FulfillmentType.SHIP,
@@ -331,25 +190,15 @@ const useLoadOrder = (
   }
 }
 
-const logger = createLogger("Order/Routes/Shipping/index.tsx")
-
-export interface ShippingProps {
-  order: Shipping2_order$data
-  me: Shipping2_me$data
-  relay?: RelayProp
-  router: Router
-  dialog: Dialog
-  commitMutation: CommitMutation
-  isCommittingMutation: boolean
-}
-
-type ActiveStep = "fulfillment_details" | "shipping_quotes" | "ready_to_proceed"
-
 export const ShippingRoute: FC<ShippingProps> = props => {
   const { relayEnvironment } = useSystemContext()
   const { order, isCommittingMutation } = props
   const { trackEvent } = useTracking()
-  const { initialValues, savedOrderData } = useLoadOrder(props)
+  const {
+    initialValues,
+    savedOrderData,
+    targetStep: currentStep,
+  } = useLoadOrder(props)
 
   const isOffer = order.mode === "OFFER"
 
@@ -364,53 +213,30 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     props.router.push(`/orders/${props.order.internalID}/payment`)
   }, [props.router, props.order.internalID])
 
-  // const shouldAdvanceToPayment =
-  //   !!(savedOrderData.fulfillmentType && !isArtsyShipping) ||
-  //   !!savedOrderData.selectedShippingQuoteId
-  const targetStepFromSavedOrder: ActiveStep = useMemo(() => {
-    console.log({
-      isArtsyShipping,
-      ft: savedOrderData.fulfillmentType,
-      sqid: savedOrderData.selectedShippingQuoteId,
-    })
-    if (!savedOrderData.fulfillmentType) {
-      return "fulfillment_details"
-    }
-    if (isArtsyShipping && !savedOrderData.selectedShippingQuoteId) {
-      return "shipping_quotes"
-    }
-    return "ready_to_proceed"
-  }, [
-    isArtsyShipping,
-    savedOrderData.fulfillmentType,
-    savedOrderData.selectedShippingQuoteId,
-  ])
-
-  const [activeStep, setActiveStep] = useState<ActiveStep>(
-    targetStepFromSavedOrder
-  )
-
-  // When the order updates, re-set the active step if it has changed.
-  // If the active step changes *to* ready_to_proceed from something
-  // else, advance automatically. If the page loads in this state, let
-  // the user click to proceed.
+  // Reset fulfillment details on load if artsy shipping to refresh shipping quotes
+  // TODO: Better to do from inside fulfillment details form?
+  // TODO: Make sure this will unset the selected shipping quote
   useEffect(() => {
-    if (targetStepFromSavedOrder !== activeStep) {
-      if (
-        targetStepFromSavedOrder === "ready_to_proceed" &&
-        savedOrderData.selectedSavedAddressId
-      ) {
-        advanceToPayment()
-        return
-      }
-      setActiveStep(targetStepFromSavedOrder)
+    if (
+      savedOrderData.fulfillmentType === FulfillmentType.SHIP &&
+      isArtsyShipping
+    ) {
+      handleSubmitFulfillmentDetails(initialValues.fulfillmentDetails)
     }
-  }, [
-    targetStepFromSavedOrder,
-    activeStep,
-    advanceToPayment,
-    savedOrderData.selectedSavedAddressId,
-  ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  const previousActiveStep = usePrevious(currentStep)
+
+  // Advance to payment when the order is ready to proceed unless it loaded that way
+  useEffect(() => {
+    if (
+      currentStep === "ready_to_proceed" &&
+      previousActiveStep !== "ready_to_proceed"
+    ) {
+      advanceToPayment()
+    }
+  }, [advanceToPayment, currentStep, previousActiveStep])
 
   const [selectedShippingQuoteId, setSelectedShippingQuoteId] = useState<
     string | undefined
@@ -562,11 +388,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const handleSubmitFulfillmentDetails = useCallback(
     async (
       formValues: FulfillmentValues,
-      formikHelpers: FormikHelpers<FulfillmentValues>
+      formikHelpers?: FormikHelpers<FulfillmentValues>
     ) => {
-      const { setSubmitting } = formikHelpers
+      const { setSubmitting } = formikHelpers || {}
 
-      setSubmitting(true)
+      setSubmitting && setSubmitting(true)
       try {
         let fulfillmentMutationValues: CommerceSetShippingInput
         let requiresArtsyShipping: boolean
@@ -615,12 +441,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         ) {
           await createUserAddressMutation(formValues.attributes)
         }
-
-        if (requiresArtsyShipping) {
-          setActiveStep("shipping_quotes")
-        } else {
-          advanceToPayment()
-        }
       } catch (error) {
         logger.error(error)
 
@@ -645,7 +465,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       requiresArtsyShippingTo,
       handleSubmitError,
       createUserAddressMutation,
-      advanceToPayment,
       trackEvent,
     ]
   )
@@ -767,10 +586,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   const shippingQuotes = compact(shippingQuotesEdges.map(edge => edge?.node))
-  const showArtsyShipping =
-    activeStep === "shipping_quotes" &&
-    !!isArtsyShipping &&
-    shippingQuotes.length > 0
+  const showArtsyShipping = !!isArtsyShipping && shippingQuotes.length > 0
 
   const defaultShippingQuoteId = shippingQuotes[0]?.id
   const useDefaultArtsyShippingQuote =
@@ -812,29 +628,29 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   })
 
   const onContinueButtonPressed = useMemo(() => {
-    if (activeStep === "fulfillment_details") {
+    if (currentStep === "fulfillment_details") {
       return (...args) => fulfillmentFormHelpers.handleSubmit(...args)
     }
-    if (activeStep === "shipping_quotes") {
+    if (currentStep === "shipping_quotes") {
       return selectShippingQuote
     }
-    if (activeStep === "ready_to_proceed") {
+    if (currentStep === "ready_to_proceed") {
       return advanceToPayment
     }
   }, [
-    activeStep,
+    currentStep,
     fulfillmentFormHelpers,
     selectShippingQuote,
     advanceToPayment,
   ])
 
   const disableSubmit = useMemo(() => {
-    if (activeStep === "fulfillment_details") {
+    if (currentStep === "fulfillment_details") {
       return !fulfillmentFormHelpers.isValid
-    } else if (activeStep === "shipping_quotes") {
+    } else if (currentStep === "shipping_quotes") {
       return !selectedShippingQuoteId
     }
-  }, [activeStep, fulfillmentFormHelpers.isValid, selectedShippingQuoteId])
+  }, [currentStep, fulfillmentFormHelpers.isValid, selectedShippingQuoteId])
 
   const orderContext: ShippingContextProps = useMemo(
     () =>
@@ -868,7 +684,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 <FulfillmentDetailsFragmentContainer
                   me={props.me}
                   initialFulfillmentValues={initialValues.fulfillmentDetails}
-                  active={activeStep === "fulfillment_details"}
+                  active={currentStep === "fulfillment_details"}
                   order={props.order}
                   onSubmit={handleSubmitFulfillmentDetails}
                   setFulfillmentFormHelpers={setFulfillmentFormHelpers}

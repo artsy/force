@@ -19,7 +19,7 @@ interface SavedAddressItemProps extends BoxProps {
 export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
   props
 ): React.ReactElement<RadioProps> => {
-  const handleClickEdit = props?.handleClickEdit
+  const handleClickEdit = props.handleClickEdit
   const address = props?.address
   const addressLine1 = address?.addressLine1
   const addressLine2 = address?.addressLine2
@@ -73,7 +73,11 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
         top={2}
         right={2}
         tabIndex={0}
-        onClick={handleClickEdit}
+        onClick={e => {
+          e.preventDefault()
+          e.stopPropagation()
+          handleClickEdit(address)
+        }}
         onKeyPress={event => {
           if (event.key !== "Enter") {
             return
