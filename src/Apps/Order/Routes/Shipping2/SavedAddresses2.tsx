@@ -1,36 +1,41 @@
-import { RadioGroup, BorderedRadio, Spacer, Clickable } from "@artsy/palette"
-import { useCallback, useEffect, useState } from "react"
 import * as React from "react"
+import { useCallback, useState } from "react"
+import styled from "styled-components"
+import { compact } from "lodash"
+import { RadioGroup, BorderedRadio, Spacer, Clickable } from "@artsy/palette"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
+import { SavedAddresses2_me$data } from "__generated__/SavedAddresses2_me.graphql"
 import {
   AddressModal,
   AddressModalAction,
   AddressModalActionType,
-} from "Apps/Order/Components/AddressModal"
+} from "Apps/Order/Routes/Shipping2/AddressModal2"
 import createLogger from "Utils/logger"
-import { SavedAddressItem } from "Apps/Order/Components/SavedAddressItem"
-import { deleteUserAddress } from "Apps/Order/Mutations/DeleteUserAddress"
-import { useSystemContext } from "System/SystemContext"
+import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/SavedAddressItem2"
 import { extractNodes } from "Utils/extractNodes"
 import { useTracking } from "react-tracking"
-import { ActionType, ContextModule, OwnerType } from "@artsy/cohesion"
-import styled from "styled-components"
+import {
+  ActionType,
+  ClickedShippingAddress,
+  ContextModule,
+  OwnerType,
+} from "@artsy/cohesion"
 import { themeGet } from "@styled-system/theme-get"
 import { SavedAddressType } from "Components/Address/utils"
+
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import {
   ShippingAddressFormValues,
   addressWithFallbackValues,
   getDefaultUserAddress,
-} from "Apps/Order/Utils/shippingUtils"
-import { compact } from "lodash"
+} from "Apps/Order/Routes/Shipping2/shippingUtils"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
 
 export interface SavedAddressesProps {
   relay: RelayRefetchProp
-  me: SavedAddresses_me$data
+  me: SavedAddresses2_me$data
   active: boolean
   onSelect: (address: ShippingAddressFormValues) => void
 }
@@ -52,10 +57,13 @@ const getBestAvailableAddress = (
 const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const logger = createLogger("SavedAddresses.tsx")
   const { trackEvent } = useTracking()
-  const { relayEnvironment } = useSystemContext()
   const [activeModal, setActiveModal] = useState<AddressModalAction | null>(
     null
   )
+  const {
+    selectedSavedAddressId,
+    // availableShippingCountries,
+  } = useShippingContext()
 
   const { onSelect, me, relay } = props
 
@@ -65,67 +73,81 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
   const [selectedAddressID, setSelectedAddressID] = useState<
     string | undefined
-  >(getDefaultUserAddress(addressList)?.internalID)
+  >(
+    getBestAvailableAddress(addressList, selectedSavedAddressId ?? undefined)
+      ?.internalID
+  )
 
-  const activeAddress =
+  const selectedAddress =
     selectedAddressID && getAddressByID(addressList, selectedAddressID)
+  const selectedAddressPresent = !!selectedAddress
 
-  // TODO: Review this. Is it needed?
-  useEffect(() => {
-    if (selectedAddressID && !activeAddress) {
-      let bestAvailableAddressID = getBestAvailableAddress(
-        addressList,
-        selectedAddressID
-      )?.internalID
-      setSelectedAddressID(bestAvailableAddressID)
+  React.useEffect(() => {
+    if (!selectedAddressPresent) {
+      setSelectedAddressID(
+        getBestAvailableAddress(
+          addressList,
+          selectedSavedAddressId ?? undefined
+        )?.internalID
+      )
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [addressList.length, selectedAddressID])
+  }, [selectedAddressPresent, addressList, selectedSavedAddressId])
+
+  // // if the active address changes eg on create/edit, automatically select it.
+  // const previousSelectedAddress = usePrevious(selectedAddress)
+  // const serializedSelectedAddress = JSON.stringify(selectedAddress)
+  // const serializedPreviousSelectedAddress = JSON.stringify(
+  //   previousSelectedAddress
+  // )
+  // useEffect(() => {
+  //   if (serializedSelectedAddress !== serializedPreviousSelectedAddress) {
+  //     onSelect(addressWithFallbackValues(selectedAddress))
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [onSelect, serializedSelectedAddress, serializedPreviousSelectedAddress])
 
   const handleSelectAddress = useCallback(
     (id: string): void => {
+      console.log("handleSelectAddress", id)
       setSelectedAddressID(id)
       const selectedAddress = getAddressByID(addressList, id)
       if (!selectedAddress) {
         console.warn("Address not found: ", id)
       }
+      trackEvent({
+        action: ActionType.clickedShippingAddress,
+        context_module: ContextModule.ordersShipping,
+        context_page_owner_type: "orders-shipping",
+      } as ClickedShippingAddress)
       // Set values on the fulfillment form context.
       // Can these values be invalid? If so, maybe we could pop a form up for
       // them to fix it. Seems unlikely.
       onSelect(addressWithFallbackValues(selectedAddress))
     },
-    [addressList, onSelect]
+    [addressList, onSelect, trackEvent]
   )
 
-  const refetchAddresses = (refetchSuccessCallback?: () => void) => {
-    relay.refetch(
-      {
-        first: PAGE_SIZE,
-      },
-      null,
-      error => {
-        if (error) {
-          logger.error(error)
-        } else {
-          refetchSuccessCallback && refetchSuccessCallback()
+  const refetchAddresses = () => {
+    return new Promise<void>((resolve, reject) =>
+      relay.refetch(
+        {
+          first: PAGE_SIZE,
+        },
+        null,
+        error => {
+          if (error) {
+            logger.error(error)
+            reject(error)
+          } else {
+            resolve()
+          }
         }
-      }
+      )
     )
   }
 
   const onError = (message: string) => {
     logger.error(message)
-  }
-
-  const handleDeleteAddress = async (addressID: string) => {
-    return deleteUserAddress(
-      relayEnvironment!,
-      addressID,
-      () => {
-        refetchAddresses()
-      },
-      onError
-    )
   }
 
   const handleClickEditAddress = (address: SavedAddressType) => {
@@ -136,8 +158,9 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     })
   }
 
-  const createOrUpdateAddressSuccess = () => {
-    refetchAddresses(() => {})
+  const refetchAndSelectAddress = async (addressID: string) => {
+    await refetchAddresses()
+    setSelectedAddressID(addressID)
   }
 
   const trackAddAddressClick = () => {
@@ -160,14 +183,22 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
             <BorderedRadio
               value={address.internalID}
               tabIndex={props.active ? 0 : -1}
-              disabled={!props.active}
+              disabled={
+                !props.active
+                //  || !availableShippingCountries.includes(address.country)
+              }
               key={index}
               position="relative"
               data-test="savedAddress"
             >
               <SavedAddressItem
                 address={address}
-                handleClickEdit={() => handleClickEditAddress(address)}
+                handleClickEdit={e => {
+                  console.log("handleClickEdit", e)
+                  e.preventDefault()
+                  e.stopPropagation()
+                  handleClickEditAddress(address)
+                }}
               />
             </BorderedRadio>
           )
@@ -191,8 +222,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         closeModal={() => {
           setActiveModal(null)
         }}
-        onSuccess={createOrUpdateAddressSuccess}
-        onDeleteAddress={handleDeleteAddress}
+        onSuccess={refetchAndSelectAddress}
+        onDeleteAddress={refetchAddresses}
         onError={onError}
         me={me}
       />
@@ -205,7 +236,7 @@ export const SavedAddressesFragmentContainer = createRefetchContainer(
   SavedAddresses,
   {
     me: graphql`
-      fragment SavedAddresses_me on Me
+      fragment SavedAddresses2_me on Me
         @argumentDefinitions(
           first: { type: "Int", defaultValue: 30 }
           last: { type: "Int" }
@@ -241,9 +272,9 @@ export const SavedAddressesFragmentContainer = createRefetchContainer(
     `,
   },
   graphql`
-    query SavedAddressesRefetchQuery {
+    query SavedAddresses2RefetchQuery {
       me {
-        ...SavedAddresses_me
+        ...SavedAddresses2_me
       }
     }
   `

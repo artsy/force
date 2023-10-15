@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e1e22d4ec03c2e9637deede26fb7baa5>>
+ * @generated SignedSource<<a13677cc63d0c2d4e3b8dbb1c18bd9ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,7 +35,7 @@ export type Shipping2_me$data = {
     readonly country: string | null;
   } | null;
   readonly name: string | null;
-  readonly " $fragmentSpreads": FragmentRefs<"FulfillmentDetailsForm_me">;
+  readonly " $fragmentSpreads": FragmentRefs<"FulfillmentDetailsForm_me" | "SavedAddresses2_me">;
   readonly " $fragmentType": "Shipping2_me";
 };
 export type Shipping2_me$key = {
@@ -96,6 +96,11 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FulfillmentDetailsForm_me"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SavedAddresses2_me"
     },
     (v0/*: any*/),
     {
@@ -244,6 +249,6 @@ return {
 };
 })();
 
-(node as any).hash = "c67a0a052f940fa59a9d43bec2ee4e47";
+(node as any).hash = "64fdd35ca689ad9879684032c9f7dd60";
 
 export default node;

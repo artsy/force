@@ -1,4 +1,4 @@
-import { Flex, Text, RadioProps } from "@artsy/palette"
+import { Flex, Text, RadioProps, BoxProps } from "@artsy/palette"
 import * as React from "react"
 import styled from "styled-components"
 import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
@@ -11,9 +11,9 @@ type AddressNode = NonNullable<
   >["node"]
 >
 
-interface SavedAddressItemProps {
+interface SavedAddressItemProps extends BoxProps {
   address: AddressNode
-  handleClickEdit: () => void
+  handleClickEdit: (event: any) => void
 }
 
 export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
@@ -73,17 +73,12 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
         top={2}
         right={2}
         tabIndex={0}
-        onClick={event => {
-          event.preventDefault()
-          event.stopPropagation()
-
-          handleClickEdit()
-        }}
+        onClick={handleClickEdit}
         onKeyPress={event => {
-          event.preventDefault()
-          event.stopPropagation()
-
-          event.key === "Enter" && handleClickEdit()
+          if (event.key !== "Enter") {
+            return
+          }
+          handleClickEdit(event)
         }}
         data-test="editAddressInShipping"
       >

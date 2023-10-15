@@ -1,5 +1,6 @@
 import { useState } from "react"
 import * as React from "react"
+import * as Yup from "yup"
 import {
   Button,
   Clickable,
@@ -10,29 +11,31 @@ import {
   Spacer,
   Text,
   Banner,
-  Select,
-  Box,
 } from "@artsy/palette"
-import {
-  SavedAddressType,
-  convertShippingAddressToMutationInput,
-} from "Apps/Order/Utils/shippingUtils"
+
 import { Formik, FormikHelpers, FormikProps } from "formik"
-import {
-  removeEmptyKeys,
-  validateAddress,
-  validatePhoneNumber,
-} from "Apps/Order/Utils/formValidators"
 import { updateUserAddress } from "Apps/Order/Mutations/UpdateUserAddress"
 import { createUserAddress } from "Apps/Order/Mutations/CreateUserAddress"
-import { SavedAddresses_me$data } from "__generated__/SavedAddresses_me.graphql"
 import { AddressModalFields } from "Components/Address/AddressModalFields"
 import { useSystemContext } from "System/SystemContext"
 import { updateUserDefaultAddress } from "Apps/Order/Mutations/UpdateUserDefaultAddress"
 import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
 import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
-import { countries } from "Utils/countries"
-import { userHasLabFeature } from "Utils/user"
+
+import { ADDRESS_VALIDATION_SHAPE } from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
+import { SavedAddresses2_me$data } from "__generated__/SavedAddresses2_me.graphql"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
+import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
+import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping2/shippingUtils"
+import { deleteUserAddress } from "Apps/Order/Mutations/DeleteUserAddress"
+
+type CreateOrUpdateAddressPayload =
+  | NonNullable<
+      CreateUserAddressMutation$data["createUserAddress"]
+    >["userAddressOrErrors"]
+  | NonNullable<
+      UpdateUserAddressMutation$data["updateUserAddress"]
+    >["userAddressOrErrors"]
 
 export enum AddressModalActionType {
   EDIT_USER_ADDRESS = "editUserAddress",
@@ -50,13 +53,11 @@ export type AddressModalAction =
 
 export interface Props {
   closeModal: () => void
-  onSuccess: (
-    address?: UpdateUserAddressMutation$data & CreateUserAddressMutation$data
-  ) => void
-  onDeleteAddress: (addressID: string) => void
+  onSuccess: (addressID: string) => Promise<void>
+  onDeleteAddress: () => Promise<void>
   onError: (message: string) => void
   modalAction: AddressModalAction | null
-  me: SavedAddresses_me$data
+  me: SavedAddresses2_me$data
 }
 
 const MODAL_TITLE_MAP: Record<AddressModalActionType, string> = {
@@ -78,6 +79,8 @@ const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
 export const GENERIC_FAIL_MESSAGE =
   "Sorry there has been an issue saving your address. Please try again."
 
+const validationSchema = Yup.object().shape(ADDRESS_VALIDATION_SHAPE)
+
 export const AddressModal: React.FC<Props> = ({
   closeModal,
   onSuccess,
@@ -86,13 +89,13 @@ export const AddressModal: React.FC<Props> = ({
   modalAction,
   me,
 }) => {
-  const { relayEnvironment, user } = useSystemContext()
-  const [_countryCode, setCountryCode] = useState<string>("us")
+  const { relayEnvironment } = useSystemContext()
 
   const [createUpdateError, setCreateUpdateError] = useState<string | null>(
     null
   )
   const [showDialog, setShowDialog] = useState<boolean>(false)
+  const { shipsFrom } = useShippingContext()
   if (!relayEnvironment) return null
   if (!modalAction) return null
 
@@ -100,22 +103,20 @@ export const AddressModal: React.FC<Props> = ({
   const initialAddress =
     modalAction.type === "editUserAddress"
       ? modalAction.address
-      : { country: "US", internalID: undefined, isDefault: false }
-
-  // TODO: Yup validator
-  const validator = (values: any) => {
-    const validationResult = validateAddress(values)
-    const phoneValidation = validatePhoneNumber(values.phoneNumber)
-    const errors = Object.assign({}, validationResult.errors, {
-      phoneNumber: phoneValidation.error,
-    })
-    const errorsTrimmed = removeEmptyKeys(errors)
-    return errorsTrimmed
-  }
+      : { country: shipsFrom, internalID: undefined, isDefault: false }
 
   const handleModalClose = () => {
     closeModal()
     setCreateUpdateError(null)
+  }
+
+  const handleDeleteAddress = async (addressID: string) => {
+    return deleteUserAddress(
+      relayEnvironment!,
+      addressID,
+      onDeleteAddress,
+      onError
+    )
   }
 
   return (
@@ -124,7 +125,7 @@ export const AddressModal: React.FC<Props> = ({
         <Formik
           validateOnMount
           initialValues={initialAddress}
-          validate={validator}
+          validationSchema={validationSchema}
           onSubmit={(
             values: SavedAddressType,
             actions: FormikHelpers<SavedAddressType>
@@ -142,31 +143,40 @@ export const AddressModal: React.FC<Props> = ({
               onError && onError(message)
             }
 
-            const handleSuccess = savedAddress => {
+            const handleSuccess = (
+              savedAddress:
+                | CreateUserAddressMutation$data
+                | UpdateUserAddressMutation$data
+            ) => {
+              const genericPayloadType = savedAddress as any
+              const payload: CreateOrUpdateAddressPayload = (
+                genericPayloadType?.createUserAddress ||
+                genericPayloadType.updateUserAddress
+              )?.userAddressOrErrors
+              const savedAddressID = payload.internalID!
               // update default address only if isDefault changed or new
               // address marked ad default
               if (
-                savedAddress?.createUserAddress?.userAddressOrErrors
-                  ?.internalID &&
+                savedAddressID &&
                 values?.isDefault &&
                 values?.isDefault !==
                   (initialAddress as SavedAddressType)?.isDefault
               ) {
                 updateUserDefaultAddress(
                   relayEnvironment,
-                  savedAddress.createUserAddress.userAddressOrErrors.internalID,
+                  payload.internalID,
                   () => {
-                    onSuccess(savedAddress)
+                    onSuccess(savedAddressID)
                   },
                   onError
                 )
               } else {
-                onSuccess && onSuccess(savedAddress)
+                onSuccess(savedAddressID)
               }
 
               setCreateUpdateError(null)
             }
-            const addressInput = convertShippingAddressToMutationInput(values)
+            const addressInput = addressWithFallbackValues(values)
             if (modalAction.type === "createUserAddress") {
               createUserAddress(
                 relayEnvironment,
@@ -199,65 +209,19 @@ export const AddressModal: React.FC<Props> = ({
               )}
               <AddressModalFields />
               <Spacer y={2} />
-              {user && !userHasLabFeature(user, "Phone Number Validation") && (
-                <Input
-                  title="Phone number"
-                  description="Required for shipping logistics"
-                  placeholder="Add phone number"
-                  name="phoneNumber"
-                  type="tel"
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  error={
-                    formik.touched.phoneNumber && formik.errors.phoneNumber
-                  }
-                  value={formik.values?.phoneNumber || ""}
-                  data-test="phoneInputWithoutValidationFlag"
-                />
-              )}
-              {user && userHasLabFeature(user, "Phone Number Validation") && (
-                <Flex>
-                  <Box style={{ maxWidth: "35%" }}>
-                    <Select
-                      title="Phone number"
-                      description="Only used for shipping purposes"
-                      options={countries}
-                      onSelect={cc => {
-                        setCountryCode(cc)
-                      }}
-                      style={{
-                        letterSpacing: "1px",
-                        borderRight: "none",
-                      }}
-                      data-test="countryDropdown"
-                    />
-                  </Box>
-                  <Flex
-                    flexDirection="column"
-                    style={{
-                      width: "100%",
-                    }}
-                  >
-                    <Box height="100%"></Box>
-                    <Input
-                      title=""
-                      description=""
-                      placeholder={"Add phone number"}
-                      name="phoneNumber"
-                      type="tel"
-                      onChange={formik.handleChange}
-                      onBlur={e => {
-                        formik.handleBlur
-                      }}
-                      error={
-                        formik.touched.phoneNumber && formik.errors.phoneNumber
-                      }
-                      value={formik.values?.phoneNumber ?? ""}
-                      style={{ borderLeft: "none" }}
-                    />
-                  </Flex>
-                </Flex>
-              )}
+              <Input
+                title="Phone number"
+                description="Required for shipping logistics"
+                placeholder="Add phone number"
+                name="phoneNumber"
+                type="tel"
+                onChange={formik.handleChange}
+                onBlur={formik.handleBlur}
+                error={formik.touched.phoneNumber && formik.errors.phoneNumber}
+                value={formik.values?.phoneNumber || ""}
+                data-test="phoneInputWithoutValidationFlag"
+              />
+
               <Spacer y={2} />
               {!initialAddress?.isDefault && (
                 <Checkbox
@@ -286,7 +250,7 @@ export const AddressModal: React.FC<Props> = ({
                 data-test="saveButton"
                 type="submit"
                 variant="primaryBlack"
-                loading={formik.isSubmitting}
+                loading={formik.isSubmitting || undefined}
                 disabled={Object.keys(formik.errors).length > 0}
                 width="100%"
                 mt={2}
@@ -324,7 +288,7 @@ export const AddressModal: React.FC<Props> = ({
                 setShowDialog(false)
                 closeModal()
                 if (initialAddress.internalID) {
-                  onDeleteAddress(initialAddress.internalID)
+                  handleDeleteAddress(initialAddress.internalID)
                 }
               }}
             >

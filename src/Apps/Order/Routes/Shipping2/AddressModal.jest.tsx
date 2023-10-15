@@ -3,7 +3,8 @@ import {
   AddressModal,
   Props,
   GENERIC_FAIL_MESSAGE,
-} from "Apps/Order/Components/AddressModal"
+  AddressModalActionType,
+} from "Apps/Order/Routes/Shipping2/AddressModal2"
 import { mount } from "enzyme"
 import { validAddress } from "Components/__tests__/Utils/addressForm"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
@@ -45,14 +46,12 @@ function getWrapper(props: Props) {
 describe("AddressModal", () => {
   beforeEach(() => {
     testAddressModalProps = {
-      show: true,
-      address: savedAddress,
       onSuccess: jest.fn(),
       onError: jest.fn(),
       onDeleteAddress: jest.fn(),
-      modalDetails: {
-        addressModalTitle: "Edit address",
-        addressModalAction: "editUserAddress",
+      modalAction: {
+        type: AddressModalActionType.EDIT_USER_ADDRESS,
+        address: savedAddress,
       },
       me: {
         id: "1234",
@@ -61,7 +60,7 @@ describe("AddressModal", () => {
           edges: [],
         },
 
-        " $fragmentType": "SavedAddresses_me",
+        " $fragmentType": "SavedAddresses2_me",
       },
       closeModal: jest.fn(),
     }
@@ -90,9 +89,12 @@ describe("AddressModal", () => {
   it("renders EditModal without checkbox when address is default", () => {
     const wrapper = getWrapper({
       ...testAddressModalProps,
-      address: {
-        ...savedAddress,
-        isDefault: true,
+      modalAction: {
+        type: AddressModalActionType.EDIT_USER_ADDRESS,
+        address: {
+          ...savedAddress,
+          isDefault: true,
+        },
       },
     })
     expect(wrapper.text()).toContain("Edit address")
@@ -102,9 +104,8 @@ describe("AddressModal", () => {
   it("renders AddModal with the title, input fields, checkbox and button", () => {
     const wrapper = getWrapper({
       ...testAddressModalProps,
-      modalDetails: {
-        addressModalTitle: "Add address",
-        addressModalAction: "createUserAddress",
+      modalAction: {
+        type: AddressModalActionType.CREATE_USER_ADDRESS,
       },
     })
     expect(wrapper.text()).toContain("Add address")
@@ -286,14 +287,12 @@ describe("AddressModal", () => {
 describe("AddressModal feature flag", () => {
   beforeEach(() => {
     testAddressModalProps = {
-      show: true,
-      address: savedAddress,
       onSuccess: jest.fn(),
       onError: jest.fn(),
       onDeleteAddress: jest.fn(),
-      modalDetails: {
-        addressModalTitle: "Edit address",
-        addressModalAction: "editUserAddress",
+      modalAction: {
+        type: AddressModalActionType.EDIT_USER_ADDRESS,
+        address: savedAddress,
       },
       me: {
         id: "1234",
@@ -302,7 +301,7 @@ describe("AddressModal feature flag", () => {
           edges: [],
         },
 
-        " $fragmentType": "SavedAddresses_me",
+        " $fragmentType": "SavedAddresses2_me",
       },
       closeModal: jest.fn(),
     }
