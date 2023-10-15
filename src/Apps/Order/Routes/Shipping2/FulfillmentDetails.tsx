@@ -119,12 +119,21 @@ export const FulfillmentDetails: FC<FulfillmentDetailsFormProps> = ({
   initialFulfillmentValues,
   ...props
 }) => {
+  // // Current we do this from index (to refresh shipping quotes)
+  // const {
+  //   fulfillmentType: savedFulfillmentType,
+  //   fulfillmentDetails: savedFulfillmentDetails,
+  // } = useShippingContext()
+  // useEffect(() => {
+  //   if (savedFulfillmentType === FulfillmentType.SHIP) {
+  //     props.onSubmit(savedFulfillmentDetails)
+  //   }
+  // // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
+
   const addressVerificationUSEnabled = !!useFeatureFlag(
     "address_verification_us"
   )
-  // const _addressVerificationIntlEnabled = !!useFeatureFlag(
-  //   "address_verification_intl"
-  // )
 
   const shouldVerifyAddressOnSubmit = (values: FulfillmentValues) => {
     return (

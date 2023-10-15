@@ -183,10 +183,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
             <BorderedRadio
               value={address.internalID}
               tabIndex={props.active ? 0 : -1}
-              disabled={
-                !props.active
-                //  || !availableShippingCountries.includes(address.country)
-              }
+              // disabled={!availableShippingCountries.includes(address.country)}
               key={index}
               position="relative"
               data-test="savedAddress"
