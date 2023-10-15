@@ -108,7 +108,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
   const handleSelectAddress = useCallback(
     (id: string): void => {
-      console.log("handleSelectAddress", id)
       setSelectedAddressID(id)
       const selectedAddress = getAddressByID(addressList, id)
       if (!selectedAddress) {
@@ -190,12 +189,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
             >
               <SavedAddressItem
                 address={address}
-                handleClickEdit={e => {
-                  console.log("handleClickEdit", e)
-                  e.preventDefault()
-                  e.stopPropagation()
-                  handleClickEditAddress(address)
-                }}
+                handleClickEdit={() => handleClickEditAddress(address)}
               />
             </BorderedRadio>
           )

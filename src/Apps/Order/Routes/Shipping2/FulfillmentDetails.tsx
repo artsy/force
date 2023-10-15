@@ -306,7 +306,11 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
   const savedAddresses = compact(
     extractNodes(props.me?.addressConnection) ?? []
   )
-  const { lockShippingCountryTo } = useShippingContext()
+  const {
+    lockShippingCountryTo,
+    fulfillmentType: savedFulfillmentType,
+    selectedSavedAddressId: savedSelectedAddressId,
+  } = useShippingContext()
 
   const availableFulfillmentTypes: FulfillmentType[] = firstArtwork.pickupAvailable
     ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
@@ -431,15 +435,15 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
         <>
           <Text variant="lg-display" mb="1">
             Delivery address
-          </Text>
+          </Text>{" "}
+          {props.renderMissingShippingQuotesError && (
+            <ArtaMissingShippingQuoteMessage />
+          )}
           {/* SAVED ADDRESSES */}
           <Collapse
             data-testid="savedAddressesCollapse"
-            open={addressFormMode === "saved_addresses"}
+            open={savedAddresses.length > 0}
           >
-            {props.renderMissingShippingQuotesError && (
-              <ArtaMissingShippingQuoteMessage />
-            )}
             <SavedAddresses
               active={addressFormMode === "saved_addresses"}
               me={props.me}
@@ -452,11 +456,12 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
           {/* NEW ADDRESS */}
           <Collapse
             data-testid="addressFormCollapse"
-            open={addressFormMode === "new_address"}
+            open={
+              addressFormMode === "new_address" ||
+              (savedFulfillmentType === FulfillmentType.SHIP &&
+                !savedSelectedAddressId)
+            }
           >
-            {props.renderMissingShippingQuotesError && (
-              <ArtaMissingShippingQuoteMessage />
-            )}
             {props.verifyAddressNow && (
               <AddressVerificationFlowQueryRenderer
                 data-testid="address-verification-flow"
