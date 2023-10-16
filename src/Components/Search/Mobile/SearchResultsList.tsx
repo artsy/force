@@ -9,17 +9,17 @@ import { extractNodes } from "Utils/extractNodes"
 import {
   SuggestionItem,
   SuggestionItemOptionProps,
-} from "Components/Search/NewSearch/SuggestionItem/SuggestionItem"
+} from "Components/Search/SuggestionItem/SuggestionItem"
 import { Flex, Spinner } from "@artsy/palette"
 import {
   SearchNodeOption,
   formatOptions,
-} from "Components/Search/NewSearch/utils/formatOptions"
+} from "Components/Search/utils/formatOptions"
 import { InfiniteScrollSentinel } from "Components/InfiniteScrollSentinel"
-import { NoResults } from "Components/Search/NewSearch/Mobile/SearchResultsList/NoResults"
-import { ContentPlaceholder } from "Components/Search/NewSearch/Mobile/SearchResultsList/ContentPlaceholder"
+import { NoResults } from "./SearchResultsList/NoResults"
+import { ContentPlaceholder } from "./SearchResultsList/ContentPlaceholder"
 import { useTracking } from "react-tracking"
-import { PillType } from "Components/Search/NewSearch/constants"
+import { PillType } from "Components/Search/constants"
 import { ActionType } from "@artsy/cohesion"
 
 interface SearchResultsListProps {

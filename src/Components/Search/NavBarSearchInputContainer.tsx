@@ -20,7 +20,7 @@ const SearchButton = styled(Clickable)`
   }
 `
 
-export const SearchInputContainer: React.ForwardRefExoticComponent<
+export const NavBarSearchInputContainer: React.ForwardRefExoticComponent<
   Omit<LabeledInputProps, "label"> & { ref?: React.Ref<HTMLInputElement> }
 > = React.forwardRef((props, ref) => {
   return (

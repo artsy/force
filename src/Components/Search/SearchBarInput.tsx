@@ -15,13 +15,9 @@ import { extractNodes } from "Utils/extractNodes"
 import { SearchBarInput_viewer$data } from "__generated__/SearchBarInput_viewer.graphql"
 import { SearchBarInputSuggestQuery } from "__generated__/SearchBarInputSuggestQuery.graphql"
 import createLogger from "Utils/logger"
-import { SearchInputPillsFragmentContainer } from "Components/Search/NewSearch/SearchInputPills"
+import { SearchInputPillsFragmentContainer } from "./SearchInputPills"
 import { isServer } from "Server/isServer"
-import {
-  PillType,
-  TOP_PILL,
-  SEARCH_DEBOUNCE_DELAY,
-} from "Components/Search/NewSearch/constants"
+import { PillType, TOP_PILL, SEARCH_DEBOUNCE_DELAY } from "./constants"
 import {
   SuggestionItem,
   SuggestionItemOptionProps,
@@ -35,7 +31,7 @@ import { reportPerformanceMeasurement } from "./utils/reportPerformanceMeasureme
 import { shouldStartSearching } from "./utils/shouldStartSearching"
 import { getLabel } from "./utils/getLabel"
 import { ActionType } from "@artsy/cohesion"
-import { SearchBarFooter } from "Components/Search/NewSearch/SearchBarFooter"
+import { SearchBarFooter } from "./SearchBarFooter"
 
 const logger = createLogger("Components/Search/SearchBar")
 
