@@ -2,7 +2,7 @@ import { FC } from "react"
 import { SuggestionItemOptionProps } from "./SuggestionItem"
 import match from "autosuggest-highlight/match"
 import parse from "autosuggest-highlight/parse"
-import { SuggestionItemPreview } from "Components/Search/Suggestions/SuggestionItemPreview"
+import { SuggestionItemPreview } from "./SuggestionItemPreview"
 import { Highlight } from "./Highlight"
 import { Text, Flex, Spacer } from "@artsy/palette"
 

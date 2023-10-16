@@ -1,5 +1,5 @@
 import { Text, Flex, FlexProps } from "@artsy/palette"
-import { Highlight } from "Components/Search/NewSearch/SuggestionItem/Highlight"
+import { Highlight } from "Components/Search/SuggestionItem/Highlight"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
 

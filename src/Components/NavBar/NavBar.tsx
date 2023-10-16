@@ -48,7 +48,7 @@ import { useNavBarHeight } from "./useNavBarHeight"
 import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
-import { SearchBar } from "Components/Search/NewSearch/SearchBar"
+import { SearchBar } from "Components/Search/SearchBar"
 
 /**
  * NOTE: Fresnel doesn't work correctly here because this is included

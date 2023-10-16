@@ -5,7 +5,7 @@ import { NavBar } from "Components/NavBar/NavBar"
 import { NavBarMobileMenuNotificationsIndicatorQueryRenderer as NavBarMobileMenuNotificationsIndicator } from "Components/NavBar/NavBarMobileMenu/NavBarMobileMenuNotificationsIndicator"
 import { useAuthDialog } from "Components/AuthDialog"
 
-jest.mock("Components/Search/NewSearch/SearchBar", () => {
+jest.mock("Components/Search/SearchBar", () => {
   return {
     SearchBar: () => <div />,
   }

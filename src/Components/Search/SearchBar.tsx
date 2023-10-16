@@ -1,5 +1,5 @@
 import { Box } from "@artsy/palette"
-import { SearchBarInputQueryRenderer } from "Components/Search/NewSearch/SearchBarInput"
+import { SearchBarInputQueryRenderer } from "./SearchBarInput"
 import { Media } from "Utils/Responsive"
 import { MobileSearchBarQueryRenderer } from "./Mobile/MobileSearchBar"
 import { FC } from "react"
