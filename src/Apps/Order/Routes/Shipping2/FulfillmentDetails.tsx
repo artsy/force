@@ -376,7 +376,6 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const handleSelectSavedAddress = useCallback(
     (address: ShippingAddressFormValues) => {
-      console.log("handleSelectSavedAddress")
       setValues({
         fulfillmentType: FulfillmentType.SHIP,
         attributes: {
@@ -448,7 +447,6 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
               active={addressFormMode === "saved_addresses"}
               me={props.me}
               onSelect={a => {
-                console.log("SavedAddresses onSelect")
                 handleSelectSavedAddress(a)
               }}
             />
