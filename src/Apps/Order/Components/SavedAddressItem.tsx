@@ -21,8 +21,8 @@ export const SavedAddressItem: React.FC<SavedAddressItemProps> = (
   props
 ): React.ReactElement<RadioProps> => {
   const handleClickEdit = props?.handleClickEdit
-  const index = props.index
-  const address = props.address
+  const index = props?.index
+  const address = props?.address
   const addressLine1 = address?.addressLine1
   const addressLine2 = address?.addressLine2
   const addressLine3 = address?.addressLine3

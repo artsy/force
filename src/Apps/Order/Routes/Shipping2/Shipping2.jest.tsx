@@ -1,7 +1,7 @@
 import { cloneDeep } from "lodash"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools/MockBoot"
-import { ShippingFragmentContainer } from "Apps/Order/Routes/Shipping"
+import { ShippingFragmentContainer } from "Apps/Order/Routes/Shipping2"
 import { graphql } from "react-relay"
 import {
   UntouchedBuyOrder,
@@ -25,7 +25,7 @@ import {
   saveAddressSuccess,
   updateAddressSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
-import { ShippingTestQuery$rawResponse } from "__generated__/ShippingTestQuery.graphql"
+import { Shipping2TestQuery$rawResponse } from "__generated__/Shipping2TestQuery.graphql"
 import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -97,7 +97,7 @@ jest.mock("react-relay", () => ({
   commitMutation: (...args) => mockCommitMutation(args),
 }))
 
-const order: ShippingTestQuery$rawResponse["order"] = {
+const order: Shipping2TestQuery$rawResponse["order"] = {
   ...UntouchedBuyOrder,
   internalID: "1234",
   id: "1234",
@@ -110,7 +110,7 @@ const pageInfo = {
   hasPreviousPage: false,
 }
 
-const meWithoutAddress: ShippingTestQuery$rawResponse["me"] = {
+const meWithoutAddress: Shipping2TestQuery$rawResponse["me"] = {
   name: "Test Name",
   email: "test@gmail.com",
   id: "4321",
@@ -125,7 +125,7 @@ const meWithoutAddress: ShippingTestQuery$rawResponse["me"] = {
   },
 }
 
-const meWithAddresses: ShippingTestQuery$rawResponse["me"] = Object.assign(
+const meWithAddresses: Shipping2TestQuery$rawResponse["me"] = Object.assign(
   {},
   meWithoutAddress,
   {
@@ -268,12 +268,12 @@ describe("Shipping", () => {
       </MockBoot>
     ),
     query: graphql`
-      query ShippingTestQuery @raw_response_type @relay_test_operation {
+      query Shipping2TestQuery @raw_response_type @relay_test_operation {
         order: commerceOrder(id: "unused") {
-          ...Shipping_order
+          ...Shipping2_order
         }
         me {
-          ...Shipping_me
+          ...Shipping2_me
         }
       }
     `,
