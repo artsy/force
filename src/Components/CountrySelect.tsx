@@ -23,7 +23,7 @@ export const CountrySelect: FC<CountrySelectProps> = ({
   )
 }
 
-export const COUNTRY_SELECT_OPTIONS = [
+const COUNTRY_SELECT_OPTIONS = [
   { text: "", value: "" },
   { text: "Afghanistan", value: "AF" },
   { text: "Åland Islands", value: "AX" },

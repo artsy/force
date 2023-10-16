@@ -1,38 +1,6 @@
 import { validatePhoneNumber } from "Components/PhoneNumberInput"
 import * as Yup from "yup"
 
-interface AddressType {
-  addressLine1: string
-  addressLine2: string | null
-  addressLine3: string | null
-  city: string
-  country: string
-  name: string | null
-  phoneNumber: string | null
-  phoneNumberCountryCode: string | null
-  postalCode: string | null
-  region: string | null
-}
-
-export interface SavedAddressType extends AddressType {
-  id: string
-  internalID: string
-  isDefault: boolean
-}
-
-export const EMPTY_ADDRESS = {
-  name: "",
-  country: "US",
-  addressLine1: "",
-  addressLine2: "",
-  addressLine3: "",
-  city: "",
-  phoneNumber: "",
-  phoneNumberCountryCode: "us",
-  postalCode: "",
-  region: "",
-} as const
-
 export const yupPhoneValidator = Yup.string()
   .required("Phone Number is required")
   .test({

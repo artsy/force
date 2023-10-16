@@ -21,10 +21,10 @@ import {
   OwnerType,
 } from "@artsy/cohesion"
 import { themeGet } from "@styled-system/theme-get"
-import { SavedAddressType } from "Components/Address/utils"
 
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import {
+  SavedAddressType,
   ShippingAddressFormValues,
   addressWithFallbackValues,
   getDefaultUserAddress,
