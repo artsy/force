@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fd990b03c24604700e81f5175c75671d>>
+ * @generated SignedSource<<21315e7bf336ed7a45f92352e76b49aa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -1253,6 +1253,7 @@ return {
           "enumValues": [
             "ARTIST",
             "ARTIST_NATIONALITY",
+            "ARTIST_SERIES",
             "ATTRIBUTION_CLASS",
             "COLOR",
             "DIMENSION_RANGE",
