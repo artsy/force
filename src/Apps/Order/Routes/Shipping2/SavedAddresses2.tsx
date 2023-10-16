@@ -46,11 +46,12 @@ const getAddressByID = (addressList: SavedAddressType[], addressID: string) => {
 
 const getBestAvailableAddress = (
   addressList: SavedAddressType[],
-  addressID?: string
+  addressID?: string,
+  availableShippingCountries?: string[]
 ) => {
   return (
     (addressID && getAddressByID(addressList, addressID)) ||
-    getDefaultUserAddress(addressList)
+    getDefaultUserAddress(addressList, availableShippingCountries)
   )
 }
 
@@ -62,7 +63,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   )
   const {
     selectedSavedAddressId,
-    // availableShippingCountries,
+    availableShippingCountries,
   } = useShippingContext()
 
   const { onSelect, me, relay } = props
@@ -74,8 +75,11 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const [selectedAddressID, setSelectedAddressID] = useState<
     string | undefined
   >(
-    getBestAvailableAddress(addressList, selectedSavedAddressId ?? undefined)
-      ?.internalID
+    getBestAvailableAddress(
+      addressList,
+      selectedSavedAddressId ?? undefined,
+      availableShippingCountries
+    )?.internalID
   )
 
   const selectedAddress =
@@ -87,24 +91,17 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       setSelectedAddressID(
         getBestAvailableAddress(
           addressList,
-          selectedSavedAddressId ?? undefined
+          selectedSavedAddressId ?? undefined,
+          availableShippingCountries
         )?.internalID
       )
     }
-  }, [selectedAddressPresent, addressList, selectedSavedAddressId])
-
-  // // if the active address changes eg on create/edit, automatically select it.
-  // const previousSelectedAddress = usePrevious(selectedAddress)
-  // const serializedSelectedAddress = JSON.stringify(selectedAddress)
-  // const serializedPreviousSelectedAddress = JSON.stringify(
-  //   previousSelectedAddress
-  // )
-  // useEffect(() => {
-  //   if (serializedSelectedAddress !== serializedPreviousSelectedAddress) {
-  //     onSelect(addressWithFallbackValues(selectedAddress))
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [onSelect, serializedSelectedAddress, serializedPreviousSelectedAddress])
+  }, [
+    selectedAddressPresent,
+    addressList,
+    selectedSavedAddressId,
+    availableShippingCountries,
+  ])
 
   const handleSelectAddress = useCallback(
     (id: string): void => {

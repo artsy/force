@@ -83,7 +83,79 @@ type ShippingRouteStep =
   | "fulfillment_details"
   | "shipping_quotes"
   | "ready_to_proceed"
-// Get information from the order and user, including shared context and initial
+
+const getInitialValues = (
+  props: ShippingProps,
+  orderData: ShippingContextProps
+): {
+  fulfillmentDetails: FulfillmentValues
+} => {
+  const { me } = props
+  const {
+    fulfillmentType: savedFulfillmentType,
+    fulfillmentDetails: savedFulfillmentDetails,
+  } = orderData
+
+  if (savedFulfillmentType) {
+    return {
+      fulfillmentDetails: {
+        fulfillmentType: savedFulfillmentType,
+        attributes: {
+          ...addressWithFallbackValues(savedFulfillmentDetails),
+          saveAddress: false,
+          addressVerifiedBy: null,
+        },
+      } as FulfillmentValues,
+    }
+  }
+  const savedAddresses = extractNodes(me?.addressConnection) ?? []
+
+  // The default ship-to address should be the first one that
+  // can be shipped-to, preferring the default
+
+  const defaultUserAddress = getDefaultUserAddress(
+    savedAddresses,
+    orderData.availableShippingCountries
+  )
+
+  const shippableDefaultAddress = defaultUserAddress
+    ? addressWithFallbackValues(defaultUserAddress)
+    : null
+
+  if (shippableDefaultAddress) {
+    return {
+      fulfillmentDetails: {
+        fulfillmentType: FulfillmentType.SHIP,
+        attributes: {
+          ...shippableDefaultAddress,
+          saveAddress: false,
+          addressVerifiedBy: null,
+        },
+      },
+    }
+  }
+
+  // The user doesn't have a valid ship-to address, so we'll return empty values.
+  // TODO: This doesn't account for matching the saved address id
+  // (that is still in savedOrderData). In addition the initial values
+  // are less relevant if the user has saved addresses - Setting country
+  // doesn't matter.
+  const initialFulfillmentValues: ShipValues["attributes"] = {
+    ...addressWithFallbackValues({ country: orderData.shipsFrom }),
+
+    addressVerifiedBy: null,
+    saveAddress: savedAddresses.length === 0,
+  }
+
+  return {
+    fulfillmentDetails: {
+      fulfillmentType: FulfillmentType.SHIP,
+      attributes: initialFulfillmentValues,
+    },
+  }
+}
+// Get information from the order and user, savedOrderData (shared, computed context about order)
+// initial values for forms, and the current step in the shipping route
 // values for forms
 export const useLoadOrder = (
   props: ShippingProps
@@ -95,9 +167,10 @@ export const useLoadOrder = (
   targetStep: ShippingRouteStep
 } => {
   const orderData = useLoadComputedData(props)
+  const initialValues = getInitialValues(props, orderData)
+
   const {
     fulfillmentType: savedFulfillmentType,
-    fulfillmentDetails: savedFulfillmentDetails,
     selectedShippingQuoteId,
     isArtsyShipping,
   } = orderData
@@ -118,75 +191,10 @@ export const useLoadOrder = (
     return "fulfillment_details"
   }, [isArtsyShipping, savedFulfillmentType, selectedShippingQuoteId])
 
-  const { me } = props
-
-  const savedAddresses = extractNodes(me?.addressConnection) ?? []
-
-  // what if available shipping locations no longer support saved address?
-  // TODO: If the initial address is US but the country select doesn't show it bc is it EU only
-  // (as one example) then the form state will stay on US (invalid) until the user updates the
-  // country input
-
-  if (savedFulfillmentType) {
-    return {
-      savedOrderData: orderData,
-      targetStep,
-      initialValues: {
-        fulfillmentDetails: {
-          fulfillmentType: savedFulfillmentType,
-          attributes: {
-            ...addressWithFallbackValues(savedFulfillmentDetails),
-            saveAddress: false,
-            addressVerifiedBy: null,
-          },
-        } as FulfillmentValues, // ???
-      },
-    }
-  }
-
-  // if user has a valid default ship-to address, set it in the form.
-  // otherwise set the initial country to the artwork's country
-  const defaultUserAddress = getDefaultUserAddress(savedAddresses)
-
-  const shippableDefaultAddress =
-    defaultUserAddress &&
-    orderData.availableShippingCountries.includes(defaultUserAddress.country)
-      ? addressWithFallbackValues(defaultUserAddress)
-      : null
-
-  if (shippableDefaultAddress) {
-    return {
-      savedOrderData: orderData,
-      targetStep,
-      initialValues: {
-        fulfillmentDetails: {
-          fulfillmentType: FulfillmentType.SHIP,
-          attributes: {
-            ...shippableDefaultAddress,
-            saveAddress: false,
-            addressVerifiedBy: null,
-          },
-        },
-      },
-    }
-  }
-
-  const initialFulfillmentValues: ShipValues["attributes"] = {
-    ...addressWithFallbackValues({ country: orderData.shipsFrom }),
-
-    addressVerifiedBy: null,
-    saveAddress: savedAddresses.length === 0,
-  }
-
   return {
     savedOrderData: orderData,
+    initialValues,
     targetStep,
-    initialValues: {
-      fulfillmentDetails: {
-        fulfillmentType: FulfillmentType.SHIP,
-        attributes: initialFulfillmentValues,
-      },
-    },
   }
 }
 
@@ -214,8 +222,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }, [props.router, props.order.internalID])
 
   // Reset fulfillment details on load if artsy shipping to refresh shipping quotes
-  // TODO: Better to do from inside fulfillment details form?
-  // TODO: Make sure this will unset the selected shipping quote
+  // Note: exact current behavior is documented in notion. On load of shipping page, it
+  // re-saves the order using the default address (not what is selected) which triggers a
+  // shipping quote refresh. the *selected shipping quote is not reset.*
   useEffect(() => {
     if (
       savedOrderData.fulfillmentType === FulfillmentType.SHIP &&
@@ -245,7 +254,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   // const selectShipping = async (editedAddress?: MutationAddressResponse) => {
   // ...
 
-  //   TODO: (Erik): Tracking
+  //   TODO: Tracking
   //     trackEvent({
   //       action: ActionType.errorMessageViewed,
   //       context_owner_type: OwnerType.ordersShipping,
@@ -361,6 +370,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       trackEvent,
     ]
   )
+
   const createUserAddressMutation = useCallback(
     async (values: ShippingAddressFormValues) => {
       createUserAddress(

@@ -1,5 +1,5 @@
 import { ShippingProps } from "Apps/Order/Routes/Shipping2"
-import { pick, omitBy, isNil, compact } from "lodash"
+import { pick, omitBy, isNil } from "lodash"
 import { useCallback } from "react"
 import { Shipping2_order$data } from "__generated__/Shipping2_order.graphql"
 import { extractNodes } from "Utils/extractNodes"
@@ -71,16 +71,20 @@ type ShippingQuotesConnectionEdges = NonNullable<
   >["edges"]
 >
 
-export const getDefaultUserAddress = (addressList: SavedAddressType[]) => {
-  const items = compact(addressList)
-
-  if (!items || items.length == 0) {
-    return
-  }
-
-  return items.find(node => node.isDefault) || items[0]
+// Get the user's default address, optionally filtering by a list of countries.
+export const getDefaultUserAddress = (
+  savedAddresses: SavedAddressType[],
+  filterCountries?: string[]
+) => {
+  const shippableAddresses = savedAddresses.filter(node => {
+    if (!Boolean(node)) return false
+    if (!filterCountries) return true
+    return filterCountries.includes(node.country)
+  })
+  return (
+    shippableAddresses.find(node => node.isDefault) || shippableAddresses[0]
+  )
 }
-
 const matchAddressFields = (...addressPair: [object, object]) => {
   const [a1, a2] = addressPair.map(a => addressWithFallbackValues(a))
   return (

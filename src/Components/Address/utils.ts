@@ -1,7 +1,7 @@
 import { validatePhoneNumber } from "Components/PhoneNumberInput"
 import * as Yup from "yup"
 
-export interface AddressType {
+interface AddressType {
   addressLine1: string
   addressLine2: string | null
   addressLine3: string | null
@@ -55,27 +55,3 @@ export const postalCodeValidator = Yup.string().when("country", {
     .matches(usPostalCodeRegexp, "Invalid postal code"),
   otherwise: Yup.string().required("Postal code is required"),
 })
-
-export const getYupAddressSchema = ({
-  simplePhoneValidation = false,
-} = {}): Yup.ObjectSchema<any, any> => {
-  const phoneNumberRegex = /^[+\-\d]*$/g
-  const phoneValidator = simplePhoneValidation
-    ? Yup.string()
-        .required("Phone number is required")
-        .matches(phoneNumberRegex, "Invalid phone number")
-    : yupPhoneValidator
-
-  return Yup.object().shape({
-    name: Yup.string().required("Name is required"),
-    country: Yup.string().required("Country is required"),
-    addressLine1: Yup.string().required("Address is required"),
-    city: Yup.string().required("City is required"),
-    region: Yup.string().required("Region is required"),
-    postalCode: postalCodeValidator,
-    phoneNumber: phoneValidator,
-    phoneNumberCountryCode: Yup.string().required(
-      "Phone Number Country Code is required"
-    ),
-  })
-}
