@@ -21,7 +21,7 @@ import {
 } from "@artsy/palette"
 import { ArtworkFilterCreateAlert } from "Components/ArtworkFilter/ArtworkFilterCreateAlert"
 import { ArtworkFilterDrawer } from "Components/ArtworkFilter/ArtworkFilterDrawer"
-import { ArtworkSortFilter2 } from "Components/ArtworkFilter/ArtworkFilters/ArtworkSortFilter2"
+import { ArtworkFilterExpandableSort } from "Components/ArtworkFilter/ArtworkFilters/ArtworkFilterExpandableSort"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
@@ -50,6 +50,7 @@ import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
+import { ArtworkFilterSort } from "Components/ArtworkFilter/ArtworkFilterSort"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -259,7 +260,7 @@ export const BaseArtworkFilter: React.FC<
 
                     {isOpen && (
                       <ArtworkFilterMobileOverlay onClose={handleClose}>
-                        <ArtworkSortFilter2 />
+                        <ArtworkFilterExpandableSort />
 
                         <Spacer y={4} />
 
@@ -428,22 +429,18 @@ export const BaseArtworkFilter: React.FC<
                 </Pill>
               </Flex>
 
-              <Flex alignItems="center" gap={0.5} flexShrink={0}>
-                <ArtworkFilterDrawer open={isOpen} onClose={handleClose}>
-                  <ArtworkSortFilter2 />
+              <ArtworkFilterSort />
 
-                  <Spacer y={4} />
-
-                  {Filters ? (
-                    Filters
-                  ) : (
-                    <ArtworkFilters
-                      user={user}
-                      relayEnvironment={relay.environment}
-                    />
-                  )}
-                </ArtworkFilterDrawer>
-              </Flex>
+              <ArtworkFilterDrawer open={isOpen} onClose={handleClose}>
+                {Filters ? (
+                  Filters
+                ) : (
+                  <ArtworkFilters
+                    user={user}
+                    relayEnvironment={relay.environment}
+                  />
+                )}
+              </ArtworkFilterDrawer>
             </Flex>
 
             <Spacer y={2} />
