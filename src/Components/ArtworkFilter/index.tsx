@@ -49,6 +49,7 @@ import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
+import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -447,7 +448,7 @@ export const BaseArtworkFilter: React.FC<
 
             <Spacer y={2} />
 
-            <ActiveFilterPills />
+            <ArtworkFilterActiveFilters />
 
             <Spacer y={4} />
 
