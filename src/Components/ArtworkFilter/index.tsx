@@ -15,6 +15,7 @@ import {
   Flex,
   FullBleed,
   GridColumns,
+  Pill,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -399,20 +400,16 @@ export const BaseArtworkFilter: React.FC<
           // New desktop filters
           <>
             <Flex alignItems="center" justifyContent="space-between" gap={2}>
-              <Flex alignItems="center" gap={2}>
-                <Text variant="sm-display" fontWeight="bold" flexShrink={0}>
-                  {totalCountLabel}
-                </Text>
-
-                <ActiveFilterPills />
-              </Flex>
-
-              <Flex alignItems="center" gap={0.5} flexShrink={0}>
+              <Flex gap={1}>
                 <ArtworkFilterCreateAlert
                   renderButton={props => {
                     return (
                       <Button
-                        variant="tertiary"
+                        variant={
+                          appliedFiltersTotalCount > 0
+                            ? "primaryBlack"
+                            : "secondaryBlack"
+                        }
                         size="small"
                         Icon={BellStrokeIcon}
                         {...props}
@@ -423,15 +420,14 @@ export const BaseArtworkFilter: React.FC<
                   }}
                 />
 
-                <Button
-                  variant="tertiary"
-                  Icon={FilterIcon}
-                  size="small"
-                  onClick={handleOpen}
-                >
-                  Sort and Filter
-                </Button>
+                <Box width="1px" bg="black30" />
 
+                <Pill Icon={FilterIcon} size="small" onClick={handleOpen}>
+                  All filters
+                </Pill>
+              </Flex>
+
+              <Flex alignItems="center" gap={0.5} flexShrink={0}>
                 <ArtworkFilterDrawer open={isOpen} onClose={handleClose}>
                   <ArtworkSortFilter2 />
 
@@ -448,6 +444,16 @@ export const BaseArtworkFilter: React.FC<
                 </ArtworkFilterDrawer>
               </Flex>
             </Flex>
+
+            <Spacer y={2} />
+
+            <ActiveFilterPills />
+
+            <Spacer y={4} />
+
+            <Text variant="xs" flexShrink={0}>
+              {totalCountLabel}:
+            </Text>
 
             <Spacer y={2} />
 
