@@ -11,7 +11,7 @@ import * as React from "react"
 import { FollowArtistButton_artist$data } from "__generated__/FollowArtistButton_artist.graphql"
 import { FollowArtistButton_me$data } from "__generated__/FollowArtistButton_me.graphql"
 import { FollowArtistButtonQuery } from "__generated__/FollowArtistButtonQuery.graphql"
-import { FollowButton } from "./Button"
+import { FollowButton, FollowButtonRenderProps } from "./Button"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
@@ -20,19 +20,20 @@ import { useMutation } from "Utils/Hooks/useMutation"
 import { useAuthDialog } from "Components/AuthDialog"
 
 interface FollowArtistButtonProps extends Omit<ButtonProps, "variant"> {
-  me: FollowArtistButton_me$data | null
   artist: FollowArtistButton_artist$data
+  children?: FollowButtonRenderProps
   contextModule?: AuthContextModule
-  triggerSuggestions?: boolean
+  me: FollowArtistButton_me$data | null
   onFollow?: (followed: boolean) => void
+  triggerSuggestions?: boolean
 }
 
 const FollowArtistButton: React.FC<FollowArtistButtonProps> = ({
-  me,
   artist,
   contextModule = ContextModule.artistHeader,
-  triggerSuggestions = false,
+  me,
   onFollow,
+  triggerSuggestions = false,
   ...rest
 }) => {
   const { isLoggedIn } = useSystemContext()

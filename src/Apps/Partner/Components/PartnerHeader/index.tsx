@@ -1,6 +1,14 @@
 import * as React from "react"
 import styled from "styled-components"
-import { Box, Text, Image, GridColumns, Column, Flex } from "@artsy/palette"
+import {
+  Box,
+  Text,
+  Image,
+  GridColumns,
+  Column,
+  Flex,
+  Stack,
+} from "@artsy/palette"
 import { PartnerHeaderAddress } from "./PartnerHeaderAddress"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowProfileButtonQueryRenderer } from "Components/FollowButton/FollowProfileButton"
@@ -10,6 +18,7 @@ import { PartnerHeader_partner$data } from "__generated__/PartnerHeader_partner.
 import { themeGet } from "@styled-system/theme-get"
 import { Jump } from "Utils/Hooks/useJump"
 import { formatFollowerCount } from "Utils/formatFollowerCount"
+import { FollowButtonInlineCount } from "Components/FollowButton/Button"
 
 export interface PartnerHeaderProps {
   partner: PartnerHeader_partner$data
@@ -79,7 +88,20 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
               id={partner.profile.internalID}
               contextModule={ContextModule.partnerHeader}
               width="100%"
-            />
+            >
+              {label => (
+                <Stack gap={0.5} flexDirection="row" alignItems="center">
+                  <Box>{label}</Box>
+
+                  {!!partner?.profile?.counts?.follows && (
+                    <FollowButtonInlineCount display={["block", "none"]}>
+                      {formatFollowerCount(partner.profile.counts.follows)}
+                    </FollowButtonInlineCount>
+                  )}
+                </Stack>
+              )}
+            </FollowProfileButtonQueryRenderer>
+
             {hasFollows && (
               <Text
                 variant="xs"
@@ -87,6 +109,7 @@ export const PartnerHeader: React.FC<PartnerHeaderProps> = ({ partner }) => {
                 textAlign="center"
                 flexShrink={0}
                 paddingTop={0.5}
+                display={["none", "block"]}
               >
                 {formatFollowerCount(partner?.profile?.counts?.follows)}{" "}
                 Follower

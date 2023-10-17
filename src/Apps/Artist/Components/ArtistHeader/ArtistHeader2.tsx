@@ -8,6 +8,7 @@ import {
   Pill,
   ReadMore,
   Spacer,
+  Stack,
   Text,
 } from "@artsy/palette"
 import {
@@ -30,6 +31,7 @@ import { useTracking } from "react-tracking"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { ProgressiveOnboardingFollowArtist } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overview/Components/ArtistCareerHighlight"
+import { FollowButtonInlineCount } from "Components/FollowButton/Button"
 
 interface ArtistHeaderProps {
   artist: ArtistHeader2_artist$data
@@ -96,7 +98,25 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                         contextModule={ContextModule.artistHeader}
                         size={["large", "small"]}
                         width={["100%", "fit-content"]}
-                      />
+                      >
+                        {label => (
+                          <Stack
+                            gap={0.5}
+                            flexDirection="row"
+                            alignItems="center"
+                          >
+                            <Box>{label}</Box>
+
+                            {!!artist.counts?.follows && (
+                              <FollowButtonInlineCount
+                                display={["block", "none"]}
+                              >
+                                {formatFollowerCount(artist.counts.follows)}
+                              </FollowButtonInlineCount>
+                            )}
+                          </Stack>
+                        )}
+                      </FollowArtistButtonQueryRenderer>
                     </ProgressiveOnboardingFollowArtist>
 
                     {!!artist.counts?.follows && (
