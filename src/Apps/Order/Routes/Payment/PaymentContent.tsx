@@ -29,6 +29,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import InfoIcon from "@artsy/icons/InfoIcon"
 import InstitutionIcon from "@artsy/icons/InstitutionIcon"
 import UnknownCardIcon from "@artsy/icons/UnknownCardIcon"
+import { Jump } from "Utils/Hooks/useJump"
 
 export interface Props {
   order: Payment_order$data
@@ -86,6 +87,7 @@ export const PaymentContent: FC<Props> = props => {
             )}
           </RadioGroup>
           <Spacer y={4} />
+          <Jump id="paymentDetailsTop" />
           <Text variant="lg-display">Payment details</Text>
           <Spacer y={2} />
         </>

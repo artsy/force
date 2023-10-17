@@ -99,6 +99,7 @@ import {
   ErrorDialogs,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
+import { Jump, useJump } from "Utils/Hooks/useJump"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -276,10 +277,13 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     if (invalidAddress) {
       setAddressErrors(addressErrors!)
       setAddressTouched(touchedAddress)
+      jumpTo("deliveryAddressTop", { behavior: "smooth" })
     }
+
     if (invalidPhoneNumber) {
       setPhoneNumberError(phoneNumberError!)
       setPhoneNumberTouched(true)
+      jumpTo("phoneNumberTop", { behavior: "smooth" })
     }
 
     return !invalidAddress && !invalidPhoneNumber
@@ -391,6 +395,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const selectShippingQuote = async () => {
     const { order } = props
+
+    if (!shippingQuoteId) jumpTo("shippingOptionsTop", { behavior: "smooth" })
 
     if (shippingQuoteId && order.internalID) {
       try {
@@ -766,12 +772,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const showArtsyShipping =
     isArtsyShipping && !!shippingQuotes && shippingQuotes.length > 0
   const isOffer = order.mode === "OFFER"
-
   const useDefaultArtsyShippingQuote =
     isArtsyShipping &&
     shippingQuotes &&
     shippingQuotes.length > 0 &&
     !shippingQuoteId
+  const { jumpTo } = useJump()
 
   // TODO: consider to move this block to a useEffect
   if (useDefaultArtsyShippingQuote) {
@@ -851,6 +857,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   shippingQuotes &&
                   shippingQuotes.length === 0 &&
                   renderArtaErrorMessage()}
+                <Jump id="deliveryAddressTop" />
                 <Text variant="lg-display" mb="2">
                   Delivery address
                 </Text>
@@ -892,6 +899,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   showPhoneNumberInput={false}
                 />
                 <Spacer y={2} />
+                <Jump id="phoneNumberTop" />
                 <PhoneNumberForm
                   tabIndex={showAddressForm ? 0 : -1}
                   value={phoneNumber}
@@ -930,6 +938,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
               {/* SHIPPING OPTION */}
               <Collapse open={showArtsyShipping}>
+                <Jump id="shippingOptionsTop" />
                 <Text variant="sm">Artsy shipping options</Text>
                 <Text variant="xs" mb="1" color="black60">
                   {renderArtsyShippingOptionText()}
