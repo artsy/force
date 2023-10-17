@@ -43,6 +43,7 @@ import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { PaymentContent } from "./PaymentContent"
+import { useJump } from "Utils/Hooks/useJump"
 
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
@@ -97,7 +98,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
 
   const artworkVersion = extractNodes(order.lineItems)[0]?.artworkVersion
 
-  const paymentDetailsRef = createRef<HTMLDivElement>()
+  const { jumpTo } = useJump()
 
   useEffect(() => {
     const bankAccountsArray =
@@ -221,7 +222,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
       const result = await CreditCardPicker?.current?.getCreditCardId()
 
       if (result?.type === "invalid_form") {
-        paymentDetailsRef.current?.scrollIntoView({ behavior: "smooth" })
+        jumpTo("paymentDetailsTop", { behavior: "smooth" })
         return
       }
       if (result?.type === "error") {
@@ -478,7 +479,6 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
               <Flex
                 flexDirection="column"
                 style={displayLoading ? { display: "none" } : {}}
-                ref={paymentDetailsRef as any}
               >
                 <PaymentContent
                   commitMutation={props.commitMutation}
