@@ -1,7 +1,7 @@
 import * as React from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
-import { FollowButton } from "./Button"
+import { FollowButton, FollowButtonRenderProps } from "./Button"
 import { FollowProfileButton_profile$data } from "__generated__/FollowProfileButton_profile.graphql"
 import { ButtonProps } from "@artsy/palette"
 import {
@@ -17,6 +17,7 @@ import { FollowProfileButtonQuery } from "__generated__/FollowProfileButtonQuery
 import { useAuthDialog } from "Components/AuthDialog"
 
 interface FollowProfileButtonProps extends Omit<ButtonProps, "variant"> {
+  children?: FollowButtonRenderProps
   profile: FollowProfileButton_profile$data
   contextModule?: AuthContextModule
   onFollow?: (followed: boolean) => void
