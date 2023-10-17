@@ -1,11 +1,14 @@
 import { FC } from "react"
 import { useActiveFilterPills } from "Components/SavedSearchAlert/useActiveFilterPills"
-import { Flex, Pill } from "@artsy/palette"
+import { Button, Flex, Pill } from "@artsy/palette"
+import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 
 export interface ArtworkFilterActiveFiltersProps {}
 
 export const ArtworkFilterActiveFilters: FC<ArtworkFilterActiveFiltersProps> = () => {
   const { pills, removePill } = useActiveFilterPills()
+
+  const { resetFilters } = useArtworkFilterContext()
 
   if (pills.length === 0) {
     return null
@@ -26,6 +29,10 @@ export const ArtworkFilterActiveFilters: FC<ArtworkFilterActiveFiltersProps> = (
           </Pill>
         )
       })}
+
+      <Button variant="tertiary" size="small" onClick={resetFilters}>
+        Clear all
+      </Button>
     </Flex>
   )
 }
