@@ -97,8 +97,11 @@ jest.mock("react-relay", () => ({
   commitMutation: (...args) => mockCommitMutation(args),
 }))
 
-const scrollIntoViewMock = jest.fn()
-window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock
+const mockJumpTo = jest.fn()
+jest.mock("Utils/Hooks/useJump", () => ({
+  useJump: () => ({ jumpTo: mockJumpTo }),
+  Jump: () => null,
+}))
 
 const order: ShippingTestQuery$rawResponse["order"] = {
   ...UntouchedBuyOrder,
@@ -948,7 +951,7 @@ describe("Shipping", () => {
 
         await saveAndContinue()
 
-        expect(scrollIntoViewMock).toBeCalled()
+        expect(mockJumpTo).toBeCalled()
       })
     })
 

@@ -92,8 +92,11 @@ jest.mock("Apps/Order/Utils/commitMutation", () => ({
 }))
 const trackEvent = jest.fn()
 
-const scrollIntoViewMock = jest.fn()
-window.HTMLElement.prototype.scrollIntoView = scrollIntoViewMock
+const mockJumpTo = jest.fn()
+jest.mock("Utils/Hooks/useJump", () => ({
+  useJump: () => ({ jumpTo: mockJumpTo }),
+  Jump: () => null,
+}))
 
 const testOrder: PaymentTestQuery$rawResponse["order"] = {
   ...BuyOrderWithShippingDetails,
@@ -236,7 +239,7 @@ describe("Payment", () => {
       CreditCardPickerMock.useInvalidFormResult()
       await page.clickSubmit()
 
-      expect(scrollIntoViewMock).toHaveBeenCalled()
+      expect(mockJumpTo).toHaveBeenCalled()
     })
 
     it("tracks when the user selects Credit Card payment method", async () => {
