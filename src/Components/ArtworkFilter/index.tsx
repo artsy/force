@@ -15,12 +15,13 @@ import {
   Flex,
   FullBleed,
   GridColumns,
+  Pill,
   Spacer,
   Text,
 } from "@artsy/palette"
 import { ArtworkFilterCreateAlert } from "Components/ArtworkFilter/ArtworkFilterCreateAlert"
 import { ArtworkFilterDrawer } from "Components/ArtworkFilter/ArtworkFilterDrawer"
-import { ArtworkSortFilter2 } from "Components/ArtworkFilter/ArtworkFilters/ArtworkSortFilter2"
+import { ArtworkFilterExpandableSort } from "Components/ArtworkFilter/ArtworkFilters/ArtworkFilterExpandableSort"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
@@ -48,6 +49,8 @@ import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
+import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
+import { ArtworkFilterSort } from "Components/ArtworkFilter/ArtworkFilterSort"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -257,7 +260,7 @@ export const BaseArtworkFilter: React.FC<
 
                     {isOpen && (
                       <ArtworkFilterMobileOverlay onClose={handleClose}>
-                        <ArtworkSortFilter2 />
+                        <ArtworkFilterExpandableSort />
 
                         <Spacer y={4} />
 
@@ -399,20 +402,16 @@ export const BaseArtworkFilter: React.FC<
           // New desktop filters
           <>
             <Flex alignItems="center" justifyContent="space-between" gap={2}>
-              <Flex alignItems="center" gap={2}>
-                <Text variant="sm-display" fontWeight="bold" flexShrink={0}>
-                  {totalCountLabel}
-                </Text>
-
-                <ActiveFilterPills />
-              </Flex>
-
-              <Flex alignItems="center" gap={0.5} flexShrink={0}>
+              <Flex gap={1}>
                 <ArtworkFilterCreateAlert
                   renderButton={props => {
                     return (
                       <Button
-                        variant="tertiary"
+                        variant={
+                          appliedFiltersTotalCount > 0
+                            ? "primaryBlack"
+                            : "secondaryBlack"
+                        }
                         size="small"
                         Icon={BellStrokeIcon}
                         {...props}
@@ -423,31 +422,36 @@ export const BaseArtworkFilter: React.FC<
                   }}
                 />
 
-                <Button
-                  variant="tertiary"
-                  Icon={FilterIcon}
-                  size="small"
-                  onClick={handleOpen}
-                >
-                  Sort and Filter
-                </Button>
+                <Box width="1px" bg="black30" />
 
-                <ArtworkFilterDrawer open={isOpen} onClose={handleClose}>
-                  <ArtworkSortFilter2 />
-
-                  <Spacer y={4} />
-
-                  {Filters ? (
-                    Filters
-                  ) : (
-                    <ArtworkFilters
-                      user={user}
-                      relayEnvironment={relay.environment}
-                    />
-                  )}
-                </ArtworkFilterDrawer>
+                <Pill Icon={FilterIcon} size="small" onClick={handleOpen}>
+                  All filters
+                </Pill>
               </Flex>
+
+              <ArtworkFilterSort />
+
+              <ArtworkFilterDrawer open={isOpen} onClose={handleClose}>
+                {Filters ? (
+                  Filters
+                ) : (
+                  <ArtworkFilters
+                    user={user}
+                    relayEnvironment={relay.environment}
+                  />
+                )}
+              </ArtworkFilterDrawer>
             </Flex>
+
+            <Spacer y={2} />
+
+            <ArtworkFilterActiveFilters />
+
+            <Spacer y={4} />
+
+            <Text variant="xs" flexShrink={0}>
+              {totalCountLabel}:
+            </Text>
 
             <Spacer y={2} />
 

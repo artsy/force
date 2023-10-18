@@ -43,6 +43,7 @@ import { SavingPaymentSpinner } from "Apps/Order/Components/SavingPaymentSpinner
 import { SaveAndContinueButton } from "Apps/Order/Components/SaveAndContinueButton"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { PaymentContent } from "./PaymentContent"
+import { useJump } from "Utils/Hooks/useJump"
 
 const logger = createLogger("Order/Routes/Payment/index.tsx")
 
@@ -96,6 +97,8 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     selectedPaymentMethod === "US_BANK_ACCOUNT"
 
   const artworkVersion = extractNodes(order.lineItems)[0]?.artworkVersion
+
+  const { jumpTo } = useJump()
 
   useEffect(() => {
     const bankAccountsArray =
@@ -218,8 +221,10 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
     try {
       const result = await CreditCardPicker?.current?.getCreditCardId()
 
-      if (result?.type === "invalid_form") return
-
+      if (result?.type === "invalid_form") {
+        jumpTo("paymentDetailsTop", { behavior: "smooth" })
+        return
+      }
       if (result?.type === "error") {
         trackEvent({
           action: ActionType.errorMessageViewed,

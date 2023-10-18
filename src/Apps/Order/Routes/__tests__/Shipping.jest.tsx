@@ -97,6 +97,12 @@ jest.mock("react-relay", () => ({
   commitMutation: (...args) => mockCommitMutation(args),
 }))
 
+const mockJumpTo = jest.fn()
+jest.mock("Utils/Hooks/useJump", () => ({
+  useJump: () => ({ jumpTo: mockJumpTo }),
+  Jump: () => null,
+}))
+
 const order: ShippingTestQuery$rawResponse["order"] = {
   ...UntouchedBuyOrder,
   internalID: "1234",
@@ -935,6 +941,17 @@ describe("Shipping", () => {
             })
           })
         })
+      })
+
+      it("scrolls to top of address form when there are address form errors", async () => {
+        renderWithRelay({
+          CommerceOrder: () => UntouchedOfferOrder,
+          Me: () => meWithoutAddress,
+        })
+
+        await saveAndContinue()
+
+        expect(mockJumpTo).toBeCalled()
       })
     })
 
