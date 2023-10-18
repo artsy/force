@@ -1,4 +1,5 @@
 import { Select, SelectProps } from "@artsy/palette"
+import { uniqBy } from "lodash"
 import { FC } from "react"
 
 export interface CountrySelectProps extends Omit<SelectProps, "options"> {
@@ -319,10 +320,13 @@ const EU_COUNTRY_SELECT_OPTIONS = [
   { text: "Vatican City", value: "VA" },
 ]
 
-export const ALL_COUNTRY_SELECT_OPTIONS = [
-  ...COUNTRY_SELECT_OPTIONS,
-  ...EU_COUNTRY_SELECT_OPTIONS,
-]
+export const ALL_COUNTRY_SELECT_OPTIONS = uniqBy(
+  [...COUNTRY_SELECT_OPTIONS, ...EU_COUNTRY_SELECT_OPTIONS],
+  "value"
+)
+
+export const ALL_COUNTRY_CODES = ALL_COUNTRY_SELECT_OPTIONS.map(c => c.value)
+export const EU_COUNTRY_CODES = EU_COUNTRY_SELECT_OPTIONS.map(c => c.value)
 
 export const COUNTRY_CODE_TO_COUNTRY_NAME = COUNTRY_SELECT_OPTIONS.reduce(
   (acc, option) => Object.assign(acc, { [option.value]: option.text }),
