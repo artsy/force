@@ -949,9 +949,59 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
+        await fillAddressForm({
+          name: "Erik David",
+          addressLine1: "401 Broadway",
+          addressLine2: "",
+          city: "",
+          region: "",
+          postalCode: "",
+          phoneNumber: "8888888888",
+          country: "",
+        })
+
         await saveAndContinue()
 
-        expect(mockJumpTo).toBeCalled()
+        expect(mockJumpTo).toBeCalledWith("deliveryAddressTop", {
+          behavior: "smooth",
+        })
+      })
+
+      it("scrolls to top of phone number form when there are phone number errors", async () => {
+        renderWithRelay({
+          CommerceOrder: () => UntouchedOfferOrder,
+          Me: () => meWithoutAddress,
+        })
+
+        await fillAddressForm({
+          name: "Erik David",
+          addressLine1: "401 Broadway",
+          addressLine2: "",
+          city: "New York",
+          region: "NY",
+          postalCode: "10013",
+          phoneNumber: "",
+          country: "US",
+        })
+
+        await saveAndContinue()
+
+        expect(mockJumpTo).toBeCalledWith("phoneNumberTop", {
+          behavior: "smooth",
+        })
+      })
+
+      it("scrolls to top of address form when there are both address and phone number errors", async () => {
+        renderWithRelay({
+          CommerceOrder: () => UntouchedOfferOrder,
+          Me: () => meWithoutAddress,
+        })
+
+        await saveAndContinue()
+
+        expect(mockJumpTo).toBeCalledWith("deliveryAddressTop", {
+          behavior: "smooth",
+        })
       })
     })
 

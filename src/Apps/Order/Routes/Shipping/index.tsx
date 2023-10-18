@@ -274,16 +274,16 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       hasError: invalidPhoneNumber,
     } = validatePhoneNumber(phoneNumber)
 
+    if (invalidPhoneNumber) {
+      setPhoneNumberError(phoneNumberError!)
+      setPhoneNumberTouched(true)
+      !invalidAddress && jumpTo("phoneNumberTop", { behavior: "smooth" })
+    }
+
     if (invalidAddress) {
       setAddressErrors(addressErrors!)
       setAddressTouched(touchedAddress)
       jumpTo("deliveryAddressTop", { behavior: "smooth" })
-    }
-
-    if (invalidPhoneNumber) {
-      setPhoneNumberError(phoneNumberError!)
-      setPhoneNumberTouched(true)
-      jumpTo("phoneNumberTop", { behavior: "smooth" })
     }
 
     return !invalidAddress && !invalidPhoneNumber
