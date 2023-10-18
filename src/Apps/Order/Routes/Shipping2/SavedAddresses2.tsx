@@ -40,21 +40,6 @@ export interface SavedAddressesProps {
   onSelect: (address: ShippingAddressFormValues) => void
 }
 
-const getAddressByID = (addressList: SavedAddressType[], addressID: string) => {
-  return addressList.find(node => node.internalID === addressID)
-}
-
-const getBestAvailableAddress = (
-  addressList: SavedAddressType[],
-  addressID?: string,
-  availableShippingCountries?: string[]
-) => {
-  return (
-    (addressID && getAddressByID(addressList, addressID)) ||
-    getDefaultUserAddress(addressList, availableShippingCountries)
-  )
-}
-
 const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const logger = createLogger("SavedAddresses.tsx")
   const { trackEvent } = useTracking()
@@ -274,3 +259,18 @@ const AddAddressButton = styled(Clickable)`
     color: ${themeGet("colors.blue100")};
   }
 `
+
+const getAddressByID = (addressList: SavedAddressType[], addressID: string) => {
+  return addressList.find(node => node.internalID === addressID)
+}
+
+const getBestAvailableAddress = (
+  addressList: SavedAddressType[],
+  addressID?: string,
+  availableShippingCountries?: string[]
+) => {
+  return (
+    (addressID && getAddressByID(addressList, addressID)) ||
+    getDefaultUserAddress(addressList, availableShippingCountries)
+  )
+}

@@ -84,120 +84,6 @@ type ShippingRouteStep =
   | "shipping_quotes"
   | "ready_to_proceed"
 
-const getInitialValues = (
-  props: ShippingProps,
-  orderData: ShippingContextProps
-): {
-  fulfillmentDetails: FulfillmentValues
-} => {
-  const { me } = props
-  const {
-    fulfillmentType: savedFulfillmentType,
-    fulfillmentDetails: savedFulfillmentDetails,
-  } = orderData
-
-  if (savedFulfillmentType) {
-    return {
-      fulfillmentDetails: {
-        fulfillmentType: savedFulfillmentType,
-        attributes: {
-          ...addressWithFallbackValues(savedFulfillmentDetails),
-          saveAddress: false,
-          addressVerifiedBy: null,
-        },
-      } as FulfillmentValues,
-    }
-  }
-  const savedAddresses = extractNodes(me?.addressConnection) ?? []
-
-  // The default ship-to address should be the first one that
-  // can be shipped-to, preferring the default
-
-  const defaultUserAddress = getDefaultUserAddress(
-    savedAddresses,
-    orderData.availableShippingCountries
-  )
-
-  const shippableDefaultAddress = defaultUserAddress
-    ? addressWithFallbackValues(defaultUserAddress)
-    : null
-
-  if (shippableDefaultAddress) {
-    return {
-      fulfillmentDetails: {
-        fulfillmentType: FulfillmentType.SHIP,
-        attributes: {
-          ...shippableDefaultAddress,
-          saveAddress: false,
-          addressVerifiedBy: null,
-        },
-      },
-    }
-  }
-
-  // The user doesn't have a valid ship-to address, so we'll return empty values.
-  // TODO: This doesn't account for matching the saved address id
-  // (that is still in savedOrderData). In addition the initial values
-  // are less relevant if the user has saved addresses - Setting country
-  // doesn't matter.
-  const initialFulfillmentValues: ShipValues["attributes"] = {
-    ...addressWithFallbackValues({ country: orderData.shipsFrom }),
-
-    addressVerifiedBy: null,
-    saveAddress: savedAddresses.length === 0,
-  }
-
-  return {
-    fulfillmentDetails: {
-      fulfillmentType: FulfillmentType.SHIP,
-      attributes: initialFulfillmentValues,
-    },
-  }
-}
-// Get information from the order and user, savedOrderData (shared, computed context about order)
-// initial values for forms, and the current step in the shipping route
-// values for forms
-export const useLoadOrder = (
-  props: ShippingProps
-): {
-  savedOrderData: ReturnType<typeof useLoadComputedData>
-  initialValues: {
-    fulfillmentDetails: FulfillmentValues
-  }
-  targetStep: ShippingRouteStep
-} => {
-  const orderData = useLoadComputedData(props)
-  const initialValues = getInitialValues(props, orderData)
-
-  const {
-    fulfillmentType: savedFulfillmentType,
-    selectedShippingQuoteId,
-    isArtsyShipping,
-  } = orderData
-
-  const targetStep: ShippingRouteStep = useMemo(() => {
-    if (!savedFulfillmentType) {
-      return "fulfillment_details"
-    }
-    if (isArtsyShipping && !selectedShippingQuoteId) {
-      return "shipping_quotes"
-    }
-    if (isArtsyShipping && selectedShippingQuoteId) {
-      return "ready_to_proceed"
-    }
-    if (!!savedFulfillmentType && !isArtsyShipping) {
-      return "ready_to_proceed"
-    }
-    return "fulfillment_details"
-  }, [isArtsyShipping, savedFulfillmentType, selectedShippingQuoteId])
-
-  return {
-    savedOrderData: orderData,
-    initialValues,
-    targetStep,
-  }
-}
-
 export const ShippingRoute: FC<ShippingProps> = props => {
   const { relayEnvironment } = useSystemContext()
   const { order, isCommittingMutation } = props
@@ -885,3 +771,117 @@ const ArtaErrorDialogMessage = () => (
     .
   </>
 )
+
+const getInitialValues = (
+  props: ShippingProps,
+  orderData: ShippingContextProps
+): {
+  fulfillmentDetails: FulfillmentValues
+} => {
+  const { me } = props
+  const {
+    fulfillmentType: savedFulfillmentType,
+    fulfillmentDetails: savedFulfillmentDetails,
+  } = orderData
+
+  if (savedFulfillmentType) {
+    return {
+      fulfillmentDetails: {
+        fulfillmentType: savedFulfillmentType,
+        attributes: {
+          ...addressWithFallbackValues(savedFulfillmentDetails),
+          saveAddress: false,
+          addressVerifiedBy: null,
+        },
+      } as FulfillmentValues,
+    }
+  }
+  const savedAddresses = extractNodes(me?.addressConnection) ?? []
+
+  // The default ship-to address should be the first one that
+  // can be shipped-to, preferring the default
+
+  const defaultUserAddress = getDefaultUserAddress(
+    savedAddresses,
+    orderData.availableShippingCountries
+  )
+
+  const shippableDefaultAddress = defaultUserAddress
+    ? addressWithFallbackValues(defaultUserAddress)
+    : null
+
+  if (shippableDefaultAddress) {
+    return {
+      fulfillmentDetails: {
+        fulfillmentType: FulfillmentType.SHIP,
+        attributes: {
+          ...shippableDefaultAddress,
+          saveAddress: false,
+          addressVerifiedBy: null,
+        },
+      },
+    }
+  }
+
+  // The user doesn't have a valid ship-to address, so we'll return empty values.
+  // TODO: This doesn't account for matching the saved address id
+  // (that is still in savedOrderData). In addition the initial values
+  // are less relevant if the user has saved addresses - Setting country
+  // doesn't matter.
+  const initialFulfillmentValues: ShipValues["attributes"] = {
+    ...addressWithFallbackValues({ country: orderData.shipsFrom }),
+
+    addressVerifiedBy: null,
+    saveAddress: savedAddresses.length === 0,
+  }
+
+  return {
+    fulfillmentDetails: {
+      fulfillmentType: FulfillmentType.SHIP,
+      attributes: initialFulfillmentValues,
+    },
+  }
+}
+// Get information from the order and user, savedOrderData (shared, computed context about order)
+// initial values for forms, and the current step in the shipping route
+// values for forms
+export const useLoadOrder = (
+  props: ShippingProps
+): {
+  savedOrderData: ReturnType<typeof useLoadComputedData>
+  initialValues: {
+    fulfillmentDetails: FulfillmentValues
+  }
+  targetStep: ShippingRouteStep
+} => {
+  const orderData = useLoadComputedData(props)
+  const initialValues = getInitialValues(props, orderData)
+
+  const {
+    fulfillmentType: savedFulfillmentType,
+    selectedShippingQuoteId,
+    isArtsyShipping,
+  } = orderData
+
+  const targetStep: ShippingRouteStep = useMemo(() => {
+    if (!savedFulfillmentType) {
+      return "fulfillment_details"
+    }
+    if (isArtsyShipping && !selectedShippingQuoteId) {
+      return "shipping_quotes"
+    }
+    if (isArtsyShipping && selectedShippingQuoteId) {
+      return "ready_to_proceed"
+    }
+    if (!!savedFulfillmentType && !isArtsyShipping) {
+      return "ready_to_proceed"
+    }
+    return "fulfillment_details"
+  }, [isArtsyShipping, savedFulfillmentType, selectedShippingQuoteId])
+
+  return {
+    savedOrderData: orderData,
+    initialValues,
+    targetStep,
+  }
+}
