@@ -372,6 +372,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
       if (isArtsyShipping) {
         setShippingQuotes(getShippingQuotes(orderOrError?.order))
+        jumpTo("shippingOptionsTop", { behavior: "smooth" })
       } else {
         props.router.push(`/orders/${props.order.internalID}/payment`)
       }
@@ -395,8 +396,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const selectShippingQuote = async () => {
     const { order } = props
-
-    if (!shippingQuoteId) jumpTo("shippingOptionsTop", { behavior: "smooth" })
 
     if (shippingQuoteId && order.internalID) {
       try {
