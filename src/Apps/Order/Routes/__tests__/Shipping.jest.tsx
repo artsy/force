@@ -1003,6 +1003,27 @@ describe("Shipping", () => {
           behavior: "smooth",
         })
       })
+
+      it("scrolls to top of shipping quotes when they are fetched after save and continue", async () => {
+        mockCommitMutation
+          .mockResolvedValueOnce(settingOrderArtaShipmentSuccess)
+          .mockImplementationOnce(relayProps => {
+            relayProps[1].onCompleted(saveAddressSuccess)
+          })
+          .mockResolvedValueOnce(selectShippingQuoteSuccess)
+
+        renderWithRelay({
+          CommerceOrder: () => UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+          Me: () => meWithoutAddress,
+        })
+
+        await fillAddressForm(validAddress)
+        await saveAndContinue()
+
+        expect(mockJumpTo).toBeCalledWith("shippingOptionsTop", {
+          behavior: "smooth",
+        })
+      })
     })
 
     describe("with saved addresses", () => {
