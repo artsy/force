@@ -51,8 +51,7 @@ export const FollowButton: ForwardRefExoticComponent<
         <Box position="relative">
           <Box
             as="span"
-            opacity={0}
-            style={{ pointerEvents: "none" }}
+            style={{ pointerEvents: "none", visibility: "hidden" }}
             aria-hidden="true"
           >
             {children ? children("Following") : "Following"}
