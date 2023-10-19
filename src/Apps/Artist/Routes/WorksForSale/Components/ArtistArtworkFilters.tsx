@@ -15,6 +15,7 @@ import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvi
 import { useSystemContext } from "System/useSystemContext"
 import { Join, Spacer } from "@artsy/palette"
 import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
+import { ArtistSeriesFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistSeriesFilter"
 
 interface ArtistArtworkFiltersProps {
   relayEnvironment?: RelayModernEnvironment
@@ -27,6 +28,7 @@ export const ArtistArtworkFilters: React.FC<ArtistArtworkFiltersProps> = props =
   return (
     <Join separator={<Spacer y={4} />}>
       <KeywordFilter />
+      <ArtistSeriesFilter expanded />
       <ArtistsFilter relayEnvironment={relayEnvironment} user={user} expanded />
       <ProgressiveOnboardingAlertSelectFilter>
         <AttributionClassFilter expanded />

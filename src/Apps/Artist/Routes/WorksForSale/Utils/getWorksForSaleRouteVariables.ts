@@ -18,6 +18,7 @@ export function getWorksForSaleRouteVariables({ artistID }, { location }) {
     "LOCATION_CITY",
     "MATERIALS_TERMS",
     "SIMPLE_PRICE_HISTOGRAM",
+    "ARTIST_SERIES",
   ]
 
   return {
