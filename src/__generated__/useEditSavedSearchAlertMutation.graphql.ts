@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<08c10fe5545df49f731838100ab36ac8>>
+ * @generated SignedSource<<93734cf5157dd5a0b99abce5988ec544>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -38,6 +38,7 @@ export type SearchCriteriaAttributes = {
   width?: string | null;
 };
 export type UserAlertSettingsInput = {
+  details?: string | null;
   email?: boolean | null;
   frequency?: UserSearchCriteriaFrequency | null;
   name?: string | null;
