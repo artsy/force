@@ -35,7 +35,6 @@ export const withProgressiveOnboardingCounts = <
 
     return (
       <SystemQueryRenderer<withProgressiveOnboardingCountsQuery>
-        lazyLoad
         placeholder={
           <Component
             {...props}
