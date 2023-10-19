@@ -44,6 +44,7 @@ import {
   validatePhoneNumber,
 } from "Components/PhoneNumberInput"
 import { useUserPhoneNumber } from "Components/SavedSearchAlert/useUserPhoneNumber"
+import { Media } from "Utils/Responsive"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -110,6 +111,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
       email: values.email,
       push: values.push,
       frequency: values.push ? values.frequency : DEFAULT_FREQUENCY,
+      details: values.details,
     }
 
     try {
@@ -222,7 +224,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
               <SavedSearchAlertNameInputQueryRenderer />
               <Box>
                 <Text variant="xs">Filters</Text>
-                <Spacer y={2} />
+                <Spacer y={1} />
                 <Flex flexWrap="wrap" gap={1}>
                   <SavedSearchAlertPills
                     items={pills}
@@ -230,9 +232,32 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
                   />
                 </Flex>
 
-                <Separator my={1} />
+                <Separator my={2} />
 
-                <PriceRangeFilter />
+                <Media at="xs">
+                  <PriceRangeFilter expanded={false} />
+                </Media>
+                <Media greaterThan="xs">
+                  <PriceRangeFilter expanded={true} />
+                </Media>
+
+                <Separator my={2} />
+
+                <Text variant="sm-display">
+                  Tell us more about what you’re looking for
+                </Text>
+                <Spacer y={1} />
+                <TextArea
+                  name="details"
+                  placeholder="For example, a specific request such as ‘spin paintings series’ or ‘signed prints’"
+                  onChange={({ value }) => {
+                    setFieldValue("details", value)
+                  }}
+                  onBlur={handleBlur}
+                  value={values.details}
+                  error={errors.details}
+                  maxLength={700}
+                />
 
                 <Separator my={2} />
               </Box>

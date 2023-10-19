@@ -61,6 +61,7 @@ export interface SavedSearchAlertFormValues {
   email: boolean
   push: boolean
   frequency: SavedSearchFrequency
+  details: string
 }
 
 export interface HearFromArtsyAdvisorFormValues {

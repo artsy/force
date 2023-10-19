@@ -8,6 +8,7 @@ import {
   Separator,
   Spacer,
   Text,
+  TextArea,
 } from "@artsy/palette"
 import { Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -90,6 +91,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     push: userAlertSettings.push,
     email: userAlertSettings.email,
     frequency: userAlertSettings.frequency as SavedSearchFrequency,
+    details: userAlertSettings.details ?? "",
   }
   const isCustomAlertsNotificationsEnabled = viewer.notificationPreferences.some(
     preference => {
@@ -114,6 +116,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
           values.name ||
           (isFallbackToGeneratedAlertNamesEnabled ? "" : entity.placeholder),
         frequency: values.push ? values.frequency : DEFAULT_FREQUENCY,
+        details: values.details ?? "",
       }
 
       await submitEditAlert({
@@ -177,9 +180,27 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                   />
                 </Flex>
 
-                <Separator my={1} />
+                <Separator my={2} />
 
                 <PriceRangeFilter />
+
+                <Separator my={2} />
+
+                <Text variant="sm-display">
+                  Tell us more about what you’re looking for
+                </Text>
+                <Spacer y={1} />
+                <TextArea
+                  name="details"
+                  placeholder="For example, a specific request such as ‘spin paintings series’ or ‘signed prints’"
+                  onChange={({ value }) => {
+                    setFieldValue("details", value)
+                  }}
+                  onBlur={handleBlur}
+                  value={values.details}
+                  error={errors.details}
+                  maxLength={700}
+                />
 
                 <Separator my={2} />
               </Box>
@@ -366,6 +387,7 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
             email
             push
             frequency
+            details
           }
         }
       }
