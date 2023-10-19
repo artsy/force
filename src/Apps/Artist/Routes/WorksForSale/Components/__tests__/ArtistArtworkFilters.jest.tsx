@@ -6,6 +6,7 @@ import {
 import { ArtistArtworkFilters } from "Apps/Artist/Routes/WorksForSale/Components/ArtistArtworkFilters"
 import { ArtworkFilterContextProvider } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ReactElement } from "react"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 const render = (ui: ReactElement, options: RenderOptions = {}) =>
   originalRender(ui, { wrapper: Wrapper, ...options })
@@ -39,6 +40,10 @@ const Wrapper: React.FC = ({ children }) => {
   )
 }
 
+jest.mock("System/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(() => true),
+}))
+
 it("renders all expected filters", () => {
   render(<ArtistArtworkFilters />)
 
@@ -52,4 +57,25 @@ it("renders all expected filters", () => {
   expect(screen.getByText("Time Period")).toBeInTheDocument()
   expect(screen.getByText("Color")).toBeInTheDocument()
   expect(screen.getByText("Galleries and Institutions")).toBeInTheDocument()
+})
+
+describe("feature flag: onyx_enable-artist-series-filter", () => {
+  describe("when the feature flag is enabled", () => {
+    beforeEach(() => {
+      ;(useFeatureFlag as jest.Mock).mockImplementation(() => true)
+    })
+    it("renders the Artist Series filter", () => {
+      render(<ArtistArtworkFilters />)
+      expect(screen.getByText("Artist Series")).toBeInTheDocument()
+    })
+  })
+  describe("when the feature flag is disabled", () => {
+    beforeEach(() => {
+      ;(useFeatureFlag as jest.Mock).mockImplementation(() => false)
+    })
+    it("does not render the Artist Series filter", () => {
+      render(<ArtistArtworkFilters />)
+      expect(screen.queryByText("Artist Series")).not.toBeInTheDocument()
+    })
+  })
 })

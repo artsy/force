@@ -138,6 +138,7 @@ export const artistRoutes: AppRouteConfig[] = [
           query artistRoutes_WorksForSaleQuery(
             $artistID: String!
             $input: FilterArtworksInput
+            # TODO:(?) only request the artist series aggregation if user has the Unleash flag enabled?
             $aggregations: [ArtworkAggregation]
           ) {
             artist(id: $artistID) {
