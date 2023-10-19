@@ -53,6 +53,7 @@ const SUPPORTED_INPUT_ARGS = [
   "artistIDs",
   "artistNationalities",
   "artistSeriesID",
+  "artistSeriesIDs",
   "atAuction",
   "attributionClass",
   "before",
