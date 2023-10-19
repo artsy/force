@@ -122,6 +122,7 @@ export interface ArtworkFiltersState extends ArtworkFilters {
 export type Slice =
   | "ARTIST_NATIONALITY"
   | "ARTIST"
+  | "ARTIST_SERIES"
   | "COLOR"
   | "DIMENSION_RANGE"
   | "GALLERY"
