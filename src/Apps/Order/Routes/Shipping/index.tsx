@@ -274,16 +274,16 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       hasError: invalidPhoneNumber,
     } = validatePhoneNumber(phoneNumber)
 
+    if (invalidPhoneNumber) {
+      setPhoneNumberError(phoneNumberError!)
+      setPhoneNumberTouched(true)
+      !invalidAddress && jumpTo("phoneNumberTop", { behavior: "smooth" })
+    }
+
     if (invalidAddress) {
       setAddressErrors(addressErrors!)
       setAddressTouched(touchedAddress)
       jumpTo("deliveryAddressTop", { behavior: "smooth" })
-    }
-
-    if (invalidPhoneNumber) {
-      setPhoneNumberError(phoneNumberError!)
-      setPhoneNumberTouched(true)
-      jumpTo("phoneNumberTop", { behavior: "smooth" })
     }
 
     return !invalidAddress && !invalidPhoneNumber
@@ -372,6 +372,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
       if (isArtsyShipping) {
         setShippingQuotes(getShippingQuotes(orderOrError?.order))
+        jumpTo("shippingOptionsTop", { behavior: "smooth" })
       } else {
         props.router.push(`/orders/${props.order.internalID}/payment`)
       }
@@ -395,8 +396,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const selectShippingQuote = async () => {
     const { order } = props
-
-    if (!shippingQuoteId) jumpTo("shippingOptionsTop", { behavior: "smooth" })
 
     if (shippingQuoteId && order.internalID) {
       try {

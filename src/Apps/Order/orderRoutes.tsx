@@ -5,6 +5,7 @@ import { ErrorPage } from "Components/ErrorPage"
 import { Redirect, RedirectException } from "found"
 import { graphql } from "react-relay"
 import { AppRouteConfig } from "System/Router/Route"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 const RespondRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Respond"),
@@ -20,12 +21,28 @@ const OfferRoute = loadable(
   }
 )
 
-const ShippingRoute = loadable(
+const ShippingRouteLegacy = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Shipping"),
   {
     resolveComponent: component => component.ShippingFragmentContainer,
   }
 )
+const ShippingRoute2 = loadable(
+  () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Shipping2"),
+  {
+    resolveComponent: component => component.ShippingFragmentContainer,
+  }
+)
+
+const ShippingRoute = props => {
+  const newShippingRoute = useFeatureFlag("refactor-shipping-route")
+
+  if (newShippingRoute) {
+    return <ShippingRoute2 {...props} />
+  }
+
+  return <ShippingRouteLegacy {...props} />
+}
 
 const PaymentRoute = loadable(
   () => import(/* webpackChunkName: "orderBundle" */ "./Routes/Payment"),
@@ -192,9 +209,11 @@ export const orderRoutes: AppRouteConfig[] = [
           query orderRoutes_ShippingQuery($orderID: ID!) {
             order: commerceOrder(id: $orderID) {
               ...Shipping_order
+              ...Shipping2_order
             }
             me {
               ...Shipping_me
+              ...Shipping2_me
             }
           }
         `,

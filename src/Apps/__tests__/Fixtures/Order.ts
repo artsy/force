@@ -49,6 +49,7 @@ const OrderArtworkNodeWithoutShipping = {
     href: "/partner/a-g",
   },
   pickup_available: true,
+  pickupAvailable: true,
   priceCurrency: "USD",
   shippingCountry: "US",
   slug: "artworkId",
