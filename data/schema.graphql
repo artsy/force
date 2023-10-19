@@ -16866,6 +16866,7 @@ enum SavedSearchesSortEnum {
 
 # Saved Search User Alert Settings
 type SavedSearchUserAlertSettings {
+  details: String
   email: Boolean!
   frequency: UserSearchCriteriaFrequency!
   name: String
@@ -19290,6 +19291,7 @@ type UserAdminNotes {
 
 # Settings for user saved search
 input UserAlertSettingsInput {
+  details: String
   email: Boolean
   frequency: UserSearchCriteriaFrequency
   name: String
