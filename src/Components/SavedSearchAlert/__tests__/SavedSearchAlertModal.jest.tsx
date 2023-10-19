@@ -12,6 +12,11 @@ import {
   SavedSearchEntity,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
+import { useFeatureFlag } from "System/useFeatureFlag"
+
+jest.mock("System/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(),
+}))
 
 const formInitialValues: SavedSearchAlertFormValues = {
   name: "",
@@ -185,6 +190,38 @@ describe("SavedSearchAlertModal", () => {
       fireEvent.click(screen.getAllByRole("checkbox")[1])
 
       expect(screen.queryByText("Frequency")).toBeInTheDocument()
+    })
+  })
+  describe("Add Filters Screen", () => {
+    describe("with the feature flag enabled", () => {
+      beforeAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockImplementation(() => true)
+      })
+      it("Should be displayed", () => {
+        render(<TestComponent />)
+
+        expect(screen.getByText("Add Filters")).toBeInTheDocument()
+      })
+      it("Should open Filters Screen", () => {
+        render(<TestComponent />)
+
+        expect(screen.getByText("Add Filters")).toBeInTheDocument()
+
+        fireEvent.click(screen.getByText("Add Filters"))
+
+        expect(screen.getByText("Rarity")).toBeInTheDocument()
+      })
+    })
+
+    describe("with the feature flag disabled", () => {
+      beforeAll(() => {
+        ;(useFeatureFlag as jest.Mock).mockImplementation(() => false)
+      })
+      it("Should not be displayed", () => {
+        render(<TestComponent />)
+
+        expect(screen.queryByText("Add Filters")).not.toBeInTheDocument()
+      })
     })
   })
 })

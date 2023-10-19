@@ -4,6 +4,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Clickable,
   Flex,
   Join,
   ModalDialog,
@@ -44,6 +45,12 @@ import {
   validatePhoneNumber,
 } from "Components/PhoneNumberInput"
 import { useUserPhoneNumber } from "Components/SavedSearchAlert/useUserPhoneNumber"
+import {
+  TransitionPanelProvider,
+  useTransitionPanel,
+} from "Components/TransitionPanel"
+import { AddFiltersScreen } from "Components/SavedSearchAlert/Components/AddFiltersScreen"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -79,6 +86,8 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
   const isHearFromArtsyAdvisorEnabled = useFeatureFlag(
     "onyx_advisory-opportunity-in-saved-search"
   )
+  const addFiltersEnabled = useFeatureFlag("onyx_create-alert-filters-screen")
+
   const { phone, regionCode } = useUserPhoneNumber()
   const advisoryOpportunitySectionScrollRef = useRef<HTMLDivElement>(null)
   const {
@@ -154,6 +163,8 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
     }
   }
 
+  const { navigateTo } = useTransitionPanel()
+
   return (
     <Formik<SavedSearchAlertFormValues & HearFromArtsyAdvisorFormValues>
       initialValues={{
@@ -203,21 +214,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
           values.email || values.push || values.hearFromArtsyAdvisor
 
         return (
-          <ModalDialog
-            onClose={onClose}
-            title="Create Alert"
-            data-testid="CreateAlertModal"
-            footer={
-              <Button
-                disabled={!hasSelectedContactMethod || !isPhoneValid}
-                loading={isSubmitting}
-                onClick={() => handleSubmit()}
-                width="100%"
-              >
-                Save Alert
-              </Button>
-            }
-          >
+          <Flex flexDirection="column">
             <Join separator={<Spacer y={2} />}>
               <SavedSearchAlertNameInputQueryRenderer />
               <Box>
@@ -229,13 +226,27 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
                     onDeletePress={handleRemovePillPress}
                   />
                 </Flex>
-
-                <Separator my={1} />
-
-                <PriceRangeFilter />
-
-                <Separator my={2} />
               </Box>
+
+              {addFiltersEnabled && (
+                <Box>
+                  <Separator my={1} />
+                  <Clickable onClick={() => navigateTo(1)} width="100%">
+                    <Text variant="sm-display">Add Filters</Text>
+                    <Flex justifyContent="space-between">
+                      <Text variant="xs" color="black60">
+                        Including Price Range, Rarity, Medium, Size, Color
+                      </Text>
+                      <ChevronRightIcon />
+                    </Flex>
+                  </Clickable>
+                  <Separator my={2} />
+                </Box>
+              )}
+
+              {!addFiltersEnabled && <PriceRangeFilter />}
+
+              {!addFiltersEnabled && <Separator my={2} />}
 
               <Box>
                 <Box display="flex" justifyContent="space-between">
@@ -344,7 +355,17 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
                 )}
               </Box>
             </Join>
-          </ModalDialog>
+            <Box>
+              <Button
+                disabled={!hasSelectedContactMethod || !isPhoneValid}
+                loading={isSubmitting}
+                onClick={() => handleSubmit()}
+                width="100%"
+              >
+                Save Alert
+              </Button>
+            </Box>
+          </Flex>
         )
       }}
     </Formik>
@@ -361,7 +382,9 @@ export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContai
     currentArtworkID,
     onCreateAlert,
     onComplete,
+    onClose,
   } = props
+  const addFiltersEnabled = useFeatureFlag("onyx_create-alert-filters-screen")
 
   const [searchCriteriaId, setSearchCriteriaId] = useState("")
   const [step, setStep] = useState<"CREATE_ALERT" | "CONFIRMATION">(
@@ -391,7 +414,27 @@ export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContai
           metric={metric}
           currentArtworkID={currentArtworkID}
         >
-          <SavedSearchAlertModal {...props} onCreateAlert={handleCreateAlert} />
+          <ModalDialog
+            onClose={onClose}
+            title="Create Alert"
+            data-testid="CreateAlertModal"
+            dialogProps={{ width: "fit-content" }}
+          >
+            {!addFiltersEnabled ? (
+              <SavedSearchAlertModal
+                {...props}
+                onCreateAlert={handleCreateAlert}
+              />
+            ) : (
+              <TransitionPanelProvider>
+                <SavedSearchAlertModal
+                  {...props}
+                  onCreateAlert={handleCreateAlert}
+                />
+                <AddFiltersScreen />
+              </TransitionPanelProvider>
+            )}
+          </ModalDialog>
         </SavedSearchAlertContextProvider>
       )
     case "CONFIRMATION":
