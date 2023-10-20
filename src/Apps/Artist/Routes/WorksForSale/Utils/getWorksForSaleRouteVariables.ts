@@ -1,4 +1,5 @@
 import { getInitialFilterState } from "Components/ArtworkFilter/Utils/getInitialFilterState"
+import { getENV } from "Utils/getENV"
 
 export function getWorksForSaleRouteVariables({ artistID }, { location }) {
   // FIXME: The initial render includes `location` in props, but subsequent
@@ -18,12 +19,21 @@ export function getWorksForSaleRouteVariables({ artistID }, { location }) {
     "LOCATION_CITY",
     "MATERIALS_TERMS",
     "SIMPLE_PRICE_HISTOGRAM",
-    "ARTIST_SERIES",
   ]
+
+  if (isArtistSeriesFilterEnabled()) {
+    aggregations.push("ARTIST_SERIES")
+  }
 
   return {
     input: filterParams,
     aggregations,
     artistID,
   }
+}
+
+function isArtistSeriesFilterEnabled() {
+  const featureFlags = getENV("FEATURE_FLAGS")
+  const artistSeriesFlag = featureFlags?.["onyx_enable-artist-series-filter"]
+  return !!artistSeriesFlag?.flagEnabled
 }

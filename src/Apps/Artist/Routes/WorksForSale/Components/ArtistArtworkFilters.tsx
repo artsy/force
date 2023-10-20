@@ -25,14 +25,14 @@ interface ArtistArtworkFiltersProps {
 export const ArtistArtworkFilters: React.FC<ArtistArtworkFiltersProps> = props => {
   const { relayEnvironment } = props
   const { user } = useSystemContext()
-  const enableArtistSeriesFilter = useFeatureFlag(
+  const isArtistSeriesFilterEnabled = useFeatureFlag(
     "onyx_enable-artist-series-filter"
   )
 
   return (
     <Join separator={<Spacer y={4} />}>
       <KeywordFilter />
-      {enableArtistSeriesFilter && <ArtistSeriesFilter expanded />}
+      {isArtistSeriesFilterEnabled && <ArtistSeriesFilter expanded />}
       <ArtistsFilter relayEnvironment={relayEnvironment} user={user} expanded />
       <ProgressiveOnboardingAlertSelectFilter>
         <AttributionClassFilter expanded />
