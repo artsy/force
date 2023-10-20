@@ -57,6 +57,14 @@ jest.mock("Utils/getENV", () => ({
   getENV: jest.fn(),
 }))
 
+// jest.mock("lodash", () => {
+//   const lodash = jest.requireActual("lodash")
+//   return {
+//     ...lodash,
+//     throttle: fn => fn,
+//   }
+// })
+
 jest.mock("@artsy/palette", () => {
   return {
     ...jest.requireActual("@artsy/palette"),
@@ -924,7 +932,7 @@ describe("Shipping", () => {
             expect(env.mock.getAllOperations()).toHaveLength(0)
           })
 
-          it("triggers the flow for international address after clicking continue", async () => {
+          it.only("triggers the flow for international address after clicking continue", async () => {
             const { env } = renderWithRelay(
               {
                 CommerceOrder: () => order,
@@ -972,7 +980,7 @@ describe("Shipping", () => {
             // TODO: This test passes in isolation but fails when run with any test
             // before it enabled. It seems to be related to the presence of the _.throttle
             // in the hook - removing that makes the test pass with others.
-            it.skip("fills in the address from an autocomplete option on a US address", async () => {
+            it.only("fills in the address from an autocomplete option on a US address", async () => {
               mockFetch.mockResolvedValue({
                 json: jest.fn().mockResolvedValue({
                   suggestions: [
