@@ -15,8 +15,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 const render = createArtworkFilterTestRenderer()
 
 describe("KeywordFilter", () => {
-  // FIXME: SWC_COMPILER_MIGRATION
-  it.skip("updates context on filter change", () => {
+  it("updates context on filter change", () => {
     render(<KeywordFilter />)
     expect(screen.getByText("Keyword Search")).toBeInTheDocument()
 
@@ -29,8 +28,7 @@ describe("KeywordFilter", () => {
     expect(currentArtworkFilterContext().filters?.keyword).toEqual(undefined)
   })
 
-  // FIXME: SWC_COMPILER_MIGRATION
-  it.skip("clears local input state after Clear All", () => {
+  it("clears local input state after Clear All", () => {
     render(<KeywordFilter />)
 
     userEvent.type(screen.getByTestId("keywordSearchInput"), "Chopper")
