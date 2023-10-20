@@ -1,11 +1,13 @@
-import { countChangedFilters } from "../countChangedFilters"
+import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { countChangedFilters } from "Components/ArtworkFilter/Utils/countChangedFilters"
 
-const EMPTY_FILTER = {
+const EMPTY_FILTER: ArtworkFilters = {
   majorPeriods: [],
   page: 1,
   sizes: [],
   sort: "-decayed_merch",
   artistIDs: [],
+  artistSeriesIDs: [],
   attributionClass: [],
   partnerIDs: [],
   additionalGeneIDs: [],

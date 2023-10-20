@@ -1,4 +1,4 @@
-import { Slice } from "../ArtworkFilter/ArtworkFilterContext"
+import { Slice } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { SavedSearchFrequency } from "./types"
 
 export const shouldExtractValueNamesFromAggregation = [
@@ -7,6 +7,7 @@ export const shouldExtractValueNamesFromAggregation = [
   "additionalGeneIDs",
   "partnerIDs",
   "artistIDs",
+  "artistSeriesIDs",
   "artistNationalities",
 ]
 
@@ -16,12 +17,14 @@ export const aggregationNameFromFilter: Record<string, Slice> = {
   additionalGeneIDs: "MEDIUM",
   partnerIDs: "PARTNER",
   artistIDs: "ARTIST",
+  artistSeriesIDs: "ARTIST_SERIES",
   artistNationalities: "ARTIST_NATIONALITY",
 }
 
 export const allowedSearchCriteriaKeys = [
   "artistID",
   "artistIDs",
+  "artistSeriesIDs",
   "locationCities",
   "colors",
   "partnerIDs",

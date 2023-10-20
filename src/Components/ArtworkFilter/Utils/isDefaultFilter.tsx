@@ -1,5 +1,5 @@
 import { DEFAULT_METRIC } from "Utils/metrics"
-import { ArtworkFilters } from "../ArtworkFilterContext"
+import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterContext"
 
 export const isDefaultFilter: (
   name: keyof ArtworkFilters,
@@ -19,6 +19,7 @@ export const isDefaultFilter: (
   switch (true) {
     case name === "sizes" ||
       name === "artistIDs" ||
+      name === "artistSeriesIDs" ||
       name === "attributionClass" ||
       name === "partnerIDs" ||
       name === "additionalGeneIDs" ||
