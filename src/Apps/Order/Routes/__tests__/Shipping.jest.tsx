@@ -57,13 +57,15 @@ jest.mock("Utils/getENV", () => ({
   getENV: jest.fn(),
 }))
 
-// jest.mock("lodash", () => {
-//   const lodash = jest.requireActual("lodash")
-//   return {
-//     ...lodash,
-//     throttle: fn => fn,
-//   }
-// })
+const mockThrottle = jest.fn((fn, _wait) => fn)
+
+jest.mock("lodash", () => {
+  const lodash = jest.requireActual("lodash")
+  return {
+    ...lodash,
+    throttle: mockThrottle,
+  }
+})
 
 jest.mock("@artsy/palette", () => {
   return {
@@ -258,15 +260,16 @@ const verifyAddressWithSuggestions = async (relayEnv, input, suggested) => {
   expect(await screen.findByText("What you entered")).toBeVisible()
 }
 
+const mockFetch = jest.fn()
+beforeEach(mockFetch.mockClear)
+
 describe("Shipping", () => {
   const pushMock = jest.fn()
-  let mockFetch
   let originalFetch
   let isCommittingMutation
   let relayEnv
 
   beforeEach(() => {
-    mockFetch = jest.fn()
     originalFetch = global.fetch
     global.fetch = mockFetch
     mockGetENV.mockImplementation(
@@ -280,8 +283,8 @@ describe("Shipping", () => {
   })
 
   afterEach(() => {
-    global.fetch = originalFetch
     jest.restoreAllMocks()
+    global.fetch = originalFetch
   })
 
   const { renderWithRelay } = setupTestWrapperTL({
@@ -932,7 +935,7 @@ describe("Shipping", () => {
             expect(env.mock.getAllOperations()).toHaveLength(0)
           })
 
-          it.only("triggers the flow for international address after clicking continue", async () => {
+          it("triggers the flow for international address after clicking continue", async () => {
             const { env } = renderWithRelay(
               {
                 CommerceOrder: () => order,
@@ -1017,6 +1020,7 @@ describe("Shipping", () => {
               expect(mockFetch).toHaveBeenCalledWith(
                 "https://us-autocomplete-pro.api.smarty.com/lookup?key=foo&search=401"
               )
+
               expect(mockFetch).toHaveBeenCalledWith(
                 "https://us-autocomplete-pro.api.smarty.com/lookup?key=foo&search=401+Broad"
               )
@@ -1038,6 +1042,44 @@ describe("Shipping", () => {
               expect(city).toHaveValue("New York")
               expect(region).toHaveValue("NY")
               expect(postalCode).toHaveValue("10013")
+            })
+            it.only("can repeat the same test again", async () => {
+              mockFetch.mockResolvedValue({
+                json: jest.fn().mockResolvedValue({
+                  suggestions: [
+                    {
+                      city: "New York",
+                      entries: 0,
+                      secondary: "",
+                      state: "NY",
+                      street_line: "401 Broadway",
+                      zipcode: "10013",
+                    },
+                  ],
+                }),
+              })
+              renderWithRelay(
+                {
+                  CommerceOrder: () => order,
+                  Me: () => meWithoutAddress,
+                },
+                undefined,
+                relayEnv
+              )
+              await waitFor(() => {
+                const line1Input = screen.getByPlaceholderText("Street address")
+                expect(line1Input).toBeEnabled()
+              })
+              const addressLine1 = screen.getByPlaceholderText("Street address")
+              await userEvent.type(addressLine1, "401 Broad", { delay: 1 })
+
+              // await waitFor(() => {
+              // Note: Due to implementation of _.throttle we can't reliably test
+              // timed throttling behavior. Instead we test that the fetch is called
+              // for the start (3-char min) and end of the query
+              expect(mockFetch).toHaveBeenCalledWith(
+                "https://us-autocomplete-pro.api.smarty.com/lookup?key=foo&search=401"
+              )
             })
             it.todo(
               "tracks when 1 or more autocomplete results are shown to the user"
