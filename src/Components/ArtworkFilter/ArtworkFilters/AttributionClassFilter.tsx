@@ -4,27 +4,15 @@ import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
-} from "../ArtworkFilterContext"
+} from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FilterExpandable } from "./FilterExpandable"
-import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
+import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 
-export const checkboxValues = [
-  {
-    name: "Unique",
-    value: "unique",
-  },
-  {
-    name: "Limited Edition",
-    value: "limited edition",
-  },
-  {
-    name: "Open Edition",
-    value: "open edition",
-  },
-  {
-    name: "Unknown Edition",
-    value: "unknown edition",
-  },
+export const ATTRIBUTION_CLASS_OPTIONS = [
+  { name: "Unique", value: "unique" },
+  { name: "Limited Edition", value: "limited edition" },
+  { name: "Open Edition", value: "open edition" },
+  { name: "Unknown Edition", value: "unknown edition" },
 ]
 
 export interface AttributionClassFilterProps {
@@ -42,7 +30,7 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
   )
   const label = `Rarity${filtersCount}`
 
-  const toggleSelection = (selected, name) => {
+  const toggleSelection = (selected: boolean, name: string) => {
     let updatedValues = attributionClass
 
     if (selected) {
@@ -57,7 +45,7 @@ export const AttributionClassFilter: React.FC<AttributionClassFilterProps> = ({
   return (
     <FilterExpandable label={label} expanded={expanded}>
       <Flex flexDirection="column">
-        {checkboxValues.map(({ name, value }, index) => {
+        {ATTRIBUTION_CLASS_OPTIONS.map(({ name, value }, index) => {
           return (
             <Checkbox
               key={index}
