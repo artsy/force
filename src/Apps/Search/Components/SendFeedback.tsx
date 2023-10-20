@@ -31,6 +31,17 @@ export const SendFeedback: FC = () => {
         sendFeedback(input: $input) {
           feedbackOrError {
             __typename
+            ... on SendFeedbackMutationSuccess {
+              feedback {
+                internalID
+              }
+            }
+            ... on SendFeedbackMutationFailure {
+              mutationError {
+                message
+                detail
+              }
+            }
           }
         }
       }
@@ -61,10 +72,11 @@ export const SendFeedback: FC = () => {
               },
             },
             rejectIf: res => {
-              return (
-                res.sendFeedback?.feedbackOrError?.__typename ===
-                "SendFeedbackMutationFailure"
-              )
+              const result = res.sendFeedback?.feedbackOrError
+
+              return result?.__typename === "SendFeedbackMutationFailure"
+                ? result.mutationError
+                : false
             },
           })
 
