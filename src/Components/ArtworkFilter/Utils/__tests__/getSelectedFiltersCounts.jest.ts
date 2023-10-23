@@ -1,19 +1,22 @@
 import {
   initialArtworkFilterState,
   getSelectedFiltersCounts,
-} from "../../ArtworkFilterContext"
+  MultiSelectArtworkFilters,
+} from "Components/ArtworkFilter/ArtworkFilterContext"
 
 describe("getSelectedFiltersCounts helper", () => {
-  const multiSelectFilters = {
+  const multiSelectFilters: MultiSelectArtworkFilters = {
     additionalGeneIDs: ["prints", "design", "installation", "drawing"],
     attributionClass: ["unique", "unknown-edition"],
     artistNationalities: ["british", "japanese"],
+    artistSeriesIDs: ["kaws-toys", "kaws-companions"],
   }
 
   const multiSelectFiltersExpectedResult = {
     attributionClass: 2,
     additionalGeneIDs: 4,
     artistNationalities: 2,
+    artistSeriesIDs: 2,
   }
 
   const singleOptionFilters = {

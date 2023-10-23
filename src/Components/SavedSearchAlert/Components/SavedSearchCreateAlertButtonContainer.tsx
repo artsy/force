@@ -108,6 +108,7 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
           email: true,
           push: false,
           frequency: DEFAULT_FREQUENCY,
+          details: "",
         }}
         entity={entity}
         criteria={criteria}

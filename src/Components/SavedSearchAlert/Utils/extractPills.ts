@@ -1,8 +1,8 @@
 import { compact, difference, find, flatten, keyBy } from "lodash"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { checkboxValues } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { ATTRIBUTION_CLASS_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { COLOR_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
-import { hardcodedMediums } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
+import { MEDIUM_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import {
   getPredefinedSizesByMetric,
   parseRange,
@@ -11,13 +11,13 @@ import { getTimePeriodToDisplay } from "Components/ArtworkFilter/ArtworkFilters/
 import { isCustomValue } from "Components/ArtworkFilter/ArtworkFilters/Utils/isCustomValue"
 import { WAYS_TO_BUY_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
 import { DEFAULT_METRIC, Metric } from "Utils/metrics"
-import { shouldExtractValueNamesFromAggregation } from "../constants"
+import { shouldExtractValueNamesFromAggregation } from "Components/SavedSearchAlert/constants"
 import {
   FilterPill,
   SavedSearchDefaultCriteria,
   SavedSearchEntity,
   SearchCriteriaAttributes,
-} from "../types"
+} from "Components/SavedSearchAlert/types"
 import { aggregationForFilter } from "./aggregationForFilter"
 
 export const extractPillFromAggregation = (
@@ -41,7 +41,7 @@ export const extractPillFromAggregation = (
 
     // Use hardcoded medium values for some grids (e.g. fair, collect grids)
     if (paramName === "additionalGeneIDs") {
-      const hardcodedValue = hardcodedMediums.find(v => v.value === value)
+      const hardcodedValue = MEDIUM_OPTIONS.find(v => v.value === value)
 
       if (hardcodedValue) {
         return {
@@ -169,8 +169,10 @@ export const extractPillsFromCriteria = ({
         result = paramValue.map(value => ({
           field: paramName,
           value,
-          displayValue: find(checkboxValues, option => value === option.value)
-            ?.name,
+          displayValue: find(
+            ATTRIBUTION_CLASS_OPTIONS,
+            option => value === option.value
+          )?.name,
         }))
         break
       }

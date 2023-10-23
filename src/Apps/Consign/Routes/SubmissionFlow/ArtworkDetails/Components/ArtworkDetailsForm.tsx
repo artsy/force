@@ -20,7 +20,7 @@ import {
   formatCategoryValueForSubmission,
 } from "Apps/Consign/Routes/SubmissionFlow/Utils/acceptableCategoriesForSubmission"
 import { ProvenanceModal } from "Apps/MyCollection/Routes/EditArtwork/Components/ProvenanceModal"
-import { checkboxValues } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
+import { ATTRIBUTION_CLASS_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import {
   Location,
   LocationAutocompleteInput,
@@ -134,7 +134,7 @@ export const getArtworkDetailsFormInitialValues = (
   }
 }
 
-const rarityOptions = checkboxValues.map(({ name, value }) => ({
+const rarityOptions = ATTRIBUTION_CLASS_OPTIONS.map(({ name, value }) => ({
   text: name,
   value,
 }))

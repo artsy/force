@@ -114,6 +114,7 @@ module.exports = {
       "warn",
       { allowSameFolder: true, rootDir: "src" },
     ],
+    "jest/valid-title": ["error", { ignoreTypeOfDescribeName: true }],
   },
   overrides: [
     {
