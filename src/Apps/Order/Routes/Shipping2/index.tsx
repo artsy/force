@@ -304,14 +304,16 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             ...addressValues
           } = formValues.attributes
           requiresArtsyShipping = requiresArtsyShippingTo(addressValues.country)
+
           fulfillmentMutationValues = {
             id: props.order.internalID,
             fulfillmentType: requiresArtsyShipping
               ? "SHIP_ARTA"
               : FulfillmentType.SHIP,
             phoneNumber,
-            shipping: addressValues,
+            shipping: { ...addressValues, phoneNumber: "" },
           }
+
           if (addressVerifiedBy) {
             fulfillmentMutationValues.addressVerifiedBy = addressVerifiedBy
           }
@@ -527,9 +529,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     } as any,
   })
 
+  const {
+    handleSubmit: fulfillmentDetailsFormikHandleSubmit,
+  } = fulfillmentFormHelpers
   const onContinueButtonPressed = useMemo(() => {
     if (currentStep === "fulfillment_details") {
-      return (...args) => fulfillmentFormHelpers.handleSubmit(...args)
+      return (...args) => fulfillmentDetailsFormikHandleSubmit(...args)
     }
     if (currentStep === "shipping_quotes") {
       return selectShippingQuote
@@ -539,7 +544,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }, [
     currentStep,
-    fulfillmentFormHelpers,
+    fulfillmentDetailsFormikHandleSubmit,
     selectShippingQuote,
     advanceToPayment,
   ])
@@ -1029,6 +1034,7 @@ export const useLoadComputedData = (props: ShippingProps): OrderData => {
       firstArtwork.processWithArtsyShippingDomestic,
     ]
   )
+
   const shippingQuotesEdges: ShippingQuotesConnectionEdges =
     (order?.lineItems?.edges &&
       order.lineItems.edges[0]?.node?.shippingQuoteOptions?.edges) ||

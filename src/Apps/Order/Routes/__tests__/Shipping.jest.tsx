@@ -244,6 +244,7 @@ const verifyAddressWithSuggestions = async (relayEnv, input, suggested) => {
   expect(await screen.findByText("What you entered")).toBeVisible()
 }
 
+const mockTrackEvent = jest.fn()
 describe("Shipping", () => {
   const pushMock = jest.fn()
   let isCommittingMutation
@@ -252,7 +253,7 @@ describe("Shipping", () => {
   beforeEach(() => {
     isCommittingMutation = false
     ;(useTracking as jest.Mock).mockImplementation(() => ({
-      trackEvent: jest.fn(),
+      trackEvent: mockTrackEvent,
     }))
     ;(useFeatureFlag as jest.Mock).mockImplementation(() => false)
   })
@@ -1088,6 +1089,16 @@ describe("Shipping", () => {
             },
           },
         })
+      })
+      it.only("set shippinglike above with trcking", async () => {
+        renderWithRelay({
+          CommerceOrder: () => order,
+          Me: () => meWithAddresses,
+        })
+
+        await saveAndContinue()
+
+        expect(mockTrackEvent.mock.calls).toEqual({})
       })
 
       it("sets shipping with the selected saved address and phone number", async () => {
