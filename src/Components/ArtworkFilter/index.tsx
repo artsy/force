@@ -51,6 +51,7 @@ import { allowedFilters } from "./Utils/allowedFilters"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
 import { ArtworkFilterSort } from "Components/ArtworkFilter/ArtworkFilterSort"
+import { ArtworkFiltersQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -427,6 +428,8 @@ export const BaseArtworkFilter: React.FC<
                 <Pill Icon={FilterIcon} size="small" onClick={handleOpen}>
                   All filters
                 </Pill>
+
+                <ArtworkFiltersQuick />
               </Flex>
 
               <ArtworkFilterSort />

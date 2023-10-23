@@ -4,11 +4,11 @@ import {
   SelectedFiltersCountsLabels,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
-} from "../ArtworkFilterContext"
+} from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ShowMore, INITIAL_ITEMS_TO_SHOW } from "./ShowMore"
 import { intersection } from "lodash"
 import { FilterExpandable } from "./FilterExpandable"
-import { useFilterLabelCountByKey } from "../Utils/useFilterLabelCountByKey"
+import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilterLabelCountByKey"
 import { sortResults } from "./Utils/sortResults"
 
 export interface MediumFilterProps {
@@ -30,7 +30,7 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
   }
 
   const allowedMediums =
-    mediums && mediums.counts.length ? mediums.counts : hardcodedMediums
+    mediums && mediums.counts.length ? mediums.counts : MEDIUM_OPTIONS
 
   const toggleMediumSelection = (selected, slug) => {
     let updatedValues = additionalGeneIDs
@@ -76,61 +76,19 @@ export const MediumFilter: FC<MediumFilterProps> = ({ expanded }) => {
   )
 }
 
-export const hardcodedMediums = [
-  {
-    value: "painting",
-    name: "Painting",
-  },
-  {
-    value: "photography",
-    name: "Photography",
-  },
-  {
-    value: "sculpture",
-    name: "Sculpture",
-  },
-  {
-    value: "prints",
-    name: "Prints",
-  },
-  {
-    value: "work-on-paper",
-    name: "Work on Paper",
-  },
-  {
-    value: "nft",
-    name: "NFT",
-  },
-  {
-    value: "design",
-    name: "Design",
-  },
-  {
-    value: "drawing",
-    name: "Drawing",
-  },
-  {
-    value: "installation",
-    name: "Installation",
-  },
-  {
-    value: "film-slash-video",
-    name: "Film/Video",
-  },
-  {
-    value: "jewelry",
-    name: "Jewelry",
-  },
-  {
-    value: "performance-art",
-    name: "Performance Art",
-  },
-  {
-    value: "reproduction",
-    name: "Reproduction",
-  },
-  {
-    value: "ephemera-or-merchandise",
-    name: "Ephemera or Merchandise",
-  },
+export const MEDIUM_OPTIONS = [
+  { value: "painting", name: "Painting" },
+  { value: "photography", name: "Photography" },
+  { value: "sculpture", name: "Sculpture" },
+  { value: "prints", name: "Prints" },
+  { value: "work-on-paper", name: "Work on Paper" },
+  { value: "nft", name: "NFT" },
+  { value: "design", name: "Design" },
+  { value: "drawing", name: "Drawing" },
+  { value: "installation", name: "Installation" },
+  { value: "film-slash-video", name: "Film/Video" },
+  { value: "jewelry", name: "Jewelry" },
+  { value: "performance-art", name: "Performance Art" },
+  { value: "reproduction", name: "Reproduction" },
+  { value: "ephemera-or-merchandise", name: "Ephemera or Merchandise" },
 ]
