@@ -246,8 +246,6 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
 
               {!addFiltersEnabled && <PriceRangeFilter />}
 
-              {!addFiltersEnabled && <Separator my={2} />}
-
               <Box>
                 <Box display="flex" justifyContent="space-between">
                   <Text variant="sm-display">Email Alerts</Text>
@@ -418,7 +416,9 @@ export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContai
             onClose={onClose}
             title="Create Alert"
             data-testid="CreateAlertModal"
-            dialogProps={{ width: "fit-content" }}
+            dialogProps={{
+              width: addFiltersEnabled ? "fit-content" : "480px",
+            }}
           >
             {!addFiltersEnabled ? (
               <SavedSearchAlertModal

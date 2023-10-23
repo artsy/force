@@ -1,4 +1,4 @@
-import { Expandable, Spacer } from "@artsy/palette"
+import { Expandable, Separator, Spacer } from "@artsy/palette"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import {
   CustomRange,
@@ -17,17 +17,21 @@ export const PriceRangeFilter: FC = () => {
   }
 
   return (
-    <Expandable
-      label={t("createAlertModal.setPriceRange")}
-      expanded
-      borderColor="white100"
-    >
-      <Spacer y={2} />
+    <>
+      <Separator my={1} />
+      <Expandable
+        label={t("createAlertModal.setPriceRange")}
+        expanded
+        borderColor="white100"
+      >
+        <Spacer y={2} />
 
-      <PriceRange
-        priceRange={criteria.priceRange ?? DEFAULT_PRICE_RANGE}
-        onPriceRangeUpdate={handlePriceRangeUpdate}
-      />
-    </Expandable>
+        <PriceRange
+          priceRange={criteria.priceRange ?? DEFAULT_PRICE_RANGE}
+          onPriceRangeUpdate={handlePriceRangeUpdate}
+        />
+      </Expandable>
+      <Separator my={2} />
+    </>
   )
 }

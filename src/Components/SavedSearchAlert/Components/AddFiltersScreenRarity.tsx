@@ -11,6 +11,14 @@ export const rarityValues = [
     name: "Limited Edition",
     value: "limited edition",
   },
+  {
+    name: "Open Edition",
+    value: "open edition",
+  },
+  {
+    name: "Unknown Edition",
+    value: "unknown edition",
+  },
 ]
 
 export const AddFiltersRarity: React.FC = () => {
