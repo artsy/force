@@ -18,6 +18,7 @@ const formInitialValues: SavedSearchAlertFormValues = {
   email: true,
   push: false,
   frequency: DEFAULT_FREQUENCY,
+  details: "",
 }
 
 const savedSearchEntity: SavedSearchEntity = {
@@ -107,6 +108,9 @@ describe("SavedSearchAlertModal", () => {
     expect(screen.getByText("Save Alert")).toBeInTheDocument()
     expect(screen.getAllByRole("checkbox")[0]).toBeChecked()
     expect(screen.getAllByRole("checkbox")[1]).not.toBeChecked()
+    expect(
+      screen.getByText("Tell us more about what you’re looking for")
+    ).toBeInTheDocument()
   })
 
   it("email value changes correctly", () => {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8fef1405178a6f20aba9a806141d254e>>
+ * @generated SignedSource<<6cee62f33faaffe9b81d6019f942131a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,7 @@ export type SavedSearchAlertEditForm_me$data = {
     readonly priceRange: string | null;
     readonly sizes: ReadonlyArray<string>;
     readonly userAlertSettings: {
+      readonly details: string | null;
       readonly email: boolean;
       readonly frequency: UserSearchCriteriaFrequency;
       readonly name: string | null;
@@ -232,6 +233,13 @@ const node: ReaderFragment = {
               "kind": "ScalarField",
               "name": "frequency",
               "storageKey": null
+            },
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "details",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -244,6 +252,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "37ee1dfe8af0053119d548baf48b2162";
+(node as any).hash = "fcd6cc64d79a3e95184e59d7fe5ee730";
 
 export default node;

@@ -44,6 +44,7 @@ import {
   validatePhoneNumber,
 } from "Components/PhoneNumberInput"
 import { useUserPhoneNumber } from "Components/SavedSearchAlert/useUserPhoneNumber"
+import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -110,6 +111,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
       email: values.email,
       push: values.push,
       frequency: values.push ? values.frequency : DEFAULT_FREQUENCY,
+      details: values.details,
     }
 
     try {
@@ -222,18 +224,17 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
               <SavedSearchAlertNameInputQueryRenderer />
               <Box>
                 <Text variant="xs">Filters</Text>
-                <Spacer y={2} />
+                <Spacer y={1} />
                 <Flex flexWrap="wrap" gap={1}>
                   <SavedSearchAlertPills
                     items={pills}
                     onDeletePress={handleRemovePillPress}
                   />
                 </Flex>
-
-                <Separator my={1} />
-
-                <PriceRangeFilter />
-
+                <Separator my={2} />
+                <PriceRangeFilter expanded={false} />
+                <Separator my={2} />
+                <DetailsInput />
                 <Separator my={2} />
               </Box>
 

@@ -45,6 +45,7 @@ import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/Fr
 import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { SavedSearchAlertNameInputQueryRenderer } from "Components/SavedSearchAlert/Components/SavedSearchAlertNameInput"
+import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 
 const logger = createLogger(
   "Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -90,6 +91,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     push: userAlertSettings.push,
     email: userAlertSettings.email,
     frequency: userAlertSettings.frequency as SavedSearchFrequency,
+    details: userAlertSettings.details ?? "",
   }
   const isCustomAlertsNotificationsEnabled = viewer.notificationPreferences.some(
     preference => {
@@ -114,6 +116,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
           values.name ||
           (isFallbackToGeneratedAlertNamesEnabled ? "" : entity.placeholder),
         frequency: values.push ? values.frequency : DEFAULT_FREQUENCY,
+        details: values.details ?? "",
       }
 
       await submitEditAlert({
@@ -177,10 +180,10 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                   />
                 </Flex>
 
-                <Separator my={1} />
-
+                <Separator my={2} />
                 <PriceRangeFilter />
-
+                <Separator my={2} />
+                <DetailsInput />
                 <Separator my={2} />
               </Box>
 
@@ -366,6 +369,7 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
             email
             push
             frequency
+            details
           }
         }
       }

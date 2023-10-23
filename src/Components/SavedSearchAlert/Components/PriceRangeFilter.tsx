@@ -8,7 +8,13 @@ import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSea
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
 
-export const PriceRangeFilter: FC = () => {
+interface PricaRangeFilterProps {
+  expanded?: boolean
+}
+
+export const PriceRangeFilter: FC<PricaRangeFilterProps> = ({
+  expanded = true,
+}) => {
   const { criteria, setCriteriaValue } = useSavedSearchAlertContext()
   const { t } = useTranslation()
 
@@ -19,7 +25,7 @@ export const PriceRangeFilter: FC = () => {
   return (
     <Expandable
       label={t("createAlertModal.setPriceRange")}
-      expanded
+      expanded={expanded}
       borderColor="white100"
     >
       <Spacer y={2} />
