@@ -44,7 +44,7 @@ import {
   validatePhoneNumber,
 } from "Components/PhoneNumberInput"
 import { useUserPhoneNumber } from "Components/SavedSearchAlert/useUserPhoneNumber"
-import { Media } from "Utils/Responsive"
+import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -231,34 +231,10 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
                     onDeletePress={handleRemovePillPress}
                   />
                 </Flex>
-
                 <Separator my={2} />
-
-                <Media at="xs">
-                  <PriceRangeFilter expanded={false} />
-                </Media>
-                <Media greaterThan="xs">
-                  <PriceRangeFilter expanded={true} />
-                </Media>
-
+                <PriceRangeFilter expanded={false} />
                 <Separator my={2} />
-
-                <Text variant="sm-display">
-                  Tell us more about what you’re looking for
-                </Text>
-                <Spacer y={1} />
-                <TextArea
-                  name="details"
-                  placeholder="For example, a specific request such as ‘spin paintings series’ or ‘signed prints’"
-                  onChange={({ value }) => {
-                    setFieldValue("details", value)
-                  }}
-                  onBlur={handleBlur}
-                  value={values.details}
-                  error={errors.details}
-                  maxLength={700}
-                />
-
+                <DetailsInput />
                 <Separator my={2} />
               </Box>
 

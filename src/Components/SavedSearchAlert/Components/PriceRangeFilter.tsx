@@ -12,7 +12,9 @@ interface PricaRangeFilterProps {
   expanded?: boolean
 }
 
-export const PriceRangeFilter: FC<PricaRangeFilterProps> = ({ expanded }) => {
+export const PriceRangeFilter: FC<PricaRangeFilterProps> = ({
+  expanded = true,
+}) => {
   const { criteria, setCriteriaValue } = useSavedSearchAlertContext()
   const { t } = useTranslation()
 
@@ -23,7 +25,7 @@ export const PriceRangeFilter: FC<PricaRangeFilterProps> = ({ expanded }) => {
   return (
     <Expandable
       label={t("createAlertModal.setPriceRange")}
-      expanded={expanded ?? true}
+      expanded={expanded}
       borderColor="white100"
     >
       <Spacer y={2} />

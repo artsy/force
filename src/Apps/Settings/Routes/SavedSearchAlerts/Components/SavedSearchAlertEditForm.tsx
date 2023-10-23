@@ -8,7 +8,6 @@ import {
   Separator,
   Spacer,
   Text,
-  TextArea,
 } from "@artsy/palette"
 import { Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -46,6 +45,7 @@ import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/Fr
 import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { SavedSearchAlertNameInputQueryRenderer } from "Components/SavedSearchAlert/Components/SavedSearchAlertNameInput"
+import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 
 const logger = createLogger(
   "Apps/SavedSearchAlerts/Components/SavedSearchAlertEditForm"
@@ -181,27 +181,9 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
                 </Flex>
 
                 <Separator my={2} />
-
                 <PriceRangeFilter />
-
                 <Separator my={2} />
-
-                <Text variant="sm-display">
-                  Tell us more about what you’re looking for
-                </Text>
-                <Spacer y={1} />
-                <TextArea
-                  name="details"
-                  placeholder="For example, a specific request such as ‘spin paintings series’ or ‘signed prints’"
-                  onChange={({ value }) => {
-                    setFieldValue("details", value)
-                  }}
-                  onBlur={handleBlur}
-                  value={values.details}
-                  error={errors.details}
-                  maxLength={700}
-                />
-
+                <DetailsInput />
                 <Separator my={2} />
               </Box>
 
