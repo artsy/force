@@ -49,9 +49,9 @@ describe("SavedSearchAlertsApp", () => {
       }),
     })
 
-    expect(screen.getAllByText("Alert #1")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Alert #2")[0]).toBeInTheDocument()
-    expect(screen.getAllByText("Alert #3")[0]).toBeInTheDocument()
+    expect(screen.getAllByText("Alert Name 1")[0]).toBeInTheDocument()
+    expect(screen.getAllByText("Alert Name 2")[0]).toBeInTheDocument()
+    expect(screen.getAllByText("Alert Name 3")[0]).toBeInTheDocument()
   })
 
   it("should expand/collapse filter pills when user toggles show all/close all filters button", async () => {
@@ -119,7 +119,7 @@ describe("SavedSearchAlertsApp", () => {
 
     fireEvent.click(screen.getAllByText("Edit")[0])
 
-    expect(screen.getAllByText("Edit Alert #1")[0]).toBeInTheDocument()
+    expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
   })
 })
 
@@ -131,24 +131,18 @@ const mockedSavedSearchesConnection = {
           { displayValue: "Limited Edition" },
           { displayValue: "Andy Warhol" },
         ],
-        userAlertSettings: {
-          name: "Alert #1",
-        },
+        displayName: "Alert Name 1",
       },
     },
     {
       node: {
-        userAlertSettings: {
-          name: "Alert #2",
-        },
+        displayName: "Alert Name 2",
       },
     },
     {
       node: {
         labels: [{ displayValue: "$0–$34,240" }, { displayValue: "Omar Ba" }],
-        userAlertSettings: {
-          name: "Alert #3",
-        },
+        displayName: "Alert Name 3",
       },
     },
   ],
@@ -161,6 +155,7 @@ const mockedSavedSearchesConnectionWithFilters = {
         userAlertSettings: {
           name: "Alert With Some Filters",
         },
+        displayName: "Alert With Some Filters",
         labels: [
           { displayValue: "Limited Edition" },
           { displayValue: "Andy Warhol" },
