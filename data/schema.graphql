@@ -13777,6 +13777,7 @@ type Partner implements Node {
     last: Int
     partnerID: String
     since: SearchCriteriaSinceEnum
+    sort: SearchCriteriaSortEnum
   ): SearchCriteriaConnection
   showPromoted: Boolean
 
@@ -15868,6 +15869,7 @@ type Query {
     last: Int
     partnerID: String
     since: SearchCriteriaSinceEnum
+    sort: SearchCriteriaSortEnum
   ): SearchCriteriaConnection
   shortcut(id: ID!): Shortcut
 
@@ -20499,6 +20501,7 @@ type Viewer {
     last: Int
     partnerID: String
     since: SearchCriteriaSinceEnum
+    sort: SearchCriteriaSortEnum
   ): SearchCriteriaConnection
   shortcut(id: ID!): Shortcut
 
