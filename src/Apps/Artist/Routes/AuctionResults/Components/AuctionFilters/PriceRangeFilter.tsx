@@ -10,7 +10,7 @@ import {
   useCurrentlySelectedFiltersForAuctionResults,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 import { debounce } from "lodash"
-import { getBarsFromAggregations } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { aggregationsToHistogram } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 
 const DEBOUNCE_DELAY = 300
@@ -22,7 +22,7 @@ export const PriceRangeFilter: FC = () => {
     includeEstimateRange,
     includeUnknownPrices,
   } = useCurrentlySelectedFiltersForAuctionResults()
-  const bars = getBarsFromAggregations(aggregations as Aggregations)
+  const bars = aggregationsToHistogram(aggregations as Aggregations)
 
   const setFilterDobounced = useMemo(
     () => setFilter && debounce(setFilter, DEBOUNCE_DELAY),

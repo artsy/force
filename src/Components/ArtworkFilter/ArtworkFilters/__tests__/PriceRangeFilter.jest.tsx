@@ -7,7 +7,7 @@ import {
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { getENV } from "Utils/getENV"
 import {
-  getBarsFromAggregations,
+  aggregationsToHistogram,
   PriceRangeFilter,
   PriceRangeFilterProps,
 } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
@@ -195,9 +195,9 @@ describe("PriceRangeFilterNew", () => {
   })
 })
 
-describe("getBarsFromAggregations", () => {
+describe("aggregationsToHistogram", () => {
   it("should return empty array if there is no aggregation", () => {
-    const result = getBarsFromAggregations([
+    const result = aggregationsToHistogram([
       {
         slice: "MAJOR_PERIOD",
         counts: [
@@ -214,7 +214,7 @@ describe("getBarsFromAggregations", () => {
   })
 
   it("should return sorted bars", () => {
-    const result = getBarsFromAggregations(aggregations)
+    const result = aggregationsToHistogram(aggregations)
 
     expect(result).toEqual([
       {
