@@ -15,7 +15,6 @@ import { SavedSearchAlertListItem_item$data } from "__generated__/SavedSearchAle
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import ChevronUpIcon from "@artsy/icons/ChevronUpIcon"
 import ChevronDownIcon from "@artsy/icons/ChevronDownIcon"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 export type SavedSearchAlertListItemVariant = "active" | "inactive"
 
@@ -35,9 +34,6 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
   const Icon = isExpanded ? ChevronUpIcon : ChevronDownIcon
 
   const toggleExpandFilters = () => setIsExpanded(isExpanded => !isExpanded)
-  const isFallbackToGeneratedAlertNamesEnabled = useFeatureFlag(
-    "onyx_force-fallback-to-generated-alert-names"
-  )
 
   const toggleExpandFiltersText = isExpanded
     ? "Close all filters"
@@ -68,9 +64,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
             color={variant === "active" ? "blue100" : "black100"}
             style={{ overflowWrap: "break-word" }}
           >
-            {isFallbackToGeneratedAlertNamesEnabled
-              ? item.displayName
-              : item.userAlertSettings.name}
+            {item.displayName}
           </Text>
           <Spacer x={2} y={2} />
           <Clickable textDecoration="underline" onClick={toggleExpandFilters}>
