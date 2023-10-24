@@ -15,6 +15,7 @@ import {
   Flex,
   FullBleed,
   GridColumns,
+  HorizontalOverflow,
   Pill,
   Spacer,
   Text,
@@ -403,34 +404,36 @@ export const BaseArtworkFilter: React.FC<
           // New desktop filters
           <>
             <Flex alignItems="center" justifyContent="space-between" gap={2}>
-              <Flex gap={1}>
-                <ArtworkFilterCreateAlert
-                  renderButton={props => {
-                    return (
-                      <Button
-                        variant={
-                          appliedFiltersTotalCount > 0
-                            ? "primaryBlack"
-                            : "secondaryBlack"
-                        }
-                        size="small"
-                        Icon={BellStrokeIcon}
-                        {...props}
-                      >
-                        Create Alert
-                      </Button>
-                    )
-                  }}
-                />
+              <HorizontalOverflow minWidth={0}>
+                <Flex gap={1}>
+                  <ArtworkFilterCreateAlert
+                    renderButton={props => {
+                      return (
+                        <Button
+                          variant={
+                            appliedFiltersTotalCount > 0
+                              ? "primaryBlack"
+                              : "secondaryBlack"
+                          }
+                          size="small"
+                          Icon={BellStrokeIcon}
+                          {...props}
+                        >
+                          Create Alert
+                        </Button>
+                      )
+                    }}
+                  />
 
-                <Box width="1px" bg="black30" />
+                  <Box width="1px" bg="black30" />
 
-                <Pill Icon={FilterIcon} size="small" onClick={handleOpen}>
-                  All filters
-                </Pill>
+                  <Pill Icon={FilterIcon} size="small" onClick={handleOpen}>
+                    All filters
+                  </Pill>
 
-                <ArtworkFiltersQuick />
-              </Flex>
+                  <ArtworkFiltersQuick />
+                </Flex>
+              </HorizontalOverflow>
 
               <ArtworkFilterSort />
 

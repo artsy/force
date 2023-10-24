@@ -50,6 +50,7 @@ const Button = styled(Clickable).attrs({
 })`
   display: flex;
   align-items: center;
+  white-space: nowrap;
 
   &:hover {
     color: ${themeGet("colors.blue100")};
