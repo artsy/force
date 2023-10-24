@@ -149,11 +149,11 @@ function getArtworkFilterQuery() {
       marketingCollections(
         slugs: [
           "contemporary"
-          "post-war"
-          "impressionist-and-modern"
-          "pre-20th-century"
-          "photography"
+          "painting"
           "street-art"
+          "photography"
+          "emerging-art"
+          "20th-century-art"
         ]
       ) {
         ...Collect_marketingCollections
