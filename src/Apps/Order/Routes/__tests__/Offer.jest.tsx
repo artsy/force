@@ -31,6 +31,16 @@ jest.mock("Utils/Events", () => ({
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
+
+const mockJumpTo = jest.fn()
+jest.mock("Utils/Hooks/useJump", () => {
+  const actual = jest.requireActual("Utils/Hooks/useJump")
+  return {
+    ...actual,
+    useJump: () => ({ jumpTo: mockJumpTo }),
+  }
+})
+
 jest.mock("Utils/user", () => ({
   getUser: jest.fn(),
   userHasLabFeature: jest.fn().mockReturnValue(false),
@@ -373,6 +383,20 @@ describe("Offer InitialMutation", () => {
       await page.clickSubmit()
       expect(mockCommitMutation).toHaveBeenCalledTimes(1)
       expect(mockShowErrorDialog).not.toHaveBeenCalled()
+    })
+
+    it("jumps to the custom amount input if custom amount is invalid", async () => {
+      let wrapper = getWrapper({
+        CommerceOrder: () => testOffer,
+      })
+      let page = new OrderAppTestPage(wrapper)
+      page.selectCustomAmount()
+
+      await page.setOfferAmount(0)
+      await page.clickSubmit()
+      expect(mockJumpTo).toHaveBeenCalledWith("price-option-custom", {
+        behavior: "smooth",
+      })
     })
 
     describe("The 'amount too small' speed bump", () => {
