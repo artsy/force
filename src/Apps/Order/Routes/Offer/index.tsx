@@ -28,6 +28,7 @@ import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { isNil } from "lodash"
 import { appendCurrencySymbol } from "Apps/Order/Utils/currencyUtils"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
+import { useJump } from "Utils/Hooks/useJump"
 
 const logger = createLogger("Order/Routes/Offer/index.tsx")
 
@@ -50,7 +51,6 @@ export const OfferRoute: FC<OfferRouteProps> = ({
   isCommittingMutation,
 }) => {
   const { trackEvent } = useTracking()
-
   const [formIsDirty, setFormIsDirty] = useState(false)
   const [lowSpeedBumpEncountered, setLowSpeedBumpEncountered] = useState(false)
   const [offerNoteValue, setOfferNoteValue] = useState({
@@ -58,6 +58,7 @@ export const OfferRoute: FC<OfferRouteProps> = ({
     value: lastOfferNote(order.myLastOffer?.note || ""),
   })
   const [offerValue, setOfferValue] = useState(0)
+  const { jumpTo } = useJump()
 
   const onOfferInputFocus = () => {
     trackEvent({
@@ -142,6 +143,7 @@ export const OfferRoute: FC<OfferRouteProps> = ({
   const onContinueButtonPressed = async () => {
     if (offerValue <= 0 || offerNoteValue.exceedsCharacterLimit) {
       setFormIsDirty(true)
+      jumpTo("price-option-custom", { behavior: "smooth" })
       return
     }
 
