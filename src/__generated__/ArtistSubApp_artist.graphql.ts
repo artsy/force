@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<654cb88f8fb9561adafa6956f0c4c56f>>
+ * @generated SignedSource<<f45719b674a64d4af8d581b6d8c1a114>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistSubApp_artist$data = {
   readonly internalID: string;
+  readonly name: string | null;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistBackLink_artist" | "ArtistMeta_artist">;
   readonly " $fragmentType": "ArtistSubApp_artist";
 };
@@ -42,12 +43,19 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "internalID",
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "name",
+      "storageKey": null
     }
   ],
   "type": "Artist",
   "abstractKey": null
 };
 
-(node as any).hash = "173e61d0564c804ebc4b5010e58bf94b";
+(node as any).hash = "1c33f69ec19538c34f49bfb69d19fc0b";
 
 export default node;
