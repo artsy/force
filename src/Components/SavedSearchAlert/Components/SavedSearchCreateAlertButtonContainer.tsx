@@ -15,8 +15,7 @@ import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { useAuthDialog } from "Components/AuthDialog"
 import { ShowAuthDialogOptions } from "Components/AuthDialog/AuthDialogContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { ModalBase, ModalDialogContent } from "@artsy/palette"
-import { FiltersSavedSearchAlertModalContainer } from "Components/SavedSearchAlert/FiltersSavedSearchAlertModal"
+
 import { CreateAlertModal } from "Components/SavedSearchAlert/CreateAlertModal"
 import { CreateAlertSteps } from "Components/SavedSearchAlert/Components/CreateAlertSteps"
 

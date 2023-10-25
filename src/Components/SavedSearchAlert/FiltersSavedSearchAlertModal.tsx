@@ -7,9 +7,7 @@ import {
   Clickable,
   Flex,
   Join,
-  ModalBase,
   ModalDialog,
-  ModalDialogContent,
   Separator,
   Spacer,
   Text,
@@ -47,10 +45,7 @@ import {
 } from "Components/PhoneNumberInput"
 import { useUserPhoneNumber } from "Components/SavedSearchAlert/useUserPhoneNumber"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
-import {
-  TransitionPanelProvider,
-  useTransitionPanel,
-} from "Components/TransitionPanel"
+
 import { AddFiltersScreen } from "Components/SavedSearchAlert/Components/AddFiltersScreen"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 
@@ -437,7 +432,7 @@ export const FiltersSavedSearchAlertModalContainer: React.FC<SavedSearchAlertFor
         >
           <ConfirmationStepModal
             onClose={handleComplete}
-            searchCriteriaId={searchCriteriaId}
+            searchCriteriaId={""}
           />
         </SavedSearchAlertContextProvider>
       )
