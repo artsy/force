@@ -17001,6 +17001,7 @@ type SearchCriteria {
   totalUserSearchCriteriaCount: Int
   totalWithAdditionalGeneIdsCount: Int
   totalWithAttributionClassCount: Int
+  totalWithOtherMetadataCount: Int
   totalWithPriceRangeCount: Int
   userAlertSettings: SavedSearchUserAlertSettings!
   userSearchCriteriaCount: Int!
