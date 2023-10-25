@@ -14,6 +14,11 @@ import { allowedSearchCriteriaKeys } from "Components/SavedSearchAlert/constants
 import qs from "qs"
 import { paramsToSnakeCase } from "Components/ArtworkFilter/Utils/urlBuilder"
 
+interface SavedSearchAlertContextStepsProps {
+  current: string
+  setStep: (string) => void
+}
+
 interface SavedSearchAlertContextProps {
   pills: FilterPill[]
   entity: SavedSearchEntity
@@ -32,6 +37,7 @@ interface SavedSearchAlertContextProps {
   ) => void
   removePill: (pill: FilterPill) => void
   criteriaHref: () => string | null
+  steps: SavedSearchAlertContextStepsProps
 }
 
 export interface SavedSearchAlertContextProviderProps {
@@ -53,6 +59,10 @@ const SavedSearchAlertContext = createContext<SavedSearchAlertContextProps>({
   setCriteriaValue: () => {},
   removePill: () => {},
   criteriaHref: () => null,
+  steps: {
+    current: "ALERT_DETAILS",
+    setStep: () => null,
+  },
 })
 
 export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextProviderProps> = ({
@@ -72,6 +82,9 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
     entity,
     metric,
   })
+  const [step, setStep] = useState<
+    "ALERT_DETAILS" | "ALERT_FILTERS" | "ALERT_CONFIRMATION"
+  >("ALERT_DETAILS")
 
   const removeCriteriaValue = (
     key: SearchCriteriaAttributeKeys,
@@ -136,6 +149,10 @@ export const SavedSearchAlertContextProvider: React.FC<SavedSearchAlertContextPr
     setCriteriaValue,
     removePill,
     criteriaHref,
+    steps: {
+      current: step,
+      setStep,
+    },
   }
 
   return (

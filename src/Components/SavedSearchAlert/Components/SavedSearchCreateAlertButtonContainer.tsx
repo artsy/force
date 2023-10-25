@@ -14,6 +14,11 @@ import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { useAuthDialog } from "Components/AuthDialog"
 import { ShowAuthDialogOptions } from "Components/AuthDialog/AuthDialogContext"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { ModalBase, ModalDialogContent } from "@artsy/palette"
+import { FiltersSavedSearchAlertModalContainer } from "Components/SavedSearchAlert/FiltersSavedSearchAlertModal"
+import { CreateAlertModal } from "Components/SavedSearchAlert/CreateAlertModal"
+import { CreateAlertSteps } from "Components/SavedSearchAlert/Components/CreateAlertSteps"
 
 interface RenderButtonProps {
   onClick: () => void
@@ -96,29 +101,38 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
   const handleComplete = () => {
     setVisibleForm(false)
   }
+  const addFiltersEnabled = useFeatureFlag("onyx_create-alert-filters-screen")
 
   return (
     <>
       {renderButton({ onClick: handleClick })}
 
-      <SavedSearchAlertModalContainer
-        visible={visibleForm}
-        initialValues={{
-          name: "",
-          email: true,
-          push: false,
-          frequency: DEFAULT_FREQUENCY,
-          details: "",
-        }}
-        entity={entity}
-        criteria={criteria}
-        metric={metric}
-        aggregations={aggregations}
-        currentArtworkID={currentArtworkID}
-        onClose={() => setVisibleForm(false)}
-        onCreateAlert={handleCreateAlert}
-        onComplete={handleComplete}
-      />
+      {addFiltersEnabled ? (
+        visibleForm && (
+          <CreateAlertModal onClose={() => setVisibleForm(false)}>
+            <CreateAlertSteps />
+          </CreateAlertModal>
+        )
+      ) : (
+        <SavedSearchAlertModalContainer
+          visible={visibleForm}
+          initialValues={{
+            name: "",
+            email: true,
+            push: false,
+            frequency: DEFAULT_FREQUENCY,
+            details: "",
+          }}
+          entity={entity}
+          criteria={criteria}
+          metric={metric}
+          aggregations={aggregations}
+          currentArtworkID={currentArtworkID}
+          onClose={() => setVisibleForm(false)}
+          onCreateAlert={handleCreateAlert}
+          onComplete={handleComplete}
+        />
+      )}
     </>
   )
 }
