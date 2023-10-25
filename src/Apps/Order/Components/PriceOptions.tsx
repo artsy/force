@@ -66,11 +66,6 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
   }, [])
 
   useEffect(() => {
-    if (!!customValue) onChange(customValue)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [customValue])
-
-  useEffect(() => {
     if (showError) {
       setSelectedRadio("price-option-custom")
       setToggle(true)
@@ -147,7 +142,10 @@ export const PriceOptions: React.FC<PriceOptionsProps> = ({
                     id="OfferForm_offerValue"
                     showError={showError}
                     value={customValue}
-                    onChange={setCustomValue}
+                    onChange={event => {
+                      setCustomValue(event)
+                      onChange(event)
+                    }}
                     onFocus={() => {
                       onFocus()
                       if (device !== Device.iPhone)
