@@ -1,8 +1,10 @@
 import {
   Box,
+  BoxProps,
   Button,
   Checkbox,
   Dropdown,
+  DropdownActions,
   DropdownProps,
   Pill,
 } from "@artsy/palette"
@@ -12,6 +14,7 @@ import ChevronSmallUpIcon from "@artsy/icons/ChevronSmallUpIcon"
 import {
   MultiSelectArtworkFilters,
   Slice,
+  initialArtworkFilterState,
   useArtworkFilterContext,
   useCurrentlySelectedFilters,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
@@ -61,86 +64,128 @@ export const FilterQuick: FC<FilterQuickProps> = ({
   }
 
   const handleClear = () => {
-    setFilter(name, [])
+    setFilter(name, initialArtworkFilterState[name])
   }
 
   return (
     <Dropdown
       dropdown={({ onHide }) => {
         return (
-          <Box display="flex" flexDirection="column" height={230} width={300}>
-            <Box
-              p={1}
-              flex={1}
-              minHeight={0}
-              style={{
-                overflowY: "scroll",
-                WebkitOverflowScrolling: "touch",
-              }}
-            >
-              <Box display="flex" flexDirection="column" gap={2}>
-                {options.map(({ name, value }, index) => {
-                  return (
-                    <Checkbox
-                      key={index}
-                      onSelect={handleSelect(value)}
-                      selected={currentValue.includes(value)}
-                    >
-                      {name}
-                    </Checkbox>
-                  )
-                })}
-              </Box>
+          <FilterQuickDropdownPanel
+            onConfirm={onHide}
+            onClear={() => {
+              handleClear()
+              onHide()
+            }}
+          >
+            <Box display="flex" flexDirection="column" gap={2}>
+              {options.map(({ name, value }, index) => {
+                return (
+                  <Checkbox
+                    key={index}
+                    onSelect={handleSelect(value)}
+                    selected={currentValue.includes(value)}
+                  >
+                    {name}
+                  </Checkbox>
+                )
+              })}
             </Box>
-
-            <Box
-              flexShrink={0}
-              display="flex"
-              justifyContent="flex-end"
-              gap={1}
-              p={1}
-              zIndex={1}
-            >
-              <Button
-                size="small"
-                variant="secondaryBlack"
-                onClick={() => {
-                  handleClear()
-                  onHide()
-                }}
-              >
-                Clear
-              </Button>
-
-              <Button size="small" variant="primaryBlack" onClick={onHide}>
-                Confirm
-              </Button>
-            </Box>
-          </Box>
+          </FilterQuickDropdownPanel>
         )
       }}
       openDropdownByClick
       placement="bottom-start"
       {...rest}
     >
-      {({ anchorRef, anchorProps, visible }) => {
+      {props => {
         return (
-          <Pill
-            ref={anchorRef as any}
-            Icon={visible ? ChevronSmallUpIcon : ChevronSmallDownIcon}
-            size="small"
-            {...anchorProps}
-          >
-            {label}
-            {count > 0 && (
-              <Box as="span" color="blue100">
-                {" "}
-                • {count}
-              </Box>
-            )}
-          </Pill>
+          <FilterQuickDropdownAnchor label={label} count={count} {...props} />
         )
       }}
     </Dropdown>
+  )
+}
+
+interface FilterQuickDropdownAnchorProps extends DropdownActions {
+  label: string
+  count: number
+}
+
+export const FilterQuickDropdownAnchor: FC<FilterQuickDropdownAnchorProps> = ({
+  anchorProps,
+  anchorRef,
+  label,
+  count,
+  visible,
+}) => {
+  return (
+    <Pill
+      ref={anchorRef as any}
+      size="small"
+      Icon={visible ? ChevronSmallUpIcon : ChevronSmallDownIcon}
+      iconPosition="right"
+      {...anchorProps}
+    >
+      {label}
+      {count > 0 && (
+        <Box as="span" color="blue100">
+          {" "}
+          • {count}
+        </Box>
+      )}
+    </Pill>
+  )
+}
+
+interface FilterQuickDropdownPanelProps extends BoxProps {
+  onClear: () => void
+  onConfirm: () => void
+  children: React.ReactNode
+}
+
+export const FilterQuickDropdownPanel: FC<FilterQuickDropdownPanelProps> = ({
+  onClear,
+  onConfirm,
+  children,
+  ...rest
+}) => {
+  return (
+    <Box
+      display="flex"
+      flexDirection="column"
+      height={230}
+      width={300}
+      {...rest}
+    >
+      <Box
+        p={1}
+        flex={1}
+        minHeight={0}
+        style={{
+          overflowY: "scroll",
+          WebkitOverflowScrolling: "touch",
+        }}
+      >
+        {children}
+      </Box>
+
+      <Box
+        flexShrink={0}
+        display="flex"
+        justifyContent="flex-end"
+        gap={1}
+        p={1}
+        zIndex={1}
+      >
+        <Button size="small" variant="secondaryBlack" onClick={onClear}>
+          Clear
+        </Button>
+
+        <Button size="small" variant="primaryBlack" onClick={onConfirm}>
+          Confirm
+        </Button>
+      </Box>
+    </Box>
   )
 }

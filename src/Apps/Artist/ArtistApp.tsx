@@ -15,7 +15,7 @@ interface ArtistAppProps {
 }
 
 const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children }) => {
-  useScrollToOpenArtistAuthModal()
+  useScrollToOpenArtistAuthModal({ name: artist.name })
 
   const isRevisedArtistHeader = useFeatureFlag("diamond_revised-artist-header")
 
@@ -72,6 +72,7 @@ export const ArtistAppFragmentContainer = createFragmentContainer(ArtistApp, {
       ...ArtistHeader2_artist
       internalID
       slug
+      name
     }
   `,
 })

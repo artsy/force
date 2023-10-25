@@ -74,9 +74,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
 }) => {
   const { relayEnvironment } = useSystemContext()
   const { pills, criteria, removeCriteriaValue } = useSavedSearchAlertContext()
-  const isFallbackToGeneratedAlertNamesEnabled = useFeatureFlag(
-    "onyx_force-fallback-to-generated-alert-names"
-  )
+
   const isHearFromArtsyAdvisorEnabled = useFeatureFlag(
     "onyx_advisory-opportunity-in-saved-search"
   )
@@ -105,9 +103,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
     }
 
     const userAlertSettings: SavedSearchAlertFormValues = {
-      name:
-        values.name ||
-        (isFallbackToGeneratedAlertNamesEnabled ? "" : entity.placeholder),
+      name: values.name || "",
       email: values.email,
       push: values.push,
       frequency: values.push ? values.frequency : DEFAULT_FREQUENCY,

@@ -25,25 +25,61 @@ export interface PriceRangeFilterProps {
 }
 
 export const PriceRangeFilter: FC<PriceRangeFilterProps> = ({ expanded }) => {
-  const {
-    shouldStageFilterChanges,
-    aggregations,
-    setFilter,
-  } = useArtworkFilterContext()
-  const { priceRange, reset } = useCurrentlySelectedFilters()
-  const [range, setRange] = useState(parsePriceRange(priceRange))
-  const bars = getBarsFromAggregations(aggregations)
+  const { field, range, histogram, onPriceRangeUpdate } = usePriceRangeFilter()
 
-  const filtersCount = useFilterLabelCountByKey(
+  const countLabel = useFilterLabelCountByKey(
     SelectedFiltersCountsLabels.priceRange
   )
-  const label = `Price${filtersCount}`
-  const hasSelection = priceRange && isCustomValue(priceRange)
 
-  const setFilterDobounced = useMemo(
-    () => debounce(setFilter, DEBOUNCE_DELAY),
+  const label = `Price${countLabel}`
+  const hasSelection = field && isCustomValue(field)
+
+  return (
+    <FilterExpandable label={label} expanded={hasSelection || expanded}>
+      <PriceRange
+        priceRange={range.join("-")}
+        bars={histogram}
+        onPriceRangeUpdate={onPriceRangeUpdate}
+      />
+    </FilterExpandable>
+  )
+}
+
+export const aggregationsToHistogram = (
+  aggregations?: Aggregations
+): HistogramBarEntity[] => {
+  if (!aggregations) return []
+
+  const aggregation = aggregations.find(({ slice }) => {
+    return slice === "SIMPLE_PRICE_HISTOGRAM"
+  })
+
+  if (!aggregation) return []
+
+  const bars: HistogramBarEntity[] = aggregation.counts.map(
+    ({ count, value }) => ({ count, value: Number(value) })
+  )
+
+  return sortBy(bars, "value")
+}
+
+export const usePriceRangeFilter = () => {
+  const filters = useArtworkFilterContext()
+
+  const { priceRange, reset } = useCurrentlySelectedFilters()
+
+  const [range, setRange] = useState(parsePriceRange(priceRange))
+
+  const histogram = useMemo(
+    () => aggregationsToHistogram(filters.aggregations),
+    [filters.aggregations]
+  )
+
+  const debouncedSetFilter = useMemo(
+    () => debounce(filters.setFilter, DEBOUNCE_DELAY),
+    // TODO: Explain why this is disabled
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [shouldStageFilterChanges]
+    [filters.shouldStageFilterChanges]
   )
 
   useEffect(() => {
@@ -53,32 +89,20 @@ export const PriceRangeFilter: FC<PriceRangeFilterProps> = ({ expanded }) => {
     }
   }, [reset, priceRange])
 
-  const handlePriceRangeUpdate = (updatedRange: CustomRange) => {
-    setRange(updatedRange)
-    setFilterDobounced("priceRange", updatedRange.join("-"))
+  const onPriceRangeUpdate = (nextRange: CustomRange) => {
+    setRange(nextRange)
+    debouncedSetFilter("priceRange", nextRange.join("-"))
   }
 
-  return (
-    <FilterExpandable label={label} expanded={hasSelection || expanded}>
-      <PriceRange
-        priceRange={range.join("-")}
-        bars={bars}
-        onPriceRangeUpdate={handlePriceRangeUpdate}
-      />
-    </FilterExpandable>
-  )
-}
+  const count = filters.selectedFiltersCounts.priceRange || 0
 
-export const getBarsFromAggregations = (aggregations?: Aggregations) => {
-  const aggregation = aggregations?.find(aggregation => {
-    return aggregation.slice === "SIMPLE_PRICE_HISTOGRAM"
-  })
-  const counts = aggregation?.counts ?? []
-  const bars: HistogramBarEntity[] = counts.map(entity => ({
-    count: entity.count,
-    value: Number(entity.value),
-  }))
-  const sortedBars = sortBy(bars, "value")
-
-  return sortedBars
+  return {
+    filters,
+    field: priceRange,
+    count,
+    range,
+    reset: () => filters.setFilter("priceRange", []),
+    histogram,
+    onPriceRangeUpdate,
+  }
 }

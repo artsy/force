@@ -13777,6 +13777,7 @@ type Partner implements Node {
     last: Int
     partnerID: String
     since: SearchCriteriaSinceEnum
+    sort: SearchCriteriaSortEnum
   ): SearchCriteriaConnection
   showPromoted: Boolean
 
@@ -15868,6 +15869,7 @@ type Query {
     last: Int
     partnerID: String
     since: SearchCriteriaSinceEnum
+    sort: SearchCriteriaSortEnum
   ): SearchCriteriaConnection
   shortcut(id: ID!): Shortcut
 
@@ -17094,8 +17096,8 @@ enum SearchCriteriaSortEnum {
   # Sort by most popular search criteria in descending order
   COUNT_DESC
 
-  # Sort by high quality priority listed first
-  HIGH_QUALITY_DESC
+  # Sort by search criteria with price presence on top
+  PRICE_PRESENCE
 }
 
 enum SearchEntity {
@@ -20499,6 +20501,7 @@ type Viewer {
     last: Int
     partnerID: String
     since: SearchCriteriaSinceEnum
+    sort: SearchCriteriaSortEnum
   ): SearchCriteriaConnection
   shortcut(id: ID!): Shortcut
 

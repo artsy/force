@@ -20,7 +20,7 @@ const ArtistSubApp: React.FC<ArtistSubAppProps> = ({
 }) => {
   const { isEigen } = useSystemContext()
 
-  useScrollToOpenArtistAuthModal()
+  useScrollToOpenArtistAuthModal({ name: artist.name })
 
   return (
     <>
@@ -45,6 +45,7 @@ export const ArtistSubAppFragmentContainer = createFragmentContainer(
         ...ArtistMeta_artist
         ...ArtistBackLink_artist
         internalID
+        name
       }
     `,
   }

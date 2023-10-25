@@ -43,7 +43,6 @@ import { RouterLink } from "System/Router/RouterLink"
 import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
 import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { SavedSearchAlertNameInputQueryRenderer } from "Components/SavedSearchAlert/Components/SavedSearchAlertNameInput"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 
@@ -80,7 +79,6 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   const { trackEvent } = useTracking()
   const {
     pills,
-    entity,
     criteria,
     isCriteriaChanged,
     removePill,
@@ -104,17 +102,12 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   )
   const userAllowsEmails = isCustomAlertsNotificationsEnabled ?? false
   const shouldShowEmailWarning = !!initialValues.email && !userAllowsEmails
-  const isFallbackToGeneratedAlertNamesEnabled = useFeatureFlag(
-    "onyx_force-fallback-to-generated-alert-names"
-  )
 
   const handleSubmit = async (values: SavedSearchAlertFormValues) => {
     try {
       const updatedAlertSettings: SavedSearchAlertFormValues = {
         ...values,
-        name:
-          values.name ||
-          (isFallbackToGeneratedAlertNamesEnabled ? "" : entity.placeholder),
+        name: values.name || "",
         frequency: values.push ? values.frequency : DEFAULT_FREQUENCY,
         details: values.details ?? "",
       }

@@ -1,6 +1,7 @@
 import { ATTRIBUTION_CLASS_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { MEDIUM_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
 import { FilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/FilterQuick"
+import { PriceRangeFilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/PriceRangeFilterQuick"
 import { FC } from "react"
 
 export const ArtworkFiltersQuick: FC = () => {
@@ -18,6 +19,8 @@ export const ArtworkFiltersQuick: FC = () => {
         slice="MEDIUM"
         options={MEDIUM_OPTIONS}
       />
+
+      <PriceRangeFilterQuick />
     </>
   )
 }

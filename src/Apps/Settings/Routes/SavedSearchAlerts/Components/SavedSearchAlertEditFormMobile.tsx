@@ -1,7 +1,6 @@
 import { ModalDialog, Spacer } from "@artsy/palette"
 import { EditAlertFormBase } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { SavedSearchAlertEditFormQueryRenderer } from "./SavedSearchAlertEditForm"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 export const SavedSearchAlertEditFormMobile: React.FC<EditAlertFormBase> = ({
   editAlertEntity,
@@ -9,15 +8,9 @@ export const SavedSearchAlertEditFormMobile: React.FC<EditAlertFormBase> = ({
   onDeleteClick,
   onCompleted,
 }) => {
-  const isFallbackToGeneratedAlertNamesEnabled = useFeatureFlag(
-    "onyx_force-fallback-to-generated-alert-names"
-  )
-
   return (
     <ModalDialog
-      title={`Edit ${
-        isFallbackToGeneratedAlertNamesEnabled ? "Alert" : editAlertEntity.name
-      }`}
+      title="Edit Alert"
       m={0}
       dialogProps={{
         width: "100%",

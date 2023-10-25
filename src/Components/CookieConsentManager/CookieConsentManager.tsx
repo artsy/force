@@ -17,6 +17,7 @@ import { CookieConsentManagerProvider } from "Components/CookieConsentManager/Co
 import { CookieConsentManagerSetter } from "Components/CookieConsentManager/CookieConsentManagerSetter"
 import { SavedCookieConsentPreferences } from "@artsy/cohesion/dist/Schema/Events/CookieConsent"
 import { ActionType } from "@artsy/cohesion"
+import { useSystemContext } from "System/useSystemContext"
 
 export const COOKIE_CONSENT_MANAGER_COOKIE_NAME = "tracking-preferences"
 
@@ -28,6 +29,8 @@ export const CookieConsentManager: FC<CookieConsentManagerProps> = ({
   children,
 }) => {
   const isMounted = useDidMount()
+
+  const { isEigen } = useSystemContext()
 
   const { trackEvent } = useTracking()
 
@@ -72,7 +75,7 @@ export const CookieConsentManager: FC<CookieConsentManagerProps> = ({
 
             // If there are no new destinations, we don't need to show the banner
             const isBannerDisplayable =
-              isDisplayable && newDestinations.length > 0
+              !isEigen && isDisplayable && newDestinations.length > 0
 
             const handleAccept = () => {
               saveConsent(ALLOW_ALL_PREFERENCES)

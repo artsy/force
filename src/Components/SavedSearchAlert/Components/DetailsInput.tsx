@@ -15,7 +15,7 @@ export const DetailsInput: React.FC = () => {
       <Spacer y={1} />
       <TextArea
         name="details"
-        placeholder="For example, a specific request such as ‘spin paintings series’ or ‘signed prints’"
+        placeholder="For example, a specific request such as ‘figurative painting’ or ‘David Hockney iPad drawings.’"
         onChange={({ value }) => {
           setFieldValue("details", value)
         }}
