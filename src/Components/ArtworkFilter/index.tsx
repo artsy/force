@@ -423,9 +423,9 @@ export const BaseArtworkFilter: React.FC<
                         </Button>
                       )
                     }}
-                  />
-
-                  <Box width="1px" bg="black30" />
+                  >
+                    <Box width="1px" bg="black30" />
+                  </ArtworkFilterCreateAlert>
 
                   <Pill Icon={FilterIcon} size="small" onClick={handleOpen}>
                     All filters
