@@ -28,7 +28,7 @@ type FulfillmentHelpers = Pick<
   "handleSubmit" | "isValid" | "values"
 >
 export interface ShippingContextProps {
-  savedOrderData: {
+  computedOrderData: {
     lockShippingCountryTo: "EU" | string | null
     shipsFrom: string
     availableShippingCountries: string[]
@@ -59,25 +59,22 @@ export const useShippingContext = () => {
   return useContext(ShippingContext)
 }
 
-// Get information from the order and user, savedOrderData (shared, computed context about order)
+// Get information from the order and user, computedOrderData (shared, computed context about order)
 // initial values for forms, and the current step in the shipping route
 // values for forms
-export const useComputedOrderContext = (
+export const useComputeOrderContext = (
   props: ShippingProps
 ): ShippingContextProps => {
-  const savedOrderData = useLoadComputedData(props)
-  const initialValues = getInitialValues(props, savedOrderData)
+  const computedOrderData = useComputeOrderData(props)
+  const initialValues = getInitialValues(props, computedOrderData)
 
-  const {
-    fulfillmentType: savedFulfillmentType,
+  const { fulfillmentType, isArtsyShipping } = computedOrderData
 
-    isArtsyShipping,
-  } = savedOrderData
   const selectedShippingQuoteId =
     initialValues.shippingQuotes.selectedShippingQuoteId
 
-  const targetStep: ShippingRouteStep = useMemo(() => {
-    if (!savedFulfillmentType) {
+  const step: ShippingRouteStep = useMemo(() => {
+    if (!fulfillmentType) {
       return "fulfillment_details"
     }
     if (isArtsyShipping && !selectedShippingQuoteId) {
@@ -86,16 +83,16 @@ export const useComputedOrderContext = (
     if (isArtsyShipping && selectedShippingQuoteId) {
       return "ready_to_proceed"
     }
-    if (!!savedFulfillmentType && !isArtsyShipping) {
+    if (!!fulfillmentType && !isArtsyShipping) {
       return "ready_to_proceed"
     }
     return "fulfillment_details"
-  }, [isArtsyShipping, savedFulfillmentType, selectedShippingQuoteId])
+  }, [isArtsyShipping, fulfillmentType, selectedShippingQuoteId])
 
   return {
-    savedOrderData: savedOrderData,
+    computedOrderData,
     initialValues,
-    step: targetStep,
+    step,
     helpers: {
       fulfillmentDetails: useFulfillmentDetailsHelpers(),
     },
@@ -130,7 +127,7 @@ const useFulfillmentDetailsHelpers = (): ShippingContextProps["helpers"]["fulfil
 
 const getInitialValues = (
   props: ShippingProps,
-  orderData: ShippingContextProps["savedOrderData"]
+  orderData: ShippingContextProps["computedOrderData"]
 ): ShippingContextProps["initialValues"] => {
   const { me } = props
 
@@ -185,7 +182,7 @@ const getInitialValues = (
 
   // The user doesn't have a valid ship-to address, so we'll return empty values.
   // TODO: This doesn't account for matching the saved address id
-  // (that is still in savedOrderData). In addition the initial values
+  // (that is still in computedOrderData). In addition the initial values
   // are less relevant if the user has saved addresses - Setting country
   // doesn't matter.
   const initialFulfillmentValues: ShipValues["attributes"] = {
@@ -280,9 +277,9 @@ const getSavedFulfillmentData = (
 }
 
 // Compute and memoize data from the saved order.
-export const useLoadComputedData = (
+const useComputeOrderData = (
   props: ShippingProps
-): ShippingContextProps["savedOrderData"] => {
+): ShippingContextProps["computedOrderData"] => {
   const { me, order } = props
   const firstLineItem = extractNodes(order.lineItems)[0]!
   const firstArtwork = firstLineItem.artwork!

@@ -104,7 +104,7 @@ export const AddressModal: React.FC<Props> = ({
     modalAction.type === "editUserAddress"
       ? modalAction.address
       : {
-          country: shippingContext.savedOrderData.shipsFrom,
+          country: shippingContext.computedOrderData.shipsFrom,
           internalID: undefined,
           isDefault: false,
         }

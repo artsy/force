@@ -22,6 +22,16 @@ jest.mock("Utils/user", () => ({
   userHasLabFeature: jest.fn(),
 }))
 
+jest.mock("Apps/Order/Routes/Shipping2/ShippingContext", () => {
+  return {
+    useShippingContext: () => ({
+      computedOrderData: {
+        shipsFrom: "US",
+      },
+    }),
+  }
+})
+
 const errorBoxQuery = "Banner[data-test='credit-card-error']"
 
 // needed for modal contentAnimation

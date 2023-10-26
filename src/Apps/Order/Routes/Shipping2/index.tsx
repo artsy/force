@@ -51,7 +51,7 @@ import {
 import { FormikHelpers } from "formik"
 import {
   ShippingContext,
-  useComputedOrderContext,
+  useComputeOrderContext,
 } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import { createUserAddress } from "Apps/Order/Mutations/CreateUserAddress"
 import { useSystemContext } from "System/useSystemContext"
@@ -83,11 +83,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const { relayEnvironment } = useSystemContext()
   const { order, isCommittingMutation } = props
   const { trackEvent } = useTracking()
-  const orderContext = useComputedOrderContext(props)
+  const orderContext = useComputeOrderContext(props)
   const {
     initialValues,
-    savedOrderData,
-    step: activeStep,
+    computedOrderData,
+    step,
     helpers: { fulfillmentDetails: fulfillmentFormHelpers },
   } = orderContext
 
@@ -97,7 +97,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     isArtsyShipping,
     requiresArtsyShippingTo,
     shippingQuotes,
-  } = savedOrderData
+  } = computedOrderData
 
   const advanceToPayment = useCallback(() => {
     props.router.push(`/orders/${props.order.internalID}/payment`)
@@ -109,7 +109,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   // shipping quote refresh. the *selected shipping quote is not reset.*
   useEffect(() => {
     if (
-      savedOrderData.fulfillmentType === FulfillmentType.SHIP &&
+      computedOrderData.fulfillmentType === FulfillmentType.SHIP &&
       isArtsyShipping
     ) {
       handleSubmitFulfillmentDetails(initialValues.fulfillmentDetails)
@@ -117,17 +117,14 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const previousActiveStep = usePrevious(activeStep)
+  const previousStep = usePrevious(step)
 
   // Advance to payment when the order is ready to proceed unless it loaded that way
   useEffect(() => {
-    if (
-      activeStep === "ready_to_proceed" &&
-      previousActiveStep !== "ready_to_proceed"
-    ) {
+    if (step === "ready_to_proceed" && previousStep !== "ready_to_proceed") {
       advanceToPayment()
     }
-  }, [advanceToPayment, activeStep, previousActiveStep])
+  }, [advanceToPayment, step, previousStep])
 
   const [selectedShippingQuoteId, setSelectedShippingQuoteId] = useState<
     string | undefined
@@ -505,29 +502,29 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     handleSubmit: fulfillmentDetailsFormikHandleSubmit,
   } = fulfillmentFormHelpers
   const onContinueButtonPressed = useMemo(() => {
-    if (activeStep === "fulfillment_details") {
+    if (step === "fulfillment_details") {
       return (...args) => fulfillmentDetailsFormikHandleSubmit(...args)
     }
-    if (activeStep === "shipping_quotes") {
+    if (step === "shipping_quotes") {
       return selectShippingQuote
     }
-    if (activeStep === "ready_to_proceed") {
+    if (step === "ready_to_proceed") {
       return advanceToPayment
     }
   }, [
-    activeStep,
+    step,
     fulfillmentDetailsFormikHandleSubmit,
     selectShippingQuote,
     advanceToPayment,
   ])
 
   const disableSubmit = useMemo(() => {
-    if (activeStep === "fulfillment_details") {
+    if (step === "fulfillment_details") {
       return !fulfillmentFormHelpers.isValid
-    } else if (activeStep === "shipping_quotes") {
+    } else if (step === "shipping_quotes") {
       return !selectedShippingQuoteId
     }
-  }, [activeStep, fulfillmentFormHelpers.isValid, selectedShippingQuoteId])
+  }, [step, fulfillmentFormHelpers.isValid, selectedShippingQuoteId])
 
   const maybeShippingQuotesConnectionEdges =
     order.lineItems?.edges?.[0]?.node?.shippingQuoteOptions?.edges
