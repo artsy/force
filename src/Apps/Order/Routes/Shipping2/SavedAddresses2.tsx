@@ -47,8 +47,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     null
   )
   const {
-    selectedSavedAddressId,
-    availableShippingCountries,
+    savedOrderData: { availableShippingCountries, selectedSavedAddressId },
   } = useShippingContext()
 
   const { onSelect, me, relay } = props

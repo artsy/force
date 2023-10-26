@@ -10,7 +10,6 @@ import {
 } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ShippingQuotes_shippingQuotes$data } from "__generated__/ShippingQuotes_shippingQuotes.graphql"
-import { compact } from "lodash"
 
 export const shippingQuoteDescriptions = {
   // Domestic shipping quotes
@@ -58,7 +57,7 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
   selectedShippingQuoteId,
   ...rest
 }) => {
-  const quotes = compact(shippingQuotes?.map(quote => quote.node))
+  const quotes = shippingQuotes?.map(quote => quote.node!)
 
   if (!quotes || !quotes.length) {
     return null

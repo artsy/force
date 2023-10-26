@@ -268,7 +268,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
             <Button
               // prevent a parent formik context from treating this as a submit button
               type="button"
-              onClick={e => {
+              onClick={() => {
                 handleCloseModal({
                   label: "Back to Edit",
                   subject: modalTitle!,
@@ -285,7 +285,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
               onClick={e => {
                 // Because this is a type="submit" button, it will trigger the formik submit handler
                 // if it is inside a form. This is not the case here. We want to make this behavior
-                // more explicitly handled by the parent context.
+                // more explicitly handled by this component's `chooseAddress()` logic.
                 e.preventDefault()
                 if (selectedAddressKey) {
                   trackSelectedAddress({

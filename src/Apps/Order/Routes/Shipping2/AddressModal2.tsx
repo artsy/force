@@ -95,7 +95,9 @@ export const AddressModal: React.FC<Props> = ({
     null
   )
   const [showDialog, setShowDialog] = useState<boolean>(false)
-  const { shipsFrom } = useShippingContext()
+  const {
+    savedOrderData: { shipsFrom },
+  } = useShippingContext()
   if (!relayEnvironment) return null
   if (!modalAction) return null
 

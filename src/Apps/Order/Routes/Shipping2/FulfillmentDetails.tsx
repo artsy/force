@@ -27,7 +27,6 @@ import {
   Formik,
   FormikErrors,
   FormikHelpers,
-  FormikProps,
   FormikTouched,
   useFormikContext,
 } from "formik"
@@ -49,11 +48,11 @@ import { RouterLink } from "System/Router/RouterLink"
 
 export const ADDRESS_VALIDATION_SHAPE = {
   addressLine1: Yup.string().required("Street address is required"),
-  addressLine2: Yup.string(),
+  addressLine2: Yup.string().nullable(),
   city: Yup.string().required("City is required"),
   postalCode: postalCodeValidator,
   region: Yup.string().when("country", {
-    is: country => country === "US",
+    is: country => ["US", "CA"].includes(country),
     then: Yup.string().required("State is required"),
     otherwise: Yup.string(),
   }),
@@ -97,43 +96,19 @@ export interface ShipValues {
 export type FulfillmentValues = ShipValues | PickupValues
 
 export interface FulfillmentDetailsFormProps {
-  active: boolean
   onSubmit: (
     values: FulfillmentValues,
     formikHelpers?: FormikHelpers<FulfillmentValues>
   ) => void | Promise<any>
-  setFulfillmentFormHelpers: React.Dispatch<
-    React.SetStateAction<
-      Pick<
-        FormikProps<FulfillmentValues>,
-        "handleSubmit" | "isValid" | "values"
-      >
-    >
-  >
-  initialFulfillmentValues: FulfillmentValues
+
   me: FulfillmentDetailsForm_me$data
   order: FulfillmentDetailsForm_order$data
-  renderMissingShippingQuotesError: boolean
 }
 
 type AddressFormMode = "saved_addresses" | "new_address" | "pickup"
 
-export const FulfillmentDetails: FC<FulfillmentDetailsFormProps> = ({
-  active,
-  initialFulfillmentValues,
-  ...props
-}) => {
-  // // Current we do this from index (to refresh shipping quotes)
-  // const {
-  //   fulfillmentType: savedFulfillmentType,
-  //   fulfillmentDetails: savedFulfillmentDetails,
-  // } = useShippingContext()
-  // useEffect(() => {
-  //   if (savedFulfillmentType === FulfillmentType.SHIP) {
-  //     props.onSubmit(savedFulfillmentDetails)
-  //   }
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+export const FulfillmentDetails: FC<FulfillmentDetailsFormProps> = props => {
+  const { initialValues } = useShippingContext()
 
   const addressVerificationUSEnabled = !!useFeatureFlag(
     "address_verification_us"
@@ -153,19 +128,14 @@ export const FulfillmentDetails: FC<FulfillmentDetailsFormProps> = ({
       values.fulfillmentType === FulfillmentType.SHIP &&
       !hasSavedAddresses &&
       enabledForAddress &&
-      addressVerificationCount < 1
+      values.attributes.addressVerifiedBy === null
     )
-    // && addressFormMode === "new_address"
   }
 
   // trigger address verification by setting this to true
   const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)
-  const [addressVerificationCount, setAddressVerificationCount] = useState<
-    number
-  >(0)
 
   const handleVerificationComplete = async () => {
-    setAddressVerificationCount(addressVerificationCount + 1)
     setVerifyAddressNow(false)
   }
 
@@ -180,19 +150,13 @@ export const FulfillmentDetails: FC<FulfillmentDetailsFormProps> = ({
 
   return (
     <Formik<FulfillmentValues>
-      initialValues={initialFulfillmentValues}
+      initialValues={initialValues.fulfillmentDetails}
       validationSchema={VALIDATION_SCHEMA}
       onSubmit={handleSubmit}
     >
       <FulfillmentDetailsFormLayout
-        renderMissingShippingQuotesError={
-          props.renderMissingShippingQuotesError
-        }
         order={props.order}
-        onSubmit={props.onSubmit}
         me={props.me}
-        setFulfillmentFormHelpers={props.setFulfillmentFormHelpers}
-        active={active}
         verifyAddressNow={verifyAddressNow}
         addressVerificationComplete={handleVerificationComplete}
       />
@@ -309,29 +273,40 @@ export const FulfillmentDetailsFragmentContainer = createFragmentContainer(
 interface LayoutProps
   extends Pick<
     FulfillmentDetailsFormProps,
-    | "order"
-    | "me"
-    | "setFulfillmentFormHelpers"
-    | "active"
-    | "renderMissingShippingQuotesError"
-    | "onSubmit"
+    "order" | "me"
+    // | "onSubmit"
   > {
   verifyAddressNow: boolean
   addressVerificationComplete: () => Promise<void>
 }
 
 const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
-  const { active, onSubmit: submitWithoutFormik } = props
+  const {
+    step,
+    savedOrderData: {
+      isArtsyShipping,
+      shippingQuotes,
+      lockShippingCountryTo,
+      fulfillmentType: savedFulfillmentType,
+      selectedSavedAddressId: savedSelectedAddressId,
+    },
+    helpers: {
+      fulfillmentDetails: { setFulfillmentFormHelpers },
+    },
+  } = useShippingContext()
+  const active = step === "fulfillment_details"
+
+  const renderMissingShippingQuotesError = !!(
+    isArtsyShipping &&
+    shippingQuotes &&
+    shippingQuotes.length === 0
+  )
+
   const firstArtwork = extractNodes(props.order.lineItems)[0]!.artwork!
 
   const savedAddresses = compact(
     extractNodes(props.me?.addressConnection) ?? []
   )
-  const {
-    lockShippingCountryTo,
-    fulfillmentType: savedFulfillmentType,
-    selectedSavedAddressId: savedSelectedAddressId,
-  } = useShippingContext()
 
   const availableFulfillmentTypes: FulfillmentType[] = firstArtwork.pickupAvailable
     ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
@@ -353,7 +328,7 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
   // Pass some key formik bits up to the shipping route
   useEffect(() => {
     if (active) {
-      props.setFulfillmentFormHelpers({
+      setFulfillmentFormHelpers({
         handleSubmit: handleSubmit,
         isValid: isValid,
         values: values,
@@ -378,7 +353,7 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
     }
     await setValues(newValues)
     await props.addressVerificationComplete()
-    submitWithoutFormik(newValues)
+    formikContext.submitForm()
   }
 
   const addressFormMode: AddressFormMode =
@@ -490,7 +465,7 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
           <Text variant="lg-display" mb="1">
             Delivery address
           </Text>{" "}
-          {props.renderMissingShippingQuotesError && (
+          {renderMissingShippingQuotesError && (
             <ArtaMissingShippingQuoteMessage />
           )}
           {/* SAVED ADDRESSES */}

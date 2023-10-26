@@ -13,6 +13,17 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
+jest.mock("Apps/Order/Routes/Shipping2/ShippingContext", () => {
+  return {
+    useShippingContext: () => ({
+      savedOrderData: {
+        availableShippingCountries: ["US"],
+        selectedSavedAddressId: "2",
+      },
+    }),
+  }
+})
+
 class SavedAddressesTestPage extends RootTestPage {
   async selectEdit() {
     this.find(`[data-test="editAddressInShipping"]`)

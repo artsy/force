@@ -175,10 +175,12 @@ const meWithAddresses: Shipping2TestQuery$rawResponse["me"] = Object.assign(
 )
 
 const saveAndContinue = async () => {
-  await userEvent.click(screen.getByText("Save and Continue"))
-  // TODO: We might be able to avoid this by using `waitFor` from
-  // `@testing-library/react` if we know what to wait for.
-  await flushPromiseQueue()
+  await waitFor(async () => {
+    await userEvent.click(screen.getByText("Save and Continue"))
+    // TODO: We might be able to avoid this by using `waitFor` from
+    // `@testing-library/react` if we know what to wait for.
+    await flushPromiseQueue()
+  })
 }
 
 const recommendedAddress = {
@@ -188,6 +190,11 @@ const recommendedAddress = {
   region: "NY",
   postalCode: "10013",
   country: "US",
+}
+
+// TODO: Is there a better way than matching on the error string?
+const getAllInputErrors = () => {
+  return screen.getAllByText(/[\w\s]is required/)
 }
 
 const verifyAddressWithSuggestions = async (relayEnv, input, suggested) => {
@@ -369,7 +376,7 @@ describe("Shipping", () => {
         expect(screen.getByTestId("AddressForm_country")).toBeEnabled()
       })
 
-      it.skip("sets shipping on order and saves address on user", async () => {
+      it("sets shipping on order and saves address on user", async () => {
         mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
         renderWithRelay({
           CommerceOrder: () => order,
@@ -408,7 +415,7 @@ describe("Shipping", () => {
         })
       })
 
-      it.skip("sets shipping on order but does not save address if save address is not checked", async () => {
+      it("sets shipping on order but does not save address if save address is not checked", async () => {
         mockCommitMutation.mockResolvedValueOnce(settingOrderShipmentSuccess)
         renderWithRelay({
           CommerceOrder: () => order,
@@ -602,7 +609,7 @@ describe("Shipping", () => {
       })
 
       describe("form validations", () => {
-        it.skip("does not submit an empty form", async () => {
+        it("does not submit an empty form", async () => {
           renderWithRelay({
             CommerceOrder: () => order,
             Me: () => meWithoutAddress,
@@ -618,25 +625,35 @@ describe("Shipping", () => {
             Me: () => meWithoutAddress,
           })
 
-          userEvent.type(screen.getByPlaceholderText("Full name"), "First Last")
+          await userEvent.paste(
+            screen.getByPlaceholderText("Full name"),
+            "First Last"
+          )
 
-          await saveAndContinue()
+          await waitFor(async () => {
+            await saveAndContinue()
+          })
           expect(mockCommitMutation).not.toBeCalled()
         })
 
-        it.skip("requires some fields", async () => {
+        it("requires some fields", async () => {
           renderWithRelay({
             CommerceOrder: () => order,
             Me: () => meWithoutAddress,
           })
 
           await saveAndContinue()
-          expect(
-            screen.getAllByText(/[\w\s]is required/).length
-          ).toBeGreaterThanOrEqual(1)
+          expect(getAllInputErrors().map(el => el.textContent)).toEqual([
+            "Full name is required",
+            "Street address is required",
+            "City is required",
+            "State is required",
+            "ZIP code is required",
+            "Phone number is required",
+          ])
         })
 
-        it.skip("requires a phone number", async () => {
+        it("requires a phone number", async () => {
           renderWithRelay({
             CommerceOrder: () => order,
             Me: () => meWithoutAddress,
@@ -654,11 +671,13 @@ describe("Shipping", () => {
           })
           await saveAndContinue()
 
-          // TODO: form validation is triggered for collapsed form unnecessarily
-          expect(screen.getAllByText(/[\w\s]is required/)).toHaveLength(2)
+          expect(
+            screen.getByText("Phone number is required")
+          ).toBeInTheDocument()
           expect(mockCommitMutation).not.toHaveBeenCalled()
         })
 
+        // TODO: New custom postal code validator needs to be relaxed to pass this
         it.skip("allows a missing postal code and state/province if the selected country is not US or Canada", async () => {
           renderWithRelay({
             CommerceOrder: () => order,
@@ -683,7 +702,7 @@ describe("Shipping", () => {
           expect(mockCommitMutation).toHaveBeenCalled()
         })
 
-        it.skip("only shows validation erros on touched inputs before submission", async () => {
+        it("only shows validation errors on touched inputs before submission", async () => {
           renderWithRelay({
             CommerceOrder: () => order,
             Me: () => meWithoutAddress,
@@ -692,11 +711,16 @@ describe("Shipping", () => {
           const name = screen.getByPlaceholderText("Full name")
           userEvent.type(name, "First Last")
           userEvent.clear(name)
+          userEvent.tab()
 
-          expect(screen.getByText(/[\w\s]is required/)).toBeInTheDocument()
+          await waitFor(async () => {
+            expect(getAllInputErrors().map(el => el.textContent)).toEqual([
+              "Full name is required",
+            ])
+          })
         })
 
-        it.skip("shows all validation erros including untouched inputs after submission", async () => {
+        it("shows all validation errors including untouched inputs after submission", async () => {
           renderWithRelay({
             CommerceOrder: () => order,
             Me: () => meWithoutAddress,
@@ -707,9 +731,7 @@ describe("Shipping", () => {
           userEvent.clear(name)
 
           await saveAndContinue()
-          expect(
-            screen.getAllByText(/[\w\s]is required/).length
-          ).toBeGreaterThan(1)
+          expect(getAllInputErrors().length).toBeGreaterThan(1)
         })
       })
 
@@ -795,7 +817,7 @@ describe("Shipping", () => {
             )
 
             mockCommitMutation
-              // .mockResolvedValueOnce(settingOrderShipmentSuccess)
+              .mockResolvedValueOnce(settingOrderShipmentSuccess)
               .mockResolvedValueOnce(updateAddressSuccess)
             // Clicking "Use This Address" on verification modal automatically
             // sets shipping on the order and proceeds to the next step.
@@ -1143,7 +1165,9 @@ describe("Shipping", () => {
           await flushPromiseQueue()
 
           // Set shipping on load for the default address
-          expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+          await waitFor(() => {
+            expect(mockCommitMutation).toHaveBeenCalledTimes(1)
+          })
           let mutationArg = mockCommitMutation.mock.calls[0][0]
           expect(mutationArg.mutation.default.operation.name).toEqual(
             "SetShippingMutation"
@@ -1154,14 +1178,15 @@ describe("Shipping", () => {
             checked: true,
           })
           await userEvent.click(within(selectedAddress).getByText("Edit"))
-          await flushPromiseQueue()
 
-          expect(screen.getByText("Edit address")).toBeVisible()
-          expect(screen.getByDisplayValue("401 Broadway")).toBeInTheDocument()
-          expect(screen.getByDisplayValue("Floor 25")).toBeInTheDocument()
-          expect(screen.getByDisplayValue("New York")).toBeInTheDocument()
-          expect(screen.getByDisplayValue("NY")).toBeInTheDocument()
-          expect(screen.getByDisplayValue("10013")).toBeInTheDocument()
+          await waitFor(async () => {
+            expect(screen.getByText("Edit address")).toBeVisible()
+            expect(screen.getByDisplayValue("401 Broadway")).toBeInTheDocument()
+            expect(screen.getByDisplayValue("Floor 25")).toBeInTheDocument()
+            expect(screen.getByDisplayValue("New York")).toBeInTheDocument()
+            expect(screen.getByDisplayValue("NY")).toBeInTheDocument()
+            expect(screen.getByDisplayValue("10013")).toBeInTheDocument()
+          })
         })
 
         it.skip("updates the address after submitting the modal form", async () => {
@@ -2298,16 +2323,18 @@ describe("Shipping", () => {
   })
 
   describe("with pickup", () => {
-    it.skip("shows an empty phone number input with saved addresses", async () => {
+    it("shows an empty phone number input with saved addresses", async () => {
       renderWithRelay({
         CommerceOrder: () => order,
         Me: () => meWithAddresses,
       })
 
-      userEvent.click(screen.getByRole("radio", { name: /Arrange for pickup/ }))
-      const phoneNumber = screen.getAllByPlaceholderText(
+      await userEvent.click(
+        screen.getByRole("radio", { name: /Arrange for pickup/ })
+      )
+      const phoneNumber = screen.getByPlaceholderText(
         "Add phone number including country code"
-      )[1]
+      )
       // TODO: need a better way to check the input is displayed/expanded (height > 0)
       expect(phoneNumber).toHaveAttribute("tabindex", "0")
       expect(phoneNumber).toHaveValue("")
