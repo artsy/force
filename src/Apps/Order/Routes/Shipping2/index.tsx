@@ -51,7 +51,7 @@ import {
 import { FormikHelpers } from "formik"
 import {
   ShippingContext,
-  useLoadOrder,
+  useComputedOrderContext,
 } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import { createUserAddress } from "Apps/Order/Mutations/CreateUserAddress"
 import { useSystemContext } from "System/useSystemContext"
@@ -83,11 +83,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const { relayEnvironment } = useSystemContext()
   const { order, isCommittingMutation } = props
   const { trackEvent } = useTracking()
-  const orderContext = useLoadOrder(props)
+  const orderContext = useComputedOrderContext(props)
   const {
     initialValues,
     savedOrderData,
-    step: currentStep,
+    step: activeStep,
     helpers: { fulfillmentDetails: fulfillmentFormHelpers },
   } = orderContext
 
@@ -117,17 +117,17 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const previousActiveStep = usePrevious(currentStep)
+  const previousActiveStep = usePrevious(activeStep)
 
   // Advance to payment when the order is ready to proceed unless it loaded that way
   useEffect(() => {
     if (
-      currentStep === "ready_to_proceed" &&
+      activeStep === "ready_to_proceed" &&
       previousActiveStep !== "ready_to_proceed"
     ) {
       advanceToPayment()
     }
-  }, [advanceToPayment, currentStep, previousActiveStep])
+  }, [advanceToPayment, activeStep, previousActiveStep])
 
   const [selectedShippingQuoteId, setSelectedShippingQuoteId] = useState<
     string | undefined
@@ -505,29 +505,29 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     handleSubmit: fulfillmentDetailsFormikHandleSubmit,
   } = fulfillmentFormHelpers
   const onContinueButtonPressed = useMemo(() => {
-    if (currentStep === "fulfillment_details") {
+    if (activeStep === "fulfillment_details") {
       return (...args) => fulfillmentDetailsFormikHandleSubmit(...args)
     }
-    if (currentStep === "shipping_quotes") {
+    if (activeStep === "shipping_quotes") {
       return selectShippingQuote
     }
-    if (currentStep === "ready_to_proceed") {
+    if (activeStep === "ready_to_proceed") {
       return advanceToPayment
     }
   }, [
-    currentStep,
+    activeStep,
     fulfillmentDetailsFormikHandleSubmit,
     selectShippingQuote,
     advanceToPayment,
   ])
 
   const disableSubmit = useMemo(() => {
-    if (currentStep === "fulfillment_details") {
+    if (activeStep === "fulfillment_details") {
       return !fulfillmentFormHelpers.isValid
-    } else if (currentStep === "shipping_quotes") {
+    } else if (activeStep === "shipping_quotes") {
       return !selectedShippingQuoteId
     }
-  }, [currentStep, fulfillmentFormHelpers.isValid, selectedShippingQuoteId])
+  }, [activeStep, fulfillmentFormHelpers.isValid, selectedShippingQuoteId])
 
   const maybeShippingQuotesConnectionEdges =
     order.lineItems?.edges?.[0]?.node?.shippingQuoteOptions?.edges

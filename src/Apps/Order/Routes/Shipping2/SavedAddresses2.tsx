@@ -46,9 +46,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const [activeModal, setActiveModal] = useState<AddressModalAction | null>(
     null
   )
-  const {
-    savedOrderData: { availableShippingCountries, selectedSavedAddressId },
-  } = useShippingContext()
+  const shippingContext = useShippingContext()
 
   const { onSelect, me, relay } = props
 
@@ -61,8 +59,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   >(
     getBestAvailableAddress(
       addressList,
-      selectedSavedAddressId ?? undefined,
-      availableShippingCountries
+      shippingContext.savedOrderData.selectedSavedAddressId ?? undefined,
+      shippingContext.savedOrderData.availableShippingCountries
     )?.internalID
   )
 
@@ -75,16 +73,16 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       setSelectedAddressID(
         getBestAvailableAddress(
           addressList,
-          selectedSavedAddressId ?? undefined,
-          availableShippingCountries
+          shippingContext.savedOrderData.selectedSavedAddressId ?? undefined,
+          shippingContext.savedOrderData.availableShippingCountries
         )?.internalID
       )
     }
   }, [
     selectedAddressPresent,
     addressList,
-    selectedSavedAddressId,
-    availableShippingCountries,
+    shippingContext.savedOrderData.selectedSavedAddressId,
+    shippingContext.savedOrderData.availableShippingCountries,
   ])
 
   const handleSelectAddress = useCallback(

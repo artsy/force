@@ -62,7 +62,9 @@ export const useShippingContext = () => {
 // Get information from the order and user, savedOrderData (shared, computed context about order)
 // initial values for forms, and the current step in the shipping route
 // values for forms
-export const useLoadOrder = (props: ShippingProps): ShippingContextProps => {
+export const useComputedOrderContext = (
+  props: ShippingProps
+): ShippingContextProps => {
   const savedOrderData = useLoadComputedData(props)
   const initialValues = getInitialValues(props, savedOrderData)
 
@@ -131,24 +133,22 @@ const getInitialValues = (
   orderData: ShippingContextProps["savedOrderData"]
 ): ShippingContextProps["initialValues"] => {
   const { me } = props
-  const {
-    fulfillmentType: savedFulfillmentType,
-    fulfillmentDetails: savedFulfillmentDetails,
-    shippingQuotes,
-  } = orderData
+
   const selectedShippingQuote =
-    (shippingQuotes && shippingQuotes.find(quote => quote.isSelected)) || null
+    (orderData.shippingQuotes &&
+      orderData.shippingQuotes.find(quote => quote.isSelected)) ||
+    null
 
   const initialShippingQuotes = {
     selectedShippingQuoteId: selectedShippingQuote?.id,
   }
-  if (savedFulfillmentType) {
+  if (orderData.fulfillmentType) {
     return {
       shippingQuotes: initialShippingQuotes,
       fulfillmentDetails: {
-        fulfillmentType: savedFulfillmentType,
+        fulfillmentType: orderData.fulfillmentType,
         attributes: {
-          ...addressWithFallbackValues(savedFulfillmentDetails),
+          ...addressWithFallbackValues(orderData.fulfillmentDetails),
           saveAddress: false,
           addressVerifiedBy: null,
         },
