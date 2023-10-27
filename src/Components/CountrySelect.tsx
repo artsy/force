@@ -326,6 +326,8 @@ export const ALL_COUNTRY_SELECT_OPTIONS = uniqBy(
 )
 
 export const ALL_COUNTRY_CODES = ALL_COUNTRY_SELECT_OPTIONS.map(c => c.value)
+
+// TODO: This is also defined in { COUNTRIES_IN_EUROPEAN_UNION } from "@artsy/commerce_helpers"
 export const EU_COUNTRY_CODES = EU_COUNTRY_SELECT_OPTIONS.map(c => c.value)
 
 export const COUNTRY_CODE_TO_COUNTRY_NAME = COUNTRY_SELECT_OPTIONS.reduce(

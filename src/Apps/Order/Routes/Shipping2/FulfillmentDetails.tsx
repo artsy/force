@@ -27,11 +27,10 @@ import {
   Formik,
   FormikErrors,
   FormikHelpers,
-  FormikProps,
   FormikTouched,
   useFormikContext,
 } from "formik"
-import { compact } from "lodash"
+import { compact, pick } from "lodash"
 import { FC, useCallback, useEffect, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import * as Yup from "yup"
@@ -49,10 +48,14 @@ import { RouterLink } from "System/Router/RouterLink"
 
 export const ADDRESS_VALIDATION_SHAPE = {
   addressLine1: Yup.string().required("Street address is required"),
-  addressLine2: Yup.string(),
+  addressLine2: Yup.string().nullable(),
   city: Yup.string().required("City is required"),
   postalCode: postalCodeValidator,
-  region: Yup.string().required("State, province or region is required"),
+  region: Yup.string().when("country", {
+    is: country => ["US", "CA"].includes(country),
+    then: Yup.string().required("State is required"),
+    otherwise: Yup.string(),
+  }),
   country: Yup.string().required("Country is required"),
 }
 const VALIDATION_SCHEMA = Yup.object().shape({
@@ -93,64 +96,52 @@ export interface ShipValues {
 export type FulfillmentValues = ShipValues | PickupValues
 
 export interface FulfillmentDetailsFormProps {
-  active: boolean
   onSubmit: (
     values: FulfillmentValues,
-    formikHelpers: FormikHelpers<FulfillmentValues>
+    formikHelpers?: FormikHelpers<FulfillmentValues>
   ) => void | Promise<any>
-  setFulfillmentFormHelpers: React.Dispatch<
-    React.SetStateAction<
-      Pick<
-        FormikProps<FulfillmentValues>,
-        "handleSubmit" | "isValid" | "values"
-      >
-    >
-  >
-  initialFulfillmentValues: FulfillmentValues
+
   me: FulfillmentDetailsForm_me$data
   order: FulfillmentDetailsForm_order$data
-  renderMissingShippingQuotesError: boolean
 }
 
 type AddressFormMode = "saved_addresses" | "new_address" | "pickup"
 
-export const FulfillmentDetails: FC<FulfillmentDetailsFormProps> = ({
-  active,
-  initialFulfillmentValues,
-  ...props
-}) => {
-  // // Current we do this from index (to refresh shipping quotes)
-  // const {
-  //   fulfillmentType: savedFulfillmentType,
-  //   fulfillmentDetails: savedFulfillmentDetails,
-  // } = useShippingContext()
-  // useEffect(() => {
-  //   if (savedFulfillmentType === FulfillmentType.SHIP) {
-  //     props.onSubmit(savedFulfillmentDetails)
-  //   }
-  // // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+export const FulfillmentDetails: FC<FulfillmentDetailsFormProps> = props => {
+  const shippingContext = useShippingContext()
 
   const addressVerificationUSEnabled = !!useFeatureFlag(
     "address_verification_us"
   )
+  const addressVerificationIntlEnabled = !!useFeatureFlag(
+    "address_verification_intl"
+  )
 
   const shouldVerifyAddressOnSubmit = (values: FulfillmentValues) => {
+    const enabledForAddress =
+      (values as ShipValues).attributes.country === "US"
+        ? addressVerificationUSEnabled
+        : addressVerificationIntlEnabled
+
+    const hasSavedAddresses = !!props.me.addressConnection?.edges?.length
     return (
       values.fulfillmentType === FulfillmentType.SHIP &&
-      values.attributes.country === "US" &&
-      addressVerificationUSEnabled
+      !hasSavedAddresses &&
+      enabledForAddress &&
+      values.attributes.addressVerifiedBy === null
     )
-    // && addressFormMode === "new_address"
   }
 
   // trigger address verification by setting this to true
   const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)
 
+  const handleVerificationComplete = () => {
+    setVerifyAddressNow(false)
+  }
+
   const handleSubmit = (values, helpers) => {
     if (shouldVerifyAddressOnSubmit(values)) {
       setVerifyAddressNow(true)
-      helpers.setSubmitting(false)
       return
     } else {
       return props.onSubmit(values, helpers)
@@ -159,21 +150,15 @@ export const FulfillmentDetails: FC<FulfillmentDetailsFormProps> = ({
 
   return (
     <Formik<FulfillmentValues>
-      initialValues={initialFulfillmentValues}
+      initialValues={shippingContext.initialValues.fulfillmentDetails}
       validationSchema={VALIDATION_SCHEMA}
       onSubmit={handleSubmit}
     >
       <FulfillmentDetailsFormLayout
-        onSubmit={props.onSubmit}
-        renderMissingShippingQuotesError={
-          props.renderMissingShippingQuotesError
-        }
         order={props.order}
         me={props.me}
-        setFulfillmentFormHelpers={props.setFulfillmentFormHelpers}
-        active={active}
         verifyAddressNow={verifyAddressNow}
-        addressVerificationComplete={() => setVerifyAddressNow(false)}
+        onAddressVerificationComplete={handleVerificationComplete}
       />
     </Formik>
   )
@@ -286,31 +271,26 @@ export const FulfillmentDetailsFragmentContainer = createFragmentContainer(
 )
 
 interface LayoutProps
-  extends Pick<
-    FulfillmentDetailsFormProps,
-    | "order"
-    | "me"
-    | "setFulfillmentFormHelpers"
-    | "onSubmit"
-    | "active"
-    | "renderMissingShippingQuotesError"
-  > {
+  extends Pick<FulfillmentDetailsFormProps, "order" | "me"> {
   verifyAddressNow: boolean
-  addressVerificationComplete: () => void
+  onAddressVerificationComplete: () => void
 }
 
 const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
-  const { active } = props
+  const shippingContext = useShippingContext()
+  const active = shippingContext.step === "fulfillment_details"
+
+  const renderMissingShippingQuotesError = !!(
+    shippingContext.computedOrderData.isArtsyShipping &&
+    shippingContext.computedOrderData.shippingQuotes &&
+    shippingContext.computedOrderData.shippingQuotes.length === 0
+  )
+
   const firstArtwork = extractNodes(props.order.lineItems)[0]!.artwork!
 
   const savedAddresses = compact(
     extractNodes(props.me?.addressConnection) ?? []
   )
-  const {
-    lockShippingCountryTo,
-    fulfillmentType: savedFulfillmentType,
-    selectedSavedAddressId: savedSelectedAddressId,
-  } = useShippingContext()
 
   const availableFulfillmentTypes: FulfillmentType[] = firstArtwork.pickupAvailable
     ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
@@ -332,7 +312,7 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
   // Pass some key formik bits up to the shipping route
   useEffect(() => {
     if (active) {
-      props.setFulfillmentFormHelpers({
+      shippingContext.helpers.fulfillmentDetails.setFulfillmentFormHelpers({
         handleSubmit: handleSubmit,
         isValid: isValid,
         values: values,
@@ -340,6 +320,25 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, handleSubmit, isValid, values])
+
+  const handleCloseVerification = async () => {
+    await setFieldValue("attributes.addressVerifiedBy", AddressVerifiedBy.USER)
+    await props.onAddressVerificationComplete()
+  }
+
+  const handleChooseAddress = async (verifiedBy, chosenAddress) => {
+    const newValues = {
+      ...values,
+      attributes: {
+        ...values.attributes,
+        ...chosenAddress,
+        addressVerifiedBy: verifiedBy,
+      },
+    }
+    await setValues(newValues)
+    await props.onAddressVerificationComplete()
+    formikContext.submitForm()
+  }
 
   const addressFormMode: AddressFormMode =
     values.fulfillmentType === FulfillmentType.PICKUP
@@ -393,12 +392,27 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
     fetchForAutocomplete,
     fetchSecondarySuggestions,
     ...autocomplete
-    // TODO: consider extraction into a component (everything after formikProps => )
-    // eslint-disable-next-line react-hooks/rules-of-hooks
   } = useAddressAutocomplete(values.attributes as ShipValues["attributes"])
 
   return (
     <Form data-testid="FulfillmentDetails_form">
+      {props.verifyAddressNow && (
+        <AddressVerificationFlowQueryRenderer
+          data-testid="address-verification-flow"
+          address={
+            pick(values.attributes, [
+              "addressLine1",
+              "addressLine2",
+              "city",
+              "region",
+              "postalCode",
+              "country",
+            ]) as ShipValues["attributes"]
+          }
+          onClose={handleCloseVerification}
+          onChosenAddress={handleChooseAddress}
+        />
+      )}
       {availableFulfillmentTypes.length > 1 && (
         <>
           <RadioGroup
@@ -435,7 +449,7 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
           <Text variant="lg-display" mb="1">
             Delivery address
           </Text>{" "}
-          {props.renderMissingShippingQuotesError && (
+          {renderMissingShippingQuotesError && (
             <ArtaMissingShippingQuoteMessage />
           )}
           {/* SAVED ADDRESSES */}
@@ -456,42 +470,11 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
             data-testid="addressFormCollapse"
             open={
               addressFormMode === "new_address" ||
-              (savedFulfillmentType === FulfillmentType.SHIP &&
-                !savedSelectedAddressId)
+              (shippingContext.computedOrderData.fulfillmentType ===
+                FulfillmentType.SHIP &&
+                !shippingContext.computedOrderData.selectedSavedAddressId)
             }
           >
-            {props.verifyAddressNow && (
-              <AddressVerificationFlowQueryRenderer
-                data-testid="address-verification-flow"
-                address={{
-                  addressLine1: values.attributes.addressLine1,
-                  addressLine2: values.attributes.addressLine2,
-                  country: values.attributes.country,
-                  city: values.attributes.city,
-                  region: values.attributes.region,
-                  postalCode: values.attributes.postalCode,
-                }}
-                onClose={() => {
-                  setFieldValue(
-                    "attributes.addressVerifiedBy",
-                    AddressVerifiedBy.USER
-                  )
-                  props.addressVerificationComplete()
-                }}
-                onChosenAddress={(verifiedBy, chosenAddress) => {
-                  setValues({
-                    ...values,
-                    attributes: {
-                      ...values.attributes,
-                      ...chosenAddress,
-                      addressVerifiedBy: verifiedBy,
-                    },
-                  })
-                  props.addressVerificationComplete()
-                }}
-              />
-            )}
-
             <GridColumns>
               <Column span={12}>
                 <Input
@@ -525,16 +508,22 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
                     setFieldValue(`attributes.country`, selected)
                   }
                   disabled={
-                    !!lockShippingCountryTo && lockShippingCountryTo !== "EU"
+                    !!shippingContext.computedOrderData.lockShippingCountryTo &&
+                    shippingContext.computedOrderData.lockShippingCountryTo !==
+                      "EU"
                   }
-                  euShippingOnly={lockShippingCountryTo === "EU"}
+                  euShippingOnly={
+                    shippingContext.computedOrderData.lockShippingCountryTo ===
+                    "EU"
+                  }
                   data-testid="AddressForm_country"
                 />
-                {lockShippingCountryTo && (
+                {shippingContext.computedOrderData.lockShippingCountryTo && (
                   <>
                     <Spacer x={0.5} y={0.5} />
                     <Text variant="xs" color="black60">
-                      {lockShippingCountryTo === "EU"
+                      {shippingContext.computedOrderData
+                        .lockShippingCountryTo === "EU"
                         ? "Continental Europe shipping only."
                         : "Domestic shipping only."}
                     </Text>
