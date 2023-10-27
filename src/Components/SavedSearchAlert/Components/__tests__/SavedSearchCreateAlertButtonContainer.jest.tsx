@@ -12,7 +12,6 @@ jest.mock("react-tracking")
 jest.mock("Components/AuthDialog/useAuthDialog")
 
 const savedSearchEntity: SavedSearchEntity = {
-  placeholder: "placeholder-label",
   defaultCriteria: {
     artistIDs: [
       {

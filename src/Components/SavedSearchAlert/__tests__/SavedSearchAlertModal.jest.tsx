@@ -22,7 +22,6 @@ const formInitialValues: SavedSearchAlertFormValues = {
 }
 
 const savedSearchEntity: SavedSearchEntity = {
-  placeholder: "Test Artist",
   defaultCriteria: {
     artistIDs: [
       {

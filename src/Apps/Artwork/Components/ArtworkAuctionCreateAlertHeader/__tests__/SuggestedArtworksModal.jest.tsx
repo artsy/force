@@ -6,7 +6,6 @@ import { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 
 describe("SuggestedArtworksModal", () => {
   const savedSearchEntity: SavedSearchEntity = {
-    placeholder: "Test Artist",
     defaultCriteria: {
       artistIDs: [
         {

@@ -27,7 +27,6 @@ const ArtworkSidebarCreateArtworkAlert: React.FC<ArtworkSidebarCreateArtworkAler
   const artists = compact(artwork.artists)
   const attributionClass = compact([artwork.attributionClass?.internalID])
   const artistIDs = artists.map(artist => artist.internalID)
-  const placeholder = `Artworks like: ${artwork.title!}`
 
   const defaultArtistsCriteria: SavedSearchEntityCriteria[] = artists.map(
     artist => ({
@@ -37,7 +36,6 @@ const ArtworkSidebarCreateArtworkAlert: React.FC<ArtworkSidebarCreateArtworkAler
   )
 
   const entity: SavedSearchEntity = {
-    placeholder,
     defaultCriteria: {
       artistIDs: defaultArtistsCriteria,
     },
