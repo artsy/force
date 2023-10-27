@@ -5,6 +5,7 @@ import {
   DEFAULT_PRICE_RANGE,
 } from "Components/PriceRange/constants"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
+import { useFeatureFlag } from "System/useFeatureFlag"
 import { FC } from "react"
 import { useTranslation } from "react-i18next"
 
@@ -22,18 +23,29 @@ export const PriceRangeFilter: FC<PricaRangeFilterProps> = ({
     setCriteriaValue("priceRange", updatedRange.join("-"))
   }
 
-  return (
-    <Expandable
-      label={t("createAlertModal.setPriceRange")}
-      expanded={expanded}
-      borderColor="white100"
-    >
-      <Spacer y={2} />
+  const addFiltersEnabled = useFeatureFlag("onyx_create-alert-filters-screen")
 
-      <PriceRange
-        priceRange={criteria.priceRange ?? DEFAULT_PRICE_RANGE}
-        onPriceRangeUpdate={handlePriceRangeUpdate}
-      />
-    </Expandable>
+  return (
+    <>
+      {!addFiltersEnabled ? (
+        <Expandable
+          label={t("createAlertModal.setPriceRange")}
+          expanded={expanded}
+          borderColor="white100"
+        >
+          <Spacer y={2} />
+
+          <PriceRange
+            priceRange={criteria.priceRange ?? DEFAULT_PRICE_RANGE}
+            onPriceRangeUpdate={handlePriceRangeUpdate}
+          />
+        </Expandable>
+      ) : (
+        <PriceRange
+          priceRange={criteria.priceRange ?? DEFAULT_PRICE_RANGE}
+          onPriceRangeUpdate={handlePriceRangeUpdate}
+        />
+      )}
+    </>
   )
 }

@@ -32,11 +32,12 @@ export const CreateAlertModal: React.FC<CreateAlertModalProps> = ({
           : { backgroundColor: "transparent" }
       }
       dialogProps={{
-        width: ["100%", 900],
-        height: ["100%", "90%"],
-        maxHeight: [null, 800],
+        width: ["100%", 440],
+        // height: "auto",
+        // maxHeight: [null, 730],
       }}
       {...modalProps}
+      title="Create Alert"
     >
       <Box
         width="100%"
@@ -49,12 +50,12 @@ export const CreateAlertModal: React.FC<CreateAlertModalProps> = ({
           ...(isMounted
             ? {
                 opacity: 1,
-                transform: "translateY(0)",
-                transition: "opacity 100ms, transform 250ms",
+                transform: "translateX(0)",
+                transition: "opacity 5000ms, transform 5500ms",
               }
             : {
                 opacity: 0,
-                transform: "translateY(10px)",
+                transform: "translateX(-2000px)",
               }),
         }}
         {...boxProps}

@@ -1,5 +1,6 @@
-import { Button, Text } from "@artsy/palette"
-import { SavedSearchAlertModal } from "Components/SavedSearchAlert/FiltersSavedSearchAlertModal"
+import { Box, Button, Text } from "@artsy/palette"
+import { useCreateAlertFadeTransition } from "Components/SavedSearchAlert/Components/CreateAlertModalTransition"
+import { FiltersSavedSearchAlertModal } from "Components/SavedSearchAlert/FiltersSavedSearchAlertModal"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 
@@ -13,7 +14,9 @@ export const CreateAlertDetailsStep: FC<CreateAlertDetailsStepProps> = ({
   onSubmit,
 }) => {
   const { steps, entity } = useSavedSearchAlertContext()
-
+  const { register, loading, handleNext } = useCreateAlertFadeTransition({
+    next: () => {},
+  })
   // Create Alert header
   // Close icon on right
   // Form
@@ -22,31 +25,27 @@ export const CreateAlertDetailsStep: FC<CreateAlertDetailsStepProps> = ({
 
   return (
     <>
-      <Text>Step {steps.current}</Text>
-      <Button
-        onClick={() => {
-          steps.setStep("ALERT_FILTERS")
-        }}
-      >
-        Go to filters
-      </Button>
-      <SavedSearchAlertModal
-        onCreateAlert={result => {
-          console.log("onCreateAlert")
-          onSubmit(result.id)
-        }}
-        initialValues={{
-          name: "",
-          email: true,
-          push: true,
-          details: "",
-          frequency: DEFAULT_FREQUENCY,
-        }}
-        entity={entity}
-        onClose={() => {
-          console.log("DONE")
-        }}
-      />
+      <Text p={2} variant="lg">
+        Create Alert
+      </Text>
+      <Box ref={register(0)}>
+        <FiltersSavedSearchAlertModal
+          onCreateAlert={result => {
+            // console.log("onCreateAlert")
+            onSubmit(result.id)
+            handleNext()
+          }}
+          initialValues={{
+            name: "",
+            email: true,
+            push: true,
+            details: "",
+            frequency: DEFAULT_FREQUENCY,
+          }}
+          entity={entity}
+          onClose={() => {}}
+        />
+      </Box>
     </>
   )
 }

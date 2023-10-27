@@ -39,20 +39,22 @@ export const AddFiltersRarity: React.FC = () => {
     <Box>
       <Text variant="sm-display">Rarity</Text>
       <Spacer y={1} />
-      <Flex flexDirection="column">
-        {rarityValues.map(({ name, value }, index) => {
-          return (
-            <Checkbox
-              key={index}
-              my={1}
-              onSelect={selected => toggleSelection(selected, value)}
-              selected={criteria.attributionClass?.includes(value)}
-            >
-              {name}
-            </Checkbox>
-          )
-        })}
-      </Flex>
+      <Box style={{ columns: "2" }}>
+        <Flex flexDirection="column">
+          {rarityValues.map(({ name, value }, index) => {
+            return (
+              <Checkbox
+                key={index}
+                my={1}
+                onSelect={selected => toggleSelection(selected, value)}
+                selected={criteria.attributionClass?.includes(value)}
+              >
+                {name}
+              </Checkbox>
+            )
+          })}
+        </Flex>
+      </Box>
     </Box>
   )
 }

@@ -7,7 +7,6 @@ import {
   Clickable,
   Flex,
   Join,
-  ModalDialog,
   Separator,
   Spacer,
   Text,
@@ -20,7 +19,7 @@ import { useSystemContext } from "System/useSystemContext"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import createLogger from "Utils/logger"
 import {
-  SavedSearchAlertContextProvider,
+  // SavedSearchAlertContextProvider,
   useSavedSearchAlertContext,
 } from "./SavedSearchAlertContext"
 import {
@@ -36,7 +35,7 @@ import { SavedSearchAlertPills } from "./Components/SavedSearchAlertPills"
 import { Metric } from "Utils/metrics"
 import { DEFAULT_FREQUENCY } from "./constants"
 import { FrequenceRadioButtons } from "./Components/FrequencyRadioButtons"
-import { ConfirmationStepModal } from "Components/SavedSearchAlert/ConfirmationStepModal"
+// import { ConfirmationStepModal } from "Components/SavedSearchAlert/ConfirmationStepModal"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { SavedSearchAlertNameInputQueryRenderer } from "Components/SavedSearchAlert/Components/SavedSearchAlertNameInput"
 import {
@@ -46,7 +45,7 @@ import {
 import { useUserPhoneNumber } from "Components/SavedSearchAlert/useUserPhoneNumber"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 
-import { AddFiltersScreen } from "Components/SavedSearchAlert/Components/AddFiltersScreen"
+// import { AddFiltersScreen } from "Components/SavedSearchAlert/Components/AddFiltersScreen"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 
 interface SavedSearchAlertFormProps {
@@ -69,7 +68,7 @@ export interface SavedSearchAlertFormContainerProps
 
 const logger = createLogger("Components/SavedSearchAlert/SavedSearchAlertModal")
 
-export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
+export const FiltersSavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
   entity,
   initialValues,
   onClose,
@@ -209,8 +208,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
           values.email || values.push || values.hearFromArtsyAdvisor
 
         return (
-          // <ModalDialogContent title="Create Alert" onClose={onClose}>
-          <Flex flexDirection="column">
+          <Flex flexDirection="column" p={2}>
             <Join separator={<Spacer y={2} />}>
               <SavedSearchAlertNameInputQueryRenderer />
               <Box>
@@ -222,6 +220,7 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
                     onDeletePress={handleRemovePillPress}
                   />
                 </Flex>
+                <Spacer y={1} />
                 <Clickable
                   onClick={() => steps.setStep("ALERT_FILTERS")}
                   width="100%"
@@ -360,81 +359,4 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
       }}
     </Formik>
   )
-}
-
-export const FiltersSavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContainerProps> = props => {
-  const {
-    visible,
-    entity,
-    criteria,
-    metric,
-    aggregations,
-    currentArtworkID,
-    onCreateAlert,
-    onComplete,
-    onClose,
-  } = props
-
-  // const [searchCriteriaId, setSearchCriteriaId] = useState("")
-  const [step, setStep] = useState<"CREATE_ALERT" | "CONFIRMATION">(
-    "CREATE_ALERT"
-  )
-
-  const handleCreateAlert = (result: SavedSearchAlertMutationResult) => {
-    // setSearchCriteriaId(result.id)
-    onCreateAlert?.(result)
-    // setStep("CONFIRMATION")
-  }
-
-  const handleComplete = () => {
-    onComplete?.()
-    setStep("CREATE_ALERT")
-  }
-
-  if (!visible) return null
-
-  switch (step) {
-    case "CREATE_ALERT":
-      return (
-        <SavedSearchAlertContextProvider
-          criteria={criteria}
-          aggregations={aggregations}
-          entity={entity}
-          metric={metric}
-          currentArtworkID={currentArtworkID}
-        >
-          <ModalDialog
-            onClose={onClose}
-            title="Create Alert"
-            data-testid="CreateAlertModal"
-            dialogProps={{
-              width: "440px",
-            }}
-          >
-            {/* <TransitionPanelProvider> */}
-            <SavedSearchAlertModal
-              {...props}
-              onCreateAlert={handleCreateAlert}
-            />
-            <AddFiltersScreen />
-            {/* </TransitionPanelProvider> */}
-          </ModalDialog>
-        </SavedSearchAlertContextProvider>
-      )
-    case "CONFIRMATION":
-      return (
-        <SavedSearchAlertContextProvider
-          criteria={criteria}
-          aggregations={aggregations}
-          entity={entity}
-          metric={metric}
-          currentArtworkID={currentArtworkID}
-        >
-          <ConfirmationStepModal
-            onClose={handleComplete}
-            searchCriteriaId={""}
-          />
-        </SavedSearchAlertContextProvider>
-      )
-  }
 }
