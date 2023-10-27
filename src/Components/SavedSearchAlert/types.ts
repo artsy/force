@@ -42,7 +42,6 @@ export type SavedSearchDefaultCriteria = {
 }
 
 export interface SavedSearchEntity {
-  placeholder: string
   owner: SavedSearchEntityOwner
   defaultCriteria: SavedSearchDefaultCriteria
 }
