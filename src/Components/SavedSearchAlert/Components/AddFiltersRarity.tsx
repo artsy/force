@@ -2,7 +2,7 @@ import * as React from "react"
 import { Box, Checkbox, Flex, Spacer, Text } from "@artsy/palette"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 
-export const rarityValues = [
+export const RARITY_OPTIONS = [
   {
     name: "Unique",
     value: "unique",
@@ -36,12 +36,12 @@ export const AddFiltersRarity: React.FC = () => {
     setCriteriaValue("attributionClass", updatedValues)
   }
   return (
-    <Box>
+    <>
       <Text variant="sm-display">Rarity</Text>
-      <Spacer y={1} />
+      <Spacer y={2} />
       <Box style={{ columns: "2" }}>
         <Flex flexDirection="column">
-          {rarityValues.map(({ name, value }, index) => {
+          {RARITY_OPTIONS.map(({ name, value }, index) => {
             return (
               <Checkbox
                 key={index}
@@ -55,6 +55,6 @@ export const AddFiltersRarity: React.FC = () => {
           })}
         </Flex>
       </Box>
-    </Box>
+    </>
   )
 }

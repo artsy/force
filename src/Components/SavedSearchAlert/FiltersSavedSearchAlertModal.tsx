@@ -1,4 +1,4 @@
-import React, { FC, useRef, useState } from "react"
+import React, { FC, useRef } from "react"
 import { Formik, FormikHelpers } from "formik"
 import {
   Box,
@@ -35,7 +35,6 @@ import { SavedSearchAlertPills } from "./Components/SavedSearchAlertPills"
 import { Metric } from "Utils/metrics"
 import { DEFAULT_FREQUENCY } from "./constants"
 import { FrequenceRadioButtons } from "./Components/FrequencyRadioButtons"
-// import { ConfirmationStepModal } from "Components/SavedSearchAlert/ConfirmationStepModal"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { SavedSearchAlertNameInputQueryRenderer } from "Components/SavedSearchAlert/Components/SavedSearchAlertNameInput"
 import {
@@ -45,7 +44,6 @@ import {
 import { useUserPhoneNumber } from "Components/SavedSearchAlert/useUserPhoneNumber"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 
-// import { AddFiltersScreen } from "Components/SavedSearchAlert/Components/AddFiltersScreen"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 
 interface SavedSearchAlertFormProps {
@@ -69,9 +67,7 @@ export interface SavedSearchAlertFormContainerProps
 const logger = createLogger("Components/SavedSearchAlert/SavedSearchAlertModal")
 
 export const FiltersSavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
-  entity,
   initialValues,
-  onClose,
   onCreateAlert,
 }) => {
   const { relayEnvironment } = useSystemContext()
@@ -354,7 +350,6 @@ export const FiltersSavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
               Save Alert
             </Button>
           </Flex>
-          // </ModalDialogContent>
         )
       }}
     </Formik>

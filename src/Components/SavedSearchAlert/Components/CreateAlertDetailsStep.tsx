@@ -1,4 +1,4 @@
-import { Box, Button, Text } from "@artsy/palette"
+import { Box, Text } from "@artsy/palette"
 import { useCreateAlertFadeTransition } from "Components/SavedSearchAlert/Components/CreateAlertModalTransition"
 import { FiltersSavedSearchAlertModal } from "Components/SavedSearchAlert/FiltersSavedSearchAlertModal"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
@@ -13,15 +13,10 @@ interface CreateAlertDetailsStepProps {
 export const CreateAlertDetailsStep: FC<CreateAlertDetailsStepProps> = ({
   onSubmit,
 }) => {
-  const { steps, entity } = useSavedSearchAlertContext()
-  const { register, loading, handleNext } = useCreateAlertFadeTransition({
+  const { entity } = useSavedSearchAlertContext()
+  const { register } = useCreateAlertFadeTransition({
     next: () => {},
   })
-  // Create Alert header
-  // Close icon on right
-  // Form
-  // > Add filters CTA
-  // Create alert button
 
   return (
     <>
@@ -31,9 +26,7 @@ export const CreateAlertDetailsStep: FC<CreateAlertDetailsStepProps> = ({
       <Box ref={register(0)}>
         <FiltersSavedSearchAlertModal
           onCreateAlert={result => {
-            // console.log("onCreateAlert")
             onSubmit(result.id)
-            handleNext()
           }}
           initialValues={{
             name: "",

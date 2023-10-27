@@ -1,4 +1,4 @@
-import { Expandable, Spacer } from "@artsy/palette"
+import { Expandable, Spacer, Text } from "@artsy/palette"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import {
   CustomRange,
@@ -41,10 +41,14 @@ export const PriceRangeFilter: FC<PricaRangeFilterProps> = ({
           />
         </Expandable>
       ) : (
-        <PriceRange
-          priceRange={criteria.priceRange ?? DEFAULT_PRICE_RANGE}
-          onPriceRangeUpdate={handlePriceRangeUpdate}
-        />
+        <>
+          <Text variant="sm-display">Price Range</Text>
+          <Spacer y={2} />
+          <PriceRange
+            priceRange={criteria.priceRange ?? DEFAULT_PRICE_RANGE}
+            onPriceRangeUpdate={handlePriceRangeUpdate}
+          />
+        </>
       )}
     </>
   )

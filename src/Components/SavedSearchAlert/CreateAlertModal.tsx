@@ -33,7 +33,7 @@ export const CreateAlertModal: React.FC<CreateAlertModalProps> = ({
       }
       dialogProps={{
         width: ["100%", 440],
-        // height: "auto",
+        height: ["100%", "auto"],
         // maxHeight: [null, 730],
       }}
       {...modalProps}
