@@ -95,7 +95,7 @@ export const AddressModal: React.FC<Props> = ({
     null
   )
   const [showDialog, setShowDialog] = useState<boolean>(false)
-  const { shipsFrom } = useShippingContext()
+  const shippingContext = useShippingContext()
   if (!relayEnvironment) return null
   if (!modalAction) return null
 
@@ -103,7 +103,11 @@ export const AddressModal: React.FC<Props> = ({
   const initialAddress =
     modalAction.type === "editUserAddress"
       ? modalAction.address
-      : { country: shipsFrom, internalID: undefined, isDefault: false }
+      : {
+          country: shippingContext.computedOrderData.shipsFrom,
+          internalID: undefined,
+          isDefault: false,
+        }
 
   const handleModalClose = () => {
     closeModal()
