@@ -20,8 +20,7 @@ import {
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
 import { extractNodes } from "Utils/extractNodes"
 import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
-import { COUNTRIES_IN_EUROPEAN_UNION } from "@artsy/commerce_helpers"
-// TODO: Duplicated list ^
+// TODO: Duplicated list of EU countries
 
 type FulfillmentHelpers = Pick<
   FormikProps<FulfillmentValues>,
@@ -306,13 +305,13 @@ const useComputeOrderData = (
     (shipToCountry: string) => {
       const isDomesticShipping =
         (shipToCountry && shipToCountry === artworkCountry) ||
-        (COUNTRIES_IN_EUROPEAN_UNION.includes(shipToCountry) &&
-          COUNTRIES_IN_EUROPEAN_UNION.includes(artworkCountry))
+        (EU_COUNTRY_CODES.includes(shipToCountry) &&
+          EU_COUNTRY_CODES.includes(artworkCountry!))
 
       const requiresArtsyShipping =
         (isDomesticShipping &&
           firstArtwork?.processWithArtsyShippingDomestic) ||
-        (!isDomesticShipping && firstArtwork?.artsyShippingInternational)
+        (!isDomesticShipping && !!firstArtwork?.artsyShippingInternational)
       return requiresArtsyShipping
     },
     [
