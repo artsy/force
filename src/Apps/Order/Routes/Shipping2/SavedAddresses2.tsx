@@ -32,7 +32,6 @@ export interface SavedAddressesProps {
   me: SavedAddresses2_me$data
   active: boolean
   onSelect: (address: ShippingAddressFormValues) => void
-  orderID: string
 }
 
 const SavedAddresses: React.FC<SavedAddressesProps> = props => {

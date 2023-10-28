@@ -45,6 +45,7 @@ import {
   ShippingAddressFormValues,
 } from "Apps/Order/Routes/Shipping2/shippingUtils"
 import { RouterLink } from "System/Router/RouterLink"
+import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
 
 export const ADDRESS_VALIDATION_SHAPE = {
   addressLine1: Yup.string().required("Street address is required"),
@@ -309,6 +310,8 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
     isValid,
   } = formikContext
 
+  const { clickedFulfillmentType } = useOrderTracking()
+
   // Pass some key formik bits up to the shipping route
   useEffect(() => {
     if (active) {
@@ -419,15 +422,16 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
             data-testid="shipping-options"
             onSelect={value => {
               setFieldValue("fulfillmentType", value)
+              clickedFulfillmentType(value as FulfillmentType)
             }}
             defaultValue={values.fulfillmentType}
           >
             <Text variant="lg-display" mb="1">
               Delivery method
             </Text>
-            <BorderedRadio value="SHIP" label="Shipping" />
+            <BorderedRadio value={FulfillmentType.SHIP} label="Shipping" />
             <BorderedRadio
-              value="PICKUP"
+              value={FulfillmentType.PICKUP}
               label="Arrange for pickup (free)"
               data-testid="pickupOption"
             >
@@ -463,7 +467,6 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
               onSelect={a => {
                 handleSelectSavedAddress(a)
               }}
-              orderID={props.order.internalID}
             />
           </Collapse>
           {/* NEW ADDRESS */}
