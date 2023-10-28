@@ -124,28 +124,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     string | undefined
   >(initialValues.shippingQuotes.selectedShippingQuoteId)
 
-  const { clickedSelectShippingOption, errorMessageViewed } = useOrderTracking(
-    order.internalID
-  )
-
-  // const selectShipping = async (editedAddress?: MutationAddressResponse) => {
-  // ...
-
-  //   TODO: Tracking
-  //     trackEvent({
-  //       action: ActionType.errorMessageViewed,
-  //       context_owner_type: OwnerType.ordersShipping,
-  //       context_owner_id: props.order.internalID,
-  //       title: "An error occurred",
-  //       message:
-  //         "Something went wrong. Please try again or contact orders@artsy.net.",
-  //       error_code: null,
-  //       flow: "user selects a shipping option",
-  //     })
-
-  //     props.dialog.showErrorDialog()
-  //   }
-  // }
+  const { clickedSelectShippingOption, errorMessageViewed } = useOrderTracking()
 
   const handleSubmitError = useCallback(
     (error: { code: string; data: string | null }) => {
@@ -156,12 +135,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         error.code === "missing_country" ||
         error.code === "missing_postal_code"
       ) {
-        errorMessageViewed(
-          error.code,
-          "Missing information",
-          "Please complete all required fields.",
-          "user submits a shipping option"
-        )
+        errorMessageViewed({
+          error_code: error.code,
+          title: "Missing information",
+          message: "Please complete all required fields.",
+          flow: "user submits a shipping option",
+        })
 
         props.dialog.showErrorDialog({
           title: "Invalid address",
@@ -172,12 +151,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         error.code === "unsupported_shipping_location" &&
         parsedData.failure_code === "domestic_shipping_only"
       ) {
-        errorMessageViewed(
-          error.code,
-          "Can't ship to that address",
-          "This work can only be shipped domestically.",
-          "user submits a shipping option"
-        )
+        errorMessageViewed({
+          error_code: error.code,
+          title: "Can't ship to that address",
+          message: "This work can only be shipped domestically.",
+          flow: "user submits a shipping option",
+        })
 
         props.dialog.showErrorDialog({
           title: "Can't ship to that address",
@@ -188,35 +167,37 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           ErrorDialogs.DestinationCouldNotBeGeocoded
         )
 
-        errorMessageViewed(
-          error.code,
-          title,
-          message,
-          "user submits a shipping option"
-        )
+        errorMessageViewed({
+          error_code: error.code,
+          title: title,
+          message: message,
+          flow: "user submits a shipping option",
+        })
 
         props.dialog.showErrorDialog({
           title,
           message: formattedMessage,
         })
       } else if (isArtsyShipping && selectedShippingQuoteId) {
-        errorMessageViewed(
-          null,
-          "An error occurred",
-          "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
-          "user submits a shipping option"
-        )
+        errorMessageViewed({
+          error_code: null,
+          title: "An error occurred",
+          message:
+            "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
+          flow: "user submits a shipping option",
+        })
 
         props.dialog.showErrorDialog({
           message: <ArtaErrorDialogMessage />,
         })
       } else {
-        errorMessageViewed(
-          error.code,
-          "An error occurred",
-          "Something went wrong. Please try again or contact orders@artsy.net.",
-          "user submits a shipping option"
-        )
+        errorMessageViewed({
+          error_code: error.code,
+          title: "An error occurred",
+          message:
+            "Something went wrong. Please try again or contact orders@artsy.net.",
+          flow: "user submits a shipping option",
+        })
 
         props.dialog.showErrorDialog()
       }
@@ -309,12 +290,13 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       } catch (error) {
         logger.error(error)
 
-        errorMessageViewed(
-          null,
-          "An error occurred",
-          "Something went wrong. Please try again or contact orders@artsy.net.",
-          "user selects a shipping option"
-        )
+        errorMessageViewed({
+          error_code: null,
+          title: "An error occurred",
+          message:
+            "Something went wrong. Please try again or contact orders@artsy.net.",
+          flow: "user selects a shipping option",
+        })
 
         props.dialog.showErrorDialog()
       }
@@ -353,12 +335,13 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       } catch (error) {
         logger.error(error)
 
-        errorMessageViewed(
-          null,
-          "An error occurred",
-          "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
-          "user sets a shipping quote"
-        )
+        errorMessageViewed({
+          error_code: null,
+          title: "An error occurred",
+          message:
+            "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
+          flow: "user sets a shipping quote",
+        })
 
         props.dialog.showErrorDialog({
           message: <ArtaErrorDialogMessage />,
@@ -380,25 +363,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   //   // consider this a user-verified address (perform verification only once).
   //   if (addressVerifiedBy) {
   //     setAddressVerifiedBy(AddressVerifiedBy.USER)
-  //   }
-  // }
-
-  // const onSelectShippingOption = (
-  //   newShippingOption: CommerceOrderFulfillmentTypeEnum
-  // ) => {
-  //   TODO: (Erik): Tracking
-  //   trackEvent({
-  //     action_type: DeprecatedSchema.ActionType.Click,
-  //     subject:
-  //       newShippingOption === "SHIP"
-  //         ? DeprecatedSchema.Subject.BNMOProvideShipping
-  //         : DeprecatedSchema.Subject.BNMOArrangePickup,
-  //     flow: "buy now",
-  //     type: "button",
-  //   })
-
-  //   if (shippingOption !== newShippingOption) {
-  //     setShippingOption(newShippingOption)
   //   }
   // }
 

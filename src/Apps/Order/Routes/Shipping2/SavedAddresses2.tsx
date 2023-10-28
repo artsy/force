@@ -42,7 +42,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   )
   const shippingContext = useShippingContext()
 
-  const { onSelect, me, relay, orderID } = props
+  const { onSelect, me, relay } = props
 
   const addressList = compact<SavedAddressType>(
     extractNodes(me?.addressConnection) ?? []
@@ -65,7 +65,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const {
     clickedShippingAddress,
     clickedAddNewShippingAddress,
-  } = useOrderTracking(orderID)
+  } = useOrderTracking()
 
   React.useEffect(() => {
     if (!selectedAddressPresent) {
