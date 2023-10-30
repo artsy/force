@@ -17838,7 +17838,7 @@ type System {
   time: SystemTime
 
   # List of all available product privileges
-  userRoles: [UserRole]
+  userRoles: [UserRole!]!
 }
 
 type SystemTime {
@@ -19507,7 +19507,7 @@ type UserPurchasesEdge {
 # Fields corresponding to a given product privilege
 type UserRole {
   # unique label for this role
-  name: String
+  name: String!
 }
 
 type UserSaleProfile {

@@ -18,9 +18,13 @@ const MyCollectionArtworkSidebarTitleInfo: React.FC<MyCollectionArtworkSidebarTi
         {artwork?.artist?.isPersonalArtist ? (
           artistNames
         ) : (
-          <RouterLink textDecoration="none" to={artist!.href}>
-            {artistNames}
-          </RouterLink>
+          <>
+            {artist?.href && (
+              <RouterLink textDecoration="none" to={artist.href}>
+                {artistNames}
+              </RouterLink>
+            )}
+          </>
         )}
       </Text>
       <Text as="h1" variant="lg-display" color="black60" mb={[0.5, 0]}>
