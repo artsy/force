@@ -131,5 +131,11 @@ module.exports = {
         "no-console": "off",
       },
     },
+    {
+      files: ["*.test.ts", "*.test.tsx", "*.jest.ts", "**/*.jest.tsx"],
+      rules: {
+        "@typescript-eslint/no-non-null-assertion": "off",
+      },
+    },
   ],
 }
