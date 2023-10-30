@@ -83,6 +83,9 @@ export function useTrackFeatureVariant({
     // HACK: Temporary hack while we refactor useAnalyticsContext
     // to update upon page navigation.
     const path = router.match.location.pathname
+
+    if (!path) return
+
     const pageParts = path.split("/")
     const pageSlug = pageParts[2]
     const pageType = pathToOwnerType(path)
