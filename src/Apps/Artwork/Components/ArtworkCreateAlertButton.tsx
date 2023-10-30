@@ -28,7 +28,6 @@ const ArtworkCreateAlertButton: FC<ArtworkCreateAlertButtonProps> = ({
   const artists = compact(artwork.artists)
   const attributionClass = compact([artwork.attributionClass?.internalID])
   const artistIDs = artists.map(artist => artist.internalID)
-  const placeholder = `Artworks like: ${artwork.title!}`
   const defaultArtistsCriteria: SavedSearchEntityCriteria[] = artists.map(
     artist => ({
       value: artist.internalID,
@@ -36,7 +35,6 @@ const ArtworkCreateAlertButton: FC<ArtworkCreateAlertButtonProps> = ({
     })
   )
   const entity: SavedSearchEntity = {
-    placeholder,
     defaultCriteria: {
       artistIDs: defaultArtistsCriteria,
     },

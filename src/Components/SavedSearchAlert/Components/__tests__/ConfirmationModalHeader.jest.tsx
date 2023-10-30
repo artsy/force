@@ -7,7 +7,6 @@ import { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 describe("ConfirmationModalHeader", () => {
   it("renders title and pills", () => {
     const savedSearchEntity: SavedSearchEntity = {
-      placeholder: "Test Artist",
       defaultCriteria: {
         artistIDs: [
           {

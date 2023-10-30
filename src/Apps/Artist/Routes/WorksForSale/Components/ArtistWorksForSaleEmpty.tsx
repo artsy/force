@@ -37,7 +37,6 @@ const ArtistWorksForSaleEmpty: FC<ArtistWorksForSaleEmptyProps> = ({
 
           <SavedSearchCreateAlertButtonContainer
             entity={{
-              placeholder: artist.name!,
               owner: {
                 id: contextPageOwnerId!,
                 name: artist.name!,

@@ -298,7 +298,6 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
   )
 
   const entity: SavedSearchEntity = {
-    placeholder: defaultArtistsCriteria[0].displayValue,
     defaultCriteria: {
       artistIDs: defaultArtistsCriteria,
     },

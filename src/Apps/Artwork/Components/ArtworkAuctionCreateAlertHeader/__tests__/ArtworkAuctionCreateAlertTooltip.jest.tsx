@@ -6,7 +6,6 @@ import { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 
 describe("ArtworkAuctionCreateAlertTooltip", () => {
   const savedSearchEntity: SavedSearchEntity = {
-    placeholder: "Works by Andy Warhol",
     defaultCriteria: {
       artistIDs: [
         {

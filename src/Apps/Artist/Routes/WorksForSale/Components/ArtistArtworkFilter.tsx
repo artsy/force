@@ -34,7 +34,6 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
   }
 
   const savedSearchEntity: SavedSearchEntity = {
-    placeholder: artist.name!,
     owner: {
       type: OwnerType.artist,
       id: artist.internalID,

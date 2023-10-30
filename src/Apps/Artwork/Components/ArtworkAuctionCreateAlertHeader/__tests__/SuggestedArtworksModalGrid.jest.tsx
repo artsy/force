@@ -11,7 +11,6 @@ jest.unmock("react-relay")
 
 describe("SuggestedArtworksModalGrid", () => {
   const savedSearchEntity: SavedSearchEntity = {
-    placeholder: "Test Artist",
     defaultCriteria: {
       artistIDs: [
         {

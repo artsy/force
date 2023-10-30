@@ -1,14 +1,13 @@
 import { OwnerType } from "@artsy/cohesion"
 import { ArtworkFilters } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { SavedSearchEntity } from "../../types"
+import { SavedSearchEntity } from "Components/SavedSearchAlert/types"
 import {
   parseDefaultCriteria,
   getSearchCriteriaFromFilters,
   isDefaultValue,
-} from "../savedSearchCriteria"
+} from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 
 const mockedSavedSearchEntity: SavedSearchEntity = {
-  placeholder: "alertName",
   defaultCriteria: {
     artistIDs: [
       {
@@ -63,7 +62,6 @@ describe("getSearchCriteriaFromFilters", () => {
 
   it("returns correct criteria when a single artist is passed to defaultCriteria", () => {
     const entity: SavedSearchEntity = {
-      placeholder: "",
       defaultCriteria: {
         artistIDs: [
           {
