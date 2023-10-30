@@ -404,30 +404,32 @@ export const BaseArtworkFilter: React.FC<
             <Flex alignItems="center" justifyContent="space-between" gap={2}>
               <HorizontalOverflow minWidth={0}>
                 <Flex gap={1}>
-                  <ArtworkFilterCreateAlert
-                    renderButton={props => {
-                      return (
-                        <Button
-                          variant={
-                            appliedFiltersTotalCount > 0
-                              ? "primaryBlack"
-                              : "secondaryBlack"
-                          }
-                          size="small"
-                          Icon={BellStrokeIcon}
-                          {...props}
-                        >
-                          Create Alert
-                        </Button>
-                      )
-                    }}
-                  >
-                    <Box width="1px" bg="black30" />
-                  </ArtworkFilterCreateAlert>
+                  <Flex gap={2}>
+                    <ArtworkFilterCreateAlert
+                      renderButton={props => {
+                        return (
+                          <Button
+                            variant={
+                              appliedFiltersTotalCount > 0
+                                ? "primaryBlack"
+                                : "secondaryBlack"
+                            }
+                            size="small"
+                            Icon={BellStrokeIcon}
+                            {...props}
+                          >
+                            Create Alert
+                          </Button>
+                        )
+                      }}
+                    >
+                      <Box width="1px" bg="black30" />
+                    </ArtworkFilterCreateAlert>
 
-                  <Pill Icon={FilterIcon} size="small" onClick={handleOpen}>
-                    All Filters
-                  </Pill>
+                    <Pill Icon={FilterIcon} size="small" onClick={handleOpen}>
+                      All Filters
+                    </Pill>
+                  </Flex>
 
                   <ArtworkFiltersQuick />
                 </Flex>
