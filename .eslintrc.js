@@ -90,7 +90,7 @@ module.exports = {
     "react/no-unescaped-entities": 0,
     "@typescript-eslint/no-empty-function": 0,
     "@typescript-eslint/no-empty-interface": 0,
-    "@typescript-eslint/no-non-null-assertion": 0,
+    "@typescript-eslint/no-non-null-assertion": "error",
     "no-restricted-imports": [
       "error",
       {
