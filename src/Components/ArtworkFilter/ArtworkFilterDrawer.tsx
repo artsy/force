@@ -14,7 +14,7 @@ export const ArtworkFilterDrawer: FC<ArtworkFilterDrawerProps> = ({
   onClose,
 }) => {
   return (
-    <Drawer zIndex={Z.dropdown} open={open} onClose={onClose}>
+    <Drawer zIndex={Z.dropdown} open={open} onClose={onClose} anchor="left">
       <Box p={2} minWidth={375} position="relative">
         <Flex alignItems="center">
           <Text variant="xs" flex={1}>
