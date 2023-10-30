@@ -209,11 +209,9 @@ export const AddressForm: React.FC<AddressFormProps> = ({
       </Column>
 
       <Column span={12}>
-        <Text id="country-select" mb={0.5} variant="xs" color="black100">
-          Country
-        </Text>
         <CountrySelect
-          aria-labelledby="country-select"
+          title="Country"
+          name="Country Select"
           tabIndex={tabIndex}
           selected={
             lockCountryToOrigin || (lockCountriesToEU && !value?.country)
