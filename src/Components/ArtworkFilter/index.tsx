@@ -426,7 +426,7 @@ export const BaseArtworkFilter: React.FC<
                   </ArtworkFilterCreateAlert>
 
                   <Pill Icon={FilterIcon} size="small" onClick={handleOpen}>
-                    All filters
+                    All Filters
                   </Pill>
 
                   <ArtworkFiltersQuick />

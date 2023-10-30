@@ -50,7 +50,7 @@ export const PriceRangeFilterQuick: FC<PriceRangeFilterQuickProps> = props => {
       {props => {
         return (
           <FilterQuickDropdownAnchor
-            label="Price range"
+            label="Price Range"
             count={count}
             {...props}
           />
