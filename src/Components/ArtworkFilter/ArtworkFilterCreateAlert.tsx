@@ -8,14 +8,16 @@ import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSea
 import { getSearchCriteriaFromFilters } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { DEFAULT_METRIC } from "Utils/metrics"
 import { isEmpty } from "lodash"
-import { FC } from "react"
+import { FC, ReactNode } from "react"
 
 interface ArtworkFilterCreateAlertProps {
   renderButton: (props: { onClick: () => void }) => JSX.Element
+  children?: ReactNode
 }
 
 export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = ({
   renderButton,
+  children,
 }) => {
   const { entity } = useSavedSearchAlertContext()
   const { aggregations } = useArtworkFilterContext()
@@ -28,42 +30,46 @@ export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = ({
   const metric = filters?.metric ?? DEFAULT_METRIC
 
   return (
-    <SavedSearchCreateAlertButtonContainer
-      entity={entity}
-      criteria={criteria}
-      metric={metric}
-      aggregations={aggregations}
-      authDialogOptions={{
-        options: {
-          title: "Sign up to create your alert",
-          afterAuthAction: {
-            action: "createAlert",
-            kind: "artworks",
-            objectId: entity.owner.slug,
+    <>
+      <SavedSearchCreateAlertButtonContainer
+        entity={entity}
+        criteria={criteria}
+        metric={metric}
+        aggregations={aggregations}
+        authDialogOptions={{
+          options: {
+            title: "Sign up to create your alert",
+            afterAuthAction: {
+              action: "createAlert",
+              kind: "artworks",
+              objectId: entity.owner.slug,
+            },
           },
-        },
-        analytics: {
-          contextModule: ContextModule.artworkGrid,
-          intent: Intent.createAlert,
-        },
-      }}
-      renderButton={({ onClick }) => (
-        <ProgressiveOnboardingAlertCreate>
-          {({ onSkip: createSkip }) => (
-            <ProgressiveOnboardingAlertReady>
-              {({ onSkip: readySkip }) =>
-                renderButton({
-                  onClick: () => {
-                    createSkip()
-                    readySkip()
-                    onClick()
-                  },
-                })
-              }
-            </ProgressiveOnboardingAlertReady>
-          )}
-        </ProgressiveOnboardingAlertCreate>
-      )}
-    />
+          analytics: {
+            contextModule: ContextModule.artworkGrid,
+            intent: Intent.createAlert,
+          },
+        }}
+        renderButton={({ onClick }) => (
+          <ProgressiveOnboardingAlertCreate>
+            {({ onSkip: createSkip }) => (
+              <ProgressiveOnboardingAlertReady>
+                {({ onSkip: readySkip }) =>
+                  renderButton({
+                    onClick: () => {
+                      createSkip()
+                      readySkip()
+                      onClick()
+                    },
+                  })
+                }
+              </ProgressiveOnboardingAlertReady>
+            )}
+          </ProgressiveOnboardingAlertCreate>
+        )}
+      />
+
+      {children}
+    </>
   )
 }

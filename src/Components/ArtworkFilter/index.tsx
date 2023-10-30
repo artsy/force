@@ -28,7 +28,6 @@ import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOn
 import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { Sticky } from "Components/Sticky"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { useSystemContext } from "System/useSystemContext"
 import { Jump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
@@ -53,6 +52,7 @@ import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCou
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
 import { ArtworkFilterSort } from "Components/ArtworkFilter/ArtworkFilterSort"
 import { ArtworkFiltersQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick"
+import { useRevisedArtworkFilters } from "Components/ArtworkFilter/useRevisedArtworkFilters"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
   Filters?: JSX.Element
@@ -147,9 +147,7 @@ export const BaseArtworkFilter: React.FC<
   const total = viewer.filtered_artworks?.counts?.total ?? 0
   const totalCountLabel = getTotalCountLabel({ total, isAuctionArtwork })
 
-  const isRevisedArtworkFilters = useFeatureFlag(
-    "diamond_revised-artwork-filters"
-  )
+  const { enabled: isRevisedArtworkFiltersEnabled } = useRevisedArtworkFilters()
 
   /**
    * Check to see if the current filter is different from the previous filter
@@ -228,7 +226,7 @@ export const BaseArtworkFilter: React.FC<
 
       {/* Mobile Artwork Filter */}
       <Media at="xs">
-        {isRevisedArtworkFilters ? (
+        {isRevisedArtworkFiltersEnabled ? (
           // New mobile filters
           <>
             <Sticky>
@@ -400,7 +398,7 @@ export const BaseArtworkFilter: React.FC<
 
       {/* Desktop Artwork Filter */}
       <Media greaterThan="xs">
-        {isRevisedArtworkFilters ? (
+        {isRevisedArtworkFiltersEnabled ? (
           // New desktop filters
           <>
             <Flex alignItems="center" justifyContent="space-between" gap={2}>
@@ -423,9 +421,9 @@ export const BaseArtworkFilter: React.FC<
                         </Button>
                       )
                     }}
-                  />
-
-                  <Box width="1px" bg="black30" />
+                  >
+                    <Box width="1px" bg="black30" />
+                  </ArtworkFilterCreateAlert>
 
                   <Pill Icon={FilterIcon} size="small" onClick={handleOpen}>
                     All filters
