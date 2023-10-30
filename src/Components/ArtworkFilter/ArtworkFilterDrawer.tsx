@@ -18,7 +18,7 @@ export const ArtworkFilterDrawer: FC<ArtworkFilterDrawerProps> = ({
       <Box p={2} minWidth={375} position="relative">
         <Flex alignItems="center">
           <Text variant="xs" flex={1}>
-            Sort & Filter
+            Filters
           </Text>
 
           <ModalClose onClick={onClose} />
