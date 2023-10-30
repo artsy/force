@@ -157,7 +157,7 @@ export const FilterQuickDropdownPanel: FC<FilterQuickDropdownPanelProps> = ({
     <Box
       display="flex"
       flexDirection="column"
-      height={230}
+      maxHeight={230}
       width={300}
       {...rest}
     >
