@@ -29,6 +29,7 @@ export const PriceRangeFilterQuick: FC<PriceRangeFilterQuickProps> = props => {
       dropdown={({ onHide }) => {
         return (
           <FilterQuickDropdownPanel
+            count={count}
             onConfirm={onHide}
             onClear={() => {
               handleClear()
