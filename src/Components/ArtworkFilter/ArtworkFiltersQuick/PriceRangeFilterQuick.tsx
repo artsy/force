@@ -35,6 +35,8 @@ export const PriceRangeFilterQuick: FC<PriceRangeFilterQuickProps> = props => {
               handleClear()
               onHide()
             }}
+            maxHeight="auto"
+            p={2}
           >
             <PriceRange
               priceRange={range.join("-")}

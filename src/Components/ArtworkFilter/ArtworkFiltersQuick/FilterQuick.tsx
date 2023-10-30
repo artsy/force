@@ -151,6 +151,7 @@ export const FilterQuickDropdownPanel: FC<FilterQuickDropdownPanelProps> = ({
   onConfirm,
   children,
   count,
+  p = 1,
   ...rest
 }) => {
   return (
@@ -162,7 +163,7 @@ export const FilterQuickDropdownPanel: FC<FilterQuickDropdownPanelProps> = ({
       {...rest}
     >
       <Box
-        p={1}
+        p={p}
         flex={1}
         minHeight={0}
         style={{
