@@ -33,7 +33,7 @@ import { Jump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
 import { isEqual } from "lodash"
-import React, { useState } from "react"
+import React, { useMemo, useState } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
@@ -51,7 +51,10 @@ import { allowedFilters } from "./Utils/allowedFilters"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
 import { ArtworkFilterSort } from "Components/ArtworkFilter/ArtworkFilterSort"
-import { ArtworkFiltersQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick"
+import {
+  ARTWORK_FILTERS_QUICK_FIELDS,
+  ArtworkFiltersQuick,
+} from "Components/ArtworkFilter/ArtworkFiltersQuick"
 import { useRevisedArtworkFilters } from "Components/ArtworkFilter/useRevisedArtworkFilters"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
@@ -148,6 +151,31 @@ export const BaseArtworkFilter: React.FC<
   const totalCountLabel = getTotalCountLabel({ total, isAuctionArtwork })
 
   const { enabled: isRevisedArtworkFiltersEnabled } = useRevisedArtworkFilters()
+
+  // Count of all filters, sans `sort`
+  const revisedArtworkFiltersCount = useMemo(() => {
+    return Object.entries(filterContext.selectedFiltersCounts).reduce(
+      (acc, [field, count]) => {
+        if (field === "sort") return acc
+        return acc + count
+      },
+      0
+    )
+  }, [filterContext.selectedFiltersCounts])
+
+  // Count of only quick filters
+  const quickArtworkFiltersCount = useMemo(() => {
+    return Object.entries(filterContext.selectedFiltersCounts).reduce(
+      (acc, [field, count]) => {
+        if (!ARTWORK_FILTERS_QUICK_FIELDS.includes(field)) return acc
+        return acc + count
+      },
+      0
+    )
+  }, [filterContext.selectedFiltersCounts])
+
+  const extendedFiltersCount =
+    revisedArtworkFiltersCount - quickArtworkFiltersCount
 
   /**
    * Check to see if the current filter is different from the previous filter
@@ -410,7 +438,7 @@ export const BaseArtworkFilter: React.FC<
                         return (
                           <Button
                             variant={
-                              appliedFiltersTotalCount > 0
+                              revisedArtworkFiltersCount > 0
                                 ? "primaryBlack"
                                 : "secondaryBlack"
                             }
@@ -428,6 +456,12 @@ export const BaseArtworkFilter: React.FC<
 
                     <Pill Icon={FilterIcon} size="small" onClick={handleOpen}>
                       All Filters
+                      {extendedFiltersCount > 0 && (
+                        <Box as="span" color="brand">
+                          {" "}
+                          • {extendedFiltersCount}
+                        </Box>
+                      )}
                     </Pill>
                   </Flex>
 
