@@ -49,7 +49,7 @@ NOTE: if you haven't already, you will need to create an [admin api token](https
 
 5. Go to the "Variant" tab in the Unleash UI and confirm the variants were created and that all fields are correct.
 
-NOTE: `stickiness` needs to be set to `sessionID` on both the strategy and the variant as each has their own independent `stickiness` factor. This ensures a user gets the same treatment when unauthenticated and authenticated.
+NOTE: `stickiness` needs to be set to `sessionID` on both the strategy and the variant as each has its own independent `stickiness` factor. This ensures a user gets the same treatment when unauthenticated and authenticated.
 
 ### Adding the test to a React Component
 
