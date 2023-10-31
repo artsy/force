@@ -1,4 +1,5 @@
 import { Expandable, Spacer, Text } from "@artsy/palette"
+import { usePriceRangeFilter } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import {
   CustomRange,
@@ -18,6 +19,7 @@ export const PriceRangeFilter: FC<PricaRangeFilterProps> = ({
 }) => {
   const { criteria, setCriteriaValue } = useSavedSearchAlertContext()
   const { t } = useTranslation()
+  const { histogram } = usePriceRangeFilter()
 
   const handlePriceRangeUpdate = (updatedRange: CustomRange) => {
     setCriteriaValue("priceRange", updatedRange.join("-"))
@@ -47,6 +49,7 @@ export const PriceRangeFilter: FC<PricaRangeFilterProps> = ({
           <PriceRange
             priceRange={criteria.priceRange ?? DEFAULT_PRICE_RANGE}
             onPriceRangeUpdate={handlePriceRangeUpdate}
+            bars={histogram}
           />
         </>
       )}
