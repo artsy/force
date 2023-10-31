@@ -6,6 +6,7 @@ import { RootTestPage } from "DevTools/RootTestPage"
 import { userAddressMutation } from "Apps/__tests__/Fixtures/Order/MutationResults"
 import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/SavedAddressItem2"
 import { useTracking } from "react-tracking"
+import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -43,7 +44,13 @@ describe("Saved Addresses", () => {
   })
 
   const { getWrapper } = setupTestWrapper({
-    Component: (props: any) => <SavedAddressesFragmentContainer {...props} />,
+    Component: (props: any) => {
+      return (
+        <AnalyticsCombinedContextProvider contextPageOwnerId="example-order-id">
+          <SavedAddressesFragmentContainer {...props} />
+        </AnalyticsCombinedContextProvider>
+      )
+    },
     query: graphql`
       query SavedAddresses2Mutation_Test_Query @relay_test_operation {
         me {
@@ -133,16 +140,12 @@ describe("Saved Addresses", () => {
         await wrapper.update()
         wrapper.find("[data-test='shippingButton']").first().simulate("click")
 
-        expect(trackEvent).toHaveBeenCalled()
-        expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
-          [
-            {
-              "action": "clickedAddNewShippingAddress",
-              "context_module": "ordersShipping",
-              "context_page_owner_type": "orders-shipping",
-            },
-          ]
-        `)
+        expect(trackEvent).toHaveBeenCalledWith({
+          action: "clickedAddNewShippingAddress",
+          context_module: "ordersShipping",
+          context_page_owner_id: "example-order-id",
+          context_page_owner_type: "orders-shipping",
+        })
       })
     })
 

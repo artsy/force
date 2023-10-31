@@ -31,13 +31,7 @@ import { Collapse } from "Apps/Order/Components/Collapse"
 import { selectShippingOption } from "Apps/Order/Mutations/SelectShippingOption"
 import { ShippingQuotesFragmentContainer } from "Apps/Order/Components/ShippingQuotes"
 
-import {
-  ActionType,
-  ClickedSelectShippingOption,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
-import { useTracking } from "react-tracking"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { Analytics } from "System/Analytics/AnalyticsContext"
 import {
@@ -61,6 +55,7 @@ import {
   ShippingAddressFormValues,
 } from "Apps/Order/Routes/Shipping2/shippingUtils"
 import { usePrevious } from "Utils/Hooks/usePrevious"
+import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -82,7 +77,6 @@ export type ShippingRouteStep =
 export const ShippingRoute: FC<ShippingProps> = props => {
   const { relayEnvironment } = useSystemContext()
   const { order, isCommittingMutation } = props
-  const { trackEvent } = useTracking()
   const orderContext = useComputeOrderContext(props)
   const {
     initialValues,
@@ -130,24 +124,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     string | undefined
   >(initialValues.shippingQuotes.selectedShippingQuoteId)
 
-  // const selectShipping = async (editedAddress?: MutationAddressResponse) => {
-  // ...
-
-  //   TODO: Tracking
-  //     trackEvent({
-  //       action: ActionType.errorMessageViewed,
-  //       context_owner_type: OwnerType.ordersShipping,
-  //       context_owner_id: props.order.internalID,
-  //       title: "An error occurred",
-  //       message:
-  //         "Something went wrong. Please try again or contact orders@artsy.net.",
-  //       error_code: null,
-  //       flow: "user selects a shipping option",
-  //     })
-
-  //     props.dialog.showErrorDialog()
-  //   }
-  // }
+  const orderTracking = useOrderTracking()
 
   const handleSubmitError = useCallback(
     (error: { code: string; data: string | null }) => {
@@ -158,14 +135,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         error.code === "missing_country" ||
         error.code === "missing_postal_code"
       ) {
-        trackEvent({
-          action: ActionType.errorMessageViewed,
-          context_owner_type: OwnerType.ordersShipping,
-          context_owner_id: props.order.internalID,
+        orderTracking.errorMessageViewed({
+          error_code: error.code,
           title: "Invalid address",
           message:
             "There was an error processing your address. Please review and try again.",
-          error_code: error.code,
           flow: "user submits a shipping option",
         })
 
@@ -178,13 +152,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         error.code === "unsupported_shipping_location" &&
         parsedData.failure_code === "domestic_shipping_only"
       ) {
-        trackEvent({
-          action: ActionType.errorMessageViewed,
-          context_owner_type: OwnerType.ordersShipping,
-          context_owner_id: props.order.internalID,
+        orderTracking.errorMessageViewed({
+          error_code: error.code,
           title: "Can't ship to that address",
           message: "This work can only be shipped domestically.",
-          error_code: error.code,
           flow: "user submits a shipping option",
         })
 
@@ -197,13 +168,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           ErrorDialogs.DestinationCouldNotBeGeocoded
         )
 
-        trackEvent({
-          action: ActionType.errorMessageViewed,
-          context_owner_type: OwnerType.ordersShipping,
-          context_owner_id: props.order.internalID,
-          title,
-          message,
+        orderTracking.errorMessageViewed({
           error_code: error.code,
+          title: title,
+          message: message,
           flow: "user submits a shipping option",
         })
 
@@ -212,14 +180,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           message: formattedMessage,
         })
       } else if (isArtsyShipping && selectedShippingQuoteId) {
-        trackEvent({
-          action: ActionType.errorMessageViewed,
-          context_owner_type: OwnerType.ordersShipping,
-          context_owner_id: props.order.internalID,
+        orderTracking.errorMessageViewed({
+          error_code: null,
           title: "An error occurred",
           message:
             "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
-          error_code: null,
           flow: "user submits a shipping option",
         })
 
@@ -227,27 +192,18 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           message: <ArtaErrorDialogMessage />,
         })
       } else {
-        trackEvent({
-          action: ActionType.errorMessageViewed,
-          context_owner_type: OwnerType.ordersShipping,
-          context_owner_id: props.order.internalID,
+        orderTracking.errorMessageViewed({
+          error_code: error.code,
           title: "An error occurred",
           message:
             "Something went wrong. Please try again or contact orders@artsy.net.",
-          error_code: null,
           flow: "user submits a shipping option",
         })
 
         props.dialog.showErrorDialog()
       }
     },
-    [
-      isArtsyShipping,
-      props.dialog,
-      props.order.internalID,
-      selectedShippingQuoteId,
-      trackEvent,
-    ]
+    [isArtsyShipping, orderTracking, props.dialog, selectedShippingQuoteId]
   )
 
   const createUserAddressMutation = useCallback(
@@ -335,14 +291,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       } catch (error) {
         logger.error(error)
 
-        trackEvent({
-          action: ActionType.errorMessageViewed,
-          context_owner_type: OwnerType.ordersShipping,
-          context_owner_id: props.order.internalID,
+        orderTracking.errorMessageViewed({
+          error_code: null,
           title: "An error occurred",
           message:
             "Something went wrong. Please try again or contact orders@artsy.net.",
-          error_code: null,
           flow: "user selects a shipping option",
         })
 
@@ -356,7 +309,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       requiresArtsyShippingTo,
       handleSubmitError,
       createUserAddressMutation,
-      trackEvent,
+      orderTracking,
     ]
   )
 
@@ -383,14 +336,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       } catch (error) {
         logger.error(error)
 
-        trackEvent({
-          action: ActionType.errorMessageViewed,
-          context_owner_type: OwnerType.ordersShipping,
-          context_owner_id: props.order.internalID,
+        orderTracking.errorMessageViewed({
+          error_code: null,
           title: "An error occurred",
           message:
             "There was a problem getting shipping quotes. Please contact orders@artsy.net.",
-          error_code: null,
           flow: "user sets a shipping quote",
         })
 
@@ -400,11 +350,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       }
     }
   }, [
-    advanceToPayment,
-    handleSubmitError,
     props,
     selectedShippingQuoteId,
-    trackEvent,
+    advanceToPayment,
+    handleSubmitError,
+    orderTracking,
   ])
 
   // TODO: Pass this into the fulfillment details form (according to current structure)
@@ -417,33 +367,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   //   }
   // }
 
-  // const onSelectShippingOption = (
-  //   newShippingOption: CommerceOrderFulfillmentTypeEnum
-  // ) => {
-  //   TODO: (Erik): Tracking
-  //   trackEvent({
-  //     action_type: DeprecatedSchema.ActionType.Click,
-  //     subject:
-  //       newShippingOption === "SHIP"
-  //         ? DeprecatedSchema.Subject.BNMOProvideShipping
-  //         : DeprecatedSchema.Subject.BNMOArrangePickup,
-  //     flow: "buy now",
-  //     type: "button",
-  //   })
-
-  //   if (shippingOption !== newShippingOption) {
-  //     setShippingOption(newShippingOption)
-  //   }
-  // }
-
   const handleShippingQuoteSelected = (newShippingQuoteId: string) => {
-    trackEvent({
-      // analytics data missing if default shipping is already selected?
-      action: ActionType.clickedSelectShippingOption,
-      context_module: ContextModule.ordersShipping,
-      context_page_owner_type: "orders-shipping",
-      subject: newShippingQuoteId,
-    } as ClickedSelectShippingOption)
+    orderTracking.clickedSelectShippingOption(newShippingQuoteId)
 
     setSelectedShippingQuoteId(newShippingQuoteId)
   }

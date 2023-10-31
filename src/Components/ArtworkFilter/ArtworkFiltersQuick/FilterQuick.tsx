@@ -72,6 +72,7 @@ export const FilterQuick: FC<FilterQuickProps> = ({
       dropdown={({ onHide }) => {
         return (
           <FilterQuickDropdownPanel
+            count={count}
             onConfirm={onHide}
             onClear={() => {
               handleClear()
@@ -142,24 +143,27 @@ interface FilterQuickDropdownPanelProps extends BoxProps {
   onClear: () => void
   onConfirm: () => void
   children: React.ReactNode
+  count: number
 }
 
 export const FilterQuickDropdownPanel: FC<FilterQuickDropdownPanelProps> = ({
   onClear,
   onConfirm,
   children,
+  count,
+  p = 1,
   ...rest
 }) => {
   return (
     <Box
       display="flex"
       flexDirection="column"
-      height={230}
+      maxHeight={230}
       width={300}
       {...rest}
     >
       <Box
-        p={1}
+        p={p}
         flex={1}
         minHeight={0}
         style={{
@@ -178,11 +182,21 @@ export const FilterQuickDropdownPanel: FC<FilterQuickDropdownPanelProps> = ({
         p={1}
         zIndex={1}
       >
-        <Button size="small" variant="secondaryBlack" onClick={onClear}>
+        <Button
+          size="small"
+          variant="secondaryBlack"
+          onClick={onClear}
+          disabled={count === 0}
+        >
           Clear
         </Button>
 
-        <Button size="small" variant="primaryBlack" onClick={onConfirm}>
+        <Button
+          size="small"
+          variant="primaryBlack"
+          onClick={onConfirm}
+          disabled={count === 0}
+        >
           Confirm
         </Button>
       </Box>
