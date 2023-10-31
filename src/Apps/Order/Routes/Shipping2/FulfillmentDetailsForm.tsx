@@ -1,298 +1,67 @@
+import * as Yup from "yup"
 import {
-  AutocompleteInput,
-  BorderedRadio,
-  Checkbox,
-  Column,
-  GridColumns,
-  Input,
+  usePrevious,
   RadioGroup,
+  BorderedRadio,
+  Collapse,
   Spacer,
+  GridColumns,
+  Column,
+  Input,
+  AutocompleteInput,
+  Checkbox,
   Text,
 } from "@artsy/palette"
-import { FulfillmentDetailsForm_order$data } from "__generated__/FulfillmentDetailsForm_order.graphql"
-import { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
 import {
-  AddressVerificationFlowQueryRenderer,
   AddressVerifiedBy,
+  AddressVerificationFlowQueryRenderer,
 } from "Apps/Order/Components/AddressVerificationFlow"
-
 import {
-  AddressAutocompleteSuggestion,
-  useAddressAutocomplete,
-} from "Components/Address/useAddressAutocomplete"
-import { postalCodeValidator } from "Components/Address/utils"
-import { CountrySelect } from "Components/CountrySelect"
-import {
-  Form,
-  Formik,
-  FormikErrors,
-  FormikHelpers,
-  FormikTouched,
-  useFormikContext,
-} from "formik"
-import { compact, pick } from "lodash"
-import { FC, useCallback, useEffect, useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
-import * as Yup from "yup"
-import { extractNodes } from "Utils/extractNodes"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { SavedAddressesFragmentContainer as SavedAddresses } from "Apps/Order/Routes/Shipping2/SavedAddresses2"
-import { usePrevious } from "Utils/Hooks/usePrevious"
-import { Collapse } from "Apps/Order/Components/Collapse"
-import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
+  FulfillmentDetailsFormProps,
+  FulfillmentValues,
+  ShipValues,
+} from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
+import { SavedAddressesFragmentContainer } from "Apps/Order/Routes/Shipping2/SavedAddresses2"
 import {
   FulfillmentType,
   ShippingAddressFormValues,
-} from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
+} from "Apps/Order/Routes/Shipping2/shippingUtils"
+import {
+  useAddressAutocomplete,
+  AddressAutocompleteSuggestion,
+} from "Components/Address/useAddressAutocomplete"
+import { CountrySelect } from "Components/CountrySelect"
 import { RouterLink } from "System/Router/RouterLink"
-import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
+import { extractNodes } from "Utils/extractNodes"
+import {
+  useFormikContext,
+  Form,
+  FormikTouched,
+  FormikErrors,
+  withFormik,
+} from "formik"
+import { compact, pick } from "lodash"
+import { useEffect, useCallback } from "react"
 
-export const ADDRESS_VALIDATION_SHAPE = {
-  addressLine1: Yup.string().required("Street address is required"),
-  addressLine2: Yup.string().nullable(),
-  city: Yup.string().required("City is required"),
-  postalCode: postalCodeValidator,
-  region: Yup.string().when("country", {
-    is: country => ["US", "CA"].includes(country),
-    then: Yup.string().required("State is required"),
-    otherwise: Yup.string(),
-  }),
-  country: Yup.string().required("Country is required"),
-}
-const VALIDATION_SCHEMA = Yup.object().shape({
-  fulfillmentType: Yup.string().oneOf([
-    FulfillmentType.PICKUP,
-    FulfillmentType.SHIP,
-  ]),
+type AddressFormMode = "saved_addresses" | "new_address" | "pickup"
 
-  attributes: Yup.object()
-    .shape({
-      phoneNumber: Yup.string()
-        .required("Phone number is required")
-        .matches(/^[+\-\d]+$/, "Phone number is required"),
-      name: Yup.string().required("Full name is required"),
-    })
-    .when("fulfillmentType", {
-      is: FulfillmentType.SHIP,
-      then: schema => schema.shape(ADDRESS_VALIDATION_SHAPE),
-    }),
-})
-
-interface PickupValues {
-  fulfillmentType: FulfillmentType.PICKUP
-  attributes: {
-    name: string
-    phoneNumber: string
-  }
-}
-
-export interface ShipValues {
-  fulfillmentType: FulfillmentType.SHIP
-  attributes: ShippingAddressFormValues & {
-    saveAddress: boolean
-    addressVerifiedBy: AddressVerifiedBy | null
-  }
-}
-
-export type FulfillmentValues = ShipValues | PickupValues
-
-export interface FulfillmentDetailsFormProps {
-  onSubmit: (
-    values: FulfillmentValues,
-    formikHelpers?: FormikHelpers<FulfillmentValues>
-  ) => void | Promise<any>
-
-  me: FulfillmentDetailsForm_me$data
-  order: FulfillmentDetailsForm_order$data
-}
-
-export const FulfillmentDetails: FC<FulfillmentDetailsFormProps> = props => {
-  const shippingContext = useShippingContext()
-
-  const addressVerificationUSEnabled = !!useFeatureFlag(
-    "address_verification_us"
-  )
-  const addressVerificationIntlEnabled = !!useFeatureFlag(
-    "address_verification_intl"
-  )
-
-  const shouldVerifyAddressOnSubmit = (values: FulfillmentValues) => {
-    const enabledForAddress =
-      (values as ShipValues).attributes.country === "US"
-        ? addressVerificationUSEnabled
-        : addressVerificationIntlEnabled
-
-    const hasSavedAddresses = !!props.me.addressConnection?.edges?.length
-
-    return (
-      values.fulfillmentType === FulfillmentType.SHIP &&
-      !hasSavedAddresses &&
-      enabledForAddress &&
-      values.attributes.addressVerifiedBy === null
-    )
-  }
-
-  // trigger address verification by setting this to true
-  const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)
-
-  const handleVerificationComplete = () => {
-    setVerifyAddressNow(false)
-  }
-
-  const handleSubmit = (values, helpers) => {
-    if (shouldVerifyAddressOnSubmit(values)) {
-      setVerifyAddressNow(true)
-      return
-    } else {
-      return props.onSubmit(values, helpers)
-    }
-  }
-
-  return (
-    <Formik<FulfillmentValues>
-      initialValues={shippingContext.initialValues.fulfillmentDetails}
-      validationSchema={VALIDATION_SCHEMA}
-      onSubmit={handleSubmit}
-    >
-      {shippingContext.initialValues.fulfillmentDetails.fulfillmentType ===
-      "PICKUP" ? (
-        <PickupFulfillmentDetailsFormLayout />
-      ) : (
-        <FulfillmentDetailsFormLayout
-          order={props.order}
-          me={props.me}
-          verifyAddressNow={verifyAddressNow}
-          onAddressVerificationComplete={handleVerificationComplete}
-        />
-      )}
-    </Formik>
-  )
-}
-
-export const FulfillmentDetailsFragmentContainer = createFragmentContainer(
-  FulfillmentDetails,
-  {
-    order: graphql`
-      fragment FulfillmentDetailsForm_order on CommerceOrder {
-        internalID
-        mode
-        state
-        requestedFulfillment {
-          __typename
-          ... on CommercePickup {
-            phoneNumber
-          }
-          ... on CommerceShip {
-            name
-            addressLine1
-            addressLine2
-            city
-            region
-            country
-            postalCode
-            phoneNumber
-          }
-          ... on CommerceShipArta {
-            name
-            addressLine1
-            addressLine2
-            city
-            region
-            country
-            postalCode
-            phoneNumber
-          }
-        }
-        lineItems {
-          edges {
-            node {
-              artwork {
-                slug
-                processWithArtsyShippingDomestic
-                artsyShippingInternational
-                pickupAvailable
-                onlyShipsDomestically
-                euShippingOrigin
-                shippingCountry
-              }
-              shippingQuoteOptions {
-                edges {
-                  ...ShippingQuotes_shippingQuotes
-                  node {
-                    id
-                    isSelected
-                  }
-                }
-              }
-            }
-          }
-        }
-        ...ArtworkSummaryItem_order
-        ...TransactionDetailsSummaryItem_order
-        ...OrderStepper_order
-      }
-    `,
-    me: graphql`
-      fragment FulfillmentDetailsForm_me on Me
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 30 }
-          last: { type: "Int" }
-          after: { type: "String" }
-          before: { type: "String" }
-        ) {
-        name
-        email
-        id
-        location {
-          country
-        }
-        ...SavedAddresses2_me
-        addressConnection(
-          first: $first
-          last: $last
-          before: $before
-          after: $after
-        ) {
-          edges {
-            node {
-              id
-              internalID
-              addressLine1
-              addressLine2
-              addressLine3
-              city
-              country
-              isDefault
-              name
-              phoneNumber
-              postalCode
-              region
-            }
-          }
-        }
-      }
-    `,
-  }
-)
-
-interface LayoutProps
-  extends Pick<FulfillmentDetailsFormProps, "order" | "me"> {
+interface Props extends Pick<FulfillmentDetailsFormProps, "order" | "me"> {
+  initialValues: FulfillmentValues
   verifyAddressNow: boolean
   onAddressVerificationComplete: () => void
 }
 
-const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
+const FulfillmentDetailsFormLayout = (props: Props) => {
   const shippingContext = useShippingContext()
   const active = shippingContext.step === "fulfillment_details"
 
   const renderMissingShippingQuotesError = !!(
-    shippingContext.parsedOrderData.isArtsyShipping &&
-    shippingContext.parsedOrderData.shippingQuotes &&
-    shippingContext.parsedOrderData.shippingQuotes.length === 0
+    shippingContext.computedOrderData.isArtsyShipping &&
+    shippingContext.computedOrderData.shippingQuotes &&
+    shippingContext.computedOrderData.shippingQuotes.length === 0
   )
 
-  // FIXME: Non-null assertion
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstArtwork = extractNodes(props.order.lineItems)[0]!.artwork!
 
   const savedAddresses = compact(
@@ -315,8 +84,6 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
     setValues,
     isValid,
   } = formikContext
-
-  const orderTracking = useOrderTracking()
 
   // Pass some key formik bits up to the shipping route
   useEffect(() => {
@@ -428,16 +195,15 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
             data-testid="shipping-options"
             onSelect={value => {
               setFieldValue("fulfillmentType", value)
-              orderTracking.clickedFulfillmentType(value as FulfillmentType)
             }}
             defaultValue={values.fulfillmentType}
           >
             <Text variant="lg-display" mb="1">
               Delivery method
             </Text>
-            <BorderedRadio value={FulfillmentType.SHIP} label="Shipping" />
+            <BorderedRadio value="SHIP" label="Shipping" />
             <BorderedRadio
-              value={FulfillmentType.PICKUP}
+              value="PICKUP"
               label="Arrange for pickup (free)"
               data-testid="pickupOption"
             >
@@ -467,7 +233,7 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
             data-testid="savedAddressesCollapse"
             open={savedAddresses.length > 0}
           >
-            <SavedAddresses
+            <SavedAddressesFragmentContainer
               active={addressFormMode === "saved_addresses"}
               me={props.me}
               onSelect={a => {
@@ -480,9 +246,9 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
             data-testid="addressFormCollapse"
             open={
               addressFormMode === "new_address" ||
-              (shippingContext.parsedOrderData.fulfillmentType ===
+              (shippingContext.computedOrderData.fulfillmentType ===
                 FulfillmentType.SHIP &&
-                !shippingContext.parsedOrderData.selectedSavedAddressId)
+                !shippingContext.computedOrderData.selectedSavedAddressId)
             }
           >
             <GridColumns>
@@ -502,9 +268,15 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
               </Column>
 
               <Column span={12}>
+                <Text
+                  id="country-select"
+                  mb={0.5}
+                  variant="xs"
+                  color="black100"
+                >
+                  Country
+                </Text>
                 <CountrySelect
-                  title="Country"
-                  name="CountrySelect"
                   aria-labelledby="country-select"
                   tabIndex={tabbableFormValue("new_address")}
                   selected={values.attributes.country}
@@ -512,22 +284,22 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
                     setFieldValue(`attributes.country`, selected)
                   }
                   disabled={
-                    !!shippingContext.parsedOrderData.lockShippingCountryTo &&
-                    shippingContext.parsedOrderData.lockShippingCountryTo !==
+                    !!shippingContext.computedOrderData.lockShippingCountryTo &&
+                    shippingContext.computedOrderData.lockShippingCountryTo !==
                       "EU"
                   }
                   euShippingOnly={
-                    shippingContext.parsedOrderData.lockShippingCountryTo ===
+                    shippingContext.computedOrderData.lockShippingCountryTo ===
                     "EU"
                   }
                   data-testid="AddressForm_country"
                 />
-                {shippingContext.parsedOrderData.lockShippingCountryTo && (
+                {shippingContext.computedOrderData.lockShippingCountryTo && (
                   <>
                     <Spacer x={0.5} y={0.5} />
                     <Text variant="xs" color="black60">
-                      {shippingContext.parsedOrderData.lockShippingCountryTo ===
-                      "EU"
+                      {shippingContext.computedOrderData
+                        .lockShippingCountryTo === "EU"
                         ? "Continental Europe shipping only."
                         : "Domestic shipping only."}
                     </Text>
@@ -769,3 +541,64 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
     </Form>
   )
 }
+
+// pass into fulfillment details
+const ArtaMissingShippingQuoteMessage = () => {
+  return (
+    <Text
+      py={1}
+      px={2}
+      mb={2}
+      bg="red10"
+      color="red100"
+      data-test="artaErrorMessage"
+    >
+      In order to provide a shipping quote, we need some more information from
+      you. Please contact{" "}
+      <RouterLink color="red100" to="mailto:orders@artsy.net">
+        orders@artsy.net
+      </RouterLink>{" "}
+      so we can assist you.
+    </Text>
+  )
+}
+
+export const ADDRESS_VALIDATION_SHAPE = {
+  addressLine1: Yup.string().required("Street address is required"),
+  addressLine2: Yup.string().nullable(),
+  city: Yup.string().required("City is required"),
+  postalCode: postalCodeValidator,
+  region: Yup.string().when("country", {
+    is: country => ["US", "CA"].includes(country),
+    then: Yup.string().required("State is required"),
+    otherwise: Yup.string(),
+  }),
+  country: Yup.string().required("Country is required"),
+}
+const VALIDATION_SCHEMA = Yup.object().shape({
+  fulfillmentType: Yup.string().oneOf([
+    FulfillmentType.PICKUP,
+    FulfillmentType.SHIP,
+  ]),
+
+  attributes: Yup.object()
+    .shape({
+      phoneNumber: Yup.string()
+        .required("Phone number is required")
+        .matches(/^[+\-\d]+$/, "Phone number is required"),
+      name: Yup.string().required("Full name is required"),
+    })
+    .when("fulfillmentType", {
+      is: FulfillmentType.SHIP,
+      then: schema => schema.shape(ADDRESS_VALIDATION_SHAPE),
+    }),
+})
+
+export const FulfillmentDetailsForm = withFormik<Props, FulfillmentValues>({
+  mapPropsToValues: props => props.initialValues,
+  validationSchema: VALIDATION_SCHEMA,
+
+  handleSubmit: values => {
+    // do submitting things
+  },
+})(FulfillmentDetailsFormLayout)
