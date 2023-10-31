@@ -154,7 +154,7 @@ export const BaseArtworkFilter: React.FC<
 
   // Count of all filters, sans `sort`
   const revisedArtworkFiltersCount = useMemo(() => {
-    return Object.entries(filterContext.selectedFiltersCounts).reduce(
+    return Object.entries(filterContext.selectedFiltersCounts || {}).reduce(
       (acc, [field, count]) => {
         if (field === "sort") return acc
         return acc + count
@@ -165,7 +165,7 @@ export const BaseArtworkFilter: React.FC<
 
   // Count of only quick filters
   const quickArtworkFiltersCount = useMemo(() => {
-    return Object.entries(filterContext.selectedFiltersCounts).reduce(
+    return Object.entries(filterContext.selectedFiltersCounts || {}).reduce(
       (acc, [field, count]) => {
         if (!ARTWORK_FILTERS_QUICK_FIELDS.includes(field)) return acc
         return acc + count
