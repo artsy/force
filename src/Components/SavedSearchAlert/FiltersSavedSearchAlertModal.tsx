@@ -7,7 +7,6 @@ import {
   Clickable,
   Flex,
   Join,
-  Separator,
   Spacer,
   Text,
   TextArea,
@@ -159,7 +158,7 @@ export const FiltersSavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
     <Formik<SavedSearchAlertFormValues & HearFromArtsyAdvisorFormValues>
       initialValues={{
         message: "",
-        hearFromArtsyAdvisor: false,
+        hearFromArtsyAdvisor: false, // should we remove this?
         phoneNumber: phone,
         phoneCountryCode: regionCode,
         ...initialValues,
@@ -205,36 +204,37 @@ export const FiltersSavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
 
         return (
           <Flex flexDirection="column" p={2}>
-            <Join separator={<Spacer y={2} />}>
+            <Join separator={<Spacer y={4} />}>
               <SavedSearchAlertNameInputQueryRenderer />
+
               <Box>
-                <Text variant="xs">Filters</Text>
-                <Spacer y={1} />
-                <Flex flexWrap="wrap" gap={1}>
+                <Text variant="sm-display" mb={1}>
+                  Filters
+                </Text>
+                <Flex flexWrap="wrap">
                   <SavedSearchAlertPills
                     items={pills}
                     onDeletePress={handleRemovePillPress}
                   />
                 </Flex>
-                <Spacer y={1} />
-                <Clickable
-                  onClick={() => steps.setStep("ALERT_FILTERS")}
-                  width="100%"
-                >
-                  <Text variant="sm-display">Add Filters</Text>
-                  <Flex justifyContent="space-between">
-                    <Text variant="xs" color="black60">
-                      Including Price Range, Rarity, Medium, Size, Color
-                    </Text>
-                    <ChevronRightIcon />
-                  </Flex>
-                </Clickable>
-                <Separator my={2} />
-                <DetailsInput />
-                <Separator my={2} />
               </Box>
 
-              <Box>
+              <Clickable
+                onClick={() => steps.setStep("ALERT_FILTERS")}
+                width="100%"
+              >
+                <Text variant="sm-display">Add Filters</Text>
+                <Flex justifyContent="space-between">
+                  <Text variant="sm-display" color="black60">
+                    Including Price Range, Rarity, Medium, Size, Color
+                  </Text>
+                  <ChevronRightIcon />
+                </Flex>
+              </Clickable>
+
+              <DetailsInput />
+
+              <Join separator={<Spacer y={2} />}>
                 <Box display="flex" justifyContent="space-between">
                   <Text variant="sm-display">Email Alerts</Text>
                   <Checkbox
@@ -242,7 +242,6 @@ export const FiltersSavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
                     selected={values.email}
                   />
                 </Box>
-                <Spacer y={4} />
                 <Box display="flex" justifyContent="space-between">
                   <Text variant="sm-display">Mobile Alerts</Text>
                   <Checkbox
@@ -257,98 +256,86 @@ export const FiltersSavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
                     selected={values.push}
                   />
                 </Box>
+              </Join>
 
-                {values.push && (
-                  <>
-                    <Spacer y={2} />
-                    <FrequenceRadioButtons
-                      defaultFrequence={values.frequency}
-                      onSelect={selectedOption =>
-                        setFieldValue("frequency", selectedOption)
-                      }
+              {values.push && (
+                <FrequenceRadioButtons
+                  defaultFrequence={values.frequency}
+                  onSelect={selectedOption =>
+                    setFieldValue("frequency", selectedOption)
+                  }
+                />
+              )}
+
+              {isHearFromArtsyAdvisorEnabled && (
+                <>
+                  <Box display="flex" justifyContent="space-between">
+                    <Text variant="sm-display">Hear from an Artsy Advisor</Text>
+                    <Checkbox
+                      onSelect={selected => {
+                        setFieldValue("hearFromArtsyAdvisor", selected)
+                        // Scroll the newly revealed (or not) section into view.
+                        // Use `setTimeout` to ensure the scroll happens after
+                        // the section is rendered.
+                        setTimeout(() => {
+                          if (advisoryOpportunitySectionScrollRef?.current) {
+                            advisoryOpportunitySectionScrollRef.current.scrollIntoView(
+                              {
+                                behavior: "smooth",
+                              }
+                            )
+                          }
+                        })
+                      }}
+                      selected={values.hearFromArtsyAdvisor}
                     />
-                  </>
-                )}
+                  </Box>
 
-                <Spacer y={2} />
-
-                {isHearFromArtsyAdvisorEnabled && (
-                  <>
-                    <Spacer y={4} />
-                    <Box display="flex" justifyContent="space-between">
-                      <Text variant="sm-display">
-                        Hear from an Artsy Advisor
-                      </Text>
-                      <Checkbox
-                        onSelect={selected => {
-                          setFieldValue("hearFromArtsyAdvisor", selected)
-                          // Scroll the newly revealed (or not) section into view.
-                          // Use `setTimeout` to ensure the scroll happens after
-                          // the section is rendered.
-                          setTimeout(() => {
-                            if (advisoryOpportunitySectionScrollRef?.current) {
-                              advisoryOpportunitySectionScrollRef.current.scrollIntoView(
-                                {
-                                  behavior: "smooth",
-                                }
-                              )
-                            }
-                          })
+                  {values.hearFromArtsyAdvisor && (
+                    <>
+                      <PhoneNumberInput
+                        required
+                        inputProps={{
+                          name: "phoneNumber",
+                          onBlur: handleBlur,
+                          onChange: handleChange,
+                          placeholder: "(000) 000 0000",
+                          value: values.phoneNumber,
                         }}
-                        selected={values.hearFromArtsyAdvisor}
+                        selectProps={{
+                          name: "phoneCountryCode",
+                          onBlur: handleBlur,
+                          selected: values.phoneCountryCode,
+                          onSelect: value => {
+                            setFieldValue("phoneCountryCode", value)
+                          },
+                        }}
+                        error={errors.phoneCountryCode || errors.phoneNumber}
                       />
-                    </Box>
 
-                    {values.hearFromArtsyAdvisor && (
-                      <>
-                        <Spacer y={2} />
+                      <TextArea
+                        onChange={({ value }) => {
+                          setFieldValue("message", value)
+                        }}
+                        placeholder="Tell us more about what you're looking for."
+                        value={values.message}
+                      />
 
-                        <PhoneNumberInput
-                          mt={4}
-                          required
-                          inputProps={{
-                            name: "phoneNumber",
-                            onBlur: handleBlur,
-                            onChange: handleChange,
-                            placeholder: "(000) 000 0000",
-                            value: values.phoneNumber,
-                          }}
-                          selectProps={{
-                            name: "phoneCountryCode",
-                            onBlur: handleBlur,
-                            selected: values.phoneCountryCode,
-                            onSelect: value => {
-                              setFieldValue("phoneCountryCode", value)
-                            },
-                          }}
-                          error={errors.phoneCountryCode || errors.phoneNumber}
-                        />
+                      <Box ref={advisoryOpportunitySectionScrollRef as any} />
+                    </>
+                  )}
+                </>
+              )}
 
-                        <Spacer y={2} />
-
-                        <TextArea
-                          onChange={({ value }) => {
-                            setFieldValue("message", value)
-                          }}
-                          placeholder="Tell us more about what you're looking for."
-                          value={values.message}
-                        />
-
-                        <Box ref={advisoryOpportunitySectionScrollRef as any} />
-                      </>
-                    )}
-                  </>
-                )}
-              </Box>
+              <Button
+                disabled={!hasSelectedContactMethod || !isPhoneValid}
+                loading={isSubmitting}
+                onClick={() => handleSubmit()}
+                width="100%"
+              >
+                Save Alert
+              </Button>
             </Join>
-            <Button
-              disabled={!hasSelectedContactMethod || !isPhoneValid}
-              loading={isSubmitting}
-              onClick={() => handleSubmit()}
-              width="100%"
-            >
-              Save Alert
-            </Button>
           </Flex>
         )
       }}
