@@ -310,7 +310,7 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
     isValid,
   } = formikContext
 
-  const { clickedFulfillmentType } = useOrderTracking()
+  const orderTracking = useOrderTracking()
 
   // Pass some key formik bits up to the shipping route
   useEffect(() => {
@@ -422,7 +422,7 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
             data-testid="shipping-options"
             onSelect={value => {
               setFieldValue("fulfillmentType", value)
-              clickedFulfillmentType(value as FulfillmentType)
+              orderTracking.clickedFulfillmentType(value as FulfillmentType)
             }}
             defaultValue={values.fulfillmentType}
           >

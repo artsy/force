@@ -61,10 +61,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     selectedAddressID && getAddressByID(addressList, selectedAddressID)
   const selectedAddressPresent = !!selectedAddress
 
-  const {
-    clickedShippingAddress,
-    clickedAddNewShippingAddress,
-  } = useOrderTracking()
+  const orderTracking = useOrderTracking()
 
   React.useEffect(() => {
     if (!selectedAddressPresent) {
@@ -90,13 +87,13 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       if (!selectedAddress) {
         console.warn("Address not found: ", id)
       }
-      clickedShippingAddress()
+      orderTracking.clickedShippingAddress()
       // Set values on the fulfillment form context.
       // Can these values be invalid? If so, maybe we could pop a form up for
       // them to fix it. Seems unlikely.
       onSelect(addressWithFallbackValues(selectedAddress))
     },
-    [addressList, clickedShippingAddress, onSelect]
+    [addressList, onSelect, orderTracking]
   )
 
   const refetchAddresses = () => {
@@ -166,7 +163,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           tabIndex={props.active ? 0 : -1}
           data-test="shippingButton"
           onClick={() => {
-            clickedAddNewShippingAddress()
+            orderTracking.clickedAddNewShippingAddress()
             setActiveModal({ type: AddressModalActionType.CREATE_USER_ADDRESS })
           }}
         >

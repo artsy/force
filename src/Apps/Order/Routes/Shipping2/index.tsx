@@ -124,7 +124,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     string | undefined
   >(initialValues.shippingQuotes.selectedShippingQuoteId)
 
-  const { clickedSelectShippingOption, errorMessageViewed } = useOrderTracking()
+  const orderTracking = useOrderTracking()
 
   const handleSubmitError = useCallback(
     (error: { code: string; data: string | null }) => {
@@ -135,7 +135,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         error.code === "missing_country" ||
         error.code === "missing_postal_code"
       ) {
-        errorMessageViewed({
+        orderTracking.errorMessageViewed({
           error_code: error.code,
           title: "Missing information",
           message: "Please complete all required fields.",
@@ -151,7 +151,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         error.code === "unsupported_shipping_location" &&
         parsedData.failure_code === "domestic_shipping_only"
       ) {
-        errorMessageViewed({
+        orderTracking.errorMessageViewed({
           error_code: error.code,
           title: "Can't ship to that address",
           message: "This work can only be shipped domestically.",
@@ -167,7 +167,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           ErrorDialogs.DestinationCouldNotBeGeocoded
         )
 
-        errorMessageViewed({
+        orderTracking.errorMessageViewed({
           error_code: error.code,
           title: title,
           message: message,
@@ -179,7 +179,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           message: formattedMessage,
         })
       } else if (isArtsyShipping && selectedShippingQuoteId) {
-        errorMessageViewed({
+        orderTracking.errorMessageViewed({
           error_code: null,
           title: "An error occurred",
           message:
@@ -191,7 +191,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           message: <ArtaErrorDialogMessage />,
         })
       } else {
-        errorMessageViewed({
+        orderTracking.errorMessageViewed({
           error_code: error.code,
           title: "An error occurred",
           message:
@@ -202,7 +202,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         props.dialog.showErrorDialog()
       }
     },
-    [errorMessageViewed, isArtsyShipping, props.dialog, selectedShippingQuoteId]
+    [isArtsyShipping, orderTracking, props.dialog, selectedShippingQuoteId]
   )
 
   const createUserAddressMutation = useCallback(
@@ -290,7 +290,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       } catch (error) {
         logger.error(error)
 
-        errorMessageViewed({
+        orderTracking.errorMessageViewed({
           error_code: null,
           title: "An error occurred",
           message:
@@ -308,7 +308,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       requiresArtsyShippingTo,
       handleSubmitError,
       createUserAddressMutation,
-      errorMessageViewed,
+      orderTracking,
     ]
   )
 
@@ -335,7 +335,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       } catch (error) {
         logger.error(error)
 
-        errorMessageViewed({
+        orderTracking.errorMessageViewed({
           error_code: null,
           title: "An error occurred",
           message:
@@ -349,11 +349,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       }
     }
   }, [
-    advanceToPayment,
-    handleSubmitError,
     props,
     selectedShippingQuoteId,
-    errorMessageViewed,
+    advanceToPayment,
+    handleSubmitError,
+    orderTracking,
   ])
 
   // TODO: Pass this into the fulfillment details form (according to current structure)
@@ -367,7 +367,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   // }
 
   const handleShippingQuoteSelected = (newShippingQuoteId: string) => {
-    clickedSelectShippingOption(newShippingQuoteId)
+    orderTracking.clickedSelectShippingOption(newShippingQuoteId)
 
     setSelectedShippingQuoteId(newShippingQuoteId)
   }
