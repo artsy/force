@@ -166,7 +166,7 @@ export const BaseArtworkFilter: React.FC<
             const pageTrackingParams: ClickedChangePage = {
               action: ActionType.clickedChangePage,
               context_module: ContextModule.artworkGrid,
-              context_page_owner_type: contextPageOwnerType!,
+              context_page_owner_type: contextPageOwnerType,
               context_page_owner_id: contextPageOwnerId,
               context_page_owner_slug: contextPageOwnerSlug,
               page_current: previousFilter,
@@ -184,7 +184,7 @@ export const BaseArtworkFilter: React.FC<
                 }),
                 contextOwnerId: contextPageOwnerId,
                 contextOwnerSlug: contextPageOwnerSlug,
-                contextOwnerType: contextPageOwnerType!,
+                contextOwnerType: contextPageOwnerType,
                 current: JSON.stringify({
                   ...onlyAllowedFilters,
                   metric: filterContext?.filters?.metric,
@@ -205,7 +205,7 @@ export const BaseArtworkFilter: React.FC<
         first: 30,
         ...relayRefetchInputVariables,
         ...allowedFilters(filterContext.filters),
-        keyword: filterContext.filters!.term || filterContext.filters!.keyword,
+        keyword: filterContext.filters?.term || filterContext.filters?.keyword,
       },
       ...relayVariables,
     }
@@ -389,7 +389,7 @@ export const BaseArtworkFilter: React.FC<
         <Spacer y={2} />
 
         <ArtworkFilterArtworkGrid
-          filtered_artworks={viewer.filtered_artworks!}
+          filtered_artworks={viewer.filtered_artworks}
           isLoading={isLoading}
           offset={offset}
           columnCount={[2, 2, 2, 3]}
@@ -463,7 +463,7 @@ export const BaseArtworkFilter: React.FC<
 
             {children || (
               <ArtworkFilterArtworkGrid
-                filtered_artworks={viewer.filtered_artworks!}
+                filtered_artworks={viewer.filtered_artworks}
                 isLoading={isLoading}
                 offset={offset}
                 columnCount={[2, 3, 3, 4]}
@@ -527,7 +527,7 @@ export const BaseArtworkFilter: React.FC<
 
               {children || (
                 <ArtworkFilterArtworkGrid
-                  filtered_artworks={viewer.filtered_artworks!}
+                  filtered_artworks={viewer.filtered_artworks}
                   isLoading={isLoading}
                   offset={offset}
                   columnCount={[2, 2, 2, 3]}
