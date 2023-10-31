@@ -18,6 +18,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 
 import { CreateAlertModal } from "Components/SavedSearchAlert/CreateAlertModal"
 import { CreateAlertSteps } from "Components/SavedSearchAlert/Components/CreateAlertSteps"
+import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 
 interface RenderButtonProps {
   onClick: () => void
@@ -101,6 +102,7 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
     setVisibleForm(false)
   }
   const addFiltersEnabled = useFeatureFlag("onyx_create-alert-filters-screen")
+  const { steps } = useSavedSearchAlertContext()
 
   return (
     <>
@@ -108,7 +110,12 @@ export const SavedSearchCreateAlertButtonContainer: React.FC<Props> = ({
 
       {addFiltersEnabled ? (
         visibleForm && (
-          <CreateAlertModal onClose={() => setVisibleForm(false)}>
+          <CreateAlertModal
+            onClose={() => {
+              setVisibleForm(false)
+              steps.setStep("ALERT_DETAILS")
+            }}
+          >
             <CreateAlertSteps />
           </CreateAlertModal>
         )

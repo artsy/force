@@ -48,7 +48,6 @@ import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
   initialValues: SavedSearchAlertFormValues
-  onClose: () => void
   onCreateAlert?: (result: SavedSearchAlertMutationResult) => void
 }
 

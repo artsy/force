@@ -36,7 +36,6 @@ export const CreateAlertDetailsStep: FC<CreateAlertDetailsStepProps> = ({
             frequency: DEFAULT_FREQUENCY,
           }}
           entity={entity}
-          onClose={() => {}}
         />
       </Box>
     </>
