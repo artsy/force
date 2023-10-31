@@ -90,7 +90,7 @@ export const ArtistArticlesRouteFragmentContainer = createRefetchContainer(
           page: $page
           size: 12
           sort: PUBLISHED_AT_DESC
-          inEditorialFeed: true
+          inEditorialFeed: false
         ) {
           pageInfo {
             hasNextPage
