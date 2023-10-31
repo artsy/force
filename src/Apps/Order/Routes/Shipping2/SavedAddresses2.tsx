@@ -13,13 +13,6 @@ import {
 import createLogger from "Utils/logger"
 import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/SavedAddressItem2"
 import { extractNodes } from "Utils/extractNodes"
-import { useTracking } from "react-tracking"
-import {
-  ActionType,
-  ClickedShippingAddress,
-  ContextModule,
-  OwnerType,
-} from "@artsy/cohesion"
 import { themeGet } from "@styled-system/theme-get"
 
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
@@ -29,6 +22,7 @@ import {
   addressWithFallbackValues,
   getDefaultUserAddress,
 } from "Apps/Order/Routes/Shipping2/shippingUtils"
+import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
@@ -42,7 +36,6 @@ export interface SavedAddressesProps {
 
 const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const logger = createLogger("SavedAddresses.tsx")
-  const { trackEvent } = useTracking()
   const [activeModal, setActiveModal] = useState<AddressModalAction | null>(
     null
   )
@@ -68,6 +61,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     selectedAddressID && getAddressByID(addressList, selectedAddressID)
   const selectedAddressPresent = !!selectedAddress
 
+  const orderTracking = useOrderTracking()
+
   React.useEffect(() => {
     if (!selectedAddressPresent) {
       setSelectedAddressID(
@@ -92,17 +87,13 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       if (!selectedAddress) {
         console.warn("Address not found: ", id)
       }
-      trackEvent({
-        action: ActionType.clickedShippingAddress,
-        context_module: ContextModule.ordersShipping,
-        context_page_owner_type: "orders-shipping",
-      } as ClickedShippingAddress)
+      orderTracking.clickedShippingAddress()
       // Set values on the fulfillment form context.
       // Can these values be invalid? If so, maybe we could pop a form up for
       // them to fix it. Seems unlikely.
       onSelect(addressWithFallbackValues(selectedAddress))
     },
-    [addressList, onSelect, trackEvent]
+    [addressList, onSelect, orderTracking]
   )
 
   const refetchAddresses = () => {
@@ -141,14 +132,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     setSelectedAddressID(addressID)
   }
 
-  const trackAddAddressClick = () => {
-    trackEvent({
-      action: ActionType.clickedAddNewShippingAddress,
-      context_page_owner_type: OwnerType.ordersShipping,
-      context_module: ContextModule.ordersShipping,
-    })
-  }
-
   return (
     <>
       <RadioGroup
@@ -180,7 +163,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           tabIndex={props.active ? 0 : -1}
           data-test="shippingButton"
           onClick={() => {
-            trackAddAddressClick()
+            orderTracking.clickedAddNewShippingAddress()
             setActiveModal({ type: AddressModalActionType.CREATE_USER_ADDRESS })
           }}
         >
