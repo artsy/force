@@ -1,7 +1,8 @@
-import { Text } from "@artsy/palette"
+import { Flex, Join, Spacer, Text } from "@artsy/palette"
 import { ConfirmationModalHeader } from "Components/SavedSearchAlert/Components/ConfirmationModalHeader"
 import { ConfirmationArtworksGridQueryRenderer } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
+import { t } from "i18next"
 
 import { FC } from "react"
 
@@ -12,19 +13,20 @@ interface CreateAlertConfirmationStepProps {
 export const CreateAlertConfirmationStep: FC<CreateAlertConfirmationStepProps> = ({
   searchCriteriaID,
 }) => {
-  const { steps, criteria, currentArtworkID } = useSavedSearchAlertContext()
+  const { criteria, currentArtworkID } = useSavedSearchAlertContext()
 
   return (
-    <>
-      <Text>Step {steps.current}</Text>
-      <Text>SearchCriteria ID: {searchCriteriaID}</Text>
-      <ConfirmationModalHeader />
-      <ConfirmationArtworksGridQueryRenderer
-        onClose={() => false}
-        searchCriteriaId={searchCriteriaID!}
-        {...criteria}
-        excludeArtworkIDs={currentArtworkID ? [currentArtworkID] : undefined}
-      />
-    </>
+    <Flex flexDirection="column" p={2}>
+      <Text variant="lg">{t("createAlertModal.confirmationStep.saved")}</Text>
+      <Join separator={<Spacer y={2} />}>
+        <ConfirmationModalHeader />
+        <ConfirmationArtworksGridQueryRenderer
+          onClose={() => false}
+          searchCriteriaId={searchCriteriaID!}
+          excludeArtworkIDs={currentArtworkID ? [currentArtworkID] : undefined}
+          {...criteria}
+        />
+      </Join>
+    </Flex>
   )
 }
