@@ -193,7 +193,6 @@ export const FiltersSavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
         handleSubmit,
         handleChange,
         handleBlur,
-        touched,
         setFieldValue,
         isValid: isPhoneValid,
       }) => {
@@ -210,7 +209,7 @@ export const FiltersSavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
                 <Text variant="sm-display" mb={1}>
                   Filters
                 </Text>
-                <Flex flexWrap="wrap">
+                <Flex flexWrap="wrap" gap={1}>
                   <SavedSearchAlertPills
                     items={pills}
                     onDeletePress={handleRemovePillPress}
@@ -233,29 +232,27 @@ export const FiltersSavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
 
               <DetailsInput />
 
-              <Join separator={<Spacer y={2} />}>
-                <Box display="flex" justifyContent="space-between">
-                  <Text variant="sm-display">Email Alerts</Text>
-                  <Checkbox
-                    onSelect={selected => setFieldValue("email", selected)}
-                    selected={values.email}
-                  />
-                </Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Text variant="sm-display">Mobile Alerts</Text>
-                  <Checkbox
-                    onSelect={selected => {
-                      setFieldValue("push", selected)
+              <Box display="flex" justifyContent="space-between">
+                <Text variant="sm-display">Email Alerts</Text>
+                <Checkbox
+                  onSelect={selected => setFieldValue("email", selected)}
+                  selected={values.email}
+                />
+              </Box>
+              <Box display="flex" justifyContent="space-between">
+                <Text variant="sm-display">Mobile Alerts</Text>
+                <Checkbox
+                  onSelect={selected => {
+                    setFieldValue("push", selected)
 
-                      // Restore default frequency when "Mobile Alerts" is unselected
-                      if (!selected) {
-                        setFieldValue("frequency", DEFAULT_FREQUENCY)
-                      }
-                    }}
-                    selected={values.push}
-                  />
-                </Box>
-              </Join>
+                    // Restore default frequency when "Mobile Alerts" is unselected
+                    if (!selected) {
+                      setFieldValue("frequency", DEFAULT_FREQUENCY)
+                    }
+                  }}
+                  selected={values.push}
+                />
+              </Box>
 
               {values.push && (
                 <FrequenceRadioButtons
