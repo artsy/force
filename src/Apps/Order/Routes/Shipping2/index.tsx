@@ -137,8 +137,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       ) {
         orderTracking.errorMessageViewed({
           error_code: error.code,
-          title: "Missing information",
-          message: "Please complete all required fields.",
+          title: "Invalid address",
+          message:
+            "There was an error processing your address. Please review and try again.",
           flow: "user submits a shipping option",
         })
 
