@@ -33,7 +33,7 @@ import { Jump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
 import { isEqual } from "lodash"
-import React, { useState } from "react"
+import React, { useMemo, useState } from "react"
 import { RelayRefetchProp, createRefetchContainer, graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import useDeepCompareEffect from "use-deep-compare-effect"
@@ -51,7 +51,10 @@ import { allowedFilters } from "./Utils/allowedFilters"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
 import { ArtworkFilterActiveFilters } from "Components/ArtworkFilter/ArtworkFilterActiveFilters"
 import { ArtworkFilterSort } from "Components/ArtworkFilter/ArtworkFilterSort"
-import { ArtworkFiltersQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick"
+import {
+  ARTWORK_FILTERS_QUICK_FIELDS,
+  ArtworkFiltersQuick,
+} from "Components/ArtworkFilter/ArtworkFiltersQuick"
 import { useRevisedArtworkFilters } from "Components/ArtworkFilter/useRevisedArtworkFilters"
 
 interface ArtworkFilterProps extends SharedArtworkFilterContextProps, BoxProps {
@@ -149,6 +152,31 @@ export const BaseArtworkFilter: React.FC<
 
   const { enabled: isRevisedArtworkFiltersEnabled } = useRevisedArtworkFilters()
 
+  // Count of all filters, sans `sort`
+  const revisedArtworkFiltersCount = useMemo(() => {
+    return Object.entries(filterContext.selectedFiltersCounts || {}).reduce(
+      (acc, [field, count]) => {
+        if (field === "sort") return acc
+        return acc + count
+      },
+      0
+    )
+  }, [filterContext.selectedFiltersCounts])
+
+  // Count of only quick filters
+  const quickArtworkFiltersCount = useMemo(() => {
+    return Object.entries(filterContext.selectedFiltersCounts || {}).reduce(
+      (acc, [field, count]) => {
+        if (!ARTWORK_FILTERS_QUICK_FIELDS.includes(field)) return acc
+        return acc + count
+      },
+      0
+    )
+  }, [filterContext.selectedFiltersCounts])
+
+  const extendedFiltersCount =
+    revisedArtworkFiltersCount - quickArtworkFiltersCount
+
   /**
    * Check to see if the current filter is different from the previous filter
    * and trigger a reload.
@@ -166,7 +194,7 @@ export const BaseArtworkFilter: React.FC<
             const pageTrackingParams: ClickedChangePage = {
               action: ActionType.clickedChangePage,
               context_module: ContextModule.artworkGrid,
-              context_page_owner_type: contextPageOwnerType!,
+              context_page_owner_type: contextPageOwnerType,
               context_page_owner_id: contextPageOwnerId,
               context_page_owner_slug: contextPageOwnerSlug,
               page_current: previousFilter,
@@ -184,7 +212,7 @@ export const BaseArtworkFilter: React.FC<
                 }),
                 contextOwnerId: contextPageOwnerId,
                 contextOwnerSlug: contextPageOwnerSlug,
-                contextOwnerType: contextPageOwnerType!,
+                contextOwnerType: contextPageOwnerType,
                 current: JSON.stringify({
                   ...onlyAllowedFilters,
                   metric: filterContext?.filters?.metric,
@@ -205,7 +233,7 @@ export const BaseArtworkFilter: React.FC<
         first: 30,
         ...relayRefetchInputVariables,
         ...allowedFilters(filterContext.filters),
-        keyword: filterContext.filters!.term || filterContext.filters!.keyword,
+        keyword: filterContext.filters?.term || filterContext.filters?.keyword,
       },
       ...relayVariables,
     }
@@ -389,7 +417,7 @@ export const BaseArtworkFilter: React.FC<
         <Spacer y={2} />
 
         <ArtworkFilterArtworkGrid
-          filtered_artworks={viewer.filtered_artworks!}
+          filtered_artworks={viewer.filtered_artworks}
           isLoading={isLoading}
           offset={offset}
           columnCount={[2, 2, 2, 3]}
@@ -404,30 +432,38 @@ export const BaseArtworkFilter: React.FC<
             <Flex alignItems="center" justifyContent="space-between" gap={2}>
               <HorizontalOverflow minWidth={0}>
                 <Flex gap={1}>
-                  <ArtworkFilterCreateAlert
-                    renderButton={props => {
-                      return (
-                        <Button
-                          variant={
-                            appliedFiltersTotalCount > 0
-                              ? "primaryBlack"
-                              : "secondaryBlack"
-                          }
-                          size="small"
-                          Icon={BellStrokeIcon}
-                          {...props}
-                        >
-                          Create Alert
-                        </Button>
-                      )
-                    }}
-                  >
-                    <Box width="1px" bg="black30" />
-                  </ArtworkFilterCreateAlert>
+                  <Flex gap={2}>
+                    <ArtworkFilterCreateAlert
+                      renderButton={props => {
+                        return (
+                          <Button
+                            variant={
+                              revisedArtworkFiltersCount > 0
+                                ? "primaryBlack"
+                                : "secondaryBlack"
+                            }
+                            size="small"
+                            Icon={BellStrokeIcon}
+                            {...props}
+                          >
+                            Create Alert
+                          </Button>
+                        )
+                      }}
+                    >
+                      <Box width="1px" bg="black30" />
+                    </ArtworkFilterCreateAlert>
 
-                  <Pill Icon={FilterIcon} size="small" onClick={handleOpen}>
-                    All filters
-                  </Pill>
+                    <Pill Icon={FilterIcon} size="small" onClick={handleOpen}>
+                      All Filters
+                      {extendedFiltersCount > 0 && (
+                        <Box as="span" color="brand">
+                          {" "}
+                          • {extendedFiltersCount}
+                        </Box>
+                      )}
+                    </Pill>
+                  </Flex>
 
                   <ArtworkFiltersQuick />
                 </Flex>
@@ -461,7 +497,7 @@ export const BaseArtworkFilter: React.FC<
 
             {children || (
               <ArtworkFilterArtworkGrid
-                filtered_artworks={viewer.filtered_artworks!}
+                filtered_artworks={viewer.filtered_artworks}
                 isLoading={isLoading}
                 offset={offset}
                 columnCount={[2, 3, 3, 4]}
@@ -525,7 +561,7 @@ export const BaseArtworkFilter: React.FC<
 
               {children || (
                 <ArtworkFilterArtworkGrid
-                  filtered_artworks={viewer.filtered_artworks!}
+                  filtered_artworks={viewer.filtered_artworks}
                   isLoading={isLoading}
                   offset={offset}
                   columnCount={[2, 2, 2, 3]}

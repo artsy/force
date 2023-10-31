@@ -4,6 +4,13 @@ import { FilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/Filter
 import { PriceRangeFilterQuick } from "Components/ArtworkFilter/ArtworkFiltersQuick/PriceRangeFilterQuick"
 import { FC } from "react"
 
+// NOTE: Keep in sync with components below
+export const ARTWORK_FILTERS_QUICK_FIELDS = [
+  "attributionClass",
+  "additionalGeneIDs",
+  "priceRange",
+]
+
 export const ArtworkFiltersQuick: FC = () => {
   return (
     <>
