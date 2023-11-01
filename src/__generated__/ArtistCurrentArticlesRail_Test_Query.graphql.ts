@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a34e2e9596265731adc5af991e58ff02>>
+ * @generated SignedSource<<2b3762e4858d42e6cffa77d80553718b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -131,11 +131,6 @@ return {
                 "kind": "Literal",
                 "name": "first",
                 "value": 10
-              },
-              {
-                "kind": "Literal",
-                "name": "inEditorialFeed",
-                "value": true
               },
               {
                 "kind": "Literal",
@@ -283,7 +278,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "articlesConnection(first:10,inEditorialFeed:true,sort:\"PUBLISHED_AT_DESC\")"
+            "storageKey": "articlesConnection(first:10,sort:\"PUBLISHED_AT_DESC\")"
           },
           (v3/*: any*/)
         ],
@@ -292,7 +287,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5e6dc751569d4a76207d7063bfad2be7",
+    "cacheID": "331da03cb18e9b2cab06d62c7c331b47",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -353,7 +348,7 @@ return {
     },
     "name": "ArtistCurrentArticlesRail_Test_Query",
     "operationKind": "query",
-    "text": "query ArtistCurrentArticlesRail_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistCurrentArticlesRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentArticlesRail_artist on Artist {\n  internalID\n  name\n  slug\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC, inEditorialFeed: true) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        slug\n        href\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArtistCurrentArticlesRail_Test_Query {\n  artist(id: \"test\") {\n    ...ArtistCurrentArticlesRail_artist\n    id\n  }\n}\n\nfragment ArtistCurrentArticlesRail_artist on Artist {\n  internalID\n  name\n  slug\n  articlesConnection(first: 10, sort: PUBLISHED_AT_DESC) {\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        slug\n        href\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
