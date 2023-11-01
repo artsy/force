@@ -12,8 +12,8 @@ import {
   SearchCriteriaAttributeKeys,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
-import { useCreateSavedSearch } from "Utils/Hooks/Mutations/useCreateSavedSearchMutation"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
+import { useCreateArtworkAlert } from "Components/ArtworkAlert/Hooks/useCreateArtworkAlert"
 
 type Settings = {
   details: string
@@ -152,13 +152,18 @@ export const ArtworkAlertProvider: FC<ArtworkAlertProviderProps> = ({
   const [current, setCurrent] = useState<
     "ALERT_DETAILS" | "ALERT_FILTERS" | "ALERT_CONFIRMATION"
   >("ALERT_DETAILS")
-  const { createSavedSearch } = useCreateSavedSearch()
+
+  const { submitMutation } = useCreateArtworkAlert()
 
   const handleComplete = async () => {
     try {
-      const reponse = await createSavedSearch({
-        attributes: state.criteria,
-        userAlertSettings: state.settings,
+      const reponse = await submitMutation({
+        variables: {
+          input: {
+            attributes: state.criteria,
+            userAlertSettings: state.settings,
+          },
+        },
       })
       if (reponse.createSavedSearch?.savedSearchOrErrors.internalID) {
         dispatch({

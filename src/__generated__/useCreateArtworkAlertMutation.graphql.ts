@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<78b5042853ebeb619f17420a72321d25>>
+ * @generated SignedSource<<d957c3e232bff8062e0da171b997ecdd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,10 +43,10 @@ export type UserAlertSettingsInput = {
   name?: string | null;
   push?: boolean | null;
 };
-export type useCreateSavedSearchMutation$variables = {
+export type useCreateArtworkAlertMutation$variables = {
   input: CreateSavedSearchInput;
 };
-export type useCreateSavedSearchMutation$data = {
+export type useCreateArtworkAlertMutation$data = {
   readonly createSavedSearch: {
     readonly me: {
       readonly counts: {
@@ -58,9 +58,9 @@ export type useCreateSavedSearchMutation$data = {
     };
   } | null;
 };
-export type useCreateSavedSearchMutation = {
-  response: useCreateSavedSearchMutation$data;
-  variables: useCreateSavedSearchMutation$variables;
+export type useCreateArtworkAlertMutation = {
+  response: useCreateArtworkAlertMutation$data;
+  variables: useCreateArtworkAlertMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -115,7 +115,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useCreateSavedSearchMutation",
+    "name": "useCreateArtworkAlertMutation",
     "selections": [
       {
         "alias": null,
@@ -160,7 +160,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useCreateSavedSearchMutation",
+    "name": "useCreateArtworkAlertMutation",
     "selections": [
       {
         "alias": null,
@@ -214,16 +214,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1970ef3b4d61108e6d14d906d96975e0",
+    "cacheID": "1de25efd8dcff856921fb940a9280338",
     "id": null,
     "metadata": {},
-    "name": "useCreateSavedSearchMutation",
+    "name": "useCreateArtworkAlertMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateSavedSearchMutation(\n  $input: CreateSavedSearchInput!\n) {\n  createSavedSearch(input: $input) {\n    me {\n      counts {\n        savedSearches\n      }\n      id\n    }\n    savedSearchOrErrors {\n      __typename\n      ... on SearchCriteria {\n        internalID\n      }\n    }\n  }\n}\n"
+    "text": "mutation useCreateArtworkAlertMutation(\n  $input: CreateSavedSearchInput!\n) {\n  createSavedSearch(input: $input) {\n    me {\n      counts {\n        savedSearches\n      }\n      id\n    }\n    savedSearchOrErrors {\n      __typename\n      ... on SearchCriteria {\n        internalID\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "2e387d1943402e7054e0dbd22c1c90d4";
+(node as any).hash = "3ab46b0077d575f0e5bf64cb705e8cdd";
 
 export default node;
