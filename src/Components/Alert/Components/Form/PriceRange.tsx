@@ -1,7 +1,7 @@
 import { Expandable, Spacer } from "@artsy/palette"
 import { FC } from "react"
 
-import { useArtworkAlertContext } from "Components/ArtworkAlert/Hooks/useArtworkAlertContext"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import {
   CustomRange,
@@ -15,7 +15,7 @@ interface PricaRangeFilterProps {
 export const PriceRangeFilter: FC<PricaRangeFilterProps> = ({
   expanded = true,
 }) => {
-  const { state, dispatch } = useArtworkAlertContext()
+  const { state, dispatch } = useAlertContext()
 
   const handlePriceRangeUpdate = (updatedRange: CustomRange) => {
     dispatch({

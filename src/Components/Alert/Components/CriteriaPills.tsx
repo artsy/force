@@ -4,7 +4,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 
 import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useArtworkAlertContext } from "Components/ArtworkAlert/Hooks/useArtworkAlertContext"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { useSystemContext } from "System/SystemContext"
 
@@ -19,7 +19,7 @@ export const CriteriaPillsQueryRenderer: FC<CriteriaPillsQueryRendererProps> = (
   editable = true,
 }) => {
   const { relayEnvironment } = useSystemContext()
-  const { state } = useArtworkAlertContext()
+  const { state } = useAlertContext()
 
   const { debouncedValue: criteriaState } = useDebouncedValue({
     value: state.criteria,
@@ -65,7 +65,7 @@ const CriteriaPills: FC<CriteriaPillsProps> = ({
   editable,
 }) => {
   const labels = previewSavedSearch?.labels ?? []
-  const { dispatch } = useArtworkAlertContext()
+  const { dispatch } = useAlertContext()
 
   return (
     <>

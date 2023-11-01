@@ -23,7 +23,7 @@ import { Media } from "Utils/Responsive"
 import { RouterLink } from "System/Router/RouterLink"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { useArtworkAlert } from "Components/ArtworkAlert"
+import { useAlert } from "Components/Alert"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
@@ -105,17 +105,17 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
 
   const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
 
-  const { artworkAlertComponent, showArtworkAlert } = useArtworkAlert({
+  const { alertComponent, showAlert } = useAlert({
     initialCriteria: {
-      artistIDs: artwork.artists?.map(artist => artist?.slug as string),
-      attributionClass: [artwork.attributionClass?.internalID as string],
+      attributionClass: compact([artwork.attributionClass?.internalID]),
+      artistIDs: compact(artwork.artists).map(artist => artist.internalID),
       additionalGeneIDs: [artwork.mediumType?.filterGene?.slug as string],
     },
   })
 
   if (!displayAuctionCreateAlertHeader) return null
 
-  const ArtworkAlertSwitch: FC = () => {
+  const AlertSwitch: FC = () => {
     if (newAlertModalEnabled) {
       return (
         <>
@@ -123,13 +123,13 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
             <Button
               width="100%"
               size="large"
-              onClick={showArtworkAlert}
+              onClick={showAlert}
               Icon={BellStrokeIcon}
             >
               Create Alert
             </Button>
           </ProgressiveOnboardingAlertCreateSimple>
-          {artworkAlertComponent}
+          {alertComponent}
         </>
       )
     } else {
@@ -190,7 +190,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
                 Manage your alerts
               </Button>
             ) : (
-              <ArtworkAlertSwitch />
+              <AlertSwitch />
             )}
           </Box>
         </Column>

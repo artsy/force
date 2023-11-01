@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d957c3e232bff8062e0da171b997ecdd>>
+ * @generated SignedSource<<ae873f81177a9ae95753a738e7214355>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,10 +43,10 @@ export type UserAlertSettingsInput = {
   name?: string | null;
   push?: boolean | null;
 };
-export type useCreateArtworkAlertMutation$variables = {
+export type useCreateAlertMutation$variables = {
   input: CreateSavedSearchInput;
 };
-export type useCreateArtworkAlertMutation$data = {
+export type useCreateAlertMutation$data = {
   readonly createSavedSearch: {
     readonly me: {
       readonly counts: {
@@ -58,9 +58,9 @@ export type useCreateArtworkAlertMutation$data = {
     };
   } | null;
 };
-export type useCreateArtworkAlertMutation = {
-  response: useCreateArtworkAlertMutation$data;
-  variables: useCreateArtworkAlertMutation$variables;
+export type useCreateAlertMutation = {
+  response: useCreateAlertMutation$data;
+  variables: useCreateAlertMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -115,7 +115,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useCreateArtworkAlertMutation",
+    "name": "useCreateAlertMutation",
     "selections": [
       {
         "alias": null,
@@ -160,7 +160,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useCreateArtworkAlertMutation",
+    "name": "useCreateAlertMutation",
     "selections": [
       {
         "alias": null,
@@ -214,16 +214,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1de25efd8dcff856921fb940a9280338",
+    "cacheID": "8729cfb07282420011b03da0ef40bb35",
     "id": null,
     "metadata": {},
-    "name": "useCreateArtworkAlertMutation",
+    "name": "useCreateAlertMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateArtworkAlertMutation(\n  $input: CreateSavedSearchInput!\n) {\n  createSavedSearch(input: $input) {\n    me {\n      counts {\n        savedSearches\n      }\n      id\n    }\n    savedSearchOrErrors {\n      __typename\n      ... on SearchCriteria {\n        internalID\n      }\n    }\n  }\n}\n"
+    "text": "mutation useCreateAlertMutation(\n  $input: CreateSavedSearchInput!\n) {\n  createSavedSearch(input: $input) {\n    me {\n      counts {\n        savedSearches\n      }\n      id\n    }\n    savedSearchOrErrors {\n      __typename\n      ... on SearchCriteria {\n        internalID\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3ab46b0077d575f0e5bf64cb705e8cdd";
+(node as any).hash = "642d1ca6dc04d2921a812dd3187a69ab";
 
 export default node;

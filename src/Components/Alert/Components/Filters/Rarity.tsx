@@ -1,7 +1,7 @@
 import { Box, Checkbox, Flex, Spacer, Text } from "@artsy/palette"
 import { FC } from "react"
 
-import { useArtworkAlertContext } from "Components/ArtworkAlert/Hooks/useArtworkAlertContext"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
 export const RARITY_OPTIONS = [
   {
@@ -23,7 +23,7 @@ export const RARITY_OPTIONS = [
 ]
 
 export const Rarity: FC = () => {
-  const { state, dispatch } = useArtworkAlertContext()
+  const { state, dispatch } = useAlertContext()
   const toggleSelection = (selected, name) => {
     let updatedValues = state.criteria.attributionClass || []
 

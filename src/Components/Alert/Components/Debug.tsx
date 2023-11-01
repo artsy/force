@@ -1,13 +1,13 @@
 import { Box, Flex, Button } from "@artsy/palette"
 import { FC } from "react"
 
-import { Modal } from "Components/ArtworkAlert/Components/Modal"
-import { Steps } from "Components/ArtworkAlert/Components/Steps"
-import { useArtworkAlertContext } from "Components/ArtworkAlert/Hooks/useArtworkAlertContext"
+import { Modal } from "Components/Alert/Components/Modal"
+import { Steps } from "Components/Alert/Components/Steps"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { useMode } from "Utils/Hooks/useMode"
 
 export const Debug: FC = () => {
-  const { state, current, dispatch } = useArtworkAlertContext()
+  const { state, current, dispatch } = useAlertContext()
 
   const [mode, setMode] = useMode<"Resting" | "Modal">("Resting")
   return (

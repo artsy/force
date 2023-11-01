@@ -1,15 +1,15 @@
 import { useMemo, useState } from "react"
 
-import { ArtworkAlertProvider } from "Components/ArtworkAlert/Hooks/useArtworkAlertContext"
-import { Modal } from "Components/ArtworkAlert/Components/Modal"
+import { AlertProvider } from "Components/Alert/Hooks/useAlertContext"
+import { Modal } from "Components/Alert/Components/Modal"
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
-import { Steps } from "Components/ArtworkAlert/Components/Steps"
+import { Steps } from "Components/Alert/Components/Steps"
 
-interface UseArtworkAlert {
+interface UseAlert {
   initialCriteria?: SearchCriteriaAttributes
 }
 
-export const useArtworkAlert = ({ initialCriteria }: UseArtworkAlert) => {
+export const useAlert = ({ initialCriteria }: UseAlert) => {
   const [isVisible, setIsVisible] = useState(false)
 
   const showDialog = () => {
@@ -24,11 +24,11 @@ export const useArtworkAlert = ({ initialCriteria }: UseArtworkAlert) => {
     return (
       <>
         {isVisible && (
-          <ArtworkAlertProvider initialCriteria={initialCriteria}>
+          <AlertProvider initialCriteria={initialCriteria}>
             <Modal onClose={hideDialog}>
               <Steps />
             </Modal>
-          </ArtworkAlertProvider>
+          </AlertProvider>
         )}
       </>
     )
@@ -36,8 +36,8 @@ export const useArtworkAlert = ({ initialCriteria }: UseArtworkAlert) => {
 
   return {
     isVisible,
-    showArtworkAlert: showDialog,
-    hideArtworkAlert: hideDialog,
-    artworkAlertComponent: dialogComponent,
+    showAlert: showDialog,
+    hideAlert: hideDialog,
+    alertComponent: dialogComponent,
   }
 }

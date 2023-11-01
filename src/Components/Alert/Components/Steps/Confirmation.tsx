@@ -1,12 +1,12 @@
 import { Flex, Join, Separator, Spacer, Text } from "@artsy/palette"
 import { FC } from "react"
 
-import { CriteriaPillsQueryRenderer } from "Components/ArtworkAlert/Components/CriteriaPills"
-import { useArtworkAlertContext } from "Components/ArtworkAlert/Hooks/useArtworkAlertContext"
+import { CriteriaPillsQueryRenderer } from "Components/Alert/Components/CriteriaPills"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { ConfirmationArtworksGridQueryRenderer } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
 
 export const Confirmation: FC = () => {
-  const { state } = useArtworkAlertContext()
+  const { state } = useAlertContext()
 
   return (
     <Flex flexDirection="column" p={2}>

@@ -13,7 +13,7 @@ import {
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
-import { useCreateArtworkAlert } from "Components/ArtworkAlert/Hooks/useCreateArtworkAlert"
+import { useCreateAlert } from "Components/Alert/Hooks/useCreateAlert"
 
 type Settings = {
   details: string
@@ -115,7 +115,7 @@ const reducer = (onReset: () => State) => (state: State, action: Action) => {
   }
 }
 
-const ArtworkAlertContext = createContext<{
+const AlertContext = createContext<{
   current: "ALERT_DETAILS" | "ALERT_FILTERS" | "ALERT_CONFIRMATION"
   dispatch: React.Dispatch<Action>
   goToFilters(): void
@@ -131,12 +131,12 @@ const ArtworkAlertContext = createContext<{
   state: DEFAULT_STATE,
 })
 
-interface ArtworkAlertProviderProps {
+interface AlertProviderProps {
   initialCriteria?: SearchCriteriaAttributes
   currentArtworkID?: string
 }
 
-export const ArtworkAlertProvider: FC<ArtworkAlertProviderProps> = ({
+export const AlertProvider: FC<AlertProviderProps> = ({
   children,
   initialCriteria,
   currentArtworkID,
@@ -153,7 +153,7 @@ export const ArtworkAlertProvider: FC<ArtworkAlertProviderProps> = ({
     "ALERT_DETAILS" | "ALERT_FILTERS" | "ALERT_CONFIRMATION"
   >("ALERT_DETAILS")
 
-  const { submitMutation } = useCreateArtworkAlert()
+  const { submitMutation } = useCreateAlert()
 
   const handleComplete = async () => {
     try {
@@ -173,7 +173,7 @@ export const ArtworkAlertProvider: FC<ArtworkAlertProviderProps> = ({
       }
       setCurrent("ALERT_CONFIRMATION")
     } catch (error) {
-      console.error("ArtworkAlert/useArtworkAlertContext", error)
+      console.error("Alert/useAlertContext", error)
     }
   }
 
@@ -189,7 +189,7 @@ export const ArtworkAlertProvider: FC<ArtworkAlertProviderProps> = ({
   }, [state])
 
   return (
-    <ArtworkAlertContext.Provider
+    <AlertContext.Provider
       value={{
         current,
         dispatch,
@@ -204,10 +204,10 @@ export const ArtworkAlertProvider: FC<ArtworkAlertProviderProps> = ({
       }}
     >
       {children}
-    </ArtworkAlertContext.Provider>
+    </AlertContext.Provider>
   )
 }
 
-export const useArtworkAlertContext = () => {
-  return useContext(ArtworkAlertContext)
+export const useAlertContext = () => {
+  return useContext(AlertContext)
 }

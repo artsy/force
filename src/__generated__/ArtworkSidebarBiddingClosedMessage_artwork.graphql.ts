@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d4fa398dfee8d2ba15a2f5de8f0fb163>>
+ * @generated SignedSource<<6474426e439d52f91a123835bffdaa30>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarBiddingClosedMessage_artwork$data = {
   readonly artists: ReadonlyArray<{
-    readonly slug: string;
+    readonly internalID: string;
   } | null> | null;
   readonly attributionClass: {
     readonly internalID: string;
@@ -37,7 +37,7 @@ var v0 = [
     "alias": null,
     "args": null,
     "kind": "ScalarField",
-    "name": "slug",
+    "name": "internalID",
     "storageKey": null
   }
 ];
@@ -76,15 +76,7 @@ return {
       "kind": "LinkedField",
       "name": "attributionClass",
       "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "internalID",
-          "storageKey": null
-        }
-      ],
+      "selections": (v0/*: any*/),
       "storageKey": null
     },
     {
@@ -102,7 +94,15 @@ return {
           "kind": "LinkedField",
           "name": "filterGene",
           "plural": false,
-          "selections": (v0/*: any*/),
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "slug",
+              "storageKey": null
+            }
+          ],
           "storageKey": null
         }
       ],
@@ -114,6 +114,6 @@ return {
 };
 })();
 
-(node as any).hash = "7e8c4319c5a7c15a492c13208ee0df1e";
+(node as any).hash = "52046ed01ba7ebb7e028248d3e1b71bb";
 
 export default node;

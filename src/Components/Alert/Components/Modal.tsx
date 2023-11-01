@@ -9,9 +9,9 @@ import {
 } from "@artsy/palette"
 import React from "react"
 
-export type ArtworkAlertModalProps = ModalBaseProps
+export type AlertModalProps = ModalBaseProps
 
-export const Modal: React.FC<ArtworkAlertModalProps> = ({
+export const Modal: React.FC<AlertModalProps> = ({
   children,
   onClose,
   title,

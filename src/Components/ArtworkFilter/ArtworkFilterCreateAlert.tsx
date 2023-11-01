@@ -1,4 +1,4 @@
-import { ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule, Intent, OwnerType } from "@artsy/cohesion"
 import { DEFAULT_METRIC } from "Utils/metrics"
 import { FC, ReactNode } from "react"
 import { ProgressiveOnboardingAlertCreate } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
@@ -6,11 +6,12 @@ import { ProgressiveOnboardingAlertReady } from "Components/ProgressiveOnboardin
 import { SavedSearchCreateAlertButtonContainer } from "Components/SavedSearchAlert/Components/SavedSearchCreateAlertButtonContainer"
 import { getSearchCriteriaFromFilters } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { isEmpty } from "lodash"
-import { useArtworkAlert } from "Components/ArtworkAlert"
+import { useAlert } from "Components/Alert"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { usePrepareFiltersForPills } from "Components/ArtworkFilter/Utils/usePrepareFiltersForPills"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
+import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 
 interface ArtworkFilterCreateAlertProps {
   renderButton: (props: { onClick: () => void }) => JSX.Element
@@ -29,8 +30,16 @@ export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = ({
   const criteria = getSearchCriteriaFromFilters(entity, filters)
   const metric = filters?.metric ?? DEFAULT_METRIC
 
-  const { artworkAlertComponent, showArtworkAlert } = useArtworkAlert({
-    initialCriteria: rawFilters,
+  const initialCriteria: SearchCriteriaAttributes = {}
+  if (entity?.owner?.type === OwnerType.artist) {
+    initialCriteria.artistIDs = [entity.owner.id]
+  }
+
+  const { alertComponent, showAlert } = useAlert({
+    initialCriteria: {
+      ...rawFilters,
+      ...initialCriteria,
+    },
   })
 
   if (newAlertModalEnabled) {
@@ -44,14 +53,14 @@ export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = ({
                   onClick: () => {
                     createSkip()
                     readySkip()
-                    showArtworkAlert()
+                    showAlert()
                   },
                 })
               }
             </ProgressiveOnboardingAlertReady>
           )}
         </ProgressiveOnboardingAlertCreate>
-        {artworkAlertComponent}
+        {alertComponent}
       </>
     )
   }

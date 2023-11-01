@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2f85ca9bdf8724b3af1adbcfa99f7b64>>
+ * @generated SignedSource<<a710120ecfc0670e8e9beb7579563759>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -34,7 +34,7 @@ export type ArtworkSidebar_artwork$data = {
   } | null;
   readonly saleMessage: string | null;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarArtworkTitle_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork" | "ArtworkSidebarCommercialButtons_artwork" | "ArtworkSidebarCreateArtworkAlert_artwork" | "ArtworkSidebarDetails_artwork" | "ArtworkSidebarEstimatedValue_artwork" | "ArtworkSidebarLinks_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarShippingInformation_artwork">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarArtworkTitle_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork" | "ArtworkSidebarCommercialButtons_artwork" | "ArtworkSidebarCreateAlert_artwork" | "ArtworkSidebarDetails_artwork" | "ArtworkSidebarEstimatedValue_artwork" | "ArtworkSidebarLinks_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarShippingInformation_artwork">;
   readonly " $fragmentType": "ArtworkSidebar_artwork";
 };
 export type ArtworkSidebar_artwork$key = {
@@ -144,7 +144,7 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "ArtworkSidebarCreateArtworkAlert_artwork"
+      "name": "ArtworkSidebarCreateAlert_artwork"
     },
     {
       "args": null,
@@ -265,6 +265,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "bfbbf2bd47280ddca23c8daf07b3f536";
+(node as any).hash = "876fc67965005cc29e33af2d55142799";
 
 export default node;

@@ -2,11 +2,11 @@ import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import { Box, Clickable, Flex, Join, Separator, Text } from "@artsy/palette"
 import { FC } from "react"
 
-import { Rarity } from "Components/ArtworkAlert/Components/Filters/Rarity"
-import { useArtworkAlertContext } from "Components/ArtworkAlert/Hooks/useArtworkAlertContext"
+import { Rarity } from "Components/Alert/Components/Filters/Rarity"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
 export const Filters: FC = () => {
-  const { goToDetails } = useArtworkAlertContext()
+  const { goToDetails } = useAlertContext()
 
   return (
     <>

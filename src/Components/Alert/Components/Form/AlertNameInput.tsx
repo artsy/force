@@ -3,19 +3,19 @@ import { Input } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useFormikContext } from "formik"
 
-import { ArtworkAlertFormikValues } from "Components/ArtworkAlert/Components/Steps/Details"
+import { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useArtworkAlertContext } from "Components/ArtworkAlert/Hooks/useArtworkAlertContext"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { useSystemContext } from "System/SystemContext"
 
-import { ArtworkAlertNameInputQuery } from "__generated__/ArtworkAlertNameInputQuery.graphql"
-import { ArtworkAlertNameInput_previewSavedSearch$data } from "__generated__/ArtworkAlertNameInput_previewSavedSearch.graphql"
+import { AlertNameInputQuery } from "__generated__/AlertNameInputQuery.graphql"
+import { AlertNameInput_previewSavedSearch$data } from "__generated__/AlertNameInput_previewSavedSearch.graphql"
 
-export const ArtworkAlertNameInputQueryRenderer: FC = () => {
+export const AlertNameInputQueryRenderer: FC = () => {
   const { relayEnvironment } = useSystemContext()
 
-  const { state } = useArtworkAlertContext()
+  const { state } = useAlertContext()
 
   const { debouncedValue: criteriaState } = useDebouncedValue({
     value: state.criteria,
@@ -23,15 +23,13 @@ export const ArtworkAlertNameInputQueryRenderer: FC = () => {
   })
 
   return (
-    <SystemQueryRenderer<ArtworkAlertNameInputQuery>
+    <SystemQueryRenderer<AlertNameInputQuery>
       environment={relayEnvironment}
       query={graphql`
-        query ArtworkAlertNameInputQuery(
-          $attributes: PreviewSavedSearchAttributes!
-        ) {
+        query AlertNameInputQuery($attributes: PreviewSavedSearchAttributes!) {
           viewer {
             previewSavedSearch(attributes: $attributes) {
-              ...ArtworkAlertNameInput_previewSavedSearch
+              ...AlertNameInput_previewSavedSearch
             }
           }
         }
@@ -44,7 +42,7 @@ export const ArtworkAlertNameInputQueryRenderer: FC = () => {
         }
 
         return (
-          <ArtworkAlertNameInputFragmentContainer
+          <AlertNameInputFragmentContainer
             previewSavedSearch={props?.viewer?.previewSavedSearch ?? null}
           />
         )
@@ -53,15 +51,15 @@ export const ArtworkAlertNameInputQueryRenderer: FC = () => {
   )
 }
 
-interface ArtworkAlertNameInputProps {
-  previewSavedSearch: ArtworkAlertNameInput_previewSavedSearch$data | null
+interface AlertNameInputProps {
+  previewSavedSearch: AlertNameInput_previewSavedSearch$data | null
 }
 
-const ArtworkAlertNameInput: FC<ArtworkAlertNameInputProps> = props => {
+const AlertNameInput: FC<AlertNameInputProps> = props => {
   const placeholder = props.previewSavedSearch?.displayName ?? ""
   const [statePlaceholder, setStatePlaceholder] = useState(placeholder)
   const { values, errors, handleChange, handleBlur } = useFormikContext<
-    ArtworkAlertFormikValues
+    AlertFormikValues
   >()
 
   useEffect(() => {
@@ -84,11 +82,11 @@ const ArtworkAlertNameInput: FC<ArtworkAlertNameInputProps> = props => {
   )
 }
 
-export const ArtworkAlertNameInputFragmentContainer = createFragmentContainer(
-  ArtworkAlertNameInput,
+export const AlertNameInputFragmentContainer = createFragmentContainer(
+  AlertNameInput,
   {
     previewSavedSearch: graphql`
-      fragment ArtworkAlertNameInput_previewSavedSearch on PreviewSavedSearch {
+      fragment AlertNameInput_previewSavedSearch on PreviewSavedSearch {
         displayName
       }
     `,

@@ -13,14 +13,14 @@ import {
 import { Formik } from "formik"
 import { FC } from "react"
 
-import { ArtworkAlertNameInputQueryRenderer } from "Components/ArtworkAlert/Components/Form/ArtworkAlertNameInput"
-import { CriteriaPillsQueryRenderer } from "Components/ArtworkAlert/Components/CriteriaPills"
+import { AlertNameInputQueryRenderer } from "Components/Alert/Components/Form/AlertNameInput"
+import { CriteriaPillsQueryRenderer } from "Components/Alert/Components/CriteriaPills"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
-import { PriceRangeFilter } from "Components/ArtworkAlert/Components/Form/PriceRange"
-import { useArtworkAlertContext } from "Components/ArtworkAlert/Hooks/useArtworkAlertContext"
+import { PriceRangeFilter } from "Components/Alert/Components/Form/PriceRange"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
-export interface ArtworkAlertFormikValues {
+export interface AlertFormikValues {
   name: string
   push: boolean
   email: boolean
@@ -28,13 +28,13 @@ export interface ArtworkAlertFormikValues {
 }
 
 export const Details: FC = () => {
-  const { onComplete, dispatch, goToFilters, state } = useArtworkAlertContext()
+  const { onComplete, dispatch, goToFilters, state } = useAlertContext()
   const newAlertModalFilteresEnabled = useFeatureFlag(
     "onyx_artwork_alert_modal_v2_filters"
   )
 
   return (
-    <Formik<ArtworkAlertFormikValues>
+    <Formik<AlertFormikValues>
       initialValues={state.settings}
       onSubmit={onComplete}
     >
@@ -48,7 +48,7 @@ export const Details: FC = () => {
           <Flex flexDirection="column" p={2}>
             <Join separator={<Spacer y={2} />}>
               <Text variant="lg">Create Alert</Text>
-              <ArtworkAlertNameInputQueryRenderer />
+              <AlertNameInputQueryRenderer />
 
               <Box>
                 <Text variant="sm-display" mb={1}>

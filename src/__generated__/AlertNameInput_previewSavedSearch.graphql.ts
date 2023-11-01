@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7bc37bcef3355223e75748962770e8ba>>
+ * @generated SignedSource<<256c0abce9c1aa7e0caffaecb702964c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,20 +10,20 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkAlertNameInput_previewSavedSearch$data = {
+export type AlertNameInput_previewSavedSearch$data = {
   readonly displayName: string;
-  readonly " $fragmentType": "ArtworkAlertNameInput_previewSavedSearch";
+  readonly " $fragmentType": "AlertNameInput_previewSavedSearch";
 };
-export type ArtworkAlertNameInput_previewSavedSearch$key = {
-  readonly " $data"?: ArtworkAlertNameInput_previewSavedSearch$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkAlertNameInput_previewSavedSearch">;
+export type AlertNameInput_previewSavedSearch$key = {
+  readonly " $data"?: AlertNameInput_previewSavedSearch$data;
+  readonly " $fragmentSpreads": FragmentRefs<"AlertNameInput_previewSavedSearch">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtworkAlertNameInput_previewSavedSearch",
+  "name": "AlertNameInput_previewSavedSearch",
   "selections": [
     {
       "alias": null,
@@ -37,6 +37,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "cd5683d43d46ba8cfd0fe5555fe05d79";
+(node as any).hash = "6caece317d320af6750f6ad8786fea90";
 
 export default node;

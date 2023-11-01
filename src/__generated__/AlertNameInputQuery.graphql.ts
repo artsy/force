@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<56a3e167fdc3b064582972105e27f8f7>>
+ * @generated SignedSource<<7c25a631f33ee3ba5490e438c4333505>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,19 +29,19 @@ export type PreviewSavedSearchAttributes = {
   sizes?: ReadonlyArray<ArtworkSizes | null> | null;
   width?: string | null;
 };
-export type ArtworkAlertNameInputQuery$variables = {
+export type AlertNameInputQuery$variables = {
   attributes: PreviewSavedSearchAttributes;
 };
-export type ArtworkAlertNameInputQuery$data = {
+export type AlertNameInputQuery$data = {
   readonly viewer: {
     readonly previewSavedSearch: {
-      readonly " $fragmentSpreads": FragmentRefs<"ArtworkAlertNameInput_previewSavedSearch">;
+      readonly " $fragmentSpreads": FragmentRefs<"AlertNameInput_previewSavedSearch">;
     } | null;
   } | null;
 };
-export type ArtworkAlertNameInputQuery = {
-  response: ArtworkAlertNameInputQuery$data;
-  variables: ArtworkAlertNameInputQuery$variables;
+export type AlertNameInputQuery = {
+  response: AlertNameInputQuery$data;
+  variables: AlertNameInputQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -64,7 +64,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtworkAlertNameInputQuery",
+    "name": "AlertNameInputQuery",
     "selections": [
       {
         "alias": null,
@@ -85,7 +85,7 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "ArtworkAlertNameInput_previewSavedSearch"
+                "name": "AlertNameInput_previewSavedSearch"
               }
             ],
             "storageKey": null
@@ -101,7 +101,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "ArtworkAlertNameInputQuery",
+    "name": "AlertNameInputQuery",
     "selections": [
       {
         "alias": null,
@@ -135,16 +135,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "5147c77e45b5f1c88080c2bf84190711",
+    "cacheID": "84d8e683de609dd49f0eaa446157a55e",
     "id": null,
     "metadata": {},
-    "name": "ArtworkAlertNameInputQuery",
+    "name": "AlertNameInputQuery",
     "operationKind": "query",
-    "text": "query ArtworkAlertNameInputQuery(\n  $attributes: PreviewSavedSearchAttributes!\n) {\n  viewer {\n    previewSavedSearch(attributes: $attributes) {\n      ...ArtworkAlertNameInput_previewSavedSearch\n    }\n  }\n}\n\nfragment ArtworkAlertNameInput_previewSavedSearch on PreviewSavedSearch {\n  displayName\n}\n"
+    "text": "query AlertNameInputQuery(\n  $attributes: PreviewSavedSearchAttributes!\n) {\n  viewer {\n    previewSavedSearch(attributes: $attributes) {\n      ...AlertNameInput_previewSavedSearch\n    }\n  }\n}\n\nfragment AlertNameInput_previewSavedSearch on PreviewSavedSearch {\n  displayName\n}\n"
   }
 };
 })();
 
-(node as any).hash = "065cd1ab04c2dd344f0a8c5aa700d502";
+(node as any).hash = "3595ad95792df28280423269f3658575";
 
 export default node;

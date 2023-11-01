@@ -30,9 +30,10 @@ import { useAuthDialog } from "Components/AuthDialog"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
-import { useArtworkAlert } from "Components/ArtworkAlert"
+import { useAlert } from "Components/Alert"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import { compact } from "lodash"
 
 interface SaleMessageProps {
   saleMessage: string | null
@@ -323,15 +324,15 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
 
   const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
 
-  const { artworkAlertComponent, showArtworkAlert } = useArtworkAlert({
+  const { alertComponent, showAlert } = useAlert({
     initialCriteria: {
-      artistIDs: artwork.artists?.map(artist => artist?.internalID as string),
-      attributionClass: [artwork.attributionClass?.internalID as string],
+      attributionClass: compact([artwork.attributionClass?.internalID]),
+      artistIDs: compact(artwork.artists).map(artist => artist.internalID),
       additionalGeneIDs: [artwork.mediumType?.filterGene?.slug as string],
     },
   })
 
-  const ArtworkAlertSwitch: FC = () => {
+  const AlertSwitch: FC = () => {
     if (!isCreateAlertAvailable) {
       return null
     }
@@ -343,13 +344,13 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
             <Button
               width="100%"
               size="large"
-              onClick={showArtworkAlert}
+              onClick={showAlert}
               Icon={BellStrokeIcon}
             >
               Create Alert
             </Button>
           </ProgressiveOnboardingAlertCreateSimple>
-          {artworkAlertComponent}
+          {alertComponent}
         </>
       )
     } else {
@@ -396,7 +397,7 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
 
       <Flex flexDirection={["column", "column", "column", "column", "row"]}>
         <Join separator={<Spacer x={1} y={1} />}>
-          <ArtworkAlertSwitch />
+          <AlertSwitch />
           {artwork.isAcquireable && (
             <Button
               width="100%"

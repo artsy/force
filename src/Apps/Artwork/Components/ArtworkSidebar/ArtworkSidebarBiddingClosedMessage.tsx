@@ -7,7 +7,8 @@ import { ContextModule } from "@artsy/cohesion"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
-import { useArtworkAlert } from "Components/ArtworkAlert"
+import { useAlert } from "Components/Alert"
+import { compact } from "lodash"
 
 interface BiddingClosedMessageProps {
   artwork: ArtworkSidebarBiddingClosedMessage_artwork$data
@@ -19,10 +20,10 @@ const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
   const { t } = useTranslation()
   const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
 
-  const { artworkAlertComponent, showArtworkAlert } = useArtworkAlert({
+  const { alertComponent, showAlert } = useAlert({
     initialCriteria: {
-      artistIDs: artwork.artists?.map(artist => artist?.slug as string),
-      attributionClass: [artwork.attributionClass?.internalID as string],
+      attributionClass: compact([artwork.attributionClass?.internalID]),
+      artistIDs: compact(artwork.artists).map(artist => artist.internalID),
       additionalGeneIDs: [artwork.mediumType?.filterGene?.slug as string],
     },
   })
@@ -45,13 +46,13 @@ const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
                 <Button
                   width="100%"
                   size="large"
-                  onClick={showArtworkAlert}
+                  onClick={showAlert}
                   Icon={BellStrokeIcon}
                 >
                   Create Alert
                 </Button>
               </ProgressiveOnboardingAlertCreateSimple>
-              {artworkAlertComponent}
+              {alertComponent}
             </>
           ) : (
             <ArtworkCreateAlertButtonFragmentContainer
@@ -73,7 +74,7 @@ export const ArtworkSidebarBiddingClosedMessageFragmentContainer = createFragmen
         ...ArtworkCreateAlertButton_artwork
         isEligibleToCreateAlert
         artists {
-          slug
+          internalID
         }
         attributionClass {
           internalID

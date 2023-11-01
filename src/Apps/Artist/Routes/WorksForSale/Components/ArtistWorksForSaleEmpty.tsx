@@ -6,7 +6,7 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistWorksForSaleEmpty_artist$data } from "__generated__/ArtistWorksForSaleEmpty_artist.graphql"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { useArtworkAlert } from "Components/ArtworkAlert"
+import { useAlert } from "Components/Alert"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 
@@ -25,7 +25,7 @@ const ArtistWorksForSaleEmpty: FC<ArtistWorksForSaleEmptyProps> = ({
 
   const { filters } = useArtworkFilterContext()
 
-  const { artworkAlertComponent, showArtworkAlert } = useArtworkAlert({
+  const { alertComponent, showAlert } = useAlert({
     initialCriteria: filters,
   })
   const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
@@ -48,13 +48,13 @@ const ArtistWorksForSaleEmpty: FC<ArtistWorksForSaleEmptyProps> = ({
           {newAlertModalEnabled ? (
             <>
               <Button
-                onClick={showArtworkAlert}
+                onClick={showAlert}
                 Icon={BellStrokeIcon}
                 variant="secondaryBlack"
               >
                 Create Alert
               </Button>
-              {artworkAlertComponent}
+              {alertComponent}
             </>
           ) : (
             <SavedSearchCreateAlertButtonContainer
