@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0607469d7af2be38213ef1d6b78fbdb6>>
+ * @generated SignedSource<<47d5812c270f15c6a7f084063efad368>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -90,11 +90,6 @@ return {
           "kind": "Literal",
           "name": "first",
           "value": 6
-        },
-        {
-          "kind": "Literal",
-          "name": "inEditorialFeed",
-          "value": true
         },
         {
           "kind": "Literal",
@@ -240,7 +235,7 @@ return {
           "storageKey": null
         }
       ],
-      "storageKey": "articlesConnection(first:6,inEditorialFeed:true,sort:\"PUBLISHED_AT_DESC\")"
+      "storageKey": "articlesConnection(first:6,sort:\"PUBLISHED_AT_DESC\")"
     }
   ],
   "type": "Artist",
@@ -248,6 +243,6 @@ return {
 };
 })();
 
-(node as any).hash = "d595312130a224034cb1731778946676";
+(node as any).hash = "2c4858bc3f6fd5463107859ea94c5f93";
 
 export default node;

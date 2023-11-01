@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ed7032bc6131cd65534a284bad0d48fe>>
+ * @generated SignedSource<<e64ed87c46377c942046620941499217>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,11 +63,6 @@ const node: ReaderFragment = {
     {
       "alias": null,
       "args": [
-        {
-          "kind": "Literal",
-          "name": "inEditorialFeed",
-          "value": false
-        },
         {
           "kind": "Variable",
           "name": "page",
@@ -165,6 +160,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "2fb7b28b26c703b2c69caaa3705c09a5";
+(node as any).hash = "6bf7647c939cc4f697409621eaa37a3b";
 
 export default node;
