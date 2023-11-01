@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8b2f9eee61d9bd48d391ff641893348f>>
+ * @generated SignedSource<<bc0079bea3822565711119dcfe62759e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,9 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
   readonly artists: ReadonlyArray<{
     readonly internalID: string;
   } | null> | null;
+  readonly attributionClass: {
+    readonly internalID: string;
+  } | null;
   readonly editionSets: ReadonlyArray<{
     readonly id: string;
     readonly internalID: string;
@@ -29,6 +32,11 @@ export type ArtworkSidebarCommercialButtons_artwork$data = {
   readonly isSold: boolean | null;
   readonly listPrice: {
     readonly display?: string | null;
+  } | null;
+  readonly mediumType: {
+    readonly filterGene: {
+      readonly slug: string;
+    } | null;
   } | null;
   readonly saleMessage: string | null;
   readonly slug: string;
@@ -48,28 +56,38 @@ var v0 = {
   "name": "internalID",
   "storageKey": null
 },
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "saleMessage",
-  "storageKey": null
-},
+v1 = [
+  (v0/*: any*/)
+],
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "isAcquireable",
+  "name": "slug",
   "storageKey": null
 },
 v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "saleMessage",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "isAcquireable",
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "isOfferable",
   "storageKey": null
 },
-v4 = [
+v6 = [
   {
     "alias": null,
     "args": null,
@@ -108,20 +126,22 @@ return {
       "kind": "LinkedField",
       "name": "artists",
       "plural": true,
-      "selections": [
-        (v0/*: any*/)
-      ],
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
-    (v0/*: any*/),
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "slug",
+      "concreteType": "AttributionClass",
+      "kind": "LinkedField",
+      "name": "attributionClass",
+      "plural": false,
+      "selections": (v1/*: any*/),
       "storageKey": null
     },
-    (v1/*: any*/),
+    (v0/*: any*/),
+    (v2/*: any*/),
+    (v3/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -129,8 +149,8 @@ return {
       "name": "isInquireable",
       "storageKey": null
     },
-    (v2/*: any*/),
-    (v3/*: any*/),
+    (v4/*: any*/),
+    (v5/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -148,15 +168,38 @@ return {
       "selections": [
         {
           "kind": "InlineFragment",
-          "selections": (v4/*: any*/),
+          "selections": (v6/*: any*/),
           "type": "PriceRange",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v4/*: any*/),
+          "selections": (v6/*: any*/),
           "type": "Money",
           "abstractKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkMedium",
+      "kind": "LinkedField",
+      "name": "mediumType",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Gene",
+          "kind": "LinkedField",
+          "name": "filterGene",
+          "plural": false,
+          "selections": [
+            (v2/*: any*/)
+          ],
+          "storageKey": null
         }
       ],
       "storageKey": null
@@ -177,9 +220,9 @@ return {
           "storageKey": null
         },
         (v0/*: any*/),
-        (v2/*: any*/),
-        (v3/*: any*/),
-        (v1/*: any*/)
+        (v4/*: any*/),
+        (v5/*: any*/),
+        (v3/*: any*/)
       ],
       "storageKey": null
     }
@@ -189,6 +232,6 @@ return {
 };
 })();
 
-(node as any).hash = "dd032a3a556b4fa11c613e880ea7b6c8";
+(node as any).hash = "65b5bfc80282f94267329fb613fdccc8";
 
 export default node;
