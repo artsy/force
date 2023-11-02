@@ -32,7 +32,7 @@ export const PriceRangeFilter: FC<PricaRangeFilterProps> = ({
 
       <PriceRange
         priceRange={criteria.priceRange ?? DEFAULT_PRICE_RANGE}
-        onPriceRangeUpdate={handlePriceRangeUpdate}
+        onUpdate={handlePriceRangeUpdate}
       />
     </Expandable>
   )

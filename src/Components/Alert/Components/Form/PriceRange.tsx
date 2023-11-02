@@ -1,6 +1,5 @@
 import { Expandable, Spacer } from "@artsy/palette"
 import { FC } from "react"
-
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import {
@@ -34,7 +33,7 @@ export const PriceRangeFilter: FC<PricaRangeFilterProps> = ({
 
       <PriceRange
         priceRange={state.criteria.priceRange ?? DEFAULT_PRICE_RANGE}
-        onPriceRangeUpdate={handlePriceRangeUpdate}
+        onUpdate={handlePriceRangeUpdate}
       />
     </Expandable>
   )
