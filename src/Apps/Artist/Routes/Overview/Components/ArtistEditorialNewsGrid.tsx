@@ -166,11 +166,7 @@ export const ArtistEditorialNewsGridFragmentContainer = createFragmentContainer(
         name
         slug
         href
-        articlesConnection(
-          first: 6
-          sort: PUBLISHED_AT_DESC
-          inEditorialFeed: true
-        ) {
+        articlesConnection(first: 6, sort: PUBLISHED_AT_DESC) {
           edges {
             node {
               ...CellArticle_article

@@ -13,7 +13,7 @@ import {
   useToasts,
 } from "@artsy/palette"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
-import { useCallback, useEffect, useState } from "react"
+import { FC, useCallback, useEffect, useState } from "react"
 import { ArtworkCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkCreateAlertButton"
 import { useInquiry } from "Components/Inquiry/useInquiry"
 import { ErrorWithMetadata } from "Utils/errors"
@@ -28,6 +28,12 @@ import currency from "currency.js"
 import { useTranslation } from "react-i18next"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useRouter } from "System/Router/useRouter"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
+import { useAlert } from "Components/Alert"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import { compact } from "lodash"
 
 interface SaleMessageProps {
   saleMessage: string | null
@@ -116,7 +122,7 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
     if (!!user?.id) {
       setIsCommitingCreateOrderMutation(true)
       commitMutation<ArtworkSidebarCommercialButtonsOrderMutation>(
-        relayEnvironment!,
+        relayEnvironment as RelayModernEnvironment,
         {
           mutation: graphql`
             mutation ArtworkSidebarCommercialButtonsOrderMutation(
@@ -207,7 +213,7 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
     if (!!user?.id) {
       setIsCommitingCreateOfferOrderMutation(true)
       commitMutation<ArtworkSidebarCommercialButtonsOfferOrderMutation>(
-        relayEnvironment!,
+        relayEnvironment as RelayModernEnvironment,
         {
           mutation: graphql`
             mutation ArtworkSidebarCommercialButtonsOfferOrderMutation(
@@ -316,6 +322,49 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
   const isSecondaryContactGalleryButton =
     artwork.isOfferable || isCreateAlertAvailable
 
+  const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
+
+  const { alertComponent, showAlert } = useAlert({
+    initialCriteria: {
+      attributionClass: compact([artwork.attributionClass?.internalID]),
+      artistIDs: compact(artwork.artists).map(artist => artist.internalID),
+      additionalGeneIDs: [artwork.mediumType?.filterGene?.slug as string],
+    },
+  })
+
+  const AlertSwitch: FC = () => {
+    if (!isCreateAlertAvailable) {
+      return null
+    }
+
+    if (newAlertModalEnabled) {
+      return (
+        <>
+          <ProgressiveOnboardingAlertCreateSimple>
+            <Button
+              width="100%"
+              size="large"
+              onClick={showAlert}
+              Icon={BellStrokeIcon}
+            >
+              Create Alert
+            </Button>
+          </ProgressiveOnboardingAlertCreateSimple>
+          {alertComponent}
+        </>
+      )
+    } else {
+      return (
+        <>
+          <ArtworkCreateAlertButtonFragmentContainer
+            artwork={artwork}
+            analyticsContextModule={ContextModule.artworkSidebar}
+          />
+        </>
+      )
+    }
+  }
+
   return (
     <>
       {inquiryComponent}
@@ -348,12 +397,7 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
 
       <Flex flexDirection={["column", "column", "column", "column", "row"]}>
         <Join separator={<Spacer x={1} y={1} />}>
-          {!!isCreateAlertAvailable && (
-            <ArtworkCreateAlertButtonFragmentContainer
-              artwork={artwork}
-              analyticsContextModule={ContextModule.artworkSidebar}
-            />
-          )}
+          <AlertSwitch />
           {artwork.isAcquireable && (
             <Button
               width="100%"
@@ -431,6 +475,9 @@ export const ArtworkSidebarCommercialButtonsFragmentContainer = createFragmentCo
         artists {
           internalID
         }
+        attributionClass {
+          internalID
+        }
         internalID
         slug
         saleMessage
@@ -444,6 +491,11 @@ export const ArtworkSidebarCommercialButtonsFragmentContainer = createFragmentCo
           }
           ... on Money {
             display
+          }
+        }
+        mediumType {
+          filterGene {
+            slug
           }
         }
         editionSets {

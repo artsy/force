@@ -1,4 +1,4 @@
-import { Flex, Spacer } from "@artsy/palette"
+import { Join, Spacer } from "@artsy/palette"
 import * as React from "react"
 import { Title, Meta } from "react-head"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -57,7 +57,7 @@ const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
 
       <Spacer y={[2, 0]} />
 
-      <Flex flexDirection="column" gap={6}>
+      <Join separator={<Spacer y={6} />}>
         <ArtistCareerHighlightsQueryRenderer id={artist.internalID} />
 
         <ArtistSeriesRailQueryRenderer
@@ -72,7 +72,7 @@ const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
         <ArtistRelatedArtistsRailQueryRenderer slug={artist.internalID} />
 
         <ArtistRelatedGeneCategoriesQueryRenderer slug={artist.internalID} />
-      </Flex>
+      </Join>
     </>
   )
 }

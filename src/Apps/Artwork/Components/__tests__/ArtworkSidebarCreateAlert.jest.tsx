@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { ArtworkSidebarCreateArtworkAlertFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCreateArtworkAlert"
-import { ArtworkSidebarCreateArtworkAlert_Test_Query } from "__generated__/ArtworkSidebarCreateArtworkAlert_Test_Query.graphql"
+import { ArtworkSidebarCreateAlertFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebar/ArtworkSidebarCreateAlert"
+import { ArtworkSidebarCreateAlert_Test_Query } from "__generated__/ArtworkSidebarCreateAlert_Test_Query.graphql"
 import { fireEvent, screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/useSystemContext"
@@ -11,19 +11,19 @@ jest.mock("react-tracking")
 jest.mock("System/useSystemContext")
 
 const { renderWithRelay } = setupTestWrapperTL<
-  ArtworkSidebarCreateArtworkAlert_Test_Query
+  ArtworkSidebarCreateAlert_Test_Query
 >({
-  Component: ArtworkSidebarCreateArtworkAlertFragmentContainer,
+  Component: ArtworkSidebarCreateAlertFragmentContainer,
   query: graphql`
-    query ArtworkSidebarCreateArtworkAlert_Test_Query @relay_test_operation {
+    query ArtworkSidebarCreateAlert_Test_Query @relay_test_operation {
       artwork(id: "test-artwork-id") {
-        ...ArtworkSidebarCreateArtworkAlert_artwork
+        ...ArtworkSidebarCreateAlert_artwork
       }
     }
   `,
 })
 
-describe("ArtworkSidebarCreateArtworkAlert", () => {
+describe("ArtworkSidebarCreateAlert", () => {
   const mockuseTracking = useTracking as jest.Mock
   const trackEvent = jest.fn()
   const mockuseSystemContext = useSystemContext as jest.Mock

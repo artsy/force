@@ -86,12 +86,7 @@ export const ArtistArticlesRouteFragmentContainer = createRefetchContainer(
         @argumentDefinitions(page: { type: "Int", defaultValue: 1 }) {
         name
         slug
-        articlesConnection(
-          page: $page
-          size: 12
-          sort: PUBLISHED_AT_DESC
-          inEditorialFeed: false
-        ) {
+        articlesConnection(page: $page, size: 12, sort: PUBLISHED_AT_DESC) {
           pageInfo {
             hasNextPage
           }

@@ -58,6 +58,7 @@ import { worksForYouRoutes } from "./Apps/WorksForYou/worksForYouRoutes"
 import { myCollectionInsightsCollectorProfileRoutes } from "Apps/MyCollectionInsights/myCollectionInsightsCollectorProfileRoutes"
 import { endingSoonAuctionsRoutes } from "Apps/Auctions/EndingSoonAuctions/endingSoonAuctionsRoutes"
 import { newWorksFromGalleriesYouFollowRoutes } from "Apps/NewWorksFromGalleriesYouFollow/newWorksFromGalleriesYouFollowRoutes"
+import { alertRoutes } from "Apps/Alert/alertRoutes"
 
 export const getAppRoutes = (): AppRouteConfig[] => {
   return buildAppRoutes([
@@ -70,6 +71,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: artistSeriesRoutes },
     { routes: artistsRoutes },
     { routes: artQuizRoutes },
+    { routes: alertRoutes },
     { routes: artworkRoutes },
     { routes: auctionRoutes },
     { routes: auctionsRoutes },

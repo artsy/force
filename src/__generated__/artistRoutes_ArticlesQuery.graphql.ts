@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef26931435b3d9cb4dc00540336abe63>>
+ * @generated SignedSource<<c9ece4681fc0850c6dd75026efecad85>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -128,11 +128,6 @@ return {
           {
             "alias": null,
             "args": [
-              {
-                "kind": "Literal",
-                "name": "inEditorialFeed",
-                "value": false
-              },
               {
                 "kind": "Literal",
                 "name": "page",
@@ -366,7 +361,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "articlesConnection(inEditorialFeed:false,page:1,size:12,sort:\"PUBLISHED_AT_DESC\")"
+            "storageKey": "articlesConnection(page:1,size:12,sort:\"PUBLISHED_AT_DESC\")"
           },
           (v5/*: any*/)
         ],
@@ -375,12 +370,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "d83d347f8bb509de3250a86403b96847",
+    "cacheID": "0cd6777e78b4567d6e81c3416e5f240f",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_ArticlesQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_ArticlesQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistArticlesRoute_artist\n    id\n  }\n}\n\nfragment ArtistArticlesRoute_artist on Artist {\n  name\n  slug\n  articlesConnection(page: 1, size: 12, sort: PUBLISHED_AT_DESC, inEditorialFeed: false) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
+    "text": "query artistRoutes_ArticlesQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistArticlesRoute_artist\n    id\n  }\n}\n\nfragment ArtistArticlesRoute_artist on Artist {\n  name\n  slug\n  articlesConnection(page: 1, size: 12, sort: PUBLISHED_AT_DESC) {\n    pageInfo {\n      hasNextPage\n    }\n    pageCursors {\n      ...Pagination_pageCursors\n    }\n    edges {\n      node {\n        ...CellArticle_article\n        internalID\n        id\n      }\n    }\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n\nfragment Pagination_pageCursors on PageCursors {\n  around {\n    cursor\n    page\n    isCurrent\n  }\n  first {\n    cursor\n    page\n    isCurrent\n  }\n  last {\n    cursor\n    page\n    isCurrent\n  }\n  previous {\n    cursor\n    page\n  }\n}\n"
   }
 };
 })();

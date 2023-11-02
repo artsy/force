@@ -97,11 +97,7 @@ export const ArtistCurrentArticlesRailFragmentContainer = createFragmentContaine
         internalID
         name
         slug
-        articlesConnection(
-          first: 10
-          sort: PUBLISHED_AT_DESC
-          inEditorialFeed: true
-        ) {
+        articlesConnection(first: 10, sort: PUBLISHED_AT_DESC) {
           edges {
             node {
               ...CellArticle_article

@@ -1,68 +1,76 @@
-import { FC, useState, FormEvent, useEffect } from "react"
-import { Flex, Spacer, Box, Text, Range } from "@artsy/palette"
+import { FC, useState, FormEvent, useEffect, useMemo } from "react"
+import { Flex, Spacer, Box, Text, Range, usePrevious } from "@artsy/palette"
 import { Histogram, HistogramBarEntity } from "./Histogram"
-import {
-  CustomRange,
-  DEFAULT_CUSTOM_RANGE,
-  DEFAULT_PRICE_RANGE,
-  DEFAULT_RANGE,
-} from "Components/PriceRange/constants"
+import { CustomRange, DEFAULT_RANGE } from "Components/PriceRange/constants"
 import { NumericInput } from "Components/NumericInput"
 import { parsePriceRange } from "Components/PriceRange/Utils/parsePriceRange"
 import { parseSliderPriceRange } from "Components/PriceRange/Utils/parseSliderPriceRange"
 import { convertToFilterFormatRange } from "Components/PriceRange/Utils/convertToFilterFormatRange"
 import { getPriceValue } from "Components/PriceRange/Utils/getPriceValue"
+import { debounce } from "lodash"
 
 interface PriceRangeProps {
   priceRange: string
-  onPriceRangeUpdate: (range: CustomRange) => void
+  onUpdate?: (range: CustomRange) => void
+  onDebouncedUpdate?: (range: CustomRange) => void
   bars?: HistogramBarEntity[]
 }
 
 export const PriceRange: FC<PriceRangeProps> = ({
   priceRange,
-  onPriceRangeUpdate,
+  onUpdate,
+  onDebouncedUpdate,
   bars,
 }) => {
-  const [range, setRange] = useState(parsePriceRange(priceRange))
-  const sliderRange = parseSliderPriceRange(range)
-  const [minValue, maxValue] = range
+  const [localRange, setLocalRange] = useState(parsePriceRange(priceRange))
+
+  const previousPriceRange = usePrevious(priceRange)
+
+  const sliderRange = parseSliderPriceRange(localRange)
+
+  const [minValue, maxValue] = localRange
   const [defaultMinValue, defaultMaxValue] = DEFAULT_RANGE
 
   useEffect(() => {
-    if (priceRange === DEFAULT_PRICE_RANGE) {
-      setRange(DEFAULT_CUSTOM_RANGE)
-    }
-  }, [priceRange])
+    const shouldUpdate = previousPriceRange !== priceRange
+    if (!shouldUpdate) return
+    const nextRange = parsePriceRange(priceRange)
+    setLocalRange(nextRange)
+  }, [localRange, previousPriceRange, priceRange])
 
-  const updateRange = (updatedRange: CustomRange) => {
-    setRange(updatedRange)
-    onPriceRangeUpdate(updatedRange)
+  const handleDebouncedUpdate = useMemo(() => {
+    return debounce((nextRange: CustomRange) => {
+      onDebouncedUpdate?.(nextRange)
+    }, 250)
+  }, [onDebouncedUpdate])
+
+  const updateRange = (nextRange: CustomRange) => {
+    setLocalRange(nextRange)
+    onUpdate?.(nextRange)
+    handleDebouncedUpdate(nextRange)
   }
 
   const handleSliderValueChange = (range: number[]) => {
     const convertedRange = convertToFilterFormatRange(range)
-
     updateRange(convertedRange)
   }
 
-  const handleInputValueChange = (changedIndex: number) => (
-    event: FormEvent<HTMLInputElement>
-  ) => {
-    const { value } = event.currentTarget
-    const updatedRange = range.map((rangeValue, index) => {
-      if (index === changedIndex) {
-        if (value === "" || value === "0") {
-          return "*"
-        }
+  const handleInputValueChange = (changedIndex: number) => ({
+    currentTarget: { value },
+  }: FormEvent<HTMLInputElement>) => {
+    const nextRange = localRange.map((rangeValue, index) => {
+      if (index === changedIndex && (value === "" || value === "0")) {
+        return "*"
+      }
 
+      if (index === changedIndex) {
         return parseInt(value, 10)
       }
 
       return rangeValue
     })
 
-    updateRange(updatedRange)
+    updateRange(nextRange)
   }
 
   return (
@@ -105,9 +113,9 @@ export const PriceRange: FC<PriceRangeProps> = ({
 
       <Spacer y={2} />
 
-      {shouldDisplayHistogram(bars) ? (
+      {bars && shouldDisplayHistogram(bars) ? (
         <Histogram
-          bars={bars!}
+          bars={bars}
           selectedRange={[sliderRange[0], sliderRange[1]]}
           data-testid="PriceFilterHistogram"
         />
@@ -143,6 +151,5 @@ const isAllBarsEmpty = (bars: HistogramBarEntity[]) => {
 
 const shouldDisplayHistogram = (bars?: HistogramBarEntity[]) => {
   if (!bars) return false
-
   return bars.length > 0 && !isAllBarsEmpty(bars)
 }

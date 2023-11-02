@@ -32,13 +32,14 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
 }) => {
   const biddingEndAt =
     artwork?.saleArtwork?.extendedBiddingEndAt ?? artwork?.saleArtwork?.endAt
-  const { hasEnded } = useTimer(biddingEndAt!, artwork?.sale?.startAt!)
+  const { hasEnded } = useTimer(
+    biddingEndAt as string,
+    artwork?.sale?.startAt as string
+  )
 
   const isLotClosed = hasEnded || lotIsClosed(artwork.sale, artwork.saleArtwork)
   const displayAuctionCreateAlertHeader =
     artwork.isEligibleToCreateAlert && artwork.isInAuction && isLotClosed
-
-  if (!displayAuctionCreateAlertHeader) return null
 
   const artistName = artwork.artistNames ? ", " + artwork.artistNames : ""
   const artistSlug = artwork.artists?.[0]?.slug
@@ -61,7 +62,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
       type: OwnerType.artwork,
       slug: artwork.slug,
       id: artwork.internalID,
-      name: artwork.title!,
+      name: artwork.title as string,
     },
   }
 
@@ -98,6 +99,8 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
   const isBidder = artwork.myLotStandingManageAlerts?.[0]
   const isHighest = artwork.myLotStandingManageAlerts?.[0]?.isHighestBidder
   const hasLostBid = isBidder && !isHighest
+
+  if (!displayAuctionCreateAlertHeader) return null
 
   return (
     <SavedSearchAlertContextProvider
@@ -146,8 +149,8 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
               </Button>
             ) : (
               <ArtworkCreateAlertButtonFragmentContainer
-                analyticsContextModule={ContextModule.artworkClosedLotHeader}
                 artwork={artwork}
+                analyticsContextModule={ContextModule.artworkSidebar}
               />
             )}
           </Box>
