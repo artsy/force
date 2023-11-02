@@ -12,10 +12,6 @@ import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboar
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { FC, useEffect } from "react"
 
-jest.mock("System/useSystemContext", () => ({
-  useSystemContext: jest.fn().mockReturnValue({ isLoggedIn: true }),
-}))
-
 jest.mock(
   "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight",
   () => ({
