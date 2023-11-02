@@ -22,7 +22,7 @@ export const SPECIALISTS: SpecialistsData[] = [
   {
     firstName: "Shlomi",
     name: "Shlomi Rabi",
-    email: "shlomi.rabi@artsymail.com",
+    email: "shlomi.rabi@artsy.net",
     jobTitle: "Vice President, Head of Auctions",
     specialty: "auctions",
     bio:
