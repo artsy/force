@@ -41,7 +41,7 @@ export const PriceRangeFilterQuick: FC<PriceRangeFilterQuickProps> = props => {
             <PriceRange
               priceRange={range.join("-")}
               bars={histogram}
-              onPriceRangeUpdate={onPriceRangeUpdate}
+              onDebouncedUpdate={onPriceRangeUpdate}
             />
           </FilterQuickDropdownPanel>
         )

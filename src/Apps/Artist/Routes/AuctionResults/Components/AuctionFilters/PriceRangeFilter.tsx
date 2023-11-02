@@ -4,16 +4,13 @@ import {
   CustomRange,
   DEFAULT_PRICE_RANGE,
 } from "Components/PriceRange/constants"
-import { FC, useMemo } from "react"
+import { FC } from "react"
 import {
   useAuctionResultsFilterContext,
   useCurrentlySelectedFiltersForAuctionResults,
 } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
-import { debounce } from "lodash"
 import { aggregationsToHistogram } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
-
-const DEBOUNCE_DELAY = 300
 
 export const PriceRangeFilter: FC = () => {
   const { setFilter, aggregations } = useAuctionResultsFilterContext()
@@ -24,13 +21,8 @@ export const PriceRangeFilter: FC = () => {
   } = useCurrentlySelectedFiltersForAuctionResults()
   const bars = aggregationsToHistogram(aggregations as Aggregations)
 
-  const setFilterDobounced = useMemo(
-    () => setFilter && debounce(setFilter, DEBOUNCE_DELAY),
-    [setFilter]
-  )
-
   const handlePriceRangeUpdate = (updatedRange: CustomRange) => {
-    setFilterDobounced?.("priceRange", updatedRange.join("-"))
+    setFilter?.("priceRange", updatedRange.join("-"))
   }
 
   return (
@@ -39,7 +31,7 @@ export const PriceRangeFilter: FC = () => {
       <PriceRange
         bars={bars}
         priceRange={priceRange || DEFAULT_PRICE_RANGE}
-        onPriceRangeUpdate={handlePriceRangeUpdate}
+        onDebouncedUpdate={handlePriceRangeUpdate}
       />
       <Spacer y={2} />
       <Checkbox
