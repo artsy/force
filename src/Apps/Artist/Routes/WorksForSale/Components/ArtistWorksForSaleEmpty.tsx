@@ -6,6 +6,9 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistWorksForSaleEmpty_artist$data } from "__generated__/ArtistWorksForSaleEmpty_artist.graphql"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { useAlert } from "Components/Alert"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 
 interface ArtistWorksForSaleEmptyProps {
   artist: ArtistWorksForSaleEmpty_artist$data
@@ -19,6 +22,13 @@ const ArtistWorksForSaleEmpty: FC<ArtistWorksForSaleEmptyProps> = ({
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
+
+  const { filters } = useArtworkFilterContext()
+
+  const { alertComponent, showAlert } = useAlert({
+    initialCriteria: filters,
+  })
+  const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
 
   return (
     <>
@@ -35,45 +45,61 @@ const ArtistWorksForSaleEmpty: FC<ArtistWorksForSaleEmptyProps> = ({
 
           <Spacer y={2} />
 
-          <SavedSearchCreateAlertButtonContainer
-            entity={{
-              owner: {
-                id: contextPageOwnerId!,
-                name: artist.name!,
-                slug: contextPageOwnerSlug!,
-                type: contextPageOwnerType!,
-              },
-              defaultCriteria: {
-                artistIDs: [
-                  { displayValue: artist.name!, value: artist.internalID },
-                ],
-              },
-            }}
-            criteria={{ artistIDs: [artist.internalID] }}
-            authDialogOptions={{
-              options: {
-                title: "Sign up to create your alert",
-                afterAuthAction: {
-                  action: "createAlert",
-                  kind: "artist",
-                  objectId: artist.internalID,
-                },
-              },
-              analytics: {
-                contextModule: ContextModule.artworkGrid,
-                intent: Intent.createAlert,
-              },
-            }}
-            renderButton={({ onClick }) => (
+          {newAlertModalEnabled ? (
+            <>
               <Button
-                onClick={onClick}
+                onClick={showAlert}
                 Icon={BellStrokeIcon}
                 variant="secondaryBlack"
               >
                 Create Alert
               </Button>
-            )}
-          />
+              {alertComponent}
+            </>
+          ) : (
+            <SavedSearchCreateAlertButtonContainer
+              entity={{
+                owner: {
+                  id: contextPageOwnerId as string,
+                  name: artist.name as string,
+                  slug: contextPageOwnerSlug as string,
+                  type: contextPageOwnerType,
+                },
+                defaultCriteria: {
+                  artistIDs: [
+                    {
+                      displayValue: artist.name as string,
+                      value: artist.internalID,
+                    },
+                  ],
+                },
+              }}
+              criteria={{ artistIDs: [artist.internalID] }}
+              authDialogOptions={{
+                options: {
+                  title: "Sign up to create your alert",
+                  afterAuthAction: {
+                    action: "createAlert",
+                    kind: "artist",
+                    objectId: artist.internalID,
+                  },
+                },
+                analytics: {
+                  contextModule: ContextModule.artworkGrid,
+                  intent: Intent.createAlert,
+                },
+              }}
+              renderButton={({ onClick }) => (
+                <Button
+                  onClick={onClick}
+                  Icon={BellStrokeIcon}
+                  variant="secondaryBlack"
+                >
+                  Create Alert
+                </Button>
+              )}
+            />
+          )}
         </Column>
       </GridColumns>
     </>

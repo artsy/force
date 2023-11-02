@@ -22,6 +22,9 @@ import { SuggestedArtworksShelfQueryRenderer } from "Apps/Artwork/Components/Art
 import { Media } from "Utils/Responsive"
 import { RouterLink } from "System/Router/RouterLink"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { useAlert } from "Components/Alert"
+import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
@@ -32,13 +35,14 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
 }) => {
   const biddingEndAt =
     artwork?.saleArtwork?.extendedBiddingEndAt ?? artwork?.saleArtwork?.endAt
-  const { hasEnded } = useTimer(biddingEndAt!, artwork?.sale?.startAt!)
+  const { hasEnded } = useTimer(
+    biddingEndAt as string,
+    artwork?.sale?.startAt as string
+  )
 
   const isLotClosed = hasEnded || lotIsClosed(artwork.sale, artwork.saleArtwork)
   const displayAuctionCreateAlertHeader =
     artwork.isEligibleToCreateAlert && artwork.isInAuction && isLotClosed
-
-  if (!displayAuctionCreateAlertHeader) return null
 
   const artistName = artwork.artistNames ? ", " + artwork.artistNames : ""
   const artistSlug = artwork.artists?.[0]?.slug
@@ -61,7 +65,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
       type: OwnerType.artwork,
       slug: artwork.slug,
       id: artwork.internalID,
-      name: artwork.title!,
+      name: artwork.title as string,
     },
   }
 
@@ -98,6 +102,47 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
   const isBidder = artwork.myLotStandingManageAlerts?.[0]
   const isHighest = artwork.myLotStandingManageAlerts?.[0]?.isHighestBidder
   const hasLostBid = isBidder && !isHighest
+
+  const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
+
+  const { alertComponent, showAlert } = useAlert({
+    initialCriteria: {
+      attributionClass: compact([artwork.attributionClass?.internalID]),
+      artistIDs: compact(artwork.artists).map(artist => artist.internalID),
+      additionalGeneIDs: [artwork.mediumType?.filterGene?.slug as string],
+    },
+  })
+
+  if (!displayAuctionCreateAlertHeader) return null
+
+  const AlertSwitch: FC = () => {
+    if (newAlertModalEnabled) {
+      return (
+        <>
+          <ProgressiveOnboardingAlertCreateSimple>
+            <Button
+              width="100%"
+              size="large"
+              onClick={showAlert}
+              Icon={BellStrokeIcon}
+            >
+              Create Alert
+            </Button>
+          </ProgressiveOnboardingAlertCreateSimple>
+          {alertComponent}
+        </>
+      )
+    } else {
+      return (
+        <>
+          <ArtworkCreateAlertButtonFragmentContainer
+            artwork={artwork}
+            analyticsContextModule={ContextModule.artworkSidebar}
+          />
+        </>
+      )
+    }
+  }
 
   return (
     <SavedSearchAlertContextProvider
@@ -145,10 +190,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
                 Manage your alerts
               </Button>
             ) : (
-              <ArtworkCreateAlertButtonFragmentContainer
-                analyticsContextModule={ContextModule.artworkClosedLotHeader}
-                artwork={artwork}
-              />
+              <AlertSwitch />
             )}
           </Box>
         </Column>

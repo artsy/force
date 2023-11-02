@@ -1,6 +1,6 @@
-import { Flex, Separator, Text } from "@artsy/palette"
+import { Button, Flex, Separator, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
-import { ArtworkSidebarCreateArtworkAlert_artwork$data } from "__generated__/ArtworkSidebarCreateArtworkAlert_artwork.graphql"
+import { ArtworkSidebarCreateAlert_artwork$data } from "__generated__/ArtworkSidebarCreateAlert_artwork.graphql"
 import {
   SavedSearchEntity,
   SavedSearchEntityCriteria,
@@ -13,12 +13,15 @@ import { SavedSearchCreateAlertButton } from "Components/SavedSearchAlert/Compon
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useTranslation } from "react-i18next"
+import { useAlert } from "Components/Alert"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 
-interface ArtworkSidebarCreateArtworkAlertProps {
-  artwork: ArtworkSidebarCreateArtworkAlert_artwork$data
+interface ArtworkSidebarCreateAlertProps {
+  artwork: ArtworkSidebarCreateAlert_artwork$data
 }
 
-const ArtworkSidebarCreateArtworkAlert: React.FC<ArtworkSidebarCreateArtworkAlertProps> = ({
+const ArtworkSidebarCreateAlert: React.FC<ArtworkSidebarCreateAlertProps> = ({
   artwork,
 }) => {
   const { t } = useTranslation()
@@ -43,7 +46,7 @@ const ArtworkSidebarCreateArtworkAlert: React.FC<ArtworkSidebarCreateArtworkAler
       type: OwnerType.artwork,
       slug: artwork.slug,
       id: artwork.internalID,
-      name: artwork.title!,
+      name: artwork.title as string,
     },
   }
 
@@ -73,6 +76,11 @@ const ArtworkSidebarCreateArtworkAlert: React.FC<ArtworkSidebarCreateArtworkAler
   }
   const allowedCriteria = getAllowedSearchCriteria(criteria)
 
+  const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
+  const { alertComponent, showAlert } = useAlert({
+    initialCriteria: criteria,
+  })
+
   if (!artwork.isEligibleToCreateAlert) return null
 
   return (
@@ -88,36 +96,50 @@ const ArtworkSidebarCreateArtworkAlert: React.FC<ArtworkSidebarCreateArtworkAler
         <Text variant="xs" mr={2}>
           {t("artworkPage.sidebar.createAlert.description")}
         </Text>
-        <SavedSearchCreateAlertButton
-          entity={entity}
-          criteria={allowedCriteria}
-          aggregations={aggregations}
-          currentArtworkID={artwork.internalID}
-          authDialogOptions={{
-            options: {
-              title: "Sign up to create your alert",
-              afterAuthAction: {
-                action: "createAlert",
-                kind: "artworks",
-                objectId: artwork.internalID,
+        {newAlertModalEnabled ? (
+          <>
+            <Button
+              onClick={showAlert}
+              variant="secondaryBlack"
+              size="small"
+              Icon={BellStrokeIcon}
+            >
+              Create Alert
+            </Button>
+            {alertComponent}
+          </>
+        ) : (
+          <SavedSearchCreateAlertButton
+            entity={entity}
+            criteria={allowedCriteria}
+            aggregations={aggregations}
+            currentArtworkID={artwork.internalID}
+            authDialogOptions={{
+              options: {
+                title: "Sign up to create your alert",
+                afterAuthAction: {
+                  action: "createAlert",
+                  kind: "artworks",
+                  objectId: artwork.internalID,
+                },
               },
-            },
-            analytics: {
-              contextModule: ContextModule.artworkSidebar,
-              intent: Intent.createAlert,
-            },
-          }}
-        />
+              analytics: {
+                contextModule: ContextModule.artworkSidebar,
+                intent: Intent.createAlert,
+              },
+            }}
+          />
+        )}
       </Flex>
     </>
   )
 }
 
-export const ArtworkSidebarCreateArtworkAlertFragmentContainer = createFragmentContainer(
-  ArtworkSidebarCreateArtworkAlert,
+export const ArtworkSidebarCreateAlertFragmentContainer = createFragmentContainer(
+  ArtworkSidebarCreateAlert,
   {
     artwork: graphql`
-      fragment ArtworkSidebarCreateArtworkAlert_artwork on Artwork {
+      fragment ArtworkSidebarCreateAlert_artwork on Artwork {
         internalID
         title
         slug

@@ -30,7 +30,11 @@ export const getAllowedSearchCriteria = (
     const isAllowedKey = allowedSearchCriteriaKeys.includes(key)
 
     if (isAllowedKey && !isDefaultValue(key, value)) {
-      allowedCriteria[key] = criteria[key]
+      if (Array.isArray(value)) {
+        allowedCriteria[key] = criteria[key].filter(v => v)
+      } else {
+        allowedCriteria[key] = criteria[key]
+      }
     }
   })
 
@@ -60,7 +64,7 @@ export const getSearchCriteriaFromFilters = (
   filters: ArtworkFiltersState
 ): SearchCriteriaAttributes => {
   const allowedFilters = getAllowedSearchCriteria(filters)
-  const defaultCriteria = parseDefaultCriteria(entity.defaultCriteria)
+  const defaultCriteria = parseDefaultCriteria(entity.defaultCriteria ?? {})
 
   return {
     ...allowedFilters,

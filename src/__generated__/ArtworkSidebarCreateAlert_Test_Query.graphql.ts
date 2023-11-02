@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b9c36737f392724e25400a7f411960da>>
+ * @generated SignedSource<<b9b613f37310bdd72d1f44831de6479c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarCreateArtworkAlert_Test_Query$variables = {};
-export type ArtworkSidebarCreateArtworkAlert_Test_Query$data = {
+export type ArtworkSidebarCreateAlert_Test_Query$variables = {};
+export type ArtworkSidebarCreateAlert_Test_Query$data = {
   readonly artwork: {
-    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCreateArtworkAlert_artwork">;
+    readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCreateAlert_artwork">;
   } | null;
 };
-export type ArtworkSidebarCreateArtworkAlert_Test_Query = {
-  response: ArtworkSidebarCreateArtworkAlert_Test_Query$data;
-  variables: ArtworkSidebarCreateArtworkAlert_Test_Query$variables;
+export type ArtworkSidebarCreateAlert_Test_Query = {
+  response: ArtworkSidebarCreateAlert_Test_Query$data;
+  variables: ArtworkSidebarCreateAlert_Test_Query$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -74,7 +74,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "ArtworkSidebarCreateArtworkAlert_Test_Query",
+    "name": "ArtworkSidebarCreateAlert_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -87,7 +87,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "ArtworkSidebarCreateArtworkAlert_artwork"
+            "name": "ArtworkSidebarCreateAlert_artwork"
           }
         ],
         "storageKey": "artwork(id:\"test-artwork-id\")"
@@ -100,7 +100,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "ArtworkSidebarCreateArtworkAlert_Test_Query",
+    "name": "ArtworkSidebarCreateAlert_Test_Query",
     "selections": [
       {
         "alias": null,
@@ -186,7 +186,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "242133062c8aaa143fa016ee9ca7de86",
+    "cacheID": "9ae521387ac6a67cd271d4e215a11aca",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -241,13 +241,13 @@ return {
         "artwork.title": (v6/*: any*/)
       }
     },
-    "name": "ArtworkSidebarCreateArtworkAlert_Test_Query",
+    "name": "ArtworkSidebarCreateAlert_Test_Query",
     "operationKind": "query",
-    "text": "query ArtworkSidebarCreateArtworkAlert_Test_Query {\n  artwork(id: \"test-artwork-id\") {\n    ...ArtworkSidebarCreateArtworkAlert_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCreateArtworkAlert_artwork on Artwork {\n  internalID\n  title\n  slug\n  isEligibleToCreateAlert\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
+    "text": "query ArtworkSidebarCreateAlert_Test_Query {\n  artwork(id: \"test-artwork-id\") {\n    ...ArtworkSidebarCreateAlert_artwork\n    id\n  }\n}\n\nfragment ArtworkSidebarCreateAlert_artwork on Artwork {\n  internalID\n  title\n  slug\n  isEligibleToCreateAlert\n  artists {\n    internalID\n    name\n    slug\n    id\n  }\n  attributionClass {\n    internalID\n    id\n  }\n  mediumType {\n    filterGene {\n      slug\n      name\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "518e9c43f1441580146bce74cea25363";
+(node as any).hash = "01698e77bddcea656d75652bd1f357bf";
 
 export default node;

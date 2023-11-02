@@ -10,7 +10,7 @@ import { ArtworkSidebarArtworkTitleFragmentContainer } from "./ArtworkSidebarArt
 import { ArtworkSidebarDetailsFragmentContainer } from "./ArtworkSidebarDetails"
 import { ArtworkSidebarArtsyGuarantee } from "./ArtworkSidebarArtsyGuarantee"
 import { ArtworkSidebarPartnerInfoFragmentContainer } from "./ArtworkSidebarPartnerInfo"
-import { ArtworkSidebarCreateArtworkAlertFragmentContainer } from "./ArtworkSidebarCreateArtworkAlert"
+import { ArtworkSidebarCreateAlertFragmentContainer } from "./ArtworkSidebarCreateAlert"
 import { useTimer } from "Utils/Hooks/useTimer"
 import { useState } from "react"
 import { lotIsClosed } from "Apps/Artwork/Utils/lotIsClosed"
@@ -66,7 +66,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
   const { t } = useTranslation()
 
   useAuctionWebsocket({
-    lotID: saleArtwork?.lotID!,
+    lotID: saleArtwork?.lotID as string,
     onChange: ({ extended_bidding_end_at }) => {
       setUpdatedBiddingEndAt(extended_bidding_end_at)
     },
@@ -74,7 +74,10 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
   const artworkEcommerceAvailable = !!(isAcquireable || isOfferable)
 
-  const { hasEnded } = useTimer(updatedBiddingEndAt!, startAt!)
+  const { hasEnded } = useTimer(
+    updatedBiddingEndAt as string,
+    startAt as string
+  )
   const shouldHideDetailsCreateAlertCTA =
     !isEligibleToCreateAlert ||
     (isInAuction && hasEnded) ||
@@ -165,7 +168,7 @@ export const ArtworkSidebar: React.FC<ArtworkSidebarProps> = ({
 
       {(!shouldHideDetailsCreateAlertCTA ||
         checkIfArtworkIsOnLoanOrPermanentCollection(artwork.saleMessage)) && (
-        <ArtworkSidebarCreateArtworkAlertFragmentContainer artwork={artwork} />
+        <ArtworkSidebarCreateAlertFragmentContainer artwork={artwork} />
       )}
 
       <Separator />
@@ -195,7 +198,7 @@ export const ArtworkSidebarFragmentContainer = createFragmentContainer(
         ...ArtworkSidebarCommercialButtons_artwork
         ...ArtworkSidebarShippingInformation_artwork
         ...ArtworkSidebarPartnerInfo_artwork
-        ...ArtworkSidebarCreateArtworkAlert_artwork
+        ...ArtworkSidebarCreateAlert_artwork
         ...ArtworkSidebarLinks_artwork
         ...ArtworkSidebarEstimatedValue_artwork
         ...ArtworkSidebarBiddingClosedMessage_artwork
