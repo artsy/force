@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<08a638136fefb230079b8b7f70713370>>
+ * @generated SignedSource<<3c7fbfbdc5ae2050a9a275588f06e546>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -42,25 +42,15 @@ v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "__typename",
   "storageKey": null
 },
 v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v4 = {
   "kind": "Literal",
   "name": "first",
   "value": 0
 },
-v5 = [
-  (v4/*: any*/)
-],
-v6 = [
+v4 = [
   {
     "alias": null,
     "args": null,
@@ -68,7 +58,14 @@ v6 = [
     "name": "totalCount",
     "storageKey": null
   }
-];
+],
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -110,110 +107,19 @@ return {
         "name": "artist",
         "plural": false,
         "selections": [
-          (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "internalID",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
             "name": "name",
             "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": [
-              {
-                "kind": "Literal",
-                "name": "first",
-                "value": 1
-              }
-            ],
-            "concreteType": "FilterArtworksConnection",
-            "kind": "LinkedField",
-            "name": "filterArtworksConnection",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "FilterArtworksEdge",
-                "kind": "LinkedField",
-                "name": "edges",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "concreteType": "Artwork",
-                    "kind": "LinkedField",
-                    "name": "node",
-                    "plural": false,
-                    "selections": [
-                      (v2/*: any*/),
-                      (v3/*: any*/)
-                    ],
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              },
-              (v3/*: any*/)
-            ],
-            "storageKey": "filterArtworksConnection(first:1)"
-          },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "ArtistInsight",
-            "kind": "LinkedField",
-            "name": "insights",
-            "plural": true,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "__typename",
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": (v5/*: any*/),
-            "concreteType": "ArtistSeriesConnection",
-            "kind": "LinkedField",
-            "name": "artistSeriesConnection",
-            "plural": false,
-            "selections": (v6/*: any*/),
-            "storageKey": "artistSeriesConnection(first:0)"
-          },
-          {
-            "alias": null,
-            "args": (v5/*: any*/),
-            "concreteType": "ArticleConnection",
-            "kind": "LinkedField",
-            "name": "articlesConnection",
-            "plural": false,
-            "selections": (v6/*: any*/),
-            "storageKey": "articlesConnection(first:0)"
-          },
-          {
-            "alias": null,
-            "args": [
-              (v4/*: any*/),
-              {
-                "kind": "Literal",
-                "name": "status",
-                "value": "running"
-              }
-            ],
-            "concreteType": "ShowConnection",
-            "kind": "LinkedField",
-            "name": "showsConnection",
-            "plural": false,
-            "selections": (v6/*: any*/),
-            "storageKey": "showsConnection(first:0,status:\"running\")"
           },
           {
             "alias": null,
@@ -249,6 +155,47 @@ return {
           {
             "alias": null,
             "args": null,
+            "concreteType": "ArtistInsight",
+            "kind": "LinkedField",
+            "name": "insights",
+            "plural": true,
+            "selections": [
+              (v2/*: any*/)
+            ],
+            "storageKey": null
+          },
+          {
+            "alias": null,
+            "args": [
+              (v3/*: any*/)
+            ],
+            "concreteType": "ArtistSeriesConnection",
+            "kind": "LinkedField",
+            "name": "artistSeriesConnection",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": "artistSeriesConnection(first:0)"
+          },
+          {
+            "alias": null,
+            "args": [
+              (v3/*: any*/),
+              {
+                "kind": "Literal",
+                "name": "status",
+                "value": "running"
+              }
+            ],
+            "concreteType": "ShowConnection",
+            "kind": "LinkedField",
+            "name": "showsConnection",
+            "plural": false,
+            "selections": (v4/*: any*/),
+            "storageKey": "showsConnection(first:0,status:\"running\")"
+          },
+          {
+            "alias": null,
+            "args": null,
             "concreteType": "ArtistCounts",
             "kind": "LinkedField",
             "name": "counts",
@@ -260,23 +207,89 @@ return {
                 "kind": "ScalarField",
                 "name": "artworks",
                 "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "relatedArtists",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "articles",
+                "storageKey": null
               }
             ],
             "storageKey": null
           },
-          (v3/*: any*/)
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "ArtistRelatedData",
+            "kind": "LinkedField",
+            "name": "related",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": [
+                  {
+                    "kind": "Literal",
+                    "name": "first",
+                    "value": 1
+                  }
+                ],
+                "concreteType": "GeneConnection",
+                "kind": "LinkedField",
+                "name": "genes",
+                "plural": false,
+                "selections": [
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": "GeneEdge",
+                    "kind": "LinkedField",
+                    "name": "edges",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "concreteType": "Gene",
+                        "kind": "LinkedField",
+                        "name": "node",
+                        "plural": false,
+                        "selections": [
+                          (v2/*: any*/),
+                          (v5/*: any*/)
+                        ],
+                        "storageKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": "genes(first:1)"
+              }
+            ],
+            "storageKey": null
+          },
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "66149160b21665150658df55225f1103",
+    "cacheID": "2bd34abc90970abe0d5af720753c1651",
     "id": null,
     "metadata": {},
     "name": "artistRoutes_OverviewQuery",
     "operationKind": "query",
-    "text": "query artistRoutes_OverviewQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  internalID\n  name\n  filterArtworksConnection(first: 1) {\n    edges {\n      node {\n        internalID\n        id\n      }\n    }\n    id\n  }\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  articlesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  counts {\n    artworks\n  }\n}\n"
+    "text": "query artistRoutes_OverviewQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    ...ArtistOverviewRoute_artist\n    id\n  }\n}\n\nfragment ArtistOverviewRoute_artist on Artist {\n  internalID\n  name\n  meta(page: ABOUT) {\n    description\n    title\n  }\n  insights {\n    __typename\n  }\n  artistSeriesConnection(first: 0) {\n    totalCount\n  }\n  showsConnection(first: 0, status: \"running\") {\n    totalCount\n  }\n  counts {\n    artworks\n    relatedArtists\n    articles\n  }\n  related {\n    genes(first: 1) {\n      edges {\n        node {\n          __typename\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();

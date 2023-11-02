@@ -96,8 +96,9 @@ describe("ArtistOverviewRoute", () => {
         filterArtworksConnection: { edges: [] },
         insights: [],
         artistSeriesConnection: { totalCount: 0 },
-        articlesConnection: { totalCount: 0 },
         showsConnection: { totalCount: 0 },
+        counts: { articles: 0, relatedArtists: 0 },
+        related: { genes: { edges: [] } },
       }),
     })
 
