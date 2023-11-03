@@ -40,17 +40,33 @@ import {
   FormikTouched,
   FormikErrors,
   withFormik,
+  Formik,
 } from "formik"
 import { compact, pick } from "lodash"
 import { useEffect, useCallback } from "react"
-
-type AddressFormMode = "saved_addresses" | "new_address" | "pickup"
+import { postalCodeValidator } from "Components/Address/utils"
 
 interface Props extends Pick<FulfillmentDetailsFormProps, "order" | "me"> {
   initialValues: FulfillmentValues
   verifyAddressNow: boolean
   onAddressVerificationComplete: () => void
+  onSubmit: (values: FulfillmentValues, helpers: any) => void
+  availableFulfillmentTypes: FulfillmentType[]
 }
+
+export const FulfillmentDetailsForm = (props: Props) => {
+  return (
+    <Formik<FulfillmentValues>
+      initialValues={props.initialValues}
+      onSubmit={props.onSubmit}
+      validationSchema={VALIDATION_SCHEMA}
+    >
+      <FulfillmentDetailsFormLayout />
+    </Formik>
+  )
+}
+
+type AddressFormMode = "saved_addresses" | "new_address" | "pickup"
 
 const FulfillmentDetailsFormLayout = (props: Props) => {
   const shippingContext = useShippingContext()
@@ -62,15 +78,9 @@ const FulfillmentDetailsFormLayout = (props: Props) => {
     shippingContext.computedOrderData.shippingQuotes.length === 0
   )
 
-  const firstArtwork = extractNodes(props.order.lineItems)[0]!.artwork!
-
   const savedAddresses = compact(
     extractNodes(props.me?.addressConnection) ?? []
   )
-
-  const availableFulfillmentTypes: FulfillmentType[] = firstArtwork.pickupAvailable
-    ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
-    : [FulfillmentType.SHIP]
 
   const formikContext = useFormikContext<FulfillmentValues>()
   const {
@@ -575,6 +585,7 @@ export const ADDRESS_VALIDATION_SHAPE = {
   }),
   country: Yup.string().required("Country is required"),
 }
+
 const VALIDATION_SCHEMA = Yup.object().shape({
   fulfillmentType: Yup.string().oneOf([
     FulfillmentType.PICKUP,
@@ -594,11 +605,15 @@ const VALIDATION_SCHEMA = Yup.object().shape({
     }),
 })
 
-export const FulfillmentDetailsForm = withFormik<Props, FulfillmentValues>({
-  mapPropsToValues: props => props.initialValues,
-  validationSchema: VALIDATION_SCHEMA,
-
-  handleSubmit: values => {
-    // do submitting things
-  },
-})(FulfillmentDetailsFormLayout)
+// export const FulfillmentDetailsForm = withFormik<Props, FulfillmentValues>({
+//   mapPropsToValues: props => props.initialValues,
+//   validationSchema: VALIDATION_SCHEMA,
+//   handleSubmit: values => {
+//     if (shouldVerifyAddressOnSubmit(values)) {
+//       setVerifyAddressNow(true)
+//       return
+//     } else {
+//       return props.onSubmit(values, helpers)
+//     }
+//   },
+// })(FulfillmentDetailsFormLayout)
