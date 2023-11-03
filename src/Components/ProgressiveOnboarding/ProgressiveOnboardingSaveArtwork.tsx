@@ -11,7 +11,6 @@ import {
   withProgressiveOnboardingCounts,
   WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
-import { useSystemContext } from "System/SystemContext"
 
 interface ProgressiveOnboardingSaveArtworkProps
   extends WithProgressiveOnboardingCountsProps {}
@@ -20,12 +19,9 @@ export const __ProgressiveOnboardingSaveArtwork__: FC<ProgressiveOnboardingSaveA
   counts,
   children,
 }) => {
-  const { isLoggedIn } = useSystemContext()
-
   const { dismiss, isDismissed } = useProgressiveOnboarding()
 
   const isDisplayble =
-    isLoggedIn &&
     !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK).status &&
     counts.isReady &&
     counts.savedArtworks === 0
