@@ -20,16 +20,6 @@ export const CARD_HEIGHT_MOBILE = 418
 
 export const SPECIALISTS: SpecialistsData[] = [
   {
-    firstName: "Shlomi",
-    name: "Shlomi Rabi",
-    email: "shlomi.rabi@artsy.net",
-    jobTitle: "Vice President, Head of Auctions",
-    specialty: "auctions",
-    bio:
-      "Shlomi has 20+ years in the auction industry, with tenures at Phillips and Christie’s. He oversees Artsy’s auction partnerships and primary and secondary market auctions. Previously, he launched his own social impact auction platform, Greenhouse Auctions, which he sold to Artsy in 2021. He holds an MA from the School of the Art Institute of Chicago.",
-    imageUrl: "https://files.artsy.net/images/Shlomi-Mobile.webp",
-  },
-  {
     firstName: "Jessica",
     name: "Jessica Backus",
     email: "jessica@artsymail.com",
@@ -100,16 +90,6 @@ export const SPECIALISTS: SpecialistsData[] = [
     imageUrl: "https://files.artsy.net/images/George-Mobile.webp",
   },
   {
-    firstName: "Eleonora",
-    name: "Eleonora Leo",
-    email: "eleonora.leo@artsymail.com",
-    jobTitle: "Senior Manager, Collector Services",
-    specialty: "collectorServices",
-    bio:
-      "Eleonora supports collectors bidding in auctions across Artsy. She previously worked at several galleries as well as Phillips Auctioneers in New York, and was formerly a field archeologist in her native Rome, Italy.",
-    imageUrl: "https://files.artsy.net/images/Eleonora-Mobile.webp",
-  },
-  {
     firstName: "Erica",
     name: "Erica Lyon",
     email: "erica@artsymail.com",
@@ -137,13 +117,13 @@ export const SPECIALISTS: SpecialistsData[] = [
     specialty: "auctions",
     bio:
       "Caroline advises collectors on buying and selling hard-to-access unique artworks. Her passion and foremost expertise is emerging and ultra contemporary artist markets. With Artsy since 2016, she holds a Bachelor of Arts in Art History from Wake Forest University.",
-    imageUrl: "https://files.artsy.net/images/Caroline-Mobile.webp",
+    imageUrl: "https://files.artsy.net/images/Caroline-Desktop.webp",
   },
   {
     firstName: "Itziar",
     name: "Itziar Ramos Ricoy",
     email: "itziar.ramos@artsymail.com",
-    jobTitle: "Advisor, Auctions and Private Sales",
+    jobTitle: "Senior Advisor, Auctions and Private Sales",
     specialty: "auctions",
     bio:
       "Itziar is an accomplished art advisor committed to helping clients build exceptional collections that reflect their unique tastes and aspirations. Itziar joined Artsy in 2021, after 7+ years of experience in both private sales and auctions at Bonhams, specializing in modern, post-war, and contemporary art.",
