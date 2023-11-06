@@ -62,12 +62,15 @@ export const Details: FC = () => {
 
               {newAlertModalFilteresEnabled ? (
                 <Clickable onClick={transitionToFilters} width="100%">
-                  <Text variant="sm-display">Add Filters</Text>
+                  <Flex justifyContent="space-between" alignItems={"center"}>
+                    <Box>
+                      <Text variant="sm-display">Add Filters:</Text>
 
-                  <Flex justifyContent="space-between">
-                    <Text variant="sm-display" color="black60">
-                      Including Price Range, Rarity, Medium, Size, Color
-                    </Text>
+                      <Text variant="sm" color="black60">
+                        Including Price Range, Rarity, Medium, Size, Color
+                      </Text>
+                    </Box>
+
                     <ChevronRightIcon />
                   </Flex>
                 </Clickable>
