@@ -21,7 +21,9 @@ jest.mock("System/SystemContext", () => ({
 }))
 
 jest.mock("System/Analytics/AnalyticsContext", () => ({
-  AnalyticsContext: { Provider: ({ children }) => children },
+  useAnalyticsContext: jest.fn(() => ({
+    contextPageOwnerId: "contextPageOwnerID",
+  })),
   track: jest.fn().mockReturnValue(jest.fn),
   useTracking: jest.fn().mockReturnValue({ trackEvent: jest.fn() }),
 }))

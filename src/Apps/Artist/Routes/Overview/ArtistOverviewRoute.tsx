@@ -10,7 +10,6 @@ import { ArtistSeriesRailQueryRenderer } from "Components/ArtistSeriesRail/Artis
 import { ArtistOverviewRoute_artist$data } from "__generated__/ArtistOverviewRoute_artist.graphql"
 import { ArtistEditorialNewsGridQueryRenderer } from "Apps/Artist/Routes/Overview/Components/ArtistEditorialNewsGrid"
 import { ArtistOverviewEmpty } from "Apps/Artist/Routes/Overview/Components/ArtistOverviewEmpty"
-import { extractNodes } from "Utils/extractNodes"
 
 interface ArtistOverviewRouteProps {
   artist: ArtistOverviewRoute_artist$data
@@ -21,20 +20,20 @@ const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
 }) => {
   const { title, description } = artist.meta
 
-  const hasFeaturedWorks =
-    extractNodes(artist.filterArtworksConnection).length > 0
   const hasCareerHighlights = artist.insights.length > 0
-  // If totalCount is null or undefined default to 0
   const hasArtistSeries = artist.artistSeriesConnection?.totalCount ?? 0 > 0
-  const hasEditorial = artist.articlesConnection?.totalCount ?? 0 > 0
+  const hasEditorial = artist.counts?.articles ?? 0 > 0
   const hasCurrentShows = artist.showsConnection?.totalCount ?? 0 > 0
+  const hasRelatedArtists = artist.counts?.relatedArtists ?? 0 > 0
+  const hasRelatedCategories = artist.related?.genes?.edges?.length ?? 0 > 0
 
   if (
-    !hasFeaturedWorks &&
     !hasCareerHighlights &&
     !hasArtistSeries &&
     !hasEditorial &&
-    !hasCurrentShows
+    !hasCurrentShows &&
+    !hasRelatedArtists &&
+    !hasRelatedCategories
   ) {
     return (
       <>
@@ -58,20 +57,32 @@ const ArtistOverviewRoute: React.FC<ArtistOverviewRouteProps> = ({
       <Spacer y={[2, 0]} />
 
       <Join separator={<Spacer y={6} />}>
-        <ArtistCareerHighlightsQueryRenderer id={artist.internalID} />
+        {hasCareerHighlights && (
+          <ArtistCareerHighlightsQueryRenderer id={artist.internalID} />
+        )}
 
-        <ArtistSeriesRailQueryRenderer
-          id={artist.internalID}
-          title={`${artist.name} Series`}
-        />
+        {hasArtistSeries && (
+          <ArtistSeriesRailQueryRenderer
+            id={artist.internalID}
+            title={`${artist.name} Series`}
+          />
+        )}
 
-        <ArtistEditorialNewsGridQueryRenderer id={artist.internalID} />
+        {hasEditorial && (
+          <ArtistEditorialNewsGridQueryRenderer id={artist.internalID} />
+        )}
 
-        <ArtistCurrentShowsRailQueryRenderer id={artist.internalID} />
+        {hasCurrentShows && (
+          <ArtistCurrentShowsRailQueryRenderer id={artist.internalID} />
+        )}
 
-        <ArtistRelatedArtistsRailQueryRenderer slug={artist.internalID} />
+        {hasRelatedArtists && (
+          <ArtistRelatedArtistsRailQueryRenderer slug={artist.internalID} />
+        )}
 
-        <ArtistRelatedGeneCategoriesQueryRenderer slug={artist.internalID} />
+        {hasRelatedCategories && (
+          <ArtistRelatedGeneCategoriesQueryRenderer slug={artist.internalID} />
+        )}
       </Join>
     </>
   )
@@ -84,12 +95,9 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
       fragment ArtistOverviewRoute_artist on Artist {
         internalID
         name
-        filterArtworksConnection(first: 1) {
-          edges {
-            node {
-              internalID
-            }
-          }
+        meta(page: ABOUT) {
+          description
+          title
         }
         insights {
           __typename
@@ -97,18 +105,23 @@ export const ArtistOverviewRouteFragmentContainer = createFragmentContainer(
         artistSeriesConnection(first: 0) {
           totalCount
         }
-        articlesConnection(first: 0) {
-          totalCount
-        }
         showsConnection(first: 0, status: "running") {
           totalCount
         }
-        meta(page: ABOUT) {
-          description
-          title
-        }
         counts {
           artworks
+          relatedArtists
+          articles
+        }
+        related {
+          # Pagination is not correctly implemented so we can't use totalCount
+          genes(first: 1) {
+            edges {
+              node {
+                __typename
+              }
+            }
+          }
         }
       }
     `,
