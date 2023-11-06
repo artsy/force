@@ -28,6 +28,7 @@ export const extractPillFromAggregation = (
   aggregations: Aggregations
 ) => {
   const { paramName, paramValue } = filter
+
   const aggregation = aggregationForFilter(paramName, aggregations)
   const aggregationByValue = keyBy(aggregation?.counts, "value")
   const pills = (paramValue as string[]).map(value => {
@@ -67,9 +68,10 @@ export const extractSizeLabel = ({
   value: string
   metric: Metric
 }) => {
-  const [min, max] = parseRange(value, metric)!
+  const [min, max] = parseRange(value, metric)
 
-  let label
+  let label: string
+
   if (max === "*") {
     label = `from ${min}`
   } else if (min === "*") {
@@ -86,7 +88,7 @@ const extractPriceLabel = (range: string) => {
     return value === "*" ? value : (+value).toLocaleString()
   })
 
-  let label
+  let label: string
 
   if (min === "*") {
     label = `$0-$${max}`
@@ -191,6 +193,14 @@ export const extractPillsFromCriteria = ({
             value: paramValue,
             displayValue: extractPriceLabel(paramValue),
           }
+        }
+        break
+      }
+      case "includeArtworksByFollowedArtists": {
+        result = {
+          field: paramName,
+          value: paramValue,
+          displayValue: "Artists You Follow",
         }
         break
       }

@@ -74,7 +74,7 @@ describe("FairArtworks", () => {
 
     artistFilter.find("button").simulate("click")
     expect(artistFilter.find("Checkbox").at(0).text()).toMatch(
-      "Artists You Follow (10)"
+      "Artists You Follow"
     )
   })
 })
