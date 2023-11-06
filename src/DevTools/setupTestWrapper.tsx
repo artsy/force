@@ -9,12 +9,22 @@ import {
   MockEnvironment,
 } from "relay-test-utils"
 import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
+import { expectAndHandleOperationWithEnv } from "./mockRelayExpectations"
 
 type SetupTestWrapper<T extends OperationType> = {
   Component: React.ComponentType<T["response"]>
   query: GraphQLTaggedNode
   variables?: T["variables"]
 }
+
+type ExpectAndHandleRelayOperation = typeof expectAndHandleOperationWithEnv
+type ExpectAndHandleOperation = (
+  config: Parameters<ExpectAndHandleRelayOperation>[1]
+) => ReturnType<ExpectAndHandleRelayOperation>
+
+const buildExpectAndHandleOperation = (env: MockEnvironment) => (
+  config: Parameters<ExpectAndHandleRelayOperation>[1]
+) => expectAndHandleOperationWithEnv(env, config)
 /**
  * Creates a wrapper for testing Relay components using the `relay-test-utils`
  * package, which will provide automatic fixture data for GraphQL queries.
@@ -56,13 +66,23 @@ type SetupTestWrapper<T extends OperationType> = {
 
   // If wanting to manually provide fixture data, can pass in an object that
   // maps to the type and field resolvers.
-  renderWithRelay({
+  const { expectAndHandleOperation } = renderWithRelay({
     Show: () => ({
       description: "Hello world!"
     })
   })
 
-	expect(screen.queryByText("Hello world")).toBeInTheDocument()
+  // Manually resolve pending mutations:
+  expect(screen.queryByText("Hello world")).toBeInTheDocument()
+  userEvent.click(screen.getByText("Click me"))
+
+  await expectAndHandleOperation({
+    name: "clickIncrementMutation",
+    mockResolvers: {
+      ClickMetrics: () => {count: 42}
+    }
+  })
+  await waitFor(() => { expect(screen.queryByText("42")).toBeInTheDocument() })
  */
 /**
  * Creates a React Testing Library-based wrapper for testing Relay components
@@ -77,7 +97,10 @@ type RTLRenderResult = RenderResult<
   typeof import("@testing-library/dom/types/queries"),
   HTMLElement
 >
-type RenderWithRelay = RTLRenderResult & { env: MockEnvironment }
+type RenderWithRelay = RTLRenderResult & {
+  env: MockEnvironment
+  expectAndHandleOperation: ExpectAndHandleOperation
+}
 export const setupTestWrapperTL = <T extends OperationType>({
   Component,
   query,
@@ -110,7 +133,11 @@ export const setupTestWrapperTL = <T extends OperationType>({
       return MockPayloadGenerator.generate(operation, mockResolvers)
     })
 
-    return { ...view, env }
+    return {
+      ...view,
+      env,
+      expectAndHandleOperation: buildExpectAndHandleOperation(env),
+    }
   }
 
   return { renderWithRelay }
@@ -161,7 +188,9 @@ export const setupTestWrapper = <T extends OperationType>({
     return wrapper
   }
 
-  return { getWrapper }
+  return {
+    getWrapper,
+  }
 }
 
 class ErrorBoundary extends React.Component {
