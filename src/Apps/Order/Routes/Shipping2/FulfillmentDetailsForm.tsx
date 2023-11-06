@@ -17,7 +17,6 @@ import {
   AddressVerificationFlowQueryRenderer,
 } from "Apps/Order/Components/AddressVerificationFlow"
 import {
-  FulfillmentDetailsFormProps,
   FulfillmentValues,
   ShipValues,
 } from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
@@ -39,14 +38,17 @@ import {
   Form,
   FormikTouched,
   FormikErrors,
-  withFormik,
   Formik,
 } from "formik"
 import { compact, pick } from "lodash"
 import { useEffect, useCallback } from "react"
-import { postalCodeValidator } from "Components/Address/utils"
+import { ADDRESS_VALIDATION_SHAPE } from "Apps/Order/Utils/shippingUtils"
+import { Shipping2_me$data } from "__generated__/Shipping2_me.graphql"
 
-interface Props extends Pick<FulfillmentDetailsFormProps, "order" | "me"> {
+export interface FulfillmentDetailsFormProps {
+  // TODO: ideally we don't need to thread shipping2_me through here but that requires
+  // adding savedAdderesses to the context.
+  me: Shipping2_me$data
   initialValues: FulfillmentValues
   verifyAddressNow: boolean
   onAddressVerificationComplete: () => void
@@ -54,21 +56,34 @@ interface Props extends Pick<FulfillmentDetailsFormProps, "order" | "me"> {
   availableFulfillmentTypes: FulfillmentType[]
 }
 
-export const FulfillmentDetailsForm = (props: Props) => {
+export const FulfillmentDetailsForm = (props: FulfillmentDetailsFormProps) => {
   return (
     <Formik<FulfillmentValues>
       initialValues={props.initialValues}
       onSubmit={props.onSubmit}
       validationSchema={VALIDATION_SCHEMA}
     >
-      <FulfillmentDetailsFormLayout />
+      <FulfillmentDetailsFormLayout
+        me={props.me}
+        verifyAddressNow={props.verifyAddressNow}
+        onAddressVerificationComplete={props.onAddressVerificationComplete}
+        availableFulfillmentTypes={props.availableFulfillmentTypes}
+      />
     </Formik>
   )
 }
 
 type AddressFormMode = "saved_addresses" | "new_address" | "pickup"
 
-const FulfillmentDetailsFormLayout = (props: Props) => {
+const FulfillmentDetailsFormLayout = (
+  props: Pick<
+    FulfillmentDetailsFormProps,
+    | "verifyAddressNow"
+    | "onAddressVerificationComplete"
+    | "me"
+    | "availableFulfillmentTypes"
+  >
+) => {
   const shippingContext = useShippingContext()
   const active = shippingContext.step === "fulfillment_details"
 
@@ -199,7 +214,7 @@ const FulfillmentDetailsFormLayout = (props: Props) => {
           onChosenAddress={handleChooseAddress}
         />
       )}
-      {availableFulfillmentTypes.length > 1 && (
+      {props.availableFulfillmentTypes.length > 1 && (
         <>
           <RadioGroup
             data-testid="shipping-options"
@@ -573,19 +588,6 @@ const ArtaMissingShippingQuoteMessage = () => {
   )
 }
 
-export const ADDRESS_VALIDATION_SHAPE = {
-  addressLine1: Yup.string().required("Street address is required"),
-  addressLine2: Yup.string().nullable(),
-  city: Yup.string().required("City is required"),
-  postalCode: postalCodeValidator,
-  region: Yup.string().when("country", {
-    is: country => ["US", "CA"].includes(country),
-    then: Yup.string().required("State is required"),
-    otherwise: Yup.string(),
-  }),
-  country: Yup.string().required("Country is required"),
-}
-
 const VALIDATION_SCHEMA = Yup.object().shape({
   fulfillmentType: Yup.string().oneOf([
     FulfillmentType.PICKUP,
@@ -604,16 +606,3 @@ const VALIDATION_SCHEMA = Yup.object().shape({
       then: schema => schema.shape(ADDRESS_VALIDATION_SHAPE),
     }),
 })
-
-// export const FulfillmentDetailsForm = withFormik<Props, FulfillmentValues>({
-//   mapPropsToValues: props => props.initialValues,
-//   validationSchema: VALIDATION_SCHEMA,
-//   handleSubmit: values => {
-//     if (shouldVerifyAddressOnSubmit(values)) {
-//       setVerifyAddressNow(true)
-//       return
-//     } else {
-//       return props.onSubmit(values, helpers)
-//     }
-//   },
-// })(FulfillmentDetailsFormLayout)

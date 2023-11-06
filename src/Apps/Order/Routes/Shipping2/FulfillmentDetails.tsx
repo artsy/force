@@ -64,7 +64,7 @@ export interface ShipValues {
 
 export type FulfillmentValues = ShipValues | PickupValues
 
-export interface FulfillmentDetailsFormProps {
+export interface FulfillmentDetailsProps {
   onSubmit: (
     values: FulfillmentValues,
     formikHelpers?: FormikHelpers<FulfillmentValues>
@@ -74,7 +74,7 @@ export interface FulfillmentDetailsFormProps {
   order: FulfillmentDetailsForm_order$data
 }
 
-export const FulfillmentDetails: FC<FulfillmentDetailsFormProps> = props => {
+export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
   const shippingContext = useShippingContext()
 
   const addressVerificationUSEnabled = !!useFeatureFlag(
