@@ -1,4 +1,4 @@
-import { Checkbox, Column, GridColumns, Text } from "@artsy/palette"
+import { Checkbox, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { FC } from "react"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { MEDIUM_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
@@ -49,9 +49,11 @@ export const Medium: FC = () => {
 
   return (
     <>
-      <Text variant="sm-display" mb={3}>
+      <Text variant="sm-display" pb={1}>
         Medium
       </Text>
+
+      <Spacer y={2} />
 
       <GridColumns>
         <ShowMore expanded={hasBelowTheFoldMediumFilter}>
