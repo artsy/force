@@ -37,13 +37,13 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
     owner: {
       type: OwnerType.artist,
       id: artist.internalID,
-      name: artist.name!,
+      name: artist.name ?? "Unknown",
       slug: artist.slug,
     },
     defaultCriteria: {
       artistIDs: [
         {
-          displayValue: artist.name!,
+          displayValue: artist.name ?? "Unknown",
           value: artist.internalID,
         },
       ],
@@ -71,9 +71,7 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
         <BaseArtworkFilter
           relay={relay}
           viewer={artist}
-          Filters={
-            <ArtistArtworkFilters relayEnvironment={relay.environment} />
-          }
+          Filters={<ArtistArtworkFilters />}
           relayVariables={{
             aggregations: ["TOTAL"],
           }}
