@@ -3,7 +3,6 @@ import {
   usePrevious,
   RadioGroup,
   BorderedRadio,
-  Collapse,
   Spacer,
   GridColumns,
   Column,
@@ -44,6 +43,7 @@ import { compact, pick } from "lodash"
 import { useEffect, useCallback } from "react"
 import { ADDRESS_VALIDATION_SHAPE } from "Apps/Order/Utils/shippingUtils"
 import { Shipping2_me$data } from "__generated__/Shipping2_me.graphql"
+import { Collapse } from "Apps/Order/Components/Collapse"
 
 export interface FulfillmentDetailsFormProps {
   // TODO: ideally we don't need to thread shipping2_me through here but that requires
