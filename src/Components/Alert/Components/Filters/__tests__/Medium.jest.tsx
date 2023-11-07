@@ -4,37 +4,50 @@ import {
   useAlertContext,
 } from "Components/Alert/Hooks/useAlertContext"
 import { Medium } from "Components/Alert/Components/Filters/Medium"
+import {
+  ArtworkFilterContextProvider,
+  useArtworkFilterContext,
+} from "Components/ArtworkFilter/ArtworkFilterContext"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
 describe("MediumFilter", () => {
+  let filterContext
   let alertContext
 
   const MediumFilterTestComponent = () => {
+    filterContext = useArtworkFilterContext()
     alertContext = useAlertContext()
 
     return <Medium />
   }
 
-  const getWrapper = (initialCriteria = {}) => {
+  const getWrapper = (contextProps = {}, initialCriteria = {}) => {
     return mount(
-      <AlertProvider initialCriteria={initialCriteria}>
-        <MediumFilterTestComponent />
-      </AlertProvider>
+      <ArtworkFilterContextProvider {...contextProps}>
+        <AlertProvider initialCriteria={initialCriteria}>
+          <MediumFilterTestComponent />
+        </AlertProvider>
+      </ArtworkFilterContextProvider>
     )
   }
 
-  it("only shows custom mediums if aggregations passed to context", () => {
+  it("displays all mediums", () => {
     const wrapper = getWrapper()
+
+    expect(wrapper.find("Checkbox").length).toBe(14)
 
     expect(wrapper.html()).toContain("Painting")
   })
 
-  it("shows a maximum of six mediums when not expanded.", () => {
+  it("selects mediums and only updates alert context", () => {
     const wrapper = getWrapper()
 
-    expect(wrapper.find("Checkbox").length).toBe(6)
+    wrapper.find("Checkbox").first().simulate("click")
+
+    expect(alertContext.state.criteria.additionalGeneIDs).toEqual(["painting"])
+    expect(filterContext.filters.additionalGeneIDs).toEqual([])
   })
 })
