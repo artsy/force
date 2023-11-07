@@ -21,7 +21,7 @@ const ArticleChannelRelatedArticles: FC<ArticleChannelRelatedArticlesProps> = ({
   return (
     <>
       <Text variant="lg-display" mb={4}>
-        More From {article.byline}
+        More From {article.channel?.name || article.byline}
       </Text>
 
       <Shelf alignItems="flex-start">
@@ -44,6 +44,9 @@ export const ArticleChannelRelatedArticlesFragmentContainer = createFragmentCont
     article: graphql`
       fragment ArticleChannelRelatedArticles_article on Article {
         byline
+        channel {
+          name
+        }
         channelArticles {
           internalID
           ...CellArticle_article
