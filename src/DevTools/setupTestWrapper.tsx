@@ -9,7 +9,10 @@ import {
   MockEnvironment,
 } from "relay-test-utils"
 import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
-import { expectAndHandleOperationWithEnv } from "./mockRelayExpectations"
+import {
+  mockResolveMostRecentOperationWithEnv,
+  mockRejectMostRecentOperationWithEnv,
+} from "./mockRelayOperations"
 
 type SetupTestWrapper<T extends OperationType> = {
   Component: React.ComponentType<T["response"]>
@@ -17,14 +20,6 @@ type SetupTestWrapper<T extends OperationType> = {
   variables?: T["variables"]
 }
 
-type ExpectAndHandleRelayOperation = typeof expectAndHandleOperationWithEnv
-type ExpectAndHandleOperation = (
-  config: Parameters<ExpectAndHandleRelayOperation>[1]
-) => ReturnType<ExpectAndHandleRelayOperation>
-
-const buildExpectAndHandleOperation = (env: MockEnvironment) => (
-  config: Parameters<ExpectAndHandleRelayOperation>[1]
-) => expectAndHandleOperationWithEnv(env, config)
 /**
  * Creates a wrapper for testing Relay components using the `relay-test-utils`
  * package, which will provide automatic fixture data for GraphQL queries.
@@ -71,18 +66,17 @@ const buildExpectAndHandleOperation = (env: MockEnvironment) => (
       description: "Hello world!"
     })
   })
+  expect(screen.queryByText("Hello world")).toBeInTheDocument()
 
   // Manually resolve pending mutations:
-  expect(screen.queryByText("Hello world")).toBeInTheDocument()
   userEvent.click(screen.getByText("Click me"))
 
-  await expectAndHandleOperation({
-    name: "clickIncrementMutation",
-    mockResolvers: {
-      ClickMetrics: () => {count: 42}
-    }
+  const clickCountOperation = await mockResolveMostRecentOperation({
+    ClickMetrics: () => {count: 42}
   })
-  await waitFor(() => { expect(screen.queryByText("42")).toBeInTheDocument() })
+  
+  expect(clickCountOperation.name).toBe("ClickMetricsMutation")
+  await waitFor(() => expect(screen.queryByText("42 clicks")).toBeInTheDocument())
  */
 /**
  * Creates a React Testing Library-based wrapper for testing Relay components
@@ -99,7 +93,12 @@ type RTLRenderResult = RenderResult<
 >
 type RenderWithRelay = RTLRenderResult & {
   env: MockEnvironment
-  expectAndHandleOperation: ExpectAndHandleOperation
+  mockResolveMostRecentOperation: ReturnType<
+    typeof mockResolveMostRecentOperationWithEnv
+  >
+  mockRejectMostRecentOperation: ReturnType<
+    typeof mockRejectMostRecentOperationWithEnv
+  >
 }
 export const setupTestWrapperTL = <T extends OperationType>({
   Component,
@@ -136,7 +135,10 @@ export const setupTestWrapperTL = <T extends OperationType>({
     return {
       ...view,
       env,
-      expectAndHandleOperation: buildExpectAndHandleOperation(env),
+      mockResolveMostRecentOperation: mockResolveMostRecentOperationWithEnv(
+        env
+      ),
+      mockRejectMostRecentOperation: mockRejectMostRecentOperationWithEnv(env),
     }
   }
 
