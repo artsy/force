@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d0291634c6ad02ea91bf973c04fcfbfc>>
+ * @generated SignedSource<<03391386a306c8dd376f3d5c250aba26>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -94,6 +94,25 @@ return {
         "plural": false,
         "selections": [
           (v2/*: any*/),
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "Channel",
+            "kind": "LinkedField",
+            "name": "channel",
+            "plural": false,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "name",
+                "storageKey": null
+              },
+              (v3/*: any*/)
+            ],
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -223,12 +242,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a7fef10af472812fe2d9b5dc94de6a91",
+    "cacheID": "e33a2d7a28c5b621dadb13059f984dc1",
     "id": null,
     "metadata": {},
     "name": "ArticleChannelRelatedArticlesQuery",
     "operationKind": "query",
-    "text": "query ArticleChannelRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleChannelRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleChannelRelatedArticles_article on Article {\n  byline\n  channelArticles {\n    internalID\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
+    "text": "query ArticleChannelRelatedArticlesQuery(\n  $id: String!\n) {\n  article(id: $id) {\n    ...ArticleChannelRelatedArticles_article\n    id\n  }\n}\n\nfragment ArticleChannelRelatedArticles_article on Article {\n  byline\n  channel {\n    name\n    id\n  }\n  channelArticles {\n    internalID\n    ...CellArticle_article\n    id\n  }\n}\n\nfragment CellArticle_article on Article {\n  vertical\n  title\n  thumbnailTitle\n  byline\n  href\n  publishedAt(format: \"MMM D, YYYY\")\n  thumbnailImage {\n    cropped(width: 445, height: 334) {\n      width\n      height\n      src\n      srcSet\n    }\n  }\n}\n"
   }
 };
 })();
