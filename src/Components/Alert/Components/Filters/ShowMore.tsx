@@ -30,7 +30,7 @@ export const ShowMore: React.FC<ShowMoreProps> = ({
             textAlign="left"
             onClick={() => setExpanded(visibility => !visibility)}
           >
-            <Text>{isExpanded ? "Hide" : "Show more"}</Text>
+            {!expanded && <Text>{isExpanded ? "Hide" : "Show more"}</Text>}
           </Clickable>
         </Column>
       )}
