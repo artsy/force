@@ -146,7 +146,7 @@ export const SettingsPaymentsMethodForm: FC<SettingsPaymentsMethodFormProps> = (
             }
           >
             <Form>
-              <GridColumns gridRowGap={2}>
+              <GridColumns>
                 <Column span={12}>
                   <CreditCardInput required />
                 </Column>
