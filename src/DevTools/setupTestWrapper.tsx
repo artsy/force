@@ -128,20 +128,17 @@ export const setupTestWrapperTL = <T extends OperationType>({
     })
 
     const mockResolveLastOperation = (mockResolvers: MockResolvers) => {
-      let operation
+      const operation = env.mock.getMostRecentOperation()
 
       act(() => {
-        env.mock.resolveMostRecentOperation(relayOperation => {
-          operation = relayOperation
-          return MockPayloadGenerator.generate(operation, mockResolvers)
-        })
+        env.mock.resolve(
+          operation,
+          MockPayloadGenerator.generate(operation, mockResolvers)
+        )
       })
 
-      // Cast here to get around use-before-assign rule
-      const _operation = operation as OperationDescriptor
-
-      const operationName = _operation?.request.node.operation.name
-      const operationVariables = _operation?.request.variables
+      const operationName = operation?.request.node.operation.name
+      const operationVariables = operation?.request.variables
 
       return { operation, operationName, operationVariables }
     }
