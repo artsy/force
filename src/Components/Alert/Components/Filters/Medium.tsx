@@ -2,19 +2,10 @@ import { Checkbox, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { FC } from "react"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { MEDIUM_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
-import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
-import { sortResults } from "Components/ArtworkFilter/ArtworkFilters/Utils/sortResults"
-import { intersection } from "lodash"
-import {
-  INITIAL_ITEMS_TO_SHOW,
-  ShowMore,
-} from "Components/Alert/Components/Filters/ShowMore"
+import { ShowMore } from "Components/Alert/Components/Filters/ShowMore"
 
 export const Medium: FC = () => {
   const { state, dispatch } = useAlertContext()
-  const filters = useArtworkFilterContext()
-
-  const additionalGeneIDs = state.criteria.additionalGeneIDs || []
 
   const toggleSelection = (selected, name) => {
     let updatedValues = state.criteria.additionalGeneIDs || []
@@ -31,22 +22,6 @@ export const Medium: FC = () => {
     })
   }
 
-  const mediums = filters.aggregations?.find(agg => agg.slice === "MEDIUM") || {
-    slice: "",
-    counts: [],
-  }
-
-  const allowedMediums = mediums?.counts?.length
-    ? mediums.counts
-    : MEDIUM_OPTIONS
-
-  const intersected = intersection(
-    additionalGeneIDs,
-    allowedMediums.slice(INITIAL_ITEMS_TO_SHOW).map(({ value }) => value)
-  )
-  const hasBelowTheFoldMediumFilter = intersected.length > 0
-  const resultsSorted = sortResults(additionalGeneIDs, allowedMediums)
-
   return (
     <>
       <Text variant="sm-display" pb={1}>
@@ -56,8 +31,8 @@ export const Medium: FC = () => {
       <Spacer y={2} />
 
       <GridColumns>
-        <ShowMore expanded={hasBelowTheFoldMediumFilter}>
-          {resultsSorted.map(({ name, value }, index) => {
+        <ShowMore expanded={false}>
+          {MEDIUM_OPTIONS.map(({ name, value }, index) => {
             return (
               <Column span={6} key={index}>
                 <Checkbox
