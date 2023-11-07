@@ -11,19 +11,15 @@ import { MaterialsFilter } from "Components/ArtworkFilter/ArtworkFilters/Materia
 import { PartnersFilter } from "Components/ArtworkFilter/ArtworkFilters/PartnersFilter"
 import { ArtistsFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistsFilter"
 import { KeywordFilter } from "Components/ArtworkFilter/ArtworkFilters/KeywordFilter"
-import type RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { useSystemContext } from "System/useSystemContext"
 import { Join, Spacer } from "@artsy/palette"
 import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
 import { ArtistSeriesFilter } from "Components/ArtworkFilter/ArtworkFilters/ArtistSeriesFilter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
-interface ArtistArtworkFiltersProps {
-  relayEnvironment?: RelayModernEnvironment
-}
+interface ArtistArtworkFiltersProps {}
 
 export const ArtistArtworkFilters: React.FC<ArtistArtworkFiltersProps> = props => {
-  const { relayEnvironment } = props
   const { user } = useSystemContext()
   const isArtistSeriesFilterEnabled = useFeatureFlag(
     "onyx_enable-artist-series-filter"
@@ -33,7 +29,7 @@ export const ArtistArtworkFilters: React.FC<ArtistArtworkFiltersProps> = props =
     <Join separator={<Spacer y={4} />}>
       <KeywordFilter />
       {isArtistSeriesFilterEnabled && <ArtistSeriesFilter expanded />}
-      <ArtistsFilter relayEnvironment={relayEnvironment} user={user} expanded />
+      <ArtistsFilter user={user} expanded />
       <ProgressiveOnboardingAlertSelectFilter>
         <AttributionClassFilter expanded />
       </ProgressiveOnboardingAlertSelectFilter>

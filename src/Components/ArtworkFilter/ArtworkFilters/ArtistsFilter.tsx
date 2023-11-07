@@ -15,7 +15,6 @@ import { useSystemContext } from "System/useSystemContext"
 
 export interface ArtistsFilterProps {
   expanded?: boolean
-  relayEnvironment?: any
   fairID?: string
   user?: User
 }
@@ -32,18 +31,13 @@ const ArtistItem: React.FC<
   name,
   followedArtistSlugs,
   isFollowedArtistCheckboxSelected,
-  ...checkboxProps
+  ...rest
 }) => {
   const { setFilter } = useArtworkFilterContext()
   const { artistIDs = [] } = useCurrentlySelectedFilters()
 
-  const toggleArtistSelection = (selected, slug) => {
+  const toggleArtistSelection = (selected: boolean, slug: string) => {
     let updatedValues = artistIDs
-
-    // Move followed artists to the explicit `artistIDs` list
-    if (isFollowedArtistCheckboxSelected) {
-      updatedValues = [...artistIDs, ...followedArtistSlugs]
-    }
 
     if (selected) {
       updatedValues = [...updatedValues, slug]
@@ -59,7 +53,7 @@ const ArtistItem: React.FC<
 
   return (
     <Checkbox
-      {...checkboxProps}
+      {...rest}
       selected={
         artistIDs.includes(slug) ||
         (isFollowedArtistCheckboxSelected && isFollowedArtist)
@@ -67,8 +61,6 @@ const ArtistItem: React.FC<
       onSelect={selected => {
         return toggleArtistSelection(selected, slug)
       }}
-      // TODO: Should not have external margin
-      my={1}
     >
       {name}
     </Checkbox>
@@ -77,13 +69,16 @@ const ArtistItem: React.FC<
 
 export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
   const { relayEnvironment, user } = useSystemContext()
+
   const {
     aggregations,
     followedArtists = [],
     setFollowedArtists,
     ...filterContext
   } = useArtworkFilterContext()
+
   const artists = aggregations?.find(agg => agg.slice === "ARTIST")
+
   const {
     artistIDs = [],
     includeArtworksByFollowedArtists,
@@ -99,7 +94,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
   useEffect(() => {
     if (artists?.counts && relayEnvironment && user) {
       fetchFollowedArtists({ relayEnvironment, fairID }).then(data => {
-        setFollowedArtists!(data)
+        setFollowedArtists?.(data)
       })
     }
 
@@ -119,7 +114,7 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
 
   return (
     <FilterExpandable label={label} expanded={hasSelection || expanded}>
-      <Flex flexDirection="column">
+      <Flex flexDirection="column" gap={2} mt={1}>
         <Checkbox
           disabled={!followedArtistArtworkCount}
           selected={isFollowedArtistCheckboxSelected}
@@ -127,12 +122,12 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
             filterContext.setFilter("includeArtworksByFollowedArtists", value)
             filterContext.setFilter("artistIDs", [])
           }}
-          my={1}
         >
-          Artists You Follow ({followedArtistArtworkCount})
+          Artists You Follow
         </Checkbox>
 
-        <ShowMore>
+        {/* TODO: Remove external margin override */}
+        <ShowMore mt={0}>
           {artistsSorted.map(({ value: slug, name }, index) => {
             return (
               <ArtistItem
@@ -143,7 +138,10 @@ export const ArtistsFilter: FC<ArtistsFilterProps> = ({ expanded, fairID }) => {
                 isFollowedArtistCheckboxSelected={
                   isFollowedArtistCheckboxSelected ?? false
                 }
-                my={1}
+                disabled={
+                  isFollowedArtistCheckboxSelected &&
+                  followedArtistSlugs.includes(slug)
+                }
               />
             )
           })}

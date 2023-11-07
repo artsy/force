@@ -2,13 +2,13 @@ import { Slice } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { SavedSearchFrequency } from "./types"
 
 export const shouldExtractValueNamesFromAggregation = [
+  "additionalGeneIDs",
+  "artistIDs",
+  "artistNationalities",
+  "artistSeriesIDs",
   "locationCities",
   "materialsTerms",
-  "additionalGeneIDs",
   "partnerIDs",
-  "artistIDs",
-  "artistSeriesIDs",
-  "artistNationalities",
 ]
 
 export const aggregationNameFromFilter: Record<string, Slice> = {
@@ -22,25 +22,26 @@ export const aggregationNameFromFilter: Record<string, Slice> = {
 }
 
 export const allowedSearchCriteriaKeys = [
+  "acquireable",
+  "additionalGeneIDs",
   "artistID",
   "artistIDs",
+  "artistNationalities",
   "artistSeriesIDs",
-  "locationCities",
-  "colors",
-  "partnerIDs",
-  "additionalGeneIDs",
-  "attributionClass",
-  "majorPeriods",
-  "acquireable",
   "atAuction",
+  "attributionClass",
+  "colors",
+  "height",
+  "includeArtworksByFollowedArtists",
   "inquireableOnly",
-  "offerable",
+  "locationCities",
+  "majorPeriods",
   "materialsTerms",
+  "offerable",
+  "partnerIDs",
   "priceRange",
   "sizes",
-  "height",
   "width",
-  "artistNationalities",
 ]
 
 export const DEFAULT_FREQUENCY: SavedSearchFrequency = "daily"

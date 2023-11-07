@@ -6,7 +6,6 @@ import {
   Clickable,
   Flex,
   Join,
-  Separator,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -29,6 +28,7 @@ export interface AlertFormikValues {
 
 export const Details: FC = () => {
   const { onComplete, dispatch, goToFilters, state } = useAlertContext()
+
   const newAlertModalFilteresEnabled = useFeatureFlag(
     "onyx_artwork_alert_modal_v2_filters"
   )
@@ -46,8 +46,9 @@ export const Details: FC = () => {
 
         return (
           <Flex flexDirection="column" p={2}>
-            <Join separator={<Spacer y={2} />}>
+            <Join separator={<Spacer y={4} />}>
               <Text variant="lg">Create Alert</Text>
+
               <AlertNameInputQueryRenderer />
 
               <Box>
@@ -57,24 +58,27 @@ export const Details: FC = () => {
                 <Flex flexWrap="wrap" gap={1}>
                   <CriteriaPillsQueryRenderer />
                 </Flex>
+              </Box>
 
-                {newAlertModalFilteresEnabled ? (
-                  <Clickable onClick={transitionToFilters} width="100%">
-                    <Text variant="sm-display">Add Filters</Text>
-                    <Flex justifyContent="space-between">
-                      <Text variant="sm-display" color="black60">
+              {newAlertModalFilteresEnabled ? (
+                <Clickable onClick={transitionToFilters} width="100%">
+                  <Flex justifyContent="space-between" alignItems={"center"}>
+                    <Box>
+                      <Text variant="sm-display">Add Filters:</Text>
+
+                      <Text variant="sm" color="black60">
                         Including Price Range, Rarity, Medium, Size, Color
                       </Text>
-                      <ChevronRightIcon />
-                    </Flex>
-                  </Clickable>
-                ) : (
-                  <PriceRangeFilter expanded={false} />
-                )}
-                <Separator my={2} />
-                <DetailsInput />
-                <Separator my={2} />
-              </Box>
+                    </Box>
+
+                    <ChevronRightIcon />
+                  </Flex>
+                </Clickable>
+              ) : (
+                <PriceRangeFilter expanded={false} />
+              )}
+
+              <DetailsInput />
 
               <Box>
                 <Box display="flex" justifyContent="space-between">
@@ -84,7 +88,9 @@ export const Details: FC = () => {
                     selected={values.email}
                   />
                 </Box>
-                <Spacer y={4} />
+
+                <Spacer y={2} />
+
                 <Box display="flex" justifyContent="space-between">
                   <Text variant="sm-display">Mobile Alerts</Text>
                   <Checkbox
@@ -93,7 +99,6 @@ export const Details: FC = () => {
                   />
                 </Box>
               </Box>
-              <Spacer y={4} />
 
               <Button
                 loading={isSubmitting}

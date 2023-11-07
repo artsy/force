@@ -292,14 +292,7 @@ export const BaseArtworkFilter: React.FC<
 
                         <Spacer y={4} />
 
-                        {Filters ? (
-                          Filters
-                        ) : (
-                          <ArtworkFilters
-                            user={user}
-                            relayEnvironment={relay.environment}
-                          />
-                        )}
+                        {Filters ? Filters : <ArtworkFilters user={user} />}
                       </ArtworkFilterMobileOverlay>
                     )}
                   </ProgressiveOnboardingAlertSelectFilter>
@@ -368,10 +361,7 @@ export const BaseArtworkFilter: React.FC<
                               {Filters ? (
                                 Filters
                               ) : (
-                                <ArtworkFilters
-                                  relayEnvironment={relay.environment}
-                                  user={user}
-                                />
+                                <ArtworkFilters user={user} />
                               )}
                             </Box>
                           </ArtworkFilterMobileOverlay>
@@ -472,14 +462,7 @@ export const BaseArtworkFilter: React.FC<
               <ArtworkFilterSort />
 
               <ArtworkFilterDrawer open={isOpen} onClose={handleClose}>
-                {Filters ? (
-                  Filters
-                ) : (
-                  <ArtworkFilters
-                    user={user}
-                    relayEnvironment={relay.environment}
-                  />
-                )}
+                {Filters ? Filters : <ArtworkFilters user={user} />}
               </ArtworkFilterDrawer>
             </Flex>
 
@@ -522,14 +505,7 @@ export const BaseArtworkFilter: React.FC<
             </Column>
 
             <Column span={3}>
-              {Filters ? (
-                Filters
-              ) : (
-                <ArtworkFilters
-                  user={user}
-                  relayEnvironment={relay.environment}
-                />
-              )}
+              {Filters ? Filters : <ArtworkFilters user={user} />}
             </Column>
 
             <Column
