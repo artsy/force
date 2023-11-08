@@ -30,7 +30,7 @@ const { getWrapper } = setupTestWrapper({
 
 describe("OfferHistoryItem", () => {
   it("shows the current offer", async () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       CommerceOrder: () => order,
     })
 
@@ -41,7 +41,7 @@ describe("OfferHistoryItem", () => {
   })
 
   it("doesn't show the 'show offer history' button if no other offers", async () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       CommerceOrder: () => order,
     })
 
@@ -49,7 +49,7 @@ describe("OfferHistoryItem", () => {
   })
 
   it("does show the 'show offer history' button if there are other offers", async () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       CommerceOrder: () => ({
         ...order,
         offers: { edges: Offers },
@@ -60,7 +60,7 @@ describe("OfferHistoryItem", () => {
   })
 
   it("shows the other offers if you click the button", async () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       CommerceOrder: () => ({
         ...order,
         offers: { edges: Offers },
@@ -85,7 +85,7 @@ describe("OfferHistoryItem", () => {
   })
 
   it("shows right copy if the last submitted offer was from the buyer", async () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       CommerceOrder: () => ({
         ...order,
         lastOffer: {

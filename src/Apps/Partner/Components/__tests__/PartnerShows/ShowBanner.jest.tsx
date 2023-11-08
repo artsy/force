@@ -1,6 +1,6 @@
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
-import { ShowBannerFragmentContainer } from "../../PartnerShows"
+import { ShowBannerFragmentContainer } from "Apps/Partner/Components/PartnerShows"
 
 jest.unmock("react-relay")
 
@@ -29,7 +29,7 @@ const { getWrapper } = setupTestWrapper({
 
 describe("ShowBanner", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Show: () => ({
         name: "Ellen Altfest | Nature",
         href: "/show/white-cube-ellen-altfest-nature",
@@ -79,7 +79,7 @@ describe("ShowBanner", () => {
   ])(
     "renders correct type label(isFairBooth: %s, status: %s)",
     (isFairBooth, status, result) => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Show: () => ({
           isFairBooth,
           status,

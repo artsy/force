@@ -26,7 +26,7 @@ const { getWrapper } = setupTestWrapper<FeatureApp_Test_Query>({
 
 describe("FeatureApp", () => {
   it("renders the correct components", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       OrderedSet: () => ({ itemType: "Artwork" }),
     })
 

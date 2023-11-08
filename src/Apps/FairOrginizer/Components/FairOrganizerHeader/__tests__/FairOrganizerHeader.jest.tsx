@@ -22,7 +22,7 @@ const { getWrapper } = setupTestWrapper({
 
 describe("FairOrganizerHeader", () => {
   it("displays link to the fair page", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         href: "fair/art-paris-2020",
       }),
@@ -33,7 +33,7 @@ describe("FairOrganizerHeader", () => {
   })
 
   it("displays title with organizer name", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       FairOrganizer: () => ({
         name: "Art Paris",
       }),
@@ -42,14 +42,14 @@ describe("FairOrganizerHeader", () => {
   })
 
   it("displays icon, follow button, and info", () => {
-    const wrapper = getWrapper({})
+    const { wrapper } = getWrapper({})
     expect(wrapper.html()).toContain("HeaderIcon")
     expect(wrapper.find("FairOrganizerFollowButton").length).toBe(1)
     expect(wrapper.find("FairOrganizerInfo").length).toBe(1)
   })
 
   it("displays period", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         exhibitionPeriod: "Sep 10 - 19",
       }),
@@ -59,13 +59,13 @@ describe("FairOrganizerHeader", () => {
 
   it("doesn't display timer if event is passed", () => {
     const startAt = DateTime.local().minus({ days: 1 }).toString()
-    const wrapper = getWrapper({ Fair: () => ({ startAt }) })
+    const { wrapper } = getWrapper({ Fair: () => ({ startAt }) })
     expect(wrapper.find("Timer").length).toBe(0)
   })
 
   it("displays timer if event starts in future", () => {
     const startAt = DateTime.local().plus({ days: 1 }).toString()
-    const wrapper = getWrapper({ Fair: () => ({ startAt }) })
+    const { wrapper } = getWrapper({ Fair: () => ({ startAt }) })
     expect(wrapper.find("Timer").length).toBe(1)
     expect(wrapper.text()).toContain("Opens in:")
   })

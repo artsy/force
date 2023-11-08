@@ -25,7 +25,7 @@ const { getWrapper } = setupTestWrapper<ShowContextualLink_Test_Query>({
 describe("ShowContextualLink", () => {
   describe("is a fair booth", () => {
     it("renders the fair link", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Show: () => ({ isFairBooth: true }),
         Fair: () => ({ name: "Catty Fair", isActive: true }),
       })
@@ -34,7 +34,7 @@ describe("ShowContextualLink", () => {
     })
 
     it("hides link if show.isActive = false", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Show: () => ({ isFairBooth: true }),
         Fair: () => ({ name: "Catty Fair", isActive: false }),
       })
@@ -45,7 +45,7 @@ describe("ShowContextualLink", () => {
 
   describe("when not a fair booth", () => {
     it("renders the partner link when the partner is linkable", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Show: () => ({ isFairBooth: false }),
         Partner: () => ({
           name: "Catty Partner",
@@ -62,7 +62,7 @@ describe("ShowContextualLink", () => {
     })
 
     it("does not render the partner link when the partner is not linkable", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Show: () => ({ isFairBooth: false }),
         Partner: () => ({
           name: "Catty Partner",

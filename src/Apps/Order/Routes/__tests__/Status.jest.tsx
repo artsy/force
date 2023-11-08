@@ -66,7 +66,7 @@ describe("Status", () => {
 
   describe("offers", () => {
     it("should should have a title containing status", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
 
@@ -75,7 +75,7 @@ describe("Status", () => {
 
     describe("submitted", () => {
       it("should say order submitted and have message box", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => testOrder,
         })
         const page = new StatusTestPage(wrapper)
@@ -98,7 +98,7 @@ describe("Status", () => {
 
       it("should say order submitted and have message to continue to inbox on Eigen", async () => {
         isEigen = true
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => testOrder,
         })
         const page = new StatusTestPage(wrapper)
@@ -118,7 +118,7 @@ describe("Status", () => {
       })
 
       it("should not show a note section if none exists", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () =>
             produce(testOrder, order => {
               // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
@@ -133,7 +133,7 @@ describe("Status", () => {
 
     describe("in review", () => {
       it("should say order submitted and have message box", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...testOrder,
             state: "IN_REVIEW",
@@ -160,7 +160,7 @@ describe("Status", () => {
 
       it("should say order submitted and have message to continue to inbox on Eigen", async () => {
         isEigen = true
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...testOrder,
             state: "IN_REVIEW",
@@ -186,7 +186,7 @@ describe("Status", () => {
 
     describe("approved", () => {
       it("should say confirmed and have message box", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...OfferOrderWithShippingDetails,
             displayState: "APPROVED",
@@ -201,7 +201,7 @@ describe("Status", () => {
 
     describe("processing", () => {
       it("should say confirmed and have message box", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...OfferOrderWithShippingDetails,
             displayState: "PROCESSING",
@@ -217,7 +217,7 @@ describe("Status", () => {
     describe("processing approval", () => {
       describe("with wire payment method", () => {
         it("should say 'Thank you, your offer has been accepted' and have message box", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...OfferOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -233,7 +233,7 @@ describe("Status", () => {
         })
 
         it("renders Message with alert variant and 'please proceed' message", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...OfferOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -251,7 +251,7 @@ describe("Status", () => {
         })
 
         it("renders the alert Message with correct messages", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...OfferOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -272,7 +272,7 @@ describe("Status", () => {
         })
 
         it("renders content for Artsy's bank details", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...OfferOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -295,7 +295,7 @@ describe("Status", () => {
 
       describe("with non-wire payment methods", () => {
         it("should say 'Offer accepted. Payment processing.' and have message box", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...OfferOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -309,7 +309,7 @@ describe("Status", () => {
         })
 
         it("renders description", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...OfferOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -324,7 +324,7 @@ describe("Status", () => {
         })
 
         it("does not render an alert message", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...OfferOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -341,7 +341,7 @@ describe("Status", () => {
 
     describe("in transit", () => {
       it("should say confirmed, have message box and the tracking URL", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...OfferOrderWithShippingDetails,
             displayState: "IN_TRANSIT",
@@ -358,7 +358,7 @@ describe("Status", () => {
       })
 
       it("should display non linked tracking number if no Url", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...ArtaShippedWithTrackingIdNoTrackingUrl,
             displayState: "IN_TRANSIT",
@@ -373,7 +373,7 @@ describe("Status", () => {
       })
 
       it("should display note about shipping when tracking is not available", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...ArtaShippedWithNoTrackingIdNoTrackingUrl,
             ...CreditCardPaymentDetails,
@@ -390,7 +390,7 @@ describe("Status", () => {
 
     describe("fulfilled (ship)", () => {
       it("should say order has shipped and have message box", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...OfferOrderWithShippingDetails,
             displayState: "FULFILLED",
@@ -406,7 +406,7 @@ describe("Status", () => {
 
     describe("fulfilled (pickup)", () => {
       it("should say order has been picked up and NOT have message box", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...OfferOrderPickup,
             ...CreditCardPaymentDetails,
@@ -422,7 +422,7 @@ describe("Status", () => {
 
     describe("buyer rejected", () => {
       it("should say that offer was declined", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...OfferOrderPickup,
             ...CreditCardPaymentDetails,
@@ -439,7 +439,7 @@ describe("Status", () => {
 
     describe("seller rejected", () => {
       it("should say that offer was declined", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...OfferOrderPickup,
             ...CreditCardPaymentDetails,
@@ -456,7 +456,7 @@ describe("Status", () => {
 
     describe("seller lapsed", () => {
       it("should say that offer expired", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...OfferOrderPickup,
             ...CreditCardPaymentDetails,
@@ -473,7 +473,7 @@ describe("Status", () => {
 
     describe("buyer lapsed", () => {
       it("should say that offer expired", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...OfferOrderPickup,
             ...CreditCardPaymentDetails,
@@ -490,7 +490,7 @@ describe("Status", () => {
 
     describe("refunded", () => {
       it("should say that order was canceled", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...OfferOrderPickup,
             ...CreditCardPaymentDetails,
@@ -506,7 +506,7 @@ describe("Status", () => {
 
     describe("canceled after accept", () => {
       it("should say that order was canceled", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...OfferOrderPickup,
             ...CreditCardPaymentDetails,
@@ -525,7 +525,7 @@ describe("Status", () => {
 
   describe("orders", () => {
     it("should should have a title containing status", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => BuyOrderWithShippingDetails,
       })
 
@@ -534,7 +534,7 @@ describe("Status", () => {
 
     describe("submitted", () => {
       it("should say order submitted and have message box", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...BuyOrderWithShippingDetails,
             ...CreditCardPaymentDetails,
@@ -555,7 +555,7 @@ describe("Status", () => {
 
     describe("approved", () => {
       it("should say confirmed", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...BuyOrderWithShippingDetails,
             ...CreditCardPaymentDetails,
@@ -568,7 +568,7 @@ describe("Status", () => {
       })
 
       it("should render correct title for Private Sale orders", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...BuyOrderWithShippingDetails,
             ...CreditCardPaymentDetails,
@@ -584,7 +584,7 @@ describe("Status", () => {
       })
 
       it("should render correct description for Private Sale orders", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...BuyOrderWithShippingDetails,
             ...CreditCardPaymentDetails,
@@ -600,7 +600,7 @@ describe("Status", () => {
       })
 
       it("should render help email in description for Private Sale orders", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...BuyOrderWithShippingDetails,
             ...CreditCardPaymentDetails,
@@ -617,7 +617,7 @@ describe("Status", () => {
     describe("processing approval", () => {
       describe("with wire payment method", () => {
         it("should render correct title and have message box", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -633,7 +633,7 @@ describe("Status", () => {
         })
 
         it("should render correct title for wire private sale orders", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -649,7 +649,7 @@ describe("Status", () => {
         })
 
         it("renders Message with alert variant and 'please proceed' message", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -667,7 +667,7 @@ describe("Status", () => {
         })
 
         it("should render correct instruction for wire private sale orders", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -681,7 +681,7 @@ describe("Status", () => {
         })
 
         it("should not render any description for wire private sale orders", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -695,7 +695,7 @@ describe("Status", () => {
         })
 
         it("renders the alert Message with correct messages", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -716,7 +716,7 @@ describe("Status", () => {
         })
 
         it("renders correct Artsy bank details for orders in USD", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -738,7 +738,7 @@ describe("Status", () => {
         })
 
         it("renders correct Artsy bank details for orders in GBP", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -762,7 +762,7 @@ describe("Status", () => {
         })
 
         it("renders correct Artsy bank details for orders in EUR", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -787,7 +787,7 @@ describe("Status", () => {
 
       describe("with non-wire payment methods", () => {
         it("should say 'Your order is confirmed. Payment processing.' and have message box", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -803,7 +803,7 @@ describe("Status", () => {
         })
 
         it("should render correct title for private sale orders", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -819,7 +819,7 @@ describe("Status", () => {
         })
 
         it("renders description", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -834,7 +834,7 @@ describe("Status", () => {
         })
 
         it("should render correct description for private sale orders", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -851,7 +851,7 @@ describe("Status", () => {
         })
 
         it("does not render an alert message", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => ({
               ...BuyOrderWithShippingDetails,
               displayState: "PROCESSING_APPROVAL",
@@ -868,7 +868,7 @@ describe("Status", () => {
 
     describe("fulfilled (ship)", () => {
       it("should say order has shipped and have message box", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...BuyOrderWithShippingDetails,
             ...CreditCardPaymentDetails,
@@ -884,7 +884,7 @@ describe("Status", () => {
 
     describe("fulfilled (pickup)", () => {
       it("should say order has been picked up and NOT have message box", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...BuyOrderPickup,
             ...CreditCardPaymentDetails,
@@ -900,7 +900,7 @@ describe("Status", () => {
 
     describe("canceled (ship)", () => {
       it("should say that order was canceled", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...BuyOrderWithShippingDetails,
             ...CreditCardPaymentDetails,
@@ -916,7 +916,7 @@ describe("Status", () => {
 
     describe("canceled (pickup)", () => {
       it("should say that order was canceled", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...BuyOrderPickup,
             ...CreditCardPaymentDetails,
@@ -932,7 +932,7 @@ describe("Status", () => {
 
     describe("refunded", () => {
       it("should say that order was canceled", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...BuyOrderPickup,
             ...CreditCardPaymentDetails,

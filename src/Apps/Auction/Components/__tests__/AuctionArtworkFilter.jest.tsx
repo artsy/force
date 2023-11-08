@@ -47,7 +47,7 @@ describe("AuctionArtworkFilter", () => {
   })
 
   it("renders correct components", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(wrapper.find("ArtworkGridContextProvider")).toHaveLength(1)
     expect(
       (wrapper.find("ArtworkGridContextProvider").props() as any)
@@ -57,7 +57,7 @@ describe("AuctionArtworkFilter", () => {
   })
 
   it("displays correct default sort", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(
       (wrapper.find("ArtworkFilter").props() as any).sortOptions[0]
     ).toEqual({
@@ -67,7 +67,7 @@ describe("AuctionArtworkFilter", () => {
   })
 
   it("passes in correct slug from router into relayRefetchInputVariables", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(
       (wrapper.find("ArtworkFilter").props() as any).relayRefetchInputVariables
     ).toEqual(

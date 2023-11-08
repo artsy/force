@@ -20,7 +20,7 @@ describe("SettingsAuctionsRoute", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Me: () => {},
     })
 
@@ -28,7 +28,7 @@ describe("SettingsAuctionsRoute", () => {
   })
 
   it("renders 3 correct children", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Me: () => {},
     })
 

@@ -19,7 +19,7 @@ describe("ArtworkTopContextBar", () => {
   })
 
   it("if no in show or auction or fair, render nothing", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => ({
         context: null,
       }),
@@ -30,7 +30,7 @@ describe("ArtworkTopContextBar", () => {
 
   describe("sale", () => {
     it("does not render if sale is invalid", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({
           sale: null,
         }),
@@ -39,7 +39,7 @@ describe("ArtworkTopContextBar", () => {
     })
 
     it("renders a sale banner", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({
           context: {
             __typename: "Sale",
@@ -66,7 +66,7 @@ describe("ArtworkTopContextBar", () => {
     })
 
     it("does not render partnerName if benefit or gallery auction", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({
           context: {
             __typename: "Sale",
@@ -87,7 +87,7 @@ describe("ArtworkTopContextBar", () => {
 
     describe("the auction registration countdown", () => {
       it("does not render by default", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           Artwork: () => ({
             context: {
               __typename: "Sale",
@@ -114,7 +114,7 @@ describe("ArtworkTopContextBar", () => {
         const registrationEndsAt = DateTime.local()
           .plus({ hours: 1 })
           .toString()
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           Artwork: () => ({
             context: {
               __typename: "Sale",
@@ -141,7 +141,7 @@ describe("ArtworkTopContextBar", () => {
         const registrationEndsAt = DateTime.local()
           .plus({ hours: 1 })
           .toString()
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           Artwork: () => ({
             context: {
               __typename: "Sale",
@@ -168,7 +168,7 @@ describe("ArtworkTopContextBar", () => {
 
   describe("fair", () => {
     it("renders a fair banner", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({
           context: {
             __typename: "Fair",
@@ -192,7 +192,7 @@ describe("ArtworkTopContextBar", () => {
 
   describe("show", () => {
     it("renders a show banner with default status", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({
           context: {
             __typename: "Show",
@@ -215,7 +215,7 @@ describe("ArtworkTopContextBar", () => {
     })
 
     it("renders upcoming status", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({
           context: {
             __typename: "Show",
@@ -228,7 +228,7 @@ describe("ArtworkTopContextBar", () => {
     })
 
     it("renders closed status", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({
           context: {
             __typename: "Show",

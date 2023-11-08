@@ -1,5 +1,5 @@
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { AuctionDetailsFragmentContainer } from "../AuctionDetails"
+import { AuctionDetailsFragmentContainer } from "Apps/Auction/Components/AuctionDetails/AuctionDetails"
 import { AuctionDetailsTestQuery } from "__generated__/AuctionDetailsTestQuery.graphql"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -36,7 +36,7 @@ describe("AuctionDetails", () => {
   })
 
   it("shows correct title", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         name: "Auction Name",
       }),
@@ -45,7 +45,7 @@ describe("AuctionDetails", () => {
   })
 
   it("shows register button", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         name: "Auction Name",
         isRegistrationClosed: false,
@@ -55,7 +55,7 @@ describe("AuctionDetails", () => {
   })
 
   it.skip("shows formatted start time", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         auctionsDetailFormattedStartDateTime: "Mar 22, 2022 • 9:22pm GMT",
       }),
@@ -64,7 +64,7 @@ describe("AuctionDetails", () => {
   })
 
   it("shows add to calendar button", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         isClosed: false,
       }),
@@ -73,7 +73,7 @@ describe("AuctionDetails", () => {
   })
 
   it("shows sale description", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         description: "Auction description",
       }),
@@ -82,7 +82,7 @@ describe("AuctionDetails", () => {
   })
 
   it("shows the sidebar info", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(wrapper.find("AuctionInfoSidebarFragmentContainer").length).toBe(1)
   })
 })

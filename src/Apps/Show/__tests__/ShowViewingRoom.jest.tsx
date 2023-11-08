@@ -41,7 +41,7 @@ describe("ShowViewingRoom", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       ViewingRoom: () => ({
         title: "Example Viewing Room",
         status: "closed",
@@ -59,7 +59,7 @@ describe("ShowViewingRoom", () => {
   })
 
   it("tracks clicks", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       ViewingRoom: () => ({
         internalID: "example-viewing-room-id",
         slug: "example-viewing-room-slug",

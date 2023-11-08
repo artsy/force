@@ -41,7 +41,7 @@ describe("FairOverview", () => {
   })
 
   it("displays the about information", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         about: "This is the about.",
       }),
@@ -51,7 +51,7 @@ describe("FairOverview", () => {
   })
 
   it("displays Read more if about section contains more than 480 symbols", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         about:
           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum bibendum nulla sit amet erat vehicula, ut scelerisque purus interdum. Quisque vel pretium arcu. Phasellus nunc tellus, laoreet eget cursus a, vehicula sit amet erat. Integer porttitor mollis tellus, ultrices euismod dolor aliquet et. Integer placerat turpis vitae ligula dignissim commodo. Vivamus id sapien eros. Vestibulum consequat, lacus eu facilisis auctor, dui odio dignissim arcu, nec tincidunt erat eros sed libero.",
@@ -62,7 +62,7 @@ describe("FairOverview", () => {
   })
 
   it("renders articles if they are present", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         href: "/fair/example",
       }),
@@ -75,7 +75,7 @@ describe("FairOverview", () => {
   })
 
   it("does not render the collection when it is missing", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({ marketingCollections: [] }),
     })
 
@@ -84,7 +84,7 @@ describe("FairOverview", () => {
   })
 
   it("does not render articles when they are missing", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         href: "/fair/example",
         articlesConnection: {
@@ -97,7 +97,7 @@ describe("FairOverview", () => {
   })
 
   it("renders the collection when it is present", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       MarketingCollection: () => ({
         title: "Big Artists, Small Sculptures",
       }),
@@ -115,7 +115,7 @@ describe("FairOverview", () => {
     const openTime = new Date()
     openTime.setDate(openTime.getDate() + 1)
 
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         endAt: openTime.toISOString(),
       }),
@@ -128,7 +128,7 @@ describe("FairOverview", () => {
     const closeTime = new Date()
     closeTime.setDate(closeTime.getDate() - 1)
 
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         endAt: closeTime.toISOString(),
       }),

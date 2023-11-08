@@ -137,7 +137,7 @@ describe("Review", () => {
   describe("buy-mode orders", () => {
     it("enables the button and routes to the payoff page", async () => {
       mockCommitMutation.mockResolvedValue(submitOrderSuccess)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -149,7 +149,7 @@ describe("Review", () => {
 
     it("disables the submit button when props.stripe is not present", () => {
       loadStripe.mockReturnValueOnce(null)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -157,7 +157,7 @@ describe("Review", () => {
     })
 
     it("takes the user back to the /shipping view", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -169,7 +169,7 @@ describe("Review", () => {
     })
 
     it("takes the user back to the /payment view", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -181,7 +181,7 @@ describe("Review", () => {
     })
 
     it("shows buyer guarentee", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -191,7 +191,7 @@ describe("Review", () => {
 
     it("shows an error modal when there is an error in submitOrderPayload", async () => {
       mockCommitMutation.mockResolvedValue(submitOrderWithFailure)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -202,7 +202,7 @@ describe("Review", () => {
 
     it("shows an error modal when there is a network error", async () => {
       mockCommitMutation.mockRejectedValue({})
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -215,7 +215,7 @@ describe("Review", () => {
       mockCommitMutation.mockResolvedValue(
         submitOrderWithVersionMismatchFailure
       )
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -231,7 +231,7 @@ describe("Review", () => {
 
     it("shows a modal with a helpful error message if a user has not entered shipping and payment information", async () => {
       mockCommitMutation.mockResolvedValue(submitOrderWithMissingInfo)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -246,7 +246,7 @@ describe("Review", () => {
 
     it("shows a modal with a helpful error message if the user's card is declined", async () => {
       mockCommitMutation.mockResolvedValue(submitOrderWithFailureCardDeclined)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -263,7 +263,7 @@ describe("Review", () => {
       mockCommitMutation.mockResolvedValue(
         submitOrderWithFailureInsufficientFunds
       )
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -280,7 +280,7 @@ describe("Review", () => {
       mockCommitMutation.mockResolvedValue(
         submitOrderWithFailureCurrencyNotSupported
       )
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -299,7 +299,7 @@ describe("Review", () => {
 
     it("shows a modal that redirects to the artist page if there is an insufficient inventory", async () => {
       mockCommitMutation.mockResolvedValue(submitOrderWithNoInventoryFailure)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -323,7 +323,7 @@ describe("Review", () => {
         },
       })
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
 
@@ -348,7 +348,7 @@ describe("Review", () => {
         },
       })
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
 
@@ -364,7 +364,7 @@ describe("Review", () => {
 
     it("shows SCA modal when required", async () => {
       mockCommitMutation.mockResolvedValue(submitOrderWithActionRequired)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -382,7 +382,7 @@ describe("Review", () => {
     }
 
     it("shows an active offer stepper if the order is an Offer Order", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       const page = new ReviewTestPage(wrapper)
@@ -395,7 +395,7 @@ describe("Review", () => {
     })
 
     it("shows an offer section in the shipping and payment review", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       const page = new ReviewTestPage(wrapper)
@@ -408,7 +408,7 @@ describe("Review", () => {
     })
 
     it("shows an offer note if one exists", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...OfferOrderWithShippingDetailsAndNote,
           impulseConversationId: null,
@@ -421,7 +421,7 @@ describe("Review", () => {
 
     it("enables the button and routes to the artwork page", async () => {
       mockCommitMutation.mockResolvedValue(submitOfferOrderSuccess)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       const page = new ReviewTestPage(wrapper)
@@ -435,7 +435,7 @@ describe("Review", () => {
 
     it("shows an error modal when there is an error in submitOrderPayload", async () => {
       mockCommitMutation.mockResolvedValue(submitOfferOrderWithFailure)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       const page = new ReviewTestPage(wrapper)
@@ -446,7 +446,7 @@ describe("Review", () => {
 
     it("shows an error modal when there is a network error", async () => {
       mockCommitMutation.mockRejectedValue({})
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       const page = new ReviewTestPage(wrapper)
@@ -459,7 +459,7 @@ describe("Review", () => {
       mockCommitMutation.mockResolvedValue(
         submitOfferOrderWithVersionMismatchFailure
       )
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       const page = new ReviewTestPage(wrapper)
@@ -475,7 +475,7 @@ describe("Review", () => {
 
     it("shows a modal if there is a payment_method_confirmation_failed", async () => {
       mockCommitMutation.mockResolvedValue(submitOfferOrderFailedConfirmation)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       const page = new ReviewTestPage(wrapper)
@@ -492,7 +492,7 @@ describe("Review", () => {
       mockCommitMutation.mockResolvedValue(
         submitOfferOrderWithNoInventoryFailure
       )
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       const page = new ReviewTestPage(wrapper)
@@ -506,7 +506,7 @@ describe("Review", () => {
 
     it("shows SCA modal when required", async () => {
       mockCommitMutation.mockResolvedValue(submitOfferOrderWithActionRequired)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       const page = new ReviewTestPage(wrapper)
@@ -528,7 +528,7 @@ describe("Review", () => {
 
       it("dispatches message given Eigen when the offer is submitted", async () => {
         mockCommitMutation.mockResolvedValue(submitOfferOrderSuccess)
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => testOffer,
         })
         const page = new ReviewTestPage(wrapper)
@@ -563,7 +563,7 @@ describe("Review", () => {
     }
 
     it("takes the user back to the /shipping view", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -575,7 +575,7 @@ describe("Review", () => {
     })
 
     it("renders shipping information", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new ReviewTestPage(wrapper)
@@ -599,7 +599,7 @@ describe("Review", () => {
 
   describe("Inquiry offer orders", () => {
     it("renders with inquiry extra information", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...OfferOrderWithMissingMetadata,
           impulseConversationId: "5665",
@@ -616,7 +616,7 @@ describe("Review", () => {
     })
 
     it("does not show message about shipping and tax confirmation for buy now orders", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...BuyOrderWithShippingDetails,
           impulseConversationId: null,
@@ -631,7 +631,7 @@ describe("Review", () => {
 
     it("enables the button and routes to the conversation", async () => {
       mockCommitMutation.mockResolvedValue(submitOfferOrderSuccess)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...OfferOrderWithMissingMetadata,
           impulseConversationId: "5665",
@@ -648,7 +648,7 @@ describe("Review", () => {
   describe("Inquiry buy-mode orders", () => {
     it("enables the button and routes to the conversation", async () => {
       mockCommitMutation.mockResolvedValue(submitOfferOrderSuccess)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...BuyOrderWithShippingDetails,
           source: "inquiry",
@@ -665,7 +665,7 @@ describe("Review", () => {
 
   describe("Bank debit orders", () => {
     it("shows bank transfer as payment method", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...BuyOrderWithBankDebitDetails,
           impulseConversationId: null,
@@ -681,7 +681,7 @@ describe("Review", () => {
 
   describe("Wire transfer orders", () => {
     it("shows bank transfer as payment method", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...BuyOrderWithWireTransferDetails,
           impulseConversationId: null,
@@ -704,7 +704,7 @@ describe("Review", () => {
     }
 
     beforeEach(() => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => privateSaleOrderWithWire,
       })
       page = new ReviewTestPage(wrapper)
@@ -769,7 +769,7 @@ describe("Review", () => {
 
       it("routes to the status page", async () => {
         mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => OfferOrderInReviewFromArtworkPage,
         })
         const page = new ReviewTestPage(wrapper)
@@ -789,7 +789,7 @@ describe("Review", () => {
 
       it("routes to the conversation", async () => {
         mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => OfferOrderInReviewFromInquiry,
         })
         const page = new ReviewTestPage(wrapper)
@@ -815,7 +815,7 @@ describe("Review", () => {
 
         it("dispatches message and routes to status page", async () => {
           mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => OfferOrderInReviewFromArtworkPage,
           })
           const page = new ReviewTestPage(wrapper)
@@ -844,7 +844,7 @@ describe("Review", () => {
 
         it("doesn't dispatch a message and routes to status page", async () => {
           mockCommitMutation.mockResolvedValue(submitOfferOrderSuccessInReview)
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => OfferOrderInReviewFromInquiry,
           })
           const page = new ReviewTestPage(wrapper)

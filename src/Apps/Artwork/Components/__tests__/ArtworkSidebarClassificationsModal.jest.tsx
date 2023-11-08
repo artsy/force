@@ -1,4 +1,4 @@
-import { ArtworkSidebarClassificationsModalFragmentContainer } from "../ArtworkSidebarClassificationsModal"
+import { ArtworkSidebarClassificationsModalFragmentContainer } from "Apps/Artwork/Components/ArtworkSidebarClassificationsModal"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 
@@ -35,7 +35,7 @@ const getWrapperWithResponsibilityMessage = (showDisclaimer?: boolean) =>
 describe("ArtworkSidebarClassificationsModal", () => {
   it("renders the classifications with disclaimer", () => {
     const { getWrapper } = getWrapperWithResponsibilityMessage(true)
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       AttributionClass: () => ({
         name: "Unique",
         longDescription: "One of a kind piece, created by the artist.",
@@ -53,7 +53,7 @@ describe("ArtworkSidebarClassificationsModal", () => {
 
   it("renders the classifications without disclaimer", () => {
     const { getWrapper } = getWrapperWithResponsibilityMessage(false)
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       AttributionClass: () => ({
         name: "Unique",
         longDescription: "One of a kind piece, created by the artist.",

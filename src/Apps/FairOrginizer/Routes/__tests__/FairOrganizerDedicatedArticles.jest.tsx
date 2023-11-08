@@ -43,7 +43,7 @@ const { getWrapper } = setupTestWrapper<
 
 describe("FairOrganizerDedicatedArticles", () => {
   it("renders a section title with the fair organizer name", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       FairOrganizer: () => ({ name: "The Armory Show" }),
     })
 
@@ -53,14 +53,14 @@ describe("FairOrganizerDedicatedArticles", () => {
   })
 
   it("renders 10 article links", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       FairOrganizer: () => ({ articlesConnection: articlesFixture }),
     })
     expect(wrapper.find("a").length).toBe(11)
   })
 
   it("renders pagination", () => {
-    const wrapper = getWrapper({})
+    const { wrapper } = getWrapper({})
     expect(wrapper.find("Pagination").length).toBe(1)
   })
 })

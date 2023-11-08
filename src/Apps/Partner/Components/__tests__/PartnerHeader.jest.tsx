@@ -27,7 +27,7 @@ const { getWrapper } = setupTestWrapper<PartnerHeader_Test_Query>({
 
 describe("PartnerHeader", () => {
   it("displays basic information about partner profile", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         name: "White cube",
         profile: {
@@ -60,7 +60,7 @@ describe("PartnerHeader", () => {
   })
 
   it("displays unique address value", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         locations: {
           totalCount: 4,
@@ -97,7 +97,7 @@ describe("PartnerHeader", () => {
   })
 
   it("displays few addresses", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         locations: {
           totalCount: 4,
@@ -136,7 +136,7 @@ describe("PartnerHeader", () => {
   })
 
   it("does not display address", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         name: "White cube",
         locations: {
@@ -156,7 +156,7 @@ describe("PartnerHeader", () => {
   })
 
   it("displays links to partner profile page", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         name: "White cube",
         slug: "white-cube",
@@ -189,7 +189,7 @@ describe("PartnerHeader", () => {
   })
 
   it("doesn't display profile address if there is no info", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         locations: {
           totalCount: 0,
@@ -201,7 +201,7 @@ describe("PartnerHeader", () => {
   })
 
   it("doesn't display profile icon if there is no info", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         profile: null,
       }),
@@ -211,7 +211,7 @@ describe("PartnerHeader", () => {
   })
 
   it("doesn't display follow button if there is no info", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         profile: null,
       }),
@@ -221,7 +221,7 @@ describe("PartnerHeader", () => {
   })
 
   it("doesn't display follow button if partner type is equal to Auction House", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         type: "Auction House",
       }),
@@ -231,7 +231,7 @@ describe("PartnerHeader", () => {
   })
 
   it("doesn't display the follow count", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         name: "White cube",
         profile: {
@@ -246,7 +246,7 @@ describe("PartnerHeader", () => {
   })
 
   it("displays the follow count", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         name: "White cube",
         profile: {

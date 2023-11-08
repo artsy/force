@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { ShowHoursFragmentContainer } from "../Components/ShowHours"
+import { ShowHoursFragmentContainer } from "Apps/Show/Components/ShowHours"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
@@ -17,7 +17,7 @@ const { getWrapper } = setupTestWrapper({
 
 describe("ShowHours", () => {
   it("renders the schedules if they exist", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Location: () => ({ openingHours: { __typename: "OpeningHoursArray" } }),
       OpeningHoursArray: () => ({
         schedules: [
@@ -40,7 +40,7 @@ describe("ShowHours", () => {
   })
 
   it("renders the text if it exists", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Location: () => ({ openingHours: { __typename: "OpeningHoursText" } }),
       OpeningHoursText: () => ({ text: "Open 24-7" }),
     })
@@ -51,7 +51,7 @@ describe("ShowHours", () => {
   })
 
   it("renders nothing if the opening hours are text but the text is null", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Location: () => ({ openingHours: { __typename: "OpeningHoursText" } }),
       OpeningHoursText: () => ({ text: null }),
     })
@@ -62,7 +62,7 @@ describe("ShowHours", () => {
   })
 
   it("renders nothing if the opening hours are an array but null", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Location: () => ({ openingHours: { __typename: "OpeningHoursArray" } }),
       OpeningHoursArray: () => ({ schedules: null }),
     })

@@ -32,7 +32,7 @@ afterEach(() => {
 
 describe("HomeCurrentFairs", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Viewer: () => ({
         fairs: [
           {
@@ -50,7 +50,7 @@ describe("HomeCurrentFairs", () => {
   })
 
   it("returns null when no data is received", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Viewer: () => ({
         fairs: null,
       }),
@@ -61,7 +61,7 @@ describe("HomeCurrentFairs", () => {
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       wrapper.find("RouterLink").last().simulate("click")
       expect(trackEvent).toBeCalledWith({
         action: "clickedFairGroup",
@@ -75,7 +75,7 @@ describe("HomeCurrentFairs", () => {
     })
 
     it("tracks view all", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       wrapper.find("RouterLink").first().simulate("click")
       expect(trackEvent).toBeCalledWith({
         action: "clickedFairGroup",

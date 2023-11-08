@@ -82,7 +82,7 @@ describe("Deprecated Save artwork", () => {
   })
 
   it("can save an artwork", async () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => artwork,
     })
     const page = new DeprecatedSaveButtonTestPage(wrapper)
@@ -98,7 +98,7 @@ describe("Deprecated Save artwork", () => {
 
   it("can remove a saved artwork", async () => {
     defaultMutationResults.saveArtwork.artwork.isSaved = false
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => ({ ...artwork, isSaved: true }),
     })
     const page = new DeprecatedSaveButtonTestPage(wrapper)
@@ -123,7 +123,7 @@ describe("Deprecated Save artwork", () => {
       return { showAuthDialog }
     })
 
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => artwork,
     })
     const page = new DeprecatedSaveButtonTestPage(wrapper)

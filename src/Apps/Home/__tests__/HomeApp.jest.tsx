@@ -50,7 +50,7 @@ describe("HomeApp", () => {
     })
 
     it("renders the info blurb", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
 
       expect(wrapper.text()).toContain(
         "Collect art from leading galleries, fairs, and auctions"
@@ -62,7 +62,7 @@ describe("HomeApp", () => {
     })
 
     it("renders the events", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         FeaturedLink: () => ({
           title: "Exclusively on Artsy",
           subtitle: "Example Event",
@@ -82,7 +82,7 @@ describe("HomeApp", () => {
     })
 
     it("does not render the info blurb", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
 
       expect(wrapper.text()).not.toContain(
         "Collect art from leading galleries, fairs, and auctions"

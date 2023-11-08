@@ -39,7 +39,7 @@ describe("ShowContextCard", () => {
   })
 
   it("renders correctly for a fair", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => {
         return {
           name: "Catty Art Fair",
@@ -52,7 +52,7 @@ describe("ShowContextCard", () => {
   })
 
   it("renders correctly for a partner", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Show: () => {
         return {
           isFairBooth: false,
@@ -70,7 +70,7 @@ describe("ShowContextCard", () => {
   })
 
   it("tracks clicks for partner cards", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Show: () => ({ isFairBooth: false }),
       Partner: () => ({
         internalID: "catty-gallery-id",
@@ -96,7 +96,7 @@ describe("ShowContextCard", () => {
   })
 
   it("tracks clicks for fair cards", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Show: () => ({ isFairBooth: true }),
       Fair: () => ({
         internalID: "catty-fair-id",

@@ -30,7 +30,7 @@ afterEach(() => {
 
 describe("HomeFeaturedMarketNews", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Article: () => ({
         href: "/article/example-article",
         title: "Example Article",
@@ -45,7 +45,7 @@ describe("HomeFeaturedMarketNews", () => {
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       wrapper.find("RouterLink").last().simulate("click")
       expect(trackEvent).toBeCalledWith({
         action: "clickedArticleGroup",
@@ -59,7 +59,7 @@ describe("HomeFeaturedMarketNews", () => {
     })
 
     it("tracks view all", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       wrapper.find("RouterLink").first().simulate("click")
       expect(trackEvent).toBeCalledWith({
         action: "clickedArticleGroup",

@@ -88,7 +88,7 @@ describe("RequestConditionReport", () => {
   })
 
   it("requests a condition report and tracks click event", async () => {
-    const wrapper = getWrapper(
+    const { wrapper } = getWrapper(
       {
         Artwork: () => artwork,
       },
@@ -114,7 +114,7 @@ describe("RequestConditionReport", () => {
   })
 
   it("shows a toast if the mutation fails", async () => {
-    const wrapper = getWrapper(
+    const { wrapper } = getWrapper(
       {
         Artwork: () => artwork,
       },
@@ -144,7 +144,7 @@ describe("RequestConditionReport", () => {
       })
 
       me = null
-      const wrapper = getWrapper(
+      const { wrapper } = getWrapper(
         {
           Artwork: () => artwork,
         },

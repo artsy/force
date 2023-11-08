@@ -17,7 +17,7 @@ const { getWrapper } = setupTestWrapper({
 
 describe("AuthenticityCertificate", () => {
   it("Doesn't render when there's no certificate of authenticity", async () => {
-    const component = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => {
         return {
           hasCertificateOfAuthenticity: false,
@@ -26,13 +26,13 @@ describe("AuthenticityCertificate", () => {
         }
       },
     })
-    expect(component.text()).not.toContain(
+    expect(wrapper.text()).not.toContain(
       "Includes a Certificate of Authenticity."
     )
   })
 
   it("Doesn't render when the artwork is biddable", async () => {
-    const component = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => {
         return {
           hasCertificateOfAuthenticity: true,
@@ -41,13 +41,13 @@ describe("AuthenticityCertificate", () => {
         }
       },
     })
-    expect(component.text()).not.toContain(
+    expect(wrapper.text()).not.toContain(
       "Includes a Certificate of Authenticity."
     )
   })
 
   it("Renders when there's a certificate of authenticity, but the work is not biddable", async () => {
-    const component = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => {
         return {
           hasCertificateOfAuthenticity: true,
@@ -56,9 +56,7 @@ describe("AuthenticityCertificate", () => {
         }
       },
     })
-    expect(component.text()).toContain(
-      "Includes a Certificate of Authenticity."
-    )
+    expect(wrapper.text()).toContain("Includes a Certificate of Authenticity.")
   })
 
   it.todo("Click on certificate of authenticity link opens modal")

@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { AuctionFAQsDialogFragmentContainer } from "../AuctionFAQsDialog"
+import { AuctionFAQsDialogFragmentContainer } from "Components/AuctionFAQsDialog"
 
 jest.unmock("react-relay")
 
@@ -17,7 +17,7 @@ const { getWrapper } = setupTestWrapper({
 
 describe("AuctionFAQsDialog", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Page: () => ({
         name: "How Auctions Work: Example",
         content: "<p>Hello world</p>",

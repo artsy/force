@@ -106,24 +106,24 @@ describe("AuctionApp", () => {
 
   it("embeds Salesforce widget", () => {
     mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(wrapper.find("SalesforceWrapper").exists()).toBeFalsy()
   })
 
   it("does not embed Salesforce widget on mobile", () => {
     breakpoint = "xs"
     mockGetENV.mockImplementation(() => ({ SALESFORCE_CHAT_ENABLED: true }))
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(wrapper.find("SalesforceWrapper").exists()).toBeFalsy()
   })
 
   it("shows header if coverImage", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(wrapper.find("FullBleedHeader").exists()).toBeTruthy()
   })
 
   it("hides header if no cover image", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         coverImage: null,
       }),
@@ -132,7 +132,7 @@ describe("AuctionApp", () => {
   })
 
   it("renders auction details", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(
       wrapper.find("AuctionDetailsFragmentContainer").exists()
     ).toBeTruthy()
@@ -140,7 +140,7 @@ describe("AuctionApp", () => {
 
   describe("explanatory banner for cascading", () => {
     it("includes banner when cascading is enabled", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           cascadingEndTimeIntervalMinutes: 1,
         }),
@@ -152,7 +152,7 @@ describe("AuctionApp", () => {
     })
 
     it("hides banner when cascading is disabled", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           cascadingEndTimeIntervalMinutes: null,
         }),
@@ -166,7 +166,7 @@ describe("AuctionApp", () => {
 
   describe("Tabs", () => {
     it("hides tab bar if conditions not met", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Me: () => ({
           showActiveBids: null,
         }),
@@ -184,7 +184,7 @@ describe("AuctionApp", () => {
 
     describe("Associated Sale", () => {
       it("shows tab", () => {
-        const wrapper = getWrapper()
+        const { wrapper } = getWrapper()
         wrapper.find("Tabs Clickable").at(0).simulate("click")
         wrapper.update()
         expect(
@@ -193,7 +193,7 @@ describe("AuctionApp", () => {
       })
 
       it("hides tab", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           Sale: () => ({
             showAssociatedSale: null,
           }),
@@ -206,7 +206,7 @@ describe("AuctionApp", () => {
 
     describe("ActiveBids", () => {
       it("shows tab", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           Me: () => ({
             showActiveBids: [1],
           }),
@@ -223,7 +223,7 @@ describe("AuctionApp", () => {
       })
 
       it("hides tab", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           Me: () => ({
             showActiveBids: null,
           }),
@@ -237,7 +237,7 @@ describe("AuctionApp", () => {
 
     describe("Works by artists you follow", () => {
       it("shows tab", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           Me: () => ({
             showActiveBids: [1],
           }),
@@ -262,7 +262,7 @@ describe("AuctionApp", () => {
       })
 
       it("hides tab", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           Viewer: () => ({
             showFollowedArtistsTab: null,
           }),
@@ -278,7 +278,7 @@ describe("AuctionApp", () => {
 
     describe("Buy now tab", () => {
       it("shows tab", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           Sale: () => ({
             showBuyNowTab: true,
             isClosed: false,
@@ -296,7 +296,7 @@ describe("AuctionApp", () => {
       })
 
       it("hides tab", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           Sale: () => ({
             showBuyNowTab: null,
           }),
@@ -311,7 +311,7 @@ describe("AuctionApp", () => {
 
   describe("preview sales", () => {
     it("does not show message if there are eligible sale artworks", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           status: "preview",
           eligibleSaleArtworksCount: 1,
@@ -326,7 +326,7 @@ describe("AuctionApp", () => {
     })
 
     it("shows message", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           status: "preview",
           eligibleSaleArtworksCount: 0,
@@ -342,7 +342,7 @@ describe("AuctionApp", () => {
     })
 
     it("renders the auction rail", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           status: "preview",
           eligibleSaleArtworksCount: 0,
@@ -352,7 +352,7 @@ describe("AuctionApp", () => {
     })
 
     it("does not render the auction rail", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({}),
       })
       expect(wrapper.find("AuctionCurrentAuctionsRail").length).toBe(0)
