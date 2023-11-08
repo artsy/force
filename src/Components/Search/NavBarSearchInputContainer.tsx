@@ -27,7 +27,7 @@ export const NavBarSearchInputContainer: React.ForwardRefExoticComponent<
     <LabeledInput
       ref={ref}
       width="100%"
-      height={[40, 50]}
+      height={40}
       label={
         <SearchButton
           type="submit"

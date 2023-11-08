@@ -182,7 +182,7 @@ export const NavBar: React.FC = track(
 
             {/* Top-tier */}
             <Flex pt={1} pb={[1, 0]} alignItems="stretch" flex={1}>
-              <NavBarPrimaryLogo mr={1} />
+              <NavBarPrimaryLogo mr={[1, 2]} />
 
               <Flex
                 flex={1}
