@@ -1,75 +1,21 @@
 import { Pill } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
-
 import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
-import { useDebouncedValue } from "Utils/Hooks/useDebounce"
-import { useSystemContext } from "System/SystemContext"
 
-import { CriteriaPillsQuery } from "__generated__/CriteriaPillsQuery.graphql"
-import { CriteriaPills_previewSavedSearch$data } from "__generated__/CriteriaPills_previewSavedSearch.graphql"
-
-interface CriteriaPillsQueryRendererProps {
+interface CriteriaPillsProps {
   editable?: boolean
 }
 
-export const CriteriaPillsQueryRenderer: FC<CriteriaPillsQueryRendererProps> = ({
-  editable = true,
-}) => {
-  const { relayEnvironment } = useSystemContext()
-  const { state } = useAlertContext()
-
-  const { debouncedValue: criteriaState } = useDebouncedValue({
-    value: state.criteria,
-    delay: 200,
-  })
-
-  return (
-    <SystemQueryRenderer<CriteriaPillsQuery>
-      environment={relayEnvironment}
-      query={graphql`
-        query CriteriaPillsQuery($attributes: PreviewSavedSearchAttributes) {
-          viewer {
-            previewSavedSearch(attributes: $attributes) {
-              ...CriteriaPills_previewSavedSearch
-            }
-          }
-        }
-      `}
-      variables={{ attributes: criteriaState }}
-      render={({ props, error }) => {
-        if (error) {
-          console.error(error)
-        }
-
-        return (
-          <CriteriaPillsFragmentContainer
-            previewSavedSearch={props?.viewer?.previewSavedSearch ?? null}
-            editable={editable}
-          />
-        )
-      }}
-    />
-  )
-}
-
-interface CriteriaPillsProps {
-  previewSavedSearch: CriteriaPills_previewSavedSearch$data | null
-  editable: boolean
-}
-
-const CriteriaPills: FC<CriteriaPillsProps> = ({
-  previewSavedSearch,
-  editable,
-}) => {
-  const labels = previewSavedSearch?.labels ?? []
-  const { dispatch } = useAlertContext()
+export const CriteriaPills: FC<CriteriaPillsProps> = ({ editable = true }) => {
+  const { state, dispatch } = useAlertContext()
 
   return (
     <>
-      {labels.map(label => {
+      {state.preview.labels.map(label => {
+        if (!label) return null
+
         const key = `filter-label-${label?.field}-${label?.value}`
 
         if (!editable || label?.field === "artistIDs") {

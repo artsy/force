@@ -1,9 +1,9 @@
 import { Flex, Join, Separator, Spacer, Text } from "@artsy/palette"
 import { FC } from "react"
 
-import { CriteriaPillsQueryRenderer } from "Components/Alert/Components/CriteriaPills"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { ConfirmationArtworksGridQueryRenderer } from "Components/SavedSearchAlert/ConfirmationArtworksGrid"
+import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
 
 export const Confirmation: FC = () => {
   const { state } = useAlertContext()
@@ -19,7 +19,7 @@ export const Confirmation: FC = () => {
             </Text>
 
             <Flex flexWrap="wrap" gap={1}>
-              <CriteriaPillsQueryRenderer editable={false} />
+              <CriteriaPills editable={false} />
             </Flex>
             <Separator />
           </Join>
