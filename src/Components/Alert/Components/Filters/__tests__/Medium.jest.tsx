@@ -4,21 +4,15 @@ import {
   useAlertContext,
 } from "Components/Alert/Hooks/useAlertContext"
 import { Medium } from "Components/Alert/Components/Filters/Medium"
-import {
-  ArtworkFilterContextProvider,
-  useArtworkFilterContext,
-} from "Components/ArtworkFilter/ArtworkFilterContext"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
 describe("MediumFilter", () => {
-  let filterContext
   let alertContext
 
   const MediumFilterTestComponent = () => {
-    filterContext = useArtworkFilterContext()
     alertContext = useAlertContext()
 
     return <Medium />
@@ -26,11 +20,9 @@ describe("MediumFilter", () => {
 
   const getWrapper = (contextProps = {}, initialCriteria = {}) => {
     return mount(
-      <ArtworkFilterContextProvider {...contextProps}>
-        <AlertProvider initialCriteria={initialCriteria}>
-          <MediumFilterTestComponent />
-        </AlertProvider>
-      </ArtworkFilterContextProvider>
+      <AlertProvider initialCriteria={initialCriteria}>
+        <MediumFilterTestComponent />
+      </AlertProvider>
     )
   }
 
@@ -48,6 +40,5 @@ describe("MediumFilter", () => {
     wrapper.find("Checkbox").first().simulate("click")
 
     expect(alertContext.state.criteria.additionalGeneIDs).toEqual(["painting"])
-    expect(filterContext.filters.additionalGeneIDs).toEqual([])
   })
 })
