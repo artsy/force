@@ -245,7 +245,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
           }
         `,
         { attributes: criteriaState as PreviewSavedSearchAttributes }
-      ).toPromise()
+      )?.toPromise()
 
       dispatch({
         type: "SET_PREVIEW",

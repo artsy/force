@@ -1,6 +1,5 @@
 import { Pill, SkeletonBox } from "@artsy/palette"
 import { FC } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
 import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
