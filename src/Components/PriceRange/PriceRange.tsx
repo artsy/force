@@ -75,6 +75,37 @@ export const PriceRange: FC<PriceRangeProps> = ({
 
   return (
     <>
+      {bars && shouldDisplayHistogram(bars) ? (
+        <Histogram
+          bars={bars}
+          selectedRange={[sliderRange[0], sliderRange[1]]}
+          data-testid="PriceFilterHistogram"
+        />
+      ) : null}
+
+      <Spacer y={shouldDisplayHistogram(bars) ? 2 : 4} />
+
+      <Range
+        min={defaultMinValue}
+        max={defaultMaxValue}
+        value={sliderRange}
+        onChange={handleSliderValueChange}
+        step={100}
+        ariaLabels={["Min price", "Max price"]}
+      />
+
+      <Flex justifyContent="space-between" mt={1}>
+        <Text variant="xs" color="black60">
+          ${defaultMinValue}
+        </Text>
+
+        <Text variant="xs" color="black60">
+          ${defaultMaxValue}+
+        </Text>
+      </Flex>
+
+      <Spacer y={2} />
+
       <Flex>
         <Box flex={1}>
           <Text variant="xs" mb={0.5}>
@@ -109,37 +140,6 @@ export const PriceRange: FC<PriceRangeProps> = ({
             onChange={handleInputValueChange(1)}
           />
         </Box>
-      </Flex>
-
-      <Spacer y={2} />
-
-      {bars && shouldDisplayHistogram(bars) ? (
-        <Histogram
-          bars={bars}
-          selectedRange={[sliderRange[0], sliderRange[1]]}
-          data-testid="PriceFilterHistogram"
-        />
-      ) : null}
-
-      <Spacer y={shouldDisplayHistogram(bars) ? 2 : 4} />
-
-      <Range
-        min={defaultMinValue}
-        max={defaultMaxValue}
-        value={sliderRange}
-        onChange={handleSliderValueChange}
-        step={100}
-        ariaLabels={["Min price", "Max price"]}
-      />
-
-      <Flex justifyContent="space-between" mt={1}>
-        <Text variant="xs" color="black60">
-          ${defaultMinValue}
-        </Text>
-
-        <Text variant="xs" color="black60">
-          ${defaultMaxValue}+
-        </Text>
       </Flex>
     </>
   )

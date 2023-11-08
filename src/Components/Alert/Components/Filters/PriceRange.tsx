@@ -1,5 +1,5 @@
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
-import { Text, Spacer } from "@artsy/palette"
+import { Text } from "@artsy/palette"
 import { PriceRange } from "Components/PriceRange/PriceRange"
 import {
   CustomRange,
@@ -18,7 +18,6 @@ export const Price: React.FC = () => {
   return (
     <>
       <Text variant="sm-display">Price Range</Text>
-      <Spacer y={2} />
       <PriceRange
         priceRange={state.criteria["priceRange"] || DEFAULT_PRICE_RANGE}
         onDebouncedUpdate={handlePriceRangeUpdate}
