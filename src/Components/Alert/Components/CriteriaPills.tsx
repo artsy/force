@@ -1,4 +1,4 @@
-import { Pill } from "@artsy/palette"
+import { Pill, SkeletonBox } from "@artsy/palette"
 import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
@@ -11,9 +11,15 @@ interface CriteriaPillsProps {
 export const CriteriaPills: FC<CriteriaPillsProps> = ({ editable = true }) => {
   const { state, dispatch } = useAlertContext()
 
+  const labels = state.preview.labels
+
+  if (!labels) {
+    return <CriteriaPillsPlaceholder />
+  }
+
   return (
     <>
-      {state.preview.labels.map(label => {
+      {labels.map(label => {
         if (!label) return null
 
         const key = `filter-label-${label?.field}-${label?.value}`
@@ -49,17 +55,12 @@ export const CriteriaPills: FC<CriteriaPillsProps> = ({ editable = true }) => {
   )
 }
 
-export const CriteriaPillsFragmentContainer = createFragmentContainer(
-  CriteriaPills,
-  {
-    previewSavedSearch: graphql`
-      fragment CriteriaPills_previewSavedSearch on PreviewSavedSearch {
-        labels {
-          displayValue
-          field
-          value
-        }
-      }
-    `,
-  }
-)
+const CriteriaPillsPlaceholder: FC = () => {
+  return (
+    <>
+      <SkeletonBox width={150} height={30} />
+      <SkeletonBox width={80} height={30} />
+      <SkeletonBox width={100} height={30} />
+    </>
+  )
+}

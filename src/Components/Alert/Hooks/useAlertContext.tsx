@@ -35,7 +35,7 @@ type Label = {
 }
 
 type Preview = {
-  labels: (Label | null)[]
+  labels?: (Label | null)[]
   displayName: string
 }
 
@@ -57,7 +57,7 @@ export const DEFAULT_STATE: State = {
   criteria: {},
   preview: {
     displayName: "",
-    labels: [],
+    labels: undefined,
   },
 }
 
@@ -180,7 +180,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     currentArtworkID,
     preview: {
       displayName: "",
-      labels: [],
+      labels: undefined,
     },
   }
   const basis = useRef<State>(initialState)

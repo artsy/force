@@ -1,6 +1,5 @@
 import { FC } from "react"
 import { Input } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
 import { useFormikContext } from "formik"
 import { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
@@ -25,14 +24,3 @@ export const AlertNameInput: FC = () => {
     />
   )
 }
-
-export const AlertNameInputFragmentContainer = createFragmentContainer(
-  AlertNameInput,
-  {
-    previewSavedSearch: graphql`
-      fragment AlertNameInput_previewSavedSearch on PreviewSavedSearch {
-        displayName
-      }
-    `,
-  }
-)
