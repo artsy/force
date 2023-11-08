@@ -14,6 +14,7 @@ import {
 } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { useCreateAlert } from "Components/Alert/Hooks/useCreateAlert"
+import { CustomRange } from "Components/PriceRange/constants"
 
 type Settings = {
   details: string
@@ -47,14 +48,14 @@ type Action =
       type: "SET_CRITERIA_ATTRIBUTE"
       payload: {
         key: SearchCriteriaAttributeKeys
-        value: string | string[] | number | boolean | null
+        value: string | string[] | number | boolean | null | CustomRange
       }
     }
   | {
       type: "REMOVE_CRITERIA_ATTRIBUTE_VALUE"
       payload: {
         key: SearchCriteriaAttributeKeys
-        value: string | string[] | number | boolean | null
+        value: string | string[] | number | boolean | null | CustomRange
       }
     }
   | { type: "SET_SEARCH_CRITERIA_ID"; payload: string }
