@@ -43,7 +43,7 @@
     "publish-assets": "node scripts/uploadToS3.js",
     "publish-assets:local": "yarn clean && yarn build:client:prod && yarn publish-assets",
     "relay": "relay-compiler",
-    "sync-env": "aws s3 cp s3://artsy-citadel/dev/.env.force .env.shared && echo 'ENV sync complete.'",
+    "sync-env": "aws s3 cp s3://artsy-citadel/force/.env.shared ./ && echo 'ENV sync complete.'",
     "start": "scripts/start.sh",
     "start:prod": "yarn build && SESSION_LOCAL_INSECURE=true NODE_ENV=production yarn start",
     "start:prod:debug": "SESSION_LOCAL_INSECURE=true NODE_ENV=production node --inspect --max_old_space_size=3072 ./server.dist.js",
