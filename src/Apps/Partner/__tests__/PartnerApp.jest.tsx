@@ -47,7 +47,7 @@ const { getWrapper } = setupTestWrapper<PartnerApp_Test_Query>({
 
 describe("PartnerApp", () => {
   it("displays navigation tabs for the partner page", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         displayFullPartnerPage: true,
         isDefaultProfilePublic: true,
@@ -58,7 +58,7 @@ describe("PartnerApp", () => {
   })
 
   it("does not display nav tabs for limited profile", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         displayFullPartnerPage: false,
         isDefaultProfilePublic: true,
@@ -69,7 +69,7 @@ describe("PartnerApp", () => {
   })
 
   it("displays navigation tabs for brand partner", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         displayFullPartnerPage: false,
         partnerType: "Brand",
@@ -81,7 +81,7 @@ describe("PartnerApp", () => {
   })
 
   it("displays header image for the partner page", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         profile: {
           image: {
@@ -101,7 +101,7 @@ describe("PartnerApp", () => {
   })
 
   it("doesn't display profile image if there is no info", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         profile: {
           image: null,
@@ -112,7 +112,7 @@ describe("PartnerApp", () => {
   })
 
   it("doesn't display profile image if the partner isn't eligible for a full profile", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         displayFullPartnerPage: false,
       }),

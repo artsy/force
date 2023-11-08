@@ -17,7 +17,7 @@ const { getWrapper } = setupTestWrapper({
 
 describe("ViewInRoomArtwork", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => ({
         widthCm: 40,
         heightCm: 30,

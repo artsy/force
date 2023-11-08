@@ -123,7 +123,7 @@ describe("ArtworkGrid", () => {
     })
 
     it("Renders artworks if present", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         FilterArtworksConnection: () => ArtworkGridFixture,
       })
 
@@ -132,7 +132,7 @@ describe("ArtworkGrid", () => {
     })
 
     it("Renders empty message if no artworks", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         FilterArtworksConnection: () => ({ edges: [] }),
       })
 
@@ -140,7 +140,7 @@ describe("ArtworkGrid", () => {
     })
 
     it("Can call onClearFilters from empty message", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         FilterArtworksConnection: () => ({ edges: [] }),
       })
       wrapper.find(ResetFilterLink).simulate("click")
@@ -149,7 +149,7 @@ describe("ArtworkGrid", () => {
     })
 
     it("#componentDidMount sets state.interval if props.onLoadMore", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         FilterArtworksConnection: () => ArtworkGridFixture,
       })
       const artworkGridContainer = await wrapper.find(ArtworkGridContainer)
@@ -161,7 +161,7 @@ describe("ArtworkGrid", () => {
     })
 
     it("#componentWillUnmount calls #clearInterval if state.interval exists", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         FilterArtworksConnection: () => ArtworkGridFixture,
       })
       const artworkGridContainer = await wrapper.find(ArtworkGridContainer)
@@ -182,7 +182,7 @@ describe("ArtworkGrid", () => {
     })
 
     it("#sectionedArtworks divides artworks into columns", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         FilterArtworksConnection: () => ArtworkGridFixture,
       })
       const artworkGridContainer = (await wrapper
@@ -196,7 +196,7 @@ describe("ArtworkGrid", () => {
     })
 
     it("Renders artworks if present (2)", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         FilterArtworksConnection: () => ArtworkGridFixture,
       })
       const artworkGridContainer = await wrapper.find(ArtworkGridContainer)
@@ -210,7 +210,7 @@ describe("ArtworkGrid", () => {
     it("Should preload same number of images as specified in preloadImageCount", async () => {
       columnCount = 2
       preloadImageCount = 2
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         FilterArtworksConnection: () => ArtworkGridFixture,
       })
 

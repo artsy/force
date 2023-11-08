@@ -51,7 +51,7 @@ describe("InquiryBasicInfo", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({ name: "Example Partner" }),
     })
 
@@ -64,7 +64,7 @@ describe("InquiryBasicInfo", () => {
   })
 
   it("updates the collector profile when the form is submitted", async () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
 
     expect(mockSubmitUpdateMyUserProfile).not.toBeCalled()
     expect(mockNext).not.toBeCalled()
@@ -84,7 +84,7 @@ describe("InquiryBasicInfo", () => {
   })
 
   it("updates the collector profile when the form is submitted with more information", async () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
 
     expect(mockSubmitUpdateMyUserProfile).not.toBeCalled()
     expect(mockNext).not.toBeCalled()

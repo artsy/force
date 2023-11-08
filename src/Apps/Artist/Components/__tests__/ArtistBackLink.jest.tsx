@@ -34,7 +34,7 @@ describe("ArtistBackLink", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artist: () => ({ name: "Example Artist" }),
     })
 
@@ -42,7 +42,7 @@ describe("ArtistBackLink", () => {
   })
 
   it("tracks correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artist: () => ({ href: "/artist/example-artist" }),
     })
 

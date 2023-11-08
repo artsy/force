@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { ArtworkLightboxFragmentContainer } from "../ArtworkLightbox"
+import { ArtworkLightboxFragmentContainer } from "Apps/Artwork/Components/ArtworkLightbox"
 
 jest.unmock("react-relay")
 jest.mock("react-head", () => ({
@@ -27,12 +27,12 @@ describe("ArtworkLightbox", () => {
   }
 
   it("does not error out if activeIndex is undefined", () => {
-    const wrapper = setup({ activeIndex: null }).getWrapper()
+    const { wrapper } = setup({ activeIndex: null }).getWrapper()
     expect(wrapper.html()).toBeFalsy()
   })
 
   it("renders correctly", () => {
-    const wrapper = setup().getWrapper()
+    const { wrapper } = setup().getWrapper()
     expect(wrapper.find("Image").length).toBeTruthy()
   })
 })

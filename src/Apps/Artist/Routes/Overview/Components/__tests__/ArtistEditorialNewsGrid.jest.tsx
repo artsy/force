@@ -30,7 +30,7 @@ afterEach(() => {
 
 describe("ArtistEditorialNewsGrid", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artist: () => ({
         name: "Test Artist",
         articlesConnection: {
@@ -54,7 +54,7 @@ describe("ArtistEditorialNewsGrid", () => {
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artist: () => ({
           internalID: "example-artist-id",
           slug: "example-artist-slug",
@@ -75,7 +75,7 @@ describe("ArtistEditorialNewsGrid", () => {
     })
 
     it("tracks view all", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
 
       wrapper.find("RouterLink").first().simulate("click")
 

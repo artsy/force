@@ -35,7 +35,7 @@ const { getWrapper } = setupTestWrapper<ArtworkDetailsMediumModal_Test_Query>({
 
 describe("ArtworkDetailsMediumModal", () => {
   it("renders the mediumType", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => ({
         mediumType: {
           longDescription:

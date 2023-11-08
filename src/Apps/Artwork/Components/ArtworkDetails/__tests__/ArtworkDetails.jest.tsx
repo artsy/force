@@ -36,7 +36,7 @@ const { getWrapper } = setupTestWrapper<ArtworkDetails_Test_Query>({
 describe("ArtworkDetails", () => {
   describe("ArtworkDetailsAdditionalInfo for a live sale artwork", () => {
     it("displays a request lot condition report button when canRequestLotConditionsReport is true", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({
           canRequestLotConditionsReport: true,
           conditionDescription: {
@@ -53,7 +53,7 @@ describe("ArtworkDetails", () => {
     })
 
     it("display condition description when canRequestLotConditionsReport is false but has condition description", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({
           canRequestLotConditionsReport: false,
           conditionDescription: {
@@ -68,7 +68,7 @@ describe("ArtworkDetails", () => {
     })
 
     it("does not display the condition section at all when canRequestLotConditionsReport is false and condition Description is missing", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({
           canRequestLotConditionsReport: false,
           conditionDescription: null,
@@ -81,7 +81,7 @@ describe("ArtworkDetails", () => {
 
   describe("ArtworkDetails for a gallery artwork that is missing some fields", () => {
     it("renders additional info with just what is present", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({
           series: null,
           publisher: null,
@@ -123,7 +123,7 @@ describe("ArtworkDetails", () => {
       }),
     }
 
-    const wrapper = getWrapper(emptyData)
+    const { wrapper } = getWrapper(emptyData)
 
     expect(wrapper.find("ArtworkDetailsAdditionalInfo").find("dl").length).toBe(
       0
@@ -132,7 +132,7 @@ describe("ArtworkDetails", () => {
 
   describe("ArtworkDetails for gallery artwork with complete details", () => {
     it("renders a correct component tree", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       const html = wrapper.html()
 
       expect(html).toContain("About the work")
@@ -145,7 +145,7 @@ describe("ArtworkDetails", () => {
 
   describe("ArtworkDetailsAboutTheWorkFromPartner", () => {
     it("displays partner additionalInformation for artwork", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({
           additionalInformation: "Here is some additional info for this work",
         }),
@@ -157,7 +157,7 @@ describe("ArtworkDetails", () => {
     })
 
     it("does not display avatar when profile is not available and no initials for partner", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Partner: () => ({ profile: null, initials: null }),
       })
 
@@ -167,7 +167,7 @@ describe("ArtworkDetails", () => {
     })
 
     it("does not render partner follow button if artwork is from an auction partner", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Partner: () => ({
           type: "Auction House",
         }),
@@ -177,7 +177,7 @@ describe("ArtworkDetails", () => {
     })
 
     it("works without a partner", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({
           partner: null,
         }),

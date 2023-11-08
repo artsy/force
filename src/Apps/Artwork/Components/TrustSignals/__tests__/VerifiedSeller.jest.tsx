@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { VerifiedSellerFragmentContainer } from "../VerifiedSeller"
+import { VerifiedSellerFragmentContainer } from "Apps/Artwork/Components/TrustSignals/VerifiedSeller"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
@@ -19,7 +19,7 @@ const partnerName = "partner-name"
 
 describe("VerifiedSeller", () => {
   it("Doesn't render when the partner is a verified seller", async () => {
-    const component = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => {
         return {
           id: "opaque-seller-id",
@@ -32,11 +32,11 @@ describe("VerifiedSeller", () => {
         }
       },
     })
-    expect(component.find("TrustSignal").length).toBe(0)
+    expect(wrapper.find("TrustSignal").length).toBe(0)
   })
 
   it("Doesn't render when the artwork is biddable", async () => {
-    const component = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => {
         return {
           id: "opaque-seller-id",
@@ -49,11 +49,11 @@ describe("VerifiedSeller", () => {
         }
       },
     })
-    expect(component.find("TrustSignal").length).toBe(0)
+    expect(wrapper.find("TrustSignal").length).toBe(0)
   })
 
   it("Renders when the partner is a verified seller, but the work is not biddable", async () => {
-    const component = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => {
         return {
           id: "opaque-seller-id",
@@ -66,7 +66,7 @@ describe("VerifiedSeller", () => {
         }
       },
     })
-    expect(component.find("TrustSignal").length).toBe(1)
-    expect(component.text()).toContain(partnerName)
+    expect(wrapper.find("TrustSignal").length).toBe(1)
+    expect(wrapper.text()).toContain(partnerName)
   })
 })

@@ -21,7 +21,7 @@ describe("FairOrganizerPastEventsRail", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       CroppedImageUrl: () => ({
         width: 325,
         height: 140,
@@ -53,7 +53,7 @@ describe("FairOrganizerPastEventsRail", () => {
   })
 
   it("does not render rail if no collections", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       FairConnection: () => ({
         edges: null,
       }),

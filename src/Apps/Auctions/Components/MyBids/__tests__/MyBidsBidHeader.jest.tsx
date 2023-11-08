@@ -32,7 +32,7 @@ describe("MyBidsBidHeaderFragmentContainer", () => {
   })
 
   it("renders correct components and data", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         coverImage: {
           cropped: {
@@ -65,7 +65,7 @@ describe("MyBidsBidHeaderFragmentContainer", () => {
   })
 
   it("tracks clicks", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     wrapper.find("RouterLink").first().simulate("click")
     expect(trackEvent).toHaveBeenCalledWith({
       action: "clickedAuctionGroup",

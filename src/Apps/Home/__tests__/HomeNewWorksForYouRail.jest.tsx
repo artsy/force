@@ -36,7 +36,7 @@ afterEach(() => {
 
 describe("HomeNewWorksForYouRail", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       ArtworkConnection: () => ({
         edges: [
           {
@@ -55,7 +55,7 @@ describe("HomeNewWorksForYouRail", () => {
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       wrapper.find("RouterLink").first().simulate("click")
       expect(trackEvent).toBeCalledWith({
         action: "clickedArtworkGroup",

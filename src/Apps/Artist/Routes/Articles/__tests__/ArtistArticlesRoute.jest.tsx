@@ -24,7 +24,7 @@ describe("ArtistArticlesRoute", () => {
   })
 
   it("render a zero state if no articles", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artist: () => ({
         articlesConnection: { edges: null },
       }),
@@ -33,7 +33,7 @@ describe("ArtistArticlesRoute", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artist: () => ({
         name: "Example Artist",
       }),

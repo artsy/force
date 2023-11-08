@@ -21,7 +21,7 @@ const { getWrapper } = setupTestWrapper({
 
 describe("FairHeader", () => {
   it("displays fair name", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         name: "Miart 2020",
         slug: "miart-2020",

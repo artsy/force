@@ -31,7 +31,7 @@ describe("ArtistCurrentArticlesRail", () => {
   })
 
   it("does not render rail if no articles", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artist: () => ({
         articlesConnection: { edges: null },
       }),
@@ -41,7 +41,7 @@ describe("ArtistCurrentArticlesRail", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artist: () => ({
         name: "artistName",
         slug: "artistSlug",
@@ -60,7 +60,7 @@ describe("ArtistCurrentArticlesRail", () => {
   })
 
   it("tracks to articles route", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artist: () => ({
         internalID: "test-artist-id",
         slug: "test-artist-slug",
@@ -82,7 +82,7 @@ describe("ArtistCurrentArticlesRail", () => {
   })
 
   it("tracks article click", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Article: () => ({
         internalID: "test-article-id",
         slug: "test-article-slug",

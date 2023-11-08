@@ -36,7 +36,7 @@ describe("MarketStats", () => {
   })
 
   it("does not render if no price insights", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       PriceInsightConnection: () => ({
         edges: null,
       }),
@@ -45,7 +45,7 @@ describe("MarketStats", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       PriceInsightConnection: () => priceInsightsConnectionFixture,
     })
     expect(wrapper.text()).toContain("Market Signals")
@@ -56,7 +56,7 @@ describe("MarketStats", () => {
   })
 
   it("tracks correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       PriceInsightConnection: () => priceInsightsConnectionFixture,
     })
 

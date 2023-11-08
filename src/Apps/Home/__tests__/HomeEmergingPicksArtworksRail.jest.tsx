@@ -28,7 +28,7 @@ describe("HomeEmergingPicksArtworksRail", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Viewer: () => artworksConnection,
     })
 
@@ -37,7 +37,7 @@ describe("HomeEmergingPicksArtworksRail", () => {
   })
 
   it("tracks artwork click", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Viewer: () => artworksConnection,
     })
 
@@ -54,7 +54,7 @@ describe("HomeEmergingPicksArtworksRail", () => {
   })
 
   it("tracks view all", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Viewer: () => artworksConnection,
     })
 

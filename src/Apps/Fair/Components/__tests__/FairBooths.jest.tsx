@@ -49,7 +49,7 @@ describe("FairBooths", () => {
   })
 
   it("renders the rails from exhibitors that have artworks", async () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         edges: [
           {
@@ -64,7 +64,7 @@ describe("FairBooths", () => {
   })
 
   it("skips over any partners with no artworks", async () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         edges: [
           {
@@ -83,13 +83,13 @@ describe("FairBooths", () => {
   })
 
   it("renders pagination", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(wrapper.find(Pagination)).toHaveLength(1)
   })
 
   describe("sort", () => {
     it("renders correctly", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       const text = wrapper.find(FairBoothSortFilter).text()
       expect(wrapper.find(FairBoothSortFilter).length).toBe(1)
       expect(text).toContain("Sort:")
@@ -98,7 +98,7 @@ describe("FairBooths", () => {
     })
 
     it("changes selected value on click", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       const sort = wrapper.find(SortFilter)
       expect(sort.find("option")).toHaveLength(2)
       expect(sort.prop("selected")).toEqual("FEATURED_DESC")
@@ -107,7 +107,7 @@ describe("FairBooths", () => {
     })
 
     it("calls refetch with proper params", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       const refetchSpy = jest.spyOn(
         (wrapper.find("FairBooths").props() as any).relay,
         "refetch"

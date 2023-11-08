@@ -43,7 +43,7 @@ afterEach(() => {
 
 describe("HomeNewWorksFromGalleriesYouFollowRail", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
 
     expect(wrapper.html()).toContain("/new-works-from-galleries-you-follow")
 
@@ -52,7 +52,7 @@ describe("HomeNewWorksFromGalleriesYouFollowRail", () => {
 
   describe("tracking", () => {
     it("tracks view all clicks", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       wrapper.find("RouterLink").at(1).simulate("click")
 
       expect(trackEvent).toBeCalledWith({
@@ -64,7 +64,7 @@ describe("HomeNewWorksFromGalleriesYouFollowRail", () => {
     })
 
     it("tracks item clicks", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       wrapper.find("RouterLink").at(2).simulate("click")
 
       expect(trackEvent).toBeCalledWith({

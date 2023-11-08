@@ -28,7 +28,7 @@ const { getWrapper } = setupTestWrapper<GeneFamilies_Test_Query>({
 
 describe("GeneFamilies", () => {
   it("renders gene families", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       GeneFamilyConnection: () => ({
         edges: [
           {

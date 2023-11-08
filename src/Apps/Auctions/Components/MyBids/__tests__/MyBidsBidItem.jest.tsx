@@ -37,7 +37,7 @@ describe("MyBidsBidItem", () => {
   })
 
   it("renders correct components and data", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       SaleArtwork: () => ({
         slug: "saleArtworkSlug",
         name: "saleArtworkName",
@@ -77,7 +77,7 @@ describe("MyBidsBidItem", () => {
   describe("component behavior", () => {
     describe("when watching", () => {
       it("shows highest bid amount", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           SaleArtwork: () => ({
             isWatching: true,
             currentBid: {
@@ -91,7 +91,7 @@ describe("MyBidsBidItem", () => {
       })
 
       it("shows estimate if no highest bid", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           SaleArtwork: () => ({
             isWatching: true,
             estimate: "estimate",
@@ -108,7 +108,7 @@ describe("MyBidsBidItem", () => {
 
     describe("when not watching", () => {
       it("shows the current bid", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           SaleArtwork: () => ({
             isWatching: false,
             currentBid: {
@@ -122,7 +122,7 @@ describe("MyBidsBidItem", () => {
       })
 
       it("shows proper bid label when only one bid", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           SaleArtwork: () => ({
             isWatching: false,
             lotState: {
@@ -136,7 +136,7 @@ describe("MyBidsBidItem", () => {
       })
 
       it("shows proper bid label when multiple bids", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           SaleArtwork: () => ({
             isWatching: false,
             lotState: {
@@ -152,7 +152,7 @@ describe("MyBidsBidItem", () => {
   })
 
   it("tracks clicks", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     wrapper.find("RouterLink").first().simulate("click")
     expect(trackEvent.mock.calls[0]).toMatchInlineSnapshot(`
       [

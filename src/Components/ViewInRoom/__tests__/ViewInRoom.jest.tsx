@@ -24,7 +24,7 @@ const { getWrapper } = setupTestWrapper({
 
 describe("ViewInRoom", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => ({ widthCm: 33, heightCm: 66 }),
       ResizedImageUrl: () => ({
         src: "example.jpg",

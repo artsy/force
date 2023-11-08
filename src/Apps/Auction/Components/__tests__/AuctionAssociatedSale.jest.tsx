@@ -20,7 +20,7 @@ describe("AuctionAssociatedSale", () => {
   })
 
   it("renders correct components", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         name: "Sale Name",
         displayTimelyAt: "Starts tomorrow",

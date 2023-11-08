@@ -40,7 +40,7 @@ describe("AuctionActiveBids", () => {
         slug: "auction-slug",
       },
     })
-    return getWrapper
+    return { getWrapper }
   }
 
   beforeAll(() => {
@@ -63,10 +63,10 @@ describe("AuctionActiveBids", () => {
   })
 
   describe("mobile", () => {
-    const getWrapper = setup("sm")
+    const { getWrapper } = setup("sm")
 
     it("renders correct components", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       expect(wrapper.text()).toContain("Your Active Bids")
       expect(
         wrapper.find("AuctionLotInfoFragmentContainer").exists()
@@ -77,10 +77,10 @@ describe("AuctionActiveBids", () => {
   })
 
   describe("desktop", () => {
-    const getWrapper = setup("lg")
+    const { getWrapper } = setup("lg")
 
     it("renders correct components", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       expect(wrapper.text()).toContain("Your Active Bids")
       expect(
         wrapper.find("AuctionLotInfoFragmentContainer").exists()
@@ -88,7 +88,7 @@ describe("AuctionActiveBids", () => {
     })
 
     it("shows current bid", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Me: () => ({
           lotStandings: [
             {
@@ -107,7 +107,7 @@ describe("AuctionActiveBids", () => {
 
     describe("auction with cascading lots, some closed", () => {
       it("displays bidding closed for a lot that has closed", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           Me: () => ({
             lotStandings: [
               {
@@ -137,7 +137,7 @@ describe("AuctionActiveBids", () => {
 
     describe("current bid", () => {
       it("shows current bid count", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           Me: () => ({
             lotStandings: [
               {
@@ -155,7 +155,7 @@ describe("AuctionActiveBids", () => {
       })
 
       it("handles pluralization", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           Me: () => ({
             lotStandings: [
               {
@@ -188,7 +188,7 @@ describe("AuctionActiveBids", () => {
       },
     }))
 
-    const wrapper = setup("sm")({
+    const { wrapper } = setup("sm").getWrapper({
       Me: () => ({
         internalID: "me-id",
       }),
@@ -218,7 +218,7 @@ describe("AuctionActiveBids", () => {
       },
     }))
 
-    const wrapper = setup("sm")({
+    const { wrapper } = setup("sm").getWrapper({
       Me: () => ({
         internalID: "me-id",
       }),

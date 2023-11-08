@@ -32,7 +32,7 @@ describe("MyBids", () => {
   })
 
   it("renders the correct components", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(wrapper.find("CarouselRail")).toBeDefined()
     expect(wrapper.find("SaleContainer")).toBeDefined()
     expect(wrapper.find("MyBidsBidHeaderFragmentContainer")).toBeDefined()
@@ -40,7 +40,7 @@ describe("MyBids", () => {
   })
 
   it("renders the Bid Now button if only user interaction is registration and button links out to sale", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Me: () => ({
         myBids: {
           active: [
@@ -60,7 +60,7 @@ describe("MyBids", () => {
   })
 
   it("tracks clicks on the only registered button", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Me: () => ({
         myBids: {
           active: [
