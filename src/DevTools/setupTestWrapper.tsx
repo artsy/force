@@ -131,8 +131,8 @@ export const setupTestWrapperTL = <T extends OperationType>({
         )
       })
 
-      const operationName = operation?.request.node.operation.name
-      const operationVariables = operation?.request.variables
+      const operationName = operation.request.node.operation.name
+      const operationVariables = operation.request.variables
 
       return { operation, operationName, operationVariables }
     }
@@ -143,8 +143,8 @@ export const setupTestWrapperTL = <T extends OperationType>({
       act(() => {
         env.mock.reject(operation, error)
       })
-      const operationName = operation?.request.node.operation.name
-      const operationVariables = operation?.request.variables
+      const operationName = operation.request.node.operation.name
+      const operationVariables = operation.request.variables
 
       return { operation, operationName, operationVariables }
     }
@@ -201,8 +201,8 @@ export const setupTestWrapper = <T extends OperationType>({
         )
       })
 
-      const operationName = operation?.request.node.operation.name
-      const operationVariables = operation?.request.variables
+      const operationName = operation.request.node.operation.name
+      const operationVariables = operation.request.variables
 
       return { operation, operationName, operationVariables }
     }
@@ -213,8 +213,8 @@ export const setupTestWrapper = <T extends OperationType>({
       act(() => {
         env.mock.reject(operation, error)
       })
-      const operationName = operation?.request.node.operation.name
-      const operationVariables = operation?.request.variables
+      const operationName = operation.request.node.operation.name
+      const operationVariables = operation.request.variables
 
       return { operation, operationName, operationVariables }
     }
