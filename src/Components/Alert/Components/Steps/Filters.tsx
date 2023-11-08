@@ -5,7 +5,7 @@ import { FC } from "react"
 import { Rarity } from "Components/Alert/Components/Filters/Rarity"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { Medium } from "Components/Alert/Components/Filters/Medium"
-import { Price } from "Components/Alert/Components/Filters/PriceRange"
+import { Price } from "Components/Alert/Components/Filters/Price"
 
 export const Filters: FC = () => {
   const { goToDetails } = useAlertContext()
