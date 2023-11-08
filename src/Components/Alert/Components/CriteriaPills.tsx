@@ -10,7 +10,7 @@ interface CriteriaPillsProps {
 export const CriteriaPills: FC<CriteriaPillsProps> = ({ editable = true }) => {
   const { state, dispatch } = useAlertContext()
 
-  const labels = state.preview.labels
+  const labels = state?.preview?.labels
 
   if (!labels) {
     return <CriteriaPillsPlaceholder />

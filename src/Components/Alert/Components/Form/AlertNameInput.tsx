@@ -15,7 +15,7 @@ export const AlertNameInput: FC = () => {
     <Input
       title="Alert Name"
       name="name"
-      placeholder={state.preview.displayName}
+      placeholder={state?.preview?.displayName}
       value={values.name}
       onChange={handleChange("name")}
       onBlur={handleBlur("name")}
