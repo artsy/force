@@ -4,7 +4,7 @@ import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { ShowMore } from "Components/Alert/Components/Filters/ShowMore"
 import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
 
-interface BaseAlertFilterProps {
+interface QuickMultipleSelectAlertFilterProps {
   criteriaKey: SearchCriteriaAttributeKeys
   description?: string
   expanded?: boolean
@@ -12,7 +12,7 @@ interface BaseAlertFilterProps {
   options: { value: string; name: string }[]
 }
 
-export const BaseAlertFilter: FC<BaseAlertFilterProps> = ({
+export const QuickMultipleSelectAlertFilter: FC<QuickMultipleSelectAlertFilterProps> = ({
   criteriaKey,
   description,
   expanded = false,

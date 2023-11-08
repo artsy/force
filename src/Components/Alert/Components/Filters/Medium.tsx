@@ -1,10 +1,10 @@
 import { FC } from "react"
 import { MEDIUM_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
-import { BaseAlertFilter } from "Components/Alert/Components/Filters/BaseAlertFilter"
+import { QuickMultipleSelectAlertFilter } from "Components/Alert/Components/Filters/QuickMultipleSelectAlertFilter"
 
 export const Medium: FC = () => {
   return (
-    <BaseAlertFilter
+    <QuickMultipleSelectAlertFilter
       expanded
       label="Medium"
       criteriaKey="additionalGeneIDs"
