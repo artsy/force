@@ -28,7 +28,6 @@ import {
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { Collapse } from "Apps/Order/Components/Collapse"
 
-import { selectShippingOption } from "Apps/Order/Mutations/SelectShippingOption"
 import { ShippingQuotesFragmentContainer } from "Apps/Order/Components/ShippingQuotes"
 
 import { ContextModule, OwnerType } from "@artsy/cohesion"
@@ -45,17 +44,13 @@ import {
 import { FormikHelpers } from "formik"
 import {
   ShippingContext,
-  useComputeOrderContext,
-} from "Apps/Order/Routes/Shipping2/ShippingContext"
-import { createUserAddress } from "Apps/Order/Mutations/CreateUserAddress"
-import { useSystemContext } from "System/useSystemContext"
-import { setShipping } from "Apps/Order/Mutations/SetShipping"
-import {
-  FulfillmentType,
-  ShippingAddressFormValues,
-} from "Apps/Order/Routes/Shipping2/shippingUtils"
+  useComputeShippingContext,
+} from "Apps/Order/Routes/Shipping2/support/ShippingContext"
+
+import { FulfillmentType } from "Apps/Order/Routes/Shipping2/support/shippingUtils"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
+import { log, warn } from "console"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -75,14 +70,14 @@ export type ShippingRouteStep =
   | "ready_to_proceed"
 
 export const ShippingRoute: FC<ShippingProps> = props => {
-  const { relayEnvironment } = useSystemContext()
   const { order, isCommittingMutation } = props
-  const orderContext = useComputeOrderContext(props)
+  const orderContext = useComputeShippingContext(props)
   const {
     initialValues,
     computedOrderData,
     step,
     helpers: { fulfillmentDetails: fulfillmentFormHelpers },
+    mutations,
   } = orderContext
 
   const isOffer = order.mode === "OFFER"
@@ -206,30 +201,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     [isArtsyShipping, orderTracking, props.dialog, selectedShippingQuoteId]
   )
 
-  const createUserAddressMutation = useCallback(
-    async (values: ShippingAddressFormValues) => {
-      createUserAddress(
-        relayEnvironment!,
-        {
-          addressLine1: values.addressLine1,
-          addressLine2: values.addressLine2,
-          city: values.city,
-          country: values.country,
-          name: values.name,
-          phoneNumber: values.phoneNumber,
-          postalCode: values.postalCode,
-          region: values.region,
-        },
-        () => null,
-        logger.error,
-        props.me,
-        () => null
-      )
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.me.id, relayEnvironment]
-  )
-
+  const {
+    saveFulfillmentDetails: saveFulfillmentDetailsMutation,
+    createSavedAddress: createSavedAddressMutation,
+    selectShippingQuote: selectShippingQuoteMutation,
+  } = mutations
   const handleSubmitFulfillmentDetails = useCallback(
     async (
       formValues: FulfillmentValues,
@@ -271,24 +247,45 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           }
         }
 
-        const result = await setShipping(props.commitMutation, {
-          input: fulfillmentMutationValues,
+        console.log("submitting mutation...", {
+          saveFulfillmentDetailsMutation,
         })
+        const result = await saveFulfillmentDetailsMutation({
+          variables: { input: fulfillmentMutationValues },
+        }).then(d => {
+          console.log("got result", d)
+          return d
+        })
+        console.log({ result })
 
+        warn({
+          result: JSON.stringify(
+            result.commerceSetShipping?.orderOrError,
+            null,
+            2
+          ),
+        })
         const orderOrError = result.commerceSetShipping?.orderOrError
 
         if (orderOrError?.error) {
           handleSubmitError(orderOrError.error)
           return
         }
+        log("no error")
 
         if (
           formValues.fulfillmentType === FulfillmentType.SHIP &&
           formValues.attributes.saveAddress
         ) {
-          await createUserAddressMutation(formValues.attributes)
+          log("creating user address")
+          await createSavedAddressMutation({
+            variables: { input: { attributes: { ...formValues.attributes } } },
+          })
+          log("creating user address done")
         }
+        log("handle submit done")
       } catch (error) {
+        log("mutation error:", error)
         logger.error(error)
 
         orderTracking.errorMessageViewed({
@@ -303,12 +300,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       }
     },
     [
-      props.commitMutation,
+      saveFulfillmentDetailsMutation,
+      requiresArtsyShippingTo,
       props.order.internalID,
       props.dialog,
-      requiresArtsyShippingTo,
       handleSubmitError,
-      createUserAddressMutation,
+      createSavedAddressMutation,
       orderTracking,
     ]
   )
@@ -318,14 +315,16 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
     if (selectedShippingQuoteId && order.internalID) {
       try {
-        const orderOrError = (
-          await selectShippingOption(props.commitMutation, {
+        const result = await selectShippingQuoteMutation({
+          variables: {
             input: {
               id: order.internalID,
               selectedShippingQuoteId: selectedShippingQuoteId,
             },
-          })
-        ).commerceSelectShippingOption?.orderOrError
+          },
+        })
+        // TODO: result.commerceSelectShippingOption may be null due to other error?
+        const orderOrError = result.commerceSelectShippingOption?.orderOrError
 
         if (orderOrError?.error) {
           handleSubmitError(orderOrError.error)
@@ -351,6 +350,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }, [
     props,
+    selectShippingQuoteMutation,
     selectedShippingQuoteId,
     advanceToPayment,
     handleSubmitError,

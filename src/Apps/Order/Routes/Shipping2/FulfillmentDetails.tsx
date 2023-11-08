@@ -39,11 +39,11 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { SavedAddressesFragmentContainer as SavedAddresses } from "Apps/Order/Routes/Shipping2/SavedAddresses2"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/support/ShippingContext"
 import {
   FulfillmentType,
   ShippingAddressFormValues,
-} from "Apps/Order/Routes/Shipping2/shippingUtils"
+} from "Apps/Order/Routes/Shipping2/support/shippingUtils"
 import { RouterLink } from "System/Router/RouterLink"
 import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
 
@@ -287,6 +287,8 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
     shippingContext.computedOrderData.shippingQuotes.length === 0
   )
 
+  // FIXME: Non-null assertion
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstArtwork = extractNodes(props.order.lineItems)[0]!.artwork!
 
   const savedAddresses = compact(

@@ -15,13 +15,13 @@ import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/SavedAddressItem2"
 import { extractNodes } from "Utils/extractNodes"
 import { themeGet } from "@styled-system/theme-get"
 
-import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/support/ShippingContext"
 import {
   SavedAddressType,
   ShippingAddressFormValues,
   addressWithFallbackValues,
   getDefaultUserAddress,
-} from "Apps/Order/Routes/Shipping2/shippingUtils"
+} from "Apps/Order/Routes/Shipping2/support/shippingUtils"
 import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
@@ -115,10 +115,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     )
   }
 
-  const onError = (message: string) => {
-    logger.error(message)
-  }
-
   const handleClickEditAddress = (address: SavedAddressType) => {
     setSelectedAddressID(address.id)
     setActiveModal({
@@ -176,9 +172,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           setActiveModal(null)
         }}
         onSuccess={refetchAndSelectAddress}
-        onDeleteAddress={refetchAddresses}
-        onError={onError}
-        me={me}
       />
       <Spacer y={4} />
     </>

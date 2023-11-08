@@ -14,7 +14,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-jest.mock("Apps/Order/Routes/Shipping2/ShippingContext", () => {
+jest.mock("Apps/Order/Routes/Shipping2/support/ShippingContext", () => {
   return {
     useShippingContext: () => ({
       computedOrderData: {
