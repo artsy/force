@@ -121,12 +121,6 @@ export const setupTestWrapperTL = <T extends OperationType>({
       />
     )
 
-    const view = render(<TestRenderer />)
-
-    env.mock.resolveMostRecentOperation(operation => {
-      return MockPayloadGenerator.generate(operation, mockResolvers)
-    })
-
     const mockResolveLastOperation = (mockResolvers: MockResolvers) => {
       const operation = env.mock.getMostRecentOperation()
 
@@ -144,10 +138,22 @@ export const setupTestWrapperTL = <T extends OperationType>({
     }
 
     const mockRejectLastOperation = (error: Error) => {
+      const operation = env.mock.getMostRecentOperation()
+
       act(() => {
-        env.mock.rejectMostRecentOperation(error)
+        env.mock.reject(operation, error)
       })
+      const operationName = operation?.request.node.operation.name
+      const operationVariables = operation?.request.variables
+
+      return { operation, operationName, operationVariables }
     }
+
+    const view = render(<TestRenderer />)
+
+    env.mock.resolveMostRecentOperation(operation => {
+      return MockPayloadGenerator.generate(operation, mockResolvers)
+    })
 
     return { ...view, env, mockResolveLastOperation, mockRejectLastOperation }
   }
@@ -185,6 +191,34 @@ export const setupTestWrapper = <T extends OperationType>({
       />
     )
 
+    const mockResolveLastOperation = (mockResolvers: MockResolvers) => {
+      const operation = env.mock.getMostRecentOperation()
+
+      act(() => {
+        env.mock.resolve(
+          operation,
+          MockPayloadGenerator.generate(operation, mockResolvers)
+        )
+      })
+
+      const operationName = operation?.request.node.operation.name
+      const operationVariables = operation?.request.variables
+
+      return { operation, operationName, operationVariables }
+    }
+
+    const mockRejectLastOperation = (error: Error) => {
+      const operation = env.mock.getMostRecentOperation()
+
+      act(() => {
+        env.mock.reject(operation, error)
+      })
+      const operationName = operation?.request.node.operation.name
+      const operationVariables = operation?.request.variables
+
+      return { operation, operationName, operationVariables }
+    }
+
     const wrapper = mount(
       <ErrorBoundary>
         <TestRenderer />
@@ -197,7 +231,7 @@ export const setupTestWrapper = <T extends OperationType>({
 
     wrapper.update()
 
-    return wrapper
+    return { wrapper, env, mockResolveLastOperation, mockRejectLastOperation }
   }
 
   return { getWrapper }
