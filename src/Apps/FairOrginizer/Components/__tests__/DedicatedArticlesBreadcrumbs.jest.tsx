@@ -22,7 +22,9 @@ const { getWrapper } = setupTestWrapper<
 
 describe("DedicatedArticlesBreadcrumbs", () => {
   it("renders proper router link", () => {
-    const wrapper = getWrapper({ FairOrganizer: () => ({ slug: "organizer" }) })
+    const { wrapper } = getWrapper({
+      FairOrganizer: () => ({ slug: "organizer" }),
+    })
 
     expect(wrapper.find("RouterLink").length).toBe(1)
     expect(wrapper.find("RouterLink").prop("to")).toEqual(
@@ -31,7 +33,7 @@ describe("DedicatedArticlesBreadcrumbs", () => {
   })
 
   it("displays breadcrumbs item containing fair organizer name", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       FairOrganizer: () => ({ name: "Organizer" }),
     })
 
@@ -39,13 +41,13 @@ describe("DedicatedArticlesBreadcrumbs", () => {
   })
 
   it("displays arrow left icon", () => {
-    const wrapper = getWrapper({})
+    const { wrapper } = getWrapper({})
 
     expect(wrapper.find("ChevronLeftIcon").length).toBe(1)
   })
 
   it("displays image", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       FairOrganizer: () => ({
         profile: {
           image: { url: "some-src" },
@@ -58,7 +60,7 @@ describe("DedicatedArticlesBreadcrumbs", () => {
   })
 
   it("displays title containing fair organizer name", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       FairOrganizer: () => ({ name: "Organizer" }),
     })
 

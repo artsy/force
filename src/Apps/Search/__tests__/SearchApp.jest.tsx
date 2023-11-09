@@ -42,7 +42,7 @@ const { getWrapper } = setupTestWrapper<SearchApp_Test_Query>({
 
 describe("SearchApp", () => {
   it("includes the total count", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Viewer: () => VIEWER_FIXTURE,
     })
     const html = wrapper.find("TotalResults").text()
@@ -50,7 +50,7 @@ describe("SearchApp", () => {
   })
 
   it("includes tabs w/ counts", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Viewer: () => VIEWER_FIXTURE,
     })
     const html = wrapper.find("NavigationTabs").text()

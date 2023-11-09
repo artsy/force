@@ -32,7 +32,7 @@ describe("ArtistWorksForSaleRail", () => {
   })
 
   it("does not render rail if no works", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artist: () => ({
         artworksConnection: { edges: null },
       }),
@@ -41,7 +41,7 @@ describe("ArtistWorksForSaleRail", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artist: () => ({
         name: "artistName",
         slug: "artistSlug",
@@ -60,7 +60,7 @@ describe("ArtistWorksForSaleRail", () => {
   })
 
   it("tracks to works route", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     wrapper.find("RouterLink").first().simulate("click")
     expect(trackingSpy).toHaveBeenCalledWith(
       expect.objectContaining({
@@ -73,7 +73,7 @@ describe("ArtistWorksForSaleRail", () => {
   })
 
   it("tracks work click", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     wrapper.find("RouterLink").at(2).simulate("click")
     expect(trackingSpy).toHaveBeenCalledWith(
       expect.objectContaining({

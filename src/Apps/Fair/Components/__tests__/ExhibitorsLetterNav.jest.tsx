@@ -30,14 +30,14 @@ const { getWrapper } = setupTestWrapper<ExhibitorsLetterNav_Test_Query>({
 
 describe("ExhibitorsLetterNav", () => {
   it("displays 27 elements", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({ exhibitorsGroupedByName }),
     })
     expect(wrapper.find("Letter").length).toBe(27)
   })
 
   it("displays letters either enabled or disabled", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({ exhibitorsGroupedByName }),
     })
 
@@ -59,7 +59,7 @@ describe("ExhibitorsLetterNav", () => {
   })
 
   it("displays letters with proper on-hover title", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({ exhibitorsGroupedByName }),
     })
 

@@ -190,7 +190,7 @@ describe("Payment", () => {
         }
       })
       isCommittingMutation = false
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       page = new PaymentTestPage(wrapper)
@@ -303,7 +303,7 @@ describe("Payment", () => {
     let page: PaymentTestPage
 
     beforeEach(() => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => OfferOrderWithShippingDetails,
       })
       page = new PaymentTestPage(wrapper)
@@ -341,7 +341,7 @@ describe("Payment", () => {
       })
       isCommittingMutation = false
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => achOrder,
       })
       page = new PaymentTestPage(wrapper)
@@ -423,7 +423,7 @@ describe("Payment", () => {
     }
 
     beforeEach(() => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => bankOrder,
       })
       page = new PaymentTestPage(wrapper)
@@ -458,7 +458,7 @@ describe("Payment", () => {
       })
       isCommittingMutation = false
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => sepaOrder,
       })
       page = new PaymentTestPage(wrapper)
@@ -519,7 +519,7 @@ describe("Payment", () => {
     }
 
     beforeEach(() => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => sepaOrder,
       })
       page = new PaymentTestPage(wrapper)
@@ -563,7 +563,7 @@ describe("Payment", () => {
         submitMutation: submitMutationMock,
       }))
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => wireOrder,
       })
       page = new PaymentTestPage(wrapper)
@@ -630,7 +630,7 @@ describe("Payment", () => {
     }
 
     beforeEach(() => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => wireOrder,
       })
       page = new PaymentTestPage(wrapper)
@@ -701,7 +701,7 @@ describe("Payment", () => {
     beforeEach(() => {
       jest.clearAllMocks()
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => privateSaleOrderWithWire,
       })
       page = new PaymentTestPage(wrapper)
@@ -759,7 +759,7 @@ describe("Payment", () => {
           }
         })
 
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => order,
         })
         page = new PaymentTestPage(wrapper)

@@ -129,7 +129,7 @@ describe("AuctionBidRoute", () => {
   })
 
   it("has the correct ModalDialog title", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         name: "Sale Name",
       }),
@@ -157,7 +157,7 @@ describe("AuctionBidRoute", () => {
       },
     }))
 
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         slug: "sale-slug",
       }),
@@ -171,7 +171,7 @@ describe("AuctionBidRoute", () => {
   })
 
   it("renders correct components", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         bidder: null,
       }),
@@ -189,7 +189,7 @@ describe("AuctionBidRoute", () => {
   })
 
   it("doesn't ask for credit card info if user has one on file", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         bidder: null,
       }),
@@ -209,7 +209,7 @@ describe("AuctionBidRoute", () => {
       submitBid: spy,
     }))
 
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     ;(wrapper.find("Formik").props() as any).onSubmit(values, helpers)
 
     expect(spy).toHaveBeenCalledWith(values, helpers)
@@ -238,7 +238,7 @@ describe("AuctionBidRoute", () => {
       },
     }))
 
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     ;(wrapper.find("Select").props() as any).onSelect("1000")
 
     expect(spy).toHaveBeenCalledWith({

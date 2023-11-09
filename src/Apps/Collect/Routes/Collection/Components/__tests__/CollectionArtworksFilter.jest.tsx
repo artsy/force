@@ -70,13 +70,13 @@ describe("CollectionArtworksFilter", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(wrapper.find("ArtworkFilterArtworkGrid").length).toBe(1)
     expect(wrapper.find("ArtworkGridItem").length).toBe(1)
   })
 
   it("renders filters in correct order for just collection", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       MarketingCollectionQuery: () => ({
         artistIDs: [],
       }),
@@ -142,7 +142,7 @@ describe("CollectionArtworksFilter", () => {
   })
 
   it("renders filters in correct order for artist's collection", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       MarketingCollectionQuery: () => ({
         artistIDs: ["some-unique-artist-id"],
       }),

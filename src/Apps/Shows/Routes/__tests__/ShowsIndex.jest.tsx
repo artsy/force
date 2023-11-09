@@ -35,7 +35,7 @@ const { getWrapper } = setupTestWrapper<ShowsIndex_Test_Query>({
 
 describe("ShowsIndex", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       OrderedSet: () => ({ name: "Featured Shows" }),
       Show: () => ({ name: "Example Show" }),
     })

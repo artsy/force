@@ -1,4 +1,4 @@
-import { AboutPartnerFragmentContainer } from "../../Overview/AboutPartner"
+import { AboutPartnerFragmentContainer } from "Apps/Partner/Components/Overview/AboutPartner"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
@@ -40,7 +40,7 @@ describe("AboutPartner", () => {
     limitedBio = limitedBio ? limitedBio : fullBio
     fullBio = fullBio ? fullBio : limitedBio
 
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         website,
         vatNumber,
@@ -64,7 +64,7 @@ describe("AboutPartner", () => {
     const slug = "the-unit-ldn"
     const internalID = "1234asdf"
 
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         website,
         slug,
@@ -83,7 +83,7 @@ describe("AboutPartner", () => {
   })
 
   it("doesn't render the text if data is empty", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         website: null,
         vatNumber: null,
@@ -97,7 +97,7 @@ describe("AboutPartner", () => {
   })
 
   it("doesn't render the component if all data is empty", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         website: null,
         vatNumber: null,

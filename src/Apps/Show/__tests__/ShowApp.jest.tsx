@@ -41,7 +41,7 @@ const { getWrapper } = setupTestWrapper<ShowApp_Test_Query>({
 
 describe("ShowApp", () => {
   it("renders the title", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Show: () => ({ name: "Example Show" }),
     })
     expect(wrapper.find("h1")).toHaveLength(1)
@@ -49,7 +49,7 @@ describe("ShowApp", () => {
   })
 
   it("renders the appropriate info", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         name: "Example Partner",
       }),
@@ -72,7 +72,7 @@ describe("ShowApp", () => {
   })
 
   it("renders a viewing room if there are any", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Show: () => ({
         viewingRoomsConnection: {
           edges: [
@@ -88,7 +88,7 @@ describe("ShowApp", () => {
   })
 
   it("does not render `Back to Fair` banner by default", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Show: () => ({
         isFairBooth: false,
         name: "Example Show",
@@ -100,7 +100,7 @@ describe("ShowApp", () => {
   })
 
   it("does not render `Back to Fair` banner without full featured fair", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Show: () => ({
         isFairBooth: true,
         name: "Example Show",
@@ -112,7 +112,7 @@ describe("ShowApp", () => {
   })
 
   it("render `Back to Fair` banner on fair booth pages", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Show: () => ({
         isFairBooth: true,
         name: "Example Show",

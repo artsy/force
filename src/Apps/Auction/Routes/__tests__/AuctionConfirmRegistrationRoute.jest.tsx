@@ -97,7 +97,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
   })
 
   it("has the correct ModalDialog title", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         name: "Sale Name",
       }),
@@ -120,7 +120,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
       },
     }))
 
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         slug: "sale-slug",
       }),
@@ -134,7 +134,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
   })
 
   it("shows identity verification notification", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         requireIdentityVerification: true,
         bidder: {
@@ -151,7 +151,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
   })
 
   it("hides identity verification notification", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         requireIdentityVerification: false,
       }),
@@ -166,7 +166,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
   it.each([[true], [false]])(
     "hides phone number input if phoneNumber is present and requireIdentityVerification is %s",
     requireIdentityVerification => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           requireIdentityVerification,
         }),
@@ -188,7 +188,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
   it.each([[true], [false]])(
     "shows phone number input if phoneNumber is not present and requireIdentityVerification is %s",
     requireIdentityVerification => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           requireIdentityVerification,
         }),
@@ -208,7 +208,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
   )
 
   it("renders correct components", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Me: () => ({
         hasQualifiedCreditCards: true,
       }),
@@ -288,7 +288,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
   })
 
   it("returns null if no qualified credit card", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Me: () => ({
         hasQualifiedCreditCards: false,
       }),
@@ -327,7 +327,7 @@ describe("AuctionConfirmRegistrationRoute", () => {
         },
       }))
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           slug: "sale-slug",
           internalID: "saleInternalID",

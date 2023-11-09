@@ -25,7 +25,7 @@ const { getWrapper } = setupTestWrapper<PartnerContacts_Test_Query>({
 
 describe("PartnerContacts", () => {
   it("displays partner contact cards", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         locations: {
           totalCount: 2,
@@ -53,7 +53,7 @@ describe("PartnerContacts", () => {
   })
 
   it("doesn't display contact card if there is no info", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         locations: {
           edges: null,

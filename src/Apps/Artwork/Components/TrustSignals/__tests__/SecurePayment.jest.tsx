@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { SecurePaymentFragmentContainer } from "../SecurePayment"
+import { SecurePaymentFragmentContainer } from "Apps/Artwork/Components/TrustSignals/SecurePayment"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
@@ -17,7 +17,7 @@ const { getWrapper } = setupTestWrapper({
 
 describe("SecurePayment", () => {
   it("Doesn't render when work is neither acquireable nor offerable", async () => {
-    const component = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => {
         return {
           is_acquireable: false,
@@ -25,11 +25,11 @@ describe("SecurePayment", () => {
         }
       },
     })
-    expect(component.find("TrustSignal").length).toBe(0)
+    expect(wrapper.find("TrustSignal").length).toBe(0)
   })
 
   it("Renders when the artwork is acquireable", async () => {
-    const component = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => {
         return {
           is_acquireable: true,
@@ -37,11 +37,11 @@ describe("SecurePayment", () => {
         }
       },
     })
-    expect(component.find("TrustSignal").length).toBe(1)
+    expect(wrapper.find("TrustSignal").length).toBe(1)
   })
 
   it("Renders when the artwork is offerable", async () => {
-    const component = getWrapper({
+    const { wrapper } = getWrapper({
       Artwork: () => {
         return {
           is_acquireable: false,
@@ -49,6 +49,6 @@ describe("SecurePayment", () => {
         }
       },
     })
-    expect(component.find("TrustSignal").length).toBe(1)
+    expect(wrapper.find("TrustSignal").length).toBe(1)
   })
 })

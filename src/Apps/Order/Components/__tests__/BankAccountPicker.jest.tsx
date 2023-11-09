@@ -125,7 +125,7 @@ describe("BankAccountFragmentContainer", () => {
     })
 
     it("does not render bank account selection", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
@@ -135,7 +135,7 @@ describe("BankAccountFragmentContainer", () => {
     })
 
     it("renders bank element form", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
@@ -175,7 +175,7 @@ describe("BankAccountFragmentContainer", () => {
     ]
 
     it("renders a list of the users saved bank accounts", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => BuyOrderPickup,
         Me: () => ({
           bankAccounts: {
@@ -197,7 +197,7 @@ describe("BankAccountFragmentContainer", () => {
     })
 
     it("shows the bank element when user selects 'add another bank account'", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => BuyOrderPickup,
         Me: () => ({
           bankAccounts: {
@@ -216,7 +216,7 @@ describe("BankAccountFragmentContainer", () => {
         type: "existing",
       }
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => BuyOrderPickup,
         Me: () => ({
           bankAccounts: {
@@ -236,7 +236,7 @@ describe("BankAccountFragmentContainer", () => {
         type: "existing",
       }
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => BuyOrderPickup,
         Me: () => ({
           bankAccounts: {
@@ -260,7 +260,7 @@ describe("BankAccountFragmentContainer", () => {
         }
       })
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => orderWithBankAccount,
         Me: () => ({
           bankAccounts: {
@@ -298,7 +298,7 @@ describe("BankAccountFragmentContainer", () => {
         submitMutation: submitMutationMock,
       }))
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => BuyOrderPickup,
         Me: () => ({
           bankAccounts: {
@@ -346,7 +346,7 @@ describe("BankAccountFragmentContainer", () => {
         submitMutation: submitMutationMock,
       }))
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => BuyOrderPickup,
         Me: () => ({
           bankAccounts: {

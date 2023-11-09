@@ -18,7 +18,7 @@ describe("UserRegistrationAuctions", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Me: () => ({
         saleRegistrationsConnection: {
           edges: [
@@ -38,7 +38,7 @@ describe("UserRegistrationAuctions", () => {
   })
 
   it("renders -Nothing to Show- message when no available sale found", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Me: () => ({
         saleRegistrationsConnection: {
           edges: [],
@@ -50,7 +50,7 @@ describe("UserRegistrationAuctions", () => {
   })
 
   it("renders -Registration for Upcoming Auctions- title even if data is not there", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Me: () => ({
         saleRegistrationsConnection: {
           edges: [],
@@ -62,7 +62,7 @@ describe("UserRegistrationAuctions", () => {
   })
 
   it("renders button with correct href of sale", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Me: () => ({
         saleRegistrationsConnection: {
           edges: [

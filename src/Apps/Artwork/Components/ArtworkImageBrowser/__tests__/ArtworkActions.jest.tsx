@@ -72,7 +72,7 @@ describe("ArtworkActions", () => {
     it("renders proper components for a team user", () => {
       mockUserIsAdmin = true
       mockUserIsTeam = true
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
 
       expect(wrapper.find(EditIcon).length).toBe(1)
       expect(wrapper.find(GenomeIcon).length).toBe(1)
@@ -82,7 +82,7 @@ describe("ArtworkActions", () => {
     it("renders proper components for a non-team user", () => {
       mockUserIsAdmin = false
       mockUserIsTeam = false
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({ isHangable: true, isDownloadable: true }),
       })
 
@@ -97,21 +97,21 @@ describe("ArtworkActions", () => {
 
     describe("concerning SaveButton states icon states", () => {
       it("renders heart icon when not sale", () => {
-        const wrapper = getWrapper({ Artwork: () => ({ sale: null }) })
+        const { wrapper } = getWrapper({ Artwork: () => ({ sale: null }) })
 
         expect(wrapper.find(HeartStrokeIcon).length).toBe(1)
         expect(wrapper.find(BellStrokeIcon).length).toBe(0)
       })
 
       it("renders heart icon when sale is closed", () => {
-        const wrapper = getWrapper({ Sale: () => ({ isClosed: true }) })
+        const { wrapper } = getWrapper({ Sale: () => ({ isClosed: true }) })
 
         expect(wrapper.find(HeartStrokeIcon).length).toBe(1)
         expect(wrapper.find(BellStrokeIcon).length).toBe(0)
       })
 
       it("renders bell icon when sale is open", () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           Sale: () => ({
             isAuction: true,
             isClosed: false,
@@ -125,13 +125,17 @@ describe("ArtworkActions", () => {
 
     describe("view in a room", () => {
       it("available for artworks that are hangable", () => {
-        const wrapper = getWrapper({ Artwork: () => ({ isHangable: true }) })
+        const { wrapper } = getWrapper({
+          Artwork: () => ({ isHangable: true }),
+        })
 
         expect(wrapper.find(ShowIcon).length).toBe(1)
       })
 
       it("is not available for non hangable artworks", () => {
-        const wrapper = getWrapper({ Artwork: () => ({ isHangable: false }) })
+        const { wrapper } = getWrapper({
+          Artwork: () => ({ isHangable: false }),
+        })
 
         expect(wrapper.find(ShowIcon).length).toBe(0)
       })
@@ -142,7 +146,7 @@ describe("ArtworkActions", () => {
         it("renders link if isDownloadable", () => {
           mockUserIsAdmin = false
           mockUserIsTeam = false
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             Artwork: () => ({ isDownloadable: true }),
           })
 
@@ -152,7 +156,7 @@ describe("ArtworkActions", () => {
         it("renders link if admin", () => {
           mockUserIsAdmin = true
           mockUserIsTeam = true
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             Artwork: () => ({ isDownloadable: false }),
           })
 
@@ -162,7 +166,7 @@ describe("ArtworkActions", () => {
         it("hides link if isDownloadable=false and the user is not an admin", () => {
           mockUserIsAdmin = false
           mockUserIsTeam = false
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             Artwork: () => ({ isDownloadable: false }),
           })
 
@@ -176,7 +180,7 @@ describe("ArtworkActions", () => {
     const getWrapper = getWrapperWithBreakpoint("xs")
 
     it("shows the More icon", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({ isHangable: true, isDownloadable: true }),
       })
 
@@ -192,7 +196,7 @@ describe("ArtworkActions", () => {
     it("shows no More icon if there are <= 3 actions", () => {
       mockUserIsAdmin = false
       mockUserIsTeam = false
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artwork: () => ({ isDownloadable: false, isHangable: true }),
       })
 

@@ -1,4 +1,4 @@
-import { FairsFairRowFragmentContainer } from "../FairsFairRow"
+import { FairsFairRowFragmentContainer } from "Apps/Fairs/Components/FairsFairRow"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { DateTime } from "luxon"
@@ -18,7 +18,7 @@ const { getWrapper } = setupTestWrapper({
 
 describe("FairsFairRow", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         name: "Example Fair",
         isoStartAt: DateTime.local().minus({ day: 7 }).toISODate(),
@@ -32,7 +32,7 @@ describe("FairsFairRow", () => {
 
   describe("upcoming fair", () => {
     it("renders correctly", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Fair: () => ({
           name: "Example Fair",
           isoStartAt: DateTime.local().plus({ day: 7 }).toISODate(),

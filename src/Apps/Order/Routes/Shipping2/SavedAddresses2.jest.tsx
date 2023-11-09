@@ -62,7 +62,7 @@ describe("Saved Addresses", () => {
 
   describe("Saved Addresses mutations", () => {
     it("edits the saved addresses after calling edit address mutation", async () => {
-      const wrapper = getWrapper(
+      const { wrapper } = getWrapper(
         { Me: () => userAddressMutation.me },
         { active: true }
       )
@@ -77,7 +77,7 @@ describe("Saved Addresses", () => {
 
   describe("Saved Addresses", () => {
     it("add address modal with expected props", async () => {
-      const wrapper = getWrapper(
+      const { wrapper } = getWrapper(
         {
           Me: () => ({
             addressConnection: mockAddressConnection,
@@ -95,7 +95,7 @@ describe("Saved Addresses", () => {
       })
     })
     it("edit address modal with expected props", async () => {
-      const wrapper = getWrapper(
+      const { wrapper } = getWrapper(
         {
           Me: () => ({
             addressConnection: mockAddressConnection,
@@ -119,7 +119,7 @@ describe("Saved Addresses", () => {
     })
 
     it("render an add address button", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Me: () => ({
           addressConnection: mockAddressConnection,
         }),
@@ -131,7 +131,7 @@ describe("Saved Addresses", () => {
 
     describe("when clicking on the add address button", () => {
       it("tracks an analytics event", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           Me: () => ({
             addressConnection: mockAddressConnection,
           }),
@@ -150,7 +150,7 @@ describe("Saved Addresses", () => {
     })
 
     it("renders radio buttons with addresses", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Me: () => ({
           addressConnection: mockAddressConnection,
         }),

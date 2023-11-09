@@ -19,7 +19,7 @@ const { getWrapper } = setupTestWrapper<ShowArtworksEmptyState_Test_Query>({
 describe("ShowArtworksEmptyState", () => {
   describe("fair booth", () => {
     it("renders the correct message for non-closed fair booths", () => {
-      const wrapper = getWrapper({ Show: () => ({ isFairBooth: true }) })
+      const { wrapper } = getWrapper({ Show: () => ({ isFairBooth: true }) })
       const html = wrapper.html()
 
       expect(html).toContain(
@@ -28,7 +28,7 @@ describe("ShowArtworksEmptyState", () => {
     })
 
     it("renders the correct message for closed fair booths", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Show: () => ({ isFairBooth: true, status: "closed" }),
       })
       const html = wrapper.html()
@@ -42,7 +42,7 @@ describe("ShowArtworksEmptyState", () => {
 
   describe("show", () => {
     it("renders the correct message for non-closed shows", () => {
-      const wrapper = getWrapper({ Show: () => ({ isFairBooth: false }) })
+      const { wrapper } = getWrapper({ Show: () => ({ isFairBooth: false }) })
       const html = wrapper.html()
 
       expect(html).toContain(
@@ -51,7 +51,7 @@ describe("ShowArtworksEmptyState", () => {
     })
 
     it("renders the correct message for closed shows", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Show: () => ({ isFairBooth: false, status: "closed" }),
       })
       const html = wrapper.html()

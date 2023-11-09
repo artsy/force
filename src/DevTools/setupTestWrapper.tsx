@@ -1,8 +1,12 @@
-import { render, RenderResult } from "@testing-library/react"
+import { act, render, RenderResult } from "@testing-library/react"
 import { mount } from "enzyme"
 import * as React from "react"
-import { QueryRenderer } from "react-relay"
-import { GraphQLTaggedNode, OperationType } from "relay-runtime"
+import { QueryRenderer, Variables } from "react-relay"
+import {
+  GraphQLTaggedNode,
+  OperationDescriptor,
+  OperationType,
+} from "relay-runtime"
 import {
   createMockEnvironment,
   MockPayloadGenerator,
@@ -77,7 +81,19 @@ type RTLRenderResult = RenderResult<
   typeof import("@testing-library/dom/types/queries"),
   HTMLElement
 >
-type RenderWithRelay = RTLRenderResult & { env: MockEnvironment }
+
+type RenderWithRelay = RTLRenderResult & {
+  env: MockEnvironment
+  mockResolveLastOperation: (
+    mockResolvers: MockResolvers
+  ) => {
+    operation: OperationDescriptor
+    operationName: string
+    operationVariables: Variables
+  }
+  mockRejectLastOperation: (error: Error) => void
+}
+
 export const setupTestWrapperTL = <T extends OperationType>({
   Component,
   query,
@@ -89,6 +105,7 @@ export const setupTestWrapperTL = <T extends OperationType>({
     mockedEnv?: ReturnType<typeof createMockEnvironment>
   ): RenderWithRelay => {
     const env = mockedEnv ?? createMockEnvironment()
+
     const TestRenderer = () => (
       <QueryRenderer<T>
         environment={env}
@@ -104,13 +121,41 @@ export const setupTestWrapperTL = <T extends OperationType>({
       />
     )
 
+    const mockResolveLastOperation = (mockResolvers: MockResolvers) => {
+      const operation = env.mock.getMostRecentOperation()
+
+      act(() => {
+        env.mock.resolve(
+          operation,
+          MockPayloadGenerator.generate(operation, mockResolvers)
+        )
+      })
+
+      const operationName = operation.request.node.operation.name
+      const operationVariables = operation.request.variables
+
+      return { operation, operationName, operationVariables }
+    }
+
+    const mockRejectLastOperation = (error: Error) => {
+      const operation = env.mock.getMostRecentOperation()
+
+      act(() => {
+        env.mock.reject(operation, error)
+      })
+      const operationName = operation.request.node.operation.name
+      const operationVariables = operation.request.variables
+
+      return { operation, operationName, operationVariables }
+    }
+
     const view = render(<TestRenderer />)
 
     env.mock.resolveMostRecentOperation(operation => {
       return MockPayloadGenerator.generate(operation, mockResolvers)
     })
 
-    return { ...view, env }
+    return { ...view, env, mockResolveLastOperation, mockRejectLastOperation }
   }
 
   return { renderWithRelay }
@@ -146,6 +191,34 @@ export const setupTestWrapper = <T extends OperationType>({
       />
     )
 
+    const mockResolveLastOperation = (mockResolvers: MockResolvers) => {
+      const operation = env.mock.getMostRecentOperation()
+
+      act(() => {
+        env.mock.resolve(
+          operation,
+          MockPayloadGenerator.generate(operation, mockResolvers)
+        )
+      })
+
+      const operationName = operation.request.node.operation.name
+      const operationVariables = operation.request.variables
+
+      return { operation, operationName, operationVariables }
+    }
+
+    const mockRejectLastOperation = (error: Error) => {
+      const operation = env.mock.getMostRecentOperation()
+
+      act(() => {
+        env.mock.reject(operation, error)
+      })
+      const operationName = operation.request.node.operation.name
+      const operationVariables = operation.request.variables
+
+      return { operation, operationName, operationVariables }
+    }
+
     const wrapper = mount(
       <ErrorBoundary>
         <TestRenderer />
@@ -158,7 +231,7 @@ export const setupTestWrapper = <T extends OperationType>({
 
     wrapper.update()
 
-    return wrapper
+    return { wrapper, env, mockResolveLastOperation, mockRejectLastOperation }
   }
 
   return { getWrapper }

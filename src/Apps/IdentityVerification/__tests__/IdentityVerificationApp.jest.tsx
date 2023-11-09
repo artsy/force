@@ -60,7 +60,7 @@ describe("IdentityVerification route", () => {
       })
 
       it("renders a message about an identity verification that is `passed`", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           IdentityVerification: () => ({
             state: "passed",
           }),
@@ -73,7 +73,7 @@ describe("IdentityVerification route", () => {
       })
 
       it("renders a message about an identity verification that is `failed`", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           IdentityVerification: () => ({
             state: "failed",
           }),
@@ -86,7 +86,7 @@ describe("IdentityVerification route", () => {
       })
 
       it("renders a message about an identity verification that is `watchlist_hit`", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           IdentityVerification: () => ({
             state: "watchlist_hit",
           }),
@@ -102,7 +102,7 @@ describe("IdentityVerification route", () => {
     })
 
     it("allows an identity verification instance's owner to view the landing page", async () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       const page = new IdentityVerificationAppTestPage(wrapper)
 
       expect(page.text()).toContain("Artsy Identity Verification")
@@ -114,7 +114,7 @@ describe("IdentityVerification route", () => {
       })
 
       it("user click on 'continue to verification' button is tracked", async () => {
-        const wrapper = getWrapper()
+        const { wrapper } = getWrapper()
         const page = new IdentityVerificationAppTestPage(wrapper)
 
         await page.clickStartVerification()
@@ -129,7 +129,7 @@ describe("IdentityVerification route", () => {
 
       it("user is redirected to the verification flow on a successful mutation", async () => {
         const env = createMockEnvironment()
-        const wrapper = getWrapper({}, {}, env)
+        const { wrapper } = getWrapper({}, {}, env)
         const page = new IdentityVerificationAppTestPage(wrapper)
 
         await page.clickStartVerification()
@@ -152,7 +152,7 @@ describe("IdentityVerification route", () => {
 
       it("user sees an error toast if the mutation fails", async () => {
         const env = createMockEnvironment()
-        const wrapper = getWrapper({}, {}, env)
+        const { wrapper } = getWrapper({}, {}, env)
         const page = new IdentityVerificationAppTestPage(wrapper)
 
         await page.clickStartVerification()
@@ -180,7 +180,7 @@ describe("IdentityVerification route", () => {
 
       it("shows an error message on network failiure", async () => {
         const env = createMockEnvironment()
-        const wrapper = getWrapper({}, {}, env)
+        const { wrapper } = getWrapper({}, {}, env)
         const page = new IdentityVerificationAppTestPage(wrapper)
 
         await page.clickStartVerification()

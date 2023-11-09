@@ -47,7 +47,7 @@ describe("CurrentAuctions", () => {
   })
 
   it("renders zerostate if no auctions", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       SaleConnection: () => ({
         edges: [],
       }),
@@ -57,7 +57,7 @@ describe("CurrentAuctions", () => {
   })
 
   it("renders current auctions and correct components", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       SaleConnection: () => ({
         totalCount: 5,
         pageInfo: {

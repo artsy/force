@@ -29,7 +29,7 @@ const { getWrapper } = setupTestWrapper<
 
 describe("ArtistsIndex", () => {
   it("renders the page", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       OrderedSet: () => ({ name: "Featured Artists" }),
     })
 

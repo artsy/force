@@ -25,14 +25,14 @@ const { getWrapper } = setupTestWrapper<FairOrganizerApp_Test_Query>({
 
 describe("FairOrganizerApp", () => {
   it("sets a title tag", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       FairOrganizer: () => ({ name: "Art Paris", slug: "art-paris" }),
     })
     expect(wrapper.find("Title").first().text()).toEqual("Art Paris | Artsy")
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(wrapper.find("MetaTags").length).toBe(1)
     expect(wrapper.find("FairOrganizerHeaderImage").length).toBe(1)
     expect(wrapper.find("FairOrganizerHeader").length).toBe(1)

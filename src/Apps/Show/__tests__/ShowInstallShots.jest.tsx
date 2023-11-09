@@ -25,13 +25,13 @@ const { getWrapper } = setupTestWrapper({
 
 describe("ShowInstallShots", () => {
   it("renders empty string if there are no images", () => {
-    const wrapper = getWrapper({ Show: () => ({ images: [] }) })
+    const { wrapper } = getWrapper({ Show: () => ({ images: [] }) })
 
     expect(wrapper.html()).toBe("")
   })
 
   it("renders the images", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Show: (_, generateID) => ({
         images: [{ internalID: generateID() }, { internalID: generateID() }],
       }),
@@ -42,7 +42,7 @@ describe("ShowInstallShots", () => {
   })
 
   it("zooms the second image when it is clicked", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Show: (_, generateID) => ({
         images: [
           { internalID: generateID() },

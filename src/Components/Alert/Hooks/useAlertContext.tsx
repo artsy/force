@@ -14,6 +14,13 @@ import {
 } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { useCreateAlert } from "Components/Alert/Hooks/useCreateAlert"
+import { useSystemContext } from "System/SystemContext"
+import {
+  PreviewSavedSearchAttributes,
+  useAlertContextPreviewQuery,
+} from "__generated__/useAlertContextPreviewQuery.graphql"
+import { Environment, fetchQuery, graphql } from "react-relay"
+import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { CustomRange } from "Components/PriceRange/constants"
 
 type Settings = {
@@ -23,11 +30,16 @@ type Settings = {
   push: boolean
 }
 
+type PreviewSavedSearch = NonNullable<
+  useAlertContextPreviewQuery["response"]["viewer"]
+>["previewSavedSearch"]
+
 export type State = {
   settings: Settings
   criteria: SearchCriteriaAttributes
   searchCriteriaID?: string
   currentArtworkID?: string
+  preview: PreviewSavedSearch
 }
 
 export const DEFAULT_STATE: State = {
@@ -38,6 +50,7 @@ export const DEFAULT_STATE: State = {
     push: false,
   },
   criteria: {},
+  preview: null,
 }
 
 type Action =
@@ -59,6 +72,7 @@ type Action =
       }
     }
   | { type: "SET_SEARCH_CRITERIA_ID"; payload: string }
+  | { type: "SET_PREVIEW"; payload: PreviewSavedSearch }
 
 const reducer = (onReset: () => State) => (state: State, action: Action) => {
   switch (action.type) {
@@ -111,6 +125,12 @@ const reducer = (onReset: () => State) => (state: State, action: Action) => {
         searchCriteriaID: action.payload,
       }
 
+    case "SET_PREVIEW":
+      return {
+        ...state,
+        preview: action.payload,
+      }
+
     default:
       return state
   }
@@ -142,12 +162,15 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   initialCriteria,
   currentArtworkID,
 }) => {
+  const { relayEnvironment } = useSystemContext()
+
   const initialState = {
     settings: DEFAULT_STATE.settings,
     criteria:
       getAllowedSearchCriteria(initialCriteria as SearchCriteriaAttributes) ??
       DEFAULT_STATE.criteria,
     currentArtworkID,
+    preview: null,
   }
   const basis = useRef<State>(initialState)
   const [current, setCurrent] = useState<
@@ -188,6 +211,48 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   useEffect(() => {
     basis.current = state
   }, [state])
+
+  // Fetching the display name and labels for alert name input placeholder and the criteria pills, when the criteria changes.
+
+  const { debouncedValue: debouncedCriteria } = useDebouncedValue({
+    value: state.criteria,
+    delay: 200,
+    settings: { leading: true },
+  })
+
+  useEffect(() => {
+    const fetchPreview = async (criteriaState: SearchCriteriaAttributes) => {
+      const data = await fetchQuery<useAlertContextPreviewQuery>(
+        relayEnvironment as Environment,
+        graphql`
+          query useAlertContextPreviewQuery(
+            $attributes: PreviewSavedSearchAttributes
+          ) {
+            viewer {
+              previewSavedSearch(attributes: $attributes) {
+                displayName
+                labels {
+                  displayValue
+                  field
+                  value
+                }
+              }
+            }
+          }
+        `,
+        { attributes: criteriaState as PreviewSavedSearchAttributes }
+      )?.toPromise()
+
+      if (!data?.viewer?.previewSavedSearch) return
+
+      dispatch({
+        type: "SET_PREVIEW",
+        payload: data?.viewer?.previewSavedSearch as PreviewSavedSearch,
+      })
+    }
+
+    fetchPreview(debouncedCriteria)
+  }, [debouncedCriteria, relayEnvironment])
 
   return (
     <AlertContext.Provider

@@ -79,13 +79,13 @@ describe("PartnerArtworks", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(wrapper.find("ArtworkFilterArtworkGrid").length).toBe(1)
     expect(wrapper.find("ArtworkGridItem").length).toBe(1)
   })
 
   it("renders filters in correct order", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       FilterArtworksConnection: () => ({
         counts: {
           followedArtists: 10,

@@ -34,7 +34,7 @@ afterEach(() => {
 
 describe("HomeRecentlyViewedRail", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       HomePage: () => ({
         artworkModule: {
           results: [
@@ -53,7 +53,7 @@ describe("HomeRecentlyViewedRail", () => {
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       wrapper.find("RouterLink").first().simulate("click")
       expect(trackEvent).toBeCalledWith({
         action: "clickedArtworkGroup",

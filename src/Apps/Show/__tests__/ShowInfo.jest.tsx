@@ -1,5 +1,5 @@
 import { graphql } from "react-relay"
-import { ShowInfoFragmentContainer } from "../Routes/ShowInfo"
+import { ShowInfoFragmentContainer } from "Apps/Show/Routes/ShowInfo"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 
 jest.unmock("react-relay")
@@ -20,7 +20,7 @@ describe("ShowInfo", () => {
     it("renders the basic page", () => {
       const events = []
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Show: () => ({ events }),
         Partner: () => ({ type: "Gallery" }),
       })
@@ -42,7 +42,7 @@ describe("ShowInfo", () => {
 
       const events = [event]
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Show: () => ({ events }),
         Partner: () => ({ type: "Gallery" }),
       })
@@ -67,7 +67,7 @@ describe("ShowInfo", () => {
 
       const events = [event]
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Show: () => ({ events }),
         Partner: () => ({ type: "Gallery" }),
       })
@@ -82,7 +82,7 @@ describe("ShowInfo", () => {
 
       const events = [event]
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Show: () => ({ events }),
         Partner: () => ({ type: "Gallery" }),
       })

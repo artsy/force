@@ -24,7 +24,7 @@ describe("ArtistCVRoute", () => {
   })
 
   it("renders a message with no show info", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artist: () => ({
         showsConnection: { edges: null },
       }),
@@ -33,7 +33,7 @@ describe("ArtistCVRoute", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artist: () => ({
         name: "artistName",
       }),

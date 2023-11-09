@@ -19,7 +19,7 @@ describe("FairTimer", () => {
   })
 
   it("should return closed if the fair has passed", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         startAt: "2020-08-19T08:00:00+00:00",
         endAt: "2020-09-19T08:00:00+00:00",
@@ -33,7 +33,7 @@ describe("FairTimer", () => {
     const startAt = DateTime.local().plus({ days: 1 }).toString()
     const endAt = DateTime.local().plus({ days: 2 }).toString()
 
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         startAt,
         endAt,

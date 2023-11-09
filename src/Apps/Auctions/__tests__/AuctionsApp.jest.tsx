@@ -48,33 +48,33 @@ describe("AuctionsApp", () => {
   })
 
   it("displays the auctions landing page", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(wrapper.find("AuctionsMeta").length).toBe(1)
   })
 
   it("renders the Current Auctions tab by default", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     const html = wrapper.html()
 
     expect(html).toContain("Current Auctions")
   })
 
   it("renders the Upcoming tab by default", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     const html = wrapper.html()
 
     expect(html).toContain("Upcoming")
   })
 
   it("renders the Past tab by default", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     const html = wrapper.html()
 
     expect(html).toContain("Past")
   })
 
   it("redirects to the Bid At Auction page", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(wrapper.find("RouterLink")).toBeDefined()
     expect(wrapper.find("RouterLink").first().props().to).toBe(
       "https://support.artsy.net/s/article/How-do-I-place-a-bid-in-an-auction"
@@ -86,7 +86,7 @@ describe("AuctionsApp", () => {
       user: null,
     }))
 
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     const html = wrapper.html()
     expect(html).toContain("Trending Lots")
   })
@@ -96,13 +96,13 @@ describe("AuctionsApp", () => {
       user: null,
     }))
 
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     const html = wrapper.html()
     expect(html).toContain("Current Highlights")
   })
 
   it("does not render auctions if they are not present", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       salesConnection: () => ({ edges: [] }),
     })
 
@@ -119,7 +119,7 @@ describe("AuctionsApp", () => {
       user: null,
     }))
 
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
 
     expect(wrapper.find("MyBidsFragmentContainer").length).toBe(0)
     expect(

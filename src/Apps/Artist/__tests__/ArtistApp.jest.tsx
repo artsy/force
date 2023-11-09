@@ -35,7 +35,7 @@ describe("ArtistApp", () => {
     it("renders correct components", () => {
       mockfindCurrentRoute.mockImplementation(() => ({}))
 
-      const wrapper = getWrapper(
+      const { wrapper } = getWrapper(
         {
           Artist: () => ({
             statuses: {
@@ -57,7 +57,7 @@ describe("ArtistApp", () => {
 
     it("tabs navigate to the correct urls", () => {
       mockfindCurrentRoute.mockImplementation(() => ({}))
-      const wrapper = getWrapper(
+      const { wrapper } = getWrapper(
         {
           Artist: () => ({
             slug: "artist-slug",
