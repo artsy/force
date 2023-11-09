@@ -1,4 +1,4 @@
-import { Box, Checkbox, Flex, Join, Spacer, Text } from "@artsy/palette"
+import { Checkbox, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { entries } from "lodash"
 import { FC } from "react"
 import { WAYS_TO_BUY_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
@@ -26,31 +26,26 @@ export const WaysToBuy: FC = () => {
     <>
       <Text variant="sm-display">Ways to buy</Text>
       <Spacer y={2} />
-      <Box style={{ columns: "2" }}>
-        <Flex flexDirection="column">
-          {checkboxes.map((checkbox, index) => {
-            return (
-              <>
-                <Join separator={<Spacer y={1} />}>
-                  <Checkbox
-                    key={index}
-                    onSelect={value => {
-                      dispatch({
-                        type: "SET_CRITERIA_ATTRIBUTE",
-                        payload: { key: checkbox.key, value },
-                      })
-                    }}
-                    selected={checkbox.selected}
-                    my={1}
-                  >
-                    {checkbox.name}
-                  </Checkbox>
-                </Join>
-              </>
-            )
-          })}
-        </Flex>
-      </Box>
+      <GridColumns>
+        {checkboxes.map((checkbox, index) => {
+          return (
+            <Column span={6} key={index}>
+              <Checkbox
+                key={index}
+                onSelect={value => {
+                  dispatch({
+                    type: "SET_CRITERIA_ATTRIBUTE",
+                    payload: { key: checkbox.key, value },
+                  })
+                }}
+                selected={checkbox.selected}
+              >
+                {checkbox.name}
+              </Checkbox>
+            </Column>
+          )
+        })}
+      </GridColumns>
     </>
   )
 }

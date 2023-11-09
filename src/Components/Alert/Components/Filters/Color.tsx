@@ -1,4 +1,11 @@
-import { Checkbox, Box, Text, Flex, Spacer } from "@artsy/palette"
+import {
+  Checkbox,
+  Box,
+  Text,
+  Spacer,
+  GridColumns,
+  Column,
+} from "@artsy/palette"
 import * as React from "react"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
@@ -6,31 +13,6 @@ import { COLOR_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/ColorFilt
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
 type ColorOption = typeof COLOR_OPTIONS[number]
-
-const ColorSwatch = styled.div`
-  width: ${themeGet("space.2")};
-  height: ${themeGet("space.2")};
-  border-radius: ${themeGet("space.2")};
-  flex-shrink: 0;
-`
-
-const BlackAndWhiteSwatch = styled(ColorSwatch)`
-  position: relative;
-  overflow: hidden;
-  border: 1px solid ${themeGet("colors.black10")};
-  transform: rotate(-135deg);
-
-  &::after {
-    content: "";
-    display: block;
-    width: 100%;
-    height: 50%;
-    position: absolute;
-    top: 0;
-    left: 0;
-    background-color: ${themeGet("colors.black100")};
-  }
-`
 
 const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
   colorOption,
@@ -89,18 +71,43 @@ export const Color: React.FC = () => {
     <>
       <Text variant="sm-display">Colors</Text>
       <Spacer y={2} />
-      <Box style={{ columns: "2" }}>
-        <Flex flexDirection="column">
-          {COLOR_OPTIONS.map(colorOption => {
-            return (
+      <GridColumns>
+        {COLOR_OPTIONS.map(colorOption => {
+          return (
+            <Column span={6} key={colorOption.value}>
               <ColorFilterOption
                 key={colorOption.value}
                 colorOption={colorOption as any}
               />
-            )
-          })}
-        </Flex>
-      </Box>
+            </Column>
+          )
+        })}
+      </GridColumns>
     </>
   )
 }
+
+const ColorSwatch = styled.div`
+  width: ${themeGet("space.2")};
+  height: ${themeGet("space.2")};
+  border-radius: ${themeGet("space.2")};
+  flex-shrink: 0;
+`
+
+const BlackAndWhiteSwatch = styled(ColorSwatch)`
+  position: relative;
+  overflow: hidden;
+  border: 1px solid ${themeGet("colors.black10")};
+  transform: rotate(-135deg);
+
+  &::after {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 50%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: ${themeGet("colors.black100")};
+  }
+`
