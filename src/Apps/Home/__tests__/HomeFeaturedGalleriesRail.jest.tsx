@@ -36,7 +36,7 @@ afterEach(() => {
 
 describe("HomeFeaturedGalleriesRail", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         name: "Test Gallery",
         href: "/test-href",
@@ -50,7 +50,7 @@ describe("HomeFeaturedGalleriesRail", () => {
   })
 
   it("shows initials if no images", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Profile: () => ({
         owner: {
           initials: "initials",
@@ -68,7 +68,7 @@ describe("HomeFeaturedGalleriesRail", () => {
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       wrapper.find("RouterLink").last().simulate("click")
       expect(trackEvent).toBeCalledWith({
         action: "clickedGalleryGroup",
@@ -82,7 +82,7 @@ describe("HomeFeaturedGalleriesRail", () => {
     })
 
     it("tracks view all", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       wrapper.find("RouterLink").first().simulate("click")
       expect(trackEvent).toBeCalledWith({
         action: "clickedGalleryGroup",

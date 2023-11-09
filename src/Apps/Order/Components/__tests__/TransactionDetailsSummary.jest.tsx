@@ -103,7 +103,7 @@ describe("TransactionDetailsSummaryItem", () => {
   describe("Order breakdown messaging", () => {
     it("shows the shipping and tax price as 'Calculated in next steps' when null before shipping address was added", async () => {
       transactionStep = "shipping"
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...transactionSummaryBuyOrder,
           taxTotal: null,
@@ -120,7 +120,7 @@ describe("TransactionDetailsSummaryItem", () => {
     })
 
     it("shows the shipping and tax price as 'Waiting for final costs' when null after shipping address was added", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...transactionSummaryBuyOrder,
           taxTotal: null,
@@ -137,7 +137,7 @@ describe("TransactionDetailsSummaryItem", () => {
     })
 
     it("shows tax import reminder", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => transactionSummaryBuyOrder,
       })
 
@@ -148,7 +148,7 @@ describe("TransactionDetailsSummaryItem", () => {
     })
 
     it("shows shipping confirmation note when shipping cannot be calculated after shipping address was added", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...transactionSummaryBuyOrder,
           shippingTotal: null,
@@ -164,7 +164,7 @@ describe("TransactionDetailsSummaryItem", () => {
     })
 
     it("does not show list price in the transaction summary", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => transactionSummaryOfferOrder,
       })
 
@@ -174,7 +174,7 @@ describe("TransactionDetailsSummaryItem", () => {
     })
 
     it("shows 'Waiting for final costs' when buyer total has not been calucuated yet", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...transactionSummaryBuyOrder,
           buyerTotal: null,
@@ -189,7 +189,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
   describe("CommerceBuyOrder", () => {
     it("shows a US prefix on the price when currency is USD", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => transactionSummaryBuyOrder,
       })
 
@@ -202,7 +202,7 @@ describe("TransactionDetailsSummaryItem", () => {
     })
 
     it("shows the shipping and tax price if it's greater than 0", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => transactionSummaryBuyOrder,
       })
 
@@ -216,7 +216,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
     describe("artsy shipping specific", () => {
       it("shows the shipping quote name if shipping by Arta", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () =>
             transactionSummaryBuyOrderWithSelectedShippingQuote,
         })
@@ -227,7 +227,7 @@ describe("TransactionDetailsSummaryItem", () => {
       })
 
       it("shows the correct footnotes for offers when user has not made selection yet", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () =>
             UntouchedMakeOfferWithArtsyShippingDomesticFromUS,
         })
@@ -242,7 +242,7 @@ describe("TransactionDetailsSummaryItem", () => {
       })
 
       it("shows the correct footnotes for offers when user selects a shipping quote", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...transactionSummaryOfferOrder,
             requestedFulfillment: {
@@ -286,7 +286,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
     it("shows the congratulations message when order gets submmited", async () => {
       showCongratulationMessage = true
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => transactionSummaryBuyOrder,
       })
 
@@ -303,7 +303,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
   describe("CommerceOfferOrder", () => {
     it("shows the shipping and tax price if it's greater than 0", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => transactionSummaryOfferOrder,
       })
 
@@ -317,7 +317,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
     it("shows the last submitted offer if requested", async () => {
       useLastSubmittedOffer = true
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...transactionSummaryOfferOrderPounds,
           __typename: "CommerceOfferOrder",
@@ -343,7 +343,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
     it("says 'seller's offer' when the last submitted offer is from the seller", async () => {
       useLastSubmittedOffer = true
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...transactionSummaryOfferOrderPounds,
           lastOffer: {
@@ -363,7 +363,7 @@ describe("TransactionDetailsSummaryItem", () => {
     it("takes an offer override parameter", async () => {
       useLastSubmittedOffer = true
       offerOverride = "$1billion"
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...transactionSummaryOfferOrder,
           lastOffer: {
@@ -382,7 +382,7 @@ describe("TransactionDetailsSummaryItem", () => {
 
     it("lets you specify whether to use list price or last offer as context price", async () => {
       offerContextPrice = "LAST_OFFER"
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...transactionSummaryOfferOrderPounds,
           lastOffer: {

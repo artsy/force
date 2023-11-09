@@ -28,7 +28,7 @@ const { getWrapper } = setupTestWrapper({
 
 describe("ArtistsRail", () => {
   it("renders artist list if partner not eligible for full profile", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         slug: "unit-london",
         profileArtistsLayout: "Grid",
@@ -48,7 +48,7 @@ describe("ArtistsRail", () => {
 
   describe("renders carousel", () => {
     it("renders container correctly", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Partner: () => ({
           slug: "unit-london",
           profileArtistsLayout: "Grid",
@@ -66,7 +66,7 @@ describe("ArtistsRail", () => {
     })
 
     it("doesn't render if no artists with published artworks", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Partner: () => ({
           slug: "unit-london",
           profileArtistsLayout: "Grid",
@@ -86,7 +86,7 @@ describe("ArtistsRail", () => {
 
   describe("renders list", () => {
     it("renders container correctly", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Partner: () => ({
           slug: "unit-london",
           profileArtistsLayout: "List",
@@ -104,7 +104,7 @@ describe("ArtistsRail", () => {
     })
 
     it("doesn't render if no artists", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Partner: () => ({
           slug: "unit-london",
           profileArtistsLayout: "List",

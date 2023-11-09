@@ -32,7 +32,7 @@ afterEach(() => {
 
 describe("HomeAuctionLotsRail", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Viewer: () => ({
         artworksConnection: {
           edges: [
@@ -55,7 +55,7 @@ describe("HomeAuctionLotsRail", () => {
 
   describe("tracking", () => {
     it("tracks artwork click", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Viewer: () => ({
           artworksConnection: {
             edges: [
@@ -86,7 +86,7 @@ describe("HomeAuctionLotsRail", () => {
     })
 
     it("tracks view all", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Viewer: () => ({
           artworksConnection: {
             edges: [

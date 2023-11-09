@@ -133,7 +133,7 @@ describe("The respond page", () => {
     })
 
     it("renders", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...testOrder,
 
@@ -174,7 +174,7 @@ describe("The respond page", () => {
     })
 
     it("shows a note if there is one", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => OfferOrderWithShippingDetailsAndNote,
       })
       const page = new RespondTestPage(wrapper)
@@ -183,7 +183,7 @@ describe("The respond page", () => {
     })
 
     it("shows the offer history item", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new RespondTestPage(wrapper)
@@ -198,7 +198,7 @@ describe("The respond page", () => {
     })
 
     it("hides offer note button for inquiry order", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...testOrder,
           isInquiryOrder: true,
@@ -224,7 +224,7 @@ describe("The respond page", () => {
 
     it("Accepting the seller's offer works", async () => {
       mockCommitMutation.mockResolvedValue(buyerCounterOfferSuccess)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new RespondTestPage(wrapper)
@@ -238,7 +238,7 @@ describe("The respond page", () => {
 
     it("Declining the seller's offer works", async () => {
       mockCommitMutation.mockResolvedValue(buyerCounterOfferSuccess)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new RespondTestPage(wrapper)
@@ -260,7 +260,7 @@ describe("The respond page", () => {
       })
 
       it("doesn't work if nothing was typed in", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => testOrder,
         })
         const page = new RespondTestPage(wrapper)
@@ -274,7 +274,7 @@ describe("The respond page", () => {
       })
 
       it("doesn't let the user continue if the offer value is not positive", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => testOrder,
         })
         const page = new RespondTestPage(wrapper)
@@ -289,7 +289,7 @@ describe("The respond page", () => {
 
       it("works when a valid number is inputted", async () => {
         mockCommitMutation.mockResolvedValue(buyerCounterOfferSuccess)
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => testOrder,
         })
         const page = new RespondTestPage(wrapper)
@@ -316,7 +316,7 @@ describe("The respond page", () => {
 
       it("works when a valid number is inputted for a non-usd currency", async () => {
         mockCommitMutation.mockResolvedValue(buyerCounterOfferSuccess)
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => ({ ...testOrder, currencyCode: "GBP" }),
         })
         const page = new RespondTestPage(wrapper)
@@ -344,7 +344,7 @@ describe("The respond page", () => {
 
     it("shows the error modal if submitting a counter offer fails at network level", async () => {
       mockCommitMutation.mockRejectedValue({})
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new RespondTestPage(wrapper)
@@ -362,7 +362,7 @@ describe("The respond page", () => {
 
     it("shows the error modal if submitting a counter offer fails for business reasons", async () => {
       mockCommitMutation.mockResolvedValue(buyerCounterOfferFailed)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new RespondTestPage(wrapper)
@@ -388,7 +388,7 @@ describe("The respond page", () => {
 
       it("shows if the offer amount is too small", async () => {
         mockCommitMutation.mockResolvedValue(buyerCounterOfferSuccess)
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => testOrder,
         })
         const page = new RespondTestPage(wrapper)
@@ -426,7 +426,7 @@ describe("The respond page", () => {
 
       it("shows if the offer amount is too high", async () => {
         mockCommitMutation.mockResolvedValue(buyerCounterOfferSuccess)
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => testOrder,
         })
         const page = new RespondTestPage(wrapper)
@@ -463,7 +463,7 @@ describe("The respond page", () => {
     })
 
     it("tracks the offer input focus", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new RespondTestPage(wrapper)
@@ -482,7 +482,7 @@ describe("The respond page", () => {
     })
 
     it("tracks viwing the low offer speedbump", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new RespondTestPage(wrapper)
@@ -501,7 +501,7 @@ describe("The respond page", () => {
     })
 
     it("tracks viwing the high offer speedbump", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new RespondTestPage(wrapper)

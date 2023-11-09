@@ -171,7 +171,7 @@ describe("AuctionRegistrationRoute", () => {
   })
 
   it("has the correct ModalDialog title", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect((wrapper.find("ModalDialog").props() as any).title).toEqual(
       "Register to Bid on Artsy"
     )
@@ -186,7 +186,7 @@ describe("AuctionRegistrationRoute", () => {
       },
     }))
 
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         slug: "sale-slug",
       }),
@@ -197,7 +197,7 @@ describe("AuctionRegistrationRoute", () => {
   })
 
   it("shows identity verification notification", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         requireIdentityVerification: true,
         bidder: {
@@ -214,7 +214,7 @@ describe("AuctionRegistrationRoute", () => {
   })
 
   it("hides identity verification notification", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         requireIdentityVerification: false,
       }),
@@ -227,7 +227,7 @@ describe("AuctionRegistrationRoute", () => {
   })
 
   it("renders correct components", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         requireIdentityVerification: true,
       }),
@@ -253,7 +253,7 @@ describe("AuctionRegistrationRoute", () => {
         },
       }))
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           slug: "sale-slug",
           internalID: "saleInternalID",

@@ -30,7 +30,7 @@ describe("DeepZoom", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
 
     expect(wrapper.html()).toContain(
       'input min="0" max="1" step="0.001" type="range"'
@@ -38,7 +38,7 @@ describe("DeepZoom", () => {
   })
 
   it("calls onClose when the close button is clicked", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
 
     expect(handleClose).not.toBeCalled()
 

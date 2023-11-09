@@ -30,7 +30,7 @@ afterEach(() => {
 
 describe("HomeFeaturedShowsRail", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Show: () => ({
         name: "Example Show",
         exhibitionPeriod: "June 9 – 25",
@@ -51,7 +51,7 @@ describe("HomeFeaturedShowsRail", () => {
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       wrapper.find("RouterLink").last().simulate("click")
       expect(trackEvent).toBeCalledWith({
         action: "clickedShowGroup",
@@ -65,7 +65,7 @@ describe("HomeFeaturedShowsRail", () => {
     })
 
     it("tracks view all", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
       wrapper.find("RouterLink").first().simulate("click")
       expect(trackEvent).toBeCalledWith({
         action: "clickedShowGroup",

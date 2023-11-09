@@ -42,7 +42,7 @@ describe("FairOrganizerFollowButton", () => {
   })
 
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Profile: () => ({
         isFollowed: false,
       }),
@@ -52,7 +52,7 @@ describe("FairOrganizerFollowButton", () => {
   })
 
   it("toggles following label", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Profile: () => ({
         isFollowed: true,
       }),
@@ -68,7 +68,7 @@ describe("FairOrganizerFollowButton", () => {
 
     mockUseAuthDialog.mockImplementation(() => ({ showAuthDialog }))
 
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       FairOrganizer: () => ({
         internalID: "fairOrganizerInternalID",
         name: "fairOrganizerName",
@@ -100,7 +100,7 @@ describe("FairOrganizerFollowButton", () => {
       user: "user",
     }))
 
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Profile: () => ({
         id: "profileId",
         internalID: "profileInternalID",

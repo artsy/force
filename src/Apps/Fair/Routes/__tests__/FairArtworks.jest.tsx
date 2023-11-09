@@ -56,7 +56,7 @@ describe("FairArtworks", () => {
   })
 
   it("renders correctly", async () => {
-    const wrapper = await getWrapper({
+    const { wrapper } = await getWrapper({
       Fair: () => FAIR_ARTWORKS_FIXTURE.fair,
     })
 
@@ -65,7 +65,7 @@ describe("FairArtworks", () => {
   })
 
   it("includes the artist filter", async () => {
-    const wrapper = await getWrapper({
+    const { wrapper } = await getWrapper({
       Fair: () => FAIR_ARTWORKS_FIXTURE.fair,
     })
 

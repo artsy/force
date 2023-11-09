@@ -26,7 +26,7 @@ const { getWrapper } = setupTestWrapper<NavigationTabs_Test_PartnerQuery>({
 
 describe("PartnerNavigationTabs", () => {
   it("renders all tabs by default", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         id: "white-cube",
         slug: "white-cube",
@@ -48,7 +48,7 @@ describe("PartnerNavigationTabs", () => {
   })
 
   it("display Shop instead of Works for Brand partner", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         id: "white-cube",
         partnerType: "Brand",
@@ -61,7 +61,7 @@ describe("PartnerNavigationTabs", () => {
   })
 
   it("doesn't display contact tab if no locations", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({ locations: { totalCount: null } }),
     })
     const html = wrapper.html()
@@ -70,7 +70,7 @@ describe("PartnerNavigationTabs", () => {
   })
 
   it("doesn't display articles tab if no locations", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({ articles: { totalCount: null } }),
     })
     const html = wrapper.html()
@@ -79,7 +79,7 @@ describe("PartnerNavigationTabs", () => {
   })
 
   it("doesn't display artists tab if no artists", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         displayArtistsSection: true,
         representedArtists: { totalCount: 0 },
@@ -92,7 +92,7 @@ describe("PartnerNavigationTabs", () => {
   })
 
   it("doesn't display artists tab if displayArtistsSection is false", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         displayArtistsSection: false,
         representedArtists: { totalCount: 10 },
@@ -105,7 +105,7 @@ describe("PartnerNavigationTabs", () => {
   })
 
   it("doesn't display viewing rooms tab if no vieving rooms", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Partner: () => ({
         viewingRooms: { totalCount: 0 },
       }),

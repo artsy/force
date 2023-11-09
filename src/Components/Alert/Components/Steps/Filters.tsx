@@ -1,9 +1,9 @@
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import { Box, Clickable, Flex, Join, Separator, Text } from "@artsy/palette"
 import { FC } from "react"
-
 import { Rarity } from "Components/Alert/Components/Filters/Rarity"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import { Medium } from "Components/Alert/Components/Filters/Medium"
 
 export const Filters: FC = () => {
   const { goToDetails } = useAlertContext()
@@ -27,6 +27,7 @@ export const Filters: FC = () => {
           <Separator my={2} />
           <Join separator={<Separator my={2} />}>
             <Rarity />
+            <Medium />
           </Join>
         </Box>
       </Flex>

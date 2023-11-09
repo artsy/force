@@ -190,7 +190,7 @@ describe("CreditCardPickerFragmentContainer", () => {
 
   describe("with no existing cards", () => {
     it("renders", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
@@ -203,7 +203,7 @@ describe("CreditCardPickerFragmentContainer", () => {
 
     it("does not show the 'manage cards' link if eigen", () => {
       isEigen = true
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
@@ -214,7 +214,7 @@ describe("CreditCardPickerFragmentContainer", () => {
   })
 
   it("always shows the billing address form without checkbox when the user selected 'pick' shipping option", async () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       CommerceOrder: () => BuyOrderPickup,
     })
     const page = new CreditCardPickerTestPage(wrapper)
@@ -227,7 +227,7 @@ describe("CreditCardPickerFragmentContainer", () => {
   })
 
   it("does not pre-populate with available details when returning to the payment route", async () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       CommerceOrder: () => ({
         ...BuyOrderPickup,
         id: "1234",
@@ -262,7 +262,7 @@ describe("CreditCardPickerFragmentContainer", () => {
   })
 
   it("always uses the billing address for stripe tokenization when the user selected 'pick' shipping option", async () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       CommerceOrder: () => ({
         ...BuyOrderPickup,
         id: "1234",
@@ -288,7 +288,7 @@ describe("CreditCardPickerFragmentContainer", () => {
   })
 
   it("tokenizes credit card information using shipping address as billing address", async () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       CommerceOrder: () => defaultData.order,
       Me: () => defaultData.me,
     })
@@ -308,7 +308,7 @@ describe("CreditCardPickerFragmentContainer", () => {
   })
 
   it("tokenizes credit card information with a different billing address", async () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       CommerceOrder: () => defaultData.order,
       Me: () => defaultData.me,
     })
@@ -336,7 +336,7 @@ describe("CreditCardPickerFragmentContainer", () => {
       },
     }
     _mockStripe().createToken.mockReturnValue(Promise.resolve(stripeToken))
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       CommerceOrder: () => defaultData.order,
       Me: () => defaultData.me,
     })
@@ -363,7 +363,7 @@ describe("CreditCardPickerFragmentContainer", () => {
       },
     }
     _mockStripe().createToken.mockReturnValue(Promise.resolve(stripeError))
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       CommerceOrder: () => defaultData.order,
       Me: () => defaultData.me,
     })
@@ -446,7 +446,7 @@ describe("CreditCardPickerFragmentContainer", () => {
 
     describe("with one card", () => {
       it("renders", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => orderWithoutCard,
           Me: () => ({
             creditCards: {
@@ -478,7 +478,7 @@ describe("CreditCardPickerFragmentContainer", () => {
 
       it("has no 'manage cards' link if eigen", () => {
         isEigen = true
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => orderWithoutCard,
           Me: () => ({
             creditCards: {
@@ -491,7 +491,7 @@ describe("CreditCardPickerFragmentContainer", () => {
       })
 
       it("shows the 'use new card' section when you select that option", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => orderWithoutCard,
           Me: () => ({
             creditCards: {
@@ -506,7 +506,7 @@ describe("CreditCardPickerFragmentContainer", () => {
       })
 
       it("hides the 'use new card' section if you select the card again", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => orderWithoutCard,
           Me: () => ({
             creditCards: {
@@ -523,7 +523,7 @@ describe("CreditCardPickerFragmentContainer", () => {
 
     describe("with two cards", () => {
       it("has three radio buttons", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => orderWithoutCard,
           Me: () => ({
             creditCards: {
@@ -559,7 +559,7 @@ describe("CreditCardPickerFragmentContainer", () => {
 
       it("shows the 'manage cards' link if eigen", () => {
         isEigen = true
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => orderWithoutCard,
           Me: () => ({
             creditCards: {
@@ -573,7 +573,7 @@ describe("CreditCardPickerFragmentContainer", () => {
       })
 
       it("returns the relevante credit card id if you select a different card", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => orderWithoutCard,
           Me: () => ({
             creditCards: {
@@ -591,7 +591,7 @@ describe("CreditCardPickerFragmentContainer", () => {
       })
 
       it("shows the 'use new card' section when you select that option", async () => {
-        const wrapper = getWrapper({
+        const { wrapper } = getWrapper({
           CommerceOrder: () => orderWithoutCard,
           Me: () => ({
             creditCards: {
@@ -609,7 +609,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     describe("when returning to the payment page when the initial card is saved", () => {
       describe("with two cards", () => {
         it("the card associated with the order is selected", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => orderWithCard,
             Me: () => ({
               creditCards: {
@@ -629,7 +629,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     describe("when returning to the payment page when the initial card is not saved", () => {
       describe("with two saved cards", () => {
         it("shows a radio button for the unsaved card with a selected radio", async () => {
-          const wrapper = getWrapper({
+          const { wrapper } = getWrapper({
             CommerceOrder: () => orderWithUnsavedCard,
             Me: () => ({
               creditCards: {
@@ -658,7 +658,7 @@ describe("CreditCardPickerFragmentContainer", () => {
       _mockStripe().createToken.mockReturnValue(
         Promise.resolve({ token: { id: "tokenId", postalCode: "1324" } })
       )
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
@@ -682,7 +682,7 @@ describe("CreditCardPickerFragmentContainer", () => {
       _mockStripe().createToken.mockReturnValue(
         Promise.resolve({ token: { id: "tokenId" } })
       )
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
@@ -710,7 +710,7 @@ describe("CreditCardPickerFragmentContainer", () => {
 
   describe("Analytics", () => {
     it("tracks click when use shipping address checkbox transitions from checked to unchecked but not from unchecked to checked", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
@@ -735,7 +735,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     })
 
     it("doesn't track clicks on the address checkbox when order status is not pending", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...OfferOrderWithShippingDetails,
           state: "SUBMITTED",
@@ -751,7 +751,7 @@ describe("CreditCardPickerFragmentContainer", () => {
 
   describe("Validations", () => {
     it("says a required field is required with billing address exposed", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
@@ -766,7 +766,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     })
 
     it("before submit, only shows a validation error on inputs that have been touched", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
@@ -786,7 +786,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     })
 
     it("after submit, shows all validation errors on inputs that have been touched", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
@@ -806,7 +806,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     })
 
     it("does not submit an empty form with billing address exposed", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
@@ -819,7 +819,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     })
 
     it("does not submit the mutation with an incomplete form with billing address exposed", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
@@ -835,7 +835,7 @@ describe("CreditCardPickerFragmentContainer", () => {
       _mockStripe().createToken.mockReturnValue(
         Promise.resolve({ token: { id: "tokenId" } })
       )
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
@@ -865,7 +865,7 @@ describe("CreditCardPickerFragmentContainer", () => {
       _mockStripe().createToken.mockReturnValue(
         Promise.resolve({ token: { id: "tokenId" } })
       )
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => defaultData.order,
         Me: () => defaultData.me,
       })
@@ -892,7 +892,7 @@ describe("CreditCardPickerFragmentContainer", () => {
     })
 
     it("overwrites null shipping address items with empty string when shipping address is selected for billing", async () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...BuyOrderWithShippingDetails,
           creditCard: null,

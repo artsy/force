@@ -133,7 +133,7 @@ describe("Payment", () => {
   })
 
   it("shows the countdown timer", async () => {
-    let wrapper = getWrapper({
+    let { wrapper } = getWrapper({
       CommerceOrder: () => ({
         ...testOrder,
         stateExpiresAt: DateTime.fromISO(NOW)
@@ -148,14 +148,14 @@ describe("Payment", () => {
 
   it("shows the button spinner while loading the mutation", async () => {
     isCommittingMutation = true
-    let wrapper = getWrapper()
+    let { wrapper } = getWrapper()
     let page = new OrderAppTestPage(wrapper)
 
     expect(page.isLoading()).toBeTruthy()
   })
 
   it("commits fixFailedPayment mutation with Gravity credit card id", async () => {
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
+    let { wrapper } = getWrapper({ CommerceOrder: () => testOrder })
     let page = new OrderAppTestPage(wrapper)
     await page.clickSubmit()
 
@@ -174,7 +174,7 @@ describe("Payment", () => {
 
   it("takes the user to the status page", async () => {
     mockCommitMutation.mockResolvedValue(fixFailedPaymentSuccess)
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
+    let { wrapper } = getWrapper({ CommerceOrder: () => testOrder })
     let page = new OrderAppTestPage(wrapper)
     await page.clickSubmit()
 
@@ -182,7 +182,7 @@ describe("Payment", () => {
   })
 
   it("does not do anything when there are form errors", async () => {
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
+    let { wrapper } = getWrapper({ CommerceOrder: () => testOrder })
     let page = new OrderAppTestPage(wrapper)
     CreditCardPickerMock.useInvalidFormResult()
     await page.clickSubmit()
@@ -192,7 +192,7 @@ describe("Payment", () => {
 
   it("shows the default error modal when the payment picker throws an error", async () => {
     CreditCardPickerMock.useThrownError()
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
+    let { wrapper } = getWrapper({ CommerceOrder: () => testOrder })
     let page = new OrderAppTestPage(wrapper)
 
     await page.clickSubmit()
@@ -203,7 +203,7 @@ describe("Payment", () => {
     mockCommitMutation.mockResolvedValueOnce(
       fixFailedPaymentInsufficientInventoryFailure
     )
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
+    let { wrapper } = getWrapper({ CommerceOrder: () => testOrder })
     let page = new OrderAppTestPage(wrapper)
     await page.clickSubmit()
 
@@ -218,7 +218,7 @@ describe("Payment", () => {
 
   it("shows a custom error modal with when the payment picker returns a normal error", async () => {
     CreditCardPickerMock.useErrorResult()
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
+    let { wrapper } = getWrapper({ CommerceOrder: () => testOrder })
     let page = new OrderAppTestPage(wrapper)
     await page.clickSubmit()
 
@@ -231,7 +231,7 @@ describe("Payment", () => {
 
   it("shows an error modal with the title 'An internal error occurred' and the default message when the payment picker returns an error with the type 'internal_error'", async () => {
     CreditCardPickerMock.useInternalErrorResult()
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
+    let { wrapper } = getWrapper({ CommerceOrder: () => testOrder })
     let page = new OrderAppTestPage(wrapper)
     await page.clickSubmit()
 
@@ -242,7 +242,7 @@ describe("Payment", () => {
 
   it("shows an error modal when fixing the failed payment fails", async () => {
     mockCommitMutation.mockResolvedValueOnce(fixFailedPaymentFailure)
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
+    let { wrapper } = getWrapper({ CommerceOrder: () => testOrder })
     let page = new OrderAppTestPage(wrapper)
     await page.clickSubmit()
 
@@ -255,7 +255,7 @@ describe("Payment", () => {
 
   it("shows an error modal when there is a network error", async () => {
     mockCommitMutation.mockRejectedValue({})
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
+    let { wrapper } = getWrapper({ CommerceOrder: () => testOrder })
     let page = new OrderAppTestPage(wrapper)
     await page.clickSubmit()
 
@@ -264,7 +264,7 @@ describe("Payment", () => {
 
   it("shows SCA modal when required", async () => {
     mockCommitMutation.mockResolvedValue(fixFailedPaymentWithActionRequired)
-    let wrapper = getWrapper({ CommerceOrder: () => testOrder })
+    let { wrapper } = getWrapper({ CommerceOrder: () => testOrder })
     let page = new OrderAppTestPage(wrapper)
     await page.clickSubmit()
 

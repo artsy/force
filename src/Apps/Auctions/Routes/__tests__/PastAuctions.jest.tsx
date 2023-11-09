@@ -47,7 +47,7 @@ describe("PastAuctions", () => {
   })
 
   it("renders zerostate if no auctions", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       SaleConnection: () => ({
         edges: [],
       }),
@@ -57,7 +57,7 @@ describe("PastAuctions", () => {
   })
 
   it("renders past auctions and correct components", async () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       SaleConnection: () => ({
         totalCount: 5,
         pageInfo: {

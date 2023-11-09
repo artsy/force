@@ -19,7 +19,7 @@ describe("FairEditorialRailArticles", () => {
   })
 
   it("renders shelf containing 4 editorial items", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         articlesConnection: {
           edges: [

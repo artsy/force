@@ -115,7 +115,7 @@ describe("Offer InitialMutation", () => {
 
   describe("the page layout", () => {
     it("has 4 price options - unique artwork", () => {
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -125,7 +125,7 @@ describe("Offer InitialMutation", () => {
       expect(page.text()).toContain("All offers are binding")
     })
     it("has price options - single edition with price", () => {
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...UntouchedOfferOrderSingleEditionSet,
           internalID: "1234",
@@ -137,7 +137,7 @@ describe("Offer InitialMutation", () => {
       expect(page.priceOptions.find("BorderedRadio")).toHaveLength(4)
     })
     it("doesn't have price options - single edition without price", () => {
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...UntouchedOfferOrderSingleEditionSetNoPrice,
           internalID: "1234",
@@ -147,7 +147,7 @@ describe("Offer InitialMutation", () => {
       expect(page.find("PriceOptions").exists()).toBeFalsy()
     })
     it("doesn't have price options - multiple editions", () => {
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...UntouchedOfferOrderMultipleEditionSets,
           internalID: "1234",
@@ -158,7 +158,7 @@ describe("Offer InitialMutation", () => {
     })
 
     it("can receive input, which updates the transaction summary", async () => {
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -172,7 +172,7 @@ describe("Offer InitialMutation", () => {
     })
 
     it("can select a price option which updates the transaction summary", async () => {
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -194,7 +194,7 @@ describe("Offer InitialMutation", () => {
     const offer = { ...testOffer, ...UntouchedOfferOrderInPounds }
 
     it("can receive input, which updates the transaction summary", async () => {
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => offer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -212,7 +212,7 @@ describe("Offer InitialMutation", () => {
     const offer = { ...testOffer, ...UntouchedOfferOrderWithRange }
 
     it("shows the list price as a range", () => {
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => offer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -222,7 +222,7 @@ describe("Offer InitialMutation", () => {
     })
 
     it("does not show the offer is too small warning", async () => {
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => offer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -233,7 +233,7 @@ describe("Offer InitialMutation", () => {
     })
 
     it("does not show the offer amount is too high warning", async () => {
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => offer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -247,7 +247,7 @@ describe("Offer InitialMutation", () => {
   describe("a offer note", () => {
     describe("non inquiry order offer", () => {
       it("displays OfferNote button", () => {
-        let wrapper = getWrapper({
+        let { wrapper } = getWrapper({
           CommerceOrder: () => testOffer,
         })
         let page = new OrderAppTestPage(wrapper)
@@ -259,7 +259,7 @@ describe("Offer InitialMutation", () => {
 
     describe("inquiry order offer", () => {
       it("hides the OfferNote button for an inquiry order", () => {
-        let wrapper = getWrapper({
+        let { wrapper } = getWrapper({
           CommerceOrder: () => ({ ...testOffer, isInquiryOrder: true }),
         })
         let page = new OrderAppTestPage(wrapper)
@@ -272,7 +272,7 @@ describe("Offer InitialMutation", () => {
 
   describe("mutation", () => {
     it("doesn't let the user continue if custom amount is invalid", async () => {
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -289,7 +289,7 @@ describe("Offer InitialMutation", () => {
     })
 
     it("lets the user continue with list price as offer if they haven't clicked any option", async () => {
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -301,7 +301,7 @@ describe("Offer InitialMutation", () => {
 
     it("routes to shipping screen after mutation completes - option", async () => {
       mockCommitMutation.mockResolvedValue(initialOfferSuccess)
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -317,7 +317,7 @@ describe("Offer InitialMutation", () => {
 
     it("routes to shipping screen after mutation completes - custom amount", async () => {
       mockCommitMutation.mockResolvedValue(initialOfferSuccess)
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -330,7 +330,7 @@ describe("Offer InitialMutation", () => {
 
     it("shows the button spinner while committing the mutation", async () => {
       isCommittingMutation = true
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -340,7 +340,7 @@ describe("Offer InitialMutation", () => {
 
     it("shows an error modal when there is an error from the server", async () => {
       mockCommitMutation.mockResolvedValue(initialOfferFailedCannotOffer)
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -353,7 +353,7 @@ describe("Offer InitialMutation", () => {
 
     it("shows a helpful error message in a modal when there is an error from the server because the amount is invalid", async () => {
       mockCommitMutation.mockResolvedValue(initialOfferFailedAmountIsInvalid)
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -369,7 +369,7 @@ describe("Offer InitialMutation", () => {
 
     it("shows no modal warning when an offer made on work with hidden price", async () => {
       mockCommitMutation.mockResolvedValue(initialOfferSuccess)
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...UntouchedOfferOrderPriceHidden,
           internalID: "1234",
@@ -386,7 +386,7 @@ describe("Offer InitialMutation", () => {
     })
 
     it("jumps to the custom amount input if custom amount is invalid", async () => {
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -401,7 +401,7 @@ describe("Offer InitialMutation", () => {
 
     describe("The 'amount too small' speed bump", () => {
       it("shows if the offer amount is too small", async () => {
-        let wrapper = getWrapper({
+        let { wrapper } = getWrapper({
           CommerceOrder: () => ({
             ...UntouchedOfferOrderMultipleEditionSets,
             internalID: "1234",
@@ -428,7 +428,7 @@ describe("Offer InitialMutation", () => {
 
   describe("Analytics", () => {
     it("tracks the offer input focus", () => {
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       let page = new OrderAppTestPage(wrapper)
@@ -450,7 +450,7 @@ describe("Offer InitialMutation", () => {
         flow: "Make offer",
         order_id: "1234",
       }
-      let wrapper = getWrapper({
+      let { wrapper } = getWrapper({
         CommerceOrder: () => testOffer,
       })
       let page = new OrderAppTestPage(wrapper)

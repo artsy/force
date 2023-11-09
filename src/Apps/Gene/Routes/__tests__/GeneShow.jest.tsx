@@ -29,7 +29,7 @@ const { getWrapper } = setupTestWrapper<GeneShow_Test_Query>({
 
 describe("GeneShow", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Gene: () => ({
         name: "Example Gene",
         displayName: "Display Name",
@@ -41,7 +41,7 @@ describe("GeneShow", () => {
   })
 
   it("renders fallback title correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Gene: () => ({
         name: "Example Gene",
         displayName: "",
@@ -53,7 +53,7 @@ describe("GeneShow", () => {
   })
 
   it("renders meta description and title from query", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Gene: () => ({
         meta: { description: "Gene Meta Description" },
         displayName: "Display Name",
@@ -71,7 +71,7 @@ describe("GeneShow", () => {
   })
 
   it("renders fallback meta description and fallback title", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Gene: () => ({
         name: "Design",
         meta: { description: null },

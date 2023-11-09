@@ -34,7 +34,7 @@ const { getWrapper } = setupTestWrapper({
 
 describe("ViewingRoomCard", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       ViewingRoom: () => ({
         title: "Ceramic Girl(s)",
         href: "/viewing-room/antonio-colombo-ceramic-girl-s",
@@ -66,7 +66,7 @@ describe("ViewingRoomCard", () => {
   })
 
   it("not renders the text if no data is null/undefined", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       ViewingRoom: () => ({
         title: null,
         href: null,

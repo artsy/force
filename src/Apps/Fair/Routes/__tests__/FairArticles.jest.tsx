@@ -18,7 +18,7 @@ const { getWrapper } = setupTestWrapper({
 
 describe("FairArticles", () => {
   it("renders the articles", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Article: () => ({
         thumbnailTitle: "Example Article",
         byline: "Example Author",
@@ -32,7 +32,7 @@ describe("FairArticles", () => {
   })
 
   it("renders an empty state when there are no articles", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Fair: () => ({
         articlesConnection: {
           totalCount: 0,

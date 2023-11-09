@@ -35,7 +35,7 @@ afterEach(() => {
 
 describe("HomeTrendingArtistsRail", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Artist: () => ({
         name: "Test Artist",
         href: "test-href",
@@ -51,7 +51,7 @@ describe("HomeTrendingArtistsRail", () => {
 
   describe("tracking", () => {
     it("tracks item clicks", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Artist: () => ({
           internalID: "test-artist-id",
           slug: "test-artist-slug",
@@ -72,7 +72,7 @@ describe("HomeTrendingArtistsRail", () => {
     })
 
     it("tracks view all", () => {
-      const wrapper = getWrapper()
+      const { wrapper } = getWrapper()
 
       wrapper.find("RouterLink").first().simulate("click")
 

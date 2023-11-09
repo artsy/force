@@ -1,7 +1,7 @@
 import { graphql } from "react-relay"
 import { DateTime } from "luxon"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
-import { AuctionWorksByFollowedArtistsRailFragmentContainer } from "../AuctionWorksByFollowedArtistsRail"
+import { AuctionWorksByFollowedArtistsRailFragmentContainer } from "Apps/Auction/Components/AuctionWorksByFollowedArtistsRail"
 import { AuctionWorksByFollowedArtistsRailTestQuery } from "__generated__/AuctionWorksByFollowedArtistsRailTestQuery.graphql"
 
 jest.unmock("react-relay")
@@ -23,12 +23,12 @@ describe("AuctionWorksByFollowedArtistsRail", () => {
   })
 
   it("renders correct components", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(wrapper.find("Rail")).toHaveLength(1)
   })
 
   it("renders correct title", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
     expect(wrapper.text()).toContain("Works By Artists You Follow")
   })
 
@@ -37,7 +37,7 @@ describe("AuctionWorksByFollowedArtistsRail", () => {
     const startDate = baseDate.minus({ hours: 1 })
     const endDate = baseDate.plus({ hours: 1 })
 
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Viewer: () => ({
         saleArtworksConnection: {
           edges: [

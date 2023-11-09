@@ -31,7 +31,7 @@ const { getWrapper } = setupTestWrapper<ArtistsByLetterQuery>({
 
 describe("ArtistsByLetter", () => {
   it("renders the page", () => {
-    const wrapper = getWrapper()
+    const { wrapper } = getWrapper()
 
     expect(wrapper.find("h1")).toHaveLength(1)
     expect(wrapper.find("h1").text()).toEqual("Artists - A")

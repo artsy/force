@@ -56,7 +56,7 @@ describe("RegisterButton", () => {
   })
 
   it("returns null if ecommerce sale", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         isAuction: false,
       }),
@@ -66,7 +66,7 @@ describe("RegisterButton", () => {
   })
 
   it("returns null if sale is closed", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       Sale: () => ({
         isClosed: true,
       }),
@@ -77,7 +77,7 @@ describe("RegisterButton", () => {
 
   describe("live open", () => {
     it("renders correctly", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           isLiveOpen: true,
         }),
@@ -89,7 +89,7 @@ describe("RegisterButton", () => {
 
   describe("qualified for bidding", () => {
     it("renders correctly", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           isPreview: false,
           bidder: {
@@ -107,7 +107,7 @@ describe("RegisterButton", () => {
 
   describe("should prompt ID verification", () => {
     it("renders correctly", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           requireIdentityVerification: true,
           bidder: {
@@ -130,7 +130,7 @@ describe("RegisterButton", () => {
 
   describe("registration pending", () => {
     it("renders correctly without identity verification", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           requireIdentityVerification: true,
           bidder: {
@@ -150,7 +150,7 @@ describe("RegisterButton", () => {
     })
 
     it("renders correctly with identity verification", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           requireIdentityVerification: false,
           bidder: {
@@ -166,7 +166,7 @@ describe("RegisterButton", () => {
 
   describe("registration closed", () => {
     it("renders correctly", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           isRegistrationClosed: true,
         }),
@@ -178,7 +178,7 @@ describe("RegisterButton", () => {
 
   describe("registration open", () => {
     it("renders correctly with identity verification", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           isClosed: false,
           isLiveOpen: false,
@@ -195,7 +195,7 @@ describe("RegisterButton", () => {
     })
 
     it("renders correctly without identity verification", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           isClosed: false,
           isLiveOpen: false,
@@ -215,7 +215,7 @@ describe("RegisterButton", () => {
         return { showAuthDialog }
       })
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Me: () => ({
           internalID: null,
         }),
@@ -252,7 +252,7 @@ describe("RegisterButton", () => {
         },
       }))
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Me: () => ({
           hasCreditCards: false,
         }),
@@ -278,7 +278,7 @@ describe("RegisterButton", () => {
         },
       }))
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Me: () => ({
           hasCreditCards: true,
         }),
@@ -310,7 +310,7 @@ describe("RegisterButton", () => {
         },
       }))
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Sale: () => ({
           isLiveOpen: true,
           liveURLIfOpen: "live-url",
@@ -331,7 +331,7 @@ describe("RegisterButton", () => {
         },
       }))
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Me: () => ({
           internalID: "me-id",
           isIdentityVerified: false,
@@ -368,7 +368,7 @@ describe("RegisterButton", () => {
         },
       }))
 
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         Me: () => ({
           hasCreditCards: true,
         }),

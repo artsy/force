@@ -96,7 +96,7 @@ describe("Buyer rejects seller offer", () => {
     })
 
     it("renders", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => ({
           ...testOrder,
           stateExpiresAt: DateTime.fromISO(NOW)
@@ -115,7 +115,7 @@ describe("Buyer rejects seller offer", () => {
     })
 
     it("Shows a change link that takes the user back to the respond page", () => {
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new OrderAppTestPage(wrapper)
@@ -138,7 +138,7 @@ describe("Buyer rejects seller offer", () => {
 
     it("routes to status page after mutation completes", async () => {
       mockCommitMutation.mockResolvedValue(rejectOfferSuccess)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new OrderAppTestPage(wrapper)
@@ -151,7 +151,7 @@ describe("Buyer rejects seller offer", () => {
 
     it("shows the button spinner while loading the mutation", async () => {
       isCommittingMutation = true
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new OrderAppTestPage(wrapper)
@@ -161,7 +161,7 @@ describe("Buyer rejects seller offer", () => {
 
     it("shows an error modal when there is an error from the server", async () => {
       mockCommitMutation.mockResolvedValue(rejectOfferFailed)
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new OrderAppTestPage(wrapper)
@@ -172,7 +172,7 @@ describe("Buyer rejects seller offer", () => {
 
     it("shows an error modal when there is a network error", async () => {
       mockCommitMutation.mockRejectedValue({})
-      const wrapper = getWrapper({
+      const { wrapper } = getWrapper({
         CommerceOrder: () => testOrder,
       })
       const page = new OrderAppTestPage(wrapper)

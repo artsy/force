@@ -41,7 +41,7 @@ const { getWrapper } = setupTestWrapper<ShowsCity_Test_Query>({
 
 describe("ShowsCity", () => {
   it("renders correctly", () => {
-    const wrapper = getWrapper({
+    const { wrapper } = getWrapper({
       City: () => ({ name: "Sunnydale" }),
       Show: () => ({ name: "Example Show", startAt: new Date().toISOString() }),
       ShowConnection: () => ({ totalCount: 44 }),
