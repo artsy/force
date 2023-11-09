@@ -15,6 +15,7 @@ export const Price: React.FC = () => {
       payload: { key: "priceRange", value: updatedValues.join("-") },
     })
   }
+
   return (
     <>
       <Text variant="sm-display">Price Range</Text>
