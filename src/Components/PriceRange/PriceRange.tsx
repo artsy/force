@@ -80,7 +80,8 @@ export const PriceRange: FC<PriceRangeProps> = ({
           bars={bars}
           selectedRange={[sliderRange[0], sliderRange[1]]}
           data-testid="PriceFilterHistogram"
-        /> }
+        />
+      )}
 
       <Spacer y={shouldDisplayHistogram(bars) ? 2 : 4} />
 
