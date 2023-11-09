@@ -20,7 +20,7 @@ export const Price: React.FC = () => {
     <>
       <Text variant="sm-display">Price Range</Text>
       <PriceRange
-        priceRange={state.criteria["priceRange"] || DEFAULT_PRICE_RANGE}
+        priceRange={state.criteria.priceRange || DEFAULT_PRICE_RANGE}
         onDebouncedUpdate={handlePriceRangeUpdate}
       />
     </>
