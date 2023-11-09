@@ -43,7 +43,6 @@ const ColorFilterOption: React.FC<{ colorOption: ColorOption }> = ({
         key={name}
         onSelect={selected => toggleColor(selected, value)}
         selected={state.criteria.colors?.includes(value)}
-        my={1}
       >
         <Box
           display="flex"
