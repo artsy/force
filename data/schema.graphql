@@ -13773,7 +13773,6 @@ type Partner implements Node {
     artistID: ID
     before: String
     first: Int
-    highQuality: Boolean
     last: Int
     partnerID: String
     represented: Boolean
@@ -14713,6 +14712,8 @@ type Query {
 
     # Returns the first _n_ elements from the list.
     first: Int
+
+    # (Deprecated) No longer supported
     highQuality: Boolean
 
     # Returns the last _n_ elements from the list.
@@ -15866,7 +15867,6 @@ type Query {
     artistID: ID
     before: String
     first: Int
-    highQuality: Boolean
     last: Int
     partnerID: String
     represented: Boolean
@@ -20500,7 +20500,6 @@ type Viewer {
     artistID: ID
     before: String
     first: Int
-    highQuality: Boolean
     last: Int
     partnerID: String
     represented: Boolean
