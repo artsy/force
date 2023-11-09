@@ -1,8 +1,8 @@
-import { Box, BoxProps, Input } from "@artsy/palette"
+import { Box, BoxProps, Input, PhoneInput } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ContactInformationForm_me$data } from "__generated__/ContactInformationForm_me.graphql"
-import { PhoneNumberInput } from "Components/PhoneNumberInput"
+import { countries } from "Utils/countries"
 
 export interface ContactInformationFormModel {
   name: string
@@ -52,23 +52,18 @@ export const ContactInformationForm: React.FC<ContactInformationFormProps> = ({
         onBlur={handleBlur}
         error={touched.email && errors.email}
       />
-      <PhoneNumberInput
+      <PhoneInput
+        options={countries}
+        onSelect={option => {
+          setFieldValue("phoneNumberCountryCode", option.value)
+        }}
+        name="phoneNumber"
+        onChange={handleChange}
+        onBlur={handleBlur}
         mt={4}
-        inputProps={{
-          name: "phoneNumber",
-          onBlur: handleBlur,
-          onChange: handleChange,
-          placeholder: "(000) 000 0000",
-          value: values.phoneNumber,
-        }}
-        selectProps={{
-          name: "phoneNumberCountryCode",
-          onBlur: handleBlur,
-          selected: values.phoneNumberCountryCode,
-          onSelect: value => {
-            setFieldValue("phoneNumberCountryCode", value)
-          },
-        }}
+        dropdownValue={values.phoneNumberCountryCode}
+        inputValue={values.phoneNumber}
+        placeholder="(000) 000 0000"
         required
         error={
           (touched.phoneNumberCountryCode && errors.phoneNumberCountryCode) ||

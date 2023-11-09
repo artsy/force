@@ -108,11 +108,8 @@ export const PriceRange: FC<PriceRangeProps> = ({
 
       <Flex>
         <Box flex={1}>
-          <Text variant="xs" mb={0.5}>
-            Min
-          </Text>
-
           <NumericInput
+            title="Min"
             label="$USD"
             name="price_min"
             min="0"
@@ -126,11 +123,8 @@ export const PriceRange: FC<PriceRangeProps> = ({
         <Spacer x={2} />
 
         <Box flex={1}>
-          <Text variant="xs" mb={0.5}>
-            Max
-          </Text>
-
           <NumericInput
+            title="Max"
             label="$USD"
             name="price_max"
             min="0"

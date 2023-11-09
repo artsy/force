@@ -10,8 +10,7 @@ import {
   Spacer,
   Text,
   Banner,
-  Select,
-  Box,
+  PhoneInput,
 } from "@artsy/palette"
 import {
   SavedAddressType,
@@ -204,48 +203,22 @@ export const AddressModal: React.FC<Props> = ({
                     />
                   )}
                 {user && userHasLabFeature(user, "Phone Number Validation") && (
-                  <Flex>
-                    <Box style={{ maxWidth: "35%" }}>
-                      <Select
-                        title="Phone number"
-                        description="Only used for shipping purposes"
-                        options={countries}
-                        onSelect={cc => {
-                          setCountryCode(cc)
-                        }}
-                        style={{
-                          letterSpacing: "1px",
-                          borderRight: "none",
-                        }}
-                        data-test="countryDropdown"
-                      />
-                    </Box>
-                    <Flex
-                      flexDirection="column"
-                      style={{
-                        width: "100%",
-                      }}
-                    >
-                      <Box height="100%"></Box>
-                      <Input
-                        title=""
-                        description=""
-                        placeholder={"Add phone number"}
-                        name="phoneNumber"
-                        type="tel"
-                        onChange={formik.handleChange}
-                        onBlur={e => {
-                          formik.handleBlur
-                        }}
-                        error={
-                          formik.touched.phoneNumber &&
-                          formik.errors.phoneNumber
-                        }
-                        value={formik.values?.phoneNumber ?? ""}
-                        style={{ borderLeft: "none" }}
-                      />
-                    </Flex>
-                  </Flex>
+                  <PhoneInput
+                    options={countries}
+                    onSelect={selected => {
+                      setCountryCode(selected.value)
+                    }}
+                    description="Only used for shipping purposes"
+                    placeholder="Add phone number"
+                    name="phoneNumber"
+                    type="tel"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    error={
+                      formik.touched.phoneNumber && formik.errors.phoneNumber
+                    }
+                    value={formik.values?.phoneNumber ?? ""}
+                  />
                 )}
                 <Spacer y={2} />
                 {(!address?.isDefault || createMutation) && (

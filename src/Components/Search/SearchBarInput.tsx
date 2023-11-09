@@ -248,6 +248,7 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
       }}
       dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
       flip={false}
+      height={40}
     />
   )
 }

@@ -48,7 +48,7 @@ export const formatCategoryValueForSubmission = (categoryValue: string) => {
 export const acceptableCategoriesForSubmission = () => {
   const categories: ({
     text: string
-    value: AcceptableValuesMapKey | null
+    value: AcceptableValuesMapKey | ""
   } | null)[] = categoryOptions.map(medium => {
     const newVal = formatCategoryValueForSubmission(medium.value)
     if (ACCEPTABLE_CATEGORY_VALUES_MAP[newVal]) {
@@ -56,6 +56,6 @@ export const acceptableCategoriesForSubmission = () => {
     }
     return null
   })
-  categories.unshift({ text: "Select", value: null })
+  categories.unshift({ text: "Select", value: "" })
   return compact(categories)
 }

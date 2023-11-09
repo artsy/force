@@ -6,7 +6,7 @@ import { BankDebitForm } from "./BankDebitForm"
 import { CreateBankDebitSetupForOrder } from "./Mutations/CreateBankDebitSetupForOrder"
 import { BankAccountPicker_order$data } from "__generated__/BankAccountPicker_order.graphql"
 import { Payment_order$data } from "__generated__/Payment_order.graphql"
-import { Box, Message, Spacer, Text } from "@artsy/palette"
+import { Box, Message, Spacer, Text, THEME } from "@artsy/palette"
 import { LoadingArea } from "Components/LoadingArea"
 import { camelCase, upperFirst } from "lodash"
 import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext/OrderPaymentContext"
@@ -84,50 +84,58 @@ export const BankDebitProvider: FC<Props> = ({ order, onError }) => {
   const appearance: Appearance = {
     theme: "stripe",
     variables: {
-      colorPrimary: "#000",
-      colorBackground: "#ffffff",
-      colorText: "#707070",
-      colorDanger: "#df1b41",
-      fontFamily: "Ideal Sans, system-ui, sans-serif",
-      borderRadius: "0px",
+      colorPrimary: THEME.colors.black100,
+      colorBackground: THEME.colors.white100,
+      colorText: THEME.colors.black100,
+      colorIcon: THEME.colors.black60,
+      colorDanger: THEME.colors.red100,
+      fontFamily: THEME.fonts.sans,
+      borderRadius: "3px",
     },
     rules: {
       ".Label": {
-        fontSize: "13.5px",
-        lineHeight: "20px",
-        fontFamily: "Helvetica, sans-serif",
-        color: "#000",
+        fontSize: THEME.textVariants.xs.fontSize, // "13px",
+        lineHeight: THEME.textVariants.xs.lineHeight, // "20px",
+        color: THEME.colors.black100,
+      },
+      ".Label--resting": {
+        color: THEME.colors.black60,
+      },
+      ".Label--floating": {
+        color: THEME.colors.black100,
       },
       ".Input": {
-        borderTop: "none",
-        borderLeft: "none",
-        borderRight: "none",
-        borderBottom: "1px solid #C2C2C2",
+        border: `1px solid ${THEME.colors.black30}`,
         transition: "border-color 0.25s",
         boxShadow: "none",
         paddingTop: "12px",
-        lineHeight: "26px",
-        marginBottom: "10px",
+        lineHeight: THEME.textVariants["sm-display"].lineHeight, // "20px",
+        marginBottom: THEME.space["1"], // "10px"
+        color: THEME.colors.black100,
+      },
+      ".Input--empty": {
+        color: THEME.colors.black60,
       },
       ".Input:focus": {
         boxShadow: "none",
-        color: "#000",
+        color: THEME.colors.black100,
+        borderColor: THEME.colors.blue100,
       },
       ".Input:hover": {
-        color: "#000",
-        borderColor: "#707070",
+        color: THEME.colors.black100,
+        borderColor: THEME.colors.black60,
       },
       ".Input--invalid": {
-        borderTop: "none",
-        borderLeft: "none",
-        borderRight: "none",
-        borderBottom: "1px solid #C82400",
-        color: "#000",
+        border: `1px solid ${THEME.colors.red100}`,
+        color: THEME.colors.black100,
         boxShadow: "none",
       },
+      ".Input:autofill": {
+        backgroundColor: THEME.colors.white100,
+      },
       ".TermsText": {
-        fontSize: "13px",
-        lineHeight: "20px",
+        fontSize: THEME.textVariants.xs.fontSize, // "13px",
+        lineHeight: THEME.textVariants.xs.lineHeight, // "20px",
       },
     },
   }

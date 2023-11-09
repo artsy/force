@@ -496,15 +496,9 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
               </Column>
 
               <Column span={12}>
-                <Text
-                  id="country-select"
-                  mb={0.5}
-                  variant="xs"
-                  color="black100"
-                >
-                  Country
-                </Text>
                 <CountrySelect
+                  title="Country"
+                  name="CountrySelect"
                   aria-labelledby="country-select"
                   tabIndex={tabbableFormValue("new_address")}
                   selected={values.attributes.country}

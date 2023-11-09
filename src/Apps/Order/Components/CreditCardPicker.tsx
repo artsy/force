@@ -21,7 +21,7 @@ import type {
   StripeElements,
   Stripe,
 } from "@stripe/stripe-js"
-import { CardElement } from "@stripe/react-stripe-js"
+import { CardNumberElement } from "@stripe/react-stripe-js"
 
 import {
   BorderedRadio,
@@ -118,9 +118,11 @@ export class CreditCardPicker extends React.Component<
     try {
       this.setState({ isCreatingStripeToken: true })
       const stripeBillingAddress = this.getStripeBillingAddress()
-      const cardElement = this.props.elements.getElement(CardElement)!
+      const cardNumberElement = this.props.elements.getElement(
+        CardNumberElement
+      )!
       return await this.props.stripe.createToken(
-        cardElement,
+        cardNumberElement,
         stripeBillingAddress
       )
     } finally {
@@ -316,7 +318,6 @@ export class CreditCardPicker extends React.Component<
           {userHasExistingCards && <Spacer y={2} />}
           <Flex flexDirection="column">
             <CreditCardInput
-              title="Credit card"
               error={stripeError?.message}
               onChange={response => {
                 this.setState({ stripeError: response.error! })

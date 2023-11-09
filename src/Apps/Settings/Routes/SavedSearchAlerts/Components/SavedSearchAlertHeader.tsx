@@ -28,8 +28,7 @@ export const SavedSearchAlertHeader: FC<SavedSearchAlertHeaderProps> = ({
       </Text>
 
       <Select
-        variant="inline"
-        title="Sort:"
+        title="Sort"
         options={SORT_OPTIONS}
         selected={selected}
         onSelect={onSortSelect}

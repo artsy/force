@@ -1,5 +1,5 @@
 import * as React from "react"
-import { Column, GridColumns, Input, Text } from "@artsy/palette"
+import { Column, GridColumns, Input } from "@artsy/palette"
 import { useFormikContext } from "formik"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
 import { CountrySelect } from "Components/CountrySelect"
@@ -30,10 +30,8 @@ export const AddressModalFields: React.FC = () => {
         />
       </Column>
       <Column span={12}>
-        <Text variant="xs" mb={0.5}>
-          Country
-        </Text>
         <CountrySelect
+          title="Country"
           selected={values?.country}
           onSelect={countryCode => {
             setFieldValue("country", countryCode)
