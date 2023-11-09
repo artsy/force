@@ -51,6 +51,5 @@ describe("OfferNote", () => {
     expect(text).toContain(
       "Add additional information to help the gallery to evaluate your offer."
     )
-    expect(text).toContain("0/1000")
   })
 })

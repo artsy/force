@@ -211,7 +211,7 @@ export const AddressForm: React.FC<AddressFormProps> = ({
       <Column span={12}>
         <CountrySelect
           title="Country"
-          name="Country Select"
+          id="country-select"
           tabIndex={tabIndex}
           selected={
             lockCountryToOrigin || (lockCountriesToEU && !value?.country)
