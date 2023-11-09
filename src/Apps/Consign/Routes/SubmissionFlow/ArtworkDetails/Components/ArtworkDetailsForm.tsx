@@ -139,7 +139,7 @@ const rarityOptions = ATTRIBUTION_CLASS_OPTIONS.map(({ name, value }) => ({
   value,
 }))
 
-rarityOptions.unshift({ text: "Select a Сlassification", value: "default" })
+rarityOptions.unshift({ text: "Select a Сlassification", value: "" })
 
 export interface ArtworkDetailsFormModel {
   artistName: string
@@ -284,10 +284,7 @@ export const ArtworkDetailsForm: React.FC = () => {
       </GridColumns>
       <GridColumns mt={[4, 2]}>
         <Column span={6}>
-          <Flex justifyContent="space-between">
-            <Text variant="xs" mb={0.5}>
-              Rarity
-            </Text>
+          <Flex justifyContent="flex-end">
             <Clickable
               onClick={() => setIsRarityModalOpen(true)}
               data-test-id="open-rarity-modal"
@@ -298,6 +295,7 @@ export const ArtworkDetailsForm: React.FC = () => {
             </Clickable>
           </Flex>
           <Select
+            title="Rarity"
             name="rarity"
             options={rarityOptions}
             selected={values.rarity}
@@ -306,9 +304,15 @@ export const ArtworkDetailsForm: React.FC = () => {
             onSelect={selected => setFieldValue("rarity", selected)}
           />
         </Column>
-        <Column span={6}>
+        <Column display="flex" span={6}>
           {limitedEditionRarity && (
-            <Flex alignItems="center" mt={[30, 0]} mb={[1, 0]}>
+            <Flex
+              flex={1}
+              alignSelf="flex-end"
+              alignItems="center"
+              mt={[30, 0]}
+              mb={[1, 0]}
+            >
               <Input
                 title="Edition Number"
                 placeholder="Your work's #"
@@ -337,54 +341,43 @@ export const ArtworkDetailsForm: React.FC = () => {
       <GridColumns mt={[30, 2]}>
         <Column span={6}>
           <Flex height="100%">
-            <Box width="50%" mr={2} height="100%">
-              <Text variant="xs" mb={0.5} mr={0.5}>
-                Height
-              </Text>
-              <LabeledInput
-                maxLength={256}
-                label={values.units}
-                name="height"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.height}
-              />
-            </Box>
-            <Box width="50%" height="100%">
-              <Text variant="xs" mb={0.5} mr={0.5}>
-                Width
-              </Text>
-              <LabeledInput
-                maxLength={256}
-                label={values.units}
-                name="width"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.width}
-              />
-            </Box>
+            <LabeledInput
+              title="Height"
+              width="50%"
+              mr={2}
+              maxLength={256}
+              label={values.units}
+              name="height"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.height}
+            />
+
+            <LabeledInput
+              title="Width"
+              width="50%"
+              maxLength={256}
+              label={values.units}
+              name="width"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.width}
+            />
           </Flex>
         </Column>
         <Column span={6} mt={[4, 0]}>
           <Flex height="100%">
-            <Box pr={[0, 1]} width="50%" height="100%">
-              <Flex>
-                <Text variant="xs" mb={0.5} mr={0.5}>
-                  Depth
-                </Text>
-                <Text variant="xs" color="black60">
-                  (Optional)
-                </Text>
-              </Flex>
-              <LabeledInput
-                maxLength={256}
-                label={values.units}
-                name="depth"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.depth}
-              />
-            </Box>
+            <LabeledInput
+              title="Depth (Optional)"
+              pr={[0, 1]}
+              width="50%"
+              maxLength={256}
+              label={values.units}
+              name="depth"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.depth}
+            />
             <RadioGroup
               width="50%"
               defaultValue={values.units}
@@ -401,11 +394,7 @@ export const ArtworkDetailsForm: React.FC = () => {
       </GridColumns>
       <GridColumns mt={[4, 2]}>
         <Column span={6}>
-          <Flex justifyContent="space-between">
-            <Text variant="xs" mb={0.5}>
-              Provenance
-            </Text>
-
+          <Flex justifyContent="flex-end">
             <Clickable
               onClick={() => setIsProvenanceModalOpen(true)}
               data-test-id="open-provenance-modal"
@@ -417,6 +406,7 @@ export const ArtworkDetailsForm: React.FC = () => {
           </Flex>
 
           <Input
+            title="Provenance"
             name="provenance"
             placeholder="Describe how you acquired the work"
             maxLength={256}
@@ -425,8 +415,9 @@ export const ArtworkDetailsForm: React.FC = () => {
             value={values.provenance}
           />
         </Column>
-        <Column span={6} mt={[4, 0]}>
+        <Column display="flex" alignItems="flex-end" span={6} mt={[4, 0]}>
           <LocationAutocompleteInput
+            flex={1}
             name="location"
             title="City"
             placeholder="Enter city where artwork is located"

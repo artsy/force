@@ -182,7 +182,7 @@ export const NavBar: React.FC = track(
 
             {/* Top-tier */}
             <Flex pt={1} pb={[1, 0]} alignItems="stretch" flex={1}>
-              <NavBarPrimaryLogo mr={1} />
+              <NavBarPrimaryLogo mr={[1, 2]} />
 
               <Flex
                 flex={1}
@@ -213,7 +213,7 @@ export const NavBar: React.FC = track(
               </Flex>
 
               {/* Desktop. Collapses into mobile at `xs` breakpoint. */}
-              <Flex display={["none", "flex"]} ml={1} alignItems="stretch">
+              <Flex display={["none", "flex"]} ml={2} alignItems="stretch">
                 <Text variant="sm" lineHeight={1} display={["none", "flex"]}>
                   <Flex alignItems="center" display={["none", "none", "flex"]}>
                     <NavBarItemLink

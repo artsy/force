@@ -7,6 +7,7 @@ import {
   Flex,
   Join,
   ModalDialog,
+  PhoneInput,
   Separator,
   Spacer,
   Text,
@@ -39,12 +40,10 @@ import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRa
 import { ConfirmationStepModal } from "Components/SavedSearchAlert/ConfirmationStepModal"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { SavedSearchAlertNameInputQueryRenderer } from "Components/SavedSearchAlert/Components/SavedSearchAlertNameInput"
-import {
-  PhoneNumberInput,
-  validatePhoneNumber,
-} from "Components/PhoneNumberInput"
+import { validatePhoneNumber } from "Components/PhoneNumberInput"
 import { useUserPhoneNumber } from "Components/SavedSearchAlert/useUserPhoneNumber"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
+import { countries } from "Utils/countries"
 
 interface SavedSearchAlertFormProps {
   entity: SavedSearchEntity
@@ -303,23 +302,18 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
                       <>
                         <Spacer y={2} />
 
-                        <PhoneNumberInput
+                        <PhoneInput
+                          options={countries}
                           mt={4}
                           required
-                          inputProps={{
-                            name: "phoneNumber",
-                            onBlur: handleBlur,
-                            onChange: handleChange,
-                            placeholder: "(000) 000 0000",
-                            value: values.phoneNumber,
-                          }}
-                          selectProps={{
-                            name: "phoneCountryCode",
-                            onBlur: handleBlur,
-                            selected: values.phoneCountryCode,
-                            onSelect: value => {
-                              setFieldValue("phoneCountryCode", value)
-                            },
+                          name="phoneNumber"
+                          placeholder="(000) 000 0000"
+                          inputValue={values.phoneNumber}
+                          dropdownValue={values.phoneCountryCode}
+                          onBlur={handleBlur}
+                          onChange={handleChange}
+                          onSelect={option => {
+                            setFieldValue("phoneCountryCode", option.value)
                           }}
                           error={errors.phoneCountryCode || errors.phoneNumber}
                         />

@@ -101,6 +101,6 @@ describe("SearchResultsArtworks", () => {
   it("renders sort input", () => {
     renderWithRelay()
 
-    expect(screen.getByText("Sort:")).toBeInTheDocument()
+    expect(screen.getByText("Sort")).toBeInTheDocument()
   })
 })

@@ -2,7 +2,7 @@ export const rarityOptions = [
   {
     name: "Select a Сlassification",
     text: "Select a Сlassification",
-    value: "default",
+    value: "",
   },
   {
     name: "Unique",

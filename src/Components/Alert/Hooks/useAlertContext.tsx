@@ -21,6 +21,7 @@ import {
 } from "__generated__/useAlertContextPreviewQuery.graphql"
 import { Environment, fetchQuery, graphql } from "react-relay"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
+import { CustomRange } from "Components/PriceRange/constants"
 
 type Settings = {
   details: string
@@ -60,14 +61,14 @@ type Action =
       type: "SET_CRITERIA_ATTRIBUTE"
       payload: {
         key: SearchCriteriaAttributeKeys
-        value: string | string[] | number | boolean | null
+        value: string | string[] | number | boolean | null | CustomRange
       }
     }
   | {
       type: "REMOVE_CRITERIA_ATTRIBUTE_VALUE"
       payload: {
         key: SearchCriteriaAttributeKeys
-        value: string | string[] | number | boolean | null
+        value: string | string[] | number | boolean | null | CustomRange
       }
     }
   | { type: "SET_SEARCH_CRITERIA_ID"; payload: string }

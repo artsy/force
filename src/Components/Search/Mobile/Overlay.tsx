@@ -113,9 +113,7 @@ export const Overlay: FC<OverlayProps> = ({ viewer, relay, onClose }) => {
               ref={inputRef}
               value={inputValue}
               placeholder={t`navbar.searchArtsy`}
-              label={
-                <SearchIcon fill="black60" aria-hidden mr={-10} size={18} />
-              }
+              label={<SearchIcon fill="black60" aria-hidden size={18} />}
               onChange={handleValueChange}
             />
           </Box>

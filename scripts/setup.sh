@@ -24,7 +24,7 @@ yarn install || (npm install --global yarn@latest && yarn install)
 # For more info on shared configuration see:
 # https://github.com/artsy/force/blob/main/docs/env_configuration.md
 echo "Downloading .env.shared file..."
-if ! aws s3 cp s3://artsy-citadel/dev/.env.force .env.shared; then
+if ! aws s3 cp s3://artsy-citadel/force/.env.shared ./; then
   echo "Unable to download shared config from s3. Using .env.oss!"
   echo "This is expected for open source contributors."
   echo "If you work at Artsy, please check your s3 access."

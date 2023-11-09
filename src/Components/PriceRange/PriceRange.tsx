@@ -75,51 +75,13 @@ export const PriceRange: FC<PriceRangeProps> = ({
 
   return (
     <>
-      <Flex>
-        <Box flex={1}>
-          <Text variant="xs" mb={0.5}>
-            Min
-          </Text>
-
-          <NumericInput
-            label="$USD"
-            name="price_min"
-            min="0"
-            step="100"
-            aria-label="Min price"
-            value={getPriceValue(minValue)}
-            onChange={handleInputValueChange(0)}
-          />
-        </Box>
-
-        <Spacer x={2} />
-
-        <Box flex={1}>
-          <Text variant="xs" mb={0.5}>
-            Max
-          </Text>
-
-          <NumericInput
-            label="$USD"
-            name="price_max"
-            min="0"
-            step="100"
-            aria-label="Max price"
-            value={getPriceValue(maxValue)}
-            onChange={handleInputValueChange(1)}
-          />
-        </Box>
-      </Flex>
-
-      <Spacer y={2} />
-
-      {bars && shouldDisplayHistogram(bars) ? (
+      {!!bars && !!shouldDisplayHistogram(bars) && (
         <Histogram
           bars={bars}
           selectedRange={[sliderRange[0], sliderRange[1]]}
           data-testid="PriceFilterHistogram"
         />
-      ) : null}
+      )}
 
       <Spacer y={shouldDisplayHistogram(bars) ? 2 : 4} />
 
@@ -140,6 +102,38 @@ export const PriceRange: FC<PriceRangeProps> = ({
         <Text variant="xs" color="black60">
           ${defaultMaxValue}+
         </Text>
+      </Flex>
+
+      <Spacer y={2} />
+
+      <Flex>
+        <Box flex={1}>
+          <NumericInput
+            title="Min"
+            label="$USD"
+            name="price_min"
+            min="0"
+            step="100"
+            aria-label="Min price"
+            value={getPriceValue(minValue)}
+            onChange={handleInputValueChange(0)}
+          />
+        </Box>
+
+        <Spacer x={2} />
+
+        <Box flex={1}>
+          <NumericInput
+            title="Max"
+            label="$USD"
+            name="price_max"
+            min="0"
+            step="100"
+            aria-label="Max price"
+            value={getPriceValue(maxValue)}
+            onChange={handleInputValueChange(1)}
+          />
+        </Box>
       </Flex>
     </>
   )

@@ -1,6 +1,6 @@
 import { Select, SelectProps } from "@artsy/palette"
 import { Media } from "Utils/Responsive"
-import { useAuctionResultsFilterContext } from "../AuctionResultsFilterContext"
+import { useAuctionResultsFilterContext } from "Apps/Artist/Routes/AuctionResults/AuctionResultsFilterContext"
 
 // TODO: move this to sortOptions?
 const SORTS = [
@@ -22,7 +22,6 @@ export const SortSelect = () => {
   const filterContext = useAuctionResultsFilterContext()
 
   const props: SelectProps = {
-    variant: "inline",
     options: SORTS,
     selected: filterContext?.filters?.sort,
     onSelect: sort => {
@@ -36,7 +35,7 @@ export const SortSelect = () => {
       </Media>
 
       <Media greaterThan="xs">
-        <Select {...props} title="Sort:" />
+        <Select {...props} title="Sort" />
       </Media>
     </>
   )

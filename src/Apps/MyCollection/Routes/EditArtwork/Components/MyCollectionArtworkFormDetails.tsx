@@ -140,10 +140,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
 
       <GridColumns mt={[4, 2]}>
         <Column span={6} mt={[2, 0]}>
-          <Flex justifyContent="space-between">
-            <Text variant="xs" mb={0.5}>
-              Rarity
-            </Text>
+          <Flex justifyContent="flex-end">
             <Clickable
               onClick={() => setIsRarityModalOpen(true)}
               data-test-id="open-rarity-modal"
@@ -154,6 +151,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             </Clickable>
           </Flex>
           <Select
+            title="Rarity"
             name="attributionClass"
             options={rarityOptions}
             selected={values.attributionClass}
@@ -162,9 +160,15 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             onSelect={selected => setFieldValue("attributionClass", selected)}
           />
         </Column>
-        <Column span={6} mt={[2, 0]}>
+        <Column display="flex" span={6} mt={[2, 0]}>
           {isLimitedEdition && (
-            <Flex alignItems="center" mt={[30, 0]} mb={[1, 0]}>
+            <Flex
+              flex={1}
+              alignSelf="flex-end"
+              alignItems="center"
+              mt={[30, 0]}
+              mb={[1, 0]}
+            >
               <NumericInput
                 label=""
                 title="Edition Number"
@@ -197,55 +201,46 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
       <GridColumns mt={[30, 2]}>
         <Column span={6} mt={[2, 0]}>
           <Flex height="100%">
-            <Box width="50%" mr={2} height="100%">
-              <Text variant="xs" mb={0.5} mr={0.5}>
-                Height
-              </Text>
-              <NumericInput
-                maxLength={256}
-                label={values.metric}
-                name="height"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.height}
-                role="textbox"
-                data-testid="my-collection-artwork-details-height"
-              />
-            </Box>
-            <Box width="50%" height="100%">
-              <Text variant="xs" mb={0.5} mr={0.5}>
-                Width
-              </Text>
-              <NumericInput
-                maxLength={256}
-                label={values.metric}
-                name="width"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.width}
-                role="textbox"
-              />
-            </Box>
+            <NumericInput
+              width="50%"
+              mr={2}
+              title="Height"
+              maxLength={256}
+              label={values.metric}
+              name="height"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.height}
+              role="textbox"
+              data-testid="my-collection-artwork-details-height"
+            />
+            <NumericInput
+              title="Width"
+              maxLength={256}
+              label={values.metric}
+              name="width"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.width}
+              role="textbox"
+              width="50%"
+            />
           </Flex>
         </Column>
         <Column span={6} mt={[4, 0]}>
           <Flex height="100%">
-            <Box pr={[0, 1]} width="50%" height="100%">
-              <Flex>
-                <Text variant="xs" mb={0.5} mr={0.5}>
-                  Depth
-                </Text>
-              </Flex>
-              <NumericInput
-                maxLength={256}
-                label={values.metric}
-                name="depth"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.depth}
-                role="textbox"
-              />
-            </Box>
+            <NumericInput
+              pr={[0, 1]}
+              width="50%"
+              title="Depth"
+              maxLength={256}
+              label={values.metric}
+              name="depth"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.depth}
+              role="textbox"
+            />
             <RadioGroup
               width="50%"
               defaultValue={values.metric}
@@ -265,19 +260,16 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
       <GridColumns mt={[30, 2]}>
         <Column span={6} mt={[2, 0]}>
           <Flex height="100%">
-            <Box mr={2} width="100%" height="100%">
-              <Text variant="xs" mb={0.5} mr={0.5}>
-                Price Paid
-              </Text>
-              <LabeledInput
-                maxLength={256}
-                label={values.pricePaidCurrency}
-                name="pricePaidDollars"
-                onBlur={handleBlur}
-                onChange={handleChange}
-                value={values.pricePaidDollars}
-              />
-            </Box>
+            <LabeledInput
+              width="100%"
+              title="Price Paid"
+              maxLength={256}
+              label={values.pricePaidCurrency}
+              name="pricePaidDollars"
+              onBlur={handleBlur}
+              onChange={handleChange}
+              value={values.pricePaidDollars}
+            />
           </Flex>
         </Column>
         <Column span={6} mt={[4, 0]}>
@@ -301,11 +293,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
       </GridColumns>
       <GridColumns mt={[4, 2]}>
         <Column span={6} mt={[2, 0]}>
-          <Flex justifyContent="space-between">
-            <Text variant="xs" mb={0.5}>
-              Provenance
-            </Text>
-
+          <Flex justifyContent="flex-end">
             <Clickable
               onClick={() => setIsProvenanceModalOpen(true)}
               data-test-id="open-provenance-modal"
@@ -317,6 +305,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
           </Flex>
 
           <Input
+            title="Provenance"
             name="provenance"
             placeholder="Describe how you acquired the work"
             maxLength={500}
@@ -325,7 +314,7 @@ export const MyCollectionArtworkFormDetails: React.FC = () => {
             value={values.provenance}
           />
         </Column>
-        <Column span={6} mt={[4, 0]}>
+        <Column alignItems="flex-end" display="flex" span={6} mt={[4, 0]}>
           <Input
             title="City"
             name="artworkLocation"

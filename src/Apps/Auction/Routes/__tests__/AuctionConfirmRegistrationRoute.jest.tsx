@@ -200,9 +200,8 @@ describe("AuctionConfirmRegistrationRoute", () => {
         }),
       })
 
-      expect(wrapper.text()).toContain(
-        "Phone Number*Required for shipping logistics"
-      )
+      expect(wrapper.text()).toContain("Phone Number*Required")
+      expect(wrapper.text()).toContain("Required for shipping logistics")
       expect(wrapper.text()).toContain("and provide a valid phone number")
     }
   )

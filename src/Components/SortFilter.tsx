@@ -25,8 +25,7 @@ export const SortFilter: React.FC<SortFilterProps> = ({
     <Flex justifyContent={["space-between", "flex-end"]} alignItems="center">
       <Box>
         <Select
-          variant="inline"
-          title="Sort:"
+          title="Sort"
           options={sortOptions}
           selected={selected}
           onSelect={onSort}

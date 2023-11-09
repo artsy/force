@@ -110,14 +110,14 @@ export const PriceDatabaseSearch: FC = () => {
           <MultiSelect
             options={categoryOptions}
             onSelect={handleFilterSelect("categories")}
-            name="Medium"
+            title="Medium"
           />
         </Column>
 
         <Column span={4} pb={[0, 4]}>
           <MultiSelect
             options={sizeOptions}
-            name="Size"
+            title="Size"
             onSelect={handleFilterSelect("sizes")}
           />
         </Column>
