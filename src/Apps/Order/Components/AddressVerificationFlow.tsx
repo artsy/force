@@ -24,6 +24,7 @@ import {
   ValidationAddressViewed,
 } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import compact from "lodash/compact"
 
 type VerifyAddressSuccessType = Extract<
   AddressVerificationFlow_verifyAddress$data["verifyAddressOrError"],
@@ -139,7 +140,15 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
             lines: lines,
             address: address,
           }))
-        addressOptions = [...suggestedOptions, inputOption]
+        addressOptions = [...suggestedOptions, inputOption].map(option => ({
+          ...option,
+          lines: compact(option.lines),
+          address: {
+            ...option.address,
+            addressLine2: option.address.addressLine2 || "",
+            region: option.address.region || "",
+          },
+        }))
       } else {
         addressOptions = [inputOption]
         verificationPath = VerificationPath.REVIEW_AND_CONFIRM
@@ -253,7 +262,7 @@ const AddressVerificationFlow: React.FC<AddressVerificationFlowProps> = ({
                     }
                   >
                     <Flex flexDirection="column">
-                      {addressOption.lines.map((line: string) => (
+                      {compact(addressOption.lines).map((line: string) => (
                         <Text variant="xs" key={line}>
                           {line}
                         </Text>

@@ -48,9 +48,7 @@ import {
 } from "Apps/Order/Routes/Shipping2/support/ShippingContext"
 
 import { FulfillmentType } from "Apps/Order/Routes/Shipping2/support/shippingUtils"
-import { usePrevious } from "Utils/Hooks/usePrevious"
 import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
-import { log, warn } from "console"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -60,14 +58,11 @@ export interface ShippingProps {
   relay?: RelayProp
   router: Router
   dialog: Dialog
-  commitMutation: CommitMutation
   isCommittingMutation: boolean
+  commitMutation: CommitMutation
 }
 
-export type ShippingRouteStep =
-  | "fulfillment_details"
-  | "shipping_quotes"
-  | "ready_to_proceed"
+export type ShippingRouteStep = "fulfillment_details" | "shipping_quotes"
 
 export const ShippingRoute: FC<ShippingProps> = props => {
   const { order, isCommittingMutation } = props
@@ -105,15 +100,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
-  const previousStep = usePrevious(step)
-
-  // Advance to payment when the order is ready to proceed unless it loaded that way
-  useEffect(() => {
-    if (step === "ready_to_proceed" && previousStep !== "ready_to_proceed") {
-      advanceToPayment()
-    }
-  }, [advanceToPayment, step, previousStep])
 
   const [selectedShippingQuoteId, setSelectedShippingQuoteId] = useState<
     string | undefined
@@ -244,50 +230,41 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             id: props.order.internalID,
             fulfillmentType: FulfillmentType.PICKUP,
             phoneNumber: formValues.attributes.phoneNumber,
+            shipping: {
+              addressLine1: "",
+              addressLine2: "",
+              country: "US",
+              name: "",
+              city: "",
+              postalCode: "",
+              region: "",
+              phoneNumber: "",
+            },
           }
         }
 
-        console.log("submitting mutation...", {
-          saveFulfillmentDetailsMutation,
-        })
         const result = await saveFulfillmentDetailsMutation({
           variables: { input: fulfillmentMutationValues },
-        }).then(d => {
-          console.log("got result", d)
-          return d
         })
-        console.log({ result })
 
-        warn({
-          result: JSON.stringify(
-            result.commerceSetShipping?.orderOrError,
-            null,
-            2
-          ),
-        })
         const orderOrError = result.commerceSetShipping?.orderOrError
 
-        if (orderOrError?.error) {
+        if (orderOrError?.__typename === "CommerceOrderWithMutationFailure") {
           handleSubmitError(orderOrError.error)
           return
         }
-        log("no error")
-
         if (
           formValues.fulfillmentType === FulfillmentType.SHIP &&
           formValues.attributes.saveAddress
         ) {
-          log("creating user address")
           await createSavedAddressMutation({
             variables: { input: { attributes: { ...formValues.attributes } } },
           })
-          log("creating user address done")
         }
-        log("handle submit done")
+        if (!requiresArtsyShipping) {
+          advanceToPayment()
+        }
       } catch (error) {
-        log("mutation error:", error)
-        logger.error(error)
-
         orderTracking.errorMessageViewed({
           error_code: null,
           title: "An error occurred",
@@ -306,6 +283,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       props.dialog,
       handleSubmitError,
       createSavedAddressMutation,
+      advanceToPayment,
       orderTracking,
     ]
   )
@@ -430,18 +408,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     if (step === "fulfillment_details") {
       return (...args) => fulfillmentDetailsFormikHandleSubmit(...args)
     }
-    if (step === "shipping_quotes") {
-      return selectShippingQuote
-    }
-    if (step === "ready_to_proceed") {
-      return advanceToPayment
-    }
-  }, [
-    step,
-    fulfillmentDetailsFormikHandleSubmit,
-    selectShippingQuote,
-    advanceToPayment,
-  ])
+    return selectShippingQuote
+  }, [step, fulfillmentDetailsFormikHandleSubmit, selectShippingQuote])
 
   const disableSubmit = useMemo(() => {
     if (step === "fulfillment_details") {
@@ -494,6 +462,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 </Collapse>
                 <Media greaterThan="xs">
                   <Button
+                    type="submit"
                     onClick={onContinueButtonPressed}
                     disabled={disableSubmit}
                     loading={isCommittingMutation || undefined}
@@ -521,6 +490,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 <Spacer y={[2, 4]} />
                 <Media at="xs">
                   <Button
+                    type="submit"
                     onClick={onContinueButtonPressed}
                     disabled={disableSubmit}
                     loading={isCommittingMutation}
@@ -544,6 +514,8 @@ export const ShippingFragmentContainer = createFragmentContainer(
   {
     order: graphql`
       fragment Shipping2_order on CommerceOrder {
+        __typename
+        id
         ...FulfillmentDetailsForm_order
         internalID
         mode

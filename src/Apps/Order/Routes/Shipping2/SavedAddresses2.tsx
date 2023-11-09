@@ -85,7 +85,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       setSelectedAddressID(id)
       const selectedAddress = getAddressByID(addressList, id)
       if (!selectedAddress) {
-        console.warn("Address not found: ", id)
+        logger.warn("Address not found: ", id)
       }
       orderTracking.clickedShippingAddress()
       // Set values on the fulfillment form context.
@@ -93,7 +93,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       // them to fix it. Seems unlikely.
       onSelect(addressWithFallbackValues(selectedAddress))
     },
-    [addressList, onSelect, orderTracking]
+    [addressList, onSelect, orderTracking, logger]
   )
 
   const refetchAddresses = () => {

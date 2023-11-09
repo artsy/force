@@ -10,9 +10,14 @@ export const useSaveFulfillmentDetails = () => {
       ) {
         commerceSetShipping(input: $input) {
           orderOrError {
+            __typename
             ... on CommerceOrderWithMutationSuccess {
               order {
-                ...Shipping2_order
+                id
+                __typename
+                ... on CommerceOrder {
+                  ...Shipping2_order
+                }
               }
             }
             ... on CommerceOrderWithMutationFailure {
@@ -21,6 +26,9 @@ export const useSaveFulfillmentDetails = () => {
                 code
                 data
               }
+            }
+            ... on CommerceOrderRequiresAction {
+              __typename
             }
           }
         }

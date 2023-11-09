@@ -60,26 +60,15 @@ export const useComputeShippingContext = (
   const computedOrderData = useProcessOrderData(props)
   const initialValues = getInitialValues(props, computedOrderData)
 
-  const { fulfillmentType, isArtsyShipping } = computedOrderData
-
-  const selectedShippingQuoteId =
-    initialValues.shippingQuotes.selectedShippingQuoteId
+  const { isArtsyShipping } = computedOrderData
 
   const step: ShippingRouteStep = useMemo(() => {
-    if (!fulfillmentType) {
-      return "fulfillment_details"
-    }
-    if (isArtsyShipping && !selectedShippingQuoteId) {
+    if (isArtsyShipping) {
       return "shipping_quotes"
     }
-    if (isArtsyShipping && selectedShippingQuoteId) {
-      return "ready_to_proceed"
-    }
-    if (!!fulfillmentType && !isArtsyShipping) {
-      return "ready_to_proceed"
-    }
+
     return "fulfillment_details"
-  }, [isArtsyShipping, fulfillmentType, selectedShippingQuoteId])
+  }, [isArtsyShipping])
 
   return {
     computedOrderData,

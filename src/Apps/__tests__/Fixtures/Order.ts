@@ -16,7 +16,6 @@ const OrderArtworkNodeWithoutShipping = {
   edition_sets: [],
   euShippingOrigin: false,
   href: "/artwork/artworkID",
-  id: "02393",
   image: {
     resized: {
       url:

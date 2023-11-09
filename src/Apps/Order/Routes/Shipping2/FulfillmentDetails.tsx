@@ -125,6 +125,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsFormProps> = props => {
         : addressVerificationIntlEnabled
 
     const hasSavedAddresses = !!props.me.addressConnection?.edges?.length
+
     return (
       values.fulfillmentType === FulfillmentType.SHIP &&
       !hasSavedAddresses &&
