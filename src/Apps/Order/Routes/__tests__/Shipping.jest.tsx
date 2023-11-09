@@ -293,7 +293,7 @@ describe("Shipping", () => {
           Me: () => meWithoutAddress,
         })
 
-        expect(screen.getByRole("button", { name: "Offer" })).toBeVisible()
+        expect(screen.getAllByRole("button", { name: "Offer" }).length).toBe(2)
       })
 
       it("renders fulfillment selection if artwork is available for pickup", async () => {
