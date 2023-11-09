@@ -3,18 +3,12 @@ import {
   AlertProvider,
   useAlertContext,
 } from "Components/Alert/Hooks/useAlertContext"
-import {
-  ArtworkFilterContextProvider,
-  useArtworkFilterContext,
-} from "Components/ArtworkFilter/ArtworkFilterContext"
 import { Price } from "Components/Alert/Components/Filters/Price"
 
 describe("PriceFilter", () => {
-  let filterContext
   let alertContext
 
   const PriceFilterTestComponent = () => {
-    filterContext = useArtworkFilterContext()
     alertContext = useAlertContext()
 
     return <Price />
@@ -22,11 +16,9 @@ describe("PriceFilter", () => {
 
   const renderPriceRangeFilter = (contextProps = {}, initialCriteria = {}) => {
     return render(
-      <ArtworkFilterContextProvider {...contextProps}>
-        <AlertProvider initialCriteria={initialCriteria}>
-          <PriceFilterTestComponent />
-        </AlertProvider>
-      </ArtworkFilterContextProvider>
+      <AlertProvider initialCriteria={initialCriteria}>
+        <PriceFilterTestComponent />
+      </AlertProvider>
     )
   }
 
@@ -41,7 +33,6 @@ describe("PriceFilter", () => {
     })
 
     expect(alertContext.state.criteria.priceRange).toEqual("1000-10000")
-    expect(filterContext.filters.priceRange).toEqual("*-*")
   })
 
   it("sets only max price value", () => {
