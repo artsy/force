@@ -12,8 +12,8 @@ import {
 import { Formik } from "formik"
 import { FC } from "react"
 
-import { AlertNameInputQueryRenderer } from "Components/Alert/Components/Form/AlertNameInput"
-import { CriteriaPillsQueryRenderer } from "Components/Alert/Components/CriteriaPills"
+import { AlertNameInput } from "Components/Alert/Components/Form/AlertNameInput"
+import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 import { PriceRangeFilter } from "Components/Alert/Components/Form/PriceRange"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
@@ -49,14 +49,14 @@ export const Details: FC = () => {
             <Join separator={<Spacer y={4} />}>
               <Text variant="lg">Create Alert</Text>
 
-              <AlertNameInputQueryRenderer />
+              <AlertNameInput />
 
               <Box>
                 <Text variant="sm-display" mb={1}>
                   Filters
                 </Text>
                 <Flex flexWrap="wrap" gap={1}>
-                  <CriteriaPillsQueryRenderer />
+                  <CriteriaPills />
                 </Flex>
               </Box>
 
