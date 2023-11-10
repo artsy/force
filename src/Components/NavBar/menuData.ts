@@ -32,29 +32,56 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
     title: "Artists",
     links: [
       {
-        text: "New This Week",
-        href: "/collection/new-this-week",
-      },
-      {
-        text: "Trending Now",
-        href: "/collection/trending-now",
-      },
-      {
-        text: "Curator's Picks",
+        text: "New from Galleries",
         menu: {
-          title: "Curator's Picks",
+          title: "New from Galleries",
+          links: [
+            {
+              text: "New from Leading Galleries",
+              href: "/collection/new-from-leading-galleries",
+            },
+            {
+              text: "New from Tastemaking Galleries",
+              href: "/collection/new-from-tastemaking-galleries",
+            },
+            {
+              text: "New from Small Galleries",
+              href: "/collection/new-from-small-galleries",
+            },
+          ],
+        },
+      },
+      {
+        text: "Curator’s Picks",
+        menu: {
+          title: "Curator’s Picks",
           links: [
             {
               text: "Curators’ Picks: Emerging",
               href: "/collection/curators-picks-emerging",
             },
             {
-              text: "Curators’ Picks: Blue-Chip",
+              text: "Curators’ Picks: Blue Chip",
               href: "/collection/curators-picks-blue-chip",
             },
           ],
         },
-        dividerBelow: true,
+      },
+      {
+        text: "New on Artsy",
+        menu: {
+          title: "New on Artsy",
+          links: [
+            {
+              text: "New This Week",
+              href: "/collection/new-this-week",
+            },
+            {
+              text: "Trending Now",
+              href: "/collection/trending-now",
+            },
+          ],
+        },
       },
       {
         text: "Featured Artists",
@@ -91,14 +118,7 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
             },
           ],
         },
-      },
-      // Empty column
-      {
-        text: "",
-        menu: {
-          title: "",
-          links: [],
-        },
+        dividerBelow: true,
       },
       {
         text: "View All Artists",
@@ -113,18 +133,6 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
   menu: {
     title: "Artworks",
     links: [
-      {
-        text: "Contemporary Abstraction",
-        href: "/collection/contemporary-abstraction",
-      },
-      {
-        text: "Top Auction Lots",
-        href: "/collection/top-auction-lots",
-      },
-      {
-        text: "Best of Prints & Editions",
-        href: "/collection/best-of-prints-and-editions",
-      },
       {
         text: "Price",
         menu: {
@@ -146,45 +154,65 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
         },
       },
       {
-        text: "Movements",
+        text: "Curator’s Picks",
         menu: {
-          title: "Movements",
+          title: "Curator’s Picks",
           links: [
             {
-              text: "Contemporary",
+              text: "Contemporary Abstraction",
+              href: "/collection/contemporary-abstraction",
+            },
+            {
+              text: "Top Auction Lots",
+              href: "/collection/top-auction-lots",
+            },
+            {
+              text: "Best of Prints & Editions",
+              href: "/collection/best-of-prints-and-editions",
+            },
+          ],
+        },
+      },
+      {
+        text: "Categories",
+        menu: {
+          title: "Categories",
+          links: [
+            {
+              text: "Contemporary Art",
               href: "/collection/contemporary",
+            },
+            {
+              text: "Emerging Art",
+              href: "/gene/emerging-art",
             },
             {
               text: "Street Art",
               href: "/collection/street-art",
             },
             {
+              text: "Abstract Art",
+              href: "/collection/abstract-art",
+            },
+            {
               text: "Pop Art",
               href: "/collection/pop-art",
             },
             {
-              text: "Abstract Expressionism",
-              href: "/collection/abstract-expressionism",
+              text: "Minimalism",
+              href: "/collection/minimalism",
             },
             {
-              text: "Post-War",
-              href: "/collection/post-war",
-            },
-            {
-              text: "Impressionism and Modernism",
+              text: "Impressionist and Modern Art",
               href: "/collection/impressionist-and-modern",
-            },
-            {
-              text: "Old Masters",
-              href: "/collection/old-masters",
             },
           ],
         },
       },
       {
-        text: "Medium",
+        text: "Mediums",
         menu: {
-          title: "Medium",
+          title: "Mediums",
           links: [
             {
               text: "Painting",
@@ -195,6 +223,10 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
               href: "/collection/prints",
             },
             {
+              text: "Works on Paper",
+              href: "/collection/works-on-paper",
+            },
+            {
               text: "Photography",
               href: "/collection/photography",
             },
@@ -203,12 +235,8 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
               href: "/collection/sculpture",
             },
             {
-              text: "Work on Paper",
-              href: "/collection/works-on-paper",
-            },
-            {
-              text: "Mixed Media",
-              href: "/collection/mixed-media",
+              text: "Ceramics",
+              href: "/collection/ceramics",
             },
             {
               text: "Design",
@@ -216,13 +244,16 @@ export const ARTWORKS_SUBMENU_DATA: MenuLinkData = {
             },
             {
               text: "NFTs",
-              href: "/collect?additional_gene_ids[0]=nft",
+              href: "/collect?additional_gene_ids%5B0%5D=nft",
             },
           ],
         },
         dividerBelow: true,
       },
-      { text: "View All Artworks", href: "/collect" },
+      {
+        text: "View All Artworks",
+        href: "/collect",
+      },
     ],
   },
 }

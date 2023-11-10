@@ -1,8 +1,8 @@
-import { Box, Text, GridColumns, Column, Flex } from "@artsy/palette"
+import { Box, Text, GridColumns, Column, Spacer } from "@artsy/palette"
 import * as DeprecatedAnalyticsSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
 import * as React from "react"
-import { MenuData, SimpleLinkData } from "../menuData"
+import { MenuData, SimpleLinkData } from "Components/NavBar/menuData"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 import { NavBarMenuItemLink } from "./NavBarMenuItem"
@@ -28,7 +28,7 @@ export const NavBarSubMenu: React.FC<NavBarSubMenuProps> = ({
   ) => {
     const link = event.currentTarget
     const text = link.innerText
-    const href = link.getAttribute("href")!
+    const href = link.getAttribute("href")
 
     trackEvent({
       action_type: DeprecatedAnalyticsSchema.ActionType.Click,
@@ -50,79 +50,70 @@ export const NavBarSubMenu: React.FC<NavBarSubMenuProps> = ({
     <Text width="100vw" variant={["xs", "xs", "sm"]} onClick={onClick}>
       <AppContainer>
         <HorizontalPadding>
-          <GridColumns>
-            <Column
-              span={2}
-              py={6}
-              display="flex"
-              flexDirection="column"
-              justifyContent="space-between"
-              borderRight="1px solid"
-              borderColor="black10"
-            >
-              <Box>
-                {menu.links.map((menuItem, i) => {
-                  if (!("menu" in menuItem)) {
-                    const isLast = lastMenuLinkIndex === i
+          <GridColumns py={6} gridColumnGap={0}>
+            {menu.links.map(subMenu => {
+              if ("menu" in subMenu) {
+                return (
+                  <Column key={subMenu.text} span={3}>
+                    <Text variant="xs" px={2} color="black60">
+                      {subMenu.text}
+                    </Text>
 
-                    return (
-                      !isLast && (
-                        <NavBarMenuItemLink
-                          key={menuItem.text}
-                          to={menuItem.href}
-                          onClick={handleClick}
-                        >
-                          {menuItem.text}
-                        </NavBarMenuItemLink>
+                    <Spacer y={1} />
+
+                    {subMenu.menu &&
+                      subMenu.menu.links.map(menuItem => {
+                        return (
+                          !("menu" in menuItem) && (
+                            <NavBarMenuItemLink
+                              key={menuItem.text}
+                              to={menuItem.href}
+                              onClick={handleClick}
+                            >
+                              {menuItem.text}
+                            </NavBarMenuItemLink>
+                          )
+                        )
+                      })}
+                  </Column>
+                )
+              }
+            })}
+
+            <>
+              <Column
+                span={3}
+                display="flex"
+                flexDirection="column"
+                justifyContent="space-between"
+              >
+                <Box>
+                  {menu.links.map((menuItem, i) => {
+                    if (!("menu" in menuItem)) {
+                      const isLast = lastMenuLinkIndex === i
+
+                      return (
+                        !isLast && (
+                          <NavBarMenuItemLink
+                            key={menuItem.text}
+                            to={menuItem.href}
+                            onClick={handleClick}
+                          >
+                            {menuItem.text}
+                          </NavBarMenuItemLink>
+                        )
                       )
-                    )
-                  }
-                })}
-              </Box>
+                    }
+                  })}
+                </Box>
 
-              <NavBarMenuItemLink to={lastMenuItem.href}>
-                {lastMenuItem.text}
-              </NavBarMenuItemLink>
-            </Column>
-
-            <Column
-              span={10}
-              py={6}
-              display="flex"
-              flexDirection="column"
-              justifyContent="space-between"
-            >
-              <Flex>
-                {menu.links.map(subMenu => {
-                  if ("menu" in subMenu) {
-                    return (
-                      <Box key={subMenu.text} flex={1}>
-                        <Text variant="xs" mb={1} px={2} color="black60">
-                          {subMenu.text}
-                        </Text>
-
-                        {subMenu.menu &&
-                          subMenu.menu.links.map(menuItem => {
-                            return (
-                              !("menu" in menuItem) && (
-                                <NavBarMenuItemLink
-                                  key={menuItem.text}
-                                  to={menuItem.href}
-                                  onClick={handleClick}
-                                >
-                                  {menuItem.text}
-                                </NavBarMenuItemLink>
-                              )
-                            )
-                          })}
-                      </Box>
-                    )
-                  }
-                })}
-              </Flex>
+                <NavBarMenuItemLink to={lastMenuItem.href}>
+                  {lastMenuItem.text}
+                </NavBarMenuItemLink>
+              </Column>
 
               {isArtistsDropdown && (
-                <Box>
+                <Column span={9}>
                   <Text variant="xs" py={1} px={2} color="black60">
                     Browse by name
                   </Text>
@@ -144,9 +135,9 @@ export const NavBarSubMenu: React.FC<NavBarSubMenuProps> = ({
                       )
                     })}
                   </Text>
-                </Box>
+                </Column>
               )}
-            </Column>
+            </>
           </GridColumns>
         </HorizontalPadding>
       </AppContainer>
