@@ -1,10 +1,12 @@
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import { Box, Clickable, Flex, Join, Separator, Text } from "@artsy/palette"
 import { FC } from "react"
-import { Rarity } from "Components/Alert/Components/Filters/Rarity"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import { Rarity } from "Components/Alert/Components/Filters/Rarity"
 import { Medium } from "Components/Alert/Components/Filters/Medium"
 import { Price } from "Components/Alert/Components/Filters/Price"
+import { WaysToBuy } from "Components/Alert/Components/Filters/WaysToBuy"
+import { Color } from "Components/Alert/Components/Filters/Color"
 
 export const Filters: FC = () => {
   const { goToDetails } = useAlertContext()
@@ -30,6 +32,8 @@ export const Filters: FC = () => {
             <Price />
             <Rarity />
             <Medium />
+            <WaysToBuy />
+            <Color />
           </Join>
         </Box>
       </Flex>
