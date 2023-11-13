@@ -36,6 +36,20 @@ export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = ({
   }
 
   const { alertComponent, showAlert } = useAlert({
+    authDialogOptions: {
+      options: {
+        title: "Sign up to create your alert",
+        afterAuthAction: {
+          action: "createAlert",
+          kind: "artworks",
+          objectId: entity.owner.slug,
+        },
+      },
+      analytics: {
+        contextModule: ContextModule.artworkGrid,
+        intent: Intent.createAlert,
+      },
+    },
     initialCriteria: {
       ...rawFilters,
       ...initialCriteria,

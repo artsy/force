@@ -26,6 +26,20 @@ const ArtistWorksForSaleEmpty: FC<ArtistWorksForSaleEmptyProps> = ({
   const { filters } = useArtworkFilterContext()
 
   const { alertComponent, showAlert } = useAlert({
+    authDialogOptions: {
+      options: {
+        title: "Sign up to create your alert",
+        afterAuthAction: {
+          action: "createAlert",
+          kind: "artist",
+          objectId: artist.internalID,
+        },
+      },
+      analytics: {
+        contextModule: ContextModule.artworkGrid,
+        intent: Intent.createAlert,
+      },
+    },
     initialCriteria: filters,
   })
   const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
