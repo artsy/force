@@ -67,7 +67,7 @@ export const Details: FC = () => {
                       <Text variant="sm-display">Add Filters:</Text>
 
                       <Text variant="sm" color="black60">
-                        Including Price Range, Rarity, Medium, Size, Color
+                        Including Price Range, Rarity, Medium, Color
                       </Text>
                     </Box>
 
@@ -82,7 +82,7 @@ export const Details: FC = () => {
 
               <Box>
                 <Box display="flex" justifyContent="space-between">
-                  <Text variant="sm-display">Email Alerts</Text>
+                  <Text variant="sm-display">Email</Text>
                   <Checkbox
                     onSelect={selected => setFieldValue("email", selected)}
                     selected={values.email}
@@ -92,7 +92,7 @@ export const Details: FC = () => {
                 <Spacer y={2} />
 
                 <Box display="flex" justifyContent="space-between">
-                  <Text variant="sm-display">Mobile Alerts</Text>
+                  <Text variant="sm-display">Push Notifications</Text>
                   <Checkbox
                     onSelect={selected => setFieldValue("push", selected)}
                     selected={values.push}
