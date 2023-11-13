@@ -3,6 +3,7 @@ import {
   Button,
   Flex,
   ModalDialog,
+  Pill,
   Spacer,
   Text,
   useToasts,
@@ -167,7 +168,12 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
         flexDirection={["column", "row"]}
       >
         <Box flexBasis="50%">
-          <Text variant={["md", "lg"]}>App Authenticator</Text>
+          <Flex flexDirection={"row"} alignItems="center">
+            <Text variant={["md", "lg"]}>App Authenticator</Text>
+            <Pill mx={4} size="small" variant="gray">
+              Preferred
+            </Pill>
+          </Flex>
 
           {enabledSecondFactorLabel && (
             <Text variant={["md", "lg"]} color="black60">
