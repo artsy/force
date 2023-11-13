@@ -12,7 +12,7 @@ export const Filters: FC = () => {
   const { goToDetails } = useAlertContext()
 
   return (
-    <>
+    <Box minWidth={[null, 700]}>
       <Flex flexDirection="column" width="auto">
         <Clickable
           onClick={() => {
@@ -37,6 +37,6 @@ export const Filters: FC = () => {
           </Join>
         </Box>
       </Flex>
-    </>
+    </Box>
   )
 }
