@@ -29,9 +29,9 @@ export const Filters: FC = () => {
           <Text variant="lg">Filters</Text>
           <Separator my={2} />
           <Join separator={<Separator my={2} />}>
-            <Price />
-            <Rarity />
             <Medium />
+            <Rarity />
+            <Price />
             <WaysToBuy />
             <Color />
           </Join>
