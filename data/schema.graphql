@@ -14284,6 +14284,7 @@ input PreviewSavedSearchAttributes {
   acquireable: Boolean
   additionalGeneIDs: [String]
   artistIDs: [String]
+  artistSeriesIDs: [String]
   atAuction: Boolean
   attributionClass: [String]
   colors: [String]
