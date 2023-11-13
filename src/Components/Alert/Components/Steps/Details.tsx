@@ -46,11 +46,11 @@ export const Details: FC = () => {
 
         return (
           <Flex flexDirection="column" p={2}>
+            <Text variant="lg">Create Alert</Text>
+            <Spacer y={2} />
+            <AlertNameInput />
+            <Spacer y={4} />
             <Join separator={<Spacer y={4} />}>
-              <Text variant="lg">Create Alert</Text>
-
-              <AlertNameInput />
-
               <Box>
                 <Text variant="sm-display" mb={1}>
                   Filters
@@ -108,7 +108,7 @@ export const Details: FC = () => {
                 }}
                 width="100%"
               >
-                Save Alert
+                Create Alert
               </Button>
             </Join>
           </Flex>
