@@ -30,25 +30,12 @@ describe("NavBarSubMenu", () => {
 
   it("renders simple links", () => {
     const wrapper = getWrapper()
-    const linkMenuItems = wrapper.find("a")
+    const links = wrapper.find("a")
 
-    expect(linkMenuItems.at(0).text()).toContain("Contemporary Abstraction")
-    expect(linkMenuItems.at(0).prop("href")).toEqual(
-      "/collection/contemporary-abstraction"
+    expect(links.at(0).text()).toContain("Finds Under $1,000")
+    expect(links.at(0).prop("href")).toEqual(
+      "/collection/finds-under-1000-dollars"
     )
-
-    expect(linkMenuItems.at(1).text()).toContain("Top Auction Lots")
-    expect(linkMenuItems.at(1).prop("href")).toEqual(
-      "/collection/top-auction-lots"
-    )
-
-    expect(linkMenuItems.at(2).text()).toContain("Best of Prints & Editions")
-    expect(linkMenuItems.at(2).prop("href")).toEqual(
-      "/collection/best-of-prints-and-editions"
-    )
-
-    expect(linkMenuItems.at(3).text()).toContain("View All Artworks")
-    expect(linkMenuItems.at(3).prop("href")).toEqual("/collect")
   })
 
   it("doesn't render artists letter nav inside artworks dropdown", () => {

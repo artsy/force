@@ -76,7 +76,6 @@ const NavBarMobileSubMenuPanel: React.FC<NavBarMobileSubMenuPanelProps> = ({
   showBacknav = true,
 }) => {
   const isArtistsMenu = title === "Artists"
-  const lastLinkIndex = links.length - 1
 
   return (
     <NavBarMobileMenuTransition isOpen={isOpen}>
@@ -92,16 +91,7 @@ const NavBarMobileSubMenuPanel: React.FC<NavBarMobileSubMenuPanelProps> = ({
       </Flex>
 
       {links.map((link, i) => {
-        const isLast = lastLinkIndex === i
-
-        return (
-          <NavBarMobileSubMenuItem
-            key={i}
-            link={link}
-            isLast={isLast}
-            isArtistsMenu={isArtistsMenu}
-          />
-        )
+        return <NavBarMobileSubMenuItem key={i} link={link} />
       })}
 
       {isArtistsMenu && (
@@ -167,14 +157,10 @@ export const NavBarMobileSubMenuBack: React.FC = () => {
 
 interface NavBarMobileSubMenuItemProps {
   link: LinkData
-  isLast: boolean
-  isArtistsMenu: boolean
 }
 
 export const NavBarMobileSubMenuItem: React.FC<NavBarMobileSubMenuItemProps> = ({
   link,
-  isLast,
-  isArtistsMenu,
 }) => {
   const { trackEvent } = useTracking()
   const contextModule = useTrackingContextModule()
@@ -207,8 +193,6 @@ export const NavBarMobileSubMenuItem: React.FC<NavBarMobileSubMenuItemProps> = (
     <>
       <NavBarMobileMenuItemLink to={link.href} onClick={handleClick}>
         {link.text}
-
-        {isArtistsMenu && isLast && <> A – Z</>}
       </NavBarMobileMenuItemLink>
 
       {link.dividerBelow && <Separator my={1} />}

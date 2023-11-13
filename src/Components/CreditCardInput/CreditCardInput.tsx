@@ -62,7 +62,7 @@ export const CreditCardInput: React.FC<CreditCardInputProps> = ({
     <Box data-test="creditCardInput" {...rest}>
       <GridColumns gridRowGap={2}>
         <Column span={[12, 6]}>
-          <CardElementContainer error={!!error}>
+          <CardElementContainer data-test="cardNumberInput" error={!!error}>
             <CardNumberElement
               onChange={onChange}
               options={{
@@ -76,13 +76,21 @@ export const CreditCardInput: React.FC<CreditCardInputProps> = ({
         <Column span={[12, 6]}>
           <Flex flex={1}>
             <Join separator={<Spacer x={2} />}>
-              <CardElementContainer flex={1} error={!!error}>
+              <CardElementContainer
+                data-test="expDateInput"
+                flex={1}
+                error={!!error}
+              >
                 <CardExpiryElement
                   onChange={onChange}
                   options={{ style: { base: stripeBaseStyle } }}
                 />
               </CardElementContainer>
-              <CardElementContainer flex={1} error={!!error}>
+              <CardElementContainer
+                data-test="cvcInput"
+                flex={1}
+                error={!!error}
+              >
                 <CardCvcElement
                   onChange={onChange}
                   options={{ style: { base: stripeBaseStyle } }}

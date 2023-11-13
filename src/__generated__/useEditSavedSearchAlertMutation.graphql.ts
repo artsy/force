@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<93734cf5157dd5a0b99abce5988ec544>>
+ * @generated SignedSource<<174d516ecf117c59d4bcae8d9aabce2f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,6 +21,7 @@ export type SearchCriteriaAttributes = {
   additionalGeneIDs?: ReadonlyArray<string> | null;
   artistID?: string | null;
   artistIDs?: ReadonlyArray<string> | null;
+  artistSeriesIDs?: ReadonlyArray<string> | null;
   atAuction?: boolean | null;
   attributionClass?: ReadonlyArray<string> | null;
   colors?: ReadonlyArray<string> | null;
