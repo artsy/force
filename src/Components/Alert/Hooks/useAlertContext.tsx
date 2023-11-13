@@ -22,6 +22,7 @@ import {
 import { Environment, fetchQuery, graphql } from "react-relay"
 import { useDebouncedValue } from "Utils/Hooks/useDebounce"
 import { CustomRange } from "Components/PriceRange/constants"
+import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 
 type Settings = {
   details: string
@@ -178,6 +179,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   >("ALERT_DETAILS")
 
   const { submitMutation } = useCreateAlert()
+  const { createdAlert } = useAlertTracking()
 
   const handleComplete = async () => {
     try {
@@ -189,11 +191,16 @@ export const AlertProvider: FC<AlertProviderProps> = ({
           },
         },
       })
-      if (reponse.createSavedSearch?.savedSearchOrErrors.internalID) {
+      const searchCriteriaID =
+        reponse.createSavedSearch?.savedSearchOrErrors.internalID
+
+      if (searchCriteriaID) {
         dispatch({
           type: "SET_SEARCH_CRITERIA_ID",
-          payload: reponse.createSavedSearch?.savedSearchOrErrors.internalID,
+          payload: searchCriteriaID,
         })
+
+        createdAlert(searchCriteriaID)
       }
       setCurrent("ALERT_CONFIRMATION")
     } catch (error) {

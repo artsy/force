@@ -12,6 +12,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { usePrepareFiltersForPills } from "Components/ArtworkFilter/Utils/usePrepareFiltersForPills"
 import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
+import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 
 interface ArtworkFilterCreateAlertProps {
   renderButton: (props: { onClick: () => void }) => JSX.Element
@@ -42,6 +43,8 @@ export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = ({
     },
   })
 
+  const { clickedCreateAlert } = useAlertTracking()
+
   if (newAlertModalEnabled) {
     return (
       <>
@@ -54,6 +57,7 @@ export const ArtworkFilterCreateAlert: FC<ArtworkFilterCreateAlertProps> = ({
                     createSkip()
                     readySkip()
                     showAlert()
+                    clickedCreateAlert()
                   },
                 })
               }

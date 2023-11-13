@@ -31,9 +31,9 @@ import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
 import { useAlert } from "Components/Alert"
-import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { compact } from "lodash"
+import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
 interface SaleMessageProps {
   saleMessage: string | null
@@ -341,14 +341,7 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
       return (
         <>
           <ProgressiveOnboardingAlertCreateSimple>
-            <Button
-              width="100%"
-              size="large"
-              onClick={showAlert}
-              Icon={BellStrokeIcon}
-            >
-              Create Alert
-            </Button>
+            <CreateAlertButton width="100%" size="large" onClick={showAlert} />
           </ProgressiveOnboardingAlertCreateSimple>
           {alertComponent}
         </>
