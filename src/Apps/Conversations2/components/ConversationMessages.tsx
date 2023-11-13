@@ -12,6 +12,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 import { usePoll } from "Utils/Hooks/usePoll"
 import { Sentinel } from "Components/Sentinal"
+import { useGroupedMessages } from "Apps/Conversations2/hooks/useGroupMessages"
 
 const PAGE_SIZE = 15
 
@@ -39,6 +40,10 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
   })
 
   const messages = extractNodes(conversation?.messagesConnection)
+  const events = extractNodes(conversation?.orderEventsConnection)
+
+  // WIP
+  const groupedMessages = useGroupedMessages(messages, events)
 
   const refreshList = () => {
     if (!relay.isLoading()) {
@@ -143,6 +148,41 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
         }
         inquiryRequest {
           formattedFirstMessage
+        }
+
+        orderEventsConnection: orderConnection(
+          first: 10
+          states: [
+            APPROVED
+            FULFILLED
+            SUBMITTED
+            REFUNDED
+            CANCELED
+            PROCESSING_APPROVAL
+          ]
+          participantType: BUYER
+        ) {
+          edges {
+            node {
+              internalID
+              updatedAt
+              ... on CommerceOfferOrder {
+                buyerAction
+              }
+              orderHistory {
+                ...OrderUpdate_event
+                __typename
+                ... on CommerceOrderStateChangedEvent {
+                  state
+                  stateReason
+                  createdAt
+                }
+                ... on CommerceOfferSubmittedEvent {
+                  createdAt
+                }
+              }
+            }
+          }
         }
       }
     `,

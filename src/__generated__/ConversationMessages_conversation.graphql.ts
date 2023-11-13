@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<264b0d43cdcc85d3616705cdcde020b2>>
+ * @generated SignedSource<<cc3395628a9e2b656cdf92a5f3cb1a67>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,6 +9,8 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type CommerceBuyerOfferActionEnum = "OFFER_ACCEPTED" | "OFFER_ACCEPTED_CONFIRM_NEEDED" | "OFFER_RECEIVED" | "OFFER_RECEIVED_CONFIRM_NEEDED" | "PAYMENT_FAILED" | "PROVISIONAL_OFFER_ACCEPTED" | "%future added value";
+export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ConversationMessages_conversation$data = {
   readonly inquiryRequest: {
@@ -30,6 +32,22 @@ export type ConversationMessages_conversation$data = {
       readonly startCursor: string | null;
     };
   };
+  readonly orderEventsConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
+        readonly internalID: string;
+        readonly orderHistory: ReadonlyArray<{
+          readonly __typename: string;
+          readonly createdAt?: string;
+          readonly state?: CommerceOrderStateEnum;
+          readonly stateReason?: string | null;
+          readonly " $fragmentSpreads": FragmentRefs<"OrderUpdate_event">;
+        }>;
+        readonly updatedAt: string;
+      } | null;
+    } | null> | null;
+  } | null;
   readonly " $fragmentType": "ConversationMessages_conversation";
 } | null;
 export type ConversationMessages_conversation$key = {
@@ -37,7 +55,29 @@ export type ConversationMessages_conversation$key = {
   readonly " $fragmentSpreads": FragmentRefs<"ConversationMessages_conversation">;
 };
 
-const node: ReaderFragment = {
+const node: ReaderFragment = (function(){
+var v0 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "createdAt",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+};
+return {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -143,20 +183,8 @@ const node: ReaderFragment = {
                     "name": "id",
                     "storageKey": null
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "internalID",
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "createdAt",
-                    "storageKey": null
-                  },
+                  (v0/*: any*/),
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -169,13 +197,7 @@ const node: ReaderFragment = {
                     "kind": "FragmentSpread",
                     "name": "ConversationMessage_message"
                   },
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "__typename",
-                    "storageKey": null
-                  }
+                  (v2/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -212,12 +234,138 @@ const node: ReaderFragment = {
         }
       ],
       "storageKey": null
+    },
+    {
+      "alias": "orderEventsConnection",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 10
+        },
+        {
+          "kind": "Literal",
+          "name": "participantType",
+          "value": "BUYER"
+        },
+        {
+          "kind": "Literal",
+          "name": "states",
+          "value": [
+            "APPROVED",
+            "FULFILLED",
+            "SUBMITTED",
+            "REFUNDED",
+            "CANCELED",
+            "PROCESSING_APPROVAL"
+          ]
+        }
+      ],
+      "concreteType": "CommerceOrderConnectionWithTotalCount",
+      "kind": "LinkedField",
+      "name": "orderConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "CommerceOrderEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": null,
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": [
+                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "updatedAt",
+                  "storageKey": null
+                },
+                {
+                  "kind": "InlineFragment",
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "kind": "ScalarField",
+                      "name": "buyerAction",
+                      "storageKey": null
+                    }
+                  ],
+                  "type": "CommerceOfferOrder",
+                  "abstractKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": null,
+                  "kind": "LinkedField",
+                  "name": "orderHistory",
+                  "plural": true,
+                  "selections": [
+                    {
+                      "args": null,
+                      "kind": "FragmentSpread",
+                      "name": "OrderUpdate_event"
+                    },
+                    (v2/*: any*/),
+                    {
+                      "kind": "InlineFragment",
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "state",
+                          "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "stateReason",
+                          "storageKey": null
+                        },
+                        (v1/*: any*/)
+                      ],
+                      "type": "CommerceOrderStateChangedEvent",
+                      "abstractKey": null
+                    },
+                    {
+                      "kind": "InlineFragment",
+                      "selections": [
+                        (v1/*: any*/)
+                      ],
+                      "type": "CommerceOfferSubmittedEvent",
+                      "abstractKey": null
+                    }
+                  ],
+                  "storageKey": null
+                }
+              ],
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\",\"CANCELED\",\"PROCESSING_APPROVAL\"])"
     }
   ],
   "type": "Conversation",
   "abstractKey": null
 };
+})();
 
-(node as any).hash = "aebc6e389059be4455b62e7a3ba34c35";
+(node as any).hash = "0a916513e49f7165e6c172cd1658354b";
 
 export default node;
