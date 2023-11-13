@@ -7,14 +7,13 @@ import { Steps } from "Components/Alert/Components/Steps"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { useSystemContext } from "System/SystemContext"
-import { ShowAuthDialogOptions } from "Components/AuthDialog/AuthDialogContext"
+import { AuthContextModule, ContextModule, Intent } from "@artsy/cohesion"
 
 interface UseAlert {
-  authDialogOptions?: Omit<ShowAuthDialogOptions, "mode">
   initialCriteria?: SearchCriteriaAttributes
 }
 
-export const useAlert = ({ authDialogOptions, initialCriteria }: UseAlert) => {
+export const useAlert = ({ initialCriteria }: UseAlert) => {
   const { showAuthDialog } = useAuthDialog()
   const { isLoggedIn } = useSystemContext()
 
@@ -32,8 +31,23 @@ export const useAlert = ({ authDialogOptions, initialCriteria }: UseAlert) => {
   const [isVisible, setIsVisible] = useState(false)
 
   const showDialog = () => {
-    if (!isLoggedIn && authDialogOptions) {
-      showAuthDialog({ mode: "SignUp", ...authDialogOptions })
+    if (!isLoggedIn) {
+      showAuthDialog({
+        mode: "SignUp",
+        options: {
+          title: "Sign up to create your alert",
+          afterAuthAction: {
+            action: Intent.createAlert,
+          },
+        },
+        analytics: {
+          intent: Intent.createAlert,
+          // TODO: Add `createAlert` ContextModule value to `AuthContextModule`
+          // list in @artsy/cohesion
+          contextModule: ContextModule.createAlert as AuthContextModule,
+        },
+      })
+
       return
     }
 

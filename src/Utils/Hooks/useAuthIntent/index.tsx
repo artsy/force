@@ -16,6 +16,7 @@ export const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
 
 export type AfterAuthAction =
   | { action: "associateSubmission"; kind: "submission"; objectId: string }
+  | { action: "createAlert" }
   | { action: "createAlert"; kind: "artist"; objectId: string }
   | { action: "createAlert"; kind: "artworks"; objectId: string }
   | { action: "follow"; kind: "artist"; objectId: string }
