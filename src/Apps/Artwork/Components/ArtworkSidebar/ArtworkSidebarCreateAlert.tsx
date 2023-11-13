@@ -78,20 +78,6 @@ const ArtworkSidebarCreateAlert: React.FC<ArtworkSidebarCreateAlertProps> = ({
 
   const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
   const { alertComponent, showAlert } = useAlert({
-    authDialogOptions: {
-      options: {
-        title: "Sign up to create your alert",
-        afterAuthAction: {
-          action: "createAlert",
-          kind: "artworks",
-          objectId: artwork.internalID,
-        },
-      },
-      analytics: {
-        contextModule: ContextModule.artworkSidebar,
-        intent: Intent.createAlert,
-      },
-    },
     initialCriteria: criteria,
   })
 
