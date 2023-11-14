@@ -161,7 +161,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
     })
   }
 
-  const show2FAWarning = isArtsyEmail(me.email!)
+  const show2FAWarning = isArtsyEmail(me?.email)
 
   return (
     <>
@@ -233,7 +233,7 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
                 loading={isCreating}
                 disabled={isCreating}
               >
-                Set up
+                Set Up
               </Button>
             )}
           </Flex>
