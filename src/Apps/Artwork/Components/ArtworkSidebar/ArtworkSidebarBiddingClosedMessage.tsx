@@ -1,14 +1,14 @@
 import { createFragmentContainer, graphql } from "react-relay"
-import { Button, Spacer, Text } from "@artsy/palette"
+import { Spacer, Text } from "@artsy/palette"
 import { ArtworkCreateAlertButtonFragmentContainer } from "Apps/Artwork/Components/ArtworkCreateAlertButton"
 import { useTranslation } from "react-i18next"
 import { ArtworkSidebarBiddingClosedMessage_artwork$data } from "__generated__/ArtworkSidebarBiddingClosedMessage_artwork.graphql"
 import { ContextModule } from "@artsy/cohesion"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
-import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import { useAlert } from "Components/Alert"
 import { compact } from "lodash"
+import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
 interface BiddingClosedMessageProps {
   artwork: ArtworkSidebarBiddingClosedMessage_artwork$data
@@ -43,14 +43,11 @@ const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
           {newAlertModalEnabled ? (
             <>
               <ProgressiveOnboardingAlertCreateSimple>
-                <Button
+                <CreateAlertButton
                   width="100%"
                   size="large"
                   onClick={showAlert}
-                  Icon={BellStrokeIcon}
-                >
-                  Create Alert
-                </Button>
+                />
               </ProgressiveOnboardingAlertCreateSimple>
               {alertComponent}
             </>

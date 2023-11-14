@@ -9,6 +9,7 @@ import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useAlert } from "Components/Alert"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
 interface ArtistWorksForSaleEmptyProps {
   artist: ArtistWorksForSaleEmpty_artist$data
@@ -47,13 +48,7 @@ const ArtistWorksForSaleEmpty: FC<ArtistWorksForSaleEmptyProps> = ({
 
           {newAlertModalEnabled ? (
             <>
-              <Button
-                onClick={showAlert}
-                Icon={BellStrokeIcon}
-                variant="secondaryBlack"
-              >
-                Create Alert
-              </Button>
+              <CreateAlertButton onClick={showAlert} />
               {alertComponent}
             </>
           ) : (

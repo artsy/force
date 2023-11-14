@@ -1,4 +1,4 @@
-import { Button, Flex, Separator, Text } from "@artsy/palette"
+import { Flex, Separator, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtworkSidebarCreateAlert_artwork$data } from "__generated__/ArtworkSidebarCreateAlert_artwork.graphql"
 import {
@@ -15,7 +15,7 @@ import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useTranslation } from "react-i18next"
 import { useAlert } from "Components/Alert"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
 interface ArtworkSidebarCreateAlertProps {
   artwork: ArtworkSidebarCreateAlert_artwork$data
@@ -98,14 +98,7 @@ const ArtworkSidebarCreateAlert: React.FC<ArtworkSidebarCreateAlertProps> = ({
         </Text>
         {newAlertModalEnabled ? (
           <>
-            <Button
-              onClick={showAlert}
-              variant="secondaryBlack"
-              size="small"
-              Icon={BellStrokeIcon}
-            >
-              Create Alert
-            </Button>
+            <CreateAlertButton onClick={showAlert} />
             {alertComponent}
           </>
         ) : (

@@ -4,7 +4,6 @@ import {
   splitBoxProps,
   useDidMount,
   Box,
-  DROP_SHADOW,
   ModalClose,
 } from "@artsy/palette"
 import React from "react"
@@ -32,32 +31,20 @@ export const Modal: React.FC<AlertModalProps> = ({
           : { backgroundColor: "transparent" }
       }
       dialogProps={{
-        width: ["100%", 900],
-        height: ["100%", "90%"],
-        maxHeight: [null, 800],
+        height: ["100%", "auto"],
+        width: ["100%", "auto"],
+        maxHeight: ["auto", "90%"],
+        minWidth: ["auto", 500],
       }}
       {...modalProps}
       title="Create Alert"
     >
       <Box
         width="100%"
+        height="100%"
         position="relative"
-        bg="white100"
         overflowY="auto"
-        style={{
-          WebkitOverflowScrolling: "touch",
-          boxShadow: DROP_SHADOW,
-          ...(isMounted
-            ? {
-                opacity: 1,
-                transform: "translateX(0)",
-                transition: "opacity 5000ms, transform 5500ms",
-              }
-            : {
-                opacity: 0,
-                transform: "translateX(-2000px)",
-              }),
-        }}
+        bg="white100"
         {...boxProps}
       >
         <ModalClose onClick={onClose} position="absolute" top={0} right={0} />
