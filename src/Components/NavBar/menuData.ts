@@ -84,37 +84,29 @@ export const ARTISTS_SUBMENU_DATA: MenuLinkData = {
         },
       },
       {
-        text: "Featured Artists",
+        text: "Trending Artists",
         menu: {
-          title: "Featured Artists",
+          title: "Trending Artists",
           links: [
             {
-              text: "Barbara Kruger",
-              href: "/artist/barbara-kruger",
+              text: "Robert Nava",
+              href: "/artist/robert-nava",
             },
             {
-              text: "Carrie Mae Weems",
-              href: "/artist/carrie-mae-weems",
+              text: "Issy Wood",
+              href: "/artist/issy-wood",
             },
             {
-              text: "Daniel Arsham",
-              href: "/artist/daniel-arsham",
+              text: "Tunji Adeniyi-Jones",
+              href: "/artist/tunji-adeniyi-jones",
             },
             {
-              text: "Sam Gilliam",
-              href: "/artist/sam-gilliam",
+              text: "Anna Park",
+              href: "/artist/anna-park",
             },
             {
-              text: "Takashi Murakami",
-              href: "/artist/takashi-murakami",
-            },
-            {
-              text: "Tracey Emin",
-              href: "/artist/tracey-emin",
-            },
-            {
-              text: "Yinka Shonibare",
-              href: "/artist/yinka-shonibare",
+              text: "Louis Fratino",
+              href: "/artist/louis-fratino",
             },
           ],
         },
