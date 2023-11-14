@@ -7,7 +7,6 @@ import ReactRefreshWebpackPlugin from "@pmmmwh/react-refresh-webpack-plugin"
 import SimpleProgressWebpackPlugin from "simple-progress-webpack-plugin"
 import TimeFixPlugin from "time-fix-plugin"
 import { WebpackManifestPlugin } from "webpack-manifest-plugin"
-import ForkTsCheckerWebpackPlugin from "fork-ts-checker-webpack-plugin"
 import path from "path"
 import webpack from "webpack"
 import { basePath, webpackEnv } from "../webpackEnv"
@@ -71,15 +70,6 @@ export const clientDevelopmentConfig = () => {
       ...sharedPlugins(),
       new webpack.HotModuleReplacementPlugin(),
       new CaseSensitivePathsPlugin(),
-      new ForkTsCheckerWebpackPlugin({
-        typescript: {
-          diagnosticOptions: {
-            semantic: true,
-            syntactic: true,
-          },
-        },
-        formatter: { type: "codeframe", options: { highlightCode: true } },
-      }),
       new LoadablePlugin({
         filename: "loadable-stats.json",
         path: path.resolve(basePath, "public", "assets"),
