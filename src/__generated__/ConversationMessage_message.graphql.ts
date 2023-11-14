@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c19318f22a416dda00aaf21142378a34>>
+ * @generated SignedSource<<ae1a996d58b6b3864ac96d37cd6d724b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationMessage_message$data = {
+  readonly __typename: "Message";
   readonly attachments: ReadonlyArray<{
     readonly contentType: string;
     readonly downloadURL: string;
@@ -54,6 +55,13 @@ return {
   "metadata": null,
   "name": "ConversationMessage_message",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "__typename",
+      "storageKey": null
+    },
     {
       "alias": null,
       "args": null,
@@ -224,6 +232,6 @@ return {
 };
 })();
 
-(node as any).hash = "8af28f2432bfb55dede921f1c02a89bb";
+(node as any).hash = "69e2b679afe5c4af2d4f591b2a72eb78";
 
 export default node;

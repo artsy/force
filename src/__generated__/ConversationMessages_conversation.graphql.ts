@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<49942a3734b87075a25228b8ee0f2a1a>>
+ * @generated SignedSource<<b47ad489dbdbf4edc9865663f9683d1f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,7 @@ export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added v
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ConversationMessages_conversation$data = {
+  readonly fromLastViewedMessageID: string | null;
   readonly inquiryRequest: {
     readonly formattedFirstMessage: string | null;
   } | null;
@@ -123,6 +124,13 @@ return {
   },
   "name": "ConversationMessages_conversation",
   "selections": [
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "fromLastViewedMessageID",
+      "storageKey": null
+    },
     {
       "kind": "RequiredField",
       "field": {
@@ -436,6 +444,6 @@ return {
 };
 })();
 
-(node as any).hash = "c1328245e2f8971e89d70d6c17e6445b";
+(node as any).hash = "3902912e7094e285bde00657012e8f28";
 
 export default node;

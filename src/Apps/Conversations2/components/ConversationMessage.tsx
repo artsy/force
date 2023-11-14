@@ -38,6 +38,7 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
   const data = useFragment(
     graphql`
       fragment ConversationMessage_message on Message {
+        __typename
         id
         internalID
         attachments {
@@ -66,6 +67,9 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
   )
 
   if (!data) {
+    return null
+  }
+  if (data.__typename !== "Message") {
     return null
   }
 

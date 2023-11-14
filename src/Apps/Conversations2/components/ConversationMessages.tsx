@@ -17,6 +17,11 @@ import {
   useGroupedMessages,
 } from "Apps/Conversations2/hooks/useGroupedMessages"
 import { ConversationOrderUpdate } from "Apps/Conversations2/components/Message/ConversationOrderUpdate"
+import {
+  ConversationTimeSince,
+  fromToday,
+} from "Apps/Conversations2/components/Message/ConversationTimeSince"
+import { ConversationNewMessageMarker } from "Apps/Conversations2/components/Message/ConversationNewMessageMarker"
 
 const PAGE_SIZE = 15
 
@@ -90,8 +95,14 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
         {groupedMessagesAndEvents.map((messageGroup, groupIndex) => {
           return (
             <>
+              <ConversationTimeSince
+                message={messageGroup[0]}
+                exact
+                mb={1}
+                alignSelf="center"
+              />
+
               {[...messageGroup].reverse().map((message, messageIndex) => {
-                console.log(groupedMessagesAndEvents)
                 if (isRelevantEvent(message)) {
                   return (
                     <ConversationOrderUpdate
@@ -103,15 +114,17 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
                 }
 
                 return (
-                  <ConversationMessage
-                    key={message.internalID}
-                    messageIndex={messageIndex}
-                    messages={messages}
-                    message={message}
-                    formattedFirstMessage={
-                      conversation?.inquiryRequest?.formattedFirstMessage
-                    }
-                  />
+                  <>
+                    <ConversationMessage
+                      key={message.internalID}
+                      messageIndex={messageIndex}
+                      messages={messages}
+                      message={message}
+                      formattedFirstMessage={
+                        conversation?.inquiryRequest?.formattedFirstMessage
+                      }
+                    />
+                  </>
                 )
               })}
             </>
@@ -147,6 +160,8 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
           first: { type: "Int", defaultValue: 10 }
           after: { type: "String" }
         ) {
+        fromLastViewedMessageID
+
         messagesConnection(first: $first, after: $after, sort: DESC)
           @required(action: NONE)
           @connection(

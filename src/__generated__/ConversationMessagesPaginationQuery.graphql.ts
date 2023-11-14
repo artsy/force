@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d48f37fdbeb81975d8d283b676f2bf4c>>
+ * @generated SignedSource<<294626cbb1ad13097a5819b75b941556>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -156,6 +156,13 @@ return {
         "selections": [
           {
             "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "fromLastViewedMessageID",
+            "storageKey": null
+          },
+          {
+            "alias": null,
             "args": (v6/*: any*/),
             "concreteType": "MessageConnection",
             "kind": "LinkedField",
@@ -227,6 +234,7 @@ return {
                         "name": "isFromUser",
                         "storageKey": null
                       },
+                      (v10/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -345,8 +353,7 @@ return {
                         "kind": "ScalarField",
                         "name": "cc",
                         "storageKey": null
-                      },
-                      (v10/*: any*/)
+                      }
                     ],
                     "storageKey": null
                   },
@@ -580,12 +587,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1503d114491bf7a38251b3b0a7c6efef",
+    "cacheID": "fcc8915a9288b3691a18e857af6a4042",
     "id": null,
     "metadata": {},
     "name": "ConversationMessagesPaginationQuery",
     "operationKind": "query",
-    "text": "query ConversationMessagesPaginationQuery(\n  $conversationId: String!\n  $first: Int!\n  $after: String\n) {\n  conversation(id: $conversationId) {\n    ...ConversationMessages_conversation_2HEEH6\n    id\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  id\n  internalID\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAt\n  createdAtTime: createdAt(format: \"h:mmA\")\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n\nfragment ConversationMessages_conversation_2HEEH6 on Conversation {\n  messagesConnection(first: $first, after: $after, sort: DESC) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        internalID\n        createdAt\n        isFromUser\n        ...ConversationMessage_message\n        __typename\n      }\n      cursor\n    }\n  }\n  inquiryRequest {\n    formattedFirstMessage\n    id\n  }\n  orderEvents: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED, PROCESSING_APPROVAL], participantType: BUYER) {\n    edges {\n      node {\n        __typename\n        internalID\n        updatedAt\n        ... on CommerceOfferOrder {\n          buyerAction\n        }\n        orderHistory {\n          ...ConversationOrderUpdate_event\n          __typename\n          ... on CommerceOrderStateChangedEvent {\n            createdAt\n            orderUpdateState\n            state\n            stateReason\n          }\n          ... on CommerceOfferSubmittedEvent {\n            createdAt\n            offer {\n              amount\n              fromParticipant\n              definesTotal\n              offerAmountChanged\n              respondsTo {\n                fromParticipant\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationOrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    orderUpdateState\n    state\n    stateReason\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query ConversationMessagesPaginationQuery(\n  $conversationId: String!\n  $first: Int!\n  $after: String\n) {\n  conversation(id: $conversationId) {\n    ...ConversationMessages_conversation_2HEEH6\n    id\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  __typename\n  id\n  internalID\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAt\n  createdAtTime: createdAt(format: \"h:mmA\")\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n\nfragment ConversationMessages_conversation_2HEEH6 on Conversation {\n  fromLastViewedMessageID\n  messagesConnection(first: $first, after: $after, sort: DESC) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        internalID\n        createdAt\n        isFromUser\n        ...ConversationMessage_message\n        __typename\n      }\n      cursor\n    }\n  }\n  inquiryRequest {\n    formattedFirstMessage\n    id\n  }\n  orderEvents: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED, PROCESSING_APPROVAL], participantType: BUYER) {\n    edges {\n      node {\n        __typename\n        internalID\n        updatedAt\n        ... on CommerceOfferOrder {\n          buyerAction\n        }\n        orderHistory {\n          ...ConversationOrderUpdate_event\n          __typename\n          ... on CommerceOrderStateChangedEvent {\n            createdAt\n            orderUpdateState\n            state\n            stateReason\n          }\n          ... on CommerceOfferSubmittedEvent {\n            createdAt\n            offer {\n              amount\n              fromParticipant\n              definesTotal\n              offerAmountChanged\n              respondsTo {\n                fromParticipant\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment ConversationOrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    orderUpdateState\n    state\n    stateReason\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
   }
 };
 })();

@@ -46,7 +46,6 @@ export const ConversationOrderUpdate: React.FC<OrderUpdateProps> = ({
   let textColor: Color | null = null
   let message: string
   let Icon: React.FC<any> = MoneyFillIcon
-  let action: { label?: string; onClick?: () => void } = {}
 
   if (data.__typename === "CommerceOfferSubmittedEvent") {
     const { offer } = data
@@ -57,10 +56,6 @@ export const ConversationOrderUpdate: React.FC<OrderUpdateProps> = ({
       message = `You sent ${isCounter ? "a counteroffer" : "an offer"} for ${
         data.offer.amount
       }`
-
-      if (!isCounter) {
-        action = { label: "See details", onClick: () => setShowDetails(true) }
-      }
     } else if (offer.fromParticipant === "SELLER") {
       color = "orange150"
       Icon = AlertFillIcon
@@ -101,7 +96,6 @@ export const ConversationOrderUpdate: React.FC<OrderUpdateProps> = ({
     } else if (orderUpdateState === "buy_submitted") {
       color = "black100"
       message = `You purchased this artwork`
-      action = { label: "See details", onClick: () => setShowDetails(true) }
     } else {
       return null
     }
@@ -111,12 +105,7 @@ export const ConversationOrderUpdate: React.FC<OrderUpdateProps> = ({
 
   return (
     <Flex flexDirection="column">
-      <ConversationTimeSince
-        style={{ alignSelf: "center" }}
-        time={data.createdAt}
-        exact
-        mb={1}
-      />
+      <ConversationTimeSince message={data} alignSelf="center" exact mb={1} />
 
       <Flex px={2} justifyContent="center" flexDirection="row">
         <Flex flexDirection="row">
@@ -125,17 +114,6 @@ export const ConversationOrderUpdate: React.FC<OrderUpdateProps> = ({
           <Flex flexDirection="column" pl={1}>
             <Text color={textColor || color} variant="xs">
               {message}
-              {action.label && action.onClick && (
-                <>
-                  {". "}
-                  <Clickable
-                    onClick={action.onClick}
-                    textDecoration="underline"
-                  >
-                    {action.label}.
-                  </Clickable>
-                </>
-              )}
             </Text>
           </Flex>
         </Flex>

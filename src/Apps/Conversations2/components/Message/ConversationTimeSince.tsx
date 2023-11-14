@@ -3,19 +3,26 @@ import { Box, BoxProps, Text } from "@artsy/palette"
 import { DateTime } from "luxon"
 
 interface ConversationTimeSinceProps extends Omit<BoxProps, "color"> {
-  time: string | null
+  message: any
   exact?: boolean
   style?: React.CSSProperties
 }
 
 export const ConversationTimeSince: React.FC<ConversationTimeSinceProps> = ({
-  time,
+  message,
   exact,
   ...props
 }) => {
+  if (message.__typename !== "Message") {
+    return null
+  }
+
+  const time = message.createdAt ?? ""
+
   if (!time) {
     return null
   }
+
   return (
     <Box {...props}>
       <Text variant="xs" color="black30">
