@@ -53,7 +53,7 @@ export const useConversationPurchaseButtonData = (
   }
 
   const isUniqueArtwork =
-    !artwork.isEdition || artwork.editionSets?.length! === 1
+    !artwork.isEdition || artwork.editionSets?.length === 1
 
   const isPurchaseButtonPresent = artwork.isAcquireable
 

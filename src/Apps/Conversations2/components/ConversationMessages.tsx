@@ -12,7 +12,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 import { usePoll } from "Utils/Hooks/usePoll"
 import { Sentinel } from "Components/Sentinal"
-import { useGroupedMessages } from "Apps/Conversations2/hooks/useGroupMessages"
+import { useGroupedMessages } from "Apps/Conversations2/hooks/useGroupedMessages"
 
 const PAGE_SIZE = 15
 
@@ -40,10 +40,13 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
   })
 
   const messages = extractNodes(conversation?.messagesConnection)
-  const events = extractNodes(conversation?.orderEventsConnection)
 
-  // WIP
-  const groupedMessages = useGroupedMessages(messages, events)
+  const groupedMessagesAndEvents = useGroupedMessages(
+    conversation?.messagesConnection,
+    conversation?.orderEvents
+  )
+
+  console.log(groupedMessagesAndEvents)
 
   const refreshList = () => {
     if (!relay.isLoading()) {
@@ -59,11 +62,11 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
   }
 
   // Refetch messages in the background
-  usePoll({
-    callback: () => refreshList(),
-    intervalTime: BACKGROUND_REFETCH_INTERVAL,
-    key: "conversationMessages",
-  })
+  // usePoll({
+  //   callback: () => refreshList(),
+  //   intervalTime: BACKGROUND_REFETCH_INTERVAL,
+  //   key: "conversationMessages",
+  // })
 
   useAutoScrollToBottom({
     messages,
@@ -150,7 +153,7 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
           formattedFirstMessage
         }
 
-        orderEventsConnection: orderConnection(
+        orderEvents: orderConnection(
           first: 10
           states: [
             APPROVED
@@ -170,15 +173,24 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
                 buyerAction
               }
               orderHistory {
-                ...OrderUpdate_event
                 __typename
                 ... on CommerceOrderStateChangedEvent {
+                  createdAt
+                  orderUpdateState
                   state
                   stateReason
-                  createdAt
                 }
                 ... on CommerceOfferSubmittedEvent {
                   createdAt
+                  offer {
+                    amount
+                    fromParticipant
+                    definesTotal
+                    offerAmountChanged
+                    respondsTo {
+                      fromParticipant
+                    }
+                  }
                 }
               }
             }

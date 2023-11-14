@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2935dcc43c587df58ad74b2da406c07e>>
+ * @generated SignedSource<<266e6b06633c6122075e9463f0c85525>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -403,7 +403,7 @@ return {
             "storageKey": null
           },
           {
-            "alias": "orderEventsConnection",
+            "alias": "orderEvents",
             "args": [
               (v1/*: any*/),
               {
@@ -476,10 +476,6 @@ return {
                         "name": "orderHistory",
                         "plural": true,
                         "selections": [
-                          {
-                            "kind": "TypeDiscriminator",
-                            "abstractKey": "__isCommerceOrderEventUnion"
-                          },
                           (v6/*: any*/),
                           {
                             "kind": "InlineFragment",
@@ -585,7 +581,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "938c2b7867f52aee4b23a3e508128362",
+    "cacheID": "c636646ccce6d056828eaf56c22d0525",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -670,26 +666,26 @@ return {
         "conversation.messagesConnection.pageInfo.hasNextPage": (v13/*: any*/),
         "conversation.messagesConnection.pageInfo.hasPreviousPage": (v13/*: any*/),
         "conversation.messagesConnection.pageInfo.startCursor": (v9/*: any*/),
-        "conversation.orderEventsConnection": {
+        "conversation.orderEvents": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "CommerceOrderConnectionWithTotalCount"
         },
-        "conversation.orderEventsConnection.edges": {
+        "conversation.orderEvents.edges": {
           "enumValues": null,
           "nullable": true,
           "plural": true,
           "type": "CommerceOrderEdge"
         },
-        "conversation.orderEventsConnection.edges.node": {
+        "conversation.orderEvents.edges.node": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "CommerceOrder"
         },
-        "conversation.orderEventsConnection.edges.node.__typename": (v10/*: any*/),
-        "conversation.orderEventsConnection.edges.node.buyerAction": {
+        "conversation.orderEvents.edges.node.__typename": (v10/*: any*/),
+        "conversation.orderEvents.edges.node.buyerAction": {
           "enumValues": [
             "OFFER_ACCEPTED",
             "OFFER_ACCEPTED_CONFIRM_NEEDED",
@@ -702,38 +698,37 @@ return {
           "plural": false,
           "type": "CommerceBuyerOfferActionEnum"
         },
-        "conversation.orderEventsConnection.edges.node.id": (v8/*: any*/),
-        "conversation.orderEventsConnection.edges.node.internalID": (v8/*: any*/),
-        "conversation.orderEventsConnection.edges.node.orderHistory": {
+        "conversation.orderEvents.edges.node.id": (v8/*: any*/),
+        "conversation.orderEvents.edges.node.internalID": (v8/*: any*/),
+        "conversation.orderEvents.edges.node.orderHistory": {
           "enumValues": null,
           "nullable": false,
           "plural": true,
           "type": "CommerceOrderEventUnion"
         },
-        "conversation.orderEventsConnection.edges.node.orderHistory.__isCommerceOrderEventUnion": (v10/*: any*/),
-        "conversation.orderEventsConnection.edges.node.orderHistory.__typename": (v10/*: any*/),
-        "conversation.orderEventsConnection.edges.node.orderHistory.createdAt": (v10/*: any*/),
-        "conversation.orderEventsConnection.edges.node.orderHistory.offer": {
+        "conversation.orderEvents.edges.node.orderHistory.__typename": (v10/*: any*/),
+        "conversation.orderEvents.edges.node.orderHistory.createdAt": (v10/*: any*/),
+        "conversation.orderEvents.edges.node.orderHistory.offer": {
           "enumValues": null,
           "nullable": false,
           "plural": false,
           "type": "CommerceOffer"
         },
-        "conversation.orderEventsConnection.edges.node.orderHistory.offer.amount": (v9/*: any*/),
-        "conversation.orderEventsConnection.edges.node.orderHistory.offer.definesTotal": (v13/*: any*/),
-        "conversation.orderEventsConnection.edges.node.orderHistory.offer.fromParticipant": (v14/*: any*/),
-        "conversation.orderEventsConnection.edges.node.orderHistory.offer.id": (v8/*: any*/),
-        "conversation.orderEventsConnection.edges.node.orderHistory.offer.offerAmountChanged": (v13/*: any*/),
-        "conversation.orderEventsConnection.edges.node.orderHistory.offer.respondsTo": {
+        "conversation.orderEvents.edges.node.orderHistory.offer.amount": (v9/*: any*/),
+        "conversation.orderEvents.edges.node.orderHistory.offer.definesTotal": (v13/*: any*/),
+        "conversation.orderEvents.edges.node.orderHistory.offer.fromParticipant": (v14/*: any*/),
+        "conversation.orderEvents.edges.node.orderHistory.offer.id": (v8/*: any*/),
+        "conversation.orderEvents.edges.node.orderHistory.offer.offerAmountChanged": (v13/*: any*/),
+        "conversation.orderEvents.edges.node.orderHistory.offer.respondsTo": {
           "enumValues": null,
           "nullable": true,
           "plural": false,
           "type": "CommerceOffer"
         },
-        "conversation.orderEventsConnection.edges.node.orderHistory.offer.respondsTo.fromParticipant": (v14/*: any*/),
-        "conversation.orderEventsConnection.edges.node.orderHistory.offer.respondsTo.id": (v8/*: any*/),
-        "conversation.orderEventsConnection.edges.node.orderHistory.orderUpdateState": (v9/*: any*/),
-        "conversation.orderEventsConnection.edges.node.orderHistory.state": {
+        "conversation.orderEvents.edges.node.orderHistory.offer.respondsTo.fromParticipant": (v14/*: any*/),
+        "conversation.orderEvents.edges.node.orderHistory.offer.respondsTo.id": (v8/*: any*/),
+        "conversation.orderEvents.edges.node.orderHistory.orderUpdateState": (v9/*: any*/),
+        "conversation.orderEvents.edges.node.orderHistory.state": {
           "enumValues": [
             "ABANDONED",
             "APPROVED",
@@ -749,13 +744,13 @@ return {
           "plural": false,
           "type": "CommerceOrderStateEnum"
         },
-        "conversation.orderEventsConnection.edges.node.orderHistory.stateReason": (v9/*: any*/),
-        "conversation.orderEventsConnection.edges.node.updatedAt": (v10/*: any*/)
+        "conversation.orderEvents.edges.node.orderHistory.stateReason": (v9/*: any*/),
+        "conversation.orderEvents.edges.node.updatedAt": (v10/*: any*/)
       }
     },
     "name": "ConversationMessagesTestQuery",
     "operationKind": "query",
-    "text": "query ConversationMessagesTestQuery {\n  conversation(id: \"123\") {\n    ...ConversationMessages_conversation\n    id\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  id\n  internalID\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAt\n  createdAtTime: createdAt(format: \"h:mmA\")\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n\nfragment ConversationMessages_conversation on Conversation {\n  messagesConnection(first: 10, sort: DESC) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        internalID\n        createdAt\n        isFromUser\n        ...ConversationMessage_message\n        __typename\n      }\n      cursor\n    }\n  }\n  inquiryRequest {\n    formattedFirstMessage\n    id\n  }\n  orderEventsConnection: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED, PROCESSING_APPROVAL], participantType: BUYER) {\n    edges {\n      node {\n        __typename\n        internalID\n        updatedAt\n        ... on CommerceOfferOrder {\n          buyerAction\n        }\n        orderHistory {\n          ...OrderUpdate_event\n          __typename\n          ... on CommerceOrderStateChangedEvent {\n            state\n            stateReason\n            createdAt\n          }\n          ... on CommerceOfferSubmittedEvent {\n            createdAt\n          }\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment OrderUpdate_event on CommerceOrderEventUnion {\n  __isCommerceOrderEventUnion: __typename\n  __typename\n  ... on CommerceOrderStateChangedEvent {\n    createdAt\n    orderUpdateState\n    state\n    stateReason\n  }\n  ... on CommerceOfferSubmittedEvent {\n    createdAt\n    offer {\n      amount\n      fromParticipant\n      definesTotal\n      offerAmountChanged\n      respondsTo {\n        fromParticipant\n        id\n      }\n      id\n    }\n  }\n}\n"
+    "text": "query ConversationMessagesTestQuery {\n  conversation(id: \"123\") {\n    ...ConversationMessages_conversation\n    id\n  }\n}\n\nfragment ConversationMessage_message on Message {\n  id\n  internalID\n  attachments {\n    internalID\n    contentType\n    downloadURL\n    fileName\n    id\n  }\n  body\n  createdAt\n  createdAtTime: createdAt(format: \"h:mmA\")\n  deliveries {\n    openedAt\n    fullTransformedEmail\n    id\n  }\n  isFromUser\n  isFirstMessage\n  from {\n    name\n  }\n  to\n  cc\n}\n\nfragment ConversationMessages_conversation on Conversation {\n  messagesConnection(first: 10, sort: DESC) {\n    pageInfo {\n      hasNextPage\n      hasPreviousPage\n      startCursor\n      endCursor\n    }\n    edges {\n      node {\n        id\n        internalID\n        createdAt\n        isFromUser\n        ...ConversationMessage_message\n        __typename\n      }\n      cursor\n    }\n  }\n  inquiryRequest {\n    formattedFirstMessage\n    id\n  }\n  orderEvents: orderConnection(first: 10, states: [APPROVED, FULFILLED, SUBMITTED, REFUNDED, CANCELED, PROCESSING_APPROVAL], participantType: BUYER) {\n    edges {\n      node {\n        __typename\n        internalID\n        updatedAt\n        ... on CommerceOfferOrder {\n          buyerAction\n        }\n        orderHistory {\n          __typename\n          ... on CommerceOrderStateChangedEvent {\n            createdAt\n            orderUpdateState\n            state\n            stateReason\n          }\n          ... on CommerceOfferSubmittedEvent {\n            createdAt\n            offer {\n              amount\n              fromParticipant\n              definesTotal\n              offerAmountChanged\n              respondsTo {\n                fromParticipant\n                id\n              }\n              id\n            }\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

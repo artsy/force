@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cc3395628a9e2b656cdf92a5f3cb1a67>>
+ * @generated SignedSource<<a00872b4fadf92c828f3a275012f12e4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceBuyerOfferActionEnum = "OFFER_ACCEPTED" | "OFFER_ACCEPTED_CONFIRM_NEEDED" | "OFFER_RECEIVED" | "OFFER_RECEIVED_CONFIRM_NEEDED" | "PAYMENT_FAILED" | "PROVISIONAL_OFFER_ACCEPTED" | "%future added value";
+export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ConversationMessages_conversation$data = {
@@ -32,17 +33,33 @@ export type ConversationMessages_conversation$data = {
       readonly startCursor: string | null;
     };
   };
-  readonly orderEventsConnection: {
+  readonly orderEvents: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
         readonly internalID: string;
         readonly orderHistory: ReadonlyArray<{
-          readonly __typename: string;
-          readonly createdAt?: string;
-          readonly state?: CommerceOrderStateEnum;
-          readonly stateReason?: string | null;
-          readonly " $fragmentSpreads": FragmentRefs<"OrderUpdate_event">;
+          readonly __typename: "CommerceOfferSubmittedEvent";
+          readonly createdAt: string;
+          readonly offer: {
+            readonly amount: string | null;
+            readonly definesTotal: boolean;
+            readonly fromParticipant: CommerceOrderParticipantEnum | null;
+            readonly offerAmountChanged: boolean;
+            readonly respondsTo: {
+              readonly fromParticipant: CommerceOrderParticipantEnum | null;
+            } | null;
+          };
+        } | {
+          readonly __typename: "CommerceOrderStateChangedEvent";
+          readonly createdAt: string;
+          readonly orderUpdateState: string | null;
+          readonly state: CommerceOrderStateEnum;
+          readonly stateReason: string | null;
+        } | {
+          // This will never be '%other', but we need some
+          // value in case none of the concrete values match.
+          readonly __typename: "%other";
         }>;
         readonly updatedAt: string;
       } | null;
@@ -75,6 +92,13 @@ v2 = {
   "args": null,
   "kind": "ScalarField",
   "name": "__typename",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "fromParticipant",
   "storageKey": null
 };
 return {
@@ -236,7 +260,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": "orderEventsConnection",
+      "alias": "orderEvents",
       "args": [
         {
           "kind": "Literal",
@@ -312,15 +336,18 @@ return {
                   "name": "orderHistory",
                   "plural": true,
                   "selections": [
-                    {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "OrderUpdate_event"
-                    },
                     (v2/*: any*/),
                     {
                       "kind": "InlineFragment",
                       "selections": [
+                        (v1/*: any*/),
+                        {
+                          "alias": null,
+                          "args": null,
+                          "kind": "ScalarField",
+                          "name": "orderUpdateState",
+                          "storageKey": null
+                        },
                         {
                           "alias": null,
                           "args": null,
@@ -334,8 +361,7 @@ return {
                           "kind": "ScalarField",
                           "name": "stateReason",
                           "storageKey": null
-                        },
-                        (v1/*: any*/)
+                        }
                       ],
                       "type": "CommerceOrderStateChangedEvent",
                       "abstractKey": null
@@ -343,7 +369,52 @@ return {
                     {
                       "kind": "InlineFragment",
                       "selections": [
-                        (v1/*: any*/)
+                        (v1/*: any*/),
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "CommerceOffer",
+                          "kind": "LinkedField",
+                          "name": "offer",
+                          "plural": false,
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "amount",
+                              "storageKey": null
+                            },
+                            (v3/*: any*/),
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "definesTotal",
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "offerAmountChanged",
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "concreteType": "CommerceOffer",
+                              "kind": "LinkedField",
+                              "name": "respondsTo",
+                              "plural": false,
+                              "selections": [
+                                (v3/*: any*/)
+                              ],
+                              "storageKey": null
+                            }
+                          ],
+                          "storageKey": null
+                        }
                       ],
                       "type": "CommerceOfferSubmittedEvent",
                       "abstractKey": null
@@ -366,6 +437,6 @@ return {
 };
 })();
 
-(node as any).hash = "0a916513e49f7165e6c172cd1658354b";
+(node as any).hash = "d2b1ef00803f0c93f70ead19bc554267";
 
 export default node;

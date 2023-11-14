@@ -79,6 +79,7 @@ export const relativeDate = (time: string) => {
     return date.toRelative()
   } else if (minutesSince <= 40320) {
     const numberOfWeeksAgo = Math.floor(Math.abs(minutesSince / 10080))
+
     const formattedDate =
       numberOfWeeksAgo == 1
         ? `${numberOfWeeksAgo} week ago`

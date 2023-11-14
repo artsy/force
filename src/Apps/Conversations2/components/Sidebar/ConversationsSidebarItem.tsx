@@ -1,12 +1,4 @@
-import {
-  Box,
-  Flex,
-  Image,
-  StackableBorderBox,
-  Text,
-  Tooltip,
-} from "@artsy/palette"
-import { UserVerifiedIcon } from "Apps/Conversations2/components/UserVerifiedIcon"
+import { Box, Flex, Image, StackableBorderBox, Text } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
@@ -138,18 +130,6 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
               <Text variant="xs" {...fontWeight} overflowEllipsis>
                 {data?.to?.name}
               </Text>
-              {data.fromUser?.collectorProfile?.confirmedBuyerAt && (
-                <Tooltip
-                  size="sm"
-                  content="Confirmed Buyer"
-                  placement="top"
-                  width={120}
-                >
-                  <Box ml={0.5}>
-                    <UserVerifiedIcon data-testid="user-verified-icon" />
-                  </Box>
-                </Tooltip>
-              )}
             </Box>
             <Text variant="xs" {...fontWeight} overflowEllipsis>
               {item.artist.name}

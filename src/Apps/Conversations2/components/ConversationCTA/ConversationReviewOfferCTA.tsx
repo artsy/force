@@ -27,8 +27,8 @@ export const ConversationReviewOfferCTA: React.FC<ConversationReviewOfferCTAProp
 
   const { hoursTillEnd, minutes } = useEventTiming({
     currentTime: DateTime.local().toString(),
-    startAt: activeOrder?.lastOffer?.createdAt!,
-    endAt: activeOrder?.stateExpiresAt!,
+    startAt: activeOrder?.lastOffer?.createdAt as string,
+    endAt: activeOrder?.stateExpiresAt as string,
   })
 
   if (!activeOrder) {

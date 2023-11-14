@@ -9,6 +9,7 @@ import { Conversation2CTA_conversation$key } from "__generated__/Conversation2CT
 import VerifiedIcon from "@artsy/icons/VerifiedIcon"
 import { ConversationConfirmModal } from "Apps/Conversations2/components/ConversationCTA/ConversationConfirmModal"
 import { ConversationReviewOfferCTA } from "Apps/Conversations2/components/ConversationCTA/ConversationReviewOfferCTA"
+import { extractNodes } from "Utils/extractNodes"
 
 interface Conversation2CTAProps extends FlexProps {
   conversation: Conversation2CTA_conversation$key
@@ -23,6 +24,11 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
   const liveArtwork = data?.items?.[0]?.liveArtwork
   const artwork = liveArtwork?.__typename === "Artwork" ? liveArtwork : null
 
+  const activeOrder = extractNodes(data.activeOrderCTA)[0]
+
+  if (activeOrder) {
+    return null
+  }
   if (!artwork) {
     return null
   }
@@ -89,6 +95,30 @@ const FRAGMENT = graphql`
         __typename
         ... on Artwork {
           internalID
+        }
+      }
+    }
+
+    activeOrderCTA: orderConnection(
+      first: 10
+      states: [APPROVED, PROCESSING_APPROVAL, FULFILLED, SUBMITTED, REFUNDED]
+    ) {
+      edges {
+        node {
+          internalID
+          state
+          stateReason
+          stateExpiresAt
+          ... on CommerceOfferOrder {
+            buyerAction
+            offers(first: 5) {
+              edges {
+                node {
+                  internalID
+                }
+              }
+            }
+          }
         }
       }
     }

@@ -40,8 +40,10 @@ export const ConversationConfirmModal: React.FC<ConversationConfirmModalProps> =
     hideSelectEditionSetModal,
   } = useConversationsContext()
 
+  const firstEditionSetID = data.editionSets?.[0]?.internalID as string
+
   const [selectedEdition, setSelectedEdition] = useState<string | null>(
-    data.editionSets?.length === 1 ? data.editionSets[0]!.internalID : null
+    data.editionSets?.length === 1 ? firstEditionSetID : null
   )
 
   const isActionable =
@@ -54,9 +56,9 @@ export const ConversationConfirmModal: React.FC<ConversationConfirmModalProps> =
   }
 
   // TODO: Fix show / hide visibility
-  // if (!isConfirmModalVisible) {
-  //   return null
-  // }
+  if (!isConfirmModalVisible) {
+    return null
+  }
 
   const detailItems = getArtworkDetailItems(data)
 
