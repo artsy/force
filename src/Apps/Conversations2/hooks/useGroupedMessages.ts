@@ -12,10 +12,12 @@ export const useGroupedMessages = (messages, events) => {
 
   useEffect(() => {
     const allMessages = extractNodes(messages)
+
     const allOrderEvents = extractNodes(events).reduce(
       (prev, order) => prev.concat(order.orderHistory),
       []
     )
+
     const orderEventsWithoutFailedPayment = allOrderEvents.filter(
       (event, index) => {
         if (
@@ -33,7 +35,7 @@ export const useGroupedMessages = (messages, events) => {
 
     const sortedMessages = sortBy(
       [...orderEventsWithoutFailedPayment, ...allMessages],
-      message => DateTime.fromISO(message.createdAt!)
+      message => DateTime.fromISO(message.createdAt as string)
     )
 
     const groupAllMessages = groupMessages(sortedMessages)
@@ -57,6 +59,7 @@ export const isRelevantEvent = item => {
 
 // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
 export type Message = ConversationMessages_messages$data["edges"][number]["node"]
+
 /**
  * Combines messages into groups of messages sent by the same party and
  * separated out into different groups if sent across multiple days

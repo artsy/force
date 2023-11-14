@@ -2,13 +2,13 @@ import * as React from "react"
 import { Box, BoxProps, Text } from "@artsy/palette"
 import { DateTime } from "luxon"
 
-interface TimeSinceProps extends Omit<BoxProps, "color"> {
+interface ConversationTimeSinceProps extends Omit<BoxProps, "color"> {
   time: string | null
   exact?: boolean
   style?: React.CSSProperties
 }
 
-export const TimeSince: React.FC<TimeSinceProps> = ({
+export const ConversationTimeSince: React.FC<ConversationTimeSinceProps> = ({
   time,
   exact,
   ...props

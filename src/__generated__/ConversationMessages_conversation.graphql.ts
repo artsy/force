@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a00872b4fadf92c828f3a275012f12e4>>
+ * @generated SignedSource<<49942a3734b87075a25228b8ee0f2a1a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -39,9 +39,9 @@ export type ConversationMessages_conversation$data = {
         readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
         readonly internalID: string;
         readonly orderHistory: ReadonlyArray<{
-          readonly __typename: "CommerceOfferSubmittedEvent";
-          readonly createdAt: string;
-          readonly offer: {
+          readonly __typename: string;
+          readonly createdAt?: string;
+          readonly offer?: {
             readonly amount: string | null;
             readonly definesTotal: boolean;
             readonly fromParticipant: CommerceOrderParticipantEnum | null;
@@ -50,16 +50,10 @@ export type ConversationMessages_conversation$data = {
               readonly fromParticipant: CommerceOrderParticipantEnum | null;
             } | null;
           };
-        } | {
-          readonly __typename: "CommerceOrderStateChangedEvent";
-          readonly createdAt: string;
-          readonly orderUpdateState: string | null;
-          readonly state: CommerceOrderStateEnum;
-          readonly stateReason: string | null;
-        } | {
-          // This will never be '%other', but we need some
-          // value in case none of the concrete values match.
-          readonly __typename: "%other";
+          readonly orderUpdateState?: string | null;
+          readonly state?: CommerceOrderStateEnum;
+          readonly stateReason?: string | null;
+          readonly " $fragmentSpreads": FragmentRefs<"ConversationOrderUpdate_event">;
         }>;
         readonly updatedAt: string;
       } | null;
@@ -336,6 +330,11 @@ return {
                   "name": "orderHistory",
                   "plural": true,
                   "selections": [
+                    {
+                      "args": null,
+                      "kind": "FragmentSpread",
+                      "name": "ConversationOrderUpdate_event"
+                    },
                     (v2/*: any*/),
                     {
                       "kind": "InlineFragment",
@@ -437,6 +436,6 @@ return {
 };
 })();
 
-(node as any).hash = "d2b1ef00803f0c93f70ead19bc554267";
+(node as any).hash = "c1328245e2f8971e89d70d6c17e6445b";
 
 export default node;

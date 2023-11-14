@@ -12,7 +12,11 @@ import { extractNodes } from "Utils/extractNodes"
 import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 import { usePoll } from "Utils/Hooks/usePoll"
 import { Sentinel } from "Components/Sentinal"
-import { useGroupedMessages } from "Apps/Conversations2/hooks/useGroupedMessages"
+import {
+  isRelevantEvent,
+  useGroupedMessages,
+} from "Apps/Conversations2/hooks/useGroupedMessages"
+import { ConversationOrderUpdate } from "Apps/Conversations2/components/Message/ConversationOrderUpdate"
 
 const PAGE_SIZE = 15
 
@@ -45,8 +49,6 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
     conversation?.messagesConnection,
     conversation?.orderEvents
   )
-
-  console.log(groupedMessagesAndEvents)
 
   const refreshList = () => {
     if (!relay.isLoading()) {
@@ -85,17 +87,34 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
           />
         )}
 
-        {messages.reverse().map((message, messageIndex) => {
+        {groupedMessagesAndEvents.map((messageGroup, groupIndex) => {
           return (
-            <ConversationMessage
-              key={message.internalID}
-              messageIndex={messageIndex}
-              messages={messages}
-              message={message}
-              formattedFirstMessage={
-                conversation?.inquiryRequest?.formattedFirstMessage
-              }
-            />
+            <>
+              {[...messageGroup].reverse().map((message, messageIndex) => {
+                console.log(groupedMessagesAndEvents)
+                if (isRelevantEvent(message)) {
+                  return (
+                    <ConversationOrderUpdate
+                      key={`event-${messageIndex}`}
+                      event={message as any}
+                      setShowDetails={x => x}
+                    />
+                  )
+                }
+
+                return (
+                  <ConversationMessage
+                    key={message.internalID}
+                    messageIndex={messageIndex}
+                    messages={messages}
+                    message={message}
+                    formattedFirstMessage={
+                      conversation?.inquiryRequest?.formattedFirstMessage
+                    }
+                  />
+                )
+              })}
+            </>
           )
         })}
 
@@ -173,6 +192,7 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
                 buyerAction
               }
               orderHistory {
+                ...ConversationOrderUpdate_event
                 __typename
                 ... on CommerceOrderStateChangedEvent {
                   createdAt
