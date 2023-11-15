@@ -45,10 +45,13 @@ import { FormikHelpers } from "formik"
 import {
   ShippingContext,
   useComputeShippingContext,
-} from "Apps/Order/Routes/Shipping2/support/ShippingContext"
+} from "Apps/Order/Routes/Shipping2/ShippingContext"
 
-import { FulfillmentType } from "Apps/Order/Routes/Shipping2/support/shippingUtils"
+import { FulfillmentType } from "Apps/Order/Routes/Shipping2/shippingUtils"
 import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
+import { useSaveFulfillmentDetails } from "Apps/Order/Routes/Shipping2/shippingContextHelpers/mutations/useSaveFulfillmentDetails"
+import { useCreateSavedAddress } from "Apps/Order/Routes/Shipping2/shippingContextHelpers/mutations/useCreateSavedAddress"
+import { useSelectShippingQuote } from "Apps/Order/Routes/Shipping2/shippingContextHelpers/mutations/useSelectShippingQuote"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -66,13 +69,17 @@ export type ShippingRouteStep = "fulfillment_details" | "shipping_quotes"
 
 export const ShippingRoute: FC<ShippingProps> = props => {
   const { order, isCommittingMutation } = props
+
+  const saveFulfillmentDetails = useSaveFulfillmentDetails().submitMutation
+  const createSavedAddress = useCreateSavedAddress().submitMutation
+  const selectShippingQuote = useSelectShippingQuote().submitMutation
+
   const orderContext = useComputeShippingContext(props)
   const {
     initialValues,
-    computedOrderData,
+    parsedOrderData,
     step,
     helpers: { fulfillmentDetails: fulfillmentFormHelpers },
-    mutations,
   } = orderContext
 
   const isOffer = order.mode === "OFFER"
@@ -81,7 +88,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     isArtsyShipping,
     requiresArtsyShippingTo,
     shippingQuotes,
-  } = computedOrderData
+  } = parsedOrderData
 
   const advanceToPayment = useCallback(() => {
     props.router.push(`/orders/${props.order.internalID}/payment`)
@@ -93,7 +100,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   // shipping quote refresh. the *selected shipping quote is not reset.*
   useEffect(() => {
     if (
-      computedOrderData.fulfillmentType === FulfillmentType.SHIP &&
+      parsedOrderData.fulfillmentType === FulfillmentType.SHIP &&
       isArtsyShipping
     ) {
       handleSubmitFulfillmentDetails(initialValues.fulfillmentDetails)
@@ -187,11 +194,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     [isArtsyShipping, orderTracking, props.dialog, selectedShippingQuoteId]
   )
 
-  const {
-    saveFulfillmentDetails: saveFulfillmentDetailsMutation,
-    createSavedAddress: createSavedAddressMutation,
-    selectShippingQuote: selectShippingQuoteMutation,
-  } = mutations
   const handleSubmitFulfillmentDetails = useCallback(
     async (
       formValues: FulfillmentValues,
@@ -243,7 +245,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           }
         }
 
-        const result = await saveFulfillmentDetailsMutation({
+        const result = await saveFulfillmentDetails({
           variables: { input: fulfillmentMutationValues },
         })
 
@@ -257,7 +259,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           formValues.fulfillmentType === FulfillmentType.SHIP &&
           formValues.attributes.saveAddress
         ) {
-          await createSavedAddressMutation({
+          await createSavedAddress({
             variables: { input: { attributes: { ...formValues.attributes } } },
           })
         }
@@ -277,23 +279,23 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       }
     },
     [
-      saveFulfillmentDetailsMutation,
+      saveFulfillmentDetails,
       requiresArtsyShippingTo,
       props.order.internalID,
       props.dialog,
       handleSubmitError,
-      createSavedAddressMutation,
+      createSavedAddress,
       advanceToPayment,
       orderTracking,
     ]
   )
 
-  const selectShippingQuote = useCallback(async () => {
+  const saveSelectedShippingQuote = useCallback(async () => {
     const { order } = props
 
     if (selectedShippingQuoteId && order.internalID) {
       try {
-        const result = await selectShippingQuoteMutation({
+        const result = await selectShippingQuote({
           variables: {
             input: {
               id: order.internalID,
@@ -328,14 +330,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }, [
     props,
-    selectShippingQuoteMutation,
+    selectShippingQuote,
     selectedShippingQuoteId,
     advanceToPayment,
     handleSubmitError,
     orderTracking,
   ])
-
-  // TODO: Pass this into the fulfillment details form (according to current structure)
 
   // TODO: Make sure we re-set address verified by in the fulfillment details form
   //   // If the address has already been verified and the user is editing the form,
@@ -408,8 +408,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     if (step === "fulfillment_details") {
       return (...args) => fulfillmentDetailsFormikHandleSubmit(...args)
     }
-    return selectShippingQuote
-  }, [step, fulfillmentDetailsFormikHandleSubmit, selectShippingQuote])
+    return saveSelectedShippingQuote
+  }, [step, fulfillmentDetailsFormikHandleSubmit, saveSelectedShippingQuote])
 
   const disableSubmit = useMemo(() => {
     if (step === "fulfillment_details") {
@@ -441,9 +441,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   me={props.me}
                   order={props.order}
                   onSubmit={handleSubmitFulfillmentDetails}
-                  // maybe move to context
-                  // setFulfillmentFormHelpers={setFulfillmentFormHelpers}
-                  // move all of these to shipping context
                 />
 
                 {/* SHIPPING Quotes */}

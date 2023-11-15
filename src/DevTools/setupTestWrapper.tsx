@@ -124,9 +124,11 @@ export const setupTestWrapperTL = <T extends OperationType>({
     const mockResolveLastOperation = (mockResolvers: MockResolvers) => {
       const operation = env.mock.getMostRecentOperation()
 
-      const payload = MockPayloadGenerator.generate(operation, mockResolvers)
       act(() => {
-        env.mock.resolve(operation, payload)
+        env.mock.resolve(
+          operation,
+          MockPayloadGenerator.generate(operation, mockResolvers)
+        )
       })
 
       const operationName = operation.request.node.operation.name

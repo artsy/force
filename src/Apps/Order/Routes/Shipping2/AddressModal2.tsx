@@ -18,11 +18,15 @@ import { AddressModalFields } from "Components/Address/AddressModalFields"
 
 import { ADDRESS_VALIDATION_SHAPE } from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
-import { useShippingContext } from "Apps/Order/Routes/Shipping2/support/ShippingContext"
-import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping2/support/shippingUtils"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
+import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping2/shippingUtils"
 import { useCreateSavedAddressMutation$data } from "__generated__/useCreateSavedAddressMutation.graphql"
 import { useUpdateSavedAddressMutation$data } from "__generated__/useUpdateSavedAddressMutation.graphql"
 import createLogger from "Utils/logger"
+import { useCreateSavedAddress } from "Apps/Order/Routes/Shipping2/shippingContextHelpers/mutations/useCreateSavedAddress"
+import { useDeleteSavedAddress } from "Apps/Order/Routes/Shipping2/shippingContextHelpers/mutations/useDeleteSavedAddress"
+import { useUpdateSavedAddress } from "Apps/Order/Routes/Shipping2/shippingContextHelpers/mutations/useUpdateSavedAddress"
+import { useUpdateUserDefaultAddress } from "Apps/Order/Routes/Shipping2/shippingContextHelpers/mutations/useUpdateUserDefaultAddress"
 
 export enum AddressModalActionType {
   EDIT_USER_ADDRESS = "editUserAddress",
@@ -79,16 +83,20 @@ export const AddressModal: React.FC<Props> = ({
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const shippingContext = useShippingContext()
 
+  const createSavedAddress = useCreateSavedAddress().submitMutation
+  const deleteSavedAddress = useDeleteSavedAddress().submitMutation
+  const updateSavedAddress = useUpdateSavedAddress().submitMutation
+  const updateUserDefaultAddress = useUpdateUserDefaultAddress().submitMutation
+
   if (!modalAction) return null
 
-  const { mutations } = shippingContext
   const title = (modalAction && MODAL_TITLE_MAP[modalAction.type]) || ""
   const initialAddress =
     modalAction.type === "editUserAddress"
       ? modalAction.address
       : {
           // TODO: Instead of using ShippingContext, initialValues could be a shippingUtils function
-          country: shippingContext.computedOrderData.shipsFrom,
+          country: shippingContext.parsedOrderData.shipsFrom,
           internalID: undefined,
           isDefault: false,
         }
@@ -118,13 +126,11 @@ export const AddressModal: React.FC<Props> = ({
   }
 
   const handleDeleteAddress = async (addressID: string) => {
-    return mutations
-      .deleteSavedAddress({
-        variables: {
-          input: { userAddressID: addressID },
-        },
-      })
-      .catch(logger.error)
+    return deleteSavedAddress({
+      variables: {
+        input: { userAddressID: addressID },
+      },
+    }).catch(logger.error)
   }
 
   const handleMutationPayload = (
@@ -151,29 +157,25 @@ export const AddressModal: React.FC<Props> = ({
     try {
       if (modalAction.type === "createUserAddress") {
         operation = () => {
-          return mutations
-            .createSavedAddress({
-              variables: {
-                input: { attributes: addressInput },
-              },
-            })
-            .then(result => {
-              return handleMutationPayload(result.createUserAddress)
-            })
+          return createSavedAddress({
+            variables: {
+              input: { attributes: addressInput },
+            },
+          }).then(result => {
+            return handleMutationPayload(result.createUserAddress)
+          })
         }
       } else {
         operation = () =>
-          mutations
-            .updateSavedAddress({
-              variables: {
-                input: {
-                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-                  userAddressID: initialAddress.internalID!,
-                  attributes: addressInput,
-                },
+          updateSavedAddress({
+            variables: {
+              input: {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                userAddressID: initialAddress.internalID!,
+                attributes: addressInput,
               },
-            })
-            .then(result => handleMutationPayload(result.updateUserAddress))
+            },
+          }).then(result => handleMutationPayload(result.updateUserAddress))
       }
       const { data, errors } = await operation()
       if (errors) {
@@ -188,7 +190,7 @@ export const AddressModal: React.FC<Props> = ({
         values?.isDefault &&
         values?.isDefault !== initialAddress?.isDefault
       ) {
-        const updateAddressResult = await mutations.updateUserDefaultAddress({
+        const updateAddressResult = await updateUserDefaultAddress({
           variables: {
             input: { userAddressID: savedAddressID },
           },

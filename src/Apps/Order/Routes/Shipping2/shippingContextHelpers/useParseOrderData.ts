@@ -1,20 +1,28 @@
 import { ShippingProps } from "Apps/Order/Routes/Shipping2"
 import { FulfillmentValues } from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
-import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/support/ShippingContext/ShippingContext"
 import {
   FulfillmentType,
   SavedAddressType,
   ShippingAddressFormValues,
   addressWithFallbackValues,
-} from "Apps/Order/Routes/Shipping2/support/shippingUtils"
+} from "Apps/Order/Routes/Shipping2/shippingUtils"
 import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
 import { useCallback } from "react"
 
+export interface ParsedOrderData {
+  lockShippingCountryTo: "EU" | string | null
+  shipsFrom: string
+  availableShippingCountries: string[]
+  requiresArtsyShippingTo: (shipTo: string) => boolean
+  selectedSavedAddressId: string | null
+  fulfillmentDetails: FulfillmentValues["attributes"] | null
+  fulfillmentType: FulfillmentValues["fulfillmentType"] | null
+  isArtsyShipping?: boolean
+  shippingQuotes?: Array<{ id: string; isSelected: boolean }>
+}
 // Compute and memoize data from the saved order.
-export const useProcessOrderData = (
-  props: ShippingProps
-): ShippingContextProps["computedOrderData"] => {
+export const useParseOrderData = (props: ShippingProps): ParsedOrderData => {
   const { me, order } = props
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -45,6 +53,8 @@ export const useProcessOrderData = (
     ? EU_COUNTRY_CODES
     : [lockShippingCountryTo]
 
+  // todo: Should this be moved into ShippingContext.helpers? It relies on several
+  // intermediate values we don't expose.
   const requiresArtsyShippingTo = useCallback(
     (shipToCountry: string) => {
       const isDomesticShipping =

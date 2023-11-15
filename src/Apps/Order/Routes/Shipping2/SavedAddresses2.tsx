@@ -15,13 +15,13 @@ import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/SavedAddressItem2"
 import { extractNodes } from "Utils/extractNodes"
 import { themeGet } from "@styled-system/theme-get"
 
-import { useShippingContext } from "Apps/Order/Routes/Shipping2/support/ShippingContext"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import {
   SavedAddressType,
   ShippingAddressFormValues,
   addressWithFallbackValues,
   getDefaultUserAddress,
-} from "Apps/Order/Routes/Shipping2/support/shippingUtils"
+} from "Apps/Order/Routes/Shipping2/shippingUtils"
 import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
@@ -52,8 +52,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   >(
     getBestAvailableAddress(
       addressList,
-      shippingContext.computedOrderData.selectedSavedAddressId ?? undefined,
-      shippingContext.computedOrderData.availableShippingCountries
+      shippingContext.parsedOrderData.selectedSavedAddressId ?? undefined,
+      shippingContext.parsedOrderData.availableShippingCountries
     )?.internalID
   )
 
@@ -68,16 +68,16 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       setSelectedAddressID(
         getBestAvailableAddress(
           addressList,
-          shippingContext.computedOrderData.selectedSavedAddressId ?? undefined,
-          shippingContext.computedOrderData.availableShippingCountries
+          shippingContext.parsedOrderData.selectedSavedAddressId ?? undefined,
+          shippingContext.parsedOrderData.availableShippingCountries
         )?.internalID
       )
     }
   }, [
     selectedAddressPresent,
     addressList,
-    shippingContext.computedOrderData.selectedSavedAddressId,
-    shippingContext.computedOrderData.availableShippingCountries,
+    shippingContext.parsedOrderData.selectedSavedAddressId,
+    shippingContext.parsedOrderData.availableShippingCountries,
   ])
 
   const handleSelectAddress = useCallback(

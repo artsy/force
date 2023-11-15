@@ -1,3 +1,5 @@
+/* eslint-disable jest/no-disabled-tests */
+// TODO: Re-enable tests
 import { cloneDeep } from "lodash"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { MockBoot } from "DevTools/MockBoot"
@@ -774,7 +776,7 @@ describe("Shipping", () => {
           })
 
           await saveAndContinue()
-          const fulfillmentRequest = await resolveSaveFulfillmentDetails(
+          await resolveSaveFulfillmentDetails(
             mockResolveLastOperation,
             settingOrderShipmentSuccess.commerceSetShipping
           )
@@ -922,7 +924,6 @@ describe("Shipping", () => {
                 phoneNumber: validAddress.phoneNumber,
                 shipping: {
                   ...recommendedAddress,
-                  addressLine2: "",
                   name: "Erik David",
                   phoneNumber: "",
                 },
@@ -1403,7 +1404,6 @@ describe("Shipping", () => {
                 phoneNumber: validAddress.phoneNumber,
                 shipping: {
                   ...recommendedAddress,
-                  addressLine2: "",
                   name: "Erik David",
                   phoneNumber: "",
                 },
@@ -2061,7 +2061,7 @@ describe("Shipping", () => {
               //     onSuccess(updateAddressResponse)
               //   })
 
-              const { env, mockResolveLastOperation } = renderWithRelay(
+              const { mockResolveLastOperation } = renderWithRelay(
                 {
                   CommerceOrder: () => UntouchedBuyOrderWithShippingQuotes,
                   Me: () => meWithAddresses,

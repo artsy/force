@@ -9,27 +9,19 @@ import {
   addressWithFallbackValues,
   getDefaultUserAddress,
   FulfillmentType,
-} from "Apps/Order/Routes/Shipping2/support/shippingUtils"
+} from "Apps/Order/Routes/Shipping2/shippingUtils"
 import { extractNodes } from "Utils/extractNodes"
-import { useProcessOrderData } from "Apps/Order/Routes/Shipping2/support/ShippingContext/useProcessOrderData"
-import { useShippingMutations } from "Apps/Order/Routes/Shipping2/support/ShippingContext/mutations"
+import {
+  ParsedOrderData,
+  useParseOrderData,
+} from "Apps/Order/Routes/Shipping2/shippingContextHelpers/useParseOrderData"
 
 type FulfillmentHelpers = Pick<
   FormikProps<FulfillmentValues>,
   "handleSubmit" | "isValid" | "values"
 >
 export interface ShippingContextProps {
-  computedOrderData: {
-    lockShippingCountryTo: "EU" | string | null
-    shipsFrom: string
-    availableShippingCountries: string[]
-    requiresArtsyShippingTo: (shipTo: string) => boolean
-    selectedSavedAddressId: string | null
-    fulfillmentDetails: FulfillmentValues["attributes"] | null
-    fulfillmentType: FulfillmentValues["fulfillmentType"] | null
-    isArtsyShipping?: boolean
-    shippingQuotes?: Array<{ id: string; isSelected: boolean }>
-  }
+  parsedOrderData: ParsedOrderData
   initialValues: {
     fulfillmentDetails: FulfillmentValues
     shippingQuotes: {
@@ -42,7 +34,6 @@ export interface ShippingContextProps {
       setFulfillmentFormHelpers: (helpers: FulfillmentHelpers) => void
     }
   }
-  mutations: ReturnType<typeof useShippingMutations>
 }
 
 export const ShippingContext = createContext<ShippingContextProps>({} as any)
@@ -51,33 +42,31 @@ export const useShippingContext = () => {
   return useContext(ShippingContext)
 }
 
-// Get information from the order and user, computedOrderData (shared, computed context about order)
+// Get information from the order and user, parsedOrderData (shared, computed context about order)
 // initial values for forms, and the current step in the shipping route
 // values for forms
 export const useComputeShippingContext = (
   props: ShippingProps
 ): ShippingContextProps => {
-  const computedOrderData = useProcessOrderData(props)
-  const initialValues = getInitialValues(props, computedOrderData)
+  const parsedOrderData = useParseOrderData(props)
+  const initialValues = getInitialValues(props, parsedOrderData)
 
-  const { isArtsyShipping } = computedOrderData
+  const { isArtsyShipping } = parsedOrderData
 
   const step: ShippingRouteStep = useMemo(() => {
     if (isArtsyShipping) {
       return "shipping_quotes"
     }
-
     return "fulfillment_details"
   }, [isArtsyShipping])
 
   return {
-    computedOrderData,
+    parsedOrderData,
     initialValues,
     step,
     helpers: {
       fulfillmentDetails: useFulfillmentDetailsHelpers(),
     },
-    mutations: useShippingMutations(),
   }
 }
 
@@ -109,7 +98,7 @@ const useFulfillmentDetailsHelpers = (): ShippingContextProps["helpers"]["fulfil
 
 const getInitialValues = (
   props: ShippingProps,
-  orderData: ShippingContextProps["computedOrderData"]
+  orderData: ShippingContextProps["parsedOrderData"]
 ): ShippingContextProps["initialValues"] => {
   const { me } = props
 
@@ -164,7 +153,7 @@ const getInitialValues = (
 
   // The user doesn't have a valid ship-to address, so we'll return empty values.
   // TODO: This doesn't account for matching the saved address id
-  // (that is still in computedOrderData). In addition the initial values
+  // (that is still in parsedOrderData). In addition the initial values
   // are less relevant if the user has saved addresses - Setting country
   // doesn't matter.
   const initialFulfillmentValues: ShipValues["attributes"] = {
