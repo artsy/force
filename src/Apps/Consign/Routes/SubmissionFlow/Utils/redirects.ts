@@ -5,8 +5,8 @@ import { redirects_submission$data } from "__generated__/redirects_submission.gr
 import {
   getArtworkDetailsFormInitialValues,
   SubmissionType,
-} from "../ArtworkDetails/Components/ArtworkDetailsForm"
-import { getUploadPhotosFormInitialValues } from "../UploadPhotos/UploadPhotos"
+} from "Apps/Consign/Routes/SubmissionFlow/ArtworkDetails/Components/ArtworkDetailsForm"
+import { getUploadPhotosFormInitialValues } from "Apps/Consign/Routes/SubmissionFlow/UploadPhotos/UploadPhotos"
 import {
   artworkDetailsValidationSchema,
   uploadPhotosValidationSchema,
@@ -37,7 +37,8 @@ const checkArtworkDetailsFormValid = redirectToIf(
     )
 )
 
-const checkUploadPhotosFormValid = redirectToIf(
+// TODO: Is this needed as a rule to go back to edit contact info?
+export const checkUploadPhotosFormValid = redirectToIf(
   id => `/sell/submission/${id}/upload-photos`,
   submission =>
     !uploadPhotosValidationSchema.isValidSync(
@@ -65,8 +66,12 @@ export const redirects = {
       path: "/:id/contact-information",
       rules: [
         checkSubmissionExist,
-        checkArtworkDetailsFormValid,
-        checkUploadPhotosFormValid,
+        // TODO: Is this needed? A user should be able to edit their contact
+        // info independent of all else. With these rules enabled, the back
+        // button is broken.
+
+        // checkArtworkDetailsFormValid,
+        // checkUploadPhotosFormValid,
       ],
     },
   ],

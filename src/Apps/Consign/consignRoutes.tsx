@@ -283,10 +283,19 @@ export const consignRoutes: AppRouteConfig[] = [
   {
     path: "/sell/submission",
     getComponent: () => SubmissionLayout,
-    onServerSideRender: ({ res }) => {
-      res.redirect("/sell/submission/contact-information")
-    },
     children: [
+      {
+        // Default landing is the same as /contact-information
+        path: "",
+        layout: "ContainerOnly",
+        getComponent: () => ContactInformation,
+        onClientSideRender: () => {
+          ContactInformation.preload()
+        },
+        query: contactInformationQuery,
+        render: renderSubmissionFlowStep,
+        prepareVariables: prepareSubmissionFlowStepVariables,
+      },
       {
         path: "artwork-details",
         layout: "ContainerOnly",
