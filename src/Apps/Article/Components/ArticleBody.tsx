@@ -28,6 +28,7 @@ import { OPTIMAL_READING_WIDTH } from "./Sections/ArticleSectionText"
 import { Analytics } from "System/Analytics/AnalyticsContext"
 import { ArticleNewsSourceFragmentContainer } from "./ArticleNewsSource"
 import { TopContextBar } from "Components/TopContextBar"
+import { Sticky } from "Components/Sticky"
 
 interface ArticleBodyProps {
   article: ArticleBody_article$data
@@ -155,63 +156,78 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
 
           {article.layout === "STANDARD" && (
             <Column span={4} start={9}>
-              {article.relatedArticles.length > 0 && (
-                <>
-                  <Text variant="lg-display" mb={2}>
-                    Related Stories
-                  </Text>
+              <Box id={`ArticleSidebar--${article.internalID}`} height="100%">
+                {/* Negative margin outside of sticky + corresponding positive padding inside of sticky to adjust whitespace around text */}
+                <Spacer y={-2} />
 
-                  <Join separator={<Spacer y={2} />}>
-                    {article.relatedArticles.map(relatedArticle => {
-                      const img = relatedArticle.thumbnailImage?.cropped
+                <Sticky
+                  bottomBoundary={`#ArticleSidebar--${article.internalID}`}
+                >
+                  {article.relatedArticles.length > 0 && (
+                    <>
+                      <Text variant="lg-display" pt={2}>
+                        Related Stories
+                      </Text>
 
-                      return (
-                        <RouterLink
-                          key={relatedArticle.internalID}
-                          display="flex"
-                          to={relatedArticle.href}
-                          textDecoration="none"
-                          aria-label={`${relatedArticle.title} by ${relatedArticle.byline}`}
-                        >
-                          <Box mr={2} flexShrink={0}>
-                            {img ? (
-                              <Image
-                                width={100}
-                                height={100}
-                                src={img.src}
-                                srcSet={img.srcSet}
-                                alt=""
-                                lazyLoad
-                              />
-                            ) : (
-                              <Box bg="black10" width={100} height={100} />
-                            )}
-                          </Box>
+                      <Spacer y={2} />
 
-                          <Box>
-                            <Text variant="sm-display" lineClamp={2}>
-                              {relatedArticle.title}
-                            </Text>
+                      <Join separator={<Spacer y={1} />}>
+                        {article.relatedArticles.map(relatedArticle => {
+                          const img = relatedArticle.thumbnailImage?.cropped
 
-                            <Text variant="xs" color="black60" lineClamp={1}>
-                              {relatedArticle.byline}
-                            </Text>
-                          </Box>
-                        </RouterLink>
-                      )
-                    })}
-                  </Join>
-                </>
-              )}
+                          return (
+                            <RouterLink
+                              key={relatedArticle.internalID}
+                              display="flex"
+                              to={relatedArticle.href}
+                              textDecoration="none"
+                              aria-label={`${relatedArticle.title} by ${relatedArticle.byline}`}
+                            >
+                              <Box mr={2} flexShrink={0}>
+                                {img ? (
+                                  <Image
+                                    width={100}
+                                    height={100}
+                                    src={img.src}
+                                    srcSet={img.srcSet}
+                                    alt=""
+                                    lazyLoad
+                                  />
+                                ) : (
+                                  <Box bg="black10" width={100} height={100} />
+                                )}
+                              </Box>
 
-              <Spacer y={6} />
+                              <Box>
+                                <Text variant="sm-display" lineClamp={2}>
+                                  {relatedArticle.title}
+                                </Text>
 
-              <ArticleAd
-                bg="black5"
-                p={1}
-                unit="Desktop_RightRail1"
-                size="300x250"
-              />
+                                <Text
+                                  variant="xs"
+                                  color="black60"
+                                  lineClamp={1}
+                                >
+                                  {relatedArticle.byline}
+                                </Text>
+                              </Box>
+                            </RouterLink>
+                          )
+                        })}
+                      </Join>
+                    </>
+                  )}
+
+                  <Spacer y={2} />
+
+                  <ArticleAd
+                    bg="black5"
+                    p={1}
+                    unit="Desktop_RightRail1"
+                    size="300x250"
+                  />
+                </Sticky>
+              </Box>
             </Column>
           )}
         </GridColumns>
