@@ -4,6 +4,7 @@ import {
   Flex,
   ModalDialog,
   Spacer,
+  Sup,
   Text,
   useToasts,
 } from "@artsy/palette"
@@ -167,7 +168,9 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
         flexDirection={["column", "row"]}
       >
         <Box flexBasis="50%">
-          <Text variant={["md", "lg"]}>App Authenticator</Text>
+          <Text variant={["md", "lg"]}>
+            App Authenticator <Sup color="brand">Recommended</Sup>
+          </Text>
 
           {enabledSecondFactorLabel && (
             <Text variant={["md", "lg"]} color="black60">

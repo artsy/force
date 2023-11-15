@@ -301,7 +301,6 @@
     "eslint-plugin-styled-components-a11y": "0.0.16",
     "eslint-plugin-testing-library": "^4.6.0",
     "fork-ts-checker-notifier-webpack-plugin": "4.0.0",
-    "fork-ts-checker-webpack-plugin": "6.2.10",
     "graphql-tag": "2.10.3",
     "graphql-tools": "4.0.3",
     "html-webpack-plugin": "5.3.1",

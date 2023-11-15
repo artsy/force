@@ -10,5 +10,7 @@ describe("isArtsyEmail", () => {
     expect(isArtsyEmail("me@artsymail.co")).toBe(false)
     expect(isArtsyEmail("me@fake-artsymail.com")).toBe(false)
     expect(isArtsyEmail("")).toBe(false)
+    expect(isArtsyEmail(undefined)).toBe(false)
+    expect(isArtsyEmail(null)).toBe(false)
   })
 })
