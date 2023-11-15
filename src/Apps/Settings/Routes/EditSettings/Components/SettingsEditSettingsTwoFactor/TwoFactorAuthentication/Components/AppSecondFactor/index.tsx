@@ -169,7 +169,7 @@ export const AppSecondFactor: React.FC<AppSecondFactorProps> = ({
       >
         <Box flexBasis="50%">
           <Text variant={["md", "lg"]}>
-            App Authenticator <Sup color="brand">Preferred</Sup>
+            App Authenticator <Sup color="brand">Recommended</Sup>
           </Text>
 
           {enabledSecondFactorLabel && (
