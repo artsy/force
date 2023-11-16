@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1c73f70a5b8d33e149b01a6768654a2c>>
+ * @generated SignedSource<<3b76e70002391fda5626d8708fe72338>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,6 +25,7 @@ export type SavedSearchAlertsApp_Test_Query$rawResponse = {
         readonly node: {
           readonly __typename: "SearchCriteria";
           readonly artistIDs: ReadonlyArray<string> | null;
+          readonly artistSeriesIDs: ReadonlyArray<string>;
           readonly displayName: string;
           readonly href: string;
           readonly internalID: string;
@@ -152,6 +153,13 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "artistSeriesIDs",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "href",
                         "storageKey": null
                       },
@@ -263,12 +271,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "311347d5e26fc42d8939f30dfae7a938",
+    "cacheID": "d694a047f72182dfd8ab73b4fc9953e6",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsApp_Test_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsApp_Test_Query {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  displayName\n  artistIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsApp_Test_Query {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

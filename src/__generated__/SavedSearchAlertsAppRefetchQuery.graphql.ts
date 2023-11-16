@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<21d96207d2ae30c3acc25756e4bc9ab8>>
+ * @generated SignedSource<<21fa6f762d3dd744ea18d38c0c96a045>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -161,6 +161,13 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "artistSeriesIDs",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "href",
                         "storageKey": null
                       },
@@ -272,12 +279,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "12d104300be0d38d10a463fb2ddb5ae0",
+    "cacheID": "bb3ba5f4e2141ef7c795604d7d68f028",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsAppRefetchQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsAppRefetchQuery(\n  $after: String\n  $count: Int!\n  $sort: SavedSearchesSortEnum\n) {\n  me {\n    ...SavedSearchAlertsApp_me_3P8D4U\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  displayName\n  artistIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me_3P8D4U on Me {\n  savedSearchesConnection(first: $count, after: $after, sort: $sort) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsAppRefetchQuery(\n  $after: String\n  $count: Int!\n  $sort: SavedSearchesSortEnum\n) {\n  me {\n    ...SavedSearchAlertsApp_me_3P8D4U\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me_3P8D4U on Me {\n  savedSearchesConnection(first: $count, after: $after, sort: $sort) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

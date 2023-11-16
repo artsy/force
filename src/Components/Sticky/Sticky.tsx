@@ -56,7 +56,16 @@ export const Sticky: React.FC<
       top={headerOffset + offsetTop}
       bottomBoundary={bottomBoundary}
       onStateChange={state => {
-        setStuck(state.status === ReactSticky.STATUS_FIXED)
+        switch (state.status) {
+          case ReactSticky.STATUS_FIXED:
+            setStuck(true)
+            break
+          case ReactSticky.STATUS_ORIGINAL:
+          case ReactSticky.STATUS_RELEASED:
+            setStuck(false)
+            deregisterSticky()
+            break
+        }
       }}
       innerZ={1}
     >
