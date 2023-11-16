@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bbe1f8e3653baacfec535af3f5b34993>>
+ * @generated SignedSource<<ddd12f458f855cea1d0b853961035b00>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,11 @@ export type SearchResultsList_viewer$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly __typename: string;
+        readonly coverArtwork?: {
+          readonly image: {
+            readonly src: string | null;
+          } | null;
+        } | null;
         readonly displayLabel: string | null;
         readonly displayType?: string | null;
         readonly href: string | null;
@@ -188,6 +193,43 @@ const node: ReaderFragment = {
                         }
                       ],
                       "storageKey": null
+                    },
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "Artwork",
+                      "kind": "LinkedField",
+                      "name": "coverArtwork",
+                      "plural": false,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "Image",
+                          "kind": "LinkedField",
+                          "name": "image",
+                          "plural": false,
+                          "selections": [
+                            {
+                              "alias": "src",
+                              "args": [
+                                {
+                                  "kind": "Literal",
+                                  "name": "version",
+                                  "value": [
+                                    "small"
+                                  ]
+                                }
+                              ],
+                              "kind": "ScalarField",
+                              "name": "url",
+                              "storageKey": "url(version:[\"small\"])"
+                            }
+                          ],
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
                     }
                   ],
                   "type": "Artist",
@@ -239,6 +281,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "6d35cdcc07fad9feee082d440b665d7c";
+(node as any).hash = "8ebbcb51fdd52ce906eb31c9608d3d8a";
 
 export default node;

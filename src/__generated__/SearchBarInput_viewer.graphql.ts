@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<953a6914a20668a8c9233b6d2ffb5817>>
+ * @generated SignedSource<<b45b7f174b5a108b5c2902bcc972eff2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,6 +15,11 @@ export type SearchBarInput_viewer$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly __typename: string;
+        readonly coverArtwork?: {
+          readonly image: {
+            readonly src: string | null;
+          } | null;
+        } | null;
         readonly displayLabel: string | null;
         readonly displayType?: string | null;
         readonly href: string | null;
@@ -183,6 +188,43 @@ const node: ReaderFragment = {
                             }
                           ],
                           "storageKey": null
+                        },
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "Artwork",
+                          "kind": "LinkedField",
+                          "name": "coverArtwork",
+                          "plural": false,
+                          "selections": [
+                            {
+                              "alias": null,
+                              "args": null,
+                              "concreteType": "Image",
+                              "kind": "LinkedField",
+                              "name": "image",
+                              "plural": false,
+                              "selections": [
+                                {
+                                  "alias": "src",
+                                  "args": [
+                                    {
+                                      "kind": "Literal",
+                                      "name": "version",
+                                      "value": [
+                                        "square"
+                                      ]
+                                    }
+                                  ],
+                                  "kind": "ScalarField",
+                                  "name": "url",
+                                  "storageKey": "url(version:[\"square\"])"
+                                }
+                              ],
+                              "storageKey": null
+                            }
+                          ],
+                          "storageKey": null
                         }
                       ],
                       "type": "Artist",
@@ -215,6 +257,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "92e9fc123f592d6f0778d455c3febb50";
+(node as any).hash = "806eab8056a659b4acab2a86966190c5";
 
 export default node;
