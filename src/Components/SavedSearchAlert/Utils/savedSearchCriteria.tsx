@@ -25,7 +25,7 @@ export const getAllowedSearchCriteria = (
 ) => {
   const allowedCriteria: SearchCriteriaAttributes = {}
 
-  Object.entries(criteria).forEach(entry => {
+  Object.entries(criteria ?? {}).forEach(entry => {
     const [key, value] = entry
     const isAllowedKey = allowedSearchCriteriaKeys.includes(key)
 

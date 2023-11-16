@@ -69,6 +69,7 @@ export const Filters: FC = () => {
           </Join>
           <Spacer y={6} />
           <Button
+            data-testid="setFilters"
             onClick={() => {
               goToDetails()
             }}

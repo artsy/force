@@ -3,22 +3,40 @@ import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import { Button, ButtonProps } from "@artsy/palette"
 
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
-export interface Props extends ButtonProps {
+interface RenderButtonProps {
   onClick: () => void
 }
 
-export const CreateAlertButton: FC<Props> = ({ onClick, ...buttonProps }) => {
+export interface CreateAlertButtonProps extends ButtonProps {
+  onClick?: () => void
+  renderButton?: (props: RenderButtonProps) => JSX.Element
+}
+
+export const CreateAlertButton: FC<CreateAlertButtonProps> = ({
+  onClick,
+  renderButton,
+  ...buttonProps
+}) => {
   const { clickedCreateAlert } = useAlertTracking()
+  const { dispatch } = useAlertContext()
 
   const handleClick = () => {
+    onClick?.()
+
     clickedCreateAlert()
 
-    return onClick()
+    dispatch({ type: "SHOW" })
+  }
+
+  if (renderButton) {
+    return renderButton({ onClick: handleClick })
   }
 
   return (
     <Button
+      data-testid="createAlert"
       onClick={handleClick}
       variant="secondaryBlack"
       size="small"

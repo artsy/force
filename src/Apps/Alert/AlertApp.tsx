@@ -1,6 +1,6 @@
 import { FC } from "react"
 import { Spacer, Box } from "@artsy/palette"
-import { AlertProvider } from "Components/Alert/Hooks/useAlertContext"
+import { AlertProvider } from "Components/Alert/AlertProvider"
 import { Debug } from "Components/Alert/Components/Debug"
 import { Steps } from "Components/Alert/Components/Steps"
 

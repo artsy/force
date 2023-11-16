@@ -30,9 +30,7 @@ import { useAuthDialog } from "Components/AuthDialog"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
-import { useAlert } from "Components/Alert"
 import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
-import { compact } from "lodash"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
 interface SaleMessageProps {
@@ -324,14 +322,6 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
 
   const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
 
-  const { alertComponent, showAlert } = useAlert({
-    initialCriteria: {
-      attributionClass: compact([artwork.attributionClass?.internalID]),
-      artistIDs: compact(artwork.artists).map(artist => artist.internalID),
-      additionalGeneIDs: [artwork.mediumType?.filterGene?.slug as string],
-    },
-  })
-
   const AlertSwitch: FC = () => {
     if (!isCreateAlertAvailable) {
       return null
@@ -341,9 +331,8 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
       return (
         <>
           <ProgressiveOnboardingAlertCreateSimple>
-            <CreateAlertButton width="100%" size="large" onClick={showAlert} />
+            <CreateAlertButton width="100%" size="large" />
           </ProgressiveOnboardingAlertCreateSimple>
-          {alertComponent}
         </>
       )
     } else {

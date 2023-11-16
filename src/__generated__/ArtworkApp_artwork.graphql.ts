@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<65b1f53081d0041be6e0d29c0c1e5e1d>>
+ * @generated SignedSource<<14b4b044dfc2bb26965e3dcde0ac4c43>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,9 +17,13 @@ export type ArtworkApp_artwork$data = {
   } | null;
   readonly artists: ReadonlyArray<{
     readonly id: string;
+    readonly internalID: string;
     readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistInfo_artist">;
   } | null> | null;
+  readonly attributionClass: {
+    readonly internalID: string;
+  } | null;
   readonly availability: string | null;
   readonly internalID: string;
   readonly is_acquireable: boolean | null;
@@ -27,6 +31,11 @@ export type ArtworkApp_artwork$data = {
   readonly is_offerable: boolean | null;
   readonly listPrice: {
     readonly display?: string | null;
+  } | null;
+  readonly mediumType: {
+    readonly filterGene: {
+      readonly slug: string;
+    } | null;
   } | null;
   readonly partner: {
     readonly " $fragmentSpreads": FragmentRefs<"UnlistedArtworkBanner_partner">;
@@ -52,14 +61,14 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "slug",
+  "name": "internalID",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "slug",
   "storageKey": null
 },
 v2 = [
@@ -82,8 +91,20 @@ return {
   "metadata": null,
   "name": "ArtworkApp_artwork",
   "selections": [
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "AttributionClass",
+      "kind": "LinkedField",
+      "name": "attributionClass",
+      "plural": false,
+      "selections": [
+        (v0/*: any*/)
+      ],
+      "storageKey": null
+    },
     (v1/*: any*/),
+    (v0/*: any*/),
     {
       "alias": "is_acquireable",
       "args": null,
@@ -103,6 +124,29 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "availability",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ArtworkMedium",
+      "kind": "LinkedField",
+      "name": "mediumType",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Gene",
+          "kind": "LinkedField",
+          "name": "filterGene",
+          "plural": false,
+          "selections": [
+            (v1/*: any*/)
+          ],
+          "storageKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -171,8 +215,8 @@ return {
           "kind": "FragmentSpread",
           "name": "CascadingEndTimesBanner_sale"
         },
-        (v1/*: any*/),
         (v0/*: any*/),
+        (v1/*: any*/),
         {
           "alias": null,
           "args": null,
@@ -199,6 +243,7 @@ return {
           "storageKey": null
         },
         (v0/*: any*/),
+        (v1/*: any*/),
         (v3/*: any*/)
       ],
       "storageKey": null
@@ -251,6 +296,6 @@ return {
 };
 })();
 
-(node as any).hash = "25d8548df52eb81ac57239f5be941545";
+(node as any).hash = "9e413607b7545cf07e2c756f804b19ef";
 
 export default node;

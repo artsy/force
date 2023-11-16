@@ -24,7 +24,7 @@ export const WaysToBuy: FC = () => {
 
   return (
     <>
-      <Text variant="sm-display">Ways to buy</Text>
+      <Text variant="sm-display">Ways to Buy</Text>
       <Spacer y={2} />
       <GridColumns>
         {checkboxes.map((checkbox, index) => {
