@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<464f26f97ae76054bc76b4de49846409>>
+ * @generated SignedSource<<84129c6d40ee88377cfc85f28035d6e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,6 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertListItem_item$data = {
   readonly artistIDs: ReadonlyArray<string> | null;
+  readonly artistSeriesIDs: ReadonlyArray<string>;
   readonly displayName: string;
   readonly href: string;
   readonly internalID: string;
@@ -53,6 +54,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "artistIDs",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "artistSeriesIDs",
       "storageKey": null
     },
     {
@@ -103,6 +111,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "35f469c2e286278b9cbf0d109224ba46";
+(node as any).hash = "bc48ccf23d8ad6b9aaf9dc66eb22496d";
 
 export default node;

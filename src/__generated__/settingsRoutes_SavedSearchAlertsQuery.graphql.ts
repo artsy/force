@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<efc386b45ef6de08b01af5188b764627>>
+ * @generated SignedSource<<fd833ce084cf21e286c0470137567eef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -124,6 +124,13 @@ return {
                         "alias": null,
                         "args": null,
                         "kind": "ScalarField",
+                        "name": "artistSeriesIDs",
+                        "storageKey": null
+                      },
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
                         "name": "href",
                         "storageKey": null
                       },
@@ -235,12 +242,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "55fe6f4969e6c79f3a96d91abf35cbb9",
+    "cacheID": "e947d48684cdf32f1d95f6ef26592269",
     "id": null,
     "metadata": {},
     "name": "settingsRoutes_SavedSearchAlertsQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SavedSearchAlertsQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  displayName\n  artistIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query settingsRoutes_SavedSearchAlertsQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();

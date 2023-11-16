@@ -122,6 +122,7 @@ export const SavedSearchAlertListItemFragmentContainer = createFragmentContainer
         internalID
         displayName
         artistIDs
+        artistSeriesIDs
         href
         labels {
           displayValue
