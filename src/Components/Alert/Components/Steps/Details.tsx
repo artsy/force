@@ -82,7 +82,11 @@ export const Details: FC = () => {
                 </Box>
 
                 {newAlertModalFilteresEnabled ? (
-                  <Clickable onClick={transitionToFiltersAndTrack} width="100%">
+                  <Clickable
+                    data-testid="addFilters"
+                    onClick={transitionToFiltersAndTrack}
+                    width="100%"
+                  >
                     <Flex justifyContent="space-between" alignItems={"center"}>
                       <Box>
                         <Text variant="sm-display">Add Filters:</Text>
@@ -122,6 +126,7 @@ export const Details: FC = () => {
                 </Box>
 
                 <Button
+                  data-testid="submitCreateAlert"
                   loading={isSubmitting}
                   onClick={() => {
                     dispatch({ type: "SET_SETTINGS", payload: values })

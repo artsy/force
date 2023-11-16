@@ -1,8 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import {
-  AlertProvider,
-  useAlertContext,
-} from "Components/Alert/Hooks/useAlertContext"
+import { AlertProvider } from "Components/Alert/AlertProvider"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { PriceQueryRenderer } from "Components/Alert/Components/Filters/Price"
 import { MockBoot } from "DevTools/MockBoot"
 import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"

@@ -5,12 +5,16 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { useTracking } from "react-tracking"
 import { MockBoot } from "DevTools/MockBoot"
+import { fetchQuery } from "react-relay"
 
 interface Props {
   context?: Record<string, any>
 }
 
-jest.unmock("react-relay")
+jest.mock("react-relay", () => ({
+  ...jest.requireActual("react-relay"),
+  fetchQuery: jest.fn(),
+}))
 
 jest.mock("react-tracking")
 jest.mock("System/Router/useRouter", () => ({
@@ -23,8 +27,12 @@ jest.mock("System/Router/useRouter", () => ({
     },
   }),
 }))
+
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
+}))
+;(fetchQuery as jest.Mock).mockImplementation(() => ({
+  toPromise: jest.fn().mockResolvedValue({}),
 }))
 
 const getWrapper = (props: Props = {}) => {

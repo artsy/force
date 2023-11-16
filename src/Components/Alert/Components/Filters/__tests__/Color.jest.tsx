@@ -1,9 +1,7 @@
 import { mount } from "enzyme"
-import {
-  AlertProvider,
-  useAlertContext,
-} from "Components/Alert/Hooks/useAlertContext"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { Color } from "Components/Alert/Components/Filters/Color"
+import { AlertProvider } from "Components/Alert/AlertProvider"
 
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),

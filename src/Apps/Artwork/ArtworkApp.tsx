@@ -39,6 +39,8 @@ import { useCallback, useEffect } from "react"
 import { ArtworkSidebarFragmentContainer } from "./Components/ArtworkSidebar/ArtworkSidebar"
 import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/ArtworkDetails/ArtworkDetailsPartnerInfo"
 import { ArtworkAuctionCreateAlertHeaderFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertHeader"
+import { compact } from "lodash"
+import { AlertProvider } from "Components/Alert/AlertProvider"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -274,9 +276,9 @@ export const ArtworkApp: React.FC<Props> = props => {
   )
 }
 
-const TrackingWrappedArtworkApp: React.FC<Props> = props => {
+const WrappedArtworkApp: React.FC<Props> = props => {
   const {
-    artwork: { internalID, sale },
+    artwork: { artists, attributionClass, internalID, mediumType, sale },
   } = props
 
   const {
@@ -292,6 +294,12 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
 
   const websocketEnabled = !!sale?.extendedBiddingIntervalMinutes
 
+  const initialAlertCriteria = {
+    attributionClass: compact([attributionClass?.internalID]),
+    artistIDs: compact(artists).map(artist => artist.internalID),
+    additionalGeneIDs: compact([mediumType?.filterGene?.slug as string]),
+  }
+
   return (
     <Analytics contextPageOwnerId={internalID}>
       <WebsocketContextProvider
@@ -301,12 +309,14 @@ const TrackingWrappedArtworkApp: React.FC<Props> = props => {
         }}
         enabled={websocketEnabled}
       >
-        <ArtworkApp
-          {...props}
-          routerPathname={pathname}
-          referrer={referrer}
-          shouldTrackPageView={isComplete}
-        />
+        <AlertProvider initialCriteria={initialAlertCriteria}>
+          <ArtworkApp
+            {...props}
+            routerPathname={pathname}
+            referrer={referrer}
+            shouldTrackPageView={isComplete}
+          />
+        </AlertProvider>
       </WebsocketContextProvider>
     </Analytics>
   )
@@ -319,15 +329,23 @@ const SpinnerContainer = styled.div`
 `
 
 export const ArtworkAppFragmentContainer = createFragmentContainer(
-  withSystemContext(TrackingWrappedArtworkApp),
+  withSystemContext(WrappedArtworkApp),
   {
     artwork: graphql`
       fragment ArtworkApp_artwork on Artwork {
+        attributionClass {
+          internalID
+        }
         slug
         internalID
         is_acquireable: isAcquireable
         is_offerable: isOfferable
         availability
+        mediumType {
+          filterGene {
+            slug
+          }
+        }
         visibilityLevel
         # FIXME: The props in the component need to update to reflect
         # the new structure for price.
@@ -351,6 +369,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         }
         artists {
           id
+          internalID
           slug
           ...ArtistInfo_artist
         }
