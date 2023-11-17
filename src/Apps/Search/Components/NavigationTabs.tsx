@@ -51,7 +51,7 @@ const RoundedRouteTab: React.FC<RouteTabProps> = ({ text, count, ...rest }) => {
       variant="search"
       count={count}
       as={RouterLink}
-      my={0.5}
+      my={1}
       mr={1}
       active={isActive}
       {...rest}
