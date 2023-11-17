@@ -241,7 +241,6 @@ describe("Shipping", () => {
   const mockPush = jest.fn()
 
   beforeEach(() => {
-    jest.resetAllMocks()
     isCommittingMutation = false
     relayEnv = createMockEnvironment()
     ;(useTracking as jest.Mock).mockImplementation(() => ({
