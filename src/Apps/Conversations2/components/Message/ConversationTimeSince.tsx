@@ -61,7 +61,7 @@ const exactDate = (time: string) => {
   } else if (daysSince < 7) {
     return date.toFormat("cccc t")
   } else {
-    return date.toFormat("ccc, LLL d, t")
+    return date.toFormat("ccc, LLL d, yyyy t")
   }
 }
 

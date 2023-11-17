@@ -38,12 +38,7 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
       <ConversationReviewOfferCTA conversation={data} />
 
       <Flex {...flexProps} flexDirection="column">
-        <Flex
-          flexDirection="row"
-          alignItems="center"
-          justifyContent={"center"}
-          // mb={1}
-        >
+        <Flex flexDirection="row" alignItems="center" justifyContent={"center"}>
           <GuaranteeIconBlue mr={1} />
 
           <Flex>

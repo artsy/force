@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b47ad489dbdbf4edc9865663f9683d1f>>
+ * @generated SignedSource<<3ae4d2bb349bea8b1f725453dbbce5ea>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,6 +18,16 @@ export type ConversationMessages_conversation$data = {
   readonly inquiryRequest: {
     readonly formattedFirstMessage: string | null;
   } | null;
+  readonly items: ReadonlyArray<{
+    readonly item: {
+      readonly __typename: string;
+      readonly id?: string;
+      readonly internalID?: string;
+      readonly isOfferable?: boolean | null;
+      readonly isOfferableFromInquiry?: boolean | null;
+      readonly " $fragmentSpreads": FragmentRefs<"ConversationMessageArtwork_item">;
+    } | null;
+  } | null> | null;
   readonly messagesConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -72,24 +82,31 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "internalID",
+  "name": "id",
   "storageKey": null
 },
 v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "createdAt",
+  "name": "internalID",
   "storageKey": null
 },
 v2 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "__typename",
+  "name": "createdAt",
   "storageKey": null
 },
 v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -202,15 +219,9 @@ return {
                 "name": "node",
                 "plural": false,
                 "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "id",
-                    "storageKey": null
-                  },
                   (v0/*: any*/),
                   (v1/*: any*/),
+                  (v2/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -223,7 +234,7 @@ return {
                     "kind": "FragmentSpread",
                     "name": "ConversationMessage_message"
                   },
-                  (v2/*: any*/)
+                  (v3/*: any*/)
                 ],
                 "storageKey": null
               },
@@ -256,6 +267,57 @@ return {
           "args": null,
           "kind": "ScalarField",
           "name": "formattedFirstMessage",
+          "storageKey": null
+        }
+      ],
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": "ConversationItem",
+      "kind": "LinkedField",
+      "name": "items",
+      "plural": true,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": null,
+          "kind": "LinkedField",
+          "name": "item",
+          "plural": false,
+          "selections": [
+            (v3/*: any*/),
+            {
+              "kind": "InlineFragment",
+              "selections": [
+                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isOfferable",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "isOfferableFromInquiry",
+                  "storageKey": null
+                },
+                (v1/*: any*/)
+              ],
+              "type": "Artwork",
+              "abstractKey": null
+            },
+            {
+              "args": null,
+              "kind": "FragmentSpread",
+              "name": "ConversationMessageArtwork_item"
+            }
+          ],
           "storageKey": null
         }
       ],
@@ -308,7 +370,7 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
+                (v1/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -343,11 +405,11 @@ return {
                       "kind": "FragmentSpread",
                       "name": "ConversationOrderUpdate_event"
                     },
-                    (v2/*: any*/),
+                    (v3/*: any*/),
                     {
                       "kind": "InlineFragment",
                       "selections": [
-                        (v1/*: any*/),
+                        (v2/*: any*/),
                         {
                           "alias": null,
                           "args": null,
@@ -376,7 +438,7 @@ return {
                     {
                       "kind": "InlineFragment",
                       "selections": [
-                        (v1/*: any*/),
+                        (v2/*: any*/),
                         {
                           "alias": null,
                           "args": null,
@@ -392,7 +454,7 @@ return {
                               "name": "amount",
                               "storageKey": null
                             },
-                            (v3/*: any*/),
+                            (v4/*: any*/),
                             {
                               "alias": null,
                               "args": null,
@@ -415,7 +477,7 @@ return {
                               "name": "respondsTo",
                               "plural": false,
                               "selections": [
-                                (v3/*: any*/)
+                                (v4/*: any*/)
                               ],
                               "storageKey": null
                             }
@@ -444,6 +506,6 @@ return {
 };
 })();
 
-(node as any).hash = "3902912e7094e285bde00657012e8f28";
+(node as any).hash = "152b0860c9827822db6248f4d004fa2d";
 
 export default node;

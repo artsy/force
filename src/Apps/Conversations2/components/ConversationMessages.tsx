@@ -23,6 +23,7 @@ import {
 } from "Apps/Conversations2/components/Message/ConversationTimeSince"
 import { ConversationNewMessageMarker } from "Apps/Conversations2/components/Message/ConversationNewMessageMarker"
 import { useRouter } from "System/Router/useRouter"
+import { ConversationMessageArtwork } from "Apps/Conversations2/components/Message/ConversationMessageArtwork"
 
 const PAGE_SIZE = 15
 
@@ -108,9 +109,18 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
               <ConversationTimeSince
                 message={messageGroup[0]}
                 exact
-                mb={1}
+                mt={groupIndex === 0 ? 1 : 4}
+                mb={groupIndex === 0 ? 4 : 4}
                 alignSelf="center"
               />
+
+              {groupIndex === 0 && (
+                <ConversationMessageArtwork
+                  key={conversation?.items?.[0]?.item?.internalID}
+                  item={conversation?.items?.[0]?.item!}
+                  mb={2}
+                />
+              )}
 
               {[...messageGroup].reverse().map((message, messageIndex) => {
                 if (isRelevantEvent(message)) {
@@ -119,6 +129,8 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
                       key={`event-${messageIndex}`}
                       event={message as any}
                       setShowDetails={x => x}
+                      mt={2}
+                      mb={2}
                     />
                   )
                 }
@@ -196,7 +208,19 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
         inquiryRequest {
           formattedFirstMessage
         }
-
+        items {
+          item {
+            __typename
+            # TODO: Is this needed
+            ... on Artwork {
+              id
+              isOfferable
+              isOfferableFromInquiry
+              internalID
+            }
+            ...ConversationMessageArtwork_item
+          }
+        }
         orderEvents: orderConnection(
           first: 10
           states: [

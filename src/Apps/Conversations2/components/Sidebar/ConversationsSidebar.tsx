@@ -53,7 +53,6 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
   })
 
   const conversations = extractNodes(data.conversationsConnection)
-  console.log(conversations)
 
   let totalDisplayedCount =
     data.conversationsConnection?.edges?.length ?? SIDEBAR_FETCH_PAGE_SIZE

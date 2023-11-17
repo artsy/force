@@ -1,12 +1,12 @@
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
-import { Clickable, Color, Flex, Spacer, Text, THEME } from "@artsy/palette"
+import { Color, Flex, FlexProps, Spacer, Text, THEME } from "@artsy/palette"
 import { ConversationTimeSince } from "./ConversationTimeSince"
 import { ConversationOrderUpdate_event$key } from "__generated__/ConversationOrderUpdate_event.graphql"
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
 import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
 
-export interface OrderUpdateProps {
+export interface OrderUpdateProps extends FlexProps {
   event: ConversationOrderUpdate_event$key
   setShowDetails: (showDetails: boolean) => void
 }
@@ -14,6 +14,7 @@ export interface OrderUpdateProps {
 export const ConversationOrderUpdate: React.FC<OrderUpdateProps> = ({
   event,
   setShowDetails,
+  ...flexProps
 }) => {
   const data = useFragment(
     graphql`
@@ -104,7 +105,7 @@ export const ConversationOrderUpdate: React.FC<OrderUpdateProps> = ({
   }
 
   return (
-    <Flex flexDirection="column" pt={2}>
+    <Flex flexDirection="column" {...flexProps}>
       <ConversationTimeSince message={data} alignSelf="center" exact mb={1} />
 
       <Flex px={2} justifyContent="center" flexDirection="row">

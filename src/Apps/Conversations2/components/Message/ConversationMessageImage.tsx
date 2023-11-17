@@ -7,6 +7,7 @@ export const ConversationMessageImage: FC<ImageProps> = ({
   ...props
 }) => {
   const [isLoading, setIsLoading] = useState(true)
+
   return (
     <>
       <Clickable display="flex" onClick={() => window?.open(src, "_blank")}>

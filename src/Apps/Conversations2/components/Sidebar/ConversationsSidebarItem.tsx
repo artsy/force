@@ -75,12 +75,16 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
     conversation
   )
 
+  const isSelected = match.params.conversationId === data.internalID
+
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
-    setTimeout(() => {
-      scrollRef.current?.scrollIntoView({ behavior: "instant" })
-    }, 0)
+    if (isSelected) {
+      setTimeout(() => {
+        scrollRef.current?.scrollIntoView({ behavior: "instant" })
+      }, 0)
+    }
   }, [])
 
   const item = data?.items?.[0]?.item
@@ -102,9 +106,7 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
   return (
     <StackableBorderBox
       flexDirection="column"
-      backgroundColor={
-        match.params.conversationId === data.internalID ? "black5" : "white100"
-      }
+      backgroundColor={isSelected ? "black5" : "white100"}
       style={{ borderLeft: 0, borderRight: 0, ...borderTop }}
       ref={scrollRef as any}
     >

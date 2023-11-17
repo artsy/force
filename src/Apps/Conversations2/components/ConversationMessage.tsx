@@ -76,9 +76,9 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
   const prevMessage = messages[messageIndex - 1]
   const nextMessage = messages[messageIndex + 1]
 
-  const messageDate = new Date(data.createdAt!)
-  const prevMessageDate = new Date(prevMessage?.createdAt!)
-  const nextMessageDate = new Date(nextMessage?.createdAt!)
+  const messageDate = new Date(data.createdAt as string)
+  const prevMessageDate = new Date(prevMessage?.createdAt as string)
+  const nextMessageDate = new Date(nextMessage?.createdAt as string)
 
   const simplified =
     data.isFromUser === prevMessage?.isFromUser
@@ -108,7 +108,7 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
         }}
       />
 
-      {displayDaySeparator && (
+      {/* {displayDaySeparator && (
         <>
           {messageIndex > 0 && <Spacer y={4} />}
           <Text color="black60" alignSelf="center">
@@ -116,7 +116,7 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
           </Text>
           <Spacer y={1} />
         </>
-      )}
+      )} */}
 
       <Spacer y={simplified ? 0.5 : 2} />
 
@@ -131,16 +131,20 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
       </ConversationMessageBubble>
 
       {data.attachments?.map((attachment, index) => {
-        if (!attachment) return null
+        if (!attachment) {
+          return null
+        }
+
+        const attachmentLength = data.attachments?.length as number
+
         return (
           <React.Fragment key={attachment.internalID}>
             <Spacer y={0.5} />
+
             <ConversationMessageBubble
               fromViewer={!data.isFromUser}
               simplified
-              seenBy={
-                index === data.attachments?.length! - 1 ? seenBy : undefined
-              }
+              seenBy={index === attachmentLength - 1 ? seenBy : undefined}
             >
               {attachment.contentType.startsWith("image") ? (
                 <ConversationMessageImage

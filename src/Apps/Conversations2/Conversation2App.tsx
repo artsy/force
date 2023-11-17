@@ -14,6 +14,7 @@ import { Conversation2App_conversation$data } from "__generated__/Conversation2A
 import { Fragment, Suspense } from "react"
 import { ConversationsSidebarSkeleton } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarSkeleton"
 import { ConversationsProvider } from "Apps/Conversations2/ConversationsContext"
+import { MetaTags } from "Components/MetaTags"
 
 const COLUMN_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
 const MOBILE_HEIGHT = `calc(100dvh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
@@ -34,119 +35,123 @@ const Conversation2App: React.FC<Conversation2RouteProps> = ({
     : Fragment) as typeof Suspense
 
   return (
-    <Flex
-      flex={1}
-      flexGrow={1}
-      position="relative"
-      height={MOBILE_HEIGHT}
-      zIndex={1}
-      overflow={"hidden"}
-    >
-      {/*
+    <>
+      <MetaTags title="Inbox | Artsy" />
+
+      <Flex
+        flex={1}
+        flexGrow={1}
+        position="relative"
+        height={MOBILE_HEIGHT}
+        zIndex={1}
+        overflow={"hidden"}
+      >
+        {/*
         Desktop View
       */}
 
-      <Media greaterThan="sm">
-        <Flex display={["none", "flex"]}>
-          <Resizer split="vertical" minSize={200} defaultSizes={[1, 2, 1]}>
-            <Flex
-              flexGrow={[0, 1]}
-              position="sticky"
-              top={0}
-              overflowY="auto"
-              height={COLUMN_HEIGHT}
-              display={["none", "block"]}
-              borderRight="1px solid"
-              borderRightColor="black15"
-            >
-              <ClientOnlySuspense fallback={<ConversationsSidebarSkeleton />}>
-                <ConversationsSidebar viewer={viewer} />
-              </ClientOnlySuspense>
-            </Flex>
-
-            <Flex
-              flexGrow={1}
-              position="sticky"
-              top={0}
-              overflowY="auto"
-              height={COLUMN_HEIGHT}
-            >
+        <Media greaterThan="sm">
+          <Flex display={["none", "flex"]}>
+            <Resizer split="vertical" minSize={200} defaultSizes={[1, 2, 1]}>
               <Flex
-                flexDirection="column"
-                justifyContent="space-between"
-                height="100%"
-                flex={1}
-                width="100%"
+                flexGrow={[0, 1]}
+                position="sticky"
+                top={0}
+                overflowY="auto"
+                height={COLUMN_HEIGHT}
+                display={["none", "block"]}
+                borderRight="1px solid"
+                borderRightColor="black15"
               >
-                <Flex height="78%">
-                  <ClientOnlySuspense fallback={null}>
-                    <ConversationMessagesPaginationContainer
-                      conversation={conversation}
-                    />
-                  </ClientOnlySuspense>
-                </Flex>
-
-                <ConversationReply conversation={conversation} />
+                <ClientOnlySuspense fallback={<ConversationsSidebarSkeleton />}>
+                  <ConversationsSidebar viewer={viewer} />
+                </ClientOnlySuspense>
               </Flex>
-            </Flex>
 
-            <Flex
-              flexGrow={1}
-              position="sticky"
-              top={0}
-              overflowY="auto"
-              height={COLUMN_HEIGHT}
-              display={["none", "block"]}
-              borderLeft="1px solid"
-              borderLeftColor="black15"
-              p={2}
-              pb={6}
-            >
-              <ConversationDetails conversation={conversation} />
-            </Flex>
-          </Resizer>
-        </Flex>
-      </Media>
+              <Flex
+                flexGrow={1}
+                position="sticky"
+                top={0}
+                overflowY="auto"
+                height={COLUMN_HEIGHT}
+              >
+                <Flex
+                  flexDirection="column"
+                  justifyContent="space-between"
+                  height="100%"
+                  flex={1}
+                  width="100%"
+                >
+                  <Flex height="78%">
+                    <ClientOnlySuspense fallback={null}>
+                      <ConversationMessagesPaginationContainer
+                        conversation={conversation}
+                      />
+                    </ClientOnlySuspense>
+                  </Flex>
 
-      {/*
+                  <ConversationReply conversation={conversation} />
+                </Flex>
+              </Flex>
+
+              <Flex
+                flexGrow={1}
+                position="sticky"
+                top={0}
+                overflowY="auto"
+                height={COLUMN_HEIGHT}
+                display={["none", "block"]}
+                borderLeft="1px solid"
+                borderLeftColor="black15"
+                p={2}
+                pb={6}
+              >
+                <ConversationDetails conversation={conversation} />
+              </Flex>
+            </Resizer>
+          </Flex>
+        </Media>
+
+        {/*
         Mobile View
       */}
 
-      <Media lessThan="md" style={{ width: "100%", margin: 0 }}>
-        <Flex
-          display={currentColumn === "sidebar" ? "flex" : "none"}
-          height={MOBILE_HEIGHT}
-          flexDirection="column"
-          width="100%"
-          margin={0}
-        >
-          <ConversationsSidebar viewer={viewer} />
-        </Flex>
-
-        {currentColumn === "conversation" && (
+        <Media lessThan="md" style={{ width: "100%", margin: 0 }}>
           <Flex
-            display={currentColumn === "conversation" ? "flex" : "none"}
+            display={currentColumn === "sidebar" ? "flex" : "none"}
             height={MOBILE_HEIGHT}
-            flexGrow={1}
-            position="sticky"
-            justifyContent="space-between"
             flexDirection="column"
-            top={0}
-            overflowY="auto"
+            width="100%"
+            margin={0}
           >
-            <ConversationHeader conversation={conversation} />
-
-            <ClientOnlySuspense fallback={null}>
-              <ConversationMessagesPaginationContainer
-                conversation={conversation}
-              />
-            </ClientOnlySuspense>
-
-            <ConversationReply conversation={conversation} />
+            <ConversationsSidebar viewer={viewer} />
           </Flex>
-        )}
-      </Media>
-    </Flex>
+
+          {currentColumn === "conversation" && (
+            <Flex
+              display={currentColumn === "conversation" ? "flex" : "none"}
+              height={MOBILE_HEIGHT}
+              flexGrow={1}
+              position="sticky"
+              justifyContent="space-between"
+              flexDirection="column"
+              top={0}
+              overflowY="auto"
+            >
+              <ConversationHeader conversation={conversation} />
+
+              <ClientOnlySuspense fallback={null}>
+                <ConversationMessagesPaginationContainer
+                  conversation={conversation}
+                />
+              </ClientOnlySuspense>
+
+              <ConversationReply conversation={conversation} />
+            </Flex>
+          )}
+        </Media>
+      </Flex>
+    </>
   )
 }
 
