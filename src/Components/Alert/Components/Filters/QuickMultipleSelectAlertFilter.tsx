@@ -1,7 +1,6 @@
 import { Checkbox, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { FC } from "react"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
-import { ShowMore } from "Components/Alert/Components/Filters/ShowMore"
 import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
 
 interface QuickMultipleSelectAlertFilterProps {
