@@ -66,16 +66,16 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
   const formattedOptions: SuggestionItemOptionProps[] = [
     ...options.map(option => {
       return {
-        text: option.displayLabel!,
-        value: option.displayLabel!,
+        text: option.displayLabel ?? "Unknown",
+        value: option.displayLabel ?? "unknown",
         subtitle:
           getLabel({
             displayType: option.displayType ?? "",
             typename: option.__typename,
           }) ?? "",
-        imageUrl: option.imageUrl!,
+        imageUrl: option.coverArtwork?.image?.src || option.imageUrl || "",
         showAuctionResultsButton: !!option.statuses?.auctionLots,
-        href: option.href!,
+        href: option.href ?? "/",
         typename: option.__typename,
       }
     }),
@@ -283,6 +283,11 @@ export const SearchBarInputRefetchContainer = createRefetchContainer(
                 statuses {
                   artworks
                   auctionLots
+                }
+                coverArtwork {
+                  image {
+                    src: url(version: ["square"])
+                  }
                 }
               }
             }
