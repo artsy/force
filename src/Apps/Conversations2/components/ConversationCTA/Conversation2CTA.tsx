@@ -42,7 +42,7 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
           flexDirection="row"
           alignItems="center"
           justifyContent={"center"}
-          mb={1}
+          // mb={1}
         >
           <GuaranteeIconBlue mr={1} />
 
@@ -62,12 +62,12 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
           <ConversationConfirmModal conversation={data} artwork={artwork} />
         </Box>
 
-        <Flex flexDirection="row">
+        <Flex flexDirection="row" justifyContent="space-between">
           {artwork.isAcquireable && (
-            <ConversationPurchaseButton conversation={data} />
+            <ConversationPurchaseButton conversation={data} mt={1} px={0.5} />
           )}
           {(artwork.isOfferable || artwork.isOfferableFromInquiry) && (
-            <ConversationMakeOfferButton conversation={data} />
+            <ConversationMakeOfferButton conversation={data} mt={1} px={0.5} />
           )}
         </Flex>
       </Flex>

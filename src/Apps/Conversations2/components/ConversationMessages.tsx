@@ -22,6 +22,7 @@ import {
   fromToday,
 } from "Apps/Conversations2/components/Message/ConversationTimeSince"
 import { ConversationNewMessageMarker } from "Apps/Conversations2/components/Message/ConversationNewMessageMarker"
+import { useRouter } from "System/Router/useRouter"
 
 const PAGE_SIZE = 15
 
@@ -36,6 +37,7 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
   conversation,
   relay,
 }) => {
+  const { match } = useRouter()
   const [hasScrolledBottom, setHasScrolledBottom] = useState(false)
   const [showLatestMessages, setShowLatestMessages] = useState(false)
   const autoScrollToBottomRef = useRef<HTMLDivElement>(null)
@@ -74,6 +76,14 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
   //   intervalTime: BACKGROUND_REFETCH_INTERVAL,
   //   key: "conversationMessages",
   // })
+
+  useEffect(() => {
+    setTimeout(() => {
+      autoScrollToBottomRef.current?.scrollIntoView({
+        behavior: "instant",
+      })
+    }, 0)
+  }, [match.params.conversationId])
 
   useAutoScrollToBottom({
     messages,

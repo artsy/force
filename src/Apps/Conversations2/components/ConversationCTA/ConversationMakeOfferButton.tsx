@@ -1,4 +1,4 @@
-import { Button, Spacer } from "@artsy/palette"
+import { Box, BoxProps, Button } from "@artsy/palette"
 import { useMakeInquiryOffer } from "Apps/Conversations2/mutations/useMakeInquiryOfferMutation"
 import { useState } from "react"
 import { useRouter } from "System/Router/useRouter"
@@ -8,12 +8,13 @@ import { useConversationPurchaseButtonData } from "Apps/Conversations2/component
 import { useConversationsContext } from "Apps/Conversations2/ConversationsContext"
 import { useTracking } from "react-tracking"
 
-interface ConversationMakeOfferButtonProps {
+interface ConversationMakeOfferButtonProps extends BoxProps {
   conversation: useConversationPurchaseButtonData_conversation$key
 }
 
 export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonProps> = ({
   conversation,
+  ...boxProps
 }) => {
   const tracking = useTracking()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -98,12 +99,7 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
   }
 
   return (
-    <>
-      <Spacer
-        x={data.isPurchaseButtonPresent ? 1 : 0}
-        y={data.isPurchaseButtonPresent ? 1 : 0}
-      />
-
+    <Box width="100%" {...boxProps}>
       <Button
         width="100%"
         onClick={handleClick}
@@ -112,6 +108,6 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
       >
         Make an Offer
       </Button>
-    </>
+    </Box>
   )
 }

@@ -104,7 +104,7 @@ export const ConversationOrderUpdate: React.FC<OrderUpdateProps> = ({
   }
 
   return (
-    <Flex flexDirection="column">
+    <Flex flexDirection="column" pt={2}>
       <ConversationTimeSince message={data} alignSelf="center" exact mb={1} />
 
       <Flex px={2} justifyContent="center" flexDirection="row">

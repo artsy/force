@@ -1,4 +1,4 @@
-import { Button } from "@artsy/palette"
+import { Box, BoxProps, Button } from "@artsy/palette"
 import { useMakeInquiryOrder } from "Apps/Conversations2/mutations/useMakeInquiryOrderMutation"
 import { useState } from "react"
 import { useRouter } from "System/Router/useRouter"
@@ -8,12 +8,13 @@ import { useConversationsContext } from "Apps/Conversations2/ConversationsContex
 import { useConversationPurchaseButtonData } from "Apps/Conversations2/components/ConversationCTA/useConversationPurchaseButtonData"
 import { useConversationPurchaseButtonData_conversation$key } from "__generated__/useConversationPurchaseButtonData_conversation.graphql"
 
-interface ConversationPurchaseButtonProps {
+interface ConversationPurchaseButtonProps extends BoxProps {
   conversation: useConversationPurchaseButtonData_conversation$key
 }
 
 export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProps> = ({
   conversation,
+  ...boxProps
 }) => {
   const tracking = useTracking()
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -96,8 +97,10 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
   }
 
   return (
-    <Button width="100%" onClick={handleClick} loading={isSubmitting}>
-      Purchase
-    </Button>
+    <Box width="100%" {...boxProps} display="inline">
+      <Button width="100%" onClick={handleClick} loading={isSubmitting}>
+        Purchase
+      </Button>
+    </Box>
   )
 }

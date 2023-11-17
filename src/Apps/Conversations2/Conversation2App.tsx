@@ -78,7 +78,7 @@ const Conversation2App: React.FC<Conversation2RouteProps> = ({
                 flex={1}
                 width="100%"
               >
-                <Flex height="90%">
+                <Flex height="78%">
                   <ClientOnlySuspense fallback={null}>
                     <ConversationMessagesPaginationContainer
                       conversation={conversation}

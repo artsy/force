@@ -45,9 +45,6 @@ export const conversations2Routes: AppRouteConfig[] = [
         }
       }
     `,
-    cacheConfig: {
-      force: true,
-    },
   },
   {
     path: "/user/conversations2/:conversationId",
@@ -73,8 +70,5 @@ export const conversations2Routes: AppRouteConfig[] = [
         }
       }
     `,
-    cacheConfig: {
-      force: true,
-    },
   },
 ]
