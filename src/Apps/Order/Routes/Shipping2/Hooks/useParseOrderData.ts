@@ -5,7 +5,7 @@ import {
   SavedAddressType,
   ShippingAddressFormValues,
   addressWithFallbackValues,
-} from "Apps/Order/Routes/Shipping2/shippingUtils"
+} from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
 import { useCallback } from "react"

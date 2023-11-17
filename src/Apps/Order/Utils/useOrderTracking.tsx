@@ -11,11 +11,12 @@ import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useMemo } from "react"
 import * as DeprecatedSchema from "@artsy/cohesion/dist/DeprecatedSchema"
 import { useTracking } from "react-tracking"
-import { FulfillmentType } from "Apps/Order/Routes/Shipping2/shippingUtils"
+import { FulfillmentType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 
 export const useOrderTracking = () => {
   const { trackEvent } = useTracking()
   const analytics = useAnalyticsContext()
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const contextPageOwnerId = analytics.contextPageOwnerId!
 
   const trackingCalls = useMemo(() => {

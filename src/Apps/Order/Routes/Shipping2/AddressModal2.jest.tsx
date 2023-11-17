@@ -6,13 +6,13 @@ import {
 } from "Apps/Order/Routes/Shipping2/AddressModal2"
 import { validAddress } from "Components/__tests__/Utils/addressForm"
 import { useSystemContext } from "System/useSystemContext"
-import { SavedAddressType } from "Apps/Order/Routes/Shipping2/shippingUtils"
+import { SavedAddressType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { createMockEnvironment } from "relay-test-utils"
 import { waitFor } from "@testing-library/react"
 import {
   ShippingContext,
   useComputeShippingContext,
-} from "Apps/Order/Routes/Shipping2/ShippingContext"
+} from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { AddressModal2TestQuery } from "__generated__/AddressModal2TestQuery.graphql"
@@ -26,16 +26,13 @@ jest.mock("Utils/user", () => ({
   userHasLabFeature: jest.fn(),
 }))
 
-jest.mock(
-  "Apps/Order/Routes/Shipping2/shippingContextHelpers/useParseOrderData",
-  () => {
-    return {
-      useParseOrderData: () => ({
-        shipsFrom: "US",
-      }),
-    }
+jest.mock("Apps/Order/Routes/Shipping2/Hooks/useParseOrderData", () => {
+  return {
+    useParseOrderData: () => ({
+      shipsFrom: "US",
+    }),
   }
-)
+})
 
 const errorBoxQuery = "Banner[data-testid='form-banner-error']"
 

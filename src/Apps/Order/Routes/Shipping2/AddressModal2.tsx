@@ -18,15 +18,15 @@ import { AddressModalFields } from "Components/Address/AddressModalFields"
 
 import { ADDRESS_VALIDATION_SHAPE } from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
-import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
-import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping2/shippingUtils"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
+import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { useCreateSavedAddressMutation$data } from "__generated__/useCreateSavedAddressMutation.graphql"
 import { useUpdateSavedAddressMutation$data } from "__generated__/useUpdateSavedAddressMutation.graphql"
 import createLogger from "Utils/logger"
-import { useCreateSavedAddress } from "Apps/Order/Routes/Shipping2/shippingContextHelpers/mutations/useCreateSavedAddress"
-import { useDeleteSavedAddress } from "Apps/Order/Routes/Shipping2/shippingContextHelpers/mutations/useDeleteSavedAddress"
-import { useUpdateSavedAddress } from "Apps/Order/Routes/Shipping2/shippingContextHelpers/mutations/useUpdateSavedAddress"
-import { useUpdateUserDefaultAddress } from "Apps/Order/Routes/Shipping2/shippingContextHelpers/mutations/useUpdateUserDefaultAddress"
+import { useCreateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useCreateSavedAddress"
+import { useDeleteSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useDeleteSavedAddress"
+import { useUpdateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useUpdateSavedAddress"
+import { useUpdateUserDefaultAddress } from "Apps/Order/Routes/Shipping2/Mutations/useUpdateUserDefaultAddress"
 
 export enum AddressModalActionType {
   EDIT_USER_ADDRESS = "editUserAddress",
@@ -126,11 +126,15 @@ export const AddressModal: React.FC<Props> = ({
   }
 
   const handleDeleteAddress = async (addressID: string) => {
-    return deleteSavedAddress({
-      variables: {
-        input: { userAddressID: addressID },
-      },
-    }).catch(logger.error)
+    try {
+      return deleteSavedAddress({
+        variables: {
+          input: { userAddressID: addressID },
+        },
+      })
+    } catch (error) {
+      logger.error(error)
+    }
   }
 
   const handleMutationPayload = (

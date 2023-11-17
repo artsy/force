@@ -15,13 +15,13 @@ import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/SavedAddressItem2"
 import { extractNodes } from "Utils/extractNodes"
 import { themeGet } from "@styled-system/theme-get"
 
-import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import {
   SavedAddressType,
   ShippingAddressFormValues,
   addressWithFallbackValues,
   getDefaultUserAddress,
-} from "Apps/Order/Routes/Shipping2/shippingUtils"
+} from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"

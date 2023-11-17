@@ -35,7 +35,6 @@ import userEvent from "@testing-library/user-event"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { queryByAttribute } from "@testing-library/dom"
 import { ErrorDialogMessage } from "Apps/Order/Utils/getErrorDialogCopy"
-
 import { within } from "@testing-library/dom"
 import {
   createMockEnvironment,
@@ -225,6 +224,7 @@ const verifyAddressWithSuggestions = async (
   expect(await screen.findByText("Recommended")).toBeVisible()
   expect(await screen.findByText("What you entered")).toBeVisible()
 }
+
 const resolveSaveFulfillmentDetails = async (
   mockResolveLastOperation,
   commerceSetShipping
@@ -234,6 +234,7 @@ const resolveSaveFulfillmentDetails = async (
       CommerceSetShippingPayload: () => commerceSetShipping,
     })
   )
+
 describe("Shipping", () => {
   let isCommittingMutation: boolean
   let relayEnv: MockEnvironment

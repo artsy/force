@@ -45,13 +45,13 @@ import { FormikHelpers } from "formik"
 import {
   ShippingContext,
   useComputeShippingContext,
-} from "Apps/Order/Routes/Shipping2/ShippingContext"
+} from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 
-import { FulfillmentType } from "Apps/Order/Routes/Shipping2/shippingUtils"
+import { FulfillmentType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
-import { useSaveFulfillmentDetails } from "Apps/Order/Routes/Shipping2/shippingContextHelpers/mutations/useSaveFulfillmentDetails"
-import { useCreateSavedAddress } from "Apps/Order/Routes/Shipping2/shippingContextHelpers/mutations/useCreateSavedAddress"
-import { useSelectShippingQuote } from "Apps/Order/Routes/Shipping2/shippingContextHelpers/mutations/useSelectShippingQuote"
+import { useSaveFulfillmentDetails } from "Apps/Order/Routes/Shipping2/Mutations/useSaveFulfillmentDetails"
+import { useCreateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useCreateSavedAddress"
+import { useSelectShippingQuote } from "Apps/Order/Routes/Shipping2/Mutations/useSelectShippingQuote"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -110,7 +110,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const [selectedShippingQuoteId, setSelectedShippingQuoteId] = useState<
     string | undefined
-  >(initialValues.shippingQuotes.selectedShippingQuoteId)
+  >(initialValues.shippingQuotes.selectedShippingQuoteId ?? undefined)
 
   const orderTracking = useOrderTracking()
 

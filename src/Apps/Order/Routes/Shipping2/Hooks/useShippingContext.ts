@@ -9,12 +9,12 @@ import {
   addressWithFallbackValues,
   getDefaultUserAddress,
   FulfillmentType,
-} from "Apps/Order/Routes/Shipping2/shippingUtils"
+} from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { extractNodes } from "Utils/extractNodes"
 import {
   ParsedOrderData,
   useParseOrderData,
-} from "Apps/Order/Routes/Shipping2/shippingContextHelpers/useParseOrderData"
+} from "Apps/Order/Routes/Shipping2/Hooks/useParseOrderData"
 
 type FulfillmentHelpers = Pick<
   FormikProps<FulfillmentValues>,
@@ -25,7 +25,7 @@ export interface ShippingContextProps {
   initialValues: {
     fulfillmentDetails: FulfillmentValues
     shippingQuotes: {
-      selectedShippingQuoteId: any
+      selectedShippingQuoteId?: string | null
     }
   }
   step: ShippingRouteStep
