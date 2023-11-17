@@ -54,11 +54,19 @@ export const conversations2Routes: AppRouteConfig[] = [
     layout: "FullBleed",
     ignoreScrollBehavior: true,
     getComponent: () => Conversation2App,
-
+    prepareVariables: (params, { location }) => {
+      return {
+        conversationId: params.conversationId,
+        first: location.query.sidebarTotal,
+      }
+    },
     query: graphql`
-      query conversations2Routes_DetailQuery($conversationId: String!) {
+      query conversations2Routes_DetailQuery(
+        $conversationId: String!
+        $first: Int
+      ) {
         viewer {
-          ...Conversation2App_viewer
+          ...Conversation2App_viewer @arguments(first: $first)
         }
         conversation(id: $conversationId) @required(action: NONE) {
           ...Conversation2App_conversation

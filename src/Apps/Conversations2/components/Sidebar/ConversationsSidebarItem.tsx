@@ -5,6 +5,8 @@ import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
 import { extractNodes } from "Utils/extractNodes"
 import { ConversationsSidebarItem_conversation$key } from "__generated__/ConversationsSidebarItem_conversation.graphql"
+import { getSidebarTotal } from "Apps/Conversations2/components/Sidebar/Utils/getSidebarTotal"
+import { useEffect, useRef } from "react"
 
 interface ConversationsSidebarItemProps {
   conversation: ConversationsSidebarItem_conversation$key
@@ -73,6 +75,14 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
     conversation
   )
 
+  const scrollRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    setTimeout(() => {
+      scrollRef.current?.scrollIntoView({ behavior: "instant" })
+    }, 0)
+  }, [])
+
   const item = data?.items?.[0]?.item
   const orders = extractNodes(data?.orderConnection)
 
@@ -89,10 +99,6 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
       ? "Order"
       : "Offer"
 
-  // TODO: once we fix unread, uncomment line below
-  // const fontWeight = data.unread ? { fontWeight: "bold" } : {}
-  const fontWeight = {}
-
   return (
     <StackableBorderBox
       flexDirection="column"
@@ -100,11 +106,12 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
         match.params.conversationId === data.internalID ? "black5" : "white100"
       }
       style={{ borderLeft: 0, borderRight: 0, ...borderTop }}
+      ref={scrollRef as any}
     >
       <RouterLink
         to={`/user/conversations2/${data.internalID}?${
-          match.location.query.conversationsFilter
-            ? `conversationsFilter=${match.location.query.conversationsFilter}`
+          match.location.query.sidebarTotal
+            ? `sidebarTotal=${getSidebarTotal()}`
             : ""
         }`}
         textDecoration={"none"}
@@ -127,11 +134,11 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
 
           <Flex flexDirection="column" mx={1} flex={1} overflow="hidden">
             <Box display="inherit">
-              <Text variant="xs" {...fontWeight} overflowEllipsis>
+              <Text variant="xs" overflowEllipsis>
                 {data?.to?.name}
               </Text>
             </Box>
-            <Text variant="xs" {...fontWeight} overflowEllipsis>
+            <Text variant="xs" overflowEllipsis>
               {item.artist.name}
             </Text>
             <Text variant="xs" color="black60" overflowEllipsis>
@@ -143,21 +150,9 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
           </Flex>
 
           <Flex flexDirection="column" alignSelf="flex-start">
-            <Text variant="xs" {...fontWeight}>
-              {conversationType}
-            </Text>
+            <Text variant="xs">{conversationType}</Text>
             <Flex flexDirection="row" alignItems="center">
-              {/* TODO: once we fix unread, uncomment line below */}
-              {/* {!!data.unread && (
-                <Box
-                  size={6}
-                  backgroundColor="blue100"
-                  borderRadius="50%"
-                  mr={1}
-                  data-testid="unread-dot"
-                />
-              )} */}
-              <Text variant="xs" color="black60" {...fontWeight}>
+              <Text variant="xs" color="black60">
                 {data?.lastMessageAt}
               </Text>
             </Flex>

@@ -7,12 +7,13 @@ import { ConversationsSidebarEmpty } from "Apps/Conversations2/components/Sideba
 import { ConversationsSidebarItem } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarItem"
 import { ConversationsSidebar_viewer$key } from "__generated__/ConversationsSidebar_viewer.graphql"
 import { Sentinel } from "Components/Sentinal"
+import { useEffect } from "react"
+import { useRouter } from "System/Router/useRouter"
+import { SIDEBAR_FETCH_PAGE_SIZE } from "Apps/Conversations2/components/Sidebar/Utils/getSidebarTotal"
 
 interface ConversationsSidebarProps {
   viewer: ConversationsSidebar_viewer$key
 }
-
-const PAGE_SIZE = 10
 
 export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
   viewer,
@@ -42,14 +43,51 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
     viewer
   )
 
+  const { match } = useRouter()
+
   const { loadMore } = useLoadMore({
-    pageSize: PAGE_SIZE,
+    pageSize: SIDEBAR_FETCH_PAGE_SIZE,
     loadNext,
     isLoadingNext,
     hasNext,
   })
 
   const conversations = extractNodes(data.conversationsConnection)
+  console.log(conversations)
+
+  let totalDisplayedCount =
+    data.conversationsConnection?.edges?.length ?? SIDEBAR_FETCH_PAGE_SIZE
+
+  if (totalDisplayedCount < SIDEBAR_FETCH_PAGE_SIZE) {
+    totalDisplayedCount = SIDEBAR_FETCH_PAGE_SIZE
+  }
+
+  useEffect(() => {
+    const url = new URL(
+      `${window.location.origin}/user/conversations2/${match.params.conversationId}`
+    )
+
+    const existingParams = match.location.query
+
+    Object.entries(existingParams).forEach(([key, value]) => {
+      url.searchParams.set(key, value)
+    })
+
+    url.searchParams.set(
+      "sidebarTotal",
+      String(totalDisplayedCount ?? SIDEBAR_FETCH_PAGE_SIZE)
+    )
+
+    // TODO:
+    // We need to step outside of the normal next.js router query params state
+    // because triggering a push to _only_ update query params will trigger
+    // the route loading bar and a fetch. We just want to silently update.
+    history.pushState({}, "", url)
+
+    // No need for conversationID, as we want to preserve the sidebar state
+    // across renders.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [totalDisplayedCount])
 
   return (
     <Flex flexDirection="column" flex={1}>
