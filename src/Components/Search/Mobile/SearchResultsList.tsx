@@ -58,7 +58,12 @@ const SearchResultsList: FC<SearchResultsListProps> = ({
   }, [viewer.searchConnection])
 
   const formattedOptions: SuggestionItemOptionProps[] = formatOptions(
-    options as SearchNodeOption[]
+    options.map(option => {
+      return {
+        ...option,
+        imageUrl: option.coverArtwork?.image?.src || option.imageUrl,
+      }
+    }) as SearchNodeOption[]
   )
 
   if (!viewer.searchConnection) {
@@ -155,6 +160,11 @@ export const SearchResultsListPaginationContainer = createPaginationContainer(
                 statuses {
                   artworks
                   auctionLots
+                }
+                coverArtwork {
+                  image {
+                    src: url(version: ["small"])
+                  }
                 }
               }
             }
