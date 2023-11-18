@@ -1,4 +1,4 @@
-import { createContext, useContext, useMemo, useState } from "react"
+import { useContext, useMemo, useState } from "react"
 import { FormikProps } from "formik"
 import { ShippingProps, ShippingRouteStep } from "Apps/Order/Routes/Shipping2"
 import {
@@ -11,44 +11,51 @@ import {
   FulfillmentType,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { extractNodes } from "Utils/extractNodes"
+import { useParseOrderData } from "Apps/Order/Routes/Shipping2/Hooks/useParseOrderData"
 import {
-  ParsedOrderData,
-  useParseOrderData,
-} from "Apps/Order/Routes/Shipping2/Hooks/useParseOrderData"
-
-type FulfillmentHelpers = Pick<
-  FormikProps<FulfillmentValues>,
-  "handleSubmit" | "isValid" | "values"
->
-export interface ShippingContextProps {
-  parsedOrderData: ParsedOrderData
-  initialValues: {
-    fulfillmentDetails: FulfillmentValues
-    shippingQuotes: {
-      selectedShippingQuoteId?: string | null
-    }
-  }
-  step: ShippingRouteStep
-  helpers: {
-    fulfillmentDetails: FulfillmentHelpers & {
-      setFulfillmentFormHelpers: (helpers: FulfillmentHelpers) => void
-    }
-  }
-}
-
-export const ShippingContext = createContext<ShippingContextProps>({} as any)
+  ShippingContext,
+  ShippingContextProps,
+} from "Apps/Order/Routes/Shipping2/Utils/ShippingContext"
 
 export const useShippingContext = () => {
   return useContext(ShippingContext)
 }
 
-// Get information from the order and user, parsedOrderData (shared, computed context about order)
-// initial values for forms, and the current step in the shipping route
-// values for forms
+/**
+ * Load the full shipping context from its top-level route using relay props.
+ */
 export const useComputeShippingContext = (
   props: ShippingProps
 ): ShippingContextProps => {
   const parsedOrderData = useParseOrderData(props)
+
+  /**
+   * Because there is a single button for both fulfillment details and
+   * shipping quote steps (and duplicated in the sidebar)
+   * we need to hack some formik values UP from the fulfillment details form.
+   *
+   * Currently we need to pass up:
+   */
+  const [fulfillmentFormHelpers, setFulfillmentFormHelpers] = useState<
+    Pick<FormikProps<FulfillmentValues>, "handleSubmit" | "isValid" | "values">
+  >({
+    // Used to submit the form
+    handleSubmit: () => {},
+    // Used to disable the button
+    isValid: false,
+    // Used to get the form values for un-saving the address if the user
+    // unchecks it after saving it in the fulfillment details step.
+    values: ({
+      attributes: {
+        saveAddress: false,
+      },
+    } as unknown) as FulfillmentValues,
+  })
+  const fulfillmentDetailsHelpers = {
+    ...fulfillmentFormHelpers,
+    setFulfillmentFormHelpers,
+  }
+
   const initialValues = getInitialValues(props, parsedOrderData)
 
   const { isArtsyShipping } = parsedOrderData
@@ -65,34 +72,8 @@ export const useComputeShippingContext = (
     initialValues,
     step,
     helpers: {
-      fulfillmentDetails: useFulfillmentDetailsHelpers(),
+      fulfillmentDetails: fulfillmentDetailsHelpers,
     },
-  }
-}
-
-const useFulfillmentDetailsHelpers = (): ShippingContextProps["helpers"]["fulfillmentDetails"] => {
-  // Because there is a single button for both fulfillment details and
-  // shipping quote steps (and duplicated in the sidebar)
-  // we need to hack some formik values UP from the fulfillment details
-  // form.
-  // handleSubmit: Used to submit the form
-  // isValid: Used to disable the button
-  // values: Used to get the form values for un-saving the address if the user
-  //   unchecks it after saving it in the fulfillment details step.
-  const [fulfillmentFormHelpers, setFulfillmentFormHelpers] = useState<
-    Pick<FormikProps<FulfillmentValues>, "handleSubmit" | "isValid" | "values">
-  >({
-    handleSubmit: () => {},
-    isValid: false,
-    values: {
-      attributes: {
-        saveAddress: false,
-      },
-    } as any,
-  })
-  return {
-    ...fulfillmentFormHelpers,
-    setFulfillmentFormHelpers,
   }
 }
 

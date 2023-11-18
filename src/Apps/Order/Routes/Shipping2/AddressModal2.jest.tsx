@@ -1,6 +1,6 @@
 import {
   AddressModal,
-  Props,
+  AddressModalProps,
   GENERIC_FAIL_MESSAGE,
   AddressModalActionType,
 } from "Apps/Order/Routes/Shipping2/AddressModal2"
@@ -9,16 +9,17 @@ import { useSystemContext } from "System/useSystemContext"
 import { SavedAddressType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { createMockEnvironment } from "relay-test-utils"
 import { waitFor } from "@testing-library/react"
-import {
-  ShippingContext,
-  useComputeShippingContext,
-} from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
+import { useComputeShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { AddressModal2TestQuery } from "__generated__/AddressModal2TestQuery.graphql"
+import { ShippingContext } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.unmock("react-relay")
 jest.mock("System/useSystemContext")
+const mockUseSystemContext = useSystemContext as jest.Mock
+
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
@@ -45,29 +46,15 @@ const savedAddress: SavedAddressType = {
   isDefault: false,
 }
 
-let testAddressModalProps: Props
+let testAddressModalProps: AddressModalProps
 
 let mockRelayEnv: ReturnType<typeof createMockEnvironment>
 
-beforeEach(() => {
-  mockRelayEnv = createMockEnvironment()
-  ;(useSystemContext as jest.Mock).mockImplementation(() => {
-    return {
-      user: { lab_features: [] },
-      isLoggedIn: true,
-      relayEnvironment: mockRelayEnv,
-    }
-  })
-})
-
-const { getWrapper } = setupTestWrapper<AddressModal2TestQuery>({
-  // Cast props here because we don't actually need the query, just the relay
-  // test wrapper. -
-  // props must be passed via getWrapper's componentProps arg
+const { getWrapper: _getWrapper } = setupTestWrapper<AddressModal2TestQuery>({
   Component: (props: unknown) => {
     return (
       <ShippingContext.Provider value={useComputeShippingContext({} as any)}>
-        <AddressModal {...(props as Props)} />
+        <AddressModal {...(props as AddressModalProps)} />
       </ShippingContext.Provider>
     )
   },
@@ -80,8 +67,23 @@ const { getWrapper } = setupTestWrapper<AddressModal2TestQuery>({
   `,
 })
 
+const getWrapper = ({
+  mockResolvers = {},
+  componentProps = testAddressModalProps,
+  relayEnvironment = mockRelayEnv,
+} = {}) => _getWrapper(mockResolvers, componentProps, relayEnvironment)
+
 describe("AddressModal", () => {
   beforeEach(() => {
+    mockRelayEnv = createMockEnvironment()
+    mockUseSystemContext.mockImplementation(() => {
+      return {
+        user: { lab_features: [] },
+        isLoggedIn: true,
+        relayEnvironment: mockRelayEnv,
+      }
+    })
+
     testAddressModalProps = {
       onSuccess: jest.fn(),
       modalAction: {
@@ -91,17 +93,10 @@ describe("AddressModal", () => {
 
       closeModal: jest.fn(),
     }
-    ;(useSystemContext as jest.Mock).mockImplementation(() => {
-      return {
-        user: { lab_features: [] },
-        isLoggedIn: true,
-        relayEnvironment: mockRelayEnv,
-      }
-    })
   })
 
   it("renders EditModal with the title, input fields and buttons", () => {
-    const { wrapper } = getWrapper({}, testAddressModalProps, mockRelayEnv)
+    const { wrapper } = getWrapper()
 
     expect(wrapper.text()).toContain("Edit address")
     expect(wrapper.find("input").length).toBe(7)
@@ -113,9 +108,8 @@ describe("AddressModal", () => {
   })
 
   it("renders EditModal without checkbox when address is default", () => {
-    const { wrapper } = getWrapper(
-      {},
-      {
+    const { wrapper } = getWrapper({
+      componentProps: {
         ...testAddressModalProps,
         modalAction: {
           type: AddressModalActionType.EDIT_USER_ADDRESS,
@@ -125,23 +119,20 @@ describe("AddressModal", () => {
           },
         },
       },
-      mockRelayEnv
-    )
+    })
     expect(wrapper.text()).toContain("Edit address")
     expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(0)
   })
 
   it("renders AddModal with the title, input fields, checkbox and button", () => {
-    const { wrapper } = getWrapper(
-      {},
-      {
+    const { wrapper } = getWrapper({
+      componentProps: {
         ...testAddressModalProps,
         modalAction: {
           type: AddressModalActionType.CREATE_USER_ADDRESS,
         },
       },
-      mockRelayEnv
-    )
+    })
     expect(wrapper.text()).toContain("Add address")
     expect(wrapper.find("input").length).toBe(7)
     expect(wrapper.find("select").length).toBe(1)
@@ -151,31 +142,26 @@ describe("AddressModal", () => {
     expect(wrapper.find("Button[data-test='saveButton']").length).toBe(1)
   })
 
-  it("clicking the delete button spawns a correct dialog", () => {
-    const { wrapper } = getWrapper({}, testAddressModalProps, mockRelayEnv)
+  it("clicking the delete button spawns a correct dialog", async () => {
+    const { wrapper } = getWrapper()
     const deleteButton = wrapper.find("Clickable[data-test='deleteButton']")
     deleteButton.simulate("click")
+    await wrapper.update()
     const dialog = wrapper.find("ModalDialog[data-test='deleteAddressDialog']")
 
-    setTimeout(() => {
-      expect(dialog).toHaveLength(1)
-      expect(dialog.text()).toContain("Delete address?")
-      expect(dialog.text()).toContain(
-        "This will remove this address from your saved addresses"
-      )
-      const dialogDelete = dialog.find("Button").at(1)
-      expect(dialogDelete.text()).toContain("Delete")
-      const dialogCancel = dialog.find("Button").at(0)
-      expect(dialogCancel.text()).toContain("Cancel")
-    }, 0)
+    expect(dialog).toHaveLength(1)
+    expect(dialog.text()).toContain("Delete address?")
+    expect(dialog.text()).toContain(
+      "This will remove this address from your saved addresses"
+    )
+    const dialogDelete = dialog.find("Button").at(1)
+    expect(dialogDelete.text()).toContain("Delete")
+    const dialogCancel = dialog.find("Button").at(0)
+    expect(dialogCancel.text()).toContain("Cancel")
   })
 
   it("when the dialog is confirmed, the delete action happens", async () => {
-    const { mockResolveLastOperation, wrapper } = getWrapper(
-      {},
-      testAddressModalProps,
-      mockRelayEnv
-    )
+    const { mockResolveLastOperation, wrapper } = getWrapper()
     const deleteButton = wrapper.find("Clickable[data-test='deleteButton']")
     deleteButton.simulate("click")
     const dialog = wrapper.find("ModalDialog[data-test='deleteAddressDialog']")
@@ -186,23 +172,19 @@ describe("AddressModal", () => {
       mockResolveLastOperation({})
     )
 
+    await flushPromiseQueue()
+    await wrapper.update()
     expect(operationName).toBe("useDeleteSavedAddressMutation")
     expect(operationVariables).toEqual({
       input: { userAddressID: "internal-id" },
     })
 
-    await waitFor(() => {
-      expect(wrapper.find(AddressModal).props().closeModal).toHaveBeenCalled()
-    })
+    expect(wrapper.find(AddressModal).props().closeModal).toHaveBeenCalled()
   })
 
   describe("update mode", () => {
     it("creates address when form is submitted with valid values", async () => {
-      const { mockResolveLastOperation, wrapper } = getWrapper(
-        {},
-        testAddressModalProps,
-        mockRelayEnv
-      )
+      const { mockResolveLastOperation, wrapper } = getWrapper()
 
       const formik = wrapper.find("Formik").first()
       formik.props().onSubmit!(validAddress as any)
@@ -243,11 +225,7 @@ describe("AddressModal", () => {
     })
 
     it("shows generic error when mutation fails", async () => {
-      const { wrapper, mockRejectLastOperation } = getWrapper(
-        {},
-        testAddressModalProps,
-        mockRelayEnv
-      )
+      const { wrapper, mockRejectLastOperation } = getWrapper()
 
       const formik = wrapper.find("Formik").first()
 
@@ -265,11 +243,7 @@ describe("AddressModal", () => {
       })
     })
     it("shows generic error when mutation returns error", async () => {
-      const { mockResolveLastOperation, wrapper } = getWrapper(
-        {},
-        testAddressModalProps,
-        mockRelayEnv
-      )
+      const { mockResolveLastOperation, wrapper } = getWrapper()
 
       const formik = wrapper.find("Formik").first()
       formik.props().onSubmit!(validAddress as any)
@@ -298,11 +272,7 @@ describe("AddressModal", () => {
     })
 
     it("sets formik error when address mutation returns phone validation error", async () => {
-      const { mockResolveLastOperation, wrapper } = getWrapper(
-        {},
-        testAddressModalProps,
-        mockRelayEnv
-      )
+      const { mockResolveLastOperation, wrapper } = getWrapper()
 
       const formik = wrapper.find("Formik").first()
       const setFieldError = jest.fn()

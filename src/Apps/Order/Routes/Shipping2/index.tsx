@@ -42,16 +42,14 @@ import {
   FulfillmentValues,
 } from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
 import { FormikHelpers } from "formik"
-import {
-  ShippingContext,
-  useComputeShippingContext,
-} from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
+import { useComputeShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 
 import { FulfillmentType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
 import { useSaveFulfillmentDetails } from "Apps/Order/Routes/Shipping2/Mutations/useSaveFulfillmentDetails"
 import { useCreateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useCreateSavedAddress"
 import { useSelectShippingQuote } from "Apps/Order/Routes/Shipping2/Mutations/useSelectShippingQuote"
+import { ShippingContext } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -94,10 +92,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     props.router.push(`/orders/${props.order.internalID}/payment`)
   }, [props.router, props.order.internalID])
 
-  // Reset fulfillment details on load if artsy shipping to refresh shipping quotes
-  // Note: exact current behavior is documented in notion. On load of shipping page, it
-  // re-saves the order using the default address (not what is selected) which triggers a
-  // shipping quote refresh. the *selected shipping quote is not reset.*
+  /**
+   * Reset fulfillment details on load if artsy shipping to refresh shipping
+   * quotes. See EMI-1534.
+   */
   useEffect(() => {
     if (
       parsedOrderData.fulfillmentType === FulfillmentType.SHIP &&

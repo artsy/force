@@ -42,7 +42,7 @@ export type AddressModalAction =
       address: SavedAddressType
     }
 
-export interface Props {
+export interface AddressModalProps {
   closeModal: () => void
   onSuccess: (addressID: string) => Promise<void>
 
@@ -70,7 +70,7 @@ export const GENERIC_FAIL_MESSAGE =
 
 const validationSchema = Yup.object().shape(ADDRESS_VALIDATION_SHAPE)
 
-export const AddressModal: React.FC<Props> = ({
+export const AddressModal: React.FC<AddressModalProps> = ({
   closeModal,
   onSuccess,
   modalAction,
@@ -160,18 +160,17 @@ export const AddressModal: React.FC<Props> = ({
     let operation: () => Promise<ReturnType<typeof handleMutationPayload>>
     try {
       if (modalAction.type === "createUserAddress") {
-        operation = () => {
-          return createSavedAddress({
+        operation = async () => {
+          const result = await createSavedAddress({
             variables: {
               input: { attributes: addressInput },
             },
-          }).then(result => {
-            return handleMutationPayload(result.createUserAddress)
           })
+          return handleMutationPayload(result.createUserAddress)
         }
       } else {
-        operation = () =>
-          updateSavedAddress({
+        operation = async () => {
+          const result = await updateSavedAddress({
             variables: {
               input: {
                 // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -179,16 +178,19 @@ export const AddressModal: React.FC<Props> = ({
                 attributes: addressInput,
               },
             },
-          }).then(result => handleMutationPayload(result.updateUserAddress))
+          })
+          return handleMutationPayload(result.updateUserAddress)
+        }
       }
+
       const { data, errors } = await operation()
+
       if (errors) {
         handleErrors(errors, helpers)
         return
       }
-      const savedAddressID = data?.internalID
 
-      // update default address if isDefault and original values were not default
+      const savedAddressID = data?.internalID
       if (
         !!savedAddressID &&
         values?.isDefault &&
