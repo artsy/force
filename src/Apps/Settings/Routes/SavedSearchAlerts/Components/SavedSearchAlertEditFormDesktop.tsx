@@ -2,6 +2,8 @@ import { Box, Clickable, Flex, Spacer, Text } from "@artsy/palette"
 import { EditAlertFormBase } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { SavedSearchAlertEditFormQueryRenderer } from "./SavedSearchAlertEditForm"
 import CloseIcon from "@artsy/icons/CloseIcon"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { NewSavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/NewSavedSearchAlertEditForm"
 
 export const SavedSearchAlertEditFormDesktop: React.FC<EditAlertFormBase> = ({
   editAlertEntity,
@@ -9,6 +11,8 @@ export const SavedSearchAlertEditFormDesktop: React.FC<EditAlertFormBase> = ({
   onDeleteClick,
   onCompleted,
 }) => {
+  const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
+
   return (
     <Box flex={1} p={4}>
       <Flex justifyContent="space-between" alignItems="center">
@@ -22,11 +26,19 @@ export const SavedSearchAlertEditFormDesktop: React.FC<EditAlertFormBase> = ({
 
       <Spacer y={6} />
 
-      <SavedSearchAlertEditFormQueryRenderer
-        editAlertEntity={editAlertEntity}
-        onDeleteClick={onDeleteClick}
-        onCompleted={onCompleted}
-      />
+      {newAlertModalEnabled ? (
+        <NewSavedSearchAlertEditFormQueryRenderer
+          editAlertEntity={editAlertEntity}
+          onDeleteClick={onDeleteClick}
+          onCompleted={onCompleted}
+        />
+      ) : (
+        <SavedSearchAlertEditFormQueryRenderer
+          editAlertEntity={editAlertEntity}
+          onDeleteClick={onDeleteClick}
+          onCompleted={onCompleted}
+        />
+      )}
     </Box>
   )
 }
