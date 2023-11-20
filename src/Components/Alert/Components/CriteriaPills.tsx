@@ -1,4 +1,4 @@
-import { Pill, SkeletonBox } from "@artsy/palette"
+import { Pill, ShowMore, SkeletonBox } from "@artsy/palette"
 import { FC } from "react"
 import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
@@ -15,9 +15,12 @@ export const CriteriaPills: FC<CriteriaPillsProps> = ({ editable = true }) => {
   if (!labels) {
     return <CriteriaPillsPlaceholder />
   }
+  const PILLS_TO_DISPLAY = 10
+  const countPills = labels.length
+  const showMorePillsText = `+${countPills - PILLS_TO_DISPLAY} more`
 
   return (
-    <>
+    <ShowMore initial={PILLS_TO_DISPLAY} showMoreText={showMorePillsText}>
       {labels.map(label => {
         if (!label) return null
 
@@ -50,7 +53,7 @@ export const CriteriaPills: FC<CriteriaPillsProps> = ({ editable = true }) => {
           </Pill>
         )
       })}
-    </>
+    </ShowMore>
   )
 }
 
