@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f4eb68d1b3e3aaa78e678eaaf247622e>>
+ * @generated SignedSource<<9498335a4defd8b1f2d0faba41f7d1f0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type PriceAggregationsQuery$variables = {
 export type PriceAggregationsQuery$data = {
   readonly artist: {
     readonly filterArtworksConnection: {
-      readonly " $fragmentSpreads": FragmentRefs<"Price_aggregations">;
+      readonly " $fragmentSpreads": FragmentRefs<"Price_artworksConnection">;
     } | null;
   } | null;
 };
@@ -87,7 +87,7 @@ return {
               {
                 "args": null,
                 "kind": "FragmentSpread",
-                "name": "Price_aggregations"
+                "name": "Price_artworksConnection"
               }
             ],
             "storageKey": "filterArtworksConnection(aggregations:[\"SIMPLE_PRICE_HISTOGRAM\"],first:0)"
@@ -182,16 +182,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "7fd9f50513fe8831ab80a2e0dacb7bef",
+    "cacheID": "ce937da26f8f97ffd9e93d4de41588d2",
     "id": null,
     "metadata": {},
     "name": "PriceAggregationsQuery",
     "operationKind": "query",
-    "text": "query PriceAggregationsQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    filterArtworksConnection(aggregations: [SIMPLE_PRICE_HISTOGRAM], first: 0) {\n      ...Price_aggregations\n      id\n    }\n    id\n  }\n}\n\nfragment Price_aggregations on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      name\n      value\n      count\n    }\n  }\n}\n"
+    "text": "query PriceAggregationsQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    filterArtworksConnection(aggregations: [SIMPLE_PRICE_HISTOGRAM], first: 0) {\n      ...Price_artworksConnection\n      id\n    }\n    id\n  }\n}\n\nfragment Price_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      name\n      value\n      count\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "938d4f8cb2cadde9e8ca3857cf34e60d";
+(node as any).hash = "e937383606927b42d7ff3ea6554119b6";
 
 export default node;

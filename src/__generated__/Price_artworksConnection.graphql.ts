@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<489ba151b0a8ce333fbb31f158977e96>>
+ * @generated SignedSource<<5f30238da574a744b4bcd4ff191576ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ARTIST_SERIES" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type Price_aggregations$data = {
+export type Price_artworksConnection$data = {
   readonly aggregations: ReadonlyArray<{
     readonly counts: ReadonlyArray<{
       readonly count: number;
@@ -20,18 +20,18 @@ export type Price_aggregations$data = {
     } | null> | null;
     readonly slice: ArtworkAggregation | null;
   } | null> | null;
-  readonly " $fragmentType": "Price_aggregations";
+  readonly " $fragmentType": "Price_artworksConnection";
 };
-export type Price_aggregations$key = {
-  readonly " $data"?: Price_aggregations$data;
-  readonly " $fragmentSpreads": FragmentRefs<"Price_aggregations">;
+export type Price_artworksConnection$key = {
+  readonly " $data"?: Price_artworksConnection$data;
+  readonly " $fragmentSpreads": FragmentRefs<"Price_artworksConnection">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "Price_aggregations",
+  "name": "Price_artworksConnection",
   "selections": [
     {
       "alias": null,
@@ -88,6 +88,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "52800e27907237961be7f2d123e6ea21";
+(node as any).hash = "0af65d4d9404f73410d348f01049c2a9";
 
 export default node;

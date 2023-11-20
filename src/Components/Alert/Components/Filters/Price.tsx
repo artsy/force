@@ -10,17 +10,17 @@ import { aggregationsToHistogram } from "Components/ArtworkFilter/ArtworkFilters
 import { PriceAggregationsQuery } from "__generated__/PriceAggregationsQuery.graphql"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { createFragmentContainer, graphql } from "react-relay"
-import { Price_aggregations$data } from "__generated__/Price_aggregations.graphql"
+import { Price_artworksConnection$data } from "__generated__/Price_artworksConnection.graphql"
 
 interface PriceProps {
-  aggregations?: Price_aggregations$data | null
+  artworksConnection?: Price_artworksConnection$data | null
 }
 
-export const Price: React.FC<PriceProps> = ({ aggregations }) => {
+export const Price: React.FC<PriceProps> = ({ artworksConnection }) => {
   const { state, dispatch } = useAlertContext()
 
   const bars = aggregationsToHistogram(
-    aggregations?.aggregations as Aggregations
+    artworksConnection?.aggregations as Aggregations
   )
 
   const handlePriceRangeUpdate = (updatedValues: CustomRange) => {
@@ -46,8 +46,8 @@ export const Price: React.FC<PriceProps> = ({ aggregations }) => {
 }
 
 export const PriceFragmentContainer = createFragmentContainer(Price, {
-  aggregations: graphql`
-    fragment Price_aggregations on FilterArtworksConnection {
+  artworksConnection: graphql`
+    fragment Price_artworksConnection on FilterArtworksConnection {
       aggregations {
         slice
         counts {
@@ -81,7 +81,7 @@ export const PriceQueryRenderer = () => {
               aggregations: [SIMPLE_PRICE_HISTOGRAM]
               first: 0
             ) {
-              ...Price_aggregations
+              ...Price_artworksConnection
             }
           }
         }
@@ -91,9 +91,11 @@ export const PriceQueryRenderer = () => {
           console.error(error)
         }
 
-        const aggregations = props?.artist?.filterArtworksConnection
+        const artworksConnection = props?.artist?.filterArtworksConnection
 
-        return <PriceFragmentContainer aggregations={aggregations} />
+        return (
+          <PriceFragmentContainer artworksConnection={artworksConnection} />
+        )
       }}
     />
   )
