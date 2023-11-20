@@ -2,7 +2,7 @@ import { graphql } from "relay-runtime"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { ConversationMessageTestQuery } from "__generated__/ConversationMessageTestQuery.graphql"
-import { ConversationMessage } from "Apps/Conversations2/components/ConversationMessage"
+import { ConversationMessage } from "Apps/Conversations2/components/Message/ConversationMessage"
 
 jest.mock("next/router", () => require("next-router-mock"))
 

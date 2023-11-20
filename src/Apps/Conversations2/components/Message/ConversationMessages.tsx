@@ -1,4 +1,4 @@
-import { Box, Flex } from "@artsy/palette"
+import { Flex, Spinner } from "@artsy/palette"
 import React, { FC, useEffect, useRef, useState } from "react"
 import {
   createPaginationContainer,
@@ -6,8 +6,6 @@ import {
   RelayPaginationProp,
 } from "react-relay"
 import { ConversationMessage } from "./ConversationMessage"
-import { LatestMessages } from "./LatestMessages"
-import { useLoadMore } from "Apps/Conversations2/hooks/useLoadMore"
 import { extractNodes } from "Utils/extractNodes"
 import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 import { usePoll } from "Utils/Hooks/usePoll"
@@ -17,13 +15,10 @@ import {
   useGroupedMessages,
 } from "Apps/Conversations2/hooks/useGroupedMessages"
 import { ConversationOrderUpdate } from "Apps/Conversations2/components/Message/ConversationOrderUpdate"
-import {
-  ConversationTimeSince,
-  fromToday,
-} from "Apps/Conversations2/components/Message/ConversationTimeSince"
-import { ConversationNewMessageMarker } from "Apps/Conversations2/components/Message/ConversationNewMessageMarker"
-import { useRouter } from "System/Router/useRouter"
+import { ConversationTimeSince } from "Apps/Conversations2/components/Message/ConversationTimeSince"
 import { ConversationMessageArtwork } from "Apps/Conversations2/components/Message/ConversationMessageArtwork"
+import { LatestMessages } from "Apps/Conversations2/components/LatestMessages"
+import styled from "styled-components"
 
 const PAGE_SIZE = 15
 
@@ -38,70 +33,96 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
   conversation,
   relay,
 }) => {
-  const { match } = useRouter()
-  const [hasScrolledBottom, setHasScrolledBottom] = useState(false)
-  const [showLatestMessages, setShowLatestMessages] = useState(false)
+  const [isFetchingAllMessages, startFetchAllTransition] = useState(false)
+  const [isFetchingLoadMoreMessages, startLoadMoreTransition] = useState(false)
+  const [showLatestMessagesFlyOut, setShowLatestMessagesFlyOut] = useState(
+    false
+  )
   const autoScrollToBottomRef = useRef<HTMLDivElement>(null)
-
-  const { loadMore } = useLoadMore({
-    pageSize: PAGE_SIZE,
-    hasNext: relay.hasMore,
-    isLoadingNext: relay.isLoading,
-    loadNext: relay.loadMore,
-    when: hasScrolledBottom,
-  })
-
-  const messages = extractNodes(conversation?.messagesConnection)
 
   const groupedMessagesAndEvents = useGroupedMessages(
     conversation?.messagesConnection,
     conversation?.orderEvents
   )
 
-  const refreshList = () => {
-    if (!relay.isLoading()) {
-      relay.refetchConnection(PAGE_SIZE, null, {
-        first: messages.length,
-      })
-    }
-  }
+  const totalCount = conversation?.messagesConnection?.totalCount ?? 0
+  const messages = extractNodes(conversation?.messagesConnection)
 
-  const handleLatestMessagesClick = () => {
-    refreshList()
-    autoScrollToBottomRef.current?.scrollIntoView({ behavior: "smooth" })
-  }
+  const enableTopListSentinal =
+    showLatestMessagesFlyOut && totalCount !== messages.length
 
-  // Refetch messages in the background
-  // usePoll({
-  //   callback: () => refreshList(),
-  //   intervalTime: BACKGROUND_REFETCH_INTERVAL,
-  //   key: "conversationMessages",
-  // })
-
-  useEffect(() => {
-    setTimeout(() => {
-      autoScrollToBottomRef.current?.scrollIntoView({
-        behavior: "instant",
-      })
-    }, 0)
-  }, [match.params.conversationId])
+  const enableBottomRefreshSentinal = totalCount > 2
 
   useAutoScrollToBottom({
     messages,
     autoScrollToBottomRef,
   })
 
+  // Refetch messages in the background
+  usePoll({
+    callback: () => {
+      // FIXME: Move to env var
+      const ENABLED = false
+
+      if (ENABLED) {
+        refetchMessages({ showPreloader: false })
+      }
+    },
+    intervalTime: BACKGROUND_REFETCH_INTERVAL,
+    key: "conversationMessages",
+  })
+
+  const refetchMessages = ({ showPreloader = true }) => {
+    if (messages.length === 0) {
+      return
+    }
+
+    const performRefetch = () => {
+      relay.refetchConnection(
+        PAGE_SIZE,
+        () => {
+          startLoadMoreTransition(false)
+        },
+        {
+          first: PAGE_SIZE,
+        }
+      )
+    }
+
+    // If we're not showing the preloader, keep the current scroll position and
+    // simply refresh the list
+    if (!showPreloader) {
+      performRefetch()
+      return
+    }
+
+    setTimeout(() => {
+      autoScrollToBottomRef.current?.scrollIntoView({
+        behavior: "smooth",
+      })
+    }, 100)
+
+    startLoadMoreTransition(true)
+    performRefetch()
+  }
+
   return (
     <Flex flexDirection="column" overflowY="auto" p={2} flexGrow={1}>
       <Flex flexDirection="column" position="relative">
-        {!!hasScrolledBottom && (
-          <Sentinel
+        {enableTopListSentinal && (
+          <LoadAllMessagesSentinal
+            testId="LoadAllMessagesSentinal"
             onEnterView={() => {
-              loadMore()
+              startFetchAllTransition(true)
+
+              relay.refetchConnection(totalCount, () => {
+                startFetchAllTransition(false)
+              })
             }}
-            testId="messages-top-sentinel"
           />
         )}
+
+        {isFetchingAllMessages && <TopLoadingSpinner />}
 
         {groupedMessagesAndEvents.map((messageGroup, groupIndex) => {
           return (
@@ -117,7 +138,7 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
               {groupIndex === 0 && (
                 <ConversationMessageArtwork
                   key={conversation?.items?.[0]?.item?.internalID}
-                  item={conversation?.items?.[0]?.item!}
+                  item={conversation?.items?.[0]?.item as any}
                   mb={2}
                 />
               )}
@@ -154,20 +175,23 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
         })}
 
         <LatestMessages
-          visible={showLatestMessages}
-          onClick={handleLatestMessagesClick}
-        />
-
-        <Sentinel
-          onEnterView={() => {
-            !hasScrolledBottom && setHasScrolledBottom(true)
-            setShowLatestMessages(false)
+          visible={enableBottomRefreshSentinal && showLatestMessagesFlyOut}
+          onClick={() => {
+            refetchMessages({
+              showPreloader: true,
+            })
           }}
-          onExitView={() => !showLatestMessages && setShowLatestMessages(true)}
-          testId="messages-bottom-sentinel"
         />
 
-        <Box ref={autoScrollToBottomRef as any} />
+        <LatestMessagesSentinel
+          onEnterView={() => setShowLatestMessagesFlyOut(false)}
+          onExitView={() => setShowLatestMessagesFlyOut(true)}
+          testId="LatestMessagesSentinel"
+        />
+
+        {isFetchingLoadMoreMessages && <BottomLoadingSpinner />}
+
+        <AutoScrollToBottom ref={autoScrollToBottomRef as any} />
       </Flex>
     </Flex>
   )
@@ -189,6 +213,7 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
           @connection(
             key: "ConversationMessages_conversation_messagesConnection"
           ) {
+          totalCount
           pageInfo {
             hasNextPage
             hasPreviousPage
@@ -304,7 +329,24 @@ const useAutoScrollToBottom = ({
 
   useEffect(() => {
     if (lastMessageId) {
-      autoScrollToBottomRef.current?.scrollIntoView()
+      setTimeout(() => {
+        autoScrollToBottomRef.current?.scrollIntoView({
+          behavior: "instant",
+          block: "end",
+        })
+      }, 10)
     }
   }, [lastMessageId, autoScrollToBottomRef])
 }
+
+const LoadingSpinner = () => (
+  <Flex>
+    <Spinner />
+  </Flex>
+)
+
+const LoadAllMessagesSentinal = Sentinel
+const LatestMessagesSentinel = Sentinel
+const TopLoadingSpinner = LoadingSpinner
+const BottomLoadingSpinner = LoadingSpinner
+const AutoScrollToBottom = styled.div``

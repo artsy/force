@@ -17,74 +17,21 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
   conversation,
   index,
 }) => {
+  const data = useFragment(FRAGMENT, conversation)
   const { match } = useRouter()
   const { trackEvent } = useTracking()
 
-  const data = useFragment(
-    graphql`
-      fragment ConversationsSidebarItem_conversation on Conversation {
-        internalID
-        from {
-          name
-        }
-        fromUser {
-          collectorProfile {
-            confirmedBuyerAt
-          }
-        }
-        to {
-          name
-        }
-        lastMessageAt(format: "MMM D")
-
-        orderConnection(
-          last: 1
-          states: [
-            APPROVED
-            FULFILLED
-            SUBMITTED
-            PROCESSING_APPROVAL
-            REFUNDED
-          ]
-        ) {
-          edges {
-            node {
-              __typename
-            }
-          }
-        }
-
-        items {
-          item @required(action: NONE) {
-            __typename
-            ... on Artwork {
-              id
-              title @required(action: NONE)
-              date
-              artist @required(action: NONE) {
-                name @required(action: NONE)
-              }
-              image @required(action: NONE) {
-                url(version: ["small", "square"]) @required(action: NONE)
-              }
-            }
-          }
-        }
-      }
-    `,
-    conversation
-  )
-
   const isSelected = match.params.conversationId === data.internalID
-
   const scrollRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
     if (isSelected) {
       setTimeout(() => {
-        scrollRef.current?.scrollIntoView({ behavior: "instant" })
-      }, 0)
+        scrollRef.current?.scrollIntoView({ behavior: "instant", block: "end" })
+      }, 10)
     }
+    // Only want this to fire on mount
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   const item = data?.items?.[0]?.item
@@ -140,19 +87,23 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
                 {data?.to?.name}
               </Text>
             </Box>
+
             <Text variant="xs" overflowEllipsis>
               {item.artist.name}
             </Text>
+
             <Text variant="xs" color="black60" overflowEllipsis>
               <Text fontStyle="italic" display="inline" variant="xs">
                 {item.title}
               </Text>
+
               {item.date && `, ${item.date}`}
             </Text>
           </Flex>
 
           <Flex flexDirection="column" alignSelf="flex-start">
             <Text variant="xs">{conversationType}</Text>
+
             <Flex flexDirection="row" alignItems="center">
               <Text variant="xs" color="black60">
                 {data?.lastMessageAt}
@@ -164,3 +115,49 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
     </StackableBorderBox>
   )
 }
+
+const FRAGMENT = graphql`
+  fragment ConversationsSidebarItem_conversation on Conversation {
+    internalID
+    from {
+      name
+    }
+    fromUser {
+      collectorProfile {
+        confirmedBuyerAt
+      }
+    }
+    to {
+      name
+    }
+    lastMessageAt(format: "MMM D")
+
+    orderConnection(
+      last: 1
+      states: [APPROVED, FULFILLED, SUBMITTED, PROCESSING_APPROVAL, REFUNDED]
+    ) {
+      edges {
+        node {
+          __typename
+        }
+      }
+    }
+
+    items {
+      item @required(action: NONE) {
+        __typename
+        ... on Artwork {
+          id
+          title @required(action: NONE)
+          date
+          artist @required(action: NONE) {
+            name @required(action: NONE)
+          }
+          image @required(action: NONE) {
+            url(version: ["small", "square"]) @required(action: NONE)
+          }
+        }
+      }
+    }
+  }
+`

@@ -1,6 +1,3 @@
-import { ConversationMessageBubble } from "./Message/ConversationMessageBubble"
-import { ConversationMessageImage } from "./Message/ConversationMessageImage"
-import { ConversationMessageFile } from "./Message/ConversationMessageFile"
 import { graphql, useFragment } from "react-relay"
 import { Box, Spacer, Text } from "@artsy/palette"
 import { format, differenceInDays, isSameDay, isSameMinute } from "date-fns"
@@ -12,6 +9,9 @@ import {
 import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 import { useScrollPagination } from "Apps/Conversations2/hooks/useScrollPagination"
 import Linkify from "react-linkify"
+import { ConversationMessageBubble } from "Apps/Conversations2/components/Message/ConversationMessageBubble"
+import { ConversationMessageImage } from "Apps/Conversations2/components/Message/ConversationMessageImage"
+import { ConversationMessageFile } from "Apps/Conversations2/components/Message/ConversationMessageFile"
 
 interface ConversationMessageProps {
   messageIndex: number

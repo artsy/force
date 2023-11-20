@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3ae4d2bb349bea8b1f725453dbbce5ea>>
+ * @generated SignedSource<<1adaf0e4fd3a9705c45ac09234759443>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,6 +43,7 @@ export type ConversationMessages_conversation$data = {
       readonly hasPreviousPage: boolean;
       readonly startCursor: string | null;
     };
+    readonly totalCount: number | null;
   };
   readonly orderEvents: {
     readonly edges: ReadonlyArray<{
@@ -164,6 +165,13 @@ return {
         "name": "__ConversationMessages_conversation_messagesConnection_connection",
         "plural": false,
         "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "totalCount",
+            "storageKey": null
+          },
           {
             "alias": null,
             "args": null,
@@ -506,6 +514,6 @@ return {
 };
 })();
 
-(node as any).hash = "152b0860c9827822db6248f4d004fa2d";
+(node as any).hash = "23a90f0b60cde6f43c7fca882592f47e";
 
 export default node;
