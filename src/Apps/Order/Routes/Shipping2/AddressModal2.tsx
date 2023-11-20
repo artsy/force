@@ -16,8 +16,10 @@ import {
 import { Formik, FormikHelpers, FormikProps } from "formik"
 import { AddressModalFields } from "Components/Address/AddressModalFields"
 
-import { ADDRESS_VALIDATION_SHAPE } from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
-import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
+import {
+  ADDRESS_VALIDATION_SHAPE,
+  SavedAddressType,
+} from "Apps/Order/Utils/shippingUtils"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { useCreateSavedAddressMutation$data } from "__generated__/useCreateSavedAddressMutation.graphql"

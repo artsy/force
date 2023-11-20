@@ -96,7 +96,6 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
     <FulfillmentDetailsForm
       initialValues={shippingContext.initialValues.fulfillmentDetails}
       onAddressVerificationComplete={handleVerificationComplete}
-      order={props.order}
       me={props.me}
       verifyAddressNow={verifyAddressNow}
       onSubmit={handleSubmit}

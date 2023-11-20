@@ -1,7 +1,7 @@
 import { Address } from "Components/Address/AddressForm"
 import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
-import { screen, waitFor, within } from "@testing-library/react"
+import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 
 export const validAddress: Address = {

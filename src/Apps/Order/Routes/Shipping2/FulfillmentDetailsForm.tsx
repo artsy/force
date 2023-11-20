@@ -42,13 +42,13 @@ import {
 import { compact, pick } from "lodash"
 import { useEffect, useCallback } from "react"
 import { ADDRESS_VALIDATION_SHAPE } from "Apps/Order/Utils/shippingUtils"
-import { Shipping2_me$data } from "__generated__/Shipping2_me.graphql"
 import { Collapse } from "Apps/Order/Components/Collapse"
+import { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
 
 export interface FulfillmentDetailsFormProps {
   // TODO: ideally we don't need to thread shipping2_me through here but that requires
   // adding savedAdderesses to the context.
-  me: Shipping2_me$data
+  me: FulfillmentDetailsForm_me$data
   initialValues: FulfillmentValues
   verifyAddressNow: boolean
   onAddressVerificationComplete: () => void
