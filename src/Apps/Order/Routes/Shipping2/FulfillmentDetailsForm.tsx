@@ -454,7 +454,7 @@ const FulfillmentDetailsFormLayout = (
                   data-testid="AddressForm_region"
                 />
               </Column>
-              <Column span={6}>
+              <Column span={6} data-testid="AddressForm_region_area">
                 <Input
                   tabIndex={tabbableFormValue("new_address")}
                   name="attributes.postalCode"

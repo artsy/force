@@ -43,7 +43,6 @@ export const fillCountrySelect = (component, value) => {
 }
 
 export const fillAddressForm = async (address: Address) => {
-  within(screen.getByTestId("AddressForm"))
   await waitFor(() => {
     const line1Input = screen.getByPlaceholderText("Street address")
     expect(line1Input).toBeEnabled()
@@ -55,21 +54,25 @@ export const fillAddressForm = async (address: Address) => {
   const addressLine1 = screen.getByPlaceholderText("Street address")
   const addressLine2 = screen.getByPlaceholderText("Apt, floor, suite, etc.")
   const city = screen.getByPlaceholderText("City")
-  const region = await screen.findByPlaceholderText(
+  const region = screen.getByPlaceholderText(
     address.country === "US" ? "State" : "State, province, or region"
   )
-  const postalCode = await screen.findByPlaceholderText(
-    address.country === "US" ? "ZIP code" : "ZIP/postal code"
+  const postalCode = screen.getByPlaceholderText(
+    address.country === "US" ? "ZIP code" : "postal code",
+    { exact: false }
   )
   const phoneNumber = screen.getAllByPlaceholderText(
     "Add phone number including country code"
   )[0]
 
-  userEvent.paste(name, address.name)
-  userEvent.paste(addressLine1, address.addressLine1)
-  userEvent.paste(addressLine2, address.addressLine2)
-  userEvent.paste(city, address.city)
-  userEvent.paste(region, address.region)
-  userEvent.paste(postalCode, address.postalCode)
-  address.phoneNumber && userEvent.paste(phoneNumber, address.phoneNumber)
+  await Promise.all([
+    userEvent.paste(name, address.name),
+    userEvent.paste(addressLine1, address.addressLine1),
+    userEvent.paste(addressLine2, address.addressLine2),
+    userEvent.paste(city, address.city),
+    userEvent.paste(region, address.region),
+    userEvent.paste(postalCode, address.postalCode),
+  ])
+  address.phoneNumber &&
+    (await userEvent.paste(phoneNumber, address.phoneNumber))
 }
