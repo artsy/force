@@ -70,7 +70,7 @@ jest.mock("System/useFeatureFlag", () => ({
 
 const mockShowErrorDialog = jest.fn()
 jest.mock("Apps/Order/Dialogs", () => ({
-  ...jest.requireActual("../../Dialogs"),
+  ...jest.requireActual("Apps/Order/Dialogs"),
   injectDialog: Component => props => (
     <Component {...props} dialog={{ showErrorDialog: mockShowErrorDialog }} />
   ),
@@ -152,7 +152,7 @@ const meWithAddresses: Shipping2TestQuery$rawResponse["me"] = Object.assign(
 )
 
 const saveAndContinue = async () => {
-  await userEvent.click(screen.getByText("Save and Continue"))
+  await waitFor(() => userEvent.click(screen.getByText("Save and Continue")))
 }
 
 const recommendedAddress = {

@@ -1,7 +1,7 @@
 import { Address } from "Components/Address/AddressForm"
 import { CountrySelect } from "Components/CountrySelect"
 import { Input } from "@artsy/palette"
-import { screen, waitFor } from "@testing-library/react"
+import { screen, waitFor, within } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 
 export const validAddress: Address = {
@@ -43,27 +43,33 @@ export const fillCountrySelect = (component, value) => {
 }
 
 export const fillAddressForm = async (address: Address) => {
+  within(screen.getByTestId("AddressForm"))
   await waitFor(() => {
     const line1Input = screen.getByPlaceholderText("Street address")
     expect(line1Input).toBeEnabled()
   })
-  const name = screen.getByPlaceholderText("Full name")
   const country = screen.getByTestId("AddressForm_country")
+  await userEvent.selectOptions(country, [address.country])
+
+  const name = screen.getByPlaceholderText("Full name")
   const addressLine1 = screen.getByPlaceholderText("Street address")
   const addressLine2 = screen.getByPlaceholderText("Apt, floor, suite, etc.")
   const city = screen.getByPlaceholderText("City")
-  const region = screen.getByPlaceholderText("State, province, or region")
-  const postalCode = screen.getByPlaceholderText("ZIP/postal code")
+  const region = await screen.findByPlaceholderText(
+    address.country === "US" ? "State" : "State, province, or region"
+  )
+  const postalCode = await screen.findByPlaceholderText(
+    address.country === "US" ? "ZIP code" : "ZIP/postal code"
+  )
   const phoneNumber = screen.getAllByPlaceholderText(
     "Add phone number including country code"
   )[0]
 
   userEvent.paste(name, address.name)
-  userEvent.selectOptions(country, [address.country])
   userEvent.paste(addressLine1, address.addressLine1)
   userEvent.paste(addressLine2, address.addressLine2)
   userEvent.paste(city, address.city)
   userEvent.paste(region, address.region)
   userEvent.paste(postalCode, address.postalCode)
-  userEvent.paste(phoneNumber, address.phoneNumber!)
+  address.phoneNumber && userEvent.paste(phoneNumber, address.phoneNumber)
 }

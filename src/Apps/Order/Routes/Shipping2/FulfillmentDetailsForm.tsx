@@ -19,12 +19,12 @@ import {
   FulfillmentValues,
   ShipValues,
 } from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
-import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { SavedAddressesFragmentContainer } from "Apps/Order/Routes/Shipping2/SavedAddresses2"
 import {
   FulfillmentType,
   ShippingAddressFormValues,
-} from "Apps/Order/Routes/Shipping2/shippingUtils"
+} from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import {
   useAddressAutocomplete,
   AddressAutocompleteSuggestion,
@@ -88,9 +88,9 @@ const FulfillmentDetailsFormLayout = (
   const active = shippingContext.step === "fulfillment_details"
 
   const renderMissingShippingQuotesError = !!(
-    shippingContext.computedOrderData.isArtsyShipping &&
-    shippingContext.computedOrderData.shippingQuotes &&
-    shippingContext.computedOrderData.shippingQuotes.length === 0
+    shippingContext.parsedOrderData.isArtsyShipping &&
+    shippingContext.parsedOrderData.shippingQuotes &&
+    shippingContext.parsedOrderData.shippingQuotes.length === 0
   )
 
   const savedAddresses = compact(
@@ -271,9 +271,9 @@ const FulfillmentDetailsFormLayout = (
             data-testid="addressFormCollapse"
             open={
               addressFormMode === "new_address" ||
-              (shippingContext.computedOrderData.fulfillmentType ===
+              (shippingContext.parsedOrderData.fulfillmentType ===
                 FulfillmentType.SHIP &&
-                !shippingContext.computedOrderData.selectedSavedAddressId)
+                !shippingContext.parsedOrderData.selectedSavedAddressId)
             }
           >
             <GridColumns>
@@ -309,22 +309,22 @@ const FulfillmentDetailsFormLayout = (
                     setFieldValue(`attributes.country`, selected)
                   }
                   disabled={
-                    !!shippingContext.computedOrderData.lockShippingCountryTo &&
-                    shippingContext.computedOrderData.lockShippingCountryTo !==
+                    !!shippingContext.parsedOrderData.lockShippingCountryTo &&
+                    shippingContext.parsedOrderData.lockShippingCountryTo !==
                       "EU"
                   }
                   euShippingOnly={
-                    shippingContext.computedOrderData.lockShippingCountryTo ===
+                    shippingContext.parsedOrderData.lockShippingCountryTo ===
                     "EU"
                   }
                   data-testid="AddressForm_country"
                 />
-                {shippingContext.computedOrderData.lockShippingCountryTo && (
+                {shippingContext.parsedOrderData.lockShippingCountryTo && (
                   <>
                     <Spacer x={0.5} y={0.5} />
                     <Text variant="xs" color="black60">
-                      {shippingContext.computedOrderData
-                        .lockShippingCountryTo === "EU"
+                      {shippingContext.parsedOrderData.lockShippingCountryTo ===
+                      "EU"
                         ? "Continental Europe shipping only."
                         : "Domestic shipping only."}
                     </Text>

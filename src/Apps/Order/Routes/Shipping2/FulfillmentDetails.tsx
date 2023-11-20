@@ -1,43 +1,12 @@
-import {
-  AutocompleteInput,
-  BorderedRadio,
-  Checkbox,
-  Column,
-  GridColumns,
-  Input,
-  RadioGroup,
-  Spacer,
-  Text,
-} from "@artsy/palette"
 import { FulfillmentDetailsForm_order$data } from "__generated__/FulfillmentDetailsForm_order.graphql"
 import { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
-import {
-  AddressVerificationFlowQueryRenderer,
-  AddressVerifiedBy,
-} from "Apps/Order/Components/AddressVerificationFlow"
+import { AddressVerifiedBy } from "Apps/Order/Components/AddressVerificationFlow"
 
-import {
-  AddressAutocompleteSuggestion,
-  useAddressAutocomplete,
-} from "Components/Address/useAddressAutocomplete"
-import { postalCodeValidator } from "Components/Address/utils"
-import { CountrySelect } from "Components/CountrySelect"
-import {
-  Form,
-  Formik,
-  FormikErrors,
-  FormikHelpers,
-  FormikTouched,
-  useFormikContext,
-} from "formik"
-import { compact, pick } from "lodash"
-import { FC, useCallback, useEffect, useState } from "react"
+import { FormikHelpers } from "formik"
+import { FC, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { SavedAddressesFragmentContainer as SavedAddresses } from "Apps/Order/Routes/Shipping2/SavedAddresses2"
-import { usePrevious } from "Utils/Hooks/usePrevious"
-import { Collapse } from "Apps/Order/Components/Collapse"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 
 import { FulfillmentDetailsForm } from "Apps/Order/Routes/Shipping2/FulfillmentDetailsForm"
