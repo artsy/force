@@ -39,11 +39,11 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { SavedAddressesFragmentContainer as SavedAddresses } from "Apps/Order/Routes/Shipping2/SavedAddresses2"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Collapse } from "Apps/Order/Components/Collapse"
-import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import {
   FulfillmentType,
   ShippingAddressFormValues,
-} from "Apps/Order/Routes/Shipping2/shippingUtils"
+} from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { RouterLink } from "System/Router/RouterLink"
 import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
 
@@ -125,6 +125,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsFormProps> = props => {
         : addressVerificationIntlEnabled
 
     const hasSavedAddresses = !!props.me.addressConnection?.edges?.length
+
     return (
       values.fulfillmentType === FulfillmentType.SHIP &&
       !hasSavedAddresses &&
@@ -282,11 +283,13 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
   const active = shippingContext.step === "fulfillment_details"
 
   const renderMissingShippingQuotesError = !!(
-    shippingContext.computedOrderData.isArtsyShipping &&
-    shippingContext.computedOrderData.shippingQuotes &&
-    shippingContext.computedOrderData.shippingQuotes.length === 0
+    shippingContext.parsedOrderData.isArtsyShipping &&
+    shippingContext.parsedOrderData.shippingQuotes &&
+    shippingContext.parsedOrderData.shippingQuotes.length === 0
   )
 
+  // FIXME: Non-null assertion
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstArtwork = extractNodes(props.order.lineItems)[0]!.artwork!
 
   const savedAddresses = compact(
@@ -474,9 +477,9 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
             data-testid="addressFormCollapse"
             open={
               addressFormMode === "new_address" ||
-              (shippingContext.computedOrderData.fulfillmentType ===
+              (shippingContext.parsedOrderData.fulfillmentType ===
                 FulfillmentType.SHIP &&
-                !shippingContext.computedOrderData.selectedSavedAddressId)
+                !shippingContext.parsedOrderData.selectedSavedAddressId)
             }
           >
             <GridColumns>
@@ -506,22 +509,22 @@ const FulfillmentDetailsFormLayout = (props: LayoutProps) => {
                     setFieldValue(`attributes.country`, selected)
                   }
                   disabled={
-                    !!shippingContext.computedOrderData.lockShippingCountryTo &&
-                    shippingContext.computedOrderData.lockShippingCountryTo !==
+                    !!shippingContext.parsedOrderData.lockShippingCountryTo &&
+                    shippingContext.parsedOrderData.lockShippingCountryTo !==
                       "EU"
                   }
                   euShippingOnly={
-                    shippingContext.computedOrderData.lockShippingCountryTo ===
+                    shippingContext.parsedOrderData.lockShippingCountryTo ===
                     "EU"
                   }
                   data-testid="AddressForm_country"
                 />
-                {shippingContext.computedOrderData.lockShippingCountryTo && (
+                {shippingContext.parsedOrderData.lockShippingCountryTo && (
                   <>
                     <Spacer x={0.5} y={0.5} />
                     <Text variant="xs" color="black60">
-                      {shippingContext.computedOrderData
-                        .lockShippingCountryTo === "EU"
+                      {shippingContext.parsedOrderData.lockShippingCountryTo ===
+                      "EU"
                         ? "Continental Europe shipping only."
                         : "Domestic shipping only."}
                     </Text>

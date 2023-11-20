@@ -15,13 +15,13 @@ import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/SavedAddressItem2"
 import { extractNodes } from "Utils/extractNodes"
 import { themeGet } from "@styled-system/theme-get"
 
-import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import {
   SavedAddressType,
   ShippingAddressFormValues,
   addressWithFallbackValues,
   getDefaultUserAddress,
-} from "Apps/Order/Routes/Shipping2/shippingUtils"
+} from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
@@ -52,8 +52,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   >(
     getBestAvailableAddress(
       addressList,
-      shippingContext.computedOrderData.selectedSavedAddressId ?? undefined,
-      shippingContext.computedOrderData.availableShippingCountries
+      shippingContext.parsedOrderData.selectedSavedAddressId ?? undefined,
+      shippingContext.parsedOrderData.availableShippingCountries
     )?.internalID
   )
 
@@ -68,16 +68,16 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       setSelectedAddressID(
         getBestAvailableAddress(
           addressList,
-          shippingContext.computedOrderData.selectedSavedAddressId ?? undefined,
-          shippingContext.computedOrderData.availableShippingCountries
+          shippingContext.parsedOrderData.selectedSavedAddressId ?? undefined,
+          shippingContext.parsedOrderData.availableShippingCountries
         )?.internalID
       )
     }
   }, [
     selectedAddressPresent,
     addressList,
-    shippingContext.computedOrderData.selectedSavedAddressId,
-    shippingContext.computedOrderData.availableShippingCountries,
+    shippingContext.parsedOrderData.selectedSavedAddressId,
+    shippingContext.parsedOrderData.availableShippingCountries,
   ])
 
   const handleSelectAddress = useCallback(
@@ -85,7 +85,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       setSelectedAddressID(id)
       const selectedAddress = getAddressByID(addressList, id)
       if (!selectedAddress) {
-        console.warn("Address not found: ", id)
+        logger.warn("Address not found: ", id)
       }
       orderTracking.clickedShippingAddress()
       // Set values on the fulfillment form context.
@@ -93,7 +93,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       // them to fix it. Seems unlikely.
       onSelect(addressWithFallbackValues(selectedAddress))
     },
-    [addressList, onSelect, orderTracking]
+    [addressList, onSelect, orderTracking, logger]
   )
 
   const refetchAddresses = () => {
@@ -113,10 +113,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         }
       )
     )
-  }
-
-  const onError = (message: string) => {
-    logger.error(message)
   }
 
   const handleClickEditAddress = (address: SavedAddressType) => {
@@ -176,9 +172,6 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           setActiveModal(null)
         }}
         onSuccess={refetchAndSelectAddress}
-        onDeleteAddress={refetchAddresses}
-        onError={onError}
-        me={me}
       />
       <Spacer y={4} />
     </>

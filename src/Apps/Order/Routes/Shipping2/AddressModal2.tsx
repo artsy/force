@@ -14,28 +14,19 @@ import {
 } from "@artsy/palette"
 
 import { Formik, FormikHelpers, FormikProps } from "formik"
-import { updateUserAddress } from "Apps/Order/Mutations/UpdateUserAddress"
-import { createUserAddress } from "Apps/Order/Mutations/CreateUserAddress"
 import { AddressModalFields } from "Components/Address/AddressModalFields"
-import { useSystemContext } from "System/SystemContext"
-import { updateUserDefaultAddress } from "Apps/Order/Mutations/UpdateUserDefaultAddress"
-import { UpdateUserAddressMutation$data } from "__generated__/UpdateUserAddressMutation.graphql"
-import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressMutation.graphql"
 
 import { ADDRESS_VALIDATION_SHAPE } from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
-import { SavedAddresses2_me$data } from "__generated__/SavedAddresses2_me.graphql"
-import { useShippingContext } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
-import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping2/shippingUtils"
-import { deleteUserAddress } from "Apps/Order/Mutations/DeleteUserAddress"
-
-type CreateOrUpdateAddressPayload =
-  | NonNullable<
-      CreateUserAddressMutation$data["createUserAddress"]
-    >["userAddressOrErrors"]
-  | NonNullable<
-      UpdateUserAddressMutation$data["updateUserAddress"]
-    >["userAddressOrErrors"]
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
+import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
+import { useCreateSavedAddressMutation$data } from "__generated__/useCreateSavedAddressMutation.graphql"
+import { useUpdateSavedAddressMutation$data } from "__generated__/useUpdateSavedAddressMutation.graphql"
+import createLogger from "Utils/logger"
+import { useCreateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useCreateSavedAddress"
+import { useDeleteSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useDeleteSavedAddress"
+import { useUpdateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useUpdateSavedAddress"
+import { useUpdateUserDefaultAddress } from "Apps/Order/Routes/Shipping2/Mutations/useUpdateUserDefaultAddress"
 
 export enum AddressModalActionType {
   EDIT_USER_ADDRESS = "editUserAddress",
@@ -51,13 +42,11 @@ export type AddressModalAction =
       address: SavedAddressType
     }
 
-export interface Props {
+export interface AddressModalProps {
   closeModal: () => void
   onSuccess: (addressID: string) => Promise<void>
-  onDeleteAddress: () => Promise<void>
-  onError: (message: string) => void
+
   modalAction: AddressModalAction | null
-  me: SavedAddresses2_me$data
 }
 
 const MODAL_TITLE_MAP: Record<AddressModalActionType, string> = {
@@ -77,26 +66,28 @@ const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
 }
 
 export const GENERIC_FAIL_MESSAGE =
-  "Sorry there has been an issue saving your address. Please try again."
+  "Sorry, there has been an issue saving your address. Please try again."
 
 const validationSchema = Yup.object().shape(ADDRESS_VALIDATION_SHAPE)
 
-export const AddressModal: React.FC<Props> = ({
+export const AddressModal: React.FC<AddressModalProps> = ({
   closeModal,
   onSuccess,
-  onDeleteAddress,
-  onError,
   modalAction,
-  me,
 }) => {
-  const { relayEnvironment } = useSystemContext()
+  const logger = createLogger("AddressModal2.tsx")
 
   const [createUpdateError, setCreateUpdateError] = useState<string | null>(
     null
   )
   const [showDialog, setShowDialog] = useState<boolean>(false)
   const shippingContext = useShippingContext()
-  if (!relayEnvironment) return null
+
+  const createSavedAddress = useCreateSavedAddress().submitMutation
+  const deleteSavedAddress = useDeleteSavedAddress().submitMutation
+  const updateSavedAddress = useUpdateSavedAddress().submitMutation
+  const updateUserDefaultAddress = useUpdateUserDefaultAddress().submitMutation
+
   if (!modalAction) return null
 
   const title = (modalAction && MODAL_TITLE_MAP[modalAction.type]) || ""
@@ -104,7 +95,8 @@ export const AddressModal: React.FC<Props> = ({
     modalAction.type === "editUserAddress"
       ? modalAction.address
       : {
-          country: shippingContext.computedOrderData.shipsFrom,
+          // TODO: Instead of using ShippingContext, initialValues could be a shippingUtils function
+          country: shippingContext.parsedOrderData.shipsFrom,
           internalID: undefined,
           isDefault: false,
         }
@@ -114,15 +106,120 @@ export const AddressModal: React.FC<Props> = ({
     setCreateUpdateError(null)
   }
 
-  const handleDeleteAddress = async (addressID: string) => {
-    return deleteUserAddress(
-      relayEnvironment!,
-      addressID,
-      onDeleteAddress,
-      onError
-    )
+  const handleErrors = (
+    errors: ReadonlyArray<{ message: string }>,
+    formikHelpers
+  ) => {
+    if (!errors?.length) return
+
+    const userMessage: Record<string, string> | null =
+      SERVER_ERROR_MAP[errors[0].message]
+
+    if (userMessage) {
+      formikHelpers.setFieldError(userMessage.field, userMessage.message)
+    } else {
+      setCreateUpdateError(GENERIC_FAIL_MESSAGE)
+    }
+
+    formikHelpers?.setSubmitting(false)
+    logger.error(errors.map(error => error.message).join(", "))
   }
 
+  const handleDeleteAddress = async (addressID: string) => {
+    try {
+      return deleteSavedAddress({
+        variables: {
+          input: { userAddressID: addressID },
+        },
+      })
+    } catch (error) {
+      logger.error(error)
+    }
+  }
+
+  const handleMutationPayload = (
+    payload:
+      | useUpdateSavedAddressMutation$data["updateUserAddress"]
+      | useCreateSavedAddressMutation$data["createUserAddress"]
+  ):
+    | { data: SavedAddressType; errors: null }
+    | { data: null; errors: ReadonlyArray<{ message: string }> } => {
+    const addressOrErrors = payload?.userAddressOrErrors
+    const errors = addressOrErrors?.errors
+    if (errors?.length) {
+      return { errors, data: null }
+    }
+    return { errors: null, data: addressOrErrors as SavedAddressType }
+  }
+
+  const handleSubmit = async (
+    values: SavedAddressType,
+    helpers: FormikHelpers<SavedAddressType>
+  ) => {
+    const addressInput = addressWithFallbackValues(values)
+    let operation: () => Promise<ReturnType<typeof handleMutationPayload>>
+    try {
+      if (modalAction.type === "createUserAddress") {
+        operation = async () => {
+          const result = await createSavedAddress({
+            variables: {
+              input: { attributes: addressInput },
+            },
+          })
+          return handleMutationPayload(result.createUserAddress)
+        }
+      } else {
+        operation = async () => {
+          const result = await updateSavedAddress({
+            variables: {
+              input: {
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                userAddressID: initialAddress.internalID!,
+                attributes: addressInput,
+              },
+            },
+          })
+          return handleMutationPayload(result.updateUserAddress)
+        }
+      }
+
+      const { data, errors } = await operation()
+
+      if (errors) {
+        handleErrors(errors, helpers)
+        return
+      }
+
+      const savedAddressID = data?.internalID
+      if (
+        !!savedAddressID &&
+        values?.isDefault &&
+        values?.isDefault !== initialAddress?.isDefault
+      ) {
+        const updateAddressResult = await updateUserDefaultAddress({
+          variables: {
+            input: { userAddressID: savedAddressID },
+          },
+        })
+        const updateAddressPayload =
+          updateAddressResult.updateUserDefaultAddress?.userAddressOrErrors
+        if (updateAddressPayload?.errors) {
+          logger.error(
+            updateAddressPayload.errors.map(error => error.message).join(", ")
+          )
+          return
+        }
+      }
+      onSuccess(savedAddressID)
+      setCreateUpdateError(null)
+      closeModal()
+    } catch (error) {
+      handleErrors([error], helpers)
+    }
+  }
+  if (createUpdateError) {
+    logger.log({ createUpdateError })
+  }
   return (
     <>
       <ModalDialog title={title} onClose={handleModalClose} width={900}>
@@ -130,84 +227,12 @@ export const AddressModal: React.FC<Props> = ({
           validateOnMount
           initialValues={initialAddress}
           validationSchema={validationSchema}
-          onSubmit={(
-            values: SavedAddressType,
-            actions: FormikHelpers<SavedAddressType>
-          ) => {
-            const handleError = message => {
-              const userMessage: Record<string, string> | null =
-                SERVER_ERROR_MAP[message]
-
-              if (userMessage) {
-                actions.setFieldError(userMessage.field, userMessage.message)
-              } else {
-                setCreateUpdateError(GENERIC_FAIL_MESSAGE)
-              }
-              actions?.setSubmitting(false)
-              onError && onError(message)
-            }
-
-            const handleSuccess = (
-              savedAddress:
-                | CreateUserAddressMutation$data
-                | UpdateUserAddressMutation$data
-            ) => {
-              const genericPayloadType = savedAddress as any
-              const payload: CreateOrUpdateAddressPayload = (
-                genericPayloadType?.createUserAddress ||
-                genericPayloadType.updateUserAddress
-              )?.userAddressOrErrors
-              const savedAddressID = payload.internalID!
-              // update default address only if isDefault changed or new
-              // address marked ad default
-              if (
-                savedAddressID &&
-                values?.isDefault &&
-                values?.isDefault !==
-                  (initialAddress as SavedAddressType)?.isDefault
-              ) {
-                updateUserDefaultAddress(
-                  relayEnvironment,
-                  payload.internalID,
-                  () => {
-                    onSuccess(savedAddressID)
-                  },
-                  onError
-                )
-              } else {
-                onSuccess(savedAddressID)
-              }
-
-              setCreateUpdateError(null)
-            }
-            const addressInput = addressWithFallbackValues(values)
-            if (modalAction.type === "createUserAddress") {
-              createUserAddress(
-                relayEnvironment,
-                addressInput,
-                handleSuccess,
-                handleError,
-                me,
-                closeModal
-              )
-            } else {
-              if (modalAction.type === "editUserAddress") {
-                updateUserAddress(
-                  relayEnvironment,
-                  initialAddress.internalID!,
-                  addressInput,
-                  closeModal,
-                  handleSuccess,
-                  handleError
-                )
-              }
-            }
-          }}
+          onSubmit={handleSubmit}
         >
           {(formik: FormikProps<SavedAddressType>) => (
             <form onSubmit={formik.handleSubmit}>
               {createUpdateError && (
-                <Banner my={2} data-test="credit-card-error" variant="error">
+                <Banner my={2} data-testid="form-banner-error" variant="error">
                   {createUpdateError}
                 </Banner>
               )}

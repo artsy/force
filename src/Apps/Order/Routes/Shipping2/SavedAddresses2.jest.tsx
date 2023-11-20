@@ -14,10 +14,10 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-jest.mock("Apps/Order/Routes/Shipping2/ShippingContext", () => {
+jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => {
   return {
     useShippingContext: () => ({
-      computedOrderData: {
+      parsedOrderData: {
         availableShippingCountries: ["US"],
         selectedSavedAddressId: "2",
       },

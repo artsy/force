@@ -27,12 +27,14 @@ const ORDER_EMPTY_ADDRESS: ShippingAddressFormValues = {
   country: "",
   postalCode: "",
 }
+
 const onlyAddressValues = (values: any) => {
   return pick<ShippingAddressFormValues>(
     values,
     Object.keys(ORDER_EMPTY_ADDRESS)
   )
 }
+
 export const addressWithFallbackValues = (
   address: any
 ): ShippingAddressFormValues => ({
