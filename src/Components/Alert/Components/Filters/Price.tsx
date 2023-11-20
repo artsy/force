@@ -72,16 +72,15 @@ export const PriceQueryRenderer = () => {
       lazyLoad
       placeholder={<Price />}
       variables={{ artistID }}
+      // TODO: use rootlevel artworks connection instead to fetch aggregations for all artists
+      // https://github.com/artsy/force/pull/13158#discussion_r1399214348
       query={graphql`
         query PriceAggregationsQuery($artistID: String!) {
           artist(id: $artistID) {
             filterArtworksConnection(
               aggregations: [SIMPLE_PRICE_HISTOGRAM]
-              first: 1
+              first: 0
             ) {
-              counts {
-                total
-              }
               ...Price_aggregations
             }
           }

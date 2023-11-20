@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0f5906e95cb0c6450aae829a91e183c3>>
+ * @generated SignedSource<<f4eb68d1b3e3aaa78e678eaaf247622e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,6 @@ export type PriceAggregationsQuery$variables = {
 export type PriceAggregationsQuery$data = {
   readonly artist: {
     readonly filterArtworksConnection: {
-      readonly counts: {
-        readonly total: any | null;
-      } | null;
       readonly " $fragmentSpreads": FragmentRefs<"Price_aggregations">;
     } | null;
   } | null;
@@ -54,28 +51,10 @@ v2 = [
   {
     "kind": "Literal",
     "name": "first",
-    "value": 1
+    "value": 0
   }
 ],
 v3 = {
-  "alias": null,
-  "args": null,
-  "concreteType": "FilterArtworksCounts",
-  "kind": "LinkedField",
-  "name": "counts",
-  "plural": false,
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "total",
-      "storageKey": null
-    }
-  ],
-  "storageKey": null
-},
-v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -105,14 +84,13 @@ return {
             "name": "filterArtworksConnection",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
               {
                 "args": null,
                 "kind": "FragmentSpread",
                 "name": "Price_aggregations"
               }
             ],
-            "storageKey": "filterArtworksConnection(aggregations:[\"SIMPLE_PRICE_HISTOGRAM\"],first:1)"
+            "storageKey": "filterArtworksConnection(aggregations:[\"SIMPLE_PRICE_HISTOGRAM\"],first:0)"
           }
         ],
         "storageKey": null
@@ -143,7 +121,6 @@ return {
             "name": "filterArtworksConnection",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -194,27 +171,27 @@ return {
                 ],
                 "storageKey": null
               },
-              (v4/*: any*/)
+              (v3/*: any*/)
             ],
-            "storageKey": "filterArtworksConnection(aggregations:[\"SIMPLE_PRICE_HISTOGRAM\"],first:1)"
+            "storageKey": "filterArtworksConnection(aggregations:[\"SIMPLE_PRICE_HISTOGRAM\"],first:0)"
           },
-          (v4/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "9b51c606369c257b4717dd76c60b03e5",
+    "cacheID": "7fd9f50513fe8831ab80a2e0dacb7bef",
     "id": null,
     "metadata": {},
     "name": "PriceAggregationsQuery",
     "operationKind": "query",
-    "text": "query PriceAggregationsQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    filterArtworksConnection(aggregations: [SIMPLE_PRICE_HISTOGRAM], first: 1) {\n      counts {\n        total\n      }\n      ...Price_aggregations\n      id\n    }\n    id\n  }\n}\n\nfragment Price_aggregations on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      name\n      value\n      count\n    }\n  }\n}\n"
+    "text": "query PriceAggregationsQuery(\n  $artistID: String!\n) {\n  artist(id: $artistID) {\n    filterArtworksConnection(aggregations: [SIMPLE_PRICE_HISTOGRAM], first: 0) {\n      ...Price_aggregations\n      id\n    }\n    id\n  }\n}\n\nfragment Price_aggregations on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      name\n      value\n      count\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7892c8b69d5aea40641af742a0f0c2ca";
+(node as any).hash = "938d4f8cb2cadde9e8ca3857cf34e60d";
 
 export default node;
