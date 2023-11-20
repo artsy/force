@@ -72,17 +72,16 @@ export const PriceQueryRenderer = () => {
       lazyLoad
       placeholder={<Price />}
       variables={{ artistID }}
-      // TODO: use rootlevel artworks connection instead to fetch aggregations for all artists
+      // TODO: Pass in many artist IDs after fixing Gravity
       // https://github.com/artsy/force/pull/13158#discussion_r1399214348
       query={graphql`
         query PriceAggregationsQuery($artistID: String!) {
-          artist(id: $artistID) {
-            filterArtworksConnection(
-              aggregations: [SIMPLE_PRICE_HISTOGRAM]
-              first: 0
-            ) {
-              ...Price_artworksConnection
-            }
+          artworksConnection(
+            aggregations: [SIMPLE_PRICE_HISTOGRAM]
+            artistID: $artistID
+            first: 0
+          ) {
+            ...Price_artworksConnection
           }
         }
       `}
@@ -91,7 +90,7 @@ export const PriceQueryRenderer = () => {
           console.error(error)
         }
 
-        const artworksConnection = props?.artist?.filterArtworksConnection
+        const artworksConnection = props?.artworksConnection
 
         return (
           <PriceFragmentContainer artworksConnection={artworksConnection} />

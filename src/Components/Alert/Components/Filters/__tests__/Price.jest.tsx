@@ -72,29 +72,27 @@ describe("PriceFilter", () => {
 
     environment.mock.resolveMostRecentOperation(operation =>
       MockPayloadGenerator.generate(operation, {
-        Artist: () => ({
-          filterArtworksConnection: {
-            counts: {
-              total: 10915,
-            },
-            aggregations: [
-              {
-                slice: "SIMPLE_PRICE_HISTOGRAM",
-                counts: [
-                  {
-                    name: "0",
-                    value: "42",
-                    count: 5542,
-                  },
-                  {
-                    name: "50000",
-                    value: "424242",
-                    count: 704,
-                  },
-                ],
-              },
-            ],
+        FilterArtworksConnection: () => ({
+          counts: {
+            total: 10915,
           },
+          aggregations: [
+            {
+              slice: "SIMPLE_PRICE_HISTOGRAM",
+              counts: [
+                {
+                  name: "0",
+                  value: "42",
+                  count: 5542,
+                },
+                {
+                  name: "50000",
+                  value: "424242",
+                  count: 704,
+                },
+              ],
+            },
+          ],
         }),
       })
     )
