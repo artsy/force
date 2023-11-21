@@ -73,7 +73,7 @@ export const useAlertTracking = () => {
       const payload: ClickedArtworkGroup = {
         action: ActionType.clickedArtworkGroup,
         context_module: ContextModule.alertConfirmation,
-        context_page_owner_type: OwnerType.alertConfirmation,
+        context_page_owner_type: contextPageOwnerType,
         destination_page_owner_id: internalId,
         destination_page_owner_slug: slug,
         destination_page_owner_type: OwnerType.artwork,
