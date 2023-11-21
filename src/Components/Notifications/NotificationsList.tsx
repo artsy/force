@@ -12,13 +12,15 @@ import {
 } from "__generated__/NotificationsListQuery.graphql"
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { SystemContext } from "System/SystemContext"
 import { NotificationsListScrollSentinel } from "./NotificationsListScrollSentinel"
 import { NotificationPaginationType, NotificationType } from "./types"
 import { NotificationsEmptyStateByType } from "./NotificationsEmptyStateByType"
-import { shouldDisplayNotification } from "./util"
 import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
+import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
+import { useRouter } from "found"
+import { shouldDisplayNotification } from "Components/Notifications/util"
 
 interface NotificationsListQueryRendererProps {
   type: NotificationType
@@ -36,6 +38,26 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
   type,
   paginationType = "showMoreButton",
 }) => {
+  const { match } = useRouter()
+
+  const { mode, setCurrentNotificationId, state } = useNotificationsContext()
+
+  useEffect(() => {
+    if (!(mode === "page")) {
+      return
+    }
+
+    const notifications = extractNodes(viewer.notifications)
+
+    const notificationId =
+      match?.location.query.notification_id || notifications[0]?.internalID
+
+    setCurrentNotificationId(notificationId)
+
+    // router.replace(`/notifications`)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [match?.location.query.notification_id])
+
   const [loading, setLoading] = useState(false)
   const [currentPaginationType, setCurrentPaginationType] = useState(
     paginationType
@@ -73,7 +95,7 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
     }
 
     return (
-      <Box textAlign="center" mt={4}>
+      <Box textAlign="center" my={4}>
         <Button
           onClick={handleLoadNext}
           loading={loading}
@@ -94,10 +116,19 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
     <>
       <Join separator={<Separator />}>
         {nodes.map(node => (
-          <NotificationItemFragmentContainer
+          <Box
+            bg={
+              state.currentNotificationId === node.internalID
+                ? "black5"
+                : "transparent"
+            }
             key={node.internalID}
-            item={node}
-          />
+          >
+            <NotificationItemFragmentContainer
+              item={node}
+              key={node.internalID}
+            />
+          </Box>
         ))}
       </Join>
 

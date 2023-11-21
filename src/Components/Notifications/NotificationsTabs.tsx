@@ -102,7 +102,9 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
         <MarkAllAsReadPanel unreadCounts={unreadCounts} />
       </Sticky>
 
-      {activeTab.current.child}
+      <Flex overflow="scroll" flexDirection="column">
+        {activeTab.current.child}
+      </Flex>
     </>
   )
 }

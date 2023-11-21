@@ -1,4 +1,4 @@
-import { Flex, Image, Join, Spacer, Text } from "@artsy/palette"
+import { Flex, Image, Join, Spacer, THEME, Text } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { NotificationItem_item$data } from "__generated__/NotificationItem_item.graphql"
@@ -15,6 +15,9 @@ import {
   shouldDisplayNotificationTypeLabel,
 } from "./util"
 import { NotificationTypeLabel } from "./NotificationTypeLabel"
+import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
+import { useRouter } from "found"
+import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 const logger = createLogger("NotificationItem")
 
@@ -25,6 +28,9 @@ interface NotificationItemProps {
 const UNREAD_INDICATOR_SIZE = 8
 
 const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
+  const isMobile = __internal__useMatchMedia(THEME.mediaQueries.xs)
+  const { router } = useRouter()
+  const { mode, setCurrentNotificationId } = useNotificationsContext()
   const { trackEvent } = useTracking()
   const { relayEnvironment } = useSystemContext()
   const artworks = extractNodes(item.artworksConnection)
@@ -62,10 +68,46 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
       action: ActionType.clickedActivityPanelNotificationItem,
       notification_type: item.notificationType,
     })
+
+    if (isMobile) {
+      router.push(`/notifications/${item.internalID}`)
+    } else if (mode === "dropdown") {
+      router.push(`/notifications?notification_id=${item.internalID}`)
+    } else {
+      setCurrentNotificationId(item.internalID)
+    }
+
+    setCurrentNotificationId(item.internalID)
+  }
+
+  const LinkComponent = ({ children }) => {
+    if (isMobile) {
+      return (
+        <NotificationItemLink to={`/notifications/${item.internalID}`}>
+          {children}
+        </NotificationItemLink>
+      )
+    }
+
+    if (mode === "page") {
+      return (
+        <Flex onClick={handlePress} p={2}>
+          {children}
+        </Flex>
+      )
+    } else {
+      return (
+        <NotificationItemLink
+          to={`/notifications?notification_id=${item.internalID}`}
+        >
+          {children}
+        </NotificationItemLink>
+      )
+    }
   }
 
   return (
-    <NotificationItemLink to={item.targetHref} onClick={handlePress}>
+    <LinkComponent>
       <Flex flex={1} flexDirection="column">
         <Text variant="xs" color="black60">
           {shouldDisplayNotificationTypeLabel(item.notificationType) && (
@@ -124,7 +166,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
           aria-label="Unread notification indicator"
         />
       )}
-    </NotificationItemLink>
+    </LinkComponent>
   )
 }
 

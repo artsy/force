@@ -14,6 +14,9 @@ export const NotificationTypeLabel: React.FC<Props> = ({
     if (notificationType === "ARTICLE_FEATURED_ARTIST") {
       return "Artsy Editorial"
     }
+    if (notificationType === "ARTWORK_PUBLISHED") {
+      return "Follow"
+    }
 
     return null
   }
