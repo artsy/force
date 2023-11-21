@@ -4,7 +4,7 @@ import {
   GENERIC_FAIL_MESSAGE,
   AddressModalActionType,
 } from "Apps/Order/Routes/Shipping2/AddressModal2"
-import { validAddress } from "Components/__tests__/Utils/addressForm"
+import { validAddress } from "Components/__tests__/Utils/addressForm2"
 import { useSystemContext } from "System/useSystemContext"
 import { SavedAddressType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { createMockEnvironment } from "relay-test-utils"

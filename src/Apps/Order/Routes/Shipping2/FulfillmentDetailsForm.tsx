@@ -461,7 +461,7 @@ const FulfillmentDetailsFormLayout = (
                   placeholder={
                     values.attributes.country === "US"
                       ? "ZIP code"
-                      : "Zip/postal code"
+                      : "ZIP/postal code"
                   }
                   title={
                     values.attributes.country === "US"

@@ -30,7 +30,7 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import {
   fillAddressForm,
   validAddress,
-} from "Components/__tests__/Utils/addressForm"
+} from "Components/__tests__/Utils/addressForm2"
 import userEvent from "@testing-library/user-event"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { queryByAttribute } from "@testing-library/dom"
