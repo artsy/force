@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1adaf0e4fd3a9705c45ac09234759443>>
+ * @generated SignedSource<<8a87426c2b6a2d1843748a2b9877e5fd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -70,7 +70,7 @@ export type ConversationMessages_conversation$data = {
         readonly updatedAt: string;
       } | null;
     } | null> | null;
-  } | null;
+  };
   readonly " $fragmentType": "ConversationMessages_conversation";
 } | null;
 export type ConversationMessages_conversation$key = {
@@ -332,181 +332,186 @@ return {
       "storageKey": null
     },
     {
-      "alias": "orderEvents",
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "first",
-          "value": 10
-        },
-        {
-          "kind": "Literal",
-          "name": "participantType",
-          "value": "BUYER"
-        },
-        {
-          "kind": "Literal",
-          "name": "states",
-          "value": [
-            "APPROVED",
-            "FULFILLED",
-            "SUBMITTED",
-            "REFUNDED",
-            "CANCELED",
-            "PROCESSING_APPROVAL"
-          ]
-        }
-      ],
-      "concreteType": "CommerceOrderConnectionWithTotalCount",
-      "kind": "LinkedField",
-      "name": "orderConnection",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "concreteType": "CommerceOrderEdge",
-          "kind": "LinkedField",
-          "name": "edges",
-          "plural": true,
-          "selections": [
-            {
-              "alias": null,
-              "args": null,
-              "concreteType": null,
-              "kind": "LinkedField",
-              "name": "node",
-              "plural": false,
-              "selections": [
-                (v1/*: any*/),
-                {
-                  "alias": null,
-                  "args": null,
-                  "kind": "ScalarField",
-                  "name": "updatedAt",
-                  "storageKey": null
-                },
-                {
-                  "kind": "InlineFragment",
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "buyerAction",
-                      "storageKey": null
-                    }
-                  ],
-                  "type": "CommerceOfferOrder",
-                  "abstractKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": null,
-                  "kind": "LinkedField",
-                  "name": "orderHistory",
-                  "plural": true,
-                  "selections": [
-                    {
-                      "args": null,
-                      "kind": "FragmentSpread",
-                      "name": "ConversationOrderUpdate_event"
-                    },
-                    (v3/*: any*/),
-                    {
-                      "kind": "InlineFragment",
-                      "selections": [
-                        (v2/*: any*/),
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "orderUpdateState",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "state",
-                          "storageKey": null
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "kind": "ScalarField",
-                          "name": "stateReason",
-                          "storageKey": null
-                        }
-                      ],
-                      "type": "CommerceOrderStateChangedEvent",
-                      "abstractKey": null
-                    },
-                    {
-                      "kind": "InlineFragment",
-                      "selections": [
-                        (v2/*: any*/),
-                        {
-                          "alias": null,
-                          "args": null,
-                          "concreteType": "CommerceOffer",
-                          "kind": "LinkedField",
-                          "name": "offer",
-                          "plural": false,
-                          "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "amount",
-                              "storageKey": null
-                            },
-                            (v4/*: any*/),
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "definesTotal",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "offerAmountChanged",
-                              "storageKey": null
-                            },
-                            {
-                              "alias": null,
-                              "args": null,
-                              "concreteType": "CommerceOffer",
-                              "kind": "LinkedField",
-                              "name": "respondsTo",
-                              "plural": false,
-                              "selections": [
-                                (v4/*: any*/)
-                              ],
-                              "storageKey": null
-                            }
-                          ],
-                          "storageKey": null
-                        }
-                      ],
-                      "type": "CommerceOfferSubmittedEvent",
-                      "abstractKey": null
-                    }
-                  ],
-                  "storageKey": null
-                }
-              ],
-              "storageKey": null
-            }
-          ],
-          "storageKey": null
-        }
-      ],
-      "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\",\"CANCELED\",\"PROCESSING_APPROVAL\"])"
+      "kind": "RequiredField",
+      "field": {
+        "alias": "orderEvents",
+        "args": [
+          {
+            "kind": "Literal",
+            "name": "first",
+            "value": 10
+          },
+          {
+            "kind": "Literal",
+            "name": "participantType",
+            "value": "BUYER"
+          },
+          {
+            "kind": "Literal",
+            "name": "states",
+            "value": [
+              "APPROVED",
+              "FULFILLED",
+              "SUBMITTED",
+              "REFUNDED",
+              "CANCELED",
+              "PROCESSING_APPROVAL"
+            ]
+          }
+        ],
+        "concreteType": "CommerceOrderConnectionWithTotalCount",
+        "kind": "LinkedField",
+        "name": "orderConnection",
+        "plural": false,
+        "selections": [
+          {
+            "alias": null,
+            "args": null,
+            "concreteType": "CommerceOrderEdge",
+            "kind": "LinkedField",
+            "name": "edges",
+            "plural": true,
+            "selections": [
+              {
+                "alias": null,
+                "args": null,
+                "concreteType": null,
+                "kind": "LinkedField",
+                "name": "node",
+                "plural": false,
+                "selections": [
+                  (v1/*: any*/),
+                  {
+                    "alias": null,
+                    "args": null,
+                    "kind": "ScalarField",
+                    "name": "updatedAt",
+                    "storageKey": null
+                  },
+                  {
+                    "kind": "InlineFragment",
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "buyerAction",
+                        "storageKey": null
+                      }
+                    ],
+                    "type": "CommerceOfferOrder",
+                    "abstractKey": null
+                  },
+                  {
+                    "alias": null,
+                    "args": null,
+                    "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "orderHistory",
+                    "plural": true,
+                    "selections": [
+                      {
+                        "args": null,
+                        "kind": "FragmentSpread",
+                        "name": "ConversationOrderUpdate_event"
+                      },
+                      (v3/*: any*/),
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          (v2/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "orderUpdateState",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "state",
+                            "storageKey": null
+                          },
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "stateReason",
+                            "storageKey": null
+                          }
+                        ],
+                        "type": "CommerceOrderStateChangedEvent",
+                        "abstractKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          (v2/*: any*/),
+                          {
+                            "alias": null,
+                            "args": null,
+                            "concreteType": "CommerceOffer",
+                            "kind": "LinkedField",
+                            "name": "offer",
+                            "plural": false,
+                            "selections": [
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "amount",
+                                "storageKey": null
+                              },
+                              (v4/*: any*/),
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "definesTotal",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "kind": "ScalarField",
+                                "name": "offerAmountChanged",
+                                "storageKey": null
+                              },
+                              {
+                                "alias": null,
+                                "args": null,
+                                "concreteType": "CommerceOffer",
+                                "kind": "LinkedField",
+                                "name": "respondsTo",
+                                "plural": false,
+                                "selections": [
+                                  (v4/*: any*/)
+                                ],
+                                "storageKey": null
+                              }
+                            ],
+                            "storageKey": null
+                          }
+                        ],
+                        "type": "CommerceOfferSubmittedEvent",
+                        "abstractKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  }
+                ],
+                "storageKey": null
+              }
+            ],
+            "storageKey": null
+          }
+        ],
+        "storageKey": "orderConnection(first:10,participantType:\"BUYER\",states:[\"APPROVED\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\",\"CANCELED\",\"PROCESSING_APPROVAL\"])"
+      },
+      "action": "NONE",
+      "path": "orderEvents"
     }
   ],
   "type": "Conversation",
@@ -514,6 +519,6 @@ return {
 };
 })();
 
-(node as any).hash = "23a90f0b60cde6f43c7fca882592f47e";
+(node as any).hash = "1afdc0a4cb89a69191f616b12fd48d0c";
 
 export default node;

@@ -1,22 +1,38 @@
-import { ConversationMessages_messages$data } from "__generated__/ConversationMessages_messages.graphql"
 import { DateTime } from "luxon"
 import { useEffect, useState } from "react"
 import { extractNodes } from "Utils/extractNodes"
 import { sortBy } from "lodash"
-import { fromToday } from "Apps/Conversations2/components/Message/ConversationTimeSince"
+import { fromToday } from "Apps/Conversations2/components/Message/Utils/dateFormatters"
+import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 
-// MessageType[][]
+interface UseGroupedMessagesProps {
+  messagesConnection: NonNullable<
+    NonNullable<
+      NonNullable<ConversationMessages_conversation$data>["messagesConnection"]
+    >
+  >
+  orderEvents: NonNullable<
+    NonNullable<
+      NonNullable<ConversationMessages_conversation$data>["orderEvents"]
+    >
+  >
+}
 
-export const useGroupedMessages = (messages, events) => {
-  const [messagesAndEvents, setMessagesAndEvents] = useState([])
+export const useGroupedMessages = ({
+  messagesConnection,
+  orderEvents,
+}: UseGroupedMessagesProps) => {
+  const [messagesAndEvents, setMessagesAndEvents] = useState<
+    MessageAndOrderEvent[][]
+  >([])
 
   useEffect(() => {
-    const allMessages = extractNodes(messages)
+    const allMessages = extractNodes(messagesConnection)
+    const orders = extractNodes(orderEvents)
 
-    const allOrderEvents = extractNodes(events).reduce(
-      (prev, order) => prev.concat(order.orderHistory),
-      []
-    )
+    const allOrderEvents = orders.reduce((prev, order) => {
+      return [...prev, ...order.orderHistory]
+    }, [])
 
     const orderEventsWithoutFailedPayment = allOrderEvents.filter(
       (event, index) => {
@@ -38,10 +54,16 @@ export const useGroupedMessages = (messages, events) => {
       message => DateTime.fromISO(message.createdAt as string)
     )
 
-    const groupAllMessages = groupMessages(sortedMessages)
+    const groupAllMessages = groupMessages(
+      sortedMessages as MessageAndOrderEvent[]
+    )
 
     setMessagesAndEvents(groupAllMessages.reverse())
-  }, [messages, events])
+  }, [messagesConnection, orderEvents])
+
+  if (!messagesAndEvents || !orderEvents) {
+    return []
+  }
 
   return messagesAndEvents
 }
@@ -57,39 +79,59 @@ export const isRelevantEvent = item => {
   )
 }
 
-// @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-export type Message = ConversationMessages_messages$data["edges"][number]["node"]
+export type Message = NonNullable<
+  NonNullable<
+    NonNullable<
+      NonNullable<UseGroupedMessagesProps>["messagesConnection"]
+    >["edges"]
+  >[number]
+>["node"]
+
+export type OrderEvent = NonNullable<
+  NonNullable<
+    NonNullable<NonNullable<UseGroupedMessagesProps>["orderEvents"]>["edges"]
+  >[number]
+>["node"]
+
+type MessageAndOrderEvent = Message & OrderEvent
 
 /**
  * Combines messages into groups of messages sent by the same party and
  * separated out into different groups if sent across multiple days
  * @param messages Messages in the conversation
  */
-export const groupMessages = (messages: Message[]): Message[][] => {
+export const groupMessages = (
+  messages: MessageAndOrderEvent[]
+): MessageAndOrderEvent[][] => {
   if (messages.length === 0) {
     return []
   }
 
   // Make a copy of messages
   const remainingMessages = [...messages]
-  const groups = [[remainingMessages.pop()]]
+  const groups = [[remainingMessages.pop()]] as Message[][]
 
   while (remainingMessages.length > 0) {
     const lastGroup = groups[groups.length - 1]
     const lastMessage = lastGroup[lastGroup.length - 1]
-    const currentMessage = remainingMessages.pop()
+    const currentMessage = remainingMessages.pop() as Message
 
-    const lastMessageCreatedAt = DateTime.fromISO(lastMessage.createdAt)
-    const currentMessageCreatedAt = DateTime.fromISO(currentMessage.createdAt)
+    const lastMessageCreatedAt = DateTime.fromISO(
+      lastMessage?.createdAt as string
+    )
+
+    const currentMessageCreatedAt = DateTime.fromISO(
+      currentMessage?.createdAt as string
+    )
+
     const sameDay = lastMessageCreatedAt.hasSame(currentMessageCreatedAt, "day")
-
     const today = fromToday(currentMessageCreatedAt)
 
     if (sameDay && !today) {
       lastGroup.push(currentMessage)
     } else if (!today) {
       groups.push([currentMessage])
-    } else if (lastMessage.isFromUser !== currentMessage.isFromUser) {
+    } else if (lastMessage?.isFromUser !== currentMessage?.isFromUser) {
       groups.push([currentMessage])
     } else if (!sameDay && today) {
       groups.push([currentMessage])
@@ -97,5 +139,6 @@ export const groupMessages = (messages: Message[]): Message[][] => {
       lastGroup.push(currentMessage)
     }
   }
-  return groups
+
+  return groups as MessageAndOrderEvent[][]
 }

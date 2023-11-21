@@ -65,6 +65,7 @@ export const ConversationMessageBubble: FC<ConversationMessageBubbleProps> = ({
           )}
         </Flex>
       )}
+
       {simplified && !fromViewer && <Flex size={30} mr={1} />}
 
       {/* Name/Time and bubble section */}
@@ -99,6 +100,7 @@ export const ConversationMessageBubble: FC<ConversationMessageBubbleProps> = ({
         >
           <Linkify componentDecorator={linkTargetDecorator}>{children}</Linkify>
         </Box>
+
         {seenBy && (
           <Flex alignSelf="flex-end" alignItems="center" mt={1}>
             <Text variant="xs" color="black60">

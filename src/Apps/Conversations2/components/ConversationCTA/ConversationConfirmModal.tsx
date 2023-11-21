@@ -90,7 +90,6 @@ export const ConversationConfirmModal: React.FC<ConversationConfirmModalProps> =
       }
     >
       <Expandable
-        pb={1}
         label={
           <Flex py={1}>
             {!!data.image && (
@@ -110,12 +109,13 @@ export const ConversationConfirmModal: React.FC<ConversationConfirmModalProps> =
             </Flex>
           </Flex>
         }
+        pb={1}
       >
         <Flex
           flexDirection="column"
-          pr={2}
           maxHeight="230px"
           overflowY="scroll"
+          pr={2}
         >
           {detailItems.map(({ title, value }, index) => {
             return (
@@ -264,25 +264,52 @@ const getArtworkDetailItems = (
   artwork: ConversationConfirmModal_artwork$data
 ) => {
   const items = [
-    { title: "Price", value: artwork.saleMessage },
-    { title: "Medium", value: artwork.category },
-    { title: "Manufacturer", value: artwork.manufacturer },
-    { title: "Publisher", value: artwork.publisher },
-    { title: "Materials", value: artwork.medium },
-    { title: "Classification", value: artwork.attributionClass?.name },
+    {
+      title: "Price",
+      value: artwork.saleMessage,
+    },
+    {
+      title: "Medium",
+      value: artwork.category,
+    },
+    {
+      title: "Manufacturer",
+      value: artwork.manufacturer,
+    },
+    {
+      title: "Publisher",
+      value: artwork.publisher,
+    },
+    {
+      title: "Materials",
+      value: artwork.medium,
+    },
+    {
+      title: "Classification",
+      value: artwork.attributionClass?.name,
+    },
     {
       title: "Dimensions",
       value: [artwork.dimensions?.in, artwork.dimensions?.cm]
         .filter(d => d)
         .join("\n"),
     },
-    { title: "Signature", value: artwork.signatureInfo?.details },
-    { title: "Frame", value: artwork.framed?.details },
+    {
+      title: "Signature",
+      value: artwork.signatureInfo?.details,
+    },
+    {
+      title: "Frame",
+      value: artwork.framed?.details,
+    },
     {
       title: "Certificate of Authenticity",
       value: artwork.certificateOfAuthenticity?.details,
     },
-    { title: "Condition", value: artwork.conditionDescription?.details },
+    {
+      title: "Condition",
+      value: artwork.conditionDescription?.details,
+    },
   ].filter(item => {
     return item.value != null && item.value !== ""
   })

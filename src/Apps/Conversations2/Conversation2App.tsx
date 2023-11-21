@@ -6,7 +6,6 @@ import { ConversationReply } from "Apps/Conversations2/components/ConversationRe
 import { ConversationDetails } from "Apps/Conversations2/components/Details/ConversationDetails"
 import { Conversation2App_viewer$data } from "__generated__/Conversation2App_viewer.graphql"
 import { Conversation2App_conversation$data } from "__generated__/Conversation2App_conversation.graphql"
-import { Fragment, Suspense } from "react"
 import { ConversationsProvider } from "Apps/Conversations2/ConversationsContext"
 import { MetaTags } from "Components/MetaTags"
 import { ConversationsLayout } from "Apps/Conversations2/components/ConversationLayout"
@@ -82,6 +81,6 @@ export const Conversation2AppFragmentContainer = createFragmentContainer(
   }
 )
 
-const ClientOnlySuspense = (typeof window !== "undefined"
-  ? Suspense
-  : Fragment) as typeof Suspense
+// const ClientOnlySuspense = (typeof window !== "undefined"
+//   ? Suspense
+//   : Fragment) as typeof Suspense

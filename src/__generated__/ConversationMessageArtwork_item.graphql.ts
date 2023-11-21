@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<591ee159a8d2d845f84b60fddd7c98a9>>
+ * @generated SignedSource<<92566393256049993cc9909b751b2494>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,12 @@ export type ConversationMessageArtwork_item$data = {
   readonly href: string | null;
   readonly id: string;
   readonly image: {
-    readonly imageURL: string | null;
+    readonly aspectRatio: number;
+    readonly resized: {
+      readonly height: number | null;
+      readonly url: string;
+      readonly width: number | null;
+    } | null;
   } | null;
   readonly internalID: string;
   readonly isOfferableFromInquiry: boolean | null;
@@ -130,19 +135,49 @@ return {
           "plural": false,
           "selections": [
             {
-              "alias": "imageURL",
+              "alias": null,
               "args": [
                 {
                   "kind": "Literal",
-                  "name": "version",
-                  "value": [
-                    "large"
-                  ]
+                  "name": "width",
+                  "value": 1350
                 }
               ],
+              "concreteType": "ResizedImageUrl",
+              "kind": "LinkedField",
+              "name": "resized",
+              "plural": false,
+              "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "url",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "width",
+                  "storageKey": null
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "height",
+                  "storageKey": null
+                }
+              ],
+              "storageKey": "resized(width:1350)"
+            },
+            {
+              "alias": null,
+              "args": null,
               "kind": "ScalarField",
-              "name": "url",
-              "storageKey": "url(version:[\"large\"])"
+              "name": "aspectRatio",
+              "storageKey": null
             }
           ],
           "storageKey": null
@@ -181,6 +216,6 @@ return {
 };
 })();
 
-(node as any).hash = "193455c1e5c5987b5bf5c4b4775b6040";
+(node as any).hash = "f0e0f1df1920e550694c3787309033bf";
 
 export default node;

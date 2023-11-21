@@ -1,6 +1,6 @@
 import { graphql, useFragment } from "react-relay"
 import { Box, Spacer, Text } from "@artsy/palette"
-import { format, differenceInDays, isSameDay, isSameMinute } from "date-fns"
+import { isSameMinute } from "date-fns"
 import React from "react"
 import {
   ConversationMessage_message$data,
@@ -35,41 +35,9 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
 }) => {
   const { appendElementRef } = useScrollPagination()
 
-  const data = useFragment(
-    graphql`
-      fragment ConversationMessage_message on Message {
-        __typename
-        id
-        internalID
-        attachments {
-          internalID
-          contentType
-          downloadURL
-          fileName
-        }
-        body
-        createdAt
-        createdAtTime: createdAt(format: "h:mmA") @required(action: NONE)
-        deliveries @required(action: NONE) {
-          openedAt
-          fullTransformedEmail
-        }
-        isFromUser
-        isFirstMessage
-        from @required(action: NONE) {
-          name
-        }
-        to @required(action: NONE)
-        cc @required(action: NONE)
-      }
-    `,
-    message
-  )
+  const data = useFragment(FRAGMENT, message)
 
-  if (!data) {
-    return null
-  }
-  if (data.__typename !== "Message") {
+  if (!data || data.__typename !== "Message") {
     return null
   }
 
@@ -84,10 +52,6 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
     data.isFromUser === prevMessage?.isFromUser
       ? isSameMinute(messageDate, prevMessageDate)
       : false
-
-  const displayDaySeparator = prevMessage
-    ? !isSameDay(messageDate, prevMessageDate)
-    : true
 
   const isLastGroupedPartnerMessage =
     !data.isFromUser &&
@@ -107,16 +71,6 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
           }
         }}
       />
-
-      {/* {displayDaySeparator && (
-        <>
-          {messageIndex > 0 && <Spacer y={4} />}
-          <Text color="black60" alignSelf="center">
-            {getDayAsText(messageDate)}
-          </Text>
-          <Spacer y={1} />
-        </>
-      )} */}
 
       <Spacer y={simplified ? 0.5 : 2} />
 
@@ -166,6 +120,34 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
   )
 }
 
+const FRAGMENT = graphql`
+  fragment ConversationMessage_message on Message {
+    __typename
+    id
+    internalID
+    attachments {
+      internalID
+      contentType
+      downloadURL
+      fileName
+    }
+    body
+    createdAt
+    createdAtTime: createdAt(format: "h:mmA") @required(action: NONE)
+    deliveries @required(action: NONE) {
+      openedAt
+      fullTransformedEmail
+    }
+    isFromUser
+    isFirstMessage
+    from @required(action: NONE) {
+      name
+    }
+    to @required(action: NONE)
+    cc @required(action: NONE)
+  }
+`
+
 const Message: React.FC<{
   data: NonNullable<ConversationMessage_message$data>
   formattedFirstMessage: string | null | undefined
@@ -204,13 +186,6 @@ const Message: React.FC<{
       </Linkify>
     </Text>
   )
-}
-
-const getDayAsText = (messageDate: Date): string => {
-  const daysSinceCreated = differenceInDays(messageDate, new Date())
-  if (daysSinceCreated === 0) return "Today"
-  if (daysSinceCreated === -1) return "Yesterday"
-  return format(messageDate, "PP")
 }
 
 export const defineSeenBy = (

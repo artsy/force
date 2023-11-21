@@ -27,7 +27,7 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
   useEffect(() => {
     if (isSelected) {
       setTimeout(() => {
-        scrollRef.current?.scrollIntoView({ behavior: "instant", block: "end" })
+        scrollRef.current?.scrollIntoView({ block: "end" })
       }, 10)
     }
     // Only want this to fire on mount

@@ -1,5 +1,5 @@
 import { Flex, Spinner } from "@artsy/palette"
-import React, { FC, useEffect, useRef, useState } from "react"
+import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import {
   createPaginationContainer,
   graphql,
@@ -26,7 +26,7 @@ const PAGE_SIZE = 15
 const BACKGROUND_REFETCH_INTERVAL = 5000
 
 interface ConversationMessagesProps {
-  conversation: ConversationMessages_conversation$data
+  conversation: NonNullable<ConversationMessages_conversation$data>
   relay: RelayPaginationProp
 }
 
@@ -41,10 +41,10 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
   )
   const autoScrollToBottomRef = useRef<HTMLDivElement>(null)
 
-  const groupedMessagesAndEvents = useGroupedMessages(
-    conversation?.messagesConnection,
-    conversation?.orderEvents
-  )
+  const groupedMessagesAndEvents = useGroupedMessages({
+    messagesConnection: conversation.messagesConnection,
+    orderEvents: conversation.orderEvents,
+  })
 
   const totalCount = conversation?.messagesConnection?.totalCount ?? 0
   const messages = extractNodes(conversation?.messagesConnection)
@@ -161,10 +161,10 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
                   return (
                     <>
                       <ConversationMessage
-                        key={message.internalID}
+                        key={message?.internalID}
                         messageIndex={messageIndex}
                         messages={messages}
-                        message={message}
+                        message={message as NonNullable<typeof message>}
                         formattedFirstMessage={
                           conversation?.inquiryRequest?.formattedFirstMessage
                         }
@@ -238,7 +238,6 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
         items {
           item {
             __typename
-            # TODO: Is this needed
             ... on Artwork {
               id
               isOfferable
@@ -259,7 +258,7 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
             PROCESSING_APPROVAL
           ]
           participantType: BUYER
-        ) {
+        ) @required(action: NONE) {
           edges {
             node {
               internalID
@@ -329,16 +328,22 @@ const useAutoScrollToBottom = ({
 }: UseAutoScrollToBottomProps) => {
   const lastMessageId = messages.length > 0 ? messages[0].internalID : null
 
+  const triggerAutoScroll = useCallback(() => {
+    setTimeout(() => {
+      autoScrollToBottomRef.current?.scrollIntoView({
+        behavior: "instant",
+        block: "end",
+      })
+    }, 10)
+  }, [autoScrollToBottomRef])
+
   useEffect(() => {
     if (lastMessageId) {
-      setTimeout(() => {
-        autoScrollToBottomRef.current?.scrollIntoView({
-          behavior: "instant",
-          block: "end",
-        })
-      }, 10)
+      triggerAutoScroll()
     }
-  }, [lastMessageId, autoScrollToBottomRef])
+  }, [lastMessageId, autoScrollToBottomRef, triggerAutoScroll])
+
+  return { triggerAutoScroll }
 }
 
 const LoadingSpinner = () => (

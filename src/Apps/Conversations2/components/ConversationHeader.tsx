@@ -97,21 +97,25 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
           <Spacer y={2} />
 
           <Flex justifyContent="space-between">
-            <Image
-              src={item.image?.url!}
-              height={50}
-              width={50}
-              alt={`Artwork image of ${item.title}`}
-            />
+            {item.image?.url && (
+              <Image
+                src={item.image.url}
+                height={50}
+                width={50}
+                alt={`Artwork image of ${item.title}`}
+              />
+            )}
 
             <Spacer x={1} />
 
             <Flex flexDirection="column" flexGrow={1}>
               <Text>{item.artist?.name}</Text>
+
               <Text color="black60">
                 <Text fontStyle="italic" display="inline">
                   {item.title}
                 </Text>
+
                 {item.date && `, ${item.date}`}
               </Text>
             </Flex>
@@ -166,6 +170,7 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
 
           <Flex>
             <Spacer x={30} />
+
             <Clickable
               minWidth={0}
               onClick={() => {
@@ -179,12 +184,14 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
               }}
             >
               <Flex alignItems="center" minWidth={0}>
-                <Image
-                  src={item.image?.url!}
-                  height={24}
-                  width={24}
-                  alt={`Artwork image of ${item.title}`}
-                />
+                {item.image?.url && (
+                  <Image
+                    src={item.image.url}
+                    height={24}
+                    width={24}
+                    alt={`Artwork image of ${item.title}`}
+                  />
+                )}
 
                 <Spacer x={1} />
 

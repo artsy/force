@@ -26,10 +26,7 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
 
   const activeOrder = extractNodes(data.activeOrderCTA)[0]
 
-  if (activeOrder) {
-    return null
-  }
-  if (!artwork) {
+  if (activeOrder || !artwork) {
     return null
   }
 
@@ -61,6 +58,7 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
           {artwork.isAcquireable && (
             <ConversationPurchaseButton conversation={data} mt={1} px={0.5} />
           )}
+
           {(artwork.isOfferable || artwork.isOfferableFromInquiry) && (
             <ConversationMakeOfferButton conversation={data} mt={1} px={0.5} />
           )}

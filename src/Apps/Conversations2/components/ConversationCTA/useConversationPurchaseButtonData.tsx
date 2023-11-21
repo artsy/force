@@ -34,7 +34,6 @@ export const useConversationPurchaseButtonData = (
   if (!data) {
     return null
   }
-
   if (data.items?.[0]?.liveArtwork?.__typename !== "Artwork") {
     return null
   }

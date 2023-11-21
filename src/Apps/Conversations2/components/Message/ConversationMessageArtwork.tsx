@@ -4,6 +4,8 @@ import { graphql, useFragment } from "react-relay"
 import { FlexProps, Flex, Image, Text } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 
+const MAX_IMAGE_WIDTH = 350
+
 interface ConversationMessageArtworkProps extends FlexProps {
   item: ConversationMessageArtwork_item$key
 }
@@ -14,11 +16,7 @@ export const ConversationMessageArtwork: React.FC<ConversationMessageArtworkProp
 }) => {
   const data = useFragment(FRAGMENT, item)
 
-  if (data.__typename !== "Artwork") {
-    return null
-  }
-
-  if (!data.image?.imageURL) {
+  if (data.__typename !== "Artwork" || !data.image?.resized?.url) {
     return null
   }
 
@@ -33,13 +31,22 @@ export const ConversationMessageArtwork: React.FC<ConversationMessageArtworkProp
       textDecoration="none"
       style={{ alignSelf: "flex-end", maxWidth: "100%" }}
     >
-      <Flex flexDirection="column" {...flexProps}>
-        <Image
-          src={data.image.imageURL}
-          alt={data.title as string}
-          style={{ maxWidth: "350px" }}
-          borderRadius="15px 15px 0 0"
-        />
+      <Flex
+        flexDirection="column"
+        backgroundColor="black10"
+        borderRadius="15px 15px 0 0"
+        {...flexProps}
+      >
+        {data.image.resized.width && (
+          <Image
+            src={data.image.resized.url}
+            alt={data.title as string}
+            width={data.image.resized.width}
+            height={MAX_IMAGE_WIDTH / data.image.aspectRatio}
+            style={{ maxWidth: MAX_IMAGE_WIDTH }}
+            borderRadius="10px 10px 0 0"
+          />
+        )}
 
         <Flex
           p={1}
@@ -79,7 +86,12 @@ const FRAGMENT = graphql`
       href
       isOfferableFromInquiry
       image {
-        imageURL: url(version: ["large"])
+        resized(width: 1350) {
+          url
+          width
+          height
+        }
+        aspectRatio
       }
       listPrice {
         __typename
