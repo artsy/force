@@ -55,7 +55,6 @@ export const ConversationConfirmModal: React.FC<ConversationConfirmModalProps> =
     return null
   }
 
-  // TODO: Fix show / hide visibility
   if (!isConfirmModalVisible) {
     return null
   }
@@ -68,7 +67,7 @@ export const ConversationConfirmModal: React.FC<ConversationConfirmModalProps> =
 
   return (
     <ModalDialog
-      onClose={hideSelectEditionSetModal}
+      onClose={() => hideSelectEditionSetModal()}
       title="Select edition set"
       footer={
         <Flex flexGrow={1}>

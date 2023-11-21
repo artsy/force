@@ -20,7 +20,12 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { router } = useRouter()
   const { submitMutation } = useMakeInquiryOrder()
-  const { showSelectEditionSetModal } = useConversationsContext()
+
+  const {
+    showSelectEditionSetModal,
+    isConfirmModalVisible,
+  } = useConversationsContext()
+
   const data = useConversationPurchaseButtonData(conversation)
 
   if (!data) {
@@ -37,26 +42,6 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
     }
 
     tracking.trackEvent(tappedPurchaseEvent)
-  }
-
-  // TODO: Fix display of this
-  // Opens a modal window to select an edition set on non-unique artworks
-  if (!data.isUniqueArtwork) {
-    return (
-      <Button
-        size="large"
-        // flexGrow={1}
-        onClick={() => {
-          trackPurchaseEvent()
-
-          showSelectEditionSetModal({
-            isCreatingOfferOrder: false,
-          })
-        }}
-      >
-        Purchase
-      </Button>
-    )
   }
 
   const handleClick = async () => {
@@ -94,6 +79,28 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
     } finally {
       setIsSubmitting(false)
     }
+  }
+
+  // Opens a modal window to select an edition set on non-unique artworks, and
+  // if the modal is already open, use the standard purchase button below.
+  if (!isConfirmModalVisible && !data.isUniqueArtwork) {
+    return (
+      <Box width="100%" {...boxProps} display="inline">
+        <Button
+          size="large"
+          width="100%"
+          onClick={() => {
+            trackPurchaseEvent()
+
+            showSelectEditionSetModal({
+              isCreatingOfferOrder: false,
+            })
+          }}
+        >
+          Purchase
+        </Button>
+      </Box>
+    )
   }
 
   return (

@@ -56,7 +56,12 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
 
         <Flex flexDirection="row" justifyContent="space-between">
           {artwork.isAcquireable && (
-            <ConversationPurchaseButton conversation={data} mt={1} px={0.5} />
+            <ConversationPurchaseButton
+              conversation={data}
+              mt={1}
+              px={0.5}
+              width="100%"
+            />
           )}
 
           {(artwork.isOfferable || artwork.isOfferableFromInquiry) && (
