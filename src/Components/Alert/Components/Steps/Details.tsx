@@ -36,6 +36,10 @@ export const Details: FC = () => {
   const newAlertModalFilteresEnabled = useFeatureFlag(
     "onyx_artwork_alert_modal_v2_filters"
   )
+  const enableSuggestedFilters = useFeatureFlag(
+    "onyx_saved_searches_suggested_filters"
+  )
+
   const isMounted = useDidMount()
 
   return (
@@ -97,6 +101,28 @@ export const Details: FC = () => {
                   </Clickable>
                 ) : (
                   <PriceRangeFilter expanded={false} />
+                )}
+
+                {enableSuggestedFilters && (
+                  <Flex justifyContent="space-between" flexDirection={"column"}>
+                    <Box>
+                      <Text variant="sm-display">Suggested Filters:</Text>
+                    </Box>
+
+                    <Box>
+                      <Clickable onClick={transitionToFilters}>
+                        <Flex
+                          justifyContent={"space-between"}
+                          alignItems={"center"}
+                        >
+                          <Text variant="sm" color="black60" mr={0.5}>
+                            More Filters
+                          </Text>
+                          <ChevronRightIcon height={14} width={14} />
+                        </Flex>
+                      </Clickable>
+                    </Box>
+                  </Flex>
                 )}
 
                 <DetailsInput />
