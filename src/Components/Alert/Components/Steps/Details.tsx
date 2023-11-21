@@ -81,7 +81,7 @@ export const Details: FC = () => {
                   </Flex>
                 </Box>
 
-                {newAlertModalFilteresEnabled ? (
+                {newAlertModalFilteresEnabled && !newAlertModalFilteresEnabled && (
                   <Clickable
                     data-testid="addFilters"
                     onClick={transitionToFiltersAndTrack}
@@ -99,18 +99,20 @@ export const Details: FC = () => {
                       <ChevronRightIcon />
                     </Flex>
                   </Clickable>
-                ) : (
+                )}
+
+                {!newAlertModalFilteresEnabled && (
                   <PriceRangeFilter expanded={false} />
                 )}
 
-                {enableSuggestedFilters && (
+                {newAlertModalFilteresEnabled && enableSuggestedFilters && (
                   <Flex justifyContent="space-between" flexDirection={"column"}>
                     <Box>
-                      <Text variant="sm-display">Suggested Filters:</Text>
+                      <Text variant="sm-display">Suggested Filters</Text>
                     </Box>
 
                     <Box>
-                      <Clickable onClick={transitionToFilters}>
+                      <Clickable onClick={transitionToFiltersAndTrack}>
                         <Flex
                           justifyContent={"space-between"}
                           alignItems={"center"}
@@ -124,7 +126,6 @@ export const Details: FC = () => {
                     </Box>
                   </Flex>
                 )}
-
                 <DetailsInput />
 
                 <NotificationPreferencesQueryRenderer mode="create" />
