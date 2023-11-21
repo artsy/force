@@ -1,6 +1,6 @@
 import * as React from "react"
 import { graphql, useFragment } from "react-relay"
-import { Color, Flex, FlexProps, Spacer, Text, THEME } from "@artsy/palette"
+import { Color, Flex, FlexProps, Text, THEME } from "@artsy/palette"
 import { ConversationTimeSince } from "./ConversationTimeSince"
 import { ConversationOrderUpdate_event$key } from "__generated__/ConversationOrderUpdate_event.graphql"
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
@@ -109,18 +109,14 @@ export const ConversationOrderUpdate: React.FC<OrderUpdateProps> = ({
       <ConversationTimeSince message={data} alignSelf="center" exact mb={1} />
 
       <Flex px={2} justifyContent="center" flexDirection="row">
-        <Flex flexDirection="row">
-          <Icon fill={color} />
+        <Icon fill={color} />
 
-          <Flex flexDirection="column" pl={1}>
-            <Text color={textColor || color} variant="xs">
-              {message}
-            </Text>
-          </Flex>
+        <Flex flexDirection="column" pl={1}>
+          <Text color={textColor || color} variant="xs">
+            {message}
+          </Text>
         </Flex>
       </Flex>
-
-      <Spacer y={5} />
     </Flex>
   )
 }

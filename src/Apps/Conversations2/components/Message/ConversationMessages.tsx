@@ -11,6 +11,7 @@ import { ConversationMessages_conversation$data } from "__generated__/Conversati
 import { usePoll } from "Utils/Hooks/usePoll"
 import { Sentinel } from "Components/Sentinal"
 import {
+  Message,
   isRelevantEvent,
   useGroupedMessages,
 } from "Apps/Conversations2/hooks/useGroupedMessages"
@@ -131,7 +132,7 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
                 message={messageGroup[0]}
                 exact
                 mt={groupIndex === 0 ? 1 : 4}
-                mb={groupIndex === 0 ? 4 : 4}
+                mb={groupIndex === 0 ? 4 : 2}
                 alignSelf="center"
               />
 
@@ -139,37 +140,38 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
                 <ConversationMessageArtwork
                   key={conversation?.items?.[0]?.item?.internalID}
                   item={conversation?.items?.[0]?.item as any}
-                  mb={2}
                 />
               )}
 
-              {[...messageGroup].reverse().map((message, messageIndex) => {
-                if (isRelevantEvent(message)) {
-                  return (
-                    <ConversationOrderUpdate
-                      key={`event-${messageIndex}`}
-                      event={message as any}
-                      setShowDetails={x => x}
-                      mt={2}
-                      mb={2}
-                    />
-                  )
-                }
+              {[...messageGroup]
+                .reverse()
+                .map((message: Message, messageIndex) => {
+                  if (isRelevantEvent(message)) {
+                    return (
+                      <ConversationOrderUpdate
+                        key={`event-${messageIndex}`}
+                        event={message as any}
+                        setShowDetails={x => x}
+                        mt={4}
+                        mb={1}
+                      />
+                    )
+                  }
 
-                return (
-                  <>
-                    <ConversationMessage
-                      key={message.internalID}
-                      messageIndex={messageIndex}
-                      messages={messages}
-                      message={message}
-                      formattedFirstMessage={
-                        conversation?.inquiryRequest?.formattedFirstMessage
-                      }
-                    />
-                  </>
-                )
-              })}
+                  return (
+                    <>
+                      <ConversationMessage
+                        key={message.internalID}
+                        messageIndex={messageIndex}
+                        messages={messages}
+                        message={message}
+                        formattedFirstMessage={
+                          conversation?.inquiryRequest?.formattedFirstMessage
+                        }
+                      />
+                    </>
+                  )
+                })}
             </>
           )
         })}
