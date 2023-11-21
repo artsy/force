@@ -10,20 +10,23 @@ import {
 } from "react"
 import * as React from "react"
 
-type Sticky = {
+export type TSticky = {
   id: string
   height: number
+  status: "FIXED" | "ORIGINAL" | "RELEASED"
 }
 
 const StickyContext = createContext<{
   /** Sorted by place in React tree (lower on the page = later in the array) */
-  stickies: Sticky[]
-  registerSticky(sticky: Sticky): void
-  deregisterSticky(sticky: Pick<Sticky, "id">): void
+  stickies: TSticky[]
+  registerSticky(sticky: TSticky): void
+  deregisterSticky(sticky: Pick<TSticky, "id">): void
+  updateSticky({ id, payload }: { id: string; payload: Partial<TSticky> }): void
 }>({
   stickies: [],
   registerSticky: () => {},
   deregisterSticky: () => {},
+  updateSticky: () => {},
 })
 
 /**
@@ -31,21 +34,36 @@ const StickyContext = createContext<{
  * You do NOT need to import this to use a `Sticky` component.
  */
 export const StickyProvider: React.FC = ({ children }) => {
-  const [stickies, setStickies] = useState<Sticky[]>([])
+  const [stickies, setStickies] = useState<TSticky[]>([])
 
-  const registerSticky = useCallback((sticky: Sticky) => {
+  const registerSticky = useCallback((sticky: TSticky) => {
     setStickies(prevStickies => uniqBy([...prevStickies, sticky], "id"))
   }, [])
 
-  const deregisterSticky = useCallback((sticky: Sticky) => {
+  const deregisterSticky = useCallback((sticky: TSticky) => {
     setStickies(prevStickies =>
       prevStickies.filter(({ id }) => id !== sticky.id)
     )
   }, [])
 
+  const updateSticky = useCallback(
+    ({ id, payload }: { id: string; payload: Partial<TSticky> }) => {
+      setStickies(prevStickies =>
+        prevStickies.map(sticky => {
+          if (sticky.id !== id) return sticky
+          return {
+            ...sticky,
+            ...payload,
+          }
+        })
+      )
+    },
+    []
+  )
+
   return (
     <StickyContext.Provider
-      value={{ stickies, registerSticky, deregisterSticky }}
+      value={{ stickies, registerSticky, deregisterSticky, updateSticky }}
     >
       {children}
     </StickyContext.Provider>
@@ -63,11 +81,12 @@ export const getOffsetTopForSticky = ({
   stickies,
 }: {
   id: string
-  stickies: Sticky[]
+  stickies: TSticky[]
 }) => {
-  const index = stickies.findIndex(sticky => sticky.id === id)
+  const relevant = stickies.filter(sticky => sticky.status !== "RELEASED")
+  const index = relevant.findIndex(sticky => sticky.id === id)
 
-  return compound([0, ...stickies.map(({ height }) => height).slice(0, -1)])[
+  return compound([0, ...relevant.map(({ height }) => height).slice(0, -1)])[
     index
   ]
 }
@@ -77,6 +96,7 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
     stickies,
     registerSticky: __registerSticky__,
     deregisterSticky: __deregisterSticky__,
+    updateSticky: __updateSticky__,
   } = useContext(StickyContext)
 
   const id = useRef(_id ?? generateId())
@@ -84,7 +104,7 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
   const registerSticky = useCallback(
     height => {
       if (height === undefined) return
-      __registerSticky__({ id: id.current, height })
+      __registerSticky__({ id: id.current, height, status: "ORIGINAL" })
     },
     [__registerSticky__]
   )
@@ -92,6 +112,13 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
   const deregisterSticky = useCallback(() => {
     __deregisterSticky__({ id: id.current })
   }, [__deregisterSticky__])
+
+  const updateSticky = useCallback(
+    (payload: Partial<TSticky>) => {
+      __updateSticky__({ id: id.current, payload })
+    },
+    [__updateSticky__]
+  )
 
   const offsetTop = useMemo(
     () => getOffsetTopForSticky({ id: id.current, stickies }) ?? 0,
@@ -104,5 +131,6 @@ export const useSticky = ({ id: _id }: { id?: string } = {}) => {
     offsetTop,
     registerSticky,
     stickies,
+    updateSticky,
   }
 }
