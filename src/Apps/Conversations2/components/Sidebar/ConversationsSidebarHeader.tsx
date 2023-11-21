@@ -4,7 +4,7 @@ export const ConversationsSidebarHeader: React.FC = () => {
   return (
     <Box
       p={2}
-      px={4}
+      px={2}
       position="sticky"
       top={0}
       flexDirection="column"

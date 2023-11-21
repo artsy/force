@@ -5,7 +5,7 @@ import { useMobileLayoutActions } from "Apps/Conversations2/hooks/useMobileLayou
 import { DESKTOP_NAV_BAR_HEIGHT } from "Components/NavBar/constants"
 
 const DESKTOP_HEIGHT = `calc(100vh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
-const MOBILE_HEIGHT = `calc(100dvh - ${DESKTOP_NAV_BAR_HEIGHT}px)`
+const MOBILE_HEIGHT = `calc(100dvh - 60px)` // 60 is the height of the reply box
 
 export interface ConversationsLayoutProps {
   renderSidebar: () => JSX.Element | null
@@ -94,7 +94,7 @@ export const MobileLayout: React.FC<ConversationsLayoutProps> = ({
   const { currentColumn } = useMobileLayoutActions()
 
   return (
-    <Box ml={-2} mr={-2}>
+    <Box ml={0} mr={0}>
       <Box
         overflowX="hidden"
         display={currentColumn === "sidebar" ? "block" : "none"}

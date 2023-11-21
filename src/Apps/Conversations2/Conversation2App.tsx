@@ -10,6 +10,8 @@ import { Fragment, Suspense } from "react"
 import { ConversationsProvider } from "Apps/Conversations2/ConversationsContext"
 import { MetaTags } from "Components/MetaTags"
 import { ConversationsLayout } from "Apps/Conversations2/components/ConversationLayout"
+import { ConversationHeader } from "Apps/Conversations2/components/ConversationHeader"
+import { Media } from "Utils/Responsive"
 
 interface Conversation2RouteProps {
   conversation: Conversation2App_conversation$data
@@ -33,6 +35,13 @@ const Conversation2App: React.FC<Conversation2RouteProps> = ({
         renderMessages={() => {
           return (
             <>
+              <Media lessThan="md">
+                <ConversationHeader
+                  conversation={conversation}
+                  // onGoToConversations={goToSidebar}
+                  // onGoToDetails={goToDetails}
+                />
+              </Media>
               <ConversationMessagesPaginationContainer
                 conversation={conversation}
               />
