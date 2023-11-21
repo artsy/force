@@ -131,37 +131,39 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   })
 
   useEffect(() => {
-    const fetchPreview = async (criteriaState: SearchCriteriaAttributes) => {
-      const data = await fetchQuery<AlertProviderPreviewQuery>(
-        relayEnvironment as Environment,
-        graphql`
-          query AlertProviderPreviewQuery(
-            $attributes: PreviewSavedSearchAttributes
-          ) {
-            viewer {
-              previewSavedSearch(attributes: $attributes) {
-                displayName
-                labels {
-                  displayValue
-                  field
-                  value
-                }
+    const subscription = fetchQuery<AlertProviderPreviewQuery>(
+      relayEnvironment as Environment,
+      graphql`
+        query AlertProviderPreviewQuery(
+          $attributes: PreviewSavedSearchAttributes
+        ) {
+          viewer {
+            previewSavedSearch(attributes: $attributes) {
+              displayName
+              labels {
+                displayValue
+                field
+                value
               }
             }
           }
-        `,
-        { attributes: criteriaState as PreviewSavedSearchAttributes }
-      )?.toPromise()
+        }
+      `,
+      { attributes: debouncedCriteria as PreviewSavedSearchAttributes }
+    )?.subscribe?.({
+      next: data => {
+        if (!data?.viewer?.previewSavedSearch) return
 
-      if (!data?.viewer?.previewSavedSearch) return
+        dispatch({
+          type: "SET_PREVIEW",
+          payload: data?.viewer?.previewSavedSearch as PreviewSavedSearch,
+        })
+      },
+    })
 
-      dispatch({
-        type: "SET_PREVIEW",
-        payload: data?.viewer?.previewSavedSearch as PreviewSavedSearch,
-      })
+    return () => {
+      subscription?.unsubscribe?.()
     }
-
-    fetchPreview(debouncedCriteria)
   }, [debouncedCriteria, relayEnvironment])
 
   useEffect(() => {
