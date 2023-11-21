@@ -1,3 +1,4 @@
+import * as Yup from "yup"
 import { Address, emptyAddress } from "Components/Address/AddressForm"
 import { Shipping_me$data } from "__generated__/Shipping_me.graphql"
 import { Shipping_order$data } from "__generated__/Shipping_order.graphql"
@@ -11,6 +12,7 @@ import {
   CommerceOrderFulfillmentTypeEnum,
   SetShippingMutation$data,
 } from "__generated__/SetShippingMutation.graphql"
+import { postalCodeValidator } from "Components/Address/utils"
 
 export type SavedAddressType = NonNullable<
   NonNullable<
@@ -35,6 +37,19 @@ export type ShippingQuotesType = NonNullable<
     >["node"]
   >["shippingQuoteOptions"]
 >["edges"]
+
+export const ADDRESS_VALIDATION_SHAPE = {
+  addressLine1: Yup.string().required("Street address is required"),
+  addressLine2: Yup.string().nullable(),
+  city: Yup.string().required("City is required"),
+  postalCode: postalCodeValidator,
+  region: Yup.string().when("country", {
+    is: country => ["US", "CA"].includes(country),
+    then: Yup.string().required("State is required"),
+    otherwise: Yup.string(),
+  }),
+  country: Yup.string().required("Country is required"),
+}
 
 export const defaultShippingAddressIndex = (
   me: Shipping_me$data,
