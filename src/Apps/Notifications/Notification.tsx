@@ -39,7 +39,9 @@ const Notification: React.FC<NotificationProps> = ({ me }) => {
         {notification.publishedAt}
       </Text>
 
-      <Text variant="xl">{notification.title}</Text>
+      <Text variant="xl" mb={2}>
+        {notification.title}
+      </Text>
 
       <Spacer y={4} />
 

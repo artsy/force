@@ -1,4 +1,4 @@
-import { FullBleed } from "@artsy/palette"
+import { FullBleed, Separator, Text } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import { Notifications } from "Components/Notifications/Notifications"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -16,6 +16,12 @@ const NotificationsApp: React.FC<NotificationsAppProps> = props => {
       <MetaTags title="Notifications | Artsy" pathname="/notifications" />
 
       <FullBleed>
+        <Text variant="xl" m={4}>
+          Activity Panel
+        </Text>
+
+        <Separator />
+
         <Notifications
           mode="page"
           unreadCounts={me.unreadNotificationsCount ?? 0}

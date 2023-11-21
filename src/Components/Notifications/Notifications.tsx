@@ -52,7 +52,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
   const [height, setHeight] = useState(0)
 
   useEffect(() => {
-    const MENU_HEIGHT = 103
+    const MENU_HEIGHT = 200
 
     const handleResize = () => {
       setHeight(window.innerHeight - MENU_HEIGHT)
