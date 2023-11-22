@@ -1,4 +1,5 @@
 import loadable from "@loadable/component"
+import { SIDEBAR_FETCH_PAGE_SIZE } from "Apps/Conversations2/components/Sidebar/Utils/getSidebarTotal"
 import { AppRouteConfig } from "System/Router/Route"
 import { extractNodes } from "Utils/extractNodes"
 import { getENV } from "Utils/getENV"
@@ -54,7 +55,7 @@ export const conversations2Routes: AppRouteConfig[] = [
     prepareVariables: (params, { location }) => {
       return {
         conversationId: params.conversationId,
-        first: location.query.sidebarTotal,
+        first: location.query.sidebarTotal ?? SIDEBAR_FETCH_PAGE_SIZE,
       }
     },
     query: graphql`

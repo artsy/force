@@ -1,5 +1,5 @@
-import { Flex, Spinner } from "@artsy/palette"
-import React, { FC, useCallback, useEffect, useRef, useState } from "react"
+import { Box, Flex, Spinner } from "@artsy/palette"
+import React, { FC, Ref, useCallback, useEffect, useRef, useState } from "react"
 import {
   createPaginationContainer,
   graphql,
@@ -193,7 +193,7 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
 
         {isFetchingLoadMoreMessages && <BottomLoadingSpinner />}
 
-        <AutoScrollToBottom ref={autoScrollToBottomRef as any} />
+        <AutoScrollToBottom ref={autoScrollToBottomRef as any} height={20} />
       </Flex>
     </Flex>
   )
@@ -319,7 +319,9 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
 
 interface UseAutoScrollToBottomProps {
   messages: any[]
-  autoScrollToBottomRef: any
+  autoScrollToBottomRef: {
+    current: HTMLDivElement
+  }
 }
 
 const useAutoScrollToBottom = ({
@@ -330,9 +332,10 @@ const useAutoScrollToBottom = ({
 
   const triggerAutoScroll = useCallback(() => {
     setTimeout(() => {
-      autoScrollToBottomRef.current?.scrollIntoView({
+      autoScrollToBottomRef?.current?.scrollIntoView({
         behavior: "instant",
         block: "end",
+        inline: "end",
       })
     }, 10)
   }, [autoScrollToBottomRef])
@@ -356,4 +359,4 @@ const LoadAllMessagesSentinal = Sentinel
 const LatestMessagesSentinel = Sentinel
 const TopLoadingSpinner = LoadingSpinner
 const BottomLoadingSpinner = LoadingSpinner
-const AutoScrollToBottom = styled.div``
+const AutoScrollToBottom = Box

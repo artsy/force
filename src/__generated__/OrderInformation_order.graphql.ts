@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0e4045c5e15d559a6f3e882a55deda18>>
+ * @generated SignedSource<<7dc66d83b2e7ba1983f61927c2d82e93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,12 +9,14 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
+export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type OrderInformation_order$data = {
   readonly code: string;
   readonly lastOffer?: {
     readonly amount: string | null;
   } | null;
+  readonly state: CommerceOrderStateEnum;
   readonly " $fragmentSpreads": FragmentRefs<"OrderState_state" | "ReviewOrderButton_order">;
   readonly " $fragmentType": "OrderInformation_order";
 };
@@ -34,6 +36,13 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "ScalarField",
       "name": "code",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "state",
       "storageKey": null
     },
     {
@@ -82,6 +91,6 @@ const node: ReaderFragment = {
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "65344b77abd3dd5c9a93c80d235465a7";
+(node as any).hash = "13a40b6902c041d3f9c0be30ad60eeb3";
 
 export default node;

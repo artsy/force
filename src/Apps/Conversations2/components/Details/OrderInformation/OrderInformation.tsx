@@ -14,6 +14,7 @@ export const OrderInformation: React.FC<OrderInformationProps> = ({
     graphql`
       fragment OrderInformation_order on CommerceOrder {
         code
+        state
         ...OrderState_state
         ...ReviewOrderButton_order
         ... on CommerceOfferOrder {
@@ -30,6 +31,8 @@ export const OrderInformation: React.FC<OrderInformationProps> = ({
 
   const { code, lastOffer } = data
 
+  const showReviewOrderButton = data.state !== "CANCELED"
+
   return (
     <>
       <Text variant="lg">Order Information</Text>
@@ -45,7 +48,7 @@ export const OrderInformation: React.FC<OrderInformationProps> = ({
 
       <Spacer y={2} />
 
-      <ReviewOrderButton order={data} />
+      {showReviewOrderButton && <ReviewOrderButton order={data} />}
     </>
   )
 }

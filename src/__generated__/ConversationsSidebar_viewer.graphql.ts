@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c12ad5db3fc9384867c743dfe725d2c5>>
+ * @generated SignedSource<<a47b18a7a500c27950477cdebe1dc11f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -66,7 +66,7 @@ return {
       "fragmentPathInResult": [
         "viewer"
       ],
-      "operation": require('./ConversationsSidebarPaginationQuery.graphql')
+      "operation": require('./ConversationsSidebar2PaginationQuery.graphql')
     }
   },
   "name": "ConversationsSidebar_viewer",
@@ -167,6 +167,6 @@ return {
 };
 })();
 
-(node as any).hash = "92b36f72da0dcaba8e8049888a9b5380";
+(node as any).hash = "6bd7f914ba655c2a0630a99fb48a5365";
 
 export default node;

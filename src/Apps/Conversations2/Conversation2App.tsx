@@ -1,6 +1,6 @@
 import { createFragmentContainer, graphql } from "react-relay"
 import { useMobileLayoutActions } from "Apps/Conversations2/hooks/useMobileLayoutActions"
-import { ConversationsSidebar } from "Apps/Conversations2/components/Sidebar/ConversationsSidebar"
+import { ConversationsSidebarPaginationContainer } from "Apps/Conversations2/components/Sidebar/ConversationsSidebar"
 import { ConversationMessagesPaginationContainer } from "Apps/Conversations2/components/Message/ConversationMessages"
 import { ConversationReply } from "Apps/Conversations2/components/ConversationReply"
 import { ConversationDetails } from "Apps/Conversations2/components/Details/ConversationDetails"
@@ -29,7 +29,7 @@ const Conversation2App: React.FC<Conversation2RouteProps> = ({
 
       <ConversationsLayout
         renderSidebar={() => {
-          return <ConversationsSidebar viewer={viewer} />
+          return <ConversationsSidebarPaginationContainer viewer={viewer} />
         }}
         renderMessages={() => {
           return (
