@@ -1,5 +1,12 @@
 # Guide to mocking relay data using `renderRelayTree`, `mockData`, and `mockMutationResults`
 
+> [!WARNING]
+> These docs refer to deprecated utility functions backed by enzyme. For all new
+> tests, use `@testing-library/react` and the `setupTestWrapperTL` helper. See
+> our [best practices][] doc for more guidelines.
+
+[best practices]: https://github.com/artsy/force/blob/main/docs/best_practices.md#testing
+
 ## The basics
 
 If your are testing a component that makes a query to metaphysics, you can use the `renderRelayTree` helper to mock out the data that would be returned by metaphysics. Previously this was done with the `mockResolvers` prop, but now we have an easier and less confusing way: `mockData` and `mockMutationResults`. The idea is that these properties should match the exact data shape that metaphysics would return.
