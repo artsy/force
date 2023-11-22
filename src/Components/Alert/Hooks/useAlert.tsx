@@ -7,7 +7,7 @@ import { Steps } from "Components/Alert/Components/Steps"
 import { useAuthDialog } from "Components/AuthDialog"
 import { useAuthIntent } from "Utils/Hooks/useAuthIntent"
 import { useSystemContext } from "System/SystemContext"
-import { AuthContextModule, ContextModule, Intent } from "@artsy/cohesion"
+import { ContextModule, Intent } from "@artsy/cohesion"
 
 interface UseAlert {
   initialCriteria?: SearchCriteriaAttributes
@@ -42,9 +42,7 @@ export const useAlert = ({ initialCriteria }: UseAlert) => {
         },
         analytics: {
           intent: Intent.createAlert,
-          // TODO: Add `createAlert` ContextModule value to `AuthContextModule`
-          // list in @artsy/cohesion
-          contextModule: ContextModule.createAlert as AuthContextModule,
+          contextModule: ContextModule.createAlert,
         },
       })
 

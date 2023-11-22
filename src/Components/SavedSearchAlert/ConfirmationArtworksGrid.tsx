@@ -23,6 +23,7 @@ import {
   ConfirmationStepFooterContentPlaceholder,
   ConfirmationStepFooterQueryRenderer,
 } from "Components/SavedSearchAlert/Components/ConfirmationStepFooter"
+import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 
 export const NUMBER_OF_ARTWORKS_TO_SHOW = 10
 
@@ -38,6 +39,7 @@ export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
   onClose,
 }) => {
   const { t } = useTranslation()
+  const { clickedArtworkGroup } = useAlertTracking()
   const artworksCount = artworksConnection?.counts?.total ?? 0
 
   if (artworksCount === 0) {
@@ -84,7 +86,13 @@ export const ConfirmationArtworks: FC<ConfirmationArtworksProps> = ({
       <ArtworkGridContextProvider saveOnlyToDefaultList>
         <GridColumns>
           <Column span={12}>
-            <ArtworkGrid artworks={artworksConnection!} columnCount={2} />
+            <ArtworkGrid
+              artworks={artworksConnection!}
+              columnCount={2}
+              onBrickClick={artwork =>
+                clickedArtworkGroup(artwork.internalID, artwork.slug)
+              }
+            />
           </Column>
         </GridColumns>
       </ArtworkGridContextProvider>

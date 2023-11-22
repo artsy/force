@@ -5,7 +5,6 @@ import { QuickMultipleSelectAlertFilter } from "Components/Alert/Components/Filt
 export const Medium: FC = () => {
   return (
     <QuickMultipleSelectAlertFilter
-      expanded
       label="Medium"
       criteriaKey="additionalGeneIDs"
       options={MEDIUM_OPTIONS}

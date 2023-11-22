@@ -33,7 +33,6 @@ export const Modal: React.FC<AlertModalProps> = ({
       dialogProps={{
         height: ["100%", "auto"],
         width: ["100%", "auto"],
-        maxHeight: ["auto", "90%"],
         minWidth: ["auto", 500],
       }}
       {...modalProps}
@@ -43,11 +42,16 @@ export const Modal: React.FC<AlertModalProps> = ({
         width="100%"
         height="100%"
         position="relative"
-        overflowY="auto"
         bg="white100"
         {...boxProps}
       >
-        <ModalClose onClick={onClose} position="absolute" top={0} right={0} />
+        <ModalClose
+          onClick={onClose}
+          position="absolute"
+          top={0}
+          right={0}
+          zIndex={3}
+        />
 
         {children}
       </Box>

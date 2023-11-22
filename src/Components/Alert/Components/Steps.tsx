@@ -1,5 +1,4 @@
 import { FC } from "react"
-
 import { Confirmation } from "Components/Alert/Components/Steps/Confirmation"
 import { Details } from "Components/Alert/Components/Steps/Details"
 import { Filters } from "Components/Alert/Components/Steps/Filters"
