@@ -109,6 +109,11 @@ module.exports = {
         name: "react-waypoint",
         message: "Please use `useIntersectionObserver`",
       },
+      {
+        name: "react-runtime",
+        importNames: ["graphql"],
+        message: "Please import `graphql` from `react-relay`.",
+      },
     ],
     "no-relative-import-paths/no-relative-import-paths": [
       "warn",
