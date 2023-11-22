@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<55df872d129aeeceb7ae1844b8404183>>
+ * @generated SignedSource<<7f64acd974e3f6d9a03bca6e1ae63077>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowAbout_show$data = {
-  readonly about: string | null;
+  readonly about: string | null | undefined;
   readonly " $fragmentType": "ShowAbout_show";
 };
 export type ShowAbout_show$key = {

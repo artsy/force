@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4dedf62108e21465e1d728f6e02d12a0>>
+ * @generated SignedSource<<70caac28376f0ab44b110722684bf154>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,14 +16,14 @@ export type NotificationsList_viewer$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artworks: {
-          readonly totalCount: number | null;
-        } | null;
+          readonly totalCount: number | null | undefined;
+        } | null | undefined;
         readonly internalID: string;
         readonly notificationType: NotificationTypesEnum;
         readonly " $fragmentSpreads": FragmentRefs<"NotificationItem_item">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "NotificationsList_viewer";
 };
 export type NotificationsList_viewer$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c2a2776e44f9aae5add7b5c33e8f7a9b>>
+ * @generated SignedSource<<11ec2f82944846223ea19b628e134f21>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,14 +10,14 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type RequestConditionReportTestQuery$variables = {};
+export type RequestConditionReportTestQuery$variables = Record<PropertyKey, never>;
 export type RequestConditionReportTestQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"RequestConditionReport_artwork">;
-  } | null;
+  } | null | undefined;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"RequestConditionReport_me">;
-  } | null;
+  } | null | undefined;
 };
 export type RequestConditionReportTestQuery$rawResponse = {
   readonly artwork: {
@@ -26,14 +26,14 @@ export type RequestConditionReportTestQuery$rawResponse = {
     readonly saleArtwork: {
       readonly id: string;
       readonly internalID: string;
-    } | null;
+    } | null | undefined;
     readonly slug: string;
-  } | null;
+  } | null | undefined;
   readonly me: {
-    readonly email: string | null;
+    readonly email: string | null | undefined;
     readonly id: string;
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
 };
 export type RequestConditionReportTestQuery = {
   rawResponse: RequestConditionReportTestQuery$rawResponse;

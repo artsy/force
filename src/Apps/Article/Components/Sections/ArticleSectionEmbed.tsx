@@ -32,8 +32,8 @@ const ArticleSectionEmbed: FC<ArticleSectionEmbedProps> = ({ section }) => {
           display="block"
           width="100%"
           height={[
-            section.mobileHeight ?? section.height,
-            section.height ?? section.mobileHeight,
+            section.mobileHeight ?? (section.height as number),
+            section.height ?? (section.mobileHeight as number),
           ]}
           borderWidth={0}
           // @ts-ignore

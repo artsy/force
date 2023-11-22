@@ -34,7 +34,7 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
     return null
   }
 
-  const conversationID = conversation.internalID!
+  const conversationID = conversation.internalID
   const activeOrder = extractNodes(conversation.activeOrders)[0]
   const {
     isOfferableFromInquiry,
@@ -88,8 +88,8 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
       return (
         <ReviewOfferCTA
           kind={kind}
-          activeOrder={activeOrder}
-          conversationID={conversationID}
+          activeOrder={activeOrder as any}
+          conversationID={conversationID as string}
           openOrderModal={() => openOrderModal()}
         />
       )

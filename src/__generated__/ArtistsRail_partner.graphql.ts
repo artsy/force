@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<166df1763347010f759284da0ebdcb13>>
+ * @generated SignedSource<<e63aa5253f9d86561fb780c2d3feab93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,13 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistsRail_partner$data = {
   readonly artistsWithPublishedArtworks: {
-    readonly totalCount: number | null;
-  } | null;
-  readonly displayFullPartnerPage: boolean | null;
-  readonly profileArtistsLayout: string | null;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
+  readonly displayFullPartnerPage: boolean | null | undefined;
+  readonly profileArtistsLayout: string | null | undefined;
   readonly representedArtistsWithoutPublishedArtworks: {
-    readonly totalCount: number | null;
-  } | null;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtistsRail_partner";
 };

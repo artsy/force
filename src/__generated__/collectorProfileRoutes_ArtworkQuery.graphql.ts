@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<95210c582a7f40c1f0b035bdffe53556>>
+ * @generated SignedSource<<cbce074236eb5af139880f34b9eccc3d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type collectorProfileRoutes_ArtworkQuery$variables = {
 export type collectorProfileRoutes_ArtworkQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtwork_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type collectorProfileRoutes_ArtworkQuery = {
   response: collectorProfileRoutes_ArtworkQuery$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1d95bd5e57963861e4b7834ab46db561>>
+ * @generated SignedSource<<610f054f40983bd129bf6f88c41060f9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,21 +14,21 @@ export type ArtistCVGroup_artist$data = {
   readonly showsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly city: string | null;
-        readonly href: string | null;
+        readonly city: string | null | undefined;
+        readonly href: string | null | undefined;
         readonly id: string;
-        readonly name: string | null;
+        readonly name: string | null | undefined;
         readonly partner: {
-          readonly href?: string | null;
-          readonly name?: string | null;
-        } | null;
-        readonly startAt: string | null;
-      } | null;
-    } | null> | null;
+          readonly href?: string | null | undefined;
+          readonly name?: string | null | undefined;
+        } | null | undefined;
+        readonly startAt: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageInfo: {
       readonly hasNextPage: boolean;
     };
-  } | null;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtistCVGroup_artist";
 };

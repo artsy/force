@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4aa9fc4384b91066d4a5bfd33f3ab3cf>>
+ * @generated SignedSource<<b1b460e00d911ea4e3dcd9e88be562d6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,43 +11,43 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkAuctionCreateAlertHeader_artwork$data = {
-  readonly artistNames: string | null;
+  readonly artistNames: string | null | undefined;
   readonly artists: ReadonlyArray<{
     readonly internalID: string;
-    readonly name: string | null;
+    readonly name: string | null | undefined;
     readonly slug: string;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly attributionClass: {
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
   readonly internalID: string;
   readonly isEligibleToCreateAlert: boolean;
-  readonly isInAuction: boolean | null;
+  readonly isInAuction: boolean | null | undefined;
   readonly mediumType: {
     readonly filterGene: {
-      readonly name: string | null;
+      readonly name: string | null | undefined;
       readonly slug: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
   readonly myLotStandingManageAlerts: ReadonlyArray<{
-    readonly isHighestBidder: boolean | null;
-  }> | null;
+    readonly isHighestBidder: boolean | null | undefined;
+  }> | null | undefined;
   readonly sale: {
-    readonly isClosed: boolean | null;
-    readonly startAt: string | null;
-  } | null;
+    readonly isClosed: boolean | null | undefined;
+    readonly startAt: string | null | undefined;
+  } | null | undefined;
   readonly saleArtwork: {
-    readonly endAt: string | null;
-    readonly endedAt: string | null;
-    readonly extendedBiddingEndAt: string | null;
-  } | null;
+    readonly endAt: string | null | undefined;
+    readonly endedAt: string | null | undefined;
+    readonly extendedBiddingEndAt: string | null | undefined;
+  } | null | undefined;
   readonly savedSearch: {
     readonly suggestedArtworksConnection: {
-      readonly totalCount: number | null;
-    } | null;
-  } | null;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly slug: string;
-  readonly title: string | null;
+  readonly title: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkCreateAlertButton_artwork">;
   readonly " $fragmentType": "ArtworkAuctionCreateAlertHeader_artwork";
 };

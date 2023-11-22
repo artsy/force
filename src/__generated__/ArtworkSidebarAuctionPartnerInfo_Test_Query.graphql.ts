@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbbdeb137594c8a2fc49cce1f793da18>>
+ * @generated SignedSource<<0527e7ece755aade1fdc6e2454547cc0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,29 +10,29 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarAuctionPartnerInfo_Test_Query$variables = {};
+export type ArtworkSidebarAuctionPartnerInfo_Test_Query$variables = Record<PropertyKey, never>;
 export type ArtworkSidebarAuctionPartnerInfo_Test_Query$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuctionPartnerInfo_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse = {
   readonly artwork: {
     readonly id: string;
     readonly partner: {
       readonly id: string;
-      readonly name: string | null;
-    } | null;
+      readonly name: string | null | undefined;
+    } | null | undefined;
     readonly sale: {
       readonly id: string;
       readonly internalID: string;
-      readonly is_closed: boolean | null;
-    } | null;
+      readonly is_closed: boolean | null | undefined;
+    } | null | undefined;
     readonly sale_artwork: {
-      readonly estimate: string | null;
+      readonly estimate: string | null | undefined;
       readonly id: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type ArtworkSidebarAuctionPartnerInfo_Test_Query = {
   rawResponse: ArtworkSidebarAuctionPartnerInfo_Test_Query$rawResponse;

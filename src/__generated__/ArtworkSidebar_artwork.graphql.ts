@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a710120ecfc0670e8e9beb7579563759>>
+ * @generated SignedSource<<0beee4634bc89c75fb5804906faee09d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,26 +13,26 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebar_artwork$data = {
   readonly artists: ReadonlyArray<{
     readonly internalID: string;
-  } | null> | null;
-  readonly isAcquireable: boolean | null;
-  readonly isBiddable: boolean | null;
+  } | null | undefined> | null | undefined;
+  readonly isAcquireable: boolean | null | undefined;
+  readonly isBiddable: boolean | null | undefined;
   readonly isEligibleForArtsyGuarantee: boolean;
   readonly isEligibleToCreateAlert: boolean;
-  readonly isInAuction: boolean | null;
-  readonly isOfferable: boolean | null;
-  readonly isSold: boolean | null;
+  readonly isInAuction: boolean | null | undefined;
+  readonly isOfferable: boolean | null | undefined;
+  readonly isSold: boolean | null | undefined;
   readonly sale: {
-    readonly isClosed: boolean | null;
-    readonly startAt: string | null;
-  } | null;
+    readonly isClosed: boolean | null | undefined;
+    readonly startAt: string | null | undefined;
+  } | null | undefined;
   readonly saleArtwork: {
-    readonly endAt: string | null;
-    readonly endedAt: string | null;
-    readonly extendedBiddingEndAt: string | null;
-    readonly lotID: string | null;
-    readonly lotLabel: string | null;
-  } | null;
-  readonly saleMessage: string | null;
+    readonly endAt: string | null | undefined;
+    readonly endedAt: string | null | undefined;
+    readonly extendedBiddingEndAt: string | null | undefined;
+    readonly lotID: string | null | undefined;
+    readonly lotLabel: string | null | undefined;
+  } | null | undefined;
+  readonly saleMessage: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarArtists_artwork" | "ArtworkSidebarArtworkTitle_artwork" | "ArtworkSidebarAuctionInfoPolling_artwork" | "ArtworkSidebarAuctionTimer_artwork" | "ArtworkSidebarBiddingClosedMessage_artwork" | "ArtworkSidebarCommercialButtons_artwork" | "ArtworkSidebarCreateAlert_artwork" | "ArtworkSidebarDetails_artwork" | "ArtworkSidebarEstimatedValue_artwork" | "ArtworkSidebarLinks_artwork" | "ArtworkSidebarPartnerInfo_artwork" | "ArtworkSidebarShippingInformation_artwork">;
   readonly " $fragmentType": "ArtworkSidebar_artwork";

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4c842b9b3f3e08fa1ddbe3ede9b40a98>>
+ * @generated SignedSource<<1e9710d3d2663244290c328106f2d0d5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,63 +15,63 @@ export type Conversation_conversation$data = {
   readonly from: {
     readonly email: string;
   };
-  readonly fromLastViewedMessageID: string | null;
+  readonly fromLastViewedMessageID: string | null | undefined;
   readonly id: string;
   readonly initialMessage: string;
-  readonly internalID: string | null;
-  readonly isLastMessageToUser: boolean | null;
+  readonly internalID: string | null | undefined;
+  readonly isLastMessageToUser: boolean | null | undefined;
   readonly items: ReadonlyArray<{
     readonly item: {
       readonly __typename: string;
       readonly id?: string;
       readonly internalID?: string;
-      readonly isOfferable?: boolean | null;
-      readonly isOfferableFromInquiry?: boolean | null;
+      readonly isOfferable?: boolean | null | undefined;
+      readonly isOfferableFromInquiry?: boolean | null | undefined;
       readonly " $fragmentSpreads": FragmentRefs<"Item_item">;
-    } | null;
+    } | null | undefined;
     readonly liveArtwork: {
       readonly __typename: "Artwork";
       readonly internalID: string;
-      readonly isAcquireable: boolean | null;
-      readonly isOfferable: boolean | null;
-      readonly isOfferableFromInquiry: boolean | null;
+      readonly isAcquireable: boolean | null | undefined;
+      readonly isOfferable: boolean | null | undefined;
+      readonly isOfferableFromInquiry: boolean | null | undefined;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
-    } | null;
-  } | null> | null;
-  readonly lastMessageID: string | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
+  readonly lastMessageID: string | null | undefined;
   readonly messagesConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly id: string;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageInfo: {
-      readonly endCursor: string | null;
+      readonly endCursor: string | null | undefined;
       readonly hasNextPage: boolean;
       readonly hasPreviousPage: boolean;
-      readonly startCursor: string | null;
+      readonly startCursor: string | null | undefined;
     };
-    readonly totalCount: number | null;
+    readonly totalCount: number | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ConversationMessages_messages">;
-  } | null;
+  } | null | undefined;
   readonly orderConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
+        readonly buyerAction?: CommerceBuyerOfferActionEnum | null | undefined;
         readonly internalID: string;
         readonly updatedAt: string;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ConversationMessages_events">;
-  } | null;
+  } | null | undefined;
   readonly to: {
-    readonly initials: string | null;
+    readonly initials: string | null | undefined;
     readonly name: string;
   };
-  readonly unread: boolean | null;
+  readonly unread: boolean | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ConversationCTA_conversation">;
   readonly " $fragmentType": "Conversation_conversation";
 };

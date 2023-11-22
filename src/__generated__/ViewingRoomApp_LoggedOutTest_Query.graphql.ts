@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<df86f781040c873a45ddc5bd232f1335>>
+ * @generated SignedSource<<21e520fdc058f833539fa0af18071776>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,29 +16,29 @@ export type ViewingRoomApp_LoggedOutTest_Query$variables = {
 export type ViewingRoomApp_LoggedOutTest_Query$data = {
   readonly viewingRoom: {
     readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomApp_viewingRoom">;
-  } | null;
+  } | null | undefined;
 };
 export type ViewingRoomApp_LoggedOutTest_Query$rawResponse = {
   readonly viewingRoom: {
-    readonly distanceToClose: string | null;
-    readonly distanceToOpen: string | null;
-    readonly href: string | null;
+    readonly distanceToClose: string | null | undefined;
+    readonly distanceToOpen: string | null | undefined;
+    readonly href: string | null | undefined;
     readonly image: {
       readonly imageURLs: {
-        readonly normalized: string | null;
-      } | null;
-    } | null;
+        readonly normalized: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
     readonly internalID: string;
     readonly partner: {
-      readonly href: string | null;
+      readonly href: string | null | undefined;
       readonly id: string;
       readonly internalID: string;
-      readonly name: string | null;
-    } | null;
-    readonly pullQuote: string | null;
+      readonly name: string | null | undefined;
+    } | null | undefined;
+    readonly pullQuote: string | null | undefined;
     readonly status: string;
     readonly title: string;
-  } | null;
+  } | null | undefined;
 };
 export type ViewingRoomApp_LoggedOutTest_Query = {
   rawResponse: ViewingRoomApp_LoggedOutTest_Query$rawResponse;

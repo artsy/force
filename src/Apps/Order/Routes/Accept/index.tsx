@@ -152,12 +152,12 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
 
   const handleAcceptError = async (error: {
     code: string
-    data: string | null
+    data: string | null | undefined
   }) => {
     logger.error(error)
     switch (error.code) {
       case "capture_failed": {
-        const parsedData = get(error, e => JSON.parse(e.data!), {})
+        const parsedData = get(error, e => JSON.parse(e.data as any), {})
 
         // https://stripe.com/docs/declines/codes
         if (parsedData.decline_code === "insufficient_funds") {
@@ -242,8 +242,8 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
             <CountdownTimer
               action="Respond"
               note="Expired offers end the negotiation process permanently."
-              countdownStart={order.lastOffer?.createdAt!}
-              countdownEnd={order.stateExpiresAt!}
+              countdownStart={order.lastOffer?.createdAt as string}
+              countdownEnd={order.stateExpiresAt as string}
             />
             <TransactionDetailsSummaryItem
               order={order}

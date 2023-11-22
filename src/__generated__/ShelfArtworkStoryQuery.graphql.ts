@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<652a4ab1365b96985a1ce92652764ba7>>
+ * @generated SignedSource<<1aa3ff781806692b8d77b041d3986c03>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ShelfArtworkStoryQuery$variables = {
 export type ShelfArtworkStoryQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type ShelfArtworkStoryQuery = {
   response: ShelfArtworkStoryQuery$data;

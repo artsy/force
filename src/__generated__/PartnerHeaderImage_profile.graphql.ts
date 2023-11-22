@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4ccdd490f7de22a3869b36df5b6864b4>>
+ * @generated SignedSource<<e08fb4f9e95028909ebcbe58eac2c95a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerHeaderImage_profile$data = {
   readonly image: {
-    readonly url: string | null;
-  } | null;
+    readonly url: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "PartnerHeaderImage_profile";
 };
 export type PartnerHeaderImage_profile$key = {

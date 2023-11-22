@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11a2dbea26cd7a93fd551efc19715ab9>>
+ * @generated SignedSource<<6a696e027a9ea248ac7593f706d3ebb6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,10 +17,10 @@ export type ArtworkSidebarAuctionInfoPollingQuery$data = {
   readonly artwork: {
     readonly internalID: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBidAction_artwork" | "ArtworkSidebarCurrentBidInfo_artwork">;
-  } | null;
+  } | null | undefined;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuctionInfoPolling_me">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtworkSidebarAuctionInfoPollingQuery = {
   response: ArtworkSidebarAuctionInfoPollingQuery$data;

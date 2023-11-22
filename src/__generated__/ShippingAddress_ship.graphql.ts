@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7ae5e84f8c2f85a356c5eeab8dbf8971>>
+ * @generated SignedSource<<cd96d0a4a8ef9e7eeb7da6a5558d6c5b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,14 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShippingAddress_ship$data = {
-  readonly addressLine1?: string | null;
-  readonly addressLine2?: string | null;
-  readonly city?: string | null;
-  readonly country?: string | null;
-  readonly name?: string | null;
-  readonly phoneNumber?: string | null;
-  readonly postalCode?: string | null;
-  readonly region?: string | null;
+  readonly addressLine1?: string | null | undefined;
+  readonly addressLine2?: string | null | undefined;
+  readonly city?: string | null | undefined;
+  readonly country?: string | null | undefined;
+  readonly name?: string | null | undefined;
+  readonly phoneNumber?: string | null | undefined;
+  readonly postalCode?: string | null | undefined;
+  readonly region?: string | null | undefined;
   readonly " $fragmentType": "ShippingAddress_ship";
 };
 export type ShippingAddress_ship$key = {

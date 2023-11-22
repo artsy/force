@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ced57ed40d47a0f72f041438f32f68ae>>
+ * @generated SignedSource<<4222d227a1c16cd0ca8ca3c0570f70e0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,20 +16,20 @@ export type ShowsCurrentShow_show$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
-      } | null;
-    } | null> | null;
-    readonly totalCount: number | null;
-  } | null;
-  readonly endAt: string | null;
-  readonly href: string | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
+  readonly endAt: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly location: {
-    readonly city: string | null;
-  } | null;
-  readonly name: string | null;
+    readonly city: string | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly partner: {
-    readonly name?: string | null;
-  } | null;
-  readonly startAt: string | null;
+    readonly name?: string | null | undefined;
+  } | null | undefined;
+  readonly startAt: string | null | undefined;
   readonly " $fragmentType": "ShowsCurrentShow_show";
 };
 export type ShowsCurrentShow_show$key = {

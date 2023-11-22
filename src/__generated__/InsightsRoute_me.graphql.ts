@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<36801c51b4ed18e4f93ff13b0637b30a>>
+ * @generated SignedSource<<0dad67e254e3e3b1129bae32784ec611>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type InsightsRoute_me$data = {
   readonly myCollectionInfo: {
     readonly artworksCount: number;
     readonly " $fragmentSpreads": FragmentRefs<"InsightsOverview_info">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"InsightsAuctionResults_me" | "InsightsCareerHighlightRail_me" | "InsightsMedianSalePrice_me">;
   readonly " $fragmentType": "InsightsRoute_me";
 };

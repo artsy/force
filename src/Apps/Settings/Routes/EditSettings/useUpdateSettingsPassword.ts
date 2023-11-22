@@ -1,4 +1,4 @@
-import { commitMutation, graphql } from "relay-runtime"
+import { commitMutation, graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import {
   useUpdateSettingsPasswordMutation,
@@ -13,7 +13,7 @@ export const useUpdateSettingsPassword = () => {
     input: UpdateMyPasswordMutationInput
   ): Promise<useUpdateSettingsPasswordMutation$data> => {
     return new Promise((resolve, reject) => {
-      commitMutation<useUpdateSettingsPasswordMutation>(relayEnvironment!, {
+      commitMutation<useUpdateSettingsPasswordMutation>(relayEnvironment, {
         onError: reject,
         onCompleted: (res, errors) => {
           if (errors !== null) {

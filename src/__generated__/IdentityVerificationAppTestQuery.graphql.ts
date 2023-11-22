@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<605780b46a48f427299fc88400483640>>
+ * @generated SignedSource<<777ac6604361ad70c4cbbffa24ff0686>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,18 +10,18 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type IdentityVerificationAppTestQuery$variables = {};
+export type IdentityVerificationAppTestQuery$variables = Record<PropertyKey, never>;
 export type IdentityVerificationAppTestQuery$data = {
   readonly identityVerification: {
     readonly " $fragmentSpreads": FragmentRefs<"IdentityVerificationApp_identityVerification">;
-  } | null;
+  } | null | undefined;
 };
 export type IdentityVerificationAppTestQuery$rawResponse = {
   readonly identityVerification: {
     readonly id: string;
     readonly internalID: string;
     readonly state: string;
-  } | null;
+  } | null | undefined;
 };
 export type IdentityVerificationAppTestQuery = {
   rawResponse: IdentityVerificationAppTestQuery$rawResponse;

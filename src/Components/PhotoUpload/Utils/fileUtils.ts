@@ -1,5 +1,5 @@
 import { ErrorCode, FileRejection } from "react-dropzone"
-import { Environment } from "relay-runtime"
+import { Environment } from "react-relay"
 import createLogger from "Utils/logger"
 import uuid from "uuid"
 import { createGeminiAssetWithS3Credentials } from "Components/PhotoUpload/Mutations/createGeminiAssetWithS3Credentials"
@@ -133,7 +133,7 @@ export const uploadSubmissionPhoto = async (
     // create asset in Gemini
     return await createGeminiAssetWithS3Credentials(relayEnvironment, {
       sourceKey,
-      sourceBucket: photo.bucket!,
+      sourceBucket: photo.bucket as string,
       templateKey: convectionKey,
       metadata: {
         id: submissionId,

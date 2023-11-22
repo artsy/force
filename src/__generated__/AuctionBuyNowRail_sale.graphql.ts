@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0845e0a2b4d00e855a39966ec06a3a1b>>
+ * @generated SignedSource<<056d025ed86a44a50df1db73aec70a09>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,19 +12,19 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionBuyNowRail_sale$data = {
   readonly promotedSale: {
-    readonly href: string | null;
+    readonly href: string | null | undefined;
     readonly internalID: string;
-    readonly name: string | null;
+    readonly name: string | null | undefined;
     readonly saleArtworksConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly artwork: {
             readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-          } | null;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "AuctionBuyNowRail_sale";
 };
 export type AuctionBuyNowRail_sale$key = {

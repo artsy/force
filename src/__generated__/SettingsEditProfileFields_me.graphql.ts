@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c9c13160cf6354bcdd2994c00048c6e6>>
+ * @generated SignedSource<<49f53b47567f76e16d6032347cda3dc5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,21 +11,21 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditProfileFields_me$data = {
-  readonly bio: string | null;
+  readonly bio: string | null | undefined;
   readonly canRequestEmailConfirmation: boolean;
-  readonly email: string | null;
+  readonly email: string | null | undefined;
   readonly internalID: string;
   readonly isEmailConfirmed: boolean;
-  readonly isIdentityVerified: boolean | null;
+  readonly isIdentityVerified: boolean | null | undefined;
   readonly location: {
-    readonly city: string | null;
-    readonly country: string | null;
-    readonly display: string | null;
-    readonly state: string | null;
-  } | null;
-  readonly name: string | null;
-  readonly otherRelevantPositions: string | null;
-  readonly profession: string | null;
+    readonly city: string | null | undefined;
+    readonly country: string | null | undefined;
+    readonly display: string | null | undefined;
+    readonly state: string | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
+  readonly otherRelevantPositions: string | null | undefined;
+  readonly profession: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileImage_me">;
   readonly " $fragmentType": "SettingsEditProfileFields_me";
 };

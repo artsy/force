@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b22795109960ad163b70075992dd5bad>>
+ * @generated SignedSource<<7cce012903b0115b3b2f5f3ecfe8ea20>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedMarketNews_Test_Query$variables = {};
+export type HomeFeaturedMarketNews_Test_Query$variables = Record<PropertyKey, never>;
 export type HomeFeaturedMarketNews_Test_Query$data = {
   readonly articles: ReadonlyArray<{
     readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedMarketNews_articles">;

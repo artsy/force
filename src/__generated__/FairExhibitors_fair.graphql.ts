@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<40d47abfe861e5186daa445e7f3e0cbd>>
+ * @generated SignedSource<<522e30f31c49fccd1769191cdd8d8e84>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,11 +13,11 @@ import { FragmentRefs } from "relay-runtime";
 export type FairExhibitors_fair$data = {
   readonly exhibitorsGroupedByName: ReadonlyArray<{
     readonly exhibitors: ReadonlyArray<{
-      readonly partnerID: string | null;
-    } | null> | null;
-    readonly letter: string | null;
+      readonly partnerID: string | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly letter: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"FairExhibitorsGroup_exhibitorsGroup">;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"FairExhibitorsGroup_fair">;
   readonly " $fragmentType": "FairExhibitors_fair";
 };

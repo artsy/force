@@ -1,5 +1,6 @@
-import { Environment, fetchQuery, graphql } from "relay-runtime"
+import { fetchQuery, graphql } from "react-relay"
 import { getConvectionGeminiKeyQuery } from "__generated__/getConvectionGeminiKeyQuery.graphql"
+import { Environment } from "react-relay"
 
 export const getConvectionGeminiKey = (relayEnvironment: Environment) =>
   fetchQuery<getConvectionGeminiKeyQuery>(
@@ -21,4 +22,4 @@ export const getConvectionGeminiKey = (relayEnvironment: Environment) =>
     }
   )
     .toPromise()
-    .then(data => data?.system!.services!.convection.geminiTemplateKey)
+    .then(data => data?.system?.services?.convection.geminiTemplateKey)

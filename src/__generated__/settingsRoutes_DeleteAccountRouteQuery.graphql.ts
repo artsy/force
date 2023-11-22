@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ccaa0812a41f75546bdf3a375bea7c22>>
+ * @generated SignedSource<<8d8f56ce2789c0f2ab68d32f6b204460>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_DeleteAccountRouteQuery$variables = {};
+export type settingsRoutes_DeleteAccountRouteQuery$variables = Record<PropertyKey, never>;
 export type settingsRoutes_DeleteAccountRouteQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"DeleteAccountRoute_me">;
-  } | null;
+  } | null | undefined;
 };
 export type settingsRoutes_DeleteAccountRouteQuery = {
   response: settingsRoutes_DeleteAccountRouteQuery$data;

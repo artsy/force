@@ -28,7 +28,6 @@ export const DisableFactorConfirmation: React.FC<DisableFactorConfirmationProps>
     }
 
     try {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       await DisableSecondFactor(relayEnvironment, {
         password,
         secondFactorID,

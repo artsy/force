@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e77ef0508efe97346a4d20951b9ce27e>>
+ * @generated SignedSource<<95f1b3de199128e9b1264f890edd8db6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,10 +17,10 @@ export type MarketingFeaturedArtworksRail_viewer$data = {
         readonly node: {
           readonly internalID: string;
           readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null> | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "MarketingFeaturedArtworksRail_viewer";
 };
 export type MarketingFeaturedArtworksRail_viewer$key = {

@@ -14,7 +14,7 @@ import { useOrderPaymentContext } from "Apps/Order/Routes/Payment/PaymentContext
 import InfoIcon from "@artsy/icons/InfoIcon"
 
 interface Props {
-  order: { mode: string | null; internalID: string }
+  order: { mode: string | null | undefined; internalID: string }
   onError: (error: Error | StripeError) => void
 }
 

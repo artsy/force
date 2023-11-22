@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a07e8f7fd00a2ecf59a8292daa032ef5>>
+ * @generated SignedSource<<1dc0bb879b1a454babf00bb580347829>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,13 +17,13 @@ export type AuctionBidRouteQuery$variables = {
 export type AuctionBidRouteQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"AuctionBidRoute_artwork">;
-  } | null;
+  } | null | undefined;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"AuctionBidRoute_me">;
-  } | null;
+  } | null | undefined;
   readonly sale: {
     readonly " $fragmentSpreads": FragmentRefs<"AuctionBidRoute_sale">;
-  } | null;
+  } | null | undefined;
 };
 export type AuctionBidRouteQuery = {
   response: AuctionBidRouteQuery$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<21315e7bf336ed7a45f92352e76b49aa>>
+ * @generated SignedSource<<ea74a3e0d0eec11bd4642ad4fc033321>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type TagArtworkFilter_Query$variables = {
 export type TagArtworkFilter_Query$data = {
   readonly tag: {
     readonly " $fragmentSpreads": FragmentRefs<"TagArtworkFilter_tag">;
-  } | null;
+  } | null | undefined;
 };
 export type TagArtworkFilter_Query = {
   response: TagArtworkFilter_Query$data;

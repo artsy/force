@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<69ee348c8b7c49d08935ff5ceec5058c>>
+ * @generated SignedSource<<69659e31ab223a0a28a2581329cc3012>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,8 @@ export type DefaultHeader_headerArtworks$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
       readonly " $fragmentSpreads": FragmentRefs<"DefaultHeaderArtwork_artwork">;
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "DefaultHeader_headerArtworks";
 };
 export type DefaultHeader_headerArtworks$key = {

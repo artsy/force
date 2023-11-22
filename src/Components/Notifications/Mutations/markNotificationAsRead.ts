@@ -2,17 +2,9 @@ import {
   markNotificationAsReadMutation,
   markNotificationAsReadMutation$data,
 } from "__generated__/markNotificationAsReadMutation.graphql"
-import {
-  commitMutation,
-  Environment,
-  graphql,
-  RecordSourceSelectorProxy,
-} from "relay-runtime"
+import { Environment, commitMutation, graphql } from "react-relay"
 
-const updater = (
-  id: string,
-  store: RecordSourceSelectorProxy<markNotificationAsReadMutation$data>
-) => {
+const updater = (id: string, store: any) => {
   const notification = store.get(id)
 
   notification?.setValue(false, "isUnread")

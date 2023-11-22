@@ -30,25 +30,24 @@ export class SeoProducts extends Component<SeoProductsProps> {
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
     const artworksForSeoProduct = artworks.edges.filter(edge => {
       return get(edge, e => {
-        return e!.node!.is_acquireable && e!.node!.partner!.profile!.icon!.url
+        return e?.node?.is_acquireable && e?.node?.partner?.profile?.icon?.url
       })
     })
 
-    return artworksForSeoProduct!.map(a => {
-      if (a!.node !== null) {
-        const node = a!.node
+    return artworksForSeoProduct.map(a => {
+      if (a?.node != null) {
+        const node = a?.node
         const {
           artists,
           availability,
           image,
           is_price_range,
           partner,
-          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-          listPrice: { display },
+          listPrice,
         } = node
         const location = partner && partner.locations && partner.locations[0]
         const artistsName = artists
-          ? toSentence(artists.map(artist => artist!.name))
+          ? toSentence(artists.map(artist => artist?.name))
           : null
         const isInstitution = partner && partner.type === "Institution"
         const partnerImg = get(partner, p => {
@@ -71,19 +70,21 @@ export class SeoProducts extends Component<SeoProductsProps> {
               ...(isInstitution
                 ? {}
                 : {
-                    category: node.category,
-                    productionDate: node.date,
+                    category: node?.category,
+                    productionDate: node?.date,
                     offers: {
                       "@type": "Offer",
                       price: !is_price_range
-                        ? formatCurrency(display)
+                        ? formatCurrency(listPrice?.display)
                         : {
                             minPrice:
-                              display && formatCurrency(display.split("-")[0]),
+                              listPrice?.display &&
+                              formatCurrency(listPrice?.display?.split("-")[0]),
                             maxPrice:
-                              display && formatCurrency(display.split("-")[1]),
+                              listPrice?.display &&
+                              formatCurrency(listPrice?.display?.split("-")[1]),
                           },
-                      priceCurrency: node.price_currency,
+                      priceCurrency: node?.price_currency,
                       availability: availability && AVAILABILITY[availability],
                       seller: {
                         "@type": "ArtGallery",

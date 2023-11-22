@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b8be01bdcf4949db20f918a79a758588>>
+ * @generated SignedSource<<3a230f1a7aa184deb5513541870949cb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type orderRoutes_CounterQuery$variables = {
 export type orderRoutes_CounterQuery$data = {
   readonly order: {
     readonly " $fragmentSpreads": FragmentRefs<"Counter_order">;
-  } | null;
+  } | null | undefined;
 };
 export type orderRoutes_CounterQuery = {
   response: orderRoutes_CounterQuery$data;

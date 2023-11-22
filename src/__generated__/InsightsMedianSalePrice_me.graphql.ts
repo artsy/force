@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a54751d27235392666bec4596efcf6c1>>
+ * @generated SignedSource<<62c334f83551bd62ce56c8dcf4c78896>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,19 +17,19 @@ export type InsightsMedianSalePrice_me$data = {
         readonly artist: {
           readonly internalID: string;
           readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
-        } | null;
+        } | null | undefined;
         readonly internalID: string;
         readonly marketPriceInsights: {
-          readonly medianSalePriceDisplayText: string | null;
-        } | null;
-        readonly medium: string | null;
+          readonly medianSalePriceDisplayText: string | null | undefined;
+        } | null | undefined;
+        readonly medium: string | null | undefined;
         readonly mediumType: {
-          readonly name: string | null;
-        } | null;
-        readonly title: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
+          readonly name: string | null | undefined;
+        } | null | undefined;
+        readonly title: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "InsightsMedianSalePrice_me";
 };
 export type InsightsMedianSalePrice_me$key = {

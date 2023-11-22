@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a93200a5911d4cc7a86d8b412c01e869>>
+ * @generated SignedSource<<17ac461d83b79b16594831671bfa2296>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,13 +16,13 @@ export type AuctionAssociatedSale_sale$data = {
       readonly cropped: {
         readonly src: string;
         readonly srcSet: string;
-      } | null;
-    } | null;
-    readonly displayTimelyAt: string | null;
-    readonly href: string | null;
-    readonly name: string | null;
+      } | null | undefined;
+    } | null | undefined;
+    readonly displayTimelyAt: string | null | undefined;
+    readonly href: string | null | undefined;
+    readonly name: string | null | undefined;
     readonly slug: string;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "AuctionAssociatedSale_sale";
 };
 export type AuctionAssociatedSale_sale$key = {

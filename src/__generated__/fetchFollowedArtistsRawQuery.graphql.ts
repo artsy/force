@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4d34595cd3daf96ab664a8846866870e>>
+ * @generated SignedSource<<7f375e1701bdaedb243780821cc0d427>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,7 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type fetchFollowedArtistsRawQuery$variables = {};
+export type fetchFollowedArtistsRawQuery$variables = Record<PropertyKey, never>;
 export type fetchFollowedArtistsRawQuery$data = {
   readonly me: {
     readonly followsAndSaves: {
@@ -19,12 +19,12 @@ export type fetchFollowedArtistsRawQuery$data = {
             readonly artist: {
               readonly internalID: string;
               readonly slug: string;
-            } | null;
-          } | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  } | null;
+            } | null | undefined;
+          } | null | undefined;
+        } | null | undefined> | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type fetchFollowedArtistsRawQuery = {
   response: fetchFollowedArtistsRawQuery$data;

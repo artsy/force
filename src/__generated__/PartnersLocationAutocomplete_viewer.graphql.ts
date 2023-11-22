@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<05ac89c9280b75c9116a6fb41368fd1b>>
+ * @generated SignedSource<<6f71ffe515f7963867773d9406871303>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,18 +13,18 @@ import { FragmentRefs } from "relay-runtime";
 export type PartnersLocationAutocomplete_viewer$data = {
   readonly allCities: ReadonlyArray<{
     readonly coordinates: {
-      readonly lat: number | null;
-      readonly lng: number | null;
-    } | null;
+      readonly lat: number | null | undefined;
+      readonly lng: number | null | undefined;
+    } | null | undefined;
     readonly fullName: string;
     readonly text: string;
     readonly value: string;
   }>;
   readonly featuredCities: ReadonlyArray<{
     readonly coordinates: {
-      readonly lat: number | null;
-      readonly lng: number | null;
-    } | null;
+      readonly lat: number | null | undefined;
+      readonly lng: number | null | undefined;
+    } | null | undefined;
     readonly fullName: string;
     readonly text: string;
     readonly value: string;

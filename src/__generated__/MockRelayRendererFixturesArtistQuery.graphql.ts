@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ee8f8fd3a7d626e41a5ac2ec18b092ab>>
+ * @generated SignedSource<<b094819d4673064acd73fe3c18c6fc6d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,13 +16,13 @@ export type MockRelayRendererFixturesArtistQuery$variables = {
 export type MockRelayRendererFixturesArtistQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"MockRelayRendererFixtures_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type MockRelayRendererFixturesArtistQuery$rawResponse = {
   readonly artist: {
     readonly id: string;
-    readonly name: string | null;
-  } | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
 };
 export type MockRelayRendererFixturesArtistQuery = {
   rawResponse: MockRelayRendererFixturesArtistQuery$rawResponse;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0dca8669b10bf2610e773955e8a33537>>
+ * @generated SignedSource<<c717493a704a510b7a0fe1f95230cf3c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,14 +10,14 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type AddAssetToConsignmentSubmissionInput = {
-  assetType?: string | null;
-  clientMutationId?: string | null;
-  externalSubmissionId?: string | null;
-  filename?: string | null;
+  assetType?: string | null | undefined;
+  clientMutationId?: string | null | undefined;
+  externalSubmissionId?: string | null | undefined;
+  filename?: string | null | undefined;
   geminiToken: string;
-  sessionID?: string | null;
-  size?: string | null;
-  submissionID?: string | null;
+  sessionID?: string | null | undefined;
+  size?: string | null | undefined;
+  submissionID?: string | null | undefined;
 };
 export type addAssetToConsignmentMutation$variables = {
   input: AddAssetToConsignmentSubmissionInput;
@@ -26,8 +26,8 @@ export type addAssetToConsignmentMutation$data = {
   readonly addAssetToConsignmentSubmission: {
     readonly asset: {
       readonly id: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type addAssetToConsignmentMutation = {
   response: addAssetToConsignmentMutation$data;

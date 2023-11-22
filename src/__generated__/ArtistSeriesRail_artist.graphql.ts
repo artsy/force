@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<23fa2fb7c72966c68ad5b3a09b2d9f6a>>
+ * @generated SignedSource<<4795d2ae6df05ac7f17d7f12170d0944>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,10 +18,10 @@ export type ArtistSeriesRail_artist$data = {
         readonly internalID: string;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellArtistSeries_artistSeries">;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly href: string | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly href: string | null | undefined;
   readonly " $fragmentType": "ArtistSeriesRail_artist";
 };
 export type ArtistSeriesRail_artist$key = {

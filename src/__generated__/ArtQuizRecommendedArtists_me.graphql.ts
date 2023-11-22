@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d5acad14460da9dbf9a2a886502f0569>>
+ * @generated SignedSource<<82cc3cd32b01a6fad39574d3b8b05826>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,8 +16,8 @@ export type ArtQuizRecommendedArtists_me$data = {
       readonly artist: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ArtQuizRecommendedArtist_artist">;
-      } | null;
-      readonly isSaved: boolean | null;
+      } | null | undefined;
+      readonly isSaved: boolean | null | undefined;
     }>;
   };
   readonly " $fragmentType": "ArtQuizRecommendedArtists_me";

@@ -37,7 +37,7 @@ export class MarketInsights extends Component<MarketInsightsProps> {
 
     const topAuctionResult =
       this.props.artist.auctionResultsConnection?.edges !== null
-        ? this.props.artist.auctionResultsConnection.edges[0]?.node
+        ? this.props.artist.auctionResultsConnection.edges?.[0]?.node
         : null
 
     const display = [

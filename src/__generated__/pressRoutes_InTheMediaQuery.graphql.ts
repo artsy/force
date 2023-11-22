@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<137c00de10e763f2ebee3a1420adb842>>
+ * @generated SignedSource<<1a30523163309f83b2aac6a0b1bc6c91>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type pressRoutes_InTheMediaQuery$variables = {};
+export type pressRoutes_InTheMediaQuery$variables = Record<PropertyKey, never>;
 export type pressRoutes_InTheMediaQuery$data = {
   readonly page: {
     readonly " $fragmentSpreads": FragmentRefs<"PressApp_page">;

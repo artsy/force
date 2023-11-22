@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<56bec84b6351fc2e3a0bfd0ff8d3d5ec>>
+ * @generated SignedSource<<76bef43c9946562b1e570c48a05c7923>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type UserBidHistory_me$data = {
   readonly inactiveLotStandings: ReadonlyArray<{
     readonly " $fragmentSpreads": FragmentRefs<"SettingsAuctionsLotStanding_lotStanding">;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "UserBidHistory_me";
 };
 export type UserBidHistory_me$key = {

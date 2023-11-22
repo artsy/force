@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ba37308e799b4beac4b1df02fba0d1da>>
+ * @generated SignedSource<<81148cc6be5026551c00b0de4947590d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,18 +15,18 @@ export type ShowBanner_show$data = {
     readonly medium: {
       readonly src: string;
       readonly srcSet: string;
-    } | null;
-  } | null;
-  readonly description: string | null;
-  readonly exhibitionPeriod: string | null;
-  readonly href: string | null;
-  readonly isFairBooth: boolean | null;
+    } | null | undefined;
+  } | null | undefined;
+  readonly description: string | null | undefined;
+  readonly exhibitionPeriod: string | null | undefined;
+  readonly href: string | null | undefined;
+  readonly isFairBooth: boolean | null | undefined;
   readonly location: {
-    readonly city: string | null;
-  } | null;
-  readonly name: string | null;
+    readonly city: string | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly slug: string;
-  readonly status: string | null;
+  readonly status: string | null | undefined;
   readonly " $fragmentType": "ShowBanner_show";
 };
 export type ShowBanner_show$key = {

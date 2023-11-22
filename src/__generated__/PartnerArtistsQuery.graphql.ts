@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6410bce13669e0f376157b5d8640c82c>>
+ * @generated SignedSource<<fc94f654aa4134ded1661ea884d81921>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type PartnerArtistsQuery$variables = {
 export type PartnerArtistsQuery$data = {
   readonly partner: {
     readonly " $fragmentSpreads": FragmentRefs<"PartnerArtists_partner">;
-  } | null;
+  } | null | undefined;
 };
 export type PartnerArtistsQuery = {
   response: PartnerArtistsQuery$data;

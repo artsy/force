@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bdef699ea354df94e7453e09a8ef174d>>
+ * @generated SignedSource<<d0cfd5f799434074ea68b6a2ff505152>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,14 +13,14 @@ import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionImageCollectionCaption_figure$data = {
   readonly __typename: string;
   readonly artist?: {
-    readonly name: string | null;
-  } | null;
-  readonly caption?: string | null;
-  readonly date?: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly caption?: string | null | undefined;
+  readonly date?: string | null | undefined;
   readonly partner?: {
-    readonly name: string | null;
-  } | null;
-  readonly title?: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly title?: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
   readonly " $fragmentType": "ArticleSectionImageCollectionCaption_figure";
 };

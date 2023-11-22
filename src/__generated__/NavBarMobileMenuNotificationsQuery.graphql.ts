@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6ad97ba133c13e99aa99287bb6d7f99c>>
+ * @generated SignedSource<<6ed0eac9c4eb8700975eb6100c4759ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NavBarMobileMenuNotificationsQuery$variables = {};
+export type NavBarMobileMenuNotificationsQuery$variables = Record<PropertyKey, never>;
 export type NavBarMobileMenuNotificationsQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"NavBarMobileMenuNotifications_me">;
-  } | null;
+  } | null | undefined;
 };
 export type NavBarMobileMenuNotificationsQuery = {
   response: NavBarMobileMenuNotificationsQuery$data;

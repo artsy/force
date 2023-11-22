@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b9397f724f778c33c299384bf25c30fa>>
+ * @generated SignedSource<<d8bc7d19e9ac13799fa1f62e93e754b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type showRoutes_ShowSubAppQuery$variables = {
 export type showRoutes_ShowSubAppQuery$data = {
   readonly show: {
     readonly " $fragmentSpreads": FragmentRefs<"ShowSubApp_show">;
-  } | null;
+  } | null | undefined;
 };
 export type showRoutes_ShowSubAppQuery = {
   response: showRoutes_ShowSubAppQuery$data;

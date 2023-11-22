@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7c29db21c059160fe6988055c955c0f6>>
+ * @generated SignedSource<<721616758c0ee9395666638e4f9fcc4b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,63 +12,63 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionEditArtwork_artwork$data = {
   readonly artist: {
-    readonly formattedNationalityAndBirthday: string | null;
+    readonly formattedNationalityAndBirthday: string | null | undefined;
     readonly image: {
       readonly cropped: {
         readonly height: number;
         readonly src: string;
         readonly srcSet: string;
         readonly width: number;
-      } | null;
-    } | null;
-    readonly initials: string | null;
+      } | null | undefined;
+    } | null | undefined;
+    readonly initials: string | null | undefined;
     readonly internalID: string;
-    readonly isPersonalArtist: boolean | null;
-    readonly name: string | null;
+    readonly isPersonalArtist: boolean | null | undefined;
+    readonly name: string | null | undefined;
     readonly targetSupply: {
-      readonly isP1: boolean | null;
+      readonly isP1: boolean | null | undefined;
     };
-  } | null;
-  readonly artistNames: string | null;
-  readonly artworkLocation: string | null;
+  } | null | undefined;
+  readonly artistNames: string | null | undefined;
+  readonly artworkLocation: string | null | undefined;
   readonly attributionClass: {
-    readonly name: string | null;
-  } | null;
-  readonly category: string | null;
-  readonly confidentialNotes: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly category: string | null | undefined;
+  readonly confidentialNotes: string | null | undefined;
   readonly consignmentSubmission: {
-    readonly inProgress: boolean | null;
-  } | null;
-  readonly date: string | null;
-  readonly depth: string | null;
+    readonly inProgress: boolean | null | undefined;
+  } | null | undefined;
+  readonly date: string | null | undefined;
+  readonly depth: string | null | undefined;
   readonly dimensions: {
-    readonly cm: string | null;
-    readonly in: string | null;
-  } | null;
-  readonly editionNumber: string | null;
-  readonly editionSize: string | null;
-  readonly height: string | null;
+    readonly cm: string | null | undefined;
+    readonly in: string | null | undefined;
+  } | null | undefined;
+  readonly editionNumber: string | null | undefined;
+  readonly editionSize: string | null | undefined;
+  readonly height: string | null | undefined;
   readonly id: string;
   readonly images: ReadonlyArray<{
-    readonly height: number | null;
-    readonly imageURL: string | null;
-    readonly internalID: string | null;
-    readonly isDefault: boolean | null;
-    readonly width: number | null;
-  } | null> | null;
+    readonly height: number | null | undefined;
+    readonly imageURL: string | null | undefined;
+    readonly internalID: string | null | undefined;
+    readonly isDefault: boolean | null | undefined;
+    readonly width: number | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly internalID: string;
-  readonly isEdition: boolean | null;
-  readonly medium: string | null;
-  readonly metric: string | null;
+  readonly isEdition: boolean | null | undefined;
+  readonly medium: string | null | undefined;
+  readonly metric: string | null | undefined;
   readonly pricePaid: {
     readonly currencyCode: string;
-    readonly display: string | null;
+    readonly display: string | null | undefined;
     readonly minor: any;
-  } | null;
-  readonly provenance: string | null;
+  } | null | undefined;
+  readonly provenance: string | null | undefined;
   readonly slug: string;
-  readonly title: string | null;
-  readonly width: string | null;
+  readonly title: string | null | undefined;
+  readonly width: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkFormMain_artwork">;
   readonly " $fragmentType": "MyCollectionEditArtwork_artwork";
 };

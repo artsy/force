@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<339383e5a56dc18ea892645b192819a9>>
+ * @generated SignedSource<<d9ff9353f32281ac62a2debc1665dacb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type EntityTooltipGeneQuery$variables = {
 export type EntityTooltipGeneQuery$data = {
   readonly gene: {
     readonly " $fragmentSpreads": FragmentRefs<"EntityTooltipGene_gene">;
-  } | null;
+  } | null | undefined;
 };
 export type EntityTooltipGeneQuery = {
   response: EntityTooltipGeneQuery$data;

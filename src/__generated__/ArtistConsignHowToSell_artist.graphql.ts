@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<74b757b4dbf460671568cb9a3b714257>>
+ * @generated SignedSource<<51ca676e20bf0765627d408e436f8096>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistConsignHowToSell_artist$data = {
-  readonly href: string | null;
+  readonly href: string | null | undefined;
   readonly " $fragmentType": "ArtistConsignHowToSell_artist";
 };
 export type ArtistConsignHowToSell_artist$key = {

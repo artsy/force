@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7600548473e04db6728a7f60f9a6e555>>
+ * @generated SignedSource<<93414b1b95c71412ab0fc8f80c95a405>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,32 +18,32 @@ export type Collection_collection$data = {
         readonly count: number;
         readonly name: string;
         readonly value: string;
-      } | null> | null;
-      readonly slice: ArtworkAggregation | null;
-    } | null> | null;
+      } | null | undefined> | null | undefined;
+      readonly slice: ArtworkAggregation | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly counts?: {
-      readonly followedArtists: any | null;
-    } | null;
+      readonly followedArtists: any | null | undefined;
+    } | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"Header_artworks" | "SeoProductsForArtworks_artworks">;
-  } | null;
+  } | null | undefined;
   readonly ascending_artworks: {
     readonly " $fragmentSpreads": FragmentRefs<"SeoProductsForCollections_ascending_artworks">;
-  } | null;
+  } | null | undefined;
   readonly descending_artworks: {
     readonly " $fragmentSpreads": FragmentRefs<"SeoProductsForCollections_descending_artworks">;
-  } | null;
-  readonly description: string | null;
-  readonly descriptionMarkdown: string | null;
+  } | null | undefined;
+  readonly description: string | null | undefined;
+  readonly descriptionMarkdown: string | null | undefined;
   readonly fallbackHeaderImage: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly image: {
-          readonly url: string | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly headerImage: string | null;
+          readonly url: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly headerImage: string | null | undefined;
   readonly id: string;
   readonly linkedCollections: ReadonlyArray<{
     readonly " $fragmentSpreads": FragmentRefs<"CollectionsHubRails_linkedCollections">;

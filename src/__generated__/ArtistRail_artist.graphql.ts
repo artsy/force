@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<231878b886f7232a1b989ac3fefd09ec>>
+ * @generated SignedSource<<4d733fc9a3ea910fef1125bfe8b6a1e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type ArtistRail_artist$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly name: string | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
   readonly " $fragmentType": "ArtistRail_artist";
 };

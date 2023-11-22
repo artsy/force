@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b3a30ced844ea5af16463825d5164bbf>>
+ * @generated SignedSource<<79a59ee687db5d2f9f0b18096d618362>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,9 +10,9 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SaveArtworkInput = {
-  artworkID?: string | null;
-  clientMutationId?: string | null;
-  remove?: boolean | null;
+  artworkID?: string | null | undefined;
+  clientMutationId?: string | null | undefined;
+  remove?: boolean | null | undefined;
 };
 export type SaveArtworkMutation$variables = {
   input: SaveArtworkInput;
@@ -21,31 +21,31 @@ export type SaveArtworkMutation$data = {
   readonly saveArtwork: {
     readonly artwork: {
       readonly id: string;
-      readonly isSaved: boolean | null;
+      readonly isSaved: boolean | null | undefined;
       readonly slug: string;
-    } | null;
+    } | null | undefined;
     readonly me: {
       readonly counts: {
         readonly savedArtworks: number;
-      } | null;
+      } | null | undefined;
       readonly id: string;
     };
-  } | null;
+  } | null | undefined;
 };
 export type SaveArtworkMutation$rawResponse = {
   readonly saveArtwork: {
     readonly artwork: {
       readonly id: string;
-      readonly isSaved: boolean | null;
+      readonly isSaved: boolean | null | undefined;
       readonly slug: string;
-    } | null;
+    } | null | undefined;
     readonly me: {
       readonly counts: {
         readonly savedArtworks: number;
-      } | null;
+      } | null | undefined;
       readonly id: string;
     };
-  } | null;
+  } | null | undefined;
 };
 export type SaveArtworkMutation = {
   rawResponse: SaveArtworkMutation$rawResponse;

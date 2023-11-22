@@ -1,10 +1,10 @@
-import * as React from "react";
+import * as React from "react"
 import { Box, BoxProps, Text } from "@artsy/palette"
 import { DateTime } from "luxon"
 
 const daysSinceDate = (time: string | DateTime): number => {
   const date = typeof time === "string" ? DateTime.fromISO(time) : time
-  return Math.floor(Math.abs(date.diffNow("days").toObject().days!))
+  return Math.floor(Math.abs(date.diffNow("days").toObject().days as number))
 }
 
 export const fromToday = (time: string | DateTime) => {
@@ -55,7 +55,7 @@ export const relativeDate = (time: string) => {
   } else if (minutesSince <= 10080) {
     return date.toRelative()
   } else if (minutesSince <= 40320) {
-    const numberOfWeeksAgo = Math.floor(Math.abs(minutesSince! / 10080))
+    const numberOfWeeksAgo = Math.floor(Math.abs(minutesSince / 10080))
     const formattedDate =
       numberOfWeeksAgo == 1
         ? `${numberOfWeeksAgo} week ago`
@@ -68,7 +68,7 @@ export const relativeDate = (time: string) => {
 }
 
 interface TimeSinceProps extends Omit<BoxProps, "color"> {
-  time: string | null
+  time: string | null | undefined
   exact?: boolean
   style?: any // FIXME: React.CSSProperties
 }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<98b8a860f847f1860fc530d8f7f6ac60>>
+ * @generated SignedSource<<95e37c81cbc31c37cdffd3b5e9bee9ec>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,13 +22,13 @@ export type ArtistWorksForSaleRoute_artist$data = {
         readonly count: number;
         readonly name: string;
         readonly value: string;
-      } | null> | null;
-      readonly slice: ArtworkAggregation | null;
-    } | null> | null;
+      } | null | undefined> | null | undefined;
+      readonly slice: ArtworkAggregation | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly counts: {
-      readonly total: any | null;
-    } | null;
-  } | null;
+      readonly total: any | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistArtworkFilter_artist" | "ArtistWorksForSaleEmpty_artist">;
   readonly " $fragmentType": "ArtistWorksForSaleRoute_artist";
 };

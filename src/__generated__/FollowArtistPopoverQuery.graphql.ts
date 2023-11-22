@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d9a637e2c3f2558f280a7ad78bd2fbbc>>
+ * @generated SignedSource<<f742578e3119347877b61f425d02db82>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type FollowArtistPopoverQuery$variables = {
 export type FollowArtistPopoverQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"FollowArtistPopover_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type FollowArtistPopoverQuery = {
   response: FollowArtistPopoverQuery$data;

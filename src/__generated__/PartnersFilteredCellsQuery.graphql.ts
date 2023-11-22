@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e47e54e422f9686c1aa33b0df2f41f9f>>
+ * @generated SignedSource<<e05ff961f78a95528a21e48a2d6fa9be>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,15 +12,15 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
 export type PartnersFilteredCellsQuery$variables = {
-  after?: string | null;
-  category?: ReadonlyArray<string | null> | null;
-  near?: string | null;
-  type?: ReadonlyArray<PartnerClassification | null> | null;
+  after?: string | null | undefined;
+  category?: ReadonlyArray<string | null | undefined> | null | undefined;
+  near?: string | null | undefined;
+  type?: ReadonlyArray<PartnerClassification | null | undefined> | null | undefined;
 };
 export type PartnersFilteredCellsQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"PartnersFilteredCells_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type PartnersFilteredCellsQuery = {
   response: PartnersFilteredCellsQuery$data;

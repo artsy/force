@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<73ec2790a21a188ccb0f4fb264569df4>>
+ * @generated SignedSource<<0f6087a8e50d015dae807a730a63dec9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditSettingsInformation_me$data = {
-  readonly email: string | null;
-  readonly name: string | null;
-  readonly paddleNumber: string | null;
+  readonly email: string | null | undefined;
+  readonly name: string | null | undefined;
+  readonly paddleNumber: string | null | undefined;
   readonly phoneNumber: {
-    readonly display: string | null;
-    readonly originalNumber: string | null;
-    readonly regionCode: string | null;
-  } | null;
-  readonly priceRange: string | null;
-  readonly priceRangeMax: number | null;
-  readonly priceRangeMin: number | null;
+    readonly display: string | null | undefined;
+    readonly originalNumber: string | null | undefined;
+    readonly regionCode: string | null | undefined;
+  } | null | undefined;
+  readonly priceRange: string | null | undefined;
+  readonly priceRangeMax: number | null | undefined;
+  readonly priceRangeMin: number | null | undefined;
   readonly " $fragmentType": "SettingsEditSettingsInformation_me";
 };
 export type SettingsEditSettingsInformation_me$key = {

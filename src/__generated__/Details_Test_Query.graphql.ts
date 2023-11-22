@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fdbab72c61bc0d697c0246d9fe3c53ff>>
+ * @generated SignedSource<<cd63e7f6a17139e7e1ecdf9b9d8f36ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,85 +10,85 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type Details_Test_Query$variables = {};
+export type Details_Test_Query$variables = Record<PropertyKey, never>;
 export type Details_Test_Query$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type Details_Test_Query$rawResponse = {
   readonly artwork: {
     readonly artist: {
       readonly id: string;
       readonly targetSupply: {
-        readonly isP1: boolean | null;
+        readonly isP1: boolean | null | undefined;
       };
-    } | null;
-    readonly artistNames: string | null;
+    } | null | undefined;
+    readonly artistNames: string | null | undefined;
     readonly artists: ReadonlyArray<{
-      readonly href: string | null;
+      readonly href: string | null | undefined;
       readonly id: string;
-      readonly name: string | null;
-    } | null> | null;
+      readonly name: string | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly attributionClass: {
       readonly id: string;
-      readonly name: string | null;
-    } | null;
-    readonly collecting_institution: string | null;
-    readonly cultural_maker: string | null;
-    readonly date: string | null;
-    readonly href: string | null;
+      readonly name: string | null | undefined;
+    } | null | undefined;
+    readonly collecting_institution: string | null | undefined;
+    readonly cultural_maker: string | null | undefined;
+    readonly date: string | null | undefined;
+    readonly href: string | null | undefined;
     readonly id: string;
     readonly internalID: string;
-    readonly isSaved: boolean | null;
+    readonly isSaved: boolean | null | undefined;
     readonly isSavedToList: boolean;
     readonly marketPriceInsights: {
-      readonly demandRank: number | null;
-    } | null;
+      readonly demandRank: number | null | undefined;
+    } | null | undefined;
     readonly mediumType: {
       readonly filterGene: {
         readonly id: string;
-        readonly name: string | null;
-      } | null;
-    } | null;
+        readonly name: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
     readonly partner: {
-      readonly href: string | null;
+      readonly href: string | null | undefined;
       readonly id: string;
-      readonly name: string | null;
-    } | null;
+      readonly name: string | null | undefined;
+    } | null | undefined;
     readonly preview: {
-      readonly url: string | null;
-    } | null;
+      readonly url: string | null | undefined;
+    } | null | undefined;
     readonly sale: {
-      readonly cascadingEndTimeIntervalMinutes: number | null;
-      readonly endAt: string | null;
-      readonly extendedBiddingIntervalMinutes: number | null;
+      readonly cascadingEndTimeIntervalMinutes: number | null | undefined;
+      readonly endAt: string | null | undefined;
+      readonly extendedBiddingIntervalMinutes: number | null | undefined;
       readonly id: string;
-      readonly is_auction: boolean | null;
-      readonly is_closed: boolean | null;
-      readonly startAt: string | null;
-    } | null;
+      readonly is_auction: boolean | null | undefined;
+      readonly is_closed: boolean | null | undefined;
+      readonly startAt: string | null | undefined;
+    } | null | undefined;
     readonly sale_artwork: {
       readonly counts: {
-        readonly bidder_positions: any | null;
-      } | null;
-      readonly endAt: string | null;
-      readonly extendedBiddingEndAt: string | null;
-      readonly formattedEndDateTime: string | null;
+        readonly bidder_positions: any | null | undefined;
+      } | null | undefined;
+      readonly endAt: string | null | undefined;
+      readonly extendedBiddingEndAt: string | null | undefined;
+      readonly formattedEndDateTime: string | null | undefined;
       readonly highest_bid: {
-        readonly display: string | null;
-      } | null;
+        readonly display: string | null | undefined;
+      } | null | undefined;
       readonly id: string;
-      readonly lotID: string | null;
-      readonly lotLabel: string | null;
+      readonly lotID: string | null | undefined;
+      readonly lotLabel: string | null | undefined;
       readonly opening_bid: {
-        readonly display: string | null;
-      } | null;
-    } | null;
-    readonly sale_message: string | null;
+        readonly display: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+    readonly sale_message: string | null | undefined;
     readonly slug: string;
-    readonly title: string | null;
-  } | null;
+    readonly title: string | null | undefined;
+  } | null | undefined;
 };
 export type Details_Test_Query = {
   rawResponse: Details_Test_Query$rawResponse;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf9f8b4bbadd214ea82f633b5f8af58f>>
+ * @generated SignedSource<<98507584acfd1fd9337b61235e1c199b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,37 +11,37 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationSnippet_conversation$data = {
-  readonly internalID: string | null;
+  readonly internalID: string | null | undefined;
   readonly items: ReadonlyArray<{
     readonly item: {
       readonly __typename: "Artwork";
-      readonly artistNames: string | null;
-      readonly date: string | null;
+      readonly artistNames: string | null | undefined;
+      readonly date: string | null | undefined;
       readonly image: {
-        readonly url: string | null;
-      } | null;
-      readonly title: string | null;
+        readonly url: string | null | undefined;
+      } | null | undefined;
+      readonly title: string | null | undefined;
     } | {
       readonly __typename: "Show";
       readonly coverImage: {
-        readonly url: string | null;
-      } | null;
+        readonly url: string | null | undefined;
+      } | null | undefined;
       readonly fair: {
-        readonly name: string | null;
-      } | null;
-      readonly name: string | null;
+        readonly name: string | null | undefined;
+      } | null | undefined;
+      readonly name: string | null | undefined;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
-    } | null;
-  } | null> | null;
-  readonly lastMessage: string | null;
-  readonly lastMessageAt: string | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
+  readonly lastMessage: string | null | undefined;
+  readonly lastMessageAt: string | null | undefined;
   readonly to: {
     readonly name: string;
   };
-  readonly unread: boolean | null;
+  readonly unread: boolean | null | undefined;
   readonly " $fragmentType": "ConversationSnippet_conversation";
 };
 export type ConversationSnippet_conversation$key = {

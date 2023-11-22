@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c9c86bd56d9584b6929b409a97b1fc8>>
+ * @generated SignedSource<<c0adc618bfd11c7f7ebbd35fc23dd34d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetailsMediumModal_artwork$data = {
   readonly mediumType: {
-    readonly longDescription: string | null;
-    readonly name: string | null;
-  } | null;
+    readonly longDescription: string | null | undefined;
+    readonly name: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ArtworkDetailsMediumModal_artwork";
 };
 export type ArtworkDetailsMediumModal_artwork$key = {

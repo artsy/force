@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<310b4a6c1ef968a6216e86cc73104f47>>
+ * @generated SignedSource<<5c83a9b4c157067b0d0e52bcb34a85db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type RequestConditionReportInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   saleArtworkID: string;
 };
 export type RequestConditionReportMutation$variables = {
@@ -21,7 +21,7 @@ export type RequestConditionReportMutation$data = {
     readonly conditionReportRequest: {
       readonly internalID: string;
     };
-  } | null;
+  } | null | undefined;
 };
 export type RequestConditionReportMutation = {
   response: RequestConditionReportMutation$data;

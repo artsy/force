@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6f4dd71020ee7e43c4b60c6fcd55759a>>
+ * @generated SignedSource<<7e36831201cbba33846bcf7dd27f12d0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UpdateMyPasswordMutationInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   currentPassword: string;
   newPassword: string;
   passwordConfirmation: string;
@@ -20,8 +20,8 @@ export type useUpdateSettingsPasswordMutation$variables = {
 };
 export type useUpdateSettingsPasswordMutation$data = {
   readonly updateMyPassword: {
-    readonly clientMutationId: string | null;
-  } | null;
+    readonly clientMutationId: string | null | undefined;
+  } | null | undefined;
 };
 export type useUpdateSettingsPasswordMutation = {
   response: useUpdateSettingsPasswordMutation$data;

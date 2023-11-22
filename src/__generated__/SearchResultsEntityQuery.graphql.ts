@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a750c57c5e2e2aa28386fac00858afdd>>
+ * @generated SignedSource<<e3482a7377c887fa07d433bb3f3680b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,18 +12,18 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchEntity = "ARTICLE" | "ARTIST" | "ARTIST_SERIES" | "ARTWORK" | "CITY" | "COLLECTION" | "FAIR" | "FEATURE" | "GALLERY" | "GENE" | "INSTITUTION" | "PAGE" | "PROFILE" | "SALE" | "SHOW" | "TAG" | "VIEWING_ROOM" | "%future added value";
 export type SearchResultsEntityQuery$variables = {
-  after?: string | null;
-  before?: string | null;
-  entities?: ReadonlyArray<SearchEntity | null> | null;
-  first?: number | null;
-  last?: number | null;
-  page?: number | null;
+  after?: string | null | undefined;
+  before?: string | null | undefined;
+  entities?: ReadonlyArray<SearchEntity | null | undefined> | null | undefined;
+  first?: number | null | undefined;
+  last?: number | null | undefined;
+  page?: number | null | undefined;
   term: string;
 };
 export type SearchResultsEntityQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"SearchResultsEntity_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type SearchResultsEntityQuery = {
   response: SearchResultsEntityQuery$data;

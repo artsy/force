@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<61bd6c1605954a199712424780bb6a3b>>
+ * @generated SignedSource<<7e8823ebe426d078eab6ee7e7194d2ed>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,16 +13,16 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarAuctionTimer_artwork$data = {
   readonly internalID: string;
   readonly sale: {
-    readonly cascadingEndTimeIntervalMinutes: number | null;
-    readonly isClosed: boolean | null;
-    readonly startAt: string | null;
+    readonly cascadingEndTimeIntervalMinutes: number | null | undefined;
+    readonly isClosed: boolean | null | undefined;
+    readonly startAt: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"AuctionTimer_sale">;
-  } | null;
+  } | null | undefined;
   readonly saleArtwork: {
-    readonly endAt: string | null;
-    readonly endedAt: string | null;
+    readonly endAt: string | null | undefined;
+    readonly endedAt: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"LotTimer_saleArtwork">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ArtworkSidebarAuctionTimer_artwork";
 };
 export type ArtworkSidebarAuctionTimer_artwork$key = {

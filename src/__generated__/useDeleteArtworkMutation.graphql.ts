@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a00151ae5374101722abbf2366a6425a>>
+ * @generated SignedSource<<72212068c46bc051c68bf804e1e7e3ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type MyCollectionDeleteArtworkInput = {
   artworkId: string;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
 };
 export type useDeleteArtworkMutation$variables = {
   input: MyCollectionDeleteArtworkInput;
@@ -21,12 +21,12 @@ export type useDeleteArtworkMutation$data = {
     readonly artworkOrError: {
       readonly artwork?: {
         readonly internalID: string;
-      } | null;
+      } | null | undefined;
       readonly mutationError?: {
         readonly message: string;
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useDeleteArtworkMutation = {
   response: useDeleteArtworkMutation$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9eb794a38343c191d756d18466ee0e48>>
+ * @generated SignedSource<<10324f8147864ffe1efa7504c7ab1337>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,11 +18,11 @@ export type ConversationMessages_events$data = {
         readonly __typename: string;
         readonly createdAt?: string;
         readonly state?: CommerceOrderStateEnum;
-        readonly stateReason?: string | null;
+        readonly stateReason?: string | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"OrderUpdate_event">;
       }>;
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "ConversationMessages_events";
 };
 export type ConversationMessages_events$key = {

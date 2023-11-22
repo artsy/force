@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bc6fba9cad9cd9c269761ce2ff114198>>
+ * @generated SignedSource<<28cbb3def1b398efa8f6e10d2af0aa52>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type InstitutionsRouteFragmentContainer_Test_Query$variables = {};
+export type InstitutionsRouteFragmentContainer_Test_Query$variables = Record<PropertyKey, never>;
 export type InstitutionsRouteFragmentContainer_Test_Query$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"InstitutionsRoute_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type InstitutionsRouteFragmentContainer_Test_Query = {
   response: InstitutionsRouteFragmentContainer_Test_Query$data;

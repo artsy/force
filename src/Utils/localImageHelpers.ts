@@ -57,7 +57,10 @@ export const cleanLocalImages = async () => {
  * Returns the local image if it is stored and the requested image version is not available
  */
 export const useLocalImage = (
-  image: { internalID: string | null; versions: any } | null,
+  image:
+    | { internalID: string | null | undefined; versions: any }
+    | null
+    | undefined,
   requestedImageVersion?: string
 ) => {
   return useLocalImageStorage(
@@ -91,7 +94,7 @@ export const useLocalImageStorage = (
     }
 
     try {
-      setLocalImage(await getLocalImage(key!))
+      setLocalImage(await getLocalImage(key))
     } catch (error) {
       console.error(error)
     }

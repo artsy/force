@@ -13,7 +13,10 @@ interface PollAccountBalanceProps {
   relay: RelayRefetchProp
   setupIntentId: string
   bankAccountId: string
-  commerceBankAccountBalance: PollAccountBalance_commerceBankAccountBalance$data | null
+  commerceBankAccountBalance:
+    | PollAccountBalance_commerceBankAccountBalance$data
+    | null
+    | undefined
   onBalanceCheckComplete: (
     displayInsufficientFundsError: boolean,
     checkResult: BalanceCheckResult

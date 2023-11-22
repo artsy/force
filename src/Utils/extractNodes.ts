@@ -1,9 +1,16 @@
 export function extractNodes<Node extends object, T = Node>(
   connection:
     | {
-        readonly edges?: ReadonlyArray<{
-          readonly node?: Node | null
-        } | null> | null
+        readonly edges?:
+          | ReadonlyArray<
+              | {
+                  readonly node?: Node | null | undefined
+                }
+              | null
+              | undefined
+            >
+          | null
+          | undefined
       }
     | undefined
     | null,
@@ -11,6 +18,7 @@ export function extractNodes<Node extends object, T = Node>(
 ): T[] {
   return (
     connection?.edges?.map(edge =>
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       mapper ? (mapper(edge?.node!) as any) : edge?.node!
     ) ?? []
   )

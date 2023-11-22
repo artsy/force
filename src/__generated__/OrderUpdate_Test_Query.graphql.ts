@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7abfbeb36aafb5b6501d140474913f60>>
+ * @generated SignedSource<<10c69196a55381880917c0da4fd57964>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,11 +23,11 @@ export type OrderUpdate_Test_Query$data = {
               readonly __typename: string;
               readonly " $fragmentSpreads": FragmentRefs<"OrderUpdate_event">;
             }>;
-          } | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  } | null;
+          } | null | undefined;
+        } | null | undefined> | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type OrderUpdate_Test_Query = {
   response: OrderUpdate_Test_Query$data;

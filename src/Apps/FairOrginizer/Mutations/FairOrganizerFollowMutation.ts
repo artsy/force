@@ -1,5 +1,6 @@
-import { commitMutation, Environment, graphql } from "relay-runtime"
+import { commitMutation, graphql } from "react-relay"
 import { FairOrganizerFollowMutation } from "__generated__/FairOrganizerFollowMutation.graphql"
+import { Environment } from "react-relay"
 
 export type FollowFairOrganizerMutationProps = (
   relayEnvironment: Environment,

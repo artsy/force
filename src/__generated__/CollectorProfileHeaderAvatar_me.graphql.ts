@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d658ac8e5573c4be628a16c1eb3ceb01>>
+ * @generated SignedSource<<f3e73b41b6d5f46103aaad8424c22aa1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,8 +15,8 @@ export type CollectorProfileHeaderAvatar_me$data = {
     readonly resized: {
       readonly src: string;
       readonly srcSet: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "CollectorProfileHeaderAvatar_me";
 };
 export type CollectorProfileHeaderAvatar_me$key = {

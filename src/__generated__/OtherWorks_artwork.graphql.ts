@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a0f826a8f88a8e7bb29ba16f3a0a0c13>>
+ * @generated SignedSource<<b83bbd72e3a8d69ea30ed3c882414db3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,21 +13,21 @@ import { FragmentRefs } from "relay-runtime";
 export type OtherWorks_artwork$data = {
   readonly context: {
     readonly __typename: string;
-  } | null;
+  } | null | undefined;
   readonly contextGrids: ReadonlyArray<{
     readonly __typename: string;
     readonly artworksConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly slug: string;
-        } | null;
-      } | null> | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
       readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
-    } | null;
-    readonly ctaHref: string | null;
-    readonly ctaTitle: string | null;
-    readonly title: string | null;
-  } | null> | null;
+    } | null | undefined;
+    readonly ctaHref: string | null | undefined;
+    readonly ctaTitle: string | null | undefined;
+    readonly title: string | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "OtherWorks_artwork";
 };

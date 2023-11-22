@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1bcfe95fe46fa6b1d461fcb3d0161f52>>
+ * @generated SignedSource<<ccc554045184cf30b8bd05d2b9a53484>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,16 +12,16 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowContextualLink_show$data = {
   readonly fair: {
-    readonly href: string | null;
-    readonly isActive: boolean | null;
-    readonly name: string | null;
-  } | null;
-  readonly isFairBooth: boolean | null;
+    readonly href: string | null | undefined;
+    readonly isActive: boolean | null | undefined;
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly isFairBooth: boolean | null | undefined;
   readonly partner: {
-    readonly href?: string | null;
-    readonly isLinkable?: boolean | null;
-    readonly name?: string | null;
-  } | null;
+    readonly href?: string | null | undefined;
+    readonly isLinkable?: boolean | null | undefined;
+    readonly name?: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ShowContextualLink_show";
 };
 export type ShowContextualLink_show$key = {

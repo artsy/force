@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b9fa9cc7e31fc79106c4a1f51c5325bf>>
+ * @generated SignedSource<<535c2f57a08d8c41ace55084e24d5cde>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionDetailsStartTime_sale$data = {
   readonly cascadingEndTime: {
-    readonly formattedStartDateTime: string | null;
-  } | null;
+    readonly formattedStartDateTime: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "AuctionDetailsStartTime_sale";
 };
 export type AuctionDetailsStartTime_sale$key = {

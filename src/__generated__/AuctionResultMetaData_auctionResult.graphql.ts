@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7204c63f476a5bf4faf71425ed0247a0>>
+ * @generated SignedSource<<93ac1fc6f013307367cc4fbe5e292368>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResultMetaData_auctionResult$data = {
-  readonly dimensionText: string | null;
+  readonly dimensionText: string | null | undefined;
   readonly estimate: {
-    readonly display: string | null;
-  } | null;
-  readonly formattedSaleDate: string | null;
-  readonly isUpcoming: boolean | null;
-  readonly location: string | null;
-  readonly lotNumber: string | null;
-  readonly mediumText: string | null;
-  readonly organization: string | null;
-  readonly saleTitle: string | null;
+    readonly display: string | null | undefined;
+  } | null | undefined;
+  readonly formattedSaleDate: string | null | undefined;
+  readonly isUpcoming: boolean | null | undefined;
+  readonly location: string | null | undefined;
+  readonly lotNumber: string | null | undefined;
+  readonly mediumText: string | null | undefined;
+  readonly organization: string | null | undefined;
+  readonly saleTitle: string | null | undefined;
   readonly " $fragmentType": "AuctionResultMetaData_auctionResult";
 };
 export type AuctionResultMetaData_auctionResult$key = {

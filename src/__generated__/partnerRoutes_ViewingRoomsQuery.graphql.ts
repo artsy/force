@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd003bef9959ddf238ddb2d2e12a2842>>
+ * @generated SignedSource<<c9638769ce2c73e62a667d9e5a86ea82>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,13 +16,13 @@ export type partnerRoutes_ViewingRoomsQuery$variables = {
 export type partnerRoutes_ViewingRoomsQuery$data = {
   readonly currentViewingRooms: {
     readonly " $fragmentSpreads": FragmentRefs<"PartnerViewingRooms_currentViewingRooms">;
-  } | null;
+  } | null | undefined;
   readonly pastViewingRooms: {
     readonly " $fragmentSpreads": FragmentRefs<"PartnerViewingRooms_pastViewingRooms">;
-  } | null;
+  } | null | undefined;
   readonly upcomingViewingRooms: {
     readonly " $fragmentSpreads": FragmentRefs<"PartnerViewingRooms_upcomingViewingRooms">;
-  } | null;
+  } | null | undefined;
 };
 export type partnerRoutes_ViewingRoomsQuery = {
   response: partnerRoutes_ViewingRoomsQuery$data;

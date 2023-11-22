@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<af7bf69c3112dfcf433c3479fc67ca38>>
+ * @generated SignedSource<<94077d46040bfdddc95175f3679389ed>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,31 +14,31 @@ export type ItemReview_lineItem$data = {
   readonly artwork: {
     readonly editionSets: ReadonlyArray<{
       readonly dimensions: {
-        readonly cm: string | null;
-        readonly in: string | null;
-      } | null;
+        readonly cm: string | null | undefined;
+        readonly in: string | null | undefined;
+      } | null | undefined;
       readonly internalID: string;
-    } | null> | null;
-  } | null;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly artworkVersion: {
-    readonly artistNames: string | null;
+    readonly artistNames: string | null | undefined;
     readonly attributionClass: {
-      readonly shortDescription: string | null;
-    } | null;
-    readonly date: string | null;
+      readonly shortDescription: string | null | undefined;
+    } | null | undefined;
+    readonly date: string | null | undefined;
     readonly dimensions: {
-      readonly cm: string | null;
-      readonly in: string | null;
-    } | null;
+      readonly cm: string | null | undefined;
+      readonly in: string | null | undefined;
+    } | null | undefined;
     readonly image: {
       readonly resized: {
         readonly url: string;
-      } | null;
-    } | null;
-    readonly medium: string | null;
-    readonly title: string | null;
-  } | null;
-  readonly editionSetId: string | null;
+      } | null | undefined;
+    } | null | undefined;
+    readonly medium: string | null | undefined;
+    readonly title: string | null | undefined;
+  } | null | undefined;
+  readonly editionSetId: string | null | undefined;
   readonly " $fragmentType": "ItemReview_lineItem";
 };
 export type ItemReview_lineItem$key = {

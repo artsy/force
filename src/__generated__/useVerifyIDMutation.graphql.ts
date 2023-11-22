@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<95981cfa16e11eec933c2ffd00b1c8d2>>
+ * @generated SignedSource<<4129ec47c4d3871a3d849471080b882a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,14 +10,14 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SendIdentityVerificationEmailMutationInput = {
-  clientMutationId?: string | null;
-  email?: string | null;
-  initiatorID?: string | null;
-  name?: string | null;
-  orderID?: string | null;
-  saleID?: string | null;
-  sendEmail?: boolean | null;
-  userID?: string | null;
+  clientMutationId?: string | null | undefined;
+  email?: string | null | undefined;
+  initiatorID?: string | null | undefined;
+  name?: string | null | undefined;
+  orderID?: string | null | undefined;
+  saleID?: string | null | undefined;
+  sendEmail?: boolean | null | undefined;
+  userID?: string | null | undefined;
 };
 export type useVerifyIDMutation$variables = {
   input: SendIdentityVerificationEmailMutationInput;
@@ -28,14 +28,14 @@ export type useVerifyIDMutation$data = {
       readonly identityVerification?: {
         readonly internalID: string;
         readonly state: string;
-        readonly userID: string | null;
-      } | null;
+        readonly userID: string | null | undefined;
+      } | null | undefined;
       readonly mutationError?: {
-        readonly error: string | null;
+        readonly error: string | null | undefined;
         readonly message: string;
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useVerifyIDMutation = {
   response: useVerifyIDMutation$data;

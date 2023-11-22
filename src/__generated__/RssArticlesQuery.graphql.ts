@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0860f8c0871e5ba75f4cbf94d3f3f7b2>>
+ * @generated SignedSource<<d14b59332919d480160deefc7c3fb807>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,52 +16,52 @@ export type RssArticlesQuery$data = {
   readonly articlesConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly byline: string | null;
+        readonly byline: string | null | undefined;
         readonly hero: {
-          readonly embed?: string | null;
+          readonly embed?: string | null | undefined;
           readonly image?: {
             readonly resized: {
               readonly src: string;
-            } | null;
-          } | null;
-        } | null;
-        readonly href: string | null;
+            } | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+        readonly href: string | null | undefined;
         readonly id: string;
-        readonly publishedAt: string | null;
+        readonly publishedAt: string | null | undefined;
         readonly sections: ReadonlyArray<{
           readonly __typename: "ArticleSectionEmbed";
-          readonly url: string | null;
+          readonly url: string | null | undefined;
         } | {
           readonly __typename: "ArticleSectionImageCollection";
           readonly figures: ReadonlyArray<{
             readonly __typename: "ArticleImageSection";
             readonly image: {
-              readonly caption: string | null;
+              readonly caption: string | null | undefined;
               readonly resized: {
-                readonly height: number | null;
+                readonly height: number | null | undefined;
                 readonly src: string;
                 readonly srcSet: string;
-                readonly width: number | null;
-              } | null;
-            } | null;
+                readonly width: number | null | undefined;
+              } | null | undefined;
+            } | null | undefined;
           } | {
             readonly __typename: "Artwork";
             readonly artists: ReadonlyArray<{
-              readonly name: string | null;
-            } | null> | null;
-            readonly date: string | null;
+              readonly name: string | null | undefined;
+            } | null | undefined> | null | undefined;
+            readonly date: string | null | undefined;
             readonly image: {
               readonly resized: {
-                readonly height: number | null;
+                readonly height: number | null | undefined;
                 readonly src: string;
                 readonly srcSet: string;
-                readonly width: number | null;
-              } | null;
-            } | null;
+                readonly width: number | null | undefined;
+              } | null | undefined;
+            } | null | undefined;
             readonly partner: {
-              readonly name: string | null;
-            } | null;
-            readonly title: string | null;
+              readonly name: string | null | undefined;
+            } | null | undefined;
+            readonly title: string | null | undefined;
           } | {
             // This will never be '%other', but we need some
             // value in case none of the concrete values match.
@@ -72,32 +72,32 @@ export type RssArticlesQuery$data = {
           readonly figures: ReadonlyArray<{
             readonly __typename: "ArticleImageSection";
             readonly image: {
-              readonly caption: string | null;
+              readonly caption: string | null | undefined;
               readonly resized: {
-                readonly height: number | null;
+                readonly height: number | null | undefined;
                 readonly src: string;
                 readonly srcSet: string;
-                readonly width: number | null;
-              } | null;
-            } | null;
+                readonly width: number | null | undefined;
+              } | null | undefined;
+            } | null | undefined;
           } | {
             readonly __typename: "Artwork";
             readonly artists: ReadonlyArray<{
-              readonly name: string | null;
-            } | null> | null;
-            readonly date: string | null;
+              readonly name: string | null | undefined;
+            } | null | undefined> | null | undefined;
+            readonly date: string | null | undefined;
             readonly image: {
               readonly resized: {
-                readonly height: number | null;
+                readonly height: number | null | undefined;
                 readonly src: string;
                 readonly srcSet: string;
-                readonly width: number | null;
-              } | null;
-            } | null;
+                readonly width: number | null | undefined;
+              } | null | undefined;
+            } | null | undefined;
             readonly partner: {
-              readonly name: string | null;
-            } | null;
-            readonly title: string | null;
+              readonly name: string | null | undefined;
+            } | null | undefined;
+            readonly title: string | null | undefined;
           } | {
             // This will never be '%other', but we need some
             // value in case none of the concrete values match.
@@ -105,10 +105,10 @@ export type RssArticlesQuery$data = {
           }>;
         } | {
           readonly __typename: "ArticleSectionText";
-          readonly body: string | null;
+          readonly body: string | null | undefined;
         } | {
           readonly __typename: "ArticleSectionVideo";
-          readonly embed: string | null;
+          readonly embed: string | null | undefined;
         } | {
           // This will never be '%other', but we need some
           // value in case none of the concrete values match.
@@ -117,12 +117,12 @@ export type RssArticlesQuery$data = {
         readonly thumbnailImage: {
           readonly resized: {
             readonly src: string;
-          } | null;
-        } | null;
-        readonly thumbnailTitle: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
+          } | null | undefined;
+        } | null | undefined;
+        readonly thumbnailTitle: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
 };
 export type RssArticlesQuery = {
   response: RssArticlesQuery$data;

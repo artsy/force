@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1aead2465e0d58ad59d9c837272bd6f5>>
+ * @generated SignedSource<<9cfcf9c8e68d5a1b9bd3f05574fce67a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type NavigationTabs_searchableConnection$data = {
     readonly counts: ReadonlyArray<{
       readonly count: number;
       readonly name: string;
-    } | null> | null;
-    readonly slice: SearchAggregation | null;
-  } | null> | null;
+    } | null | undefined> | null | undefined;
+    readonly slice: SearchAggregation | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "NavigationTabs_searchableConnection";
 };
 export type NavigationTabs_searchableConnection$key = {

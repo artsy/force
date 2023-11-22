@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a3ff571328c8a715b96ff288f0d075d>>
+ * @generated SignedSource<<51981340b4144e74e3753f6ed98eae5c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type myCollectionInsightsCollectorProfileRoutesQuery$variables = {
 export type myCollectionInsightsCollectorProfileRoutesQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionInsightsMedianSalePriceAtAuction_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type myCollectionInsightsCollectorProfileRoutesQuery = {
   response: myCollectionInsightsCollectorProfileRoutesQuery$data;

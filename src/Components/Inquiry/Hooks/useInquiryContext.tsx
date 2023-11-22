@@ -18,7 +18,7 @@ import { Visited } from "Components/Inquiry/Visited"
 import { logger } from "Components/Inquiry/util"
 import { Location } from "Components/LocationAutocompleteInput"
 import { Spinner } from "@artsy/palette"
-import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import { Environment as IEnvironment } from "react-relay"
 import { setAfterAuthAction } from "Utils/Hooks/useAuthIntent"
 
 export type Context = {
@@ -111,7 +111,7 @@ const InquiryContext = createContext<{
   next(): void
   dispatchCreateAlert(): void
   onClose(): void
-  relayEnvironment: React.RefObject<Environment>
+  relayEnvironment: React.RefObject<IEnvironment>
   setContext: (updatedContext: Partial<Context>) => React.RefObject<Context>
   setInquiry: React.Dispatch<React.SetStateAction<InquiryState>>
   /** Set an updated Relay environment once the user is authenticated */
@@ -209,20 +209,17 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
 
   const { relayEnvironment: defaultRelayEnvironment } = useSystemContext()
 
-  const relayEnvironment = useRef(defaultRelayEnvironment!)
+  const relayEnvironment = useRef(defaultRelayEnvironment)
 
   /**
    * In this flow we go from a logged out state to a logged in/signed up state
    * where we have to execute mutations like sending the inquiry, saving your
    * information, etc. We store the Relay environment in a ref then update it here.
    */
-  const setRelayEnvironment = useCallback(
-    (updatedEnvironment: RelayModernEnvironment) => {
-      relayEnvironment.current = updatedEnvironment
-      return relayEnvironment
-    },
-    []
-  )
+  const setRelayEnvironment = useCallback((updatedEnvironment: Environment) => {
+    relayEnvironment.current = updatedEnvironment
+    return relayEnvironment
+  }, [])
 
   return (
     <InquiryContext.Provider
@@ -249,7 +246,7 @@ export const InquiryProvider: React.FC<InquiryProviderProps> = ({
 }
 
 interface InquiryContextContextProps {
-  me: useInquiryContext_me$data | null
+  me: useInquiryContext_me$data | null | undefined
 }
 
 const InquiryContextContext: React.FC<InquiryContextContextProps> = ({

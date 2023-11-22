@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3aab1473cd9099a7eae5898314af8ed6>>
+ * @generated SignedSource<<4db4e41b96f0b73b4b971759991ff2bc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,8 +15,8 @@ export type AuctionApp_me$data = {
   readonly showActiveBids: ReadonlyArray<{
     readonly activeBid: {
       readonly internalID: string;
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"AuctionActiveBids_me" | "AuctionDetails_me">;
   readonly " $fragmentType": "AuctionApp_me";
 };

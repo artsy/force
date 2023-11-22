@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f66d6f7de4a5a9e498ad354ca69006d6>>
+ * @generated SignedSource<<ab959e81793ca2df9b354eee0a066cfe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type orderRoutes_ShippingQuery$variables = {
 export type orderRoutes_ShippingQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"Shipping2_me" | "Shipping_me">;
-  } | null;
+  } | null | undefined;
   readonly order: {
     readonly " $fragmentSpreads": FragmentRefs<"Shipping2_order" | "Shipping_order">;
-  } | null;
+  } | null | undefined;
 };
 export type orderRoutes_ShippingQuery = {
   response: orderRoutes_ShippingQuery$data;

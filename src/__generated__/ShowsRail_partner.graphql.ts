@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<75754697e795db2141fe845672dbacbb>>
+ * @generated SignedSource<<71c808601ec808bf21909a4383fa7de3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,16 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowsRail_partner$data = {
-  readonly displayFullPartnerPage: boolean | null;
+  readonly displayFullPartnerPage: boolean | null | undefined;
   readonly showsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
-      } | null;
-    } | null> | null;
-    readonly totalCount: number | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ShowsRail_partner";
 };

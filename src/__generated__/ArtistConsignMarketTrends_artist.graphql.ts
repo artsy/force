@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d04392b94068d6c961ae8584842ff40e>>
+ * @generated SignedSource<<8b4448a48b02542cfb4879f30a75abea>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,15 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistConsignMarketTrends_artist$data = {
-  readonly href: string | null;
+  readonly href: string | null | undefined;
   readonly targetSupply: {
     readonly microfunnel: {
       readonly metadata: {
-        readonly highestRealized: string | null;
-        readonly realized: string | null;
-        readonly str: string | null;
-      } | null;
-    } | null;
+        readonly highestRealized: string | null | undefined;
+        readonly realized: string | null | undefined;
+        readonly str: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
   };
   readonly " $fragmentType": "ArtistConsignMarketTrends_artist";
 };

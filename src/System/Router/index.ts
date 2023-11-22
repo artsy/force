@@ -1,8 +1,8 @@
-import { RelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { FarceCreateRouterArgs } from "found"
 import { SystemContextProps } from "System/SystemContext"
 import { AppRouteConfig } from "./Route"
 import { FeatureFlags } from "Server/featureFlags/featureFlagService"
+import { Environment } from "react-relay"
 
 /**
  * Configuration used when creating a new Router app
@@ -11,7 +11,7 @@ export interface RouterConfig {
   /**
    * Context values to be passed to ArtsyContext
    */
-  context?: SystemContextProps & { relayEnvironment?: RelaySSREnvironment }
+  context?: SystemContextProps & { relayEnvironment?: Environment }
 
   /**
    * Configuration options to be passed to Found router

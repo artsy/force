@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<be328b8ac1c1eef0c55701e6ed20b87a>>
+ * @generated SignedSource<<65fb09c624c5dea843933c89ab60e4dc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,15 +9,15 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type useUserPhoneNumberQuery$variables = {};
+export type useUserPhoneNumberQuery$variables = Record<PropertyKey, never>;
 export type useUserPhoneNumberQuery$data = {
   readonly me: {
     readonly phoneNumber: {
-      readonly display: string | null;
-      readonly originalNumber: string | null;
-      readonly regionCode: string | null;
-    } | null;
-  } | null;
+      readonly display: string | null | undefined;
+      readonly originalNumber: string | null | undefined;
+      readonly regionCode: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useUserPhoneNumberQuery = {
   response: useUserPhoneNumberQuery$data;

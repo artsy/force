@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<636c778a6475a9b1673e5b253e486e58>>
+ * @generated SignedSource<<bb6e718be4bf3f22d87fca10bb10aec4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnersLocationAutocompleteQuery$variables = {};
+export type PartnersLocationAutocompleteQuery$variables = Record<PropertyKey, never>;
 export type PartnersLocationAutocompleteQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"PartnersLocationAutocomplete_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type PartnersLocationAutocompleteQuery = {
   response: PartnersLocationAutocompleteQuery$data;

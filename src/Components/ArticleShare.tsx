@@ -7,8 +7,8 @@ import FacebookIcon from "@artsy/icons/FacebookIcon"
 import EnvelopeIcon from "@artsy/icons/EnvelopeIcon"
 
 interface ArticleShareProps extends BoxProps {
-  description: string | null
-  pathname: string | null
+  description: string | null | undefined
+  pathname: string | null | undefined
 }
 
 export const ArticleShare: FC<ArticleShareProps> = ({

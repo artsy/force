@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<be727c440a33dd618f9d0f5ac0a9f15d>>
+ * @generated SignedSource<<40064f1db1cfabf10bc3dfaf5e0b42b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,55 +13,55 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ARTIST_SERIES" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type FilterArtworksInput = {
-  acquireable?: boolean | null;
-  additionalGeneIDs?: ReadonlyArray<string | null> | null;
-  after?: string | null;
-  aggregationPartnerCities?: ReadonlyArray<string | null> | null;
-  aggregations?: ReadonlyArray<ArtworkAggregation | null> | null;
-  artistID?: string | null;
-  artistIDs?: ReadonlyArray<string | null> | null;
-  artistNationalities?: ReadonlyArray<string | null> | null;
-  artistSeriesID?: string | null;
-  artistSeriesIDs?: ReadonlyArray<string | null> | null;
-  atAuction?: boolean | null;
-  attributionClass?: ReadonlyArray<string | null> | null;
-  before?: string | null;
-  color?: string | null;
-  colors?: ReadonlyArray<string | null> | null;
-  dimensionRange?: string | null;
-  excludeArtworkIDs?: ReadonlyArray<string | null> | null;
-  extraAggregationGeneIDs?: ReadonlyArray<string | null> | null;
-  first?: number | null;
-  forSale?: boolean | null;
-  geneID?: string | null;
-  geneIDs?: ReadonlyArray<string | null> | null;
-  height?: string | null;
-  includeArtworksByFollowedArtists?: boolean | null;
-  includeMediumFilterInAggregation?: boolean | null;
-  inquireableOnly?: boolean | null;
-  keyword?: string | null;
-  keywordMatchExact?: boolean | null;
-  last?: number | null;
-  locationCities?: ReadonlyArray<string | null> | null;
-  majorPeriods?: ReadonlyArray<string | null> | null;
-  marketable?: boolean | null;
-  marketingCollectionID?: string | null;
-  materialsTerms?: ReadonlyArray<string | null> | null;
-  medium?: string | null;
-  offerable?: boolean | null;
-  page?: number | null;
-  partnerCities?: ReadonlyArray<string | null> | null;
-  partnerID?: string | null;
-  partnerIDs?: ReadonlyArray<string | null> | null;
-  period?: string | null;
-  periods?: ReadonlyArray<string | null> | null;
-  priceRange?: string | null;
-  saleID?: string | null;
-  size?: number | null;
-  sizes?: ReadonlyArray<ArtworkSizes | null> | null;
-  sort?: string | null;
-  tagID?: string | null;
-  width?: string | null;
+  acquireable?: boolean | null | undefined;
+  additionalGeneIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  after?: string | null | undefined;
+  aggregationPartnerCities?: ReadonlyArray<string | null | undefined> | null | undefined;
+  aggregations?: ReadonlyArray<ArtworkAggregation | null | undefined> | null | undefined;
+  artistID?: string | null | undefined;
+  artistIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  artistNationalities?: ReadonlyArray<string | null | undefined> | null | undefined;
+  artistSeriesID?: string | null | undefined;
+  artistSeriesIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  atAuction?: boolean | null | undefined;
+  attributionClass?: ReadonlyArray<string | null | undefined> | null | undefined;
+  before?: string | null | undefined;
+  color?: string | null | undefined;
+  colors?: ReadonlyArray<string | null | undefined> | null | undefined;
+  dimensionRange?: string | null | undefined;
+  excludeArtworkIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  extraAggregationGeneIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  first?: number | null | undefined;
+  forSale?: boolean | null | undefined;
+  geneID?: string | null | undefined;
+  geneIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  height?: string | null | undefined;
+  includeArtworksByFollowedArtists?: boolean | null | undefined;
+  includeMediumFilterInAggregation?: boolean | null | undefined;
+  inquireableOnly?: boolean | null | undefined;
+  keyword?: string | null | undefined;
+  keywordMatchExact?: boolean | null | undefined;
+  last?: number | null | undefined;
+  locationCities?: ReadonlyArray<string | null | undefined> | null | undefined;
+  majorPeriods?: ReadonlyArray<string | null | undefined> | null | undefined;
+  marketable?: boolean | null | undefined;
+  marketingCollectionID?: string | null | undefined;
+  materialsTerms?: ReadonlyArray<string | null | undefined> | null | undefined;
+  medium?: string | null | undefined;
+  offerable?: boolean | null | undefined;
+  page?: number | null | undefined;
+  partnerCities?: ReadonlyArray<string | null | undefined> | null | undefined;
+  partnerID?: string | null | undefined;
+  partnerIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  period?: string | null | undefined;
+  periods?: ReadonlyArray<string | null | undefined> | null | undefined;
+  priceRange?: string | null | undefined;
+  saleID?: string | null | undefined;
+  size?: number | null | undefined;
+  sizes?: ReadonlyArray<ArtworkSizes | null | undefined> | null | undefined;
+  sort?: string | null | undefined;
+  tagID?: string | null | undefined;
+  width?: string | null | undefined;
 };
 export type AuctionArtworkFilterTestQuery$variables = {
   input: FilterArtworksInput;
@@ -69,7 +69,7 @@ export type AuctionArtworkFilterTestQuery$variables = {
 export type AuctionArtworkFilterTestQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworkFilter_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type AuctionArtworkFilterTestQuery = {
   response: AuctionArtworkFilterTestQuery$data;

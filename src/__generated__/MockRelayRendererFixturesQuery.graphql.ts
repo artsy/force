@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<61e63cc5e6ad64c47a06391b37c85902>>
+ * @generated SignedSource<<71904498037fd2efe35bcec4663f8277>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,24 +10,24 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MockRelayRendererFixturesQuery$variables = {};
+export type MockRelayRendererFixturesQuery$variables = Record<PropertyKey, never>;
 export type MockRelayRendererFixturesQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"MockRelayRendererFixtures_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type MockRelayRendererFixturesQuery$rawResponse = {
   readonly artwork: {
     readonly artist: {
       readonly id: string;
       readonly slug: string;
-    } | null;
+    } | null | undefined;
     readonly id: string;
     readonly image: {
-      readonly url: string | null;
-    } | null;
-    readonly title: string | null;
-  } | null;
+      readonly url: string | null | undefined;
+    } | null | undefined;
+    readonly title: string | null | undefined;
+  } | null | undefined;
 };
 export type MockRelayRendererFixturesQuery = {
   rawResponse: MockRelayRendererFixturesQuery$rawResponse;

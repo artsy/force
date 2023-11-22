@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0773f293cad902228d9687e616f98560>>
+ * @generated SignedSource<<d600ad56c9eb8264387a9620781c0c73>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,7 @@ export type HomeFeaturedShowsRail_orderedSet$data = {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "HomeFeaturedShowsRail_orderedSet";
 };
 export type HomeFeaturedShowsRail_orderedSet$key = {

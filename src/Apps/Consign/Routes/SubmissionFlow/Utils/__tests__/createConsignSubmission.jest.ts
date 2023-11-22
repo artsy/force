@@ -1,12 +1,12 @@
-import { Environment } from "relay-runtime"
+import { Environment } from "react-relay"
 import {
   createConsignSubmissionMutation,
   updateConsignSubmissionMutation,
-} from "../../Mutations"
+} from "Apps/Consign/Routes/SubmissionFlow/Mutations"
 import {
   createOrUpdateConsignSubmission,
   SubmissionInput,
-} from "../createOrUpdateConsignSubmission"
+} from "Apps/Consign/Routes/SubmissionFlow/Utils/createOrUpdateConsignSubmission"
 
 jest.mock("../../Mutations/CreateConsignSubmissionMutation", () => ({
   ...jest.requireActual("../../Mutations/CreateConsignSubmissionMutation"),

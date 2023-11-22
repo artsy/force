@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8fa0fc81cfb1726591bf076753e5ffa6>>
+ * @generated SignedSource<<50a110316e9b5beaebba6b04b3167e5b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CareerHighlightModalStepTestQuery$variables = {};
+export type CareerHighlightModalStepTestQuery$variables = Record<PropertyKey, never>;
 export type CareerHighlightModalStepTestQuery$data = {
   readonly me: {
     readonly myCollectionInfo: {
       readonly BIENNIAL: ReadonlyArray<{
         readonly " $fragmentSpreads": FragmentRefs<"CareerHighlightModalStep_careerHighlight">;
       }>;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type CareerHighlightModalStepTestQuery = {
   response: CareerHighlightModalStepTestQuery$data;

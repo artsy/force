@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e3bfc9c3ede5d2c9a92e97b5976cc5f0>>
+ * @generated SignedSource<<84bccbfaa1da310f0ca8650532739db0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,12 +12,12 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type searchRoutes_SearchResultsArtistsQuery$variables = {
   keyword: string;
-  page?: number | null;
+  page?: number | null | undefined;
 };
 export type searchRoutes_SearchResultsArtistsQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"SearchResultsArtists_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type searchRoutes_SearchResultsArtistsQuery = {
   response: searchRoutes_SearchResultsArtistsQuery$data;

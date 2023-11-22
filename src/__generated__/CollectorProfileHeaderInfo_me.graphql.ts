@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2025ab8731cea7c9e5d237942badd629>>
+ * @generated SignedSource<<f6b7809da9a8b34c402bf668ef4f2085>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileHeaderInfo_me$data = {
   readonly location: {
-    readonly display: string | null;
-  } | null;
-  readonly otherRelevantPositions: string | null;
-  readonly profession: string | null;
+    readonly display: string | null | undefined;
+  } | null | undefined;
+  readonly otherRelevantPositions: string | null | undefined;
+  readonly profession: string | null | undefined;
   readonly " $fragmentType": "CollectorProfileHeaderInfo_me";
 };
 export type CollectorProfileHeaderInfo_me$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e5c24a8c749da8b5c46657ce5124d1e0>>
+ * @generated SignedSource<<86d29de90303d0c7b42aad3b0a9843b8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,14 +10,14 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionConfirmRegistrationRouteTestQuery$variables = {};
+export type AuctionConfirmRegistrationRouteTestQuery$variables = Record<PropertyKey, never>;
 export type AuctionConfirmRegistrationRouteTestQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"AuctionConfirmRegistrationRoute_me">;
-  } | null;
+  } | null | undefined;
   readonly sale: {
     readonly " $fragmentSpreads": FragmentRefs<"AuctionConfirmRegistrationRoute_sale">;
-  } | null;
+  } | null | undefined;
 };
 export type AuctionConfirmRegistrationRouteTestQuery = {
   response: AuctionConfirmRegistrationRouteTestQuery$data;

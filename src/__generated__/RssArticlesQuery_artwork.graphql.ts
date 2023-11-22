@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<44debc74e726ababd70f4d8a50a5aaac>>
+ * @generated SignedSource<<89cd792717a32e180bcff77fc6188018>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,21 +12,21 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RssArticlesQuery_artwork$data = {
   readonly artists: ReadonlyArray<{
-    readonly name: string | null;
-  } | null> | null;
-  readonly date: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined> | null | undefined;
+  readonly date: string | null | undefined;
   readonly image: {
     readonly resized: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly src: string;
       readonly srcSet: string;
-      readonly width: number | null;
-    } | null;
-  } | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly partner: {
-    readonly name: string | null;
-  } | null;
-  readonly title: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "RssArticlesQuery_artwork";
 };
 export type RssArticlesQuery_artwork$key = {

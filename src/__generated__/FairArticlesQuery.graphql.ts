@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a6ca718e3016e372bb3250ebc152d6f0>>
+ * @generated SignedSource<<06c93ad8734d584b0eea10ef868f6f4c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,12 +12,12 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairArticlesQuery$variables = {
   id: string;
-  page?: number | null;
+  page?: number | null | undefined;
 };
 export type FairArticlesQuery$data = {
   readonly fair: {
     readonly " $fragmentSpreads": FragmentRefs<"FairArticles_fair">;
-  } | null;
+  } | null | undefined;
 };
 export type FairArticlesQuery = {
   response: FairArticlesQuery$data;

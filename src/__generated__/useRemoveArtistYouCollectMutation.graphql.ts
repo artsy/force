@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fb0e61d78f4706eb3d7e5f267dc55fd8>>
+ * @generated SignedSource<<919746a18bad5114a59b71f76a2c8802>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,21 +11,21 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeleteUserInterestMutationInput = {
-  anonymousSessionId?: string | null;
-  clientMutationId?: string | null;
+  anonymousSessionId?: string | null | undefined;
+  clientMutationId?: string | null | undefined;
   id: string;
-  sessionID?: string | null;
+  sessionID?: string | null | undefined;
 };
 export type useRemoveArtistYouCollectMutation$variables = {
   input: DeleteUserInterestMutationInput;
 };
 export type useRemoveArtistYouCollectMutation$data = {
   readonly deleteUserInterest: {
-    readonly clientMutationId: string | null;
+    readonly clientMutationId: string | null | undefined;
     readonly me: {
       readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileArtistsYouCollect_me">;
     };
-  } | null;
+  } | null | undefined;
 };
 export type useRemoveArtistYouCollectMutation = {
   response: useRemoveArtistYouCollectMutation$data;

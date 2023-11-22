@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7c412111c38544513f7c8058da7d0959>>
+ * @generated SignedSource<<4d8d94b6cc39b7b4d3057144a5ff8818>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type SettingsPurchasesRow_order$data = {
-  readonly buyerTotal: string | null;
+  readonly buyerTotal: string | null | undefined;
   readonly code: string;
   readonly createdAt: string;
   readonly currencyCode: string;
@@ -24,45 +24,45 @@ export type SettingsPurchasesRow_order$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
-          readonly artistNames: string | null;
+          readonly artistNames: string | null | undefined;
           readonly artists: ReadonlyArray<{
-            readonly href: string | null;
-          } | null> | null;
-          readonly href: string | null;
+            readonly href: string | null | undefined;
+          } | null | undefined> | null | undefined;
+          readonly href: string | null | undefined;
           readonly partner: {
-            readonly href: string | null;
-            readonly initials: string | null;
-            readonly name: string | null;
+            readonly href: string | null | undefined;
+            readonly initials: string | null | undefined;
+            readonly name: string | null | undefined;
             readonly profile: {
               readonly icon: {
                 readonly cropped: {
                   readonly src: string;
                   readonly srcSet: string;
-                } | null;
-              } | null;
-            } | null;
-          } | null;
-          readonly shippingOrigin: string | null;
-          readonly title: string | null;
-        } | null;
+                } | null | undefined;
+              } | null | undefined;
+            } | null | undefined;
+          } | null | undefined;
+          readonly shippingOrigin: string | null | undefined;
+          readonly title: string | null | undefined;
+        } | null | undefined;
         readonly artworkVersion: {
           readonly image: {
             readonly cropped: {
               readonly src: string;
               readonly srcSet: string;
-            } | null;
-          } | null;
-        } | null;
+            } | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
         readonly fulfillments: {
           readonly edges: ReadonlyArray<{
             readonly node: {
-              readonly trackingId: string | null;
-            } | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
+              readonly trackingId: string | null | undefined;
+            } | null | undefined;
+          } | null | undefined> | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly paymentMethodDetails: {
     readonly __typename: "BankAccount";
     readonly last4: string;
@@ -76,10 +76,10 @@ export type SettingsPurchasesRow_order$data = {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly requestedFulfillment: {
     readonly __typename: string;
-  } | null;
+  } | null | undefined;
   readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
   readonly " $fragmentType": "SettingsPurchasesRow_order";

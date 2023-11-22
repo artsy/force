@@ -14,7 +14,7 @@ export function useRouter(): {
 }
 
 export function useIsRouteActive(
-  to: string | null,
+  to: string | null | undefined,
   options = { exact: true }
 ): boolean {
   const { match, router } = useRouter()

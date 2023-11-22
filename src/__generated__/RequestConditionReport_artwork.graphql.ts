@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0c4db6c1f849e04d489161053e0b4417>>
+ * @generated SignedSource<<613fdf3a61e7d48090d73e610d0583cb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type RequestConditionReport_artwork$data = {
   readonly internalID: string;
   readonly saleArtwork: {
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "RequestConditionReport_artwork";
 };

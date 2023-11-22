@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b412e7a59b437c10c0559d69a410f489>>
+ * @generated SignedSource<<5e97fe3aac81f1d872fea65aee466dbd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,9 +14,9 @@ export type ConfirmArtworkModal_artwork$data = {
   readonly editionSets: ReadonlyArray<{
     readonly internalID: string;
     readonly " $fragmentSpreads": FragmentRefs<"EditionSelectBox_edition">;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly internalID: string;
-  readonly isEdition: boolean | null;
+  readonly isEdition: boolean | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"CollapsibleArtworkDetails_artwork" | "ConfirmArtworkButton_artwork">;
   readonly " $fragmentType": "ConfirmArtworkModal_artwork";
 };

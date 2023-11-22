@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c45122405f929a2c95c8f3523245c9a6>>
+ * @generated SignedSource<<a49433333e30843e690e4ea98e932ba2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,7 @@ export type RedirectsProfileQuery$data = {
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     };
-  } | null;
+  } | null | undefined;
 };
 export type RedirectsProfileQuery = {
   response: RedirectsProfileQuery$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<419dc03abb80f571f03e3740d9694921>>
+ * @generated SignedSource<<36e3edcf559109afd885c91c8503133c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,12 +17,12 @@ export type SearchRouteQuery$data = {
   readonly matchConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly text?: string | null;
+        readonly text?: string | null | undefined;
         readonly value?: string;
         readonly " $fragmentSpreads": FragmentRefs<"SearchRouteOption_artist">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
 };
 export type SearchRouteQuery = {
   response: SearchRouteQuery$data;

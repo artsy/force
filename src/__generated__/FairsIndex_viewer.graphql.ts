@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<db4b2a35160fc91b700dece602ddd6f3>>
+ * @generated SignedSource<<4ede8e5b532f8790d7df7193cf2eeac5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,39 +13,39 @@ import { FragmentRefs } from "relay-runtime";
 export type FairsIndex_viewer$data = {
   readonly closedFairs: ReadonlyArray<{
     readonly internalID: string;
-    readonly isPublished: boolean | null;
+    readonly isPublished: boolean | null | undefined;
     readonly profile: {
-      readonly isPublished: boolean | null;
-    } | null;
+      readonly isPublished: boolean | null | undefined;
+    } | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"FairsFairRow_fair">;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly runningFairs: ReadonlyArray<{
-    readonly bannerSize: string | null;
+    readonly bannerSize: string | null | undefined;
     readonly internalID: string;
-    readonly isPublished: boolean | null;
+    readonly isPublished: boolean | null | undefined;
     readonly profile: {
-      readonly isPublished: boolean | null;
-    } | null;
+      readonly isPublished: boolean | null | undefined;
+    } | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"FairsFairBanner_fair" | "FairsFairRow_fair">;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly upcomingFairs: ReadonlyArray<{
-    readonly exhibitionPeriod: string | null;
+    readonly exhibitionPeriod: string | null | undefined;
     readonly internalID: string;
-    readonly isPublished: boolean | null;
+    readonly isPublished: boolean | null | undefined;
     readonly location: {
-      readonly city: string | null;
-    } | null;
-    readonly name: string | null;
+      readonly city: string | null | undefined;
+    } | null | undefined;
+    readonly name: string | null | undefined;
     readonly organizer: {
       readonly profile: {
-        readonly href: string | null;
-      } | null;
-    } | null;
+        readonly href: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
     readonly profile: {
-      readonly isPublished: boolean | null;
-    } | null;
+      readonly isPublished: boolean | null | undefined;
+    } | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"FairsFairRow_fair">;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"FairsPastFairs_viewer">;
   readonly " $fragmentType": "FairsIndex_viewer";
 };

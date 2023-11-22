@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a4d7edcb40f41f6570d7346366e98604>>
+ * @generated SignedSource<<2d64dec1f0ed48c278f32c1ce2be4d78>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RegisterButton_me$data = {
-  readonly hasCreditCards: boolean | null;
+  readonly hasCreditCards: boolean | null | undefined;
   readonly internalID: string;
-  readonly isIdentityVerified: boolean | null;
+  readonly isIdentityVerified: boolean | null | undefined;
   readonly pendingIdentityVerification: {
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "RegisterButton_me";
 };
 export type RegisterButton_me$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f1dbc388b07f8b1924846060aaf9ef70>>
+ * @generated SignedSource<<3ca5cdfdb0197193e4163b9181cc3eb6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkDemandIndex_marketPriceInsights$data = {
-  readonly demandRank: number | null;
-  readonly demandRankDisplayText: string | null;
+  readonly demandRank: number | null | undefined;
+  readonly demandRankDisplayText: string | null | undefined;
   readonly " $fragmentType": "MyCollectionArtworkDemandIndex_marketPriceInsights";
 };
 export type MyCollectionArtworkDemandIndex_marketPriceInsights$key = {

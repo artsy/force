@@ -1,4 +1,4 @@
-import { Environment } from "relay-runtime"
+import { Environment } from "react-relay"
 
 // TODO: Replace with `useMutation`
 export type AuthIntentMutation = (

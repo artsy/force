@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7f14a2221df9171031f5ac894069fbae>>
+ * @generated SignedSource<<170a88282c213cff4289676882021f7f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,14 +15,14 @@ export type EndingSoonAuctionsGrid_viewer$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly id: string;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageInfo: {
-      readonly endCursor: string | null;
+      readonly endCursor: string | null | undefined;
       readonly hasNextPage: boolean;
     };
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "EndingSoonAuctionsGrid_viewer";
 };
 export type EndingSoonAuctionsGrid_viewer$key = {

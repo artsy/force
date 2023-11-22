@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d1ef6b49b5944d14c15e8c7936b8685b>>
+ * @generated SignedSource<<ef2a0b99816b34b4755ce48e5bdf5c26>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type SearchInputPills_viewer$data = {
       readonly counts: ReadonlyArray<{
         readonly count: number;
         readonly name: string;
-      } | null> | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined> | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "SearchInputPills_viewer";
 };
 export type SearchInputPills_viewer$key = {

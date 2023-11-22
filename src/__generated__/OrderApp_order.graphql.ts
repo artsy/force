@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<62a646c1c58c9260d83f24947b2643c1>>
+ * @generated SignedSource<<414c73468013baa2be83dcc9b9ab0c09>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,20 +14,20 @@ export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale
 import { FragmentRefs } from "relay-runtime";
 export type OrderApp_order$data = {
   readonly currencyCode: string;
-  readonly itemsTotalCents: number | null;
+  readonly itemsTotalCents: number | null | undefined;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
-          readonly href: string | null;
-          readonly is_acquireable: boolean | null;
-          readonly is_offerable: boolean | null;
+          readonly href: string | null | undefined;
+          readonly is_acquireable: boolean | null | undefined;
+          readonly is_offerable: boolean | null | undefined;
           readonly slug: string;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly mode: CommerceOrderModeEnum | null;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly source: CommerceOrderSourceEnum;
   readonly " $fragmentType": "OrderApp_order";
 };

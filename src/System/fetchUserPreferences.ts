@@ -1,5 +1,6 @@
-import { Environment, fetchQuery, graphql } from "relay-runtime"
+import { fetchQuery, graphql } from "react-relay"
 import { fetchUserPreferencesQuery } from "__generated__/fetchUserPreferencesQuery.graphql"
+import { Environment } from "react-relay"
 
 export const fetchUserPreferences = (relayEnvironment: Environment) => {
   return fetchQuery<fetchUserPreferencesQuery>(

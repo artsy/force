@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<48055b8482a815693fa311dccb2199c7>>
+ * @generated SignedSource<<5317fcbec7e3a24cd10ac79c81a31442>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,17 +9,17 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type createMockNetworkLayerTestAliasPrecendenceQuery$variables = {};
+export type createMockNetworkLayerTestAliasPrecendenceQuery$variables = Record<PropertyKey, never>;
 export type createMockNetworkLayerTestAliasPrecendenceQuery$data = {
   readonly artist: {
     readonly forSaleArtworks: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly id: string;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type createMockNetworkLayerTestAliasPrecendenceQuery = {
   response: createMockNetworkLayerTestAliasPrecendenceQuery$data;

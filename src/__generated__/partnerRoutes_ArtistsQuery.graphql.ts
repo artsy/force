@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<06c3036651117d531b88c3a20688cf6d>>
+ * @generated SignedSource<<ae11541b6f89ed3c9d3b40d2ac6dc0bc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,11 +16,11 @@ export type partnerRoutes_ArtistsQuery$variables = {
 export type partnerRoutes_ArtistsQuery$data = {
   readonly partner: {
     readonly allArtistsConnection: {
-      readonly totalCount: number | null;
-    } | null;
-    readonly displayArtistsSection: boolean | null;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
+    readonly displayArtistsSection: boolean | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistsRoute_partner">;
-  } | null;
+  } | null | undefined;
 };
 export type partnerRoutes_ArtistsQuery = {
   response: partnerRoutes_ArtistsQuery$data;

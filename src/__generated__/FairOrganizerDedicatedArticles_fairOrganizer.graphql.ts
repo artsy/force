@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ab6b4e13c2d97edee74f0de8f7116d72>>
+ * @generated SignedSource<<e254bd636f75dca026b4c4c79e8b5cc8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,17 +16,17 @@ export type FairOrganizerDedicatedArticles_fairOrganizer$data = {
       readonly node: {
         readonly id: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     };
     readonly pageInfo: {
       readonly hasNextPage: boolean;
     };
-    readonly totalCount: number | null;
-  } | null;
-  readonly name: string | null;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"DedicatedArticlesBreadcrumbs_fairOrganizer">;
   readonly " $fragmentType": "FairOrganizerDedicatedArticles_fairOrganizer";

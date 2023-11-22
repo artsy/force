@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7598e35eaad17dfd478d61127540bf28>>
+ * @generated SignedSource<<a240bbe314198c9fc090d50a775a37dc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,12 +12,12 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type GeneFamily_geneFamily$data = {
   readonly genes: ReadonlyArray<{
-    readonly displayName: string | null;
+    readonly displayName: string | null | undefined;
     readonly id: string;
-    readonly isPublished: boolean | null;
-    readonly name: string | null;
+    readonly isPublished: boolean | null | undefined;
+    readonly name: string | null | undefined;
     readonly slug: string;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly id: string;
   readonly name: string;
   readonly slug: string;

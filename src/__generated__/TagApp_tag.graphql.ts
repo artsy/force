@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2350965ac7a987cf911fcffc6c73bcf6>>
+ * @generated SignedSource<<d0844b62a7eb0dcdd57303a56dd2e288>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type TagApp_tag$data = {
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"TagArtworkFilter_tag" | "TagMeta_tag">;
   readonly " $fragmentType": "TagApp_tag";
 };

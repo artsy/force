@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<800f2f6cf38881626189268852da12de>>
+ * @generated SignedSource<<0b0f7ace020ff7321282a9bfdf695c62>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ConversationPageQuery$variables = {
 export type ConversationPageQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"Conversation_me">;
-  } | null;
+  } | null | undefined;
 };
 export type ConversationPageQuery = {
   response: ConversationPageQuery$data;

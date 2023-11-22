@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1c0ae3c662cb978212163a23ff62baf2>>
+ * @generated SignedSource<<d607ef4ec3a073efe289e3947978e3cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,8 @@ export type OnboardingQuestionOneMutation$variables = {
 };
 export type OnboardingQuestionOneMutation$data = {
   readonly updateMyUserProfile: {
-    readonly clientMutationId: string | null;
-  } | null;
+    readonly clientMutationId: string | null | undefined;
+  } | null | undefined;
 };
 export type OnboardingQuestionOneMutation = {
   response: OnboardingQuestionOneMutation$data;

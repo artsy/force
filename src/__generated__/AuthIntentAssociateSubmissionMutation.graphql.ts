@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4eb17c9228ffb48a6fbed79228e53217>>
+ * @generated SignedSource<<55761f1a00eb099b1b88be817fc82bb5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type AddUserToSubmissionMutationInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   id: string;
 };
 export type AuthIntentAssociateSubmissionMutation$variables = {
@@ -19,17 +19,17 @@ export type AuthIntentAssociateSubmissionMutation$variables = {
 export type AuthIntentAssociateSubmissionMutation$data = {
   readonly addUserToSubmission: {
     readonly consignmentSubmission: {
-      readonly internalID: string | null;
-    } | null;
-  } | null;
+      readonly internalID: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type AuthIntentAssociateSubmissionMutation$rawResponse = {
   readonly addUserToSubmission: {
     readonly consignmentSubmission: {
       readonly id: string;
-      readonly internalID: string | null;
-    } | null;
-  } | null;
+      readonly internalID: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type AuthIntentAssociateSubmissionMutation = {
   rawResponse: AuthIntentAssociateSubmissionMutation$rawResponse;

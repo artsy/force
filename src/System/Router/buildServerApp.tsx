@@ -39,6 +39,7 @@ import { buildServerAppContext } from "System/Router/buildServerAppContext"
 import { AppRouteConfig } from "System/Router/Route"
 import { NextFunction } from "express"
 import { findRoutesByPath } from "./Utils/findRoutesByPath"
+import { Environment } from "react-relay"
 
 export interface ServerAppResolve {
   bodyHTML?: string
@@ -61,6 +62,7 @@ export interface ServerRouterConfig extends RouterConfig {
   routes: AppRouteConfig[]
   context?: {
     injectedData?: any
+    relayEnvironment: Environment
   }
   /* For loadable-components bundle splitting */
   loadableFile?: string
@@ -141,6 +143,7 @@ export function buildServerApp(
          * is _mutated_ when it's passed to the App. Beware.
          *
          **/
+        // eslint-disable-next-line react/jsx-key
         const headTags = [<style type="text/css">{MediaStyle}</style>]
         const matchingMediaQueries =
           userAgent && matchingMediaQueriesForUserAgent(userAgent)

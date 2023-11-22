@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ac801a3478112fef2f7b9110cc38e05f>>
+ * @generated SignedSource<<e92fd904adcf6b7dfb7374b88b8162e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,8 @@ export type HomeHeroUnits_heroUnits$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
       readonly " $fragmentSpreads": FragmentRefs<"HomeHeroUnit_heroUnit">;
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "HomeHeroUnits_heroUnits";
 };
 export type HomeHeroUnits_heroUnits$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<297021af544aa4ac5e4625e4289a4ec8>>
+ * @generated SignedSource<<011c8fe42c1140faa9da735772d131d9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,13 +18,13 @@ export type SettingsSavesCategories_me$data = {
           readonly category: {
             readonly internalID: string;
             readonly " $fragmentSpreads": FragmentRefs<"CategoryRail_category">;
-          } | null;
+          } | null | undefined;
           readonly internalID: string;
-        } | null;
-      } | null> | null;
-      readonly totalCount: number | null;
-    } | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "SettingsSavesCategories_me";
 };
 export type SettingsSavesCategories_me$key = {

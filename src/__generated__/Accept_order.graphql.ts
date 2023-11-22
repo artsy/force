@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<241a8ee200ced9f0609e57e09db3f11f>>
+ * @generated SignedSource<<3ae0c46357e04728bd184b4795ca881f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,25 +11,25 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Accept_order$data = {
-  readonly creditCardId: string | null;
+  readonly creditCardId: string | null | undefined;
   readonly internalID: string;
   readonly lastOffer?: {
     readonly createdAt: string;
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
           readonly artists: ReadonlyArray<{
             readonly slug: string;
-          } | null> | null;
+          } | null | undefined> | null | undefined;
           readonly slug: string;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly stateExpiresAt: string | null;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly stateExpiresAt: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order" | "PaymentMethodSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Accept_order";
 };

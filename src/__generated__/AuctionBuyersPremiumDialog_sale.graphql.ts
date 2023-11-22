@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fea48b870bfbeeb4ff80cdb0d7df6e30>>
+ * @generated SignedSource<<1c55643e98cd8542bfae53e5c4ff6088>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionBuyersPremiumDialog_sale$data = {
   readonly buyersPremium: ReadonlyArray<{
-    readonly amount: string | null;
-    readonly cents: number | null;
-    readonly percent: number | null;
-  } | null> | null;
+    readonly amount: string | null | undefined;
+    readonly cents: number | null | undefined;
+    readonly percent: number | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "AuctionBuyersPremiumDialog_sale";
 };
 export type AuctionBuyersPremiumDialog_sale$key = {

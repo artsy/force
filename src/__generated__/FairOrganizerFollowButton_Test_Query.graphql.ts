@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8096f3ca0947fbc3e49ab97148958012>>
+ * @generated SignedSource<<732292772f0efdcad6376994eaf37c1f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type FairOrganizerFollowButton_Test_Query$variables = {
 export type FairOrganizerFollowButton_Test_Query$data = {
   readonly fairOrganizer: {
     readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerFollowButton_fairOrganizer">;
-  } | null;
+  } | null | undefined;
 };
 export type FairOrganizerFollowButton_Test_Query = {
   response: FairOrganizerFollowButton_Test_Query$data;

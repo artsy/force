@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<687e66a335481cdeb00e6ea270cd468e>>
+ * @generated SignedSource<<8d86aa378f4c98fb3a154df0d570a813>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,13 +14,13 @@ export type PartnerArtistDetailsList_partner$data = {
   readonly artists: {
     readonly edges: ReadonlyArray<{
       readonly counts: {
-        readonly artworks: any | null;
-      } | null;
+        readonly artworks: any | null | undefined;
+      } | null | undefined;
       readonly id: string;
-      readonly representedBy: boolean | null;
+      readonly representedBy: boolean | null | undefined;
       readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistDetails_partnerArtist">;
-    } | null> | null;
-  } | null;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "PartnerArtistDetailsList_partner";
 };

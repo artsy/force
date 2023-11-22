@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0e65918496d09f9e92db996631740f16>>
+ * @generated SignedSource<<3121159ad7cdd51f9afa5e9871bc716f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,14 +16,14 @@ export type identityVerificationRoutes_IdentityVerificationAppQuery$variables = 
 export type identityVerificationRoutes_IdentityVerificationAppQuery$data = {
   readonly identityVerification: {
     readonly " $fragmentSpreads": FragmentRefs<"IdentityVerificationApp_identityVerification">;
-  } | null;
+  } | null | undefined;
 };
 export type identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse = {
   readonly identityVerification: {
     readonly id: string;
     readonly internalID: string;
     readonly state: string;
-  } | null;
+  } | null | undefined;
 };
 export type identityVerificationRoutes_IdentityVerificationAppQuery = {
   rawResponse: identityVerificationRoutes_IdentityVerificationAppQuery$rawResponse;

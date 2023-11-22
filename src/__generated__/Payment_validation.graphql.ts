@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<89f60ca8e77009e3f59b181509a435ce>>
+ * @generated SignedSource<<f28ac9f20f141cd62d0234a62cef964d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Payment_validation$data = {
-  readonly paymentMethod: CommercePaymentMethodEnum | null;
+  readonly paymentMethod: CommercePaymentMethodEnum | null | undefined;
   readonly paymentMethodDetails: {
     readonly __typename: "BankAccount";
     readonly id: string;
@@ -26,7 +26,7 @@ export type Payment_validation$data = {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "Payment_validation";
 };
 export type Payment_validation$key = {

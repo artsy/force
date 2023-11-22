@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4236ed51d83fba1a9ba6cbee56b6c84a>>
+ * @generated SignedSource<<92346ed9be395018f36b2ab8d5817043>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,9 +17,9 @@ export type FairFollowedArtists_fair$data = {
         readonly internalID: string;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly slug: string;
   readonly " $fragmentType": "FairFollowedArtists_fair";

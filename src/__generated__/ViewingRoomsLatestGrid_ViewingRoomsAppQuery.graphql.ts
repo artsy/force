@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2d8a01ce8b75f3c4ad22929aa887caf1>>
+ * @generated SignedSource<<ce99e428f5a895cafd7c45f904ee070b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomsLatestGrid_ViewingRoomsAppQuery$variables = {
-  after?: string | null;
+  after?: string | null | undefined;
   count: number;
 };
 export type ViewingRoomsLatestGrid_ViewingRoomsAppQuery$data = {
   readonly allViewingRooms: {
     readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomsApp_allViewingRooms">;
-  } | null;
+  } | null | undefined;
 };
 export type ViewingRoomsLatestGrid_ViewingRoomsAppQuery = {
   response: ViewingRoomsLatestGrid_ViewingRoomsAppQuery$data;

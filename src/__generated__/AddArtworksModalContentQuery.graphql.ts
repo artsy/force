@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c4cdae2cd8bac1a3b35d120270f87e42>>
+ * @generated SignedSource<<5064e249fabfd2f591c995984c214f65>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AddArtworksModalContentQuery$variables = {};
+export type AddArtworksModalContentQuery$variables = Record<PropertyKey, never>;
 export type AddArtworksModalContentQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"AddArtworksModalContent_me">;
-  } | null;
+  } | null | undefined;
 };
 export type AddArtworksModalContentQuery = {
   response: AddArtworksModalContentQuery$data;

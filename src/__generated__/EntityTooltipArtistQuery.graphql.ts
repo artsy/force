@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<38bb7ad625e6b9c7c6ab151d45e9c455>>
+ * @generated SignedSource<<8929cb63fd1955f3c65f6b410cf1a6a4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type EntityTooltipArtistQuery$variables = {
 export type EntityTooltipArtistQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"EntityTooltipArtist_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type EntityTooltipArtistQuery = {
   response: EntityTooltipArtistQuery$data;

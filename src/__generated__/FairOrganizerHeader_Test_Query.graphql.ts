@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d8598861d13fd1140ec4970ca20ff479>>
+ * @generated SignedSource<<806943e15142e3c6d1d0a460c4052d43>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairOrganizerHeader_Test_Query$variables = {};
+export type FairOrganizerHeader_Test_Query$variables = Record<PropertyKey, never>;
 export type FairOrganizerHeader_Test_Query$data = {
   readonly fairOrganizer: {
     readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerHeader_fairOrganizer">;
-  } | null;
+  } | null | undefined;
 };
 export type FairOrganizerHeader_Test_Query = {
   response: FairOrganizerHeader_Test_Query$data;

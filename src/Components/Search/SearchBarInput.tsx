@@ -10,7 +10,7 @@ import {
 import { useTranslation } from "react-i18next"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { SystemContextProps, useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/SystemContext"
 import { extractNodes } from "Utils/extractNodes"
 import { SearchBarInput_viewer$data } from "__generated__/SearchBarInput_viewer.graphql"
 import { SearchBarInputSuggestQuery } from "__generated__/SearchBarInputSuggestQuery.graphql"
@@ -35,7 +35,7 @@ import { SearchBarFooter } from "./SearchBarFooter"
 
 const logger = createLogger("Components/Search/SearchBar")
 
-export interface SearchBarInputProps extends SystemContextProps {
+export interface SearchBarInputProps {
   relay: RelayRefetchProp
   viewer: SearchBarInput_viewer$data
   searchTerm: string

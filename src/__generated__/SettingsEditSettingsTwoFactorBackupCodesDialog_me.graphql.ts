@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ec61212cd51efbaae8128eb3f8f7eeb>>
+ * @generated SignedSource<<d60d0423140fcd95017c51b182308c7e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type SettingsEditSettingsTwoFactorBackupCodesDialog_me$data = {
   readonly backupSecondFactors: ReadonlyArray<{
     readonly code?: string;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "SettingsEditSettingsTwoFactorBackupCodesDialog_me";
 };
 export type SettingsEditSettingsTwoFactorBackupCodesDialog_me$key = {

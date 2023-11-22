@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4e8d368bcc586744e3b778bea73e23b4>>
+ * @generated SignedSource<<b2039a9e88bcb54a12c4414fca0b37d3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ArtworkRelatedArtistsQuery$variables = {
 export type ArtworkRelatedArtistsQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkRelatedArtists_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtworkRelatedArtistsQuery = {
   response: ArtworkRelatedArtistsQuery$data;

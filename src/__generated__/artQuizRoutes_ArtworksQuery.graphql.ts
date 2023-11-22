@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<018a4ab8b63389ed9372ebdced28e2f6>>
+ * @generated SignedSource<<d209c51a64ab38ea581a6728075c823f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,18 +10,18 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type artQuizRoutes_ArtworksQuery$variables = {};
+export type artQuizRoutes_ArtworksQuery$variables = Record<PropertyKey, never>;
 export type artQuizRoutes_ArtworksQuery$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly isSaved: boolean | null;
-      } | null;
-    } | null> | null;
-  } | null;
+        readonly isSaved: boolean | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtQuizArtworks_me">;
-  } | null;
+  } | null | undefined;
 };
 export type artQuizRoutes_ArtworksQuery = {
   response: artQuizRoutes_ArtworksQuery$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7e502001a479c8d425f8c79accf4cc4c>>
+ * @generated SignedSource<<e0456598e82a9bc06d610e70bfd4ccb8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerInfo_fairOrganizer$data = {
-  readonly about: string | null;
+  readonly about: string | null | undefined;
   readonly " $fragmentType": "FairOrganizerInfo_fairOrganizer";
 };
 export type FairOrganizerInfo_fairOrganizer$key = {

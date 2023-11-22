@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a8cb950cf951a0f4bbcc5e201223665>>
+ * @generated SignedSource<<f264b6b0074bb6781abeb07ce6793296>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,18 +11,18 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type GridItem_artwork$data = {
-  readonly artistNames: string | null;
-  readonly href: string | null;
+  readonly artistNames: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly image: {
     readonly aspectRatio: number;
-    readonly internalID: string | null;
-    readonly placeholder: string | null;
-    readonly url: string | null;
-    readonly versions: ReadonlyArray<string | null> | null;
-  } | null;
-  readonly imageTitle: string | null;
+    readonly internalID: string | null | undefined;
+    readonly placeholder: string | null | undefined;
+    readonly url: string | null | undefined;
+    readonly versions: ReadonlyArray<string | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly imageTitle: string | null | undefined;
   readonly internalID: string;
-  readonly title: string | null;
+  readonly title: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"Badge_artwork" | "Metadata_artwork">;
   readonly " $fragmentType": "GridItem_artwork";
 };

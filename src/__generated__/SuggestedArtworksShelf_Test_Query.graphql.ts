@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d24df1c3835e03b99dcd915cea879c7e>>
+ * @generated SignedSource<<e2af686d853cd77a206661ecce7fdc5c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,19 +10,19 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SuggestedArtworksShelf_Test_Query$variables = {};
+export type SuggestedArtworksShelf_Test_Query$variables = Record<PropertyKey, never>;
 export type SuggestedArtworksShelf_Test_Query$data = {
   readonly artworksConnection: {
     readonly counts: {
-      readonly total: any | null;
-    } | null;
+      readonly total: any | null | undefined;
+    } | null | undefined;
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
 };
 export type SuggestedArtworksShelf_Test_Query = {
   response: SuggestedArtworksShelf_Test_Query$data;

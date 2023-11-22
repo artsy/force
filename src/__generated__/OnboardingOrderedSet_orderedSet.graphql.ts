@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bc0e4a3b31c89234adf98f752be16c35>>
+ * @generated SignedSource<<b183be8117d6a66c0a30548693344c13>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,8 +32,8 @@ export type OnboardingOrderedSet_orderedSet$data = {
         // This will never be '%other', but we need some
         // value in case none of the concrete values match.
         readonly __typename: "%other";
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
   };
   readonly " $fragmentType": "OnboardingOrderedSet_orderedSet";
 };

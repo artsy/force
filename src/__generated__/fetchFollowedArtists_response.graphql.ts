@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<541e0909ee53569cd9a6dfa987f7b671>>
+ * @generated SignedSource<<c8807fb654c2fc694da6c4294998b6bb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type fetchFollowedArtists_response$data = {
       readonly artist: {
         readonly internalID: string;
         readonly slug: string;
-      } | null;
-    } | null;
-  } | null> | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "fetchFollowedArtists_response";
 };
 export type fetchFollowedArtists_response$key = {

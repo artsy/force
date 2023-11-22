@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<00a377dde8d9361998e491aa8dbffe42>>
+ * @generated SignedSource<<f478dbe179664db8d08307ec76f7cccb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,10 +18,10 @@ export type ArtistAuctionResultsRoute_artist$data = {
         readonly count: number;
         readonly name: string;
         readonly value: string;
-      } | null> | null;
-      readonly slice: AuctionResultsAggregation | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined> | null | undefined;
+      readonly slice: AuctionResultsAggregation | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResults_artist">;
   readonly " $fragmentType": "ArtistAuctionResultsRoute_artist";
 };

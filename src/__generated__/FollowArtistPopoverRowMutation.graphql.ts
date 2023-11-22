@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bdd8a2c3e4e79c405a793a2c31bd4e74>>
+ * @generated SignedSource<<d2e78f096a0e5aea8c521a7e30b93861>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,11 +12,11 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FollowArtistInput = {
   artistID: string;
-  clientMutationId?: string | null;
-  unfollow?: boolean | null;
+  clientMutationId?: string | null | undefined;
+  unfollow?: boolean | null | undefined;
 };
 export type FollowArtistPopoverRowMutation$variables = {
-  excludeArtistIds: ReadonlyArray<string | null>;
+  excludeArtistIds: ReadonlyArray<string | null | undefined>;
   input: FollowArtistInput;
 };
 export type FollowArtistPopoverRowMutation$data = {
@@ -30,12 +30,12 @@ export type FollowArtistPopoverRowMutation$data = {
               readonly id: string;
               readonly internalID: string;
               readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
-            } | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null;
-  } | null;
+            } | null | undefined;
+          } | null | undefined> | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type FollowArtistPopoverRowMutation = {
   response: FollowArtistPopoverRowMutation$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dacf590a2e051077b225f235532824fe>>
+ * @generated SignedSource<<99a2792f4efefaaabb1bc3437aca933d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,22 +11,22 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertEditFormQuery$variables = {
-  artistIds?: ReadonlyArray<string> | null;
+  artistIds?: ReadonlyArray<string> | null | undefined;
   id: string;
 };
 export type SavedSearchAlertEditFormQuery$data = {
   readonly artistsConnection: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_artistsConnection">;
-  } | null;
+  } | null | undefined;
   readonly artworksConnection: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_artworksConnection">;
-  } | null;
+  } | null | undefined;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_me">;
-  } | null;
+  } | null | undefined;
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertEditForm_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type SavedSearchAlertEditFormQuery = {
   response: SavedSearchAlertEditFormQuery$data;

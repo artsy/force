@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34c0cb603efcd4b14b2dae25d2e70c10>>
+ * @generated SignedSource<<3d30ee5e770b0ed801235733db823023>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,12 +14,12 @@ export type FairOverview_fair$data = {
   readonly articlesConnection: {
     readonly edges: ReadonlyArray<{
       readonly __typename: "ArticleEdge";
-    } | null> | null;
-  } | null;
-  readonly href: string | null;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly href: string | null | undefined;
   readonly marketingCollections: ReadonlyArray<{
     readonly id: string;
-  } | null>;
+  } | null | undefined>;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"FairAbout_fair" | "FairCollections_fair" | "FairEditorialRailArticles_fair" | "FairFollowedArtists_fair">;
   readonly " $fragmentType": "FairOverview_fair";

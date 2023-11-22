@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cf0dd47cceec507619465ecf43f44e4e>>
+ * @generated SignedSource<<c6d8f8efd5759e09c9ba3a80864d42ff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,15 +17,15 @@ export type Message_message$data = {
     readonly downloadURL: string;
     readonly fileName: string;
     readonly id: string;
-  } | null> | null;
-  readonly body: string | null;
-  readonly createdAt: string | null;
+  } | null | undefined> | null | undefined;
+  readonly body: string | null | undefined;
+  readonly createdAt: string | null | undefined;
   readonly from: {
-    readonly email: string | null;
-    readonly name: string | null;
-  } | null;
+    readonly email: string | null | undefined;
+    readonly name: string | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
-  readonly isFromUser: boolean | null;
+  readonly isFromUser: boolean | null | undefined;
   readonly " $fragmentType": "Message_message";
 };
 export type Message_message$key = {

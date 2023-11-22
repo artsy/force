@@ -1,9 +1,9 @@
 import { useTracking } from "react-tracking"
 import { MockedConversation } from "Apps/__tests__/Fixtures/Conversation"
 import { Conversation_conversation$data } from "__generated__/Conversation_conversation.graphql"
-import { Reply } from "../Components/Reply"
+import { Reply } from "Apps/Conversation/Components/Reply"
 import { mount } from "enzyme"
-import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import { Environment } from "react-relay"
 
 jest.mock("react-tracking")
 
@@ -37,7 +37,7 @@ describe("Reply", () => {
             jest.fn
           }}
           onScroll={jest.fn()}
-          environment={{} as RelayModernEnvironment}
+          environment={{} as Environment}
           refetch={() => ({ dispose: jest.fn })}
         />
       )

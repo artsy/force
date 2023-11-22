@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a3959a0639d24ca982d5e37efdaef330>>
+ * @generated SignedSource<<4b7e2ab26517c6e5d7a34bc521c01a7a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CascadingEndTimesBanner_sale$data = {
-  readonly cascadingEndTimeIntervalMinutes: number | null;
-  readonly extendedBiddingIntervalMinutes: number | null;
+  readonly cascadingEndTimeIntervalMinutes: number | null | undefined;
+  readonly extendedBiddingIntervalMinutes: number | null | undefined;
   readonly " $fragmentType": "CascadingEndTimesBanner_sale";
 };
 export type CascadingEndTimesBanner_sale$key = {

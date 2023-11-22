@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aecf1197fe3e8cb6cfccad5afd9203b2>>
+ * @generated SignedSource<<fe84e05629cd15c9c7b3b675d0fb2824>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowArtistInput = {
   artistID: string;
-  clientMutationId?: string | null;
-  unfollow?: boolean | null;
+  clientMutationId?: string | null | undefined;
+  unfollow?: boolean | null | undefined;
 };
 export type AuthIntentFollowArtistMutation$variables = {
   input: FollowArtistInput;
@@ -21,17 +21,17 @@ export type AuthIntentFollowArtistMutation$data = {
   readonly followArtist: {
     readonly artist: {
       readonly id: string;
-      readonly isFollowed: boolean | null;
-    } | null;
-  } | null;
+      readonly isFollowed: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type AuthIntentFollowArtistMutation$rawResponse = {
   readonly followArtist: {
     readonly artist: {
       readonly id: string;
-      readonly isFollowed: boolean | null;
-    } | null;
-  } | null;
+      readonly isFollowed: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type AuthIntentFollowArtistMutation = {
   rawResponse: AuthIntentFollowArtistMutation$rawResponse;

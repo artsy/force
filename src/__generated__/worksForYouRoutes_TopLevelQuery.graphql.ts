@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8329a9fc4e92f188ce9e26e34f89f7c3>>
+ * @generated SignedSource<<afc15bb7c8fe9032685a7c30e69122f9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,13 +17,13 @@ export type worksForYouRoutes_TopLevelQuery$variables = {
 export type worksForYouRoutes_TopLevelQuery$data = {
   readonly viewerArtist: {
     readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerArtist">;
-  } | null;
+  } | null | undefined;
   readonly viewerFeed: {
     readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerFeed">;
-  } | null;
+  } | null | undefined;
   readonly viewerMe: {
     readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerMe">;
-  } | null;
+  } | null | undefined;
 };
 export type worksForYouRoutes_TopLevelQuery = {
   response: worksForYouRoutes_TopLevelQuery$data;

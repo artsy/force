@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1ac03d363bce2e0947a31d43e501833a>>
+ * @generated SignedSource<<38553379ce8d716c6ae67bd7f365af2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type PartnersFilteredCells_viewer$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellPartner_partner">;
-      } | null;
-    } | null> | null;
-    readonly totalCount: number | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "PartnersFilteredCells_viewer";
 };
 export type PartnersFilteredCells_viewer$key = {

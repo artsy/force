@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<78033df0f9f42ce59cd15453103e1f5b>>
+ * @generated SignedSource<<28dff80976e16630706010f56adaa8f9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,13 +17,13 @@ export type WorksForYouApp_test_Query$variables = {
 export type WorksForYouApp_test_Query$data = {
   readonly viewerArtist: {
     readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerArtist">;
-  } | null;
+  } | null | undefined;
   readonly viewerFeed: {
     readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerFeed">;
-  } | null;
+  } | null | undefined;
   readonly viewerMe: {
     readonly " $fragmentSpreads": FragmentRefs<"WorksForYouApp_viewerMe">;
-  } | null;
+  } | null | undefined;
 };
 export type WorksForYouApp_test_Query = {
   response: WorksForYouApp_test_Query$data;

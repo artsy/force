@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b789c4933efd3bf8b5bd5f0f823b051c>>
+ * @generated SignedSource<<1ca36f7d1e248303b516ff5bc40a31d5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,14 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleInfiniteScrollQuery$variables = {
-  after?: string | null;
+  after?: string | null | undefined;
   articleID: string;
   channelID: string;
 };
 export type ArticleInfiniteScrollQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"ArticleInfiniteScroll_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type ArticleInfiniteScrollQuery = {
   response: ArticleInfiniteScrollQuery$data;

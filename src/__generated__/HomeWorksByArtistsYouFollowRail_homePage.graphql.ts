@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<39235e728f0b8bdc9e01ebb6fe6bd4ef>>
+ * @generated SignedSource<<0ff3e3cb17611776054009114ee22265>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,8 +16,8 @@ export type HomeWorksByArtistsYouFollowRail_homePage$data = {
       readonly internalID: string;
       readonly slug: string;
       readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-    } | null> | null;
-  } | null;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "HomeWorksByArtistsYouFollowRail_homePage";
 };
 export type HomeWorksByArtistsYouFollowRail_homePage$key = {

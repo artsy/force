@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bffeded7af45ead31649b9644e1b3dcb>>
+ * @generated SignedSource<<2b727eeedba967f620222e8fe16b8f2e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type DisableSecondFactorInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   password: string;
   secondFactorID: string;
 };
@@ -34,7 +34,7 @@ export type DisableSecondFactorMutation$data = {
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     };
-  } | null;
+  } | null | undefined;
 };
 export type DisableSecondFactorMutation$rawResponse = {
   readonly disableSecondFactor: {
@@ -47,7 +47,7 @@ export type DisableSecondFactorMutation$rawResponse = {
     } | {
       readonly __typename: string;
     };
-  } | null;
+  } | null | undefined;
 };
 export type DisableSecondFactorMutation = {
   rawResponse: DisableSecondFactorMutation$rawResponse;

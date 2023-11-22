@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4266d7918b617d2adaee810f12c8b45e>>
+ * @generated SignedSource<<c18bf6c0e6a643801ffea0817b4c11ec>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,17 +15,17 @@ export type ArtistSeriesApp_artistSeries$data = {
   readonly internalID: string;
   readonly railArtist: ReadonlyArray<{
     readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesRail_artist">;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly sidebarAggregations: {
     readonly aggregations: ReadonlyArray<{
       readonly counts: ReadonlyArray<{
         readonly count: number;
         readonly name: string;
         readonly value: string;
-      } | null> | null;
-      readonly slice: ArtworkAggregation | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined> | null | undefined;
+      readonly slice: ArtworkAggregation | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesArtworksFilter_artistSeries" | "ArtistSeriesHeader_artistSeries" | "ArtistSeriesMeta_artistSeries">;
   readonly " $fragmentType": "ArtistSeriesApp_artistSeries";

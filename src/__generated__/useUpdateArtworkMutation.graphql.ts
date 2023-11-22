@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<327d648a8030a1dbd55505e4f7018ec9>>
+ * @generated SignedSource<<34e47c2d25b407bd706f60847b1dc37e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,44 +11,44 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type ArtworkAttributionClassType = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type MyCollectionUpdateArtworkInput = {
-  artistIds?: ReadonlyArray<string | null> | null;
+  artistIds?: ReadonlyArray<string | null | undefined> | null | undefined;
   artworkId: string;
-  artworkLocation?: string | null;
-  attributionClass?: ArtworkAttributionClassType | null;
-  category?: string | null;
-  clientMutationId?: string | null;
-  collectorLocation?: EditableLocation | null;
-  confidentialNotes?: string | null;
-  costCurrencyCode?: string | null;
-  costMajor?: number | null;
-  costMinor?: number | null;
-  date?: string | null;
-  depth?: string | null;
-  editionNumber?: string | null;
-  editionSize?: string | null;
-  externalImageUrls?: ReadonlyArray<string | null> | null;
-  height?: string | null;
-  isEdition?: boolean | null;
-  medium?: string | null;
-  metric?: string | null;
-  pricePaidCents?: any | null;
-  pricePaidCurrency?: string | null;
-  provenance?: string | null;
-  submissionId?: string | null;
-  title?: string | null;
-  width?: string | null;
+  artworkLocation?: string | null | undefined;
+  attributionClass?: ArtworkAttributionClassType | null | undefined;
+  category?: string | null | undefined;
+  clientMutationId?: string | null | undefined;
+  collectorLocation?: EditableLocation | null | undefined;
+  confidentialNotes?: string | null | undefined;
+  costCurrencyCode?: string | null | undefined;
+  costMajor?: number | null | undefined;
+  costMinor?: number | null | undefined;
+  date?: string | null | undefined;
+  depth?: string | null | undefined;
+  editionNumber?: string | null | undefined;
+  editionSize?: string | null | undefined;
+  externalImageUrls?: ReadonlyArray<string | null | undefined> | null | undefined;
+  height?: string | null | undefined;
+  isEdition?: boolean | null | undefined;
+  medium?: string | null | undefined;
+  metric?: string | null | undefined;
+  pricePaidCents?: any | null | undefined;
+  pricePaidCurrency?: string | null | undefined;
+  provenance?: string | null | undefined;
+  submissionId?: string | null | undefined;
+  title?: string | null | undefined;
+  width?: string | null | undefined;
 };
 export type EditableLocation = {
-  address?: string | null;
-  address2?: string | null;
-  city?: string | null;
-  coordinates?: ReadonlyArray<number> | null;
-  country?: string | null;
-  countryCode?: string | null;
-  postalCode?: string | null;
-  state?: string | null;
-  stateCode?: string | null;
-  summary?: string | null;
+  address?: string | null | undefined;
+  address2?: string | null | undefined;
+  city?: string | null | undefined;
+  coordinates?: ReadonlyArray<number> | null | undefined;
+  country?: string | null | undefined;
+  countryCode?: string | null | undefined;
+  postalCode?: string | null | undefined;
+  state?: string | null | undefined;
+  stateCode?: string | null | undefined;
+  summary?: string | null | undefined;
 };
 export type useUpdateArtworkMutation$variables = {
   input: MyCollectionUpdateArtworkInput;
@@ -58,15 +58,15 @@ export type useUpdateArtworkMutation$data = {
     readonly artworkOrError: {
       readonly artwork?: {
         readonly images: ReadonlyArray<{
-          readonly internalID: string | null;
-        } | null> | null;
+          readonly internalID: string | null | undefined;
+        } | null | undefined> | null | undefined;
         readonly internalID: string;
-      } | null;
+      } | null | undefined;
       readonly mutationError?: {
         readonly message: string;
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useUpdateArtworkMutation = {
   response: useUpdateArtworkMutation$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9e5c6b38f9b76800414e2b883e5340a4>>
+ * @generated SignedSource<<3cd9044cf0c35a4494d7c3a916752972>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,9 +13,9 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkImageBrowser_artwork$data = {
   readonly figures: ReadonlyArray<{
     readonly __typename: "Image";
-    readonly height: number | null;
-    readonly isDefault: boolean | null;
-    readonly width: number | null;
+    readonly height: number | null | undefined;
+    readonly isDefault: boolean | null | undefined;
+    readonly width: number | null | undefined;
   } | {
     readonly __typename: "Video";
     readonly videoHeight: number;

@@ -1,6 +1,6 @@
 import { ActionType, SentArtworkInquiry } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
-import { commitMutation, graphql } from "relay-runtime"
+import { Environment, commitMutation, graphql } from "react-relay"
 import {
   SubmitInquiryRequestMutationInput,
   useArtworkInquiryRequestMutation,
@@ -34,7 +34,7 @@ export const useArtworkInquiryRequest = () => {
   }: UseArtworkInquiryRequestInput) => {
     return new Promise((resolve, reject) => {
       commitMutation<useArtworkInquiryRequestMutation>(
-        relayEnvironment.current!,
+        relayEnvironment.current as Environment,
         {
           onCompleted: (res, errors) => {
             if (errors !== null) {
@@ -44,18 +44,18 @@ export const useArtworkInquiryRequest = () => {
 
             resolve(res)
 
-            const inquiry = res.submitInquiryRequestMutation?.inquiryRequest!
-            const artwork = inquiry.inquireable!
+            const inquiry = res.submitInquiryRequestMutation?.inquiryRequest
+            const artwork = inquiry?.inquireable
 
             const options: SentArtworkInquiry = {
               action: ActionType.sentArtworkInquiry,
-              artwork_id: artwork.internalID!,
-              artwork_slug: artwork.slug!,
-              inquiry_id: inquiry.internalID,
+              artwork_id: artwork?.internalID as string,
+              artwork_slug: artwork?.slug as string,
+              inquiry_id: inquiry?.internalID as string,
               products: [
                 {
-                  price: artwork.price || COMPLETELY_MYSTERIOUS_PRICE_DEFAULT,
-                  product_id: artwork.internalID!,
+                  price: artwork?.price || COMPLETELY_MYSTERIOUS_PRICE_DEFAULT,
+                  product_id: artwork?.internalID as string,
                   quantity: 1,
                 },
               ],

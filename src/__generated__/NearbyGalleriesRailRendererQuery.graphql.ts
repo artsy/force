@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<354c1da16f574a88f52235b7389d7344>>
+ * @generated SignedSource<<e41d9a16eeb3ead5751ce982740e2de0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type NearbyGalleriesRailRendererQuery$data = {
   readonly partnersConnection: {
     readonly edges: ReadonlyArray<{
       readonly " $fragmentSpreads": FragmentRefs<"NearbyGalleriesRail_partners">;
-    } | null> | null;
-  } | null;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
 };
 export type NearbyGalleriesRailRendererQuery = {
   response: NearbyGalleriesRailRendererQuery$data;

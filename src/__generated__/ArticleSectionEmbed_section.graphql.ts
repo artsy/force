@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a559fe8c195f380671478f060ca4fcc8>>
+ * @generated SignedSource<<6387664bb227ca3fa05f7c1564b96855>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArticleSectionEmbedLayout = "COLUMN_WIDTH" | "FILLWIDTH" | "OVERFLOW" | "OVERFLOW_FILLWIDTH" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionEmbed_section$data = {
-  readonly _layout: ArticleSectionEmbedLayout | null;
-  readonly height: number | null;
-  readonly mobileHeight: number | null;
-  readonly url: string | null;
+  readonly _layout: ArticleSectionEmbedLayout | null | undefined;
+  readonly height: number | null | undefined;
+  readonly mobileHeight: number | null | undefined;
+  readonly url: string | null | undefined;
   readonly " $fragmentType": "ArticleSectionEmbed_section";
 };
 export type ArticleSectionEmbed_section$key = {

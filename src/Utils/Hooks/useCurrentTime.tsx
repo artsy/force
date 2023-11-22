@@ -35,7 +35,6 @@ export const useCurrentTime = ({
 
   useEffect(() => {
     if (syncWithServer) {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       getOffsetBetweenGravityClock(relayEnvironment).then(offset => {
         setTimeOffsetInMilliseconds(offset)
       })

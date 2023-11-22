@@ -11,7 +11,7 @@ import {
   Text,
 } from "@artsy/palette"
 import { ArtistAuctionResultItem_auctionResult$data } from "__generated__/ArtistAuctionResultItem_auctionResult.graphql"
-import { SystemContextProps, useSystemContext } from "System/SystemContext"
+import { useSystemContext } from "System/SystemContext"
 import { DateTime, LocaleOptions } from "luxon"
 import { createFragmentContainer, graphql } from "react-relay"
 import { AuctionResultPerformance } from "Components/AuctionResultPerformance"
@@ -20,7 +20,7 @@ import { RouterLink } from "System/Router/RouterLink"
 import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import NoArtIcon from "@artsy/icons/NoArtIcon"
 
-export interface Props extends SystemContextProps {
+export interface Props {
   auctionResult: ArtistAuctionResultItem_auctionResult$data
   filtersAtDefault: boolean
   showArtistName?: boolean
@@ -296,7 +296,7 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
     )
   }
 
-  const dateOfSale = DateTime.fromISO(saleDate!, { zone: "utc" })
+  const dateOfSale = DateTime.fromISO(saleDate as string, { zone: "utc" })
 
   // Did the sale happened last month and the price hasn't been realized yet?
   const awaitingResults = dateOfSale.plus({ month: 1 }) > DateTime.local()
@@ -345,7 +345,7 @@ const ArtistAuctionResultItemPrice: React.FC<Props> = props => {
           {estimatedPrice} (est)
         </Text>
       )}
-      <AuctionResultPerformance value={performance?.mid!} />
+      <AuctionResultPerformance value={performance?.mid as string} />
     </Box>
   )
 }
@@ -369,7 +369,7 @@ const getProps = (props: Props) => {
   }
 }
 
-const getDisplaySaleDate = (saleDate: string | null) => {
+const getDisplaySaleDate = (saleDate: string | null | undefined) => {
   if (!saleDate) return null
 
   return DateTime.fromISO(saleDate, { zone: "utc" }).toLocaleString(

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c65a8f0a010a818001ae94071ae086f7>>
+ * @generated SignedSource<<4bed12cdc0d84748b2697518638a1e9f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,22 +12,22 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleZoomGalleryCaption_figure$data = {
   readonly __typename: "ArticleImageSection";
-  readonly caption: string | null;
+  readonly caption: string | null | undefined;
   readonly " $fragmentType": "ArticleZoomGalleryCaption_figure";
 } | {
   readonly __typename: "ArticleUnpublishedArtwork";
   readonly artist: {
-    readonly name: string | null;
-  } | null;
-  readonly date: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly date: string | null | undefined;
   readonly partner: {
-    readonly name: string | null;
-  } | null;
-  readonly title: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "ArticleZoomGalleryCaption_figure";
 } | {
   readonly __typename: "Artwork";
-  readonly href: string | null;
+  readonly href: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
   readonly " $fragmentType": "ArticleZoomGalleryCaption_figure";
 } | {

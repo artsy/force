@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<83309a18563935a8a14419650a9ed745>>
+ * @generated SignedSource<<9a5a07aab2fd4c20c6eab8bb1213b8ba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,16 +12,16 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerArtistDetails_partnerArtist$data = {
   readonly biographyBlurb: {
-    readonly credit: string | null;
-    readonly text: string | null;
-  } | null;
+    readonly credit: string | null | undefined;
+    readonly text: string | null | undefined;
+  } | null | undefined;
   readonly node: {
-    readonly formattedNationalityAndBirthday: string | null;
-    readonly href: string | null;
+    readonly formattedNationalityAndBirthday: string | null | undefined;
+    readonly href: string | null | undefined;
     readonly internalID: string;
-    readonly name: string | null;
+    readonly name: string | null | undefined;
     readonly slug: string;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"PartnerArtistArtworksRail_partnerArtist">;
   readonly " $fragmentType": "PartnerArtistDetails_partnerArtist";
 };

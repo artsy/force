@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d8ef6b25892ad727e514dff2cae61bff>>
+ * @generated SignedSource<<c129beca8c9797a0bf5c4816f50be7f8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,16 +14,16 @@ export type ArtworksRoute_viewer$data = {
   readonly salesConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly href: string | null;
-        readonly isLiveOpen: boolean | null;
-        readonly liveStartAt: string | null;
-        readonly name: string | null;
+        readonly href: string | null | undefined;
+        readonly isLiveOpen: boolean | null | undefined;
+        readonly liveStartAt: string | null | undefined;
+        readonly name: string | null | undefined;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworksRail_sale">;
-      } | null;
-    } | null> | null;
-    readonly totalCount: number | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ArtworksRoute_viewer";
 };
 export type ArtworksRoute_viewer$key = {

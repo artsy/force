@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dcae8c72bf9546b677c49574312acaff>>
+ * @generated SignedSource<<ab63b060422aacf8f819fd9c76eae3f9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,29 +16,29 @@ export type WorksForYouFeed_viewer$data = {
       readonly bundledArtworksByArtistConnection: {
         readonly edges: ReadonlyArray<{
           readonly node: {
-            readonly artists: string | null;
+            readonly artists: string | null | undefined;
             readonly artworksConnection: {
               readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
-            } | null;
-            readonly href: string | null;
+            } | null | undefined;
+            readonly href: string | null | undefined;
             readonly id: string;
             readonly image: {
               readonly resized: {
                 readonly src: string;
                 readonly srcSet: string;
-              } | null;
-            } | null;
-            readonly publishedAt: string | null;
-            readonly summary: string | null;
-          } | null;
-        } | null> | null;
+              } | null | undefined;
+            } | null | undefined;
+            readonly publishedAt: string | null | undefined;
+            readonly summary: string | null | undefined;
+          } | null | undefined;
+        } | null | undefined> | null | undefined;
         readonly pageInfo: {
-          readonly endCursor: string | null;
+          readonly endCursor: string | null | undefined;
           readonly hasNextPage: boolean;
         };
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "WorksForYouFeed_viewer";
 };
 export type WorksForYouFeed_viewer$key = {

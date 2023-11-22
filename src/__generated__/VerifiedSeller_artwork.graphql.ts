@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d83ffce060474687676a6044507b80ff>>
+ * @generated SignedSource<<5b75b601ffeb2cda62dc16614be977d7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,11 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type VerifiedSeller_artwork$data = {
-  readonly is_biddable: boolean | null;
+  readonly is_biddable: boolean | null | undefined;
   readonly partner: {
-    readonly isVerifiedSeller: boolean | null;
-    readonly name: string | null;
-  } | null;
+    readonly isVerifiedSeller: boolean | null | undefined;
+    readonly name: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "VerifiedSeller_artwork";
 };
 export type VerifiedSeller_artwork$key = {

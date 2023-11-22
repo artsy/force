@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b967a8e30242057537ac71e0a98afb8b>>
+ * @generated SignedSource<<d698e7c268e68a7dc55a471a16e3834f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type viewingRoomRoutes_ViewingRoomWorksRouteQuery$variables = {
 export type viewingRoomRoutes_ViewingRoomWorksRouteQuery$data = {
   readonly viewingRoom: {
     readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomWorksRoute_viewingRoom">;
-  } | null;
+  } | null | undefined;
 };
 export type viewingRoomRoutes_ViewingRoomWorksRouteQuery = {
   response: viewingRoomRoutes_ViewingRoomWorksRouteQuery$data;

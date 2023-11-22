@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2c197185d3bc2932916ca14158b72ceb>>
+ * @generated SignedSource<<f75b9118f9f7e47e7bb2cfea48ee62d3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,8 +15,8 @@ export type GeneFamilies_geneFamiliesConnection$data = {
     readonly node: {
       readonly internalID: string;
       readonly " $fragmentSpreads": FragmentRefs<"GeneFamily_geneFamily">;
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "GeneFamilies_geneFamiliesConnection";
 };
 export type GeneFamilies_geneFamiliesConnection$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<179409f8ccabf14d53318de92d29624c>>
+ * @generated SignedSource<<2738a2c9ffcd257e39b4bd87d1b0033b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,9 +10,9 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type RemoveAssetFromConsignmentSubmissionInput = {
-  assetID?: string | null;
-  clientMutationId?: string | null;
-  sessionID?: string | null;
+  assetID?: string | null | undefined;
+  clientMutationId?: string | null | undefined;
+  sessionID?: string | null | undefined;
 };
 export type removeAssetFromConsignmentSubmissionMutation$variables = {
   input: RemoveAssetFromConsignmentSubmissionInput;
@@ -21,8 +21,8 @@ export type removeAssetFromConsignmentSubmissionMutation$data = {
   readonly removeAssetFromConsignmentSubmission: {
     readonly asset: {
       readonly id: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type removeAssetFromConsignmentSubmissionMutation = {
   response: removeAssetFromConsignmentSubmissionMutation$data;

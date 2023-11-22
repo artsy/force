@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<933b93fa51d0314e7c661c348c7bf754>>
+ * @generated SignedSource<<68fdb8d3ca3bf9e1d81663353178b10b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceSelectShippingOptionInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   id: string;
   selectedShippingQuoteId: string;
 };
@@ -24,7 +24,7 @@ export type SelectShippingOptionMutation$data = {
       readonly __typename: "CommerceOrderWithMutationSuccess";
       readonly error?: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
       readonly order?: {
@@ -34,14 +34,14 @@ export type SelectShippingOptionMutation$data = {
               readonly shippingQuoteOptions: {
                 readonly edges: ReadonlyArray<{
                   readonly " $fragmentSpreads": FragmentRefs<"ShippingQuotes_shippingQuotes">;
-                } | null> | null;
-              } | null;
-            } | null;
-          } | null> | null;
-        } | null;
+                } | null | undefined> | null | undefined;
+              } | null | undefined;
+            } | null | undefined;
+          } | null | undefined> | null | undefined;
+        } | null | undefined;
       };
     };
-  } | null;
+  } | null | undefined;
 };
 export type SelectShippingOptionMutation = {
   response: SelectShippingOptionMutation$data;

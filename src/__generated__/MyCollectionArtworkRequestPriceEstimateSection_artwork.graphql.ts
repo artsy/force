@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d3676bf00094330134bcd63235337b4f>>
+ * @generated SignedSource<<e6d22aa02a2c81cf56863ec1b32b65a1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkRequestPriceEstimateSection_artwork$data = {
-  readonly hasPriceEstimateRequest: boolean | null;
+  readonly hasPriceEstimateRequest: boolean | null | undefined;
   readonly internalID: string;
-  readonly isPriceEstimateRequestable: boolean | null;
+  readonly isPriceEstimateRequestable: boolean | null | undefined;
   readonly " $fragmentType": "MyCollectionArtworkRequestPriceEstimateSection_artwork";
 };
 export type MyCollectionArtworkRequestPriceEstimateSection_artwork$key = {

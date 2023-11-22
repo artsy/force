@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a8384cb1080dec07b2c13d022cfdf587>>
+ * @generated SignedSource<<33fce247e7b89003768a02986bd9d7d2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,13 +17,13 @@ export type SettingsSavesArtists_me$data = {
         readonly node: {
           readonly artist: {
             readonly " $fragmentSpreads": FragmentRefs<"ArtistRail_artist">;
-          } | null;
+          } | null | undefined;
           readonly internalID: string;
-        } | null;
-      } | null> | null;
-      readonly totalCount: number | null;
-    } | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "SettingsSavesArtists_me";
 };
 export type SettingsSavesArtists_me$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a1087edff18d3297644e29a6fa4a3bd5>>
+ * @generated SignedSource<<90a6edc7c8a6d5c1855910b5845b44ab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleVisibilityMetadata_article$data = {
-  readonly href: string | null;
-  readonly searchTitle: string | null;
-  readonly title: string | null;
+  readonly href: string | null | undefined;
+  readonly searchTitle: string | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "ArticleVisibilityMetadata_article";
 };
 export type ArticleVisibilityMetadata_article$key = {

@@ -2,11 +2,11 @@ import {
   createSavedSearchAlertMutation,
   createSavedSearchAlertMutation$data,
 } from "__generated__/createSavedSearchAlertMutation.graphql"
-import { commitMutation, Environment, graphql } from "relay-runtime"
 import {
   SavedSearchAlertFormValues,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
+import { commitMutation, Environment, graphql } from "react-relay"
 
 export const createSavedSearchAlert = (
   environment: Environment,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<97e813b06e30d098735ef02c1794af65>>
+ * @generated SignedSource<<dce229c126ec44e4559241359a199899>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,13 +10,13 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FollowProfileButton_Test_Query$variables = {};
+export type FollowProfileButton_Test_Query$variables = Record<PropertyKey, never>;
 export type FollowProfileButton_Test_Query$data = {
   readonly partner: {
     readonly profile: {
       readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type FollowProfileButton_Test_Query = {
   response: FollowProfileButton_Test_Query$data;

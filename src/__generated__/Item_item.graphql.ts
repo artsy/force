@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a76155b72a988e0711181ea03b90c314>>
+ * @generated SignedSource<<c85afece6537bda80fbce88e0f91ceec>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,43 +12,43 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Item_item$data = {
   readonly __typename: "Artwork";
-  readonly artistNames: string | null;
-  readonly date: string | null;
-  readonly href: string | null;
+  readonly artistNames: string | null | undefined;
+  readonly date: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly id: string;
   readonly image: {
-    readonly url: string | null;
-  } | null;
+    readonly url: string | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
-  readonly isOfferableFromInquiry: boolean | null;
+  readonly isOfferableFromInquiry: boolean | null | undefined;
   readonly listPrice: {
     readonly __typename: "Money";
-    readonly display: string | null;
+    readonly display: string | null | undefined;
   } | {
     readonly __typename: "PriceRange";
-    readonly display: string | null;
+    readonly display: string | null | undefined;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
-  readonly title: string | null;
+  } | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "Item_item";
 } | {
   readonly __typename: "Show";
   readonly coverImage: {
-    readonly url: string | null;
-  } | null;
+    readonly url: string | null | undefined;
+  } | null | undefined;
   readonly fair: {
-    readonly exhibitionPeriod: string | null;
+    readonly exhibitionPeriod: string | null | undefined;
     readonly location: {
-      readonly city: string | null;
-    } | null;
-    readonly name: string | null;
-  } | null;
-  readonly href: string | null;
+      readonly city: string | null | undefined;
+    } | null | undefined;
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly href: string | null | undefined;
   readonly id: string;
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "Item_item";
 } | {
   // This will never be '%other', but we need some

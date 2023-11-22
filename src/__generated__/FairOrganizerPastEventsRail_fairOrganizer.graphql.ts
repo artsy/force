@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<61402a5226c245d35bb9722dfd8929f1>>
+ * @generated SignedSource<<01194086ab1ad84894ec52fee5c576d6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type FairOrganizerPastEventsRail_fairOrganizer$data = {
       readonly node: {
         readonly id: string;
         readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerPastEventRailCell_fair">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "FairOrganizerPastEventsRail_fairOrganizer";
 };
 export type FairOrganizerPastEventsRail_fairOrganizer$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<213517e753fc7a8f3a1415d99e1a6555>>
+ * @generated SignedSource<<1fca45a2eb99a98f5807230ed86ff698>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,22 +17,22 @@ export type WorksForYouApp_viewerMe$data = {
         readonly edges: ReadonlyArray<{
           readonly node: {
             readonly artist: {
-              readonly name: string | null;
+              readonly name: string | null | undefined;
               readonly slug: string;
-            } | null;
-          } | null;
-        } | null> | null;
-        readonly totalCount: number | null;
-      } | null;
+            } | null | undefined;
+          } | null | undefined;
+        } | null | undefined> | null | undefined;
+        readonly totalCount: number | null | undefined;
+      } | null | undefined;
       readonly bundledArtworksByArtistConnection: {
         readonly edges: ReadonlyArray<{
           readonly node: {
             readonly id: string;
-          } | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  } | null;
+          } | null | undefined;
+        } | null | undefined> | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "WorksForYouApp_viewerMe";
 };
 export type WorksForYouApp_viewerMe$key = {

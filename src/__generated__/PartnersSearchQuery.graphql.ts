@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3b9d81bfa8621ae1e6862cb87a3d7920>>
+ * @generated SignedSource<<8afc64dc684d2226b9cf544a343808aa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,19 +11,19 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
 export type PartnersSearchQuery$variables = {
-  near?: string | null;
-  partnerCategories?: ReadonlyArray<string | null> | null;
-  term?: string | null;
-  type?: ReadonlyArray<PartnerClassification | null> | null;
+  near?: string | null | undefined;
+  partnerCategories?: ReadonlyArray<string | null | undefined> | null | undefined;
+  term?: string | null | undefined;
+  type?: ReadonlyArray<PartnerClassification | null | undefined> | null | undefined;
 };
 export type PartnersSearchQuery$data = {
   readonly filterPartners: {
     readonly hits: ReadonlyArray<{
-      readonly text: string | null;
+      readonly text: string | null | undefined;
       readonly value: string;
-    } | null> | null;
-    readonly total: number | null;
-  } | null;
+    } | null | undefined> | null | undefined;
+    readonly total: number | null | undefined;
+  } | null | undefined;
 };
 export type PartnersSearchQuery = {
   response: PartnersSearchQuery$data;

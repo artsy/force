@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<169e1f6ba83d1ae672b1cceb875366ff>>
+ * @generated SignedSource<<6999882bc9830c0af5b2a4b9ee8f1980>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,42 +11,42 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollapsibleArtworkDetails_artwork$data = {
-  readonly artistNames: string | null;
+  readonly artistNames: string | null | undefined;
   readonly attributionClass: {
-    readonly name: string | null;
-  } | null;
-  readonly category: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly category: string | null | undefined;
   readonly certificateOfAuthenticity: {
-    readonly details: string | null;
-  } | null;
+    readonly details: string | null | undefined;
+  } | null | undefined;
   readonly conditionDescription: {
-    readonly details: string | null;
-  } | null;
-  readonly date: string | null;
+    readonly details: string | null | undefined;
+  } | null | undefined;
+  readonly date: string | null | undefined;
   readonly dimensions: {
-    readonly cm: string | null;
-    readonly in: string | null;
-  } | null;
+    readonly cm: string | null | undefined;
+    readonly in: string | null | undefined;
+  } | null | undefined;
   readonly framed: {
-    readonly details: string | null;
-  } | null;
+    readonly details: string | null | undefined;
+  } | null | undefined;
   readonly image: {
     readonly resized: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly src: string;
       readonly srcSet: string;
-      readonly width: number | null;
-    } | null;
-  } | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
-  readonly manufacturer: string | null;
-  readonly medium: string | null;
-  readonly publisher: string | null;
-  readonly saleMessage: string | null;
+  readonly manufacturer: string | null | undefined;
+  readonly medium: string | null | undefined;
+  readonly publisher: string | null | undefined;
+  readonly saleMessage: string | null | undefined;
   readonly signatureInfo: {
-    readonly details: string | null;
-  } | null;
-  readonly title: string | null;
+    readonly details: string | null | undefined;
+  } | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "CollapsibleArtworkDetails_artwork";
 };
 export type CollapsibleArtworkDetails_artwork$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2dc8d43439985e6b7314a2dbc1017672>>
+ * @generated SignedSource<<f37e56970ef216db09adff76b2074475>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ConversationAppTestQuery$variables = {};
+export type ConversationAppTestQuery$variables = Record<PropertyKey, never>;
 export type ConversationAppTestQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"ConversationApp_me">;
-  } | null;
+  } | null | undefined;
 };
 export type ConversationAppTestQuery$rawResponse = {
   readonly me: {
@@ -24,54 +24,54 @@ export type ConversationAppTestQuery$rawResponse = {
         readonly node: {
           readonly __typename: "Conversation";
           readonly id: string;
-          readonly internalID: string | null;
+          readonly internalID: string | null | undefined;
           readonly items: ReadonlyArray<{
             readonly item: {
               readonly __typename: "Artwork";
               readonly __isNode: "Artwork";
-              readonly artistNames: string | null;
-              readonly date: string | null;
+              readonly artistNames: string | null | undefined;
+              readonly date: string | null | undefined;
               readonly id: string;
               readonly image: {
-                readonly url: string | null;
-              } | null;
-              readonly title: string | null;
+                readonly url: string | null | undefined;
+              } | null | undefined;
+              readonly title: string | null | undefined;
             } | {
               readonly __typename: "Show";
               readonly __isNode: "Show";
               readonly coverImage: {
-                readonly url: string | null;
-              } | null;
+                readonly url: string | null | undefined;
+              } | null | undefined;
               readonly fair: {
                 readonly id: string;
-                readonly name: string | null;
-              } | null;
+                readonly name: string | null | undefined;
+              } | null | undefined;
               readonly id: string;
-              readonly name: string | null;
+              readonly name: string | null | undefined;
             } | {
               readonly __typename: string;
               readonly __isNode: string;
               readonly id: string;
-            } | null;
-          } | null> | null;
-          readonly lastMessage: string | null;
-          readonly lastMessageAt: string | null;
+            } | null | undefined;
+          } | null | undefined> | null | undefined;
+          readonly lastMessage: string | null | undefined;
+          readonly lastMessageAt: string | null | undefined;
           readonly to: {
             readonly id: string;
             readonly name: string;
           };
-          readonly unread: boolean | null;
-        } | null;
-      } | null> | null;
+          readonly unread: boolean | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
       readonly pageInfo: {
-        readonly endCursor: string | null;
+        readonly endCursor: string | null | undefined;
         readonly hasNextPage: boolean;
         readonly hasPreviousPage: boolean;
-        readonly startCursor: string | null;
+        readonly startCursor: string | null | undefined;
       };
-    } | null;
+    } | null | undefined;
     readonly id: string;
-  } | null;
+  } | null | undefined;
 };
 export type ConversationAppTestQuery = {
   rawResponse: ConversationAppTestQuery$rawResponse;

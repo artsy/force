@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8950f9d3c4ca3c5eec11af50509f08ee>>
+ * @generated SignedSource<<7cd8e5faf347eed648dc96049ff8a3e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ArticleVerticalRelatedArticlesQuery$variables = {
 export type ArticleVerticalRelatedArticlesQuery$data = {
   readonly article: {
     readonly " $fragmentSpreads": FragmentRefs<"ArticleVerticalRelatedArticles_article">;
-  } | null;
+  } | null | undefined;
 };
 export type ArticleVerticalRelatedArticlesQuery = {
   response: ArticleVerticalRelatedArticlesQuery$data;

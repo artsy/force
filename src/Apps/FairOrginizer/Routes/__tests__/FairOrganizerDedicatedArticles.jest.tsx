@@ -36,7 +36,9 @@ const { getWrapper } = setupTestWrapper<
     }
   `,
   variables: {
+    // @ts-ignore
     first: 10,
+    // @ts-ignore
     page: 1,
   },
 })

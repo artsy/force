@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<60411c3459c0adb2be93c3930ca9a2bc>>
+ * @generated SignedSource<<f84994d1a22d83ed90635be911a682be>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type BankAccountPicker_me$data = {
       readonly node: {
         readonly internalID: string;
         readonly last4: string;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "BankAccountPicker_me";
 };
 export type BankAccountPicker_me$key = {

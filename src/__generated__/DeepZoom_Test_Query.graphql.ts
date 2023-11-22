@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<70b5e51436d885d2f1b9b32311dc8df2>>
+ * @generated SignedSource<<180c9b38b215f8e4badbbaa3a06bc926>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,13 +10,13 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type DeepZoom_Test_Query$variables = {};
+export type DeepZoom_Test_Query$variables = Record<PropertyKey, never>;
 export type DeepZoom_Test_Query$data = {
   readonly artwork: {
     readonly images: ReadonlyArray<{
       readonly " $fragmentSpreads": FragmentRefs<"DeepZoom_image">;
-    } | null> | null;
-  } | null;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
 };
 export type DeepZoom_Test_Query = {
   response: DeepZoom_Test_Query$data;

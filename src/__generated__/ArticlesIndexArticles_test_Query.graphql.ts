@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2e44d2de83236eb436bbba492b478ca0>>
+ * @generated SignedSource<<30bdbc87864a7ffd98ddfa32de8ca125>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticlesIndexArticles_test_Query$variables = {
-  after?: string | null;
+  after?: string | null | undefined;
 };
 export type ArticlesIndexArticles_test_Query$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"ArticlesIndexArticles_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type ArticlesIndexArticles_test_Query = {
   response: ArticlesIndexArticles_test_Query$data;

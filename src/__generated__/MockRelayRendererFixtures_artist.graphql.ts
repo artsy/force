@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf3efb1a421cbf1c3bc20c79ec452eff>>
+ * @generated SignedSource<<2b9b7ecb189222684e5bc477b5bf1261>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MockRelayRendererFixtures_artist$data = {
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "MockRelayRendererFixtures_artist";
 };
 export type MockRelayRendererFixtures_artist$key = {

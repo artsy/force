@@ -1,8 +1,8 @@
-import { Environment } from "relay-runtime"
+import { Environment } from "react-relay"
 import {
   createConsignSubmissionMutation,
   updateConsignSubmissionMutation,
-} from "../Mutations"
+} from "Apps/Consign/Routes/SubmissionFlow/Mutations"
 import { CreateSubmissionMutationInput } from "__generated__/CreateConsignSubmissionMutation.graphql"
 import { UpdateSubmissionMutationInput } from "__generated__/UpdateConsignSubmissionMutation.graphql"
 

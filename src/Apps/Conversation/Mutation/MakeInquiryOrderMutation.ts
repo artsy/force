@@ -1,10 +1,6 @@
 import { MakeInquiryOrderMutation } from "__generated__/MakeInquiryOrderMutation.graphql"
-import {
-  Environment,
-  MutationConfig,
-  commitMutation,
-  graphql,
-} from "relay-runtime"
+import { Environment, commitMutation, graphql } from "react-relay"
+import { MutationConfig } from "relay-runtime"
 
 export const MakeInquiryOrder = (
   environment: Environment,

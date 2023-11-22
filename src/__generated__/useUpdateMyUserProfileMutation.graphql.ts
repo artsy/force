@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a9fb1ce0fc0e0768cdeaf419a1662c42>>
+ * @generated SignedSource<<93adbc912399b369ccab369f5bd82a58>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,62 +12,62 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CurrencyPreference = "EUR" | "GBP" | "USD" | "%future added value";
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";
 export type UpdateMyProfileInput = {
-  artworksPerYear?: string | null;
-  bio?: string | null;
-  clientMutationId?: string | null;
-  collectorLevel?: number | null;
-  completedOnboarding?: boolean | null;
-  currencyPreference?: CurrencyPreference | null;
-  email?: string | null;
-  emailFrequency?: string | null;
-  gender?: string | null;
-  iconUrl?: string | null;
-  industry?: string | null;
-  isCollector?: boolean | null;
-  lengthUnitPreference?: LengthUnitPreference | null;
-  location?: EditableLocation | null;
-  name?: string | null;
-  notes?: string | null;
-  otherRelevantPositions?: string | null;
-  password?: string | null;
-  phone?: string | null;
-  phoneCountryCode?: string | null;
-  phoneNumber?: string | null;
-  priceRangeMax?: number | null;
-  priceRangeMin?: number | null;
-  privacy?: string | null;
-  profession?: string | null;
-  receiveLotOpeningSoonNotification?: boolean | null;
-  receiveNewSalesNotification?: boolean | null;
-  receiveNewWorksNotification?: boolean | null;
-  receiveOrderNotification?: boolean | null;
-  receiveOutbidNotification?: boolean | null;
-  receivePartnerShowNotification?: boolean | null;
-  receivePromotionNotification?: boolean | null;
-  receivePurchaseNotification?: boolean | null;
-  receiveSaleOpeningClosingNotification?: boolean | null;
-  receiveViewingRoomNotification?: boolean | null;
-  shareFollows?: boolean | null;
+  artworksPerYear?: string | null | undefined;
+  bio?: string | null | undefined;
+  clientMutationId?: string | null | undefined;
+  collectorLevel?: number | null | undefined;
+  completedOnboarding?: boolean | null | undefined;
+  currencyPreference?: CurrencyPreference | null | undefined;
+  email?: string | null | undefined;
+  emailFrequency?: string | null | undefined;
+  gender?: string | null | undefined;
+  iconUrl?: string | null | undefined;
+  industry?: string | null | undefined;
+  isCollector?: boolean | null | undefined;
+  lengthUnitPreference?: LengthUnitPreference | null | undefined;
+  location?: EditableLocation | null | undefined;
+  name?: string | null | undefined;
+  notes?: string | null | undefined;
+  otherRelevantPositions?: string | null | undefined;
+  password?: string | null | undefined;
+  phone?: string | null | undefined;
+  phoneCountryCode?: string | null | undefined;
+  phoneNumber?: string | null | undefined;
+  priceRangeMax?: number | null | undefined;
+  priceRangeMin?: number | null | undefined;
+  privacy?: string | null | undefined;
+  profession?: string | null | undefined;
+  receiveLotOpeningSoonNotification?: boolean | null | undefined;
+  receiveNewSalesNotification?: boolean | null | undefined;
+  receiveNewWorksNotification?: boolean | null | undefined;
+  receiveOrderNotification?: boolean | null | undefined;
+  receiveOutbidNotification?: boolean | null | undefined;
+  receivePartnerShowNotification?: boolean | null | undefined;
+  receivePromotionNotification?: boolean | null | undefined;
+  receivePurchaseNotification?: boolean | null | undefined;
+  receiveSaleOpeningClosingNotification?: boolean | null | undefined;
+  receiveViewingRoomNotification?: boolean | null | undefined;
+  shareFollows?: boolean | null | undefined;
 };
 export type EditableLocation = {
-  address?: string | null;
-  address2?: string | null;
-  city?: string | null;
-  coordinates?: ReadonlyArray<number> | null;
-  country?: string | null;
-  countryCode?: string | null;
-  postalCode?: string | null;
-  state?: string | null;
-  stateCode?: string | null;
-  summary?: string | null;
+  address?: string | null | undefined;
+  address2?: string | null | undefined;
+  city?: string | null | undefined;
+  coordinates?: ReadonlyArray<number> | null | undefined;
+  country?: string | null | undefined;
+  countryCode?: string | null | undefined;
+  postalCode?: string | null | undefined;
+  state?: string | null | undefined;
+  stateCode?: string | null | undefined;
+  summary?: string | null | undefined;
 };
 export type useUpdateMyUserProfileMutation$variables = {
   input: UpdateMyProfileInput;
 };
 export type useUpdateMyUserProfileMutation$data = {
   readonly updateMyUserProfile: {
-    readonly clientMutationId: string | null;
-  } | null;
+    readonly clientMutationId: string | null | undefined;
+  } | null | undefined;
 };
 export type useUpdateMyUserProfileMutation = {
   response: useUpdateMyUserProfileMutation$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebe4d8e7789e333418d98e0bee08709f>>
+ * @generated SignedSource<<fcb18928f73b0644e0c4467254c37600>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type RequestConditionReportQuery$variables = {
 export type RequestConditionReportQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"RequestConditionReport_artwork">;
-  } | null;
+  } | null | undefined;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"RequestConditionReport_me">;
-  } | null;
+  } | null | undefined;
 };
 export type RequestConditionReportQuery = {
   response: RequestConditionReportQuery$data;

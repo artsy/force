@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf21c38688a16da931edd6c0cd4d3503>>
+ * @generated SignedSource<<1705c6157f9262cf448bd55ed4bc4088>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,19 +11,19 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateUserAddressInput = {
   attributes: UserAddressAttributes;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
 };
 export type UserAddressAttributes = {
   addressLine1: string;
-  addressLine2?: string | null;
-  addressLine3?: string | null;
+  addressLine2?: string | null | undefined;
+  addressLine3?: string | null | undefined;
   city: string;
   country: string;
   name: string;
-  phoneNumber?: string | null;
-  phoneNumberCountryCode?: string | null;
-  postalCode?: string | null;
-  region?: string | null;
+  phoneNumber?: string | null | undefined;
+  phoneNumberCountryCode?: string | null | undefined;
+  postalCode?: string | null | undefined;
+  region?: string | null | undefined;
 };
 export type CreateUserAddressMutation$variables = {
   input: CreateUserAddressInput;
@@ -32,8 +32,8 @@ export type CreateUserAddressMutation$data = {
   readonly createUserAddress: {
     readonly userAddressOrErrors: {
       readonly addressLine1?: string;
-      readonly addressLine2?: string | null;
-      readonly addressLine3?: string | null;
+      readonly addressLine2?: string | null | undefined;
+      readonly addressLine3?: string | null | undefined;
       readonly city?: string;
       readonly country?: string;
       readonly errors?: ReadonlyArray<{
@@ -42,12 +42,12 @@ export type CreateUserAddressMutation$data = {
       readonly id?: string;
       readonly internalID?: string;
       readonly isDefault?: boolean;
-      readonly name?: string | null;
-      readonly phoneNumber?: string | null;
-      readonly postalCode?: string | null;
-      readonly region?: string | null;
+      readonly name?: string | null | undefined;
+      readonly phoneNumber?: string | null | undefined;
+      readonly postalCode?: string | null | undefined;
+      readonly region?: string | null | undefined;
     };
-  } | null;
+  } | null | undefined;
 };
 export type CreateUserAddressMutation = {
   response: CreateUserAddressMutation$data;

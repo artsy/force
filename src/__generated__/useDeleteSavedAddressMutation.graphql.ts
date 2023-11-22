@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<70f93bd6da4947c1b3223ba256bf5549>>
+ * @generated SignedSource<<90c3190292eb1fc8a0e3bacea0f4b947>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeleteUserAddressInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   userAddressID: string;
 };
 export type useDeleteSavedAddressMutation$variables = {
@@ -21,13 +21,13 @@ export type useDeleteSavedAddressMutation$data = {
   readonly deleteUserAddress: {
     readonly me: {
       readonly " $fragmentSpreads": FragmentRefs<"Shipping2_me">;
-    } | null;
+    } | null | undefined;
     readonly userAddressOrErrors: {
       readonly errors?: ReadonlyArray<{
         readonly message: string;
       }>;
     };
-  } | null;
+  } | null | undefined;
 };
 export type useDeleteSavedAddressMutation = {
   response: useDeleteSavedAddressMutation$data;

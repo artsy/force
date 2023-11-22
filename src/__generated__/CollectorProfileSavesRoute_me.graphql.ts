@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<700b105344a4568835261417b715fe65>>
+ * @generated SignedSource<<4a6981577659ae4a363bc8d0be5f8109>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,16 +17,16 @@ export type CollectorProfileSavesRoute_me$data = {
         readonly default: boolean;
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly savedArtworksArtworkList: {
     readonly artworksConnection: {
-      readonly totalCount: number | null;
-    } | null;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
     readonly internalID: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "CollectorProfileSavesRoute_me";
 };
 export type CollectorProfileSavesRoute_me$key = {

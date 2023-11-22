@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1acdd6cadf3e67aa4e698154a979f7e2>>
+ * @generated SignedSource<<58a7d38da5933d163d31396ecc6e6091>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,15 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type newForYouRoutes_TopLevelQuery$variables = {
-  first?: number | null;
+  first?: number | null | undefined;
   includeBackfill: boolean;
-  maxWorksPerArtist?: number | null;
-  version?: string | null;
+  maxWorksPerArtist?: number | null | undefined;
+  version?: string | null | undefined;
 };
 export type newForYouRoutes_TopLevelQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"NewForYouApp_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type newForYouRoutes_TopLevelQuery = {
   response: newForYouRoutes_TopLevelQuery$data;

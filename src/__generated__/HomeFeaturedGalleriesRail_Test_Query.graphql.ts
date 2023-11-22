@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5b00ae3c73025cb91a96b6a0a4ecf7fc>>
+ * @generated SignedSource<<8319744f593cd8653df9da7860b183c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeFeaturedGalleriesRail_Test_Query$variables = {};
+export type HomeFeaturedGalleriesRail_Test_Query$variables = Record<PropertyKey, never>;
 export type HomeFeaturedGalleriesRail_Test_Query$data = {
   readonly orderedSet: {
     readonly " $fragmentSpreads": FragmentRefs<"HomeFeaturedGalleriesRail_orderedSet">;
-  } | null;
+  } | null | undefined;
 };
 export type HomeFeaturedGalleriesRail_Test_Query = {
   response: HomeFeaturedGalleriesRail_Test_Query$data;

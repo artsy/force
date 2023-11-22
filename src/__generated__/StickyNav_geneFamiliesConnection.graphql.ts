@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<61a501b31e481bde076661960b9b7263>>
+ * @generated SignedSource<<e06d5b2e0a8340f8039ae36ac48ca5e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,8 +16,8 @@ export type StickyNav_geneFamiliesConnection$data = {
       readonly internalID: string;
       readonly name: string;
       readonly slug: string;
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "StickyNav_geneFamiliesConnection";
 };
 export type StickyNav_geneFamiliesConnection$key = {

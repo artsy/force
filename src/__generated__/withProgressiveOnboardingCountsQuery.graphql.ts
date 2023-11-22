@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5462158821f1a760ae2625e52810e0ec>>
+ * @generated SignedSource<<b47dff7d7382bee82e7a15d93efa07f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,15 +9,15 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type withProgressiveOnboardingCountsQuery$variables = {};
+export type withProgressiveOnboardingCountsQuery$variables = Record<PropertyKey, never>;
 export type withProgressiveOnboardingCountsQuery$data = {
   readonly me: {
     readonly counts: {
       readonly followedArtists: number;
       readonly savedArtworks: number;
       readonly savedSearches: number;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type withProgressiveOnboardingCountsQuery = {
   response: withProgressiveOnboardingCountsQuery$data;

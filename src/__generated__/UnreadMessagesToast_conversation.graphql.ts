@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4af5c822b9480768827670de945a2743>>
+ * @generated SignedSource<<6ac920640f0c2f1bb59a400bd677b700>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,14 +16,14 @@ export type UnreadMessagesToast_conversation$data = {
       readonly node: {
         readonly internalID: string;
         readonly updatedAt: string;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly fromLastViewedMessageID: string | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly fromLastViewedMessageID: string | null | undefined;
   readonly id: string;
-  readonly internalID: string | null;
-  readonly isLastMessageToUser: boolean | null;
-  readonly lastMessageID: string | null;
+  readonly internalID: string | null | undefined;
+  readonly isLastMessageToUser: boolean | null | undefined;
+  readonly lastMessageID: string | null | undefined;
   readonly " $fragmentType": "UnreadMessagesToast_conversation";
 };
 export type UnreadMessagesToast_conversation$key = {

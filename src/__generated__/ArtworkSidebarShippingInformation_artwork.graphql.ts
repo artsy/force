@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<efc1e8b3babce00793caeb9eab557290>>
+ * @generated SignedSource<<896a3e4a67cc0e0a423d77ad9c65f271>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarShippingInformation_artwork$data = {
-  readonly shippingInfo: string | null;
-  readonly shippingOrigin: string | null;
+  readonly shippingInfo: string | null | undefined;
+  readonly shippingOrigin: string | null | undefined;
   readonly " $fragmentType": "ArtworkSidebarShippingInformation_artwork";
 };
 export type ArtworkSidebarShippingInformation_artwork$key = {

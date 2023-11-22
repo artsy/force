@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<25dd365f886efcea6a026d774800159e>>
+ * @generated SignedSource<<5a9bb0a6577bbc947b9762a1345c8adf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,8 +13,8 @@ import { FragmentRefs } from "relay-runtime";
 export type FollowGeneButton_gene$data = {
   readonly id: string;
   readonly internalID: string;
-  readonly isFollowed: boolean | null;
-  readonly name: string | null;
+  readonly isFollowed: boolean | null | undefined;
+  readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "FollowGeneButton_gene";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3de852a4d210dc44114cbeba2f610601>>
+ * @generated SignedSource<<e3d55070b4a81ad38dba8e978716468a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,14 +15,14 @@ export type FairsPastFairs_viewer$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
-        readonly isPublished: boolean | null;
+        readonly isPublished: boolean | null | undefined;
         readonly profile: {
-          readonly isPublished: boolean | null;
-        } | null;
+          readonly isPublished: boolean | null | undefined;
+        } | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"FairsFairRow_fair">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "FairsPastFairs_viewer";
 };
 export type FairsPastFairs_viewer$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1201dc19b0b9a17aac38663de6169bb6>>
+ * @generated SignedSource<<3ae85a3dab09fb8bc548545602091dab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,8 @@ export type ShowsIndex_featuredShows$data = {
   readonly items: ReadonlyArray<{
     readonly id?: string;
     readonly " $fragmentSpreads": FragmentRefs<"ShowsFeaturedShow_show">;
-  } | null> | null;
-  readonly name: string | null;
+  } | null | undefined> | null | undefined;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "ShowsIndex_featuredShows";
 };
 export type ShowsIndex_featuredShows$key = {

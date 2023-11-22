@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0fa9270af3670aeaa1e4d14a4669e55b>>
+ * @generated SignedSource<<f61c784944a4509f7b9420188143464a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type UpdateUserDefaultAddressInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   userAddressID: string;
 };
 export type useUpdateUserDefaultAddressMutation$variables = {
@@ -21,13 +21,13 @@ export type useUpdateUserDefaultAddressMutation$data = {
   readonly updateUserDefaultAddress: {
     readonly me: {
       readonly " $fragmentSpreads": FragmentRefs<"Shipping2_me">;
-    } | null;
+    } | null | undefined;
     readonly userAddressOrErrors: {
       readonly errors?: ReadonlyArray<{
         readonly message: string;
       }>;
     };
-  } | null;
+  } | null | undefined;
 };
 export type useUpdateUserDefaultAddressMutation = {
   response: useUpdateUserDefaultAddressMutation$data;

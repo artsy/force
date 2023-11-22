@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8af897d25daaad7e264c4827fb739b29>>
+ * @generated SignedSource<<bca9df8ca5e494bc59114731e80e7ed3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkMeta_artwork$data = {
-  readonly artistNames: string | null;
-  readonly title: string | null;
+  readonly artistNames: string | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "MyCollectionArtworkMeta_artwork";
 };
 export type MyCollectionArtworkMeta_artwork$key = {

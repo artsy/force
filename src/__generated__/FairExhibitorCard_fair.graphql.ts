@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1b44aeee3e13b5057f2997a279f0466e>>
+ * @generated SignedSource<<696af457f657b6aa098f02f4a29ed1c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairExhibitorCard_fair$data = {
-  readonly href: string | null;
+  readonly href: string | null | undefined;
   readonly " $fragmentType": "FairExhibitorCard_fair";
 };
 export type FairExhibitorCard_fair$key = {

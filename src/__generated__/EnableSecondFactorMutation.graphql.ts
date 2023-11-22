@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<47f630b7da4fab5164408613f82aa635>>
+ * @generated SignedSource<<744a2c00ff85ebf0b92efe7295a0289e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type EnableSecondFactorInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   code: string;
   password: string;
   secondFactorID: string;
@@ -20,7 +20,7 @@ export type EnableSecondFactorMutation$variables = {
 };
 export type EnableSecondFactorMutation$data = {
   readonly enableSecondFactor: {
-    readonly recoveryCodes: ReadonlyArray<string> | null;
+    readonly recoveryCodes: ReadonlyArray<string> | null | undefined;
     readonly secondFactorOrErrors: {
       readonly __typename: "AppSecondFactor";
     } | {
@@ -36,11 +36,11 @@ export type EnableSecondFactorMutation$data = {
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     };
-  } | null;
+  } | null | undefined;
 };
 export type EnableSecondFactorMutation$rawResponse = {
   readonly enableSecondFactor: {
-    readonly recoveryCodes: ReadonlyArray<string> | null;
+    readonly recoveryCodes: ReadonlyArray<string> | null | undefined;
     readonly secondFactorOrErrors: {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
@@ -50,7 +50,7 @@ export type EnableSecondFactorMutation$rawResponse = {
     } | {
       readonly __typename: string;
     };
-  } | null;
+  } | null | undefined;
 };
 export type EnableSecondFactorMutation = {
   rawResponse: EnableSecondFactorMutation$rawResponse;

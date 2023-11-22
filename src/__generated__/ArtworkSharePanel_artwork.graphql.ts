@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b3eb119bce4255b46e721418952965f6>>
+ * @generated SignedSource<<6b521f2d50b240571866462d017b00c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,12 +12,12 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSharePanel_artwork$data = {
   readonly artworkMeta: {
-    readonly share: string | null;
-  } | null;
-  readonly href: string | null;
+    readonly share: string | null | undefined;
+  } | null | undefined;
+  readonly href: string | null | undefined;
   readonly images: ReadonlyArray<{
-    readonly url: string | null;
-  } | null> | null;
+    readonly url: string | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "ArtworkSharePanel_artwork";
 };
 export type ArtworkSharePanel_artwork$key = {

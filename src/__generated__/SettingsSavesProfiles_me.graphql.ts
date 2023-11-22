@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d31579ce09ce8ffae7a0f4b3cd5fab6c>>
+ * @generated SignedSource<<5b33455b9508c413b2fc5cad0ca117b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,10 +21,10 @@ export type SettingsSavesProfiles_me$data = {
               readonly cropped: {
                 readonly src: string;
                 readonly srcSet: string;
-              } | null;
-            } | null;
-            readonly href: string | null;
-            readonly name: string | null;
+              } | null | undefined;
+            } | null | undefined;
+            readonly href: string | null | undefined;
+            readonly name: string | null | undefined;
             readonly owner: {
               readonly __typename: "Fair";
               readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderFair_fair">;
@@ -40,11 +40,11 @@ export type SettingsSavesProfiles_me$data = {
               readonly __typename: "%other";
             };
           };
-        } | null;
-      } | null> | null;
-      readonly totalCount: number | null;
-    } | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "SettingsSavesProfiles_me";
 };
 export type SettingsSavesProfiles_me$key = {

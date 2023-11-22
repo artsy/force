@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c71ea50d3aad232599192ee81b9b0f26>>
+ * @generated SignedSource<<c5b548ba210cfae40ecb7cf8d21896dc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,34 +16,34 @@ export type ShowBannersRail_partner$data = {
       readonly node: {
         readonly id: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShowBanner_show">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly featuredShow: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly id: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShowBanner_show">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly pastShows: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly id: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShowBanner_show">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly upcomingShows: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly id: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShowBanner_show">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ShowBannersRail_partner";
 };
 export type ShowBannersRail_partner$key = {

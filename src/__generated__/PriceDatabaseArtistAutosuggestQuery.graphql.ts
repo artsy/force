@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<515511805f87cdc16f7a7167ee80a75a>>
+ * @generated SignedSource<<4cf58f7e950d69e79f45270deff02fa3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,11 +17,11 @@ export type PriceDatabaseArtistAutosuggestQuery$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID?: string;
-        readonly text: string | null;
+        readonly text: string | null | undefined;
         readonly value?: string;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
 };
 export type PriceDatabaseArtistAutosuggestQuery = {
   response: PriceDatabaseArtistAutosuggestQuery$data;

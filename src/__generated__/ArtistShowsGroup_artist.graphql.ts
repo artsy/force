@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bcd34b9f33f45800182b353a0d975627>>
+ * @generated SignedSource<<8525d2f9ab20687dc50a0d5207ff55b2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,15 +16,15 @@ export type ArtistShowsGroup_artist$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     };
     readonly pageInfo: {
       readonly hasNextPage: boolean;
     };
-  } | null;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtistShowsGroup_artist";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c80255c07a02b22eaae35d53b515e815>>
+ * @generated SignedSource<<632a424b100a1936f4482dc1539c3f41>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,13 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CellPartnerArtist_partnerArtist$data = {
   readonly artist: {
-    readonly href: string | null;
-    readonly initials: string | null;
+    readonly href: string | null | undefined;
+    readonly initials: string | null | undefined;
     readonly internalID: string;
-    readonly name: string | null;
+    readonly name: string | null | undefined;
     readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
-  } | null;
+  } | null | undefined;
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
@@ -26,14 +26,14 @@ export type CellPartnerArtist_partnerArtist$data = {
           readonly cropped: {
             readonly src: string;
             readonly srcSet: string;
-          } | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly partner: {
     readonly slug: string;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "CellPartnerArtist_partnerArtist";
 };
 export type CellPartnerArtist_partnerArtist$key = {
