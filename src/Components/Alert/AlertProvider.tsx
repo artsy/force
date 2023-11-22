@@ -27,12 +27,14 @@ import {
 interface AlertProviderProps {
   initialCriteria?: SearchCriteriaAttributes
   currentArtworkID?: string
+  visible?: boolean
 }
 
 export const AlertProvider: FC<AlertProviderProps> = ({
   children,
   initialCriteria,
   currentArtworkID,
+  visible,
 }) => {
   const { createdAlert } = useAlertTracking()
   const { showAuthDialog } = useAuthDialog()
@@ -50,7 +52,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     criteria: getAllowedSearchCriteria(initialCriteria ?? {}),
     currentArtworkID,
     preview: null,
-    visible: false,
+    visible: visible ?? false,
   }
   const [current, setCurrent] = useState<
     "ALERT_DETAILS" | "ALERT_FILTERS" | "ALERT_CONFIRMATION"

@@ -21,7 +21,7 @@ describe("PriceFilter", () => {
   const renderPriceRangeFilter = (contextProps = {}, initialCriteria = {}) => {
     return render(
       <MockBoot relayEnvironment={environment}>
-        <AlertProvider initialCriteria={initialCriteria}>
+        <AlertProvider visible initialCriteria={initialCriteria}>
           <PriceFilterTestComponent />
         </AlertProvider>
       </MockBoot>
