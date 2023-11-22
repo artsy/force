@@ -329,20 +329,16 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
 
     if (newAlertModalEnabled) {
       return (
-        <>
-          <ProgressiveOnboardingAlertCreateSimple>
-            <CreateAlertButton width="100%" size="large" />
-          </ProgressiveOnboardingAlertCreateSimple>
-        </>
+        <ProgressiveOnboardingAlertCreateSimple>
+          <CreateAlertButton width="100%" size="large" />
+        </ProgressiveOnboardingAlertCreateSimple>
       )
     } else {
       return (
-        <>
-          <ArtworkCreateAlertButtonFragmentContainer
-            artwork={artwork}
-            analyticsContextModule={ContextModule.artworkSidebar}
-          />
-        </>
+        <ArtworkCreateAlertButtonFragmentContainer
+          artwork={artwork}
+          analyticsContextModule={ContextModule.artworkSidebar}
+        />
       )
     }
   }
