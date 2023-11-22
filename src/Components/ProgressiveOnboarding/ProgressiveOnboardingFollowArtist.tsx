@@ -33,7 +33,7 @@ export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFoll
     // Hasn't followed an artist yet.
     counts.isReady &&
     counts.followedArtists === 0 &&
-    // If you've already dismissed the alerts onboarding OR you're not on the artist page.
+    // If you've already dismissed the alerts onboarding OR you're logged out OR you're not on the artist page.
     (!isLoggedIn ||
       PROGRESSIVE_ONBOARDING_ALERT_CHAIN.every(
         key => isDismissed(key).status
