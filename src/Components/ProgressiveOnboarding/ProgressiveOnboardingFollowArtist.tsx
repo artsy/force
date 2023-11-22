@@ -13,6 +13,7 @@ import {
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useRouter } from "System/Router/useRouter"
 import { pathToRegexp } from "path-to-regexp"
+import { useSystemContext } from "System/SystemContext"
 
 interface ProgressiveOnboardingFollowArtistProps
   extends WithProgressiveOnboardingCountsProps {}
@@ -22,6 +23,7 @@ export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFoll
   children,
 }) => {
   const router = useRouter()
+  const { isLoggedIn } = useSystemContext()
 
   const { dismiss, isDismissed } = useProgressiveOnboarding()
 
@@ -31,8 +33,11 @@ export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFoll
     // Hasn't followed an artist yet.
     counts.isReady &&
     counts.followedArtists === 0 &&
-    // If you've already dismissed the alerts onboarding OR you're not on the artist page.
-    (PROGRESSIVE_ONBOARDING_ALERT_CHAIN.every(key => isDismissed(key).status) ||
+    // If you've already dismissed the alerts onboarding OR you're logged out OR you're not on the artist page.
+    (!isLoggedIn ||
+      PROGRESSIVE_ONBOARDING_ALERT_CHAIN.every(
+        key => isDismissed(key).status
+      ) ||
       !pathToRegexp("/artist/:artistID").test(router.match.location.pathname))
 
   const handleClose = useCallback(() => {

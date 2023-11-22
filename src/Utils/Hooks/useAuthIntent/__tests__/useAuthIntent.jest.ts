@@ -382,6 +382,7 @@ describe("isValid", () => {
     expect(
       isValid({ action: "save", kind: "artworks", objectId: "example" })
     ).toBe(true)
+    expect(isValid({ action: "createAlert" })).toBe(true)
     expect(
       isValid({ action: "follow", kind: "invalid", objectId: "example" })
     ).toBe(false)

@@ -14,6 +14,7 @@ import { ZeroState } from "./ZeroState"
 import { ArtistArtworkFilters } from "./ArtistArtworkFilters"
 import { useSystemContext } from "System/useSystemContext"
 import { ArtworkFilterSavedSearchAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterSavedSearchAlertContextProvider"
+import { ArtworkFilterAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterAlertContextProvider"
 
 interface ArtistArtworkFilterProps {
   aggregations: SharedArtworkFilterContextProps["aggregations"]
@@ -67,16 +68,22 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
       ZeroState={ZeroState}
       userPreferredMetric={userPreferences?.metric}
     >
-      <ArtworkFilterSavedSearchAlertContextProvider entity={savedSearchEntity}>
-        <BaseArtworkFilter
-          relay={relay}
-          viewer={artist}
-          Filters={<ArtistArtworkFilters />}
-          relayVariables={{
-            aggregations: ["TOTAL"],
-          }}
-        />
-      </ArtworkFilterSavedSearchAlertContextProvider>
+      <ArtworkFilterAlertContextProvider
+        initialCriteria={{ artistIDs: [artist.internalID] }}
+      >
+        <ArtworkFilterSavedSearchAlertContextProvider
+          entity={savedSearchEntity}
+        >
+          <BaseArtworkFilter
+            relay={relay}
+            viewer={artist}
+            Filters={<ArtistArtworkFilters />}
+            relayVariables={{
+              aggregations: ["TOTAL"],
+            }}
+          />
+        </ArtworkFilterSavedSearchAlertContextProvider>
+      </ArtworkFilterAlertContextProvider>
     </ArtworkFilterContextProvider>
   )
 }

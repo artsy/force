@@ -6,8 +6,6 @@ import { ArtworkSidebarBiddingClosedMessage_artwork$data } from "__generated__/A
 import { ContextModule } from "@artsy/cohesion"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
-import { useAlert } from "Components/Alert"
-import { compact } from "lodash"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
 interface BiddingClosedMessageProps {
@@ -19,14 +17,6 @@ const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
 }) => {
   const { t } = useTranslation()
   const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
-
-  const { alertComponent, showAlert } = useAlert({
-    initialCriteria: {
-      attributionClass: compact([artwork.attributionClass?.internalID]),
-      artistIDs: compact(artwork.artists).map(artist => artist.internalID),
-      additionalGeneIDs: [artwork.mediumType?.filterGene?.slug as string],
-    },
-  })
 
   return (
     <>
@@ -43,13 +33,8 @@ const BiddingClosedMessage: React.FC<BiddingClosedMessageProps> = ({
           {newAlertModalEnabled ? (
             <>
               <ProgressiveOnboardingAlertCreateSimple>
-                <CreateAlertButton
-                  width="100%"
-                  size="large"
-                  onClick={showAlert}
-                />
+                <CreateAlertButton width="100%" size="large" />
               </ProgressiveOnboardingAlertCreateSimple>
-              {alertComponent}
             </>
           ) : (
             <ArtworkCreateAlertButtonFragmentContainer

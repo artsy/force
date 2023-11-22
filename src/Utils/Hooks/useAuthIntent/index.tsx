@@ -140,6 +140,12 @@ export const useRunAuthIntent = () => {
               case "artist":
                 syncFromLoggedOutUser()
             }
+            break
+          case "saveArtworkToLists":
+            switch (value.kind) {
+              case "artworks":
+                syncFromLoggedOutUser()
+            }
         }
       },
     })
@@ -192,8 +198,12 @@ const schema = Yup.object({
     .required(),
   kind: Yup.string()
     .oneOf(["artist", "artworks", "gene", "profile", "submission"])
-    .required(),
-  objectId: Yup.string().required(),
+    .when("action", (action, schema) => {
+      return action === "createAlert" ? schema.notRequired() : schema.required()
+    }),
+  objectId: Yup.string().when("action", (action, schema) => {
+    return action === "createAlert" ? schema.notRequired() : schema.required()
+  }),
   secondaryObjectId: Yup.string(),
 })
 
