@@ -23,6 +23,7 @@ import {
   PreviewSavedSearchAttributes,
   AlertProviderPreviewQuery,
 } from "__generated__/AlertProviderPreviewQuery.graphql"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface AlertProviderProps {
   initialCriteria?: SearchCriteriaAttributes
@@ -40,6 +41,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   const { showAuthDialog } = useAuthDialog()
   const { value, clearValue } = useAuthIntent()
   const { submitMutation } = useCreateAlert()
+  const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
   const { isLoggedIn, relayEnvironment } = useSystemContext()
 
   const initialState = {
@@ -171,12 +173,13 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   }, [state.visible, debouncedCriteria, relayEnvironment])
 
   useEffect(() => {
-    if (!value || value.action !== Intent.createAlert) return
+    if (!newAlertModalEnabled || !value || value.action !== Intent.createAlert)
+      return
 
     dispatch({ type: "SHOW" })
 
     clearValue()
-  }, [value, clearValue])
+  }, [newAlertModalEnabled, value, clearValue])
 
   return (
     <AlertContext.Provider
