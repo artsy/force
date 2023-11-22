@@ -20,6 +20,7 @@ import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
+import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
 
 export interface AlertFormikValues {
   name: string
@@ -106,25 +107,9 @@ export const Details: FC = () => {
                 )}
 
                 {newAlertModalFilteresEnabled && enableSuggestedFilters && (
-                  <Flex justifyContent="space-between" flexDirection={"column"}>
-                    <Box>
-                      <Text variant="sm-display">Suggested Filters</Text>
-                    </Box>
-
-                    <Box>
-                      <Clickable onClick={transitionToFiltersAndTrack}>
-                        <Flex
-                          justifyContent={"space-between"}
-                          alignItems={"center"}
-                        >
-                          <Text variant="sm" color="black60" mr={0.5}>
-                            More Filters
-                          </Text>
-                          <ChevronRightIcon height={14} width={14} />
-                        </Flex>
-                      </Clickable>
-                    </Box>
-                  </Flex>
+                  <SugggestedFiltersQueryRenderer
+                    transitionToFiltersAndTrack={transitionToFiltersAndTrack}
+                  />
                 )}
                 <DetailsInput />
 

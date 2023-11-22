@@ -19,18 +19,13 @@ export const QuickMultipleSelectAlertFilter: FC<QuickMultipleSelectAlertFilterPr
 }) => {
   const { state, dispatch } = useAlertContext()
 
-  const toggleSelection = (selected, name) => {
-    let updatedValues = (state.criteria[criteriaKey] || []) as string[]
-
-    if (selected) {
-      updatedValues = [...updatedValues, name]
-    } else {
-      updatedValues = updatedValues.filter(item => item !== name)
-    }
-
-    dispatch({
-      type: "SET_CRITERIA_ATTRIBUTE",
-      payload: { key: criteriaKey, value: updatedValues },
+  const toggleSelection = (selected, value) => {
+    handleFieldsWithMultipleValues({
+      selectedValue: state.criteria[criteriaKey] as string[] | null,
+      criteriaKey,
+      selected,
+      value,
+      dispatch,
     })
   }
 
@@ -64,4 +59,31 @@ export const QuickMultipleSelectAlertFilter: FC<QuickMultipleSelectAlertFilterPr
       </GridColumns>
     </>
   )
+}
+
+export const handleFieldsWithMultipleValues = ({
+  selectedValue,
+  criteriaKey,
+  selected,
+  value,
+  dispatch,
+}: {
+  selectedValue: string[] | null
+  criteriaKey: SearchCriteriaAttributeKeys
+  selected: boolean
+  value: string
+  dispatch: ReturnType<typeof useAlertContext>["dispatch"]
+}) => {
+  let updatedValues = (selectedValue || []) as string[]
+
+  if (selected) {
+    updatedValues = [...updatedValues, value]
+  } else {
+    updatedValues = updatedValues.filter(item => item !== value)
+  }
+
+  dispatch({
+    type: "SET_CRITERIA_ATTRIBUTE",
+    payload: { key: criteriaKey, value: updatedValues },
+  })
 }
