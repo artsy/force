@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ffb33f6c631124a56ec3d8031e8362a8>>
+ * @generated SignedSource<<2e00c98886de18b2291f1bdad4e7d847>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,15 +18,15 @@ export type SelectArtworkListsModal_me$data = {
         readonly isSavedArtwork: boolean;
         readonly name: string;
         readonly " $fragmentSpreads": FragmentRefs<"SelectArtworkListItem_item">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly savedArtworksArtworkList: {
     readonly internalID: string;
     readonly isSavedArtwork: boolean;
     readonly name: string;
     readonly " $fragmentSpreads": FragmentRefs<"SelectArtworkListItem_item">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "SelectArtworkListsModal_me";
 };
 export type SelectArtworkListsModal_me$key = {

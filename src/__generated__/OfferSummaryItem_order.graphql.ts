@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3382bb39ef41e0ac3375b95b69ff6aa0>>
+ * @generated SignedSource<<fb986d9e82273ad35df779a7dd102871>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,22 +17,22 @@ export type OfferSummaryItem_order$data = {
       readonly node: {
         readonly artworkOrEditionSet: {
           readonly __typename: "Artwork";
-          readonly price: string | null;
+          readonly price: string | null | undefined;
         } | {
           readonly __typename: "EditionSet";
-          readonly price: string | null;
+          readonly price: string | null | undefined;
         } | {
           // This will never be '%other', but we need some
           // value in case none of the concrete values match.
           readonly __typename: "%other";
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly myLastOffer?: {
-    readonly amount: string | null;
-    readonly note: string | null;
-  } | null;
+    readonly amount: string | null | undefined;
+    readonly note: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "OfferSummaryItem_order";
 };
 export type OfferSummaryItem_order$key = {

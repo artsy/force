@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb32a9e1dc0444b206ca8cf4dd71f4fe>>
+ * @generated SignedSource<<3619b0e6081be75f6fccc87c517eba6b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type InstitutionPartnershipsShows_orderedSet$data = {
   readonly items: ReadonlyArray<{
     readonly internalID?: string;
     readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "InstitutionPartnershipsShows_orderedSet";
 };
 export type InstitutionPartnershipsShows_orderedSet$key = {

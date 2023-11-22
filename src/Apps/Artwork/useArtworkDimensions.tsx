@@ -1,9 +1,11 @@
 interface ArtworkDimensions {
-  in: string | null
-  cm: string | null
+  in: string | null | undefined
+  cm: string | null | undefined
 }
 
-export const useArtworkDimensions = (dimensions: ArtworkDimensions | null) => {
+export const useArtworkDimensions = (
+  dimensions: ArtworkDimensions | null | undefined
+) => {
   const hasCmDimensions = !!dimensions?.cm
   const hasInDimensions = !!dimensions?.in
 

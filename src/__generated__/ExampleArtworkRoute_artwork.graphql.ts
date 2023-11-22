@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eded007f50df18e8c41a92ad389d5de6>>
+ * @generated SignedSource<<bb03a1ace85d2c2acd44bf47a2aad296>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,18 +18,18 @@ export type ExampleArtworkRoute_artwork$data = {
           readonly node: {
             readonly internalID: string;
             readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
-          } | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  } | null;
-  readonly artistNames: string | null;
-  readonly date: string | null;
-  readonly imageUrl: string | null;
+          } | null | undefined;
+        } | null | undefined> | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
+  readonly artistNames: string | null | undefined;
+  readonly date: string | null | undefined;
+  readonly imageUrl: string | null | undefined;
   readonly internalID: string;
-  readonly medium: string | null;
+  readonly medium: string | null | undefined;
   readonly slug: string;
-  readonly title: string | null;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "ExampleArtworkRoute_artwork";
 };
 export type ExampleArtworkRoute_artwork$key = {

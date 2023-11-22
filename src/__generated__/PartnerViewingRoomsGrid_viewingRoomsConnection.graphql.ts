@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dd97559043d3882c3cfb3431e2a68095>>
+ * @generated SignedSource<<eb07fb52fe9eed2345587f42be026212>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type PartnerViewingRoomsGrid_viewingRoomsConnection$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomCard_viewingRoom">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "PartnerViewingRoomsGrid_viewingRoomsConnection";
 };
 export type PartnerViewingRoomsGrid_viewingRoomsConnection$key = {

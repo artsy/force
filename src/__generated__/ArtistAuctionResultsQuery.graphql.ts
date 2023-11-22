@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d27d5363a516b8bba18978aede550cbf>>
+ * @generated SignedSource<<60ec4929b054753f78065542d72244fb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,33 +14,33 @@ export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type AuctionResultSorts = "DATE_ASC" | "DATE_DESC" | "ESTIMATE_AND_DATE_DESC" | "PRICE_AND_DATE_DESC" | "%future added value";
 export type AuctionResultsState = "ALL" | "PAST" | "UPCOMING" | "%future added value";
 export type ArtistAuctionResultsQuery$variables = {
-  allowEmptyCreatedDates?: boolean | null;
-  allowUnspecifiedSaleDates?: boolean | null;
+  allowEmptyCreatedDates?: boolean | null | undefined;
+  allowUnspecifiedSaleDates?: boolean | null | undefined;
   artistID: string;
-  before?: string | null;
-  categories?: ReadonlyArray<string | null> | null;
-  createdAfterYear?: number | null;
-  createdBeforeYear?: number | null;
-  currency?: string | null;
-  first?: number | null;
-  includeEstimateRange?: boolean | null;
-  includeUnknownPrices?: boolean | null;
-  keyword?: string | null;
-  last?: number | null;
-  organizations?: ReadonlyArray<string | null> | null;
-  page?: number | null;
-  priceRange?: string | null;
-  saleEndYear?: number | null;
-  saleStartYear?: number | null;
-  size?: number | null;
-  sizes?: ReadonlyArray<ArtworkSizes | null> | null;
-  sort?: AuctionResultSorts | null;
-  state?: AuctionResultsState | null;
+  before?: string | null | undefined;
+  categories?: ReadonlyArray<string | null | undefined> | null | undefined;
+  createdAfterYear?: number | null | undefined;
+  createdBeforeYear?: number | null | undefined;
+  currency?: string | null | undefined;
+  first?: number | null | undefined;
+  includeEstimateRange?: boolean | null | undefined;
+  includeUnknownPrices?: boolean | null | undefined;
+  keyword?: string | null | undefined;
+  last?: number | null | undefined;
+  organizations?: ReadonlyArray<string | null | undefined> | null | undefined;
+  page?: number | null | undefined;
+  priceRange?: string | null | undefined;
+  saleEndYear?: number | null | undefined;
+  saleStartYear?: number | null | undefined;
+  size?: number | null | undefined;
+  sizes?: ReadonlyArray<ArtworkSizes | null | undefined> | null | undefined;
+  sort?: AuctionResultSorts | null | undefined;
+  state?: AuctionResultsState | null | undefined;
 };
 export type ArtistAuctionResultsQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResults_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtistAuctionResultsQuery = {
   response: ArtistAuctionResultsQuery$data;

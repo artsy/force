@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd64eaa718b6bbce627cee255c9eebb2>>
+ * @generated SignedSource<<03833bfb9b1ea281806a9a2713bda93c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type orderRoutes_NewPaymentQuery$variables = {
 export type orderRoutes_NewPaymentQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"NewPayment_me">;
-  } | null;
+  } | null | undefined;
   readonly order: {
     readonly " $fragmentSpreads": FragmentRefs<"NewPayment_order">;
-  } | null;
+  } | null | undefined;
 };
 export type orderRoutes_NewPaymentQuery = {
   response: orderRoutes_NewPaymentQuery$data;

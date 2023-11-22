@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6b7edf9e954f3cf3364ab06e2cfc861f>>
+ * @generated SignedSource<<90a182fdc0dda75ab179de42fb6a1066>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,28 +16,28 @@ export type FairCollection_Query$variables = {
 export type FairCollection_Query$data = {
   readonly marketingCollection: {
     readonly " $fragmentSpreads": FragmentRefs<"FairCollection_collection">;
-  } | null;
+  } | null | undefined;
 };
 export type FairCollection_Query$rawResponse = {
   readonly marketingCollection: {
     readonly artworks: {
       readonly counts: {
-        readonly total: any | null;
-      } | null;
+        readonly total: any | null | undefined;
+      } | null | undefined;
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly id: string;
           readonly image: {
-            readonly url: string | null;
-          } | null;
-        } | null;
-      } | null> | null;
+            readonly url: string | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
       readonly id: string;
-    } | null;
+    } | null | undefined;
     readonly id: string;
     readonly slug: string;
     readonly title: string;
-  } | null;
+  } | null | undefined;
 };
 export type FairCollection_Query = {
   rawResponse: FairCollection_Query$rawResponse;

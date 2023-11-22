@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb0b4dc17b756e1f4a324c92be3bb1d3>>
+ * @generated SignedSource<<e69a4bcadd2b77f4aac956e3a7f31579>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,8 +15,8 @@ export type ArtworksList_artworks$data = {
     readonly node: {
       readonly internalID: string;
       readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "ArtworksList_artworks";
 };
 export type ArtworksList_artworks$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<14b4b044dfc2bb26965e3dcde0ac4c43>>
+ * @generated SignedSource<<b94c48db6e3483f259ef586265793a58>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,40 +14,40 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkApp_artwork$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistInfo_artist">;
-  } | null;
+  } | null | undefined;
   readonly artists: ReadonlyArray<{
     readonly id: string;
     readonly internalID: string;
     readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistInfo_artist">;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly attributionClass: {
     readonly internalID: string;
-  } | null;
-  readonly availability: string | null;
+  } | null | undefined;
+  readonly availability: string | null | undefined;
   readonly internalID: string;
-  readonly is_acquireable: boolean | null;
-  readonly is_in_auction: boolean | null;
-  readonly is_offerable: boolean | null;
+  readonly is_acquireable: boolean | null | undefined;
+  readonly is_in_auction: boolean | null | undefined;
+  readonly is_offerable: boolean | null | undefined;
   readonly listPrice: {
-    readonly display?: string | null;
-  } | null;
+    readonly display?: string | null | undefined;
+  } | null | undefined;
   readonly mediumType: {
     readonly filterGene: {
       readonly slug: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
   readonly partner: {
     readonly " $fragmentSpreads": FragmentRefs<"UnlistedArtworkBanner_partner">;
-  } | null;
+  } | null | undefined;
   readonly sale: {
-    readonly extendedBiddingIntervalMinutes: number | null;
+    readonly extendedBiddingIntervalMinutes: number | null | undefined;
     readonly internalID: string;
     readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"CascadingEndTimesBanner_sale">;
-  } | null;
+  } | null | undefined;
   readonly slug: string;
-  readonly visibilityLevel: Visibility | null;
+  readonly visibilityLevel: Visibility | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionCreateAlertHeader_artwork" | "ArtworkImageBrowser_artwork" | "ArtworkMeta_artwork" | "ArtworkRelatedArtists_artwork" | "ArtworkSidebar_artwork" | "ArtworkTopContextBar_artwork">;
   readonly " $fragmentType": "ArtworkApp_artwork";
 };

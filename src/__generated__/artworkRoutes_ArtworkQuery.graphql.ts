@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2171c998bc38e39d193bf16b9e9cb77e>>
+ * @generated SignedSource<<cf9ee265017a4ace3c819b115dc64da0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type artworkRoutes_ArtworkQuery$variables = {
 export type artworkRoutes_ArtworkQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkApp_artwork">;
-  } | null;
+  } | null | undefined;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkApp_me">;
-  } | null;
+  } | null | undefined;
 };
 export type artworkRoutes_ArtworkQuery = {
   response: artworkRoutes_ArtworkQuery$data;

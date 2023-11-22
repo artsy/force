@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7fc56abfc74febd822a1f30499871b10>>
+ * @generated SignedSource<<7577600f8df81bf95e29b8759869b0d8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,16 +13,16 @@ import { FragmentRefs } from "relay-runtime";
 export type FairCollection_collection$data = {
   readonly artworks: {
     readonly counts: {
-      readonly total: any | null;
-    } | null;
+      readonly total: any | null | undefined;
+    } | null | undefined;
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly image: {
-          readonly url: string | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
+          readonly url: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly id: string;
   readonly slug: string;
   readonly title: string;

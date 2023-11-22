@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e695a1f6e460176314b2be4a045f129d>>
+ * @generated SignedSource<<27fce53f6425b9b07e8047f76d6feeaa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,14 +10,14 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeApp_Test_Query$variables = {};
+export type HomeApp_Test_Query$variables = Record<PropertyKey, never>;
 export type HomeApp_Test_Query$data = {
   readonly featuredEventsOrderedSet: {
     readonly " $fragmentSpreads": FragmentRefs<"HomeApp_featuredEventsOrderedSet">;
-  } | null;
+  } | null | undefined;
   readonly heroUnitsConnection: {
     readonly " $fragmentSpreads": FragmentRefs<"HomeApp_heroUnitsConnection">;
-  } | null;
+  } | null | undefined;
 };
 export type HomeApp_Test_Query = {
   response: HomeApp_Test_Query$data;

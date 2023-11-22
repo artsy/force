@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9a5035d77c0835ae8a3317f52232c1e5>>
+ * @generated SignedSource<<b9d9ce3a09bca42095fa089240eaff0c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type GeneShow_Test_Query$variables = {};
+export type GeneShow_Test_Query$variables = Record<PropertyKey, never>;
 export type GeneShow_Test_Query$data = {
   readonly gene: {
     readonly " $fragmentSpreads": FragmentRefs<"GeneShow_gene">;
-  } | null;
+  } | null | undefined;
 };
 export type GeneShow_Test_Query = {
   response: GeneShow_Test_Query$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c0d6bda7d599986680a3d65eb3207a67>>
+ * @generated SignedSource<<1706faa7942abba390a0207fc10591ca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,11 +15,11 @@ export type CellSale_sale$data = {
     readonly cropped: {
       readonly src: string;
       readonly srcSet: string;
-    } | null;
-  } | null;
-  readonly formattedStartDateTime: string | null;
-  readonly href: string | null;
-  readonly name: string | null;
+    } | null | undefined;
+  } | null | undefined;
+  readonly formattedStartDateTime: string | null | undefined;
+  readonly href: string | null | undefined;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "CellSale_sale";
 };
 export type CellSale_sale$key = {

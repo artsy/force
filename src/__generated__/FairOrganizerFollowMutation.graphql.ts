@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8a15b9ee11bb954ecb1545314f4fd539>>
+ * @generated SignedSource<<e12d0b9f127db76be9734e1bb0cf95c3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,9 +10,9 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowProfileInput = {
-  clientMutationId?: string | null;
-  profileID?: string | null;
-  unfollow?: boolean | null;
+  clientMutationId?: string | null | undefined;
+  profileID?: string | null | undefined;
+  unfollow?: boolean | null | undefined;
 };
 export type FairOrganizerFollowMutation$variables = {
   input: FollowProfileInput;
@@ -21,17 +21,17 @@ export type FairOrganizerFollowMutation$data = {
   readonly followProfile: {
     readonly profile: {
       readonly id: string;
-      readonly isFollowed: boolean | null;
-    } | null;
-  } | null;
+      readonly isFollowed: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type FairOrganizerFollowMutation$rawResponse = {
   readonly followProfile: {
     readonly profile: {
       readonly id: string;
-      readonly isFollowed: boolean | null;
-    } | null;
-  } | null;
+      readonly isFollowed: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type FairOrganizerFollowMutation = {
   rawResponse: FairOrganizerFollowMutation$rawResponse;

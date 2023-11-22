@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<04ade85e834feff48980d54b9c771525>>
+ * @generated SignedSource<<ac63981c5cfb42bd48e4c0503deb520b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RequestConditionReport_me$data = {
-  readonly email: string | null;
+  readonly email: string | null | undefined;
   readonly internalID: string;
   readonly " $fragmentType": "RequestConditionReport_me";
 };

@@ -1,7 +1,7 @@
 import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 
 export interface ArtworkModel {
-  artist?: Artist
+  artist?: Artist | null | undefined
   artistName: string
   artistId: string
   category: string
@@ -33,17 +33,20 @@ export interface MyCollectionPhoto {
   removed?: boolean
 }
 
-export interface Artist {
-  formattedNationalityAndBirthday?: string | null
-  initials?: string | null
-  targetSupply: {
-    isP1: boolean | null
-  } | null
-  image?: {
-    cropped: {
-      src: string
-      srcSet: string
-    } | null
-  } | null
-  name?: string | null
-}
+export type Artist =
+  | {
+      formattedNationalityAndBirthday?: string | null
+      initials?: string | null
+      targetSupply: {
+        isP1: boolean | null
+      } | null
+      image?: {
+        cropped: {
+          src: string
+          srcSet: string
+        } | null
+      } | null
+      name?: string | null
+    }
+  | null
+  | undefined

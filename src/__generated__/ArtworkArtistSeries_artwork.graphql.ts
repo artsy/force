@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e4ec47f883151c8896025af14db7fd12>>
+ * @generated SignedSource<<00906541689708d6e61e076b24110a0f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,18 +17,18 @@ export type ArtworkArtistSeries_artwork$data = {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly internalID: string;
-        } | null;
-      } | null> | null;
-    } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesRail_artist">;
-  } | null;
+  } | null | undefined;
   readonly seriesForCounts: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artworksCount: number;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesArtworkRail_artwork">;
   readonly " $fragmentType": "ArtworkArtistSeries_artwork";

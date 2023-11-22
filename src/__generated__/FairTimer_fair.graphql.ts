@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c5e6269f5c9fc79303a0788bf3b14426>>
+ * @generated SignedSource<<f225c016f423a5cc49d78761bb0332bb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairTimer_fair$data = {
-  readonly endAt: string | null;
+  readonly endAt: string | null | undefined;
   readonly " $fragmentType": "FairTimer_fair";
 };
 export type FairTimer_fair$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9856aad86bba330312b16d988daa61ac>>
+ * @generated SignedSource<<e79a483689895c2b8ac80d1f49c923b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type articleRoutes_ArticleQuery$variables = {
 export type articleRoutes_ArticleQuery$data = {
   readonly article: {
     readonly " $fragmentSpreads": FragmentRefs<"ArticleApp_article">;
-  } | null;
+  } | null | undefined;
 };
 export type articleRoutes_ArticleQuery = {
   response: articleRoutes_ArticleQuery$data;

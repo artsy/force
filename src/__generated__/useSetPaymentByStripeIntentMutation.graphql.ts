@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b9aa26f503e8114cced92060e48be415>>
+ * @generated SignedSource<<508176450064c1b55882563932b1c4cc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceSetPaymentByStripeIntentInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   id: string;
-  oneTimeUse?: boolean | null;
+  oneTimeUse?: boolean | null | undefined;
   setupIntentId: string;
 };
 export type useSetPaymentByStripeIntentMutation$variables = {
@@ -24,7 +24,7 @@ export type useSetPaymentByStripeIntentMutation$data = {
     readonly orderOrError: {
       readonly error?: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
       readonly order?: {
@@ -32,7 +32,7 @@ export type useSetPaymentByStripeIntentMutation$data = {
         readonly " $fragmentSpreads": FragmentRefs<"Payment_validation">;
       };
     };
-  } | null;
+  } | null | undefined;
 };
 export type useSetPaymentByStripeIntentMutation = {
   response: useSetPaymentByStripeIntentMutation$data;

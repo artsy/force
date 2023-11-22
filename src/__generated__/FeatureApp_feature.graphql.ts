@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11fe8bd45a192ecb3179451862a81b1f>>
+ * @generated SignedSource<<3b3c44c98838d030e4b29582434a7eae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,16 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FeatureApp_feature$data = {
-  readonly callout: string | null;
-  readonly description: string | null;
+  readonly callout: string | null | undefined;
+  readonly description: string | null | undefined;
   readonly sets: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly id: string;
         readonly " $fragmentSpreads": FragmentRefs<"FeatureSet_set">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"FeatureHeader_feature" | "FeatureMeta_feature">;
   readonly " $fragmentType": "FeatureApp_feature";
 };

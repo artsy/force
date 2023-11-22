@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<42d97c201066b32a2f468f2a0691882c>>
+ * @generated SignedSource<<9e705a2f866a771d46b212673799a9c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type partnerRoutes_OverviewQuery$variables = {
 export type partnerRoutes_OverviewQuery$data = {
   readonly partner: {
     readonly " $fragmentSpreads": FragmentRefs<"Overview_partner">;
-  } | null;
+  } | null | undefined;
 };
 export type partnerRoutes_OverviewQuery = {
   response: partnerRoutes_OverviewQuery$data;

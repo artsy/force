@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<670b33d339f23e35beb1a169ae725b1a>>
+ * @generated SignedSource<<6d7531b50d3e43177007fa81a44beae0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type SeoProductsForCollections_descending_artworks$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
-      readonly availability: string | null;
+      readonly availability: string | null | undefined;
       readonly id: string;
       readonly listPrice: {
         readonly __typename: "Money";
@@ -24,18 +24,18 @@ export type SeoProductsForCollections_descending_artworks$data = {
         readonly maxPrice: {
           readonly currencyCode: string;
           readonly major: number;
-        } | null;
+        } | null | undefined;
         readonly minPrice: {
           readonly currencyCode: string;
           readonly major: number;
-        } | null;
+        } | null | undefined;
       } | {
         // This will never be '%other', but we need some
         // value in case none of the concrete values match.
         readonly __typename: "%other";
-      } | null;
-    } | null;
-  } | null> | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "SeoProductsForCollections_descending_artworks";
 };
 export type SeoProductsForCollections_descending_artworks$key = {

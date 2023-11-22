@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ab63df39a0e072163ed6e108259815ef>>
+ * @generated SignedSource<<ea100bf76f804aec6f1ed6822f50ac45>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,14 +16,14 @@ export type RelatedWorks_artwork$data = {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly slug: string;
-        } | null;
-      } | null> | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
       readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
-    } | null;
-    readonly name: string | null;
-  } | null;
+    } | null | undefined;
+    readonly name: string | null | undefined;
+  } | null | undefined;
   readonly slug: string;
-  readonly title: string | null;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "RelatedWorks_artwork";
 };
 export type RelatedWorks_artwork$key = {

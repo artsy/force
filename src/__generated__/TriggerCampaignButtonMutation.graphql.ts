@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<58895895f501519eab30ac40c4ac915b>>
+ * @generated SignedSource<<70a66a9af76ff827ec80439130c12bbe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,15 +12,15 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type TriggerCampaignID = "ART_QUIZ" | "%future added value";
 export type TriggerCampaignInput = {
   campaignID: TriggerCampaignID;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
 };
 export type TriggerCampaignButtonMutation$variables = {
   input: TriggerCampaignInput;
 };
 export type TriggerCampaignButtonMutation$data = {
   readonly triggerCampaign: {
-    readonly clientMutationId: string | null;
-  } | null;
+    readonly clientMutationId: string | null | undefined;
+  } | null | undefined;
 };
 export type TriggerCampaignButtonMutation = {
   response: TriggerCampaignButtonMutation$data;

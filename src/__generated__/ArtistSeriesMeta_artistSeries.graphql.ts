@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e4381fc48664008f8619bf22419e8388>>
+ * @generated SignedSource<<457edbf3e168572eed8eb77da85b2d3a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesMeta_artistSeries$data = {
   readonly artists: ReadonlyArray<{
-    readonly name: string | null;
-  } | null> | null;
-  readonly description: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined> | null | undefined;
+  readonly description: string | null | undefined;
   readonly slug: string;
   readonly title: string;
   readonly " $fragmentType": "ArtistSeriesMeta_artistSeries";

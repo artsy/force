@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<33aa1487a429e51c388a4918c82ac022>>
+ * @generated SignedSource<<a076f798a9103d88fb756837e7580860>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type InquiryInquiryQuery$variables = {
 export type InquiryInquiryQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"InquiryInquiry_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type InquiryInquiryQuery = {
   response: InquiryInquiryQuery$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ae373e098b43b48882c9652423e48946>>
+ * @generated SignedSource<<24b204230b8fc42e75351aaae19c4a7e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Conversation_me$data = {
   readonly conversation: {
-    readonly internalID: string | null;
+    readonly internalID: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ConversationCTA_conversation" | "Conversation_conversation" | "DetailsSidebar_conversation">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ConversationList_me">;
   readonly " $fragmentType": "Conversation_me";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a72ed0578747f0d61888e79ef28c0e07>>
+ * @generated SignedSource<<981c1515a1eea8d529d28e5e04caa445>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,10 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkChatBubble_artwork$data = {
-  readonly isAcquireable: boolean | null;
-  readonly isInAuction: boolean | null;
-  readonly isInquireable: boolean | null;
-  readonly isOfferable: boolean | null;
+  readonly isAcquireable: boolean | null | undefined;
+  readonly isInAuction: boolean | null | undefined;
+  readonly isInquireable: boolean | null | undefined;
+  readonly isOfferable: boolean | null | undefined;
   readonly listPrice: {
     readonly __typename: "Money";
     readonly currencyCode: string;
@@ -24,12 +24,12 @@ export type ArtworkChatBubble_artwork$data = {
     readonly maxPrice: {
       readonly currencyCode: string;
       readonly major: number;
-    } | null;
+    } | null | undefined;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ArtworkChatBubble_artwork";
 };
 export type ArtworkChatBubble_artwork$key = {

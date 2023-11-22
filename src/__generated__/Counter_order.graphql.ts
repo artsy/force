@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<406d964a4fe09e27c9e825efd9046da3>>
+ * @generated SignedSource<<f71ab74034946faecf520d62b24e9f38>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,25 +14,25 @@ export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FU
 import { FragmentRefs } from "relay-runtime";
 export type Counter_order$data = {
   readonly internalID: string;
-  readonly itemsTotal: string | null;
+  readonly itemsTotal: string | null | undefined;
   readonly lastOffer?: {
     readonly createdAt: string;
-  } | null;
+  } | null | undefined;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
           readonly slug: string;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly mode: CommerceOrderModeEnum | null;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly myLastOffer?: {
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
   readonly state: CommerceOrderStateEnum;
-  readonly stateExpiresAt: string | null;
+  readonly stateExpiresAt: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OfferHistoryItem_order" | "OrderStepper_order" | "PaymentMethodSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Counter_order";
 };

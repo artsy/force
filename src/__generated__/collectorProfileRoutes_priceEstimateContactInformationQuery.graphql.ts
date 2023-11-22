@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<974656e1f95415a93f1122d38acf6bb5>>
+ * @generated SignedSource<<c54eb1eeb3b346b0a8ef776c93826e3c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type collectorProfileRoutes_priceEstimateContactInformationQuery$variable
 export type collectorProfileRoutes_priceEstimateContactInformationQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"PriceEstimateContactInformation_artwork">;
-  } | null;
+  } | null | undefined;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"PriceEstimateContactInformation_me">;
-  } | null;
+  } | null | undefined;
 };
 export type collectorProfileRoutes_priceEstimateContactInformationQuery = {
   response: collectorProfileRoutes_priceEstimateContactInformationQuery$data;

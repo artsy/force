@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d359c9e6d3462cf72d150745854f8c18>>
+ * @generated SignedSource<<040922970317104adcce57a2535e61a7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,25 +11,25 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkLightbox_artwork$data = {
-  readonly formattedMetadata: string | null;
+  readonly formattedMetadata: string | null | undefined;
   readonly images: ReadonlyArray<{
     readonly fallback: {
       readonly height: number;
       readonly src: string;
       readonly srcSet: string;
       readonly width: number;
-    } | null;
-    readonly internalID: string | null;
-    readonly isDefault: boolean | null;
-    readonly placeholder: string | null;
+    } | null | undefined;
+    readonly internalID: string | null | undefined;
+    readonly isDefault: boolean | null | undefined;
+    readonly placeholder: string | null | undefined;
     readonly resized: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly src: string;
       readonly srcSet: string;
-      readonly width: number | null;
-    } | null;
-    readonly versions: ReadonlyArray<string | null> | null;
-  } | null> | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+    readonly versions: ReadonlyArray<string | null | undefined> | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "ArtworkLightbox_artwork";
 };
 export type ArtworkLightbox_artwork$key = {

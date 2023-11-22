@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4be697ee27e0dd1ff845805708e2528b>>
+ * @generated SignedSource<<d0cceda0a733ff699877342e51b765a5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,40 +16,40 @@ export type AddressVerificationFlow_verifyAddress$data = {
     readonly __typename: "VerifyAddressFailureType";
     readonly mutationError: {
       readonly message: string;
-      readonly statusCode: number | null;
-      readonly type: string | null;
-    } | null;
+      readonly statusCode: number | null | undefined;
+      readonly type: string | null | undefined;
+    } | null | undefined;
   } | {
     readonly __typename: "VerifyAddressType";
     readonly addressVerificationId: string;
     readonly inputAddress: {
       readonly address: {
         readonly addressLine1: string;
-        readonly addressLine2: string | null;
+        readonly addressLine2: string | null | undefined;
         readonly city: string;
         readonly country: string;
         readonly postalCode: string;
-        readonly region: string | null;
-      } | null;
-      readonly lines: ReadonlyArray<string | null> | null;
+        readonly region: string | null | undefined;
+      } | null | undefined;
+      readonly lines: ReadonlyArray<string | null | undefined> | null | undefined;
     };
     readonly suggestedAddresses: ReadonlyArray<{
       readonly address: {
         readonly addressLine1: string;
-        readonly addressLine2: string | null;
+        readonly addressLine2: string | null | undefined;
         readonly city: string;
         readonly country: string;
         readonly postalCode: string;
-        readonly region: string | null;
-      } | null;
-      readonly lines: ReadonlyArray<string | null> | null;
-    } | null>;
+        readonly region: string | null | undefined;
+      } | null | undefined;
+      readonly lines: ReadonlyArray<string | null | undefined> | null | undefined;
+    } | null | undefined>;
     readonly verificationStatus: VerificationStatuses;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "AddressVerificationFlow_verifyAddress";
 };
 export type AddressVerificationFlow_verifyAddress$key = {

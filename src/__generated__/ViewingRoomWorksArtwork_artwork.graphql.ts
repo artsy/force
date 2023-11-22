@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1da0837a7210015acc1abb74cc40d39e>>
+ * @generated SignedSource<<5c0a9cf0f43865e7cd9ef4b6e405c1ab>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,18 +11,18 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomWorksArtwork_artwork$data = {
-  readonly artistNames: string | null;
-  readonly date: string | null;
+  readonly artistNames: string | null | undefined;
+  readonly date: string | null | undefined;
   readonly image: {
     readonly resized: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly src: string;
       readonly srcSet: string;
-      readonly width: number | null;
-    } | null;
-  } | null;
-  readonly saleMessage: string | null;
-  readonly title: string | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
+  readonly saleMessage: string | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "ViewingRoomWorksArtwork_artwork";
 };
 export type ViewingRoomWorksArtwork_artwork$key = {

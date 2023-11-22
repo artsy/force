@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<17c57c25114306f7bb25dccf333a1eeb>>
+ * @generated SignedSource<<a8582b728088582494027e69af130056>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,23 +14,23 @@ export type PartnerArtistList_partner$data = {
   readonly allArtistsConnection: {
     readonly edges: ReadonlyArray<{
       readonly counts: {
-        readonly artworks: any | null;
-      } | null;
+        readonly artworks: any | null | undefined;
+      } | null | undefined;
       readonly node: {
         readonly counts: {
-          readonly artworks: any | null;
-        } | null;
-        readonly href: string | null;
+          readonly artworks: any | null | undefined;
+        } | null | undefined;
+        readonly href: string | null | undefined;
         readonly internalID: string;
-        readonly name: string | null;
+        readonly name: string | null | undefined;
         readonly slug: string;
-      } | null;
-      readonly representedBy: boolean | null;
-    } | null> | null;
-  } | null;
-  readonly displayFullPartnerPage: boolean | null;
-  readonly distinguishRepresentedArtists: boolean | null;
-  readonly href: string | null;
+      } | null | undefined;
+      readonly representedBy: boolean | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly displayFullPartnerPage: boolean | null | undefined;
+  readonly distinguishRepresentedArtists: boolean | null | undefined;
+  readonly href: string | null | undefined;
   readonly " $fragmentType": "PartnerArtistList_partner";
 };
 export type PartnerArtistList_partner$key = {

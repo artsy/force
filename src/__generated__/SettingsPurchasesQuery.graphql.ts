@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<54bbc74cbaa8cc7a9c7875218079eed3>>
+ * @generated SignedSource<<4e5afe9fe11ecc8cfa7eaf0ea04dc586>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,14 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type SettingsPurchasesQuery$variables = {
-  after?: string | null;
+  after?: string | null | undefined;
   first: number;
-  states?: ReadonlyArray<CommerceOrderStateEnum> | null;
+  states?: ReadonlyArray<CommerceOrderStateEnum> | null | undefined;
 };
 export type SettingsPurchasesQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SettingsPurchases_me">;
-  } | null;
+  } | null | undefined;
 };
 export type SettingsPurchasesQuery = {
   response: SettingsPurchasesQuery$data;

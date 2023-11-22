@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c06a3a8869bbb60e1e3fd128fbd4ba5a>>
+ * @generated SignedSource<<2e1e124fcaebd50aa111b95552532362>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,9 +15,9 @@ export type FairCard_fair$data = {
     readonly cropped: {
       readonly src: string;
       readonly srcSet: string;
-    } | null;
-  } | null;
-  readonly name: string | null;
+    } | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "FairCard_fair";
 };
 export type FairCard_fair$key = {

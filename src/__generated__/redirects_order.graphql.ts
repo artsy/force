@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4a5ad7e4ad6c0c85e7683bbc1b12e22f>>
+ * @generated SignedSource<<90222d48853e101a7939d1b22331b596>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,40 +17,40 @@ export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FU
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type redirects_order$data = {
-  readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
-  readonly bankAccountId: string | null;
+  readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null | undefined;
+  readonly bankAccountId: string | null | undefined;
   readonly creditCard: {
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
   readonly displayState: CommerceOrderDisplayStateEnum;
   readonly internalID: string;
   readonly lastOffer?: {
     readonly createdAt: string;
     readonly internalID: string;
-  } | null;
-  readonly lastTransactionFailed: boolean | null;
+  } | null | undefined;
+  readonly lastTransactionFailed: boolean | null | undefined;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
           readonly slug: string;
-        } | null;
+        } | null | undefined;
         readonly shippingQuoteOptions: {
           readonly edges: ReadonlyArray<{
             readonly node: {
               readonly isSelected: boolean;
-            } | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly mode: CommerceOrderModeEnum | null;
+            } | null | undefined;
+          } | null | undefined> | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly myLastOffer?: {
     readonly createdAt: string;
     readonly internalID: string;
-  } | null;
-  readonly paymentMethod: CommercePaymentMethodEnum | null;
+  } | null | undefined;
+  readonly paymentMethod: CommercePaymentMethodEnum | null | undefined;
   readonly paymentMethodDetails: {
     readonly __typename: "BankAccount";
     readonly id: string;
@@ -64,10 +64,10 @@ export type redirects_order$data = {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly requestedFulfillment: {
     readonly __typename: string;
-  } | null;
+  } | null | undefined;
   readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
   readonly " $fragmentType": "redirects_order";

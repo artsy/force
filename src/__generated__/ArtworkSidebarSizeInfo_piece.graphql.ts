@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<05bf6da652c6ca1ab9ae378c61902043>>
+ * @generated SignedSource<<55160f0a005e01474f0b4e8a6121d281>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarSizeInfo_piece$data = {
   readonly dimensions: {
-    readonly cm: string | null;
-    readonly in: string | null;
-  } | null;
-  readonly editionOf: string | null;
+    readonly cm: string | null | undefined;
+    readonly in: string | null | undefined;
+  } | null | undefined;
+  readonly editionOf: string | null | undefined;
   readonly " $fragmentType": "ArtworkSidebarSizeInfo_piece";
 };
 export type ArtworkSidebarSizeInfo_piece$key = {

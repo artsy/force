@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8c2282b6cd5921cb206a7f9ade104c79>>
+ * @generated SignedSource<<4e31c506dcd21e9935a57326f10dfde1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,13 +10,13 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateConsignmentInquiryMutationInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   email: string;
   message: string;
   name: string;
-  phoneNumber?: string | null;
-  recipientEmail?: string | null;
-  userId?: string | null;
+  phoneNumber?: string | null | undefined;
+  recipientEmail?: string | null | undefined;
+  userId?: string | null | undefined;
 };
 export type useCreateConsignmentInquiryMutation$variables = {
   input: CreateConsignmentInquiryMutationInput;
@@ -26,14 +26,14 @@ export type useCreateConsignmentInquiryMutation$data = {
     readonly consignmentInquiryOrError: {
       readonly consignmentInquiry?: {
         readonly internalID: number;
-      } | null;
+      } | null | undefined;
       readonly mutationError?: {
-        readonly error: string | null;
+        readonly error: string | null | undefined;
         readonly message: string;
-        readonly statusCode: number | null;
-      } | null;
-    } | null;
-  } | null;
+        readonly statusCode: number | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useCreateConsignmentInquiryMutation = {
   response: useCreateConsignmentInquiryMutation$data;

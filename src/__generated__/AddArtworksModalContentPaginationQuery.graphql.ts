@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8dfbf4818fba68a283593042d5a22420>>
+ * @generated SignedSource<<940f1d4d34320cf2ef561a9879794ec5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,14 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectionArtworkSorts = "POSITION_ASC" | "POSITION_DESC" | "SAVED_AT_ASC" | "SAVED_AT_DESC" | "%future added value";
 export type AddArtworksModalContentPaginationQuery$variables = {
-  after?: string | null;
+  after?: string | null | undefined;
   first: number;
-  sort?: CollectionArtworkSorts | null;
+  sort?: CollectionArtworkSorts | null | undefined;
 };
 export type AddArtworksModalContentPaginationQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"AddArtworksModalContent_me">;
-  } | null;
+  } | null | undefined;
 };
 export type AddArtworksModalContentPaginationQuery = {
   response: AddArtworksModalContentPaginationQuery$data;

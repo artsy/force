@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8e4a430c4ddd4c6fb1628c193ec06e3d>>
+ * @generated SignedSource<<db444a687f0298c5520affff71c36749>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,10 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceCreateOfferOrderWithArtworkInput = {
   artworkId: string;
-  clientMutationId?: string | null;
-  editionSetId?: string | null;
-  findActiveOrCreate?: boolean | null;
-  quantity?: number | null;
+  clientMutationId?: string | null | undefined;
+  editionSetId?: string | null | undefined;
+  findActiveOrCreate?: boolean | null | undefined;
+  quantity?: number | null | undefined;
 };
 export type AuthIntentCreateOfferOrderMutation$variables = {
   input: CommerceCreateOfferOrderWithArtworkInput;
@@ -26,15 +26,15 @@ export type AuthIntentCreateOfferOrderMutation$data = {
       readonly __typename: "CommerceOrderWithMutationSuccess";
       readonly error?: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
       readonly order?: {
         readonly internalID: string;
-        readonly mode: CommerceOrderModeEnum | null;
+        readonly mode: CommerceOrderModeEnum | null | undefined;
       };
     };
-  } | null;
+  } | null | undefined;
 };
 export type AuthIntentCreateOfferOrderMutation$rawResponse = {
   readonly commerceCreateOfferOrderWithArtwork: {
@@ -42,7 +42,7 @@ export type AuthIntentCreateOfferOrderMutation$rawResponse = {
       readonly __typename: "CommerceOrderWithMutationFailure";
       readonly error: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
     } | {
@@ -51,12 +51,12 @@ export type AuthIntentCreateOfferOrderMutation$rawResponse = {
         readonly __typename: string;
         readonly id: string;
         readonly internalID: string;
-        readonly mode: CommerceOrderModeEnum | null;
+        readonly mode: CommerceOrderModeEnum | null | undefined;
       };
     } | {
       readonly __typename: string;
     };
-  } | null;
+  } | null | undefined;
 };
 export type AuthIntentCreateOfferOrderMutation = {
   rawResponse: AuthIntentCreateOfferOrderMutation$rawResponse;

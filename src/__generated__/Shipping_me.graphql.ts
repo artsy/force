@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d2bb290d6cbde4fa109c495ca9bb2d18>>
+ * @generated SignedSource<<bab9713dc81346eda398490f6efbc227>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,26 +15,26 @@ export type Shipping_me$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly addressLine1: string;
-        readonly addressLine2: string | null;
-        readonly addressLine3: string | null;
+        readonly addressLine2: string | null | undefined;
+        readonly addressLine3: string | null | undefined;
         readonly city: string;
         readonly country: string;
         readonly id: string;
         readonly internalID: string;
         readonly isDefault: boolean;
-        readonly name: string | null;
-        readonly phoneNumber: string | null;
-        readonly postalCode: string | null;
-        readonly region: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly email: string | null;
+        readonly name: string | null | undefined;
+        readonly phoneNumber: string | null | undefined;
+        readonly postalCode: string | null | undefined;
+        readonly region: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly email: string | null | undefined;
   readonly id: string;
   readonly location: {
-    readonly country: string | null;
-  } | null;
-  readonly name: string | null;
+    readonly country: string | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses_me">;
   readonly " $fragmentType": "Shipping_me";
 };

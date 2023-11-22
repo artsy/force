@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f1c7f1ce785cf7e1d26e51b6b63ccf5d>>
+ * @generated SignedSource<<9f94e9e746bfc8c52acba2cfb189788a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,19 +17,19 @@ export type fairOrganizerRoutes_FairOrganizerQuery$data = {
   readonly fairOrganizer: {
     readonly profile: {
       readonly __typename: "Profile";
-    } | null;
+    } | null | undefined;
     readonly runningFairs: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly href: string | null;
+          readonly href: string | null | undefined;
           readonly profile: {
             readonly __typename: "Profile";
-          } | null;
-        } | null;
-      } | null> | null;
-    } | null;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerApp_fairOrganizer">;
-  } | null;
+  } | null | undefined;
 };
 export type fairOrganizerRoutes_FairOrganizerQuery = {
   response: fairOrganizerRoutes_FairOrganizerQuery$data;

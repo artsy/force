@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<90f9bd8276f692ea20f05f2d776fc495>>
+ * @generated SignedSource<<6bcb51be68ca9df5fb761f2542e13865>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,14 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RssArticlesQuery_image$data = {
   readonly image: {
-    readonly caption: string | null;
+    readonly caption: string | null | undefined;
     readonly resized: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly src: string;
       readonly srcSet: string;
-      readonly width: number | null;
-    } | null;
-  } | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "RssArticlesQuery_image";
 };
 export type RssArticlesQuery_image$key = {

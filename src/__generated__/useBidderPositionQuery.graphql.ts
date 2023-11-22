@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<597968ad479d09fa3ed0537566cf154c>>
+ * @generated SignedSource<<b0b21b83270e9a64796f576b534d6f8f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,23 +16,23 @@ export type useBidderPositionQuery$variables = {
 export type useBidderPositionQuery$data = {
   readonly me: {
     readonly bidderPosition: {
-      readonly messageHeader: string | null;
+      readonly messageHeader: string | null | undefined;
       readonly position: {
         readonly internalID: string;
         readonly saleArtwork: {
           readonly artwork: {
             readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
-          } | null;
-        } | null;
+          } | null | undefined;
+        } | null | undefined;
         readonly suggestedNextBid: {
-          readonly cents: number | null;
-          readonly display: string | null;
-        } | null;
-      } | null;
+          readonly cents: number | null | undefined;
+          readonly display: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
       readonly status: string;
-    } | null;
+    } | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"AuctionActiveBids_me">;
-  } | null;
+  } | null | undefined;
 };
 export type useBidderPositionQuery = {
   response: useBidderPositionQuery$data;

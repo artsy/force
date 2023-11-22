@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<575d10b1103ae788b5d78d214154b1db>>
+ * @generated SignedSource<<e41ee591ba7afdd93e660608fd2a6ce2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,28 +12,28 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CellPartner_partner$data = {
   readonly categories: ReadonlyArray<{
-    readonly name: string | null;
+    readonly name: string | null | undefined;
     readonly slug: string;
-  } | null> | null;
-  readonly href: string | null;
-  readonly initials: string | null;
+  } | null | undefined> | null | undefined;
+  readonly href: string | null | undefined;
+  readonly initials: string | null | undefined;
   readonly internalID: string;
   readonly locationsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly city: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly name: string | null;
+        readonly city: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly profile: {
     readonly image: {
       readonly cropped: {
         readonly src: string;
         readonly srcSet: string;
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
   readonly " $fragmentType": "CellPartner_partner";

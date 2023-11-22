@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<da0fae0368d2cde6a87ea02ed71a8d10>>
+ * @generated SignedSource<<363310572ec7e457a7653a2127ac057b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ArtistSeriesArtworksFilter_Query$variables = {
 export type ArtistSeriesArtworksFilter_Query$data = {
   readonly artistSeries: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesArtworksFilter_artistSeries">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtistSeriesArtworksFilter_Query = {
   response: ArtistSeriesArtworksFilter_Query$data;

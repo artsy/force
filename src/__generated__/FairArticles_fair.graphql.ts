@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<237e204f1a2615ba73104fad87f31ed8>>
+ * @generated SignedSource<<0d7707a7570eb22743266e1a07edf437>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,15 +16,15 @@ export type FairArticles_fair$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     };
     readonly pageInfo: {
       readonly hasNextPage: boolean;
     };
-  } | null;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "FairArticles_fair";
 };

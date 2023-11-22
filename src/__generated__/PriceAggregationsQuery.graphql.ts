@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<81abbfd17aa54d8615074f131c4ba3d9>>
+ * @generated SignedSource<<fbe06979f8c06153c1ab37e4793f1d21>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type PriceAggregationsQuery$variables = {
 export type PriceAggregationsQuery$data = {
   readonly artworksConnection: {
     readonly " $fragmentSpreads": FragmentRefs<"Price_artworksConnection">;
-  } | null;
+  } | null | undefined;
 };
 export type PriceAggregationsQuery = {
   response: PriceAggregationsQuery$data;

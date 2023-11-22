@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<789b3a5307b1530ad2d6831210b8d50a>>
+ * @generated SignedSource<<a06057e46ae9912e6db541bdaf1c0795>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UpdateSmsSecondFactorInput = {
   attributes: SmsSecondFactorAttributes;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   secondFactorID: string;
 };
 export type SmsSecondFactorAttributes = {
-  countryCode?: string | null;
-  phoneNumber?: string | null;
+  countryCode?: string | null | undefined;
+  phoneNumber?: string | null | undefined;
 };
 export type UpdateSmsSecondFactorMutation$variables = {
   input: UpdateSmsSecondFactorInput;
@@ -27,7 +27,7 @@ export type UpdateSmsSecondFactorMutation$data = {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
         readonly code: string;
-        readonly data: any | null;
+        readonly data: any | null | undefined;
         readonly message: string;
       }>;
     } | {
@@ -37,7 +37,7 @@ export type UpdateSmsSecondFactorMutation$data = {
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     };
-  } | null;
+  } | null | undefined;
 };
 export type UpdateSmsSecondFactorMutation$rawResponse = {
   readonly updateSmsSecondFactor: {
@@ -45,13 +45,13 @@ export type UpdateSmsSecondFactorMutation$rawResponse = {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
         readonly code: string;
-        readonly data: any | null;
+        readonly data: any | null | undefined;
         readonly message: string;
       }>;
     } | {
       readonly __typename: string;
     };
-  } | null;
+  } | null | undefined;
 };
 export type UpdateSmsSecondFactorMutation = {
   rawResponse: UpdateSmsSecondFactorMutation$rawResponse;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<be46c24d03989049513411805de2e48e>>
+ * @generated SignedSource<<9c95f7445a86b1fa7850a153e76d8305>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,10 +15,10 @@ export type partnerRoutes_PartnerQuery$variables = {
 };
 export type partnerRoutes_PartnerQuery$data = {
   readonly partner: {
-    readonly displayFullPartnerPage: boolean | null;
-    readonly partnerType: string | null;
+    readonly displayFullPartnerPage: boolean | null | undefined;
+    readonly partnerType: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"PartnerApp_partner">;
-  } | null;
+  } | null | undefined;
 };
 export type partnerRoutes_PartnerQuery = {
   response: partnerRoutes_PartnerQuery$data;

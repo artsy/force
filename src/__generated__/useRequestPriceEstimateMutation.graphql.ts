@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f6cefeb44934dd68fe32485542de1d60>>
+ * @generated SignedSource<<806c7108f9a286ec7a35541b991e843a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,10 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type RequestPriceEstimateInput = {
   artworkId: string;
-  clientMutationId?: string | null;
-  requesterEmail?: string | null;
-  requesterName?: string | null;
-  requesterPhoneNumber?: string | null;
+  clientMutationId?: string | null | undefined;
+  requesterEmail?: string | null | undefined;
+  requesterName?: string | null | undefined;
+  requesterPhoneNumber?: string | null | undefined;
 };
 export type useRequestPriceEstimateMutation$variables = {
   input: RequestPriceEstimateInput;
@@ -23,13 +23,13 @@ export type useRequestPriceEstimateMutation$data = {
   readonly requestPriceEstimate: {
     readonly priceEstimateParamsOrError: {
       readonly mutationError?: {
-        readonly error: string | null;
-      } | null;
+        readonly error: string | null | undefined;
+      } | null | undefined;
       readonly submittedPriceEstimateParams?: {
         readonly artworkId: string;
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useRequestPriceEstimateMutation = {
   response: useRequestPriceEstimateMutation$data;

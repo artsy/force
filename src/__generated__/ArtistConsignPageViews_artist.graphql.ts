@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a20a7bdd80338a751318f8ac9818da2e>>
+ * @generated SignedSource<<69878d7c7a5a2b8f57ff33e19559ba9b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,14 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistConsignPageViews_artist$data = {
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly targetSupply: {
     readonly microfunnel: {
       readonly metadata: {
-        readonly roundedUniqueVisitors: string | null;
-        readonly roundedViews: string | null;
-      } | null;
-    } | null;
+        readonly roundedUniqueVisitors: string | null | undefined;
+        readonly roundedViews: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
   };
   readonly " $fragmentType": "ArtistConsignPageViews_artist";
 };

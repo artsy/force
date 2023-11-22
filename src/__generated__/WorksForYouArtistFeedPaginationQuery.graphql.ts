@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c23eb6ed05a935458e7e0f58204e21c6>>
+ * @generated SignedSource<<e55d9c8b19e7d2f8f43e12a6c4c3c4a0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,13 +14,13 @@ export type ArtistArtworksFilters = "IS_FOR_SALE" | "IS_NOT_FOR_SALE" | "%future
 export type WorksForYouArtistFeedPaginationQuery$variables = {
   artistSlug: string;
   count: number;
-  cursor?: string | null;
-  filter?: ReadonlyArray<ArtistArtworksFilters | null> | null;
+  cursor?: string | null | undefined;
+  filter?: ReadonlyArray<ArtistArtworksFilters | null | undefined> | null | undefined;
 };
 export type WorksForYouArtistFeedPaginationQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"WorksForYouArtistFeed_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type WorksForYouArtistFeedPaginationQuery = {
   response: WorksForYouArtistFeedPaginationQuery$data;

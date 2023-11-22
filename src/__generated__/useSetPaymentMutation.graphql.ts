@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5f8af90232da16ab852d1de3afdf72c1>>
+ * @generated SignedSource<<a1b7f0aa3ba2730fc4dee43c5c6f087d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,10 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type CommerceSetPaymentInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   id: string;
   paymentMethod: CommercePaymentMethodEnum;
-  paymentMethodId?: string | null;
+  paymentMethodId?: string | null | undefined;
 };
 export type useSetPaymentMutation$variables = {
   input: CommerceSetPaymentInput;
@@ -25,7 +25,7 @@ export type useSetPaymentMutation$data = {
     readonly orderOrError: {
       readonly error?: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
       readonly order?: {
@@ -33,7 +33,7 @@ export type useSetPaymentMutation$data = {
         readonly " $fragmentSpreads": FragmentRefs<"Payment_validation">;
       };
     };
-  } | null;
+  } | null | undefined;
 };
 export type useSetPaymentMutation = {
   response: useSetPaymentMutation$data;

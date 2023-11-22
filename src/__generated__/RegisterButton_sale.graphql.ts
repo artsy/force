@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1b651e09f48b93949b1a2e7ee69775cb>>
+ * @generated SignedSource<<8b8ff96485bf431bb47d594d953bc85d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,20 +12,20 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type RegisterButton_sale$data = {
   readonly bidder: {
-    readonly qualifiedForBidding: boolean | null;
-  } | null;
-  readonly isAuction: boolean | null;
-  readonly isClosed: boolean | null;
-  readonly isLiveOpen: boolean | null;
-  readonly isPreview: boolean | null;
-  readonly isRegistrationClosed: boolean | null;
-  readonly liveURLIfOpen: string | null;
+    readonly qualifiedForBidding: boolean | null | undefined;
+  } | null | undefined;
+  readonly isAuction: boolean | null | undefined;
+  readonly isClosed: boolean | null | undefined;
+  readonly isLiveOpen: boolean | null | undefined;
+  readonly isPreview: boolean | null | undefined;
+  readonly isRegistrationClosed: boolean | null | undefined;
+  readonly liveURLIfOpen: string | null | undefined;
   readonly registrationStatus: {
     readonly internalID: string;
-  } | null;
-  readonly requireIdentityVerification: boolean | null;
+  } | null | undefined;
+  readonly requireIdentityVerification: boolean | null | undefined;
   readonly slug: string;
-  readonly status: string | null;
+  readonly status: string | null | undefined;
   readonly " $fragmentType": "RegisterButton_sale";
 };
 export type RegisterButton_sale$key = {

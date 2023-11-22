@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7b3272ecc21bb74f2548dc7a7e658b02>>
+ * @generated SignedSource<<09836e4204ce009e2ae2e5f48165bc1c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,21 +10,21 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistBioTestQuery$variables = {};
+export type ArtistBioTestQuery$variables = Record<PropertyKey, never>;
 export type ArtistBioTestQuery$data = {
   readonly bio: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistBio_bio">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtistBioTestQuery$rawResponse = {
   readonly bio: {
     readonly biographyBlurb: {
-      readonly credit: string | null;
-      readonly partnerID: string | null;
-      readonly text: string | null;
-    } | null;
+      readonly credit: string | null | undefined;
+      readonly partnerID: string | null | undefined;
+      readonly text: string | null | undefined;
+    } | null | undefined;
     readonly id: string;
-  } | null;
+  } | null | undefined;
 };
 export type ArtistBioTestQuery = {
   rawResponse: ArtistBioTestQuery$rawResponse;

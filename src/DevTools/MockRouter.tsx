@@ -9,7 +9,7 @@ import { IMocks } from "graphql-tools/dist/Interfaces"
 import React, { useEffect, useState } from "react"
 import { getUser } from "Utils/user"
 import { AppShell } from "Apps/Components/AppShell"
-import { RelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
+import { Environment } from "react-relay"
 
 interface MockRouterProps {
   context?: RouterConfig["context"]
@@ -63,7 +63,7 @@ export const MockRouter: React.FC<MockRouterProps> = ({
           context: {
             ...context,
             user,
-            relayEnvironment: (relayEnvironment as unknown) as RelaySSREnvironment,
+            relayEnvironment: (relayEnvironment as unknown) as Environment,
           },
         })
 

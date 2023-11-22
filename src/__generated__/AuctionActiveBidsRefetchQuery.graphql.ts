@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bab10f7dc5b882555350920161af132b>>
+ * @generated SignedSource<<ec1f8d566cdc5c46567f63bcccb3fd00>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type AuctionActiveBidsRefetchQuery$variables = {
 export type AuctionActiveBidsRefetchQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"AuctionActiveBids_me">;
-  } | null;
+  } | null | undefined;
 };
 export type AuctionActiveBidsRefetchQuery = {
   response: AuctionActiveBidsRefetchQuery$data;

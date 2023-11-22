@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e89c96ab4a8cbb3f2477e8269406575d>>
+ * @generated SignedSource<<5746ff62f8d5252746adc9244b732b90>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,9 +19,9 @@ export type CreditCardPicker_me$data = {
         readonly expirationYear: number;
         readonly internalID: string;
         readonly lastDigits: string;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "CreditCardPicker_me";
 };
 export type CreditCardPicker_me$key = {

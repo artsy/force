@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<79cdee4cecbb58748bfbea9d8004e898>>
+ * @generated SignedSource<<7337a3ff4d18e308fbbcb26e2f7b5a4c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,15 +12,15 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtQuizArtworksCardMetadata_artwork$data = {
   readonly artists: ReadonlyArray<{
-    readonly name: string | null;
-  } | null> | null;
-  readonly culturalMaker: string | null;
-  readonly date: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined> | null | undefined;
+  readonly culturalMaker: string | null | undefined;
+  readonly date: string | null | undefined;
   readonly dominantColors: ReadonlyArray<string>;
   readonly partner: {
-    readonly name: string | null;
-  } | null;
-  readonly title: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "ArtQuizArtworksCardMetadata_artwork";
 };
 export type ArtQuizArtworksCardMetadata_artwork$key = {

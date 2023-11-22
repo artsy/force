@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fd86f2dbe163acf089dd08b739de18b2>>
+ * @generated SignedSource<<2727615e9cadc27bd5a0047f7c2d301c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,15 +11,15 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchRouteOption_artist$data = {
-  readonly formattedNationalityAndBirthday: string | null;
+  readonly formattedNationalityAndBirthday: string | null | undefined;
   readonly image: {
     readonly cropped: {
       readonly src: string;
       readonly srcSet: string;
-    } | null;
-  } | null;
-  readonly initials: string | null;
-  readonly name: string | null;
+    } | null | undefined;
+  } | null | undefined;
+  readonly initials: string | null | undefined;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "SearchRouteOption_artist";
 };
 export type SearchRouteOption_artist$key = {

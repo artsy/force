@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dad1d67e626e6286a5dac06747d8b12d>>
+ * @generated SignedSource<<b7c55f208a8592d88739bead6e4a4b8c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,13 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerClassification = "AUCTION" | "BRAND" | "DEMO" | "GALLERY" | "INSTITUTION" | "INSTITUTIONAL_SELLER" | "PRIVATE_COLLECTOR" | "PRIVATE_DEALER" | "%future added value";
 export type PartnersSpecialtyAutocompleteQuery$variables = {
-  near?: string | null;
-  type?: ReadonlyArray<PartnerClassification | null> | null;
+  near?: string | null | undefined;
+  type?: ReadonlyArray<PartnerClassification | null | undefined> | null | undefined;
 };
 export type PartnersSpecialtyAutocompleteQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"PartnersSpecialtyAutocomplete_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type PartnersSpecialtyAutocompleteQuery = {
   response: PartnersSpecialtyAutocompleteQuery$data;

@@ -8,7 +8,7 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
+import { Environment, createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useInquiryContext } from "Components/Inquiry/Hooks/useInquiryContext"
 import { InquiryBasicInfo_artwork$data } from "__generated__/InquiryBasicInfo_artwork.graphql"
@@ -28,7 +28,7 @@ import { useMode } from "Utils/Hooks/useMode"
 
 interface InquiryBasicInfoProps {
   artwork: InquiryBasicInfo_artwork$data
-  me: InquiryBasicInfo_me$data | null
+  me: InquiryBasicInfo_me$data | null | undefined
 }
 
 type Mode = "Pending" | "Loading" | "Success" | "Error"
@@ -39,7 +39,7 @@ const InquiryBasicInfo: React.FC<InquiryBasicInfoProps> = ({ artwork, me }) => {
   const [mode, setMode] = useMode<Mode>("Pending")
 
   const { submitUpdateMyUserProfile } = useUpdateMyUserProfile({
-    relayEnvironment: relayEnvironment.current!,
+    relayEnvironment: relayEnvironment.current as Environment,
   })
 
   const [state, setState] = useState<{
@@ -201,7 +201,7 @@ export const InquiryBasicInfoQueryRenderer: React.FC = () => {
 
   return (
     <SystemQueryRenderer<InquiryBasicInfoQuery>
-      environment={relayEnvironment.current!}
+      environment={relayEnvironment.current as Environment}
       placeholder={<InquiryBasicInfoPlaceholder />}
       query={graphql`
         query InquiryBasicInfoQuery($id: String!) {

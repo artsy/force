@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ae0913927be5ffec84038e5c9d821c80>>
+ * @generated SignedSource<<0c07e13b99526c6600cf0c539b10d4f4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,14 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SearchEntity = "ARTICLE" | "ARTIST" | "ARTIST_SERIES" | "ARTWORK" | "CITY" | "COLLECTION" | "FAIR" | "FEATURE" | "GALLERY" | "GENE" | "INSTITUTION" | "PAGE" | "PROFILE" | "SALE" | "SHOW" | "TAG" | "VIEWING_ROOM" | "%future added value";
 export type searchRoutes_SearchResultsEntityQuery$variables = {
-  entities?: ReadonlyArray<SearchEntity | null> | null;
+  entities?: ReadonlyArray<SearchEntity | null | undefined> | null | undefined;
   keyword: string;
-  page?: number | null;
+  page?: number | null | undefined;
 };
 export type searchRoutes_SearchResultsEntityQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"SearchResultsEntity_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type searchRoutes_SearchResultsEntityQuery = {
   response: searchRoutes_SearchResultsEntityQuery$data;

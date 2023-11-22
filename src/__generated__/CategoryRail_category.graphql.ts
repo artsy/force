@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e795fe285196f9f1c7a0812765bd3924>>
+ * @generated SignedSource<<bcc7f15004f6cd15eaa24d3d2b669b65>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,11 +16,11 @@ export type CategoryRail_category$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly href: string | null;
-  readonly name: string | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly href: string | null | undefined;
+  readonly name: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderGene_gene">;
   readonly " $fragmentType": "CategoryRail_category";
 };

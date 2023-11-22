@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a122061c986f18d18b2df9283c40a2a0>>
+ * @generated SignedSource<<1b0bb7e75d0645b5e950fd51baa3bc38>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomStatementRoute_viewingRoom$data = {
   readonly artworksConnection: {
-    readonly totalCount: number | null;
-  } | null;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly subsections: ReadonlyArray<{
     readonly internalID: string;
   }>;

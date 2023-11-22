@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2f818990ccc5e5797eb35fe48be6ed94>>
+ * @generated SignedSource<<30bfe07831bef7e760dc95afe2e07741>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,12 +10,12 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateAccountRequestMutationInput = {
-  action?: string | null;
-  clientMutationId?: string | null;
-  email?: string | null;
-  name?: string | null;
+  action?: string | null | undefined;
+  clientMutationId?: string | null | undefined;
+  email?: string | null | undefined;
+  name?: string | null | undefined;
   notes: string;
-  userID?: string | null;
+  userID?: string | null | undefined;
 };
 export type CCPARequestMutation$variables = {
   input: CreateAccountRequestMutationInput;
@@ -24,13 +24,13 @@ export type CCPARequestMutation$data = {
   readonly createAccountRequest: {
     readonly accountRequestOrError: {
       readonly accountRequest?: {
-        readonly notes: string | null;
-      } | null;
+        readonly notes: string | null | undefined;
+      } | null | undefined;
       readonly mutationError?: {
         readonly message: string;
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type CCPARequestMutation = {
   response: CCPARequestMutation$data;

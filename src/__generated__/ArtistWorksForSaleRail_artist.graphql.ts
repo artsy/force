@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c2d687cecf4772a5ced2e3967d84406e>>
+ * @generated SignedSource<<48c965067a99252c9993f46f147894ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,9 +17,9 @@ export type ArtistWorksForSaleRail_artist$data = {
         readonly internalID: string;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly slug: string;
   readonly " $fragmentType": "ArtistWorksForSaleRail_artist";

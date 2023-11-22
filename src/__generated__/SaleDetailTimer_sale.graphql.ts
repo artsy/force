@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f223c3d46e3176be935233811baeeb2a>>
+ * @generated SignedSource<<c3777dfc56cc413ddc56d6c17bc29b13>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SaleDetailTimer_sale$data = {
-  readonly endAt: string | null;
-  readonly endedAt: string | null;
-  readonly startAt: string | null;
+  readonly endAt: string | null | undefined;
+  readonly endedAt: string | null | undefined;
+  readonly startAt: string | null | undefined;
   readonly " $fragmentType": "SaleDetailTimer_sale";
 };
 export type SaleDetailTimer_sale$key = {

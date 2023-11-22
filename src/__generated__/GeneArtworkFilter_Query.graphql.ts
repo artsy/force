@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8f3be9372f0872411dd066cb39c66164>>
+ * @generated SignedSource<<4f84fbb7b1e2a94735ca985704efd838>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type GeneArtworkFilter_Query$variables = {
 export type GeneArtworkFilter_Query$data = {
   readonly gene: {
     readonly " $fragmentSpreads": FragmentRefs<"GeneArtworkFilter_gene">;
-  } | null;
+  } | null | undefined;
 };
 export type GeneArtworkFilter_Query = {
   response: GeneArtworkFilter_Query$data;

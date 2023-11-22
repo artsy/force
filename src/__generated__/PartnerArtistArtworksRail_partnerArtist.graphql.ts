@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<542781aab27148260e16adbba2487bc1>>
+ * @generated SignedSource<<21961859487b5f0076fce92799906209>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type PartnerArtistArtworksRail_partnerArtist$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-    readonly totalCount: number | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "PartnerArtistArtworksRail_partnerArtist";
 };
 export type PartnerArtistArtworksRail_partnerArtist$key = {

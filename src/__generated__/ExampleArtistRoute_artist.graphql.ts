@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a40b9ef7338b67a608f933302434209>>
+ * @generated SignedSource<<1c8ce35879da8cc872e2bd6f7b65e1c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ExampleArtistRoute_artist$data = {
-  readonly bio: string | null;
+  readonly bio: string | null | undefined;
   readonly internalID: string;
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "ExampleArtistRoute_artist";
 };
 export type ExampleArtistRoute_artist$key = {

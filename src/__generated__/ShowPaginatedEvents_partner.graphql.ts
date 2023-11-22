@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e3d5d1b6661a51a4a2cd997269e7d378>>
+ * @generated SignedSource<<ef8e0cce662d7d6515478bf65771998c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,16 +16,16 @@ export type ShowPaginatedEvents_partner$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     };
     readonly pageInfo: {
-      readonly endCursor: string | null;
+      readonly endCursor: string | null | undefined;
       readonly hasNextPage: boolean;
     };
-  } | null;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ShowPaginatedEvents_partner";
 };

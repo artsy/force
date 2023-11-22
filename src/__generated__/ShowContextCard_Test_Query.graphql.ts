@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aea94399abdae45b9a1202294ebc7602>>
+ * @generated SignedSource<<b8957c239a6e4285d25d022b36435ee7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShowContextCard_Test_Query$variables = {};
+export type ShowContextCard_Test_Query$variables = Record<PropertyKey, never>;
 export type ShowContextCard_Test_Query$data = {
   readonly show: {
     readonly " $fragmentSpreads": FragmentRefs<"ShowContextCard_show">;
-  } | null;
+  } | null | undefined;
 };
 export type ShowContextCard_Test_Query = {
   response: ShowContextCard_Test_Query$data;

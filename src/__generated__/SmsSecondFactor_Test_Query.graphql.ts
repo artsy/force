@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8c73e1caf3f5e1566782c085f6f6e06d>>
+ * @generated SignedSource<<dd27018a3df0c73698a94c867c99804c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SmsSecondFactor_Test_Query$variables = {};
+export type SmsSecondFactor_Test_Query$variables = Record<PropertyKey, never>;
 export type SmsSecondFactor_Test_Query$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SmsSecondFactor_me">;
-  } | null;
+  } | null | undefined;
 };
 export type SmsSecondFactor_Test_Query = {
   response: SmsSecondFactor_Test_Query$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<568a4b0cd24b4f74d85963f10cab516a>>
+ * @generated SignedSource<<4a4de0accc2ec062710c2fee16bef2b5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,14 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
-export type BankAccountPickerTestQuery$variables = {};
+export type BankAccountPickerTestQuery$variables = Record<PropertyKey, never>;
 export type BankAccountPickerTestQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"BankAccountPicker_me">;
-  } | null;
+  } | null | undefined;
   readonly order: {
     readonly " $fragmentSpreads": FragmentRefs<"BankAccountPicker_order">;
-  } | null;
+  } | null | undefined;
 };
 export type BankAccountPickerTestQuery$rawResponse = {
   readonly me: {
@@ -28,18 +28,18 @@ export type BankAccountPickerTestQuery$rawResponse = {
           readonly id: string;
           readonly internalID: string;
           readonly last4: string;
-        } | null;
-      } | null> | null;
-    } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
     readonly id: string;
-  } | null;
+  } | null | undefined;
   readonly order: {
     readonly __typename: string;
     readonly __isCommerceOrder: string;
-    readonly bankAccountId: string | null;
+    readonly bankAccountId: string | null | undefined;
     readonly id: string;
     readonly internalID: string;
-    readonly mode: CommerceOrderModeEnum | null;
+    readonly mode: CommerceOrderModeEnum | null | undefined;
     readonly paymentMethodDetails: {
       readonly __typename: "BankAccount";
       readonly id: string;
@@ -50,8 +50,8 @@ export type BankAccountPickerTestQuery$rawResponse = {
       readonly id: string;
     } | {
       readonly __typename: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type BankAccountPickerTestQuery = {
   rawResponse: BankAccountPickerTestQuery$rawResponse;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e275726d29aa9727693fd3358e7e1700>>
+ * @generated SignedSource<<8d51ecaf3e0e672b77f8ab2989afcef3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,10 +13,10 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkListEmptyState_me$data = {
   readonly artworkList: {
     readonly default: boolean;
-  } | null;
+  } | null | undefined;
   readonly savedArtworksArtworkList: {
     readonly artworksCount: number;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ArtworkListEmptyState_me";
 };
 export type ArtworkListEmptyState_me$key = {

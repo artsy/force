@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a96418dfbdc0872e56b85ba9fe5d8dea>>
+ * @generated SignedSource<<25d66212e013070c9304434b3b2ef95b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,26 +15,26 @@ export type ArtistSeriesEntity_member$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artist: {
-          readonly name: string | null;
-        } | null;
+          readonly name: string | null | undefined;
+        } | null | undefined;
         readonly image: {
           readonly resized: {
-            readonly height: number | null;
+            readonly height: number | null | undefined;
             readonly src: string;
             readonly srcSet: string;
-            readonly width: number | null;
-          } | null;
-        } | null;
+            readonly width: number | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
         readonly internalID: string;
-        readonly title: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly headerImage: string | null;
+        readonly title: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly headerImage: string | null | undefined;
   readonly id: string;
-  readonly priceGuidance: number | null;
+  readonly priceGuidance: number | null | undefined;
   readonly slug: string;
-  readonly thumbnail: string | null;
+  readonly thumbnail: string | null | undefined;
   readonly title: string;
   readonly " $fragmentType": "ArtistSeriesEntity_member";
 };

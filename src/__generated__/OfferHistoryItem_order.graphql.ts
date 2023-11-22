@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e19ff9850b7267b5fdc1a287741bde9a>>
+ * @generated SignedSource<<626752f8bd9a15d1fd696c03c5f709d4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,40 +14,40 @@ import { FragmentRefs } from "relay-runtime";
 export type OfferHistoryItem_order$data = {
   readonly currencyCode?: string;
   readonly lastOffer?: {
-    readonly amount: string | null;
-    readonly fromParticipant: CommerceOrderParticipantEnum | null;
+    readonly amount: string | null | undefined;
+    readonly fromParticipant: CommerceOrderParticipantEnum | null | undefined;
     readonly internalID: string;
-    readonly note: string | null;
-    readonly shippingTotal: string | null;
-    readonly taxTotal: string | null;
-  } | null;
+    readonly note: string | null | undefined;
+    readonly shippingTotal: string | null | undefined;
+    readonly taxTotal: string | null | undefined;
+  } | null | undefined;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artworkOrEditionSet: {
           readonly __typename: "Artwork";
-          readonly price: string | null;
+          readonly price: string | null | undefined;
         } | {
           readonly __typename: "EditionSet";
-          readonly price: string | null;
+          readonly price: string | null | undefined;
         } | {
           // This will never be '%other', but we need some
           // value in case none of the concrete values match.
           readonly __typename: "%other";
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly offers?: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly amount: string | null;
+        readonly amount: string | null | undefined;
         readonly createdAt: string;
-        readonly fromParticipant: CommerceOrderParticipantEnum | null;
+        readonly fromParticipant: CommerceOrderParticipantEnum | null | undefined;
         readonly internalID: string;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "OfferHistoryItem_order";
 };
 export type OfferHistoryItem_order$key = {

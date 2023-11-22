@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2de6faccf7147f10c4629bef11839b5d>>
+ * @generated SignedSource<<7224b4d0077ba20c0fd842ae8b9d186b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectionsHubsNav_marketingCollections$data = ReadonlyArray<{
   readonly slug: string;
-  readonly thumbnail: string | null;
+  readonly thumbnail: string | null | undefined;
   readonly title: string;
   readonly " $fragmentType": "CollectionsHubsNav_marketingCollections";
 }>;

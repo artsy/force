@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<486c087d8942c7daa648fc014936c5f6>>
+ * @generated SignedSource<<b7ee285265d9326c152637ba01068f02>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSponsor_sponsor$data = {
-  readonly partnerDarkLogo: string | null;
-  readonly partnerLightLogo: string | null;
-  readonly partnerLogoLink: string | null;
+  readonly partnerDarkLogo: string | null | undefined;
+  readonly partnerLightLogo: string | null | undefined;
+  readonly partnerLogoLink: string | null | undefined;
   readonly " $fragmentType": "ArticleSponsor_sponsor";
 };
 export type ArticleSponsor_sponsor$key = {

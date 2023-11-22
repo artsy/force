@@ -1,6 +1,5 @@
 import { FollowArtistPopoverRow_artist$data } from "__generated__/FollowArtistPopoverRow_artist.graphql"
 import { FollowArtistPopoverRowMutation } from "__generated__/FollowArtistPopoverRowMutation.graphql"
-import { SystemContextProps } from "System/SystemContext"
 import { Component } from "react"
 import {
   RelayProp,
@@ -15,10 +14,11 @@ import { FollowButton } from "Components/FollowButton/Button"
 import { EntityHeaderArtistFragmentContainer } from "Components/EntityHeaders/EntityHeaderArtist"
 import { EntityHeaderPlaceholder } from "Components/EntityHeaders/EntityHeaderPlaceholder"
 
-interface Props extends SystemContextProps {
+interface Props {
   artist: FollowArtistPopoverRow_artist$data
   excludeArtistIdsState?: FollowArtistPopoverState
   relay: RelayProp
+  user: User
 }
 
 interface State {

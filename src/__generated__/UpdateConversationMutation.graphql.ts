@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ae3f7635a7776213f06fea5b44d617c5>>
+ * @generated SignedSource<<c5a436b8559cdeb890e2d18037413cb3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,13 +10,13 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UpdateConversationMutationInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   conversationId: string;
-  dismissed?: boolean | null;
-  fromLastViewedMessageId?: string | null;
-  sellerOutcome?: string | null;
-  sellerOutcomeComment?: string | null;
-  toLastViewedMessageId?: string | null;
+  dismissed?: boolean | null | undefined;
+  fromLastViewedMessageId?: string | null | undefined;
+  sellerOutcome?: string | null | undefined;
+  sellerOutcomeComment?: string | null | undefined;
+  toLastViewedMessageId?: string | null | undefined;
 };
 export type UpdateConversationMutation$variables = {
   input: UpdateConversationMutationInput;
@@ -25,17 +25,17 @@ export type UpdateConversationMutation$data = {
   readonly updateConversation: {
     readonly conversation: {
       readonly id: string;
-      readonly unread: boolean | null;
-    } | null;
-  } | null;
+      readonly unread: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type UpdateConversationMutation$rawResponse = {
   readonly updateConversation: {
     readonly conversation: {
       readonly id: string;
-      readonly unread: boolean | null;
-    } | null;
-  } | null;
+      readonly unread: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type UpdateConversationMutation = {
   rawResponse: UpdateConversationMutation$rawResponse;

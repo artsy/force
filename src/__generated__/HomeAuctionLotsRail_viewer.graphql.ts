@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<358903db747b77b2321ecf26e54d6d81>>
+ * @generated SignedSource<<df0e1d90528abb4d2c864775ac8f032a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,13 +14,13 @@ export type HomeAuctionLotsRail_viewer$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly href: string | null;
+        readonly href: string | null | undefined;
         readonly internalID: string;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "HomeAuctionLotsRail_viewer";
 };
 export type HomeAuctionLotsRail_viewer$key = {

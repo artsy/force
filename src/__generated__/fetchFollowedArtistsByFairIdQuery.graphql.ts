@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b5579ca333609f5bee007a56de1b8dfa>>
+ * @generated SignedSource<<52d2cf47436b8fd44807fbd9d31f154b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type fetchFollowedArtistsByFairIdQuery$variables = {
-  fairID?: string | null;
+  fairID?: string | null | undefined;
 };
 export type fetchFollowedArtistsByFairIdQuery$data = {
   readonly me: {
@@ -21,12 +21,12 @@ export type fetchFollowedArtistsByFairIdQuery$data = {
             readonly artist: {
               readonly internalID: string;
               readonly slug: string;
-            } | null;
-          } | null;
-        } | null> | null;
-      } | null;
-    } | null;
-  } | null;
+            } | null | undefined;
+          } | null | undefined;
+        } | null | undefined> | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type fetchFollowedArtistsByFairIdQuery = {
   response: fetchFollowedArtistsByFairIdQuery$data;

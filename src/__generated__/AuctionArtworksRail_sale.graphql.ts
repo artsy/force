@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7995350630ef562458042490a636de49>>
+ * @generated SignedSource<<51d7b6e3a156e3cf6eb2441657774d92>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,13 +17,13 @@ export type AuctionArtworksRail_sale$data = {
         readonly internalID: string;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly formattedStartDateTime: string | null;
-  readonly href: string | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly formattedStartDateTime: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly internalID: string;
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "AuctionArtworksRail_sale";
 };

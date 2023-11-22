@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e758e31f8c2a74220a64e0f1f9c1d7b8>>
+ * @generated SignedSource<<8be3b137ee6a682712f76d6ceb6bbb77>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceBuyerCounterOfferInput = {
   amountCents: number;
-  clientMutationId?: string | null;
-  note?: string | null;
+  clientMutationId?: string | null | undefined;
+  note?: string | null | undefined;
   offerId: string;
 };
 export type RespondCounterOfferMutation$variables = {
@@ -24,14 +24,14 @@ export type RespondCounterOfferMutation$data = {
     readonly orderOrError: {
       readonly error?: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
       readonly order?: {
         readonly " $fragmentSpreads": FragmentRefs<"Respond_order">;
       };
     };
-  } | null;
+  } | null | undefined;
 };
 export type RespondCounterOfferMutation = {
   response: RespondCounterOfferMutation$data;

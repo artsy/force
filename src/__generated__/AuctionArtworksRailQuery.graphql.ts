@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3af57b861df68b58c31f0ec4c8324517>>
+ * @generated SignedSource<<85c28df3cd03c285368be7de7fbd6264>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type AuctionArtworksRailQuery$variables = {
 export type AuctionArtworksRailQuery$data = {
   readonly sale: {
     readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworksRail_sale">;
-  } | null;
+  } | null | undefined;
 };
 export type AuctionArtworksRailQuery = {
   response: AuctionArtworksRailQuery$data;

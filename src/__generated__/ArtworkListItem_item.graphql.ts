@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6c3d8b4432d4cc55dd71304030f1ab29>>
+ * @generated SignedSource<<09c5c9e5a80fb87feb367846d22da382>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,11 +15,11 @@ export type ArtworkListItem_item$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly image: {
-          readonly url: string | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
+          readonly url: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly artworksCount: number;
   readonly default: boolean;
   readonly internalID: string;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a237ddef5b7f33d207095c65dcd04e66>>
+ * @generated SignedSource<<61eb5bb41138e1275f67c5ac509a955a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,13 +16,13 @@ export type CellArtist_artist$data = {
       readonly cropped: {
         readonly src: string;
         readonly srcSet: string;
-      } | null;
-    } | null;
-  } | null;
-  readonly href: string | null;
-  readonly initials: string | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
+  readonly href: string | null | undefined;
+  readonly initials: string | null | undefined;
   readonly internalID: string;
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
   readonly " $fragmentType": "CellArtist_artist";

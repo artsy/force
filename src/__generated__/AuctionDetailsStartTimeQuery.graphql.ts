@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fe98e077aa1cf0ff2a48df87dca0062e>>
+ * @generated SignedSource<<f50f0e343d711e9415f0d068cfa891e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,12 +16,12 @@ export type AuctionDetailsStartTimeQuery$variables = {
 export type AuctionDetailsStartTimeQuery$data = {
   readonly sale: {
     readonly cascadingEndTime: {
-      readonly formattedStartDateTime: string | null;
-    } | null;
-    readonly cascadingEndTimeIntervalMinutes: number | null;
-    readonly formattedStartDateTime: string | null;
+      readonly formattedStartDateTime: string | null | undefined;
+    } | null | undefined;
+    readonly cascadingEndTimeIntervalMinutes: number | null | undefined;
+    readonly formattedStartDateTime: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"AuctionDetailsStartTime_sale">;
-  } | null;
+  } | null | undefined;
 };
 export type AuctionDetailsStartTimeQuery = {
   response: AuctionDetailsStartTimeQuery$data;

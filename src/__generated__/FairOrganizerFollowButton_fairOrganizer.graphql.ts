@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3c5ced7f416e84738ea2387de5dac077>>
+ * @generated SignedSource<<0274c52e367c9a9354457a4ead935dd8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairOrganizerFollowButton_fairOrganizer$data = {
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly profile: {
     readonly id: string;
     readonly internalID: string;
-    readonly isFollowed: boolean | null;
-  } | null;
+    readonly isFollowed: boolean | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "FairOrganizerFollowButton_fairOrganizer";
 };

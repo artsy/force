@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<90697f1e00e6bd68516d321c446097ae>>
+ * @generated SignedSource<<97933fecad2ae40c30bd8e8160de3970>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,25 +11,25 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairsFairRow_fair$data = {
-  readonly exhibitionPeriod: string | null;
-  readonly href: string | null;
-  readonly isoStartAt: string | null;
-  readonly name: string | null;
+  readonly exhibitionPeriod: string | null | undefined;
+  readonly href: string | null | undefined;
+  readonly isoStartAt: string | null | undefined;
+  readonly name: string | null | undefined;
   readonly organizer: {
     readonly profile: {
-      readonly href: string | null;
-    } | null;
-  } | null;
+      readonly href: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly profile: {
     readonly icon: {
       readonly resized: {
-        readonly height: number | null;
+        readonly height: number | null | undefined;
         readonly src: string;
         readonly srcSet: string;
-        readonly width: number | null;
-      } | null;
-    } | null;
-  } | null;
+        readonly width: number | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "FairsFairRow_fair";
 };
 export type FairsFairRow_fair$key = {

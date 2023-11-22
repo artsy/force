@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5155f709866570a71b063122f9e612ac>>
+ * @generated SignedSource<<f39406a37d7fdc220cfb0694ca49e870>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionBidRoute_me$data = {
-  readonly hasQualifiedCreditCards: boolean | null;
+  readonly hasQualifiedCreditCards: boolean | null | undefined;
   readonly internalID: string;
   readonly " $fragmentType": "AuctionBidRoute_me";
 };

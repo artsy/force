@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<838140e217b0eeb64a3ced89604b4c91>>
+ * @generated SignedSource<<2688fa565abfa8b7d137f011bc37765e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type showRoutes_ShowInfoQuery$variables = {
 export type showRoutes_ShowInfoQuery$data = {
   readonly show: {
     readonly " $fragmentSpreads": FragmentRefs<"ShowInfo_show">;
-  } | null;
+  } | null | undefined;
 };
 export type showRoutes_ShowInfoQuery = {
   response: showRoutes_ShowInfoQuery$data;

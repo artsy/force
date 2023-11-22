@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4c001786965a8e957000b486a19c9a7d>>
+ * @generated SignedSource<<4a03a144628f59c5bc311759c99e2d03>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkActions_artwork$data = {
-  readonly downloadableImageUrl: string | null;
-  readonly isDownloadable: boolean | null;
-  readonly isHangable: boolean | null;
+  readonly downloadableImageUrl: string | null | undefined;
+  readonly isDownloadable: boolean | null | undefined;
+  readonly isHangable: boolean | null | undefined;
   readonly partner: {
     readonly slug: string;
-  } | null;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkActionsSaveButton_artwork" | "ArtworkDownloadButton_artwork" | "ArtworkSharePanel_artwork" | "ViewInRoom_artwork">;
   readonly " $fragmentType": "ArtworkActions_artwork";

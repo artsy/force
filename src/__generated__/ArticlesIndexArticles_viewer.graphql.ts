@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e879f8b015c98285ff440a50f98dd214>>
+ * @generated SignedSource<<4d65eceed9ad046ee9b3850ed6ec08c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type ArticlesIndexArticles_viewer$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ArticlesIndexArticle_article">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ArticlesIndexArticles_viewer";
 };
 export type ArticlesIndexArticles_viewer$key = {

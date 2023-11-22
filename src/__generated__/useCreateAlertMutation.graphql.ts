@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<20fefcd1daca5f64953f0e70a530e9ae>>
+ * @generated SignedSource<<7d3dbc5deb9febfebe7d6831a2a1458a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,37 +12,37 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UserSearchCriteriaFrequency = "daily" | "instant" | "%future added value";
 export type CreateSavedSearchInput = {
   attributes: SearchCriteriaAttributes;
-  clientMutationId?: string | null;
-  userAlertSettings?: UserAlertSettingsInput | null;
+  clientMutationId?: string | null | undefined;
+  userAlertSettings?: UserAlertSettingsInput | null | undefined;
 };
 export type SearchCriteriaAttributes = {
-  acquireable?: boolean | null;
-  additionalGeneIDs?: ReadonlyArray<string> | null;
-  artistID?: string | null;
-  artistIDs?: ReadonlyArray<string> | null;
-  artistSeriesIDs?: ReadonlyArray<string> | null;
-  atAuction?: boolean | null;
-  attributionClass?: ReadonlyArray<string> | null;
-  colors?: ReadonlyArray<string> | null;
-  dimensionRange?: string | null;
-  height?: string | null;
-  inquireableOnly?: boolean | null;
-  keyword?: string | null;
-  locationCities?: ReadonlyArray<string> | null;
-  majorPeriods?: ReadonlyArray<string> | null;
-  materialsTerms?: ReadonlyArray<string> | null;
-  offerable?: boolean | null;
-  partnerIDs?: ReadonlyArray<string> | null;
-  priceRange?: string | null;
-  sizes?: ReadonlyArray<string> | null;
-  width?: string | null;
+  acquireable?: boolean | null | undefined;
+  additionalGeneIDs?: ReadonlyArray<string> | null | undefined;
+  artistID?: string | null | undefined;
+  artistIDs?: ReadonlyArray<string> | null | undefined;
+  artistSeriesIDs?: ReadonlyArray<string> | null | undefined;
+  atAuction?: boolean | null | undefined;
+  attributionClass?: ReadonlyArray<string> | null | undefined;
+  colors?: ReadonlyArray<string> | null | undefined;
+  dimensionRange?: string | null | undefined;
+  height?: string | null | undefined;
+  inquireableOnly?: boolean | null | undefined;
+  keyword?: string | null | undefined;
+  locationCities?: ReadonlyArray<string> | null | undefined;
+  majorPeriods?: ReadonlyArray<string> | null | undefined;
+  materialsTerms?: ReadonlyArray<string> | null | undefined;
+  offerable?: boolean | null | undefined;
+  partnerIDs?: ReadonlyArray<string> | null | undefined;
+  priceRange?: string | null | undefined;
+  sizes?: ReadonlyArray<string> | null | undefined;
+  width?: string | null | undefined;
 };
 export type UserAlertSettingsInput = {
-  details?: string | null;
-  email?: boolean | null;
-  frequency?: UserSearchCriteriaFrequency | null;
-  name?: string | null;
-  push?: boolean | null;
+  details?: string | null | undefined;
+  email?: boolean | null | undefined;
+  frequency?: UserSearchCriteriaFrequency | null | undefined;
+  name?: string | null | undefined;
+  push?: boolean | null | undefined;
 };
 export type useCreateAlertMutation$variables = {
   input: CreateSavedSearchInput;
@@ -52,12 +52,12 @@ export type useCreateAlertMutation$data = {
     readonly me: {
       readonly counts: {
         readonly savedSearches: number;
-      } | null;
-    } | null;
+      } | null | undefined;
+    } | null | undefined;
     readonly savedSearchOrErrors: {
       readonly internalID?: string;
     };
-  } | null;
+  } | null | undefined;
 };
 export type useCreateAlertMutation = {
   response: useCreateAlertMutation$data;

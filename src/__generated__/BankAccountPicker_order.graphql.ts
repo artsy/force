@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0aa0daf192e70983e60bee7b3dd6cbcd>>
+ * @generated SignedSource<<5e4c831a5c453ff6798d1a2af1a925cd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,13 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type BankAccountPicker_order$data = {
-  readonly bankAccountId: string | null;
+  readonly bankAccountId: string | null | undefined;
   readonly internalID: string;
-  readonly mode: CommerceOrderModeEnum | null;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly paymentMethodDetails: {
     readonly internalID?: string;
     readonly last4?: string;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "BankAccountPicker_order";
 };
 export type BankAccountPicker_order$key = {

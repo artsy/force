@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c20fa9398a5170005141e953cbe5475b>>
+ * @generated SignedSource<<c1a4ca05168b4909a7d2d009afd1750b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,10 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type CommerceSetPaymentInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   id: string;
   paymentMethod: CommercePaymentMethodEnum;
-  paymentMethodId?: string | null;
+  paymentMethodId?: string | null | undefined;
 };
 export type commitMutationTest1Mutation$variables = {
   input: CommerceSetPaymentInput;
@@ -26,7 +26,7 @@ export type commitMutationTest1Mutation$data = {
         readonly code: string;
       };
     };
-  } | null;
+  } | null | undefined;
 };
 export type commitMutationTest1Mutation = {
   response: commitMutationTest1Mutation$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3b98a3f9e3d017de78897c5936e26534>>
+ * @generated SignedSource<<5932d143191807bc5ed59b7422649949>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,15 +12,15 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowSorts = "END_AT_ASC" | "END_AT_DESC" | "FEATURED_ASC" | "FEATURED_DESC" | "FEATURED_DESC_END_AT_DESC" | "NAME_ASC" | "NAME_DESC" | "PARTNER_ASC" | "SORTABLE_NAME_ASC" | "SORTABLE_NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "UPDATED_AT_ASC" | "UPDATED_AT_DESC" | "%future added value";
 export type FairBoothsQuery$variables = {
-  first?: number | null;
+  first?: number | null | undefined;
   id: string;
-  page?: number | null;
-  sort?: ShowSorts | null;
+  page?: number | null | undefined;
+  sort?: ShowSorts | null | undefined;
 };
 export type FairBoothsQuery$data = {
   readonly fair: {
     readonly " $fragmentSpreads": FragmentRefs<"FairBooths_fair">;
-  } | null;
+  } | null | undefined;
 };
 export type FairBoothsQuery = {
   response: FairBoothsQuery$data;

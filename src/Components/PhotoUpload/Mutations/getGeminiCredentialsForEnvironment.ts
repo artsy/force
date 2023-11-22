@@ -1,9 +1,10 @@
-import { commitMutation, Environment, graphql } from "relay-runtime"
+import { commitMutation, graphql } from "react-relay"
 import {
   RequestCredentialsForAssetUploadInput,
   getGeminiCredentialsForEnvironmentMutation$data,
   getGeminiCredentialsForEnvironmentMutation,
 } from "__generated__/getGeminiCredentialsForEnvironmentMutation.graphql"
+import { Environment } from "react-relay"
 
 export type AssetCredentials =
   | NonNullable<

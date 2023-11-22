@@ -94,7 +94,6 @@ export const SaleRequiringIDV: Partial<
 export const NotIDVedUser: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] = {
   id: "user-id",
   isIdentityVerified: false,
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   pendingIdentityVerification: undefined,
 }
 
@@ -107,7 +106,6 @@ export const UserPendingIDV: ArtworkSidebarBidAction_Test_Query$rawResponse["me"
 export const IDVedUser: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] = {
   id: "user-id",
   isIdentityVerified: true,
-  // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
   pendingIdentityVerification: undefined,
 }
 

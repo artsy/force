@@ -52,7 +52,7 @@ const ShowPaginatedEvents: React.FC<ShowEventsProps> = ({
 
   const shows = extractNodes(showsConnection)
 
-  const handleClick = (cursor: string | null, page: number) => {
+  const handleClick = (cursor: string | null | undefined, page: number) => {
     if (paramsPage === page) return
 
     setIsLoading(true)
@@ -218,7 +218,9 @@ export const ShowPaginatedEventsRenderer: React.FC<ShowPaginatedEventsRendererPr
         return (
           <ShowEventsRefetchContainer
             {...rest}
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             partner={props.partner!}
+            // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
             paramsPage={page!}
           />
         )

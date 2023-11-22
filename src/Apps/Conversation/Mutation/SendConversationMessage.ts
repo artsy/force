@@ -1,12 +1,10 @@
 import { Conversation_conversation$data } from "__generated__/Conversation_conversation.graphql"
 import { SendConversationMessageMutation } from "__generated__/SendConversationMessageMutation.graphql"
+import { Environment, commitMutation, graphql } from "react-relay"
 import {
   ConnectionHandler,
-  Environment,
   MutationConfig,
   RecordSourceSelectorProxy,
-  commitMutation,
-  graphql,
 } from "relay-runtime"
 
 export const SendConversationMessage = (

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a15596cfbc9e35417d56cdb4c6646182>>
+ * @generated SignedSource<<d4f8598aa728c84c2c0d6aa205cf6209>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,39 +12,39 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ARTIST_SERIES" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ShowApp_show$data = {
-  readonly about: string | null;
+  readonly about: string | null | undefined;
   readonly counts: {
-    readonly eligibleArtworks: any | null;
-  } | null;
+    readonly eligibleArtworks: any | null | undefined;
+  } | null | undefined;
   readonly fair: {
-    readonly hasFullFeature: boolean | null;
-  } | null;
-  readonly href: string | null;
+    readonly hasFullFeature: boolean | null | undefined;
+  } | null | undefined;
+  readonly href: string | null | undefined;
   readonly images: ReadonlyArray<{
-    readonly url: string | null;
-  } | null> | null;
+    readonly url: string | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly internalID: string;
-  readonly isFairBooth: boolean | null;
-  readonly name: string | null;
+  readonly isFairBooth: boolean | null | undefined;
+  readonly name: string | null | undefined;
   readonly sidebar: {
     readonly aggregations: ReadonlyArray<{
       readonly counts: ReadonlyArray<{
         readonly count: number;
         readonly name: string;
         readonly value: string;
-      } | null> | null;
-      readonly slice: ArtworkAggregation | null;
-    } | null> | null;
+      } | null | undefined> | null | undefined;
+      readonly slice: ArtworkAggregation | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly counts?: {
-      readonly followedArtists: any | null;
-    } | null;
-  } | null;
+      readonly followedArtists: any | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly viewingRoomsConnection: {
     readonly edges: ReadonlyArray<{
       readonly __typename: "ViewingRoomsEdge";
-    } | null> | null;
-  } | null;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"BackToFairBanner_show" | "ShowAbout_show" | "ShowArtworksEmptyState_show" | "ShowArtworks_show" | "ShowContextCard_show" | "ShowHeader_show" | "ShowInstallShots_show" | "ShowMeta_show" | "ShowViewingRoom_show">;
   readonly " $fragmentType": "ShowApp_show";
 };

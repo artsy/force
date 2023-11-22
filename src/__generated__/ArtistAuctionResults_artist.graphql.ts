@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<229965aa6354dffef5b6c4fc99f8666d>>
+ * @generated SignedSource<<8a9607adefbe2f2cb52077053dec3d5a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,35 +14,35 @@ export type ArtistAuctionResults_artist$data = {
   readonly auctionResultsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly isUpcoming: boolean | null;
+        readonly isUpcoming: boolean | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     };
     readonly pageInfo: {
-      readonly endCursor: string | null;
+      readonly endCursor: string | null | undefined;
       readonly hasNextPage: boolean;
     };
-    readonly totalCount: number | null;
-  } | null;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly meta: {
     readonly description: string;
     readonly title: string;
   };
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly pastAuctionResults: {
-    readonly totalCount: number | null;
-  } | null;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly statuses: {
-    readonly auctionLots: boolean | null;
-  } | null;
+    readonly auctionLots: boolean | null | undefined;
+  } | null | undefined;
   readonly upcomingAuctionResults: {
-    readonly totalCount: number | null;
-  } | null;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ArtistAuctionResults_artist";
 };
 export type ArtistAuctionResults_artist$key = {

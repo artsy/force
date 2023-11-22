@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0f2ca578b456ab7d90f65862ddb78a47>>
+ * @generated SignedSource<<9f0ff567fa95700e4c4bfe72881a338f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,17 +15,17 @@ export type EntityHeaderFair_fair$data = {
     readonly cropped: {
       readonly src: string;
       readonly srcSet: string;
-    } | null;
-  } | null;
-  readonly endAt: string | null;
-  readonly href: string | null;
+    } | null | undefined;
+  } | null | undefined;
+  readonly endAt: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly internalID: string;
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly profile: {
-    readonly initials: string | null;
+    readonly initials: string | null | undefined;
     readonly internalID: string;
-  } | null;
-  readonly startAt: string | null;
+  } | null | undefined;
+  readonly startAt: string | null | undefined;
   readonly " $fragmentType": "EntityHeaderFair_fair";
 };
 export type EntityHeaderFair_fair$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<036f54c1fa0e7f6b530a04191e46e959>>
+ * @generated SignedSource<<9a45e30e16e2285fe426f29750cc8405>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateBackupSecondFactorsInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   password: string;
 };
 export type useCreateSettingsBackupSecondFactorsMutation$variables = {
@@ -28,7 +28,7 @@ export type useCreateSettingsBackupSecondFactorsMutation$data = {
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     };
-  } | null;
+  } | null | undefined;
 };
 export type useCreateSettingsBackupSecondFactorsMutation = {
   response: useCreateSettingsBackupSecondFactorsMutation$data;

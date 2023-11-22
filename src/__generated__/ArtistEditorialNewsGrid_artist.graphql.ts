@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<47d5812c270f15c6a7f084063efad368>>
+ * @generated SignedSource<<ed0e0e21e2cec4b12e11088f2090cebc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,29 +14,29 @@ export type ArtistEditorialNewsGrid_artist$data = {
   readonly articlesConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly byline: string | null;
-        readonly href: string | null;
+        readonly byline: string | null | undefined;
+        readonly href: string | null | undefined;
         readonly internalID: string;
-        readonly publishedAt: string | null;
-        readonly slug: string | null;
+        readonly publishedAt: string | null | undefined;
+        readonly slug: string | null | undefined;
         readonly thumbnailImage: {
           readonly large: {
             readonly height: number;
             readonly src: string;
             readonly srcSet: string;
             readonly width: number;
-          } | null;
-        } | null;
-        readonly thumbnailTitle: string | null;
-        readonly title: string | null;
-        readonly vertical: string | null;
+          } | null | undefined;
+        } | null | undefined;
+        readonly thumbnailTitle: string | null | undefined;
+        readonly title: string | null | undefined;
+        readonly vertical: string | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly href: string | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly href: string | null | undefined;
   readonly internalID: string;
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtistEditorialNewsGrid_artist";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e06b48347bdd1f9e8923f360b648270>>
+ * @generated SignedSource<<700aa65e5a435796723dd68613ca1ecd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type EntityHeaderGeneStoryQuery$variables = {
 export type EntityHeaderGeneStoryQuery$data = {
   readonly gene: {
     readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderGene_gene">;
-  } | null;
+  } | null | undefined;
 };
 export type EntityHeaderGeneStoryQuery = {
   response: EntityHeaderGeneStoryQuery$data;

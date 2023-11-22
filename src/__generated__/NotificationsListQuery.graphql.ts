@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f84ba9a41aab9f9a92c56f1ec0966f4a>>
+ * @generated SignedSource<<3ec015f72dd218f813f50dfdc1c28f61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,12 +12,12 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 export type NotificationsListQuery$variables = {
-  types?: ReadonlyArray<NotificationTypesEnum | null> | null;
+  types?: ReadonlyArray<NotificationTypesEnum | null | undefined> | null | undefined;
 };
 export type NotificationsListQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"NotificationsList_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type NotificationsListQuery = {
   response: NotificationsListQuery$data;

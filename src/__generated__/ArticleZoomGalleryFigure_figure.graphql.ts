@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3fec9d143ec989cf8516681479692c2c>>
+ * @generated SignedSource<<956536ab7ab61517aada04663995e6ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,26 +13,26 @@ import { FragmentRefs } from "relay-runtime";
 export type ArticleZoomGalleryFigure_figure$data = {
   readonly __typename: "ArticleImageSection";
   readonly image: {
-    readonly height: number | null;
-    readonly url: string | null;
-    readonly width: number | null;
-  } | null;
+    readonly height: number | null | undefined;
+    readonly url: string | null | undefined;
+    readonly width: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ArticleZoomGalleryFigure_figure";
 } | {
   readonly __typename: "ArticleUnpublishedArtwork";
   readonly image: {
-    readonly height: number | null;
-    readonly url: string | null;
-    readonly width: number | null;
-  } | null;
+    readonly height: number | null | undefined;
+    readonly url: string | null | undefined;
+    readonly width: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ArticleZoomGalleryFigure_figure";
 } | {
   readonly __typename: "Artwork";
   readonly image: {
-    readonly height: number | null;
-    readonly url: string | null;
-    readonly width: number | null;
-  } | null;
+    readonly height: number | null | undefined;
+    readonly url: string | null | undefined;
+    readonly width: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ArticleZoomGalleryFigure_figure";
 } | {
   // This will never be '%other', but we need some

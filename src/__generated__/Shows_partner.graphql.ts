@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f9cee07a9797357a38ca32d9ee6a6601>>
+ * @generated SignedSource<<b02cd7af80a9bd2f1343e475f869033e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,27 +16,27 @@ export type Shows_partner$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly featuredEvents: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
-        readonly isFeatured: boolean | null;
+        readonly isFeatured: boolean | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"ShowBanner_show">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly upcomingEvents: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "Shows_partner";
 };
 export type Shows_partner$key = {

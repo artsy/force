@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e30420febb20536ff725dd5d68a6a60d>>
+ * @generated SignedSource<<247fbb8dc34652d933f4d4f885ba8c27>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,16 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SeoDataForArtwork_artwork$data = {
-  readonly artistNames: string | null;
-  readonly availability: string | null;
-  readonly category: string | null;
-  readonly date: string | null;
+  readonly artistNames: string | null | undefined;
+  readonly availability: string | null | undefined;
+  readonly category: string | null | undefined;
+  readonly date: string | null | undefined;
   readonly dimensions: {
-    readonly in: string | null;
-  } | null;
-  readonly href: string | null;
-  readonly is_price_hidden: boolean | null;
-  readonly is_price_range: boolean | null;
+    readonly in: string | null | undefined;
+  } | null | undefined;
+  readonly href: string | null | undefined;
+  readonly is_price_hidden: boolean | null | undefined;
+  readonly is_price_range: boolean | null | undefined;
   readonly listPrice: {
     readonly __typename: "Money";
     readonly currencyCode: string;
@@ -29,38 +29,38 @@ export type SeoDataForArtwork_artwork$data = {
     readonly __typename: "PriceRange";
     readonly maxPrice: {
       readonly major: number;
-    } | null;
+    } | null | undefined;
     readonly minPrice: {
       readonly currencyCode: string;
       readonly major: number;
-    } | null;
+    } | null | undefined;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly meta: {
-    readonly description: string | null;
-    readonly title: string | null;
-  } | null;
+    readonly description: string | null | undefined;
+    readonly title: string | null | undefined;
+  } | null | undefined;
   readonly meta_image: {
     readonly resized: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly url: string;
-      readonly width: number | null;
-    } | null;
-  } | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly partner: {
-    readonly name: string | null;
+    readonly name: string | null | undefined;
     readonly profile: {
       readonly image: {
         readonly resized: {
           readonly url: string;
-        } | null;
-      } | null;
-    } | null;
-    readonly type: string | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+    readonly type: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "SeoDataForArtwork_artwork";
 };
 export type SeoDataForArtwork_artwork$key = {

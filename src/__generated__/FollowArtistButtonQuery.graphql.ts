@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2ffd4de74ff2ac2deecc5b008e092952>>
+ * @generated SignedSource<<58ec82de8fcddf6fe9b79075f41cef47>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type FollowArtistButtonQuery$variables = {
 export type FollowArtistButtonQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_artist">;
-  } | null;
+  } | null | undefined;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"FollowArtistButton_me">;
-  } | null;
+  } | null | undefined;
 };
 export type FollowArtistButtonQuery = {
   response: FollowArtistButtonQuery$data;

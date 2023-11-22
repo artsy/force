@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fd833ce084cf21e286c0470137567eef>>
+ * @generated SignedSource<<91162d495be0770f31ee16d2163c506c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_SavedSearchAlertsQuery$variables = {};
+export type settingsRoutes_SavedSearchAlertsQuery$variables = Record<PropertyKey, never>;
 export type settingsRoutes_SavedSearchAlertsQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertsApp_me">;
-  } | null;
+  } | null | undefined;
 };
 export type settingsRoutes_SavedSearchAlertsQuery = {
   response: settingsRoutes_SavedSearchAlertsQuery$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9abd1da47dbfd6ecad42abd91e43f81c>>
+ * @generated SignedSource<<22ab3e6724219cb34d20bf0d6921245e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,24 +13,24 @@ import { FragmentRefs } from "relay-runtime";
 export type ShowInfoLocation_show$data = {
   readonly fair: {
     readonly location: {
-      readonly address: string | null;
-      readonly address2: string | null;
-      readonly city: string | null;
-      readonly country: string | null;
-      readonly display: string | null;
-      readonly state: string | null;
-      readonly summary: string | null;
-    } | null;
-  } | null;
+      readonly address: string | null | undefined;
+      readonly address2: string | null | undefined;
+      readonly city: string | null | undefined;
+      readonly country: string | null | undefined;
+      readonly display: string | null | undefined;
+      readonly state: string | null | undefined;
+      readonly summary: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly location: {
-    readonly address: string | null;
-    readonly address2: string | null;
-    readonly city: string | null;
-    readonly country: string | null;
-    readonly display: string | null;
-    readonly state: string | null;
-    readonly summary: string | null;
-  } | null;
+    readonly address: string | null | undefined;
+    readonly address2: string | null | undefined;
+    readonly city: string | null | undefined;
+    readonly country: string | null | undefined;
+    readonly display: string | null | undefined;
+    readonly state: string | null | undefined;
+    readonly summary: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ShowInfoLocation_show";
 };
 export type ShowInfoLocation_show$key = {

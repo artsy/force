@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c478b91783e11a7ae9043249ee24d8a>>
+ * @generated SignedSource<<aae02f1283c5712d20915f9f59194ea4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,10 +14,10 @@ export type SavedSearchAlertEditForm_artistsConnection$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
       readonly internalID: string;
-      readonly name: string | null;
+      readonly name: string | null | undefined;
       readonly slug: string;
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "SavedSearchAlertEditForm_artistsConnection";
 };
 export type SavedSearchAlertEditForm_artistsConnection$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ca08249d03a7a84b3e152b075d986a88>>
+ * @generated SignedSource<<297a0f2b7101420b45162668b1a83add>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type SelectArtworkListsModalQuery$variables = {
 export type SelectArtworkListsModalQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SelectArtworkListsModal_me">;
-  } | null;
+  } | null | undefined;
 };
 export type SelectArtworkListsModalQuery = {
   response: SelectArtworkListsModalQuery$data;

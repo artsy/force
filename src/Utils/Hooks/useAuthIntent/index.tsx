@@ -9,8 +9,8 @@ import { saveArtworkMutation } from "./mutations/AuthIntentSaveArtworkMutation"
 import { createOrderMutation } from "./mutations/AuthIntentCreateOrderMutation"
 import { createOfferOrderMutation } from "./mutations/AuthIntentCreateOfferOrderMutation"
 import { associateSubmissionMutation } from "./mutations/AuthIntentAssociateSubmissionMutation"
-import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { useProgressiveOnboarding } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
+import { Environment } from "react-relay"
 
 export const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
 
@@ -43,7 +43,7 @@ export const runAuthIntent = async ({
   onSuccess,
 }: {
   user: User
-  relayEnvironment: RelayModernEnvironment
+  relayEnvironment: Environment
   onSuccess: (value: AfterAuthAction) => void
 }) => {
   if (!user) return

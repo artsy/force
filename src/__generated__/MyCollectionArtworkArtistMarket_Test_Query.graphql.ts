@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c0872b55464c09a18581f8ca3077062>>
+ * @generated SignedSource<<dd990cc928b86c8bf0d25dbdcde513ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,13 +10,13 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MyCollectionArtworkArtistMarket_Test_Query$variables = {};
+export type MyCollectionArtworkArtistMarket_Test_Query$variables = Record<PropertyKey, never>;
 export type MyCollectionArtworkArtistMarket_Test_Query$data = {
   readonly artwork: {
     readonly marketPriceInsights: {
       readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights">;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type MyCollectionArtworkArtistMarket_Test_Query = {
   response: MyCollectionArtworkArtistMarket_Test_Query$data;

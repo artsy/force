@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d2aec914ba152a4e4d14081ca727ffdf>>
+ * @generated SignedSource<<5a25923542165e319cd303321b54ec18>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type OnboardingMarketingCollection_marketingCollection$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"GridItem_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly title: string;
   readonly " $fragmentType": "OnboardingMarketingCollection_marketingCollection";
 };

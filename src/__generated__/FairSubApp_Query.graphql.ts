@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8780060fcf23750a1f6117fc6d156653>>
+ * @generated SignedSource<<fd7dbf5d9104e7273635738aed66b8d9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairSubApp_Query$variables = {};
+export type FairSubApp_Query$variables = Record<PropertyKey, never>;
 export type FairSubApp_Query$data = {
   readonly fair: {
     readonly " $fragmentSpreads": FragmentRefs<"FairSubApp_fair">;
-  } | null;
+  } | null | undefined;
 };
 export type FairSubApp_Query = {
   response: FairSubApp_Query$data;

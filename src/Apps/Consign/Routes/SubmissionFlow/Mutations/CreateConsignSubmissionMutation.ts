@@ -1,9 +1,8 @@
-import { commitMutation, Environment, graphql } from "relay-runtime"
-
 import {
   CreateSubmissionMutationInput,
   CreateConsignSubmissionMutation,
 } from "__generated__/CreateConsignSubmissionMutation.graphql"
+import { Environment, commitMutation, graphql } from "react-relay"
 
 export const createConsignSubmissionMutation = (
   relayEnvironment: Environment,
@@ -33,7 +32,8 @@ export const createConsignSubmissionMutation = (
         }
 
         resolve(
-          res.createConsignmentSubmission!.consignmentSubmission!.externalId!
+          res.createConsignmentSubmission?.consignmentSubmission
+            ?.externalId as string
         )
       },
     })

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<43cb603de6fdb187f569794df70937bb>>
+ * @generated SignedSource<<fc6e5eca8288031676d3aaa1b36e8469>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type MarketStatsQuery$variables = {
 export type MarketStatsQuery$data = {
   readonly priceInsightsConnection: {
     readonly " $fragmentSpreads": FragmentRefs<"MarketStats_priceInsightsConnection">;
-  } | null;
+  } | null | undefined;
 };
 export type MarketStatsQuery = {
   response: MarketStatsQuery$data;

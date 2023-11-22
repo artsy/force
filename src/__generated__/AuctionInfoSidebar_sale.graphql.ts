@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<61406f17374949f9eac85ecebeee2e12>>
+ * @generated SignedSource<<b6a7f100d286c28d658c1e2f7ba113bd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionInfoSidebar_sale$data = {
-  readonly liveStartAt: string | null;
+  readonly liveStartAt: string | null | undefined;
   readonly " $fragmentType": "AuctionInfoSidebar_sale";
 };
 export type AuctionInfoSidebar_sale$key = {

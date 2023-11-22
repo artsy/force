@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f4506da082b9cdbdf56453b332ab23b5>>
+ * @generated SignedSource<<b9fea5b48387322db2ac1a29335b331b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type NearbyGalleriesRail_partners$data = ReadonlyArray<{
   readonly node: {
     readonly internalID: string;
     readonly " $fragmentSpreads": FragmentRefs<"CellPartner_partner">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "NearbyGalleriesRail_partners";
 }>;
 export type NearbyGalleriesRail_partners$key = ReadonlyArray<{

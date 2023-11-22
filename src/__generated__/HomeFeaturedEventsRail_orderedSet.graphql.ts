@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9637bdb699e6a10728c074894954d58e>>
+ * @generated SignedSource<<9fd8b49d1f5c3638859ac6b61119fe2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,27 +13,27 @@ import { FragmentRefs } from "relay-runtime";
 export type HomeFeaturedEventsRail_orderedSet$data = {
   readonly items: ReadonlyArray<{
     readonly __typename: "FeaturedLink";
-    readonly href: string | null;
+    readonly href: string | null | undefined;
     readonly image: {
       readonly large: {
         readonly src: string;
         readonly srcSet: string;
-      } | null;
+      } | null | undefined;
       readonly small: {
         readonly height: number;
         readonly src: string;
         readonly srcSet: string;
         readonly width: number;
-      } | null;
-    } | null;
+      } | null | undefined;
+    } | null | undefined;
     readonly internalID: string;
-    readonly subtitle: string | null;
-    readonly title: string | null;
+    readonly subtitle: string | null | undefined;
+    readonly title: string | null | undefined;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "HomeFeaturedEventsRail_orderedSet";
 };
 export type HomeFeaturedEventsRail_orderedSet$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b5bc7284d86b3845f67e509e6fa738d9>>
+ * @generated SignedSource<<f62df33db8f6e4d76a3e9a79f498db47>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,8 @@ export type ArtistsIndex_featuredArtists$data = ReadonlyArray<{
   readonly artists: ReadonlyArray<{
     readonly internalID?: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistsCarouselCell_featuredLink">;
-  } | null> | null;
-  readonly name: string | null;
+  } | null | undefined> | null | undefined;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "ArtistsIndex_featuredArtists";
 }>;
 export type ArtistsIndex_featuredArtists$key = ReadonlyArray<{

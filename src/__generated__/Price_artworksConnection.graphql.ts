@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5f30238da574a744b4bcd4ff191576ce>>
+ * @generated SignedSource<<bd83b12ed6a22d27e958a64e91644e76>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,9 +17,9 @@ export type Price_artworksConnection$data = {
       readonly count: number;
       readonly name: string;
       readonly value: string;
-    } | null> | null;
-    readonly slice: ArtworkAggregation | null;
-  } | null> | null;
+    } | null | undefined> | null | undefined;
+    readonly slice: ArtworkAggregation | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "Price_artworksConnection";
 };
 export type Price_artworksConnection$key = {

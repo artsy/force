@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8057ae2e6cbca3fb93d01952b1bbe057>>
+ * @generated SignedSource<<56cff925354f693d517676cd8c61730f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type MetadataTestQuery$variables = {};
+export type MetadataTestQuery$variables = Record<PropertyKey, never>;
 export type MetadataTestQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type MetadataTestQuery = {
   response: MetadataTestQuery$data;

@@ -1,6 +1,7 @@
-import { commitMutation, Environment, graphql } from "relay-runtime"
+import { commitMutation, graphql } from "react-relay"
 import { AuthIntentAssociateSubmissionMutation } from "__generated__/AuthIntentAssociateSubmissionMutation.graphql"
 import { AuthIntentMutation } from "./types"
+import { Environment } from "react-relay"
 
 export const associateSubmissionMutation: AuthIntentMutation = (
   relayEnvironment: Environment,

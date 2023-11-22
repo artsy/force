@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1294be0ce4c4a9efd148e178151da4ed>>
+ * @generated SignedSource<<7c489169b2002e4fd2a9b866bb42bce0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,9 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceCancelReasonTypeEnum = "ADMIN_CANCELED" | "ADMIN_FAILED_REVIEW" | "BUYER_LAPSED" | "BUYER_REJECTED" | "FUNDS_NOT_RECEIVED" | "SELLER_LAPSED" | "SELLER_REJECTED" | "SELLER_REJECTED_ARTWORK_UNAVAILABLE" | "SELLER_REJECTED_OFFER_TOO_LOW" | "SELLER_REJECTED_OTHER" | "SELLER_REJECTED_SHIPPING_UNAVAILABLE" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceBuyerRejectOfferInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   offerId: string;
-  rejectReason?: CommerceCancelReasonTypeEnum | null;
+  rejectReason?: CommerceCancelReasonTypeEnum | null | undefined;
 };
 export type RejectOfferMutation$variables = {
   input: CommerceBuyerRejectOfferInput;
@@ -25,15 +25,15 @@ export type RejectOfferMutation$data = {
       readonly __typename: "CommerceOrderWithMutationSuccess";
       readonly error?: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
       readonly order?: {
-        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null | undefined;
         readonly internalID: string;
       };
     };
-  } | null;
+  } | null | undefined;
 };
 export type RejectOfferMutation = {
   response: RejectOfferMutation$data;

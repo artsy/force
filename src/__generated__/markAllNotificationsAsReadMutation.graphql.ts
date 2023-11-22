@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<36a4cc48553b206f324e963a9aaebf5f>>
+ * @generated SignedSource<<f6b099da723ca78d6342805d7feb23a0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,16 +9,16 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type markAllNotificationsAsReadMutation$variables = {};
+export type markAllNotificationsAsReadMutation$variables = Record<PropertyKey, never>;
 export type markAllNotificationsAsReadMutation$data = {
   readonly markAllNotificationsAsRead: {
     readonly responseOrError: {
       readonly mutationError?: {
         readonly message: string;
-      } | null;
-      readonly success?: boolean | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+      readonly success?: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type markAllNotificationsAsReadMutation = {
   response: markAllNotificationsAsReadMutation$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ea5bf2603d23704fc7e08414c712b94c>>
+ * @generated SignedSource<<abc26de588038f951f32247bd26e69d0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomArtworkDetails_artwork$data = {
-  readonly additionalInformation: string | null;
-  readonly href: string | null;
+  readonly additionalInformation: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly id: string;
   readonly " $fragmentSpreads": FragmentRefs<"Details_artwork">;
   readonly " $fragmentType": "ViewingRoomArtworkDetails_artwork";

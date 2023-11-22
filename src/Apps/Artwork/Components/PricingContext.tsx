@@ -93,7 +93,7 @@ export class PricingContext extends React.Component<PricingContextProps> {
 
     if (artwork.artists === null) return null
 
-    const artistId = artwork.artists[0]?.slug
+    const artistId = artwork.artists?.[0]?.slug
 
     return (
       <BorderBox mb={2} flexDirection="column">

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3b76e70002391fda5626d8708fe72338>>
+ * @generated SignedSource<<b67d9f389989e84605efaae3956976a3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchAlertsApp_Test_Query$variables = {};
+export type SavedSearchAlertsApp_Test_Query$variables = Record<PropertyKey, never>;
 export type SavedSearchAlertsApp_Test_Query$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertsApp_me">;
-  } | null;
+  } | null | undefined;
 };
 export type SavedSearchAlertsApp_Test_Query$rawResponse = {
   readonly me: {
@@ -24,7 +24,7 @@ export type SavedSearchAlertsApp_Test_Query$rawResponse = {
         readonly cursor: string;
         readonly node: {
           readonly __typename: "SearchCriteria";
-          readonly artistIDs: ReadonlyArray<string> | null;
+          readonly artistIDs: ReadonlyArray<string> | null | undefined;
           readonly artistSeriesIDs: ReadonlyArray<string>;
           readonly displayName: string;
           readonly href: string;
@@ -33,16 +33,16 @@ export type SavedSearchAlertsApp_Test_Query$rawResponse = {
             readonly displayValue: string;
           }>;
           readonly userAlertSettings: {
-            readonly name: string | null;
+            readonly name: string | null | undefined;
           };
-        } | null;
-      } | null> | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
       readonly pageInfo: {
-        readonly endCursor: string | null;
+        readonly endCursor: string | null | undefined;
         readonly hasNextPage: boolean;
       };
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type SavedSearchAlertsApp_Test_Query = {
   rawResponse: SavedSearchAlertsApp_Test_Query$rawResponse;

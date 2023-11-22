@@ -2,13 +2,8 @@ import {
   markAllNotificationsAsReadMutation,
   markAllNotificationsAsReadMutation$data,
 } from "__generated__/markAllNotificationsAsReadMutation.graphql"
-import {
-  commitMutation,
-  ConnectionHandler,
-  Environment,
-  graphql,
-  RecordSourceSelectorProxy,
-} from "relay-runtime"
+import { Environment, commitMutation, graphql } from "react-relay"
+import { ConnectionHandler, RecordSourceSelectorProxy } from "relay-runtime"
 
 const updater = (
   store: RecordSourceSelectorProxy<markAllNotificationsAsReadMutation$data>

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d901aad96162635b708638623c379c99>>
+ * @generated SignedSource<<879deeb569dfc3d355e4b2eb58d45c27>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type StandoutLotsRail_Test_Query$variables = {};
+export type StandoutLotsRail_Test_Query$variables = Record<PropertyKey, never>;
 export type StandoutLotsRail_Test_Query$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"StandoutLotsRail_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type StandoutLotsRail_Test_Query = {
   response: StandoutLotsRail_Test_Query$data;

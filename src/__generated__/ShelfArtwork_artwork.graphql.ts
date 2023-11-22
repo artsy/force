@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<baa4663e528055ebbea96546f0ab783e>>
+ * @generated SignedSource<<1c73fe8608087c21c19f6bc8f595e2d3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,14 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShelfArtwork_artwork$data = {
-  readonly artistNames: string | null;
-  readonly href: string | null;
+  readonly artistNames: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly image: {
-    readonly height: number | null;
-    readonly src: string | null;
-    readonly width: number | null;
-  } | null;
-  readonly title: string | null;
+    readonly height: number | null | undefined;
+    readonly src: string | null | undefined;
+    readonly width: number | null | undefined;
+  } | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"Metadata_artwork">;
   readonly " $fragmentType": "ShelfArtwork_artwork";
 };

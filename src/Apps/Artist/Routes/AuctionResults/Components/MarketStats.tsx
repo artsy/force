@@ -333,13 +333,13 @@ export const MarketStatsQueryRenderer: FC<{
           return null
         }
 
-        if (!props) {
+        if (!props || !props.priceInsightsConnection) {
           return <MarketStatsPlaceholder />
         }
 
         return (
           <MarketStatsFragmentContainer
-            priceInsightsConnection={props.priceInsightsConnection!}
+            priceInsightsConnection={props.priceInsightsConnection}
             onRendered={onRender}
           />
         )

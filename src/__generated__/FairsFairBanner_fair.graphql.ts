@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<13156e7f2c82aa53a006883774eb9f26>>
+ * @generated SignedSource<<1af084fa7a94476f819a448a7709f77d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,34 +11,34 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairsFairBanner_fair$data = {
-  readonly bannerSize: string | null;
-  readonly exhibitionPeriod: string | null;
-  readonly href: string | null;
+  readonly bannerSize: string | null | undefined;
+  readonly exhibitionPeriod: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly image: {
     readonly large: {
       readonly height: number;
       readonly src: string;
       readonly srcSet: string;
       readonly width: number;
-    } | null;
+    } | null | undefined;
     readonly small: {
       readonly height: number;
       readonly src: string;
       readonly srcSet: string;
       readonly width: number;
-    } | null;
-  } | null;
-  readonly name: string | null;
+    } | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly profile: {
     readonly icon: {
       readonly resized: {
-        readonly height: number | null;
+        readonly height: number | null | undefined;
         readonly src: string;
         readonly srcSet: string;
-        readonly width: number | null;
-      } | null;
-    } | null;
-  } | null;
+        readonly width: number | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "FairsFairBanner_fair";
 };
 export type FairsFairBanner_fair$key = {

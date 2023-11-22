@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<814b4f35a1ac762f825b3edc112426ac>>
+ * @generated SignedSource<<54f6c771eaff7328a237c4d8d749d4da>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_ShippingRouteQuery$variables = {};
+export type settingsRoutes_ShippingRouteQuery$variables = Record<PropertyKey, never>;
 export type settingsRoutes_ShippingRouteQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingRoute_me">;
-  } | null;
+  } | null | undefined;
 };
 export type settingsRoutes_ShippingRouteQuery = {
   response: settingsRoutes_ShippingRouteQuery$data;

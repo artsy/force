@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<734bc8e1132b64beec5c61812c77805b>>
+ * @generated SignedSource<<ab7339b3fe86450d99f1d4a13242b7b9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,13 +15,13 @@ export type FairEditorialRailArticles_fair$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
-        readonly slug: string | null;
+        readonly slug: string | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
-      } | null;
-    } | null> | null;
-    readonly totalCount: number | null;
-  } | null;
-  readonly href: string | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
+  readonly href: string | null | undefined;
   readonly " $fragmentType": "FairEditorialRailArticles_fair";
 };
 export type FairEditorialRailArticles_fair$key = {

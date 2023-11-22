@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<742a25387216aa287ada28573e77271e>>
+ * @generated SignedSource<<a54a7b1f4adeecffd178871f54506e15>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,36 +16,36 @@ export type ShowsCity_city$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShowsFeaturedShow_show">;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     };
     readonly pageInfo: {
-      readonly endCursor: string | null;
+      readonly endCursor: string | null | undefined;
       readonly hasNextPage: boolean;
     };
-    readonly totalCount: number | null;
-  } | null;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly name: string;
   readonly pastShows: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShowsFeaturedShow_show">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly upcomingShows: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
-        readonly startAt: string | null;
+        readonly startAt: string | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"ShowsFeaturedShow_show">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ShowsCity_city";
 };
 export type ShowsCity_city$key = {

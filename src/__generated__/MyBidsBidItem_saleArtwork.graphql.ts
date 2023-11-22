@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1dc43419a3f69e1ac0c5f9c266e541c2>>
+ * @generated SignedSource<<ac09a48c56e541516874f231377be318>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,30 +12,30 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyBidsBidItem_saleArtwork$data = {
   readonly artwork: {
-    readonly artistNames: string | null;
+    readonly artistNames: string | null | undefined;
     readonly image: {
       readonly cropped: {
         readonly height: number;
         readonly src: string;
         readonly srcSet: string;
         readonly width: number;
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly currentBid: {
-    readonly display: string | null;
-  } | null;
-  readonly estimate: string | null;
+    readonly display: string | null | undefined;
+  } | null | undefined;
+  readonly estimate: string | null | undefined;
   readonly internalID: string;
-  readonly isHighestBidder: boolean | null;
-  readonly isWatching: boolean | null;
-  readonly lotLabel: string | null;
+  readonly isHighestBidder: boolean | null | undefined;
+  readonly isWatching: boolean | null | undefined;
+  readonly lotLabel: string | null | undefined;
   readonly lotState: {
-    readonly bidCount: number | null;
+    readonly bidCount: number | null | undefined;
     readonly sellingPrice: {
-      readonly display: string | null;
-    } | null;
-  } | null;
+      readonly display: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "MyBidsBidItem_saleArtwork";
 };

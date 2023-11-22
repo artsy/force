@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1fe48526b6661ff35b2efdc2125924c8>>
+ * @generated SignedSource<<652ba5d93b26fca414691f8fcc70502a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,10 +18,10 @@ export type FollowArtistPopover_artist$data = {
           readonly id: string;
           readonly internalID: string;
           readonly " $fragmentSpreads": FragmentRefs<"FollowArtistPopoverRow_artist">;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "FollowArtistPopover_artist";
 };
 export type FollowArtistPopover_artist$key = {

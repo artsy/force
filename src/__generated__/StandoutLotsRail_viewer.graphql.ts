@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<89b0f6af07b3b50105a769703e18d6cf>>
+ * @generated SignedSource<<ba65a07e02254dbe35cd3a5323e86731>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,9 +17,9 @@ export type StandoutLotsRail_viewer$data = {
         readonly internalID: string;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "StandoutLotsRail_viewer";
 };
 export type StandoutLotsRail_viewer$key = {

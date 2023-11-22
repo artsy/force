@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<02e050c17a30499d65d28caec36007a3>>
+ * @generated SignedSource<<30eab97e11954e2e5b951fe9bc6738c9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,17 +9,17 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type AlertProviderTestQuery$variables = {};
+export type AlertProviderTestQuery$variables = Record<PropertyKey, never>;
 export type AlertProviderTestQuery$data = {
   readonly artist: {
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
 };
 export type AlertProviderTestQuery$rawResponse = {
   readonly artist: {
     readonly id: string;
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
 };
 export type AlertProviderTestQuery = {
   rawResponse: AlertProviderTestQuery$rawResponse;

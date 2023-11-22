@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3fe83cc81e954a7ea0f86884690e3e2c>>
+ * @generated SignedSource<<ac0004b414bf0a18bb2c5a0068b1f371>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairTabs_fair$data = {
   readonly counts: {
-    readonly artworks: any | null;
-  } | null;
-  readonly href: string | null;
+    readonly artworks: any | null | undefined;
+  } | null | undefined;
+  readonly href: string | null | undefined;
   readonly " $fragmentType": "FairTabs_fair";
 };
 export type FairTabs_fair$key = {

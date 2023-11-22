@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<791011c304aa61beb3d86378bb9e7d35>>
+ * @generated SignedSource<<72c3a112f1addcf0e8076f3bf68a52e5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,19 +15,19 @@ export type CellShow_show$data = {
     readonly cropped: {
       readonly src: string;
       readonly srcSet: string;
-    } | null;
-  } | null;
-  readonly endAt: string | null;
-  readonly exhibitionPeriod: string | null;
-  readonly href: string | null;
+    } | null | undefined;
+  } | null | undefined;
+  readonly endAt: string | null | undefined;
+  readonly exhibitionPeriod: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly internalID: string;
-  readonly isFairBooth: boolean | null;
-  readonly name: string | null;
+  readonly isFairBooth: boolean | null | undefined;
+  readonly name: string | null | undefined;
   readonly partner: {
-    readonly name?: string | null;
-  } | null;
+    readonly name?: string | null | undefined;
+  } | null | undefined;
   readonly slug: string;
-  readonly startAt: string | null;
+  readonly startAt: string | null | undefined;
   readonly " $fragmentType": "CellShow_show";
 };
 export type CellShow_show$key = {

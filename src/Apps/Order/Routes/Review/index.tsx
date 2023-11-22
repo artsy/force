@@ -103,7 +103,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           : (await submitOffer(setupIntentId)).submitOfferOrderWithConversation
               ?.orderOrError
       if (orderOrError?.error) {
-        handleSubmitError(orderOrError?.error!)
+        handleSubmitError(orderOrError?.error)
         return
       } else if (
         props.order.mode === "BUY" &&
@@ -282,11 +282,11 @@ export const ReviewRoute: FC<ReviewProps> = props => {
 
   const handleSubmitError = async (error: {
     code: string
-    data: string | null
+    data: string | null | undefined
   }) => {
     logger.error({
       ...error,
-      orderId: props.order.internalID!,
+      orderId: props.order.internalID,
       paymentMethod: props.order?.paymentMethod,
       shouldLogErrorToSentry: true,
     })
@@ -322,7 +322,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         break
       }
       case "failed_charge_authorize": {
-        const parsedData = JSON.parse(error.data!)
+        const parsedData = JSON.parse(error.data as any)
         const title = "An error occurred"
         const message = parsedData.failure_message
 
@@ -580,6 +580,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
             </Flex>
             <Media greaterThan="xs">
               <ItemReview
+                // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                 lineItem={order?.lineItems?.edges?.[0]?.node!}
                 orderSource={order.source}
               />

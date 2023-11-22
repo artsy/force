@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4eba874b45a3f6507f5800c48905938a>>
+ * @generated SignedSource<<34fdde24b564bea3a6e4f5fb41852a34>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,11 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type AddressModal2TestQuery$variables = {};
+export type AddressModal2TestQuery$variables = Record<PropertyKey, never>;
 export type AddressModal2TestQuery$data = {
   readonly _unused: {
-    readonly name: string | null;
-  } | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
 };
 export type AddressModal2TestQuery = {
   response: AddressModal2TestQuery$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<12119027d3900071c98017e3503f8728>>
+ * @generated SignedSource<<26efc6af1586c8be2fd7d64f44ca8854>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerViewingRoomsGrid_Test_Query$variables = {};
+export type PartnerViewingRoomsGrid_Test_Query$variables = Record<PropertyKey, never>;
 export type PartnerViewingRoomsGrid_Test_Query$data = {
   readonly viewingRoomsConnection: {
     readonly " $fragmentSpreads": FragmentRefs<"PartnerViewingRoomsGrid_viewingRoomsConnection">;
-  } | null;
+  } | null | undefined;
 };
 export type PartnerViewingRoomsGrid_Test_Query = {
   response: PartnerViewingRoomsGrid_Test_Query$data;

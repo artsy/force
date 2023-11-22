@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<12c840e8db0e2c407370ea07f3d599c8>>
+ * @generated SignedSource<<77820ecd70bd4f509656cfe74e6bb719>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ConfirmArtworkModalQuery$variables = {
 export type ConfirmArtworkModalQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"ConfirmArtworkModal_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type ConfirmArtworkModalQuery = {
   response: ConfirmArtworkModalQuery$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c3e7ac946cf1f0a8ad348a16e07395b>>
+ * @generated SignedSource<<e53cc020c20285d42c435c7e5ea9dec7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type SettingsCreditCard_creditCard$data = {
   readonly expirationYear: number;
   readonly internalID: string;
   readonly lastDigits: string;
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "SettingsCreditCard_creditCard";
 };
 export type SettingsCreditCard_creditCard$key = {

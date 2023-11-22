@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2dd0c7af561f79f68f2af764474cc34f>>
+ * @generated SignedSource<<886503f10f025fba3036f8b385524c61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type RecentlyViewedQuery$variables = {};
+export type RecentlyViewedQuery$variables = Record<PropertyKey, never>;
 export type RecentlyViewedQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"RecentlyViewed_me">;
-  } | null;
+  } | null | undefined;
 };
 export type RecentlyViewedQuery = {
   response: RecentlyViewedQuery$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<20dc22bf826787b84cef44bb2e0a200d>>
+ * @generated SignedSource<<0c59549e46c82d66681a5eaec019e05e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FairBoothRail_Test_Query$variables = {};
+export type FairBoothRail_Test_Query$variables = Record<PropertyKey, never>;
 export type FairBoothRail_Test_Query$data = {
   readonly show: {
     readonly " $fragmentSpreads": FragmentRefs<"FairBoothRail_show">;
-  } | null;
+  } | null | undefined;
 };
 export type FairBoothRail_Test_Query = {
   response: FairBoothRail_Test_Query$data;

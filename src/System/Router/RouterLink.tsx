@@ -20,7 +20,7 @@ export type RouterLinkProps = Omit<
     /**
      * Simplifies `LinkProps#to` to just be a string and handle nulls, which are common
      */
-    to: string | null
+    to: string | null | undefined
     textDecoration?: ResponsiveValue<string>
     inline?: boolean
   }

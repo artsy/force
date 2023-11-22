@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f4f6588a18ac558b5b909639b16ed536>>
+ * @generated SignedSource<<a98cf0495bf3737a20416b4000c89126>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,16 +15,16 @@ export type EntityHeaderGene_gene$data = {
     readonly cropped: {
       readonly src: string;
       readonly srcSet: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
   readonly filterArtworksConnection: {
     readonly counts: {
-      readonly total: any | null;
-    } | null;
-  } | null;
-  readonly href: string | null;
+      readonly total: any | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
+  readonly href: string | null | undefined;
   readonly internalID: string;
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "EntityHeaderGene_gene";
 };
 export type EntityHeaderGene_gene$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<881f597b8af3963b1d5ee24419c78338>>
+ * @generated SignedSource<<36d62a195b7cc64d96fff53e449e89e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,15 +12,15 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionResultTitleInfo_auctionResult$data = {
   readonly artist: {
-    readonly href: string | null;
-    readonly isPersonalArtist: boolean | null;
-    readonly name: string | null;
+    readonly href: string | null | undefined;
+    readonly isPersonalArtist: boolean | null | undefined;
+    readonly name: string | null | undefined;
     readonly slug: string;
-  } | null;
-  readonly dateText: string | null;
-  readonly formattedSaleDate: string | null;
-  readonly organization: string | null;
-  readonly title: string | null;
+  } | null | undefined;
+  readonly dateText: string | null | undefined;
+  readonly formattedSaleDate: string | null | undefined;
+  readonly organization: string | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "AuctionResultTitleInfo_auctionResult";
 };
 export type AuctionResultTitleInfo_auctionResult$key = {

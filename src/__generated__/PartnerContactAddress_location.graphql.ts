@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2833942df9c79f10380725271bd6346>>
+ * @generated SignedSource<<51529e930b03a618e91fee0f3b80562c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerContactAddress_location$data = {
-  readonly address: string | null;
-  readonly address2: string | null;
-  readonly city: string | null;
-  readonly displayCountry: string | null;
-  readonly phone: string | null;
-  readonly postalCode: string | null;
-  readonly state: string | null;
+  readonly address: string | null | undefined;
+  readonly address2: string | null | undefined;
+  readonly city: string | null | undefined;
+  readonly displayCountry: string | null | undefined;
+  readonly phone: string | null | undefined;
+  readonly postalCode: string | null | undefined;
+  readonly state: string | null | undefined;
   readonly " $fragmentType": "PartnerContactAddress_location";
 };
 export type PartnerContactAddress_location$key = {

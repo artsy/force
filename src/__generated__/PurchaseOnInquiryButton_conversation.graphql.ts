@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dcdce315a1e0fb6656dbf14f1e0563e0>>
+ * @generated SignedSource<<f5cd232371d04ca383ec332a1be6a240>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,23 +11,23 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PurchaseOnInquiryButton_conversation$data = {
-  readonly internalID: string | null;
+  readonly internalID: string | null | undefined;
   readonly items: ReadonlyArray<{
     readonly liveArtwork: {
       readonly __typename: "Artwork";
       readonly editionSets: ReadonlyArray<{
         readonly internalID: string;
-      } | null> | null;
+      } | null | undefined> | null | undefined;
       readonly internalID: string;
-      readonly isEdition: boolean | null;
+      readonly isEdition: boolean | null | undefined;
       readonly slug: string;
       readonly " $fragmentSpreads": FragmentRefs<"ConfirmArtworkButton_artwork">;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "PurchaseOnInquiryButton_conversation";
 };
 export type PurchaseOnInquiryButton_conversation$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<29cad638333af2e5ddfb95522491d85b>>
+ * @generated SignedSource<<d0288761ffa12de06c8b4490f614541f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,21 +17,21 @@ export type ShowsFeaturedShow_show$data = {
       readonly src: string;
       readonly srcSet: string;
       readonly width: number;
-    } | null;
+    } | null | undefined;
     readonly small: {
       readonly height: number;
       readonly src: string;
       readonly srcSet: string;
       readonly width: number;
-    } | null;
-    readonly title: string | null;
-  } | null;
-  readonly href: string | null;
+    } | null | undefined;
+    readonly title: string | null | undefined;
+  } | null | undefined;
+  readonly href: string | null | undefined;
   readonly id: string;
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly partner: {
-    readonly name?: string | null;
-  } | null;
+    readonly name?: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ShowsShowDates_show">;
   readonly " $fragmentType": "ShowsFeaturedShow_show";
 };

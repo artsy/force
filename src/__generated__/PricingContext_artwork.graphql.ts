@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aba1d789d58e46a3287afad57b19bb34>>
+ * @generated SignedSource<<28f615fa5892514fd120bdabfc057b2f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,8 +15,8 @@ import { FragmentRefs } from "relay-runtime";
 export type PricingContext_artwork$data = {
   readonly artists: ReadonlyArray<{
     readonly slug: string;
-  } | null> | null;
-  readonly category: string | null;
+  } | null | undefined> | null | undefined;
+  readonly category: string | null | undefined;
   readonly listPrice: {
     readonly __typename: "Money";
     readonly minor: any;
@@ -24,29 +24,29 @@ export type PricingContext_artwork$data = {
     readonly __typename: "PriceRange";
     readonly maxPrice: {
       readonly minor: any;
-    } | null;
+    } | null | undefined;
     readonly minPrice: {
       readonly minor: any;
-    } | null;
+    } | null | undefined;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly pricingContext: {
     readonly appliedFilters: {
-      readonly category: AnalyticsPricingContextCategoryEnum | null;
-      readonly dimension: AnalyticsPricingContextDimensionEnum | null;
+      readonly category: AnalyticsPricingContextCategoryEnum | null | undefined;
+      readonly dimension: AnalyticsPricingContextDimensionEnum | null | undefined;
     };
-    readonly appliedFiltersDisplay: string | null;
+    readonly appliedFiltersDisplay: string | null | undefined;
     readonly bins: ReadonlyArray<{
-      readonly maxPrice: string | null;
+      readonly maxPrice: string | null | undefined;
       readonly maxPriceCents: number;
-      readonly minPrice: string | null;
+      readonly minPrice: string | null | undefined;
       readonly minPriceCents: number;
       readonly numArtworks: number;
     }>;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "PricingContext_artwork";
 };
 export type PricingContext_artwork$key = {

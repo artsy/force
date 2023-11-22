@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<39d588da108410944641340fe2c8f12c>>
+ * @generated SignedSource<<c719595a2e58cd4178a35605706aff63>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type useInquiryContextQuery$variables = {};
+export type useInquiryContextQuery$variables = Record<PropertyKey, never>;
 export type useInquiryContextQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"useInquiryContext_me">;
-  } | null;
+  } | null | undefined;
 };
 export type useInquiryContextQuery = {
   response: useInquiryContextQuery$data;

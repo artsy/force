@@ -13,7 +13,7 @@ const dismiss = () => {
 export const useScrollToOpenArtistAuthModal = ({
   name,
 }: {
-  name: string | null
+  name: string | null | undefined
 }) => {
   const { showAuthDialog } = useAuthDialog()
 

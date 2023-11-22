@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<52c02167f692cc76543a43f658879123>>
+ * @generated SignedSource<<9527f7ffd05a6e52f952fd8aeae39668>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,14 +14,14 @@ export type AuctionResultImage_auctionResult$data = {
   readonly images: {
     readonly larger: {
       readonly resized: {
-        readonly height: number | null;
+        readonly height: number | null | undefined;
         readonly src: string;
         readonly srcSet: string;
-        readonly width: number | null;
-      } | null;
-    } | null;
-  } | null;
-  readonly title: string | null;
+        readonly width: number | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "AuctionResultImage_auctionResult";
 };
 export type AuctionResultImage_auctionResult$key = {

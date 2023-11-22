@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e52aea66034fa3f9268211715ccdfe4f>>
+ * @generated SignedSource<<cad25acbb4d47ad76d84435632816203>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type EntityHeaderFairOrganizerStoryQuery$variables = {
 export type EntityHeaderFairOrganizerStoryQuery$data = {
   readonly fairOrganizer: {
     readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderFairOrganizer_fairOrganizer">;
-  } | null;
+  } | null | undefined;
 };
 export type EntityHeaderFairOrganizerStoryQuery = {
   response: EntityHeaderFairOrganizerStoryQuery$data;

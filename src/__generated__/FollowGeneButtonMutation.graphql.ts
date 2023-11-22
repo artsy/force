@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a0370ed7438e5226ef129466b5521c0e>>
+ * @generated SignedSource<<ef3a896bdf86b1618925dafd16d40afe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,9 +10,9 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowGeneInput = {
-  clientMutationId?: string | null;
-  geneID?: string | null;
-  unfollow?: boolean | null;
+  clientMutationId?: string | null | undefined;
+  geneID?: string | null | undefined;
+  unfollow?: boolean | null | undefined;
 };
 export type FollowGeneButtonMutation$variables = {
   input: FollowGeneInput;
@@ -21,9 +21,9 @@ export type FollowGeneButtonMutation$data = {
   readonly followGene: {
     readonly gene: {
       readonly id: string;
-      readonly isFollowed: boolean | null;
-    } | null;
-  } | null;
+      readonly isFollowed: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type FollowGeneButtonMutation = {
   response: FollowGeneButtonMutation$data;

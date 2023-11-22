@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b08d6f3f7b05577acf1f877c02489b9b>>
+ * @generated SignedSource<<7d8ce94f612c3985dcb731bad1d29f71>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,8 @@ export type Contact_partner$data = {
   readonly locations: {
     readonly edges: ReadonlyArray<{
       readonly " $fragmentSpreads": FragmentRefs<"PartnerContacts_edges">;
-    } | null> | null;
-  } | null;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "Contact_partner";
 };
 export type Contact_partner$key = {

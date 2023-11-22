@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5eb7438069068eb34b7c4444646346ea>>
+ * @generated SignedSource<<9c5e2ca660301c19f014c511aea4c069>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type ChannelArticles_channel$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ChannelArticles_channel";
 };
 export type ChannelArticles_channel$key = {

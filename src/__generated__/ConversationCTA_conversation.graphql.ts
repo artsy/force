@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c384d74f56d4c9fa4224ab8b80c2b6d7>>
+ * @generated SignedSource<<0300e332165e88f406a077b2818590e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,22 +16,22 @@ export type ConversationCTA_conversation$data = {
   readonly activeOrders: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
+        readonly buyerAction?: CommerceBuyerOfferActionEnum | null | undefined;
         readonly internalID: string;
         readonly offers?: {
           readonly edges: ReadonlyArray<{
             readonly node: {
               readonly internalID: string;
-            } | null;
-          } | null> | null;
-        } | null;
+            } | null | undefined;
+          } | null | undefined> | null | undefined;
+        } | null | undefined;
         readonly state: CommerceOrderStateEnum;
-        readonly stateExpiresAt: string | null;
-        readonly stateReason: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly internalID: string | null;
+        readonly stateExpiresAt: string | null | undefined;
+        readonly stateReason: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly internalID: string | null | undefined;
   readonly items: ReadonlyArray<{
     readonly item: {
       readonly __typename: "Artwork";
@@ -40,18 +40,18 @@ export type ConversationCTA_conversation$data = {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
-    } | null;
+    } | null | undefined;
     readonly liveArtwork: {
       readonly __typename: "Artwork";
-      readonly isOfferableFromInquiry: boolean | null;
-      readonly is_acquireable: boolean | null;
-      readonly is_offerable: boolean | null;
+      readonly isOfferableFromInquiry: boolean | null | undefined;
+      readonly is_acquireable: boolean | null | undefined;
+      readonly is_offerable: boolean | null | undefined;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"MakeOfferOnInquiryButton_conversation" | "PurchaseOnInquiryButton_conversation">;
   readonly " $fragmentType": "ConversationCTA_conversation";
 };

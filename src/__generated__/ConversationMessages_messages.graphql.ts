@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b5e4b617664a4e397f8d5884fcc9c604>>
+ * @generated SignedSource<<d89d4d69c6a4e4e436620e3c39f807fb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,14 +14,14 @@ export type ConversationMessages_messages$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
       readonly __typename: "Message";
-      readonly body: string | null;
-      readonly createdAt: string | null;
+      readonly body: string | null | undefined;
+      readonly createdAt: string | null | undefined;
       readonly id: string;
       readonly internalID: string;
-      readonly isFromUser: boolean | null;
+      readonly isFromUser: boolean | null | undefined;
       readonly " $fragmentSpreads": FragmentRefs<"Message_message">;
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "ConversationMessages_messages";
 };
 export type ConversationMessages_messages$key = {

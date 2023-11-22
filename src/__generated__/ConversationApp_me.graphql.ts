@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6b90104fe0d78ce25cbf80ff5af91738>>
+ * @generated SignedSource<<cefd771ae9fea1dc128e6c0df88bcdfa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,13 +14,13 @@ export type ConversationApp_me$data = {
   readonly conversationsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly internalID: string | null;
+        readonly internalID: string | null | undefined;
         readonly to: {
           readonly name: string;
         };
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ConversationList_me">;
   readonly " $fragmentType": "ConversationApp_me";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b20b538ccdb1a7698f0a7936351bc635>>
+ * @generated SignedSource<<4da7df016211ac7894029242b768a922>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,24 +14,24 @@ export type AuctionBidRoute_artwork$data = {
   readonly internalID: string;
   readonly saleArtwork: {
     readonly increments: ReadonlyArray<{
-      readonly cents: number | null;
-      readonly display: string | null;
-    } | null> | null;
+      readonly cents: number | null | undefined;
+      readonly display: string | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly minimumNextBid: {
-      readonly cents: number | null;
-    } | null;
+      readonly cents: number | null | undefined;
+    } | null | undefined;
     readonly sale: {
       readonly bidder: {
         readonly id: string;
-      } | null;
+      } | null | undefined;
       readonly internalID: string;
       readonly registrationStatus: {
-        readonly qualifiedForBidding: boolean | null;
-      } | null;
+        readonly qualifiedForBidding: boolean | null | undefined;
+      } | null | undefined;
       readonly slug: string;
-    } | null;
+    } | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"AuctionLotInfo_saleArtwork">;
-  } | null;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuctionTimer_artwork">;
   readonly " $fragmentType": "AuctionBidRoute_artwork";

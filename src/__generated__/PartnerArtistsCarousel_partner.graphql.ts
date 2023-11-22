@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f7c646b8571c7b83b5c3b077dd6005d7>>
+ * @generated SignedSource<<8434e7905032bab6eb3e15de7733747c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type PartnerArtistsCarousel_partner$data = {
       readonly node: {
         readonly internalID: string;
         readonly slug: string;
-      } | null;
+      } | null | undefined;
       readonly " $fragmentSpreads": FragmentRefs<"CellPartnerArtist_partnerArtist">;
-    } | null> | null;
-  } | null;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "PartnerArtistsCarousel_partner";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2c2e9f69bd3010023ef257b2d00a30da>>
+ * @generated SignedSource<<f19ab925ca6c12a18047bd6fc8a595c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,48 +12,48 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type ArtworkAttributionClassType = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type ArtworkImportSource = "CONVECTION" | "MY_COLLECTION" | "%future added value";
 export type MyCollectionCreateArtworkInput = {
-  artistIds?: ReadonlyArray<string | null> | null;
-  artists?: ReadonlyArray<MyCollectionArtistInput | null> | null;
-  artworkLocation?: string | null;
-  attributionClass?: ArtworkAttributionClassType | null;
-  category?: string | null;
-  clientMutationId?: string | null;
-  collectorLocation?: EditableLocation | null;
-  confidentialNotes?: string | null;
-  costCurrencyCode?: string | null;
-  costMajor?: number | null;
-  costMinor?: number | null;
-  date?: string | null;
-  depth?: string | null;
-  editionNumber?: string | null;
-  editionSize?: string | null;
-  externalImageUrls?: ReadonlyArray<string | null> | null;
-  height?: string | null;
-  importSource?: ArtworkImportSource | null;
-  isEdition?: boolean | null;
-  medium?: string | null;
-  metric?: string | null;
-  pricePaidCents?: any | null;
-  pricePaidCurrency?: string | null;
-  provenance?: string | null;
-  submissionId?: string | null;
+  artistIds?: ReadonlyArray<string | null | undefined> | null | undefined;
+  artists?: ReadonlyArray<MyCollectionArtistInput | null | undefined> | null | undefined;
+  artworkLocation?: string | null | undefined;
+  attributionClass?: ArtworkAttributionClassType | null | undefined;
+  category?: string | null | undefined;
+  clientMutationId?: string | null | undefined;
+  collectorLocation?: EditableLocation | null | undefined;
+  confidentialNotes?: string | null | undefined;
+  costCurrencyCode?: string | null | undefined;
+  costMajor?: number | null | undefined;
+  costMinor?: number | null | undefined;
+  date?: string | null | undefined;
+  depth?: string | null | undefined;
+  editionNumber?: string | null | undefined;
+  editionSize?: string | null | undefined;
+  externalImageUrls?: ReadonlyArray<string | null | undefined> | null | undefined;
+  height?: string | null | undefined;
+  importSource?: ArtworkImportSource | null | undefined;
+  isEdition?: boolean | null | undefined;
+  medium?: string | null | undefined;
+  metric?: string | null | undefined;
+  pricePaidCents?: any | null | undefined;
+  pricePaidCurrency?: string | null | undefined;
+  provenance?: string | null | undefined;
+  submissionId?: string | null | undefined;
   title: string;
-  width?: string | null;
+  width?: string | null | undefined;
 };
 export type MyCollectionArtistInput = {
-  displayName?: string | null;
+  displayName?: string | null | undefined;
 };
 export type EditableLocation = {
-  address?: string | null;
-  address2?: string | null;
-  city?: string | null;
-  coordinates?: ReadonlyArray<number> | null;
-  country?: string | null;
-  countryCode?: string | null;
-  postalCode?: string | null;
-  state?: string | null;
-  stateCode?: string | null;
-  summary?: string | null;
+  address?: string | null | undefined;
+  address2?: string | null | undefined;
+  city?: string | null | undefined;
+  coordinates?: ReadonlyArray<number> | null | undefined;
+  country?: string | null | undefined;
+  countryCode?: string | null | undefined;
+  postalCode?: string | null | undefined;
+  state?: string | null | undefined;
+  stateCode?: string | null | undefined;
+  summary?: string | null | undefined;
 };
 export type useCreateArtworkMutation$variables = {
   input: MyCollectionCreateArtworkInput;
@@ -65,16 +65,16 @@ export type useCreateArtworkMutation$data = {
         readonly __id: string;
         readonly node: {
           readonly images: ReadonlyArray<{
-            readonly internalID: string | null;
-          } | null> | null;
+            readonly internalID: string | null | undefined;
+          } | null | undefined> | null | undefined;
           readonly internalID: string;
-        } | null;
-      } | null;
+        } | null | undefined;
+      } | null | undefined;
       readonly mutationError?: {
         readonly message: string;
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useCreateArtworkMutation = {
   response: useCreateArtworkMutation$data;

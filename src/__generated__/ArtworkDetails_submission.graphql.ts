@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3a9a4a7fc418ae46dbe5f881c0a3471e>>
+ * @generated SignedSource<<8e2add3674bb34714a8ebe21b97c3ded>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,28 +14,28 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetails_submission$data = {
   readonly artist: {
     readonly internalID: string;
-    readonly name: string | null;
-  } | null;
-  readonly attributionClass: ConsignmentAttributionClass | null;
-  readonly category: string | null;
-  readonly depth: string | null;
-  readonly dimensionsMetric: string | null;
-  readonly editionNumber: string | null;
-  readonly editionSize: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly attributionClass: ConsignmentAttributionClass | null | undefined;
+  readonly category: string | null | undefined;
+  readonly depth: string | null | undefined;
+  readonly dimensionsMetric: string | null | undefined;
+  readonly editionNumber: string | null | undefined;
+  readonly editionSize: string | null | undefined;
   readonly externalId: string;
-  readonly height: string | null;
-  readonly locationCity: string | null;
-  readonly locationCountry: string | null;
-  readonly locationCountryCode: string | null;
-  readonly locationPostalCode: string | null;
-  readonly locationState: string | null;
-  readonly medium: string | null;
-  readonly provenance: string | null;
-  readonly title: string | null;
-  readonly userEmail: string | null;
+  readonly height: string | null | undefined;
+  readonly locationCity: string | null | undefined;
+  readonly locationCountry: string | null | undefined;
+  readonly locationCountryCode: string | null | undefined;
+  readonly locationPostalCode: string | null | undefined;
+  readonly locationState: string | null | undefined;
+  readonly medium: string | null | undefined;
+  readonly provenance: string | null | undefined;
+  readonly title: string | null | undefined;
+  readonly userEmail: string | null | undefined;
   readonly userId: string;
-  readonly width: string | null;
-  readonly year: string | null;
+  readonly width: string | null | undefined;
+  readonly year: string | null | undefined;
   readonly " $fragmentType": "ArtworkDetails_submission";
 };
 export type ArtworkDetails_submission$key = {

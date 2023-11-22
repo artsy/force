@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4310504e0025a158f134da13b3deaf65>>
+ * @generated SignedSource<<16fb78736c9f22e819f42db8777b3175>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";
-export type fetchUserPreferencesQuery$variables = {};
+export type fetchUserPreferencesQuery$variables = Record<PropertyKey, never>;
 export type fetchUserPreferencesQuery$data = {
   readonly me: {
     readonly lengthUnitPreference: LengthUnitPreference;
-  } | null;
+  } | null | undefined;
 };
 export type fetchUserPreferencesQuery = {
   response: fetchUserPreferencesQuery$data;

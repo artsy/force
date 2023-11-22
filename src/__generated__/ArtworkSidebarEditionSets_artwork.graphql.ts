@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<74b37b95fd843569eb1731c8e333130f>>
+ * @generated SignedSource<<ce9146ddae6bb5217edd509a1cf3ebf5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,14 +14,14 @@ export type ArtworkSidebarEditionSets_artwork$data = {
   readonly editionSets: ReadonlyArray<{
     readonly id: string;
     readonly internalID: string;
-    readonly isAcquireable: boolean | null;
-    readonly isOfferable: boolean | null;
-    readonly saleMessage: string | null;
+    readonly isAcquireable: boolean | null | undefined;
+    readonly isOfferable: boolean | null | undefined;
+    readonly saleMessage: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarSizeInfo_piece">;
-  } | null> | null;
-  readonly isAcquireable: boolean | null;
-  readonly isInquireable: boolean | null;
-  readonly isOfferable: boolean | null;
+  } | null | undefined> | null | undefined;
+  readonly isAcquireable: boolean | null | undefined;
+  readonly isInquireable: boolean | null | undefined;
+  readonly isOfferable: boolean | null | undefined;
   readonly " $fragmentType": "ArtworkSidebarEditionSets_artwork";
 };
 export type ArtworkSidebarEditionSets_artwork$key = {

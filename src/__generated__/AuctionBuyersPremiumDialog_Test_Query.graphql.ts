@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4a4d8b88938ca6ba71d83bebe151bfd4>>
+ * @generated SignedSource<<c9d0123b37906f3fac0ddc16d9310bc5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type AuctionBuyersPremiumDialog_Test_Query$variables = {};
+export type AuctionBuyersPremiumDialog_Test_Query$variables = Record<PropertyKey, never>;
 export type AuctionBuyersPremiumDialog_Test_Query$data = {
   readonly sale: {
     readonly " $fragmentSpreads": FragmentRefs<"AuctionBuyersPremiumDialog_sale">;
-  } | null;
+  } | null | undefined;
 };
 export type AuctionBuyersPremiumDialog_Test_Query = {
   response: AuctionBuyersPremiumDialog_Test_Query$data;

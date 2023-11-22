@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aec5febd6d3d70b52cb6da75a1b03207>>
+ * @generated SignedSource<<00e97eaa70ddaed74de84ca67174e517>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,36 +11,36 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FeatureFeaturedLink_featuredLink$data = {
-  readonly description: string | null;
-  readonly href: string | null;
+  readonly description: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly image: {
     readonly full: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly src: string;
       readonly srcSet: string;
-      readonly width: number | null;
-    } | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
     readonly large: {
       readonly height: number;
       readonly src: string;
       readonly srcSet: string;
       readonly width: number;
-    } | null;
+    } | null | undefined;
     readonly medium: {
       readonly height: number;
       readonly src: string;
       readonly srcSet: string;
       readonly width: number;
-    } | null;
+    } | null | undefined;
     readonly small: {
       readonly height: number;
       readonly src: string;
       readonly srcSet: string;
       readonly width: number;
-    } | null;
-  } | null;
-  readonly subtitle: string | null;
-  readonly title: string | null;
+    } | null | undefined;
+  } | null | undefined;
+  readonly subtitle: string | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "FeatureFeaturedLink_featuredLink";
 };
 export type FeatureFeaturedLink_featuredLink$key = {

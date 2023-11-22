@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9011402895c8408e4380f3b711613e7d>>
+ * @generated SignedSource<<4a6bb08d11d1c9a0f585a312718fafbd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,48 +16,48 @@ export type ViewingRoomStatementRoute_Test_Query$variables = {
 export type ViewingRoomStatementRoute_Test_Query$data = {
   readonly viewingRoom: {
     readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomStatementRoute_viewingRoom">;
-  } | null;
+  } | null | undefined;
 };
 export type ViewingRoomStatementRoute_Test_Query$rawResponse = {
   readonly viewingRoom: {
     readonly artworksConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly artistNames: string | null;
-          readonly date: string | null;
+          readonly artistNames: string | null | undefined;
+          readonly date: string | null | undefined;
           readonly id: string;
           readonly image: {
             readonly resized: {
-              readonly height: number | null;
+              readonly height: number | null | undefined;
               readonly src: string;
               readonly srcSet: string;
-              readonly width: number | null;
-            } | null;
-          } | null;
+              readonly width: number | null | undefined;
+            } | null | undefined;
+          } | null | undefined;
           readonly internalID: string;
-          readonly saleMessage: string | null;
-          readonly title: string | null;
-        } | null;
-      } | null> | null;
-      readonly totalCount: number | null;
-    } | null;
-    readonly body: string | null;
-    readonly introStatement: string | null;
-    readonly pullQuote: string | null;
+          readonly saleMessage: string | null | undefined;
+          readonly title: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
+    readonly body: string | null | undefined;
+    readonly introStatement: string | null | undefined;
+    readonly pullQuote: string | null | undefined;
     readonly subsections: ReadonlyArray<{
-      readonly body: string | null;
-      readonly caption: string | null;
+      readonly body: string | null | undefined;
+      readonly caption: string | null | undefined;
       readonly image: {
-        readonly height: number | null;
+        readonly height: number | null | undefined;
         readonly imageURLs: {
-          readonly normalized: string | null;
-        } | null;
-        readonly width: number | null;
-      } | null;
+          readonly normalized: string | null | undefined;
+        } | null | undefined;
+        readonly width: number | null | undefined;
+      } | null | undefined;
       readonly internalID: string;
-      readonly title: string | null;
+      readonly title: string | null | undefined;
     }>;
-  } | null;
+  } | null | undefined;
 };
 export type ViewingRoomStatementRoute_Test_Query = {
   rawResponse: ViewingRoomStatementRoute_Test_Query$rawResponse;

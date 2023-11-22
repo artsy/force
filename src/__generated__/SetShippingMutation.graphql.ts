@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<55145d02323407f54069220c14f2418c>>
+ * @generated SignedSource<<5e19618c201ee84bd5929101aa8c39dc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,23 +14,23 @@ export type CommerceOrderFulfillmentTypeEnum = "PICKUP" | "SHIP" | "SHIP_ARTA" |
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceShippingAddressVerifiedByEnum = "ARTSY" | "USER" | "%future added value";
 export type CommerceSetShippingInput = {
-  addressVerifiedBy?: CommerceShippingAddressVerifiedByEnum | null;
-  clientMutationId?: string | null;
+  addressVerifiedBy?: CommerceShippingAddressVerifiedByEnum | null | undefined;
+  clientMutationId?: string | null | undefined;
   fulfillmentType: CommerceOrderFulfillmentTypeEnum;
   id: string;
-  phoneNumber?: string | null;
-  phoneNumberCountryCode?: string | null;
-  shipping?: CommerceShippingAttributes | null;
+  phoneNumber?: string | null | undefined;
+  phoneNumberCountryCode?: string | null | undefined;
+  shipping?: CommerceShippingAttributes | null | undefined;
 };
 export type CommerceShippingAttributes = {
-  addressLine1?: string | null;
-  addressLine2?: string | null;
-  city?: string | null;
-  country?: string | null;
-  name?: string | null;
-  phoneNumber?: string | null;
-  postalCode?: string | null;
-  region?: string | null;
+  addressLine1?: string | null | undefined;
+  addressLine2?: string | null | undefined;
+  city?: string | null | undefined;
+  country?: string | null | undefined;
+  name?: string | null | undefined;
+  phoneNumber?: string | null | undefined;
+  postalCode?: string | null | undefined;
+  region?: string | null | undefined;
 };
 export type SetShippingMutation$variables = {
   input: CommerceSetShippingInput;
@@ -41,7 +41,7 @@ export type SetShippingMutation$data = {
       readonly __typename: "CommerceOrderWithMutationSuccess";
       readonly error?: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
       readonly order?: {
@@ -52,40 +52,40 @@ export type SetShippingMutation$data = {
               readonly shippingQuoteOptions: {
                 readonly edges: ReadonlyArray<{
                   readonly " $fragmentSpreads": FragmentRefs<"ShippingQuotes_shippingQuotes">;
-                } | null> | null;
-              } | null;
-            } | null;
-          } | null> | null;
-        } | null;
+                } | null | undefined> | null | undefined;
+              } | null | undefined;
+            } | null | undefined;
+          } | null | undefined> | null | undefined;
+        } | null | undefined;
         readonly requestedFulfillment: {
           readonly __typename: "CommerceShip";
-          readonly addressLine1: string | null;
-          readonly addressLine2: string | null;
-          readonly city: string | null;
-          readonly country: string | null;
-          readonly name: string | null;
-          readonly phoneNumber: string | null;
-          readonly postalCode: string | null;
-          readonly region: string | null;
+          readonly addressLine1: string | null | undefined;
+          readonly addressLine2: string | null | undefined;
+          readonly city: string | null | undefined;
+          readonly country: string | null | undefined;
+          readonly name: string | null | undefined;
+          readonly phoneNumber: string | null | undefined;
+          readonly postalCode: string | null | undefined;
+          readonly region: string | null | undefined;
         } | {
           readonly __typename: "CommerceShipArta";
-          readonly addressLine1: string | null;
-          readonly addressLine2: string | null;
-          readonly city: string | null;
-          readonly country: string | null;
-          readonly name: string | null;
-          readonly phoneNumber: string | null;
-          readonly postalCode: string | null;
-          readonly region: string | null;
+          readonly addressLine1: string | null | undefined;
+          readonly addressLine2: string | null | undefined;
+          readonly city: string | null | undefined;
+          readonly country: string | null | undefined;
+          readonly name: string | null | undefined;
+          readonly phoneNumber: string | null | undefined;
+          readonly postalCode: string | null | undefined;
+          readonly region: string | null | undefined;
         } | {
           // This will never be '%other', but we need some
           // value in case none of the concrete values match.
           readonly __typename: "%other";
-        } | null;
+        } | null | undefined;
         readonly state: CommerceOrderStateEnum;
       };
     };
-  } | null;
+  } | null | undefined;
 };
 export type SetShippingMutation = {
   response: SetShippingMutation$data;

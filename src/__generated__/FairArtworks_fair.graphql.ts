@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<49b69c7740945e2e6728e7130f45a6d2>>
+ * @generated SignedSource<<e5e09b67b5110538b5ad87b639f87adc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,12 +14,12 @@ import { FragmentRefs } from "relay-runtime";
 export type FairArtworks_fair$data = {
   readonly filtered_artworks: {
     readonly counts: {
-      readonly followedArtists: any | null;
-      readonly total: any | null;
-    } | null;
+      readonly followedArtists: any | null | undefined;
+      readonly total: any | null | undefined;
+    } | null | undefined;
     readonly id: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
-  } | null;
+  } | null | undefined;
   readonly internalID: string;
   readonly sidebarAggregations: {
     readonly aggregations: ReadonlyArray<{
@@ -27,10 +27,10 @@ export type FairArtworks_fair$data = {
         readonly count: number;
         readonly name: string;
         readonly value: string;
-      } | null> | null;
-      readonly slice: ArtworkAggregation | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined> | null | undefined;
+      readonly slice: ArtworkAggregation | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "FairArtworks_fair";
 };

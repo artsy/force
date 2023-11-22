@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d42cdc99b20ad73fbd5f8fdecae4c6cc>>
+ * @generated SignedSource<<681e6090dfb4d3a007578d03bfbcaeee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,16 +17,16 @@ export type ShippingSummaryItem_order$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
-          readonly shippingOrigin: string | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly paymentMethod: CommercePaymentMethodEnum | null;
+          readonly shippingOrigin: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly paymentMethod: CommercePaymentMethodEnum | null | undefined;
   readonly requestedFulfillment: {
     readonly __typename: string;
     readonly " $fragmentSpreads": FragmentRefs<"ShippingAddress_ship">;
-  } | null;
+  } | null | undefined;
   readonly state: CommerceOrderStateEnum;
   readonly " $fragmentType": "ShippingSummaryItem_order";
 };

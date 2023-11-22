@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e0bd1bb4d1c5e774561d97393c85d6e0>>
+ * @generated SignedSource<<ef0f4dc65afb339a7c1178c7af2a3b93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,20 +12,20 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type UpdateUserAddressInput = {
   attributes: UserAddressAttributes;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   userAddressID: string;
 };
 export type UserAddressAttributes = {
   addressLine1: string;
-  addressLine2?: string | null;
-  addressLine3?: string | null;
+  addressLine2?: string | null | undefined;
+  addressLine3?: string | null | undefined;
   city: string;
   country: string;
   name: string;
-  phoneNumber?: string | null;
-  phoneNumberCountryCode?: string | null;
-  postalCode?: string | null;
-  region?: string | null;
+  phoneNumber?: string | null | undefined;
+  phoneNumberCountryCode?: string | null | undefined;
+  postalCode?: string | null | undefined;
+  region?: string | null | undefined;
 };
 export type useEditAddressMutation$variables = {
   input: UpdateUserAddressInput;
@@ -34,7 +34,7 @@ export type useEditAddressMutation$data = {
   readonly updateUserAddress: {
     readonly me: {
       readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingAddresses_me">;
-    } | null;
+    } | null | undefined;
     readonly userAddressOrErrors: {
       readonly errors?: ReadonlyArray<{
         readonly message: string;
@@ -42,7 +42,7 @@ export type useEditAddressMutation$data = {
       readonly internalID?: string;
       readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingAddress_address">;
     };
-  } | null;
+  } | null | undefined;
 };
 export type useEditAddressMutation = {
   response: useEditAddressMutation$data;

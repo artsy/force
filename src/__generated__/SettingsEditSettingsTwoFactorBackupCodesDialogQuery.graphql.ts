@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<06856341aed81434c44678d97235553d>>
+ * @generated SignedSource<<17c901f8ef8525672c9edfcdd224e228>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsEditSettingsTwoFactorBackupCodesDialogQuery$variables = {};
+export type SettingsEditSettingsTwoFactorBackupCodesDialogQuery$variables = Record<PropertyKey, never>;
 export type SettingsEditSettingsTwoFactorBackupCodesDialogQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsTwoFactorBackupCodesDialog_me">;
-  } | null;
+  } | null | undefined;
 };
 export type SettingsEditSettingsTwoFactorBackupCodesDialogQuery = {
   response: SettingsEditSettingsTwoFactorBackupCodesDialogQuery$data;

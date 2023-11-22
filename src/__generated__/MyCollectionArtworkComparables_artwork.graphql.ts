@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<db860b79adaf2d3a1f2557318dd6006f>>
+ * @generated SignedSource<<aab43d52a2cf413a5c1be2bd56a9efeb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkComparables_artwork$data = {
   readonly artist: {
-    readonly name: string | null;
-  } | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
   readonly auctionResult: {
     readonly edges: ReadonlyArray<{
       readonly cursor: string;
@@ -21,9 +21,9 @@ export type MyCollectionArtworkComparables_artwork$data = {
         readonly artistID: string;
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "MyCollectionArtworkComparables_artwork";
 };
 export type MyCollectionArtworkComparables_artwork$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e8fb45d3ccb8c4e097ba0b8f95714f4a>>
+ * @generated SignedSource<<057c8fe7f9fed1385fe589fe9ba99f31>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CuritorialRailsTabBar_Test_Query$variables = {};
+export type CuritorialRailsTabBar_Test_Query$variables = Record<PropertyKey, never>;
 export type CuritorialRailsTabBar_Test_Query$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"CuritorialRailsTabBar_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type CuritorialRailsTabBar_Test_Query = {
   response: CuritorialRailsTabBar_Test_Query$data;
