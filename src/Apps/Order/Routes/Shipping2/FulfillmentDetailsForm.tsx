@@ -7,7 +7,6 @@ import {
   GridColumns,
   Column,
   Input,
-  AutocompleteInput,
   Checkbox,
   Text,
 } from "@artsy/palette"
@@ -25,10 +24,6 @@ import {
   FulfillmentType,
   ShippingAddressFormValues,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
-import {
-  useAddressAutocomplete,
-  AddressAutocompleteSuggestion,
-} from "Components/Address/useAddressAutocomplete"
 import { CountrySelect } from "Components/CountrySelect"
 import { RouterLink } from "System/Router/RouterLink"
 import { extractNodes } from "Utils/extractNodes"
@@ -40,10 +35,16 @@ import {
   Formik,
 } from "formik"
 import { compact, pick } from "lodash"
-import { useEffect, useCallback } from "react"
+import { useEffect, useCallback, useState } from "react"
 import { ADDRESS_VALIDATION_SHAPE } from "Apps/Order/Utils/shippingUtils"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
+import {
+  AddressAutocompleteInput,
+  useAddressAutocompleteTracking,
+} from "Components/Address/AddressAutocompleteInput"
+import { ContextModule, OwnerType } from "@artsy/cohesion"
+import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 
 export interface FulfillmentDetailsFormProps {
   // TODO: ideally we don't need to thread shipping2_me through here but that requires
@@ -84,6 +85,13 @@ const FulfillmentDetailsFormLayout = (
     | "availableFulfillmentTypes"
   >
 ) => {
+  const { contextPageOwnerId } = useAnalyticsContext()
+  const autocompleteTracking = useAddressAutocompleteTracking({
+    contextModule: ContextModule.ordersShipping,
+    contextOwnerType: OwnerType.ordersShipping,
+    contextPageOwnerId: contextPageOwnerId || "",
+  })
+
   const shippingContext = useShippingContext()
   const active = shippingContext.step === "fulfillment_details"
 
@@ -92,6 +100,8 @@ const FulfillmentDetailsFormLayout = (
     shippingContext.parsedOrderData.shippingQuotes &&
     shippingContext.parsedOrderData.shippingQuotes.length === 0
   )
+
+  const [hasAutocompletedAddress, setHasAutocompletedAddress] = useState(false)
 
   const savedAddresses = compact(
     extractNodes(props.me?.addressConnection) ?? []
@@ -121,6 +131,17 @@ const FulfillmentDetailsFormLayout = (
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [active, handleSubmit, isValid, values])
+
+  const trackAutoCompleteEdits = useCallback(
+    (fieldName: string, handleChange) => (...args) => {
+      if (hasAutocompletedAddress) {
+        autocompleteTracking.editedAutocompletedAddress(fieldName)
+        setHasAutocompletedAddress(false)
+      }
+      handleChange(...args)
+    },
+    [autocompleteTracking, hasAutocompletedAddress]
+  )
 
   const handleCloseVerification = async () => {
     await setFieldValue("attributes.addressVerifiedBy", AddressVerifiedBy.USER)
@@ -187,13 +208,6 @@ const FulfillmentDetailsFormLayout = (
     },
     [setValues]
   )
-
-  const {
-    autocompleteOptions,
-    fetchForAutocomplete,
-    fetchSecondarySuggestions,
-    ...autocomplete
-  } = useAddressAutocomplete(values.attributes as ShipValues["attributes"])
 
   return (
     <Form data-testid="FulfillmentDetails_form">
@@ -305,9 +319,9 @@ const FulfillmentDetailsFormLayout = (
                   aria-labelledby="country-select"
                   tabIndex={tabbableFormValue("new_address")}
                   selected={values.attributes.country}
-                  onSelect={selected =>
+                  onSelect={trackAutoCompleteEdits("country", selected => {
                     setFieldValue(`attributes.country`, selected)
-                  }
+                  })}
                   disabled={
                     !!shippingContext.parsedOrderData.lockShippingCountryTo &&
                     shippingContext.parsedOrderData.lockShippingCountryTo !==
@@ -332,68 +346,60 @@ const FulfillmentDetailsFormLayout = (
                 )}
               </Column>
               <Column span={12}>
-                {!autocomplete.loaded || autocomplete.enabled ? (
-                  <AutocompleteInput<AddressAutocompleteSuggestion>
-                    tabIndex={tabbableFormValue("new_address")}
-                    disabled={!autocomplete.loaded}
-                    name="attributes.addressLine1"
-                    placeholder="Street address"
-                    title="Address line 1"
-                    value={values.attributes.addressLine1}
-                    onChange={e => {
-                      autocomplete.enabled &&
-                        fetchForAutocomplete({ search: e.target.value })
-                      handleChange(e)
-                    }}
-                    onBlur={handleBlur}
-                    options={autocompleteOptions}
-                    onSelect={option => {
-                      Object.entries(option.address).forEach(([key, value]) => {
-                        setFieldValue(`attributes.${key}`, value)
-                      })
-                      // TODO: Update w latest autocomplete code
-                      // setSelectedAddressOption({
-                      //   option: option.value,
-                      //   edited: false,
-                      // })
-                      // const event: SelectedItemFromAddressAutoCompletion = {
-                      //   action:
-                      //     ActionType.selectedItemFromAddressAutoCompletion,
-                      //   context_module: ContextModule.ordersShipping,
-                      //   context_owner_type: OwnerType.ordersShipping,
-                      //   context_owner_id: contextPageOwnerId,
-                      //   input: values.attributes.addressLine1,
-                      //   item: option.value,
-                      // }
+                <AddressAutocompleteInput
+                  address={{
+                    country: (values.attributes as ShipValues["attributes"])
+                      .country,
+                  }}
+                  disableAutocomplete={values.attributes.region === "AK"}
+                  tabIndex={tabbableFormValue("new_address")}
+                  name="attributes.addressLine1"
+                  placeholder="Street address"
+                  title="Address line 1"
+                  value={values.attributes.addressLine1}
+                  onChange={trackAutoCompleteEdits(
+                    "addressLine1",
+                    handleChange
+                  )}
+                  onBlur={handleBlur}
+                  onSelect={option => {
+                    const selectedAddress = option.address
+                    setValues({
+                      ...values,
+                      attributes: {
+                        ...values.attributes,
+                        addressLine1: selectedAddress.addressLine1,
+                        addressLine2: selectedAddress.addressLine2,
+                        city: selectedAddress.city,
+                        region: selectedAddress.region,
+                        postalCode: selectedAddress.postalCode,
+                        country: selectedAddress.country,
+                      },
+                    })
+                    setHasAutocompletedAddress(true)
 
-                      // trackEvent(event)
-                    }}
-                    error={
-                      (touched as FormikTouched<ShipValues>).attributes
-                        ?.addressLine1 &&
-                      (errors as FormikErrors<ShipValues>).attributes
-                        ?.addressLine1
-                    }
-                    data-testid="AddressForm_addressLine1"
-                  />
-                ) : (
-                  <Input
-                    tabIndex={tabbableFormValue("new_address")}
-                    name="attributes.addressLine1"
-                    placeholder="Street address"
-                    title="Address line 1"
-                    value={values.attributes.addressLine1}
-                    onChange={handleChange}
-                    onBlur={handleBlur}
-                    error={
-                      (touched as FormikTouched<ShipValues>).attributes
-                        ?.addressLine1 &&
-                      (errors as FormikErrors<ShipValues>).attributes
-                        ?.addressLine1
-                    }
-                    data-testid="AddressForm_addressLine1"
-                  />
-                )}
+                    autocompleteTracking.selectedAutocompletedAddress(
+                      option,
+                      values.attributes.addressLine1
+                    )
+                  }}
+                  onReceiveAutocompleteResult={(input, count) => {
+                    autocompleteTracking.receivedAutocompleteResult(
+                      input,
+                      count
+                    )
+                  }}
+                  error={
+                    (touched as FormikTouched<ShipValues>).attributes
+                      ?.addressLine1 &&
+                    (errors as FormikErrors<ShipValues>).attributes
+                      ?.addressLine1
+                  }
+                  data-testid="AddressForm_addressLine1"
+                  onClear={function (): void {
+                    throw new Error("Function not implemented.")
+                  }}
+                />
               </Column>
               <Column span={12}>
                 <Input
@@ -402,7 +408,10 @@ const FulfillmentDetailsFormLayout = (
                   placeholder="Apt, floor, suite, etc."
                   title="Address line 2 (optional)"
                   value={values.attributes.addressLine2}
-                  onChange={handleChange}
+                  onChange={trackAutoCompleteEdits(
+                    "addressLine2",
+                    handleChange
+                  )}
                   onBlur={handleBlur}
                   error={
                     (touched as FormikTouched<ShipValues>).attributes
@@ -420,7 +429,7 @@ const FulfillmentDetailsFormLayout = (
                   placeholder="City"
                   title="City"
                   value={values.attributes.city}
-                  onChange={handleChange}
+                  onChange={trackAutoCompleteEdits("city", handleChange)}
                   onBlur={handleBlur}
                   error={
                     (touched as FormikTouched<ShipValues>).attributes?.city &&
@@ -445,7 +454,7 @@ const FulfillmentDetailsFormLayout = (
                   }
                   autoCorrect="off"
                   value={values.attributes.region}
-                  onChange={handleChange}
+                  onChange={trackAutoCompleteEdits("region", handleChange)}
                   onBlur={handleBlur}
                   error={
                     (touched as FormikTouched<ShipValues>).attributes?.region &&
@@ -471,7 +480,7 @@ const FulfillmentDetailsFormLayout = (
                   autoCapitalize="characters"
                   autoCorrect="off"
                   value={values.attributes.postalCode}
-                  onChange={handleChange}
+                  onChange={trackAutoCompleteEdits("postalCode", handleChange)}
                   onBlur={handleBlur}
                   error={
                     (touched as FormikTouched<ShipValues>).attributes

@@ -1,4 +1,10 @@
-import { screen, render, waitFor, fireEvent } from "@testing-library/react"
+import {
+  screen,
+  render,
+  waitFor,
+  fireEvent,
+  within,
+} from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import { ShipValues } from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
 import {
@@ -7,6 +13,25 @@ import {
 } from "Apps/Order/Routes/Shipping2/FulfillmentDetailsForm"
 import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext"
 import { FulfillmentType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { useTracking } from "react-tracking"
+
+jest.mock("System/useFeatureFlag", () => ({
+  useFeatureFlag: jest.fn(),
+}))
+
+jest.mock("Utils/getENV", () => ({
+  getENV: jest.fn().mockImplementation(() => {
+    return {
+      key: "smarty-api-key",
+    }
+  }),
+}))
+
+const mockTrackEvent = jest.fn()
+
+jest.mock("react-tracking")
 
 const mockOnSubmit = jest.fn()
 const mockOnAddressVerificationComplete = jest.fn()
@@ -29,6 +54,9 @@ const renderTree = testProps => {
 
 beforeEach(() => {
   mockOnSubmit.mockReset()
+  ;(useTracking as jest.Mock).mockImplementation(() => ({
+    trackEvent: mockTrackEvent,
+  }))
   mockOnAddressVerificationComplete.mockReset()
   testProps = {
     availableFulfillmentTypes: [FulfillmentType.SHIP],
@@ -220,6 +248,84 @@ describe("FulfillmentDetailsForm", () => {
             expect.anything()
           )
         })
+      })
+    })
+  })
+  describe("Address autocomplete", () => {
+    let mockFetch: jest.Mock
+    beforeEach(() => {
+      mockFetch = jest.fn().mockResolvedValue({
+        json: jest.fn().mockResolvedValue({
+          suggestions: [
+            {
+              city: "New York",
+              entries: 2,
+              secondary: "Fl 25",
+              state: "NY",
+              street_line: "401 Broadway",
+              zipcode: "10013",
+            },
+          ],
+        }),
+      })
+
+      global.fetch = mockFetch
+      ;(useFeatureFlag as jest.Mock).mockImplementation(
+        featureName => featureName === "address_autocomplete_us"
+      )
+    })
+    it("tracks when a user selects an address and the first time they edit it", async () => {
+      renderTree(testProps)
+      await waitFor(async () => {
+        const line1Input = screen.getByPlaceholderText("Street address")
+        expect(line1Input).toBeEnabled()
+      })
+      await userEvent.paste(
+        screen.getByPlaceholderText("Street address"),
+        "401 Broadway"
+      )
+
+      const dropdown = await screen.findByRole("listbox", { hidden: true })
+      const option = within(dropdown).getByText(
+        "401 Broadway, New York NY 10013"
+      )
+
+      await userEvent.click(option)
+      await flushPromiseQueue()
+      expect(mockTrackEvent).toHaveBeenCalledTimes(2)
+      expect(mockTrackEvent).toHaveBeenNthCalledWith(1, {
+        action: "addressAutoCompletionResult",
+        context_module: "ordersShipping",
+        context_owner_id: "",
+        context_owner_type: "orders-shipping",
+        input: "401 Broadway",
+        suggested_addresses_results: 1,
+      })
+      expect(mockTrackEvent).toHaveBeenNthCalledWith(2, {
+        action: "selectedItemFromAddressAutoCompletion",
+        context_module: "ordersShipping",
+        context_owner_id: "",
+        context_owner_type: "orders-shipping",
+        input: "401 Broadway",
+        item: "401 Broadway, New York NY 10013",
+      })
+      mockTrackEvent.mockClear()
+
+      // Make 2 edits to the address; track the 1st
+      const line2Input = screen.getByPlaceholderText("Apt, floor, suite, etc.")
+      await userEvent.type(line2Input, "Floor 25")
+
+      const postalCode = screen.getByPlaceholderText("ZIP code")
+      await userEvent.type(postalCode, "-4456")
+
+      await flushPromiseQueue()
+      expect(mockTrackEvent).toHaveBeenCalledTimes(1)
+      expect(mockTrackEvent).toHaveBeenCalledWith({
+        action: "editedAutocompletedAddress",
+        context_module: "ordersShipping",
+        context_owner_id: "",
+        context_owner_type: "orders-shipping",
+        field: "addressLine2",
       })
     })
   })
