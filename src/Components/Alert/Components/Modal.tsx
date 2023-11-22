@@ -42,6 +42,7 @@ export const Modal: React.FC<AlertModalProps> = ({
         width="100%"
         height="100%"
         position="relative"
+        overflowY="auto"
         bg="white100"
         {...boxProps}
       >
