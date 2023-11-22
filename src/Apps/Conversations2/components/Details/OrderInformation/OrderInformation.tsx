@@ -1,4 +1,4 @@
-import { Spacer, Text } from "@artsy/palette"
+import { Separator, Spacer, Text } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
 import { OrderInformation_order$key } from "__generated__/OrderInformation_order.graphql"
 import { OrderState } from "./OrderState"
@@ -49,6 +49,8 @@ export const OrderInformation: React.FC<OrderInformationProps> = ({
       <Spacer y={2} />
 
       {showReviewOrderButton && <ReviewOrderButton order={data} />}
+
+      <Separator borderWidth={1} my={4} />
     </>
   )
 }

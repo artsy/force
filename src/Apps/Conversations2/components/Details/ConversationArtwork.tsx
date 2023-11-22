@@ -1,4 +1,4 @@
-import { Button, Text, Image, Flex, Spacer } from "@artsy/palette"
+import { Button, Text, Image, Flex, Spacer, Separator } from "@artsy/palette"
 import { useTracking } from "react-tracking"
 import { graphql, useFragment } from "react-relay"
 import { ConversationArtwork_conversation$key } from "__generated__/ConversationArtwork_conversation.graphql"
@@ -93,6 +93,8 @@ export const ConversationArtwork: React.FC<ConversationArtworkProps> = ({
           View Artwork
         </Button>
       </RouterLink>
+
+      <Separator borderWidth={1} my={4} />
     </>
   )
 }

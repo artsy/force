@@ -1,4 +1,4 @@
-import { Clickable, Flex, Separator } from "@artsy/palette"
+import { Clickable, Flex, Join, Separator } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
 import { OrderInformation } from "./OrderInformation/OrderInformation"
 import { ConversationArtwork } from "./ConversationArtwork"
@@ -7,6 +7,8 @@ import styled from "styled-components"
 import { extractNodes } from "Utils/extractNodes"
 import { Media } from "Utils/Responsive"
 import { ConversationDetails_conversation$key } from "__generated__/ConversationDetails_conversation.graphql"
+import { ConversationSupport } from "Apps/Conversations2/components/Details/ConversationSupport"
+import { ConversationAttachments } from "Apps/Conversations2/components/Details/ConversationAttachments"
 
 interface ConversationDetailsProps {
   conversation: ConversationDetails_conversation$key
@@ -39,6 +41,7 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
           }
         }
         ...ConversationArtwork_conversation
+        ...ConversationAttachments_conversation
       }
     `,
     conversation
@@ -58,14 +61,13 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
         </CloseButton>
       </Media>
 
-      {order && (
-        <>
-          <OrderInformation order={order} />
-          <Separator borderWidth={2} my={4} />
-        </>
-      )}
+      {order && <OrderInformation order={order} />}
 
       <ConversationArtwork conversation={data} />
+
+      <ConversationAttachments conversation={data} />
+
+      <ConversationSupport />
     </Flex>
   )
 }

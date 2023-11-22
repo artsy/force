@@ -1,5 +1,5 @@
 import { Box, Flex, Spinner } from "@artsy/palette"
-import React, { FC, Ref, useCallback, useEffect, useRef, useState } from "react"
+import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import {
   createPaginationContainer,
   graphql,
@@ -19,7 +19,6 @@ import { ConversationOrderUpdate } from "Apps/Conversations2/components/Message/
 import { ConversationTimeSince } from "Apps/Conversations2/components/Message/ConversationTimeSince"
 import { ConversationMessageArtwork } from "Apps/Conversations2/components/Message/ConversationMessageArtwork"
 import { LatestMessages } from "Apps/Conversations2/components/LatestMessages"
-import styled from "styled-components"
 
 const PAGE_SIZE = 15
 
@@ -319,9 +318,7 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
 
 interface UseAutoScrollToBottomProps {
   messages: any[]
-  autoScrollToBottomRef: {
-    current: HTMLDivElement
-  }
+  autoScrollToBottomRef: any
 }
 
 const useAutoScrollToBottom = ({
