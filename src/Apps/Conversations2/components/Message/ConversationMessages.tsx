@@ -1,4 +1,4 @@
-import { Box, Flex, Spinner } from "@artsy/palette"
+import { Box, BoxProps, Flex, Spinner } from "@artsy/palette"
 import React, { FC, useCallback, useEffect, useRef, useState } from "react"
 import {
   createPaginationContainer,
@@ -115,14 +115,20 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
             onEnterView={() => {
               startFetchAllTransition(true)
 
-              relay.refetchConnection(totalCount, () => {
-                startFetchAllTransition(false)
-              })
+              relay.refetchConnection(
+                totalCount,
+                () => {
+                  startFetchAllTransition(false)
+                },
+                {
+                  first: totalCount,
+                }
+              )
             }}
           />
         )}
 
-        {isFetchingAllMessages && <TopLoadingSpinner />}
+        {isFetchingAllMessages && <TopLoadingSpinner my={4} />}
 
         {groupedMessagesAndEvents.map((messageGroup, groupIndex) => {
           return (
@@ -190,7 +196,7 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
           testId="LatestMessagesSentinel"
         />
 
-        {isFetchingLoadMoreMessages && <BottomLoadingSpinner />}
+        {isFetchingLoadMoreMessages && <BottomLoadingSpinner mt={4} mb={2} />}
 
         <AutoScrollToBottom ref={autoScrollToBottomRef as any} height={20} />
       </Flex>
@@ -334,7 +340,7 @@ const useAutoScrollToBottom = ({
         block: "end",
         inline: "end",
       })
-    }, 10)
+    }, 0)
   }, [autoScrollToBottomRef])
 
   useEffect(() => {
@@ -346,10 +352,10 @@ const useAutoScrollToBottom = ({
   return { triggerAutoScroll }
 }
 
-const LoadingSpinner = () => (
-  <Flex>
+const LoadingSpinner: React.FC<BoxProps> = boxProps => (
+  <Box position="relative" {...boxProps}>
     <Spinner />
-  </Flex>
+  </Box>
 )
 
 const LoadAllMessagesSentinal = Sentinel

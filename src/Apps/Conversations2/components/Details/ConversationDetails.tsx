@@ -1,4 +1,4 @@
-import { Clickable, Flex, Join, Separator } from "@artsy/palette"
+import { Clickable, Flex } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
 import { OrderInformation } from "./OrderInformation/OrderInformation"
 import { ConversationArtwork } from "./ConversationArtwork"

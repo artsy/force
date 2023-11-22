@@ -80,7 +80,3 @@ export const Conversation2AppFragmentContainer = createFragmentContainer(
     `,
   }
 )
-
-// const ClientOnlySuspense = (typeof window !== "undefined"
-//   ? Suspense
-//   : Fragment) as typeof Suspense
