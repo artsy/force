@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8a87426c2b6a2d1843748a2b9877e5fd>>
+ * @generated SignedSource<<76be014cc22b81ace0a542021823fb61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,65 +14,65 @@ export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added v
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ConversationMessages_conversation$data = {
-  readonly fromLastViewedMessageID: string | null;
+  readonly fromLastViewedMessageID: string | null | undefined;
   readonly inquiryRequest: {
-    readonly formattedFirstMessage: string | null;
-  } | null;
+    readonly formattedFirstMessage: string | null | undefined;
+  } | null | undefined;
   readonly items: ReadonlyArray<{
     readonly item: {
       readonly __typename: string;
       readonly id?: string;
       readonly internalID?: string;
-      readonly isOfferable?: boolean | null;
-      readonly isOfferableFromInquiry?: boolean | null;
+      readonly isOfferable?: boolean | null | undefined;
+      readonly isOfferableFromInquiry?: boolean | null | undefined;
       readonly " $fragmentSpreads": FragmentRefs<"ConversationMessageArtwork_item">;
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly messagesConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly createdAt: string | null;
+        readonly createdAt: string | null | undefined;
         readonly id: string;
         readonly internalID: string;
-        readonly isFromUser: boolean | null;
+        readonly isFromUser: boolean | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"ConversationMessage_message">;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageInfo: {
       readonly hasNextPage: boolean;
       readonly hasPreviousPage: boolean;
-      readonly startCursor: string | null;
+      readonly startCursor: string | null | undefined;
     };
-    readonly totalCount: number | null;
+    readonly totalCount: number | null | undefined;
   };
   readonly orderEvents: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
+        readonly buyerAction?: CommerceBuyerOfferActionEnum | null | undefined;
         readonly internalID: string;
         readonly orderHistory: ReadonlyArray<{
           readonly __typename: string;
           readonly createdAt?: string;
           readonly offer?: {
-            readonly amount: string | null;
+            readonly amount: string | null | undefined;
             readonly definesTotal: boolean;
-            readonly fromParticipant: CommerceOrderParticipantEnum | null;
+            readonly fromParticipant: CommerceOrderParticipantEnum | null | undefined;
             readonly offerAmountChanged: boolean;
             readonly respondsTo: {
-              readonly fromParticipant: CommerceOrderParticipantEnum | null;
-            } | null;
+              readonly fromParticipant: CommerceOrderParticipantEnum | null | undefined;
+            } | null | undefined;
           };
-          readonly orderUpdateState?: string | null;
+          readonly orderUpdateState?: string | null | undefined;
           readonly state?: CommerceOrderStateEnum;
-          readonly stateReason?: string | null;
+          readonly stateReason?: string | null | undefined;
           readonly " $fragmentSpreads": FragmentRefs<"ConversationOrderUpdate_event">;
         }>;
         readonly updatedAt: string;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
   };
   readonly " $fragmentType": "ConversationMessages_conversation";
-} | null;
+} | null | undefined;
 export type ConversationMessages_conversation$key = {
   readonly " $data"?: ConversationMessages_conversation$data;
   readonly " $fragmentSpreads": FragmentRefs<"ConversationMessages_conversation">;

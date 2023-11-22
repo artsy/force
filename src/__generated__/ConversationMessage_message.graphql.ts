@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ae1a996d58b6b3864ac96d37cd6d724b>>
+ * @generated SignedSource<<6f3b0fe56a979798dba5c6b3f9a40fb2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,25 +17,25 @@ export type ConversationMessage_message$data = {
     readonly downloadURL: string;
     readonly fileName: string;
     readonly internalID: string;
-  } | null> | null;
-  readonly body: string | null;
+  } | null | undefined> | null | undefined;
+  readonly body: string | null | undefined;
   readonly cc: ReadonlyArray<string>;
-  readonly createdAt: string | null;
+  readonly createdAt: string | null | undefined;
   readonly createdAtTime: string;
   readonly deliveries: ReadonlyArray<{
     readonly fullTransformedEmail: string;
-    readonly openedAt: string | null;
-  } | null>;
+    readonly openedAt: string | null | undefined;
+  } | null | undefined>;
   readonly from: {
-    readonly name: string | null;
+    readonly name: string | null | undefined;
   };
   readonly id: string;
   readonly internalID: string;
-  readonly isFirstMessage: boolean | null;
-  readonly isFromUser: boolean | null;
+  readonly isFirstMessage: boolean | null | undefined;
+  readonly isFromUser: boolean | null | undefined;
   readonly to: ReadonlyArray<string>;
   readonly " $fragmentType": "ConversationMessage_message";
-} | null;
+} | null | undefined;
 export type ConversationMessage_message$key = {
   readonly " $data"?: ConversationMessage_message$data;
   readonly " $fragmentSpreads": FragmentRefs<"ConversationMessage_message">;

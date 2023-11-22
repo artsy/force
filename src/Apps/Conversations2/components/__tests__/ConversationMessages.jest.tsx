@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { ConversationMessagesPaginationContainer } from "Apps/Conversations2/components/Message/ConversationMessages"
 import { ConversationMessagesTestQuery } from "__generated__/ConversationMessagesTestQuery.graphql"
@@ -14,7 +14,7 @@ jest.mock("utils/hooks/useLoadMore", () => ({
   useLoadMore: (arg: any) => useLoadMoreMock(arg),
 }))
 
-jest.mock("next/router", () => require("next-router-mock"))
+jest.unmock("react-relay")
 
 describe("ConversationMessages", () => {
   const scrollIntoViewMock = jest.fn()

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<778938ac0d2d2983b75419ea350e2939>>
+ * @generated SignedSource<<9ceed408ff5629709c99a645794722ca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,60 +11,60 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationConfirmModal_artwork$data = {
-  readonly artistNames: string | null;
+  readonly artistNames: string | null | undefined;
   readonly attributionClass: {
-    readonly name: string | null;
-  } | null;
-  readonly category: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly category: string | null | undefined;
   readonly certificateOfAuthenticity: {
-    readonly details: string | null;
-  } | null;
+    readonly details: string | null | undefined;
+  } | null | undefined;
   readonly conditionDescription: {
-    readonly details: string | null;
-  } | null;
-  readonly date: string | null;
+    readonly details: string | null | undefined;
+  } | null | undefined;
+  readonly date: string | null | undefined;
   readonly dimensions: {
-    readonly cm: string | null;
-    readonly in: string | null;
-  } | null;
+    readonly cm: string | null | undefined;
+    readonly in: string | null | undefined;
+  } | null | undefined;
   readonly editionSets: ReadonlyArray<{
     readonly dimensions: {
-      readonly cm: string | null;
-      readonly in: string | null;
-    } | null;
-    readonly editionOf: string | null;
+      readonly cm: string | null | undefined;
+      readonly in: string | null | undefined;
+    } | null | undefined;
+    readonly editionOf: string | null | undefined;
     readonly internalID: string;
-    readonly isAcquireable: boolean | null;
-    readonly isOfferable: boolean | null;
-    readonly isOfferableFromInquiry: boolean | null;
+    readonly isAcquireable: boolean | null | undefined;
+    readonly isOfferable: boolean | null | undefined;
+    readonly isOfferableFromInquiry: boolean | null | undefined;
     readonly listPrice: {
-      readonly display?: string | null;
-    } | null;
-  } | null> | null;
+      readonly display?: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly framed: {
-    readonly details: string | null;
-  } | null;
+    readonly details: string | null | undefined;
+  } | null | undefined;
   readonly image: {
     readonly resized: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly src: string;
       readonly srcSet: string;
-      readonly width: number | null;
-    } | null;
-  } | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
-  readonly isAcquireable: boolean | null;
-  readonly isEdition: boolean | null;
-  readonly isOfferable: boolean | null;
-  readonly isOfferableFromInquiry: boolean | null;
-  readonly manufacturer: string | null;
-  readonly medium: string | null;
-  readonly publisher: string | null;
-  readonly saleMessage: string | null;
+  readonly isAcquireable: boolean | null | undefined;
+  readonly isEdition: boolean | null | undefined;
+  readonly isOfferable: boolean | null | undefined;
+  readonly isOfferableFromInquiry: boolean | null | undefined;
+  readonly manufacturer: string | null | undefined;
+  readonly medium: string | null | undefined;
+  readonly publisher: string | null | undefined;
+  readonly saleMessage: string | null | undefined;
   readonly signatureInfo: {
-    readonly details: string | null;
-  } | null;
-  readonly title: string | null;
+    readonly details: string | null | undefined;
+  } | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "ConversationConfirmModal_artwork";
 };
 export type ConversationConfirmModal_artwork$key = {

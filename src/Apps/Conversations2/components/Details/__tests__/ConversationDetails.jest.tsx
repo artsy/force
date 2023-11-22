@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { ConversationDetails } from "Apps/Conversations2/components/Details/ConversationDetails"
@@ -7,6 +7,7 @@ import { useTracking } from "react-tracking"
 import { MediaContextProvider } from "Utils/Responsive"
 
 jest.mock("react-tracking")
+jest.unmock("react-relay")
 
 describe("ConversationDetails", () => {
   let breakpoint: "md" | "sm"

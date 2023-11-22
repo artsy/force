@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9e3bfd819aa98f2c80af5756a43e3558>>
+ * @generated SignedSource<<fc82f77dd8d1378818553ae2500272fa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,21 +11,21 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SendConversationMessageMutationInput = {
-  attachments?: ReadonlyArray<ConversationMessageAttachmentInput> | null;
-  bodyHTML?: string | null;
+  attachments?: ReadonlyArray<ConversationMessageAttachmentInput> | null | undefined;
+  bodyHTML?: string | null | undefined;
   bodyText: string;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   from: string;
-  fromId?: string | null;
+  fromId?: string | null | undefined;
   id: string;
-  replyAll?: boolean | null;
+  replyAll?: boolean | null | undefined;
   replyToMessageID: string;
-  to?: ReadonlyArray<string | null> | null;
+  to?: ReadonlyArray<string | null | undefined> | null | undefined;
 };
 export type ConversationMessageAttachmentInput = {
-  id?: string | null;
+  id?: string | null | undefined;
   name: string;
-  size?: string | null;
+  size?: string | null | undefined;
   type: string;
   url: string;
 };
@@ -35,10 +35,10 @@ export type useSendConversationMessageMutation$variables = {
 export type useSendConversationMessageMutation$data = {
   readonly sendConversationMessage: {
     readonly conversation: {
-      readonly lastMessageID: string | null;
+      readonly lastMessageID: string | null | undefined;
       readonly " $fragmentSpreads": FragmentRefs<"ConversationMessages_conversation">;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useSendConversationMessageMutation = {
   response: useSendConversationMessageMutation$data;

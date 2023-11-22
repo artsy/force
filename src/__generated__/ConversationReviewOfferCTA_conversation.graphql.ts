@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ab7a96a7bd657888a3d586a68594a079>>
+ * @generated SignedSource<<c829d65326e6f181c58894576df53b43>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,25 +16,25 @@ export type ConversationReviewOfferCTA_conversation$data = {
   readonly activeOrders: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly buyerAction?: CommerceBuyerOfferActionEnum | null;
+        readonly buyerAction?: CommerceBuyerOfferActionEnum | null | undefined;
         readonly internalID: string;
         readonly lastOffer?: {
           readonly createdAt: string;
-        } | null;
+        } | null | undefined;
         readonly offers?: {
           readonly edges: ReadonlyArray<{
             readonly node: {
               readonly internalID: string;
-            } | null;
-          } | null> | null;
-        } | null;
+            } | null | undefined;
+          } | null | undefined> | null | undefined;
+        } | null | undefined;
         readonly state: CommerceOrderStateEnum;
-        readonly stateExpiresAt: string | null;
-        readonly stateReason: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly internalID: string | null;
+        readonly stateExpiresAt: string | null | undefined;
+        readonly stateReason: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly internalID: string | null | undefined;
   readonly " $fragmentType": "ConversationReviewOfferCTA_conversation";
 };
 export type ConversationReviewOfferCTA_conversation$key = {

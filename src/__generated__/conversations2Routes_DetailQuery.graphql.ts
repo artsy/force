@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b2b4a2f92393bda3b7592fdb1b0ef5d9>>
+ * @generated SignedSource<<236898317b1f3a04b03bd80929257426>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type conversations2Routes_DetailQuery$variables = {
   conversationId: string;
-  first?: number | null;
+  first?: number | null | undefined;
 };
 export type conversations2Routes_DetailQuery$data = {
   readonly conversation: {
@@ -20,8 +20,8 @@ export type conversations2Routes_DetailQuery$data = {
   };
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"Conversation2App_viewer">;
-  } | null;
-} | null;
+  } | null | undefined;
+} | null | undefined;
 export type conversations2Routes_DetailQuery = {
   response: conversations2Routes_DetailQuery$data;
   variables: conversations2Routes_DetailQuery$variables;

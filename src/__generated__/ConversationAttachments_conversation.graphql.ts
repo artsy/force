@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bc1c42998d8032280fbd1c4dbf34eae0>>
+ * @generated SignedSource<<974843e5f82808e7316ea338ce33c196>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,10 +19,10 @@ export type ConversationAttachments_conversation$data = {
           readonly downloadURL: string;
           readonly fileName: string;
           readonly id: string;
-        } | null> | null;
-      } | null;
-    } | null> | null;
-  } | null;
+        } | null | undefined> | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ConversationAttachments_conversation";
 };
 export type ConversationAttachments_conversation$key = {

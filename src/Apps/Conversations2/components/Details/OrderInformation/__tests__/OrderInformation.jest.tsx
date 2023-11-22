@@ -1,8 +1,10 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { OrderInformationTestQuery } from "__generated__/OrderInformationTestQuery.graphql"
 import { OrderInformation } from "Apps/Conversations2/components/Details/OrderInformation/OrderInformation"
+
+jest.unmock("react-relay")
 
 describe("OrderInformation", () => {
   const { renderWithRelay } = setupTestWrapperTL<OrderInformationTestQuery>({

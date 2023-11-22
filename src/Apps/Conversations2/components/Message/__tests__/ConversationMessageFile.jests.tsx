@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import { ConversationMessageFile } from "../ConversationMessageFile"
+import { ConversationMessageFile } from "Apps/Conversations2/components/Message/ConversationMessageFile"
 
 describe("ConversationMessageFile", () => {
   it("renders", () => {

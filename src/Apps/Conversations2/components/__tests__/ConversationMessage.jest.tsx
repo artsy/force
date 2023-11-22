@@ -1,10 +1,10 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { ConversationMessageTestQuery } from "__generated__/ConversationMessageTestQuery.graphql"
 import { ConversationMessage } from "Apps/Conversations2/components/Message/ConversationMessage"
 
-jest.mock("next/router", () => require("next-router-mock"))
+jest.unmock("react-relay")
 
 describe("ConversationMessage", () => {
   const { renderWithRelay } = setupTestWrapperTL<ConversationMessageTestQuery>({

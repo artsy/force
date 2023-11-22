@@ -1,5 +1,5 @@
 import { act, fireEvent, screen } from "@testing-library/react"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { ConversationReplyTestQuery } from "__generated__/ConversationReplyTestQuery.graphql"
 import { ConversationReply } from "Apps/Conversations2/components/ConversationReply"
@@ -7,6 +7,7 @@ import * as formik from "formik"
 import { useTracking } from "react-tracking"
 import { sentConversationMessage } from "@artsy/cohesion"
 
+jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("System/useSystemContext", () => ({
   useSystemContext: () => ({

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6a3cbc10f8b6abc2ebad3913a49def08>>
+ * @generated SignedSource<<9b56a10e3e8c5b47f4286aa7fc73a352>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,12 +20,12 @@ export type ConversationReply_conversation$data = {
   readonly items: ReadonlyArray<{
     readonly item: {
       readonly id?: string;
-    } | null;
-  } | null> | null;
-  readonly lastMessageID: string | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
+  readonly lastMessageID: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"Conversation2CTA_conversation">;
   readonly " $fragmentType": "ConversationReply_conversation";
-} | null;
+} | null | undefined;
 export type ConversationReply_conversation$key = {
   readonly " $data"?: ConversationReply_conversation$data;
   readonly " $fragmentSpreads": FragmentRefs<"ConversationReply_conversation">;

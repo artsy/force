@@ -3,10 +3,9 @@ import {
   createPaginationContainer,
   graphql,
 } from "react-relay"
-import { Box, Flex, Spinner } from "@artsy/palette"
+import { Box, Flex, Spinner, Text } from "@artsy/palette"
 import { useLoadMore } from "Apps/Conversations2/hooks/useLoadMore"
 import { extractNodes } from "Utils/extractNodes"
-import { ConversationsSidebarHeader } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarHeader"
 import { ConversationsSidebarEmpty } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarEmpty"
 import { ConversationsSidebarItem } from "Apps/Conversations2/components/Sidebar/ConversationsSidebarItem"
 import { ConversationsSidebar_viewer$data } from "__generated__/ConversationsSidebar_viewer.graphql"
@@ -24,6 +23,7 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
   viewer,
   relay,
 }) => {
+  console.log(viewer.conversationsConnection?.edges)
   const { match } = useRouter()
 
   const { loadMore } = useLoadMore({
@@ -75,7 +75,19 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
 
   return (
     <Flex flexDirection="column" flex={1}>
-      <ConversationsSidebarHeader />
+      <Box
+        p={2}
+        px={2}
+        position="sticky"
+        top={0}
+        flexDirection="column"
+        backgroundColor="white100"
+        borderBottom="1px solid"
+        borderBottomColor="black15"
+        zIndex={1}
+      >
+        <Text variant="lg">Inbox</Text>
+      </Box>
 
       {conversations.length === 0 && <ConversationsSidebarEmpty />}
 

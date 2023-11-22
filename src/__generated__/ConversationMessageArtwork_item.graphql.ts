@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<92566393256049993cc9909b751b2494>>
+ * @generated SignedSource<<39b814827860a0ab9cf4815e5ce30884>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,32 +12,32 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConversationMessageArtwork_item$data = {
   readonly __typename: "Artwork";
-  readonly artistNames: string | null;
-  readonly date: string | null;
-  readonly href: string | null;
+  readonly artistNames: string | null | undefined;
+  readonly date: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly id: string;
   readonly image: {
     readonly aspectRatio: number;
     readonly resized: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly url: string;
-      readonly width: number | null;
-    } | null;
-  } | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
-  readonly isOfferableFromInquiry: boolean | null;
+  readonly isOfferableFromInquiry: boolean | null | undefined;
   readonly listPrice: {
     readonly __typename: "Money";
-    readonly display: string | null;
+    readonly display: string | null | undefined;
   } | {
     readonly __typename: "PriceRange";
-    readonly display: string | null;
+    readonly display: string | null | undefined;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
-  readonly title: string | null;
+  } | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "ConversationMessageArtwork_item";
 } | {
   // This will never be '%other', but we need some

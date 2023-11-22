@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<852808cffc110f889eac6e77c840763f>>
+ * @generated SignedSource<<42f8ff3fe66133a69f5ae36047f3f520>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,20 +19,20 @@ export type ReviewOrderButton_order$data = {
       readonly __typename: string;
     };
     readonly offerAmountChanged: boolean;
-  } | null;
+  } | null | undefined;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
           readonly id: string;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly mode: CommerceOrderModeEnum;
   readonly state: CommerceOrderStateEnum;
   readonly " $fragmentType": "ReviewOrderButton_order";
-} | null;
+} | null | undefined;
 export type ReviewOrderButton_order$key = {
   readonly " $data"?: ReviewOrderButton_order$data;
   readonly " $fragmentSpreads": FragmentRefs<"ReviewOrderButton_order">;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<153d399c202200a542c3ca0394175f4d>>
+ * @generated SignedSource<<c1097fe53bf018edc216e12ef1c77942>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,22 +15,22 @@ export type ConversationArtwork_conversation$data = {
     readonly item: {
       readonly __typename: "Artwork";
       readonly artist: {
-        readonly name: string | null;
+        readonly name: string | null | undefined;
         readonly slug: string;
-      } | null;
-      readonly date: string | null;
+      } | null | undefined;
+      readonly date: string | null | undefined;
       readonly id: string;
       readonly image: {
-        readonly url: string | null;
-      } | null;
+        readonly url: string | null | undefined;
+      } | null | undefined;
       readonly slug: string;
-      readonly title: string | null;
+      readonly title: string | null | undefined;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "ConversationArtwork_conversation";
 };
 export type ConversationArtwork_conversation$key = {

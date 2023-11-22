@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4cc2aac9253ef626884ef36bc3b27c4c>>
+ * @generated SignedSource<<3483b6ad38919481b6f18e7110cd1f0a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,17 +16,17 @@ export type ConversationsSidebarItem_conversation$data = {
   };
   readonly fromUser: {
     readonly collectorProfile: {
-      readonly confirmedBuyerAt: string | null;
-    } | null;
-  } | null;
-  readonly internalID: string | null;
+      readonly confirmedBuyerAt: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
+  readonly internalID: string | null | undefined;
   readonly items: ReadonlyArray<{
     readonly item: {
       readonly __typename: "Artwork";
       readonly artist: {
         readonly name: string;
       };
-      readonly date: string | null;
+      readonly date: string | null | undefined;
       readonly id: string;
       readonly image: {
         readonly url: string;
@@ -37,15 +37,15 @@ export type ConversationsSidebarItem_conversation$data = {
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     };
-  } | null> | null;
-  readonly lastMessageAt: string | null;
+  } | null | undefined> | null | undefined;
+  readonly lastMessageAt: string | null | undefined;
   readonly orderConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly __typename: string;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly to: {
     readonly name: string;
   };

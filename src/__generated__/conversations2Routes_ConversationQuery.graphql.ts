@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f1a5706afbea55f6f6a74eeac8f02b49>>
+ * @generated SignedSource<<9bd8fb88c05ad40109ff89a042c7a234>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,15 +9,15 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type conversations2Routes_ConversationQuery$variables = {};
+export type conversations2Routes_ConversationQuery$variables = Record<PropertyKey, never>;
 export type conversations2Routes_ConversationQuery$data = {
   readonly conversationsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly internalID: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
+        readonly internalID: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
 };
 export type conversations2Routes_ConversationQuery = {
   response: conversations2Routes_ConversationQuery$data;

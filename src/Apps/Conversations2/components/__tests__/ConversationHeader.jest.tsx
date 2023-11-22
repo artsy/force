@@ -1,4 +1,4 @@
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { ConversationHeader } from "Apps/Conversations2/components/ConversationHeader"
@@ -6,14 +6,7 @@ import { ConversationHeaderTestQuery } from "__generated__/ConversationHeaderTes
 import { MediaContextProvider } from "Utils/Responsive"
 import { useTracking } from "react-tracking"
 
-jest.mock("next/router", () => require("next-router-mock"))
-
-jest.mock("next/config", () => () => ({
-  publicRuntimeConfig: {
-    NEXT_PUBLIC_VOLT_V1_URL: "homepage",
-  },
-}))
-
+jest.unmock("react-relay")
 jest.mock("react-tracking")
 
 describe("ConversationDetails", () => {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<abf3f433e6bcae4ec37ed42fe6e22998>>
+ * @generated SignedSource<<8fe020f18ccaa5ae09cc100bd5c0aa03>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type ConversationDetails_conversation$data = {
       readonly node: {
         readonly __typename: string;
         readonly " $fragmentSpreads": FragmentRefs<"OrderInformation_order">;
-      } | null;
-    } | null>;
-  } | null;
+      } | null | undefined;
+    } | null | undefined>;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ConversationArtwork_conversation" | "ConversationAttachments_conversation">;
   readonly " $fragmentType": "ConversationDetails_conversation";
 };

@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react"
-import { ConversationMessageImage } from "../ConversationMessageImage"
+import { ConversationMessageImage } from "Apps/Conversations2/components/Message/ConversationMessageImage"
 
 describe("ConversationMessageImage", () => {
   it("renders", () => {

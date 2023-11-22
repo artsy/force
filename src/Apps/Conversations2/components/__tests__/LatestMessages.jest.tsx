@@ -1,5 +1,5 @@
 import { fireEvent, screen, render } from "@testing-library/react"
-import { LatestMessages } from "../LatestMessages"
+import { LatestMessages } from "Apps/Conversations2/components/LatestMessages"
 
 describe("LatestMessages", () => {
   it("renders", () => {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0884100ec2b414b684b994340d6553ca>>
+ * @generated SignedSource<<a9953649a3e1c654049480788fe25e95>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,11 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type OrderStateStatusWithCounter_order$data = {
-  readonly formattedStateExpiresAt: string | null;
+  readonly formattedStateExpiresAt: string | null | undefined;
   readonly stateExpiresAt: string;
   readonly stateUpdatedAt: string;
   readonly " $fragmentType": "OrderStateStatusWithCounter_order";
-} | null;
+} | null | undefined;
 export type OrderStateStatusWithCounter_order$key = {
   readonly " $data"?: OrderStateStatusWithCounter_order$data;
   readonly " $fragmentSpreads": FragmentRefs<"OrderStateStatusWithCounter_order">;

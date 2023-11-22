@@ -1,15 +1,30 @@
-import { graphql } from "relay-runtime"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { ConversationsSidebarPaginationContainer } from "Apps/Conversations2/components/Sidebar/ConversationsSidebar"
 import { ConversationsSidebarTestQuery } from "__generated__/ConversationsSidebarTestQuery.graphql"
+import { graphql } from "react-relay"
+
+jest.unmock("react-relay")
+
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        query: {},
+      },
+      params: {
+        conversationId: "some-id",
+      },
+    },
+  }),
+}))
 
 describe("ConversationDetails", () => {
   const { renderWithRelay } = setupTestWrapperTL<ConversationsSidebarTestQuery>(
     {
-      Component: ({ viewer }) => (
-        <ConversationsSidebarPaginationContainer viewer={viewer!} />
-      ),
+      Component: ({ viewer }) => {
+        return <ConversationsSidebarPaginationContainer viewer={viewer!} />
+      },
       query: graphql`
         query ConversationsSidebarTestQuery @relay_test_operation {
           viewer {
@@ -22,12 +37,9 @@ describe("ConversationDetails", () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-
-    // FIXME
-    // mockRouter.query = { conversationId: "123" }
   })
 
-  it("renders", () => {
+  it.only("renders", () => {
     renderWithRelay({
       ConversationConnection: () => ({
         edges: [

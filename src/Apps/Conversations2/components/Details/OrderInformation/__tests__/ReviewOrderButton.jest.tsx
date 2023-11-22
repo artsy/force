@@ -1,16 +1,11 @@
-import { graphql } from "relay-runtime"
 import { fireEvent, screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { ReviewOrderButton } from "../ReviewOrderButton"
+import { ReviewOrderButton } from "Apps/Conversations2/components/Details/OrderInformation/ReviewOrderButton"
 import { ReviewOrderButtonTestQuery } from "__generated__/ReviewOrderButtonTestQuery.graphql"
 import { useTracking } from "react-tracking"
+import { graphql } from "react-relay"
 
-jest.mock("next/config", () => () => ({
-  publicRuntimeConfig: {
-    NEXT_PUBLIC_VOLT_V1_URL: "homepage",
-  },
-}))
-
+jest.unmock("react-relay")
 jest.mock("react-tracking")
 
 describe("ReviewOrderButton", () => {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a47b18a7a500c27950477cdebe1dc11f>>
+ * @generated SignedSource<<c7974e44a9b798c84ae89669a99d3da2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,11 +15,11 @@ export type ConversationsSidebar_viewer$data = {
     readonly edges: ReadonlyArray<{
       readonly cursor: string;
       readonly node: {
-        readonly internalID: string | null;
+        readonly internalID: string | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"ConversationsSidebarItem_conversation">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ConversationsSidebar_viewer";
 };
 export type ConversationsSidebar_viewer$key = {

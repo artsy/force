@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d987d2ee5a3e4123728b7e7c5750ffa8>>
+ * @generated SignedSource<<9044366f70dbf36dd4b4e508e92e7868>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,28 +19,28 @@ export type ConversationHeader_conversation$data = {
     readonly item: {
       readonly __typename: "Artwork";
       readonly artist: {
-        readonly name: string | null;
-      } | null;
-      readonly date: string | null;
+        readonly name: string | null | undefined;
+      } | null | undefined;
+      readonly date: string | null | undefined;
       readonly id: string;
       readonly image: {
-        readonly url: string | null;
-      } | null;
+        readonly url: string | null | undefined;
+      } | null | undefined;
       readonly slug: string;
-      readonly title: string | null;
+      readonly title: string | null | undefined;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly orderConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly state: CommerceOrderStateEnum;
-      } | null;
-    } | null>;
-  } | null;
+      } | null | undefined;
+    } | null | undefined>;
+  } | null | undefined;
   readonly to: {
     readonly name: string;
   };

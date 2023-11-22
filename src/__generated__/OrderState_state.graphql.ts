@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<32a07df23ac75eb4d30b971be5395044>>
+ * @generated SignedSource<<3e39a8b8c14cbbf400f25dbd45b45763>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,13 +18,13 @@ export type OrderState_state$data = {
       readonly __typename: string;
     };
     readonly offerAmountChanged: boolean;
-  } | null;
+  } | null | undefined;
   readonly mode: CommerceOrderModeEnum;
   readonly state: CommerceOrderStateEnum;
-  readonly stateReason: string | null;
+  readonly stateReason: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"OrderStateStatusWithCounter_order">;
   readonly " $fragmentType": "OrderState_state";
-} | null;
+} | null | undefined;
 export type OrderState_state$key = {
   readonly " $data"?: OrderState_state$data;
   readonly " $fragmentSpreads": FragmentRefs<"OrderState_state">;

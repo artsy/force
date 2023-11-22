@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7dc66d83b2e7ba1983f61927c2d82e93>>
+ * @generated SignedSource<<b2c86f7e6f7b5212be27603c1e3cc8e4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,8 @@ import { FragmentRefs } from "relay-runtime";
 export type OrderInformation_order$data = {
   readonly code: string;
   readonly lastOffer?: {
-    readonly amount: string | null;
-  } | null;
+    readonly amount: string | null | undefined;
+  } | null | undefined;
   readonly state: CommerceOrderStateEnum;
   readonly " $fragmentSpreads": FragmentRefs<"OrderState_state" | "ReviewOrderButton_order">;
   readonly " $fragmentType": "OrderInformation_order";

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<25ee4d4b68f3b24dca3c350510086faa>>
+ * @generated SignedSource<<0aaa4de87660f7298eb25bcffe933a77>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OrderInformationTestQuery$variables = {};
+export type OrderInformationTestQuery$variables = Record<PropertyKey, never>;
 export type OrderInformationTestQuery$data = {
   readonly commerceOrder: {
     readonly " $fragmentSpreads": FragmentRefs<"OrderInformation_order">;
-  } | null;
+  } | null | undefined;
 };
 export type OrderInformationTestQuery = {
   response: OrderInformationTestQuery$data;
