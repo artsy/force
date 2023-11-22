@@ -140,6 +140,12 @@ export const useRunAuthIntent = () => {
               case "artist":
                 syncFromLoggedOutUser()
             }
+            break
+          case "saveArtworkToLists":
+            switch (value.kind) {
+              case "artworks":
+                syncFromLoggedOutUser()
+            }
         }
       },
     })
