@@ -156,12 +156,15 @@ const ArticleBody: FC<ArticleBodyProps> = ({ article }) => {
 
           {article.layout === "STANDARD" && (
             <Column span={4} start={9}>
-              <Box id={`ArticleSidebar--${article.internalID}`} height="100%">
+              <Box
+                id={`Sticky__ArticleSidebar--${article.internalID}`}
+                height="100%"
+              >
                 {/* Negative margin outside of sticky + corresponding positive padding inside of sticky to adjust whitespace around text */}
                 <Spacer y={-2} />
 
                 <Sticky
-                  bottomBoundary={`#ArticleSidebar--${article.internalID}`}
+                  bottomBoundary={`#Sticky__ArticleSidebar--${article.internalID}`}
                 >
                   {article.relatedArticles.length > 0 && (
                     <>

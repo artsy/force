@@ -50,7 +50,7 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
   } = useRouter()
   const { searchConnection, artworksConnection } = viewer
   const { query } = location
-  const { aggregations } = searchConnection!
+  const { aggregations } = searchConnection ?? {}
 
   const term = usePrevious(query.term ?? "")
   const typeAggregation = aggregations?.find(agg => agg?.slice === "TYPE")
@@ -83,24 +83,26 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
 
           <Spacer y={4} />
 
-          <Sticky>
-            {({ stuck }) => {
-              return (
-                <FullBleed
-                  backgroundColor="white100"
-                  style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
-                >
-                  <AppContainer>
-                    <NavigationTabs
-                      artworkCount={artworkCount}
-                      term={term}
-                      searchableConnection={searchConnection!}
-                    />
-                  </AppContainer>
-                </FullBleed>
-              )
-            }}
-          </Sticky>
+          {searchConnection && (
+            <Sticky bottomBoundary="#Sticky__SearchApp">
+              {({ stuck }) => {
+                return (
+                  <FullBleed
+                    backgroundColor="white100"
+                    style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
+                  >
+                    <AppContainer>
+                      <NavigationTabs
+                        artworkCount={artworkCount}
+                        term={term}
+                        searchableConnection={searchConnection}
+                      />
+                    </AppContainer>
+                  </FullBleed>
+                )
+              }}
+            </Sticky>
+          )}
 
           <Spacer y={4} />
 
@@ -117,6 +119,8 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
       )}
 
       <Spacer y={4} />
+
+      <div id="Sticky__SearchApp" />
 
       <RecentlyViewed />
     </>
