@@ -79,28 +79,12 @@ export const isRelevantEvent = item => {
   )
 }
 
-export type Message = NonNullable<
-  NonNullable<
-    NonNullable<
-      NonNullable<UseGroupedMessagesProps>["messagesConnection"]
-    >["edges"]
-  >[number]
->["node"]
-
-export type OrderEvent = NonNullable<
-  NonNullable<
-    NonNullable<NonNullable<UseGroupedMessagesProps>["orderEvents"]>["edges"]
-  >[number]
->["node"]
-
-type MessageAndOrderEvent = Message & OrderEvent
-
 /**
  * Combines messages into groups of messages sent by the same party and
  * separated out into different groups if sent across multiple days
  * @param messages Messages in the conversation
  */
-export const groupMessages = (
+const groupMessages = (
   messages: MessageAndOrderEvent[]
 ): MessageAndOrderEvent[][] => {
   if (messages.length === 0) {
@@ -142,3 +126,21 @@ export const groupMessages = (
 
   return groups as MessageAndOrderEvent[][]
 }
+
+// Misc types
+
+export type Message = NonNullable<
+  NonNullable<
+    NonNullable<
+      NonNullable<UseGroupedMessagesProps>["messagesConnection"]
+    >["edges"]
+  >[number]
+>["node"]
+
+type OrderEvent = NonNullable<
+  NonNullable<
+    NonNullable<NonNullable<UseGroupedMessagesProps>["orderEvents"]>["edges"]
+  >[number]
+>["node"]
+
+type MessageAndOrderEvent = Message & OrderEvent

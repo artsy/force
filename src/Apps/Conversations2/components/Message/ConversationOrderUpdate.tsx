@@ -23,6 +23,10 @@ export const ConversationOrderUpdate: React.FC<OrderUpdateProps> = ({
 
   const { color, textColor, message, Icon } = getIconProps(data)
 
+  if (!message) {
+    return <ConversationTimeSince message={data} alignSelf="center" exact />
+  }
+
   return (
     <Flex flexDirection="column" {...flexProps}>
       <ConversationTimeSince message={data} alignSelf="center" exact mb={1} />

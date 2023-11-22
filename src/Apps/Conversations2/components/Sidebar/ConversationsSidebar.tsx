@@ -62,6 +62,10 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
   }
 
   useEffect(() => {
+    if (!match.params.conversationId) {
+      return
+    }
+
     const url = new URL(
       `${window.location.origin}/user/conversations2/${match.params.conversationId}`
     )
