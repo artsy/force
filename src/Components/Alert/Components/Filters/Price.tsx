@@ -63,22 +63,22 @@ export const PriceFragmentContainer = createFragmentContainer(Price, {
 export const PriceQueryRenderer = () => {
   const { state } = useAlertContext()
 
-  const artistID = state.criteria.artistIDs?.[0]
+  const artistIDs = state.criteria.artistIDs
 
-  if (!artistID) return <Price />
+  if (!artistIDs?.length) return <Price />
 
   return (
     <SystemQueryRenderer<PriceAggregationsQuery>
       lazyLoad
       placeholder={<Price />}
-      variables={{ artistID }}
+      variables={{ artistIDs }}
       // TODO: Pass in many artist IDs after fixing Gravity
       // https://github.com/artsy/force/pull/13158#discussion_r1399214348
       query={graphql`
-        query PriceAggregationsQuery($artistID: String!) {
+        query PriceAggregationsQuery($artistIDs: [String!]) {
           artworksConnection(
             aggregations: [SIMPLE_PRICE_HISTOGRAM]
-            artistID: $artistID
+            artistIDs: $artistIDs
             first: 0
           ) {
             ...Price_artworksConnection
