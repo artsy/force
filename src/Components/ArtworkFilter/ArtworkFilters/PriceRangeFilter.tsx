@@ -40,7 +40,7 @@ export const PriceRangeFilter: FC<PriceRangeFilterProps> = ({ expanded }) => {
 }
 
 export const aggregationsToHistogram = (
-  aggregations?: Aggregations
+  aggregations?: Aggregations | null
 ): HistogramBarEntity[] => {
   if (!aggregations) return []
 

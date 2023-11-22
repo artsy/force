@@ -5,9 +5,23 @@ import {
   CustomRange,
   DEFAULT_PRICE_RANGE,
 } from "Components/PriceRange/constants"
+import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { aggregationsToHistogram } from "Components/ArtworkFilter/ArtworkFilters/PriceRangeFilter"
+import { PriceAggregationsQuery } from "__generated__/PriceAggregationsQuery.graphql"
+import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { createFragmentContainer, graphql } from "react-relay"
+import { Price_artworksConnection$data } from "__generated__/Price_artworksConnection.graphql"
 
-export const Price: React.FC = () => {
+interface PriceProps {
+  artworksConnection?: Price_artworksConnection$data | null
+}
+
+export const Price: React.FC<PriceProps> = ({ artworksConnection }) => {
   const { state, dispatch } = useAlertContext()
+
+  const bars = aggregationsToHistogram(
+    artworksConnection?.aggregations as Aggregations
+  )
 
   const handlePriceRangeUpdate = (updatedValues: CustomRange) => {
     dispatch({
@@ -18,11 +32,70 @@ export const Price: React.FC = () => {
 
   return (
     <>
-      <Text variant="sm-display">Price Range</Text>
+      <Text variant="sm-display" mb={2}>
+        Price Range
+      </Text>
+
       <PriceRange
+        bars={bars}
         priceRange={state.criteria.priceRange || DEFAULT_PRICE_RANGE}
         onDebouncedUpdate={handlePriceRangeUpdate}
       />
     </>
+  )
+}
+
+export const PriceFragmentContainer = createFragmentContainer(Price, {
+  artworksConnection: graphql`
+    fragment Price_artworksConnection on FilterArtworksConnection {
+      aggregations {
+        slice
+        counts {
+          name
+          value
+          count
+        }
+      }
+    }
+  `,
+})
+
+export const PriceQueryRenderer = () => {
+  const { state } = useAlertContext()
+
+  const artistID = state.criteria.artistIDs?.[0]
+
+  if (!artistID) return <Price />
+
+  return (
+    <SystemQueryRenderer<PriceAggregationsQuery>
+      lazyLoad
+      placeholder={<Price />}
+      variables={{ artistID }}
+      // TODO: Pass in many artist IDs after fixing Gravity
+      // https://github.com/artsy/force/pull/13158#discussion_r1399214348
+      query={graphql`
+        query PriceAggregationsQuery($artistID: String!) {
+          artworksConnection(
+            aggregations: [SIMPLE_PRICE_HISTOGRAM]
+            artistID: $artistID
+            first: 0
+          ) {
+            ...Price_artworksConnection
+          }
+        }
+      `}
+      render={({ error, props }) => {
+        if (error) {
+          console.error(error)
+        }
+
+        const artworksConnection = props?.artworksConnection
+
+        return (
+          <PriceFragmentContainer artworksConnection={artworksConnection} />
+        )
+      }}
+    />
   )
 }
