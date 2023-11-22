@@ -131,6 +131,8 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   })
 
   useEffect(() => {
+    if (!state.visible) return
+
     const subscription = fetchQuery<AlertProviderPreviewQuery>(
       relayEnvironment as Environment,
       graphql`
@@ -164,7 +166,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     return () => {
       subscription?.unsubscribe?.()
     }
-  }, [debouncedCriteria, relayEnvironment])
+  }, [state.visible, debouncedCriteria, relayEnvironment])
 
   useEffect(() => {
     if (!value || value.action !== Intent.createAlert) return
