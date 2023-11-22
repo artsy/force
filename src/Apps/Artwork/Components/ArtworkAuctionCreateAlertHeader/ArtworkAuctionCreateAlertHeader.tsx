@@ -22,9 +22,6 @@ import { SuggestedArtworksShelfQueryRenderer } from "Apps/Artwork/Components/Art
 import { Media } from "Utils/Responsive"
 import { RouterLink } from "System/Router/RouterLink"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
-import { useFeatureFlag } from "System/useFeatureFlag"
-import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
-import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
@@ -103,30 +100,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
   const isHighest = artwork.myLotStandingManageAlerts?.[0]?.isHighestBidder
   const hasLostBid = isBidder && !isHighest
 
-  const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
-
   if (!displayAuctionCreateAlertHeader) return null
-
-  const AlertSwitch: FC = () => {
-    if (newAlertModalEnabled) {
-      return (
-        <>
-          <ProgressiveOnboardingAlertCreateSimple>
-            <CreateAlertButton width="100%" size="large" />
-          </ProgressiveOnboardingAlertCreateSimple>
-        </>
-      )
-    } else {
-      return (
-        <>
-          <ArtworkCreateAlertButtonFragmentContainer
-            artwork={artwork}
-            analyticsContextModule={ContextModule.artworkSidebar}
-          />
-        </>
-      )
-    }
-  }
 
   return (
     <SavedSearchAlertContextProvider
@@ -174,7 +148,10 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
                 Manage your alerts
               </Button>
             ) : (
-              <AlertSwitch />
+              <ArtworkCreateAlertButtonFragmentContainer
+                artwork={artwork}
+                analyticsContextModule={ContextModule.artworkSidebar}
+              />
             )}
           </Box>
         </Column>
