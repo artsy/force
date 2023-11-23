@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6f3b0fe56a979798dba5c6b3f9a40fb2>>
+ * @generated SignedSource<<5d7d4876fdf102d252830e842149d8db>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,7 +32,7 @@ export type ConversationMessage_message$data = {
   readonly id: string;
   readonly internalID: string;
   readonly isFirstMessage: boolean | null | undefined;
-  readonly isFromUser: boolean | null | undefined;
+  readonly isFromUser: boolean;
   readonly to: ReadonlyArray<string>;
   readonly " $fragmentType": "ConversationMessage_message";
 } | null | undefined;
@@ -166,11 +166,16 @@ return {
       "path": "deliveries"
     },
     {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "isFromUser",
-      "storageKey": null
+      "kind": "RequiredField",
+      "field": {
+        "alias": null,
+        "args": null,
+        "kind": "ScalarField",
+        "name": "isFromUser",
+        "storageKey": null
+      },
+      "action": "NONE",
+      "path": "isFromUser"
     },
     {
       "alias": null,
@@ -232,6 +237,6 @@ return {
 };
 })();
 
-(node as any).hash = "69e2b679afe5c4af2d4f591b2a72eb78";
+(node as any).hash = "40d5b24870703bbe5970a55ea1dded24";
 
 export default node;

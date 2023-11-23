@@ -79,7 +79,7 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
       {!data.isFromUser && simplified && <Spacer y={2} />}
 
       <ConversationMessageBubble
-        fromViewer={!data.isFromUser}
+        fromViewer={data.isFromUser}
         simplified={simplified}
         name={data.isFromUser && data.from.name ? data.from.name : undefined}
         time={!simplified ? data.createdAtTime : undefined}
@@ -142,7 +142,7 @@ const FRAGMENT = graphql`
       openedAt
       fullTransformedEmail
     }
-    isFromUser
+    isFromUser @required(action: NONE)
     isFirstMessage
     from @required(action: NONE) {
       name
