@@ -13,7 +13,6 @@ import { SavedSearchCreateAlertButton } from "Components/SavedSearchAlert/Compon
 import { ContextModule, Intent } from "@artsy/cohesion"
 import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useTranslation } from "react-i18next"
-import { useAlert } from "Components/Alert"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
@@ -77,9 +76,6 @@ const ArtworkSidebarCreateAlert: React.FC<ArtworkSidebarCreateAlertProps> = ({
   const allowedCriteria = getAllowedSearchCriteria(criteria)
 
   const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
-  const { alertComponent, showAlert } = useAlert({
-    initialCriteria: criteria,
-  })
 
   if (!artwork.isEligibleToCreateAlert) return null
 
@@ -98,8 +94,7 @@ const ArtworkSidebarCreateAlert: React.FC<ArtworkSidebarCreateAlertProps> = ({
         </Text>
         {newAlertModalEnabled ? (
           <>
-            <CreateAlertButton onClick={showAlert} />
-            {alertComponent}
+            <CreateAlertButton />
           </>
         ) : (
           <SavedSearchCreateAlertButton

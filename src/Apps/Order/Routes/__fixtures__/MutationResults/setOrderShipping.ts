@@ -42,6 +42,7 @@ export const settingOrderShipmentMissingCountryFailure = {
 export const settingOrderShipmentSuccess = {
   commerceSetShipping: {
     orderOrError: {
+      __typename: "CommerceOrderWithMutationSuccess",
       order: {
         ...BuyOrderWithShippingDetails,
       },

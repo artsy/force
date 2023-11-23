@@ -13,7 +13,7 @@ import { FC } from "react"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { Rarity } from "Components/Alert/Components/Filters/Rarity"
 import { Medium } from "Components/Alert/Components/Filters/Medium"
-import { Price } from "Components/Alert/Components/Filters/Price"
+import { PriceQueryRenderer } from "Components/Alert/Components/Filters/Price"
 import { WaysToBuy } from "Components/Alert/Components/Filters/WaysToBuy"
 import { Color } from "Components/Alert/Components/Filters/Color"
 import { useDidMount } from "Utils/Hooks/useDidMount"
@@ -63,12 +63,13 @@ export const Filters: FC = () => {
           <Join separator={<Separator my={2} />}>
             <Medium />
             <Rarity />
-            <Price />
+            <PriceQueryRenderer />
             <WaysToBuy />
             <Color />
           </Join>
           <Spacer y={6} />
           <Button
+            data-testid="setFilters"
             onClick={() => {
               goToDetails()
             }}

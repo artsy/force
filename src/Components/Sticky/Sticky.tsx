@@ -28,12 +28,20 @@ import { useSticky } from "./StickyProvider"
  */
 export const Sticky: React.FC<
   Pick<ReactStickyProps, "bottomBoundary"> & {
+    id?: string
     // TODO: Remove this prop!
     withoutHeaderOffset?: boolean
     children: ReactNode | (({ stuck }: { stuck: boolean }) => ReactNode)
   }
-> = ({ children, bottomBoundary, withoutHeaderOffset }) => {
-  const { offsetTop, registerSticky, deregisterSticky } = useSticky()
+> = ({ children, bottomBoundary, withoutHeaderOffset, id }) => {
+  const {
+    offsetTop,
+    registerSticky,
+    deregisterSticky,
+    updateSticky,
+  } = useSticky({
+    id,
+  })
 
   const { desktop, mobile } = useNavBarHeight()
 
@@ -47,7 +55,6 @@ export const Sticky: React.FC<
 
   useEffect(() => {
     registerSticky(containerRef.current?.clientHeight)
-
     return deregisterSticky
   }, [registerSticky, deregisterSticky])
 
@@ -57,14 +64,21 @@ export const Sticky: React.FC<
       bottomBoundary={bottomBoundary}
       onStateChange={state => {
         switch (state.status) {
-          case ReactSticky.STATUS_FIXED:
+          case ReactSticky.STATUS_FIXED: {
             setStuck(true)
+            updateSticky({ status: "FIXED" })
             break
-          case ReactSticky.STATUS_ORIGINAL:
-          case ReactSticky.STATUS_RELEASED:
+          }
+          case ReactSticky.STATUS_ORIGINAL: {
             setStuck(false)
-            deregisterSticky()
+            updateSticky({ status: "ORIGINAL" })
             break
+          }
+          case ReactSticky.STATUS_RELEASED: {
+            setStuck(false)
+            updateSticky({ status: "RELEASED" })
+            break
+          }
         }
       }}
       innerZ={1}

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dd5b41e964f8cd360e34312d1dbaf52c>>
+ * @generated SignedSource<<d41ef991034a6d922ec5b68b52911e8c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,6 +13,8 @@ export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Shipping2_order$data = {
+  readonly __typename: string;
+  readonly id: string;
   readonly internalID: string;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
@@ -81,10 +83,24 @@ var v0 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v1 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+},
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
   "name": "phoneNumber",
   "storageKey": null
 },
-v1 = [
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -134,7 +150,7 @@ v1 = [
     "name": "postalCode",
     "storageKey": null
   },
-  (v0/*: any*/)
+  (v2/*: any*/)
 ];
 return {
   "argumentDefinitions": [],
@@ -142,6 +158,8 @@ return {
   "metadata": null,
   "name": "Shipping2_order",
   "selections": [
+    (v0/*: any*/),
+    (v1/*: any*/),
     {
       "args": null,
       "kind": "FragmentSpread",
@@ -176,30 +194,24 @@ return {
       "name": "requestedFulfillment",
       "plural": false,
       "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "__typename",
-          "storageKey": null
-        },
+        (v0/*: any*/),
         {
           "kind": "InlineFragment",
           "selections": [
-            (v0/*: any*/)
+            (v2/*: any*/)
           ],
           "type": "CommercePickup",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v1/*: any*/),
+          "selections": (v3/*: any*/),
           "type": "CommerceShip",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v1/*: any*/),
+          "selections": (v3/*: any*/),
           "type": "CommerceShipArta",
           "abstractKey": null
         }
@@ -319,13 +331,7 @@ return {
                           "name": "node",
                           "plural": false,
                           "selections": [
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "id",
-                              "storageKey": null
-                            },
+                            (v1/*: any*/),
                             {
                               "alias": null,
                               "args": null,
@@ -372,6 +378,6 @@ return {
 };
 })();
 
-(node as any).hash = "e923e6687fa5c656399b78e71c9a433d";
+(node as any).hash = "6559bacc39b9025e660276e5eff47d17";
 
 export default node;

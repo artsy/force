@@ -19,6 +19,7 @@ import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInpu
 import { PriceRangeFilter } from "Components/Alert/Components/Form/PriceRange"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 
 export interface AlertFormikValues {
   name: string
@@ -28,6 +29,8 @@ export interface AlertFormikValues {
 }
 
 export const Details: FC = () => {
+  const { clickedAddFilters } = useAlertTracking()
+
   const { onComplete, dispatch, goToFilters, state } = useAlertContext()
 
   const newAlertModalFilteresEnabled = useFeatureFlag(
@@ -41,9 +44,10 @@ export const Details: FC = () => {
       onSubmit={onComplete}
     >
       {({ isSubmitting, values, setFieldValue, handleSubmit }) => {
-        const transitionToFilters = () => {
+        const transitionToFiltersAndTrack = () => {
           dispatch({ type: "SET_SETTINGS", payload: values })
           goToFilters()
+          clickedAddFilters()
         }
 
         return (
@@ -78,7 +82,11 @@ export const Details: FC = () => {
                 </Box>
 
                 {newAlertModalFilteresEnabled ? (
-                  <Clickable onClick={transitionToFilters} width="100%">
+                  <Clickable
+                    data-testid="addFilters"
+                    onClick={transitionToFiltersAndTrack}
+                    width="100%"
+                  >
                     <Flex justifyContent="space-between" alignItems={"center"}>
                       <Box>
                         <Text variant="sm-display">Add Filters:</Text>
@@ -118,6 +126,7 @@ export const Details: FC = () => {
                 </Box>
 
                 <Button
+                  data-testid="submitCreateAlert"
                   loading={isSubmitting}
                   onClick={() => {
                     dispatch({ type: "SET_SETTINGS", payload: values })

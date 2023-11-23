@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cb5c3716c68b21b09a2545f849f44cb0>>
+ * @generated SignedSource<<bf438376693b03fd025ab161b431bc01>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,10 +29,10 @@ export type PreviewSavedSearchAttributes = {
   sizes?: ReadonlyArray<ArtworkSizes | null> | null;
   width?: string | null;
 };
-export type useAlertContextPreviewQuery$variables = {
+export type AlertProviderPreviewQuery$variables = {
   attributes?: PreviewSavedSearchAttributes | null;
 };
-export type useAlertContextPreviewQuery$data = {
+export type AlertProviderPreviewQuery$data = {
   readonly viewer: {
     readonly previewSavedSearch: {
       readonly displayName: string;
@@ -44,9 +44,9 @@ export type useAlertContextPreviewQuery$data = {
     } | null;
   } | null;
 };
-export type useAlertContextPreviewQuery = {
-  response: useAlertContextPreviewQuery$data;
-  variables: useAlertContextPreviewQuery$variables;
+export type AlertProviderPreviewQuery = {
+  response: AlertProviderPreviewQuery$data;
+  variables: AlertProviderPreviewQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -131,7 +131,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useAlertContextPreviewQuery",
+    "name": "AlertProviderPreviewQuery",
     "selections": (v1/*: any*/),
     "type": "Query",
     "abstractKey": null
@@ -140,20 +140,20 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useAlertContextPreviewQuery",
+    "name": "AlertProviderPreviewQuery",
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "e5288d07d58057ca184f2ee652db8f08",
+    "cacheID": "07c7e1e6af4c9f5a132c8efaad8c16d0",
     "id": null,
     "metadata": {},
-    "name": "useAlertContextPreviewQuery",
+    "name": "AlertProviderPreviewQuery",
     "operationKind": "query",
-    "text": "query useAlertContextPreviewQuery(\n  $attributes: PreviewSavedSearchAttributes\n) {\n  viewer {\n    previewSavedSearch(attributes: $attributes) {\n      displayName\n      labels {\n        displayValue\n        field\n        value\n      }\n    }\n  }\n}\n"
+    "text": "query AlertProviderPreviewQuery(\n  $attributes: PreviewSavedSearchAttributes\n) {\n  viewer {\n    previewSavedSearch(attributes: $attributes) {\n      displayName\n      labels {\n        displayValue\n        field\n        value\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "7ebca4e74038b60d54f1fc2c445e211c";
+(node as any).hash = "77c3d48b13f44a144f4dcca7575a9701";
 
 export default node;

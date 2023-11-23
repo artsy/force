@@ -6,10 +6,9 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistWorksForSaleEmpty_artist$data } from "__generated__/ArtistWorksForSaleEmpty_artist.graphql"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { useAlert } from "Components/Alert"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
+import { ArtworkFilterAlertContextProvider } from "Components/ArtworkFilter/ArtworkFilterAlertContextProvider"
 
 interface ArtistWorksForSaleEmptyProps {
   artist: ArtistWorksForSaleEmpty_artist$data
@@ -24,11 +23,6 @@ const ArtistWorksForSaleEmpty: FC<ArtistWorksForSaleEmptyProps> = ({
     contextPageOwnerType,
   } = useAnalyticsContext()
 
-  const { filters } = useArtworkFilterContext()
-
-  const { alertComponent, showAlert } = useAlert({
-    initialCriteria: filters,
-  })
   const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
 
   return (
@@ -47,10 +41,11 @@ const ArtistWorksForSaleEmpty: FC<ArtistWorksForSaleEmptyProps> = ({
           <Spacer y={2} />
 
           {newAlertModalEnabled ? (
-            <>
-              <CreateAlertButton onClick={showAlert} />
-              {alertComponent}
-            </>
+            <ArtworkFilterAlertContextProvider
+              initialCriteria={{ artistIDs: [artist.internalID] }}
+            >
+              <CreateAlertButton />
+            </ArtworkFilterAlertContextProvider>
           ) : (
             <SavedSearchCreateAlertButtonContainer
               entity={{
