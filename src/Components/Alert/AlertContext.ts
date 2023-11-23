@@ -7,6 +7,7 @@ import {
 } from "Components/SavedSearchAlert/types"
 
 import { AlertProviderPreviewQuery } from "__generated__/AlertProviderPreviewQuery.graphql"
+import { DEFAULT_METRIC, Metric } from "Utils/metrics"
 
 type Settings = {
   details: string
@@ -26,6 +27,7 @@ export type State = {
   currentArtworkID?: string
   preview: PreviewSavedSearch
   visible: boolean
+  metric?: Metric
 }
 
 export const DEFAULT_STATE: State = {
@@ -38,6 +40,7 @@ export const DEFAULT_STATE: State = {
   criteria: {},
   preview: null,
   visible: false,
+  metric: DEFAULT_METRIC,
 }
 
 type Action =
@@ -62,6 +65,7 @@ type Action =
     }
   | { type: "SET_SETTINGS"; payload: Settings }
   | { type: "SET_SEARCH_CRITERIA_ID"; payload: string }
+  | { type: "SET_METRIC"; payload: Metric }
 
 export const reducer = (onShow: (State) => State, onReset: () => State) => (
   state: State,
@@ -124,6 +128,12 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
       return {
         ...state,
         settings: action.payload,
+      }
+
+    case "SET_METRIC":
+      return {
+        ...state,
+        metric: action.payload,
       }
 
     default:

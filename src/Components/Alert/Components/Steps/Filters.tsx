@@ -17,6 +17,7 @@ import { PriceQueryRenderer } from "Components/Alert/Components/Filters/Price"
 import { WaysToBuy } from "Components/Alert/Components/Filters/WaysToBuy"
 import { Color } from "Components/Alert/Components/Filters/Color"
 import { useDidMount } from "Utils/Hooks/useDidMount"
+import { Size } from "Components/Alert/Components/Filters/Size"
 
 export const Filters: FC = () => {
   const { goToDetails } = useAlertContext()
@@ -64,6 +65,7 @@ export const Filters: FC = () => {
             <Medium />
             <Rarity />
             <PriceQueryRenderer />
+            <Size />
             <WaysToBuy />
             <Color />
           </Join>
