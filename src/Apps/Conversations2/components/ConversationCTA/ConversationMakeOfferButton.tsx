@@ -21,6 +21,7 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
   const { router } = useRouter()
   const { submitMutation } = useMakeInquiryOffer()
   const { showSelectEditionSetModal } = useConversationsContext()
+
   const data = useConversationPurchaseButtonData(conversation)
 
   if (!data) {

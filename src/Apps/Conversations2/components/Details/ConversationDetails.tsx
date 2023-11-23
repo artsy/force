@@ -1,6 +1,6 @@
 import { Clickable, Flex } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import { OrderInformation } from "./OrderInformation/OrderInformation"
+import { ConversationOrderInformation } from "./OrderInformation/ConversationOrderInformation"
 import { ConversationArtwork } from "./ConversationArtwork"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import styled from "styled-components"
@@ -36,7 +36,7 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
           edges @required(action: NONE) {
             node {
               __typename
-              ...OrderInformation_order
+              ...ConversationOrderInformation_order
             }
           }
         }
@@ -61,7 +61,7 @@ export const ConversationDetails: React.FC<ConversationDetailsProps> = ({
         </CloseButton>
       </Media>
 
-      {order && <OrderInformation order={order} />}
+      {order && <ConversationOrderInformation order={order} />}
 
       <ConversationArtwork conversation={data} />
 

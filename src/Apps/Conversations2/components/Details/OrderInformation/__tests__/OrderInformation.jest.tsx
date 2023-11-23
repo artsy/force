@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { OrderInformationTestQuery } from "__generated__/OrderInformationTestQuery.graphql"
-import { OrderInformation } from "Apps/Conversations2/components/Details/OrderInformation/OrderInformation"
+import { ConversationOrderInformation } from "Apps/Conversations2/components/Details/OrderInformation/ConversationOrderInformation"
 
 jest.unmock("react-relay")
 
@@ -22,12 +22,12 @@ jest.mock("System/Router/useRouter", () => ({
 describe("OrderInformation", () => {
   const { renderWithRelay } = setupTestWrapperTL<OrderInformationTestQuery>({
     Component: ({ commerceOrder }) => {
-      return <OrderInformation order={commerceOrder!} />
+      return <ConversationOrderInformation order={commerceOrder!} />
     },
     query: graphql`
       query OrderInformationTestQuery @relay_test_operation {
         commerceOrder(id: "conversation-id") {
-          ...OrderInformation_order
+          ...ConversationOrderInformation_order
         }
       }
     `,

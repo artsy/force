@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6750cee5a99e058ddc31a33c379e98cc>>
+ * @generated SignedSource<<7cccf6b24ae14d3a66fee8d5466f7a2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type OrderStateTestQuery$variables = Record<PropertyKey, never>;
 export type OrderStateTestQuery$data = {
   readonly commerceOrder: {
-    readonly " $fragmentSpreads": FragmentRefs<"OrderState_state">;
+    readonly " $fragmentSpreads": FragmentRefs<"ConversationOrderState_state">;
   } | null | undefined;
 };
 export type OrderStateTestQuery = {
@@ -72,7 +72,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "OrderState_state"
+            "name": "ConversationOrderState_state"
           }
         ],
         "storageKey": null
@@ -193,7 +193,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "26f9b053af3f553e473bdef1da7dfd4d",
+    "cacheID": "40955eeacddae97c2fff092a90ad2239",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -259,11 +259,11 @@ return {
     },
     "name": "OrderStateTestQuery",
     "operationKind": "query",
-    "text": "query OrderStateTestQuery {\n  commerceOrder {\n    __typename\n    ...OrderState_state\n    id\n  }\n}\n\nfragment OrderStateStatusWithCounter_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  stateExpiresAt\n  stateUpdatedAt\n  formattedStateExpiresAt: stateExpiresAt(format: \"MMM D, h:mm A zz\")\n}\n\nfragment OrderState_state on CommerceOrder {\n  __isCommerceOrder: __typename\n  state\n  mode\n  stateReason\n  ... on CommerceOfferOrder {\n    lastOffer {\n      from {\n        __typename\n      }\n      offerAmountChanged\n      id\n    }\n  }\n  ...OrderStateStatusWithCounter_order\n}\n"
+    "text": "query OrderStateTestQuery {\n  commerceOrder {\n    __typename\n    ...ConversationOrderState_state\n    id\n  }\n}\n\nfragment ConversationOrderState_state on CommerceOrder {\n  __isCommerceOrder: __typename\n  state\n  mode\n  stateReason\n  ... on CommerceOfferOrder {\n    lastOffer {\n      from {\n        __typename\n      }\n      offerAmountChanged\n      id\n    }\n  }\n  ...ConversationStatusWithCounter_order\n}\n\nfragment ConversationStatusWithCounter_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  stateExpiresAt\n  stateUpdatedAt\n  formattedStateExpiresAt: stateExpiresAt(format: \"MMM D, h:mm A zz\")\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3ad417621964710837cf9ad0e274d08f";
+(node as any).hash = "f436656c053ca1812bd18d6644ad93f1";
 
 export default node;

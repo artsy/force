@@ -1,10 +1,10 @@
 import { graphql, useFragment } from "react-relay"
 import { Button, ButtonProps } from "@artsy/palette"
 import { ReviewOrderButton_order$key } from "__generated__/ReviewOrderButton_order.graphql"
-import { CounterOfferState } from "./OrderState"
 import { useTracking } from "react-tracking"
 import { RouterLink } from "System/Router/RouterLink"
 import { useRouter } from "System/Router/useRouter"
+import { CounterOfferState } from "Apps/Conversations2/components/Details/OrderState/ConversationOrderState"
 
 interface ReviewOrderButtonProps {
   order: ReviewOrderButton_order$key

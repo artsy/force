@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a9953649a3e1c654049480788fe25e95>>
+ * @generated SignedSource<<af60512d574400419df39d9bf4e86cb7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,22 +10,22 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type OrderStateStatusWithCounter_order$data = {
+export type ConversationStatusWithCounter_order$data = {
   readonly formattedStateExpiresAt: string | null | undefined;
   readonly stateExpiresAt: string;
   readonly stateUpdatedAt: string;
-  readonly " $fragmentType": "OrderStateStatusWithCounter_order";
+  readonly " $fragmentType": "ConversationStatusWithCounter_order";
 } | null | undefined;
-export type OrderStateStatusWithCounter_order$key = {
-  readonly " $data"?: OrderStateStatusWithCounter_order$data;
-  readonly " $fragmentSpreads": FragmentRefs<"OrderStateStatusWithCounter_order">;
+export type ConversationStatusWithCounter_order$key = {
+  readonly " $data"?: ConversationStatusWithCounter_order$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationStatusWithCounter_order">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "OrderStateStatusWithCounter_order",
+  "name": "ConversationStatusWithCounter_order",
   "selections": [
     {
       "kind": "RequiredField",
@@ -69,6 +69,6 @@ const node: ReaderFragment = {
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "56553a187ed2e3a93e24d71c8bcb5fa7";
+(node as any).hash = "44238dc969213f2c55d2b51279bbf736";
 
 export default node;

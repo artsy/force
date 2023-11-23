@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0aaa4de87660f7298eb25bcffe933a77>>
+ * @generated SignedSource<<2bb1c2cdf5796c84f5ba351a29e6d441>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type OrderInformationTestQuery$variables = Record<PropertyKey, never>;
 export type OrderInformationTestQuery$data = {
   readonly commerceOrder: {
-    readonly " $fragmentSpreads": FragmentRefs<"OrderInformation_order">;
+    readonly " $fragmentSpreads": FragmentRefs<"ConversationOrderInformation_order">;
   } | null | undefined;
 };
 export type OrderInformationTestQuery = {
@@ -79,7 +79,7 @@ return {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "OrderInformation_order"
+            "name": "ConversationOrderInformation_order"
           }
         ],
         "storageKey": "commerceOrder(id:\"conversation-id\")"
@@ -266,7 +266,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2d320cb8f91fc5aa8050895c4b43769b",
+    "cacheID": "62738d61d9763a0461240416383a7e7e",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -360,11 +360,11 @@ return {
     },
     "name": "OrderInformationTestQuery",
     "operationKind": "query",
-    "text": "query OrderInformationTestQuery {\n  commerceOrder(id: \"conversation-id\") {\n    __typename\n    ...OrderInformation_order\n    id\n  }\n}\n\nfragment OrderInformation_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  code\n  state\n  ...OrderState_state\n  ...ReviewOrderButton_order\n  ... on CommerceOfferOrder {\n    lastOffer {\n      amount(precision: 2)\n      id\n    }\n  }\n}\n\nfragment OrderStateStatusWithCounter_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  stateExpiresAt\n  stateUpdatedAt\n  formattedStateExpiresAt: stateExpiresAt(format: \"MMM D, h:mm A zz\")\n}\n\nfragment OrderState_state on CommerceOrder {\n  __isCommerceOrder: __typename\n  state\n  mode\n  stateReason\n  ... on CommerceOfferOrder {\n    lastOffer {\n      from {\n        __typename\n      }\n      offerAmountChanged\n      id\n    }\n  }\n  ...OrderStateStatusWithCounter_order\n}\n\nfragment ReviewOrderButton_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  id\n  state\n  mode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      from {\n        __typename\n      }\n      offerAmountChanged\n      id\n    }\n  }\n}\n"
+    "text": "query OrderInformationTestQuery {\n  commerceOrder(id: \"conversation-id\") {\n    __typename\n    ...ConversationOrderInformation_order\n    id\n  }\n}\n\nfragment ConversationOrderInformation_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  code\n  state\n  ...ConversationOrderState_state\n  ...ReviewOrderButton_order\n  ... on CommerceOfferOrder {\n    lastOffer {\n      amount(precision: 2)\n      id\n    }\n  }\n}\n\nfragment ConversationOrderState_state on CommerceOrder {\n  __isCommerceOrder: __typename\n  state\n  mode\n  stateReason\n  ... on CommerceOfferOrder {\n    lastOffer {\n      from {\n        __typename\n      }\n      offerAmountChanged\n      id\n    }\n  }\n  ...ConversationStatusWithCounter_order\n}\n\nfragment ConversationStatusWithCounter_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  stateExpiresAt\n  stateUpdatedAt\n  formattedStateExpiresAt: stateExpiresAt(format: \"MMM D, h:mm A zz\")\n}\n\nfragment ReviewOrderButton_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  id\n  state\n  mode\n  lineItems {\n    edges {\n      node {\n        artwork {\n          id\n        }\n        id\n      }\n    }\n  }\n  ... on CommerceOfferOrder {\n    lastOffer {\n      from {\n        __typename\n      }\n      offerAmountChanged\n      id\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "f12f9d7936952a9dfbacb76465fa4f19";
+(node as any).hash = "33d8bd0afb5a1c9caeda99c8a04b7f4c";
 
 export default node;

@@ -1,6 +1,6 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { MakeOfferOnInquiryButtonFragmentContainer } from "Apps/Conversation/Components/MakeOfferOnInquiryButton"
+import { ConversationMakeOfferButton } from "Apps/Conversations2/components/ConversationCTA/ConversationMakeOfferButton"
 import { MakeInquiryOffer } from "Apps/Conversation/Mutation/MakeInquiryOfferMutation"
 import { screen, fireEvent, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
@@ -13,18 +13,13 @@ const openInquiryModalFn = jest.fn()
 
 const { renderWithRelay } = setupTestWrapperTL({
   Component: (props: any) => {
-    return (
-      <MakeOfferOnInquiryButtonFragmentContainer
-        conversation={props.me.conversation}
-        openInquiryModal={openInquiryModalFn}
-      />
-    )
+    return <ConversationMakeOfferButton conversation={props.me.conversation} />
   },
   query: graphql`
-    query MakeOfferOnInquiryButton_Test_Query @relay_test_operation {
+    query ConversationMakeOfferButton_Test_Query @relay_test_operation {
       me {
         conversation(id: "123") {
-          ...MakeOfferOnInquiryButton_conversation
+          ...useConversationPurchaseButtonData_conversation
         }
       }
     }

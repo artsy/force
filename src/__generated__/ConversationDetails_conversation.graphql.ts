@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8fe020f18ccaa5ae09cc100bd5c0aa03>>
+ * @generated SignedSource<<118a2668bed6a7f51da01fc015e3fddc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type ConversationDetails_conversation$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly __typename: string;
-        readonly " $fragmentSpreads": FragmentRefs<"OrderInformation_order">;
+        readonly " $fragmentSpreads": FragmentRefs<"ConversationOrderInformation_order">;
       } | null | undefined;
     } | null | undefined>;
   } | null | undefined;
@@ -87,7 +87,7 @@ const node: ReaderFragment = {
                   {
                     "args": null,
                     "kind": "FragmentSpread",
-                    "name": "OrderInformation_order"
+                    "name": "ConversationOrderInformation_order"
                   }
                 ],
                 "storageKey": null
@@ -116,6 +116,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "bbcd8f522409585052a7208b03c3e13c";
+(node as any).hash = "69a0ab88affc27af34d9305641294924";
 
 export default node;

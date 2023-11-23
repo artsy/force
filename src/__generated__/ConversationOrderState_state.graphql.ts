@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e39a8b8c14cbbf400f25dbd45b45763>>
+ * @generated SignedSource<<faa3bec21290f09f7b21f93ba3b4d0c3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type OrderState_state$data = {
+export type ConversationOrderState_state$data = {
   readonly lastOffer?: {
     readonly from: {
       readonly __typename: string;
@@ -22,19 +22,19 @@ export type OrderState_state$data = {
   readonly mode: CommerceOrderModeEnum;
   readonly state: CommerceOrderStateEnum;
   readonly stateReason: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"OrderStateStatusWithCounter_order">;
-  readonly " $fragmentType": "OrderState_state";
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationStatusWithCounter_order">;
+  readonly " $fragmentType": "ConversationOrderState_state";
 } | null | undefined;
-export type OrderState_state$key = {
-  readonly " $data"?: OrderState_state$data;
-  readonly " $fragmentSpreads": FragmentRefs<"OrderState_state">;
+export type ConversationOrderState_state$key = {
+  readonly " $data"?: ConversationOrderState_state$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationOrderState_state">;
 };
 
 const node: ReaderFragment = {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "OrderState_state",
+  "name": "ConversationOrderState_state",
   "selections": [
     {
       "kind": "RequiredField",
@@ -118,13 +118,13 @@ const node: ReaderFragment = {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "OrderStateStatusWithCounter_order"
+      "name": "ConversationStatusWithCounter_order"
     }
   ],
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "95330a81e0e642b32375f1e595399f09";
+(node as any).hash = "22c21a18d13d2d3835215356c18c0f92";
 
 export default node;

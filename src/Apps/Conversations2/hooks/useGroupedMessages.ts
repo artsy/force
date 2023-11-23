@@ -132,10 +132,12 @@ const groupMessages = (
 export type Message = NonNullable<
   NonNullable<
     NonNullable<
-      NonNullable<UseGroupedMessagesProps>["messagesConnection"]
-    >["edges"]
-  >[number]
->["node"]
+      NonNullable<
+        NonNullable<UseGroupedMessagesProps>["messagesConnection"]
+      >["edges"]
+    >[number]
+  >["node"]
+>
 
 type OrderEvent = NonNullable<
   NonNullable<

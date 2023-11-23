@@ -1,21 +1,21 @@
 import { Separator, Spacer, Text } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import { OrderInformation_order$key } from "__generated__/OrderInformation_order.graphql"
-import { OrderState } from "./OrderState"
 import { ReviewOrderButton } from "./ReviewOrderButton"
+import { ConversationOrderState } from "Apps/Conversations2/components/Details/OrderState/ConversationOrderState"
+import { ConversationOrderInformation_order$key } from "__generated__/ConversationOrderInformation_order.graphql"
 
 interface OrderInformationProps {
-  order: OrderInformation_order$key
+  order: ConversationOrderInformation_order$key
 }
-export const OrderInformation: React.FC<OrderInformationProps> = ({
+export const ConversationOrderInformation: React.FC<OrderInformationProps> = ({
   order,
 }) => {
   const data = useFragment(
     graphql`
-      fragment OrderInformation_order on CommerceOrder {
+      fragment ConversationOrderInformation_order on CommerceOrder {
         code
         state
-        ...OrderState_state
+        ...ConversationOrderState_state
         ...ReviewOrderButton_order
         ... on CommerceOfferOrder {
           lastOffer {
@@ -44,7 +44,7 @@ export const OrderInformation: React.FC<OrderInformationProps> = ({
 
       <Spacer y={2} />
 
-      <OrderState order={data} />
+      <ConversationOrderState order={data} />
 
       <Spacer y={2} />
 
