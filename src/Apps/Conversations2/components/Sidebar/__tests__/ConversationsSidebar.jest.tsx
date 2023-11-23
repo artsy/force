@@ -39,14 +39,14 @@ describe("ConversationDetails", () => {
     jest.clearAllMocks()
   })
 
-  it.only("renders", () => {
+  it("renders", () => {
     renderWithRelay({
       ConversationConnection: () => ({
         edges: [
           {
             node: {
               internalID: "conversation-1",
-              from: { name: "Collector 1" },
+              to: { name: "Collector 1" },
               lastMessageAt: "2022-12-02",
               unread: false,
             },
@@ -67,7 +67,7 @@ describe("ConversationDetails", () => {
     })
 
     expect(
-      screen.getByText("All conversations with collectors will show here.")
+      screen.getByText("All conversations with galleries will show here.")
     ).toBeInTheDocument()
   })
 })

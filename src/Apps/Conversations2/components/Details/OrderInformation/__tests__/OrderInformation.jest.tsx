@@ -6,6 +6,19 @@ import { OrderInformation } from "Apps/Conversations2/components/Details/OrderIn
 
 jest.unmock("react-relay")
 
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        query: {},
+      },
+      params: {
+        conversationId: "conversation-id",
+      },
+    },
+  }),
+}))
+
 describe("OrderInformation", () => {
   const { renderWithRelay } = setupTestWrapperTL<OrderInformationTestQuery>({
     Component: ({ commerceOrder }) => {

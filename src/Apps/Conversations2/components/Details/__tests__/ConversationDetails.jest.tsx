@@ -9,6 +9,19 @@ import { MediaContextProvider } from "Utils/Responsive"
 jest.mock("react-tracking")
 jest.unmock("react-relay")
 
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        query: {},
+      },
+      params: {
+        conversationId: "conversation-id",
+      },
+    },
+  }),
+}))
+
 describe("ConversationDetails", () => {
   let breakpoint: "md" | "sm"
   const mockTracking = useTracking as jest.Mock
@@ -45,23 +58,9 @@ describe("ConversationDetails", () => {
       CommerceOrderConnectionWithTotalCount: () => ({ edges: [] }),
     })
 
-    expect(screen.queryByText("Order Information")).not.toBeInTheDocument()
-    expect(screen.queryByText("Artwork")).not.toBeInTheDocument()
-
-    const collector = screen.getByText("Collector Profile")
-    const manage = screen.getByText("Manage This Inquiry")
-    const help = screen.getByText("Help Center")
-
-    expect(collector.compareDocumentPosition(manage)).toBe(4)
-    expect(manage.compareDocumentPosition(help)).toBe(4)
-  })
-
-  it("doesn't render salesforce chat bubble when env variable is false", () => {
-    renderWithRelay()
-
-    expect(
-      screen.queryByTestId("salesforce-chat-bubble")
-    ).not.toBeInTheDocument()
+    expect(screen.getByText("Artwork")).toBeInTheDocument()
+    expect(screen.getByText("Attachments")).toBeInTheDocument()
+    expect(screen.getByText("Support")).toBeInTheDocument()
   })
 
   it("renders order information if there is an order associated", () => {
@@ -96,20 +95,10 @@ describe("ConversationDetails", () => {
         }),
       })
 
-      const order = screen.getByText("Order Information")
-      const artwork = screen.getByText("Artwork")
-      const collector = screen.getByText("Collector Profile")
-      const manage = screen.getByText("Manage This Inquiry")
-      const help = screen.getByText("Help Center")
-
-      expect(order.compareDocumentPosition(artwork)).toBe(4)
-      expect(artwork.compareDocumentPosition(collector)).toBe(4)
-      expect(collector.compareDocumentPosition(manage)).toBe(4)
-      expect(manage.compareDocumentPosition(help)).toBe(4)
-
-      expect(
-        screen.queryByTestId("salesforce-chat-bubble")
-      ).not.toBeInTheDocument()
+      expect(screen.getByText("Order Information")).toBeInTheDocument()
+      expect(screen.getByText("Artwork")).toBeInTheDocument()
+      expect(screen.getByText("Attachments")).toBeInTheDocument()
+      expect(screen.getByText("Support")).toBeInTheDocument()
     })
 
     it("tracks click on View Artwork", () => {

@@ -23,7 +23,6 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
   viewer,
   relay,
 }) => {
-  console.log(viewer.conversationsConnection?.edges)
   const { match } = useRouter()
 
   const { loadMore } = useLoadMore({

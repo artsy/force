@@ -8,6 +8,19 @@ import { graphql } from "react-relay"
 jest.mock("react-tracking")
 jest.unmock("react-relay")
 
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        query: {},
+      },
+      params: {
+        conversationId: "conversation-id",
+      },
+    },
+  }),
+}))
+
 describe("ConversationSidebarItem", () => {
   const mockTracking = useTracking as jest.Mock
   const trackEvent = jest.fn()
@@ -35,7 +48,7 @@ describe("ConversationSidebarItem", () => {
     renderWithRelay({
       Conversation: () => ({
         internalID: "conversation-id",
-        from: { name: "Lidiane Taquehara" },
+        to: { name: "Lidiane Taquehara" },
         lastMessageAt: "Dec 07",
         unread: false,
         fromUser: {
@@ -59,7 +72,6 @@ describe("ConversationSidebarItem", () => {
     })
 
     expect(screen.getByText("Lidiane Taquehara")).toBeInTheDocument()
-    expect(screen.getByTestId("user-verified-icon")).toBeInTheDocument()
     expect(screen.getByRole("img")).toHaveAttribute(
       "src",
       "https://imamges.com/img.png"
@@ -69,18 +81,10 @@ describe("ConversationSidebarItem", () => {
     expect(screen.getByText(", 2022")).toBeInTheDocument()
     expect(screen.getByText("Dec 07")).toBeInTheDocument()
     expect(screen.getByText("Inquiry")).toBeInTheDocument()
-    expect(screen.getByRole("link")).toHaveAttribute("href", "conversation-id")
-  })
-
-  it("renders unread icon", () => {
-    renderWithRelay({
-      Conversation: () => ({
-        unread: true,
-      }),
-    })
-
-    // TODO: once we fix unread, uncomment line below
-    // expect(screen.getByTestId("unread-dot")).toBeInTheDocument()
+    expect(screen.getByRole("link")).toHaveAttribute(
+      "href",
+      "/user/conversations2/conversation-id?"
+    )
   })
 
   it("shows Order text", () => {

@@ -8,6 +8,19 @@ import { graphql } from "react-relay"
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        query: {},
+      },
+      params: {
+        conversationId: "conversation-id",
+      },
+    },
+  }),
+}))
+
 describe("ReviewOrderButton", () => {
   const mockTracking = useTracking as jest.Mock
   const trackEvent = jest.fn()
@@ -204,7 +217,7 @@ describe("ReviewOrderButton", () => {
 
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
-      "homepage/orders/mocked-order-id"
+      "/orders/mocked-order-id/status?backToConversationId=conversation-id"
     )
   })
 })

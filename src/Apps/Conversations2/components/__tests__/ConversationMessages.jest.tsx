@@ -7,11 +7,12 @@ import { act, fireEvent, screen } from "@testing-library/react"
 import { intersect } from "Utils/Hooks/__tests__/mockIntersectionObserver"
 
 const loadMoreMock = jest.fn()
-const useLoadMoreMock = jest.fn().mockReturnValue({
-  loadMore: loadMoreMock,
-})
-jest.mock("utils/hooks/useLoadMore", () => ({
-  useLoadMore: (arg: any) => useLoadMoreMock(arg),
+
+jest.mock("Apps/Conversations2/hooks/useLoadMore", () => ({
+  useLoadMore: (arg: any) =>
+    jest.fn().mockReturnValue({
+      loadMore: jest.fn(arg),
+    }),
 }))
 
 jest.unmock("react-relay")

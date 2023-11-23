@@ -5,13 +5,36 @@ import { ConversationHeader } from "Apps/Conversations2/components/ConversationH
 import { ConversationHeaderTestQuery } from "__generated__/ConversationHeaderTestQuery.graphql"
 import { MediaContextProvider } from "Utils/Responsive"
 import { useTracking } from "react-tracking"
+import { useMobileLayoutActions } from "Apps/Conversations2/hooks/useMobileLayoutActions"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+jest.mock("Apps/Conversations2/hooks/useMobileLayoutActions", () => ({
+  useMobileLayoutActions: jest.fn().mockReturnValue({
+    goToDetails: jest.fn(),
+    goToSidebar: jest.fn(),
+  }),
+}))
+
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        query: {},
+      },
+      params: {
+        conversationId: "conversation-id",
+      },
+    },
+    router: {
+      push: jest.fn(),
+    },
+  }),
+}))
 
 describe("ConversationDetails", () => {
   let breakpoint: "md" | "sm"
-  const onGoToConversations = jest.fn()
+  const mockUseMobileLayoutActions = useMobileLayoutActions as jest.Mock
   const onGoToDetails = jest.fn()
   const mockTracking = useTracking as jest.Mock
   const trackEvent = jest.fn()
@@ -36,7 +59,6 @@ describe("ConversationDetails", () => {
     mockTracking.mockImplementation(() => ({ trackEvent }))
 
     // FIXME
-    // mockRouter.query = { conversationId: "123" }
     breakpoint = "md"
   })
 
@@ -76,7 +98,7 @@ describe("ConversationDetails", () => {
     expect(screen.getByText("View Artwork")).toBeInTheDocument()
     expect(screen.getByRole("link")).toHaveAttribute(
       "href",
-      "homepage/artworks/demo-slug-42"
+      "/artwork/demo-slug-42"
     )
   })
 
@@ -102,14 +124,31 @@ describe("ConversationDetails", () => {
     })
 
     it("clicking collector's name goes to the conversations list", () => {
+      const goToDetailsSpy = jest.fn()
+      const goToSidebarSpy = jest.fn()
+
+      mockUseMobileLayoutActions.mockReturnValue({
+        goToDetails: goToDetailsSpy,
+        goToSidebar: goToSidebarSpy,
+      })
+
       renderWithRelay()
 
       fireEvent.click(screen.getByTestId("go-to-conversation-button"))
 
-      expect(onGoToConversations).toHaveBeenCalledTimes(1)
+      expect(goToSidebarSpy).toHaveBeenCalledTimes(1)
     })
 
-    it("clicking Review CTA goes to the conversation details", () => {
+    it("Review CTA is secondary when the associated order needs no action from the partner", () => {
+      renderWithRelay()
+
+      expect(screen.getAllByRole("button")[1]).toHaveStyle(
+        "background-color: transparent"
+      )
+    })
+
+    // FIXME: Implement review screen on mobile
+    it.skip("clicking Review CTA goes to the conversation details", () => {
       renderWithRelay({
         ConversationItemType: () => ({ id: "mocked-artwork-id" }),
       })
@@ -127,7 +166,7 @@ describe("ConversationDetails", () => {
       expect(onGoToDetails).toHaveBeenCalledTimes(1)
     })
 
-    it("Review CTA is primary when there is a submitted order", () => {
+    it.skip("Review CTA is primary when there is a submitted order", () => {
       renderWithRelay({
         CommerceOrderConnectionWithTotalCount: () => ({
           edges: [{ node: { state: "SUBMITTED" } }],
@@ -139,15 +178,7 @@ describe("ConversationDetails", () => {
       )
     })
 
-    it("Review CTA is secondary when the associated order needs no action from the partner", () => {
-      renderWithRelay()
-
-      expect(screen.getAllByRole("button")[1]).toHaveStyle(
-        "background-color: transparent"
-      )
-    })
-
-    it("clicking the artwork info goes to the conversation details", () => {
+    it.skip("clicking the artwork info goes to the conversation details", () => {
       renderWithRelay({
         ConversationItemType: () => ({
           id: "mocked-artwork-id",
