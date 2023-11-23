@@ -2,6 +2,7 @@ import { createContext } from "react"
 
 import { CustomRange } from "Components/PriceRange/constants"
 import {
+  SavedSearchFrequency,
   SearchCriteriaAttributeKeys,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
@@ -13,6 +14,7 @@ type Settings = {
   email: boolean
   name: string
   push: boolean
+  frequency?: SavedSearchFrequency
 }
 
 export type PreviewSavedSearch = NonNullable<
@@ -34,6 +36,7 @@ export const DEFAULT_STATE: State = {
     details: "",
     email: true,
     push: false,
+    frequency: "daily",
   },
   criteria: {},
   preview: null,
@@ -132,10 +135,17 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
 }
 
 export interface AlertContextProps {
-  current: "ALERT_DETAILS" | "ALERT_FILTERS" | "ALERT_CONFIRMATION"
+  current:
+    | "ALERT_DETAILS"
+    | "ALERT_FILTERS"
+    | "ALERT_CONFIRMATION"
+    | "EDIT_ALERT_DETAILS"
+    | "EDIT_ALERT_FILTERS"
   dispatch: React.Dispatch<Action>
   goToFilters(): void
   goToDetails(): void
+  goToEditFilters(): void
+  goToEditDetails(): void
   onComplete(): void
   state: State
 }

@@ -28,6 +28,7 @@ interface AlertProviderProps {
   initialCriteria?: SearchCriteriaAttributes
   currentArtworkID?: string
   visible?: boolean
+  isEditMode?: boolean
 }
 
 export const AlertProvider: FC<AlertProviderProps> = ({
@@ -35,6 +36,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   initialCriteria,
   currentArtworkID,
   visible,
+  isEditMode,
 }) => {
   const { createdAlert } = useAlertTracking()
   const { showAuthDialog } = useAuthDialog()
@@ -42,11 +44,12 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   const { submitMutation } = useCreateAlert()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
 
-  const initialState = {
+  const initialState: State = {
     settings: {
       details: "",
       email: true,
       push: false,
+      frequency: "daily",
       name: "",
     },
     criteria: getAllowedSearchCriteria(initialCriteria ?? {}),
@@ -54,9 +57,14 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     preview: null,
     visible: visible ?? false,
   }
+
   const [current, setCurrent] = useState<
-    "ALERT_DETAILS" | "ALERT_FILTERS" | "ALERT_CONFIRMATION"
-  >("ALERT_DETAILS")
+    | "ALERT_DETAILS"
+    | "ALERT_FILTERS"
+    | "ALERT_CONFIRMATION"
+    | "EDIT_ALERT_DETAILS"
+    | "EDIT_ALERT_FILTERS"
+  >(isEditMode ? "EDIT_ALERT_DETAILS" : "ALERT_DETAILS")
 
   useEffect(() => {
     const criteria = getAllowedSearchCriteria(initialCriteria ?? {})
@@ -92,7 +100,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   }
 
   const onReset = (): State => {
-    setCurrent("ALERT_DETAILS")
+    setCurrent(isEditMode ? "EDIT_ALERT_DETAILS" : "ALERT_DETAILS")
 
     return initialState
   }
@@ -188,6 +196,12 @@ export const AlertProvider: FC<AlertProviderProps> = ({
         },
         goToFilters: () => {
           setCurrent("ALERT_FILTERS")
+        },
+        goToEditFilters: () => {
+          setCurrent("EDIT_ALERT_FILTERS")
+        },
+        goToEditDetails: () => {
+          setCurrent("EDIT_ALERT_DETAILS")
         },
         onComplete: handleComplete,
         state,

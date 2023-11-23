@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Checkbox,
+  Clickable,
   Flex,
   Join,
   Message,
@@ -43,9 +44,11 @@ import { extractNodes } from "Utils/extractNodes"
 import { RouterLink } from "System/Router/RouterLink"
 import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
-import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
 import { SavedSearchAlertNameInputQueryRenderer } from "Components/SavedSearchAlert/Components/SavedSearchAlertNameInput"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
+import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import { useEffect } from "react"
 
 const logger = createLogger(
   "Apps/SavedSearchAlerts/Components/NewSavedSearchAlertEditForm"
@@ -83,7 +86,8 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
     criteria,
     isCriteriaChanged,
     removePill,
-  } = useSavedSearchAlertContext()
+  } = useSavedSearchAlertContext() // TODO: use useAlertContext instead
+  const { goToEditFilters, dispatch, state } = useAlertContext()
 
   const initialValues: SavedSearchAlertFormValues = {
     name: userAlertSettings.name ?? "",
@@ -92,6 +96,25 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
     frequency: userAlertSettings.frequency as SavedSearchFrequency,
     details: userAlertSettings.details ?? "",
   }
+  useEffect(() => {
+    dispatch({
+      type: "SET_SETTINGS",
+      payload: {
+        ...initialValues,
+      },
+    })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [
+    dispatch,
+    userAlertSettings,
+    userAlertSettings.name,
+    userAlertSettings.push,
+    userAlertSettings.email,
+    userAlertSettings.details,
+    savedSearch,
+  ])
+
+  console.log("[LOGD] state = ", state)
   const isCustomAlertsNotificationsEnabled = viewer.notificationPreferences.some(
     preference => {
       return (
@@ -175,7 +198,20 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                 </Flex>
 
                 <Separator my={2} />
-                <PriceRangeFilter />
+
+                <Clickable onClick={() => goToEditFilters()} width="100%">
+                  <Flex justifyContent="space-between" alignItems={"center"}>
+                    <Box>
+                      <Text variant="sm-display">Add Filters:</Text>
+
+                      <Text variant="sm" color="black60">
+                        Including Price Range, Rarity, Medium, Color
+                      </Text>
+                    </Box>
+
+                    <ChevronRightIcon />
+                  </Flex>
+                </Clickable>
 
                 <Separator my={2} />
                 <DetailsInput />
@@ -313,13 +349,13 @@ const NewSavedSearchAlertEditFormContainer: React.FC<NewSavedSearchAlertEditForm
   }
 
   return (
-    <SavedSearchAlertContextProvider
+    /*     <SavedSearchAlertContextProvider
       entity={entity}
       criteria={criteria}
       aggregations={aggregations}
-    >
-      <NewSavedSearchAlertEditForm {...props} />
-    </SavedSearchAlertContextProvider>
+    > */
+    <NewSavedSearchAlertEditForm {...props} />
+    /* </SavedSearchAlertContextProvider> */
   )
 }
 
