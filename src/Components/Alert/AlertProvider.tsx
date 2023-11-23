@@ -8,7 +8,7 @@ import {
   State,
   reducer,
 } from "Components/Alert/AlertContext"
-import { Modal } from "Components/Alert/Components/Modal"
+import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { Steps } from "Components/Alert/Components/Steps"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { useCreateAlert } from "Components/Alert/Hooks/useCreateAlert"

@@ -1,8 +1,6 @@
-import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import {
   Box,
   Button,
-  Clickable,
   Flex,
   Join,
   Separator,
@@ -26,60 +24,39 @@ export const Filters: FC = () => {
   return (
     <Box
       minWidth={[null, 700]}
-      maxHeight={["auto", 750]}
-      overflowY="auto"
+      p={2}
       style={{
         ...(isMounted
           ? {
               opacity: 1,
-              transform: "translateX(0)",
-              transition: "opacity 300ms, transform 300ms",
+              transition: "opacity 200ms",
             }
           : {
               opacity: 0,
-              transform: "translateX(20px)",
             }),
       }}
     >
       <Flex flexDirection="column" width="auto">
-        <Clickable
+        <Text variant="lg">Filters</Text>
+        <Separator my={2} />
+        <Join separator={<Separator my={2} />}>
+          <Medium />
+          <Rarity />
+          <PriceQueryRenderer />
+          <WaysToBuy />
+          <Color />
+        </Join>
+        <Spacer y={6} />
+
+        <Button
+          data-testid="setFilters"
           onClick={() => {
             goToDetails()
           }}
-          position="sticky"
-          top="0"
-          bg="white100"
-          zIndex={2}
+          width="100%"
         >
-          <Flex justifyContent="flex-start" alignItems="center" p={2}>
-            <ChevronLeftIcon />
-            <Text variant="sm">Create Alert</Text>
-          </Flex>
-          <Separator />
-        </Clickable>
-
-        <Box p={2}>
-          <Text variant="lg">Filters</Text>
-          <Separator my={2} />
-          <Join separator={<Separator my={2} />}>
-            <Medium />
-            <Rarity />
-            <PriceQueryRenderer />
-            <Size />
-            <WaysToBuy />
-            <Color />
-          </Join>
-          <Spacer y={6} />
-          <Button
-            data-testid="setFilters"
-            onClick={() => {
-              goToDetails()
-            }}
-            width="100%"
-          >
-            Set Filters
-          </Button>
-        </Box>
+          Set Filters
+        </Button>
       </Flex>
     </Box>
   )

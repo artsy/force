@@ -1,7 +1,6 @@
 import { FC } from "react"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
 import { Button, ButtonProps } from "@artsy/palette"
-
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
