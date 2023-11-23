@@ -1,4 +1,5 @@
 import { useRouter } from "System/Router/useRouter"
+import { useSystemContext } from "System/SystemContext"
 import { omit } from "lodash"
 import { useEffect, useState, useCallback } from "react"
 
@@ -7,6 +8,7 @@ import { useEffect, useState, useCallback } from "react"
  * in between these columns.
  */
 export const useMobileLayoutActions = () => {
+  const { isFetching } = useSystemContext()
   const { match, router } = useRouter()
 
   const {
@@ -22,9 +24,11 @@ export const useMobileLayoutActions = () => {
     if (query.showAllConversations) {
       setCurrentColumn("sidebar")
     } else {
-      setCurrentColumn("conversation")
+      if (!isFetching) {
+        setCurrentColumn("conversation")
+      }
     }
-  }, [query.showAllConversations])
+  }, [query.showAllConversations, isFetching])
 
   const goToSidebar = useCallback(() => {
     setCurrentColumn("sidebar")
@@ -47,6 +51,7 @@ export const useMobileLayoutActions = () => {
   }, [])
 
   return {
+    isFetching,
     currentColumn,
     goToSidebar,
     goToDetails,

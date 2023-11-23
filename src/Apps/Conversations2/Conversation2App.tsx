@@ -35,11 +35,7 @@ const Conversation2App: React.FC<Conversation2RouteProps> = ({
           return (
             <>
               <Media lessThan="md">
-                <ConversationHeader
-                  conversation={conversation}
-                  // onGoToConversations={goToSidebar}
-                  // onGoToDetails={goToDetails}
-                />
+                <ConversationHeader conversation={conversation} />
               </Media>
               <ConversationMessagesPaginationContainer
                 conversation={conversation}

@@ -4,7 +4,7 @@ import { graphql, useFragment } from "react-relay"
 import { FlexProps, Flex, Image, Text } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 
-const MAX_IMAGE_WIDTH = 350
+const MAX_IMAGE_WIDTH = 335
 
 interface ConversationMessageArtworkProps extends FlexProps {
   item: ConversationMessageArtwork_item$key
@@ -35,6 +35,7 @@ export const ConversationMessageArtwork: React.FC<ConversationMessageArtworkProp
         flexDirection="column"
         backgroundColor="black10"
         borderRadius="15px 15px 0 0"
+        maxWidth={MAX_IMAGE_WIDTH}
         {...flexProps}
       >
         {data.image.resized.width && (
