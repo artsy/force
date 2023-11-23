@@ -1,7 +1,12 @@
 import { act, render, RenderResult } from "@testing-library/react"
 import { mount } from "enzyme"
 import * as React from "react"
-import { GraphQLTaggedNode, QueryRenderer, Variables } from "react-relay"
+import {
+  GraphQLTaggedNode,
+  QueryRenderer,
+  RelayEnvironmentProvider,
+  Variables,
+} from "react-relay"
 import { OperationDescriptor, OperationType } from "relay-runtime"
 import {
   createMockEnvironment,
@@ -10,11 +15,12 @@ import {
 } from "relay-test-utils"
 import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 
-type SetupTestWrapper<T extends OperationType> = {
-  Component: React.ComponentType<T["response"]>
-  query: GraphQLTaggedNode
+type SetupTestWrapper<T extends OperationType, ComponentProps> = {
+  Component: React.ComponentType<T["response"] & ComponentProps>
+  query?: GraphQLTaggedNode
   variables?: T["variables"]
 }
+
 /**
  * Creates a wrapper for testing Relay components using the `relay-test-utils`
  * package, which will provide automatic fixture data for GraphQL queries.
@@ -90,32 +96,37 @@ type RenderWithRelay = RTLRenderResult & {
   mockRejectLastOperation: (error: Error) => void
 }
 
-export const setupTestWrapperTL = <T extends OperationType>({
+export const setupTestWrapperTL = <T extends OperationType, ComponentProps>({
   Component,
   query,
   variables = {},
-}: SetupTestWrapper<T>) => {
+}: SetupTestWrapper<T, ComponentProps>) => {
   const renderWithRelay = (
     mockResolvers: MockResolvers = {},
-    componentProps?: {},
+    componentProps?: any,
     mockedEnv?: ReturnType<typeof createMockEnvironment>
   ): RenderWithRelay => {
     const env = mockedEnv ?? createMockEnvironment()
 
-    const TestRenderer = () => (
-      <QueryRenderer<T>
-        environment={env}
-        variables={variables}
-        query={query}
-        render={({ props, error }) => {
-          if (props) {
-            return <Component {...componentProps} {...(props as {})} />
-          } else if (error) {
-            console.error(error)
-          }
-        }}
-      />
-    )
+    const TestRenderer = () =>
+      query ? (
+        <QueryRenderer<T>
+          environment={env}
+          variables={variables}
+          query={query}
+          render={({ props, error }) => {
+            if (props) {
+              return <Component {...componentProps} {...(props as {})} />
+            } else if (error) {
+              console.error(error)
+            }
+          }}
+        />
+      ) : (
+        <RelayEnvironmentProvider environment={env}>
+          <Component {...componentProps} />
+        </RelayEnvironmentProvider>
+      )
 
     const mockResolveLastOperation = (mockResolvers: MockResolvers) => {
       const operation = env.mock.getMostRecentOperation()
@@ -151,7 +162,12 @@ export const setupTestWrapperTL = <T extends OperationType>({
       return MockPayloadGenerator.generate(operation, mockResolvers)
     })
 
-    return { ...view, env, mockResolveLastOperation, mockRejectLastOperation }
+    return {
+      ...view,
+      env,
+      mockResolveLastOperation,
+      mockRejectLastOperation,
+    }
   }
 
   return { renderWithRelay }
@@ -161,14 +177,14 @@ export const setupTestWrapperTL = <T extends OperationType>({
  * @deprecated This method should _not_ be used for new tests. See
  * `setupTestWrapperTL` which uses `@testing-library/react`.
  */
-export const setupTestWrapper = <T extends OperationType>({
+export const setupTestWrapper = <T extends OperationType, ComponentProps>({
   Component,
   query,
   variables = {},
-}: SetupTestWrapper<T>) => {
+}: SetupTestWrapper<T, ComponentProps>) => {
   const getWrapper = (
     mockResolvers: MockResolvers = {},
-    componentProps: {} = {},
+    componentProps: any = {},
     mockedEnv?: ReturnType<typeof createMockEnvironment>
   ) => {
     const env = mockedEnv ?? createMockEnvironment()
@@ -228,7 +244,12 @@ export const setupTestWrapper = <T extends OperationType>({
 
     wrapper.update()
 
-    return { wrapper, env, mockResolveLastOperation, mockRejectLastOperation }
+    return {
+      wrapper,
+      env,
+      mockResolveLastOperation,
+      mockRejectLastOperation,
+    }
   }
 
   return { getWrapper }
