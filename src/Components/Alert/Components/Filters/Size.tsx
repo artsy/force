@@ -218,7 +218,7 @@ export const Size: FC = () => {
               mt={1}
               variant="primaryGray"
               onClick={handleSetSizesClick}
-              width="100%"
+              width={["100%", 390]}
             >
               Set size
             </Button>
