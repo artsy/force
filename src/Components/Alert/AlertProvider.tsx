@@ -56,6 +56,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     currentArtworkID,
     preview: null,
     visible: visible ?? false,
+    isEditMode,
   }
 
   const [current, setCurrent] = useState<
@@ -192,16 +193,10 @@ export const AlertProvider: FC<AlertProviderProps> = ({
         current,
         dispatch,
         goToDetails: () => {
-          setCurrent("ALERT_DETAILS")
+          setCurrent(isEditMode ? "EDIT_ALERT_DETAILS" : "ALERT_DETAILS")
         },
         goToFilters: () => {
-          setCurrent("ALERT_FILTERS")
-        },
-        goToEditFilters: () => {
-          setCurrent("EDIT_ALERT_FILTERS")
-        },
-        goToEditDetails: () => {
-          setCurrent("EDIT_ALERT_DETAILS")
+          setCurrent(isEditMode ? "EDIT_ALERT_FILTERS" : "ALERT_FILTERS")
         },
         onComplete: handleComplete,
         state,

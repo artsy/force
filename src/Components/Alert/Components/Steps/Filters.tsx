@@ -19,13 +19,13 @@ import { Color } from "Components/Alert/Components/Filters/Color"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 
 export const Filters: FC = () => {
-  const { goToDetails } = useAlertContext()
+  const { goToDetails, state } = useAlertContext()
   const isMounted = useDidMount()
 
   return (
     <Box
-      minWidth={[null, 700]}
-      maxHeight={["auto", 750]}
+      minWidth={[null, state.isEditMode ? null : 700]}
+      maxHeight={["auto", state.isEditMode ? null : 750]}
       overflowY="auto"
       style={{
         ...(isMounted
@@ -52,9 +52,11 @@ export const Filters: FC = () => {
         >
           <Flex justifyContent="flex-start" alignItems="center" p={2}>
             <ChevronLeftIcon />
-            <Text variant="sm">Create Alert</Text>
+            <Text variant="sm">
+              {state.isEditMode ? "Create Alert" : "Create Alert"}
+            </Text>
           </Flex>
-          <Separator />
+          {state.isEditMode ? null : <Separator />}
         </Clickable>
 
         <Box p={2}>

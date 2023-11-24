@@ -28,6 +28,7 @@ export type State = {
   currentArtworkID?: string
   preview: PreviewSavedSearch
   visible: boolean
+  isEditMode?: boolean
 }
 
 export const DEFAULT_STATE: State = {
@@ -144,8 +145,6 @@ export interface AlertContextProps {
   dispatch: React.Dispatch<Action>
   goToFilters(): void
   goToDetails(): void
-  goToEditFilters(): void
-  goToEditDetails(): void
   onComplete(): void
   state: State
 }

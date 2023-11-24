@@ -3,7 +3,7 @@ import { Clickable, Text, Flex, Spacer, Box } from "@artsy/palette"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { NewSavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/NewSavedSearchAlertEditForm"
-import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
+import { Filters } from "Components/Alert/Components/Steps/Filters"
 
 export const EditAlertSteps: React.FC<EditAlertFormBase> = ({
   editAlertEntity,
@@ -39,24 +39,8 @@ export const EditAlertSteps: React.FC<EditAlertFormBase> = ({
     case "EDIT_ALERT_FILTERS":
       return (
         <>
-          <Box flex={1} p={4}>
-            <Flex justifyContent="space-between" alignItems="center">
-              <Clickable
-                display="flex"
-                alignItems="center"
-                onClick={() => {
-                  goToEditDetails()
-                }}
-              >
-                <ChevronLeftIcon mr={1} height={14} width={14} />
-                Back
-              </Clickable>
-              <Clickable onClick={onCloseClick}>
-                <CloseIcon display="flex" />
-              </Clickable>
-            </Flex>
-            <Spacer y={6} />
-            <Text>HEloooooooo</Text>
+          <Box flex={1} p={2}>
+            <Filters />
           </Box>
         </>
       )

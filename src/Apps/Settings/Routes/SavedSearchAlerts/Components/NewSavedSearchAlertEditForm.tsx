@@ -87,7 +87,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
     isCriteriaChanged,
     removePill,
   } = useSavedSearchAlertContext() // TODO: use useAlertContext instead
-  const { goToEditFilters, dispatch, state } = useAlertContext()
+  const { goToFilters, dispatch, state } = useAlertContext()
 
   const initialValues: SavedSearchAlertFormValues = {
     name: userAlertSettings.name ?? "",
@@ -199,7 +199,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
 
                 <Separator my={2} />
 
-                <Clickable onClick={() => goToEditFilters()} width="100%">
+                <Clickable onClick={() => goToFilters()} width="100%">
                   <Flex justifyContent="space-between" alignItems={"center"}>
                     <Box>
                       <Text variant="sm-display">Add Filters:</Text>
