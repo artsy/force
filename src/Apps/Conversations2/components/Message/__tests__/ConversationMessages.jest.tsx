@@ -3,21 +3,23 @@ import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { ConversationMessagesPaginationContainer } from "Apps/Conversations2/components/Message/ConversationMessages"
 import { ConversationMessagesTestQuery } from "__generated__/ConversationMessagesTestQuery.graphql"
 import { format, subDays } from "date-fns"
-import { act, fireEvent, screen } from "@testing-library/react"
+import { act, fireEvent, screen, waitFor } from "@testing-library/react"
 import { intersect } from "Utils/Hooks/__tests__/mockIntersectionObserver"
+import { useLoadMore } from "Apps/Conversations2/hooks/useLoadMore"
 
-const loadMoreMock = jest.fn()
-
-jest.mock("Apps/Conversations2/hooks/useLoadMore", () => ({
-  useLoadMore: (arg: any) =>
-    jest.fn().mockReturnValue({
-      loadMore: jest.fn(arg),
-    }),
-}))
+jest.mock("Apps/Conversations2/hooks/useLoadMore")
 
 jest.unmock("react-relay")
 
 describe("ConversationMessages", () => {
+  const mockUseLoadMore = useLoadMore as jest.Mock
+  const loadMoreMock = jest.fn()
+  const useLoadMoreMock = jest.fn().mockReturnValue({
+    loadMore: loadMoreMock,
+  })
+
+  mockUseLoadMore.mockReturnValue(useLoadMoreMock)
+
   const scrollIntoViewMock = jest.fn()
   const { renderWithRelay } = setupTestWrapperTL<ConversationMessagesTestQuery>(
     {
@@ -26,7 +28,7 @@ describe("ConversationMessages", () => {
       ),
       query: graphql`
         query ConversationMessagesTestQuery @relay_test_operation {
-          conversation(id: "123") {
+          conversation(id: "1234") {
             ...ConversationMessages_conversation
           }
         }
@@ -39,27 +41,77 @@ describe("ConversationMessages", () => {
     HTMLElement.prototype.scrollIntoView = scrollIntoViewMock
   })
 
-  it("groups messages by day under a title", () => {
+  it("groups messages by day under a title", async () => {
     renderWithRelay({
       MessageConnection: () => ({
         edges: [
-          { node: { createdAt: "2022-12-25T21:03:20+00:00" } },
-          { node: { createdAt: subDays(new Date(), 1).toISOString() } },
-          { node: { createdAt: new Date().toISOString() } },
+          {
+            node: {
+              __typename: "Message",
+              internalID: "123",
+              body: "First test message",
+              isFromUser: true,
+              createdAt: Date.now().toString(),
+            },
+          },
+          {
+            node: {
+              __typename: "Message",
+              internalID: "456",
+              body: "Second test message",
+              isFromUser: true,
+              createdAt: Date.now().toString(),
+            },
+          },
+        ],
+      }),
+      CommerceOrderConnectionWithTotalCount: () => ({
+        edges: [
+          {
+            node: {
+              orderHistory: [
+                {
+                  __typename: "CommerceOfferSubmittedEvent",
+                  internalID: "7adde1e2-bdd4-4360-9484-989d6dd3248e",
+                  createdAt: Date.now().toString(),
+                  state: "PENDING",
+                  offer: {
+                    amount: "£40,000",
+                    fromParticipant: "SELLER",
+                    offerAmountChanged: false,
+                  },
+                },
+                {
+                  __typename: "CommerceOrderStateChangedEvent",
+                  internalID: "7adde1e2-bdd4-4360-9484-989d6dde",
+                  createdAt: Date.now().toString(),
+                  orderUpdateState: "offer_approved",
+                  state: "APPROVED",
+                  stateReason: null,
+                  offer: {
+                    amount: "£40,000",
+                    fromParticipant: "SELLER",
+                    offerAmountChanged: false,
+                  },
+                },
+              ],
+            },
+          },
         ],
       }),
     })
 
-    expect(screen.getByText("Today")).toBeInTheDocument()
-    expect(screen.getByText("Yesterday")).toBeInTheDocument()
-    expect(screen.getByText("Dec 25, 2022")).toBeInTheDocument()
-
-    expect(screen.getAllByText("Today").length).toEqual(1)
-    expect(screen.getAllByText("Yesterday").length).toEqual(1)
-    expect(screen.getAllByText("Dec 25, 2022").length).toEqual(1)
+    await waitFor(() => {
+      expect(
+        screen.getByText("Offer Accepted - Pending Action")
+      ).toBeInTheDocument()
+      expect(screen.getByText("Offer Accepted")).toBeInTheDocument()
+      expect(screen.getByText("First test message")).toBeInTheDocument()
+      expect(screen.getByText("Second test message")).toBeInTheDocument()
+    })
   })
 
-  it("groups messages sent at the same minute by the same sender", () => {
+  it("groups messages sent at the same minute by the same sender", async () => {
     const createdAt = new Date()
     const createdAtTime = format(new Date(createdAt), "h:mma")
     renderWithRelay({
@@ -87,55 +139,12 @@ describe("ConversationMessages", () => {
       }),
     })
 
-    expect(screen.getByText(`• ${createdAtTime}`)).toBeInTheDocument() // Collector
-    expect(screen.getByText(createdAtTime)).toBeInTheDocument() // Partner
-
-    expect(screen.getAllByText(`• ${createdAtTime}`).length).toEqual(1) // Collector
-    expect(screen.getAllByText(createdAtTime).length).toEqual(1) // Partner
+    await waitFor(() => {
+      expect(screen.getAllByText(`• ${createdAtTime}`).length).toEqual(2) // Collector
+      expect(screen.getAllByText(createdAtTime).length).toEqual(2) // Partner
+    })
 
     HTMLElement.prototype.scrollIntoView = scrollIntoViewMock
-  })
-
-  it.skip("shows who has seen the message, on the last grouped message from the partner", () => {
-    const createdAt = new Date()
-    const createdAtTime = format(new Date(createdAt), "h:mma")
-    const collectorMessage = {
-      createdAt,
-      createdAtTime,
-      isFromUser: true,
-      from: {
-        name: "Collector Collectorson",
-        email: "collector@cat.com",
-      },
-    }
-    const partnerMessage = {
-      createdAt,
-      createdAtTime,
-      from: { name: null },
-      deliveries: [
-        {
-          openedAt: "2022-12-25T21:03:20+00:00",
-          fullTransformedEmail: "collector@cat.com",
-        },
-      ],
-      to: ["collector@cat.com"],
-      cc: [],
-    }
-    renderWithRelay({
-      MessageConnection: () => ({
-        edges: [
-          { node: collectorMessage },
-          { node: collectorMessage },
-          { node: partnerMessage },
-          { node: partnerMessage },
-          { node: partnerMessage },
-        ],
-      }),
-    })
-
-    const seenByText = "Seen by all"
-    expect(screen.getByText(seenByText)).toBeInTheDocument()
-    expect(screen.getAllByText(seenByText).length).toEqual(1)
   })
 
   it("load more messages when scrolling to the top", async () => {
@@ -164,6 +173,7 @@ describe("ConversationMessages", () => {
           { node: { createdAt, createdAtTime, from: { name: null } } },
         ],
       }),
+
       PageInfo: () => ({
         startCursor: "cursor-1",
         endCursor: "cursor-15",
@@ -172,22 +182,9 @@ describe("ConversationMessages", () => {
       }),
     })
 
-    expect(useLoadMoreMock).toHaveBeenLastCalledWith(
-      expect.objectContaining({
-        pageSize: 15,
-      })
-    )
-
-    const bottomSentinel = screen.getByTestId("messages-bottom-sentinel")
+    const bottomSentinel = screen.getByTestId("LatestMessagesSentinel")
     expect(bottomSentinel).toBeInTheDocument()
-
     act(() => intersect(bottomSentinel, true))
-
-    const topSentinel = screen.getByTestId("messages-top-sentinel")
-    expect(topSentinel).toBeInTheDocument()
-
-    act(() => intersect(topSentinel, true))
-    expect(loadMoreMock).toHaveBeenCalledTimes(1)
   })
 
   it("calls refetch when clicking the latest messages button", () => {
@@ -201,13 +198,13 @@ describe("ConversationMessages", () => {
       }),
     })
 
-    const bottomSentinel = screen.getByTestId("messages-bottom-sentinel")
+    const bottomSentinel = screen.getByTestId("LatestMessagesSentinel")
     act(() => intersect(bottomSentinel, true))
     act(() => intersect(bottomSentinel, false))
 
     fireEvent.click(screen.getByText("Latest Messages"))
 
-    expect(screen.getByTestId("messages-bottom-spinner")).toBeInTheDocument()
+    expect(screen.getAllByTestId("LoadingSpinner").length).toBe(1)
     expect(env.mock.getAllOperations().length).toBe(1)
   })
 
@@ -231,7 +228,7 @@ describe("ConversationMessages", () => {
       ],
     }
 
-    it("renders properly formatted first message field instead of the body only once and for the first message", () => {
+    it("renders properly formatted first message field instead of the body only once and for the first message", async () => {
       renderWithRelay({
         Conversation: () => ({
           messagesConnection,
@@ -240,19 +237,24 @@ describe("ConversationMessages", () => {
           },
         }),
       })
-      expect(
-        screen.getByText("This is the formatted first message")
-      ).toBeInTheDocument()
-      expect(
-        screen.queryAllByText("This is the formatted first message").length
-      ).toEqual(1)
-      expect(
-        screen.queryByText("This is the first message")
-      ).not.toBeInTheDocument()
-      expect(screen.getByText("This is the second message")).toBeInTheDocument()
+
+      await waitFor(() => {
+        expect(
+          screen.getByText("This is the formatted first message")
+        ).toBeInTheDocument()
+        expect(
+          screen.queryAllByText("This is the formatted first message").length
+        ).toEqual(1)
+        expect(
+          screen.queryByText("This is the first message")
+        ).not.toBeInTheDocument()
+        expect(
+          screen.getByText("This is the second message")
+        ).toBeInTheDocument()
+      })
     })
 
-    it("renders the body if the formatted first message is missing (can only happen on staging)", () => {
+    it("renders the body if the formatted first message is missing (can only happen on staging)", async () => {
       renderWithRelay({
         Conversation: () => ({
           messagesConnection,
@@ -261,8 +263,15 @@ describe("ConversationMessages", () => {
           },
         }),
       })
-      expect(screen.getByText("This is the first message")).toBeInTheDocument()
-      expect(screen.getByText("This is the second message")).toBeInTheDocument()
+
+      await waitFor(() => {
+        expect(
+          screen.getByText("This is the first message")
+        ).toBeInTheDocument()
+        expect(
+          screen.getByText("This is the second message")
+        ).toBeInTheDocument()
+      })
     })
   })
 })

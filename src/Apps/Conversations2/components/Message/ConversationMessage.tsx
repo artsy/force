@@ -13,13 +13,15 @@ import { ConversationMessageBubble } from "Apps/Conversations2/components/Messag
 import { ConversationMessageImage } from "Apps/Conversations2/components/Message/ConversationMessageImage"
 import { ConversationMessageFile } from "Apps/Conversations2/components/Message/ConversationMessageFile"
 
+export type Messages = Pick<
+  NonNullable<ConversationMessage_message$data>,
+  "isFromUser" | "internalID" | "createdAt"
+>[]
+
 interface ConversationMessageProps {
   messageIndex: number
   message: ConversationMessage_message$key
-  messages: Pick<
-    NonNullable<ConversationMessage_message$data>,
-    "isFromUser" | "internalID" | "createdAt"
-  >[]
+  messages: Messages
   simplified?: boolean
   isLastGroupedPartnerMessage?: boolean
   formattedFirstMessage?: NonNullable<

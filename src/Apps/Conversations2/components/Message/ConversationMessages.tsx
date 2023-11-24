@@ -1,11 +1,18 @@
 import { Box, BoxProps, Flex, Spinner } from "@artsy/palette"
-import React, { FC, useCallback, useEffect, useRef, useState } from "react"
+import React, {
+  FC,
+  Fragment,
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+} from "react"
 import {
   createPaginationContainer,
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { ConversationMessage } from "./ConversationMessage"
+import { ConversationMessage, Messages } from "./ConversationMessage"
 import { extractNodes } from "Utils/extractNodes"
 import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
 import { usePoll } from "Utils/Hooks/usePoll"
@@ -132,7 +139,7 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
 
         {groupedMessagesAndEvents.map((messageGroup, groupIndex) => {
           return (
-            <>
+            <Fragment key={`group-${groupIndex}`}>
               <ConversationTimeSince
                 message={messageGroup[0]}
                 exact
@@ -156,7 +163,6 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
                       <ConversationOrderUpdate
                         key={`event-${messageIndex}`}
                         event={message as any}
-                        setShowDetails={x => x}
                         mt={4}
                         mb={1}
                       />
@@ -164,20 +170,20 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
                   }
 
                   return (
-                    <>
+                    <Fragment key={`eventMessage-${messageIndex}`}>
                       <ConversationMessage
                         key={message?.internalID}
                         messageIndex={messageIndex}
-                        messages={messages}
+                        messages={messages as Messages}
                         message={message as NonNullable<typeof message>}
                         formattedFirstMessage={
                           conversation?.inquiryRequest?.formattedFirstMessage
                         }
                       />
-                    </>
+                    </Fragment>
                   )
                 })}
-            </>
+            </Fragment>
           )
         })}
 
@@ -353,7 +359,7 @@ const useAutoScrollToBottom = ({
 }
 
 const LoadingSpinner: React.FC<BoxProps> = boxProps => (
-  <Box position="relative" {...boxProps}>
+  <Box position="relative" {...boxProps} data-testid="LoadingSpinner">
     <Spinner />
   </Box>
 )

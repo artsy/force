@@ -119,42 +119,4 @@ describe("ConversationMessage", () => {
 
     expect(screen.getByText("attachment.pdf")).toBeInTheDocument()
   })
-
-  it.skip("displays Seen by all", () => {
-    renderWithRelay({
-      Message: () => ({
-        deliveries: [
-          {
-            openedAt: "2023-01-01T21:04:30+00:00",
-            fullTransformedEmail: "collector@cat.com",
-          },
-          {
-            openedAt: "2023-01-01T22:04:30+00:00",
-            fullTransformedEmail: "another_collector@dog.com",
-          },
-        ],
-        to: ["collector@cat.com"],
-        cc: ["another_collector@dog.com"],
-      }),
-    })
-
-    expect(screen.getByText("Seen by all")).toBeInTheDocument()
-  })
-
-  it.skip("displays Seen by [n]", () => {
-    renderWithRelay({
-      Message: () => ({
-        deliveries: [
-          {
-            openedAt: "2023-01-01T21:04:30+00:00",
-            fullTransformedEmail: "collector@cat.com",
-          },
-        ],
-        to: ["collector@cat.com"],
-        cc: ["another_collector@dog.com"],
-      }),
-    })
-
-    expect(screen.getByText("Seen by 1")).toBeInTheDocument()
-  })
 })

@@ -1,30 +1,24 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { OrderUpdateFragmentContainer } from "Apps/Conversation/Components/OrderUpdate"
-import { OrderUpdate_Test_Query } from "__generated__/OrderUpdate_Test_Query.graphql"
+import { ConversationOrderUpdate_Test_Query } from "__generated__/ConversationOrderUpdate_Test_Query.graphql"
 import { screen } from "@testing-library/react"
-import { DateTime } from "luxon"
+import { ConversationOrderUpdate } from "Apps/Conversations2/components/Message/ConversationOrderUpdate"
 
 jest.unmock("react-relay")
 
-const setShowDetailsSpy = jest.fn()
+describe("testing different statuses", () => {
+  const { renderWithRelay } = setupTestWrapperTL<
+    ConversationOrderUpdate_Test_Query
+  >({
+    Component: props => {
+      const event = props.conversation?.orderConnection?.edges?.[0]?.node!
+        .orderHistory[0]
 
-const { renderWithRelay } = setupTestWrapperTL<OrderUpdate_Test_Query>({
-  Component: props => {
-    const event = props!.me!.conversation!.orderConnection!.edges![0]!.node!
-      .orderHistory[0]
-
-    return (
-      <OrderUpdateFragmentContainer
-        event={event}
-        setShowDetails={setShowDetailsSpy}
-      />
-    )
-  },
-  query: graphql`
-    query ConversationOrderUpdate_Test_Query($conversationID: String!)
-      @relay_test_operation {
-      me {
+      return <ConversationOrderUpdate event={event!} />
+    },
+    query: graphql`
+      query ConversationOrderUpdate_Test_Query($conversationID: String!)
+        @relay_test_operation {
         conversation(id: $conversationID) {
           orderConnection(first: 10, participantType: BUYER) {
             edges {
@@ -38,13 +32,10 @@ const { renderWithRelay } = setupTestWrapperTL<OrderUpdate_Test_Query>({
           }
         }
       }
-    }
-  `,
-})
+    `,
+  })
 
-describe("testing different statuses", () => {
   it("render offer", () => {
-    const createdAt = "2021-07-04T12:16:40Z"
     renderWithRelay({
       Conversation: () => ({
         orderConnection: {
@@ -54,7 +45,6 @@ describe("testing different statuses", () => {
                 orderHistory: [
                   {
                     __typename: "CommerceOfferSubmittedEvent",
-                    createdAt,
                     offer: {
                       amount: "$39999",
                       fromParticipant: "BUYER",
@@ -70,21 +60,10 @@ describe("testing different statuses", () => {
       }),
     })
 
-    const date = DateTime.fromISO(createdAt)
-    expect(screen.getByText(date.toFormat("ccc, LLL d, t"))).toBeInTheDocument()
-    expect(
-      screen.getByText(/You sent an offer for \$39999./)
-    ).toBeInTheDocument()
-
-    const action = screen.queryByText("See details.")
-    expect(action).toBeInTheDocument()
-
-    action?.click()
-    expect(setShowDetailsSpy).toHaveBeenCalledWith(true)
+    expect(screen.getByText("You sent an offer for $39999")).toBeInTheDocument()
   })
 
   it("render counteroffer", () => {
-    const createdAt = "2021-07-04T12:46:40Z"
     renderWithRelay({
       Conversation: () => ({
         orderConnection: {
@@ -94,7 +73,6 @@ describe("testing different statuses", () => {
                 orderHistory: [
                   {
                     __typename: "CommerceOfferSubmittedEvent",
-                    createdAt,
                     offer: {
                       amount: "$40000",
                       definesTotal: true,
@@ -113,12 +91,9 @@ describe("testing different statuses", () => {
       }),
     })
 
-    const date = DateTime.fromISO(createdAt)
-    expect(screen.getByText(date.toFormat("ccc, LLL d, t"))).toBeInTheDocument()
     expect(
       screen.getByText("You sent a counteroffer for $40000")
     ).toBeInTheDocument()
-    expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
 
   it("render received a counteroffer", () => {
@@ -147,6 +122,7 @@ describe("testing different statuses", () => {
         },
       }),
     })
+
     expect(
       screen.getByText("You received a counteroffer for $40000")
     ).toBeInTheDocument()
@@ -179,6 +155,7 @@ describe("testing different statuses", () => {
         },
       }),
     })
+
     expect(
       screen.getByText("Offer Accepted - Pending Action")
     ).toBeInTheDocument()
@@ -205,9 +182,11 @@ describe("testing different statuses", () => {
         },
       }),
     })
+
     expect(screen.getByText("Offer Accepted")).toBeInTheDocument()
     expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
+
   it("render Offer Processing approval", () => {
     renderWithRelay({
       Conversation: () => ({
@@ -231,6 +210,7 @@ describe("testing different statuses", () => {
       screen.getByText("Offer accepted. Payment processing")
     ).toBeInTheDocument()
   })
+
   it("render Offer Declined", () => {
     renderWithRelay({
       Conversation: () => ({
@@ -252,9 +232,11 @@ describe("testing different statuses", () => {
         },
       }),
     })
+
     expect(screen.getByText("Offer Declined")).toBeInTheDocument()
     expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
+
   it("render Offer Expired", () => {
     renderWithRelay({
       Conversation: () => ({
@@ -276,9 +258,11 @@ describe("testing different statuses", () => {
         },
       }),
     })
+
     expect(screen.getByText("Offer Expired")).toBeInTheDocument()
     expect(screen.queryByText("See details.")).not.toBeInTheDocument()
   })
+
   it("render Purchase Submitted", () => {
     renderWithRelay({
       Conversation: () => ({
@@ -298,9 +282,10 @@ describe("testing different statuses", () => {
         },
       }),
     })
-    expect(screen.getByText("You purchased this artwork.")).toBeInTheDocument()
-    expect(screen.queryByText("See details.")).toBeInTheDocument()
+
+    expect(screen.getByText("You purchased this artwork")).toBeInTheDocument()
   })
+
   it("render Purchase Accepted", () => {
     renderWithRelay({
       Conversation: () => ({
@@ -321,8 +306,10 @@ describe("testing different statuses", () => {
         },
       }),
     })
+
     expect(screen.getByText("Purchase Accepted")).toBeInTheDocument()
   })
+
   it("render Purchase Expired", () => {
     renderWithRelay({
       Conversation: () => ({
@@ -344,6 +331,7 @@ describe("testing different statuses", () => {
         },
       }),
     })
+
     expect(screen.getByText("Purchase Expired")).toBeInTheDocument()
   })
 })

@@ -11,12 +11,10 @@ import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
 
 export interface OrderUpdateProps extends FlexProps {
   event: ConversationOrderUpdate_event$key
-  setShowDetails: (showDetails: boolean) => void
 }
 
 export const ConversationOrderUpdate: React.FC<OrderUpdateProps> = ({
   event,
-  setShowDetails,
   ...flexProps
 }) => {
   const data = useFragment(FRAGMENT, event)
