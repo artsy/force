@@ -22,6 +22,7 @@ import { ActionType } from "@artsy/cohesion"
 import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
+import { extractNodes } from "Utils/extractNodes"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
@@ -35,6 +36,8 @@ export const NavBarLoggedInActions: React.FC<Partial<
   const hasNotifications = unreadNotificationsCount > 0
   const hasUnseenNotifications = unseenNotificationsCount > 0
   const shouldDisplayBlueDot = hasNotifications && hasUnseenNotifications
+
+  const firstConversation = extractNodes(me?.firstConversationConnection)[0]
 
   return (
     <>
@@ -81,7 +84,13 @@ export const NavBarLoggedInActions: React.FC<Partial<
       </Dropdown>
 
       <NavBarItemLink
-        href="/user/conversations"
+        href={
+          // If first convo is loaded, jump directly to that to avoid the
+          // flashing redirect
+          firstConversation?.internalID
+            ? `/user/conversations/${firstConversation.internalID}`
+            : "/user/conversations"
+        }
         aria-label={
           hasConversations
             ? `${me?.unreadConversationCount} unread conversations`
@@ -144,6 +153,15 @@ export const NavBarLoggedInActionsQueryRenderer: React.FC<{}> = () => {
             unreadNotificationsCount
             unseenNotificationsCount
             unreadConversationCount
+
+            firstConversationConnection: conversationsConnection(first: 1) {
+              edges {
+                node {
+                  internalID
+                }
+              }
+            }
+
             followsAndSaves {
               notifications: bundledArtworksByArtistConnection(
                 sort: PUBLISHED_AT_DESC
