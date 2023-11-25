@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9b56a10e3e8c5b47f4286aa7fc73a352>>
+ * @generated SignedSource<<c8820bfb0f9d12a68aee1a6cece9d28f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,7 +23,7 @@ export type ConversationReply_conversation$data = {
     } | null | undefined;
   } | null | undefined> | null | undefined;
   readonly lastMessageID: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"Conversation2CTA_conversation">;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationCTA_conversation">;
   readonly " $fragmentType": "ConversationReply_conversation";
 } | null | undefined;
 export type ConversationReply_conversation$key = {
@@ -48,7 +48,7 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
-      "name": "Conversation2CTA_conversation"
+      "name": "ConversationCTA_conversation"
     },
     {
       "kind": "RequiredField",
@@ -151,6 +151,6 @@ return {
 };
 })();
 
-(node as any).hash = "6c417455b7d1df29e0fcb38177a9ae02";
+(node as any).hash = "0d2f6c610b891b6030defa169a4fced8";
 
 export default node;

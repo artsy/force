@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a4d58bb40468e3752e07ecd9f86daaec>>
+ * @generated SignedSource<<d364db5861d19e85861a247555f604ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,7 +22,6 @@ export type useConversationPurchaseButtonData_conversation$data = {
       readonly isAcquireable: boolean | null | undefined;
       readonly isEdition: boolean | null | undefined;
       readonly slug: string;
-      readonly " $fragmentSpreads": FragmentRefs<"ConfirmArtworkButton_artwork">;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
@@ -110,11 +109,6 @@ return {
                     (v0/*: any*/)
                   ],
                   "storageKey": null
-                },
-                {
-                  "args": null,
-                  "kind": "FragmentSpread",
-                  "name": "ConfirmArtworkButton_artwork"
                 }
               ],
               "type": "Artwork",
@@ -132,6 +126,6 @@ return {
 };
 })();
 
-(node as any).hash = "0905ce92a96caf29d9369b7179c1372f";
+(node as any).hash = "f06eee4522969d3f7bb7d224cf1adc75";
 
 export default node;

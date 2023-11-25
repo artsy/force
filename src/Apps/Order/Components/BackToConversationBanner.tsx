@@ -8,7 +8,7 @@ interface BackToConversationBannerProps {
 export const BackToConversationBanner: React.FC<
   BackToConversationBannerProps & BoxProps
 > = ({ conversationId }) => {
-  const link = `/user/conversations2/${conversationId}`
+  const link = `/user/conversations/${conversationId}`
 
   return (
     <TopContextBar href={link} displayBackArrow hideSeparator>

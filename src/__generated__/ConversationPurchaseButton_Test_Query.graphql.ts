@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e8f7af103407f6a981572606475157dd>>
+ * @generated SignedSource<<04451c661a287684e8d9e98bfc99a445>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -214,7 +214,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "aa7f5c5f267dd580e4ff2fda947b8953",
+    "cacheID": "349d86e6f6f086ee72edd95e7bce55ad",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -269,7 +269,7 @@ return {
     },
     "name": "ConversationPurchaseButton_Test_Query",
     "operationKind": "query",
-    "text": "query ConversationPurchaseButton_Test_Query {\n  me {\n    conversation(id: \"123\") {\n      ...useConversationPurchaseButtonData_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment ConfirmArtworkButton_artwork on Artwork {\n  internalID\n}\n\nfragment useConversationPurchaseButtonData_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isAcquireable\n        isEdition\n        internalID\n        slug\n        editionSets {\n          internalID\n          id\n        }\n        ...ConfirmArtworkButton_artwork\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query ConversationPurchaseButton_Test_Query {\n  me {\n    conversation(id: \"123\") {\n      ...useConversationPurchaseButtonData_conversation\n      id\n    }\n    id\n  }\n}\n\nfragment useConversationPurchaseButtonData_conversation on Conversation {\n  internalID\n  items {\n    liveArtwork {\n      __typename\n      ... on Artwork {\n        __typename\n        isAcquireable\n        isEdition\n        internalID\n        slug\n        editionSets {\n          internalID\n          id\n        }\n      }\n      ... on Node {\n        __isNode: __typename\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
