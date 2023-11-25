@@ -164,7 +164,7 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
                         key={`event-${messageIndex}`}
                         event={message as any}
                         mt={4}
-                        mb={1}
+                        mb={2}
                       />
                     )
                   }

@@ -45,7 +45,7 @@ export const ConversationStatusWithCounter: React.FC<ConversationStatusWithCount
       expiryText = "until counteroffer expires"
       break
     case "sellerCounteroffer":
-      text = "Sent counteroffer"
+      text = "Received counteroffer"
       expiryText = "until counteroffer expires"
       respondByText = `Awaiting response by ${formattedStateExpiresAt}`
       break

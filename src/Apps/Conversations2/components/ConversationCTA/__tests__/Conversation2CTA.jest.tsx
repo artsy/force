@@ -1,24 +1,18 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { ConversationCTAFragmentContainer } from "Apps/Conversation/Components/ConversationCTA"
 import { useTracking } from "react-tracking"
 import { useSystemContext as baseUseSystemContext } from "System/useSystemContext"
 import { screen, fireEvent } from "@testing-library/react"
+import { Conversation2CTA } from "Apps/Conversations2/components/ConversationCTA/Conversation2CTA"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("System/useSystemContext")
 
 describe("ConversationCTA", () => {
-  const openInquiryModalFn = jest.fn()
-  const openOrderModal = jest.fn()
   const { renderWithRelay } = setupTestWrapperTL({
     Component: (props: any) => (
-      <ConversationCTAFragmentContainer
-        conversation={props.me.conversation}
-        openInquiryModal={openInquiryModalFn}
-        openOrderModal={openOrderModal}
-      />
+      <Conversation2CTA conversation={props.me.conversation} />
     ),
     query: graphql`
       query Conversation2CTA_Test_Query @relay_test_operation {
@@ -50,6 +44,12 @@ describe("ConversationCTA", () => {
       Conversation: () => ({
         activeOrders: {
           edges: [{ node: { buyerAction: "OFFER_RECEIVED" } }],
+        },
+        activeOrderCTA: null,
+        items: {
+          liveArtwork: {
+            __typename: "Artwork",
+          },
         },
       }),
     })

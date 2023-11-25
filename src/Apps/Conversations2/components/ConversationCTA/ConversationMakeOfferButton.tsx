@@ -20,7 +20,10 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { router } = useRouter()
   const { submitMutation } = useMakeInquiryOffer()
-  const { showSelectEditionSetModal } = useConversationsContext()
+  const {
+    showSelectEditionSetModal,
+    isConfirmModalVisible,
+  } = useConversationsContext()
 
   const data = useConversationPurchaseButtonData(conversation)
 
@@ -43,7 +46,7 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
     : "primaryBlack"
 
   // Opens a modal window to select an edition set on non-unique artworks
-  if (!data.isUniqueArtwork) {
+  if (!isConfirmModalVisible && !data.isUniqueArtwork) {
     return (
       <Button
         size="large"

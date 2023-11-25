@@ -99,7 +99,7 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
 
         return (
           <React.Fragment key={attachment.internalID}>
-            <Spacer y={0.5} />
+            <Spacer y={2} />
 
             <ConversationMessageBubble
               fromViewer={!data.isFromUser}

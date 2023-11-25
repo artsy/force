@@ -162,7 +162,7 @@ describe("OrderState", () => {
         }),
       })
 
-      expect(screen.getByText("Sent counteroffer")).toBeInTheDocument()
+      expect(screen.getByText("Received counteroffer")).toBeInTheDocument()
       expect(
         screen.getByText("Awaiting response by MMMM DD, HH:mm")
       ).toBeInTheDocument()

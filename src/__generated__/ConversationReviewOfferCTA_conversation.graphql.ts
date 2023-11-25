@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c829d65326e6f181c58894576df53b43>>
+ * @generated SignedSource<<f2572983d6cf870f10b7cfb688aa4f91>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -31,6 +31,7 @@ export type ConversationReviewOfferCTA_conversation$data = {
         readonly state: CommerceOrderStateEnum;
         readonly stateExpiresAt: string | null | undefined;
         readonly stateReason: string | null | undefined;
+        readonly stateUpdatedAt: string | null | undefined;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -121,6 +122,13 @@ return {
                   "storageKey": null
                 },
                 {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "stateUpdatedAt",
+                  "storageKey": null
+                },
+                {
                   "kind": "InlineFragment",
                   "selections": [
                     {
@@ -207,6 +215,6 @@ return {
 };
 })();
 
-(node as any).hash = "38e8b41e87c099dc05e0a82eadc11ed8";
+(node as any).hash = "27b3bf1e97cc22113087b7b07f299c87";
 
 export default node;

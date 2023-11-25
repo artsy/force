@@ -1,10 +1,15 @@
 import * as React from "react"
 import { useTracking } from "react-tracking"
 import { TappedViewOffer, ActionType, OwnerType } from "@artsy/cohesion"
-import { DateTime } from "luxon"
-import { Color, Flex, ModalDialog, Text } from "@artsy/palette"
+import {
+  Clickable,
+  Flex,
+  Message,
+  MessageProps,
+  ModalDialog,
+  Text,
+} from "@artsy/palette"
 import styled from "styled-components"
-import { useEventTiming } from "Utils/Hooks/useEventTiming"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import AlertFillIcon from "@artsy/icons/AlertFillIcon"
 import MoneyFillIcon from "@artsy/icons/MoneyFillIcon"
@@ -12,6 +17,7 @@ import { graphql, useFragment } from "react-relay"
 import { ConversationReviewOfferCTA_conversation$key } from "__generated__/ConversationReviewOfferCTA_conversation.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { useState } from "react"
+import { useCountdownTimer } from "Apps/Conversations2/hooks/useCountdownTimer"
 
 export interface ConversationReviewOfferCTAProps {
   conversation: ConversationReviewOfferCTA_conversation$key
@@ -25,10 +31,9 @@ export const ConversationReviewOfferCTA: React.FC<ConversationReviewOfferCTAProp
   const [showOrderModal, setShowOrderModal] = useState(false)
   const { trackEvent } = useTracking()
 
-  const { hoursTillEnd, minutes } = useEventTiming({
-    currentTime: DateTime.local().toString(),
-    startAt: activeOrder?.lastOffer?.createdAt as string,
-    endAt: activeOrder?.stateExpiresAt as string,
+  const { remainingTime } = useCountdownTimer({
+    startTime: activeOrder?.stateUpdatedAt as string,
+    endTime: activeOrder?.stateExpiresAt as string,
   })
 
   if (!activeOrder) {
@@ -40,8 +45,7 @@ export const ConversationReviewOfferCTA: React.FC<ConversationReviewOfferCTAProp
 
   const props = getProps({
     activeOrder,
-    hoursTillEnd,
-    minutes,
+    remainingTime: remainingTime as string,
   })
 
   const handleCTAClick = () => {
@@ -69,65 +73,59 @@ export const ConversationReviewOfferCTA: React.FC<ConversationReviewOfferCTAProp
         </ModalDialog>
       )}
 
-      <Flex
-        px={2}
-        py={1}
-        justifyContent="space-between"
-        alignItems="center"
-        bg={props.backgroundColor}
-        flexDirection="row"
-        minHeight={60}
-        style={{ cursor: "pointer" }}
-        onClick={handleCTAClick}
-      >
-        <Flex flexDirection="row">
-          {/* <props.Icon mt={0.5} fill="white100" /> */}
-
-          <Flex flexDirection="column" pl={1}>
-            <Text color="white100" variant="sm">
-              {props.message}
-            </Text>
-
-            <Text color="white100" variant="xs">
-              {props.subMessage}
-            </Text>
-          </Flex>
-        </Flex>
-
-        <ChevronRightIcon fill="white100" />
-      </Flex>
+      <AlertMessage {...props} onClick={handleCTAClick} />
     </>
+  )
+}
+
+const AlertMessage = (props: GetCTAReturnProps & { onClick: () => void }) => {
+  return (
+    <Clickable onClick={props.onClick}>
+      <Flex
+        flexDirection="row"
+        justifyContent="space-between"
+        alignContent="center"
+        alignItems="center"
+      >
+        <Message variant={props.variant} title={props.message} width="100%">
+          <Text variant="sm">{props.subMessage}</Text>
+        </Message>
+        <ChevronRightIcon
+          fill="black100"
+          position="absolute"
+          right={0}
+          pr={4}
+        />
+      </Flex>
+    </Clickable>
   )
 }
 
 interface GetCTAAttributesProps {
   activeOrder: any
-  hoursTillEnd: number
-  minutes: string
+  remainingTime: string
 }
 
-const getProps = ({
-  activeOrder,
-  hoursTillEnd,
-  minutes,
-}: GetCTAAttributesProps): {
-  backgroundColor: Color
+interface GetCTAReturnProps {
   message: string
   subMessage: string
   modalUrl: string
   modalTitle: string
+  variant: MessageProps["variant"]
   Icon: React.FC<any>
-} => {
-  const expiresIn =
-    Number(hoursTillEnd) < 1 ? `${minutes}m` : `${Math.round(hoursTillEnd)}hr`
+}
 
+const getProps = ({
+  activeOrder,
+  remainingTime,
+}: GetCTAAttributesProps): GetCTAReturnProps => {
   const offerType =
     (activeOrder.offers?.edges?.length ?? 0) > 1 ? "Counteroffer" : "Offer"
 
   switch (activeOrder.buyerAction) {
     case "PAYMENT_FAILED": {
       return {
-        backgroundColor: "red100",
+        variant: "alert",
         message: "Payment Failed",
         subMessage:
           "Unable to process payment for accepted offer. Update payment method.",
@@ -138,9 +136,9 @@ const getProps = ({
     }
     case "OFFER_RECEIVED": {
       return {
-        backgroundColor: "orange150" as Color, // FIXME: Needs v3 typing
+        variant: "default",
         message: `${offerType} Received`,
-        subMessage: `The offer expires in ${expiresIn}`,
+        subMessage: `The offer expires in ${remainingTime}`,
         modalUrl: `/orders/${activeOrder.internalID}/respond`,
         modalTitle: "Review Offer",
         Icon: AlertFillIcon,
@@ -148,7 +146,7 @@ const getProps = ({
     }
     case "OFFER_ACCEPTED": {
       return {
-        backgroundColor: "green100",
+        variant: "info",
         message: `Congratulations! ${offerType} Accepted`,
         subMessage: "Tap to view",
         modalUrl: `/orders/${activeOrder.internalID}/status`,
@@ -158,9 +156,9 @@ const getProps = ({
     }
     case "OFFER_ACCEPTED_CONFIRM_NEEDED": {
       return {
-        backgroundColor: "orange150" as Color, // FIXME: Needs v3 typing
+        variant: "warning",
         message: `Offer Accepted - Confirm total`,
-        subMessage: `The offer expires in ${expiresIn}`,
+        subMessage: `The offer expires in ${remainingTime}`,
         modalUrl: `/orders/${activeOrder.internalID}/respond`,
         modalTitle: "Review Offer",
         Icon: AlertFillIcon,
@@ -168,9 +166,9 @@ const getProps = ({
     }
     case "OFFER_RECEIVED_CONFIRM_NEEDED": {
       return {
-        backgroundColor: "orange150" as Color, // FIXME: Needs v3 typing
+        variant: "warning",
         message: `Counteroffer Received - Confirm Total`,
-        subMessage: `The offer expires in ${expiresIn}`,
+        subMessage: `The offer expires in ${remainingTime}`,
         modalUrl: `/orders/${activeOrder.internalID}/respond`,
         modalTitle: "Review Offer",
         Icon: AlertFillIcon,
@@ -178,7 +176,7 @@ const getProps = ({
     }
     case "PROVISIONAL_OFFER_ACCEPTED": {
       return {
-        backgroundColor: "green100",
+        variant: "info",
         message: `Offer Accepted`,
         subMessage: "Tap to view",
         modalUrl: `/orders/${activeOrder.internalID}/status`,
@@ -207,6 +205,7 @@ const FRAGMENT = graphql`
           state
           stateReason
           stateExpiresAt
+          stateUpdatedAt
 
           ... on CommerceOfferOrder {
             buyerAction

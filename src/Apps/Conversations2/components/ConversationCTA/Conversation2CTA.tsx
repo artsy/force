@@ -26,13 +26,27 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
 
   const activeOrder = extractNodes(data.activeOrderCTA)[0]
 
-  if (activeOrder || !artwork) {
+  if (!artwork) {
     return null
   }
 
+  // Active order. Shows status of the transaction, with various actions and modal triggers
+  const showActiveOrderReviewOfferCTA = Boolean(
+    activeOrder && activeOrder.buyerAction
+  )
+
+  // Inactive order waiting for commercial actions
+  const showTransactionButtons =
+    !activeOrder &&
+    (artwork.isAcquireable ||
+      artwork.isOfferable ||
+      artwork.isOfferableFromInquiry)
+
   return (
     <>
-      <ConversationReviewOfferCTA conversation={data} />
+      {showActiveOrderReviewOfferCTA && (
+        <ConversationReviewOfferCTA conversation={data} />
+      )}
 
       <Flex {...flexProps} flexDirection="column">
         <Flex flexDirection="row" alignItems="center" justifyContent={"center"}>
@@ -54,20 +68,26 @@ export const Conversation2CTA: React.FC<Conversation2CTAProps> = ({
           <ConversationConfirmModal conversation={data} artwork={artwork} />
         </Box>
 
-        <Flex flexDirection="row" justifyContent="space-between">
-          {artwork.isAcquireable && (
-            <ConversationPurchaseButton
-              conversation={data}
-              mt={1}
-              px={0.5}
-              width="100%"
-            />
-          )}
+        {showTransactionButtons && (
+          <Flex flexDirection="row" justifyContent="space-between">
+            {artwork.isAcquireable && (
+              <ConversationPurchaseButton
+                conversation={data}
+                mt={1}
+                px={0.5}
+                width="100%"
+              />
+            )}
 
-          {(artwork.isOfferable || artwork.isOfferableFromInquiry) && (
-            <ConversationMakeOfferButton conversation={data} mt={1} px={0.5} />
-          )}
-        </Flex>
+            {(artwork.isOfferable || artwork.isOfferableFromInquiry) && (
+              <ConversationMakeOfferButton
+                conversation={data}
+                mt={1}
+                px={0.5}
+              />
+            )}
+          </Flex>
+        )}
       </Flex>
     </>
   )
