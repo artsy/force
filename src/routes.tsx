@@ -15,7 +15,6 @@ import { collectorProfileRoutes } from "Apps/CollectorProfile/collectorProfileRo
 import { consignFromMyCollectionRoutes } from "Apps/Consign/consignFromMyCollectionRoutes"
 import { consignFromCollectorProfileMyCollectionRoutes } from "Apps/Consign/consignFromCollectorProfileMyCollectionRoutes"
 import { consignRoutes } from "Apps/Consign/consignRoutes"
-import { conversationRoutes } from "Apps/Conversation/conversationRoutes"
 import { debugRoutes } from "Apps/Debug/debugRoutes"
 import { exampleRoutes } from "Apps/Example/exampleRoutes"
 import { fairRoutes } from "Apps/Fair/fairRoutes"
@@ -85,7 +84,6 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: consignFromMyCollectionRoutes },
     { routes: consignFromCollectorProfileMyCollectionRoutes },
     { routes: contactRoutes },
-    { routes: conversationRoutes },
     { routes: conversations2Routes },
     { routes: exampleRoutes },
     { routes: endingSoonAuctionsRoutes },
