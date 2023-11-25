@@ -20,6 +20,7 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
   const [isSubmitting, setIsSubmitting] = useState(false)
   const { router } = useRouter()
   const { submitMutation } = useMakeInquiryOffer()
+
   const {
     showSelectEditionSetModal,
     isConfirmModalVisible,
@@ -88,7 +89,7 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
       trackMakeOfferEvent()
 
       if (
-        response.createInquiryOfferOrder?.orderOrError.__typename ===
+        response?.createInquiryOfferOrder?.orderOrError.__typename ===
         "CommerceOrderWithMutationSuccess"
       ) {
         router.push(

@@ -2,12 +2,12 @@ import React, { FC, useRef } from "react"
 import { Button, ButtonProps } from "@artsy/palette"
 import ChevronSmallDownIcon from "@artsy/icons/ChevronSmallDownIcon"
 
-interface LatestMessagesProps {
+interface LatestMessagesFlyOutProps {
   visible: boolean
   onClick: ButtonProps["onClick"]
 }
 
-export const LatestMessages: FC<LatestMessagesProps> = ({
+export const LatestMessagesFlyOut: FC<LatestMessagesFlyOutProps> = ({
   visible,
   onClick,
 }) => {
@@ -21,7 +21,7 @@ export const LatestMessages: FC<LatestMessagesProps> = ({
       position="sticky"
       alignSelf="center"
       opacity={visible ? 1 : 0}
-      onClick={(e) => {
+      onClick={e => {
         if (!visible) {
           return
         }

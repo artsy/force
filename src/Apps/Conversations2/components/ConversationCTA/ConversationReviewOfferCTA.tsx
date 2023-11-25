@@ -70,7 +70,10 @@ export const ConversationReviewOfferCTA: React.FC<ConversationReviewOfferCTAProp
           title={props.modalTitle}
           data-testid="orderModal"
         >
-          <IFrame src={`${props.modalUrl}?isModal=true`}></IFrame>
+          <IFrame
+            src={`${props.modalUrl}?isModal=true`}
+            data-testid="orderModalIframe"
+          ></IFrame>
         </ModalDialog>
       )}
 

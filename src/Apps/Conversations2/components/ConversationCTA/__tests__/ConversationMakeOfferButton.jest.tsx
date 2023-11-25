@@ -1,48 +1,65 @@
 import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { ConversationMakeOfferButton } from "Apps/Conversations2/components/ConversationCTA/ConversationMakeOfferButton"
-import { MakeInquiryOffer } from "Apps/Conversation/Mutation/MakeInquiryOfferMutation"
 import { screen, fireEvent, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
+import { useMakeInquiryOffer } from "Apps/Conversations2/mutations/useMakeInquiryOfferMutation"
+import { useConversationsContext } from "Apps/Conversations2/ConversationsContext"
 
 jest.mock("react-tracking")
 jest.unmock("react-relay")
-jest.mock("Apps/Conversation/Mutation/MakeInquiryOfferMutation")
 
-const openInquiryModalFn = jest.fn()
+jest.mock("Apps/Conversations2/mutations/useMakeInquiryOfferMutation", () => ({
+  useMakeInquiryOffer: jest.fn().mockReturnValue({
+    submitMutation: jest.fn(),
+  }),
+}))
 
-const { renderWithRelay } = setupTestWrapperTL({
-  Component: (props: any) => {
-    return <ConversationMakeOfferButton conversation={props.me.conversation} />
-  },
-  query: graphql`
-    query ConversationMakeOfferButton_Test_Query @relay_test_operation {
-      me {
-        conversation(id: "123") {
-          ...useConversationPurchaseButtonData_conversation
+jest.mock("Apps/Conversations2/ConversationsContext", () => ({
+  useConversationsContext: jest.fn().mockReturnValue({
+    isConfirmModalVisible: false,
+    showSelectEditionSetModal: jest.fn(),
+  }),
+}))
+
+describe("ConversationMakeOfferButton", () => {
+  const { renderWithRelay } = setupTestWrapperTL({
+    Component: (props: any) => {
+      return (
+        <ConversationMakeOfferButton conversation={props.me.conversation} />
+      )
+    },
+    query: graphql`
+      query ConversationMakeOfferButton_Test_Query @relay_test_operation {
+        me {
+          conversation(id: "123") {
+            ...useConversationPurchaseButtonData_conversation
+          }
         }
       }
-    }
-  `,
-})
+    `,
+  })
 
-const trackingSpy = jest.fn()
+  const trackingSpy = jest.fn()
 
-describe("MakeOfferOnInquiryButton", () => {
+  const mockUseConversationsContext = useConversationsContext as jest.Mock
   const mockuseTracking = useTracking as jest.Mock
-  const mockMakeInquiryOfferMutation = MakeInquiryOffer as jest.Mock
+  const mockMakeInquiryOfferMutation = useMakeInquiryOffer as jest.Mock
 
   beforeEach(() => {
+    mockMakeInquiryOfferMutation.mockImplementation(() => ({
+      submitMutation: jest.fn(),
+    }))
     mockuseTracking.mockImplementation(() => ({
       trackEvent: trackingSpy,
     }))
   })
 
   afterEach(() => {
-    jest.resetAllMocks()
+    jest.clearAllMocks()
   })
 
-  it("renders with Make Offer CTA", () => {
+  it("renders with Make Offer CTA", async () => {
     renderWithRelay({
       Conversation: () => ({
         internalID: "internal-test-id",
@@ -50,14 +67,19 @@ describe("MakeOfferOnInquiryButton", () => {
       }),
     })
 
-    expect(screen.getByText("Make an Offer")).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByText("Make an Offer")).toBeInTheDocument()
+    })
   })
 
   it("clicking the button on unique artworks creates an offer", async () => {
+    const mutationSpy = jest.fn()
+
+    mockMakeInquiryOfferMutation.mockImplementation(() => ({
+      submitMutation: mutationSpy,
+    }))
+
     renderWithRelay({
-      Me: () => ({
-        Conversation: () => ({ ahot: "there" }),
-      }),
       Conversation: () => ({
         internalID: "internal-test-id",
       }),
@@ -65,21 +87,24 @@ describe("MakeOfferOnInquiryButton", () => {
 
     fireEvent.click(screen.getByText("Make an Offer"))
 
-    expect(trackingSpy).toHaveBeenCalledWith({
-      action: "tappedMakeOffer",
-      context_owner_type: "conversation",
-      impulse_conversation_id: "internal-test-id",
-    })
     await waitFor(() => {
-      expect(mockMakeInquiryOfferMutation).toHaveBeenCalledTimes(1)
+      expect(trackingSpy).toHaveBeenCalledWith({
+        action: "tappedMakeOffer",
+        context_owner_type: "conversation",
+        impulse_conversation_id: "internal-test-id",
+      })
+      expect(mutationSpy).toHaveBeenCalledTimes(1)
     })
   })
 
   it("clicking the button on artworks with one edition set creates an offer", async () => {
+    const mutationSpy = jest.fn()
+
+    mockMakeInquiryOfferMutation.mockImplementation(() => ({
+      submitMutation: mutationSpy,
+    }))
+
     renderWithRelay({
-      Me: () => ({
-        Conversation: () => ({ ahot: "there" }),
-      }),
       Conversation: () => ({
         internalID: "internal-test-id",
         items: [
@@ -100,22 +125,26 @@ describe("MakeOfferOnInquiryButton", () => {
 
     fireEvent.click(screen.getByText("Make an Offer"))
 
-    expect(trackingSpy).toHaveBeenCalledWith({
-      action: "tappedMakeOffer",
-      context_owner_type: "conversation",
-      impulse_conversation_id: "internal-test-id",
-    })
-
     await waitFor(() => {
-      expect(mockMakeInquiryOfferMutation).toHaveBeenCalledTimes(1)
+      expect(trackingSpy).toHaveBeenCalledWith({
+        action: "tappedMakeOffer",
+        context_owner_type: "conversation",
+        impulse_conversation_id: "internal-test-id",
+      })
+
+      expect(mutationSpy).toHaveBeenCalledTimes(1)
     })
   })
 
-  it("clicking the button on non-unique artworks opens the confirmation modal", () => {
+  it("clicking the button on non-unique artworks opens the confirmation modal", async () => {
+    const showModalSpy = jest.fn()
+
+    mockUseConversationsContext.mockReturnValue({
+      isConfirmModalVisible: false,
+      showSelectEditionSetModal: showModalSpy,
+    })
+
     renderWithRelay({
-      Me: () => ({
-        Conversation: () => ({ ahot: "there" }),
-      }),
       Conversation: () => ({
         internalID: "internal-test-id",
         items: [
@@ -138,11 +167,14 @@ describe("MakeOfferOnInquiryButton", () => {
     })
 
     fireEvent.click(screen.getByText("Make an Offer"))
-    expect(openInquiryModalFn).toHaveBeenCalledTimes(1)
-    expect(trackingSpy).toHaveBeenCalledWith({
-      action: "tappedMakeOffer",
-      context_owner_type: "conversation",
-      impulse_conversation_id: "internal-test-id",
+
+    await waitFor(() => {
+      expect(showModalSpy).toHaveBeenCalledTimes(1)
+      expect(trackingSpy).toHaveBeenCalledWith({
+        action: "tappedMakeOffer",
+        context_owner_type: "conversation",
+        impulse_conversation_id: "internal-test-id",
+      })
     })
   })
 })

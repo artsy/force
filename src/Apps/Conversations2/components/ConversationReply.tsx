@@ -67,10 +67,12 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
 
   const handleError = (error?: unknown) => {
     console.error("Error sending message:", error)
+
     sendToast({
       variant: "error",
       message: "Error sending message. Please try again.",
     })
+
     setIsLoading(false)
   }
 
@@ -85,6 +87,7 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
       })
       return
     }
+
     setIsLoading(true)
 
     commit({
@@ -104,6 +107,7 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
         }
 
         helpers.resetForm()
+
         trackEvent(
           sentConversationMessage({
             impulseConversationId: match.params.conversationId as string,
@@ -112,6 +116,7 @@ export const ConversationReply: FC<ConversationReplyProps> = ({
               "",
           })
         )
+
         setIsLoading(false)
         setTextAreaHeight(TEXT_AREA_MIN_HEIGHT)
       },

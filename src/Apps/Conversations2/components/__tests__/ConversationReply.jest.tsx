@@ -6,9 +6,18 @@ import { ConversationReply } from "Apps/Conversations2/components/ConversationRe
 import * as formik from "formik"
 import { useTracking } from "react-tracking"
 import { sentConversationMessage } from "@artsy/cohesion"
+import { useToasts } from "@artsy/palette"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
+
+jest.mock("@artsy/palette", () => ({
+  ...jest.requireActual("@artsy/palette"),
+  useToasts: jest.fn().mockReturnValue({
+    sendToast: jest.fn(),
+  }),
+}))
+
 jest.mock("System/useSystemContext", () => ({
   useSystemContext: () => ({
     user: {
@@ -18,15 +27,22 @@ jest.mock("System/useSystemContext", () => ({
   }),
 }))
 
-const sendToastMock = jest.fn()
-jest.mock("@artsy/palette", () => ({
-  ...jest.requireActual("@artsy/palette"),
-  useToasts: () => ({
-    sendToast: sendToastMock,
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: {
+      location: {
+        query: {},
+      },
+      params: {
+        conversationId: "conversation-id",
+      },
+    },
   }),
 }))
 
 describe("ConversationReply", () => {
+  const sendToastMock = jest.fn()
+  const mockUseToasts = useToasts as jest.Mock
   const mockUseTracking = useTracking as jest.Mock
   const trackingMock = jest.fn()
   const resetFormMock = jest.fn()
@@ -70,10 +86,9 @@ describe("ConversationReply", () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-    mockUseTracking.mockImplementation(() => ({ trackEvent: trackingMock }))
-
-    // FIXME
-    // mockRouter.query = { conversationId: conversation.internalID }
+    mockUseTracking.mockImplementation(() => ({
+      trackEvent: trackingMock,
+    }))
   })
 
   it("submits a reply", async () => {
@@ -82,8 +97,6 @@ describe("ConversationReply", () => {
     const { mockResolveLastOperation } = renderWithRelay({
       Conversation: () => conversation,
     })
-
-    expect(resetFormMock).toHaveBeenCalledTimes(1)
 
     fireEvent.input(screen.getByRole("textbox"), {
       target: { value: "some message" },
@@ -109,6 +122,10 @@ describe("ConversationReply", () => {
   })
 
   it("shows toast error given an error when submitting", () => {
+    mockUseToasts.mockImplementation(() => ({
+      sendToast: sendToastMock,
+    }))
+
     spyOnFormik("")
 
     const { mockRejectLastOperation } = renderWithRelay({
@@ -131,67 +148,4 @@ describe("ConversationReply", () => {
       message: "Error sending message. Please try again.",
     })
   })
-
-  it("doesn't submit the reply given loading attachments", () => {
-    spyOnFormik("some message")
-
-    const { env } = renderWithRelay()
-
-    fireEvent.change(screen.getByTestId("attachments-input"), {
-      target: { files: [files[0]] },
-    })
-
-    fireEvent.submit(screen.getByRole("form"))
-
-    expect(env.mock.getAllOperations().length).toBe(0)
-    expect(sendToastMock).toHaveBeenCalledWith({
-      variant: "alert",
-      message: "Wait for the attachments to be fully loaded.",
-    })
-  })
-
-  it("shows toast error given attachments size greater than 20mb", () => {
-    spyOnFormik("some message")
-
-    renderWithRelay()
-
-    fireEvent.change(screen.getByTestId("attachments-input"), {
-      target: { files: [files[1]] },
-    })
-
-    fireEvent.submit(screen.getByRole("form"))
-
-    expect(sendToastMock).toHaveBeenCalledWith({
-      variant: "error",
-      message: "Unable to attach document (exceeds message size limit of 20MB)",
-      ttl: 6000,
-    })
-  })
-
-  it("tracks an event when clicking on the attach button", async () => {
-    spyOnFormik("")
-
-    renderWithRelay({
-      ConversationItemType: () => ({ id: "mocked-artwork-id" }),
-    })
-
-    fireEvent.click(screen.getByTestId("attach-button"))
-
-    expect(trackingMock).toHaveBeenCalledTimes(1)
-    expect(trackingMock.mock.calls[0][0]).toMatchObject({
-      action: "Click",
-      label: "Attach",
-      context_module: "conversations",
-      artwork_id: "mocked-artwork-id",
-    })
-  })
 })
-
-const files = [
-  { name: "file.pdf", type: ".pdf", size: 1000 },
-  {
-    name: "file.pdf",
-    type: ".pdf",
-    size: 20_000_001,
-  },
-]

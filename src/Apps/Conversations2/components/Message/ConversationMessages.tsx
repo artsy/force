@@ -25,7 +25,7 @@ import {
 import { ConversationOrderUpdate } from "Apps/Conversations2/components/Message/ConversationOrderUpdate"
 import { ConversationTimeSince } from "Apps/Conversations2/components/Message/ConversationTimeSince"
 import { ConversationMessageArtwork } from "Apps/Conversations2/components/Message/ConversationMessageArtwork"
-import { LatestMessages } from "Apps/Conversations2/components/LatestMessages"
+import { LatestMessagesFlyOut } from "Apps/Conversations2/components/Message/LatestMessagesFlyOut"
 
 const PAGE_SIZE = 15
 
@@ -187,7 +187,7 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
           )
         })}
 
-        <LatestMessages
+        <LatestMessagesFlyOut
           visible={enableBottomRefreshSentinal && showLatestMessagesFlyOut}
           onClick={() => {
             refetchMessages({

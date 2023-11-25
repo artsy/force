@@ -23,6 +23,9 @@ describe("isRelevantEvent", () => {
   })
 
   it("should return false for undefined input", () => {
-    expect(isRelevantEvent(undefined)).toBe(false)
+    const message = {
+      __typename: null,
+    }
+    expect(isRelevantEvent(message)).toBe(false)
   })
 })
