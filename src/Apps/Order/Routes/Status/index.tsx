@@ -51,13 +51,12 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
   const flowName = order.mode === "OFFER" ? "Offer" : "Order"
   const isSubmittedOffer =
     order.mode === "OFFER" && order.displayState === "SUBMITTED"
-  const isDeclined = declinedStatuses.includes(order.stateReason!)
+  const isDeclined = declinedStatuses.includes(order.stateReason as string)
   const isModal = !!match?.location.query.isModal
   const shouldButtonDisplay = isEigen && !isModal && !isDeclined
   const shouldContinueToInbox =
     isEigen && isSubmittedOffer && order.source === "artwork_page"
   const conversationId = match.location.query.backToConversationId
-  console.log(conversationId, "***")
   const shouldDisplayBackToConversationLink = !!match.location.query
     .backToConversationId
 
@@ -92,7 +91,7 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
             <Join separator={<Spacer y={[2, 4]} />}>
               {description && <Message>{description}</Message>}
               {alertMessage && (
-                <Message variant="alert" title={alertMessageTitle!}>
+                <Message variant="alert" title={alertMessageTitle as string}>
                   {alertMessage}
                 </Message>
               )}
