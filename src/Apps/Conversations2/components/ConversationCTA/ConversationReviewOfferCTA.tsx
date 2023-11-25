@@ -68,6 +68,7 @@ export const ConversationReviewOfferCTA: React.FC<ConversationReviewOfferCTAProp
           width={900}
           onClose={() => setShowOrderModal(false)}
           title={props.modalTitle}
+          data-testid="orderModal"
         >
           <IFrame src={`${props.modalUrl}?isModal=true`}></IFrame>
         </ModalDialog>

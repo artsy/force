@@ -2,7 +2,7 @@ import { graphql } from "react-relay"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useTracking } from "react-tracking"
 import { useSystemContext as baseUseSystemContext } from "System/useSystemContext"
-import { screen, fireEvent } from "@testing-library/react"
+import { screen, fireEvent, waitFor } from "@testing-library/react"
 import { Conversation2CTA } from "Apps/Conversations2/components/ConversationCTA/Conversation2CTA"
 
 jest.unmock("react-relay")
@@ -45,11 +45,14 @@ describe("ConversationCTA", () => {
         activeOrders: {
           edges: [{ node: { buyerAction: "OFFER_RECEIVED" } }],
         },
-        activeOrderCTA: null,
-        items: {
-          liveArtwork: {
-            __typename: "Artwork",
-          },
+        activeOrderCTA: {
+          edges: [
+            {
+              node: {
+                internalID: "foo",
+              },
+            },
+          ],
         },
       }),
     })
@@ -123,18 +126,7 @@ describe("ConversationCTA", () => {
     expect(screen.getByText("Offer Accepted")).toBeInTheDocument()
   })
 
-  // FIXME: Unpend test. Relay 10 upgrade
-  it.skip("doesn't render the cta when there is no active offer", () => {
-    renderWithRelay({
-      Conversation: () => ({
-        activeOrders: {},
-      }),
-    })
-
-    expect(screen.queryAllByText(/.+/g)).toStrictEqual([])
-  })
-
-  it("clicking the review offer CTA opens the order modal", () => {
+  it("clicking the review offer CTA opens the order modal", async () => {
     renderWithRelay({
       Conversation: () => ({
         activeOrders: {
@@ -142,21 +134,24 @@ describe("ConversationCTA", () => {
         },
       }),
     })
+
     fireEvent.click(screen.getByText("Offer Received"))
 
-    expect(openOrderModal).toHaveBeenCalledTimes(1)
+    await waitFor(() => {
+      expect(screen.getByTestId("orderModal")).toBeInTheDocument()
+    })
   })
 
   describe("With no active orders", () => {
     const mockConversationWithArtwork = artwork => () => ({
       internalID: "internal-test-id",
-      activeOrders: null,
+      activeOrderCTA: null,
       items: [{ liveArtwork: { __typename: "Artwork", ...artwork } }],
     })
 
     it("renders a message about buyer guarantee", () => {
       renderWithRelay({
-        Conversation: () => ({ activeOrders: null }),
+        Conversation: () => ({ activeOrderCTA: null }),
       })
 
       const link = screen.getByText("The Artsy Guarantee")
@@ -166,7 +161,7 @@ describe("ConversationCTA", () => {
 
     it("renders Purchase button on BN-only artworks", () => {
       renderWithRelay({
-        Conversation: mockConversationWithArtwork({ is_acquireable: true }),
+        Conversation: mockConversationWithArtwork({ isAcquireable: true }),
       })
 
       expect(screen.queryByText("Purchase")).toBeInTheDocument()
@@ -175,7 +170,7 @@ describe("ConversationCTA", () => {
 
     it("renders Make Offer button on MO-only artworks", () => {
       renderWithRelay({
-        Conversation: mockConversationWithArtwork({ is_offerable: true }),
+        Conversation: mockConversationWithArtwork({ isOfferable: true }),
       })
 
       expect(screen.queryByText("Purchase")).not.toBeInTheDocument()
@@ -196,8 +191,8 @@ describe("ConversationCTA", () => {
     it("renders both Purchase and Make Offer buttons on BNMO artworks", () => {
       renderWithRelay({
         Conversation: mockConversationWithArtwork({
-          is_acquireable: true,
-          is_offerable: true,
+          isAcquireable: true,
+          isOfferable: true,
         }),
       })
 

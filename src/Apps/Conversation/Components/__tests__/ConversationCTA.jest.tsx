@@ -123,17 +123,6 @@ describe("ConversationCTA", () => {
     expect(screen.getByText("Offer Accepted")).toBeInTheDocument()
   })
 
-  // FIXME: Unpend test. Relay 10 upgrade
-  it.skip("doesn't render the cta when there is no active offer", () => {
-    renderWithRelay({
-      Conversation: () => ({
-        activeOrders: {},
-      }),
-    })
-
-    expect(screen.queryAllByText(/.+/g)).toStrictEqual([])
-  })
-
   it("clicking the review offer CTA opens the order modal", () => {
     renderWithRelay({
       Conversation: () => ({
