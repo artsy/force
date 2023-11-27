@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<297a0f2b7101420b45162668b1a83add>>
+ * @generated SignedSource<<36af2f08ca89f47fbaa3b7513ef29fe5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -229,7 +229,7 @@ return {
               {
                 "kind": "Literal",
                 "name": "sort",
-                "value": "CREATED_AT_DESC"
+                "value": "UPDATED_AT_DESC"
               }
             ],
             "concreteType": "CollectionsConnection",
@@ -259,7 +259,7 @@ return {
                 "storageKey": null
               }
             ],
-            "storageKey": "collectionsConnection(default:false,first:30,saves:true,sort:\"CREATED_AT_DESC\")"
+            "storageKey": "collectionsConnection(default:false,first:30,saves:true,sort:\"UPDATED_AT_DESC\")"
           },
           (v2/*: any*/)
         ],
@@ -268,12 +268,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "35efb4bc6e6a7fc7ceec443d73e9ac09",
+    "cacheID": "db81e39e061aa0970582bbf3d7f323a1",
     "id": null,
     "metadata": {},
     "name": "SelectArtworkListsModalQuery",
     "operationKind": "query",
-    "text": "query SelectArtworkListsModalQuery(\n  $artworkID: String!\n) {\n  me {\n    ...SelectArtworkListsModal_me_2R6IMa\n    id\n  }\n}\n\nfragment SelectArtworkListItem_item on Collection {\n  name\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 1, sort: SAVED_AT_DESC) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectArtworkListsModal_me_2R6IMa on Me {\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    isSavedArtwork(artworkID: $artworkID)\n    name\n    ...SelectArtworkListItem_item\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        isSavedArtwork(artworkID: $artworkID)\n        name\n        ...SelectArtworkListItem_item\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query SelectArtworkListsModalQuery(\n  $artworkID: String!\n) {\n  me {\n    ...SelectArtworkListsModal_me_2R6IMa\n    id\n  }\n}\n\nfragment SelectArtworkListItem_item on Collection {\n  name\n  artworksCount(onlyVisible: true)\n  artworksConnection(first: 1, sort: SAVED_AT_DESC) {\n    edges {\n      node {\n        image {\n          url(version: \"square\")\n        }\n        id\n      }\n    }\n  }\n}\n\nfragment SelectArtworkListsModal_me_2R6IMa on Me {\n  savedArtworksArtworkList: collection(id: \"saved-artwork\") {\n    internalID\n    isSavedArtwork(artworkID: $artworkID)\n    name\n    ...SelectArtworkListItem_item\n    id\n  }\n  customArtworkLists: collectionsConnection(first: 30, default: false, saves: true, sort: UPDATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        isSavedArtwork(artworkID: $artworkID)\n        name\n        ...SelectArtworkListItem_item\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();
