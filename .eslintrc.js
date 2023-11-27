@@ -110,7 +110,7 @@ module.exports = {
         message: "Please use `useIntersectionObserver`",
       },
       {
-        name: "react-runtime",
+        name: "relay-runtime",
         importNames: ["graphql"],
         message: "Please import `graphql` from `react-relay`.",
       },
