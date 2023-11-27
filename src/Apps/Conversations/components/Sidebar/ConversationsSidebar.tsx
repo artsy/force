@@ -10,9 +10,10 @@ import { ConversationsSidebarEmpty } from "Apps/Conversations/components/Sidebar
 import { ConversationsSidebarItem } from "Apps/Conversations/components/Sidebar/ConversationsSidebarItem"
 import { ConversationsSidebar_viewer$data } from "__generated__/ConversationsSidebar_viewer.graphql"
 import { Sentinel } from "Components/Sentinal"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "System/Router/useRouter"
 import { SIDEBAR_FETCH_PAGE_SIZE } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
+import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
 
 interface ConversationsSidebarProps {
   viewer: ConversationsSidebar_viewer$data
@@ -24,6 +25,10 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
   relay,
 }) => {
   const { match } = useRouter()
+
+  const [enableSilentSidebarRefetch, setEnableSilentSidebarRefetch] = useState(
+    true
+  )
 
   const { loadMore } = useLoadMore({
     pageSize: SIDEBAR_FETCH_PAGE_SIZE,
@@ -72,6 +77,30 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalDisplayedCount])
 
+  // Refetch messages in the background
+  // Only refetch if user is scrolled to the top
+  useRefetchLatestMessagesPoll({
+    intervalTime: 10000,
+    clearWhen: !enableSilentSidebarRefetch,
+    onRefetch: () => {
+      if (!enableSilentSidebarRefetch) {
+        return
+      }
+      // When refetching, check to see if we've loaded more, and if so, refetch
+      // current total count of sidebar list
+      const fetchSize =
+        viewer.conversationsConnection?.edges?.length ?? SIDEBAR_FETCH_PAGE_SIZE
+
+      relay.refetchConnection(
+        fetchSize,
+        {},
+        {
+          first: fetchSize,
+        }
+      )
+    },
+  })
+
   return (
     <Flex flexDirection="column" flex={1}>
       <Box
@@ -89,6 +118,11 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
       </Box>
 
       {conversations.length === 0 && <ConversationsSidebarEmpty />}
+
+      <Sentinel
+        onEnterView={() => setEnableSilentSidebarRefetch(true)}
+        onExitView={() => setEnableSilentSidebarRefetch(false)}
+      />
 
       {conversations.map((conversation, key) => {
         return (

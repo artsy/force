@@ -15,7 +15,6 @@ import {
 import { ConversationMessage, Messages } from "./ConversationMessage"
 import { extractNodes } from "Utils/extractNodes"
 import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
-import { usePoll } from "Utils/Hooks/usePoll"
 import { Sentinel } from "Components/Sentinal"
 import {
   Message,
@@ -26,10 +25,9 @@ import { ConversationOrderUpdate } from "Apps/Conversations/components/Message/C
 import { ConversationTimeSince } from "Apps/Conversations/components/Message/ConversationTimeSince"
 import { ConversationMessageArtwork } from "Apps/Conversations/components/Message/ConversationMessageArtwork"
 import { LatestMessagesFlyOut } from "Apps/Conversations/components/Message/LatestMessagesFlyOut"
+import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
 
 const PAGE_SIZE = 15
-
-const BACKGROUND_REFETCH_INTERVAL = 5000
 
 interface ConversationMessagesProps {
   conversation: NonNullable<ConversationMessages_conversation$data>
@@ -66,17 +64,18 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
   })
 
   // Refetch messages in the background
-  usePoll({
-    callback: () => {
-      // FIXME: Move to env var
-      const ENABLED = false
-
-      if (ENABLED) {
-        refetchMessages({ showPreloader: false })
+  useRefetchLatestMessagesPoll({
+    onRefetch: () => {
+      // Don't refetch if we're scrolled away from the bottom as the user may
+      // be reviewing old conversations up the list
+      if (showLatestMessagesFlyOut) {
+        return
       }
+
+      refetchMessages({
+        showPreloader: false,
+      })
     },
-    intervalTime: BACKGROUND_REFETCH_INTERVAL,
-    key: "conversationMessages",
   })
 
   const refetchMessages = ({ showPreloader = true }) => {
