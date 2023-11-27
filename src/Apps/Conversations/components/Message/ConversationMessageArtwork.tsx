@@ -16,6 +16,10 @@ export const ConversationMessageArtwork: React.FC<ConversationMessageArtworkProp
 }) => {
   const data = useFragment(FRAGMENT, item)
 
+  if (!data) {
+    return null
+  }
+
   if (data.__typename !== "Artwork" || !data.image?.resized?.url) {
     return null
   }
