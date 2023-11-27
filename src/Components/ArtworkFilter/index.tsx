@@ -425,68 +425,79 @@ export const BaseArtworkFilter: React.FC<
             <Spacer y={-1} />
 
             <Sticky bottomBoundary="#Sticky__ArtworkFilter">
-              <FullBleed backgroundColor="white100">
-                <AppContainer>
-                  <HorizontalPadding>
-                    <Flex
-                      alignItems="center"
-                      justifyContent="space-between"
-                      gap={2}
-                      py={1}
-                      bg="white100"
-                    >
-                      <HorizontalOverflow minWidth={0}>
-                        <Flex gap={1}>
-                          <Flex gap={2}>
-                            <ArtworkFilterCreateAlert
-                              renderButton={props => {
-                                return (
-                                  <Button
-                                    variant={
-                                      revisedArtworkFiltersCount > 0
-                                        ? "primaryBlack"
-                                        : "secondaryBlack"
-                                    }
-                                    size="small"
-                                    Icon={BellStrokeIcon}
-                                    {...props}
-                                  >
-                                    Create Alert
-                                  </Button>
-                                )
-                              }}
-                            >
-                              <Box width="1px" bg="black30" />
-                            </ArtworkFilterCreateAlert>
+              {({ stuck }) => {
+                return (
+                  <FullBleed backgroundColor="white100">
+                    <AppContainer>
+                      <HorizontalPadding>
+                        <Flex
+                          alignItems="center"
+                          justifyContent="space-between"
+                          gap={2}
+                          py={1}
+                          bg="white100"
+                        >
+                          <HorizontalOverflow minWidth={0}>
+                            <Flex gap={1}>
+                              <Flex gap={2}>
+                                <ArtworkFilterCreateAlert
+                                  renderButton={props => {
+                                    return (
+                                      <Button
+                                        variant={
+                                          revisedArtworkFiltersCount > 0
+                                            ? "primaryBlack"
+                                            : "secondaryBlack"
+                                        }
+                                        size="small"
+                                        Icon={BellStrokeIcon}
+                                        {...props}
+                                      >
+                                        Create Alert
+                                      </Button>
+                                    )
+                                  }}
+                                >
+                                  <Box width="1px" bg="black30" />
+                                </ArtworkFilterCreateAlert>
 
-                            <Pill
-                              Icon={FilterIcon}
-                              size="small"
-                              onClick={handleOpen}
-                            >
-                              All Filters
-                              {extendedFiltersCount > 0 && (
-                                <Box as="span" color="brand">
-                                  {" "}
-                                  • {extendedFiltersCount}
-                                </Box>
-                              )}
-                            </Pill>
-                          </Flex>
+                                <Pill
+                                  Icon={FilterIcon}
+                                  size="small"
+                                  onClick={handleOpen}
+                                >
+                                  All Filters
+                                  {extendedFiltersCount > 0 && (
+                                    <Box as="span" color="brand">
+                                      {" "}
+                                      • {extendedFiltersCount}
+                                    </Box>
+                                  )}
+                                </Pill>
+                              </Flex>
 
-                          <ArtworkFiltersQuick />
+                              <ArtworkFiltersQuick
+                                {...(stuck ? { offset: 20 } : {})}
+                              />
+                            </Flex>
+                          </HorizontalOverflow>
+
+                          <ArtworkFilterSort
+                            {...(stuck ? { offset: 20 } : {})}
+                          />
+
+                          <ArtworkFilterDrawer
+                            open={isOpen}
+                            onClose={handleClose}
+                          >
+                            {Filters ? Filters : <ArtworkFilters user={user} />}
+                          </ArtworkFilterDrawer>
                         </Flex>
-                      </HorizontalOverflow>
-
-                      <ArtworkFilterSort />
-
-                      <ArtworkFilterDrawer open={isOpen} onClose={handleClose}>
-                        {Filters ? Filters : <ArtworkFilters user={user} />}
-                      </ArtworkFilterDrawer>
-                    </Flex>
-                  </HorizontalPadding>
-                </AppContainer>
-              </FullBleed>
+                      </HorizontalPadding>
+                    </AppContainer>
+                  </FullBleed>
+                )
+              }}
             </Sticky>
 
             <Spacer y={2} />
