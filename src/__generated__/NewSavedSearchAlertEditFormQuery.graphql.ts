@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dbe972aceda61abcc5d19cb7cdd7ab3f>>
+ * @generated SignedSource<<f3af0d53f50866bb2e65be16754bc247>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,9 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NewSavedSearchAlertEditFormQuery$variables = {
-  artistIds?: ReadonlyArray<string> | null;
   id: string;
 };
 export type NewSavedSearchAlertEditFormQuery$data = {
-  readonly artistsConnection: {
-    readonly " $fragmentSpreads": FragmentRefs<"NewSavedSearchAlertEditForm_artistsConnection">;
-  } | null;
-  readonly artworksConnection: {
-    readonly " $fragmentSpreads": FragmentRefs<"NewSavedSearchAlertEditForm_artworksConnection">;
-  } | null;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"NewSavedSearchAlertEditForm_me">;
   } | null;
@@ -34,73 +27,23 @@ export type NewSavedSearchAlertEditFormQuery = {
 };
 
 const node: ConcreteRequest = (function(){
-var v0 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "artistIds"
-},
+var v0 = [
+  {
+    "defaultValue": null,
+    "kind": "LocalArgument",
+    "name": "id"
+  }
+],
 v1 = {
-  "defaultValue": null,
-  "kind": "LocalArgument",
-  "name": "id"
-},
-v2 = [
-  {
-    "kind": "Variable",
-    "name": "slugs",
-    "variableName": "artistIds"
-  }
-],
-v3 = [
-  {
-    "kind": "Literal",
-    "name": "aggregations",
-    "value": [
-      "LOCATION_CITY",
-      "MATERIALS_TERMS",
-      "MEDIUM",
-      "PARTNER",
-      "COLOR"
-    ]
-  },
-  {
-    "kind": "Variable",
-    "name": "artistIDs",
-    "variableName": "artistIds"
-  },
-  {
-    "kind": "Literal",
-    "name": "first",
-    "value": 0
-  }
-],
-v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
-},
-v5 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v6 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
 };
 return {
   "fragment": {
-    "argumentDefinitions": [
-      (v0/*: any*/),
-      (v1/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
     "name": "NewSavedSearchAlertEditFormQuery",
@@ -142,38 +85,6 @@ return {
           }
         ],
         "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v2/*: any*/),
-        "concreteType": "ArtistConnection",
-        "kind": "LinkedField",
-        "name": "artistsConnection",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "NewSavedSearchAlertEditForm_artistsConnection"
-          }
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v3/*: any*/),
-        "concreteType": "FilterArtworksConnection",
-        "kind": "LinkedField",
-        "name": "artworksConnection",
-        "plural": false,
-        "selections": [
-          {
-            "args": null,
-            "kind": "FragmentSpread",
-            "name": "NewSavedSearchAlertEditForm_artworksConnection"
-          }
-        ],
-        "storageKey": null
       }
     ],
     "type": "Query",
@@ -181,10 +92,7 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": [
-      (v1/*: any*/),
-      (v0/*: any*/)
-    ],
+    "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
     "name": "NewSavedSearchAlertEditFormQuery",
     "selections": [
@@ -211,7 +119,7 @@ return {
                 "name": "status",
                 "storageKey": null
               },
-              (v4/*: any*/),
+              (v1/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -247,7 +155,13 @@ return {
             "name": "savedSearch",
             "plural": false,
             "selections": [
-              (v5/*: any*/),
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
+                "name": "internalID",
+                "storageKey": null
+              },
               {
                 "alias": null,
                 "args": null,
@@ -375,7 +289,7 @@ return {
                 "name": "userAlertSettings",
                 "plural": false,
                 "selections": [
-                  (v4/*: any*/),
+                  (v1/*: any*/),
                   {
                     "alias": null,
                     "args": null,
@@ -410,122 +324,29 @@ return {
             ],
             "storageKey": null
           },
-          (v6/*: any*/)
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v2/*: any*/),
-        "concreteType": "ArtistConnection",
-        "kind": "LinkedField",
-        "name": "artistsConnection",
-        "plural": false,
-        "selections": [
           {
             "alias": null,
             "args": null,
-            "concreteType": "ArtistEdge",
-            "kind": "LinkedField",
-            "name": "edges",
-            "plural": true,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "Artist",
-                "kind": "LinkedField",
-                "name": "node",
-                "plural": false,
-                "selections": [
-                  (v5/*: any*/),
-                  (v4/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "slug",
-                    "storageKey": null
-                  },
-                  (v6/*: any*/)
-                ],
-                "storageKey": null
-              }
-            ],
+            "kind": "ScalarField",
+            "name": "id",
             "storageKey": null
           }
-        ],
-        "storageKey": null
-      },
-      {
-        "alias": null,
-        "args": (v3/*: any*/),
-        "concreteType": "FilterArtworksConnection",
-        "kind": "LinkedField",
-        "name": "artworksConnection",
-        "plural": false,
-        "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": "ArtworksAggregationResults",
-            "kind": "LinkedField",
-            "name": "aggregations",
-            "plural": true,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "slice",
-                "storageKey": null
-              },
-              {
-                "alias": null,
-                "args": null,
-                "concreteType": "AggregationCount",
-                "kind": "LinkedField",
-                "name": "counts",
-                "plural": true,
-                "selections": [
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "count",
-                    "storageKey": null
-                  },
-                  (v4/*: any*/),
-                  {
-                    "alias": null,
-                    "args": null,
-                    "kind": "ScalarField",
-                    "name": "value",
-                    "storageKey": null
-                  }
-                ],
-                "storageKey": null
-              }
-            ],
-            "storageKey": null
-          },
-          (v6/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "b11431db439a92d17f8175ef6647022c",
+    "cacheID": "720b22bddb6e4478855112e38d214bf8",
     "id": null,
     "metadata": {},
     "name": "NewSavedSearchAlertEditFormQuery",
     "operationKind": "query",
-    "text": "query NewSavedSearchAlertEditFormQuery(\n  $id: ID!\n  $artistIds: [String!]\n) {\n  viewer {\n    ...NewSavedSearchAlertEditForm_viewer\n  }\n  me {\n    ...NewSavedSearchAlertEditForm_me_3PSMXk\n    id\n  }\n  artistsConnection(slugs: $artistIds) {\n    ...NewSavedSearchAlertEditForm_artistsConnection\n  }\n  artworksConnection(first: 0, artistIDs: $artistIds, aggregations: [LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {\n    ...NewSavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment NewSavedSearchAlertEditForm_artistsConnection on ArtistConnection {\n  edges {\n    node {\n      internalID\n      name\n      slug\n      id\n    }\n  }\n}\n\nfragment NewSavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment NewSavedSearchAlertEditForm_me_3PSMXk on Me {\n  savedSearch(id: $id) {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n      frequency\n      details\n    }\n  }\n}\n\nfragment NewSavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
+    "text": "query NewSavedSearchAlertEditFormQuery(\n  $id: ID!\n) {\n  viewer {\n    ...NewSavedSearchAlertEditForm_viewer\n  }\n  me {\n    ...NewSavedSearchAlertEditForm_me_3PSMXk\n    id\n  }\n}\n\nfragment NewSavedSearchAlertEditForm_me_3PSMXk on Me {\n  savedSearch(id: $id) {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n      frequency\n      details\n    }\n  }\n}\n\nfragment NewSavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "030ce24ba45de4e9d100cbabd06c8634";
+(node as any).hash = "dbed2c22bcac86ad2aaebfa564132110";
 
 export default node;

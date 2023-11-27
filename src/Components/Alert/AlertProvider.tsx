@@ -68,14 +68,16 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   >(isEditMode ? "EDIT_ALERT_DETAILS" : "ALERT_DETAILS")
 
   useEffect(() => {
+    if (isEditMode) return
     const criteria = getAllowedSearchCriteria(initialCriteria ?? {})
 
     dispatch({ type: "SET_CRITERIA", payload: criteria })
-  }, [initialCriteria])
+  }, [initialCriteria, isEditMode])
 
   const handleComplete = async () => {
     try {
       const reponse = await submitMutation({
+        // TODO: add mutation on edit
         variables: {
           input: {
             attributes: state.criteria,
@@ -142,7 +144,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   })
 
   useEffect(() => {
-    if (!state.visible) return
+    //  if (!state.visible) return
 
     const subscription = fetchQuery<AlertProviderPreviewQuery>(
       relayEnvironment as Environment,
@@ -166,7 +168,6 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     )?.subscribe?.({
       next: data => {
         if (!data?.viewer?.previewSavedSearch) return
-
         dispatch({
           type: "SET_PREVIEW",
           payload: data?.viewer?.previewSavedSearch as PreviewSavedSearch,

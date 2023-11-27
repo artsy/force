@@ -53,7 +53,7 @@ export const Filters: FC = () => {
           <Flex justifyContent="flex-start" alignItems="center" p={2}>
             <ChevronLeftIcon />
             <Text variant="sm">
-              {state.isEditMode ? "Create Alert" : "Create Alert"}
+              {state.isEditMode ? "Edit Alert" : "Create Alert"}
             </Text>
           </Flex>
           {state.isEditMode ? null : <Separator />}
