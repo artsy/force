@@ -3,6 +3,10 @@ import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetc
 import { usePoll } from "Utils/Hooks/usePoll"
 import { useTabVisible } from "Utils/Hooks/useTabVisible"
 
+jest.mock("Utils/getENV", () => ({
+  getENV: jest.fn().mockReturnValue(true),
+}))
+
 jest.mock("Utils/Hooks/usePoll", () => ({
   usePoll: jest.fn(),
 }))
@@ -30,7 +34,7 @@ describe("useRefetchLatestMessagesPoll", () => {
     expect(mockUsePoll).toHaveBeenCalledWith({
       callback: expect.any(Function),
       intervalTime,
-      refreshKey: "MessageRefetcher",
+      key: "MessageRefetcher",
     })
   })
 

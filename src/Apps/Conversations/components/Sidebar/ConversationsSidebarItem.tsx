@@ -31,7 +31,7 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
 
   useEffect(() => {
     if (isSelected) {
-      scrollRef.current?.scrollIntoView({ block: "center" })
+      scrollRef.current?.scrollIntoView?.({ block: "center" })
     }
     // Only want this to fire on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
