@@ -146,6 +146,7 @@ export interface AlertContextProps {
   goToFilters(): void
   goToDetails(): void
   onComplete(): void
+  onCompleteEdit(): void
   state: State
 }
 

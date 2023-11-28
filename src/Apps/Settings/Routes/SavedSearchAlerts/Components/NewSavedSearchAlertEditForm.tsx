@@ -18,7 +18,6 @@ import { Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
-import { useEditSavedSearchAlert } from "Apps/Settings/Routes/SavedSearchAlerts/useEditSavedSearchAlert"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
@@ -29,8 +28,6 @@ import {
   SavedSearchFrequency,
 } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
-import { useTracking } from "react-tracking"
-import { ActionType } from "@artsy/cohesion"
 import { RouterLink } from "System/Router/RouterLink"
 import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
@@ -42,10 +39,11 @@ import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
 import { AlertNameInput } from "Components/Alert/Components/Form/AlertNameInput"
 import { Filters } from "Components/Alert/Components/Steps/Filters"
 import CloseIcon from "@artsy/icons/CloseIcon"
+import { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
 
 const logger = createLogger(
   "Apps/SavedSearchAlerts/Components/NewSavedSearchAlertEditForm"
-)
+) // TODO: move logger to the provider
 
 interface NewSavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
@@ -57,7 +55,6 @@ interface NewSavedSearchAlertEditFormQueryRendererProps {
 interface NewSavedSearchAlertEditFormProps {
   me: NewSavedSearchAlertEditForm_me$data
   viewer: NewSavedSearchAlertEditForm_viewer$data
-  editAlertEntity: EditAlertEntity
   onDeleteClick: () => void
   onCompleted: () => void
 }
@@ -65,16 +62,12 @@ interface NewSavedSearchAlertEditFormProps {
 const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = ({
   me,
   viewer,
-  editAlertEntity,
   onDeleteClick,
-  onCompleted,
 }) => {
   const { savedSearch } = me
   const { userAlertSettings } = savedSearch!
-  const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
-  const { trackEvent } = useTracking()
-  const { criteria, isCriteriaChanged } = useSavedSearchAlertContext() // TODO: use useAlertContext instead
-  const { goToFilters, dispatch } = useAlertContext()
+  const { isCriteriaChanged } = useSavedSearchAlertContext() // TODO: use useAlertContext instead
+  const { goToFilters, dispatch, onCompleteEdit } = useAlertContext()
 
   const initialValues: SavedSearchAlertFormValues = {
     name: userAlertSettings.name ?? "",
@@ -83,6 +76,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
     frequency: userAlertSettings.frequency as SavedSearchFrequency,
     details: userAlertSettings.details ?? "",
   }
+
   useEffect(() => {
     dispatch({
       type: "SET_SETTINGS",
@@ -91,7 +85,14 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, userAlertSettings])
 
-  console.log("[LOGD] savedSearch === ", savedSearch)
+  useEffect(() => {
+    dispatch({
+      type: "SET_SEARCH_CRITERIA_ID",
+      payload: savedSearch?.internalID ?? "",
+    })
+  }, [dispatch, savedSearch])
+
+  console.log("[LOGD] 1234 savedSearch === ", savedSearch)
   useEffect(() => {
     dispatch({
       type: "SET_CRITERIA",
@@ -111,7 +112,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
   const userAllowsEmails = isCustomAlertsNotificationsEnabled ?? false
   const shouldShowEmailWarning = !!initialValues.email && !userAllowsEmails
 
-  const handleSubmit = async (values: SavedSearchAlertFormValues) => {
+  /*   const handleSubmit = async (values: SavedSearchAlertFormValues) => {
     try {
       const updatedAlertSettings: SavedSearchAlertFormValues = {
         ...values,
@@ -141,10 +142,13 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
     } catch (error) {
       logger.error(error)
     }
-  }
+  } */
 
   return (
-    <Formik initialValues={{ ...initialValues }} onSubmit={handleSubmit}>
+    <Formik<AlertFormikValues>
+      initialValues={{ ...initialValues }}
+      onSubmit={onCompleteEdit}
+    >
       {({ isSubmitting, values, setFieldValue, handleSubmit }) => {
         let isSaveAlertButtonDisabled = true
 
@@ -252,7 +256,10 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                   <Button
                     flex={1}
                     loading={isSubmitting}
-                    onClick={() => handleSubmit()}
+                    onClick={() => {
+                      dispatch({ type: "SET_SETTINGS", payload: values })
+                      handleSubmit()
+                    }}
                     disabled={isSaveAlertButtonDisabled}
                   >
                     Save Alert
@@ -266,7 +273,10 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                 <Button
                   loading={isSubmitting}
                   width="100%"
-                  onClick={() => handleSubmit()}
+                  onClick={() => {
+                    dispatch({ type: "SET_SETTINGS", payload: values })
+                    handleSubmit()
+                  }}
                   disabled={isSaveAlertButtonDisabled}
                 >
                   Save Alert
@@ -318,7 +328,6 @@ export const NewSavedSearchAlertEditFormFragmentContainer = createFragmentContai
           width
           height
           inquireableOnly
-          internalID
           locationCities
           majorPeriods
           materialsTerms
@@ -393,7 +402,6 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
                   <NewSavedSearchAlertEditFormFragmentContainer
                     me={props.me}
                     viewer={props.viewer}
-                    editAlertEntity={editAlertEntity}
                     onDeleteClick={onDeleteClick}
                     onCompleted={onCompleted}
                   />

@@ -12,6 +12,7 @@ import { Modal } from "Components/Alert/Components/Modal"
 import { Steps } from "Components/Alert/Components/Steps"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { useCreateAlert } from "Components/Alert/Hooks/useCreateAlert"
+import { useEditSavedSearchAlert } from "Components/Alert/Hooks/useEditSavedSearchAlert"
 import { useAuthDialog } from "Components/AuthDialog"
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
@@ -42,6 +43,8 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   const { showAuthDialog } = useAuthDialog()
   const { value, clearValue } = useAuthIntent()
   const { submitMutation } = useCreateAlert()
+  const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
+
   const { isLoggedIn, relayEnvironment } = useSystemContext()
 
   const initialState: State = {
@@ -74,8 +77,34 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     dispatch({ type: "SET_CRITERIA", payload: criteria })
   }, [initialCriteria, isEditMode])
 
+  const handleCompleteEdit = async () => {
+    console.log("[LOGD] 123edit state = ", state)
+
+    if (!state.searchCriteriaID) return // TODO: return error
+    try {
+      const reponse = await submitEditAlert({
+        // TODO: add mutation on edit
+        variables: {
+          input: {
+            searchCriteriaID: state.searchCriteriaID,
+            attributes: state.criteria,
+            userAlertSettings: state.settings,
+          },
+        },
+      })
+      console.log("[LOGD] 123edit reponse = ", reponse)
+
+      // onCompleted()
+    } catch (error) {
+      console.error("Alert/useAlertContext", error)
+      //logger.error(error)
+    }
+  }
+
   const handleComplete = async () => {
     try {
+      console.log("[LOGD] reponse state = ", state)
+
       const reponse = await submitMutation({
         // TODO: add mutation on edit
         variables: {
@@ -85,6 +114,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
           },
         },
       })
+      console.log("[LOGD] reponse = ", reponse)
       const searchCriteriaID =
         reponse.createSavedSearch?.savedSearchOrErrors.internalID
 
@@ -93,10 +123,11 @@ export const AlertProvider: FC<AlertProviderProps> = ({
           type: "SET_SEARCH_CRITERIA_ID",
           payload: searchCriteriaID,
         })
+        console.log("[LOGD] reponse searchCriteriaID = ", searchCriteriaID)
 
         createdAlert(searchCriteriaID)
       }
-      setCurrent("ALERT_CONFIRMATION")
+      //  setCurrent("ALERT_CONFIRMATION")
     } catch (error) {
       console.error("Alert/useAlertContext", error)
     }
@@ -200,6 +231,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
           setCurrent(isEditMode ? "EDIT_ALERT_FILTERS" : "ALERT_FILTERS")
         },
         onComplete: handleComplete,
+        onCompleteEdit: handleCompleteEdit,
         state,
       }}
     >
