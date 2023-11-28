@@ -77,8 +77,8 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalDisplayedCount])
 
-  // Refetch messages in the background
-  // Only refetch if user is scrolled to the top
+  // Refetch messages in the background, but only when a user has scrolled to
+  // the top of the convo list.
   useRefetchLatestMessagesPoll({
     intervalTime: 10000,
     clearWhen: !enableSilentSidebarRefetch,

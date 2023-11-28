@@ -26,7 +26,7 @@ import { ConversationTimeSince } from "Apps/Conversations/components/Message/Con
 import { ConversationMessageArtwork } from "Apps/Conversations/components/Message/ConversationMessageArtwork"
 import { LatestMessagesFlyOut } from "Apps/Conversations/components/Message/LatestMessagesFlyOut"
 import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
-import styled, { css } from "styled-components"
+import styled from "styled-components"
 
 const PAGE_SIZE = 15
 
@@ -60,13 +60,14 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
 
   const enableBottomRefreshSentinal = totalCount > 2
 
-  useAutoScrollToBottom({
+  const { triggerAutoScroll } = useAutoScrollToBottom({
     messages,
     autoScrollToBottomRef,
   })
 
   // Refetch messages in the background
   useRefetchLatestMessagesPoll({
+    clearWhen: showLatestMessagesFlyOut,
     onRefetch: () => {
       // Don't refetch if we're scrolled away from the bottom as the user may
       // be reviewing old conversations up the list
@@ -104,14 +105,12 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
       return
     }
 
-    setTimeout(() => {
-      autoScrollToBottomRef.current?.scrollIntoView({
-        behavior: "smooth",
-      })
-    }, 100)
+    triggerAutoScroll({
+      behavior: "smooth",
+    })
 
-    startLoadMoreTransition(true)
     performRefetch()
+    startLoadMoreTransition(true)
   }
 
   return (
@@ -204,11 +203,10 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
         />
 
         <BottomLoadingSpinner
+          visible={isFetchingLoadMoreMessages}
           mt={4}
           mb={2}
-          visible={isFetchingLoadMoreMessages}
         />
-        {/* {isFetchingLoadMoreMessages && <BottomLoadingSpinner mt={4} mb={2} />} */}
 
         <AutoScrollToBottom ref={autoScrollToBottomRef as any} height={20} />
       </Flex>
@@ -222,7 +220,7 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
     conversation: graphql`
       fragment ConversationMessages_conversation on Conversation
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 10 }
+          first: { type: "Int", defaultValue: 15 }
           after: { type: "String" }
         ) {
         fromLastViewedMessageID
@@ -345,19 +343,26 @@ const useAutoScrollToBottom = ({
 }: UseAutoScrollToBottomProps) => {
   const lastMessageId = messages.length > 0 ? messages[0].internalID : null
 
-  const triggerAutoScroll = useCallback(() => {
-    setTimeout(() => {
-      autoScrollToBottomRef?.current?.scrollIntoView({
+  const triggerAutoScroll = useCallback(
+    ({ behavior = "instant", block, start } = {}) => {
+      setTimeout(() => {
+        autoScrollToBottomRef?.current?.scrollIntoView({
+          behavior,
+          block,
+          start,
+        })
+      }, 0)
+    },
+    [autoScrollToBottomRef]
+  )
+
+  useEffect(() => {
+    if (lastMessageId) {
+      triggerAutoScroll({
         behavior: "instant",
         block: "end",
         inline: "end",
       })
-    }, 0)
-  }, [autoScrollToBottomRef])
-
-  useEffect(() => {
-    if (lastMessageId) {
-      triggerAutoScroll()
     }
   }, [lastMessageId, autoScrollToBottomRef, triggerAutoScroll])
 
