@@ -78,7 +78,7 @@ export const ConversationMessage: React.FC<ConversationMessageProps> = ({
 
       {/* Add an extra spacer when quick responses come back from the other
           party */}
-      {!data.isFromUser && simplified && <Spacer y={2} />}
+      {!data.isFromUser && simplified && <Spacer y={0.5} />}
 
       <ConversationMessageBubble
         fromViewer={data.isFromUser}
