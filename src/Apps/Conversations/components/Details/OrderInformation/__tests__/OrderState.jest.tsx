@@ -200,10 +200,7 @@ describe("OrderState", () => {
         }),
       })
 
-      expect(screen.getByText("Review offer")).toBeInTheDocument()
-      expect(
-        screen.getByText("Respond by MMM D, h:mm A zz")
-      ).toBeInTheDocument()
+      expect(screen.getByText("Seller reviewing offer")).toBeInTheDocument()
     })
   })
 })

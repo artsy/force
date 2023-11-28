@@ -49,20 +49,22 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
   // Opens a modal window to select an edition set on non-unique artworks
   if (!isConfirmModalVisible && !data.isUniqueArtwork) {
     return (
-      <Button
-        size="large"
-        variant={variant}
-        flexGrow={1}
-        onClick={() => {
-          trackMakeOfferEvent()
+      <Box width="100%" {...boxProps} display="inline">
+        <Button
+          size="large"
+          variant={variant}
+          width="100%"
+          onClick={() => {
+            trackMakeOfferEvent()
 
-          showSelectEditionSetModal({
-            isCreatingOfferOrder: true,
-          })
-        }}
-      >
-        Make an Offer
-      </Button>
+            showSelectEditionSetModal({
+              isCreatingOfferOrder: true,
+            })
+          }}
+        >
+          Make an Offer
+        </Button>
+      </Box>
     )
   }
 

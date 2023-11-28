@@ -87,6 +87,7 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
     return (
       <Box width="100%" {...boxProps} display="inline">
         <Button
+          {...boxProps}
           size="large"
           width="100%"
           onClick={() => {

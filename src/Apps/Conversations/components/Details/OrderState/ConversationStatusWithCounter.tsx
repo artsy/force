@@ -49,12 +49,17 @@ export const ConversationStatusWithCounter: React.FC<ConversationStatusWithCount
       expiryText = "until counteroffer expires"
       respondByText = `Awaiting response by ${formattedStateExpiresAt}`
       break
+    case "offer":
+      text = "Seller reviewing offer"
+      expiryText = "until offer expires"
+      respondByText = ""
+      break
   }
 
   return (
     <>
       <Flex alignItems="center">
-        {status === "sellerCounteroffer" ? (
+        {status === "sellerCounteroffer" || status === "offer" ? (
           <StopwatchIcon />
         ) : (
           <AlertFillIcon fill="orange100" />
