@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2f12eddfac56519ab5dea76c195ae66>>
+ * @generated SignedSource<<fb0bbdd4901147739e05acc3d2f8ef3e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -58,6 +58,7 @@ export type SavedSearchAlertEditForm_Test_Query$rawResponse = {
       readonly acquireable: boolean | null | undefined;
       readonly additionalGeneIDs: ReadonlyArray<string>;
       readonly artistIDs: ReadonlyArray<string> | null | undefined;
+      readonly artistSeriesIDs: ReadonlyArray<string>;
       readonly atAuction: boolean | null | undefined;
       readonly attributionClass: ReadonlyArray<string>;
       readonly colors: ReadonlyArray<string>;
@@ -341,6 +342,13 @@ return {
                 "alias": null,
                 "args": null,
                 "kind": "ScalarField",
+                "name": "artistSeriesIDs",
+                "storageKey": null
+              },
+              {
+                "alias": null,
+                "args": null,
+                "kind": "ScalarField",
                 "name": "colors",
                 "storageKey": null
               },
@@ -570,12 +578,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "544025fa6a5a2969e41393d9bc8dfbde",
+    "cacheID": "8319324a5ff61ccef41c4022f25c5086",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertEditForm_Test_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertEditForm_Test_Query(\n  $artistIDs: [String!]\n) {\n  viewer {\n    ...SavedSearchAlertEditForm_viewer\n  }\n  me {\n    ...SavedSearchAlertEditForm_me_1LtJCq\n    id\n  }\n  artistsConnection(slugs: $artistIDs) {\n    ...SavedSearchAlertEditForm_artistsConnection\n  }\n  artworksConnection(first: 0, artistIDs: $artistIDs, aggregations: [LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artistsConnection on ArtistConnection {\n  edges {\n    node {\n      internalID\n      name\n      slug\n      id\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_me_1LtJCq on Me {\n  savedSearch(id: \"id\") {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n      frequency\n      details\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
+    "text": "query SavedSearchAlertEditForm_Test_Query(\n  $artistIDs: [String!]\n) {\n  viewer {\n    ...SavedSearchAlertEditForm_viewer\n  }\n  me {\n    ...SavedSearchAlertEditForm_me_1LtJCq\n    id\n  }\n  artistsConnection(slugs: $artistIDs) {\n    ...SavedSearchAlertEditForm_artistsConnection\n  }\n  artworksConnection(first: 0, artistIDs: $artistIDs, aggregations: [LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artistsConnection on ArtistConnection {\n  edges {\n    node {\n      internalID\n      name\n      slug\n      id\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_me_1LtJCq on Me {\n  savedSearch(id: \"id\") {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    artistSeriesIDs\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n      frequency\n      details\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
   }
 };
 })();
