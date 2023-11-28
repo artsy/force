@@ -29,6 +29,7 @@ export type State = {
   preview: PreviewSavedSearch
   visible: boolean
   isEditMode?: boolean
+  initialized?: boolean
 }
 
 export const DEFAULT_STATE: State = {
@@ -42,6 +43,7 @@ export const DEFAULT_STATE: State = {
   criteria: {},
   preview: null,
   visible: false,
+  initialized: false,
 }
 
 type Action =
@@ -50,6 +52,13 @@ type Action =
   | { type: "RESET" }
   | { type: "SET_PREVIEW"; payload: PreviewSavedSearch }
   | { type: "SET_CRITERIA"; payload: SearchCriteriaAttributes }
+  | {
+      type: "SET_CRITERIA_ONCE"
+      payload: {
+        criteria: SearchCriteriaAttributes
+        initialized: boolean
+      }
+    }
   | {
       type: "SET_CRITERIA_ATTRIBUTE"
       payload: {
@@ -88,6 +97,13 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
       return {
         ...state,
         criteria: action.payload,
+      }
+
+    case "SET_CRITERIA_ONCE":
+      return {
+        ...state,
+        criteria: action.payload.criteria,
+        initialized: true,
       }
 
     case "SET_CRITERIA_ATTRIBUTE":

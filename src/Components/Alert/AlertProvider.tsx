@@ -24,6 +24,7 @@ import {
   AlertProviderPreviewQuery,
   PreviewSavedSearchAttributes,
 } from "__generated__/AlertProviderPreviewQuery.graphql"
+import { useToasts } from "@artsy/palette"
 
 interface AlertProviderProps {
   initialCriteria?: SearchCriteriaAttributes
@@ -44,6 +45,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   const { value, clearValue } = useAuthIntent()
   const { submitMutation } = useCreateAlert()
   const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
+  const { sendToast } = useToasts()
 
   const { isLoggedIn, relayEnvironment } = useSystemContext()
 
@@ -60,6 +62,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     preview: null,
     visible: visible ?? false,
     isEditMode,
+    initialized: false,
   }
 
   const [current, setCurrent] = useState<
@@ -78,12 +81,9 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   }, [initialCriteria, isEditMode])
 
   const handleCompleteEdit = async () => {
-    console.log("[LOGD] 123edit state = ", state)
-
     if (!state.searchCriteriaID) return // TODO: return error
     try {
-      const reponse = await submitEditAlert({
-        // TODO: add mutation on edit
+      await submitEditAlert({
         variables: {
           input: {
             searchCriteriaID: state.searchCriteriaID,
@@ -92,9 +92,19 @@ export const AlertProvider: FC<AlertProviderProps> = ({
           },
         },
       })
-      console.log("[LOGD] 123edit reponse = ", reponse)
+
+      /*       trackEvent({
+        action: ActionType.editedSavedSearch,
+        saved_search_id: editAlertEntity.id,
+        current: JSON.stringify(userAlertSettings),
+        changed: JSON.stringify(updatedAlertSettings),
+      }) */
 
       // onCompleted()
+      onReset()
+      sendToast({
+        message: "Your Alert has been updated.",
+      })
     } catch (error) {
       console.error("Alert/useAlertContext", error)
       //logger.error(error)
@@ -103,10 +113,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
 
   const handleComplete = async () => {
     try {
-      console.log("[LOGD] reponse state = ", state)
-
       const reponse = await submitMutation({
-        // TODO: add mutation on edit
         variables: {
           input: {
             attributes: state.criteria,
@@ -114,7 +121,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
           },
         },
       })
-      console.log("[LOGD] reponse = ", reponse)
+
       const searchCriteriaID =
         reponse.createSavedSearch?.savedSearchOrErrors.internalID
 
@@ -123,7 +130,6 @@ export const AlertProvider: FC<AlertProviderProps> = ({
           type: "SET_SEARCH_CRITERIA_ID",
           payload: searchCriteriaID,
         })
-        console.log("[LOGD] reponse searchCriteriaID = ", searchCriteriaID)
 
         createdAlert(searchCriteriaID)
       }

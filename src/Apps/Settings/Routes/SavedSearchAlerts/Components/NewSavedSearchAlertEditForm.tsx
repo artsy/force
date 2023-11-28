@@ -63,11 +63,11 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
   me,
   viewer,
   onDeleteClick,
+  onCompleted,
 }) => {
   const { savedSearch } = me
   const { userAlertSettings } = savedSearch!
-  const { isCriteriaChanged } = useSavedSearchAlertContext() // TODO: use useAlertContext instead
-  const { goToFilters, dispatch, onCompleteEdit } = useAlertContext()
+  const { state, goToFilters, dispatch, onCompleteEdit } = useAlertContext()
 
   const initialValues: SavedSearchAlertFormValues = {
     name: userAlertSettings.name ?? "",
@@ -76,7 +76,6 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
     frequency: userAlertSettings.frequency as SavedSearchFrequency,
     details: userAlertSettings.details ?? "",
   }
-
   useEffect(() => {
     dispatch({
       type: "SET_SETTINGS",
@@ -92,13 +91,16 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
     })
   }, [dispatch, savedSearch])
 
-  console.log("[LOGD] 1234 savedSearch === ", savedSearch)
   useEffect(() => {
+    if (state.initialized) return
     dispatch({
-      type: "SET_CRITERIA",
-      payload: getAllowedSearchCriteria(savedSearch),
+      type: "SET_CRITERIA_ONCE",
+      payload: {
+        criteria: getAllowedSearchCriteria(savedSearch),
+        initialized: true,
+      },
     })
-  }, [dispatch, savedSearch])
+  }, [dispatch, savedSearch, state.initialized])
 
   const isCustomAlertsNotificationsEnabled = viewer.notificationPreferences.some(
     preference => {
@@ -112,38 +114,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
   const userAllowsEmails = isCustomAlertsNotificationsEnabled ?? false
   const shouldShowEmailWarning = !!initialValues.email && !userAllowsEmails
 
-  /*   const handleSubmit = async (values: SavedSearchAlertFormValues) => {
-    try {
-      const updatedAlertSettings: SavedSearchAlertFormValues = {
-        ...values,
-        name: values.name || "",
-        frequency: values.push ? values.frequency : DEFAULT_FREQUENCY,
-        details: values.details ?? "",
-      }
-
-      await submitEditAlert({
-        variables: {
-          input: {
-            searchCriteriaID: editAlertEntity!.id,
-            attributes: criteria,
-            userAlertSettings: updatedAlertSettings,
-          },
-        },
-      })
-
-      trackEvent({
-        action: ActionType.editedSavedSearch,
-        saved_search_id: editAlertEntity.id,
-        current: JSON.stringify(userAlertSettings),
-        changed: JSON.stringify(updatedAlertSettings),
-      })
-
-      onCompleted()
-    } catch (error) {
-      logger.error(error)
-    }
-  } */
-
+  // TODO: on close emty state
   return (
     <Formik<AlertFormikValues>
       initialValues={{ ...initialValues }}
@@ -152,7 +123,10 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
       {({ isSubmitting, values, setFieldValue, handleSubmit }) => {
         let isSaveAlertButtonDisabled = true
 
-        if (isCriteriaChanged || !isEqual(initialValues, values)) {
+        if (
+          !isEqual(initialValues, values) ||
+          !isEqual(state.criteria, getAllowedSearchCriteria(savedSearch))
+        ) {
           isSaveAlertButtonDisabled = false
         }
 
@@ -259,6 +233,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                     onClick={() => {
                       dispatch({ type: "SET_SETTINGS", payload: values })
                       handleSubmit()
+                      onCompleted()
                     }}
                     disabled={isSaveAlertButtonDisabled}
                   >
