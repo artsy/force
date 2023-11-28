@@ -95,18 +95,16 @@ export const MobileLayout: React.FC<ConversationsLayoutProps> = ({
 
   return (
     <Box ml={0} mr={0}>
-      {currentColumn === "sidebar" && (
-        <Box
-          overflowX="hidden"
-          display={currentColumn === "sidebar" ? "block" : "none"}
-          height={MOBILE_HEIGHT}
-          position="relative"
-        >
-          <Flex flexDirection="column" position="relative">
-            {renderSidebar()}
-          </Flex>
-        </Box>
-      )}
+      <Box
+        overflowX="hidden"
+        display={currentColumn === "sidebar" ? "block" : "none"}
+        height={MOBILE_HEIGHT}
+        position="relative"
+      >
+        <Flex flexDirection="column" position="relative">
+          {renderSidebar()}
+        </Flex>
+      </Box>
 
       {currentColumn === "conversation" && (
         <Flex

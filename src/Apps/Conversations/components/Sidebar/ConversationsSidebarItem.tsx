@@ -7,6 +7,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { ConversationsSidebarItem_conversation$key } from "__generated__/ConversationsSidebarItem_conversation.graphql"
 import { getSidebarTotal } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
 import { useEffect, useRef } from "react"
+import { getENV } from "Utils/getENV"
 
 interface ConversationsSidebarItemProps {
   conversation: ConversationsSidebarItem_conversation$key
@@ -20,15 +21,17 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
   const data = useFragment(FRAGMENT, conversation)
   const { match } = useRouter()
   const { trackEvent } = useTracking()
+  const scrollRef = useRef<HTMLDivElement>(null)
 
   const isSelected = match.params.conversationId === data.internalID
-  const scrollRef = useRef<HTMLDivElement>(null)
+
+  // On mobile, the list item never gets a select state, since tapping instantly
+  // sends the user to the messages view.
+  const isHighlighted = isSelected && !getENV("IS_MOBILE")
 
   useEffect(() => {
     if (isSelected) {
-      setTimeout(() => {
-        scrollRef.current?.scrollIntoView({ block: "end" })
-      }, 10)
+      scrollRef.current?.scrollIntoView({ block: "center" })
     }
     // Only want this to fire on mount
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -53,7 +56,7 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
   return (
     <StackableBorderBox
       flexDirection="column"
-      backgroundColor={isSelected ? "black5" : "white100"}
+      backgroundColor={isHighlighted ? "black5" : "white100"}
       style={{ borderLeft: 0, borderRight: 0, ...borderTop }}
       ref={scrollRef as any}
     >
