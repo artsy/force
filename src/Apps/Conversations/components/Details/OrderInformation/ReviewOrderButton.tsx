@@ -93,7 +93,7 @@ export const ReviewOrderButton: React.FC<ReviewOrderButtonProps> = ({
         })
       }
     >
-      <Button variant={variant} width="100%">
+      <Button size={["small", "large"]} variant={variant} width="100%">
         {ctaSubmittedText}
       </Button>
     </RouterLink>

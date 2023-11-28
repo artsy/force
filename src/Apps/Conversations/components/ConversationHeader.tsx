@@ -14,6 +14,8 @@ import { Media } from "Utils/Responsive"
 import { RouterLink } from "System/Router/RouterLink"
 import { ConversationHeader_conversation$key } from "__generated__/ConversationHeader_conversation.graphql"
 import { useMobileLayoutActions } from "Apps/Conversations/hooks/useMobileLayoutActions"
+import { extractNodes } from "Utils/extractNodes"
+import { ReviewOrderButton } from "Apps/Conversations/components/Details/OrderInformation/ReviewOrderButton"
 
 const DROP_SHADOW = "0 2px 10px rgba(0, 0, 0, .08)"
 
@@ -41,6 +43,7 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
           item {
             __typename
             ... on Artwork {
+              internalID
               id
               slug
               date
@@ -67,7 +70,7 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
         ) {
           edges @required(action: NONE) {
             node {
-              state @required(action: NONE)
+              ...ReviewOrderButton_order
             }
           }
         }
@@ -75,6 +78,8 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
     `,
     conversation
   )
+
+  const order = extractNodes(data.orderConnection)[0]
 
   const item = data?.items?.[0]?.item
 
@@ -164,6 +169,8 @@ export const ConversationHeader: React.FC<ConversationHeaderProps> = ({
               <Spacer x={1} />
               <Text variant="xs">To {data.to.name}</Text>
             </Clickable>
+
+            <ReviewOrderButton order={order} />
           </Flex>
 
           <Spacer y={1} />
