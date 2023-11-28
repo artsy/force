@@ -134,7 +134,7 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
           />
         )}
 
-        {isFetchingAllMessages && <TopLoadingSpinner my={4} />}
+        {isFetchingAllMessages && <TopLoadingSpinner height={50} mb={1} />}
 
         {groupedMessagesAndEvents.map((messageGroup, groupIndex) => {
           return (
