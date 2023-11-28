@@ -30,7 +30,7 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
     true
   )
 
-  const { loadMore } = useLoadMore({
+  const { loadMore, shouldLoadMore } = useLoadMore({
     pageSize: SIDEBAR_FETCH_PAGE_SIZE,
     loadNext: relay.loadMore,
     isLoadingNext: relay.isLoading,
@@ -134,7 +134,7 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
         )
       })}
 
-      {relay.hasMore() && relay.isLoading() && (
+      {shouldLoadMore && (
         <Box position="relative" my={2} p={1}>
           <Spinner />
         </Box>
