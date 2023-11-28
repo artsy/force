@@ -3,10 +3,6 @@ import { Aggregations } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { ATTRIBUTION_CLASS_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/AttributionClassFilter"
 import { COLOR_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/ColorFilter"
 import { MEDIUM_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/MediumFilter"
-import {
-  getPredefinedSizesByMetric,
-  parseRange,
-} from "Components/ArtworkFilter/ArtworkFilters/SizeFilter"
 import { getTimePeriodToDisplay } from "Components/ArtworkFilter/ArtworkFilters/TimePeriodFilter"
 import { isCustomValue } from "Components/ArtworkFilter/ArtworkFilters/Utils/isCustomValue"
 import { WAYS_TO_BUY_OPTIONS } from "Components/ArtworkFilter/ArtworkFilters/WaysToBuyFilter"
@@ -19,6 +15,10 @@ import {
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
 import { aggregationForFilter } from "./aggregationForFilter"
+import {
+  getPredefinedSizesByMetric,
+  parseSizeRange,
+} from "Utils/customSizeUtils"
 
 export const extractPillFromAggregation = (
   filter: {
@@ -68,7 +68,7 @@ export const extractSizeLabel = ({
   value: string
   metric: Metric
 }) => {
-  const [min, max] = parseRange(value, metric)
+  const [min, max] = parseSizeRange(value, metric)
 
   let label: string
 

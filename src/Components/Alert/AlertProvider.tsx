@@ -24,11 +24,13 @@ import {
   AlertProviderPreviewQuery,
 } from "__generated__/AlertProviderPreviewQuery.graphql"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { DEFAULT_METRIC, Metric } from "Utils/metrics"
 
 interface AlertProviderProps {
   initialCriteria?: SearchCriteriaAttributes
   currentArtworkID?: string
   visible?: boolean
+  metric?: Metric
 }
 
 export const AlertProvider: FC<AlertProviderProps> = ({
@@ -36,6 +38,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   initialCriteria,
   currentArtworkID,
   visible,
+  metric,
 }) => {
   const { createdAlert } = useAlertTracking()
   const { showAuthDialog } = useAuthDialog()
@@ -43,6 +46,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   const { submitMutation } = useCreateAlert()
   const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
   const { isLoggedIn, relayEnvironment } = useSystemContext()
+  const { userPreferences } = useSystemContext()
 
   const initialState = {
     settings: {
@@ -55,6 +59,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     currentArtworkID,
     preview: null,
     visible: visible ?? false,
+    metric: metric ?? userPreferences?.metric ?? DEFAULT_METRIC,
   }
   const [current, setCurrent] = useState<
     "ALERT_DETAILS" | "ALERT_FILTERS" | "ALERT_CONFIRMATION"

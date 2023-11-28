@@ -24,6 +24,12 @@ import { useFilterLabelCountByKey } from "Components/ArtworkFilter/Utils/useFilt
 import { useMode } from "Utils/Hooks/useMode"
 import { DEFAULT_METRIC, Metric } from "Utils/metrics"
 import { NumericInput } from "Components/NumericInput"
+import {
+  getCustomSizeRangeInInches,
+  getPredefinedSizesByMetric,
+  parseSizeRange,
+} from "Utils/customSizeUtils"
+import { getRangeValue } from "Utils/customRangeUtils"
 
 type Numeric = number | "*"
 type CustomRange = Numeric[]
@@ -36,81 +42,6 @@ export type CustomSize = {
 
 export interface SizeFilterProps {
   expanded?: boolean
-}
-
-const ONE_IN_TO_CM = 2.54
-
-export const SIZES_IN_INCHES = [
-  { displayName: "Small (under 16in)", name: "SMALL" },
-  { displayName: "Medium (16in – 40in)", name: "MEDIUM" },
-  { displayName: "Large (over 40in)", name: "LARGE" },
-]
-
-export const SIZES_IN_CENTIMETERS = [
-  { displayName: "Small (under 40cm)", name: "SMALL" },
-  { displayName: "Medium (40 – 100cm)", name: "MEDIUM" },
-  { displayName: "Large (over 100cm)", name: "LARGE" },
-]
-
-const convertToCentimeters = (element: number) => {
-  return Math.round(element * ONE_IN_TO_CM)
-}
-const convertToInches = (value: number) => {
-  return value / ONE_IN_TO_CM
-}
-
-export const parseRange = (range: string = "", metric: Metric): Numeric[] => {
-  return range.split("-").map(s => {
-    if (s === "*") return s
-    const value = parseFloat(s)
-
-    if (metric === "cm") {
-      return convertToCentimeters(value)
-    }
-
-    return value
-  })
-}
-
-const convertRangeToInches = (range: CustomRange) => {
-  return range.map(value => {
-    if (value === "*") {
-      return value
-    }
-
-    return convertToInches(value)
-  })
-}
-
-const getValue = (value: CustomRange[number]) => {
-  return value === "*" || value === 0 ? "" : value
-}
-
-export const getPredefinedSizesByMetric = (metric: Metric) => {
-  if (metric === "cm") {
-    return SIZES_IN_CENTIMETERS
-  }
-
-  return SIZES_IN_INCHES
-}
-
-export const getCustomSizeRangeInInches = (
-  customSize: CustomSize,
-  sourceMetric: Metric
-) => {
-  let sizes = customSize
-
-  if (sourceMetric === "cm") {
-    sizes = {
-      width: convertRangeToInches(customSize.width),
-      height: convertRangeToInches(customSize.height),
-    }
-  }
-
-  return {
-    width: sizes.width.join("-"),
-    height: sizes.height.join("-"),
-  }
 }
 
 export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
@@ -133,8 +64,8 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
     isCustomValue(width) || isCustomValue(height)
   )
   const [customSize, setCustomSize] = useState<CustomSize>({
-    height: parseRange(height, metric),
-    width: parseRange(width, metric),
+    height: parseSizeRange(height, metric),
+    width: parseSizeRange(width, metric),
   })
   const [mode, setMode] = useMode<Mode>("resting")
 
@@ -221,14 +152,14 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
       updatedFilters.height = customSizeRanges.height
     }
 
-    setFilters!(updatedFilters, { force: false })
+    setFilters?.(updatedFilters, { force: false })
   }
 
   useEffect(() => {
     if (width == "*-*" || height === "*-*") {
       setCustomSize({
-        width: parseRange(width, metric),
-        height: parseRange(height, metric),
+        width: parseSizeRange(width, metric),
+        height: parseSizeRange(height, metric),
       })
     }
 
@@ -303,7 +234,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
               name="width_min"
               min="0"
               step="1"
-              value={getValue(customSize.width[0])}
+              value={getRangeValue(customSize.width[0])}
               onChange={handleInputChange("width", 0)}
             />
             <Spacer x={1} />
@@ -312,7 +243,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
               name="width_max"
               min="0"
               step="1"
-              value={getValue(customSize.width[1])}
+              value={getRangeValue(customSize.width[1])}
               onChange={handleInputChange("width", 1)}
             />
           </Flex>
@@ -324,7 +255,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
               name="height_min"
               min="0"
               step="1"
-              value={getValue(customSize.height[0])}
+              value={getRangeValue(customSize.height[0])}
               onChange={handleInputChange("height", 0)}
             />
 
@@ -335,7 +266,7 @@ export const SizeFilter: React.FC<SizeFilterProps> = ({ expanded }) => {
               name="height_max"
               min="0"
               step="1"
-              value={getValue(customSize.height[1])}
+              value={getRangeValue(customSize.height[1])}
               onChange={handleInputChange("height", 1)}
             />
           </Flex>
