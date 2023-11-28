@@ -226,7 +226,7 @@ export const SelectArtworkListsModalFragmentContainer = createFragmentContainer(
           first: 30
           default: false
           saves: true
-          sort: CREATED_AT_DESC
+          sort: UPDATED_AT_DESC
         ) {
           edges {
             node {
