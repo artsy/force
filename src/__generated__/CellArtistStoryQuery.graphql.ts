@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5c3919c9236ae4d8cc7c77aa1c8f50ac>>
+ * @generated SignedSource<<06b1911ff5b7a73f5c302c82e2be0fe8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type CellArtistStoryQuery$variables = {
 export type CellArtistStoryQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"CellArtist_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type CellArtistStoryQuery = {
   response: CellArtistStoryQuery$data;

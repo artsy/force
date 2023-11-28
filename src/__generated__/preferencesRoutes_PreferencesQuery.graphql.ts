@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5b7f6e4548fc97ad0bd71b413cbc82f3>>
+ * @generated SignedSource<<5803dc99c94ff9ec2527d932b35e6364>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type preferencesRoutes_PreferencesQuery$variables = {
-  authenticationToken?: string | null;
+  authenticationToken?: string | null | undefined;
 };
 export type preferencesRoutes_PreferencesQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"PreferencesApp_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type preferencesRoutes_PreferencesQuery = {
   response: preferencesRoutes_PreferencesQuery$data;

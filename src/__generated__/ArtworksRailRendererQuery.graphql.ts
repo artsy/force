@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fb23ccc2382ba75ee98a28736b711b0d>>
+ * @generated SignedSource<<0959580c668e83d346ab3df002e37c73>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ArtworksRailRendererQuery$variables = {
 export type ArtworksRailRendererQuery$data = {
   readonly partner: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworksRail_partner">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtworksRailRendererQuery = {
   response: ArtworksRailRendererQuery$data;

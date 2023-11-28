@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<41970f7bded933c8a6528c338f61b9da>>
+ * @generated SignedSource<<de2354b7a9ecd87d5250a2508d1f966a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,18 +16,18 @@ export type ConversationList_me$data = {
       readonly cursor: string;
       readonly node: {
         readonly id: string;
-        readonly internalID: string | null;
-        readonly lastMessage: string | null;
+        readonly internalID: string | null | undefined;
+        readonly lastMessage: string | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"ConversationSnippet_conversation">;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageInfo: {
-      readonly endCursor: string | null;
+      readonly endCursor: string | null | undefined;
       readonly hasNextPage: boolean;
       readonly hasPreviousPage: boolean;
-      readonly startCursor: string | null;
+      readonly startCursor: string | null | undefined;
     };
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ConversationList_me";
 };
 export type ConversationList_me$key = {

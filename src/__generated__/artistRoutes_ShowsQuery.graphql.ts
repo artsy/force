@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9ed7d966c0712ff945bae1ebfec447d4>>
+ * @generated SignedSource<<a0b05fb6ef4443efef964a7403a29246>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type artistRoutes_ShowsQuery$variables = {
 export type artistRoutes_ShowsQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistShowsRoute_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type artistRoutes_ShowsQuery = {
   response: artistRoutes_ShowsQuery$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b4573ac3f4a332b2e6b9cfdfa8ddc487>>
+ * @generated SignedSource<<679e9da2be6e71fd5da2d6a1b4d993ca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,10 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type createAdvisoryOpportunityMutationInput = {
-  clientMutationId?: string | null;
-  message?: string | null;
-  phoneCountryCode?: string | null;
-  phoneNumber?: string | null;
+  clientMutationId?: string | null | undefined;
+  message?: string | null | undefined;
+  phoneCountryCode?: string | null | undefined;
+  phoneNumber?: string | null | undefined;
   searchCriteriaID: string;
 };
 export type useCreateAdvisoryOpportunityMutation$variables = {
@@ -27,9 +27,9 @@ export type useCreateAdvisoryOpportunityMutation$data = {
       };
       readonly mutationError?: {
         readonly message: string;
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useCreateAdvisoryOpportunityMutation = {
   response: useCreateAdvisoryOpportunityMutation$data;

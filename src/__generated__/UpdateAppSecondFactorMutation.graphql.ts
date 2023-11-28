@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dc62be843656986c78487f66301cc9e0>>
+ * @generated SignedSource<<60fc634f6e7012a5f6ac8d9d46203de9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,11 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UpdateAppSecondFactorInput = {
   attributes: AppSecondFactorAttributes;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   secondFactorID: string;
 };
 export type AppSecondFactorAttributes = {
-  name?: string | null;
+  name?: string | null | undefined;
 };
 export type UpdateAppSecondFactorMutation$variables = {
   input: UpdateAppSecondFactorInput;
@@ -35,7 +35,7 @@ export type UpdateAppSecondFactorMutation$data = {
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     };
-  } | null;
+  } | null | undefined;
 };
 export type UpdateAppSecondFactorMutation$rawResponse = {
   readonly updateAppSecondFactor: {
@@ -48,7 +48,7 @@ export type UpdateAppSecondFactorMutation$rawResponse = {
     } | {
       readonly __typename: string;
     };
-  } | null;
+  } | null | undefined;
 };
 export type UpdateAppSecondFactorMutation = {
   rawResponse: UpdateAppSecondFactorMutation$rawResponse;

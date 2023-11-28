@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e585b3be440e2ad99bf39d459f4f1ec7>>
+ * @generated SignedSource<<d9197cfc0e32b627d19a63ad9d54d20c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,7 @@ export type SettingsEditSettingsTwoFactorBackupCodes_me$data = {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "SettingsEditSettingsTwoFactorBackupCodes_me";
 };
 export type SettingsEditSettingsTwoFactorBackupCodes_me$key = {

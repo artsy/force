@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8c56eabf4227d756199f6fcb92a11fac>>
+ * @generated SignedSource<<ddbbb72078dbe099b5935c8af59622fb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,12 +13,12 @@ import { FragmentRefs } from "relay-runtime";
 export type CuritorialRailsTabBar_viewer$data = {
   readonly followedArtistsInAuction: {
     readonly counts: {
-      readonly total: any | null;
-    } | null;
-  } | null;
+      readonly total: any | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"MyBids_me">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"StandoutLotsRail_viewer" | "TrendingLotsRail_viewer" | "WorksByArtistsYouFollowRail_viewer">;
   readonly " $fragmentType": "CuritorialRailsTabBar_viewer";
 };

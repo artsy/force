@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2f4503d3c3d643deeb9ef107ed85e857>>
+ * @generated SignedSource<<54124edc09ff72f62f1a4ce2e2ee99c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SubmittedOrderModal_submittedOrder$data = {
-  readonly stateExpiresAt: string | null;
+  readonly stateExpiresAt: string | null | undefined;
   readonly " $fragmentType": "SubmittedOrderModal_submittedOrder";
 };
 export type SubmittedOrderModal_submittedOrder$key = {

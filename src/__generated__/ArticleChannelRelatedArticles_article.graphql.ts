@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<56a9f56dfc6cc5f4a8e94caa20fc1434>>
+ * @generated SignedSource<<3de74561ca990071ea87b36eadb469c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,10 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleChannelRelatedArticles_article$data = {
-  readonly byline: string | null;
+  readonly byline: string | null | undefined;
   readonly channel: {
     readonly name: string;
-  } | null;
+  } | null | undefined;
   readonly channelArticles: ReadonlyArray<{
     readonly internalID: string;
     readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;

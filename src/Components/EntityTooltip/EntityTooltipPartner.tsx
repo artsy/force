@@ -33,10 +33,10 @@ const EntityTooltipPartner: FC<EntityTooltipPartnerProps> = ({ partner }) => {
   const handleClick = () => {
     const payload: ClickedTooltip = {
       action: ActionType.clickedTooltip,
-      context_owner_id: contextPageOwnerId!,
-      context_owner_slug: contextPageOwnerSlug!,
-      context_owner_type: contextPageOwnerType!,
-      destination_path: partner.href!,
+      context_owner_id: contextPageOwnerId as string,
+      context_owner_slug: contextPageOwnerSlug as string,
+      context_owner_type: contextPageOwnerType as any,
+      destination_path: partner.href as string,
       type: "partner",
     }
 

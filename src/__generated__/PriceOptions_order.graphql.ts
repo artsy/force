@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cafe1726258f85c2b0ffad54eb30a45f>>
+ * @generated SignedSource<<5ef49e13b30a247ec5ab98546e7d22b1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type PriceOptions_order$data = {
   readonly internalID: string;
   readonly myLastOffer?: {
     readonly amountCents: number;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "PriceOptions_order";
 };
 export type PriceOptions_order$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<48efc137352068f4ebc8203fa378c154>>
+ * @generated SignedSource<<a64f7a777f86af1dae7ca0b36fa410eb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type MarketingTrendingArtistsRail_viewer$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellArtist_artist">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "MarketingTrendingArtistsRail_viewer";
 };
 export type MarketingTrendingArtistsRail_viewer$key = {

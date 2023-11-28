@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0881457336429a8a2964233ab6fef582>>
+ * @generated SignedSource<<8d66b7c9880bbd60a74f6ced6a1d3bba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,12 +14,12 @@ export type AppSecondFactor_me$data = {
   readonly appSecondFactors: ReadonlyArray<{
     readonly __typename: "AppSecondFactor";
     readonly internalID: string;
-    readonly name: string | null;
+    readonly name: string | null | undefined;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly hasSecondFactorEnabled: boolean;
   readonly " $fragmentType": "AppSecondFactor_me";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e3d9c2829689330ba887b964c4c0d3fd>>
+ * @generated SignedSource<<ddc60503d11f45fcc2d3d20ef3d93c9a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type PollAccountBalanceQuery_Test_Query$variables = {
 export type PollAccountBalanceQuery_Test_Query$data = {
   readonly commerceBankAccountBalance: {
     readonly " $fragmentSpreads": FragmentRefs<"PollAccountBalance_commerceBankAccountBalance">;
-  } | null;
+  } | null | undefined;
 };
 export type PollAccountBalanceQuery_Test_Query = {
   response: PollAccountBalanceQuery_Test_Query$data;

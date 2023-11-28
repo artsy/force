@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b31f294c0fc1b5684d1ecf10f7d0f43a>>
+ * @generated SignedSource<<1cee5417944923c5b009ca22ad637c17>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -28,7 +28,7 @@ export type PaymentMethodSummaryItem_order$data = {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly source: CommerceOrderSourceEnum;
   readonly " $fragmentType": "PaymentMethodSummaryItem_order";
 };

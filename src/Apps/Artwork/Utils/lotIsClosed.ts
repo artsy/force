@@ -1,18 +1,18 @@
 interface LegacySale {
-  is_closed: boolean | null
+  is_closed: boolean | null | undefined
 }
 
 interface Sale {
-  isClosed: boolean | null
+  isClosed: boolean | null | undefined
 }
 
 interface SaleArtwork {
-  endedAt: string | null
+  endedAt: string | null | undefined
 }
 
 export const lotIsClosed = (
-  sale: LegacySale | Sale | null,
-  saleArtwork: SaleArtwork | null
+  sale: LegacySale | Sale | null | undefined,
+  saleArtwork: SaleArtwork | null | undefined
 ): boolean => {
   // If there is no sale or saleArtwork, we can't determine if the lot is closed
   // so we return true to be safe.

@@ -5,16 +5,15 @@ import { renderWithLoadProgress } from "System/Relay/renderWithLoadProgress"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { IMocks } from "graphql-tools/dist/Interfaces"
 import * as React from "react"
-/* tslint:disable-next-line:no-query-renderer-import */
-import { QueryRenderer } from "react-relay"
+import { GraphQLTaggedNode, QueryRenderer } from "react-relay"
 import {
   Environment,
-  GraphQLTaggedNode,
   INetwork,
   OperationType,
   RecordSource,
   Store,
 } from "relay-runtime"
+import { Environment as IEnvironment } from "react-relay"
 import {
   createMockNetworkLayer,
   createMockNetworkLayer2,
@@ -214,7 +213,7 @@ export class MockRelayRenderer<T extends OperationType> extends React.Component<
     const environment = new Environment({
       network,
       store,
-    })
+    }) as IEnvironment
 
     return (
       <SystemContextConsumer>

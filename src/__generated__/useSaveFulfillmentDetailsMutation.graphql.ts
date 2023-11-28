@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2f1051f7268a13425de5f62fa5f837aa>>
+ * @generated SignedSource<<8949acfff3f9cf22ef148c848873ab2d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,23 +13,23 @@ import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderFulfillmentTypeEnum = "PICKUP" | "SHIP" | "SHIP_ARTA" | "%future added value";
 export type CommerceShippingAddressVerifiedByEnum = "ARTSY" | "USER" | "%future added value";
 export type CommerceSetShippingInput = {
-  addressVerifiedBy?: CommerceShippingAddressVerifiedByEnum | null;
-  clientMutationId?: string | null;
+  addressVerifiedBy?: CommerceShippingAddressVerifiedByEnum | null | undefined;
+  clientMutationId?: string | null | undefined;
   fulfillmentType: CommerceOrderFulfillmentTypeEnum;
   id: string;
-  phoneNumber?: string | null;
-  phoneNumberCountryCode?: string | null;
-  shipping?: CommerceShippingAttributes | null;
+  phoneNumber?: string | null | undefined;
+  phoneNumberCountryCode?: string | null | undefined;
+  shipping?: CommerceShippingAttributes | null | undefined;
 };
 export type CommerceShippingAttributes = {
-  addressLine1?: string | null;
-  addressLine2?: string | null;
-  city?: string | null;
-  country?: string | null;
-  name?: string | null;
-  phoneNumber?: string | null;
-  postalCode?: string | null;
-  region?: string | null;
+  addressLine1?: string | null | undefined;
+  addressLine2?: string | null | undefined;
+  city?: string | null | undefined;
+  country?: string | null | undefined;
+  name?: string | null | undefined;
+  phoneNumber?: string | null | undefined;
+  postalCode?: string | null | undefined;
+  region?: string | null | undefined;
 };
 export type useSaveFulfillmentDetailsMutation$variables = {
   input: CommerceSetShippingInput;
@@ -43,7 +43,7 @@ export type useSaveFulfillmentDetailsMutation$data = {
       readonly __typename: "CommerceOrderWithMutationFailure";
       readonly error: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
     } | {
@@ -58,7 +58,7 @@ export type useSaveFulfillmentDetailsMutation$data = {
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     };
-  } | null;
+  } | null | undefined;
 };
 export type useSaveFulfillmentDetailsMutation = {
   response: useSaveFulfillmentDetailsMutation$data;

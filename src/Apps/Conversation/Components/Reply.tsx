@@ -21,7 +21,7 @@ import { useTracking } from "react-tracking"
 import { ConversationCTAFragmentContainer } from "./ConversationCTA"
 import { SendConversationMessage } from "Apps/Conversation/Mutation/SendConversationMessage"
 import { Conversation_conversation$data } from "__generated__/Conversation_conversation.graphql"
-import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import { Environment } from "react-relay"
 
 const StyledFlex = styled(Flex)<FlexProps & RightProps>`
   border-top: 1px solid ${themeGet("colors.black10")};
@@ -55,11 +55,11 @@ const StyledTextArea = styled.textarea<{ height?: string }>`
 
 interface ReplyProps {
   conversation: Conversation_conversation$data
-  environment: RelayModernEnvironment
+  environment: Environment
   onScroll: () => void
   refetch: RelayRefetchProp["refetch"]
 
-  openInquiryModal: ({ createsOfferOrder: boolean }) => void
+  openInquiryModal: ({ createsOfferOrder }) => void
   openOrderModal: () => void
 }
 

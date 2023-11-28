@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e495a914f402cba0ac6eb8422c292a18>>
+ * @generated SignedSource<<bfdf084bd314e9d51736bb008292c627>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type OtherWorksQuery$variables = {
 export type OtherWorksQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"OtherWorks_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type OtherWorksQuery = {
   response: OtherWorksQuery$data;

@@ -10,7 +10,7 @@ import { ViewingRoomsLatestGrid_viewingRooms$data } from "__generated__/ViewingR
 import { RouterLink } from "System/Router/RouterLink"
 import { cropped } from "Utils/resized"
 import { extractNodes } from "Utils/extractNodes"
-import { getStatus } from "../Utils/getStatus"
+import { getStatus } from "Apps/ViewingRoom/Utils/getStatus"
 
 export interface ViewingRoomsLatestGridProps {
   relay: RelayPaginationProp
@@ -49,10 +49,13 @@ export const ViewingRoomsLatestGrid: React.FC<ViewingRoomsLatestGridProps> = pro
     <>
       <GridColumns>
         {viewingRooms.map(viewingRoom => {
-          const image = cropped(viewingRoom.image?.imageURLs?.normalized!, {
-            height: 490,
-            width: 490,
-          })
+          const image = cropped(
+            viewingRoom.image?.imageURLs?.normalized as string,
+            {
+              height: 490,
+              width: 490,
+            }
+          )
 
           const status = getStatus({
             status: viewingRoom.status,

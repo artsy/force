@@ -21,8 +21,8 @@ import { ConversationMessages_messages$data } from "__generated__/ConversationMe
 
 interface ConversationMessageProps {
   messages: ConversationMessages_messages$data
-  events: ConversationMessages_events$data | null
-  lastViewedMessageID?: string | null
+  events: ConversationMessages_events$data | null | undefined
+  lastViewedMessageID?: string | null | undefined
   setShowDetails: (showDetails: boolean) => void
 }
 type Order = NonNullable<

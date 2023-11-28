@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b874cb8298ca24a48765e58130e2478f>>
+ * @generated SignedSource<<354d7fac33a9c8771133f45caa855750>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsSavesArtists_test_Query$variables = {
-  after?: string | null;
+  after?: string | null | undefined;
 };
 export type SettingsSavesArtists_test_Query$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SettingsSavesArtists_me">;
-  } | null;
+  } | null | undefined;
 };
 export type SettingsSavesArtists_test_Query = {
   response: SettingsSavesArtists_test_Query$data;

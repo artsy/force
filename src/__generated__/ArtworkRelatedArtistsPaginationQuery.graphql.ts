@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fc12af12f5bb020204f47163c350a707>>
+ * @generated SignedSource<<cc472e9a6c4c9e09564bbdbf2c48206f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,12 +13,12 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkRelatedArtistsPaginationQuery$variables = {
   artworkID: string;
   count: number;
-  cursor?: string | null;
+  cursor?: string | null | undefined;
 };
 export type ArtworkRelatedArtistsPaginationQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkRelatedArtists_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtworkRelatedArtistsPaginationQuery = {
   response: ArtworkRelatedArtistsPaginationQuery$data;

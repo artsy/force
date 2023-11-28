@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<10402dd2e26191af633827b2cf1e9c2f>>
+ * @generated SignedSource<<c62ffcee351e4aefc3d6c3636f55dbb0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,26 +12,26 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowInstallShots_show$data = {
   readonly images: ReadonlyArray<{
-    readonly caption: string | null;
+    readonly caption: string | null | undefined;
     readonly desktop: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly src: string;
       readonly srcSet: string;
-      readonly width: number | null;
-    } | null;
-    readonly internalID: string | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+    readonly internalID: string | null | undefined;
     readonly mobile: {
-      readonly height: number | null;
-      readonly width: number | null;
-    } | null;
+      readonly height: number | null | undefined;
+      readonly width: number | null | undefined;
+    } | null | undefined;
     readonly zoom: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly src: string;
       readonly srcSet: string;
-      readonly width: number | null;
-    } | null;
-  } | null> | null;
-  readonly name: string | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "ShowInstallShots_show";
 };
 export type ShowInstallShots_show$key = {

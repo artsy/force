@@ -20,6 +20,7 @@ import { PriceRangeFilter } from "Components/Alert/Components/Form/PriceRange"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
+import { EmailPreferenceWarningMessageQueryRenderer } from "Components/Alert/Components/Filters/EmailPreferenceWarningMessage"
 
 export interface AlertFormikValues {
   name: string
@@ -113,6 +114,8 @@ export const Details: FC = () => {
                       selected={values.email}
                     />
                   </Box>
+
+                  <EmailPreferenceWarningMessageQueryRenderer />
 
                   <Spacer y={2} />
 

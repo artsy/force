@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ea279867831cc0dd622b3abd694c7bb2>>
+ * @generated SignedSource<<29b0588a29317675f41efc53943dc0f7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,30 +9,30 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type NavBarLoggedInActionsQuery$variables = {};
+export type NavBarLoggedInActionsQuery$variables = Record<PropertyKey, never>;
 export type NavBarLoggedInActionsQuery$data = {
   readonly me: {
     readonly followsAndSaves: {
       readonly notifications: {
         readonly edges: ReadonlyArray<{
           readonly node: {
-            readonly artists: string | null;
-            readonly href: string | null;
+            readonly artists: string | null | undefined;
+            readonly href: string | null | undefined;
             readonly image: {
               readonly resized: {
                 readonly url: string;
-              } | null;
-            } | null;
-            readonly published_at: string | null;
-            readonly summary: string | null;
-          } | null;
-        } | null> | null;
-      } | null;
-    } | null;
+              } | null | undefined;
+            } | null | undefined;
+            readonly published_at: string | null | undefined;
+            readonly summary: string | null | undefined;
+          } | null | undefined;
+        } | null | undefined> | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
     readonly unreadConversationCount: number;
     readonly unreadNotificationsCount: number;
     readonly unseenNotificationsCount: number;
-  } | null;
+  } | null | undefined;
 };
 export type NavBarLoggedInActionsQuery = {
   response: NavBarLoggedInActionsQuery$data;

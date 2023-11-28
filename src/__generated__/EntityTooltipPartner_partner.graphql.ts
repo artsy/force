@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7abad1a123dca61d9342525190d00a51>>
+ * @generated SignedSource<<54389a7d125990df70a1659a5d1d6e1c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,19 +11,19 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityTooltipPartner_partner$data = {
-  readonly href: string | null;
+  readonly href: string | null | undefined;
   readonly profile: {
-    readonly bio: string | null;
-    readonly fullBio: string | null;
+    readonly bio: string | null | undefined;
+    readonly fullBio: string | null | undefined;
     readonly image: {
       readonly cropped: {
         readonly height: number;
         readonly src: string;
         readonly srcSet: string;
         readonly width: number;
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
   readonly " $fragmentType": "EntityTooltipPartner_partner";
 };

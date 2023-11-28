@@ -25,7 +25,7 @@ import { useTracking } from "react-tracking"
 const logger = createLogger("SelectArtworkListsModal")
 
 export interface SelectArtworkListsModalProps {
-  me: SelectArtworkListsModal_me$data | null
+  me: SelectArtworkListsModal_me$data | null | undefined
 }
 
 type ArtworkListById = Record<string, ResultListEntity>
@@ -51,7 +51,7 @@ export const SelectArtworkListsModal: React.FC<SelectArtworkListsModalProps> = (
   const hasChanges =
     state.addingListIDs.length !== 0 || state.removingListIDs.length !== 0
 
-  const { submitMutation } = useSelectArtworkLists(state.artwork!.id)
+  const { submitMutation } = useSelectArtworkLists(state.artwork?.id as string)
   const { sendToast } = useToasts()
 
   const onClose = () => {
@@ -110,8 +110,8 @@ export const SelectArtworkListsModal: React.FC<SelectArtworkListsModalProps> = (
       action: ActionType.addedArtworkToArtworkList,
       context_owner_id: analytics.contextPageOwnerId,
       context_owner_slug: analytics.contextPageOwnerSlug,
-      context_owner_type: analytics.contextPageOwnerType!,
-      artwork_ids: [state.artwork!.internalID],
+      context_owner_type: analytics.contextPageOwnerType,
+      artwork_ids: [state.artwork?.internalID as string],
       owner_ids: state.addingListIDs,
     }
 
@@ -125,7 +125,7 @@ export const SelectArtworkListsModal: React.FC<SelectArtworkListsModalProps> = (
       await submitMutation({
         variables: {
           input: {
-            artworkIDs: [state.artwork!.internalID],
+            artworkIDs: [state.artwork?.internalID as string],
             addToCollectionIDs: state.addingListIDs,
             removeFromCollectionIDs: state.removingListIDs,
           },
@@ -226,7 +226,7 @@ export const SelectArtworkListsModalFragmentContainer = createFragmentContainer(
           first: 30
           default: false
           saves: true
-          sort: CREATED_AT_DESC
+          sort: UPDATED_AT_DESC
         ) {
           edges {
             node {
@@ -248,7 +248,7 @@ export const SelectArtworkListsModalQueryRender: FC = () => {
   return (
     <SystemQueryRenderer<SelectArtworkListsModalQuery>
       query={query}
-      variables={{ artworkID: state.artwork!.internalID }}
+      variables={{ artworkID: state.artwork?.internalID as string }}
       render={({ props, error }) => {
         if (error) {
           console.error(error)

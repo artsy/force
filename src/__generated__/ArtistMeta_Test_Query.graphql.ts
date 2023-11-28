@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7727baf6b8114d943312b800799521ef>>
+ * @generated SignedSource<<fa33e5d6a799e615d7ffa6c51141be5a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistMeta_Test_Query$variables = {};
+export type ArtistMeta_Test_Query$variables = Record<PropertyKey, never>;
 export type ArtistMeta_Test_Query$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistMeta_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtistMeta_Test_Query = {
   response: ArtistMeta_Test_Query$data;

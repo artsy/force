@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e8339699185add52bc9aa82272a2909b>>
+ * @generated SignedSource<<9e4b34b5f03c651c80edb069b179581e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type homeRoutes_HomeQuery$variables = {
 export type homeRoutes_HomeQuery$data = {
   readonly featuredEventsOrderedSet: {
     readonly " $fragmentSpreads": FragmentRefs<"HomeApp_featuredEventsOrderedSet">;
-  } | null;
+  } | null | undefined;
   readonly heroUnitsConnection: {
     readonly " $fragmentSpreads": FragmentRefs<"HomeApp_heroUnitsConnection">;
-  } | null;
+  } | null | undefined;
 };
 export type homeRoutes_HomeQuery = {
   response: homeRoutes_HomeQuery$data;

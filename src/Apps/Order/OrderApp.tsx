@@ -86,7 +86,7 @@ const OrderApp: FC<OrderAppProps> = props => {
 
   const renderChatSupportScript = () => {
     const { itemsTotalCents, currencyCode } = order
-    const price = itemsTotalCents! / 100
+    const price = (itemsTotalCents as number) / 100
 
     if (!price || !exceedsChatSupportThreshold(price, currencyCode)) {
       return null
@@ -105,7 +105,7 @@ const OrderApp: FC<OrderAppProps> = props => {
 
   const stripePromise = loadStripe(getENV("STRIPE_PUBLISHABLE_KEY"))
   const isModal = !!props.match?.location.query.isModal
-  const artwork = extractNodes(order.lineItems!)[0].artwork
+  const artwork = extractNodes(order.lineItems)[0].artwork
 
   return (
     <Box>
@@ -133,7 +133,7 @@ const OrderApp: FC<OrderAppProps> = props => {
         <StickyFooterWithInquiry
           orderType={order.mode}
           orderSource={order.source}
-          artworkID={artwork?.slug!}
+          artworkID={artwork?.slug as string}
         />
       )}
 

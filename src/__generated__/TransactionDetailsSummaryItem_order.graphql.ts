@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d21dbd3ae781255b974217cbf15bf27d>>
+ * @generated SignedSource<<c51e80ad758fbb4bc1653afac48cae5e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,65 +15,65 @@ export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added v
 import { FragmentRefs } from "relay-runtime";
 export type TransactionDetailsSummaryItem_order$data = {
   readonly __typename: string;
-  readonly buyerTotal: string | null;
+  readonly buyerTotal: string | null | undefined;
   readonly code: string;
   readonly currencyCode: string;
   readonly displayState: CommerceOrderDisplayStateEnum;
-  readonly itemsTotal: string | null;
+  readonly itemsTotal: string | null | undefined;
   readonly lastOffer?: {
-    readonly amount: string | null;
+    readonly amount: string | null | undefined;
     readonly amountCents: number;
-    readonly buyerTotal: string | null;
-    readonly buyerTotalCents: number | null;
-    readonly fromParticipant: CommerceOrderParticipantEnum | null;
+    readonly buyerTotal: string | null | undefined;
+    readonly buyerTotalCents: number | null | undefined;
+    readonly fromParticipant: CommerceOrderParticipantEnum | null | undefined;
     readonly internalID: string;
-    readonly note: string | null;
-    readonly shippingTotal: string | null;
-    readonly shippingTotalCents: number | null;
-    readonly taxTotal: string | null;
-    readonly taxTotalCents: number | null;
-  } | null;
+    readonly note: string | null | undefined;
+    readonly shippingTotal: string | null | undefined;
+    readonly shippingTotalCents: number | null | undefined;
+    readonly taxTotal: string | null | undefined;
+    readonly taxTotalCents: number | null | undefined;
+  } | null | undefined;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artworkOrEditionSet: {
           readonly __typename: "Artwork";
-          readonly price: string | null;
+          readonly price: string | null | undefined;
         } | {
           readonly __typename: "EditionSet";
-          readonly price: string | null;
+          readonly price: string | null | undefined;
         } | {
           // This will never be '%other', but we need some
           // value in case none of the concrete values match.
           readonly __typename: "%other";
-        } | null;
+        } | null | undefined;
         readonly selectedShippingQuote: {
           readonly typeName: string;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly mode: CommerceOrderModeEnum | null;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly myLastOffer?: {
-    readonly amount: string | null;
+    readonly amount: string | null | undefined;
     readonly amountCents: number;
-    readonly buyerTotal: string | null;
-    readonly buyerTotalCents: number | null;
-    readonly fromParticipant: CommerceOrderParticipantEnum | null;
+    readonly buyerTotal: string | null | undefined;
+    readonly buyerTotalCents: number | null | undefined;
+    readonly fromParticipant: CommerceOrderParticipantEnum | null | undefined;
     readonly internalID: string;
-    readonly note: string | null;
-    readonly shippingTotal: string | null;
-    readonly shippingTotalCents: number | null;
-    readonly taxTotal: string | null;
-    readonly taxTotalCents: number | null;
-  } | null;
+    readonly note: string | null | undefined;
+    readonly shippingTotal: string | null | undefined;
+    readonly shippingTotalCents: number | null | undefined;
+    readonly taxTotal: string | null | undefined;
+    readonly taxTotalCents: number | null | undefined;
+  } | null | undefined;
   readonly requestedFulfillment: {
     readonly __typename: string;
-  } | null;
-  readonly shippingTotal: string | null;
-  readonly shippingTotalCents: number | null;
-  readonly taxTotal: string | null;
-  readonly taxTotalCents: number | null;
+  } | null | undefined;
+  readonly shippingTotal: string | null | undefined;
+  readonly shippingTotalCents: number | null | undefined;
+  readonly taxTotal: string | null | undefined;
+  readonly taxTotalCents: number | null | undefined;
   readonly " $fragmentType": "TransactionDetailsSummaryItem_order";
 };
 export type TransactionDetailsSummaryItem_order$key = {

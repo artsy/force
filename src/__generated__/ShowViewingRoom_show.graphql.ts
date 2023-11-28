@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a4242b815eb8f2cd26bfed23b6cb2a9d>>
+ * @generated SignedSource<<304dc99cf890dab45b89fbeaa044e80a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,26 +12,26 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowViewingRoom_show$data = {
   readonly partner: {
-    readonly name?: string | null;
-  } | null;
+    readonly name?: string | null | undefined;
+  } | null | undefined;
   readonly viewingRoomsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly distanceToClose: string | null;
-        readonly distanceToOpen: string | null;
-        readonly href: string | null;
+        readonly distanceToClose: string | null | undefined;
+        readonly distanceToOpen: string | null | undefined;
+        readonly href: string | null | undefined;
         readonly image: {
           readonly imageURLs: {
-            readonly normalized: string | null;
-          } | null;
-        } | null;
+            readonly normalized: string | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
         readonly internalID: string;
         readonly slug: string;
         readonly status: string;
         readonly title: string;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ShowViewingRoom_show";
 };
 export type ShowViewingRoom_show$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2b97017aca787650d5f01cc9444ea93e>>
+ * @generated SignedSource<<8ff3310e3bae92b261317832755c0bf0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,12 +9,12 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type createMockNetworkLayerTestQuery$variables = {};
+export type createMockNetworkLayerTestQuery$variables = Record<PropertyKey, never>;
 export type createMockNetworkLayerTestQuery$data = {
   readonly artwork: {
     readonly id: string;
-    readonly title: string | null;
-  } | null;
+    readonly title: string | null | undefined;
+  } | null | undefined;
 };
 export type createMockNetworkLayerTestQuery = {
   response: createMockNetworkLayerTestQuery$data;

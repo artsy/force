@@ -1,9 +1,5 @@
-import {
-  commitMutation,
-  GraphQLTaggedNode,
-  MutationParameters,
-  MutationConfig,
-} from "relay-runtime"
+import { commitMutation, GraphQLTaggedNode } from "react-relay"
+import { MutationParameters, MutationConfig } from "relay-runtime"
 import { useSystemContext } from "System/useSystemContext"
 
 export const useMutation = <T extends MutationParameters>({
@@ -24,11 +20,12 @@ export const useMutation = <T extends MutationParameters>({
     const { variables = {}, rejectIf } = props
 
     return new Promise((resolve, reject) => {
-      commitMutation<T>(relayEnvironment!, {
+      commitMutation<T>(relayEnvironment, {
         mutation,
         variables,
         updater,
-        optimisticResponse,
+        // FIXME: Relay 15 types
+        optimisticResponse: optimisticResponse as any,
         onError: reject,
         onCompleted: (res, errors) => {
           if (errors !== null) {

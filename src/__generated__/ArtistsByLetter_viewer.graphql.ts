@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4113218d8e0a51c917efec6d49358a82>>
+ * @generated SignedSource<<ceb50b8146f2e339fd94a39bb89c7a2b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,19 +14,19 @@ export type ArtistsByLetter_viewer$data = {
   readonly artistsConnection: {
     readonly artists: ReadonlyArray<{
       readonly artist: {
-        readonly href: string | null;
+        readonly href: string | null | undefined;
         readonly internalID: string;
-        readonly name: string | null;
-      } | null;
-    } | null> | null;
+        readonly name: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     };
     readonly pageInfo: {
-      readonly endCursor: string | null;
+      readonly endCursor: string | null | undefined;
       readonly hasNextPage: boolean;
     };
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ArtistsByLetter_viewer";
 };
 export type ArtistsByLetter_viewer$key = {

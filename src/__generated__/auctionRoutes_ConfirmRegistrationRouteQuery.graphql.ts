@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a0c048446d82a8231bbf44e8dec3a27c>>
+ * @generated SignedSource<<b0b95383780520bd0a95f3fcc08c1da4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type auctionRoutes_ConfirmRegistrationRouteQuery$variables = {
 export type auctionRoutes_ConfirmRegistrationRouteQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"AuctionConfirmRegistrationRoute_me">;
-  } | null;
+  } | null | undefined;
   readonly sale: {
     readonly " $fragmentSpreads": FragmentRefs<"AuctionConfirmRegistrationRoute_sale">;
-  } | null;
+  } | null | undefined;
 };
 export type auctionRoutes_ConfirmRegistrationRouteQuery = {
   response: auctionRoutes_ConfirmRegistrationRouteQuery$data;

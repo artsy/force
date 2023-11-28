@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<85cfe4945d9cfc2e911617eea974154f>>
+ * @generated SignedSource<<a84e0a193c5b21cbc6073c4939653ed6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkAuctionRegistrationPanel_artwork$data = {
   readonly sale: {
-    readonly isRegistrationClosed: boolean | null;
-    readonly registrationEndsAt: string | null;
+    readonly isRegistrationClosed: boolean | null | undefined;
+    readonly registrationEndsAt: string | null | undefined;
     readonly slug: string;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ArtworkAuctionRegistrationPanel_artwork";
 };
 export type ArtworkAuctionRegistrationPanel_artwork$key = {

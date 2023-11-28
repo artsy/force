@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4ee13c35936cd1a403533f5d7cee4cd6>>
+ * @generated SignedSource<<f90a72ceb389a29614a8e89bbeb29226>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,11 +13,11 @@ import { FragmentRefs } from "relay-runtime";
 export type ShowLocationHours_location$data = {
   readonly openingHours: {
     readonly schedules?: ReadonlyArray<{
-      readonly days: string | null;
-      readonly hours: string | null;
-    } | null> | null;
-    readonly text?: string | null;
-  } | null;
+      readonly days: string | null | undefined;
+      readonly hours: string | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly text?: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ShowLocationHours_location";
 };
 export type ShowLocationHours_location$key = {

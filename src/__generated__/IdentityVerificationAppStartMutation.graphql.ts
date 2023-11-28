@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fcd4146dcd1424fc71773659e8217606>>
+ * @generated SignedSource<<3818543a2c52c41f4a4198d8ca7d3167>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type startIdentityVerificationMutationInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   identityVerificationId: string;
 };
 export type IdentityVerificationAppStartMutation$variables = {
@@ -19,14 +19,14 @@ export type IdentityVerificationAppStartMutation$variables = {
 export type IdentityVerificationAppStartMutation$data = {
   readonly startIdentityVerification: {
     readonly startIdentityVerificationResponseOrError: {
-      readonly identityVerificationFlowUrl?: string | null;
+      readonly identityVerificationFlowUrl?: string | null | undefined;
       readonly mutationError?: {
-        readonly detail: string | null;
-        readonly error: string | null;
+        readonly detail: string | null | undefined;
+        readonly error: string | null | undefined;
         readonly message: string;
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type IdentityVerificationAppStartMutation = {
   response: IdentityVerificationAppStartMutation$data;

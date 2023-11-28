@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b8b7bf7f0b25b20acf95ff916c66dc06>>
+ * @generated SignedSource<<7578ec9c382f08850df5a6e4db2f315e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,20 +12,20 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionFAQRoute_viewer$data = {
   readonly bidding: {
-    readonly content: string | null;
-  } | null;
+    readonly content: string | null | undefined;
+  } | null | undefined;
   readonly buyersPremiumTaxesAndFees: {
-    readonly content: string | null;
-  } | null;
+    readonly content: string | null | undefined;
+  } | null | undefined;
   readonly conditionsOfSale: {
-    readonly content: string | null;
-  } | null;
+    readonly content: string | null | undefined;
+  } | null | undefined;
   readonly emailsAndAlerts: {
-    readonly content: string | null;
-  } | null;
+    readonly content: string | null | undefined;
+  } | null | undefined;
   readonly paymentsAndShipping: {
-    readonly content: string | null;
-  } | null;
+    readonly content: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "AuctionFAQRoute_viewer";
 };
 export type AuctionFAQRoute_viewer$key = {

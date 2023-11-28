@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<adbcb9c52fa6ae54c1359549b87b63f8>>
+ * @generated SignedSource<<cff46f7c0a011951b5dc29feca89dfb1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,17 +9,17 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
-export type requestEmailConfirmationMutation$variables = {};
+export type requestEmailConfirmationMutation$variables = Record<PropertyKey, never>;
 export type requestEmailConfirmationMutation$data = {
   readonly sendConfirmationEmail: {
     readonly confirmationOrError: {
       readonly mutationError?: {
-        readonly error: string | null;
+        readonly error: string | null | undefined;
         readonly message: string;
-      } | null;
-      readonly unconfirmedEmail?: string | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+      readonly unconfirmedEmail?: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type requestEmailConfirmationMutation = {
   response: requestEmailConfirmationMutation$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b78366cc2f68bb25e3a3c01a6d1ef842>>
+ * @generated SignedSource<<f13b02c0f302379d190c76b561fab5ad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,10 +17,10 @@ export type PartnersFeaturedCarousel_viewer$data = {
         readonly node: {
           readonly internalID?: string;
           readonly " $fragmentSpreads": FragmentRefs<"PartnersFeaturedCarouselCell_profile">;
-        } | null;
-      } | null> | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
     };
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "PartnersFeaturedCarousel_viewer";
 };
 export type PartnersFeaturedCarousel_viewer$key = {

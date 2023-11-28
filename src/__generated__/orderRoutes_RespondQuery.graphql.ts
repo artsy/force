@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f5f79b286b5bcff9abf43e753d41b51a>>
+ * @generated SignedSource<<9ea17b0eb46680c7ba3e857a04bea359>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type orderRoutes_RespondQuery$variables = {
 export type orderRoutes_RespondQuery$data = {
   readonly order: {
     readonly " $fragmentSpreads": FragmentRefs<"Respond_order">;
-  } | null;
+  } | null | undefined;
 };
 export type orderRoutes_RespondQuery = {
   response: orderRoutes_RespondQuery$data;

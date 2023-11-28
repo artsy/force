@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e3e8c38b2e255d53042872ec5e67ee14>>
+ * @generated SignedSource<<7013e6489f4b50d16fc936f1dd5eaf65>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type ArticleInfiniteScroll_viewer$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ArticleBody_article" | "ArticleVisibilityMetadata_article">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ArticleInfiniteScroll_viewer";
 };
 export type ArticleInfiniteScroll_viewer$key = {

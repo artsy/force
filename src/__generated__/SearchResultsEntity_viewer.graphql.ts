@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d46b05f9de9549be5c8ae551cb6cb331>>
+ * @generated SignedSource<<7a274bf00d508d4c165e64758e119608>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,22 +14,22 @@ export type SearchResultsEntity_viewer$data = {
   readonly searchConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly description?: string | null;
-        readonly displayLabel?: string | null;
-        readonly displayType?: string | null;
-        readonly href?: string | null;
-        readonly imageUrl?: string | null;
+        readonly description?: string | null | undefined;
+        readonly displayLabel?: string | null | undefined;
+        readonly displayType?: string | null | undefined;
+        readonly href?: string | null | undefined;
+        readonly imageUrl?: string | null | undefined;
         readonly internalID?: string;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     };
     readonly pageInfo: {
-      readonly endCursor: string | null;
+      readonly endCursor: string | null | undefined;
       readonly hasNextPage: boolean;
     };
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "SearchResultsEntity_viewer";
 };
 export type SearchResultsEntity_viewer$key = {

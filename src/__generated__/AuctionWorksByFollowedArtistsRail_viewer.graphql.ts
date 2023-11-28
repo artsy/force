@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dd0f5f6b2c28e61a78c583b00a046a4d>>
+ * @generated SignedSource<<ce7d23fc20fc1aa50fe3d568c360c8ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,9 +15,9 @@ export type AuctionWorksByFollowedArtistsRail_viewer$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "AuctionWorksByFollowedArtistsRail_viewer";
 };
 export type AuctionWorksByFollowedArtistsRail_viewer$key = {

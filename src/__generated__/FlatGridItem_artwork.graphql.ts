@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7b45e3c591b22efd3a5293605162e4da>>
+ * @generated SignedSource<<3ca110de22adba3a95a393dad36a7ca4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,30 +11,30 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FlatGridItem_artwork$data = {
-  readonly artistNames: string | null;
-  readonly href: string | null;
+  readonly artistNames: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly image: {
     readonly resized: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly src: string;
       readonly srcSet: string;
-      readonly width: number | null;
-    } | null;
-  } | null;
-  readonly image_title: string | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
+  readonly image_title: string | null | undefined;
   readonly internalID: string;
-  readonly isSaved: boolean | null;
+  readonly isSaved: boolean | null | undefined;
   readonly sale: {
-    readonly extendedBiddingIntervalMinutes: number | null;
-    readonly extendedBiddingPeriodMinutes: number | null;
-    readonly startAt: string | null;
-  } | null;
+    readonly extendedBiddingIntervalMinutes: number | null | undefined;
+    readonly extendedBiddingPeriodMinutes: number | null | undefined;
+    readonly startAt: string | null | undefined;
+  } | null | undefined;
   readonly saleArtwork: {
-    readonly endAt: string | null;
-    readonly extendedBiddingEndAt: string | null;
-    readonly lotID: string | null;
-  } | null;
-  readonly title: string | null;
+    readonly endAt: string | null | undefined;
+    readonly extendedBiddingEndAt: string | null | undefined;
+    readonly lotID: string | null | undefined;
+  } | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"DeprecatedSaveButton_artwork" | "Metadata_artwork">;
   readonly " $fragmentType": "FlatGridItem_artwork";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<afc592a132684cd7cc7a3ae8889fe107>>
+ * @generated SignedSource<<9aa0b5a197de627873701d60bc8a3471>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,26 +14,26 @@ export type PartnerMeta_partner$data = {
   readonly locationsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly address: string | null;
-        readonly address2: string | null;
-        readonly city: string | null;
+        readonly address: string | null | undefined;
+        readonly address2: string | null | undefined;
+        readonly city: string | null | undefined;
         readonly coordinates: {
-          readonly lat: number | null;
-          readonly lng: number | null;
-        } | null;
-        readonly country: string | null;
-        readonly phone: string | null;
-        readonly postalCode: string | null;
-        readonly state: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
+          readonly lat: number | null | undefined;
+          readonly lng: number | null | undefined;
+        } | null | undefined;
+        readonly country: string | null | undefined;
+        readonly phone: string | null | undefined;
+        readonly postalCode: string | null | undefined;
+        readonly state: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly meta: {
-    readonly description: string | null;
-    readonly image: string | null;
-    readonly title: string | null;
-  } | null;
-  readonly name: string | null;
+    readonly description: string | null | undefined;
+    readonly image: string | null | undefined;
+    readonly title: string | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "PartnerMeta_partner";
 };

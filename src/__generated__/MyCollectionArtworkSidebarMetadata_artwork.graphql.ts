@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1d589691dd639c9e439dc4bf9657c9af>>
+ * @generated SignedSource<<4ad31b8fdc1bbc7d0e9246cf95362ed4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,23 +11,23 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkSidebarMetadata_artwork$data = {
-  readonly artworkLocation: string | null;
+  readonly artworkLocation: string | null | undefined;
   readonly attributionClass: {
-    readonly shortDescription: string | null;
-  } | null;
-  readonly category: string | null;
-  readonly confidentialNotes: string | null;
+    readonly shortDescription: string | null | undefined;
+  } | null | undefined;
+  readonly category: string | null | undefined;
+  readonly confidentialNotes: string | null | undefined;
   readonly dimensions: {
-    readonly cm: string | null;
-    readonly in: string | null;
-  } | null;
-  readonly editionOf: string | null;
-  readonly medium: string | null;
-  readonly metric: string | null;
+    readonly cm: string | null | undefined;
+    readonly in: string | null | undefined;
+  } | null | undefined;
+  readonly editionOf: string | null | undefined;
+  readonly medium: string | null | undefined;
+  readonly metric: string | null | undefined;
   readonly pricePaid: {
-    readonly display: string | null;
-  } | null;
-  readonly provenance: string | null;
+    readonly display: string | null | undefined;
+  } | null | undefined;
+  readonly provenance: string | null | undefined;
   readonly " $fragmentType": "MyCollectionArtworkSidebarMetadata_artwork";
 };
 export type MyCollectionArtworkSidebarMetadata_artwork$key = {

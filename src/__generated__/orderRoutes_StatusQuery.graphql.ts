@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<44238cf06ad4096bf7ce10eeecc0bb5a>>
+ * @generated SignedSource<<01d235da553cf364269ce4ac236d49a1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type orderRoutes_StatusQuery$variables = {
 export type orderRoutes_StatusQuery$data = {
   readonly order: {
     readonly " $fragmentSpreads": FragmentRefs<"Status_order">;
-  } | null;
+  } | null | undefined;
 };
 export type orderRoutes_StatusQuery = {
   response: orderRoutes_StatusQuery$data;

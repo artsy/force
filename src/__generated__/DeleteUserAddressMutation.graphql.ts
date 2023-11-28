@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<837877b23eec044986a6f938cb5c0a11>>
+ * @generated SignedSource<<b9b7884213d40f91c34603820eae7f0d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type DeleteUserAddressInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   userAddressID: string;
 };
 export type DeleteUserAddressMutation$variables = {
@@ -20,7 +20,7 @@ export type DeleteUserAddressMutation$data = {
   readonly deleteUserAddress: {
     readonly userAddressOrErrors: {
       readonly addressLine1?: string;
-      readonly addressLine2?: string | null;
+      readonly addressLine2?: string | null | undefined;
       readonly city?: string;
       readonly country?: string;
       readonly errors?: ReadonlyArray<{
@@ -30,12 +30,12 @@ export type DeleteUserAddressMutation$data = {
       readonly id?: string;
       readonly internalID?: string;
       readonly isDefault?: boolean;
-      readonly name?: string | null;
-      readonly phoneNumber?: string | null;
-      readonly postalCode?: string | null;
-      readonly region?: string | null;
+      readonly name?: string | null | undefined;
+      readonly phoneNumber?: string | null | undefined;
+      readonly postalCode?: string | null | undefined;
+      readonly region?: string | null | undefined;
     };
-  } | null;
+  } | null | undefined;
 };
 export type DeleteUserAddressMutation = {
   response: DeleteUserAddressMutation$data;

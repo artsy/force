@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7ac046355f21ec80ebda85b427cb4b3d>>
+ * @generated SignedSource<<1f0e31276cb8520f3d9fc275348af704>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,10 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworksCollectionsBatchUpdateInput = {
-  addToCollectionIDs?: ReadonlyArray<string> | null;
+  addToCollectionIDs?: ReadonlyArray<string> | null | undefined;
   artworkIDs: ReadonlyArray<string>;
-  clientMutationId?: string | null;
-  removeFromCollectionIDs?: ReadonlyArray<string> | null;
+  clientMutationId?: string | null | undefined;
+  removeFromCollectionIDs?: ReadonlyArray<string> | null | undefined;
 };
 export type useSelectArtworkListsMutation$variables = {
   input: ArtworksCollectionsBatchUpdateInput;
@@ -26,17 +26,17 @@ export type useSelectArtworkListsMutation$data = {
         readonly default: boolean;
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
-      } | null> | null;
+      } | null | undefined> | null | undefined;
       readonly mutationError?: {
-        readonly statusCode: number | null;
-      } | null;
+        readonly statusCode: number | null | undefined;
+      } | null | undefined;
       readonly removedFromArtworkLists?: ReadonlyArray<{
         readonly default: boolean;
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ArtworkListItem_item">;
-      } | null> | null;
-    } | null;
-  } | null;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useSelectArtworkListsMutation = {
   response: useSelectArtworkListsMutation$data;

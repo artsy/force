@@ -1,9 +1,10 @@
 import { useCallback, useEffect } from "react"
 import * as React from "react"
-import { commitMutation, graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import { useRouter } from "System/Router/useRouter"
 import { useRecordArtworkViewMutation } from "__generated__/useRecordArtworkViewMutation.graphql"
+import { commitMutation } from "react-relay"
 
 export const useRecordArtworkView = () => {
   const { relayEnvironment, isLoggedIn } = useSystemContext()
@@ -16,7 +17,7 @@ export const useRecordArtworkView = () => {
 
   const recordArtworkView = useCallback(
     (artworkID: string) => {
-      commitMutation<useRecordArtworkViewMutation>(relayEnvironment!, {
+      commitMutation<useRecordArtworkViewMutation>(relayEnvironment, {
         variables: { artworkID },
         mutation: graphql`
           mutation useRecordArtworkViewMutation($artworkID: String!) {

@@ -63,7 +63,7 @@ export const ArtistsByLetter: React.FC<ArtistsByLetterProps> = ({
     handleClick(endCursor, page)
   }
 
-  const handleClick = (_cursor: string | null, page: number) => {
+  const handleClick = (_cursor: string | null | undefined, page: number) => {
     setLoading(true)
 
     relay.refetch({ page }, null, error => {

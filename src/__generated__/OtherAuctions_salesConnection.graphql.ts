@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ba36b55d2361c5bcc11dd41595794dcb>>
+ * @generated SignedSource<<5e0aa8f3c9060bd58f8885bc64c9661c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,8 +15,8 @@ export type OtherAuctions_salesConnection$data = {
     readonly node: {
       readonly internalID: string;
       readonly " $fragmentSpreads": FragmentRefs<"AuctionCard_sale">;
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "OtherAuctions_salesConnection";
 };
 export type OtherAuctions_salesConnection$key = {

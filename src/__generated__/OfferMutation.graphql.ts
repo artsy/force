@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<81ac84a44a91ce0020c5165ecd07c664>>
+ * @generated SignedSource<<ac0022e69524821cde37d60042a09aeb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceAddInitialOfferToOrderInput = {
   amountCents: number;
-  clientMutationId?: string | null;
-  note?: string | null;
+  clientMutationId?: string | null | undefined;
+  note?: string | null | undefined;
   orderId: string;
 };
 export type OfferMutation$variables = {
@@ -25,21 +25,21 @@ export type OfferMutation$data = {
       readonly __typename: "CommerceOrderWithMutationSuccess";
       readonly error?: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
       readonly order?: {
         readonly internalID: string;
-        readonly mode: CommerceOrderModeEnum | null;
+        readonly mode: CommerceOrderModeEnum | null | undefined;
         readonly myLastOffer?: {
           readonly amountCents: number;
           readonly internalID: string;
-          readonly note: string | null;
-        } | null;
+          readonly note: string | null | undefined;
+        } | null | undefined;
         readonly totalListPriceCents: number;
       };
     };
-  } | null;
+  } | null | undefined;
 };
 export type OfferMutation = {
   response: OfferMutation$data;

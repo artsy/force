@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<158335e709504e8cf2da063672c49dcf>>
+ * @generated SignedSource<<50e4370d0ae93ed59d956190baec5774>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentInquiry_me$data = {
-  readonly email: string | null;
+  readonly email: string | null | undefined;
   readonly internalID: string;
-  readonly name: string | null;
-  readonly phone: string | null;
+  readonly name: string | null | undefined;
+  readonly phone: string | null | undefined;
   readonly phoneNumber: {
-    readonly regionCode: string | null;
-  } | null;
+    readonly regionCode: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ConsignmentInquiry_me";
 };
 export type ConsignmentInquiry_me$key = {

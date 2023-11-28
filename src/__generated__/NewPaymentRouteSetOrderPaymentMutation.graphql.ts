@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<af4ec5355ed77dbd94406f2879c4e9a6>>
+ * @generated SignedSource<<4811c67c611ddb6d2fbfe223c18ebedb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,10 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceFixFailedPaymentInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   creditCardId: string;
-  offerId?: string | null;
-  orderId?: string | null;
+  offerId?: string | null | undefined;
+  orderId?: string | null | undefined;
 };
 export type NewPaymentRouteSetOrderPaymentMutation$variables = {
   input: CommerceFixFailedPaymentInput;
@@ -28,25 +28,25 @@ export type NewPaymentRouteSetOrderPaymentMutation$data = {
       };
       readonly error?: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
       readonly order?: {
-        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null | undefined;
         readonly creditCard: {
-          readonly city: string | null;
-          readonly country: string | null;
+          readonly city: string | null | undefined;
+          readonly country: string | null | undefined;
           readonly internalID: string;
-          readonly name: string | null;
-          readonly postal_code: string | null;
-          readonly state: string | null;
-          readonly street1: string | null;
-          readonly street2: string | null;
-        } | null;
+          readonly name: string | null | undefined;
+          readonly postal_code: string | null | undefined;
+          readonly state: string | null | undefined;
+          readonly street1: string | null | undefined;
+          readonly street2: string | null | undefined;
+        } | null | undefined;
         readonly state: CommerceOrderStateEnum;
       };
     };
-  } | null;
+  } | null | undefined;
 };
 export type NewPaymentRouteSetOrderPaymentMutation = {
   response: NewPaymentRouteSetOrderPaymentMutation$data;

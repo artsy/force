@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<89706e5c5d0a022daf3f0ce2f8103784>>
+ * @generated SignedSource<<c673ceeb35c3fe2e277fa9be239f60bc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,30 +16,30 @@ export type Respond_order$data = {
   readonly currencyCode: string;
   readonly internalID: string;
   readonly isInquiryOrder?: boolean;
-  readonly itemsTotal: string | null;
-  readonly itemsTotalCents: number | null;
+  readonly itemsTotal: string | null | undefined;
+  readonly itemsTotalCents: number | null | undefined;
   readonly lastOffer?: {
     readonly createdAt: string;
     readonly internalID: string;
-    readonly note: string | null;
-  } | null;
-  readonly lastTransactionFailed: boolean | null;
+    readonly note: string | null | undefined;
+  } | null | undefined;
+  readonly lastTransactionFailed: boolean | null | undefined;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
-          readonly price: string | null;
+          readonly price: string | null | undefined;
           readonly slug: string;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly mode: CommerceOrderModeEnum | null;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly myLastOffer?: {
     readonly createdAt: string;
-  } | null;
+  } | null | undefined;
   readonly state: CommerceOrderStateEnum;
-  readonly stateExpiresAt: string | null;
+  readonly stateExpiresAt: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OfferHistoryItem_order" | "OrderStepper_order" | "PaymentMethodSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Respond_order";
 };

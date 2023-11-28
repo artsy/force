@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2d485d9c4e7c8f03388253b07ef7a88d>>
+ * @generated SignedSource<<1f299a7db06ca4f5b656eebd362903d5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,11 +14,11 @@ export type ShowHours_show$data = {
   readonly fair: {
     readonly location: {
       readonly " $fragmentSpreads": FragmentRefs<"ShowLocationHours_location">;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
   readonly location: {
     readonly " $fragmentSpreads": FragmentRefs<"ShowLocationHours_location">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ShowHours_show";
 };
 export type ShowHours_show$key = {

@@ -136,7 +136,6 @@ export const SmsSecondFactor: React.FC<SmsSecondFactorProps> = ({
     setCreating(true)
 
     try {
-      // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
       const response = await CreateSmsSecondFactor(relayEnvironment, {
         attributes: {},
         password,

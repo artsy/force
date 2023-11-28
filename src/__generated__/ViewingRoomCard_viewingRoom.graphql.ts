@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<79f6e295cd582abc3e412db7cfadb88f>>
+ * @generated SignedSource<<6fb7954cc034b3488d79d0fa3b97711e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,14 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomCard_viewingRoom$data = {
   readonly coverImage: {
-    readonly height: number | null;
+    readonly height: number | null | undefined;
     readonly imageURLs: {
-      readonly normalized: string | null;
-    } | null;
-    readonly width: number | null;
-  } | null;
-  readonly exhibitionPeriod: string | null;
-  readonly href: string | null;
+      readonly normalized: string | null | undefined;
+    } | null | undefined;
+    readonly width: number | null | undefined;
+  } | null | undefined;
+  readonly exhibitionPeriod: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly title: string;
   readonly " $fragmentType": "ViewingRoomCard_viewingRoom";
 };

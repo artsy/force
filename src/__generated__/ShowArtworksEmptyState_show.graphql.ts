@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<55ed421a9332a5af57e6543f4b2a8b1a>>
+ * @generated SignedSource<<4d67c439714a985efd50eb92004ff97e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowArtworksEmptyState_show$data = {
-  readonly isFairBooth: boolean | null;
-  readonly status: string | null;
+  readonly isFairBooth: boolean | null | undefined;
+  readonly status: string | null | undefined;
   readonly " $fragmentType": "ShowArtworksEmptyState_show";
 };
 export type ShowArtworksEmptyState_show$key = {

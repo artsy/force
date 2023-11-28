@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<72c6f9677f31844b081252aeb94b8d81>>
+ * @generated SignedSource<<7e653773362bf21baeff99ec66f221f6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,13 +13,13 @@ import { FragmentRefs } from "relay-runtime";
 export type MarketStats_priceInsightsConnection$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
-      readonly annualLotsSold: number | null;
-      readonly annualValueSoldCents: any | null;
-      readonly medianSaleOverEstimatePercentage: number | null;
-      readonly medium: string | null;
-      readonly sellThroughRate: number | null;
-    } | null;
-  } | null> | null;
+      readonly annualLotsSold: number | null | undefined;
+      readonly annualValueSoldCents: any | null | undefined;
+      readonly medianSaleOverEstimatePercentage: number | null | undefined;
+      readonly medium: string | null | undefined;
+      readonly sellThroughRate: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "MarketStats_priceInsightsConnection";
 };
 export type MarketStats_priceInsightsConnection$key = {

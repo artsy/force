@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aa07af4d1dde84a0c135bca9a00bc385>>
+ * @generated SignedSource<<2d2f05dceeb6ec7e869a62b462d19ac6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,21 +11,21 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SendConversationMessageMutationInput = {
-  attachments?: ReadonlyArray<ConversationMessageAttachmentInput> | null;
-  bodyHTML?: string | null;
+  attachments?: ReadonlyArray<ConversationMessageAttachmentInput> | null | undefined;
+  bodyHTML?: string | null | undefined;
   bodyText: string;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   from: string;
-  fromId?: string | null;
+  fromId?: string | null | undefined;
   id: string;
-  replyAll?: boolean | null;
+  replyAll?: boolean | null | undefined;
   replyToMessageID: string;
-  to?: ReadonlyArray<string | null> | null;
+  to?: ReadonlyArray<string | null | undefined> | null | undefined;
 };
 export type ConversationMessageAttachmentInput = {
-  id?: string | null;
+  id?: string | null | undefined;
   name: string;
-  size?: string | null;
+  size?: string | null | undefined;
   type: string;
   url: string;
 };
@@ -36,15 +36,15 @@ export type SendConversationMessageMutation$data = {
   readonly sendConversationMessage: {
     readonly messageEdge: {
       readonly node: {
-        readonly body: string | null;
+        readonly body: string | null | undefined;
         readonly id: string;
         readonly impulseID: string;
         readonly internalID: string;
-        readonly isFromUser: boolean | null;
+        readonly isFromUser: boolean | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"Message_message">;
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type SendConversationMessageMutation = {
   response: SendConversationMessageMutation$data;

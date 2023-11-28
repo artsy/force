@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ee9fc0c7b85d0a60606913c5e1b7b70>>
+ * @generated SignedSource<<0223d05ed2b70d937db40154ad113ffa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,19 +11,19 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistMeta_artist$data = {
-  readonly alternate_names: ReadonlyArray<string | null> | null;
+  readonly alternate_names: ReadonlyArray<string | null | undefined> | null | undefined;
   readonly artworks_connection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly availability: string | null;
-        readonly category: string | null;
-        readonly date: string | null;
-        readonly description: string | null;
-        readonly href: string | null;
+        readonly availability: string | null | undefined;
+        readonly category: string | null | undefined;
+        readonly date: string | null | undefined;
+        readonly description: string | null | undefined;
+        readonly href: string | null | undefined;
         readonly image: {
-          readonly large: string | null;
-          readonly small: string | null;
-        } | null;
+          readonly large: string | null | undefined;
+          readonly small: string | null | undefined;
+        } | null | undefined;
         readonly listPrice: {
           readonly __typename: "Money";
           readonly currencyCode: string;
@@ -32,50 +32,50 @@ export type ArtistMeta_artist$data = {
           readonly __typename: "PriceRange";
           readonly maxPrice: {
             readonly major: number;
-          } | null;
+          } | null | undefined;
           readonly minPrice: {
             readonly currencyCode: string;
             readonly major: number;
-          } | null;
+          } | null | undefined;
         } | {
           // This will never be '%other', but we need some
           // value in case none of the concrete values match.
           readonly __typename: "%other";
-        } | null;
+        } | null | undefined;
         readonly partner: {
-          readonly href: string | null;
-          readonly name: string | null;
+          readonly href: string | null | undefined;
+          readonly name: string | null | undefined;
           readonly profile: {
             readonly image: {
-              readonly large: string | null;
-              readonly small: string | null;
-            } | null;
-          } | null;
-        } | null;
-        readonly price_currency: string | null;
-        readonly title: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly birthday: string | null;
-  readonly blurb: string | null;
+              readonly large: string | null | undefined;
+              readonly small: string | null | undefined;
+            } | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+        readonly price_currency: string | null | undefined;
+        readonly title: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly birthday: string | null | undefined;
+  readonly blurb: string | null | undefined;
   readonly counts: {
-    readonly artworks: any | null;
-  } | null;
-  readonly deathday: string | null;
-  readonly gender: string | null;
-  readonly href: string | null;
+    readonly artworks: any | null | undefined;
+  } | null | undefined;
+  readonly deathday: string | null | undefined;
+  readonly gender: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly image: {
-    readonly large: string | null;
-    readonly square: string | null;
-    readonly versions: ReadonlyArray<string | null> | null;
-  } | null;
+    readonly large: string | null | undefined;
+    readonly square: string | null | undefined;
+    readonly versions: ReadonlyArray<string | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly meta: {
     readonly description: string;
     readonly title: string;
   };
-  readonly name: string | null;
-  readonly nationality: string | null;
+  readonly name: string | null | undefined;
+  readonly nationality: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtistMeta_artist";
 };

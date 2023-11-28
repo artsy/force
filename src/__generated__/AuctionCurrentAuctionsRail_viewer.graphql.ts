@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<43ff4f8aaf4b02005716059bccf17e4f>>
+ * @generated SignedSource<<de76917c3b5413797e3c05c19ac1191d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,9 +15,9 @@ export type AuctionCurrentAuctionsRail_viewer$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly " $fragmentSpreads": FragmentRefs<"CellSale_sale">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "AuctionCurrentAuctionsRail_viewer";
 };
 export type AuctionCurrentAuctionsRail_viewer$key = {

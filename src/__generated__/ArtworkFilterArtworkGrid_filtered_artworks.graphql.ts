@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c309a3d4ba5310d2f9b36a008076c16a>>
+ * @generated SignedSource<<1f8e220dd2d450efa54fa353b984a6ff>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,14 +14,14 @@ export type ArtworkFilterArtworkGrid_filtered_artworks$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
       readonly id: string;
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly id: string;
   readonly pageCursors: {
     readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
   };
   readonly pageInfo: {
-    readonly endCursor: string | null;
+    readonly endCursor: string | null | undefined;
     readonly hasNextPage: boolean;
   };
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;

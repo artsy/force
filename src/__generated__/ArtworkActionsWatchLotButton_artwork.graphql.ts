@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7b2e1536a3397f32e2d8c53ebb322cdd>>
+ * @generated SignedSource<<ba453fa233afc25c599304b842bf105b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,13 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkActionsWatchLotButton_artwork$data = {
   readonly sale: {
-    readonly isLiveOpen: boolean | null;
-    readonly isRegistrationClosed: boolean | null;
-    readonly liveStartAt: string | null;
+    readonly isLiveOpen: boolean | null | undefined;
+    readonly isRegistrationClosed: boolean | null | undefined;
+    readonly liveStartAt: string | null | undefined;
     readonly registrationStatus: {
-      readonly qualifiedForBidding: boolean | null;
-    } | null;
-  } | null;
+      readonly qualifiedForBidding: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkAuctionRegistrationPanel_artwork">;
   readonly " $fragmentType": "ArtworkActionsWatchLotButton_artwork";
 };

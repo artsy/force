@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a7959494c127ea6c92656e7ea717d3d6>>
+ * @generated SignedSource<<a47075ce1fd9cf427f286331e065e4e9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,13 +16,13 @@ export type ShowsCurrentShows_viewer$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShowsCurrentShow_show">;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageInfo: {
-      readonly endCursor: string | null;
+      readonly endCursor: string | null | undefined;
       readonly hasNextPage: boolean;
     };
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ShowsCurrentShows_viewer";
 };
 export type ShowsCurrentShows_viewer$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eaa40c275c819530843ecc2ffa7e9182>>
+ * @generated SignedSource<<3d5d9d73113379105a05174a7b419cdd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,19 +12,19 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AnalyticsPricingContextCategoryEnum = "ARCHITECTURE" | "BOOKS_AND_PORTFOLIOS" | "DESIGN_DECORATIVE_ART" | "DRAWING_COLLAGE_OTHER_WORK_ON_PAPER" | "FASHION" | "INSTALLATION" | "JEWELRY" | "MIXED_MEDIA" | "OTHER" | "PAINTING" | "PERFORMANCE" | "PHOTOGRAPHY" | "POSTERS" | "PRINT" | "SCULPTURE" | "SOUND" | "TEXTILE" | "VIDEO_FILM_ANIMATION" | "WORK_ON_PAPER" | "%future added value";
 export type AnalyticsPricingContextDimensionEnum = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
-export type PricingContextTestQuery$variables = {};
+export type PricingContextTestQuery$variables = Record<PropertyKey, never>;
 export type PricingContextTestQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"PricingContext_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type PricingContextTestQuery$rawResponse = {
   readonly artwork: {
     readonly artists: ReadonlyArray<{
       readonly id: string;
       readonly slug: string;
-    } | null> | null;
-    readonly category: string | null;
+    } | null | undefined> | null | undefined;
+    readonly category: string | null | undefined;
     readonly id: string;
     readonly listPrice: {
       readonly __typename: "Money";
@@ -33,28 +33,28 @@ export type PricingContextTestQuery$rawResponse = {
       readonly __typename: "PriceRange";
       readonly maxPrice: {
         readonly minor: any;
-      } | null;
+      } | null | undefined;
       readonly minPrice: {
         readonly minor: any;
-      } | null;
+      } | null | undefined;
     } | {
       readonly __typename: string;
-    } | null;
+    } | null | undefined;
     readonly pricingContext: {
       readonly appliedFilters: {
-        readonly category: AnalyticsPricingContextCategoryEnum | null;
-        readonly dimension: AnalyticsPricingContextDimensionEnum | null;
+        readonly category: AnalyticsPricingContextCategoryEnum | null | undefined;
+        readonly dimension: AnalyticsPricingContextDimensionEnum | null | undefined;
       };
-      readonly appliedFiltersDisplay: string | null;
+      readonly appliedFiltersDisplay: string | null | undefined;
       readonly bins: ReadonlyArray<{
-        readonly maxPrice: string | null;
+        readonly maxPrice: string | null | undefined;
         readonly maxPriceCents: number;
-        readonly minPrice: string | null;
+        readonly minPrice: string | null | undefined;
         readonly minPriceCents: number;
         readonly numArtworks: number;
       }>;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type PricingContextTestQuery = {
   rawResponse: PricingContextTestQuery$rawResponse;

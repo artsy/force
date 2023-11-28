@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3ca9542575d36b0d98851625669dee39>>
+ * @generated SignedSource<<6563af729fef5968709edfbff76ca239>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionText_section$data = {
-  readonly body: string | null;
+  readonly body: string | null | undefined;
   readonly " $fragmentType": "ArticleSectionText_section";
 };
 export type ArticleSectionText_section$key = {

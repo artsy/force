@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<394b2d29b3b275bbc743c600b5441421>>
+ * @generated SignedSource<<b978a196933d038f11a625538f0756f3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type PricingContextQuery$variables = {
 export type PricingContextQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"PricingContext_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type PricingContextQuery = {
   response: PricingContextQuery$data;

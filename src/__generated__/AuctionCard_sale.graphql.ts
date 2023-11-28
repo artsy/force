@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb6398c0d6fbb109c78fee07e2787f84>>
+ * @generated SignedSource<<419987d6735688430baf0c67be54ceb6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,26 +15,26 @@ export type AuctionCard_sale$data = {
     readonly cropped: {
       readonly src: string;
       readonly srcSet: string;
-    } | null;
-  } | null;
-  readonly endAt: string | null;
-  readonly href: string | null;
-  readonly isBenefit: boolean | null;
-  readonly isClosed: boolean | null;
-  readonly isGalleryAuction: boolean | null;
-  readonly isLiveOpen: boolean | null;
-  readonly isPreview: boolean | null;
-  readonly isRegistrationClosed: boolean | null;
-  readonly liveStartAt: string | null;
-  readonly name: string | null;
+    } | null | undefined;
+  } | null | undefined;
+  readonly endAt: string | null | undefined;
+  readonly href: string | null | undefined;
+  readonly isBenefit: boolean | null | undefined;
+  readonly isClosed: boolean | null | undefined;
+  readonly isGalleryAuction: boolean | null | undefined;
+  readonly isLiveOpen: boolean | null | undefined;
+  readonly isPreview: boolean | null | undefined;
+  readonly isRegistrationClosed: boolean | null | undefined;
+  readonly liveStartAt: string | null | undefined;
+  readonly name: string | null | undefined;
   readonly partner: {
-    readonly name: string | null;
-  } | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
   readonly registrationStatus: {
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
   readonly slug: string;
-  readonly startAt: string | null;
+  readonly startAt: string | null | undefined;
   readonly " $fragmentType": "AuctionCard_sale";
 };
 export type AuctionCard_sale$key = {

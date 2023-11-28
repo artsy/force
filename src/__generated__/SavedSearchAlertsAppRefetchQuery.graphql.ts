@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<21fa6f762d3dd744ea18d38c0c96a045>>
+ * @generated SignedSource<<8484fab65e215e99d4c6807bf09634bf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,14 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchesSortEnum = "CREATED_AT_DESC" | "NAME_ASC" | "%future added value";
 export type SavedSearchAlertsAppRefetchQuery$variables = {
-  after?: string | null;
+  after?: string | null | undefined;
   count: number;
-  sort?: SavedSearchesSortEnum | null;
+  sort?: SavedSearchesSortEnum | null | undefined;
 };
 export type SavedSearchAlertsAppRefetchQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertsApp_me">;
-  } | null;
+  } | null | undefined;
 };
 export type SavedSearchAlertsAppRefetchQuery = {
   response: SavedSearchAlertsAppRefetchQuery$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a20b13819a46e722813e43ad15b78c10>>
+ * @generated SignedSource<<85da7964199a420992e6de5379eaa481>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,42 +20,42 @@ export type ArticleSectionImageSet_section$data = {
     readonly id: string;
     readonly image: {
       readonly large: {
-        readonly height: number | null;
+        readonly height: number | null | undefined;
         readonly src: string;
         readonly srcSet: string;
-        readonly width: number | null;
-      } | null;
+        readonly width: number | null | undefined;
+      } | null | undefined;
       readonly small: {
         readonly height: number;
         readonly src: string;
         readonly srcSet: string;
         readonly width: number;
-      } | null;
-    } | null;
+      } | null | undefined;
+    } | null | undefined;
   } | {
     readonly __typename: "Artwork";
     readonly id: string;
     readonly image: {
       readonly large: {
-        readonly height: number | null;
+        readonly height: number | null | undefined;
         readonly src: string;
         readonly srcSet: string;
-        readonly width: number | null;
-      } | null;
+        readonly width: number | null | undefined;
+      } | null | undefined;
       readonly small: {
         readonly height: number;
         readonly src: string;
         readonly srcSet: string;
         readonly width: number;
-      } | null;
-    } | null;
+      } | null | undefined;
+    } | null | undefined;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly setLayout: ArticleSectionImageSetLayout;
-  readonly title: string | null;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "ArticleSectionImageSet_section";
 };
 export type ArticleSectionImageSet_section$key = {

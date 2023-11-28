@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<12da7ca1099fac6f1e13094550eb4849>>
+ * @generated SignedSource<<b20b7c69585b283714d52e091c184147>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,21 +17,21 @@ export type PreviouslySoldOnArtsyRail_recentlySoldArtworks$data = {
         readonly internalID: string;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"SoldArtwork_artwork">;
-      } | null;
+      } | null | undefined;
       readonly highEstimate: {
-        readonly display: string | null;
-      } | null;
+        readonly display: string | null | undefined;
+      } | null | undefined;
       readonly lowEstimate: {
-        readonly display: string | null;
-      } | null;
+        readonly display: string | null | undefined;
+      } | null | undefined;
       readonly performance: {
-        readonly mid: string | null;
-      } | null;
+        readonly mid: string | null | undefined;
+      } | null | undefined;
       readonly priceRealized: {
-        readonly display: string | null;
-      } | null;
-    } | null;
-  } | null> | null;
+        readonly display: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "PreviouslySoldOnArtsyRail_recentlySoldArtworks";
 };
 export type PreviouslySoldOnArtsyRail_recentlySoldArtworks$key = {

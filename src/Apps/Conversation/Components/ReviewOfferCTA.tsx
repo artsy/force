@@ -15,13 +15,16 @@ export const ClickableFlex = styled(Flex)`
 `
 
 export interface ReviewOfferCTAProps {
-  conversationID: string
+  conversationID: string | null | undefined
   kind: CommerceBuyerOfferActionEnum
-  activeOrder: {
-    stateExpiresAt: string | null
-    lastOffer?: { createdAt: string } | null
-    offers?: { edges: { length: number } | null } | null
-  }
+  activeOrder:
+    | {
+        stateExpiresAt: string | null | undefined
+        lastOffer?: { createdAt: string } | null | undefined
+        offers?: { edges: { length: number } | null } | null | undefined
+      }
+    | null
+    | undefined
   openOrderModal: () => void
 }
 
@@ -31,18 +34,18 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
   kind,
   openOrderModal,
 }) => {
-  const { offers } = activeOrder
   const { trackEvent } = useTracking()
 
   const { hoursTillEnd, minutes } = useEventTiming({
     currentTime: DateTime.local().toString(),
-    startAt: activeOrder.lastOffer?.createdAt!,
-    endAt: activeOrder.stateExpiresAt!,
+    startAt: activeOrder?.lastOffer?.createdAt as string,
+    endAt: activeOrder?.stateExpiresAt as string,
   })
 
   const expiresIn =
     Number(hoursTillEnd) < 1 ? `${minutes}m` : `${Math.round(hoursTillEnd)}hr`
-  const offerType = (offers?.edges?.length ?? 0) > 1 ? "Counteroffer" : "Offer"
+  const offerType =
+    (activeOrder?.offers?.edges?.length ?? 0) > 1 ? "Counteroffer" : "Offer"
 
   let ctaAttributes: {
     backgroundColor: Color
@@ -116,7 +119,7 @@ export const ReviewOfferCTA: React.FC<ReviewOfferCTAProps> = ({
   const { message, subMessage, backgroundColor, Icon } = ctaAttributes
 
   const openModal = () => {
-    trackEvent(tracks.tappedViewOffer(conversationID, message))
+    trackEvent(tracks.tappedViewOffer(conversationID as string, message))
     openOrderModal()
   }
 

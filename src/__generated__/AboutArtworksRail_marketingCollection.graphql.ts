@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ab960b4f91437585249991b05fbc0f31>>
+ * @generated SignedSource<<5fb53af13cc01e96a260e44013e4c83f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,13 +14,13 @@ export type AboutArtworksRail_marketingCollection$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly href: string | null;
+        readonly href: string | null | undefined;
         readonly internalID: string;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "AboutArtworksRail_marketingCollection";
 };
 export type AboutArtworksRail_marketingCollection$key = {

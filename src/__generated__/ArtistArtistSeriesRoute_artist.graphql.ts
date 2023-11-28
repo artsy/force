@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3911fff55290453bfac2f4329fef8d99>>
+ * @generated SignedSource<<ffd5a3a56a17065e5e8f7ece05322d99>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,15 +16,15 @@ export type ArtistArtistSeriesRoute_artist$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellArtistSeries_artistSeries">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly meta: {
     readonly description: string;
     readonly title: string;
   };
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtistArtistSeriesRoute_artist";
 };

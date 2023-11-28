@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fefc4f2504c6e32892d2c3073d6b5eaf>>
+ * @generated SignedSource<<8e80037ce29e3d6182dd260f92724985>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -21,43 +21,43 @@ export type orderRoutes_OrderQuery$variables = {
 };
 export type orderRoutes_OrderQuery$data = {
   readonly me: {
-    readonly name: string | null;
-  } | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
   readonly order: {
-    readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
-    readonly bankAccountId: string | null;
+    readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null | undefined;
+    readonly bankAccountId: string | null | undefined;
     readonly creditCard: {
       readonly internalID: string;
-    } | null;
+    } | null | undefined;
     readonly displayState: CommerceOrderDisplayStateEnum;
     readonly internalID: string;
     readonly lastOffer?: {
       readonly createdAt: string;
       readonly internalID: string;
-    } | null;
-    readonly lastTransactionFailed: boolean | null;
+    } | null | undefined;
+    readonly lastTransactionFailed: boolean | null | undefined;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly artwork: {
             readonly slug: string;
-          } | null;
+          } | null | undefined;
           readonly shippingQuoteOptions: {
             readonly edges: ReadonlyArray<{
               readonly node: {
                 readonly isSelected: boolean;
-              } | null;
-            } | null> | null;
-          } | null;
-        } | null;
-      } | null> | null;
-    } | null;
-    readonly mode: CommerceOrderModeEnum | null;
+              } | null | undefined;
+            } | null | undefined> | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+    readonly mode: CommerceOrderModeEnum | null | undefined;
     readonly myLastOffer?: {
       readonly createdAt: string;
       readonly internalID: string;
-    } | null;
-    readonly paymentMethod: CommercePaymentMethodEnum | null;
+    } | null | undefined;
+    readonly paymentMethod: CommercePaymentMethodEnum | null | undefined;
     readonly paymentMethodDetails: {
       readonly __typename: "BankAccount";
       readonly id: string;
@@ -71,69 +71,69 @@ export type orderRoutes_OrderQuery$data = {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
-    } | null;
+    } | null | undefined;
     readonly requestedFulfillment: {
       readonly __typename: string;
-    } | null;
+    } | null | undefined;
     readonly source: CommerceOrderSourceEnum;
     readonly state: CommerceOrderStateEnum;
     readonly " $fragmentSpreads": FragmentRefs<"OrderApp_order">;
-  } | null;
+  } | null | undefined;
 };
 export type orderRoutes_OrderQuery$rawResponse = {
   readonly me: {
     readonly id: string;
-    readonly name: string | null;
-  } | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
   readonly order: {
     readonly __typename: "CommerceOfferOrder";
     readonly __isCommerceOrder: "CommerceOfferOrder";
-    readonly awaitingResponseFrom: CommerceOrderParticipantEnum | null;
-    readonly bankAccountId: string | null;
+    readonly awaitingResponseFrom: CommerceOrderParticipantEnum | null | undefined;
+    readonly bankAccountId: string | null | undefined;
     readonly creditCard: {
       readonly id: string;
       readonly internalID: string;
-    } | null;
+    } | null | undefined;
     readonly currencyCode: string;
     readonly displayState: CommerceOrderDisplayStateEnum;
     readonly id: string;
     readonly internalID: string;
-    readonly itemsTotalCents: number | null;
+    readonly itemsTotalCents: number | null | undefined;
     readonly lastOffer: {
       readonly createdAt: string;
       readonly id: string;
       readonly internalID: string;
-    } | null;
-    readonly lastTransactionFailed: boolean | null;
+    } | null | undefined;
+    readonly lastTransactionFailed: boolean | null | undefined;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly artwork: {
-            readonly href: string | null;
+            readonly href: string | null | undefined;
             readonly id: string;
-            readonly is_acquireable: boolean | null;
-            readonly is_offerable: boolean | null;
+            readonly is_acquireable: boolean | null | undefined;
+            readonly is_offerable: boolean | null | undefined;
             readonly slug: string;
-          } | null;
+          } | null | undefined;
           readonly id: string;
           readonly shippingQuoteOptions: {
             readonly edges: ReadonlyArray<{
               readonly node: {
                 readonly id: string;
                 readonly isSelected: boolean;
-              } | null;
-            } | null> | null;
-          } | null;
-        } | null;
-      } | null> | null;
-    } | null;
-    readonly mode: CommerceOrderModeEnum | null;
+              } | null | undefined;
+            } | null | undefined> | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+    readonly mode: CommerceOrderModeEnum | null | undefined;
     readonly myLastOffer: {
       readonly createdAt: string;
       readonly id: string;
       readonly internalID: string;
-    } | null;
-    readonly paymentMethod: CommercePaymentMethodEnum | null;
+    } | null | undefined;
+    readonly paymentMethod: CommercePaymentMethodEnum | null | undefined;
     readonly paymentMethodDetails: {
       readonly __typename: "BankAccount";
       readonly id: string;
@@ -145,50 +145,50 @@ export type orderRoutes_OrderQuery$rawResponse = {
       readonly isManualPayment: boolean;
     } | {
       readonly __typename: string;
-    } | null;
+    } | null | undefined;
     readonly requestedFulfillment: {
       readonly __typename: string;
-    } | null;
+    } | null | undefined;
     readonly source: CommerceOrderSourceEnum;
     readonly state: CommerceOrderStateEnum;
   } | {
     readonly __typename: string;
     readonly __isCommerceOrder: string;
-    readonly bankAccountId: string | null;
+    readonly bankAccountId: string | null | undefined;
     readonly creditCard: {
       readonly id: string;
       readonly internalID: string;
-    } | null;
+    } | null | undefined;
     readonly currencyCode: string;
     readonly displayState: CommerceOrderDisplayStateEnum;
     readonly id: string;
     readonly internalID: string;
-    readonly itemsTotalCents: number | null;
-    readonly lastTransactionFailed: boolean | null;
+    readonly itemsTotalCents: number | null | undefined;
+    readonly lastTransactionFailed: boolean | null | undefined;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly artwork: {
-            readonly href: string | null;
+            readonly href: string | null | undefined;
             readonly id: string;
-            readonly is_acquireable: boolean | null;
-            readonly is_offerable: boolean | null;
+            readonly is_acquireable: boolean | null | undefined;
+            readonly is_offerable: boolean | null | undefined;
             readonly slug: string;
-          } | null;
+          } | null | undefined;
           readonly id: string;
           readonly shippingQuoteOptions: {
             readonly edges: ReadonlyArray<{
               readonly node: {
                 readonly id: string;
                 readonly isSelected: boolean;
-              } | null;
-            } | null> | null;
-          } | null;
-        } | null;
-      } | null> | null;
-    } | null;
-    readonly mode: CommerceOrderModeEnum | null;
-    readonly paymentMethod: CommercePaymentMethodEnum | null;
+              } | null | undefined;
+            } | null | undefined> | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+    readonly mode: CommerceOrderModeEnum | null | undefined;
+    readonly paymentMethod: CommercePaymentMethodEnum | null | undefined;
     readonly paymentMethodDetails: {
       readonly __typename: "BankAccount";
       readonly id: string;
@@ -200,13 +200,13 @@ export type orderRoutes_OrderQuery$rawResponse = {
       readonly isManualPayment: boolean;
     } | {
       readonly __typename: string;
-    } | null;
+    } | null | undefined;
     readonly requestedFulfillment: {
       readonly __typename: string;
-    } | null;
+    } | null | undefined;
     readonly source: CommerceOrderSourceEnum;
     readonly state: CommerceOrderStateEnum;
-  } | null;
+  } | null | undefined;
 };
 export type orderRoutes_OrderQuery = {
   rawResponse: orderRoutes_OrderQuery$rawResponse;

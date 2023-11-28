@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<56a7e2063ec7dd1d606d42aaa1a54ac8>>
+ * @generated SignedSource<<de3f709cbb3cc143f503ff453c892967>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceSubmitPendingOfferInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   offerId: string;
 };
 export type CounterSubmitMutation$variables = {
@@ -23,15 +23,15 @@ export type CounterSubmitMutation$data = {
     readonly orderOrError: {
       readonly error?: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
       readonly order?: {
-        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null;
+        readonly awaitingResponseFrom?: CommerceOrderParticipantEnum | null | undefined;
         readonly state: CommerceOrderStateEnum;
       };
     };
-  } | null;
+  } | null | undefined;
 };
 export type CounterSubmitMutation = {
   response: CounterSubmitMutation$data;

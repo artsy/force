@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd9354ce5a783e5d65594d8e42355b65>>
+ * @generated SignedSource<<4dd7dfd92fc72beb9d097d6b1cab4cd5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,22 +12,22 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistArtworkFilter_artist$data = {
   readonly counts: {
-    readonly artworks: any | null;
-    readonly auction_artworks: any | null;
-    readonly ecommerce_artworks: any | null;
-    readonly for_sale_artworks: any | null;
-    readonly has_make_offer_artworks: boolean | null;
-    readonly partner_shows: any | null;
-  } | null;
+    readonly artworks: any | null | undefined;
+    readonly auction_artworks: any | null | undefined;
+    readonly ecommerce_artworks: any | null | undefined;
+    readonly for_sale_artworks: any | null | undefined;
+    readonly has_make_offer_artworks: boolean | null | undefined;
+    readonly partner_shows: any | null | undefined;
+  } | null | undefined;
   readonly filtered_artworks: {
     readonly counts: {
-      readonly total: any | null;
-    } | null;
+      readonly total: any | null | undefined;
+    } | null | undefined;
     readonly id: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
-  } | null;
+  } | null | undefined;
   readonly internalID: string;
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtistArtworkFilter_artist";
 };

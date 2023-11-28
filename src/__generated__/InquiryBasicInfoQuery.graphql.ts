@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<172e058d555ef5dc49fba124383e0e6f>>
+ * @generated SignedSource<<107e4535aefee099d528bceeed945016>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type InquiryBasicInfoQuery$variables = {
 export type InquiryBasicInfoQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"InquiryBasicInfo_artwork">;
-  } | null;
+  } | null | undefined;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"InquiryBasicInfo_me">;
-  } | null;
+  } | null | undefined;
 };
 export type InquiryBasicInfoQuery = {
   response: InquiryBasicInfoQuery$data;

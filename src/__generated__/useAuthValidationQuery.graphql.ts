@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c1959dd5f49e4e1f9f20fe4bdcd7a9dd>>
+ * @generated SignedSource<<5b12bad2772496b7bf611ef42f47b205>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type AuthenticationStatus = "INVALID" | "LOGGED_IN" | "LOGGED_OUT" | "%future added value";
-export type useAuthValidationQuery$variables = {};
+export type useAuthValidationQuery$variables = Record<PropertyKey, never>;
 export type useAuthValidationQuery$data = {
   readonly authenticationStatus: AuthenticationStatus;
 };

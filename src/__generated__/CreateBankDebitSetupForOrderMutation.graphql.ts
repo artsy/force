@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9599744647b1fbfc17ee3edade18990e>>
+ * @generated SignedSource<<7d74c554d2e7a761e40bcc87b4e9bb75>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceCreateBankDebitSetupForOrderInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   id: string;
 };
 export type CreateBankDebitSetupForOrderMutation$variables = {
@@ -27,7 +27,7 @@ export type CreateBankDebitSetupForOrderMutation$data = {
       readonly __typename: "CommerceOrderWithMutationFailure";
       readonly error: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
     } | {
@@ -35,7 +35,7 @@ export type CreateBankDebitSetupForOrderMutation$data = {
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     };
-  } | null;
+  } | null | undefined;
 };
 export type CreateBankDebitSetupForOrderMutation = {
   response: CreateBankDebitSetupForOrderMutation$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ff0f6629a50afd756771bf9afc16dd1e>>
+ * @generated SignedSource<<f6113367e7a762f968731d67e891d39c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,28 +17,28 @@ export type ArtistAutocomplete_SearchConnection_Query$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly counts?: {
-          readonly artworks: any | null;
-        } | null;
-        readonly displayLabel: string | null;
-        readonly formattedNationalityAndBirthday?: string | null;
+          readonly artworks: any | null | undefined;
+        } | null | undefined;
+        readonly displayLabel: string | null | undefined;
+        readonly formattedNationalityAndBirthday?: string | null | undefined;
         readonly image?: {
           readonly cropped: {
             readonly height: number;
             readonly src: string;
             readonly srcSet: string;
             readonly width: number;
-          } | null;
-        } | null;
-        readonly initials?: string | null;
+          } | null | undefined;
+        } | null | undefined;
+        readonly initials?: string | null | undefined;
         readonly internalID?: string;
-        readonly isPersonalArtist?: boolean | null;
-        readonly name?: string | null;
+        readonly isPersonalArtist?: boolean | null | undefined;
+        readonly name?: string | null | undefined;
         readonly targetSupply?: {
-          readonly isP1: boolean | null;
+          readonly isP1: boolean | null | undefined;
         };
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
 };
 export type ArtistAutocomplete_SearchConnection_Query = {
   response: ArtistAutocomplete_SearchConnection_Query$data;

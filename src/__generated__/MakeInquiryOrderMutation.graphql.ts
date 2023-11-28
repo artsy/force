@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b134c1b4e3271ea233c702d79bc233ab>>
+ * @generated SignedSource<<705b5410839d4929d00876f77668427d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,10 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceCreateInquiryOrderWithArtworkInput = {
   artworkId: string;
-  clientMutationId?: string | null;
-  editionSetId?: string | null;
+  clientMutationId?: string | null | undefined;
+  editionSetId?: string | null | undefined;
   impulseConversationId: string;
-  quantity?: number | null;
+  quantity?: number | null | undefined;
 };
 export type MakeInquiryOrderMutation$variables = {
   input: CommerceCreateInquiryOrderWithArtworkInput;
@@ -26,21 +26,21 @@ export type MakeInquiryOrderMutation$data = {
       readonly __typename: "CommerceOrderWithMutationFailure";
       readonly error: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
     } | {
       readonly __typename: "CommerceOrderWithMutationSuccess";
       readonly order: {
         readonly internalID: string;
-        readonly mode: CommerceOrderModeEnum | null;
+        readonly mode: CommerceOrderModeEnum | null | undefined;
       };
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     };
-  } | null;
+  } | null | undefined;
 };
 export type MakeInquiryOrderMutation = {
   response: MakeInquiryOrderMutation$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<95badcf92a86c440116f2bb178181aa2>>
+ * @generated SignedSource<<80e94de58cc24adad924ad28cf9baec9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type updateQuizMutationInput = {
   artworkId: string;
-  clearInteraction?: boolean | null;
-  clientMutationId?: string | null;
+  clearInteraction?: boolean | null | undefined;
+  clientMutationId?: string | null | undefined;
   userId: string;
 };
 export type useUpdateQuizMutation$variables = {
@@ -21,9 +21,9 @@ export type useUpdateQuizMutation$variables = {
 export type useUpdateQuizMutation$data = {
   readonly updateQuiz: {
     readonly quiz: {
-      readonly completedAt: string | null;
-    } | null;
-  } | null;
+      readonly completedAt: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useUpdateQuizMutation = {
   response: useUpdateQuizMutation$data;

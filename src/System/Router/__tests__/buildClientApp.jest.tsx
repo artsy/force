@@ -139,7 +139,7 @@ describe("buildClientApp", () => {
           Component: HomeApp,
         },
       ],
-      context: {},
+      context: {} as any,
     })
 
     render(<ClientApp />)

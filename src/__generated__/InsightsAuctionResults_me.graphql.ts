@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<18874e2afde719811cb86cce8337fd5a>>
+ * @generated SignedSource<<bc3a4da935897764d429c87d1372cbde>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,9 +15,9 @@ export type InsightsAuctionResults_me$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultItem_auctionResult">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "InsightsAuctionResults_me";
 };
 export type InsightsAuctionResults_me$key = {

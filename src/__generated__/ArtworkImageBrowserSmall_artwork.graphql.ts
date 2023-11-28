@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d57be732142f8dab6dec733de14eaa36>>
+ * @generated SignedSource<<0afab3832be39a91f4d1470cc2cbdfa8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkImageBrowserSmall_artwork$data = {
   readonly figures: ReadonlyArray<{
-    readonly internalID: string | null;
-    readonly isZoomable: boolean | null;
+    readonly internalID: string | null | undefined;
+    readonly isZoomable: boolean | null | undefined;
     readonly type: "Image";
     readonly " $fragmentSpreads": FragmentRefs<"DeepZoom_image">;
   } | {
@@ -23,7 +23,7 @@ export type ArtworkImageBrowserSmall_artwork$data = {
     // value in case none of the concrete values match.
     readonly type: "%other";
   }>;
-  readonly isSetVideoAsCover: boolean | null;
+  readonly isSetVideoAsCover: boolean | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkLightbox_artwork" | "ArtworkVideoPlayer_artwork">;
   readonly " $fragmentType": "ArtworkImageBrowserSmall_artwork";
 };

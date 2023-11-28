@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9747e6006b145ce238a6ce334278b9f3>>
+ * @generated SignedSource<<d7cdc5eb77f41b016276f52c8a9c1a6d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,12 +13,12 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtQuizArtworksCard_artwork$data = {
   readonly image: {
     readonly resized: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly src: string;
       readonly srcSet: string;
-      readonly width: number | null;
-    } | null;
-  } | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtQuizArtworksCardMetadata_artwork">;
   readonly " $fragmentType": "ArtQuizArtworksCard_artwork";
 };

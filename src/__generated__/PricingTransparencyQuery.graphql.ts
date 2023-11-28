@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c912f4830c5c1437946562b43179575c>>
+ * @generated SignedSource<<d6d92d377ccac53e3e7b75068f2d8fe8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,17 +19,17 @@ export type PricingTransparencyQuery$data = {
     readonly saleArtwork: {
       readonly calculatedCost: {
         readonly bidAmount: {
-          readonly display: string | null;
-        } | null;
+          readonly display: string | null | undefined;
+        } | null | undefined;
         readonly buyersPremium: {
-          readonly display: string | null;
-        } | null;
+          readonly display: string | null | undefined;
+        } | null | undefined;
         readonly subtotal: {
-          readonly display: string | null;
-        } | null;
-      } | null;
-    } | null;
-  } | null;
+          readonly display: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type PricingTransparencyQuery = {
   response: PricingTransparencyQuery$data;

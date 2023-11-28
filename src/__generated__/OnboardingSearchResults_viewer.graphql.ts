@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<11d04dc2d87a7f6579de8a618a2e218c>>
+ * @generated SignedSource<<8019286d9c8ce67d24933fd6dece471d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,9 +32,9 @@ export type OnboardingSearchResults_viewer$data = {
         // This will never be '%other', but we need some
         // value in case none of the concrete values match.
         readonly __typename: "%other";
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "OnboardingSearchResults_viewer";
 };
 export type OnboardingSearchResults_viewer$key = {

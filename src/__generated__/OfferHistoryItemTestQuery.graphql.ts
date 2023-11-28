@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b05640a5c6f482d8128d3ec5f71ce02c>>
+ * @generated SignedSource<<99f38371b022452aeef49c6457eec7a9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,11 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
-export type OfferHistoryItemTestQuery$variables = {};
+export type OfferHistoryItemTestQuery$variables = Record<PropertyKey, never>;
 export type OfferHistoryItemTestQuery$data = {
   readonly order: {
     readonly " $fragmentSpreads": FragmentRefs<"OfferHistoryItem_order">;
-  } | null;
+  } | null | undefined;
 };
 export type OfferHistoryItemTestQuery$rawResponse = {
   readonly order: {
@@ -24,14 +24,14 @@ export type OfferHistoryItemTestQuery$rawResponse = {
     readonly currencyCode: string;
     readonly id: string;
     readonly lastOffer: {
-      readonly amount: string | null;
-      readonly fromParticipant: CommerceOrderParticipantEnum | null;
+      readonly amount: string | null | undefined;
+      readonly fromParticipant: CommerceOrderParticipantEnum | null | undefined;
       readonly id: string;
       readonly internalID: string;
-      readonly note: string | null;
-      readonly shippingTotal: string | null;
-      readonly taxTotal: string | null;
-    } | null;
+      readonly note: string | null | undefined;
+      readonly shippingTotal: string | null | undefined;
+      readonly taxTotal: string | null | undefined;
+    } | null | undefined;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
@@ -39,32 +39,32 @@ export type OfferHistoryItemTestQuery$rawResponse = {
             readonly __typename: "Artwork";
             readonly __isNode: "Artwork";
             readonly id: string;
-            readonly price: string | null;
+            readonly price: string | null | undefined;
           } | {
             readonly __typename: "EditionSet";
             readonly __isNode: "EditionSet";
             readonly id: string;
-            readonly price: string | null;
+            readonly price: string | null | undefined;
           } | {
             readonly __typename: string;
             readonly __isNode: string;
             readonly id: string;
-          } | null;
+          } | null | undefined;
           readonly id: string;
-        } | null;
-      } | null> | null;
-    } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
     readonly offers: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly amount: string | null;
+          readonly amount: string | null | undefined;
           readonly createdAt: string;
-          readonly fromParticipant: CommerceOrderParticipantEnum | null;
+          readonly fromParticipant: CommerceOrderParticipantEnum | null | undefined;
           readonly id: string;
           readonly internalID: string;
-        } | null;
-      } | null> | null;
-    } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
   } | {
     readonly __typename: string;
     readonly __isCommerceOrder: string;
@@ -76,22 +76,22 @@ export type OfferHistoryItemTestQuery$rawResponse = {
             readonly __typename: "Artwork";
             readonly __isNode: "Artwork";
             readonly id: string;
-            readonly price: string | null;
+            readonly price: string | null | undefined;
           } | {
             readonly __typename: "EditionSet";
             readonly __isNode: "EditionSet";
             readonly id: string;
-            readonly price: string | null;
+            readonly price: string | null | undefined;
           } | {
             readonly __typename: string;
             readonly __isNode: string;
             readonly id: string;
-          } | null;
+          } | null | undefined;
           readonly id: string;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type OfferHistoryItemTestQuery = {
   rawResponse: OfferHistoryItemTestQuery$rawResponse;

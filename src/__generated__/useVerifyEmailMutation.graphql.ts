@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<33bbce5dcf76c84ad90221fc68d5642d>>
+ * @generated SignedSource<<a60a0a15bcf894fd641e676a124f7740>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SendConfirmationEmailMutationInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
 };
 export type useVerifyEmailMutation$variables = {
   input: SendConfirmationEmailMutationInput;
@@ -19,12 +19,12 @@ export type useVerifyEmailMutation$data = {
   readonly sendConfirmationEmail: {
     readonly confirmationOrError: {
       readonly mutationError?: {
-        readonly error: string | null;
+        readonly error: string | null | undefined;
         readonly message: string;
-      } | null;
-      readonly unconfirmedEmail?: string | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+      readonly unconfirmedEmail?: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useVerifyEmailMutation = {
   response: useVerifyEmailMutation$data;

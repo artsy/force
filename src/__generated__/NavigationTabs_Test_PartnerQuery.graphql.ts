@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e26a2c65faf3e390b4a4c7ac2990150e>>
+ * @generated SignedSource<<0e1e2db2bc6772e5c1f2f750ad24872c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,39 +10,39 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type NavigationTabs_Test_PartnerQuery$variables = {};
+export type NavigationTabs_Test_PartnerQuery$variables = Record<PropertyKey, never>;
 export type NavigationTabs_Test_PartnerQuery$data = {
   readonly partner: {
     readonly " $fragmentSpreads": FragmentRefs<"NavigationTabs_partner">;
-  } | null;
+  } | null | undefined;
 };
 export type NavigationTabs_Test_PartnerQuery$rawResponse = {
   readonly partner: {
     readonly articles: {
-      readonly totalCount: number | null;
-    } | null;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
     readonly counts: {
-      readonly displayableShows: any | null;
-      readonly eligibleArtworks: any | null;
-    } | null;
-    readonly displayArtistsSection: boolean | null;
-    readonly displayWorksSection: boolean | null;
+      readonly displayableShows: any | null | undefined;
+      readonly eligibleArtworks: any | null | undefined;
+    } | null | undefined;
+    readonly displayArtistsSection: boolean | null | undefined;
+    readonly displayWorksSection: boolean | null | undefined;
     readonly id: string;
     readonly locations: {
-      readonly totalCount: number | null;
-    } | null;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
     readonly notRepresentedArtists: {
-      readonly totalCount: number | null;
-    } | null;
-    readonly partnerType: string | null;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
+    readonly partnerType: string | null | undefined;
     readonly representedArtists: {
-      readonly totalCount: number | null;
-    } | null;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
     readonly slug: string;
     readonly viewingRooms: {
-      readonly totalCount: number | null;
-    } | null;
-  } | null;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type NavigationTabs_Test_PartnerQuery = {
   rawResponse: NavigationTabs_Test_PartnerQuery$rawResponse;

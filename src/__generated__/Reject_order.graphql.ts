@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0861b4422904affe9e2a8624597a92e6>>
+ * @generated SignedSource<<7ae2e9034da87c917465dd9ef69f661a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,17 +15,17 @@ export type Reject_order$data = {
   readonly lastOffer?: {
     readonly createdAt: string;
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
           readonly slug: string;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly stateExpiresAt: string | null;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly stateExpiresAt: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order">;
   readonly " $fragmentType": "Reject_order";
 };

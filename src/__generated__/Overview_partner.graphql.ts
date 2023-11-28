@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<10fcd83c63c8a6a6a85e62ddc27cc321>>
+ * @generated SignedSource<<0ab92a3a839efd9268221b96e97cc79c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,20 +11,20 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type Overview_partner$data = {
-  readonly displayArtistsSection: boolean | null;
-  readonly displayFullPartnerPage: boolean | null;
+  readonly displayArtistsSection: boolean | null | undefined;
+  readonly displayFullPartnerPage: boolean | null | undefined;
   readonly locationsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly coordinates: {
-          readonly lat: number | null;
-          readonly lng: number | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly partnerType: string | null;
-  readonly profileBannerDisplay: string | null;
+          readonly lat: number | null | undefined;
+          readonly lng: number | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly partnerType: string | null | undefined;
+  readonly profileBannerDisplay: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"AboutPartner_partner" | "ArticlesRail_partner" | "ArtistsRail_partner" | "ShowsRail_partner" | "SubscriberBanner_partner">;
   readonly " $fragmentType": "Overview_partner";

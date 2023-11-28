@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0e7d1bad8bcea01a23160c3dbd702c94>>
+ * @generated SignedSource<<995e0404ec00b44b59eb99f3ef76c82e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,13 +9,13 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type timeQuery$variables = {};
+export type timeQuery$variables = Record<PropertyKey, never>;
 export type timeQuery$data = {
   readonly system: {
     readonly time: {
-      readonly unix: number | null;
-    } | null;
-  } | null;
+      readonly unix: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type timeQuery = {
   response: timeQuery$data;

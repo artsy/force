@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<46155c9a8db1b63589c5d4d15866bf16>>
+ * @generated SignedSource<<89d621c21d217d88d192a7c0335de07a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,26 +15,26 @@ export type ViewingRoomWorksRoute_viewingRoom$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly images: ReadonlyArray<{
-          readonly internalID: string | null;
+          readonly internalID: string | null | undefined;
           readonly resized: {
-            readonly height: number | null;
+            readonly height: number | null | undefined;
             readonly src: string;
             readonly srcSet: string;
-            readonly width: number | null;
-          } | null;
+            readonly width: number | null | undefined;
+          } | null | undefined;
           readonly solo: {
-            readonly height: number | null;
+            readonly height: number | null | undefined;
             readonly src: string;
             readonly srcSet: string;
-            readonly width: number | null;
-          } | null;
-        } | null> | null;
+            readonly width: number | null | undefined;
+          } | null | undefined;
+        } | null | undefined> | null | undefined;
         readonly internalID: string;
-        readonly title: string | null;
+        readonly title: string | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomArtworkDetails_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ViewingRoomWorksRoute_viewingRoom";
 };
 export type ViewingRoomWorksRoute_viewingRoom$key = {

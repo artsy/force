@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dc1a38d6163577a44c160b70ad26830a>>
+ * @generated SignedSource<<164ab5192c42449f93345b01440332d3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,18 +16,18 @@ export type ArtistSeriesMeta_TestQuery$variables = {
 export type ArtistSeriesMeta_TestQuery$data = {
   readonly artistSeries: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistSeriesMeta_artistSeries">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtistSeriesMeta_TestQuery$rawResponse = {
   readonly artistSeries: {
     readonly artists: ReadonlyArray<{
       readonly id: string;
-      readonly name: string | null;
-    } | null> | null;
-    readonly description: string | null;
+      readonly name: string | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly description: string | null | undefined;
     readonly slug: string;
     readonly title: string;
-  } | null;
+  } | null | undefined;
 };
 export type ArtistSeriesMeta_TestQuery = {
   rawResponse: ArtistSeriesMeta_TestQuery$rawResponse;

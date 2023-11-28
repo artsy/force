@@ -24,7 +24,7 @@ const logger = createLogger(
 
 interface RequestConditionReportProps {
   artwork: RequestConditionReport_artwork$data
-  me: RequestConditionReport_me$data | null
+  me: RequestConditionReport_me$data | null | undefined
 }
 
 export const RequestConditionReport: React.FC<RequestConditionReportProps> = props => {
@@ -43,7 +43,7 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
   const requestConditionReport = () => {
     return new Promise<RequestConditionReportMutation$data>(
       async (resolve, reject) => {
-        commitMutation<RequestConditionReportMutation>(relayEnvironment!, {
+        commitMutation<RequestConditionReportMutation>(relayEnvironment, {
           onCompleted: data => {
             resolve(data)
           },
@@ -62,7 +62,7 @@ export const RequestConditionReport: React.FC<RequestConditionReportProps> = pro
             }
           `,
           variables: {
-            input: { saleArtworkID: artwork.saleArtwork?.internalID! },
+            input: { saleArtworkID: artwork.saleArtwork?.internalID as string },
           },
         })
       }

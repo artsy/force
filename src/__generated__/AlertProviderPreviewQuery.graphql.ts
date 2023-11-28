@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf438376693b03fd025ab161b431bc01>>
+ * @generated SignedSource<<5a15ab5b1b537c6cc2264aae2122d80c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,26 +11,26 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type PreviewSavedSearchAttributes = {
-  acquireable?: boolean | null;
-  additionalGeneIDs?: ReadonlyArray<string | null> | null;
-  artistIDs?: ReadonlyArray<string | null> | null;
-  artistSeriesIDs?: ReadonlyArray<string | null> | null;
-  atAuction?: boolean | null;
-  attributionClass?: ReadonlyArray<string | null> | null;
-  colors?: ReadonlyArray<string | null> | null;
-  height?: string | null;
-  inquireableOnly?: boolean | null;
-  locationCities?: ReadonlyArray<string | null> | null;
-  majorPeriods?: ReadonlyArray<string | null> | null;
-  materialsTerms?: ReadonlyArray<string | null> | null;
-  offerable?: boolean | null;
-  partnerIDs?: ReadonlyArray<string | null> | null;
-  priceRange?: string | null;
-  sizes?: ReadonlyArray<ArtworkSizes | null> | null;
-  width?: string | null;
+  acquireable?: boolean | null | undefined;
+  additionalGeneIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  artistIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  artistSeriesIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  atAuction?: boolean | null | undefined;
+  attributionClass?: ReadonlyArray<string | null | undefined> | null | undefined;
+  colors?: ReadonlyArray<string | null | undefined> | null | undefined;
+  height?: string | null | undefined;
+  inquireableOnly?: boolean | null | undefined;
+  locationCities?: ReadonlyArray<string | null | undefined> | null | undefined;
+  majorPeriods?: ReadonlyArray<string | null | undefined> | null | undefined;
+  materialsTerms?: ReadonlyArray<string | null | undefined> | null | undefined;
+  offerable?: boolean | null | undefined;
+  partnerIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
+  priceRange?: string | null | undefined;
+  sizes?: ReadonlyArray<ArtworkSizes | null | undefined> | null | undefined;
+  width?: string | null | undefined;
 };
 export type AlertProviderPreviewQuery$variables = {
-  attributes?: PreviewSavedSearchAttributes | null;
+  attributes?: PreviewSavedSearchAttributes | null | undefined;
 };
 export type AlertProviderPreviewQuery$data = {
   readonly viewer: {
@@ -40,9 +40,9 @@ export type AlertProviderPreviewQuery$data = {
         readonly displayValue: string;
         readonly field: string;
         readonly value: string;
-      } | null>;
-    } | null;
-  } | null;
+      } | null | undefined>;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type AlertProviderPreviewQuery = {
   response: AlertProviderPreviewQuery$data;

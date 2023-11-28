@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b9412441e0a1155bfdcfb39bd2cff011>>
+ * @generated SignedSource<<2220f42dbf81c4f8859d948f22a01257>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,14 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type CreditCardPickerTestQuery$variables = {};
+export type CreditCardPickerTestQuery$variables = Record<PropertyKey, never>;
 export type CreditCardPickerTestQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"CreditCardPicker_me">;
-  } | null;
+  } | null | undefined;
   readonly order: {
     readonly " $fragmentSpreads": FragmentRefs<"CreditCardPicker_order">;
-  } | null;
+  } | null | undefined;
 };
 export type CreditCardPickerTestQuery$rawResponse = {
   readonly me: {
@@ -32,29 +32,29 @@ export type CreditCardPickerTestQuery$rawResponse = {
           readonly id: string;
           readonly internalID: string;
           readonly lastDigits: string;
-        } | null;
-      } | null> | null;
-    } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
     readonly id: string;
-  } | null;
+  } | null | undefined;
   readonly order: {
     readonly __typename: string;
     readonly __isCommerceOrder: string;
     readonly creditCard: {
       readonly brand: string;
-      readonly city: string | null;
-      readonly country: string | null;
+      readonly city: string | null | undefined;
+      readonly country: string | null | undefined;
       readonly expirationMonth: number;
       readonly expirationYear: number;
       readonly id: string;
       readonly internalID: string;
       readonly lastDigits: string;
-      readonly name: string | null;
-      readonly postalCode: string | null;
-      readonly state: string | null;
-      readonly street1: string | null;
-      readonly street2: string | null;
-    } | null;
+      readonly name: string | null | undefined;
+      readonly postalCode: string | null | undefined;
+      readonly state: string | null | undefined;
+      readonly street1: string | null | undefined;
+      readonly street2: string | null | undefined;
+    } | null | undefined;
     readonly id: string;
     readonly internalID: string;
     readonly lineItems: {
@@ -63,38 +63,38 @@ export type CreditCardPickerTestQuery$rawResponse = {
           readonly artwork: {
             readonly id: string;
             readonly slug: string;
-          } | null;
+          } | null | undefined;
           readonly id: string;
-        } | null;
-      } | null> | null;
-    } | null;
-    readonly mode: CommerceOrderModeEnum | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+    readonly mode: CommerceOrderModeEnum | null | undefined;
     readonly requestedFulfillment: {
       readonly __typename: "CommercePickup";
       readonly fulfillmentType: string;
     } | {
       readonly __typename: "CommerceShip";
-      readonly addressLine1: string | null;
-      readonly addressLine2: string | null;
-      readonly city: string | null;
-      readonly country: string | null;
-      readonly name: string | null;
-      readonly postalCode: string | null;
-      readonly region: string | null;
+      readonly addressLine1: string | null | undefined;
+      readonly addressLine2: string | null | undefined;
+      readonly city: string | null | undefined;
+      readonly country: string | null | undefined;
+      readonly name: string | null | undefined;
+      readonly postalCode: string | null | undefined;
+      readonly region: string | null | undefined;
     } | {
       readonly __typename: "CommerceShipArta";
-      readonly addressLine1: string | null;
-      readonly addressLine2: string | null;
-      readonly city: string | null;
-      readonly country: string | null;
-      readonly name: string | null;
-      readonly postalCode: string | null;
-      readonly region: string | null;
+      readonly addressLine1: string | null | undefined;
+      readonly addressLine2: string | null | undefined;
+      readonly city: string | null | undefined;
+      readonly country: string | null | undefined;
+      readonly name: string | null | undefined;
+      readonly postalCode: string | null | undefined;
+      readonly region: string | null | undefined;
     } | {
       readonly __typename: string;
-    } | null;
+    } | null | undefined;
     readonly state: CommerceOrderStateEnum;
-  } | null;
+  } | null | undefined;
 };
 export type CreditCardPickerTestQuery = {
   rawResponse: CreditCardPickerTestQuery$rawResponse;

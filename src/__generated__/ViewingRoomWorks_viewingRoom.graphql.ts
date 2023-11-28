@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d3b22413e6c68ed8007eb78755174d38>>
+ * @generated SignedSource<<a52f1d861ab6cb86bc2a0817cd260629>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type ViewingRoomWorks_viewingRoom$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomWorksArtwork_artwork">;
-      } | null;
-    } | null> | null;
-    readonly totalCount: number | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ViewingRoomWorks_viewingRoom";
 };
 export type ViewingRoomWorks_viewingRoom$key = {

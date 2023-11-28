@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0315b6e89a2466f7950cf0e53808bfda>>
+ * @generated SignedSource<<f737ad3f0ad75c3f59bf9690cfb65a84>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,29 +16,29 @@ export type MyCollectionArtworkFormArtistStep_me$data = {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly counts: {
-            readonly artworks: any | null;
-          } | null;
-          readonly displayLabel: string | null;
-          readonly formattedNationalityAndBirthday: string | null;
+            readonly artworks: any | null | undefined;
+          } | null | undefined;
+          readonly displayLabel: string | null | undefined;
+          readonly formattedNationalityAndBirthday: string | null | undefined;
           readonly image: {
             readonly cropped: {
               readonly src: string;
               readonly srcSet: string;
-            } | null;
-          } | null;
-          readonly initials: string | null;
+            } | null | undefined;
+          } | null | undefined;
+          readonly initials: string | null | undefined;
           readonly internalID: string;
-          readonly isPersonalArtist: boolean | null;
-          readonly name: string | null;
+          readonly isPersonalArtist: boolean | null | undefined;
+          readonly name: string | null | undefined;
           readonly slug: string;
           readonly targetSupply: {
-            readonly isP1: boolean | null;
+            readonly isP1: boolean | null | undefined;
           };
           readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "MyCollectionArtworkFormArtistStep_me";
 };
 export type MyCollectionArtworkFormArtistStep_me$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f09b15fd18db9ed2e8cdca09969bd2b3>>
+ * @generated SignedSource<<918e0e8bdb92d2691986b3e7737466c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,22 +15,22 @@ export type FairBooths_fair$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly counts: {
-          readonly artworks: number | null;
-        } | null;
+          readonly artworks: number | null | undefined;
+        } | null | undefined;
         readonly id: string;
         readonly partner: {
           readonly id?: string;
-        } | null;
+        } | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"FairBoothRail_show">;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     };
     readonly pageInfo: {
       readonly hasNextPage: boolean;
     };
-  } | null;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "FairBooths_fair";
 };

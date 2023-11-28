@@ -8,8 +8,8 @@ import { useTracking } from "react-tracking"
 
 interface StickyFooterProps extends WithInquiryProps {
   artworkID: string
-  orderType: string | null
-  orderSource: string | null
+  orderType: string | null | undefined
+  orderSource: string | null | undefined
 }
 
 export const StickyFooter: FC<StickyFooterProps> = ({

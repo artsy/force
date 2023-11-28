@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8ca989b94d7d6c849c063936524a2e2e>>
+ * @generated SignedSource<<0502e84acbea8fe627644e174b7215cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,12 +16,12 @@ export type MyBids_me$data = {
       readonly sale: {
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"MyBidsBidHeader_sale">;
-      } | null;
+      } | null | undefined;
       readonly saleArtworks: ReadonlyArray<{
         readonly " $fragmentSpreads": FragmentRefs<"MyBidsBidItem_saleArtwork">;
-      } | null> | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined> | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "MyBids_me";
 };
 export type MyBids_me$key = {

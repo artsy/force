@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8eb30f15a10f30a92a72a4f905c8eea4>>
+ * @generated SignedSource<<16bdd0cfdc7d517496ded9128bb44e3b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type fairRoutes_FairSubAppQuery$variables = {
 export type fairRoutes_FairSubAppQuery$data = {
   readonly fair: {
     readonly " $fragmentSpreads": FragmentRefs<"FairSubApp_fair">;
-  } | null;
+  } | null | undefined;
 };
 export type fairRoutes_FairSubAppQuery = {
   response: fairRoutes_FairSubAppQuery$data;

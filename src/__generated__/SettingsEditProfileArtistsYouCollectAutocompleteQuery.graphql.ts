@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7f27b31eb8bc0152362ae7ad2b506d23>>
+ * @generated SignedSource<<2cb50f720b5aa0a23866edc6999833cf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,11 +16,11 @@ export type SettingsEditProfileArtistsYouCollectAutocompleteQuery$data = {
   readonly searchConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly text: string | null;
+        readonly text: string | null | undefined;
         readonly value?: string;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
 };
 export type SettingsEditProfileArtistsYouCollectAutocompleteQuery = {
   response: SettingsEditProfileArtistsYouCollectAutocompleteQuery$data;

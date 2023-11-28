@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5e33b0cd9d2f9fac894262c8570dbe23>>
+ * @generated SignedSource<<80e26600e6d97b2c3fdb5b9f30ff05a2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,20 +14,20 @@ export type SearchResultsArtists_viewer$data = {
   readonly searchConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly bio?: string | null;
-        readonly href?: string | null;
-        readonly imageUrl?: string | null;
+        readonly bio?: string | null | undefined;
+        readonly href?: string | null | undefined;
+        readonly imageUrl?: string | null | undefined;
         readonly internalID?: string;
-        readonly name?: string | null;
-      } | null;
-    } | null> | null;
+        readonly name?: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     };
     readonly pageInfo: {
       readonly hasNextPage: boolean;
     };
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "SearchResultsArtists_viewer";
 };
 export type SearchResultsArtists_viewer$key = {

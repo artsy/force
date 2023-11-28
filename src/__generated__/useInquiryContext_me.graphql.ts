@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c8b146d89c73e6bc65252b522a3dfcf6>>
+ * @generated SignedSource<<404fb125ca17cbbb17b5992e7fbc61d5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type useInquiryContext_me$data = {
-  readonly collectorLevel: number | null;
+  readonly collectorLevel: number | null | undefined;
   readonly location: {
-    readonly city: string | null;
-  } | null;
-  readonly otherRelevantPositions: string | null;
-  readonly profession: string | null;
+    readonly city: string | null | undefined;
+  } | null | undefined;
+  readonly otherRelevantPositions: string | null | undefined;
+  readonly profession: string | null | undefined;
   readonly shareFollows: boolean;
   readonly " $fragmentType": "useInquiryContext_me";
 };

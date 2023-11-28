@@ -1,8 +1,8 @@
 import { SystemContext } from "System/SystemContext"
 import { useContext } from "react"
 import * as React from "react"
-import { commitMutation as relayCommitMutation } from "react-relay"
-import { Environment, MutationConfig, MutationParameters } from "relay-runtime"
+import { Environment, commitMutation as relayCommitMutation } from "react-relay"
+import { MutationConfig, MutationParameters } from "relay-runtime"
 
 interface OperationBase {
   variables: object
@@ -47,7 +47,7 @@ class ProvideMutationContext extends React.Component<
     return new Promise((resolve, reject) => {
       try {
         relayCommitMutation(this.props.relayEnvironment, {
-          mutation,
+          mutation: mutation as any,
           variables,
           onCompleted: (data, errors) => {
             this.setState({ isCommittingMutation: false }, () => {
@@ -91,7 +91,7 @@ export function injectCommitMutation<Props extends CommitMutationProps>(
   return props => {
     const { relayEnvironment } = useContext(SystemContext)
     return (
-      <ProvideMutationContext relayEnvironment={relayEnvironment!}>
+      <ProvideMutationContext relayEnvironment={relayEnvironment}>
         <MutationContext.Consumer>
           {({ isCommittingMutation, commitMutation }) => (
             <Component

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fb1ab8ae087adac74f932757f350fc7c>>
+ * @generated SignedSource<<c0f51a84fafe73b8d51882cbdb52742e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,19 +12,19 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CreateUserAddressInput = {
   attributes: UserAddressAttributes;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
 };
 export type UserAddressAttributes = {
   addressLine1: string;
-  addressLine2?: string | null;
-  addressLine3?: string | null;
+  addressLine2?: string | null | undefined;
+  addressLine3?: string | null | undefined;
   city: string;
   country: string;
   name: string;
-  phoneNumber?: string | null;
-  phoneNumberCountryCode?: string | null;
-  postalCode?: string | null;
-  region?: string | null;
+  phoneNumber?: string | null | undefined;
+  phoneNumberCountryCode?: string | null | undefined;
+  postalCode?: string | null | undefined;
+  region?: string | null | undefined;
 };
 export type useCreateSavedAddressMutation$variables = {
   input: CreateUserAddressInput;
@@ -33,11 +33,11 @@ export type useCreateSavedAddressMutation$data = {
   readonly createUserAddress: {
     readonly me: {
       readonly " $fragmentSpreads": FragmentRefs<"Shipping2_me">;
-    } | null;
+    } | null | undefined;
     readonly userAddressOrErrors: {
       readonly addressLine1?: string;
-      readonly addressLine2?: string | null;
-      readonly addressLine3?: string | null;
+      readonly addressLine2?: string | null | undefined;
+      readonly addressLine3?: string | null | undefined;
       readonly city?: string;
       readonly country?: string;
       readonly errors?: ReadonlyArray<{
@@ -46,12 +46,12 @@ export type useCreateSavedAddressMutation$data = {
       readonly id?: string;
       readonly internalID?: string;
       readonly isDefault?: boolean;
-      readonly name?: string | null;
-      readonly phoneNumber?: string | null;
-      readonly postalCode?: string | null;
-      readonly region?: string | null;
+      readonly name?: string | null | undefined;
+      readonly phoneNumber?: string | null | undefined;
+      readonly postalCode?: string | null | undefined;
+      readonly region?: string | null | undefined;
     };
-  } | null;
+  } | null | undefined;
 };
 export type useCreateSavedAddressMutation = {
   response: useCreateSavedAddressMutation$data;

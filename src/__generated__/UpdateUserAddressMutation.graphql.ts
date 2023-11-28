@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ca4ce223ef8b6f9b215fcc7af6332188>>
+ * @generated SignedSource<<8eb577337a9c2691c884a0c491df2c87>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,20 +11,20 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UpdateUserAddressInput = {
   attributes: UserAddressAttributes;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   userAddressID: string;
 };
 export type UserAddressAttributes = {
   addressLine1: string;
-  addressLine2?: string | null;
-  addressLine3?: string | null;
+  addressLine2?: string | null | undefined;
+  addressLine3?: string | null | undefined;
   city: string;
   country: string;
   name: string;
-  phoneNumber?: string | null;
-  phoneNumberCountryCode?: string | null;
-  postalCode?: string | null;
-  region?: string | null;
+  phoneNumber?: string | null | undefined;
+  phoneNumberCountryCode?: string | null | undefined;
+  postalCode?: string | null | undefined;
+  region?: string | null | undefined;
 };
 export type UpdateUserAddressMutation$variables = {
   input: UpdateUserAddressInput;
@@ -33,7 +33,7 @@ export type UpdateUserAddressMutation$data = {
   readonly updateUserAddress: {
     readonly userAddressOrErrors: {
       readonly addressLine1?: string;
-      readonly addressLine2?: string | null;
+      readonly addressLine2?: string | null | undefined;
       readonly city?: string;
       readonly country?: string;
       readonly errors?: ReadonlyArray<{
@@ -43,12 +43,12 @@ export type UpdateUserAddressMutation$data = {
       readonly id?: string;
       readonly internalID?: string;
       readonly isDefault?: boolean;
-      readonly name?: string | null;
-      readonly phoneNumber?: string | null;
-      readonly postalCode?: string | null;
-      readonly region?: string | null;
+      readonly name?: string | null | undefined;
+      readonly phoneNumber?: string | null | undefined;
+      readonly postalCode?: string | null | undefined;
+      readonly region?: string | null | undefined;
     };
-  } | null;
+  } | null | undefined;
 };
 export type UpdateUserAddressMutation = {
   response: UpdateUserAddressMutation$data;

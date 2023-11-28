@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<655d88faf44a69266d287fefcda3aad3>>
+ * @generated SignedSource<<4218a09c771b93004a70e03bd38e6c17>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomPullQuote_viewingRoom$data = {
-  readonly pullQuote: string | null;
+  readonly pullQuote: string | null | undefined;
   readonly " $fragmentType": "ViewingRoomPullQuote_viewingRoom";
 };
 export type ViewingRoomPullQuote_viewingRoom$key = {

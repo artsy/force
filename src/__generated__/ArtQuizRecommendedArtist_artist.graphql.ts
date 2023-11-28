@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1d98f3b6b6234b935590a2307e5bec69>>
+ * @generated SignedSource<<e91df5c2bc0f361515d8ff99c0dd59dd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,17 +16,17 @@ export type ArtQuizRecommendedArtist_artist$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly biographyBlurb: {
-    readonly credit: string | null;
-    readonly text: string | null;
-  } | null;
-  readonly formattedNationalityAndBirthday: string | null;
-  readonly href: string | null;
+    readonly credit: string | null | undefined;
+    readonly text: string | null | undefined;
+  } | null | undefined;
+  readonly formattedNationalityAndBirthday: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly internalID: string;
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "ArtQuizRecommendedArtist_artist";
 };
 export type ArtQuizRecommendedArtist_artist$key = {

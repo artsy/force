@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cad23a3f0b35d11ed3bc6110c9c43ae1>>
+ * @generated SignedSource<<4fbd1e1dc419c43cfcd3b55f43ff9dee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SmsSecondFactor_me$data = {
-  readonly email: string | null;
+  readonly email: string | null | undefined;
   readonly hasSecondFactorEnabled: boolean;
   readonly smsSecondFactors: ReadonlyArray<{
     readonly __typename: "SmsSecondFactor";
-    readonly formattedPhoneNumber: string | null;
+    readonly formattedPhoneNumber: string | null | undefined;
     readonly internalID: string;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "SmsSecondFactor_me";
 };
 export type SmsSecondFactor_me$key = {

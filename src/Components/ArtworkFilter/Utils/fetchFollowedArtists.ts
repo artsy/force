@@ -1,5 +1,5 @@
-import { Environment, fetchQuery } from "relay-runtime"
-import { graphql } from "react-relay"
+import { fetchQuery } from "react-relay"
+import { Environment, graphql } from "react-relay"
 import { fetchFollowedArtistsByFairIdQuery } from "__generated__/fetchFollowedArtistsByFairIdQuery.graphql"
 import { fetchFollowedArtistsRawQuery } from "__generated__/fetchFollowedArtistsRawQuery.graphql"
 import { compact, isString } from "lodash"

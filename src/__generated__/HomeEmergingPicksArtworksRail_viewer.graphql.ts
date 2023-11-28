@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34bb4fe6498a0bf9f8123757eea8405e>>
+ * @generated SignedSource<<57496b27864b2ff83cd0d4a589eda54e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,13 +14,13 @@ export type HomeEmergingPicksArtworksRail_viewer$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly href: string | null;
+        readonly href: string | null | undefined;
         readonly internalID: string;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "HomeEmergingPicksArtworksRail_viewer";
 };
 export type HomeEmergingPicksArtworksRail_viewer$key = {

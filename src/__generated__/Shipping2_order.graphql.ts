@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d41ef991034a6d922ec5b68b52911e8c>>
+ * @generated SignedSource<<f56a70455279fab369a6ac2f9d0cf119>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,55 +20,55 @@ export type Shipping2_order$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
-          readonly artsyShippingInternational: boolean | null;
-          readonly euShippingOrigin: boolean | null;
-          readonly onlyShipsDomestically: boolean | null;
-          readonly pickup_available: boolean | null;
-          readonly processWithArtsyShippingDomestic: boolean | null;
-          readonly shippingCountry: string | null;
+          readonly artsyShippingInternational: boolean | null | undefined;
+          readonly euShippingOrigin: boolean | null | undefined;
+          readonly onlyShipsDomestically: boolean | null | undefined;
+          readonly pickup_available: boolean | null | undefined;
+          readonly processWithArtsyShippingDomestic: boolean | null | undefined;
+          readonly shippingCountry: string | null | undefined;
           readonly slug: string;
-        } | null;
+        } | null | undefined;
         readonly shippingQuoteOptions: {
           readonly edges: ReadonlyArray<{
             readonly node: {
               readonly id: string;
               readonly isSelected: boolean;
-            } | null;
+            } | null | undefined;
             readonly " $fragmentSpreads": FragmentRefs<"ShippingQuotes_shippingQuotes">;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly mode: CommerceOrderModeEnum | null;
+          } | null | undefined> | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly requestedFulfillment: {
     readonly __typename: "CommercePickup";
-    readonly phoneNumber: string | null;
+    readonly phoneNumber: string | null | undefined;
   } | {
     readonly __typename: "CommerceShip";
-    readonly addressLine1: string | null;
-    readonly addressLine2: string | null;
-    readonly city: string | null;
-    readonly country: string | null;
-    readonly name: string | null;
-    readonly phoneNumber: string | null;
-    readonly postalCode: string | null;
-    readonly region: string | null;
+    readonly addressLine1: string | null | undefined;
+    readonly addressLine2: string | null | undefined;
+    readonly city: string | null | undefined;
+    readonly country: string | null | undefined;
+    readonly name: string | null | undefined;
+    readonly phoneNumber: string | null | undefined;
+    readonly postalCode: string | null | undefined;
+    readonly region: string | null | undefined;
   } | {
     readonly __typename: "CommerceShipArta";
-    readonly addressLine1: string | null;
-    readonly addressLine2: string | null;
-    readonly city: string | null;
-    readonly country: string | null;
-    readonly name: string | null;
-    readonly phoneNumber: string | null;
-    readonly postalCode: string | null;
-    readonly region: string | null;
+    readonly addressLine1: string | null | undefined;
+    readonly addressLine2: string | null | undefined;
+    readonly city: string | null | undefined;
+    readonly country: string | null | undefined;
+    readonly name: string | null | undefined;
+    readonly phoneNumber: string | null | undefined;
+    readonly postalCode: string | null | undefined;
+    readonly region: string | null | undefined;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly state: CommerceOrderStateEnum;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "FulfillmentDetailsForm_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Shipping2_order";

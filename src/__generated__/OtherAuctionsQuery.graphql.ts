@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7513303217bb58ac3525cc997a6a3431>>
+ * @generated SignedSource<<46c7278ddd9da20629ffeed9a6542377>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,13 +12,13 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SaleSorts = "CREATED_AT_ASC" | "CREATED_AT_DESC" | "ELIGIBLE_SALE_ARTWORKS_COUNT_ASC" | "ELIGIBLE_SALE_ARTWORKS_COUNT_DESC" | "END_AT_ASC" | "END_AT_DESC" | "LICENSED_TIMELY_AT_NAME_DESC" | "NAME_ASC" | "NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "TIMELY_AT_NAME_ASC" | "TIMELY_AT_NAME_DESC" | "_ID_ASC" | "_ID_DESC" | "%future added value";
 export type OtherAuctionsQuery$variables = {
-  first?: number | null;
-  sort?: SaleSorts | null;
+  first?: number | null | undefined;
+  sort?: SaleSorts | null | undefined;
 };
 export type OtherAuctionsQuery$data = {
   readonly salesConnection: {
     readonly " $fragmentSpreads": FragmentRefs<"OtherAuctions_salesConnection">;
-  } | null;
+  } | null | undefined;
 };
 export type OtherAuctionsQuery = {
   response: OtherAuctionsQuery$data;

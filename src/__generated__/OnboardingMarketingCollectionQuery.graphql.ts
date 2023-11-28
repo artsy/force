@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<14400e7a255695e0adf207b04f9a29a9>>
+ * @generated SignedSource<<4928b72dcf01d88a7e13fae5272437ec>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type OnboardingMarketingCollectionQuery$variables = {
 export type OnboardingMarketingCollectionQuery$data = {
   readonly marketingCollection: {
     readonly " $fragmentSpreads": FragmentRefs<"OnboardingMarketingCollection_marketingCollection">;
-  } | null;
+  } | null | undefined;
 };
 export type OnboardingMarketingCollectionQuery = {
   response: OnboardingMarketingCollectionQuery$data;

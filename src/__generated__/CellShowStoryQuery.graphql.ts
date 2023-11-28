@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebad08e4e1e864d97b92d0065ab6d1d6>>
+ * @generated SignedSource<<0818480d98b36d1379b79d41440a8151>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type CellShowStoryQuery$variables = {
 export type CellShowStoryQuery$data = {
   readonly show: {
     readonly " $fragmentSpreads": FragmentRefs<"CellShow_show">;
-  } | null;
+  } | null | undefined;
 };
 export type CellShowStoryQuery = {
   response: CellShowStoryQuery$data;

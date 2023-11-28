@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<279ee19b0dcaee0abd8624b293eace1b>>
+ * @generated SignedSource<<14e768d3b45442a0c2fa7ded743ca0c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,10 +15,10 @@ export type FeatureHeaderDefault_feature$data = {
     readonly resized: {
       readonly src: string;
       readonly srcSet: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
   readonly name: string;
-  readonly subheadline: string | null;
+  readonly subheadline: string | null | undefined;
   readonly " $fragmentType": "FeatureHeaderDefault_feature";
 };
 export type FeatureHeaderDefault_feature$key = {

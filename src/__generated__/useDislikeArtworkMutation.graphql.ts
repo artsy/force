@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd7a123f35ecb179df7363869718f31c>>
+ * @generated SignedSource<<9e5decd86da5649b5d63ddff289c2d16>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type DislikeArtworkInput = {
   artworkID: string;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   remove: boolean;
 };
 export type useDislikeArtworkMutation$variables = {
@@ -21,8 +21,8 @@ export type useDislikeArtworkMutation$data = {
   readonly dislikeArtwork: {
     readonly artwork: {
       readonly isDisliked: boolean;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useDislikeArtworkMutation = {
   response: useDislikeArtworkMutation$data;

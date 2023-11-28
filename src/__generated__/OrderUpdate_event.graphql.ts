@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f2af52d5216a174dc254b851d2bb5097>>
+ * @generated SignedSource<<043ef79743e3e2ad48b43e5e641d5692>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,21 +16,21 @@ export type OrderUpdate_event$data = {
   readonly __typename: "CommerceOfferSubmittedEvent";
   readonly createdAt: string;
   readonly offer: {
-    readonly amount: string | null;
+    readonly amount: string | null | undefined;
     readonly definesTotal: boolean;
-    readonly fromParticipant: CommerceOrderParticipantEnum | null;
+    readonly fromParticipant: CommerceOrderParticipantEnum | null | undefined;
     readonly offerAmountChanged: boolean;
     readonly respondsTo: {
-      readonly fromParticipant: CommerceOrderParticipantEnum | null;
-    } | null;
+      readonly fromParticipant: CommerceOrderParticipantEnum | null | undefined;
+    } | null | undefined;
   };
   readonly " $fragmentType": "OrderUpdate_event";
 } | {
   readonly __typename: "CommerceOrderStateChangedEvent";
   readonly createdAt: string;
-  readonly orderUpdateState: string | null;
+  readonly orderUpdateState: string | null | undefined;
   readonly state: CommerceOrderStateEnum;
-  readonly stateReason: string | null;
+  readonly stateReason: string | null | undefined;
   readonly " $fragmentType": "OrderUpdate_event";
 } | {
   // This will never be '%other', but we need some

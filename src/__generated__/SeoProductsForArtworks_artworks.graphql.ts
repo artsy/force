@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<96809fb7f11f23109179f5f2dd6fe013>>
+ * @generated SignedSource<<9a3555d148c42eaacebf5f9e7777999d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,46 +14,46 @@ export type SeoProductsForArtworks_artworks$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
       readonly artists: ReadonlyArray<{
-        readonly name: string | null;
-      } | null> | null;
-      readonly availability: string | null;
-      readonly category: string | null;
-      readonly date: string | null;
-      readonly href: string | null;
+        readonly name: string | null | undefined;
+      } | null | undefined> | null | undefined;
+      readonly availability: string | null | undefined;
+      readonly category: string | null | undefined;
+      readonly date: string | null | undefined;
+      readonly href: string | null | undefined;
       readonly id: string;
       readonly image: {
-        readonly url: string | null;
-      } | null;
-      readonly is_acquireable: boolean | null;
-      readonly is_price_range: boolean | null;
+        readonly url: string | null | undefined;
+      } | null | undefined;
+      readonly is_acquireable: boolean | null | undefined;
+      readonly is_price_range: boolean | null | undefined;
       readonly listPrice: {
-        readonly display?: string | null;
-      } | null;
+        readonly display?: string | null | undefined;
+      } | null | undefined;
       readonly meta: {
-        readonly description: string | null;
-      } | null;
+        readonly description: string | null | undefined;
+      } | null | undefined;
       readonly partner: {
         readonly locations: ReadonlyArray<{
-          readonly address: string | null;
-          readonly address_2: string | null;
-          readonly city: string | null;
-          readonly country: string | null;
-          readonly phone: string | null;
-          readonly postal_code: string | null;
-          readonly state: string | null;
-        } | null> | null;
-        readonly name: string | null;
+          readonly address: string | null | undefined;
+          readonly address_2: string | null | undefined;
+          readonly city: string | null | undefined;
+          readonly country: string | null | undefined;
+          readonly phone: string | null | undefined;
+          readonly postal_code: string | null | undefined;
+          readonly state: string | null | undefined;
+        } | null | undefined> | null | undefined;
+        readonly name: string | null | undefined;
         readonly profile: {
           readonly icon: {
-            readonly url: string | null;
-          } | null;
-        } | null;
-        readonly type: string | null;
-      } | null;
-      readonly price_currency: string | null;
-      readonly title: string | null;
-    } | null;
-  } | null> | null;
+            readonly url: string | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+        readonly type: string | null | undefined;
+      } | null | undefined;
+      readonly price_currency: string | null | undefined;
+      readonly title: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "SeoProductsForArtworks_artworks";
 };
 export type SeoProductsForArtworks_artworks$key = {

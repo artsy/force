@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<00fe485f510056eadf47d4a4524f5ab8>>
+ * @generated SignedSource<<0de33fc26d564b7a84bf30f19eebe1e8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ArticleHeroStoryQuery$variables = {
 export type ArticleHeroStoryQuery$data = {
   readonly article: {
     readonly " $fragmentSpreads": FragmentRefs<"ArticleHero_article">;
-  } | null;
+  } | null | undefined;
 };
 export type ArticleHeroStoryQuery = {
   response: ArticleHeroStoryQuery$data;

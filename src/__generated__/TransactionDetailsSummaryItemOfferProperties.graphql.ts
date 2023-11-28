@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3910a387a8cdbd3d014117db6ff1e0b4>>
+ * @generated SignedSource<<26da431c2d392f913af7f43deed4facb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,17 +12,17 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type TransactionDetailsSummaryItemOfferProperties$data = {
-  readonly amount: string | null;
+  readonly amount: string | null | undefined;
   readonly amountCents: number;
-  readonly buyerTotal: string | null;
-  readonly buyerTotalCents: number | null;
-  readonly fromParticipant: CommerceOrderParticipantEnum | null;
+  readonly buyerTotal: string | null | undefined;
+  readonly buyerTotalCents: number | null | undefined;
+  readonly fromParticipant: CommerceOrderParticipantEnum | null | undefined;
   readonly internalID: string;
-  readonly note: string | null;
-  readonly shippingTotal: string | null;
-  readonly shippingTotalCents: number | null;
-  readonly taxTotal: string | null;
-  readonly taxTotalCents: number | null;
+  readonly note: string | null | undefined;
+  readonly shippingTotal: string | null | undefined;
+  readonly shippingTotalCents: number | null | undefined;
+  readonly taxTotal: string | null | undefined;
+  readonly taxTotalCents: number | null | undefined;
   readonly " $fragmentType": "TransactionDetailsSummaryItemOfferProperties";
 };
 export type TransactionDetailsSummaryItemOfferProperties$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<603b2f9bfa650421294cd25b9eb295a8>>
+ * @generated SignedSource<<929930aee9505a8ddd2ec85666689d5e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type AuctionActiveBidsTestQuery$variables = {
 export type AuctionActiveBidsTestQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"AuctionActiveBids_me">;
-  } | null;
+  } | null | undefined;
 };
 export type AuctionActiveBidsTestQuery = {
   response: AuctionActiveBidsTestQuery$data;

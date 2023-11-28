@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd7f99d4d34047f067599cef0e29f147>>
+ * @generated SignedSource<<2fa7c95994a7bb3892c68f51cededb91>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -24,8 +24,8 @@ export type HomeFeaturedGalleriesRail_orderedSet$data = {
         // This will never be '%other', but we need some
         // value in case none of the concrete values match.
         readonly __typename: "%other";
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
   };
   readonly " $fragmentType": "HomeFeaturedGalleriesRail_orderedSet";
 };

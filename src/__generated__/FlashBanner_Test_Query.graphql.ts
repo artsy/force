@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<951aaa841ad1aadd6c9ca32f8dc35329>>
+ * @generated SignedSource<<8ab1d2fb3107f506cfd17b62dd65c727>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type FlashBanner_Test_Query$variables = {};
+export type FlashBanner_Test_Query$variables = Record<PropertyKey, never>;
 export type FlashBanner_Test_Query$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"FlashBanner_me">;
-  } | null;
+  } | null | undefined;
 };
 export type FlashBanner_Test_Query = {
   response: FlashBanner_Test_Query$data;

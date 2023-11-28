@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0bba1fcc5dd9db95682f0d3908460f47>>
+ * @generated SignedSource<<b4341d8962f0a63190fb9a38f3659b25>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type InstitutionPartnershipsProfiles_orderedSet$data = {
     readonly owner?: {
       readonly " $fragmentSpreads": FragmentRefs<"CellPartner_partner">;
     };
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "InstitutionPartnershipsProfiles_orderedSet";
 };
 export type InstitutionPartnershipsProfiles_orderedSet$key = {

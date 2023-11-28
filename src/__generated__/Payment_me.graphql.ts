@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f8f8687328f57b0f0ef3d19e2e21b65e>>
+ * @generated SignedSource<<a1415ffad78aa09fa113377c3e1a3801>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type Payment_me$data = {
       readonly node: {
         readonly internalID: string;
         readonly last4: string;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"BankAccountPicker_me" | "CreditCardPicker_me">;
   readonly " $fragmentType": "Payment_me";
 };

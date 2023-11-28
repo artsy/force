@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c28c742d4f3220362f9c69d4ea08e518>>
+ * @generated SignedSource<<459e49a555eddb5af5143e936bd17e8c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnersRails_viewer$data = {
   readonly partnerCategories: ReadonlyArray<{
-    readonly name: string | null;
+    readonly name: string | null | undefined;
     readonly slug: string;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "PartnersRails_viewer";
 };
 export type PartnersRails_viewer$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6982d1ed5808e509ebbb8f74522bd1dd>>
+ * @generated SignedSource<<5d39ec447bd4da988ae3e9391a467665>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ArtistCurrentArticlesRailQuery$variables = {
 export type ArtistCurrentArticlesRailQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistCurrentArticlesRail_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtistCurrentArticlesRailQuery = {
   response: ArtistCurrentArticlesRailQuery$data;

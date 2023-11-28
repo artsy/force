@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f3696029c8791ff1188b5138b0554652>>
+ * @generated SignedSource<<9086833d7e3a6c5a5939d0fbf2aa27ca>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,9 +10,9 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowProfileInput = {
-  clientMutationId?: string | null;
-  profileID?: string | null;
-  unfollow?: boolean | null;
+  clientMutationId?: string | null | undefined;
+  profileID?: string | null | undefined;
+  unfollow?: boolean | null | undefined;
 };
 export type FollowProfileButtonMutation$variables = {
   input: FollowProfileInput;
@@ -21,9 +21,9 @@ export type FollowProfileButtonMutation$data = {
   readonly followProfile: {
     readonly profile: {
       readonly id: string;
-      readonly isFollowed: boolean | null;
-    } | null;
-  } | null;
+      readonly isFollowed: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type FollowProfileButtonMutation = {
   response: FollowProfileButtonMutation$data;

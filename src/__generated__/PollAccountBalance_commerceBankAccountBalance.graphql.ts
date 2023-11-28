@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e586bce8c66170976b0712b8e9ca6efb>>
+ * @generated SignedSource<<9f3f2bb5c973366ea0bda0b808c7659a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PollAccountBalance_commerceBankAccountBalance$data = {
-  readonly balanceCents: number | null;
-  readonly currencyCode: string | null;
+  readonly balanceCents: number | null | undefined;
+  readonly currencyCode: string | null | undefined;
   readonly " $fragmentType": "PollAccountBalance_commerceBankAccountBalance";
 };
 export type PollAccountBalance_commerceBankAccountBalance$key = {

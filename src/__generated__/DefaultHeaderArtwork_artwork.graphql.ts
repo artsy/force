@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c57a3e9f61f9bd510abd094f4705d2e0>>
+ * @generated SignedSource<<72bcd23b18c96462a9d5d7bb09efd3c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,18 +11,18 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DefaultHeaderArtwork_artwork$data = {
-  readonly href: string | null;
+  readonly href: string | null | undefined;
   readonly id: string;
   readonly image: {
     readonly resized: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly src: string;
       readonly srcSet: string;
-      readonly width: number | null;
-    } | null;
-  } | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly slug: string;
-  readonly title: string | null;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "DefaultHeaderArtwork_artwork";
 };
 export type DefaultHeaderArtwork_artwork$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<da54d48e45d3f02e38d60bf0a2f3b0a9>>
+ * @generated SignedSource<<e4825914a81c6f16ab1e90467662ad07>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type UpdateUserDefaultAddressInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   userAddressID: string;
 };
 export type UpdateUserDefaultAddressMutation$variables = {
@@ -20,7 +20,7 @@ export type UpdateUserDefaultAddressMutation$data = {
   readonly updateUserDefaultAddress: {
     readonly userAddressOrErrors: {
       readonly addressLine1?: string;
-      readonly addressLine2?: string | null;
+      readonly addressLine2?: string | null | undefined;
       readonly city?: string;
       readonly country?: string;
       readonly errors?: ReadonlyArray<{
@@ -30,12 +30,12 @@ export type UpdateUserDefaultAddressMutation$data = {
       readonly id?: string;
       readonly internalID?: string;
       readonly isDefault?: boolean;
-      readonly name?: string | null;
-      readonly phoneNumber?: string | null;
-      readonly postalCode?: string | null;
-      readonly region?: string | null;
+      readonly name?: string | null | undefined;
+      readonly phoneNumber?: string | null | undefined;
+      readonly postalCode?: string | null | undefined;
+      readonly region?: string | null | undefined;
     };
-  } | null;
+  } | null | undefined;
 };
 export type UpdateUserDefaultAddressMutation = {
   response: UpdateUserDefaultAddressMutation$data;

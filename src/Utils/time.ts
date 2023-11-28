@@ -1,6 +1,5 @@
 import { timeQuery } from "__generated__/timeQuery.graphql"
-import { graphql } from "react-relay"
-import { Environment, fetchQuery } from "relay-runtime"
+import { Environment, fetchQuery, graphql } from "react-relay"
 
 const getLocalTimestampInMilliSeconds = () => {
   return Date.now()
@@ -37,6 +36,7 @@ export async function getOffsetBetweenGravityClock(
     const possibleNetworkLatencyInMilliSeconds =
       (getLocalTimestampInMilliSeconds() - startTime) / 2
     const serverTimestampInMilliSeconds =
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       data?.system?.time?.unix! * 1e3 + possibleNetworkLatencyInMilliSeconds
 
     return serverTimestampInMilliSeconds

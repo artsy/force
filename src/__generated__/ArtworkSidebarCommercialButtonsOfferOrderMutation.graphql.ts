@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<886d1c2b6194ba00e5339716c1396dc0>>
+ * @generated SignedSource<<e999a7c80de11212cebb47df2ea14c4f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,10 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceCreateOfferOrderWithArtworkInput = {
   artworkId: string;
-  clientMutationId?: string | null;
-  editionSetId?: string | null;
-  findActiveOrCreate?: boolean | null;
-  quantity?: number | null;
+  clientMutationId?: string | null | undefined;
+  editionSetId?: string | null | undefined;
+  findActiveOrCreate?: boolean | null | undefined;
+  quantity?: number | null | undefined;
 };
 export type ArtworkSidebarCommercialButtonsOfferOrderMutation$variables = {
   input: CommerceCreateOfferOrderWithArtworkInput;
@@ -26,15 +26,15 @@ export type ArtworkSidebarCommercialButtonsOfferOrderMutation$data = {
       readonly __typename: "CommerceOrderWithMutationSuccess";
       readonly error?: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
       readonly order?: {
         readonly internalID: string;
-        readonly mode: CommerceOrderModeEnum | null;
+        readonly mode: CommerceOrderModeEnum | null | undefined;
       };
     };
-  } | null;
+  } | null | undefined;
 };
 export type ArtworkSidebarCommercialButtonsOfferOrderMutation = {
   response: ArtworkSidebarCommercialButtonsOfferOrderMutation$data;

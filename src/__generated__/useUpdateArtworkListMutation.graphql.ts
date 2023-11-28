@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5102aacb4695ccb6734d3ff244873c17>>
+ * @generated SignedSource<<c2040226162658d855289dd7bcf588a7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type updateCollectionInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   id: string;
   name: string;
 };
@@ -25,20 +25,20 @@ export type useUpdateArtworkListMutation$data = {
         readonly fieldErrors: ReadonlyArray<{
           readonly message: string;
           readonly name: string;
-        } | null> | null;
-      } | null;
+        } | null | undefined> | null | undefined;
+      } | null | undefined;
     } | {
       readonly __typename: "UpdateCollectionSuccess";
       readonly artworkList: {
         readonly internalID: string;
         readonly name: string;
-      } | null;
+      } | null | undefined;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useUpdateArtworkListMutation = {
   response: useUpdateArtworkListMutation$data;

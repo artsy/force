@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<48e06333829deb8c57e75cfd793fb3ec>>
+ * @generated SignedSource<<256c1a163487b1eb5278b9d1a10668df>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,18 +14,18 @@ export type TrendingLotsRail_viewer$data = {
   readonly trendingLotsConnection: {
     readonly edges: ReadonlyArray<{
       readonly counts: {
-        readonly bidderPositions: any | null;
-      } | null;
+        readonly bidderPositions: any | null | undefined;
+      } | null | undefined;
       readonly node: {
         readonly internalID: string;
         readonly sale: {
-          readonly isClosed: boolean | null;
-        } | null;
+          readonly isClosed: boolean | null | undefined;
+        } | null | undefined;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "TrendingLotsRail_viewer";
 };
 export type TrendingLotsRail_viewer$key = {

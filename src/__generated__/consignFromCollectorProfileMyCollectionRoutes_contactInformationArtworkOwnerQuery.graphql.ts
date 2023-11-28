@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9d6e44550f5cee6f98d2c1638a0fd95b>>
+ * @generated SignedSource<<635cf5ef699f0293dce71bf9975f36c9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,48 +12,48 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ConsignmentAttributionClass = "LIMITED_EDITION" | "OPEN_EDITION" | "UNIQUE" | "UNKNOWN_EDITION" | "%future added value";
 export type consignFromCollectorProfileMyCollectionRoutes_contactInformationArtworkOwnerQuery$variables = {
-  externalId?: string | null;
-  id?: string | null;
-  sessionID?: string | null;
+  externalId?: string | null | undefined;
+  id?: string | null | undefined;
+  sessionID?: string | null | undefined;
 };
 export type consignFromCollectorProfileMyCollectionRoutes_contactInformationArtworkOwnerQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_me">;
-  } | null;
+  } | null | undefined;
   readonly submission: {
     readonly artist: {
       readonly internalID: string;
-      readonly name: string | null;
-    } | null;
+      readonly name: string | null | undefined;
+    } | null | undefined;
     readonly assets: ReadonlyArray<{
-      readonly filename: string | null;
-      readonly geminiToken: string | null;
+      readonly filename: string | null | undefined;
+      readonly geminiToken: string | null | undefined;
       readonly id: string;
-      readonly imageUrls: any | null;
-      readonly size: string | null;
-    } | null> | null;
-    readonly attributionClass: ConsignmentAttributionClass | null;
-    readonly category: string | null;
-    readonly depth: string | null;
-    readonly dimensionsMetric: string | null;
-    readonly editionNumber: string | null;
-    readonly editionSize: string | null;
+      readonly imageUrls: any | null | undefined;
+      readonly size: string | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly attributionClass: ConsignmentAttributionClass | null | undefined;
+    readonly category: string | null | undefined;
+    readonly depth: string | null | undefined;
+    readonly dimensionsMetric: string | null | undefined;
+    readonly editionNumber: string | null | undefined;
+    readonly editionSize: string | null | undefined;
     readonly externalId: string;
-    readonly height: string | null;
-    readonly locationCity: string | null;
-    readonly locationCountry: string | null;
-    readonly locationCountryCode: string | null;
-    readonly locationPostalCode: string | null;
-    readonly locationState: string | null;
-    readonly medium: string | null;
-    readonly provenance: string | null;
-    readonly title: string | null;
-    readonly userEmail: string | null;
+    readonly height: string | null | undefined;
+    readonly locationCity: string | null | undefined;
+    readonly locationCountry: string | null | undefined;
+    readonly locationCountryCode: string | null | undefined;
+    readonly locationPostalCode: string | null | undefined;
+    readonly locationState: string | null | undefined;
+    readonly medium: string | null | undefined;
+    readonly provenance: string | null | undefined;
+    readonly title: string | null | undefined;
+    readonly userEmail: string | null | undefined;
     readonly userId: string;
-    readonly width: string | null;
-    readonly year: string | null;
+    readonly width: string | null | undefined;
+    readonly year: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ContactInformation_submission">;
-  } | null;
+  } | null | undefined;
 };
 export type consignFromCollectorProfileMyCollectionRoutes_contactInformationArtworkOwnerQuery = {
   response: consignFromCollectorProfileMyCollectionRoutes_contactInformationArtworkOwnerQuery$data;

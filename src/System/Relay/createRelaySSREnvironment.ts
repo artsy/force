@@ -14,6 +14,7 @@ import {
 } from "react-relay-network-modern/node8"
 import "regenerator-runtime/runtime"
 import { Environment, INetwork, RecordSource, Store } from "relay-runtime"
+import { Environment as IEnvironment } from "react-relay"
 import { cacheMiddleware } from "./middleware/cache/cacheMiddleware"
 import { metaphysicsErrorHandlerMiddleware } from "./middleware/metaphysicsErrorHandlerMiddleware"
 import { metaphysicsExtensionsLoggerMiddleware } from "./middleware/metaphysicsExtensionsLoggerMiddleware"
@@ -92,8 +93,8 @@ export function createRelaySSREnvironment(config: Config = {}) {
   const authenticatedHeaders = !!user
     ? {
         ...headers,
-        "X-USER-ID": user && user.id!,
-        "X-ACCESS-TOKEN": user && user.accessToken!,
+        "X-USER-ID": user && (user.id as string),
+        "X-ACCESS-TOKEN": user && (user.accessToken as string),
       }
     : headers
 
@@ -153,7 +154,9 @@ export function createRelaySSREnvironment(config: Config = {}) {
 
   environment.relaySSRMiddleware = relaySSRMiddleware
 
-  return environment
+  return environment as IEnvironment & {
+    relaySSRMiddleware: RelayClientSSR | RelayServerSSR
+  }
 }
 
 /**

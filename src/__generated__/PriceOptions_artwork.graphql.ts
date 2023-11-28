@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a0e0f9231ccef459b39ce8c44efc202a>>
+ * @generated SignedSource<<4f4367de8799274cb85a9a2d4064db01>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PriceOptions_artwork$data = {
-  readonly isPriceRange: boolean | null;
+  readonly isPriceRange: boolean | null | undefined;
   readonly listPrice: {
     readonly major?: number;
     readonly maxPrice?: {
       readonly major: number;
-    } | null;
+    } | null | undefined;
     readonly minPrice?: {
       readonly major: number;
-    } | null;
-  } | null;
-  readonly priceCurrency: string | null;
+    } | null | undefined;
+  } | null | undefined;
+  readonly priceCurrency: string | null | undefined;
   readonly " $fragmentType": "PriceOptions_artwork";
 };
 export type PriceOptions_artwork$key = {

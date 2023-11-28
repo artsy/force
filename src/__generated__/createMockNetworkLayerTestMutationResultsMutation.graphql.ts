@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2596e796910ce51a860ce2e6f2afcb49>>
+ * @generated SignedSource<<ce0790af55cc9e959541ed711a0fe29b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceBuyerAcceptOfferInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   offerId: string;
 };
 export type createMockNetworkLayerTestMutationResultsMutation$variables = {
@@ -22,7 +22,7 @@ export type createMockNetworkLayerTestMutationResultsMutation$data = {
     readonly orderOrError: {
       readonly error?: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
       readonly order?: {
@@ -30,7 +30,7 @@ export type createMockNetworkLayerTestMutationResultsMutation$data = {
         readonly state: CommerceOrderStateEnum;
       };
     };
-  } | null;
+  } | null | undefined;
 };
 export type createMockNetworkLayerTestMutationResultsMutation = {
   response: createMockNetworkLayerTestMutationResultsMutation$data;

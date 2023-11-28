@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<40fbc270367553ed180f9d3e057e4ccb>>
+ * @generated SignedSource<<85d1f46863571057acf672267cac9713>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ArtistRelatedGeneCategoriesQuery$variables = {
 export type ArtistRelatedGeneCategoriesQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistRelatedGeneCategories_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtistRelatedGeneCategoriesQuery = {
   response: ArtistRelatedGeneCategoriesQuery$data;

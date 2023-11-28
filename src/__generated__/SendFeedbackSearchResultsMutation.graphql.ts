@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b48d34eb0318683e16dbff3c84f455df>>
+ * @generated SignedSource<<8ce05eb478ff91075890a55cce342e0d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SendFeedbackMutationInput = {
-  clientMutationId?: string | null;
-  email?: string | null;
+  clientMutationId?: string | null | undefined;
+  email?: string | null | undefined;
   message: string;
-  name?: string | null;
-  url?: string | null;
+  name?: string | null | undefined;
+  url?: string | null | undefined;
 };
 export type SendFeedbackSearchResultsMutation$variables = {
   input: SendFeedbackMutationInput;
@@ -24,20 +24,20 @@ export type SendFeedbackSearchResultsMutation$data = {
     readonly feedbackOrError: {
       readonly __typename: "SendFeedbackMutationFailure";
       readonly mutationError: {
-        readonly detail: string | null;
+        readonly detail: string | null | undefined;
         readonly message: string;
-      } | null;
+      } | null | undefined;
     } | {
       readonly __typename: "SendFeedbackMutationSuccess";
       readonly feedback: {
         readonly internalID: string;
-      } | null;
+      } | null | undefined;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type SendFeedbackSearchResultsMutation = {
   response: SendFeedbackSearchResultsMutation$data;

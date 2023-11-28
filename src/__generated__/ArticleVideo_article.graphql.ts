@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<80d515293e6946bf96f6311da5510199>>
+ * @generated SignedSource<<16b49ec4875e75da49fddf8dc9087987>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,32 +11,32 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleVideo_article$data = {
-  readonly description: string | null;
-  readonly href: string | null;
+  readonly description: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly media: {
     readonly coverImage: {
-      readonly url: string | null;
-    } | null;
-    readonly credits: string | null;
-    readonly description: string | null;
-    readonly duration: string | null;
-    readonly releaseDate: string | null;
-    readonly url: string | null;
-  } | null;
+      readonly url: string | null | undefined;
+    } | null | undefined;
+    readonly credits: string | null | undefined;
+    readonly description: string | null | undefined;
+    readonly duration: string | null | undefined;
+    readonly releaseDate: string | null | undefined;
+    readonly url: string | null | undefined;
+  } | null | undefined;
   readonly moreRelatedArticles: ReadonlyArray<{
     readonly internalID: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArticleSeriesItem_article">;
   }>;
   readonly seriesArticle: {
-    readonly description: string | null;
-    readonly href: string | null;
+    readonly description: string | null | undefined;
+    readonly href: string | null | undefined;
     readonly sponsor: {
       readonly " $fragmentSpreads": FragmentRefs<"ArticleSponsor_sponsor">;
-    } | null;
-    readonly title: string | null;
-  } | null;
-  readonly title: string | null;
-  readonly vertical: string | null;
+    } | null | undefined;
+    readonly title: string | null | undefined;
+  } | null | undefined;
+  readonly title: string | null | undefined;
+  readonly vertical: string | null | undefined;
   readonly " $fragmentType": "ArticleVideo_article";
 };
 export type ArticleVideo_article$key = {

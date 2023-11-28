@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<13d599a2c98b3fb76d98f311338efda3>>
+ * @generated SignedSource<<f232aeb89c47e95abeb339b8627a7c9f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,18 +17,18 @@ export type OrderStepper_order$data = {
       readonly node: {
         readonly artwork: {
           readonly slug: string;
-        } | null;
+        } | null | undefined;
         readonly shippingQuoteOptions: {
           readonly edges: ReadonlyArray<{
             readonly node: {
               readonly isSelected: boolean;
-            } | null;
-          } | null> | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly mode: CommerceOrderModeEnum | null;
+            } | null | undefined;
+          } | null | undefined> | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly paymentMethodDetails: {
     readonly __typename: "BankAccount";
     readonly id: string;
@@ -42,10 +42,10 @@ export type OrderStepper_order$data = {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly requestedFulfillment: {
     readonly __typename: string;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "OrderStepper_order";
 };
 export type OrderStepper_order$key = {

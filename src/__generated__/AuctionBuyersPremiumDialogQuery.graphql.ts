@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e62da57c14d6126126430364110de58>>
+ * @generated SignedSource<<0fc2edb03b20bb9bfd6214312802c495>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type AuctionBuyersPremiumDialogQuery$variables = {
 export type AuctionBuyersPremiumDialogQuery$data = {
   readonly sale: {
     readonly " $fragmentSpreads": FragmentRefs<"AuctionBuyersPremiumDialog_sale">;
-  } | null;
+  } | null | undefined;
 };
 export type AuctionBuyersPremiumDialogQuery = {
   response: AuctionBuyersPremiumDialogQuery$data;

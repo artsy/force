@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<20f721a04d900f4d48b5ec0823702adb>>
+ * @generated SignedSource<<f1b61756fa824bf3d8f9283b55d86d00>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,10 +14,10 @@ export type ShippingQuotes_shippingQuotes$data = ReadonlyArray<{
   readonly node: {
     readonly id: string;
     readonly isSelected: boolean;
-    readonly price: string | null;
+    readonly price: string | null | undefined;
     readonly priceCents: number;
     readonly typeName: string;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ShippingQuotes_shippingQuotes";
 }>;
 export type ShippingQuotes_shippingQuotes$key = ReadonlyArray<{

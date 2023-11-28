@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e4b52346f2d593d1e739313cb9d7f517>>
+ * @generated SignedSource<<1a378a44c1be79464fcf38000dc61e6f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type jobsRoutes_JobsQuery$variables = {};
+export type jobsRoutes_JobsQuery$variables = Record<PropertyKey, never>;
 export type jobsRoutes_JobsQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"JobsApp_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type jobsRoutes_JobsQuery = {
   response: jobsRoutes_JobsQuery$data;

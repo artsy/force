@@ -1,4 +1,4 @@
-import { commitMutation, graphql } from "relay-runtime"
+import { commitMutation, graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import {
   useCreateSettingsBackupSecondFactorsMutation,
@@ -14,7 +14,7 @@ export const useCreateSettingsBackupSecondFactors = () => {
   ): Promise<useCreateSettingsBackupSecondFactorsMutation$data> => {
     return new Promise((resolve, reject) => {
       commitMutation<useCreateSettingsBackupSecondFactorsMutation>(
-        relayEnvironment!,
+        relayEnvironment,
         {
           onError: reject,
           onCompleted: (res, errors) => {

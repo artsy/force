@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0c98d72510a351ab2c7166698626c2bf>>
+ * @generated SignedSource<<d3d9a8ca705a42cac7ef67a6ce9af221>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ArtworkDetailsPartnerInfoQuery$variables = {
 export type ArtworkDetailsPartnerInfoQuery$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetailsPartnerInfo_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtworkDetailsPartnerInfoQuery = {
   response: ArtworkDetailsPartnerInfoQuery$data;

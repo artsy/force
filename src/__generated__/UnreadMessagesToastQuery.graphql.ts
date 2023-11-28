@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9f336a8836f4f622683c8dfa721b1787>>
+ * @generated SignedSource<<de2d20ce1d770e9b78cb047d48c5fcde>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type UnreadMessagesToastQuery$data = {
   readonly me: {
     readonly conversation: {
       readonly " $fragmentSpreads": FragmentRefs<"UnreadMessagesToast_conversation">;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type UnreadMessagesToastQuery = {
   response: UnreadMessagesToastQuery$data;

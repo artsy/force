@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e1a7054748dd1db2adcf185045c32789>>
+ * @generated SignedSource<<d8325ffc58c38f7bfcb01f6d205fec21>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,8 +18,8 @@ export type InsightsCareerHighlightRail_me$data = {
       readonly GROUP_SHOW: number;
       readonly REVIEWED: number;
       readonly SOLO_SHOW: number;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "InsightsCareerHighlightRail_me";
 };
 export type InsightsCareerHighlightRail_me$key = {

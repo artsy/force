@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<45a58708b37983188608af996e206a95>>
+ * @generated SignedSource<<33d98364a91a900d96f926f60fb21057>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,7 @@ export type exampleRoutes_ArtistQuery$data = {
   readonly artist: {
     readonly id: string;
     readonly " $fragmentSpreads": FragmentRefs<"ExampleArtistRoute_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type exampleRoutes_ArtistQuery = {
   response: exampleRoutes_ArtistQuery$data;

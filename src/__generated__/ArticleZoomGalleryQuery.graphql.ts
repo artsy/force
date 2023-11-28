@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0d3faf79c2ffd8bd26d92381e9043244>>
+ * @generated SignedSource<<601278df6f3b8ee79d662d3be89d034d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ArticleZoomGalleryQuery$variables = {
 export type ArticleZoomGalleryQuery$data = {
   readonly article: {
     readonly " $fragmentSpreads": FragmentRefs<"ArticleZoomGallery_article">;
-  } | null;
+  } | null | undefined;
 };
 export type ArticleZoomGalleryQuery = {
   response: ArticleZoomGalleryQuery$data;

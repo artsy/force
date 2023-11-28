@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c02410a81ed18f864770b9bad095abe3>>
+ * @generated SignedSource<<d8bcd93062b3b9904e585025bc2d4f97>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,7 @@ export type OnboardingSearchResultsQuery$variables = {
 export type OnboardingSearchResultsQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"OnboardingSearchResults_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type OnboardingSearchResultsQuery = {
   response: OnboardingSearchResultsQuery$data;

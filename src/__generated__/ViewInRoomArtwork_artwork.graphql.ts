@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d23bc9dde4ffe6adeb60f16c1c7c38ee>>
+ * @generated SignedSource<<f6370d334f504060e310782e972e6f22>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,16 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewInRoomArtwork_artwork$data = {
-  readonly heightCm: number | null;
+  readonly heightCm: number | null | undefined;
   readonly image: {
     readonly resized: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly src: string;
       readonly srcSet: string;
-      readonly width: number | null;
-    } | null;
-  } | null;
-  readonly widthCm: number | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
+  readonly widthCm: number | null | undefined;
   readonly " $fragmentType": "ViewInRoomArtwork_artwork";
 };
 export type ViewInRoomArtwork_artwork$key = {

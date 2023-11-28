@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<446bf3716aa0071f4a2eceb7272e3646>>
+ * @generated SignedSource<<74dbb1b64439f59bb57533d314f0b5af>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,9 +10,9 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SaveArtworkInput = {
-  artworkID?: string | null;
-  clientMutationId?: string | null;
-  remove?: boolean | null;
+  artworkID?: string | null | undefined;
+  clientMutationId?: string | null | undefined;
+  remove?: boolean | null | undefined;
 };
 export type useSaveArtworkMutation$variables = {
   input: SaveArtworkInput;
@@ -20,9 +20,9 @@ export type useSaveArtworkMutation$variables = {
 export type useSaveArtworkMutation$data = {
   readonly saveArtwork: {
     readonly artwork: {
-      readonly isSaved: boolean | null;
-    } | null;
-  } | null;
+      readonly isSaved: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useSaveArtworkMutation = {
   response: useSaveArtworkMutation$data;

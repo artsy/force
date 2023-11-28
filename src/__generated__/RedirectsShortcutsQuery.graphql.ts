@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ce242e1ebd38d997983974ff5f1c8344>>
+ * @generated SignedSource<<06163617d4b01bd907e7d44af7136e40>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type RedirectsShortcutsQuery$variables = {
 export type RedirectsShortcutsQuery$data = {
   readonly shortcut: {
     readonly long: string;
-  } | null;
+  } | null | undefined;
 };
 export type RedirectsShortcutsQuery = {
   response: RedirectsShortcutsQuery$data;

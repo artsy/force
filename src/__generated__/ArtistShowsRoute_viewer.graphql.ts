@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bbf018b5a865ab8893191e60261a2484>>
+ * @generated SignedSource<<e4995d42f8945c4b89dc5237b9801b61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,20 +13,20 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistShowsRoute_viewer$data = {
   readonly artist: {
     readonly currentShowsCount: {
-      readonly totalCount: number | null;
-    } | null;
-    readonly name: string | null;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
+    readonly name: string | null | undefined;
     readonly upcomingShowsCount: {
-      readonly totalCount: number | null;
-    } | null;
-  } | null;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly currentShows: {
-    readonly name: string | null;
+    readonly name: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistShowsGroup_artist">;
-  } | null;
+  } | null | undefined;
   readonly upcomingShows: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistShowsGroup_artist">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ArtistShowsRoute_viewer";
 };
 export type ArtistShowsRoute_viewer$key = {

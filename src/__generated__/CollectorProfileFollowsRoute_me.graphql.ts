@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b0ecb43ae30613c66adf57c913850ccf>>
+ * @generated SignedSource<<821f57786d966d771eff44234d339952>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileFollowsRoute_me$data = {
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "CollectorProfileFollowsRoute_me";
 };
 export type CollectorProfileFollowsRoute_me$key = {

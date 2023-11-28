@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<46be6a767e0eebcd9daf4172db4f318f>>
+ * @generated SignedSource<<b01dfd1cac2f8659e08aa4d0f08612c3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type createCollectionInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   name: string;
 };
 export type useCreateCollectionMutation$variables = {
@@ -23,15 +23,15 @@ export type useCreateCollectionMutation$data = {
         readonly artworksCount: number;
         readonly internalID: string;
         readonly name: string;
-      } | null;
+      } | null | undefined;
       readonly mutationError?: {
         readonly fieldErrors: ReadonlyArray<{
           readonly message: string;
           readonly name: string;
-        } | null> | null;
-      } | null;
-    } | null;
-  } | null;
+        } | null | undefined> | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useCreateCollectionMutation = {
   response: useCreateCollectionMutation$data;

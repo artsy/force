@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<da33d425560534a68bcd3e2a0e8de17e>>
+ * @generated SignedSource<<2c2684939f5d5be10d33318dec17bf53>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type RequestCredentialsForAssetUploadInput = {
   acl: string;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   name: string;
 };
 export type getGeminiCredentialsForEnvironmentMutation$variables = {
@@ -32,8 +32,8 @@ export type getGeminiCredentialsForEnvironmentMutation$data = {
       };
       readonly policyEncoded: string;
       readonly signature: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type getGeminiCredentialsForEnvironmentMutation = {
   response: getGeminiCredentialsForEnvironmentMutation$data;

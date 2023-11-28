@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9e14c9408f9c1b8eb03457789bab58ac>>
+ * @generated SignedSource<<0cfc1450e485bc56bc4aa8870840db22>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type featureRoutes_FeatureQuery$variables = {
 export type featureRoutes_FeatureQuery$data = {
   readonly feature: {
     readonly " $fragmentSpreads": FragmentRefs<"FeatureApp_feature">;
-  } | null;
+  } | null | undefined;
 };
 export type featureRoutes_FeatureQuery = {
   response: featureRoutes_FeatureQuery$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c46820c6cdca004d782cb64dfec315aa>>
+ * @generated SignedSource<<7eae2c44880bf6317ef61c67833ee70e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type orderRoutes_AcceptQuery$variables = {
 export type orderRoutes_AcceptQuery$data = {
   readonly order: {
     readonly " $fragmentSpreads": FragmentRefs<"Accept_order">;
-  } | null;
+  } | null | undefined;
 };
 export type orderRoutes_AcceptQuery = {
   response: orderRoutes_AcceptQuery$data;

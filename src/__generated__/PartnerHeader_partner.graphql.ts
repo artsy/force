@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7307a26122e715cc3f94da877089e90f>>
+ * @generated SignedSource<<43d73b43688c75f84f498e6be9bba4de>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,26 +14,26 @@ export type PartnerHeader_partner$data = {
   readonly locations: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly city: string | null;
-      } | null;
-    } | null> | null;
-    readonly totalCount: number | null;
-  } | null;
-  readonly name: string | null;
+        readonly city: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly profile: {
     readonly counts: {
-      readonly follows: any | null;
-    } | null;
+      readonly follows: any | null | undefined;
+    } | null | undefined;
     readonly icon: {
       readonly resized: {
         readonly src: string;
         readonly srcSet: string;
-      } | null;
-    } | null;
+      } | null | undefined;
+    } | null | undefined;
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
   readonly slug: string;
-  readonly type: string | null;
+  readonly type: string | null | undefined;
   readonly " $fragmentType": "PartnerHeader_partner";
 };
 export type PartnerHeader_partner$key = {

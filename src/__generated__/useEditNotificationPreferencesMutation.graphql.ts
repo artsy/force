@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e715b2671298bd097d39d6aea1a23613>>
+ * @generated SignedSource<<3bb09563946ad291f3d5740be8ced4c2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SubGroupInputStatus = "SUBSCRIBED" | "UNSUBSCRIBED" | "%future added value";
 export type updateNotificationPreferencesMutationInput = {
-  authenticationToken?: string | null;
-  clientMutationId?: string | null;
+  authenticationToken?: string | null | undefined;
+  clientMutationId?: string | null | undefined;
   subscriptionGroups: ReadonlyArray<NotificationPreferenceInput>;
 };
 export type NotificationPreferenceInput = {
-  channel?: string | null;
+  channel?: string | null | undefined;
   name: string;
   status: SubGroupInputStatus;
 };
@@ -25,8 +25,8 @@ export type useEditNotificationPreferencesMutation$variables = {
 };
 export type useEditNotificationPreferencesMutation$data = {
   readonly updateNotificationPreferences: {
-    readonly clientMutationId: string | null;
-  } | null;
+    readonly clientMutationId: string | null | undefined;
+  } | null | undefined;
 };
 export type useEditNotificationPreferencesMutation = {
   response: useEditNotificationPreferencesMutation$data;

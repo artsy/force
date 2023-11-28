@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7ee2fd481e03388894aaee54d0c49b56>>
+ * @generated SignedSource<<18f7501f1a59b328440e1843e862f418>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateSmsSecondFactorInput = {
   attributes: SmsSecondFactorAttributes;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   password: string;
 };
 export type SmsSecondFactorAttributes = {
-  countryCode?: string | null;
-  phoneNumber?: string | null;
+  countryCode?: string | null | undefined;
+  phoneNumber?: string | null | undefined;
 };
 export type CreateSmsSecondFactorMutation$variables = {
   input: CreateSmsSecondFactorInput;
@@ -37,7 +37,7 @@ export type CreateSmsSecondFactorMutation$data = {
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     };
-  } | null;
+  } | null | undefined;
 };
 export type CreateSmsSecondFactorMutation$rawResponse = {
   readonly createSmsSecondFactor: {
@@ -53,7 +53,7 @@ export type CreateSmsSecondFactorMutation$rawResponse = {
     } | {
       readonly __typename: string;
     };
-  } | null;
+  } | null | undefined;
 };
 export type CreateSmsSecondFactorMutation = {
   rawResponse: CreateSmsSecondFactorMutation$rawResponse;

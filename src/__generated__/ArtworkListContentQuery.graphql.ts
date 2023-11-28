@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<98d7b13a294ae9f87437a3b6d85dc666>>
+ * @generated SignedSource<<f13a61ef94ada739ed43acd768656915>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,13 +13,13 @@ import { FragmentRefs } from "relay-runtime";
 export type CollectionArtworkSorts = "POSITION_ASC" | "POSITION_DESC" | "SAVED_AT_ASC" | "SAVED_AT_DESC" | "%future added value";
 export type ArtworkListContentQuery$variables = {
   listID: string;
-  page?: number | null;
-  sort?: CollectionArtworkSorts | null;
+  page?: number | null | undefined;
+  sort?: CollectionArtworkSorts | null | undefined;
 };
 export type ArtworkListContentQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkListContent_me">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtworkListContentQuery = {
   response: ArtworkListContentQuery$data;

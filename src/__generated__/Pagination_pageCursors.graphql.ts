@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fdde338701971a927de44a2dcd17d1db>>
+ * @generated SignedSource<<8128f2c43394e9e349a9e9864be6adc3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -20,16 +20,16 @@ export type Pagination_pageCursors$data = {
     readonly cursor: string;
     readonly isCurrent: boolean;
     readonly page: number;
-  } | null;
+  } | null | undefined;
   readonly last: {
     readonly cursor: string;
     readonly isCurrent: boolean;
     readonly page: number;
-  } | null;
+  } | null | undefined;
   readonly previous: {
     readonly cursor: string;
     readonly page: number;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "Pagination_pageCursors";
 };
 export type Pagination_pageCursors$key = {

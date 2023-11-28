@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<caa303b70013d9331fede791650e64ee>>
+ * @generated SignedSource<<c0b82f7333ed0f27562c0e6a4d2a5b78>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,14 +10,14 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type fairsRoutes_FairsQuery$variables = {};
+export type fairsRoutes_FairsQuery$variables = Record<PropertyKey, never>;
 export type fairsRoutes_FairsQuery$data = {
   readonly featuredFairs: ReadonlyArray<{
     readonly " $fragmentSpreads": FragmentRefs<"FairsIndex_featuredFairs">;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"FairsIndex_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type fairsRoutes_FairsQuery = {
   response: fairsRoutes_FairsQuery$data;

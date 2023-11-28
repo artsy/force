@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<79166274acdb0d480b4009ac2a9f636f>>
+ * @generated SignedSource<<ed9cd245c1fc95aa1b2746663c1f772b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,13 +15,13 @@ export type MyBidsBidHeader_sale$data = {
     readonly cropped: {
       readonly src: string;
       readonly srcSet: string;
-    } | null;
-  } | null;
-  readonly formattedStartDateTime: string | null;
-  readonly name: string | null;
+    } | null | undefined;
+  } | null | undefined;
+  readonly formattedStartDateTime: string | null | undefined;
+  readonly name: string | null | undefined;
   readonly partner: {
-    readonly name: string | null;
-  } | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "MyBidsBidHeader_sale";
 };

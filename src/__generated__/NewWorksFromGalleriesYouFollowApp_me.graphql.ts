@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<51c5dc96b449d2cc7cae528c1dfe6d23>>
+ * @generated SignedSource<<792ed476b2fab60e2998b3cba3d346c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,11 +15,11 @@ export type NewWorksFromGalleriesYouFollowApp_me$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly id: string;
-      } | null;
-    } | null> | null;
-    readonly totalCount: number | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "NewWorksFromGalleriesYouFollowApp_me";
 };
 export type NewWorksFromGalleriesYouFollowApp_me$key = {

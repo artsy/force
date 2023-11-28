@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<712a71b217de0414849a52aeb14f5974>>
+ * @generated SignedSource<<adb1449b196aa973e59348a9baf48f91>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,8 +17,8 @@ export type ConfirmationStepFooter_Test_Query$data = {
     readonly internalID: string;
     readonly savedSearch: {
       readonly href: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type ConfirmationStepFooter_Test_Query = {
   response: ConfirmationStepFooter_Test_Query$data;

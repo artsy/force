@@ -1,15 +1,10 @@
-import { graphql } from "react-relay"
+import { Environment, commitMutation, graphql } from "react-relay"
 import {
   CreateUserAddressMutation,
   CreateUserAddressMutation$data,
   UserAddressAttributes,
 } from "__generated__/CreateUserAddressMutation.graphql"
-import {
-  commitMutation,
-  Environment,
-  RecordSourceSelectorProxy,
-  ConnectionHandler,
-} from "relay-runtime"
+import { RecordSourceSelectorProxy, ConnectionHandler } from "relay-runtime"
 
 const onAddressAdded = (
   me: { id: string },
@@ -20,16 +15,20 @@ const onAddressAdded = (
 
   if (response) {
     const meStore = store.get(me.id)
-    const connection = ConnectionHandler.getConnection(
-      meStore!,
-      "SavedAddresses_addressConnection"
-    )
-    const mutationPayload = store.getRootField("createUserAddress")
+    if (meStore) {
+      const connection = ConnectionHandler.getConnection(
+        meStore,
+        "SavedAddresses_addressConnection"
+      )
+      const mutationPayload = store.getRootField("createUserAddress")
 
-    const createUserAddressOrError = mutationPayload.getLinkedRecord(
-      "userAddressOrErrors"
-    )
-    ConnectionHandler.insertEdgeAfter(connection!, createUserAddressOrError)
+      const createUserAddressOrError = mutationPayload.getLinkedRecord(
+        "userAddressOrErrors"
+      )
+      if (connection) {
+        ConnectionHandler.insertEdgeAfter(connection, createUserAddressOrError)
+      }
+    }
   }
 }
 
@@ -75,7 +74,7 @@ export const createUserAddress = async (
       }
     `,
     updater: (store, data: CreateUserAddressMutation$data) => {
-      onAddressAdded(me, store, data)
+      onAddressAdded(me, store as RecordSourceSelectorProxy, data)
     },
     onCompleted: (data, e) => {
       const errors = data.createUserAddress?.userAddressOrErrors.errors

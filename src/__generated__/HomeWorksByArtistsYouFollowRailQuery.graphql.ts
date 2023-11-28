@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<041499cbd6ecbedac25271a7cb78070d>>
+ * @generated SignedSource<<f8da4d41835353236f4cc5849c5bdabe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type HomeWorksByArtistsYouFollowRailQuery$variables = {};
+export type HomeWorksByArtistsYouFollowRailQuery$variables = Record<PropertyKey, never>;
 export type HomeWorksByArtistsYouFollowRailQuery$data = {
   readonly homePage: {
     readonly " $fragmentSpreads": FragmentRefs<"HomeWorksByArtistsYouFollowRail_homePage">;
-  } | null;
+  } | null | undefined;
 };
 export type HomeWorksByArtistsYouFollowRailQuery = {
   response: HomeWorksByArtistsYouFollowRailQuery$data;

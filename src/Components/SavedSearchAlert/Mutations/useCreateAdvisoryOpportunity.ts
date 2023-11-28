@@ -1,6 +1,6 @@
 import { useCreateAdvisoryOpportunityMutation } from "__generated__/useCreateAdvisoryOpportunityMutation.graphql"
 import { useMutation } from "Utils/Hooks/useMutation"
-import { graphql } from "relay-runtime"
+import { graphql } from "react-relay"
 
 export const useCreateAdvisoryOpportunity = () => {
   return useMutation<useCreateAdvisoryOpportunityMutation>({

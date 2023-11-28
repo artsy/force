@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a12cfa38562102187a3427b81c7161b>>
+ * @generated SignedSource<<f7a547754cbc779eb46bcb6a58270191>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,11 +15,11 @@ export type SelectArtworkListItem_item$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly image: {
-          readonly url: string | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
+          readonly url: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly artworksCount: number;
   readonly name: string;
   readonly " $fragmentType": "SelectArtworkListItem_item";

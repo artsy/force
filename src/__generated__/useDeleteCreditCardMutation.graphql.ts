@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1152a9657144b85c94a0ca73cf8ea290>>
+ * @generated SignedSource<<10e1150f0759534b1d033af64dd076ea>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeleteCreditCardInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   id: string;
 };
 export type useDeleteCreditCardMutation$variables = {
@@ -22,15 +22,15 @@ export type useDeleteCreditCardMutation$data = {
     readonly creditCardOrError: {
       readonly creditCard?: {
         readonly " $fragmentSpreads": FragmentRefs<"SettingsCreditCard_creditCard">;
-      } | null;
+      } | null | undefined;
       readonly mutationError?: {
         readonly message: string;
-      } | null;
-    } | null;
+      } | null | undefined;
+    } | null | undefined;
     readonly me: {
       readonly " $fragmentSpreads": FragmentRefs<"SettingsPaymentsMethods_me">;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useDeleteCreditCardMutation = {
   response: useDeleteCreditCardMutation$data;

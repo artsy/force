@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bac59b21ea5c3729ff9952a2b28b9d9f>>
+ * @generated SignedSource<<1d70a3ee096bec95d3aabfdf25d06bad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,16 +13,16 @@ import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkGrid_artworks$data = {
   readonly edges: ReadonlyArray<{
     readonly node: {
-      readonly href: string | null;
+      readonly href: string | null | undefined;
       readonly id: string;
       readonly image: {
         readonly aspectRatio: number;
-      } | null;
+      } | null | undefined;
       readonly internalID: string;
       readonly slug: string;
       readonly " $fragmentSpreads": FragmentRefs<"FlatGridItem_artwork" | "GridItem_artwork">;
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "MyCollectionArtworkGrid_artworks";
 };
 export type MyCollectionArtworkGrid_artworks$key = {

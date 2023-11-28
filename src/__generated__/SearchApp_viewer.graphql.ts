@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c1f55a53a868c75b93afb6845c9a2773>>
+ * @generated SignedSource<<5c71d24736624e929f01fe7be0426c90>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,26 +14,26 @@ import { FragmentRefs } from "relay-runtime";
 export type SearchApp_viewer$data = {
   readonly artworksConnection: {
     readonly counts: {
-      readonly total: any | null;
-    } | null;
-  } | null;
+      readonly total: any | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly searchConnection: {
     readonly aggregations: ReadonlyArray<{
       readonly counts: ReadonlyArray<{
         readonly count: number;
         readonly name: string;
-      } | null> | null;
-      readonly slice: SearchAggregation | null;
-    } | null> | null;
+      } | null | undefined> | null | undefined;
+      readonly slice: SearchAggregation | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly displayLabel?: string | null;
-        readonly displayType?: string | null;
+        readonly displayLabel?: string | null | undefined;
+        readonly displayType?: string | null | undefined;
         readonly slug?: string;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"NavigationTabs_searchableConnection">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "SearchApp_viewer";
 };
 export type SearchApp_viewer$key = {

@@ -4,8 +4,8 @@ export const getStatus = ({
   distanceToClose,
 }: {
   status: string
-  distanceToOpen: string | null
-  distanceToClose: string | null
+  distanceToOpen: string | null | undefined
+  distanceToClose: string | null | undefined
 }): string | null => {
   switch (status) {
     case "closed":

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<244299c9d82b0cbf1a4984f2804b76cd>>
+ * @generated SignedSource<<540c5f24b11d009bc9deed2b01433441>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,12 +14,12 @@ export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Payment_order$data = {
-  readonly artworkDetails: string | null;
+  readonly artworkDetails: string | null | undefined;
   readonly availablePaymentMethods: ReadonlyArray<CommercePaymentMethodEnum>;
-  readonly bankAccountId: string | null;
-  readonly buyerTotal: string | null;
-  readonly buyerTotalCents: number | null;
-  readonly conditionsOfSale: string | null;
+  readonly bankAccountId: string | null | undefined;
+  readonly buyerTotal: string | null | undefined;
+  readonly buyerTotalCents: number | null | undefined;
+  readonly conditionsOfSale: string | null | undefined;
   readonly currencyCode: string;
   readonly internalID: string;
   readonly lineItems: {
@@ -27,16 +27,16 @@ export type Payment_order$data = {
       readonly node: {
         readonly artwork: {
           readonly slug: string;
-        } | null;
+        } | null | undefined;
         readonly artworkVersion: {
-          readonly condition_description: string | null;
-          readonly provenance: string | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly mode: CommerceOrderModeEnum | null;
-  readonly paymentMethod: CommercePaymentMethodEnum | null;
+          readonly condition_description: string | null | undefined;
+          readonly provenance: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
+  readonly paymentMethod: CommercePaymentMethodEnum | null | undefined;
   readonly paymentMethodDetails: {
     readonly __typename: "BankAccount";
     readonly id: string;
@@ -50,7 +50,7 @@ export type Payment_order$data = {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly source: CommerceOrderSourceEnum;
   readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "BankAccountPicker_order" | "CreditCardPicker_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Payment_order";

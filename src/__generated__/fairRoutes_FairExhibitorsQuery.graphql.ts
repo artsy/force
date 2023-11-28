@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<42403d6619aec815ac35a177e19cd338>>
+ * @generated SignedSource<<21018d74e65c87ae75f08507572bdb62>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type fairRoutes_FairExhibitorsQuery$variables = {
 export type fairRoutes_FairExhibitorsQuery$data = {
   readonly fair: {
     readonly " $fragmentSpreads": FragmentRefs<"FairExhibitors_fair">;
-  } | null;
+  } | null | undefined;
 };
 export type fairRoutes_FairExhibitorsQuery = {
   response: fairRoutes_FairExhibitorsQuery$data;

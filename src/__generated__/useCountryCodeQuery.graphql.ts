@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<847d7e3d0d9a71f6674048b26d80f7ab>>
+ * @generated SignedSource<<4bdb5cb01ce7ce7f7865b187b78b6a1d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,8 +14,8 @@ export type useCountryCodeQuery$variables = {
 };
 export type useCountryCodeQuery$data = {
   readonly requestLocation: {
-    readonly countryCode: string | null;
-  } | null;
+    readonly countryCode: string | null | undefined;
+  } | null | undefined;
 };
 export type useCountryCodeQuery = {
   response: useCountryCodeQuery$data;

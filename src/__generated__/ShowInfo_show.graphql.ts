@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f440828ca8166c5cc7bd09f6ab119ca3>>
+ * @generated SignedSource<<c93dac9511e64c7d21c49b7ba84a07d7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,25 +11,25 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowInfo_show$data = {
-  readonly about: string | null;
+  readonly about: string | null | undefined;
   readonly events: ReadonlyArray<{
-    readonly dateTimeRange: string | null;
-    readonly description: string | null;
-    readonly eventType: string | null;
-    readonly title: string | null;
-  } | null> | null;
-  readonly hasLocation: boolean | null;
-  readonly name: string | null;
+    readonly dateTimeRange: string | null | undefined;
+    readonly description: string | null | undefined;
+    readonly eventType: string | null | undefined;
+    readonly title: string | null | undefined;
+  } | null | undefined> | null | undefined;
+  readonly hasLocation: boolean | null | undefined;
+  readonly name: string | null | undefined;
   readonly partner: {
     readonly __typename: "Partner";
-    readonly type: string | null;
+    readonly type: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
-  readonly pressRelease: string | null;
+  } | null | undefined;
+  readonly pressRelease: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ShowHours_show" | "ShowInfoLocation_show">;
   readonly " $fragmentType": "ShowInfo_show";
 };

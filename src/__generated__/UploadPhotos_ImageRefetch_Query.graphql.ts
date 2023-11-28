@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7775561abde35d27b0bef4f78597cc85>>
+ * @generated SignedSource<<7869b43a4207664efbaf3f38adedec80>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,21 +11,21 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type UploadPhotos_ImageRefetch_Query$variables = {
   id: string;
-  sessionID?: string | null;
+  sessionID?: string | null | undefined;
 };
 export type UploadPhotos_ImageRefetch_Query$data = {
   readonly submission: {
     readonly assets: ReadonlyArray<{
-      readonly filename: string | null;
-      readonly geminiToken: string | null;
+      readonly filename: string | null | undefined;
+      readonly geminiToken: string | null | undefined;
       readonly id: string;
-      readonly imageUrls: any | null;
-      readonly size: string | null;
-    } | null> | null;
+      readonly imageUrls: any | null | undefined;
+      readonly size: string | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly externalId: string;
-    readonly userEmail: string | null;
+    readonly userEmail: string | null | undefined;
     readonly userId: string;
-  } | null;
+  } | null | undefined;
 };
 export type UploadPhotos_ImageRefetch_Query = {
   response: UploadPhotos_ImageRefetch_Query$data;

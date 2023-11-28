@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2281006f908d1c1176e0ee93af2d54fe>>
+ * @generated SignedSource<<77e0c5be91f08a9e7de41ed1f1b547d1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,13 +19,13 @@ export type NotificationItem_item$data = {
           readonly thumb: {
             readonly src: string;
             readonly srcSet: string;
-          } | null;
-        } | null;
+          } | null | undefined;
+        } | null | undefined;
         readonly internalID: string;
-        readonly title: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
+        readonly title: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly id: string;
   readonly internalID: string;
   readonly isUnread: boolean;

@@ -40,7 +40,7 @@ const Articles: React.FC<ArticlesProps> = ({ partner, relay }) => {
 
   const articles = extractNodes(articlesConnection)
 
-  const handleClick = (cursor: string | null, page: number) => {
+  const handleClick = (cursor: string | null | undefined, page: number) => {
     const query = page === 1 ? {} : { ...location.query, page }
 
     setIsLoading(true)

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cbe17241bf0372a5af9b95e4e3976ab5>>
+ * @generated SignedSource<<743e55c0777df7761bd72882436cf76f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type UploadPhotos_SubmissionFlowTest_Query$variables = {
-  externalId?: string | null;
+  externalId?: string | null | undefined;
 };
 export type UploadPhotos_SubmissionFlowTest_Query$data = {
   readonly submission: {
     readonly " $fragmentSpreads": FragmentRefs<"UploadPhotos_submission">;
-  } | null;
+  } | null | undefined;
 };
 export type UploadPhotos_SubmissionFlowTest_Query = {
   response: UploadPhotos_SubmissionFlowTest_Query$data;

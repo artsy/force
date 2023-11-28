@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7baa6dffb6a1e7ff6f91db9e5f4b60f9>>
+ * @generated SignedSource<<b850cb0c99ac84f69cb4f9aa18288f2f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,26 +12,26 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArticleFeatureSectionType = "BASIC" | "FULLSCREEN" | "SPLIT" | "TEXT" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleHero_article$data = {
-  readonly byline: string | null;
+  readonly byline: string | null | undefined;
   readonly hero: {
-    readonly embed?: string | null;
+    readonly embed?: string | null | undefined;
     readonly image?: {
       readonly split: {
         readonly src: string;
         readonly srcSet: string;
-      } | null;
+      } | null | undefined;
       readonly text: {
         readonly src: string;
         readonly srcSet: string;
-      } | null;
-      readonly url: string | null;
-    } | null;
+      } | null | undefined;
+      readonly url: string | null | undefined;
+    } | null | undefined;
     readonly layout?: ArticleFeatureSectionType;
-    readonly media?: string | null;
-  } | null;
-  readonly href: string | null;
-  readonly title: string | null;
-  readonly vertical: string | null;
+    readonly media?: string | null | undefined;
+  } | null | undefined;
+  readonly href: string | null | undefined;
+  readonly title: string | null | undefined;
+  readonly vertical: string | null | undefined;
   readonly " $fragmentType": "ArticleHero_article";
 };
 export type ArticleHero_article$key = {
