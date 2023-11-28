@@ -3,11 +3,11 @@ import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetc
 import { usePoll } from "Utils/Hooks/usePoll"
 import { useTabVisible } from "Utils/Hooks/useTabVisible"
 
-jest.mock("utils/hooks/usePoll", () => ({
+jest.mock("Utils/Hooks/usePoll", () => ({
   usePoll: jest.fn(),
 }))
 
-jest.mock("utils/hooks/useTabVisible", () => ({
+jest.mock("Utils/Hooks/useTabVisible", () => ({
   useTabVisible: jest.fn(),
 }))
 
