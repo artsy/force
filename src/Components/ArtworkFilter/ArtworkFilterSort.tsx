@@ -1,16 +1,26 @@
-import { Clickable, Dropdown, Radio, RadioGroup, Text } from "@artsy/palette"
+import {
+  Clickable,
+  Dropdown,
+  DropdownProps,
+  Radio,
+  RadioGroup,
+  Text,
+} from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { FC } from "react"
 import SortIcon from "@artsy/icons/SortIcon"
 import styled from "styled-components"
 import { themeGet } from "@styled-system/theme-get"
 
-export const ArtworkFilterSort: FC = () => {
+interface ArtworkFilterSortProps
+  extends Omit<DropdownProps, "dropdown" | "children"> {}
+
+export const ArtworkFilterSort: FC<ArtworkFilterSortProps> = props => {
   const { sortOptions, filters, setFilter } = useArtworkFilterContext()
 
   const activeSort = sortOptions?.find(({ value }) => {
     return value === (filters?.sort ?? "-decayed_merch")
-  })!
+  }) || { text: "Default", value: "-decayed_merch" }
 
   return (
     <Dropdown
@@ -30,6 +40,7 @@ export const ArtworkFilterSort: FC = () => {
       }
       openDropdownByClick
       placement="bottom-end"
+      {...props}
     >
       {({ anchorRef, anchorProps }) => {
         return (
