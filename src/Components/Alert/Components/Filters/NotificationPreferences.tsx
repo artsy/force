@@ -96,7 +96,7 @@ export const NotificationPreferencesFragmentContainer = createFragmentContainer(
 export const NotificationPreferencesQueryRenderer: React.FC = () => {
   return (
     <SystemQueryRenderer<NotificationPreferencesQuery>
-      lazyLoad
+      // lazyLoad
       placeholder={PLACEHOLDER}
       query={graphql`
         query NotificationPreferencesQuery {
