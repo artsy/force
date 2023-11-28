@@ -26,6 +26,7 @@ import { ConversationTimeSince } from "Apps/Conversations/components/Message/Con
 import { ConversationMessageArtwork } from "Apps/Conversations/components/Message/ConversationMessageArtwork"
 import { LatestMessagesFlyOut } from "Apps/Conversations/components/Message/LatestMessagesFlyOut"
 import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
+import styled, { css } from "styled-components"
 
 const PAGE_SIZE = 15
 
@@ -202,7 +203,12 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
           testId="LatestMessagesSentinel"
         />
 
-        {isFetchingLoadMoreMessages && <BottomLoadingSpinner mt={4} mb={2} />}
+        <BottomLoadingSpinner
+          mt={4}
+          mb={2}
+          visible={isFetchingLoadMoreMessages}
+        />
+        {/* {isFetchingLoadMoreMessages && <BottomLoadingSpinner mt={4} mb={2} />} */}
 
         <AutoScrollToBottom ref={autoScrollToBottomRef as any} height={20} />
       </Flex>
@@ -367,5 +373,30 @@ const LoadingSpinner: React.FC<BoxProps> = boxProps => (
 const LoadAllMessagesSentinal = Sentinel
 const LatestMessagesSentinel = Sentinel
 const TopLoadingSpinner = LoadingSpinner
-const BottomLoadingSpinner = LoadingSpinner
 const AutoScrollToBottom = Box
+
+const BottomLoadingSpinner: React.FC<BoxProps & { visible: boolean }> = ({
+  visible,
+  ...boxProps
+}) => {
+  return (
+    <SpinnerWrapper className={visible ? "active" : ""}>
+      <Box position="relative" {...boxProps} data-testid="LoadingSpinner">
+        <Spinner />
+      </Box>
+    </SpinnerWrapper>
+  )
+}
+
+const SpinnerWrapper = styled(Box)`
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: height 0.5s ease, opacity 0.5s ease;
+
+  &.active {
+    height: 60px;
+    opacity: 1;
+    margin-bottom: 40px;
+  }
+`
