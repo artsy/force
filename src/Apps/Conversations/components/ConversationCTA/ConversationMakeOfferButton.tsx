@@ -46,28 +46,6 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
     ? "secondaryBlack"
     : "primaryBlack"
 
-  // Opens a modal window to select an edition set on non-unique artworks
-  if (!isConfirmModalVisible && !data.isUniqueArtwork) {
-    return (
-      <Box width="100%" {...boxProps} display="inline">
-        <Button
-          size="large"
-          variant={variant}
-          width="100%"
-          onClick={() => {
-            trackMakeOfferEvent()
-
-            showSelectEditionSetModal({
-              isCreatingOfferOrder: true,
-            })
-          }}
-        >
-          Make an Offer
-        </Button>
-      </Box>
-    )
-  }
-
   const handleClick = async () => {
     setIsSubmitting(true)
 
@@ -105,9 +83,32 @@ export const ConversationMakeOfferButton: React.FC<ConversationMakeOfferButtonPr
     }
   }
 
+  // Opens a modal window to select an edition set on non-unique artworks
+  if (!isConfirmModalVisible && !data.isUniqueArtwork) {
+    return (
+      <Box width="100%" {...boxProps} display="inline">
+        <Button
+          size={["small", "large"]}
+          variant={variant}
+          width="100%"
+          onClick={() => {
+            trackMakeOfferEvent()
+
+            showSelectEditionSetModal({
+              isCreatingOfferOrder: true,
+            })
+          }}
+        >
+          Make an Offer
+        </Button>
+      </Box>
+    )
+  }
+
   return (
     <Box width="100%" {...boxProps}>
       <Button
+        size={["small", "large"]}
         width="100%"
         onClick={handleClick}
         loading={isSubmitting}

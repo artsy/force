@@ -64,14 +64,14 @@ export const ConversationsSidebarItem: React.FC<ConversationsSidebarItemProps> =
             : ""
         }`}
         textDecoration={"none"}
-        onClick={() =>
+        onClick={() => {
           trackEvent({
             action: "Click",
             label: "Selected inquiry",
             context_module: "conversations",
             artwork_id: item.id,
           })
-        }
+        }}
       >
         <Flex alignItems="center" px={[0, 2]}>
           <Image

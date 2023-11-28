@@ -43,6 +43,7 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
   const [showLatestMessagesFlyOut, setShowLatestMessagesFlyOut] = useState(
     false
   )
+
   const autoScrollToBottomRef = useRef<HTMLDivElement>(null)
 
   const groupedMessagesAndEvents = useGroupedMessages({
@@ -134,7 +135,7 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
           />
         )}
 
-        {isFetchingAllMessages && <TopLoadingSpinner height={50} mb={1} />}
+        {isFetchingAllMessages && <TopLoadingSpinner height={30} mb={4} />}
 
         {groupedMessagesAndEvents.map((messageGroup, groupIndex) => {
           return (
