@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<29130652cfc08252e99b8712042e37a3>>
+ * @generated SignedSource<<9189c1b3d6ef51a863d789da34d9b7ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -43,6 +43,7 @@ export type UpdateMyProfileInput = {
   receiveNewWorksNotification?: boolean | null | undefined;
   receiveOrderNotification?: boolean | null | undefined;
   receiveOutbidNotification?: boolean | null | undefined;
+  receivePartnerOfferNotification?: boolean | null | undefined;
   receivePartnerShowNotification?: boolean | null | undefined;
   receivePromotionNotification?: boolean | null | undefined;
   receivePurchaseNotification?: boolean | null | undefined;
