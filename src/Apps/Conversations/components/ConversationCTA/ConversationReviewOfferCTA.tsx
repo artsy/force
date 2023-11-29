@@ -140,7 +140,7 @@ const getProps = ({
     }
     case "OFFER_RECEIVED": {
       return {
-        variant: "default",
+        variant: "info",
         message: `${offerType} Received`,
         subMessage: `The offer expires in ${remainingTime}`,
         modalUrl: `/orders/${activeOrder.internalID}/respond`,

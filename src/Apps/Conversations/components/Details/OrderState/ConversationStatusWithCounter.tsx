@@ -33,7 +33,7 @@ export const ConversationStatusWithCounter: React.FC<ConversationStatusWithCount
 
   let text = "Review offer"
   let expiryText = "until offer expires"
-  let respondByText = `Respond by ${formattedStateExpiresAt}`
+  let respondByText = `Seller will respond by ${formattedStateExpiresAt}`
 
   switch (status) {
     case "buy":
