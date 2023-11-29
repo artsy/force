@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8f80612f4065f71d66f994a0c0168048>>
+ * @generated SignedSource<<4c204161862478e6986470aca007fe7d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,11 +17,11 @@ export type conversationsRoutes_DetailQuery$variables = {
 export type conversationsRoutes_DetailQuery$data = {
   readonly conversation: {
     readonly " $fragmentSpreads": FragmentRefs<"ConversationApp_conversation">;
-  };
+  } | null | undefined;
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"ConversationApp_viewer">;
   } | null | undefined;
-} | null | undefined;
+};
 export type conversationsRoutes_DetailQuery = {
   response: conversationsRoutes_DetailQuery$data;
   variables: conversationsRoutes_DetailQuery$variables;
@@ -436,25 +436,20 @@ return {
         "storageKey": null
       },
       {
-        "kind": "RequiredField",
-        "field": {
-          "alias": null,
-          "args": (v2/*: any*/),
-          "concreteType": "Conversation",
-          "kind": "LinkedField",
-          "name": "conversation",
-          "plural": false,
-          "selections": [
-            {
-              "args": null,
-              "kind": "FragmentSpread",
-              "name": "ConversationApp_conversation"
-            }
-          ],
-          "storageKey": null
-        },
-        "action": "NONE",
-        "path": "conversation"
+        "alias": null,
+        "args": (v2/*: any*/),
+        "concreteType": "Conversation",
+        "kind": "LinkedField",
+        "name": "conversation",
+        "plural": false,
+        "selections": [
+          {
+            "args": null,
+            "kind": "FragmentSpread",
+            "name": "ConversationApp_conversation"
+          }
+        ],
+        "storageKey": null
       }
     ],
     "type": "Query",
@@ -1808,6 +1803,6 @@ return {
 };
 })();
 
-(node as any).hash = "b758876e1820c03826eed3f5f9d000fb";
+(node as any).hash = "eab6c8990926ab9424ad40e546669743";
 
 export default node;
