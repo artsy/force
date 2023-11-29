@@ -53,13 +53,6 @@ type Action =
   | { type: "SET_PREVIEW"; payload: PreviewSavedSearch }
   | { type: "SET_CRITERIA"; payload: SearchCriteriaAttributes }
   | {
-      type: "SET_CRITERIA_ONCE"
-      payload: {
-        criteria: SearchCriteriaAttributes
-        initialized: boolean
-      }
-    }
-  | {
       type: "SET_CRITERIA_ATTRIBUTE"
       payload: {
         key: SearchCriteriaAttributeKeys
@@ -75,6 +68,15 @@ type Action =
     }
   | { type: "SET_SETTINGS"; payload: Settings }
   | { type: "SET_SEARCH_CRITERIA_ID"; payload: string }
+  | {
+      type: "SET_INITIAL_STATE_ON_EDIT"
+      payload: {
+        settings: Settings
+        initialized: boolean
+        criteria: SearchCriteriaAttributes
+        searchCriteriaID: string
+      }
+    }
 
 export const reducer = (onShow: (State) => State, onReset: () => State) => (
   state: State,
@@ -97,13 +99,6 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
       return {
         ...state,
         criteria: action.payload,
-      }
-
-    case "SET_CRITERIA_ONCE":
-      return {
-        ...state,
-        criteria: action.payload.criteria,
-        initialized: true,
       }
 
     case "SET_CRITERIA_ATTRIBUTE":
@@ -138,6 +133,15 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
       return {
         ...state,
         searchCriteriaID: action.payload,
+      }
+
+    case "SET_INITIAL_STATE_ON_EDIT":
+      return {
+        ...state,
+        settings: action.payload.settings,
+        initialized: true,
+        criteria: action.payload.criteria,
+        searchCriteriaID: action.payload.searchCriteriaID,
       }
 
     case "SET_SETTINGS":

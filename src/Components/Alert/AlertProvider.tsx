@@ -101,7 +101,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
       }) */
 
       // onCompleted()
-      onReset()
+      // onReset()
       sendToast({
         message: "Your Alert has been updated.",
       })

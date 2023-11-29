@@ -22,7 +22,6 @@ import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
 import { isEqual } from "lodash"
-import { useSavedSearchAlertContext } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import {
   SavedSearchAlertFormValues,
   SavedSearchFrequency,
@@ -76,31 +75,20 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
     frequency: userAlertSettings.frequency as SavedSearchFrequency,
     details: userAlertSettings.details ?? "",
   }
-  useEffect(() => {
-    dispatch({
-      type: "SET_SETTINGS",
-      payload: initialValues,
-    })
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch, userAlertSettings])
-
-  useEffect(() => {
-    dispatch({
-      type: "SET_SEARCH_CRITERIA_ID",
-      payload: savedSearch?.internalID ?? "",
-    })
-  }, [dispatch, savedSearch])
 
   useEffect(() => {
     if (state.initialized) return
     dispatch({
-      type: "SET_CRITERIA_ONCE",
+      type: "SET_INITIAL_STATE_ON_EDIT",
       payload: {
+        settings: initialValues,
+        searchCriteriaID: savedSearch?.internalID ?? "",
         criteria: getAllowedSearchCriteria(savedSearch),
         initialized: true,
       },
     })
-  }, [dispatch, savedSearch, state.initialized])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch, userAlertSettings, savedSearch, state.initialized])
 
   const isCustomAlertsNotificationsEnabled = viewer.notificationPreferences.some(
     preference => {
