@@ -152,6 +152,7 @@ export const FollowProfileButtonQueryRenderer: React.FC<FollowProfileButtonQuery
       `}
       placeholder={<FollowButton {...rest} />}
       variables={{ id }}
+      cacheConfig={{ force: true }}
       render={({ error, props }) => {
         if (error || !props?.profile) {
           return <FollowButton {...rest} />

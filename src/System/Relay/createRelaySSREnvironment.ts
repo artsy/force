@@ -108,7 +108,7 @@ export function createRelaySSREnvironment(config: Config = {}) {
     cacheMiddleware({
       size: Number(getENV("NETWORK_CACHE_SIZE")) ?? 2000, // max 2000 requests
       ttl: Number(getENV("NETWORK_CACHE_TTL")) ?? 3600000, // 1 hour
-      clearOnMutation: true,
+      clearOnMutation: false,
       disableServerSideCache: !!user, // disable server-side cache if logged in
       onInit: queryResponseCache => {
         if (!isServer) {
