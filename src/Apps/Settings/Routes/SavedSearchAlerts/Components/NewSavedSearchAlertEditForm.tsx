@@ -18,7 +18,6 @@ import { Formik } from "formik"
 import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
-import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
 import { isEqual } from "lodash"
@@ -39,10 +38,6 @@ import { AlertNameInput } from "Components/Alert/Components/Form/AlertNameInput"
 import { Filters } from "Components/Alert/Components/Steps/Filters"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
-
-const logger = createLogger(
-  "Apps/SavedSearchAlerts/Components/NewSavedSearchAlertEditForm"
-) // TODO: move logger to the provider
 
 interface NewSavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
@@ -102,10 +97,9 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
   const userAllowsEmails = isCustomAlertsNotificationsEnabled ?? false
   const shouldShowEmailWarning = !!initialValues.email && !userAllowsEmails
 
-  // TODO: on close emty state
   return (
     <Formik<AlertFormikValues>
-      initialValues={{ ...initialValues }}
+      initialValues={state.initialized ? state.settings : { ...initialValues }}
       onSubmit={onCompleteEdit}
     >
       {({ isSubmitting, values, setFieldValue, handleSubmit }) => {
@@ -122,6 +116,18 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
           isSaveAlertButtonDisabled = true
         }
 
+        const transitionToFilters = () => {
+          dispatch({ type: "SET_SETTINGS", payload: values })
+          goToFilters()
+        }
+
+        const finishEditing = () => {
+          dispatch({ type: "SET_SETTINGS", payload: values })
+          handleSubmit()
+          setTimeout(() => {
+            onCompleted()
+          }, 1000)
+        }
         return (
           <Box>
             <Join separator={<Spacer y={[4, 6]} />}>
@@ -135,7 +141,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
 
                 <Separator my={2} />
 
-                <Clickable onClick={() => goToFilters()} width="100%">
+                <Clickable onClick={transitionToFilters} width="100%">
                   <Flex justifyContent="space-between" alignItems={"center"}>
                     <Box>
                       <Text variant="sm-display">Add Filters:</Text>
@@ -218,11 +224,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                   <Button
                     flex={1}
                     loading={isSubmitting}
-                    onClick={() => {
-                      dispatch({ type: "SET_SETTINGS", payload: values })
-                      handleSubmit()
-                      onCompleted()
-                    }}
+                    onClick={finishEditing}
                     disabled={isSaveAlertButtonDisabled}
                   >
                     Save Alert
@@ -236,10 +238,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                 <Button
                   loading={isSubmitting}
                   width="100%"
-                  onClick={() => {
-                    dispatch({ type: "SET_SETTINGS", payload: values })
-                    handleSubmit()
-                  }}
+                  onClick={finishEditing}
                   disabled={isSaveAlertButtonDisabled}
                 >
                   Save Alert

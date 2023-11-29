@@ -25,7 +25,10 @@ import {
   PreviewSavedSearchAttributes,
 } from "__generated__/AlertProviderPreviewQuery.graphql"
 import { useToasts } from "@artsy/palette"
+import { t } from "i18next"
+import createLogger from "Utils/logger"
 
+const logger = createLogger("AlertProvider.tsx")
 interface AlertProviderProps {
   initialCriteria?: SearchCriteriaAttributes
   currentArtworkID?: string
@@ -81,7 +84,12 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   }, [initialCriteria, isEditMode])
 
   const handleCompleteEdit = async () => {
-    if (!state.searchCriteriaID) return // TODO: return error
+    if (!state.searchCriteriaID) {
+      return sendToast({
+        variant: "error",
+        message: t("common.errors.somethingWentWrong"),
+      })
+    }
     try {
       await submitEditAlert({
         variables: {
@@ -100,14 +108,10 @@ export const AlertProvider: FC<AlertProviderProps> = ({
         changed: JSON.stringify(updatedAlertSettings),
       }) */
 
-      // onCompleted()
-      // onReset()
-      sendToast({
-        message: "Your Alert has been updated.",
-      })
+      onReset()
     } catch (error) {
       console.error("Alert/useAlertContext", error)
-      //logger.error(error)
+      logger.error(error)
     }
   }
 
@@ -133,15 +137,15 @@ export const AlertProvider: FC<AlertProviderProps> = ({
 
         createdAlert(searchCriteriaID)
       }
-      //  setCurrent("ALERT_CONFIRMATION")
+      setCurrent("ALERT_CONFIRMATION")
     } catch (error) {
       console.error("Alert/useAlertContext", error)
+      logger.error(error)
     }
   }
 
   const onReset = (): State => {
     setCurrent(isEditMode ? "EDIT_ALERT_DETAILS" : "ALERT_DETAILS")
-
     return initialState
   }
 
