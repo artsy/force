@@ -71,9 +71,6 @@ export const auctionRoutes: AppRouteConfig[] = [
         }
       }
     `,
-    cacheConfig: {
-      force: true,
-    },
     prepareVariables: (params, props) => {
       const auctionFilterDefaults = {
         sort: "sale_position",
@@ -117,9 +114,6 @@ export const auctionRoutes: AppRouteConfig[] = [
             }
           }
         `,
-        cacheConfig: {
-          force: true,
-        },
       },
       {
         path: "confirm-registration",
@@ -135,9 +129,6 @@ export const auctionRoutes: AppRouteConfig[] = [
             }
           }
         `,
-        cacheConfig: {
-          force: true,
-        },
       },
       {
         path: "bid/:artworkSlug?",
@@ -171,9 +162,6 @@ export const auctionRoutes: AppRouteConfig[] = [
             slug,
             artworkSlug,
           }
-        },
-        cacheConfig: {
-          force: true,
         },
       },
     ],
