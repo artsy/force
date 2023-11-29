@@ -11,6 +11,7 @@ import { MetaTags } from "Components/MetaTags"
 import { ConversationsLayout } from "Apps/Conversations/components/ConversationLayout"
 import { ConversationHeader } from "Apps/Conversations/components/ConversationHeader"
 import { Media } from "Utils/Responsive"
+import { ConversationZeroState } from "Apps/Conversations/components/ConversationZeroState"
 
 interface ConversationRouteProps {
   conversation: ConversationApp_conversation$data
@@ -22,6 +23,10 @@ const ConversationApp: React.FC<ConversationRouteProps> = ({
   conversation,
 }) => {
   const { goToConversation } = useMobileLayoutActions()
+
+  if (!conversation) {
+    return <ConversationZeroState />
+  }
 
   return (
     <ConversationsProvider>

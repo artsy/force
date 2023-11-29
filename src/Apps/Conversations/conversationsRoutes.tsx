@@ -27,7 +27,9 @@ export const conversationsRoutes: AppRouteConfig[] = [
         props.conversationsConnection
       )[0]?.internalID
 
-      let conversationUrl = `/user/conversations/${initialConversationID}`
+      let conversationUrl = initialConversationID
+        ? `/user/conversations/${initialConversationID}`
+        : "/user/conversations/no-messages"
 
       if (getENV("IS_MOBILE")) {
         conversationUrl = `${conversationUrl}?showAllConversations=true`
@@ -66,7 +68,7 @@ export const conversationsRoutes: AppRouteConfig[] = [
         viewer {
           ...ConversationApp_viewer @arguments(first: $first)
         }
-        conversation(id: $conversationId) @required(action: NONE) {
+        conversation(id: $conversationId) {
           ...ConversationApp_conversation
         }
       }
