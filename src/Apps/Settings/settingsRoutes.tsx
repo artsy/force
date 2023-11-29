@@ -128,9 +128,6 @@ export const settingsRoutes: AppRouteConfig[] = [
         }
       }
     `,
-    cacheConfig: {
-      force: true,
-    },
     children: [
       {
         path: "auctions",
@@ -146,9 +143,6 @@ export const settingsRoutes: AppRouteConfig[] = [
             }
           }
         `,
-        cacheConfig: {
-          force: true,
-        },
       },
       {
         path: "edit-profile",
@@ -164,9 +158,6 @@ export const settingsRoutes: AppRouteConfig[] = [
             }
           }
         `,
-        cacheConfig: {
-          force: true,
-        },
       },
       {
         path: "payments",
@@ -182,9 +173,6 @@ export const settingsRoutes: AppRouteConfig[] = [
             }
           }
         `,
-        cacheConfig: {
-          force: true,
-        },
       },
       {
         path: "purchases",
@@ -200,9 +188,6 @@ export const settingsRoutes: AppRouteConfig[] = [
             }
           }
         `,
-        cacheConfig: {
-          force: true,
-        },
       },
       {
         path: "saves",
@@ -224,9 +209,6 @@ export const settingsRoutes: AppRouteConfig[] = [
             }
           }
         `,
-        cacheConfig: {
-          force: true,
-        },
       },
       {
         path: "/alerts",
@@ -242,9 +224,6 @@ export const settingsRoutes: AppRouteConfig[] = [
             }
           }
         `,
-        cacheConfig: {
-          force: true,
-        },
       },
       {
         path: "edit-settings",
@@ -260,9 +239,6 @@ export const settingsRoutes: AppRouteConfig[] = [
             }
           }
         `,
-        cacheConfig: {
-          force: true,
-        },
       },
       {
         path: "delete",
@@ -278,9 +254,6 @@ export const settingsRoutes: AppRouteConfig[] = [
             }
           }
         `,
-        cacheConfig: {
-          force: true,
-        },
       },
       {
         path: "shipping",
@@ -296,9 +269,6 @@ export const settingsRoutes: AppRouteConfig[] = [
             }
           }
         `,
-        cacheConfig: {
-          force: true,
-        },
       },
     ],
   },

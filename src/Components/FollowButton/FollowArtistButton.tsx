@@ -251,7 +251,6 @@ export const FollowArtistButtonQueryRenderer: React.FC<FollowArtistButtonQueryRe
       `}
       placeholder={<FollowButton {...rest} />}
       variables={{ id }}
-      cacheConfig={{ force: true }}
       render={({ error, props }) => {
         if (error || !props?.artist) {
           return <FollowButton {...rest} />
