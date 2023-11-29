@@ -90,7 +90,7 @@ export const RenderError: React.FC<{
  * between the top most container and StaticContainer.
  *
  */
-const Renderer = ({ children, ...props }) => {
+export const Renderer = ({ children, ...props }) => {
   return (
     <Box>
       <StaticContainer {...props}>{children}</StaticContainer>

@@ -27,6 +27,7 @@ import {
   getStatusCopy,
   continueToInboxText,
 } from "Apps/Order/Utils/getStatusCopy"
+import { BackToConversationBanner } from "Apps/Order/Components/BackToConversationBanner"
 
 const logger = createLogger("Order/Routes/Status/index.tsx")
 
@@ -50,11 +51,14 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
   const flowName = order.mode === "OFFER" ? "Offer" : "Order"
   const isSubmittedOffer =
     order.mode === "OFFER" && order.displayState === "SUBMITTED"
-  const isDeclined = declinedStatuses.includes(order.stateReason!)
+  const isDeclined = declinedStatuses.includes(order.stateReason as string)
   const isModal = !!match?.location.query.isModal
   const shouldButtonDisplay = isEigen && !isModal && !isDeclined
   const shouldContinueToInbox =
     isEigen && isSubmittedOffer && order.source === "artwork_page"
+  const conversationId = match.location.query.backToConversationId
+  const shouldDisplayBackToConversationLink = !!match.location.query
+    .backToConversationId
 
   const {
     title,
@@ -67,12 +71,18 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
 
   return (
     <>
-      <Text variant="lg-display" fontWeight="regular" color="black100">
-        {title}
-      </Text>
-      <Text variant="xs" fontWeight="regular" color="black60" mb={[2, 4]}>
-        {flowName} <span data-test="OrderCode">#{order.code}</span>
-      </Text>
+      {shouldDisplayBackToConversationLink ? (
+        <BackToConversationBanner conversationId={conversationId} />
+      ) : (
+        <>
+          <Text variant="lg-display" fontWeight="regular" color="black100">
+            {title}
+          </Text>
+          <Text variant="xs" fontWeight="regular" color="black60" mb={[2, 4]}>
+            {flowName} <span data-test="OrderCode">#{order.code}</span>
+          </Text>
+        </>
+      )}
       <TwoColumnLayout
         noRowGap
         Content={
@@ -81,7 +91,7 @@ export const StatusRoute: FC<StatusProps> = ({ order, match }) => {
             <Join separator={<Spacer y={[2, 4]} />}>
               {description && <Message>{description}</Message>}
               {alertMessage && (
-                <Message variant="alert" title={alertMessageTitle!}>
+                <Message variant="alert" title={alertMessageTitle as string}>
                   {alertMessage}
                 </Message>
               )}

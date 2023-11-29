@@ -108,7 +108,7 @@ export const NavBar: React.FC = track(
   ) => {
     const link = event.currentTarget
     const text = (link.getAttribute("data-label") || link.textContent) ?? ""
-    const href = link.getAttribute("href")!
+    const href = link.getAttribute("href") as string
 
     trackEvent({
       action_type: DeprecatedAnalyticsSchema.ActionType.Click,
