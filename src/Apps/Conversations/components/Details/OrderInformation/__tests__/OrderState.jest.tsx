@@ -183,7 +183,7 @@ describe("OrderState", () => {
 
       expect(screen.getByText("Review counteroffer")).toBeInTheDocument()
       expect(
-        screen.getByText("Respond by MMM D, h:mm A zz")
+        screen.getByText("Seller will respond by MMM D, h:mm A zz")
       ).toBeInTheDocument()
     })
 
