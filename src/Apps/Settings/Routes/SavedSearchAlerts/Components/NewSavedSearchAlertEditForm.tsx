@@ -72,16 +72,21 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
   }
 
   useEffect(() => {
-    if (state.initialized) return
-    dispatch({
-      type: "SET_INITIAL_STATE_ON_EDIT",
-      payload: {
-        settings: initialValues,
-        searchCriteriaID: savedSearch?.internalID ?? "",
-        criteria: getAllowedSearchCriteria(savedSearch),
-        initialized: true,
-      },
-    })
+    if (
+      !state.initialized ||
+      !isEqual(savedSearch?.internalID, state.searchCriteriaID)
+    ) {
+      dispatch({
+        type: "SET_INITIAL_STATE_ON_EDIT",
+        payload: {
+          settings: initialValues,
+          searchCriteriaID: savedSearch?.internalID ?? "",
+          criteria: getAllowedSearchCriteria(savedSearch),
+          initialized: true,
+        },
+      })
+    }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch, userAlertSettings, savedSearch, state.initialized])
 
@@ -99,7 +104,12 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
 
   return (
     <Formik<AlertFormikValues>
-      initialValues={state.initialized ? state.settings : { ...initialValues }}
+      initialValues={
+        state.initialized &&
+        isEqual(savedSearch?.internalID, state.searchCriteriaID)
+          ? state.settings
+          : { ...initialValues }
+      }
       onSubmit={onCompleteEdit}
     >
       {({ isSubmitting, values, setFieldValue, handleSubmit }) => {
@@ -326,7 +336,7 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
   onCompleted,
   onCloseClick,
 }) => {
-  const { current } = useAlertContext()
+  const { current, dispatch } = useAlertContext()
 
   return (
     <SystemQueryRenderer<NewSavedSearchAlertEditFormQuery>
@@ -356,7 +366,12 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
                     <Text variant={["md", "lg"]} flex={1} mr={1}>
                       Edit Alert
                     </Text>
-                    <Clickable onClick={onCloseClick}>
+                    <Clickable
+                      onClick={() => {
+                        onCloseClick()
+                        dispatch({ type: "RESET" })
+                      }}
+                    >
                       <CloseIcon display="flex" />
                     </Clickable>
                   </Flex>
