@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9044366f70dbf36dd4b4e508e92e7868>>
+ * @generated SignedSource<<e59027dde096b64810fe119b7add5c3c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,6 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ConversationHeader_conversation$data = {
   readonly from: {
@@ -26,6 +25,7 @@ export type ConversationHeader_conversation$data = {
       readonly image: {
         readonly url: string | null | undefined;
       } | null | undefined;
+      readonly internalID: string;
       readonly slug: string;
       readonly title: string | null | undefined;
     } | {
@@ -37,7 +37,7 @@ export type ConversationHeader_conversation$data = {
   readonly orderConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly state: CommerceOrderStateEnum;
+        readonly " $fragmentSpreads": FragmentRefs<"ReviewOrderButton_order">;
       } | null | undefined;
     } | null | undefined>;
   } | null | undefined;
@@ -113,6 +113,13 @@ return {
             {
               "kind": "InlineFragment",
               "selections": [
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "internalID",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -224,16 +231,9 @@ return {
                 "plural": false,
                 "selections": [
                   {
-                    "kind": "RequiredField",
-                    "field": {
-                      "alias": null,
-                      "args": null,
-                      "kind": "ScalarField",
-                      "name": "state",
-                      "storageKey": null
-                    },
-                    "action": "NONE",
-                    "path": "orderConnection.edges.node.state"
+                    "args": null,
+                    "kind": "FragmentSpread",
+                    "name": "ReviewOrderButton_order"
                   }
                 ],
                 "storageKey": null
@@ -253,6 +253,6 @@ return {
 };
 })();
 
-(node as any).hash = "a2384077464ebb8089305b517f8ea9b7";
+(node as any).hash = "db25b31209d5f3c27adb98ebe43709f7";
 
 export default node;

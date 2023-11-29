@@ -23,6 +23,7 @@ import { ProgressiveOnboardingFollowFind } from "Components/ProgressiveOnboardin
 import { ProgressiveOnboardingSaveFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingAlertFind } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertFind"
 import { extractNodes } from "Utils/extractNodes"
+import { getENV } from "Utils/getENV"
 
 /** Displays action icons for logged in users such as inbox, profile, and notifications */
 export const NavBarLoggedInActions: React.FC<Partial<
@@ -84,13 +85,17 @@ export const NavBarLoggedInActions: React.FC<Partial<
       </Dropdown>
 
       <NavBarItemLink
-        href={
-          // If first convo is loaded, jump directly to that to avoid the
-          // flashing redirect
-          firstConversation?.internalID
-            ? `/user/conversations/${firstConversation.internalID}`
-            : "/user/conversations"
-        }
+        href={(() => {
+          if (getENV("IS_MOBILE")) {
+            return `/user/conversations`
+          }
+
+          if (firstConversation?.internalID) {
+            return `/user/conversations/${firstConversation.internalID}`
+          } else {
+            return "/user/conversations"
+          }
+        })()}
         aria-label={
           hasConversations
             ? `${me?.unreadConversationCount} unread conversations`

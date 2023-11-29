@@ -24,14 +24,9 @@ const calculateTime = (endTime: string) => {
 }
 
 const calculateImminent = (endTime: string) =>
-  differenceInHours(
-    new Date(endTime),
-    new Date(),
-    // @ts-expect-error CONVERSATION_MIGRATION
-    {
-      roundingMethod: "ceil",
-    }
-  ) <= IMMINENT_TIME
+  differenceInHours(new Date(endTime), new Date(), {
+    roundingMethod: "ceil",
+  }) <= IMMINENT_TIME
 
 const calculatePercentage = (startTime: string, endTime: string) => {
   const now = new Date()

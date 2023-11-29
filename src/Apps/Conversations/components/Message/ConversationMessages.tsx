@@ -15,7 +15,6 @@ import {
 import { ConversationMessage, Messages } from "./ConversationMessage"
 import { extractNodes } from "Utils/extractNodes"
 import { ConversationMessages_conversation$data } from "__generated__/ConversationMessages_conversation.graphql"
-import { usePoll } from "Utils/Hooks/usePoll"
 import { Sentinel } from "Components/Sentinal"
 import {
   Message,
@@ -26,10 +25,10 @@ import { ConversationOrderUpdate } from "Apps/Conversations/components/Message/C
 import { ConversationTimeSince } from "Apps/Conversations/components/Message/ConversationTimeSince"
 import { ConversationMessageArtwork } from "Apps/Conversations/components/Message/ConversationMessageArtwork"
 import { LatestMessagesFlyOut } from "Apps/Conversations/components/Message/LatestMessagesFlyOut"
+import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
+import styled from "styled-components"
 
 const PAGE_SIZE = 15
-
-const BACKGROUND_REFETCH_INTERVAL = 5000
 
 interface ConversationMessagesProps {
   conversation: NonNullable<ConversationMessages_conversation$data>
@@ -45,6 +44,7 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
   const [showLatestMessagesFlyOut, setShowLatestMessagesFlyOut] = useState(
     false
   )
+
   const autoScrollToBottomRef = useRef<HTMLDivElement>(null)
 
   const groupedMessagesAndEvents = useGroupedMessages({
@@ -60,23 +60,25 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
 
   const enableBottomRefreshSentinal = totalCount > 2
 
-  useAutoScrollToBottom({
+  const { triggerAutoScroll } = useAutoScrollToBottom({
     messages,
     autoScrollToBottomRef,
   })
 
   // Refetch messages in the background
-  usePoll({
-    callback: () => {
-      // FIXME: Move to env var
-      const ENABLED = false
-
-      if (ENABLED) {
-        refetchMessages({ showPreloader: false })
+  useRefetchLatestMessagesPoll({
+    clearWhen: showLatestMessagesFlyOut,
+    onRefetch: () => {
+      // Don't refetch if we're scrolled away from the bottom as the user may
+      // be reviewing old conversations up the list
+      if (showLatestMessagesFlyOut) {
+        return
       }
+
+      refetchMessages({
+        showPreloader: false,
+      })
     },
-    intervalTime: BACKGROUND_REFETCH_INTERVAL,
-    key: "conversationMessages",
   })
 
   const refetchMessages = ({ showPreloader = true }) => {
@@ -103,14 +105,12 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
       return
     }
 
-    setTimeout(() => {
-      autoScrollToBottomRef.current?.scrollIntoView({
-        behavior: "smooth",
-      })
-    }, 100)
+    triggerAutoScroll({
+      behavior: "smooth",
+    })
 
-    startLoadMoreTransition(true)
     performRefetch()
+    startLoadMoreTransition(true)
   }
 
   return (
@@ -135,7 +135,7 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
           />
         )}
 
-        {isFetchingAllMessages && <TopLoadingSpinner my={4} />}
+        {isFetchingAllMessages && <TopLoadingSpinner height={30} mb={4} />}
 
         {groupedMessagesAndEvents.map((messageGroup, groupIndex) => {
           return (
@@ -202,7 +202,11 @@ export const ConversationMessages: FC<ConversationMessagesProps> = ({
           testId="LatestMessagesSentinel"
         />
 
-        {isFetchingLoadMoreMessages && <BottomLoadingSpinner mt={4} mb={2} />}
+        <BottomLoadingSpinner
+          visible={isFetchingLoadMoreMessages}
+          mt={4}
+          mb={2}
+        />
 
         <AutoScrollToBottom ref={autoScrollToBottomRef as any} height={20} />
       </Flex>
@@ -216,7 +220,7 @@ export const ConversationMessagesPaginationContainer = createPaginationContainer
     conversation: graphql`
       fragment ConversationMessages_conversation on Conversation
         @argumentDefinitions(
-          first: { type: "Int", defaultValue: 10 }
+          first: { type: "Int", defaultValue: 15 }
           after: { type: "String" }
         ) {
         fromLastViewedMessageID
@@ -339,19 +343,26 @@ const useAutoScrollToBottom = ({
 }: UseAutoScrollToBottomProps) => {
   const lastMessageId = messages.length > 0 ? messages[0].internalID : null
 
-  const triggerAutoScroll = useCallback(() => {
-    setTimeout(() => {
-      autoScrollToBottomRef?.current?.scrollIntoView({
+  const triggerAutoScroll = useCallback(
+    ({ behavior = "instant", block, start } = {}) => {
+      setTimeout(() => {
+        autoScrollToBottomRef?.current?.scrollIntoView({
+          behavior,
+          block,
+          start,
+        })
+      }, 0)
+    },
+    [autoScrollToBottomRef]
+  )
+
+  useEffect(() => {
+    if (lastMessageId) {
+      triggerAutoScroll({
         behavior: "instant",
         block: "end",
         inline: "end",
       })
-    }, 0)
-  }, [autoScrollToBottomRef])
-
-  useEffect(() => {
-    if (lastMessageId) {
-      triggerAutoScroll()
     }
   }, [lastMessageId, autoScrollToBottomRef, triggerAutoScroll])
 
@@ -367,5 +378,30 @@ const LoadingSpinner: React.FC<BoxProps> = boxProps => (
 const LoadAllMessagesSentinal = Sentinel
 const LatestMessagesSentinel = Sentinel
 const TopLoadingSpinner = LoadingSpinner
-const BottomLoadingSpinner = LoadingSpinner
 const AutoScrollToBottom = Box
+
+const BottomLoadingSpinner: React.FC<BoxProps & { visible: boolean }> = ({
+  visible,
+  ...boxProps
+}) => {
+  return (
+    <SpinnerWrapper className={visible ? "active" : ""}>
+      <Box position="relative" {...boxProps} data-testid="LoadingSpinner">
+        <Spinner />
+      </Box>
+    </SpinnerWrapper>
+  )
+}
+
+const SpinnerWrapper = styled(Box)`
+  height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: height 0.5s ease, opacity 0.5s ease;
+
+  &.active {
+    height: 60px;
+    opacity: 1;
+    margin-bottom: 40px;
+  }
+`

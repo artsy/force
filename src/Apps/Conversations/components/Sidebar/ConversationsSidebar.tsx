@@ -10,9 +10,10 @@ import { ConversationsSidebarEmpty } from "Apps/Conversations/components/Sidebar
 import { ConversationsSidebarItem } from "Apps/Conversations/components/Sidebar/ConversationsSidebarItem"
 import { ConversationsSidebar_viewer$data } from "__generated__/ConversationsSidebar_viewer.graphql"
 import { Sentinel } from "Components/Sentinal"
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import { useRouter } from "System/Router/useRouter"
 import { SIDEBAR_FETCH_PAGE_SIZE } from "Apps/Conversations/components/Sidebar/Utils/getSidebarTotal"
+import { useRefetchLatestMessagesPoll } from "Apps/Conversations/hooks/useRefetchLatestMessagesPoll"
 
 interface ConversationsSidebarProps {
   viewer: ConversationsSidebar_viewer$data
@@ -25,7 +26,11 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
 }) => {
   const { match } = useRouter()
 
-  const { loadMore } = useLoadMore({
+  const [enableSilentSidebarRefetch, setEnableSilentSidebarRefetch] = useState(
+    true
+  )
+
+  const { loadMore, shouldLoadMore } = useLoadMore({
     pageSize: SIDEBAR_FETCH_PAGE_SIZE,
     loadNext: relay.loadMore,
     isLoadingNext: relay.isLoading,
@@ -72,6 +77,30 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [totalDisplayedCount])
 
+  // Refetch messages in the background, but only when a user has scrolled to
+  // the top of the convo list.
+  useRefetchLatestMessagesPoll({
+    intervalTime: 10000,
+    clearWhen: !enableSilentSidebarRefetch,
+    onRefetch: () => {
+      if (!enableSilentSidebarRefetch) {
+        return
+      }
+      // When refetching, check to see if we've loaded more, and if so, refetch
+      // current total count of sidebar list
+      const fetchSize =
+        viewer.conversationsConnection?.edges?.length ?? SIDEBAR_FETCH_PAGE_SIZE
+
+      relay.refetchConnection(
+        fetchSize,
+        {},
+        {
+          first: fetchSize,
+        }
+      )
+    },
+  })
+
   return (
     <Flex flexDirection="column" flex={1}>
       <Box
@@ -90,6 +119,11 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
 
       {conversations.length === 0 && <ConversationsSidebarEmpty />}
 
+      <Sentinel
+        onEnterView={() => setEnableSilentSidebarRefetch(true)}
+        onExitView={() => setEnableSilentSidebarRefetch(false)}
+      />
+
       {conversations.map((conversation, key) => {
         return (
           <ConversationsSidebarItem
@@ -100,7 +134,7 @@ export const ConversationsSidebar: React.FC<ConversationsSidebarProps> = ({
         )
       })}
 
-      {relay.hasMore() && relay.isLoading() && (
+      {shouldLoadMore && (
         <Box position="relative" my={2} p={1}>
           <Spinner />
         </Box>

@@ -43,6 +43,7 @@ declare module "sharify" {
       CURRENT_PATH: string
       CURRENT_USER: User
       EIGEN: boolean
+      ENABLE_CONVERSATIONS_MESSAGES_AUTO_REFRESH: boolean
       ENABLE_I18N_DEBUG: boolean
       ENABLE_NEW_AUCTIONS_FILTER: boolean
       ENABLE_QUERY_BATCHING: boolean

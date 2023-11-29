@@ -87,7 +87,8 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
     return (
       <Box width="100%" {...boxProps} display="inline">
         <Button
-          size="large"
+          {...boxProps}
+          size={["small", "large"]}
           width="100%"
           onClick={() => {
             trackPurchaseEvent()
@@ -105,7 +106,12 @@ export const ConversationPurchaseButton: React.FC<ConversationPurchaseButtonProp
 
   return (
     <Box width="100%" {...boxProps} display="inline">
-      <Button width="100%" onClick={handleClick} loading={isSubmitting}>
+      <Button
+        size={["small", "large"]}
+        width="100%"
+        onClick={handleClick}
+        loading={isSubmitting}
+      >
         Purchase
       </Button>
     </Box>

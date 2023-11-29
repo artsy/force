@@ -1,4 +1,4 @@
-import { Box, Flex, FlexProps, Text } from "@artsy/palette"
+import { Box, Flex, FlexProps, Spacer, Text } from "@artsy/palette"
 import { themeGet } from "@styled-system/theme-get"
 import { ConversationMakeOfferButton } from "Apps/Conversations/components/ConversationCTA/ConversationMakeOfferButton"
 import { ConversationPurchaseButton } from "Apps/Conversations/components/ConversationCTA/ConversationPurchaseButton"
@@ -49,7 +49,7 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
       )}
 
       <Flex {...flexProps} flexDirection="column">
-        <Flex flexDirection="row" alignItems="center" justifyContent={"center"}>
+        <Flex flexDirection="row" alignItems="center" justifyContent="center">
           <GuaranteeIconBlue mr={1} />
 
           <Flex>
@@ -69,24 +69,27 @@ export const ConversationCTA: React.FC<ConversationCTAProps> = ({
         </Box>
 
         {showTransactionButtons && (
-          <Flex flexDirection="row" justifyContent="space-between">
-            {artwork.isAcquireable && (
-              <ConversationPurchaseButton
-                conversation={data}
-                mt={1}
-                px={0.5}
-                width="100%"
-              />
-            )}
+          <>
+            <Spacer y={1} />
 
-            {(artwork.isOfferable || artwork.isOfferableFromInquiry) && (
-              <ConversationMakeOfferButton
-                conversation={data}
-                mt={1}
-                px={0.5}
-              />
-            )}
-          </Flex>
+            <Flex flexDirection="row" justifyContent="space-between">
+              {artwork.isAcquireable && (
+                <ConversationPurchaseButton
+                  conversation={data}
+                  px={0.5}
+                  width="100%"
+                />
+              )}
+
+              {(artwork.isOfferable || artwork.isOfferableFromInquiry) && (
+                <ConversationMakeOfferButton
+                  conversation={data}
+                  px={0.5}
+                  width="100%"
+                />
+              )}
+            </Flex>
+          </>
         )}
       </Flex>
     </>

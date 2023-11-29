@@ -106,18 +106,20 @@ export const MobileLayout: React.FC<ConversationsLayoutProps> = ({
         </Flex>
       </Box>
 
-      <Flex
-        display={currentColumn === "conversation" ? "flex" : "none"}
-        height={MOBILE_HEIGHT}
-        flexGrow={1}
-        position="sticky"
-        justifyContent="space-between"
-        flexDirection="column"
-        top={0}
-        overflowY="auto"
-      >
-        {renderMessages()}
-      </Flex>
+      {currentColumn === "conversation" && (
+        <Flex
+          display={currentColumn === "conversation" ? "flex" : "none"}
+          height={MOBILE_HEIGHT}
+          flexGrow={1}
+          position="sticky"
+          justifyContent="space-between"
+          flexDirection="column"
+          top={0}
+          overflowY="auto"
+        >
+          {renderMessages()}
+        </Flex>
+      )}
 
       <Flex
         display={currentColumn === "detail" ? "flex" : "none"}

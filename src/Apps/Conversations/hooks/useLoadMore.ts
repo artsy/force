@@ -36,7 +36,10 @@ export const useLoadMore = ({
 
   useEffect(() => {
     if (shouldLoadMore && hasMore() && !isLoading() && when !== false) {
-      loadNext(pageSize)
+      loadNext(pageSize, () => {
+        setLoadMore(false)
+      })
+    } else {
       setLoadMore(false)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -46,5 +49,5 @@ export const useLoadMore = ({
     setLoadMore(true)
   }, [])
 
-  return { loadMore }
+  return { loadMore, shouldLoadMore }
 }
