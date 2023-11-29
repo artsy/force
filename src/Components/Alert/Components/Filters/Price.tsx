@@ -72,8 +72,6 @@ export const PriceQueryRenderer = () => {
       lazyLoad
       placeholder={<Price />}
       variables={{ artistIDs }}
-      // TODO: Pass in many artist IDs after fixing Gravity
-      // https://github.com/artsy/force/pull/13158#discussion_r1399214348
       query={graphql`
         query PriceAggregationsQuery($artistIDs: [String!]) {
           artworksConnection(

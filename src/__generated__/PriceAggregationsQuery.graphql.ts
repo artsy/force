@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fbe06979f8c06153c1ab37e4793f1d21>>
+ * @generated SignedSource<<34736a1822221259a99df368fd5473c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PriceAggregationsQuery$variables = {
-  artistID: string;
+  artistIDs?: ReadonlyArray<string> | null | undefined;
 };
 export type PriceAggregationsQuery$data = {
   readonly artworksConnection: {
@@ -28,7 +28,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistID"
+    "name": "artistIDs"
   }
 ],
 v1 = [
@@ -41,8 +41,8 @@ v1 = [
   },
   {
     "kind": "Variable",
-    "name": "artistID",
-    "variableName": "artistID"
+    "name": "artistIDs",
+    "variableName": "artistIDs"
   },
   {
     "kind": "Literal",
@@ -154,16 +154,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2145e19ab94ac1486d9e8c0c04170cc6",
+    "cacheID": "a083c88f50af5933a00da6fb07fbcefd",
     "id": null,
     "metadata": {},
     "name": "PriceAggregationsQuery",
     "operationKind": "query",
-    "text": "query PriceAggregationsQuery(\n  $artistID: String!\n) {\n  artworksConnection(aggregations: [SIMPLE_PRICE_HISTOGRAM], artistID: $artistID, first: 0) {\n    ...Price_artworksConnection\n    id\n  }\n}\n\nfragment Price_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      name\n      value\n      count\n    }\n  }\n}\n"
+    "text": "query PriceAggregationsQuery(\n  $artistIDs: [String!]\n) {\n  artworksConnection(aggregations: [SIMPLE_PRICE_HISTOGRAM], artistIDs: $artistIDs, first: 0) {\n    ...Price_artworksConnection\n    id\n  }\n}\n\nfragment Price_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      name\n      value\n      count\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c2c782473ddf596ca7e52c75d4bdb55e";
+(node as any).hash = "709bd463dcc68a76c56392c28fc8db6c";
 
 export default node;
