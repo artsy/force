@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<009c28cc57cf801db86a790323f1a422>>
+ * @generated SignedSource<<1cd985488260d3c22dbaa247c3b5400b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
-export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 export type RejectTestQuery$variables = Record<PropertyKey, never>;
 export type RejectTestQuery$data = {
   readonly order: {
@@ -790,6 +790,7 @@ return {
           "enumValues": [
             "artwork_page",
             "inquiry",
+            "partner_offer",
             "private_sale"
           ],
           "nullable": false,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<facb1c443445842baa9b1763df72fc59>>
+ * @generated SignedSource<<a12181c68eb6c745f69eb4fecde8f4e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -843,6 +843,7 @@ return {
           "enumValues": [
             "artwork_page",
             "inquiry",
+            "partner_offer",
             "private_sale"
           ],
           "nullable": false,
