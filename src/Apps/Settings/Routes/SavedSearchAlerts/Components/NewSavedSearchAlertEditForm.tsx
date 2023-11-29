@@ -6,6 +6,7 @@ import {
   Flex,
   Join,
   Message,
+  ModalDialog,
   Separator,
   Spacer,
   Text,
@@ -27,7 +28,8 @@ import {
 } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { RouterLink } from "System/Router/RouterLink"
-import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
+// TODO: do we use FREQUENCY for push notifications?
+//import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
@@ -46,13 +48,96 @@ interface NewSavedSearchAlertEditFormQueryRendererProps {
   onCloseClick: () => void
 }
 
+interface NewSavedSearchAlertEditStepsProps {
+  me: NewSavedSearchAlertEditForm_me$data
+  viewer: NewSavedSearchAlertEditForm_viewer$data
+  onDeleteClick: () => void
+  onCompleted: () => void
+  onCloseClick: () => void
+}
+
 interface NewSavedSearchAlertEditFormProps {
   me: NewSavedSearchAlertEditForm_me$data
   viewer: NewSavedSearchAlertEditForm_viewer$data
   onDeleteClick: () => void
   onCompleted: () => void
 }
+const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> = ({
+  me,
+  viewer,
+  onDeleteClick,
+  onCompleted,
+  onCloseClick,
+}) => {
+  const { current, dispatch } = useAlertContext()
 
+  return (
+    <>
+      <Media greaterThanOrEqual="md">
+        {current === "EDIT_ALERT_DETAILS" && (
+          <Box flex={1} p={4}>
+            <Flex justifyContent="space-between" alignItems="center">
+              <Text variant={["md", "lg"]} flex={1} mr={1}>
+                Edit Alert
+              </Text>
+              <Clickable
+                onClick={() => {
+                  onCloseClick()
+                  dispatch({ type: "RESET" })
+                }}
+              >
+                <CloseIcon display="flex" />
+              </Clickable>
+            </Flex>
+            <Spacer y={6} />
+            <NewSavedSearchAlertEditForm
+              me={me}
+              viewer={viewer}
+              onDeleteClick={onDeleteClick}
+              onCompleted={onCompleted}
+            />
+          </Box>
+        )}
+        {current === "EDIT_ALERT_FILTERS" && (
+          <Box flex={1} p={2}>
+            <Filters />
+          </Box>
+        )}
+      </Media>
+
+      <Media lessThan="md">
+        <ModalDialog
+          header={null}
+          title={current === "EDIT_ALERT_DETAILS" ? "Edit Alert" : "Edit Alert"}
+          m={0}
+          dialogProps={{
+            width: "100%",
+            height: "100%",
+          }}
+          onClose={onCloseClick}
+        >
+          {current === "EDIT_ALERT_DETAILS" && (
+            <>
+              <Spacer y={4} />
+
+              <NewSavedSearchAlertEditForm
+                me={me}
+                viewer={viewer}
+                onDeleteClick={onDeleteClick}
+                onCompleted={onCompleted}
+              />
+            </>
+          )}
+          {current === "EDIT_ALERT_FILTERS" && (
+            <Box m={-2}>
+              <Filters />
+            </Box>
+          )}
+        </ModalDialog>
+      </Media>
+    </>
+  )
+}
 const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = ({
   me,
   viewer,
@@ -273,7 +358,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
 }
 
 export const NewSavedSearchAlertEditFormFragmentContainer = createFragmentContainer(
-  NewSavedSearchAlertEditForm,
+  NewSavedSearchAlertEditSteps,
   {
     viewer: graphql`
       fragment NewSavedSearchAlertEditForm_viewer on Viewer {
@@ -336,8 +421,6 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
   onCompleted,
   onCloseClick,
 }) => {
-  const { current, dispatch } = useAlertContext()
-
   return (
     <SystemQueryRenderer<NewSavedSearchAlertEditFormQuery>
       query={SAVED_SEARCH_ALERT_EDIT_FORM_QUERY}
@@ -358,39 +441,15 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
         }
 
         if (props?.me && props?.viewer) {
-          switch (current) {
-            case "EDIT_ALERT_DETAILS":
-              return (
-                <Box flex={1} p={4}>
-                  <Flex justifyContent="space-between" alignItems="center">
-                    <Text variant={["md", "lg"]} flex={1} mr={1}>
-                      Edit Alert
-                    </Text>
-                    <Clickable
-                      onClick={() => {
-                        onCloseClick()
-                        dispatch({ type: "RESET" })
-                      }}
-                    >
-                      <CloseIcon display="flex" />
-                    </Clickable>
-                  </Flex>
-                  <Spacer y={6} />
-                  <NewSavedSearchAlertEditFormFragmentContainer
-                    me={props.me}
-                    viewer={props.viewer}
-                    onDeleteClick={onDeleteClick}
-                    onCompleted={onCompleted}
-                  />
-                </Box>
-              )
-            case "EDIT_ALERT_FILTERS":
-              return (
-                <Box flex={1} p={2}>
-                  <Filters />
-                </Box>
-              )
-          }
+          return (
+            <NewSavedSearchAlertEditFormFragmentContainer
+              me={props.me}
+              viewer={props.viewer}
+              onDeleteClick={onDeleteClick}
+              onCompleted={onCompleted}
+              onCloseClick={onCloseClick}
+            />
+          )
         }
 
         return (

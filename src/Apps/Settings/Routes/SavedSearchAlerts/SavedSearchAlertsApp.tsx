@@ -6,6 +6,11 @@ import {
   Join,
   useToasts,
   Button,
+  ModalDialog,
+  Spacer,
+  Flex,
+  Text,
+  Clickable,
 } from "@artsy/palette"
 import {
   createPaginationContainer,
@@ -35,6 +40,7 @@ import { EditAlertSteps } from "Apps/Settings/Routes/SavedSearchAlerts/Component
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { NewSavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/NewSavedSearchAlertEditForm"
+import CloseIcon from "@artsy/icons/CloseIcon"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me$data
@@ -206,17 +212,18 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
                   <Box id="content-end" />
                 </Media>
 
-                {/*  <Media lessThan="md">
-        {list}
-        {isEditMode && editAlertEntity && (
-          <SavedSearchAlertEditFormMobile
-            editAlertEntity={editAlertEntity}
-            onCloseClick={closeEditForm}
-            onCompleted={handleCompleted}
-            onDeleteClick={handleDeleteClick}
-          />
-        )}
-      </Media> */}
+                <Media lessThan="md">
+                  {list}
+                  {isEditMode && editAlertEntity && (
+                    <NewSavedSearchAlertEditFormQueryRenderer
+                      editAlertEntity={editAlertEntity}
+                      onCloseClick={closeEditForm}
+                      onCompleted={handleCompleted}
+                      onDeleteClick={handleDeleteClick}
+                    />
+                  )}
+                </Media>
+
                 {showDeleteModal && editAlertEntity && (
                   <SavedSearchAlertDeleteModal
                     id={editAlertEntity!.id}
