@@ -29,7 +29,7 @@ import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/Active
 import { Sticky } from "Components/Sticky"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useSystemContext } from "System/useSystemContext"
-import { Jump, useJump } from "Utils/Hooks/useJump"
+import { Jump } from "Utils/Hooks/useJump"
 import { usePrevious } from "Utils/Hooks/usePrevious"
 import { Media } from "Utils/Responsive"
 import { isEqual } from "lodash"
@@ -227,10 +227,7 @@ export const BaseArtworkFilter: React.FC<
     )
   }, [filterContext.filters])
 
-  const { jumpTo } = useJump()
-
   const fetchResults = () => {
-    jumpTo("artworkFilter")
     setIsLoading(true)
 
     const refetchVariables = {
