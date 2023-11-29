@@ -5,7 +5,6 @@ import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironme
 import { useSystemContext } from "System/SystemContext"
 import { PartnerOfferCheckoutMutation } from "__generated__/PartnerOfferCheckoutMutation.graphql"
 import { useRouter } from "System/Router/useRouter"
-import { ErrorWithMetadata } from "Utils/errors"
 import { logger } from "@sentry/utils"
 import { LoadingArea } from "Components/LoadingArea"
 import { Box } from "@artsy/palette"
@@ -14,9 +13,6 @@ export const PartnerOfferCheckout: FC = () => {
   const { relayEnvironment, router } = useSystemContext()
   const { match } = useRouter()
   const partnerOfferId = match.params.partnerOfferID
-  const onMutationError = (error: ErrorWithMetadata) => {
-    logger.error(error)
-  }
 
   useEffect(() => {
     commitMutation<PartnerOfferCheckoutMutation>(
@@ -59,16 +55,16 @@ export const PartnerOfferCheckout: FC = () => {
           let redirectUrl = "/"
 
           if (orderOrError.error) {
-            const error_code = orderOrError.error.code
-            const error_data = JSON.parse(orderOrError.error.data)
-            switch (error_code) {
+            const errorCode = orderOrError.error.code
+            const errorData = JSON.parse(orderOrError.error.data)
+            switch (errorCode) {
               case "expired_partner_offer":
                 // TODO: Show error message in artwork page
-                redirectUrl = `/artwork/${error_data.artwork_id}`
+                redirectUrl = `/artwork/${errorData.artwork_id}`
                 break
               case "not_acquireable":
                 // TODO: Show error message in artwork page
-                redirectUrl = `/artwork/${error_data.artwork_id}`
+                redirectUrl = `/artwork/${errorData.artwork_id}`
                 break
             }
           } else {
@@ -76,7 +72,9 @@ export const PartnerOfferCheckout: FC = () => {
           }
           router?.push(redirectUrl)
         },
-        onError: onMutationError,
+        onError: (error) => {
+          logger.error(error)
+        },
       }
     )
   })
