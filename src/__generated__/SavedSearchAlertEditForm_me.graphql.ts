@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2994c0a0dc5165da8c2b754ea5784a9b>>
+ * @generated SignedSource<<5ec57b2ebf2f66b4e3b769a7be4f38ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,6 +16,7 @@ export type SavedSearchAlertEditForm_me$data = {
     readonly acquireable: boolean | null | undefined;
     readonly additionalGeneIDs: ReadonlyArray<string>;
     readonly artistIDs: ReadonlyArray<string> | null | undefined;
+    readonly artistSeriesIDs: ReadonlyArray<string>;
     readonly atAuction: boolean | null | undefined;
     readonly attributionClass: ReadonlyArray<string>;
     readonly colors: ReadonlyArray<string>;
@@ -112,6 +113,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "attributionClass",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "artistSeriesIDs",
           "storageKey": null
         },
         {
@@ -252,6 +260,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "fcd6cc64d79a3e95184e59d7fe5ee730";
+(node as any).hash = "c02bdca221ec190d5391c18a7711a636";
 
 export default node;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<94e2dddf2a31af15b2ba00dba1d593f5>>
+ * @generated SignedSource<<0f8d5781efd099e135f2931d374003cb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
-export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type OfferTestQuery$variables = Record<PropertyKey, never>;
 export type OfferTestQuery$data = {
@@ -1255,6 +1255,7 @@ return {
           "enumValues": [
             "artwork_page",
             "inquiry",
+            "partner_offer",
             "private_sale"
           ],
           "nullable": false,

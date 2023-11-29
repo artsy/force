@@ -343,6 +343,7 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
           artistIDs
           atAuction
           attributionClass
+          artistSeriesIDs
           colors
           dimensionRange
           sizes
@@ -408,7 +409,14 @@ const SAVED_SEARCH_ALERT_EDIT_FORM_QUERY = graphql`
     artworksConnection(
       first: 0
       artistIDs: $artistIds
-      aggregations: [LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]
+      aggregations: [
+        ARTIST_SERIES
+        LOCATION_CITY
+        MATERIALS_TERMS
+        MEDIUM
+        PARTNER
+        COLOR
+      ]
     ) {
       ...SavedSearchAlertEditForm_artworksConnection
     }

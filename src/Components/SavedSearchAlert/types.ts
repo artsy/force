@@ -8,6 +8,7 @@ export interface SearchCriteriaAttributes {
   partnerIDs?: string[] | null
   additionalGeneIDs?: string[] | null
   attributionClass?: string[] | null
+  artistSeriesIDs?: string[] | null
   majorPeriods?: string[] | null
   acquireable?: boolean | null
   atAuction?: boolean | null

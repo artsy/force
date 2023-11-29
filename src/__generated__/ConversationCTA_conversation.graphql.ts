@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0300e332165e88f406a077b2818590e6>>
+ * @generated SignedSource<<ceba4b979c9fa11dd27cc02b071a08c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ export type CommerceBuyerOfferActionEnum = "OFFER_ACCEPTED" | "OFFER_ACCEPTED_CO
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ConversationCTA_conversation$data = {
-  readonly activeOrders: {
+  readonly activeOrderCTA: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly buyerAction?: CommerceBuyerOfferActionEnum | null | undefined;
@@ -43,16 +43,17 @@ export type ConversationCTA_conversation$data = {
     } | null | undefined;
     readonly liveArtwork: {
       readonly __typename: "Artwork";
+      readonly isAcquireable: boolean | null | undefined;
+      readonly isOfferable: boolean | null | undefined;
       readonly isOfferableFromInquiry: boolean | null | undefined;
-      readonly is_acquireable: boolean | null | undefined;
-      readonly is_offerable: boolean | null | undefined;
+      readonly " $fragmentSpreads": FragmentRefs<"ConversationConfirmModal_artwork">;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     } | null | undefined;
   } | null | undefined> | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"MakeOfferOnInquiryButton_conversation" | "PurchaseOnInquiryButton_conversation">;
+  readonly " $fragmentSpreads": FragmentRefs<"ConversationReviewOfferCTA_conversation" | "useConversationPurchaseButtonData_conversation">;
   readonly " $fragmentType": "ConversationCTA_conversation";
 };
 export type ConversationCTA_conversation$key = {
@@ -84,6 +85,16 @@ return {
   "metadata": null,
   "name": "ConversationCTA_conversation",
   "selections": [
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "useConversationPurchaseButtonData_conversation"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ConversationReviewOfferCTA_conversation"
+    },
     (v0/*: any*/),
     {
       "alias": null,
@@ -104,6 +115,11 @@ return {
             {
               "kind": "InlineFragment",
               "selections": [
+                {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ConversationConfirmModal_artwork"
+                },
                 (v1/*: any*/),
                 {
                   "alias": null,
@@ -113,14 +129,14 @@ return {
                   "storageKey": null
                 },
                 {
-                  "alias": "is_acquireable",
+                  "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "isAcquireable",
                   "storageKey": null
                 },
                 {
-                  "alias": "is_offerable",
+                  "alias": null,
                   "args": null,
                   "kind": "ScalarField",
                   "name": "isOfferable",
@@ -155,7 +171,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": "activeOrders",
+      "alias": "activeOrderCTA",
       "args": [
         {
           "kind": "Literal",
@@ -277,16 +293,6 @@ return {
         }
       ],
       "storageKey": "orderConnection(first:10,states:[\"APPROVED\",\"PROCESSING_APPROVAL\",\"FULFILLED\",\"SUBMITTED\",\"REFUNDED\"])"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "PurchaseOnInquiryButton_conversation"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "MakeOfferOnInquiryButton_conversation"
     }
   ],
   "type": "Conversation",
@@ -294,6 +300,6 @@ return {
 };
 })();
 
-(node as any).hash = "189d341881a765e63aaec84434b1b908";
+(node as any).hash = "51741c03c63f809671000616b84871be";
 
 export default node;

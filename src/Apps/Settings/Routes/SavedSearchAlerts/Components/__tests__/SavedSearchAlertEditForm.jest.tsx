@@ -85,7 +85,14 @@ describe("SavedSearchAlertEditForm", () => {
         artworksConnection(
           first: 0
           artistIDs: $artistIDs
-          aggregations: [LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]
+          aggregations: [
+            ARTIST_SERIES
+            LOCATION_CITY
+            MATERIALS_TERMS
+            MEDIUM
+            PARTNER
+            COLOR
+          ]
         ) {
           ...SavedSearchAlertEditForm_artworksConnection
         }
@@ -415,6 +422,7 @@ const savedSearchAlertMocked = {
   artistIDs,
   atAuction: true,
   attributionClass: [],
+  artistSeriesIDs: [],
   colors: [],
   dimensionRange: null,
   displayName: "Alert #1",
