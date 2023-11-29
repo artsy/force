@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<414c73468013baa2be83dcc9b9ab0c09>>
+ * @generated SignedSource<<f66bfb56703832030a166063b3647561>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
-export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type OrderApp_order$data = {
   readonly currencyCode: string;
