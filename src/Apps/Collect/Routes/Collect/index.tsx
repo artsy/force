@@ -19,6 +19,7 @@ import {
   SharedArtworkFilterContextProps,
 } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { useSystemContext } from "System/useSystemContext"
+import { useRouter } from "System/Router/useRouter"
 
 export interface CollectAppProps {
   match: Match
@@ -34,6 +35,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
   match: { location, params },
   viewer,
 }) => {
+  const { silentReplace } = useRouter()
   const { userPreferences } = useSystemContext()
   const medium = params?.medium as Medium
   const color = params?.color as Color
@@ -119,26 +121,7 @@ export const CollectApp: React.FC<CollectAppProps> = ({
             onChange={filters => {
               const url = buildUrlForCollectApp(filters)
 
-              if (typeof window !== "undefined") {
-                window.history.replaceState({}, "", url)
-              }
-
-              /**
-             * FIXME: Ideally we route using our router, but are running into
-             * synchronization issues between router state and URL bar state.
-             *
-             * See below example as an illustration:
-             *
-              const newLocation = router.createLocation(url)
-
-              router.replace({
-                ...newLocation,
-                state: {
-                  scrollTo: "#JUMP--artworkFilter"
-                },
-              })
-            *
-            */
+              silentReplace(url)
             }}
             userPreferredMetric={userPreferences?.metric}
           />

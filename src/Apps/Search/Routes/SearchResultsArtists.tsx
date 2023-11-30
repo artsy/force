@@ -88,10 +88,9 @@ export class SearchResultsArtistsRoute extends React.Component<Props, State> {
           page,
           term,
         })
-        // TODO: Look into using router push w/ query params.
-        // this.props.router.replace(`/search/artists?${urlParams}`)
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        window.history.pushState({}, null, `/search/artists?${urlParams}`)
+        // TODO: use silentPush from useRouter if this class component is
+        // converted to a function component
+        window.history.pushState({}, "", `/search/artists?${urlParams}`)
       }
     )
   }

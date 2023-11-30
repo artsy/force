@@ -90,10 +90,9 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
           page,
           term,
         })
-        // TODO: Look into using router push w/ query params.
-        // this.props.router.replace(`/search/${tab}?${urlParams}`)
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-        window.history.pushState({}, null, `/search/${tab}?${urlParams}`)
+        // TODO: use silentPush from useRouter if this class component is
+        // converted to a function component
+        window.history.pushState({}, "", `/search/${tab}?${urlParams}`)
       }
     )
   }
