@@ -1,4 +1,4 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react"
+import { fireEvent, render, screen } from "@testing-library/react"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { MockBoot } from "DevTools/MockBoot"
 import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
