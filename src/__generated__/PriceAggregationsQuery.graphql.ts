@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34736a1822221259a99df368fd5473c1>>
+ * @generated SignedSource<<132dcd7b300de07ed24e5ecc78ee79e9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PriceAggregationsQuery$variables = {
-  artistIDs?: ReadonlyArray<string> | null | undefined;
+  artistIDs: ReadonlyArray<string>;
 };
 export type PriceAggregationsQuery$data = {
   readonly artworksConnection: {
@@ -154,16 +154,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a083c88f50af5933a00da6fb07fbcefd",
+    "cacheID": "c4eff41d88c01a162bcfb26bb4bd2214",
     "id": null,
     "metadata": {},
     "name": "PriceAggregationsQuery",
     "operationKind": "query",
-    "text": "query PriceAggregationsQuery(\n  $artistIDs: [String!]\n) {\n  artworksConnection(aggregations: [SIMPLE_PRICE_HISTOGRAM], artistIDs: $artistIDs, first: 0) {\n    ...Price_artworksConnection\n    id\n  }\n}\n\nfragment Price_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      name\n      value\n      count\n    }\n  }\n}\n"
+    "text": "query PriceAggregationsQuery(\n  $artistIDs: [String!]!\n) {\n  artworksConnection(aggregations: [SIMPLE_PRICE_HISTOGRAM], artistIDs: $artistIDs, first: 0) {\n    ...Price_artworksConnection\n    id\n  }\n}\n\nfragment Price_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      name\n      value\n      count\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "709bd463dcc68a76c56392c28fc8db6c";
+(node as any).hash = "396b6104acd1c8e196c00f8b0d7c2d0b";
 
 export default node;
