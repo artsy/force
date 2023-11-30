@@ -10,6 +10,17 @@ const SettingsApp = loadable(
   }
 )
 
+const AlertsRoute = loadable(
+  () =>
+    import(
+      /* webpackChunkName: "settingsBundle" */ "./Routes/SavedSearchAlerts/SavedSearchAlertsApp"
+    ),
+  {
+    resolveComponent: component =>
+      component.SavedSearchAlertsAppPaginationContainer,
+  }
+)
+
 const AuctionsRoute = loadable(
   () =>
     import(
@@ -102,17 +113,6 @@ const handleServerSideRender = ({ req, res }) => {
     res.redirect("/")
   }
 }
-
-const SavedSearchAlertsApp = loadable(
-  () =>
-    import(
-      /* webpackChunkName: "settingsBundle" */ "./Routes/SavedSearchAlerts/SavedSearchAlertsApp"
-    ),
-  {
-    resolveComponent: component =>
-      component.SavedSearchAlertsAppPaginationContainer,
-  }
-)
 
 export const settingsRoutes: AppRouteConfig[] = [
   {
@@ -211,14 +211,29 @@ export const settingsRoutes: AppRouteConfig[] = [
         `,
       },
       {
-        path: "/alerts",
-        getComponent: () => SavedSearchAlertsApp,
+        path: "alerts",
+        getComponent: () => AlertsRoute,
         onClientSideRender: () => {
-          SavedSearchAlertsApp.preload()
+          AlertsRoute.preload()
         },
         onServerSideRender: handleServerSideRender,
         query: graphql`
           query settingsRoutes_SavedSearchAlertsAppQuery {
+            me {
+              ...SavedSearchAlertsApp_me
+            }
+          }
+        `,
+      },
+      {
+        path: "alerts/:searchCriteriaID/edit",
+        getComponent: () => AlertsRoute,
+        onClientSideRender: () => {
+          AlertsRoute.preload()
+        },
+        onServerSideRender: handleServerSideRender,
+        query: graphql`
+          query settingsRoutes_SavedSearchAlertsAppEditQuery {
             me {
               ...SavedSearchAlertsApp_me
             }
@@ -271,20 +286,5 @@ export const settingsRoutes: AppRouteConfig[] = [
         `,
       },
     ],
-  },
-
-  {
-    path: "/settings/alerts",
-    getComponent: () => SavedSearchAlertsApp,
-    onClientSideRender: () => {
-      SavedSearchAlertsApp.preload()
-    },
-    query: graphql`
-      query settingsRoutes_SavedSearchAlertsQuery {
-        me {
-          ...SavedSearchAlertsApp_me
-        }
-      }
-    `,
   },
 ]
