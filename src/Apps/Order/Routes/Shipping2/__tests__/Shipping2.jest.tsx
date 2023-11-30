@@ -228,12 +228,12 @@ const verifyAddressWithSuggestions = async (
 const resolveSaveFulfillmentDetails = async (
   mockResolveLastOperation,
   commerceSetShipping
-) =>
-  await waitFor(() =>
-    mockResolveLastOperation({
-      CommerceSetShippingPayload: () => commerceSetShipping,
-    })
-  )
+) => {
+  await flushPromiseQueue()
+  return await mockResolveLastOperation({
+    CommerceSetShippingPayload: () => commerceSetShipping,
+  })
+}
 
 describe("Shipping", () => {
   let isCommittingMutation: boolean
@@ -1409,6 +1409,15 @@ describe("Shipping", () => {
                 },
               },
             })
+            const selectShippingOptionOperation = await waitFor(() =>
+              mockResolveLastOperation({
+                CommerceSelectShippingOptionPayload: () =>
+                  selectShippingQuoteSuccess.commerceSelectShippingOption,
+              })
+            )
+            expect(selectShippingOptionOperation.operationName).toBe(
+              "useSelectShippingQuoteMutation"
+            )
             const createAddressOperation = await waitFor(() =>
               mockResolveLastOperation({
                 CommerceCreateUserAddressPayload: () => saveAddressSuccess,
@@ -1419,15 +1428,14 @@ describe("Shipping", () => {
             )
 
             await waitFor(() => userEvent.click(screen.getByText(/^Premium/)))
-            await saveAndContinue()
 
-            const selectShippingOptionOperation = await waitFor(() =>
+            const selectNewShippingOptionOperation = await waitFor(() =>
               mockResolveLastOperation({
                 CommerceSelectShippingOptionPayload: () =>
                   selectShippingQuoteSuccess.commerceSelectShippingOption,
               })
             )
-            expect(selectShippingOptionOperation.operationName).toBe(
+            expect(selectNewShippingOptionOperation.operationName).toBe(
               "useSelectShippingQuoteMutation"
             )
           })
@@ -1489,9 +1497,6 @@ describe("Shipping", () => {
               "useCreateSavedAddressMutation"
             )
 
-            await waitFor(() => userEvent.click(screen.getByText(/^Premium/)))
-            await saveAndContinue()
-
             const selectShippingOptionOperation = await waitFor(() =>
               mockResolveLastOperation({
                 CommerceSelectShippingOptionPayload: () =>
@@ -1501,6 +1506,9 @@ describe("Shipping", () => {
             expect(selectShippingOptionOperation.operationName).toBe(
               "useSelectShippingQuoteMutation"
             )
+
+            await saveAndContinue()
+            expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
           })
         })
       })
@@ -1539,7 +1547,7 @@ describe("Shipping", () => {
         ).toBeInTheDocument()
       })
 
-      it.skip("removes saved address if save address is deselected after fetching shipping quotes", async () => {
+      it("removes saved address if save address is deselected after fetching shipping quotes", async () => {
         const { mockResolveLastOperation } = renderWithRelay(
           {
             CommerceOrder: () =>

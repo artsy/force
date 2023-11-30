@@ -16,6 +16,7 @@ export interface ParsedOrderData {
   availableShippingCountries: string[]
   requiresArtsyShippingTo: (shipTo: string) => boolean
   selectedSavedAddressId: string | null
+  selectedShippingQuoteId?: string
   fulfillmentDetails: FulfillmentValues["attributes"] | null
   fulfillmentType: FulfillmentValues["fulfillmentType"] | null
   isArtsyShipping?: boolean
@@ -76,6 +77,8 @@ export const useParseOrderData = (props: ShippingProps): ParsedOrderData => {
   )
 
   const shippingQuotes = extractNodes(firstLineItem.shippingQuoteOptions) ?? []
+  const selectedShippingQuoteId = shippingQuotes.find(quote => quote.isSelected)
+    ?.id
 
   return {
     fulfillmentDetails: savedFulfillmentData?.fulfillmentDetails || null,
@@ -87,6 +90,7 @@ export const useParseOrderData = (props: ShippingProps): ParsedOrderData => {
     availableShippingCountries,
     lockShippingCountryTo,
     requiresArtsyShippingTo,
+    selectedShippingQuoteId,
     shipsFrom,
   }
 }

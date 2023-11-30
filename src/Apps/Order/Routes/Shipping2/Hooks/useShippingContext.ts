@@ -82,15 +82,10 @@ const getInitialValues = (
   orderData: ShippingContextProps["parsedOrderData"]
 ): ShippingContextProps["initialValues"] => {
   const { me } = props
-
-  const selectedShippingQuote =
-    (orderData.shippingQuotes &&
-      orderData.shippingQuotes.find(quote => quote.isSelected)) ||
-    null
-
   const initialShippingQuotes = {
-    selectedShippingQuoteId: selectedShippingQuote?.id,
+    selectedShippingQuoteId: orderData.selectedShippingQuoteId,
   }
+
   if (orderData.fulfillmentType) {
     return {
       shippingQuotes: initialShippingQuotes,

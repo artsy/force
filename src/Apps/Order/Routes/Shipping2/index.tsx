@@ -106,10 +106,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const [selectedShippingQuoteId, setSelectedShippingQuoteId] = useState<
-    string | undefined
-  >(initialValues.shippingQuotes.selectedShippingQuoteId ?? undefined)
-
   const orderTracking = useOrderTracking()
 
   const handleSubmitError = useCallback(
@@ -165,7 +161,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           title,
           message: formattedMessage,
         })
-      } else if (isArtsyShipping && selectedShippingQuoteId) {
+      } else if (
+        isArtsyShipping &&
+        !orderContext.parsedOrderData.selectedShippingQuoteId
+      ) {
         orderTracking.errorMessageViewed({
           error_code: null,
           title: "An error occurred",
@@ -189,7 +188,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         props.dialog.showErrorDialog()
       }
     },
-    [isArtsyShipping, orderTracking, props.dialog, selectedShippingQuoteId]
+    [
+      isArtsyShipping,
+      orderTracking,
+      props.dialog,
+      orderContext.parsedOrderData.selectedShippingQuoteId,
+    ]
   )
 
   const handleSubmitFulfillmentDetails = useCallback(
@@ -288,10 +292,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     ]
   )
 
-  const saveSelectedShippingQuote = useCallback(async () => {
-    const { order } = props
+  const saveSelectedShippingQuote = useCallback(
+    async (selectedShippingQuoteId: string) => {
+      const { order } = props
 
-    if (selectedShippingQuoteId && order.internalID) {
       try {
         const result = await selectShippingQuote({
           variables: {
@@ -325,15 +329,15 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           message: <ArtaErrorDialogMessage />,
         })
       }
-    }
-  }, [
-    props,
-    selectShippingQuote,
-    selectedShippingQuoteId,
-    advanceToPayment,
-    handleSubmitError,
-    orderTracking,
-  ])
+    },
+    [
+      props,
+      selectShippingQuote,
+      advanceToPayment,
+      handleSubmitError,
+      orderTracking,
+    ]
+  )
 
   // TODO: Make sure we re-set address verified by in the fulfillment details form
   //   // If the address has already been verified and the user is editing the form,
@@ -346,7 +350,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const handleShippingQuoteSelected = (newShippingQuoteId: string) => {
     orderTracking.clickedSelectShippingOption(newShippingQuoteId)
 
-    setSelectedShippingQuoteId(newShippingQuoteId)
+    saveSelectedShippingQuote(newShippingQuoteId)
   }
 
   // TODO: (Erik) - we will need some way of handling the user going back.
@@ -382,19 +386,22 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const defaultShippingQuoteId = shippingQuotes?.[0]?.id
   const useDefaultArtsyShippingQuote =
-    isArtsyShipping && defaultShippingQuoteId && !selectedShippingQuoteId
+    isArtsyShipping &&
+    defaultShippingQuoteId &&
+    !orderContext.parsedOrderData.selectedShippingQuoteId
 
   // Automatically selects first shipping quote when they change
   useEffect(() => {
     if (
       useDefaultArtsyShippingQuote &&
-      selectedShippingQuoteId !== defaultShippingQuoteId
+      orderContext.parsedOrderData.selectedShippingQuoteId !==
+        defaultShippingQuoteId
     ) {
-      setSelectedShippingQuoteId(defaultShippingQuoteId)
+      saveSelectedShippingQuote(defaultShippingQuoteId)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
-    selectedShippingQuoteId,
+    orderContext.parsedOrderData.selectedShippingQuoteId,
     defaultShippingQuoteId,
     useDefaultArtsyShippingQuote,
   ])
@@ -411,11 +418,19 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const disableSubmit = useMemo(() => {
     if (step === "fulfillment_details") {
-      return !fulfillmentFormHelpers.isValid
+      return !(fulfillmentFormHelpers.isValid || isCommittingMutation)
     } else if (step === "shipping_quotes") {
-      return !selectedShippingQuoteId
+      return !(
+        orderContext.parsedOrderData.selectedShippingQuoteId ||
+        isCommittingMutation
+      )
     }
-  }, [step, fulfillmentFormHelpers.isValid, selectedShippingQuoteId])
+  }, [
+    step,
+    fulfillmentFormHelpers.isValid,
+    orderContext.parsedOrderData.selectedShippingQuoteId,
+    isCommittingMutation,
+  ])
 
   const maybeShippingQuotesConnectionEdges =
     order.lineItems?.edges?.[0]?.node?.shippingQuoteOptions?.edges
@@ -449,7 +464,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   </Text>
                   <ShippingQuotesFragmentContainer
                     mb={3}
-                    selectedShippingQuoteId={selectedShippingQuoteId}
+                    selectedShippingQuoteId={
+                      orderContext.parsedOrderData.selectedShippingQuoteId
+                    }
                     shippingQuotes={shippingQuotesConnectionEdges}
                     onSelect={handleShippingQuoteSelected}
                   />
