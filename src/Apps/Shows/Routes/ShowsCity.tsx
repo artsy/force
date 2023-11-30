@@ -20,6 +20,7 @@ import { extractNodes } from "Utils/extractNodes"
 import { FragmentRefs } from "relay-runtime"
 import { PaginationFragmentContainer } from "Components/Pagination"
 import { Jump, useJump } from "Utils/Hooks/useJump"
+import { useRouter } from "System/Router/useRouter"
 
 interface ShowsCityProps {
   viewer: ShowsCity_viewer$data
@@ -63,6 +64,7 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
   const [loading, setLoading] = useState(false)
 
   const { jumpTo } = useJump({ offset: 20 })
+  const { silentReplace } = useRouter()
 
   const handleClick = (cursor: string, page: number) => {
     jumpTo(CURRENT_SHOWS_JUMP_ID)
@@ -79,7 +81,7 @@ export const ShowsCity: React.FC<ShowsCityProps> = ({
 
         setLoading(false)
 
-        window.history.replaceState({}, "", `?page=${page}`)
+        silentReplace(`?page=${page}`)
       }
     )
   }

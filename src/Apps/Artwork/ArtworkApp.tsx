@@ -85,7 +85,7 @@ const BelowTheFoldArtworkDetails: React.FC<BelowTheFoldArtworkDetailsProps> = ({
 
 export const ArtworkApp: React.FC<Props> = props => {
   const { artwork, me, referrer, tracking, shouldTrackPageView } = props
-  const { match } = useRouter()
+  const { match, silentPush } = useRouter()
 
   const showUnlistedArtworkBanner =
     artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
@@ -170,7 +170,7 @@ export const ArtworkApp: React.FC<Props> = props => {
     if (!!submittedOrderId) {
       // TODO: Look into using router push
       // this.props.router.replace(this.props.match.location.pathname)
-      window.history.pushState({}, null, props.match.location.pathname)
+      silentPush(props.match.location.pathname)
     }
     track()
     // eslint-disable-next-line react-hooks/exhaustive-deps
