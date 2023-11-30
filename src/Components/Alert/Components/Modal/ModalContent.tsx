@@ -10,16 +10,23 @@ export interface ModalDialogContentProps
   children: React.ReactNode
   onClose?(): void
   header?: React.ReactNode
+  footer?: React.ReactNode
 }
 
 export const ModalContent: React.FC<ModalDialogContentProps> = ({
   children,
   header,
+  footer,
   onClose,
 }) => {
   const {
     sentinel: topSentinel,
     isSentinelVisible: isAtTop,
+  } = useSentinelVisibility()
+
+  const {
+    sentinel: bottomSentinel,
+    isSentinelVisible: isAtBottom,
   } = useSentinelVisibility()
 
   return (
@@ -55,7 +62,24 @@ export const ModalContent: React.FC<ModalDialogContentProps> = ({
       >
         {topSentinel}
         {children}
+        {bottomSentinel}
       </Box>
+      <Flex
+        width="100%"
+        alignItems="flex-start"
+        justifyContent="space-between"
+        zIndex={1}
+        style={{
+          transition: "box-shadow 250ms",
+          boxShadow: isAtBottom ? DROP_SHADOW : undefined,
+        }}
+      >
+        {footer && (
+          <Box p={2} width="100%">
+            {footer}
+          </Box>
+        )}
+      </Flex>
     </Flex>
   )
 }

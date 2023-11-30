@@ -1,7 +1,7 @@
-import { Clickable, Flex, Text } from "@artsy/palette"
 import { FC } from "react"
-import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import { Clickable, Flex, Text } from "@artsy/palette"
 import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
 export const FiltersHeader: FC = () => {
   const { goToDetails } = useAlertContext()

@@ -58,7 +58,7 @@ export const Details: FC = () => {
               ...(isMounted
                 ? {
                     opacity: 1,
-                    transition: "opacity 200ms",
+                    transition: "opacity 250ms",
                   }
                 : {
                     opacity: 0,
