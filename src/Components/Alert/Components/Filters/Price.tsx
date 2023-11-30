@@ -73,7 +73,7 @@ export const PriceQueryRenderer = () => {
       placeholder={<Price />}
       variables={{ artistIDs }}
       query={graphql`
-        query PriceAggregationsQuery($artistIDs: [String!]) {
+        query PriceAggregationsQuery($artistIDs: [String!]!) {
           artworksConnection(
             aggregations: [SIMPLE_PRICE_HISTOGRAM]
             artistIDs: $artistIDs
