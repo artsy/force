@@ -7,7 +7,6 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { RouterLink } from "System/Router/RouterLink"
 import { FC, useEffect } from "react"
@@ -28,8 +27,6 @@ export const NotificationPreferences: FC<NotificationPreferencesProps> = ({
   mode,
   viewer,
 }) => {
-  const { state } = useAlertContext()
-
   const { setFieldValue, values } = useFormikContext<AlertFormikValues>()
 
   const areCustomAlertsEmailNotificationsEnabled = viewer?.notificationPreferences?.some(
@@ -43,11 +40,12 @@ export const NotificationPreferences: FC<NotificationPreferencesProps> = ({
   )
 
   useEffect(() => {
-    // If we're in edit mode, we don't want to override the user's email preference
+    // Don't want to override the user's email preference when in edit mode
     if (mode === "edit") return
 
     setFieldValue("email", areCustomAlertsEmailNotificationsEnabled)
-  }, [areCustomAlertsEmailNotificationsEnabled, mode, setFieldValue, state])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const showEmailPreferenceWarning =
     values.email && !areCustomAlertsEmailNotificationsEnabled
@@ -56,6 +54,7 @@ export const NotificationPreferences: FC<NotificationPreferencesProps> = ({
     <Box>
       <Box display="flex" justifyContent="space-between">
         <Text variant="sm-display">Email</Text>
+
         <Checkbox
           onSelect={selected => setFieldValue("email", selected)}
           selected={values.email}
@@ -75,6 +74,7 @@ export const NotificationPreferences: FC<NotificationPreferencesProps> = ({
 
       <Box display="flex" justifyContent="space-between">
         <Text variant="sm-display">Push Notifications</Text>
+
         <Checkbox
           onSelect={selected => setFieldValue("push", selected)}
           selected={values.push}
