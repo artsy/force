@@ -185,7 +185,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   })
 
   useEffect(() => {
-    //  if (!state.visible) return
+    if (!state.visible && !state.isEditMode) return
 
     const subscription = fetchQuery<AlertProviderPreviewQuery>(
       relayEnvironment as Environment,
@@ -219,7 +219,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     return () => {
       subscription?.unsubscribe?.()
     }
-  }, [state.visible, debouncedCriteria, relayEnvironment])
+  }, [state.visible, debouncedCriteria, relayEnvironment, state.isEditMode])
 
   useEffect(() => {
     if (!value || value.action !== Intent.createAlert) return

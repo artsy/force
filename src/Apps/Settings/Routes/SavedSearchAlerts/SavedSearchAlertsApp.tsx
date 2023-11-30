@@ -6,11 +6,6 @@ import {
   Join,
   useToasts,
   Button,
-  ModalDialog,
-  Spacer,
-  Flex,
-  Text,
-  Clickable,
 } from "@artsy/palette"
 import {
   createPaginationContainer,
@@ -36,11 +31,8 @@ import { SavedSearchAlertEditFormMobile } from "./Components/SavedSearchAlertEdi
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { EditAlertSteps } from "Apps/Settings/Routes/SavedSearchAlerts/Components/EditAlertSteps"
 import { AlertProvider } from "Components/Alert/AlertProvider"
-import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { NewSavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/NewSavedSearchAlertEditForm"
-import CloseIcon from "@artsy/icons/CloseIcon"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me$data
