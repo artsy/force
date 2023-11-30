@@ -20,7 +20,7 @@ describe("NotificationPreferences", () => {
             initialValues={{ email: false, name: "", push: false, details: "" }}
             onSubmit={jest.fn()}
           >
-            <NotificationPreferencesQueryRenderer />
+            <NotificationPreferencesQueryRenderer mode="create" />
           </Formik>
         </AlertProvider>
       </MockBoot>
