@@ -36,6 +36,7 @@ import { Filters } from "Components/Alert/Components/Steps/Filters"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
 import { AlertProvider } from "Components/Alert/AlertProvider"
+import { isEqual } from "lodash"
 
 interface NewSavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
@@ -148,8 +149,6 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
       )
     }
   )
-  const userAllowsEmails = isCustomAlertsNotificationsEnabled ?? false
-  const shouldShowEmailWarning = !!state.settings.email && !userAllowsEmails
 
   return (
     <Formik<AlertFormikValues>
@@ -158,6 +157,19 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
       validateOnChange
     >
       {({ isSubmitting, values, setFieldValue, handleSubmit, dirty }) => {
+        const userAllowsEmails = isCustomAlertsNotificationsEnabled ?? false
+        const shouldShowEmailWarning = !!values.email && !userAllowsEmails
+
+        let isSaveAlertButtonDisabled = true
+
+        if (state.criteriaChanged || !isEqual(state.settings, values)) {
+          isSaveAlertButtonDisabled = false
+        }
+
+        if (!values.email && !values.push) {
+          isSaveAlertButtonDisabled = true
+        }
+
         const transitionToFilters = () => {
           dispatch({ type: "SET_SETTINGS", payload: values })
           goToFilters()
@@ -267,11 +279,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                     flex={1}
                     loading={isSubmitting}
                     onClick={finishEditing}
-                    disabled={
-                      !dirty &&
-                      !state.criteriaChanged &&
-                      (values.push || values.email)
-                    }
+                    disabled={isSaveAlertButtonDisabled}
                   >
                     Save Alert
                   </Button>
@@ -285,11 +293,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                   loading={isSubmitting}
                   width="100%"
                   onClick={finishEditing}
-                  disabled={
-                    !dirty &&
-                    !state.criteriaChanged &&
-                    (values.push || values.email)
-                  }
+                  disabled={isSaveAlertButtonDisabled}
                 >
                   Save Alert
                 </Button>
