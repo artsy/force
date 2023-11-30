@@ -19,7 +19,7 @@ import { PriceRangeFilter } from "Components/Alert/Components/Form/PriceRange"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
-import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/Filters/NotificationPreferences"
+import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 
 export interface AlertFormikValues {
   name: string
@@ -43,7 +43,7 @@ export const Details: FC = () => {
       initialValues={state.settings}
       onSubmit={onComplete}
     >
-      {({ isSubmitting, values, setFieldValue, handleSubmit }) => {
+      {({ isSubmitting, values, handleSubmit }) => {
         const transitionToFiltersAndTrack = () => {
           dispatch({ type: "SET_SETTINGS", payload: values })
           goToFilters()
@@ -101,7 +101,7 @@ export const Details: FC = () => {
 
                 <DetailsInput />
 
-                <NotificationPreferencesQueryRenderer />
+                <NotificationPreferencesQueryRenderer mode="create" />
               </Join>
             </Flex>
 

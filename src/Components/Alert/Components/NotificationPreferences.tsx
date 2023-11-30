@@ -17,11 +17,15 @@ import { NotificationPreferencesQuery } from "__generated__/NotificationPreferen
 import { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
 import { useFormikContext } from "formik"
 
+type AlertFormMode = "create" | "edit"
+
 interface NotificationPreferencesProps {
+  mode: AlertFormMode
   viewer?: NotificationPreferences_viewer$data
 }
 
 export const NotificationPreferences: FC<NotificationPreferencesProps> = ({
+  mode,
   viewer,
 }) => {
   const { state } = useAlertContext()
@@ -39,8 +43,11 @@ export const NotificationPreferences: FC<NotificationPreferencesProps> = ({
   )
 
   useEffect(() => {
+    // If we're in edit mode, we don't want to override the user's email preference
+    if (mode === "edit") return
+
     setFieldValue("email", areCustomAlertsEmailNotificationsEnabled)
-  }, [areCustomAlertsEmailNotificationsEnabled, setFieldValue, state])
+  }, [areCustomAlertsEmailNotificationsEnabled, mode, setFieldValue, state])
 
   const showEmailPreferenceWarning =
     values.email && !areCustomAlertsEmailNotificationsEnabled
@@ -93,7 +100,13 @@ export const NotificationPreferencesFragmentContainer = createFragmentContainer(
   }
 )
 
-export const NotificationPreferencesQueryRenderer: React.FC = () => {
+interface NotificationPreferencesQueryRendererProps {
+  mode: AlertFormMode
+}
+
+export const NotificationPreferencesQueryRenderer: React.FC<NotificationPreferencesQueryRendererProps> = ({
+  mode,
+}) => {
   return (
     <SystemQueryRenderer<NotificationPreferencesQuery>
       // lazyLoad
@@ -116,7 +129,10 @@ export const NotificationPreferencesQueryRenderer: React.FC = () => {
         }
 
         return (
-          <NotificationPreferencesFragmentContainer viewer={props.viewer} />
+          <NotificationPreferencesFragmentContainer
+            mode={mode}
+            viewer={props.viewer}
+          />
         )
       }}
     />

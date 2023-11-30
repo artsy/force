@@ -1,10 +1,9 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react"
 import { AlertProvider } from "Components/Alert/AlertProvider"
-import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { MockBoot } from "DevTools/MockBoot"
 import { MockPayloadGenerator, createMockEnvironment } from "relay-test-utils"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/Filters/NotificationPreferences"
+import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
 import { Formik } from "formik"
 
