@@ -6,7 +6,7 @@ import { ConfirmationArtworksGridQueryRenderer } from "Components/SavedSearchAle
 import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
 
 export const Confirmation: FC = () => {
-  const { state } = useAlertContext()
+  const { dispatch, state } = useAlertContext()
 
   return (
     <Flex flexDirection="column" p={2}>
@@ -25,7 +25,9 @@ export const Confirmation: FC = () => {
           </Join>
         </Flex>
         <ConfirmationArtworksGridQueryRenderer
-          onClose={() => false}
+          onClose={() => {
+            dispatch({ type: "RESET" })
+          }}
           searchCriteriaId={state.searchCriteriaID as string}
           excludeArtworkIDs={
             state.currentArtworkID ? [state.currentArtworkID] : undefined
