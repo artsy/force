@@ -94,7 +94,7 @@ export const SaleRequiringIDV: Partial<
 export const NotIDVedUser: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] = {
   id: "user-id",
   isIdentityVerified: false,
-  pendingIdentityVerification: null,
+  pendingIdentityVerification: undefined,
 }
 
 export const UserPendingIDV: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] = {
@@ -106,7 +106,7 @@ export const UserPendingIDV: ArtworkSidebarBidAction_Test_Query$rawResponse["me"
 export const IDVedUser: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] = {
   id: "user-id",
   isIdentityVerified: true,
-  pendingIdentityVerification: null,
+  pendingIdentityVerification: undefined,
 }
 
 export const NoUser: ArtworkSidebarBidAction_Test_Query$rawResponse["me"] = null
