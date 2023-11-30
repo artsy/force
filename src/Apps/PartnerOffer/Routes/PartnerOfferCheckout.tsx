@@ -1,7 +1,5 @@
 import { FC, useEffect } from "react"
-import { graphql } from "react-relay"
-import { commitMutation } from "relay-runtime"
-import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import { graphql, commitMutation } from "react-relay"
 import { useSystemContext } from "System/SystemContext"
 import { PartnerOfferCheckoutMutation } from "__generated__/PartnerOfferCheckoutMutation.graphql"
 import { useRouter } from "System/Router/useRouter"
@@ -16,7 +14,7 @@ export const PartnerOfferCheckout: FC = () => {
 
   useEffect(() => {
     commitMutation<PartnerOfferCheckoutMutation>(
-      relayEnvironment as RelayModernEnvironment,
+      relayEnvironment,
       {
         mutation: graphql`
           mutation PartnerOfferCheckoutMutation(
