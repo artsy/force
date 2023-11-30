@@ -9,12 +9,12 @@ import {
 
 import { AlertProviderPreviewQuery } from "__generated__/AlertProviderPreviewQuery.graphql"
 
-type Settings = {
+export type Settings = {
   details: string
   email: boolean
   name: string
   push: boolean
-  frequency?: SavedSearchFrequency
+  frequency: SavedSearchFrequency
 }
 
 export type PreviewSavedSearch = NonNullable<
@@ -29,7 +29,7 @@ export type State = {
   preview: PreviewSavedSearch
   visible: boolean
   isEditMode?: boolean
-  initialized?: boolean
+  criteriaChanged?: boolean
 }
 
 export const DEFAULT_STATE: State = {
@@ -43,7 +43,7 @@ export const DEFAULT_STATE: State = {
   criteria: {},
   preview: null,
   visible: false,
-  initialized: false,
+  criteriaChanged: false,
 }
 
 type Action =
@@ -68,15 +68,6 @@ type Action =
     }
   | { type: "SET_SETTINGS"; payload: Settings }
   | { type: "SET_SEARCH_CRITERIA_ID"; payload: string }
-  | {
-      type: "SET_INITIAL_STATE_ON_EDIT"
-      payload: {
-        settings: Settings
-        initialized: boolean
-        criteria: SearchCriteriaAttributes
-        searchCriteriaID: string
-      }
-    }
 
 export const reducer = (onShow: (State) => State, onReset: () => State) => (
   state: State,
@@ -99,6 +90,7 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
       return {
         ...state,
         criteria: action.payload,
+        criteriaChanged: true,
       }
 
     case "SET_CRITERIA_ATTRIBUTE":
@@ -108,6 +100,7 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
           ...state.criteria,
           [action.payload.key]: action.payload.value,
         },
+        criteriaChanged: true,
       }
 
     case "REMOVE_CRITERIA_ATTRIBUTE_VALUE":
@@ -127,6 +120,7 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
           ...state.criteria,
           [action.payload.key]: criteriaValue,
         },
+        criteriaChanged: true,
       }
 
     case "SET_SEARCH_CRITERIA_ID":
@@ -135,19 +129,11 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
         searchCriteriaID: action.payload,
       }
 
-    case "SET_INITIAL_STATE_ON_EDIT":
-      return {
-        ...state,
-        settings: action.payload.settings,
-        initialized: true,
-        criteria: action.payload.criteria,
-        searchCriteriaID: action.payload.searchCriteriaID,
-      }
-
     case "SET_SETTINGS":
       return {
         ...state,
         settings: action.payload,
+        criteriaChanged: true,
       }
 
     default:

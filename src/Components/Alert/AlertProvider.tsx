@@ -5,6 +5,7 @@ import { Environment, fetchQuery, graphql } from "react-relay"
 import {
   AlertContext,
   PreviewSavedSearch,
+  Settings,
   State,
   reducer,
 } from "Components/Alert/AlertContext"
@@ -31,7 +32,9 @@ import createLogger from "Utils/logger"
 const logger = createLogger("AlertProvider.tsx")
 interface AlertProviderProps {
   initialCriteria?: SearchCriteriaAttributes
+  initialSettings?: Settings
   currentArtworkID?: string
+  searchCriteriaID?: string
   visible?: boolean
   isEditMode?: boolean
 }
@@ -39,7 +42,9 @@ interface AlertProviderProps {
 export const AlertProvider: FC<AlertProviderProps> = ({
   children,
   initialCriteria,
+  initialSettings,
   currentArtworkID,
+  searchCriteriaID,
   visible,
   isEditMode,
 }) => {
@@ -49,23 +54,26 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   const { submitMutation } = useCreateAlert()
   const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
   const { sendToast } = useToasts()
+  console.log("initialCriteria = ", initialCriteria)
+  console.log("initialSettings = ", initialSettings)
 
   const { isLoggedIn, relayEnvironment } = useSystemContext()
 
   const initialState: State = {
     settings: {
-      details: "",
-      email: true,
-      push: false,
-      frequency: "daily",
-      name: "",
+      details: initialSettings?.details ?? "",
+      email: initialSettings?.email ?? true,
+      push: initialSettings?.push ?? false,
+      frequency: initialSettings?.frequency ?? "daily",
+      name: initialSettings?.name ?? "",
     },
     criteria: getAllowedSearchCriteria(initialCriteria ?? {}),
     currentArtworkID,
+    searchCriteriaID,
     preview: null,
     visible: visible ?? false,
     isEditMode,
-    initialized: false,
+    criteriaChanged: false,
   }
 
   const [current, setCurrent] = useState<
@@ -84,7 +92,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   }, [initialCriteria, isEditMode])
 
   const handleCompleteEdit = async () => {
-    if (!state.searchCriteriaID) {
+    if (!searchCriteriaID) {
       return sendToast({
         variant: "error",
         message: t("common.errors.somethingWentWrong"),
@@ -94,7 +102,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
       await submitEditAlert({
         variables: {
           input: {
-            searchCriteriaID: state.searchCriteriaID,
+            searchCriteriaID: searchCriteriaID,
             attributes: state.criteria,
             userAlertSettings: state.settings,
           },

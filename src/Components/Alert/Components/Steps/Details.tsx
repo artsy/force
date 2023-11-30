@@ -20,12 +20,14 @@ import { PriceRangeFilter } from "Components/Alert/Components/Form/PriceRange"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
+import { SavedSearchFrequency } from "Components/SavedSearchAlert/types"
 
 export interface AlertFormikValues {
   name: string
   push: boolean
   email: boolean
   details: string
+  frequency: SavedSearchFrequency
 }
 
 export const Details: FC = () => {
