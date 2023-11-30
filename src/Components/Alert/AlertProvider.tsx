@@ -23,7 +23,6 @@ import {
   PreviewSavedSearchAttributes,
   AlertProviderPreviewQuery,
 } from "__generated__/AlertProviderPreviewQuery.graphql"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { DEFAULT_METRIC, Metric } from "Utils/metrics"
 
 interface AlertProviderProps {
