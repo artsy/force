@@ -58,18 +58,14 @@ export const Details: FC = () => {
               ...(isMounted
                 ? {
                     opacity: 1,
-                    transform: "translateX(0)",
-                    transition: "opacity 300ms, transform 300ms",
+                    transition: "opacity 250ms",
                   }
                 : {
                     opacity: 0,
-                    transform: "translateX(-10px)",
                   }),
             }}
           >
-            <Flex flexDirection="column" p={2} overflowY="auto">
-              <Text variant="lg">Create Alert</Text>
-              <Spacer y={2} />
+            <Flex flexDirection="column" p={2}>
               <AlertNameInput />
               <Spacer y={4} />
               <Join separator={<Spacer y={4} />}>
@@ -127,20 +123,22 @@ export const Details: FC = () => {
                     />
                   </Box>
                 </Box>
-
-                <Button
-                  data-testid="submitCreateAlert"
-                  loading={isSubmitting}
-                  onClick={() => {
-                    dispatch({ type: "SET_SETTINGS", payload: values })
-                    handleSubmit()
-                  }}
-                  width="100%"
-                >
-                  Create Alert
-                </Button>
               </Join>
             </Flex>
+
+            <Box position="sticky" bottom={0} bg={"white100"} p={2}>
+              <Button
+                data-testid="submitCreateAlert"
+                loading={isSubmitting}
+                onClick={() => {
+                  dispatch({ type: "SET_SETTINGS", payload: values })
+                  handleSubmit()
+                }}
+                width="100%"
+              >
+                Create Alert
+              </Button>
+            </Box>
           </Box>
         )
       }}
