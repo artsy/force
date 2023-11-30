@@ -26,8 +26,6 @@ import {
 } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { RouterLink } from "System/Router/RouterLink"
-// TODO: do we use FREQUENCY for push notifications?
-//import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
@@ -269,7 +267,11 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                     flex={1}
                     loading={isSubmitting}
                     onClick={finishEditing}
-                    disabled={!dirty && !state.criteriaChanged}
+                    disabled={
+                      !dirty &&
+                      !state.criteriaChanged &&
+                      (values.push || values.email)
+                    }
                   >
                     Save Alert
                   </Button>
@@ -283,7 +285,11 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                   loading={isSubmitting}
                   width="100%"
                   onClick={finishEditing}
-                  disabled={!dirty && !state.criteriaChanged}
+                  disabled={
+                    !dirty &&
+                    !state.criteriaChanged &&
+                    (values.push || values.email)
+                  }
                 >
                   Save Alert
                 </Button>

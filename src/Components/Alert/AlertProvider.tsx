@@ -28,6 +28,7 @@ import {
 import { useToasts } from "@artsy/palette"
 import { t } from "i18next"
 import createLogger from "Utils/logger"
+import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 
 const logger = createLogger("AlertProvider.tsx")
 interface AlertProviderProps {
@@ -54,8 +55,6 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   const { submitMutation } = useCreateAlert()
   const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
   const { sendToast } = useToasts()
-  console.log("initialCriteria = ", initialCriteria)
-  console.log("initialSettings = ", initialSettings)
 
   const { isLoggedIn, relayEnvironment } = useSystemContext()
 
@@ -64,7 +63,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
       details: initialSettings?.details ?? "",
       email: initialSettings?.email ?? true,
       push: initialSettings?.push ?? false,
-      frequency: initialSettings?.frequency ?? "daily",
+      frequency: initialSettings?.frequency ?? DEFAULT_FREQUENCY,
       name: initialSettings?.name ?? "",
     },
     criteria: getAllowedSearchCriteria(initialCriteria ?? {}),
@@ -115,8 +114,6 @@ export const AlertProvider: FC<AlertProviderProps> = ({
         current: JSON.stringify(userAlertSettings),
         changed: JSON.stringify(updatedAlertSettings),
       }) */
-
-      onReset()
     } catch (error) {
       console.error("Alert/useAlertContext", error)
       logger.error(error)
