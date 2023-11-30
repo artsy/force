@@ -2,6 +2,7 @@ import { usePrevious } from "@artsy/palette"
 import { LayoutBlank } from "Apps/Components/Layouts/LayoutBlank"
 import { LayoutContainerOnly } from "Apps/Components/Layouts/LayoutContainerOnly"
 import { LayoutDefault } from "Apps/Components/Layouts/LayoutDefault"
+import { LayoutFullBleed } from "Apps/Components/Layouts/LayoutFullBleed"
 import { LayoutLogoOnly } from "Apps/Components/Layouts/LayoutLogoOnly"
 import { LayoutNavOnly } from "Apps/Components/Layouts/LayoutNavOnly"
 import { useSystemContext } from "System/SystemContext"
@@ -19,6 +20,7 @@ export const LAYOUTS = {
   Blank: LayoutBlank,
   ContainerOnly: LayoutContainerOnly,
   Default: LayoutDefault,
+  FullBleed: LayoutFullBleed,
   LogoOnly: LayoutLogoOnly,
   NavOnly: LayoutNavOnly,
 } as const

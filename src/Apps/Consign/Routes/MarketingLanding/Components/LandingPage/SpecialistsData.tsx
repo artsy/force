@@ -117,7 +117,8 @@ export const SPECIALISTS: SpecialistsData[] = [
     specialty: "auctions",
     bio:
       "Caroline advises collectors on buying and selling hard-to-access unique artworks. Her passion and foremost expertise is emerging and ultra contemporary artist markets. With Artsy since 2016, she holds a Bachelor of Arts in Art History from Wake Forest University.",
-    imageUrl: "https://files.artsy.net/images/Caroline-Desktop.webp",
+    imageUrl:
+      "https://files.artsy.net/images/Caroline-Mobile-1701268893821.webp",
   },
   {
     firstName: "Itziar",
@@ -126,7 +127,7 @@ export const SPECIALISTS: SpecialistsData[] = [
     jobTitle: "Senior Advisor, Auctions and Private Sales",
     specialty: "auctions",
     bio:
-      "Itziar is an accomplished art advisor committed to helping clients build exceptional collections that reflect their unique tastes and aspirations. Itziar joined Artsy in 2021, after 7+ years of experience in both private sales and auctions at Bonhams, specializing in modern, post-war, and contemporary art.",
+      "Itziar is a senior art advisor and auction specialist with more than a decade of art experience. She is dedicated to curating remarkable art collections for clients, reflecting their tastes and facilitating art sales. Proficient in English, Spanish, and Italian, her impressive career includes heading modern, post-war, and contemporary art sales at Bonhams. Notably, she excels in auctions and private sales, enhancing Artsy since 2021.",
     imageUrl: "https://files.artsy.net/images/Itziar-Mobile.webp",
   },
   {

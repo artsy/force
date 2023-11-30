@@ -37,6 +37,9 @@ interface ServiceAvailability {
   enabled?: boolean
 }
 
+/**
+ * @deprecated - Use AddressAutocompleteInput instead
+ */
 export const useAddressAutocomplete = (
   address: Partial<Address> & { country: Address["country"] },
   {
