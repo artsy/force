@@ -70,7 +70,7 @@ const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> 
   return (
     <>
       <Media greaterThanOrEqual="md">
-        {current === "EDIT_ALERT_DETAILS" && (
+        {current === "ALERT_DETAILS" && (
           <Box flex={1} p={4}>
             <Flex justifyContent="space-between" alignItems="center">
               <Text variant={["md", "lg"]} flex={1} mr={1}>
@@ -93,7 +93,7 @@ const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> 
             />
           </Box>
         )}
-        {current === "EDIT_ALERT_FILTERS" && (
+        {current === "ALERT_FILTERS" && (
           <Box flex={1} p={2}>
             <Filters />
           </Box>
@@ -103,7 +103,7 @@ const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> 
       <Media lessThan="md">
         <ModalDialog
           header={null}
-          title={current === "EDIT_ALERT_DETAILS" ? "Edit Alert" : "Edit Alert"}
+          title="Edit Alert"
           m={0}
           dialogProps={{
             width: "100%",
@@ -111,7 +111,7 @@ const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> 
           }}
           onClose={onCloseClick}
         >
-          {current === "EDIT_ALERT_DETAILS" && (
+          {current === "ALERT_DETAILS" && (
             <>
               <Spacer y={4} />
 
@@ -122,7 +122,7 @@ const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> 
               />
             </>
           )}
-          {current === "EDIT_ALERT_FILTERS" && (
+          {current === "ALERT_FILTERS" && (
             <Box m={-2}>
               <Filters />
             </Box>

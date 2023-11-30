@@ -76,12 +76,8 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   }
 
   const [current, setCurrent] = useState<
-    | "ALERT_DETAILS"
-    | "ALERT_FILTERS"
-    | "ALERT_CONFIRMATION"
-    | "EDIT_ALERT_DETAILS"
-    | "EDIT_ALERT_FILTERS"
-  >(isEditMode ? "EDIT_ALERT_DETAILS" : "ALERT_DETAILS")
+    "ALERT_DETAILS" | "ALERT_FILTERS" | "ALERT_CONFIRMATION"
+  >("ALERT_DETAILS")
 
   useEffect(() => {
     if (isEditMode) return
@@ -150,7 +146,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   }
 
   const onReset = (): State => {
-    setCurrent(isEditMode ? "EDIT_ALERT_DETAILS" : "ALERT_DETAILS")
+    setCurrent("ALERT_DETAILS")
     return initialState
   }
 
@@ -190,6 +186,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   })
 
   useEffect(() => {
+    // proceed only for the Create Alert flow; ckip for the Edit Alert flow
     if (!state.visible && !state.isEditMode) return
 
     const subscription = fetchQuery<AlertProviderPreviewQuery>(
@@ -240,10 +237,10 @@ export const AlertProvider: FC<AlertProviderProps> = ({
         current,
         dispatch,
         goToDetails: () => {
-          setCurrent(isEditMode ? "EDIT_ALERT_DETAILS" : "ALERT_DETAILS")
+          setCurrent("ALERT_DETAILS")
         },
         goToFilters: () => {
-          setCurrent(isEditMode ? "EDIT_ALERT_FILTERS" : "ALERT_FILTERS")
+          setCurrent("ALERT_FILTERS")
         },
         onComplete: handleComplete,
         onCompleteEdit: handleCompleteEdit,
