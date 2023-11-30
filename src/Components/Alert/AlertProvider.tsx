@@ -24,6 +24,7 @@ import {
   AlertProviderPreviewQuery,
 } from "__generated__/AlertProviderPreviewQuery.graphql"
 import { DEFAULT_METRIC, Metric } from "Utils/metrics"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface AlertProviderProps {
   initialCriteria?: SearchCriteriaAttributes

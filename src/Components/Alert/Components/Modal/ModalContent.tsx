@@ -7,7 +7,6 @@ import { Flex, ModalClose } from "@artsy/palette"
 export interface ModalDialogContentProps
   extends BoxProps,
     React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode
   onClose?(): void
   header?: React.ReactNode
   footer?: React.ReactNode
