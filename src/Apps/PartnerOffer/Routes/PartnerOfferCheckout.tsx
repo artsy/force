@@ -13,73 +13,70 @@ export const PartnerOfferCheckout: FC = () => {
   const partnerOfferId = match.params.partnerOfferID
 
   useEffect(() => {
-    commitMutation<PartnerOfferCheckoutMutation>(
-      relayEnvironment,
-      {
-        mutation: graphql`
-          mutation PartnerOfferCheckoutMutation(
-            $input: CommerceCreatePartnerOfferOrderInput!
-          ) {
-            commerceCreatePartnerOfferOrder(input: $input) {
-              orderOrError {
-                ... on CommerceOrderWithMutationSuccess {
-                  __typename
-                  order {
-                    internalID
-                    mode
-                  }
+    commitMutation<PartnerOfferCheckoutMutation>(relayEnvironment, {
+      mutation: graphql`
+        mutation PartnerOfferCheckoutMutation(
+          $input: CommerceCreatePartnerOfferOrderInput!
+        ) {
+          commerceCreatePartnerOfferOrder(input: $input) {
+            orderOrError {
+              ... on CommerceOrderWithMutationSuccess {
+                __typename
+                order {
+                  internalID
+                  mode
                 }
-                ... on CommerceOrderWithMutationFailure {
-                  error {
-                    type
-                    code
-                    data
-                  }
+              }
+              ... on CommerceOrderWithMutationFailure {
+                error {
+                  type
+                  code
+                  data
                 }
               }
             }
           }
-        `,
-        variables: {
-          input: {
-            partnerOfferId: partnerOfferId,
-          },
+        }
+      `,
+      variables: {
+        input: {
+          partnerOfferId: partnerOfferId,
         },
-        onCompleted: data => {
-          const {
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-            commerceCreatePartnerOfferOrder: { orderOrError },
-          } = data
-          let redirectUrl = "/"
+      },
+      onCompleted: data => {
+        const {
+          // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
+          commerceCreatePartnerOfferOrder: { orderOrError },
+        } = data
+        let redirectUrl = "/"
 
-          if (orderOrError.error) {
-            const errorCode = orderOrError.error.code
-            const errorData = JSON.parse(orderOrError.error.data)
-            switch (errorCode) {
-              case "expired_partner_offer":
-                // TODO: Show error message in artwork page
-                redirectUrl = `/artwork/${errorData.artwork_id}`
-                break
-              case "not_acquireable":
-                // TODO: Show error message in artwork page
-                redirectUrl = `/artwork/${errorData.artwork_id}`
-                break
-            }
-          } else {
-            redirectUrl = `/orders/${orderOrError.order.internalID}`
+        if (orderOrError.error) {
+          const errorCode = orderOrError.error.code
+          const errorData = JSON.parse(orderOrError.error.data)
+          switch (errorCode) {
+            case "expired_partner_offer":
+              // TODO: Show error message in artwork page
+              redirectUrl = `/artwork/${errorData.artwork_id}`
+              break
+            case "not_acquireable":
+              // TODO: Show error message in artwork page
+              redirectUrl = `/artwork/${errorData.artwork_id}`
+              break
           }
-          router?.push(redirectUrl)
-        },
-        onError: (error) => {
-          logger.error(error)
-        },
-      }
-    )
+        } else {
+          redirectUrl = `/orders/${orderOrError.order.internalID}`
+        }
+        router?.push(redirectUrl)
+      },
+      onError: error => {
+        logger.error(error)
+      },
+    })
   })
 
   return (
     <LoadingArea isLoading={true}>
-      <Box height={300}></Box>
+      <Box height={300} />
     </LoadingArea>
   )
 }
