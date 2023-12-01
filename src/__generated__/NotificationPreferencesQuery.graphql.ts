@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d6422ec78efe6a9bd1f85959e6c2ff65>>
+ * @generated SignedSource<<2954b221acee6e07c399ea4ae3b2ff43>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type EmailPreferenceWarningMessageQuery$variables = Record<PropertyKey, never>;
-export type EmailPreferenceWarningMessageQuery$data = {
+export type NotificationPreferencesQuery$variables = Record<PropertyKey, never>;
+export type NotificationPreferencesQuery$data = {
   readonly viewer: {
-    readonly " $fragmentSpreads": FragmentRefs<"EmailPreferenceWarningMessage_viewer">;
+    readonly " $fragmentSpreads": FragmentRefs<"NotificationPreferences_viewer">;
   } | null | undefined;
 };
-export type EmailPreferenceWarningMessageQuery = {
-  response: EmailPreferenceWarningMessageQuery$data;
-  variables: EmailPreferenceWarningMessageQuery$variables;
+export type NotificationPreferencesQuery = {
+  response: NotificationPreferencesQuery$data;
+  variables: NotificationPreferencesQuery$variables;
 };
 
 const node: ConcreteRequest = {
@@ -26,7 +26,7 @@ const node: ConcreteRequest = {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "EmailPreferenceWarningMessageQuery",
+    "name": "NotificationPreferencesQuery",
     "selections": [
       {
         "alias": null,
@@ -39,7 +39,7 @@ const node: ConcreteRequest = {
           {
             "args": null,
             "kind": "FragmentSpread",
-            "name": "EmailPreferenceWarningMessage_viewer"
+            "name": "NotificationPreferences_viewer"
           }
         ],
         "storageKey": null
@@ -52,7 +52,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "EmailPreferenceWarningMessageQuery",
+    "name": "NotificationPreferencesQuery",
     "selections": [
       {
         "alias": null,
@@ -100,15 +100,15 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "2b118ed57279ed579c6c061f0d9781ca",
+    "cacheID": "43fac0034838582150d5333fea6faa38",
     "id": null,
     "metadata": {},
-    "name": "EmailPreferenceWarningMessageQuery",
+    "name": "NotificationPreferencesQuery",
     "operationKind": "query",
-    "text": "query EmailPreferenceWarningMessageQuery {\n  viewer {\n    ...EmailPreferenceWarningMessage_viewer\n  }\n}\n\nfragment EmailPreferenceWarningMessage_viewer on Viewer {\n  notificationPreferences {\n    channel\n    name\n    status\n  }\n}\n"
+    "text": "query NotificationPreferencesQuery {\n  viewer {\n    ...NotificationPreferences_viewer\n  }\n}\n\nfragment NotificationPreferences_viewer on Viewer {\n  notificationPreferences {\n    channel\n    name\n    status\n  }\n}\n"
   }
 };
 
-(node as any).hash = "b70cc7290e95e848f43d8a7b17889665";
+(node as any).hash = "59f3999f3f59f823cc03ba0795090112";
 
 export default node;

@@ -88,7 +88,10 @@ describe("AlertProvider", () => {
         },
       }),
     }
+
+    mockResolveLastOperation(mockedNotificationPreferencesResolver)
     mockResolveLastOperation(mockedPreviewResolver)
+
     await flushPromiseQueue()
 
     expect(screen.getByText("Add Filters:")).toBeInTheDocument()
@@ -124,3 +127,15 @@ describe("AlertProvider", () => {
     ).toBeInTheDocument()
   })
 })
+
+const mockedNotificationPreferencesResolver = {
+  Viewer: () => ({
+    notificationPreferences: [
+      {
+        channel: "email",
+        name: "custom_alerts",
+        status: "NOT_SUBSCRIBED",
+      },
+    ],
+  }),
+}
