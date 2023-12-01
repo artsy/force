@@ -36,9 +36,7 @@ export const QuickMultipleSelectAlertFilter: FC<QuickMultipleSelectAlertFilterPr
 
   return (
     <>
-      <Text variant="sm-display" pb={1}>
-        {label}
-      </Text>
+      <Text variant="sm-display">{label}</Text>
 
       {!!description && (
         <Text variant="xs" pb={1} mt={2}>

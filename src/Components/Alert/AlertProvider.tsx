@@ -8,7 +8,7 @@ import {
   State,
   reducer,
 } from "Components/Alert/AlertContext"
-import { Modal } from "Components/Alert/Components/Modal"
+import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { Steps } from "Components/Alert/Components/Steps"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { useCreateAlert } from "Components/Alert/Hooks/useCreateAlert"
@@ -23,8 +23,8 @@ import {
   PreviewSavedSearchAttributes,
   AlertProviderPreviewQuery,
 } from "__generated__/AlertProviderPreviewQuery.graphql"
-import { useFeatureFlag } from "System/useFeatureFlag"
 import { DEFAULT_METRIC, Metric } from "Utils/metrics"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface AlertProviderProps {
   initialCriteria?: SearchCriteriaAttributes

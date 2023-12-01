@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<91162d495be0770f31ee16d2163c506c>>
+ * @generated SignedSource<<89cd8e78e61c1e06e263081a37217a47>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type settingsRoutes_SavedSearchAlertsQuery$variables = Record<PropertyKey, never>;
-export type settingsRoutes_SavedSearchAlertsQuery$data = {
+export type settingsRoutes_SavedSearchAlertsAppEditQuery$variables = Record<PropertyKey, never>;
+export type settingsRoutes_SavedSearchAlertsAppEditQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertsApp_me">;
   } | null | undefined;
 };
-export type settingsRoutes_SavedSearchAlertsQuery = {
-  response: settingsRoutes_SavedSearchAlertsQuery$data;
-  variables: settingsRoutes_SavedSearchAlertsQuery$variables;
+export type settingsRoutes_SavedSearchAlertsAppEditQuery = {
+  response: settingsRoutes_SavedSearchAlertsAppEditQuery$data;
+  variables: settingsRoutes_SavedSearchAlertsAppEditQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -39,7 +39,7 @@ return {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "settingsRoutes_SavedSearchAlertsQuery",
+    "name": "settingsRoutes_SavedSearchAlertsAppEditQuery",
     "selections": [
       {
         "alias": null,
@@ -65,7 +65,7 @@ return {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "settingsRoutes_SavedSearchAlertsQuery",
+    "name": "settingsRoutes_SavedSearchAlertsAppEditQuery",
     "selections": [
       {
         "alias": null,
@@ -242,16 +242,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e947d48684cdf32f1d95f6ef26592269",
+    "cacheID": "c8b5db0ed191a7d37ee26c2b37da44f3",
     "id": null,
     "metadata": {},
-    "name": "settingsRoutes_SavedSearchAlertsQuery",
+    "name": "settingsRoutes_SavedSearchAlertsAppEditQuery",
     "operationKind": "query",
-    "text": "query settingsRoutes_SavedSearchAlertsQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query settingsRoutes_SavedSearchAlertsAppEditQuery {\n  me {\n    ...SavedSearchAlertsApp_me\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me on Me {\n  savedSearchesConnection(first: 10, sort: CREATED_AT_DESC) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "1a1527fe89bb166c9f3f58b8618f9220";
+(node as any).hash = "8df33aeecf080d4a56a31f7b7411b096";
 
 export default node;

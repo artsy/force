@@ -2,7 +2,6 @@ import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
   Box,
   Button,
-  Checkbox,
   Clickable,
   Flex,
   Join,
@@ -20,7 +19,7 @@ import { PriceRangeFilter } from "Components/Alert/Components/Form/PriceRange"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
-import { EmailPreferenceWarningMessageQueryRenderer } from "Components/Alert/Components/Filters/EmailPreferenceWarningMessage"
+import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 
 export interface AlertFormikValues {
   name: string
@@ -44,7 +43,7 @@ export const Details: FC = () => {
       initialValues={state.settings}
       onSubmit={onComplete}
     >
-      {({ isSubmitting, values, setFieldValue, handleSubmit }) => {
+      {({ isSubmitting, values, handleSubmit }) => {
         const transitionToFiltersAndTrack = () => {
           dispatch({ type: "SET_SETTINGS", payload: values })
           goToFilters()
@@ -58,18 +57,14 @@ export const Details: FC = () => {
               ...(isMounted
                 ? {
                     opacity: 1,
-                    transform: "translateX(0)",
-                    transition: "opacity 300ms, transform 300ms",
+                    transition: "opacity 250ms",
                   }
                 : {
                     opacity: 0,
-                    transform: "translateX(-10px)",
                   }),
             }}
           >
-            <Flex flexDirection="column" p={2} overflowY="auto">
-              <Text variant="lg">Create Alert</Text>
-              <Spacer y={2} />
+            <Flex flexDirection="column" p={2}>
               <AlertNameInput />
               <Spacer y={4} />
               <Join separator={<Spacer y={4} />}>
@@ -106,41 +101,23 @@ export const Details: FC = () => {
 
                 <DetailsInput />
 
-                <Box>
-                  <Box display="flex" justifyContent="space-between">
-                    <Text variant="sm-display">Email</Text>
-                    <Checkbox
-                      onSelect={selected => setFieldValue("email", selected)}
-                      selected={values.email}
-                    />
-                  </Box>
-
-                  <EmailPreferenceWarningMessageQueryRenderer />
-
-                  <Spacer y={2} />
-
-                  <Box display="flex" justifyContent="space-between">
-                    <Text variant="sm-display">Push Notifications</Text>
-                    <Checkbox
-                      onSelect={selected => setFieldValue("push", selected)}
-                      selected={values.push}
-                    />
-                  </Box>
-                </Box>
-
-                <Button
-                  data-testid="submitCreateAlert"
-                  loading={isSubmitting}
-                  onClick={() => {
-                    dispatch({ type: "SET_SETTINGS", payload: values })
-                    handleSubmit()
-                  }}
-                  width="100%"
-                >
-                  Create Alert
-                </Button>
+                <NotificationPreferencesQueryRenderer mode="create" />
               </Join>
             </Flex>
+
+            <Box position="sticky" bottom={0} bg={"white100"} p={2}>
+              <Button
+                data-testid="submitCreateAlert"
+                loading={isSubmitting}
+                onClick={() => {
+                  dispatch({ type: "SET_SETTINGS", payload: values })
+                  handleSubmit()
+                }}
+                width="100%"
+              >
+                Create Alert
+              </Button>
+            </Box>
           </Box>
         )
       }}

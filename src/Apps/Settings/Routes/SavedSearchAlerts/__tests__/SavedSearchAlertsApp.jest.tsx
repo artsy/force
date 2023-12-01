@@ -116,10 +116,15 @@ describe("SavedSearchAlertsApp", () => {
         savedSearchesConnection: mockedSavedSearchesConnection,
       }),
     })
-
     fireEvent.click(screen.getAllByText("Edit")[0])
 
-    expect(screen.getAllByText("Edit Alert")[0]).toBeInTheDocument()
+    expect(window.location.pathname).toEqual(
+      `/settings/alerts/example-id-1/edit`
+    )
+
+    screen.getByTestId("closeButton").click()
+
+    expect(window.location.pathname).toEqual(`/settings/alerts`)
   })
 })
 
@@ -127,6 +132,7 @@ const mockedSavedSearchesConnection = {
   edges: [
     {
       node: {
+        internalID: "example-id-1",
         labels: [
           { displayValue: "Limited Edition" },
           { displayValue: "Andy Warhol" },
@@ -136,6 +142,7 @@ const mockedSavedSearchesConnection = {
     },
     {
       node: {
+        internalID: "example-id-2",
         displayName: "Alert Name 2",
       },
     },
