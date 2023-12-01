@@ -21,7 +21,6 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { SavedSearchFrequency } from "Components/SavedSearchAlert/types"
-import { EmailPreferenceWarningMessageQueryRenderer } from "Components/Alert/Components/Filters/EmailPreferenceWarningMessage"
 
 export interface AlertFormikValues {
   name: string

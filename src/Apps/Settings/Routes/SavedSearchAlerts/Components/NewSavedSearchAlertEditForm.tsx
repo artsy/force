@@ -153,7 +153,6 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
         }
 
         const transitionToFilters = () => {
-          dispatch({ type: "SET_SETTINGS", payload: values })
           goToFilters()
         }
 
