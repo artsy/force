@@ -15,7 +15,7 @@ export type Settings = {
   email: boolean
   name: string
   push: boolean
-  frequency: SavedSearchFrequency
+  frequency?: SavedSearchFrequency
 }
 
 export type PreviewSavedSearch = NonNullable<

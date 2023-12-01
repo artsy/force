@@ -27,7 +27,7 @@ export interface AlertFormikValues {
   push: boolean
   email: boolean
   details: string
-  frequency: SavedSearchFrequency
+  frequency?: SavedSearchFrequency
 }
 
 export const Details: FC = () => {

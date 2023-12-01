@@ -39,6 +39,7 @@ import { isEqual } from "lodash"
 import { FiltersFooter } from "Components/Alert/Components/Steps/StepsFooter/FiltersFooter"
 import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
 import { Modal } from "Components/Alert/Components/Modal/Modal"
+import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 
 interface NewSavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
@@ -236,7 +237,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
 
                 {values.push && (
                   <FrequenceRadioButtons
-                    defaultFrequence={values.frequency}
+                    defaultFrequence={values.frequency || DEFAULT_FREQUENCY}
                     onSelect={selectedOption =>
                       setFieldValue("frequency", selectedOption)
                     }
