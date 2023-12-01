@@ -76,7 +76,7 @@ export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
           return (
             <Pill
               key={key}
-              variant="filter"
+              variant="dotted"
               selected
               mr={1}
               onClick={() => {
