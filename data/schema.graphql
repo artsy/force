@@ -13697,6 +13697,7 @@ type PageInfo {
 
 type Partner implements Node {
   alertsSummaryArtistsConnection(
+    activeInventory: Boolean
     after: String
     before: String
     first: Int
