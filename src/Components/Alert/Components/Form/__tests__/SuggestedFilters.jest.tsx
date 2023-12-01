@@ -14,7 +14,7 @@ const mockTransitionToFiltersAndTrack = jest.fn()
 
 describe("SuggestedFilters", () => {
   const { renderWithRelay } = setupTestWrapperTL({
-    Component: ({ test }: { test: boolean }) => (
+    Component: () => (
       <AlertProvider initialCriteria={{}}>
         <SugggestedFiltersQueryRenderer
           transitionToFiltersAndTrack={mockTransitionToFiltersAndTrack}

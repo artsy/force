@@ -15,8 +15,8 @@ import {
 } from "relay-test-utils"
 import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 
-type SetupTestWrapper<T extends OperationType, ComponentProps> = {
-  Component: React.ComponentType<T["response"] & ComponentProps>
+type SetupTestWrapper<T extends OperationType> = {
+  Component: React.ComponentType<T["response"]>
   query?: GraphQLTaggedNode
   variables?: T["variables"]
 }
@@ -96,11 +96,11 @@ type RenderWithRelay = RTLRenderResult & {
   mockRejectLastOperation: (error: Error) => void
 }
 
-export const setupTestWrapperTL = <T extends OperationType, ComponentProps>({
+export const setupTestWrapperTL = <T extends OperationType>({
   Component,
   query,
   variables = {},
-}: SetupTestWrapper<T, ComponentProps>) => {
+}: SetupTestWrapper<T>) => {
   const renderWithRelay = (
     mockResolvers: MockResolvers = {},
     componentProps?: any,
@@ -177,14 +177,14 @@ export const setupTestWrapperTL = <T extends OperationType, ComponentProps>({
  * @deprecated This method should _not_ be used for new tests. See
  * `setupTestWrapperTL` which uses `@testing-library/react`.
  */
-export const setupTestWrapper = <T extends OperationType, ComponentProps>({
+export const setupTestWrapper = <T extends OperationType>({
   Component,
   query,
   variables = {},
-}: SetupTestWrapper<T, ComponentProps>) => {
+}: SetupTestWrapper<T>) => {
   const getWrapper = (
     mockResolvers: MockResolvers = {},
-    componentProps: any = {},
+    componentProps: {} = {},
     mockedEnv?: ReturnType<typeof createMockEnvironment>
   ) => {
     const env = mockedEnv ?? createMockEnvironment()
