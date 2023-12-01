@@ -82,7 +82,7 @@ export const Details: FC = () => {
                   </Flex>
                 </Box>
 
-                {newAlertModalFilteresEnabled && !newAlertModalFilteresEnabled && (
+                {newAlertModalFilteresEnabled && !enableSuggestedFilters && (
                   <Clickable
                     data-testid="addFilters"
                     onClick={transitionToFiltersAndTrack}
