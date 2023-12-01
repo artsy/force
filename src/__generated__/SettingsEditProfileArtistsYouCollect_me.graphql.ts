@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<20300853362d086368ff3742d3db8148>>
+ * @generated SignedSource<<19839a0254f797169ad15736cb3fed85>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,7 +18,7 @@ export type SettingsEditProfileArtistsYouCollect_me$data = {
       readonly interest: {
         readonly __typename: "Artist";
         readonly internalID: string;
-        readonly name: string | null;
+        readonly name: string | null | undefined;
         readonly slug: string;
       } | {
         // This will never be '%other', but we need some
@@ -26,8 +26,8 @@ export type SettingsEditProfileArtistsYouCollect_me$data = {
         readonly __typename: "%other";
       };
       readonly internalID: string;
-    } | null>;
-  } | null;
+    } | null | undefined>;
+  } | null | undefined;
   readonly " $fragmentType": "SettingsEditProfileArtistsYouCollect_me";
 };
 export type SettingsEditProfileArtistsYouCollect_me$key = {

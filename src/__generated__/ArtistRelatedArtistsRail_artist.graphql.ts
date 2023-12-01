@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<53f9f2f3c4e99e705ca2dc3f1d01c736>>
+ * @generated SignedSource<<8ed367681651a157d55beedbbd926dfd>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,14 +15,14 @@ export type ArtistRelatedArtistsRail_artist$data = {
     readonly artistsConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly href: string | null;
+          readonly href: string | null | undefined;
           readonly internalID: string;
           readonly slug: string;
           readonly " $fragmentSpreads": FragmentRefs<"CellArtist_artist">;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ArtistRelatedArtistsRail_artist";
 };
 export type ArtistRelatedArtistsRail_artist$key = {

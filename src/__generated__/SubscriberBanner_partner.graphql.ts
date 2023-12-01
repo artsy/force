@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a86b456f3ab442b212baac27c0fb0d6d>>
+ * @generated SignedSource<<920d8993ac8c222c2b22ee0ed1788b77>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SubscriberBanner_partner$data = {
-  readonly hasFairPartnership: boolean | null;
-  readonly name: string | null;
+  readonly hasFairPartnership: boolean | null | undefined;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "SubscriberBanner_partner";
 };
 export type SubscriberBanner_partner$key = {

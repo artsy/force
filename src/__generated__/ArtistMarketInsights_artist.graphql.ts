@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6c7c16de440066ba6e3440ba0c967e76>>
+ * @generated SignedSource<<66a38350a22a1142e1d233484ddd7804>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,26 +14,26 @@ export type ArtistMarketInsights_artist$data = {
   readonly auctionResultsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly organization: string | null;
+        readonly organization: string | null | undefined;
         readonly price_realized: {
-          readonly display: string | null;
-        } | null;
-        readonly sale_date: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly collections: ReadonlyArray<string | null> | null;
+          readonly display: string | null | undefined;
+        } | null | undefined;
+        readonly sale_date: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly collections: ReadonlyArray<string | null | undefined> | null | undefined;
   readonly highlights: {
     readonly partnersConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly categories: ReadonlyArray<{
             readonly slug: string;
-          } | null> | null;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
+          } | null | undefined> | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ArtistMarketInsights_artist";
 };
 export type ArtistMarketInsights_artist$key = {

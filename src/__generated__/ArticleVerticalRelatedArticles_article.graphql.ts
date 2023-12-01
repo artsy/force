@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9f462080fb03b830f8fc68d08577fc33>>
+ * @generated SignedSource<<4b176b96e56056c24f3d6f84a381b876>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleVerticalRelatedArticles_article$data = {
-  readonly vertical: string | null;
+  readonly vertical: string | null | undefined;
   readonly verticalRelatedArticles: ReadonlyArray<{
     readonly internalID: string;
     readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;

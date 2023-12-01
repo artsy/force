@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf05622f9ed2ff86aac12bb449c6a103>>
+ * @generated SignedSource<<8d487e52ff65ab8832860b45a8a562e0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type ArticlesRail_partner$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
-      } | null;
-    } | null> | null;
-    readonly totalCount: number | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArticlesRail_partner";
 };

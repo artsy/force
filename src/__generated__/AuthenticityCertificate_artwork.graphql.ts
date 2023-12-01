@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<86f2c6193bb44c8a7072ce3f0663cc22>>
+ * @generated SignedSource<<ef60278889acfc52be0e5fd06b75577b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuthenticityCertificate_artwork$data = {
-  readonly hasCertificateOfAuthenticity: boolean | null;
-  readonly is_biddable: boolean | null;
+  readonly hasCertificateOfAuthenticity: boolean | null | undefined;
+  readonly is_biddable: boolean | null | undefined;
   readonly " $fragmentType": "AuthenticityCertificate_artwork";
 };
 export type AuthenticityCertificate_artwork$key = {

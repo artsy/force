@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<04474c105d96aa898e0724d7836dfeb8>>
+ * @generated SignedSource<<02ee42f330495596e45e1618fb4228c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,44 +13,44 @@ export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "ARTSY_VANGUARD_YEAR
 import { FragmentRefs } from "relay-runtime";
 export type ArtistHeader2_artist$data = {
   readonly biographyBlurb: {
-    readonly credit: string | null;
-    readonly text: string | null;
-  } | null;
+    readonly credit: string | null | undefined;
+    readonly text: string | null | undefined;
+  } | null | undefined;
   readonly counts: {
-    readonly follows: any | null;
-  } | null;
+    readonly follows: any | null | undefined;
+  } | null | undefined;
   readonly coverArtwork: {
-    readonly href: string | null;
+    readonly href: string | null | undefined;
     readonly image: {
-      readonly height: number | null;
-      readonly src: string | null;
-      readonly width: number | null;
-    } | null;
-    readonly title: string | null;
-  } | null;
-  readonly formattedNationalityAndBirthday: string | null;
+      readonly height: number | null | undefined;
+      readonly src: string | null | undefined;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+    readonly title: string | null | undefined;
+  } | null | undefined;
+  readonly formattedNationalityAndBirthday: string | null | undefined;
   readonly insights: ReadonlyArray<{
-    readonly kind: ArtistInsightKind | null;
+    readonly kind: ArtistInsightKind | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistCareerHighlight_insight">;
   }>;
   readonly internalID: string;
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly slug: string;
   readonly verifiedRepresentatives: ReadonlyArray<{
     readonly partner: {
-      readonly href: string | null;
+      readonly href: string | null | undefined;
       readonly internalID: string;
-      readonly name: string | null;
+      readonly name: string | null | undefined;
       readonly profile: {
         readonly icon: {
           readonly src1x: {
             readonly src: string;
-          } | null;
+          } | null | undefined;
           readonly src2x: {
             readonly src: string;
-          } | null;
-        } | null;
-      } | null;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
     };
   }>;
   readonly " $fragmentType": "ArtistHeader2_artist";

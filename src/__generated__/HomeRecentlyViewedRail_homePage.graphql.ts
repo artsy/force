@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d958bd89526a735a716d30602a2a5b41>>
+ * @generated SignedSource<<d9e1c5ed612262e2b6fcdce032d96ae4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,8 +16,8 @@ export type HomeRecentlyViewedRail_homePage$data = {
       readonly internalID: string;
       readonly slug: string;
       readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-    } | null> | null;
-  } | null;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "HomeRecentlyViewedRail_homePage";
 };
 export type HomeRecentlyViewedRail_homePage$key = {

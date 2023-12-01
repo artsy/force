@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ddb0935903bac039cfa3ce3b033915eb>>
+ * @generated SignedSource<<0f64cc59e8531155a990582996e63f93>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NewForYouApp_test_Query$variables = {
-  first?: number | null;
+  first?: number | null | undefined;
   includeBackfill: boolean;
 };
 export type NewForYouApp_test_Query$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"NewForYouArtworksGrid_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type NewForYouApp_test_Query = {
   response: NewForYouApp_test_Query$data;

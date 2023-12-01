@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ddd12f458f855cea1d0b853961035b00>>
+ * @generated SignedSource<<14c762de2da01af9985fd9d403e379f1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,21 +17,21 @@ export type SearchResultsList_viewer$data = {
         readonly __typename: string;
         readonly coverArtwork?: {
           readonly image: {
-            readonly src: string | null;
-          } | null;
-        } | null;
-        readonly displayLabel: string | null;
-        readonly displayType?: string | null;
-        readonly href: string | null;
-        readonly imageUrl: string | null;
+            readonly src: string | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+        readonly displayLabel: string | null | undefined;
+        readonly displayType?: string | null | undefined;
+        readonly href: string | null | undefined;
+        readonly imageUrl: string | null | undefined;
         readonly slug?: string;
         readonly statuses?: {
-          readonly artworks: boolean | null;
-          readonly auctionLots: boolean | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
+          readonly artworks: boolean | null | undefined;
+          readonly auctionLots: boolean | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "SearchResultsList_viewer";
 };
 export type SearchResultsList_viewer$key = {

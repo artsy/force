@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2712bec74b4ab7918c400b749962dffd>>
+ * @generated SignedSource<<384a679dac7be38762307a90e08eefd4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type searchRoutes_SearchResultsTopLevelQuery$variables = {
 export type searchRoutes_SearchResultsTopLevelQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"SearchApp_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type searchRoutes_SearchResultsTopLevelQuery = {
   response: searchRoutes_SearchResultsTopLevelQuery$data;

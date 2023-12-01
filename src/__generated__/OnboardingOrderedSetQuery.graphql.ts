@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e9e4000631468a21d1c93fb3567d25c0>>
+ * @generated SignedSource<<a335c29752c7023f7207b835ada2e982>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type OnboardingOrderedSetQuery$variables = {
 export type OnboardingOrderedSetQuery$data = {
   readonly orderedSets: ReadonlyArray<{
     readonly " $fragmentSpreads": FragmentRefs<"OnboardingOrderedSet_orderedSet">;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
 };
 export type OnboardingOrderedSetQuery = {
   response: OnboardingOrderedSetQuery$data;

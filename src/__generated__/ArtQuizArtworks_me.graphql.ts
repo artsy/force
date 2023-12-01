@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1c3e6c8e739c10de7000f39d3eb91ae7>>
+ * @generated SignedSource<<d3f0f452b8b730612d180a7e52d17ba1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,16 +15,16 @@ export type ArtQuizArtworks_me$data = {
   readonly quiz: {
     readonly quizArtworkConnection: {
       readonly edges: ReadonlyArray<{
-        readonly interactedAt: string | null;
+        readonly interactedAt: string | null | undefined;
         readonly node: {
           readonly internalID: string;
           readonly isDisliked: boolean;
-          readonly isSaved: boolean | null;
+          readonly isSaved: boolean | null | undefined;
           readonly slug: string;
           readonly " $fragmentSpreads": FragmentRefs<"ArtQuizArtworksCard_artwork">;
-        } | null;
-      } | null> | null;
-    } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
   };
   readonly " $fragmentType": "ArtQuizArtworks_me";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f2c39e28f4cc6273b1d04b7804333485>>
+ * @generated SignedSource<<4c806ad114e0405063e0ddc69da84709>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuthenticationProvider = "APPLE" | "FACEBOOK" | "GOOGLE" | "%future added value";
 export type UnlinkAuthenticationMutationInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   provider: AuthenticationProvider;
 };
 export type useUnlinkSettingsLinkedAccountMutation$variables = {
@@ -23,7 +23,7 @@ export type useUnlinkSettingsLinkedAccountMutation$data = {
     readonly me: {
       readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsLinkedAccounts_me">;
     };
-  } | null;
+  } | null | undefined;
 };
 export type useUnlinkSettingsLinkedAccountMutation = {
   response: useUnlinkSettingsLinkedAccountMutation$data;

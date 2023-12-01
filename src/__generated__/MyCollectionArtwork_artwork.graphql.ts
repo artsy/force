@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<08c7aafbb4c15da9ac0de6de2a0aa3a0>>
+ * @generated SignedSource<<f7cc0c384190587f14d454fb8b96c265>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,24 +13,24 @@ import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtwork_artwork$data = {
   readonly artist: {
     readonly auctionResults: {
-      readonly totalCount: number | null;
-    } | null;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
     readonly slug: string;
     readonly targetSupply: {
-      readonly isP1: boolean | null;
+      readonly isP1: boolean | null | undefined;
     };
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
-  } | null;
+  } | null | undefined;
   readonly comparables: {
-    readonly totalCount: number | null;
-  } | null;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly consignmentSubmission: {
-    readonly displayText: string | null;
-  } | null;
-  readonly hasMarketPriceInsights: boolean | null;
+    readonly displayText: string | null | undefined;
+  } | null | undefined;
+  readonly hasMarketPriceInsights: boolean | null | undefined;
   readonly internalID: string;
   readonly slug: string;
-  readonly submissionId: string | null;
+  readonly submissionId: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkImageBrowser_artwork" | "MyCollectionArtworkInsights_artwork" | "MyCollectionArtworkMeta_artwork" | "MyCollectionArtworkRequestPriceEstimateSection_artwork" | "MyCollectionArtworkSidebarTitleInfo_artwork" | "MyCollectionArtworkSidebar_artwork">;
   readonly " $fragmentType": "MyCollectionArtwork_artwork";
 };

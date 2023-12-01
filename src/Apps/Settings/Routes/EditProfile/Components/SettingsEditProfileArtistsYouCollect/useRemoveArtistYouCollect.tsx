@@ -1,4 +1,4 @@
-import { commitMutation, graphql } from "relay-runtime"
+import { commitMutation, graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import { useRemoveArtistYouCollectMutation } from "__generated__/useRemoveArtistYouCollectMutation.graphql"
 
@@ -7,7 +7,7 @@ export const useRemoveArtistYouCollect = () => {
 
   const submitRemoveArtistYouCollect = (artistID: string) => {
     return new Promise((resolve, reject) => {
-      commitMutation<useRemoveArtistYouCollectMutation>(relayEnvironment!, {
+      commitMutation<useRemoveArtistYouCollectMutation>(relayEnvironment, {
         onError: reject,
         onCompleted: (res, errors) => {
           if (errors !== null) {

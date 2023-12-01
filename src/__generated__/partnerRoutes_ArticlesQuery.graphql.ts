@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<aeff4fa32ce51bef804fd5f966f59308>>
+ * @generated SignedSource<<3f279ff4e1617f4ed467d69e97975a08>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,16 +11,16 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type partnerRoutes_ArticlesQuery$variables = {
-  page?: number | null;
+  page?: number | null | undefined;
   partnerId: string;
 };
 export type partnerRoutes_ArticlesQuery$data = {
   readonly partner: {
     readonly articles: {
-      readonly totalCount: number | null;
-    } | null;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"Articles_partner">;
-  } | null;
+  } | null | undefined;
 };
 export type partnerRoutes_ArticlesQuery = {
   response: partnerRoutes_ArticlesQuery$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<27f53aaf9d8c03838d4c77a321a5000c>>
+ * @generated SignedSource<<84684ffd58027c62f11e8f24c00c140e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,16 +16,16 @@ export type Articles_partner$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     };
     readonly pageInfo: {
-      readonly endCursor: string | null;
+      readonly endCursor: string | null | undefined;
       readonly hasNextPage: boolean;
     };
-  } | null;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "Articles_partner";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<52404741f80e81fed54116e4e48a3e9a>>
+ * @generated SignedSource<<33dc4316488c5689b1e844226bcd95b1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,44 +10,44 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
-export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Review_order$data = {
-  readonly artworkDetails: string | null;
+  readonly artworkDetails: string | null | undefined;
   readonly code: string;
-  readonly conditionsOfSale: string | null;
-  readonly impulseConversationId: string | null;
+  readonly conditionsOfSale: string | null | undefined;
+  readonly impulseConversationId: string | null | undefined;
   readonly internalID: string;
-  readonly itemsTotal: string | null;
+  readonly itemsTotal: string | null | undefined;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
           readonly artists: ReadonlyArray<{
             readonly slug: string;
-          } | null> | null;
+          } | null | undefined> | null | undefined;
           readonly internalID: string;
           readonly slug: string;
-        } | null;
+        } | null | undefined;
         readonly artworkVersion: {
-          readonly condition_description: string | null;
-          readonly provenance: string | null;
-        } | null;
+          readonly condition_description: string | null | undefined;
+          readonly provenance: string | null | undefined;
+        } | null | undefined;
         readonly " $fragmentSpreads": FragmentRefs<"ItemReview_lineItem">;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly mode: CommerceOrderModeEnum | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly myLastOffer?: {
     readonly hasDefiniteTotal: boolean;
     readonly internalID: string;
-  } | null;
-  readonly paymentMethod: CommercePaymentMethodEnum | null;
+  } | null | undefined;
+  readonly paymentMethod: CommercePaymentMethodEnum | null | undefined;
   readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
-  readonly stateExpiresAt: string | null;
+  readonly stateExpiresAt: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "OfferSummaryItem_order" | "OrderStepper_order" | "PaymentMethodSummaryItem_order" | "ShippingArtaSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Review_order";
 };

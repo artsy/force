@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<92edbcd3cbf5a0e55ce464108977e757>>
+ * @generated SignedSource<<637721c833cc4dcdc89c8ed151e33723>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type FollowProfileButtonQuery$variables = {
 export type FollowProfileButtonQuery$data = {
   readonly profile: {
     readonly " $fragmentSpreads": FragmentRefs<"FollowProfileButton_profile">;
-  } | null;
+  } | null | undefined;
 };
 export type FollowProfileButtonQuery = {
   response: FollowProfileButtonQuery$data;

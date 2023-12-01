@@ -8,6 +8,7 @@ import {
 } from "Components/SavedSearchAlert/types"
 
 import { AlertProviderPreviewQuery } from "__generated__/AlertProviderPreviewQuery.graphql"
+import { DEFAULT_METRIC, Metric } from "Utils/metrics"
 
 export type Settings = {
   details: string
@@ -30,6 +31,7 @@ export type State = {
   visible: boolean
   isEditMode?: boolean
   criteriaChanged?: boolean
+  metric?: Metric
 }
 
 export const DEFAULT_STATE: State = {
@@ -43,6 +45,7 @@ export const DEFAULT_STATE: State = {
   criteria: {},
   preview: null,
   visible: false,
+  metric: DEFAULT_METRIC,
   criteriaChanged: false,
 }
 
@@ -68,6 +71,7 @@ type Action =
     }
   | { type: "SET_SETTINGS"; payload: Settings }
   | { type: "SET_SEARCH_CRITERIA_ID"; payload: string }
+  | { type: "SET_METRIC"; payload: Metric }
 
 export const reducer = (onShow: (State) => State, onReset: () => State) => (
   state: State,
@@ -134,6 +138,12 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
         ...state,
         settings: action.payload,
         criteriaChanged: true,
+      }
+
+    case "SET_METRIC":
+      return {
+        ...state,
+        metric: action.payload,
       }
 
     default:

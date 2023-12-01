@@ -1,12 +1,12 @@
 import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
+import { screen } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { graphql } from "react-relay"
 
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
-import { AlertProviderTestPage } from "Components/Alert/Hooks/__tests__/Utils/AlertProviderTestPage"
 import { useAuthDialog } from "Components/AuthDialog"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useSystemContext } from "System/SystemContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
@@ -28,7 +28,7 @@ describe("AlertProvider", () => {
   let mockUseTracking: jest.Mock = useTracking as jest.Mock
   let mockUseSystemContext: jest.Mock = useSystemContext as jest.Mock
 
-  const { getWrapper } = setupTestWrapper({
+  const { renderWithRelay } = setupTestWrapperTL({
     Component: ({ artist }: any) => (
       <AlertProvider initialCriteria={{ artistIDs: [artist.internalID] }}>
         <CreateAlertButton />
@@ -61,7 +61,7 @@ describe("AlertProvider", () => {
   })
 
   it("opens the create alert modal with initial criteria", async () => {
-    const { mockResolveLastOperation, wrapper } = getWrapper(
+    const { mockResolveLastOperation } = renderWithRelay(
       {
         Artist: () => {
           return { internalID: "artist-id" }
@@ -70,10 +70,9 @@ describe("AlertProvider", () => {
       {},
       relayEnv
     )
-    let page = new AlertProviderTestPage(wrapper)
 
     // open modal, defaults to details step
-    page.clickCreateAlertButton()
+    screen.getByTestId("createAlert").click()
 
     const mockedPreviewResolver = {
       Viewer: () => ({
@@ -92,31 +91,36 @@ describe("AlertProvider", () => {
     mockResolveLastOperation(mockedPreviewResolver)
     await flushPromiseQueue()
 
-    expect(page.text()).toContain("Add Filters")
-    expect(page.text()).toContain("Andy Warhol")
+    expect(screen.getByText("Add Filters:")).toBeInTheDocument()
+    expect(screen.getByText("Andy Warhol")).toBeInTheDocument()
 
     // transition to filters step
-    page.clickAddFiltersButton()
+    screen.getByTestId("addFilters").click()
 
-    expect(page.text()).toContain("Medium")
-    expect(page.text()).toContain("Rarity")
-    expect(page.text()).toContain("Price Range")
-    expect(page.text()).toContain("Colors")
-    expect(page.text()).toContain("Ways to Buy")
+    expect(screen.getByText("Medium")).toBeInTheDocument()
+    expect(screen.getByText("Rarity")).toBeInTheDocument()
+    expect(screen.getByText("Price Range")).toBeInTheDocument()
+    expect(screen.getByText("Colors")).toBeInTheDocument()
+    expect(screen.getByText("Ways to Buy")).toBeInTheDocument()
 
     // transition back to details step
-    page.clickSetFiltersButton()
+    screen.getByTestId("setFilters").click()
 
-    expect(page.text()).toContain("Add Filters")
+    expect(screen.getByText("Add Filters:")).toBeInTheDocument()
 
     // submit form
-    page.clickSubmitCreateAlertButton()
+    screen.getByTestId("submitCreateAlert").click()
     await flushPromiseQueue()
 
     // useCreateAlert
     mockResolveLastOperation({})
     await flushPromiseQueue()
 
-    expect(page.text()).toContain("Your alert has been saved.")
+    expect(screen.getByText("Your alert has been saved.")).toBeInTheDocument()
+    expect(
+      screen.getByText(
+        "We’ll let you know when matching works are added to Artsy."
+      )
+    ).toBeInTheDocument()
   })
 })

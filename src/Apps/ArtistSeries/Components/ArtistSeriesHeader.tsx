@@ -26,11 +26,11 @@ const ArtistSeriesHeader: React.FC<ArtistSeriesHeaderProps> = ({
     artworksCountMessage,
   },
 }) => {
-  if (artists === null) return null
+  if (artists === null || !artists?.length) return null
 
   const [artist] = artists
 
-  if (artist === null) return null
+  if (!artist) return null
 
   return (
     <>

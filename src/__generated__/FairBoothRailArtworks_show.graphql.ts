@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c59b58c2f120a02069511ef6800be168>>
+ * @generated SignedSource<<17117552ac59e99d54aa7261b292bc32>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,9 +17,9 @@ export type FairBoothRailArtworks_show$data = {
         readonly internalID: string;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "FairBoothRailArtworks_show";
 };
 export type FairBoothRailArtworks_show$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cd2af457c090e18d3fc5a62440fef9f1>>
+ * @generated SignedSource<<b90732a1831d2c447fb4d50a717bcffa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
-export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
@@ -28,34 +28,34 @@ export type Status_order$data = {
           readonly edges: ReadonlyArray<{
             readonly node: {
               readonly courier: string;
-              readonly estimatedDelivery: string | null;
-              readonly trackingId: string | null;
-            } | null;
-          } | null> | null;
-        } | null;
+              readonly estimatedDelivery: string | null | undefined;
+              readonly trackingId: string | null | undefined;
+            } | null | undefined;
+          } | null | undefined> | null | undefined;
+        } | null | undefined;
         readonly selectedShippingQuote: {
           readonly typeName: string;
-        } | null;
+        } | null | undefined;
         readonly shipment: {
-          readonly carrierName: string | null;
-          readonly estimatedDeliveryWindow: string | null;
-          readonly trackingNumber: string | null;
-          readonly trackingUrl: string | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly mode: CommerceOrderModeEnum | null;
+          readonly carrierName: string | null | undefined;
+          readonly estimatedDeliveryWindow: string | null | undefined;
+          readonly trackingNumber: string | null | undefined;
+          readonly trackingUrl: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly myLastOffer?: {
-    readonly amount: string | null;
+    readonly amount: string | null | undefined;
     readonly amountCents: number;
     readonly internalID: string;
-    readonly shippingTotal: string | null;
-    readonly shippingTotalCents: number | null;
-    readonly taxTotal: string | null;
-    readonly taxTotalCents: number | null;
-  } | null;
-  readonly paymentMethod: CommercePaymentMethodEnum | null;
+    readonly shippingTotal: string | null | undefined;
+    readonly shippingTotalCents: number | null | undefined;
+    readonly taxTotal: string | null | undefined;
+    readonly taxTotalCents: number | null | undefined;
+  } | null | undefined;
+  readonly paymentMethod: CommercePaymentMethodEnum | null | undefined;
   readonly requestedFulfillment: {
     readonly __typename: "CommercePickup";
   } | {
@@ -66,11 +66,11 @@ export type Status_order$data = {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
-  readonly stateExpiresAt: string | null;
-  readonly stateReason: string | null;
+  readonly stateExpiresAt: string | null | undefined;
+  readonly stateReason: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "PaymentMethodSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Status_order";
 };

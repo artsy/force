@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<595c69eafb0e18fe75cef9573ee06427>>
+ * @generated SignedSource<<31ffde404e70921aa30dd2dd0fd0462e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type deleteCollectionInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   id: string;
 };
 export type useDeleteArtworkListMutation$variables = {
@@ -22,19 +22,19 @@ export type useDeleteArtworkListMutation$data = {
       readonly __typename: "DeleteCollectionFailure";
       readonly mutationError: {
         readonly message: string;
-        readonly statusCode: number | null;
-      } | null;
+        readonly statusCode: number | null | undefined;
+      } | null | undefined;
     } | {
       readonly __typename: "DeleteCollectionSuccess";
       readonly artworkList: {
         readonly id: string;
-      } | null;
+      } | null | undefined;
     } | {
       // This will never be '%other', but we need some
       // value in case none of the concrete values match.
       readonly __typename: "%other";
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useDeleteArtworkListMutation = {
   response: useDeleteArtworkListMutation$data;

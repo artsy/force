@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<acb1e501d424027740d5281b430803e4>>
+ * @generated SignedSource<<36a2f452db0b90ae052df290847dc9c6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,14 +10,14 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarBidAction_Test_Query$variables = {};
+export type ArtworkSidebarBidAction_Test_Query$variables = Record<PropertyKey, never>;
 export type ArtworkSidebarBidAction_Test_Query$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBidAction_artwork">;
-  } | null;
+  } | null | undefined;
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBidAction_me">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtworkSidebarBidAction_Test_Query$rawResponse = {
   readonly artwork: {
@@ -27,42 +27,42 @@ export type ArtworkSidebarBidAction_Test_Query$rawResponse = {
       readonly most_recent_bid: {
         readonly id: string;
         readonly max_bid: {
-          readonly cents: number | null;
-        } | null;
-      } | null;
-    }> | null;
+          readonly cents: number | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    }> | null | undefined;
     readonly sale: {
       readonly id: string;
-      readonly is_closed: boolean | null;
-      readonly is_live_open: boolean | null;
-      readonly is_open: boolean | null;
-      readonly is_preview: boolean | null;
-      readonly is_registration_closed: boolean | null;
+      readonly is_closed: boolean | null | undefined;
+      readonly is_live_open: boolean | null | undefined;
+      readonly is_open: boolean | null | undefined;
+      readonly is_preview: boolean | null | undefined;
+      readonly is_registration_closed: boolean | null | undefined;
       readonly registrationStatus: {
         readonly id: string;
-        readonly qualified_for_bidding: boolean | null;
-      } | null;
-      readonly requireIdentityVerification: boolean | null;
+        readonly qualified_for_bidding: boolean | null | undefined;
+      } | null | undefined;
+      readonly requireIdentityVerification: boolean | null | undefined;
       readonly slug: string;
-    } | null;
+    } | null | undefined;
     readonly sale_artwork: {
-      readonly endedAt: string | null;
+      readonly endedAt: string | null | undefined;
       readonly id: string;
       readonly increments: ReadonlyArray<{
-        readonly cents: number | null;
-        readonly display: string | null;
-      } | null> | null;
-    } | null;
+        readonly cents: number | null | undefined;
+        readonly display: string | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
     readonly slug: string;
-  } | null;
+  } | null | undefined;
   readonly me: {
     readonly id: string;
-    readonly isIdentityVerified: boolean | null;
+    readonly isIdentityVerified: boolean | null | undefined;
     readonly pendingIdentityVerification: {
       readonly id: string;
       readonly internalID: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type ArtworkSidebarBidAction_Test_Query = {
   rawResponse: ArtworkSidebarBidAction_Test_Query$rawResponse;

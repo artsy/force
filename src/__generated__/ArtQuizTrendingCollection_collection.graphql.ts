@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<72e230c4093b83aba04d1b5b64f4de3d>>
+ * @generated SignedSource<<f3ff0df88ec787212ba94af08965f63d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type ArtQuizTrendingCollection_collection$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly description: string | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly description: string | null | undefined;
   readonly title: string;
   readonly " $fragmentType": "ArtQuizTrendingCollection_collection";
 };

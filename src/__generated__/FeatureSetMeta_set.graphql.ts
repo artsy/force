@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bf808b0bb7755026243db7337c18c744>>
+ * @generated SignedSource<<b0b3edd21e7a9b730c1d745e7ea4c1da>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FeatureSetMeta_set$data = {
-  readonly description: string | null;
-  readonly name: string | null;
+  readonly description: string | null | undefined;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "FeatureSetMeta_set";
 };
 export type FeatureSetMeta_set$key = {

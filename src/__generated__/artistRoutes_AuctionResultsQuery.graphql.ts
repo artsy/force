@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fb213a1a003c85cd78308862f4a34190>>
+ * @generated SignedSource<<0595bb11708db796c0b00db73f669eea>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,23 +13,23 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSizes = "LARGE" | "MEDIUM" | "SMALL" | "%future added value";
 export type AuctionResultsState = "ALL" | "PAST" | "UPCOMING" | "%future added value";
 export type artistRoutes_AuctionResultsQuery$variables = {
-  allowEmptyCreatedDates?: boolean | null;
+  allowEmptyCreatedDates?: boolean | null | undefined;
   artistID: string;
-  categories?: ReadonlyArray<string | null> | null;
-  createdAfterYear?: number | null;
-  createdBeforeYear?: number | null;
-  includeEstimateRange?: boolean | null;
-  includeUnknownPrices?: boolean | null;
-  organizations?: ReadonlyArray<string | null> | null;
-  page?: number | null;
-  priceRange?: string | null;
-  sizes?: ReadonlyArray<ArtworkSizes | null> | null;
-  state?: AuctionResultsState | null;
+  categories?: ReadonlyArray<string | null | undefined> | null | undefined;
+  createdAfterYear?: number | null | undefined;
+  createdBeforeYear?: number | null | undefined;
+  includeEstimateRange?: boolean | null | undefined;
+  includeUnknownPrices?: boolean | null | undefined;
+  organizations?: ReadonlyArray<string | null | undefined> | null | undefined;
+  page?: number | null | undefined;
+  priceRange?: string | null | undefined;
+  sizes?: ReadonlyArray<ArtworkSizes | null | undefined> | null | undefined;
+  state?: AuctionResultsState | null | undefined;
 };
 export type artistRoutes_AuctionResultsQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultsRoute_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type artistRoutes_AuctionResultsQuery = {
   response: artistRoutes_AuctionResultsQuery$data;

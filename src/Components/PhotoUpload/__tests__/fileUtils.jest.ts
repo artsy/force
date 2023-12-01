@@ -1,8 +1,11 @@
-import { Environment } from "relay-runtime"
+import { Environment } from "react-relay"
 import { createGeminiAssetWithS3Credentials } from "Components/PhotoUpload/Mutations/createGeminiAssetWithS3Credentials"
 import { getConvectionGeminiKey } from "Components/PhotoUpload/Mutations/getConvectionGeminiKey"
 import { getGeminiCredentialsForEnvironment } from "Components/PhotoUpload/Mutations/getGeminiCredentialsForEnvironment"
-import { Photo, uploadSubmissionPhoto } from "Components/PhotoUpload/Utils/fileUtils"
+import {
+  Photo,
+  uploadSubmissionPhoto,
+} from "Components/PhotoUpload/Utils/fileUtils"
 import { uploadFileToS3 } from "Components/PhotoUpload/Utils/uploadFileToS3"
 
 jest.mock("../Mutations/getConvectionGeminiKey", () => ({

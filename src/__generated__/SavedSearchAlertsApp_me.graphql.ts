@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0b92f8b9ffdc43c818f7ed8a73e92a0e>>
+ * @generated SignedSource<<50e3eb1745f73eeaad1442b4f47e0c69>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type SavedSearchAlertsApp_me$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertListItem_item">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "SavedSearchAlertsApp_me";
 };
 export type SavedSearchAlertsApp_me$key = {

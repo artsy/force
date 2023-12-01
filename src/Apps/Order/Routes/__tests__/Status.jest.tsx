@@ -44,6 +44,13 @@ const testOrder: StatusQuery$rawResponse["order"] = {
 describe("Status", () => {
   let isEigen
 
+  let match = {
+    location: {
+      query: {},
+    },
+    params: {},
+  }
+
   beforeEach(() => {
     jest.clearAllMocks()
     isEigen = false
@@ -52,7 +59,7 @@ describe("Status", () => {
   const { getWrapper } = setupTestWrapper({
     Component: (props: any) => (
       <MockBoot context={{ isEigen }}>
-        <StatusFragmentContainer {...props} />
+        <StatusFragmentContainer {...props} match={match} />
       </MockBoot>
     ),
     query: graphql`
@@ -944,6 +951,43 @@ describe("Status", () => {
         expect(page.text()).toContain("Your order was canceled and refunded")
         expect(page.getMessageLength()).toBe(1)
       })
+    })
+  })
+
+  describe("back to conversation", () => {
+    it("should not display back to conversation link", () => {
+      const { wrapper } = getWrapper({
+        CommerceOrder: () => ({
+          ...BuyOrderPickup,
+          ...CreditCardPaymentDetails,
+          displayState: "REFUNDED",
+        }),
+      })
+      const page = new StatusTestPage(wrapper)
+
+      expect(page.text()).not.toContain("Back to conversation")
+    })
+
+    it("should render a link to the conversation", async () => {
+      match = {
+        location: {
+          query: {
+            backToConversationId: "conversationId",
+          },
+        },
+        params: {},
+      }
+
+      const { wrapper } = getWrapper({
+        CommerceOrder: () => ({
+          ...BuyOrderPickup,
+          ...CreditCardPaymentDetails,
+          displayState: "REFUNDED",
+        }),
+      })
+      const page = new StatusTestPage(wrapper)
+
+      expect(page.text()).toContain("Back to conversation")
     })
   })
 })

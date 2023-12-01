@@ -9,10 +9,12 @@ import {
 } from "@artsy/palette"
 import {
   createPaginationContainer,
+  Environment,
+  fetchQuery,
   graphql,
   RelayPaginationProp,
 } from "react-relay"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { SavedSearchAlertsApp_me$data } from "__generated__/SavedSearchAlertsApp_me.graphql"
 import { Media } from "Utils/Responsive"
 import { EditAlertEntity } from "./types"
@@ -30,8 +32,11 @@ import { Sticky } from "Components/Sticky"
 import { SavedSearchAlertEditFormMobile } from "./Components/SavedSearchAlertEditFormMobile"
 import { useTracking } from "react-tracking"
 import { ActionType } from "@artsy/cohesion"
-import { useFeatureFlag } from "System/useFeatureFlag"
+import { useRouter } from "System/Router/useRouter"
+import { useSystemContext } from "System/SystemContext"
+import { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
 import { NewSavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/NewSavedSearchAlertEditForm"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me$data
@@ -50,6 +55,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     editAlertEntity,
     setEditAlertEntity,
   ] = useState<EditAlertEntity | null>(null)
+  const { relayEnvironment } = useSystemContext()
   const { sendToast } = useToasts()
   const { trackEvent } = useTracking()
   const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
@@ -58,9 +64,11 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const [loading, setLoading] = useState(false)
   const alerts = extractNodes(me.savedSearchesConnection)
   const isEditMode = editAlertEntity !== null
+  const { match, silentPush } = useRouter()
 
   const closeEditForm = () => {
     setEditAlertEntity(null)
+    silentPush("/settings/alerts")
   }
 
   const refetch = (variables?: RefetchVariables) => {
@@ -131,11 +139,50 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     })
   }
 
+  const searchCriteriaID = match?.params?.searchCriteriaID
+
+  useEffect(() => {
+    if (!searchCriteriaID) return
+
+    const subscription = fetchQuery<SavedSearchAlertsApp_Alert_Query>(
+      relayEnvironment as Environment,
+      graphql`
+        query SavedSearchAlertsApp_Alert_Query($searchCriteriaID: ID!) {
+          me {
+            savedSearch(id: $searchCriteriaID) {
+              internalID
+              artistIDs
+              userAlertSettings {
+                name
+              }
+            }
+          }
+        }
+      `,
+      { searchCriteriaID: searchCriteriaID }
+    )?.subscribe?.({
+      next: data => {
+        const alert = data?.me?.savedSearch
+        if (!alert) return
+
+        setEditAlertEntity({
+          id: alert.internalID,
+          artistIds: alert.artistIDs as string[],
+          name: alert.userAlertSettings.name ?? "",
+        })
+      },
+    })
+
+    return () => {
+      subscription?.unsubscribe?.()
+    }
+  }, [searchCriteriaID, relayEnvironment])
+
   const list = (
     <>
       <Join separator={<Separator color="black15" />}>
-        {alerts.map(edge => {
-          const isCurrentEdgeSelected = editAlertEntity?.id === edge.internalID
+        {alerts.map(node => {
+          const isCurrentEdgeSelected = editAlertEntity?.id === node.internalID
           let variant: SavedSearchAlertListItemVariant | undefined
           if (isCurrentEdgeSelected) {
             variant = "active"
@@ -145,11 +192,12 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
           return (
             <SavedSearchAlertListItemFragmentContainer
-              key={edge.internalID}
-              item={edge}
+              key={node.internalID}
+              item={node}
               variant={variant}
-              onEditAlertClick={value => {
-                setEditAlertEntity(value)
+              onEditAlertClick={entity => {
+                setEditAlertEntity(entity)
+                silentPush(`/settings/alerts/${entity.id}/edit`)
               }}
             />
           )

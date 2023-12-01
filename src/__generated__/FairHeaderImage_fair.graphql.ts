@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c33ed6e7ea54aa522a6672df77b17859>>
+ * @generated SignedSource<<414d9eaae12724b7d60140aa062035e6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FairHeaderImage_fair$data = {
   readonly image: {
-    readonly url: string | null;
-  } | null;
+    readonly url: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "FairHeaderImage_fair";
 };
 export type FairHeaderImage_fair$key = {

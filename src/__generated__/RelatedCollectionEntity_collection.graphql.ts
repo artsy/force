@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a974e4de30950ddcb16e945e63f1e1f5>>
+ * @generated SignedSource<<0e22b6a0b2b35fb96cb3c02f236a2e06>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,23 +15,23 @@ export type RelatedCollectionEntity_collection$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artist: {
-          readonly name: string | null;
-        } | null;
+          readonly name: string | null | undefined;
+        } | null | undefined;
         readonly image: {
           readonly resized: {
-            readonly height: number | null;
+            readonly height: number | null | undefined;
             readonly src: string;
             readonly srcSet: string;
-            readonly width: number | null;
-          } | null;
-        } | null;
-        readonly title: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly headerImage: string | null;
+            readonly width: number | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+        readonly title: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly headerImage: string | null | undefined;
   readonly id: string;
-  readonly priceGuidance: number | null;
+  readonly priceGuidance: number | null | undefined;
   readonly slug: string;
   readonly title: string;
   readonly " $fragmentType": "RelatedCollectionEntity_collection";

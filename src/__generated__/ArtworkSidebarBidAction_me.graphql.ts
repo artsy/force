@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<90185bf2eeb25822fa127d3a072dc5db>>
+ * @generated SignedSource<<e495f3b57bb2b3193964ef66b08d7a9f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,10 +11,10 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarBidAction_me$data = {
-  readonly isIdentityVerified: boolean | null;
+  readonly isIdentityVerified: boolean | null | undefined;
   readonly pendingIdentityVerification: {
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ArtworkSidebarBidAction_me";
 };
 export type ArtworkSidebarBidAction_me$key = {

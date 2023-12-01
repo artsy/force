@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1aa09bb60b1602a1c1689a77f5cbff0d>>
+ * @generated SignedSource<<900817b02b0469be6427fa99551e997e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type UnlistedArtworkBanner_partner$data = {
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "UnlistedArtworkBanner_partner";
 };
 export type UnlistedArtworkBanner_partner$key = {

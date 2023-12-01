@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cdc9d252e8c8dc249179da919755f00c>>
+ * @generated SignedSource<<9752312cfe6532a6ea304d31248f9c22>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,31 +12,31 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type UserSearchCriteriaFrequency = "daily" | "instant" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type NewSavedSearchAlertEditForm_searchCriteria$data = {
-  readonly acquireable: boolean | null;
+  readonly acquireable: boolean | null | undefined;
   readonly additionalGeneIDs: ReadonlyArray<string>;
-  readonly artistIDs: ReadonlyArray<string> | null;
-  readonly atAuction: boolean | null;
+  readonly artistIDs: ReadonlyArray<string> | null | undefined;
+  readonly atAuction: boolean | null | undefined;
   readonly attributionClass: ReadonlyArray<string>;
   readonly colors: ReadonlyArray<string>;
-  readonly dimensionRange: string | null;
-  readonly height: string | null;
-  readonly inquireableOnly: boolean | null;
+  readonly dimensionRange: string | null | undefined;
+  readonly height: string | null | undefined;
+  readonly inquireableOnly: boolean | null | undefined;
   readonly internalID: string;
   readonly locationCities: ReadonlyArray<string>;
   readonly majorPeriods: ReadonlyArray<string>;
   readonly materialsTerms: ReadonlyArray<string>;
-  readonly offerable: boolean | null;
+  readonly offerable: boolean | null | undefined;
   readonly partnerIDs: ReadonlyArray<string>;
-  readonly priceRange: string | null;
+  readonly priceRange: string | null | undefined;
   readonly sizes: ReadonlyArray<string>;
   readonly userAlertSettings: {
-    readonly details: string | null;
+    readonly details: string | null | undefined;
     readonly email: boolean;
     readonly frequency: UserSearchCriteriaFrequency;
-    readonly name: string | null;
+    readonly name: string | null | undefined;
     readonly push: boolean;
   };
-  readonly width: string | null;
+  readonly width: string | null | undefined;
   readonly " $fragmentType": "NewSavedSearchAlertEditForm_searchCriteria";
 };
 export type NewSavedSearchAlertEditForm_searchCriteria$key = {

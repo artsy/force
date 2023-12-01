@@ -29,7 +29,7 @@ export interface ArtworkSidebarProps {
 }
 
 const checkIfArtworkIsOnLoanOrPermanentCollection = (
-  saleMessage: string | null
+  saleMessage: string | null | undefined
 ) => {
   switch (saleMessage) {
     case "On loan":

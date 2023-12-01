@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b7a006f1d54b70967c3a45e4c4df7ed3>>
+ * @generated SignedSource<<dbf8fa65ea86b45ca5f206476382a915>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetails_SubmissionFlowTest_Query$variables = {
-  externalId?: string | null;
+  externalId?: string | null | undefined;
 };
 export type ArtworkDetails_SubmissionFlowTest_Query$data = {
   readonly submission: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_submission">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtworkDetails_SubmissionFlowTest_Query = {
   response: ArtworkDetails_SubmissionFlowTest_Query$data;

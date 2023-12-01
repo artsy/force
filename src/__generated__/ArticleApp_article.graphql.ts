@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<69c207ac5a3bf0252739dd0a2517a5d1>>
+ * @generated SignedSource<<c4cf8a24c54764ef27a1cbf03fc9c44f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,7 +12,7 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArticleLayout = "CLASSIC" | "FEATURE" | "NEWS" | "SERIES" | "STANDARD" | "VIDEO" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArticleApp_article$data = {
-  readonly channelID: string | null;
+  readonly channelID: string | null | undefined;
   readonly internalID: string;
   readonly layout: ArticleLayout;
   readonly " $fragmentSpreads": FragmentRefs<"ArticleBody_article" | "ArticleMetaTags_article" | "ArticleSeries_article" | "ArticleVideo_article" | "ArticleVisibilityMetadata_article">;

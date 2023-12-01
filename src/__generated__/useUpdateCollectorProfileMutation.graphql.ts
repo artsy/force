@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e89cde8dc7ac0aa0f8454520b6d6ac6f>>
+ * @generated SignedSource<<51b0cc590db299075c5a8937557fd919>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,25 +11,25 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type Intents = "BUY_ART_AND_DESIGN" | "FIND_ART_EXHIBITS" | "LEARN_ABOUT_ART" | "READ_ART_MARKET_NEWS" | "RESEARCH_ART_PRICES" | "SELL_ART_AND_DESIGN" | "%future added value";
 export type UpdateCollectorProfileInput = {
-  affiliatedAuctionHouseIds?: ReadonlyArray<string | null> | null;
-  affiliatedFairIds?: ReadonlyArray<string | null> | null;
-  affiliatedGalleryIds?: ReadonlyArray<string | null> | null;
-  clientMutationId?: string | null;
-  companyName?: string | null;
-  companyWebsite?: string | null;
-  institutionalAffiliations?: string | null;
-  intents?: ReadonlyArray<Intents | null> | null;
-  loyaltyApplicant?: boolean | null;
-  professionalBuyer?: boolean | null;
-  selfReportedPurchases?: string | null;
+  affiliatedAuctionHouseIds?: ReadonlyArray<string | null | undefined> | null | undefined;
+  affiliatedFairIds?: ReadonlyArray<string | null | undefined> | null | undefined;
+  affiliatedGalleryIds?: ReadonlyArray<string | null | undefined> | null | undefined;
+  clientMutationId?: string | null | undefined;
+  companyName?: string | null | undefined;
+  companyWebsite?: string | null | undefined;
+  institutionalAffiliations?: string | null | undefined;
+  intents?: ReadonlyArray<Intents | null | undefined> | null | undefined;
+  loyaltyApplicant?: boolean | null | undefined;
+  professionalBuyer?: boolean | null | undefined;
+  selfReportedPurchases?: string | null | undefined;
 };
 export type useUpdateCollectorProfileMutation$variables = {
   input: UpdateCollectorProfileInput;
 };
 export type useUpdateCollectorProfileMutation$data = {
   readonly updateCollectorProfile: {
-    readonly clientMutationId: string | null;
-  } | null;
+    readonly clientMutationId: string | null | undefined;
+  } | null | undefined;
 };
 export type useUpdateCollectorProfileMutation = {
   response: useUpdateCollectorProfileMutation$data;

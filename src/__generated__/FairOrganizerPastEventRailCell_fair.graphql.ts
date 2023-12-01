@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb8ccf82b68ede33cfd1fbfe22dd6a0d>>
+ * @generated SignedSource<<43b7ea294857c057ec5caf6ecf40c99c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,9 +17,9 @@ export type FairOrganizerPastEventRailCell_fair$data = {
       readonly src: string;
       readonly srcSet: string;
       readonly width: number;
-    } | null;
-  } | null;
-  readonly name: string | null;
+    } | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "FairOrganizerPastEventRailCell_fair";
 };

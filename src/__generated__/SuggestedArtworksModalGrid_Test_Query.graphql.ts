@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8e74b5866c43f6751bd565a9c7f67d44>>
+ * @generated SignedSource<<9fb81727ea7105d5d6a8174403088008>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,14 +10,14 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SuggestedArtworksModalGrid_Test_Query$variables = {};
+export type SuggestedArtworksModalGrid_Test_Query$variables = Record<PropertyKey, never>;
 export type SuggestedArtworksModalGrid_Test_Query$data = {
   readonly artworksConnection: {
     readonly counts: {
-      readonly total: any | null;
-    } | null;
+      readonly total: any | null | undefined;
+    } | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
-  } | null;
+  } | null | undefined;
 };
 export type SuggestedArtworksModalGrid_Test_Query = {
   response: SuggestedArtworksModalGrid_Test_Query$data;

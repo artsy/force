@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dc56d4ed9abb11f0acd9599d60ec6346>>
+ * @generated SignedSource<<0e1c5aeb625c1e9c733d399d59cffd07>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -25,7 +25,7 @@ export type ArticleZoomGallery_article$data = {
       readonly id?: string;
       readonly " $fragmentSpreads": FragmentRefs<"ArticleZoomGalleryCaption_figure" | "ArticleZoomGalleryFigure_figure">;
     }>;
-    readonly title: string | null;
+    readonly title: string | null | undefined;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.

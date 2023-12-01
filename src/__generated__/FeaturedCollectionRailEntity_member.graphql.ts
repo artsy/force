@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<16b1066cc6bf3b5aaf7aa4d8daf0d6c2>>
+ * @generated SignedSource<<9a79ae205d5237576b262699f3841920>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type FeaturedCollectionRailEntity_member$data = {
-  readonly description: string | null;
+  readonly description: string | null | undefined;
   readonly id: string;
-  readonly priceGuidance: number | null;
+  readonly priceGuidance: number | null | undefined;
   readonly slug: string;
   readonly thumbnailImage: {
     readonly cropped: {
@@ -21,8 +21,8 @@ export type FeaturedCollectionRailEntity_member$data = {
       readonly src: string;
       readonly srcSet: string;
       readonly width: number;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
   readonly title: string;
   readonly " $fragmentType": "FeaturedCollectionRailEntity_member";
 };

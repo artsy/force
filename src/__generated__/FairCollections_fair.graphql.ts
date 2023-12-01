@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8c8f928a8d2a9add1596ee59453be902>>
+ * @generated SignedSource<<826771f54e090fb9c88bbb48cd4e66da>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type FairCollections_fair$data = {
     readonly id: string;
     readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"FairCollection_collection">;
-  } | null>;
+  } | null | undefined>;
   readonly " $fragmentType": "FairCollections_fair";
 };
 export type FairCollections_fair$key = {

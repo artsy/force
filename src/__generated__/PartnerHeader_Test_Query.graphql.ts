@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a0f90cd823c76a6a51ab9181dbf101ff>>
+ * @generated SignedSource<<6f1bba1f2e913cec9d37a9c7dc59d8e4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerHeader_Test_Query$variables = {};
+export type PartnerHeader_Test_Query$variables = Record<PropertyKey, never>;
 export type PartnerHeader_Test_Query$data = {
   readonly partner: {
     readonly " $fragmentSpreads": FragmentRefs<"PartnerHeader_partner">;
-  } | null;
+  } | null | undefined;
 };
 export type PartnerHeader_Test_Query$rawResponse = {
   readonly partner: {
@@ -22,29 +22,29 @@ export type PartnerHeader_Test_Query$rawResponse = {
     readonly locations: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly city: string | null;
+          readonly city: string | null | undefined;
           readonly id: string;
-        } | null;
-      } | null> | null;
-      readonly totalCount: number | null;
-    } | null;
-    readonly name: string | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
+    readonly name: string | null | undefined;
     readonly profile: {
       readonly counts: {
-        readonly follows: any | null;
-      } | null;
+        readonly follows: any | null | undefined;
+      } | null | undefined;
       readonly icon: {
         readonly resized: {
           readonly src: string;
           readonly srcSet: string;
-        } | null;
-      } | null;
+        } | null | undefined;
+      } | null | undefined;
       readonly id: string;
       readonly internalID: string;
-    } | null;
+    } | null | undefined;
     readonly slug: string;
-    readonly type: string | null;
-  } | null;
+    readonly type: string | null | undefined;
+  } | null | undefined;
 };
 export type PartnerHeader_Test_Query = {
   rawResponse: PartnerHeader_Test_Query$rawResponse;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<65081fff40eedcea1786d70d976863a1>>
+ * @generated SignedSource<<5a1959329e349e4c284908b87b34ceef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,12 +12,12 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PartnerCategoryType = "GALLERY" | "INSTITUTION" | "%future added value";
 export type PartnersRailsQuery$variables = {
-  categoryType?: PartnerCategoryType | null;
+  categoryType?: PartnerCategoryType | null | undefined;
 };
 export type PartnersRailsQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"PartnersRails_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type PartnersRailsQuery = {
   response: PartnersRailsQuery$data;

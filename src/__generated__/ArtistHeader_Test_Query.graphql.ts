@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bc8e2c97bef471516b0f373fa79a0fc6>>
+ * @generated SignedSource<<2c60bd972e8a30d447b73f5b417e95a9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtistHeader_Test_Query$variables = {};
+export type ArtistHeader_Test_Query$variables = Record<PropertyKey, never>;
 export type ArtistHeader_Test_Query$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtistHeader_Test_Query = {
   response: ArtistHeader_Test_Query$data;

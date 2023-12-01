@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6b61413653d78096a8e3630a0285d1b7>>
+ * @generated SignedSource<<a12181c68eb6c745f69eb4fecde8f4e1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SettingsPurchases_Test_Query$variables = {};
+export type SettingsPurchases_Test_Query$variables = Record<PropertyKey, never>;
 export type SettingsPurchases_Test_Query$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SettingsPurchases_me">;
-  } | null;
+  } | null | undefined;
 };
 export type SettingsPurchases_Test_Query = {
   response: SettingsPurchases_Test_Query$data;
@@ -843,6 +843,7 @@ return {
           "enumValues": [
             "artwork_page",
             "inquiry",
+            "partner_offer",
             "private_sale"
           ],
           "nullable": false,

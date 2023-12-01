@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1f209c20ef01ef71796440620a7a06a7>>
+ * @generated SignedSource<<f6845130f284ad9f5fd131bedf4db127>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,25 +14,25 @@ export type GeneShow_gene$data = {
   readonly artistsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly href: string | null;
+        readonly href: string | null | undefined;
         readonly internalID: string;
-        readonly name: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly displayName: string | null;
-  readonly formattedDescription: string | null;
+        readonly name: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly displayName: string | null | undefined;
+  readonly formattedDescription: string | null | undefined;
   readonly internalID: string;
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly similar: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly href: string | null;
+        readonly href: string | null | undefined;
         readonly internalID: string;
-        readonly name: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
+        readonly name: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"GeneArtworkFilter_gene" | "GeneMeta_gene">;
   readonly " $fragmentType": "GeneShow_gene";
 };

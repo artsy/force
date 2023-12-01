@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<57da098abf87e87f87dcb24855a24fae>>
+ * @generated SignedSource<<d220c37119d4afb94ac03b40cfe4261a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,12 +16,12 @@ export type AddArtworksModalContent_me$data = {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly internalID: string;
-        } | null;
-      } | null> | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
       readonly " $fragmentSpreads": FragmentRefs<"ArtworksList_artworks">;
-    } | null;
+    } | null | undefined;
     readonly artworksCount: number;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "AddArtworksModalContent_me";
 };
 export type AddArtworksModalContent_me$key = {

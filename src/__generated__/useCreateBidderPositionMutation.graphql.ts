@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a35ff3a5c5af22315e8874b1e5d1cf3b>>
+ * @generated SignedSource<<2b99b27c7204d154657833b7cc49367e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type BidderPositionInput = {
   artworkID: string;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   maxBidAmountCents: number;
   saleID: string;
 };
@@ -21,21 +21,21 @@ export type useCreateBidderPositionMutation$variables = {
 export type useCreateBidderPositionMutation$data = {
   readonly createBidderPosition: {
     readonly result: {
-      readonly messageHeader: string | null;
+      readonly messageHeader: string | null | undefined;
       readonly position: {
         readonly internalID: string;
         readonly saleArtwork: {
           readonly sale: {
             readonly registrationStatus: {
               readonly internalID: string;
-              readonly qualifiedForBidding: boolean | null;
-            } | null;
-          } | null;
-        } | null;
-      } | null;
+              readonly qualifiedForBidding: boolean | null | undefined;
+            } | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
       readonly status: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useCreateBidderPositionMutation = {
   response: useCreateBidderPositionMutation$data;

@@ -1,6 +1,5 @@
 import { Environment } from "react-relay"
-import { commitMutation, graphql } from "relay-runtime"
-import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
+import { commitMutation, graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 import {
   useUpdateMyUserProfileMutation,
@@ -8,7 +7,7 @@ import {
 } from "__generated__/useUpdateMyUserProfileMutation.graphql"
 
 interface UseUpdateMyUserProfile {
-  relayEnvironment?: RelayModernEnvironment | Environment | undefined
+  relayEnvironment?: Environment
 }
 
 export const useUpdateMyUserProfile = ({
@@ -19,7 +18,7 @@ export const useUpdateMyUserProfile = ({
   const submitUpdateMyUserProfile = (input: UpdateMyProfileInput = {}) => {
     return new Promise((resolve, reject) => {
       commitMutation<useUpdateMyUserProfileMutation>(
-        (relayEnvironment ?? defaultRelayEnvironment)!,
+        relayEnvironment ?? defaultRelayEnvironment,
         {
           onError: reject,
           onCompleted: (res, errors) => {

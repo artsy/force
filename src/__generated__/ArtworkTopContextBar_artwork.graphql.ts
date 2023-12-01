@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bde4b7c5b219d6b48084722e5040ace5>>
+ * @generated SignedSource<<01416075ff4659528ac5f1d30b9519ad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,42 +13,42 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkTopContextBar_artwork$data = {
   readonly context: {
     readonly __typename: "Fair";
-    readonly href: string | null;
-    readonly name: string | null;
+    readonly href: string | null | undefined;
+    readonly name: string | null | undefined;
     readonly profile: {
       readonly icon: {
-        readonly url: string | null;
-      } | null;
-    } | null;
+        readonly url: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
   } | {
     readonly __typename: "Sale";
-    readonly href: string | null;
-    readonly name: string | null;
+    readonly href: string | null | undefined;
+    readonly name: string | null | undefined;
   } | {
     readonly __typename: "Show";
-    readonly href: string | null;
-    readonly name: string | null;
-    readonly status: string | null;
+    readonly href: string | null | undefined;
+    readonly name: string | null | undefined;
+    readonly status: string | null | undefined;
     readonly thumbnail: {
-      readonly url: string | null;
-    } | null;
+      readonly url: string | null | undefined;
+    } | null | undefined;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly partner: {
-    readonly name: string | null;
-  } | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
   readonly sale: {
     readonly coverImage: {
-      readonly url: string | null;
-    } | null;
-    readonly isAuction: boolean | null;
-    readonly isBenefit: boolean | null;
-    readonly isGalleryAuction: boolean | null;
+      readonly url: string | null | undefined;
+    } | null | undefined;
+    readonly isAuction: boolean | null | undefined;
+    readonly isBenefit: boolean | null | undefined;
+    readonly isGalleryAuction: boolean | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"RegistrationAuctionTimer_sale">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ArtworkTopContextBar_artwork";
 };
 export type ArtworkTopContextBar_artwork$key = {

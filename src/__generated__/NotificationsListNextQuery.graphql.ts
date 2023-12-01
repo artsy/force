@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ef05fc839090edde0736f51dd11a4e40>>
+ * @generated SignedSource<<0993bdccdc72a0b2b864f5e941bede1e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,13 +13,13 @@ import { FragmentRefs } from "relay-runtime";
 export type NotificationTypesEnum = "ARTICLE_FEATURED_ARTIST" | "ARTWORK_ALERT" | "ARTWORK_PUBLISHED" | "PARTNER_SHOW_OPENED" | "VIEWING_ROOM_PUBLISHED" | "%future added value";
 export type NotificationsListNextQuery$variables = {
   count: number;
-  cursor?: string | null;
-  types?: ReadonlyArray<NotificationTypesEnum | null> | null;
+  cursor?: string | null | undefined;
+  types?: ReadonlyArray<NotificationTypesEnum | null | undefined> | null | undefined;
 };
 export type NotificationsListNextQuery$data = {
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"NotificationsList_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type NotificationsListNextQuery = {
   response: NotificationsListNextQuery$data;

@@ -59,8 +59,14 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
               <Image
                 src={image.desktop.src}
                 srcSet={image.desktop.srcSet}
-                width={[image.mobile.width, image.desktop.width]}
-                height={[image.mobile.height, image.desktop.height]}
+                width={[
+                  image.mobile.width as number,
+                  image.desktop.width as number,
+                ]}
+                height={[
+                  image.mobile.height as number,
+                  image.desktop.height as number,
+                ]}
                 style={{
                   display: "block",
                   objectFit: "contain",
@@ -76,7 +82,10 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
                   mt={1}
                   color="black60"
                   textAlign="left"
-                  width={[image.mobile.width, image.desktop.width]}
+                  width={[
+                    image.mobile.width as number,
+                    image.desktop.width as number,
+                  ]}
                   title={image.caption}
                   overflowEllipsis
                 >
@@ -88,7 +97,7 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
         })}
       </Shelf>
 
-      {selectedImage !== null && !!selectedImage.zoom && (
+      {selectedImage !== null && !!selectedImage?.zoom && (
         <ModalBase
           onClose={handleClose}
           dialogProps={{
@@ -107,14 +116,14 @@ export const ShowInstallShots: React.FC<ShowInstallShotsProps> = ({
             onClick={handleClose}
           >
             <ResponsiveBox
-              maxWidth={selectedImage.zoom.width!}
-              maxHeight={selectedImage.zoom.height!}
-              aspectWidth={selectedImage.zoom.width!}
-              aspectHeight={selectedImage.zoom.height!}
+              maxWidth={selectedImage?.zoom.width as number}
+              maxHeight={selectedImage?.zoom.height as number}
+              aspectWidth={selectedImage?.zoom.width as number}
+              aspectHeight={selectedImage?.zoom.height as number}
             >
               <Image
-                src={selectedImage.zoom.src}
-                srcSet={selectedImage.zoom.srcSet}
+                src={selectedImage?.zoom.src}
+                srcSet={selectedImage?.zoom.srcSet}
                 width="100%"
                 height="100%"
                 alt={`${show.name}, installation view`}

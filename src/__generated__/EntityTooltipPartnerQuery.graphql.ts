@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3656bb908f11db7ac8ee7dca1b51a319>>
+ * @generated SignedSource<<2262dbd6297f84ac60ab361d472068a7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type EntityTooltipPartnerQuery$variables = {
 export type EntityTooltipPartnerQuery$data = {
   readonly partner: {
     readonly " $fragmentSpreads": FragmentRefs<"EntityTooltipPartner_partner">;
-  } | null;
+  } | null | undefined;
 };
 export type EntityTooltipPartnerQuery = {
   response: EntityTooltipPartnerQuery$data;

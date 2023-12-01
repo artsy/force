@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bdaefb4efb6cda0daf73fc1132f8f3b4>>
+ * @generated SignedSource<<2adbd5db9900d1825ac9bf60b043b610>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type WorksTL_Query$variables = {
 export type WorksTL_Query$data = {
   readonly partner: {
     readonly " $fragmentSpreads": FragmentRefs<"Works_partner">;
-  } | null;
+  } | null | undefined;
 };
 export type WorksTL_Query = {
   response: WorksTL_Query$data;

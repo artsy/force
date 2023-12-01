@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cb4537b05fad582bf9aa83a23f90c88c>>
+ * @generated SignedSource<<49dc472acf0ace3dfda3811b9d972b59>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,9 +11,9 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CollectorProfileHeader_me$data = {
-  readonly bio: string | null;
-  readonly createdAt: string | null;
-  readonly name: string | null;
+  readonly bio: string | null | undefined;
+  readonly createdAt: string | null | undefined;
+  readonly name: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileHeaderAvatar_me" | "CollectorProfileHeaderInfo_me">;
   readonly " $fragmentType": "CollectorProfileHeader_me";
 };

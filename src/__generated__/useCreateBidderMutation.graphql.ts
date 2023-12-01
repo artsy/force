@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c37987238d1f62e8b3b5633c1e125a04>>
+ * @generated SignedSource<<0ff5ce447d655749eb304e3640a00104>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CreateBidderInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   saleID: string;
 };
 export type useCreateBidderMutation$variables = {
@@ -23,9 +23,9 @@ export type useCreateBidderMutation$data = {
       readonly internalID: string;
       readonly sale: {
         readonly " $fragmentSpreads": FragmentRefs<"AuctionApp_sale">;
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useCreateBidderMutation = {
   response: useCreateBidderMutation$data;

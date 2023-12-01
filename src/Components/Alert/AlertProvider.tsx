@@ -9,7 +9,7 @@ import {
   State,
   reducer,
 } from "Components/Alert/AlertContext"
-import { Modal } from "Components/Alert/Components/Modal"
+import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { Steps } from "Components/Alert/Components/Steps"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { useCreateAlert } from "Components/Alert/Hooks/useCreateAlert"
@@ -29,6 +29,8 @@ import { useToasts } from "@artsy/palette"
 import { t } from "i18next"
 import createLogger from "Utils/logger"
 import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
+import { DEFAULT_METRIC, Metric } from "Utils/metrics"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 const logger = createLogger("AlertProvider.tsx")
 interface AlertProviderProps {
@@ -37,6 +39,7 @@ interface AlertProviderProps {
   currentArtworkID?: string
   searchCriteriaID?: string
   visible?: boolean
+  metric?: Metric
   isEditMode?: boolean
 }
 
@@ -47,16 +50,18 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   currentArtworkID,
   searchCriteriaID,
   visible,
+  metric,
   isEditMode,
 }) => {
+  const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
   const { createdAlert } = useAlertTracking()
   const { showAuthDialog } = useAuthDialog()
   const { value, clearValue } = useAuthIntent()
   const { submitMutation } = useCreateAlert()
   const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
   const { sendToast } = useToasts()
-
   const { isLoggedIn, relayEnvironment } = useSystemContext()
+  const { userPreferences } = useSystemContext()
 
   const initialState: State = {
     settings: {
@@ -73,6 +78,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     visible: visible ?? false,
     isEditMode,
     criteriaChanged: false,
+    metric: metric ?? userPreferences?.metric ?? DEFAULT_METRIC,
   }
 
   const [current, setCurrent] = useState<
@@ -224,12 +230,13 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   }, [state.visible, debouncedCriteria, relayEnvironment, state.isEditMode])
 
   useEffect(() => {
-    if (!value || value.action !== Intent.createAlert) return
+    if (!newAlertModalEnabled || !value || value.action !== Intent.createAlert)
+      return
 
     dispatch({ type: "SHOW" })
 
     clearValue()
-  }, [value, clearValue])
+  }, [newAlertModalEnabled, value, clearValue])
 
   return (
     <AlertContext.Provider

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d8d05b0d00a3afe5a2f35a8d32c0c87c>>
+ * @generated SignedSource<<4f57916ebd96e684530391d1abac06d2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,21 +12,21 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 export type Visibility = "DRAFT" | "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkMeta_artwork$data = {
-  readonly href: string | null;
-  readonly isShareable: boolean | null;
+  readonly href: string | null | undefined;
+  readonly isShareable: boolean | null | undefined;
   readonly meta: {
-    readonly description: string | null;
-    readonly longDescription: string | null;
-    readonly title: string | null;
-  } | null;
+    readonly description: string | null | undefined;
+    readonly longDescription: string | null | undefined;
+    readonly title: string | null | undefined;
+  } | null | undefined;
   readonly metaImage: {
     readonly resized: {
-      readonly height: number | null;
+      readonly height: number | null | undefined;
       readonly url: string;
-      readonly width: number | null;
-    } | null;
-  } | null;
-  readonly visibilityLevel: Visibility | null;
+      readonly width: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
+  readonly visibilityLevel: Visibility | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkChatBubble_artwork" | "SeoDataForArtwork_artwork">;
   readonly " $fragmentType": "ArtworkMeta_artwork";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<59ba64bf129f1440546724bddb87b27c>>
+ * @generated SignedSource<<b15ffec7613784972fd601aff573d2aa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,32 +13,32 @@ import { FragmentRefs } from "relay-runtime";
 export type AuctionActiveBids_me$data = {
   readonly internalID: string;
   readonly lotStandings: ReadonlyArray<{
-    readonly isHighestBidder: boolean | null;
+    readonly isHighestBidder: boolean | null | undefined;
     readonly saleArtwork: {
       readonly counts: {
-        readonly bidderPositions: any | null;
-      } | null;
+        readonly bidderPositions: any | null | undefined;
+      } | null | undefined;
       readonly currentBid: {
-        readonly display: string | null;
-      } | null;
-      readonly endedAt: string | null;
+        readonly display: string | null | undefined;
+      } | null | undefined;
+      readonly endedAt: string | null | undefined;
       readonly highestBid: {
-        readonly display: string | null;
-      } | null;
-      readonly lotLabel: string | null;
-      readonly reserveStatus: string | null;
+        readonly display: string | null | undefined;
+      } | null | undefined;
+      readonly lotLabel: string | null | undefined;
+      readonly reserveStatus: string | null | undefined;
       readonly sale: {
-        readonly endAt: string | null;
-        readonly isClosed: boolean | null;
-        readonly isLiveOpen: boolean | null;
-        readonly liveStartAt: string | null;
+        readonly endAt: string | null | undefined;
+        readonly isClosed: boolean | null | undefined;
+        readonly isLiveOpen: boolean | null | undefined;
+        readonly liveStartAt: string | null | undefined;
         readonly slug: string;
-      } | null;
-      readonly saleID: string | null;
+      } | null | undefined;
+      readonly saleID: string | null | undefined;
       readonly slug: string;
       readonly " $fragmentSpreads": FragmentRefs<"AuctionLotInfo_saleArtwork">;
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "AuctionActiveBids_me";
 };
 export type AuctionActiveBids_me$key = {

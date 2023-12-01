@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0c4d836bb65dbc29a551c45b0c285fbd>>
+ * @generated SignedSource<<deb67a4866bc1b3475daa7603e41b536>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,11 +14,11 @@ import { FragmentRefs } from "relay-runtime";
 export type GeneArtworkFilter_gene$data = {
   readonly filtered_artworks: {
     readonly counts: {
-      readonly total: any | null;
-    } | null;
+      readonly total: any | null | undefined;
+    } | null | undefined;
     readonly id: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
-  } | null;
+  } | null | undefined;
   readonly internalID: string;
   readonly sidebar: {
     readonly aggregations: ReadonlyArray<{
@@ -26,13 +26,13 @@ export type GeneArtworkFilter_gene$data = {
         readonly count: number;
         readonly name: string;
         readonly value: string;
-      } | null> | null;
-      readonly slice: ArtworkAggregation | null;
-    } | null> | null;
+      } | null | undefined> | null | undefined;
+      readonly slice: ArtworkAggregation | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly counts?: {
-      readonly followedArtists: any | null;
-    } | null;
-  } | null;
+      readonly followedArtists: any | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "GeneArtworkFilter_gene";
 };

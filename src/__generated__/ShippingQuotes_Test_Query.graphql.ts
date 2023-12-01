@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb05157dc777ffad8284e5bd33907a43>>
+ * @generated SignedSource<<fdf03ed4721eb534ce36ea4ce01088d7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ShippingQuotes_Test_Query$variables = {};
+export type ShippingQuotes_Test_Query$variables = Record<PropertyKey, never>;
 export type ShippingQuotes_Test_Query$data = {
   readonly order: {
     readonly lineItems: {
@@ -19,12 +19,12 @@ export type ShippingQuotes_Test_Query$data = {
           readonly shippingQuoteOptions: {
             readonly edges: ReadonlyArray<{
               readonly " $fragmentSpreads": FragmentRefs<"ShippingQuotes_shippingQuotes">;
-            } | null> | null;
-          } | null;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
+            } | null | undefined> | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type ShippingQuotes_Test_Query$rawResponse = {
   readonly order: {
@@ -39,16 +39,16 @@ export type ShippingQuotes_Test_Query$rawResponse = {
               readonly node: {
                 readonly id: string;
                 readonly isSelected: boolean;
-                readonly price: string | null;
+                readonly price: string | null | undefined;
                 readonly priceCents: number;
                 readonly typeName: string;
-              } | null;
-            } | null> | null;
-          } | null;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
+              } | null | undefined;
+            } | null | undefined> | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type ShippingQuotes_Test_Query = {
   rawResponse: ShippingQuotes_Test_Query$rawResponse;

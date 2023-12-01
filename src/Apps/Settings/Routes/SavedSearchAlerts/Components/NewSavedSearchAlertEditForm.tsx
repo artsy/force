@@ -6,7 +6,6 @@ import {
   Flex,
   Join,
   Message,
-  ModalDialog,
   Separator,
   Spacer,
   Text,
@@ -37,6 +36,9 @@ import CloseIcon from "@artsy/icons/CloseIcon"
 import { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { isEqual } from "lodash"
+import { FiltersFooter } from "Components/Alert/Components/Steps/StepsFooter/FiltersFooter"
+import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
+import { Modal } from "Components/Alert/Components/Modal/Modal"
 
 interface NewSavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
@@ -66,27 +68,20 @@ const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> 
   onCompleted,
   onCloseClick,
 }) => {
-  const { current, dispatch } = useAlertContext()
+  const { current } = useAlertContext()
 
   return (
     <>
       <Media greaterThanOrEqual="md">
         {current === "ALERT_DETAILS" && (
           <Box flex={1} p={4}>
-            <Flex justifyContent="space-between" alignItems="center">
-              <Text variant={["md", "lg"]} flex={1} mr={1}>
-                Edit Alert
-              </Text>
-              <Clickable
-                onClick={() => {
-                  onCloseClick()
-                  dispatch({ type: "RESET" })
-                }}
-              >
+            <Flex justifyContent="space-between">
+              <ModalHeader />
+              <Clickable onClick={onCloseClick}>
                 <CloseIcon display="flex" />
               </Clickable>
             </Flex>
-            <Spacer y={6} />
+            <Spacer y={4} />
             <NewSavedSearchAlertEditForm
               viewer={viewer}
               onDeleteClick={onDeleteClick}
@@ -95,40 +90,27 @@ const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> 
           </Box>
         )}
         {current === "ALERT_FILTERS" && (
-          <Box flex={1} p={2}>
+          <Box flex={1} px={2} pt={4}>
+            <ModalHeader />
             <Filters />
+            <FiltersFooter />
           </Box>
         )}
       </Media>
 
       <Media lessThan="md">
-        <ModalDialog
-          header={null}
-          title="Edit Alert"
-          m={0}
-          dialogProps={{
-            width: "100%",
-            height: "100%",
-          }}
-          onClose={onCloseClick}
-        >
-          {current === "ALERT_DETAILS" && (
-            <>
-              <Spacer y={4} />
-
+        <Modal onClose={onCloseClick}>
+          <Flex mx={2}>
+            {current === "ALERT_DETAILS" && (
               <NewSavedSearchAlertEditForm
                 viewer={viewer}
                 onDeleteClick={onDeleteClick}
                 onCompleted={onCompleted}
               />
-            </>
-          )}
-          {current === "ALERT_FILTERS" && (
-            <Box m={-2}>
-              <Filters />
-            </Box>
-          )}
-        </ModalDialog>
+            )}
+            {current === "ALERT_FILTERS" && <Filters />}
+          </Flex>
+        </Modal>
       </Media>
     </>
   )

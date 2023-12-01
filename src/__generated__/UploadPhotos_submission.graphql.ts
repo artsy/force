@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b66534ad534095a89d79198dc6033524>>
+ * @generated SignedSource<<a72ca88303bf272bd5ff43caac523196>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,14 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type UploadPhotos_submission$data = {
   readonly assets: ReadonlyArray<{
-    readonly filename: string | null;
-    readonly geminiToken: string | null;
+    readonly filename: string | null | undefined;
+    readonly geminiToken: string | null | undefined;
     readonly id: string;
-    readonly imageUrls: any | null;
-    readonly size: string | null;
-  } | null> | null;
+    readonly imageUrls: any | null | undefined;
+    readonly size: string | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly externalId: string;
-  readonly userEmail: string | null;
+  readonly userEmail: string | null | undefined;
   readonly userId: string;
   readonly " $fragmentType": "UploadPhotos_submission";
 };

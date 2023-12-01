@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a5f7272a7f85e8f3c25668a7db22512d>>
+ * @generated SignedSource<<79cc002f70fa8572b684feac6791105c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type FairApp_fair$data = {
   readonly internalID: string;
   readonly profile: {
     readonly id: string;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ExhibitorsLetterNav_fair" | "FairHeaderImage_fair" | "FairHeader_fair" | "FairMeta_fair" | "FairTabs_fair">;
   readonly " $fragmentType": "FairApp_fair";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<59e5c7ffeac49aa64e88bb1418aa9c78>>
+ * @generated SignedSource<<1ca750db6ce5199d47b3b5bd90fd3cfe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,13 +15,13 @@ export type ArtistRelatedGeneCategories_artist$data = {
     readonly genes: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly href: string | null;
+          readonly href: string | null | undefined;
           readonly internalID: string;
-          readonly name: string | null;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
+          readonly name: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ArtistRelatedGeneCategories_artist";
 };
 export type ArtistRelatedGeneCategories_artist$key = {

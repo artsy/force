@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b6327b1d81388c64d946041d7d8fb2c7>>
+ * @generated SignedSource<<a9797208fef2a5547af5569aba810c6f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,10 +13,10 @@ import { FragmentRefs } from "relay-runtime";
 export type MyCollectionArtworkInsights_artwork$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkAuctionResults_artist">;
-  } | null;
+  } | null | undefined;
   readonly marketPriceInsights: {
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkArtistMarket_marketPriceInsights" | "MyCollectionArtworkDemandIndex_marketPriceInsights">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkComparables_artwork" | "MyCollectionArtworkRequestPriceEstimateSection_artwork">;
   readonly " $fragmentType": "MyCollectionArtworkInsights_artwork";
 };

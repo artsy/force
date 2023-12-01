@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f7b02307ea35758f23e902ffbac3a50a>>
+ * @generated SignedSource<<abd7b4ec23d283f34c4dabd8a34f9d02>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type OtherCollectionEntity_member$data = {
   readonly id: string;
   readonly slug: string;
-  readonly thumbnail: string | null;
+  readonly thumbnail: string | null | undefined;
   readonly title: string;
   readonly " $fragmentType": "OtherCollectionEntity_member";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c578f53018eb307473d4ded1c7e1743d>>
+ * @generated SignedSource<<bffd965877589440f076fd6827333436>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,8 +16,8 @@ export type ArtworkListArtworksGrid_me$data = {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly id: string;
-        } | null;
-      } | null> | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
       readonly pageCursors: {
         readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
       };
@@ -25,9 +25,9 @@ export type ArtworkListArtworksGrid_me$data = {
         readonly hasNextPage: boolean;
       };
       readonly " $fragmentSpreads": FragmentRefs<"ArtworkGrid_artworks">;
-    } | null;
+    } | null | undefined;
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkListEmptyState_me">;
   readonly " $fragmentType": "ArtworkListArtworksGrid_me";
 };

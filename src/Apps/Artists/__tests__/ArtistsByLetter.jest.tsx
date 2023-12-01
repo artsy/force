@@ -15,7 +15,7 @@ const { getWrapper } = setupTestWrapper<ArtistsByLetterQuery>({
   Component: props => {
     return (
       <MockBoot>
-        <ArtistsByLetterFragmentContainer {...props} />
+        <ArtistsByLetterFragmentContainer {...(props as any)} />
       </MockBoot>
     )
   },

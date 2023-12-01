@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c9556164a2ba75a0dda71d47be3d7ec5>>
+ * @generated SignedSource<<f18ef4cb96b23c77e0d7b520e3a50775>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type RecentlyViewed_me$data = {
       readonly node: {
         readonly id: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "RecentlyViewed_me";
 };
 export type RecentlyViewed_me$key = {

@@ -23,7 +23,7 @@ interface FollowArtistButtonProps extends Omit<ButtonProps, "variant"> {
   artist: FollowArtistButton_artist$data
   children?: FollowButtonRenderProps
   contextModule?: AuthContextModule
-  me: FollowArtistButton_me$data | null
+  me: FollowArtistButton_me$data | null | undefined
   onFollow?: (followed: boolean) => void
   triggerSuggestions?: boolean
 }

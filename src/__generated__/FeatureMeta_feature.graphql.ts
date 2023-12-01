@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8bfa111cd04b120479d2bfbeced2ddc7>>
+ * @generated SignedSource<<3c717bbea4cd0651f30121d6405f9403>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type FeatureMeta_feature$data = {
   readonly meta: {
     readonly description: string;
-    readonly image: string | null;
+    readonly image: string | null | undefined;
     readonly name: string;
   };
   readonly slug: string;

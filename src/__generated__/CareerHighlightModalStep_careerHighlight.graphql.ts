@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a53bad3298d7c3265ce11a51181f2f65>>
+ * @generated SignedSource<<606463b1c38aaee20e0791371728ee61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,7 +13,7 @@ import { FragmentRefs } from "relay-runtime";
 export type CareerHighlightModalStep_careerHighlight$data = ReadonlyArray<{
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "CareerHighlightModalStep_careerHighlight";
 }>;
 export type CareerHighlightModalStep_careerHighlight$key = ReadonlyArray<{

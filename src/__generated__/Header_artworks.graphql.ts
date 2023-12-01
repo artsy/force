@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7a35b7cb11b013ad6d473d76305e7c77>>
+ * @generated SignedSource<<5d8c267d0087cb1c0986187076643506>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,9 +13,9 @@ import { FragmentRefs } from "relay-runtime";
 export type Header_artworks$data = {
   readonly merchandisableArtists: ReadonlyArray<{
     readonly internalID: string;
-    readonly name: string | null;
+    readonly name: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"DefaultHeader_headerArtworks">;
   readonly " $fragmentType": "Header_artworks";
 };

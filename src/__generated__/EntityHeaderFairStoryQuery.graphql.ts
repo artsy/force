@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<89fdcf1fcbdaf226cb2e2f16272c56b9>>
+ * @generated SignedSource<<ff241b82a861fde7c9b2c754b2d31c0e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type EntityHeaderFairStoryQuery$variables = {
 export type EntityHeaderFairStoryQuery$data = {
   readonly fair: {
     readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderFair_fair">;
-  } | null;
+  } | null | undefined;
 };
 export type EntityHeaderFairStoryQuery = {
   response: EntityHeaderFairStoryQuery$data;

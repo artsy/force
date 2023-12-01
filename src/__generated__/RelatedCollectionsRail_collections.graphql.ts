@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2a94071fd89268b6084559b9eed8adac>>
+ * @generated SignedSource<<dee6ca86ef984000d165d7b6e5235b06>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,9 +15,9 @@ export type RelatedCollectionsRail_collections$data = ReadonlyArray<{
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly id: string;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"RelatedCollectionEntity_collection">;
   readonly " $fragmentType": "RelatedCollectionsRail_collections";
 }>;

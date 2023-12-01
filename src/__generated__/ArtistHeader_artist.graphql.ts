@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9199c2ad0c21827131dd45f98c16b9cd>>
+ * @generated SignedSource<<2ee454b142895a77f34a32b48af90c91>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,28 +14,28 @@ export type ArtistHeader_artist$data = {
   readonly auctionResultsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly organization: string | null;
+        readonly organization: string | null | undefined;
         readonly price_realized: {
-          readonly display: string | null;
-        } | null;
-        readonly sale_date: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
+          readonly display: string | null | undefined;
+        } | null | undefined;
+        readonly sale_date: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly biographyBlurb: {
-    readonly credit: string | null;
-    readonly text: string | null;
-  } | null;
+    readonly credit: string | null | undefined;
+    readonly text: string | null | undefined;
+  } | null | undefined;
   readonly counts: {
-    readonly follows: any | null;
-    readonly forSaleArtworks: any | null;
-  } | null;
-  readonly formattedNationalityAndBirthday: string | null;
+    readonly follows: any | null | undefined;
+    readonly forSaleArtworks: any | null | undefined;
+  } | null | undefined;
+  readonly formattedNationalityAndBirthday: string | null | undefined;
   readonly image: {
-    readonly url: string | null;
-  } | null;
+    readonly url: string | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtistHeader_artist";
 };

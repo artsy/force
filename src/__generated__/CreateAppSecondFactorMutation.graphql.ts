@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4411991557505da030a208f9f43a8575>>
+ * @generated SignedSource<<1b10f8df473bbaa7c7f98b7df2cc0eeb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,11 +11,11 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateAppSecondFactorInput = {
   attributes: AppSecondFactorAttributes;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   password: string;
 };
 export type AppSecondFactorAttributes = {
-  name?: string | null;
+  name?: string | null | undefined;
 };
 export type CreateAppSecondFactorMutation$variables = {
   input: CreateAppSecondFactorInput;
@@ -25,9 +25,9 @@ export type CreateAppSecondFactorMutation$data = {
     readonly secondFactorOrErrors: {
       readonly __typename: "AppSecondFactor";
       readonly internalID: string;
-      readonly name: string | null;
-      readonly otpProvisioningURI: string | null;
-      readonly otpSecret: string | null;
+      readonly name: string | null | undefined;
+      readonly otpProvisioningURI: string | null | undefined;
+      readonly otpSecret: string | null | undefined;
     } | {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
@@ -39,16 +39,16 @@ export type CreateAppSecondFactorMutation$data = {
       // value in case none of the concrete values match.
       readonly __typename: "%other";
     };
-  } | null;
+  } | null | undefined;
 };
 export type CreateAppSecondFactorMutation$rawResponse = {
   readonly createAppSecondFactor: {
     readonly secondFactorOrErrors: {
       readonly __typename: "AppSecondFactor";
       readonly internalID: string;
-      readonly name: string | null;
-      readonly otpProvisioningURI: string | null;
-      readonly otpSecret: string | null;
+      readonly name: string | null | undefined;
+      readonly otpProvisioningURI: string | null | undefined;
+      readonly otpSecret: string | null | undefined;
     } | {
       readonly __typename: "Errors";
       readonly errors: ReadonlyArray<{
@@ -58,7 +58,7 @@ export type CreateAppSecondFactorMutation$rawResponse = {
     } | {
       readonly __typename: string;
     };
-  } | null;
+  } | null | undefined;
 };
 export type CreateAppSecondFactorMutation = {
   rawResponse: CreateAppSecondFactorMutation$rawResponse;

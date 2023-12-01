@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dadcb9cd3dc0a5b3fb070a5a14c419ab>>
+ * @generated SignedSource<<643d3d5595812cad4515a5eebc1b7cd0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,7 @@ export type exampleRoutes_ArtworkQuery$data = {
   readonly artwork: {
     readonly id: string;
     readonly " $fragmentSpreads": FragmentRefs<"ExampleArtworkRoute_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type exampleRoutes_ArtworkQuery = {
   response: exampleRoutes_ArtworkQuery$data;

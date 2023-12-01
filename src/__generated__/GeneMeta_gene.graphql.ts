@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2c44c6888753bea5fc0e0419c1d3fa9>>
+ * @generated SignedSource<<478ba688af0b77e35225d041f4cc65d3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type GeneMeta_gene$data = {
-  readonly displayName: string | null;
-  readonly href: string | null;
+  readonly displayName: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly image: {
     readonly cropped: {
       readonly src: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
   readonly meta: {
     readonly description: string;
   };
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly " $fragmentType": "GeneMeta_gene";
 };
 export type GeneMeta_gene$key = {

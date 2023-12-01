@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b1e41dddb1408c76678dd0cf7e262f17>>
+ * @generated SignedSource<<56815c4a3ed8f6c7c3957f25dd95480e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,19 +17,19 @@ export type PartnersSpecialtyAutocomplete_viewer$data = {
         readonly count: number;
         readonly text: string;
         readonly value: string;
-      } | null> | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined> | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly filterPartners: {
     readonly aggregations: ReadonlyArray<{
       readonly counts: ReadonlyArray<{
         readonly count: number;
         readonly text: string;
         readonly value: string;
-      } | null> | null;
-    } | null> | null;
-    readonly total: number | null;
-  } | null;
+      } | null | undefined> | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly total: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "PartnersSpecialtyAutocomplete_viewer";
 };
 export type PartnersSpecialtyAutocomplete_viewer$key = {

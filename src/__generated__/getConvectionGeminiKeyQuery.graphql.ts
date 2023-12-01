@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb28aa7552238fde37006d85fd4535e5>>
+ * @generated SignedSource<<42dcbe7ee743922776511896d1e58505>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,15 +9,15 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type getConvectionGeminiKeyQuery$variables = {};
+export type getConvectionGeminiKeyQuery$variables = Record<PropertyKey, never>;
 export type getConvectionGeminiKeyQuery$data = {
   readonly system: {
     readonly services: {
       readonly convection: {
         readonly geminiTemplateKey: string;
       };
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type getConvectionGeminiKeyQuery = {
   response: getConvectionGeminiKeyQuery$data;

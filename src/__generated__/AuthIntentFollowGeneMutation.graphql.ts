@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ee98363308497186fb714a6b957cd44e>>
+ * @generated SignedSource<<b0d84987a33e59f8a8899227f973f984>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,9 +10,9 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type FollowGeneInput = {
-  clientMutationId?: string | null;
-  geneID?: string | null;
-  unfollow?: boolean | null;
+  clientMutationId?: string | null | undefined;
+  geneID?: string | null | undefined;
+  unfollow?: boolean | null | undefined;
 };
 export type AuthIntentFollowGeneMutation$variables = {
   input: FollowGeneInput;
@@ -21,17 +21,17 @@ export type AuthIntentFollowGeneMutation$data = {
   readonly followGene: {
     readonly gene: {
       readonly id: string;
-      readonly isFollowed: boolean | null;
-    } | null;
-  } | null;
+      readonly isFollowed: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type AuthIntentFollowGeneMutation$rawResponse = {
   readonly followGene: {
     readonly gene: {
       readonly id: string;
-      readonly isFollowed: boolean | null;
-    } | null;
-  } | null;
+      readonly isFollowed: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type AuthIntentFollowGeneMutation = {
   rawResponse: AuthIntentFollowGeneMutation$rawResponse;

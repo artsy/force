@@ -189,7 +189,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         setShippingQuoteId(undefined)
       } else if (selectedAddressID == deletedAddressID) {
         selectSavedAddress(
-          addressList.find(address => address.isDefault)?.internalID!
+          addressList.find(address => address.isDefault)?.internalID as string
         )
       }
 
@@ -275,13 +275,13 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     } = validatePhoneNumber(phoneNumber)
 
     if (invalidPhoneNumber) {
-      setPhoneNumberError(phoneNumberError!)
+      setPhoneNumberError(phoneNumberError as string)
       setPhoneNumberTouched(true)
       !invalidAddress && jumpTo("phoneNumberTop", { behavior: "smooth" })
     }
 
     if (invalidAddress) {
-      setAddressErrors(addressErrors!)
+      setAddressErrors(addressErrors)
       setAddressTouched(touchedAddress)
       jumpTo("deliveryAddressTop", { behavior: "smooth" })
     }
@@ -318,7 +318,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     if (shippingOption === "PICKUP") {
       const { error, hasError } = validatePhoneNumber(phoneNumber)
       if (hasError) {
-        setPhoneNumberError(error!)
+        setPhoneNumberError(error as string)
         setPhoneNumberTouched(true)
         return
       }
@@ -331,7 +331,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         : convertShippingAddressForExchange(
             editedAddress
               ? editedAddress
-              : addressList.find(
+              : // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+                addressList.find(
                   address => address.internalID == selectedAddressID
                 )!
           )
@@ -486,7 +487,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       }
     } else if (savedAddressID) {
       deleteUserAddress(
-        relayEnvironment!,
+        relayEnvironment,
         savedAddressID,
         () => {},
         message => {
@@ -496,7 +497,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }
 
-  const handleSubmitError = (error: { code: string; data: string | null }) => {
+  const handleSubmitError = (error: {
+    code: string
+    data: string | null | undefined
+  }) => {
     logger.error(error)
     const parsedData = error.data ? JSON.parse(error.data) : {}
     if (
@@ -625,7 +629,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     const { error } = validatePhoneNumber(newPhoneNumber)
 
     setPhoneNumber(newPhoneNumber)
-    setPhoneNumberError(error!)
+    setPhoneNumberError(error as string)
     setPhoneNumberTouched(true)
     setShippingQuotes(null)
     setShippingQuoteId(undefined)
@@ -892,9 +896,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                   errors={addressErrors}
                   touched={addressTouched}
                   onChange={onAddressChange}
-                  domesticOnly={artwork?.onlyShipsDomestically!}
-                  euOrigin={artwork?.euShippingOrigin!}
-                  shippingCountry={artwork?.shippingCountry!}
+                  domesticOnly={artwork?.onlyShipsDomestically as boolean}
+                  euOrigin={artwork?.euShippingOrigin as boolean}
+                  shippingCountry={artwork?.shippingCountry as string}
                   showPhoneNumberInput={false}
                 />
                 <Spacer y={2} />

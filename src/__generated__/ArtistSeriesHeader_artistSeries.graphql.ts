@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f2175bf388e79affb38a5ac8568558af>>
+ * @generated SignedSource<<3148a9477037037c5d0a4ceb2c10496a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,24 +12,24 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesHeader_artistSeries$data = {
   readonly artists: ReadonlyArray<{
-    readonly href: string | null;
+    readonly href: string | null | undefined;
     readonly image: {
-      readonly url: string | null;
-    } | null;
+      readonly url: string | null | undefined;
+    } | null | undefined;
     readonly internalID: string;
-    readonly name: string | null;
+    readonly name: string | null | undefined;
     readonly slug: string;
-  } | null> | null;
-  readonly artworksCountMessage: string | null;
-  readonly descriptionFormatted: string | null;
+  } | null | undefined> | null | undefined;
+  readonly artworksCountMessage: string | null | undefined;
+  readonly descriptionFormatted: string | null | undefined;
   readonly image: {
     readonly cropped: {
       readonly height: number;
       readonly src: string;
       readonly srcSet: string;
       readonly width: number;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly slug: string;
   readonly title: string;

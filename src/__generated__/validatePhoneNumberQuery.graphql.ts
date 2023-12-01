@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3945c99b436202753e34df44cefd6a81>>
+ * @generated SignedSource<<87eb12cdc73738800bf5571ecb2c6862>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type validatePhoneNumberQuery$variables = {
   phoneNumber: string;
-  regionCode?: string | null;
+  regionCode?: string | null | undefined;
 };
 export type validatePhoneNumberQuery$data = {
   readonly phoneNumber: {
-    readonly isValid: boolean | null;
-  } | null;
+    readonly isValid: boolean | null | undefined;
+  } | null | undefined;
 };
 export type validatePhoneNumberQuery = {
   response: validatePhoneNumberQuery$data;

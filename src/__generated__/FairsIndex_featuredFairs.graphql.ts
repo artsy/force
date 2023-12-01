@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0c116a3c97be57fad4ec846cc71f40b2>>
+ * @generated SignedSource<<de27da580d030e6511349d1d32da1722>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,11 +18,11 @@ export type FairsIndex_featuredFairs$data = ReadonlyArray<{
         readonly src: string;
         readonly srcSet: string;
         readonly width: number;
-      } | null;
-    } | null;
+      } | null | undefined;
+    } | null | undefined;
     readonly internalID?: string;
-    readonly title?: string | null;
-  } | null> | null;
+    readonly title?: string | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "FairsIndex_featuredFairs";
 }>;
 export type FairsIndex_featuredFairs$key = ReadonlyArray<{

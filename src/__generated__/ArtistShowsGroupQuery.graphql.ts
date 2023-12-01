@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<94efdc9d17abfd26cecc66e31c0d24f7>>
+ * @generated SignedSource<<f939da7375bc8083e6ca2f9324abbe19>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,14 +13,14 @@ import { FragmentRefs } from "relay-runtime";
 export type ShowSorts = "END_AT_ASC" | "END_AT_DESC" | "FEATURED_ASC" | "FEATURED_DESC" | "FEATURED_DESC_END_AT_DESC" | "NAME_ASC" | "NAME_DESC" | "PARTNER_ASC" | "SORTABLE_NAME_ASC" | "SORTABLE_NAME_DESC" | "START_AT_ASC" | "START_AT_DESC" | "UPDATED_AT_ASC" | "UPDATED_AT_DESC" | "%future added value";
 export type ArtistShowsGroupQuery$variables = {
   artistID: string;
-  page?: number | null;
-  sort?: ShowSorts | null;
+  page?: number | null | undefined;
+  sort?: ShowSorts | null | undefined;
   status: string;
 };
 export type ArtistShowsGroupQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistShowsGroup_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtistShowsGroupQuery = {
   response: ArtistShowsGroupQuery$data;

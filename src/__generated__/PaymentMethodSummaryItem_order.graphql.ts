@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b31f294c0fc1b5684d1ecf10f7d0f43a>>
+ * @generated SignedSource<<a686cd5ac32639b1f79b6ab3dc03f90f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type PaymentMethodSummaryItem_order$data = {
   readonly paymentMethodDetails: {
@@ -28,7 +28,7 @@ export type PaymentMethodSummaryItem_order$data = {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly source: CommerceOrderSourceEnum;
   readonly " $fragmentType": "PaymentMethodSummaryItem_order";
 };

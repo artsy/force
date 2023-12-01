@@ -1,5 +1,5 @@
 import * as React from "react"
-import { QueryRenderer } from "react-relay"
+import { Environment, QueryRenderer } from "react-relay"
 import { OperationType } from "relay-runtime"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useSystemContext } from "System/useSystemContext"
@@ -23,7 +23,7 @@ export type SystemQueryRendererProps<T extends OperationType> = Omit<
   lazyLoad?: boolean
   lazyLoadThreshold?: number
   placeholder?: ReactElement<any, string | JSXElementConstructor<any>>
-  environment?: QueryRendererProps["environment"]
+  environment?: Environment
   variables?: QueryRendererProps["variables"]
   render(renderProps: {
     error: Error | null

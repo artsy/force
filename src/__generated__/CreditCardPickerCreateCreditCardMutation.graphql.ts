@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<97928fca345a330d1e839a3f497c6482>>
+ * @generated SignedSource<<5d6bdef39e0b404ff237f146ce6a32d0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,8 +10,8 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreditCardInput = {
-  clientMutationId?: string | null;
-  oneTimeUse?: boolean | null;
+  clientMutationId?: string | null | undefined;
+  oneTimeUse?: boolean | null | undefined;
   token: string;
 };
 export type CreditCardPickerCreateCreditCardMutation$variables = {
@@ -22,25 +22,25 @@ export type CreditCardPickerCreateCreditCardMutation$data = {
     readonly creditCardOrError: {
       readonly creditCard?: {
         readonly brand: string;
-        readonly city: string | null;
-        readonly country: string | null;
+        readonly city: string | null | undefined;
+        readonly country: string | null | undefined;
         readonly expirationMonth: number;
         readonly expirationYear: number;
         readonly internalID: string;
         readonly lastDigits: string;
-        readonly name: string | null;
-        readonly postalCode: string | null;
-        readonly state: string | null;
-        readonly street1: string | null;
-        readonly street2: string | null;
-      } | null;
+        readonly name: string | null | undefined;
+        readonly postalCode: string | null | undefined;
+        readonly state: string | null | undefined;
+        readonly street1: string | null | undefined;
+        readonly street2: string | null | undefined;
+      } | null | undefined;
       readonly mutationError?: {
-        readonly detail: string | null;
+        readonly detail: string | null | undefined;
         readonly message: string;
-        readonly type: string | null;
-      } | null;
-    } | null;
-  } | null;
+        readonly type: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type CreditCardPickerCreateCreditCardMutation = {
   response: CreditCardPickerCreateCreditCardMutation$data;

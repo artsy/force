@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bd4fb4d23fce888fa4bcdbbd62dd240b>>
+ * @generated SignedSource<<f915d10c1ce12d44a9dff50ff51dbece>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,10 +17,10 @@ export type WorksByArtistsYouFollowRail_viewer$data = {
         readonly internalID: string;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-      } | null;
-    } | null> | null;
-    readonly totalCount: number | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "WorksByArtistsYouFollowRail_viewer";
 };
 export type WorksByArtistsYouFollowRail_viewer$key = {

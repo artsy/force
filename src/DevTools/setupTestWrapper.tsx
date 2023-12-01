@@ -1,12 +1,8 @@
 import { act, render, RenderResult } from "@testing-library/react"
 import { mount } from "enzyme"
 import * as React from "react"
-import { QueryRenderer, Variables } from "react-relay"
-import {
-  GraphQLTaggedNode,
-  OperationDescriptor,
-  OperationType,
-} from "relay-runtime"
+import { GraphQLTaggedNode, QueryRenderer, Variables } from "react-relay"
+import { OperationDescriptor, OperationType } from "relay-runtime"
 import {
   createMockEnvironment,
   MockPayloadGenerator,
@@ -162,7 +158,8 @@ export const setupTestWrapperTL = <T extends OperationType>({
 }
 
 /**
- * @note See `setupTestWrapperTL`, which uses `@testing-library/react`
+ * @deprecated This method should _not_ be used for new tests. See
+ * `setupTestWrapperTL` which uses `@testing-library/react`.
  */
 export const setupTestWrapper = <T extends OperationType>({
   Component,

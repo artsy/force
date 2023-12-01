@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9653085985c06b8f02065b8989580f6c>>
+ * @generated SignedSource<<b22039528dd6e183c9c76f74c577e053>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type useRecordArtworkViewMutation$variables = {
 export type useRecordArtworkViewMutation$data = {
   readonly recordArtworkView: {
     readonly artwork_id: string;
-  } | null;
+  } | null | undefined;
 };
 export type useRecordArtworkViewMutation = {
   response: useRecordArtworkViewMutation$data;

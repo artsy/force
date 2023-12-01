@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<092a1007aecd144522c356cc722c9c01>>
+ * @generated SignedSource<<9539e78f122f7d3f69120bf1430a932d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,25 +10,25 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SeoDataForArtwork_Test_Query$variables = {};
+export type SeoDataForArtwork_Test_Query$variables = Record<PropertyKey, never>;
 export type SeoDataForArtwork_Test_Query$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"SeoDataForArtwork_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type SeoDataForArtwork_Test_Query$rawResponse = {
   readonly artwork: {
-    readonly artistNames: string | null;
-    readonly availability: string | null;
-    readonly category: string | null;
-    readonly date: string | null;
+    readonly artistNames: string | null | undefined;
+    readonly availability: string | null | undefined;
+    readonly category: string | null | undefined;
+    readonly date: string | null | undefined;
     readonly dimensions: {
-      readonly in: string | null;
-    } | null;
-    readonly href: string | null;
+      readonly in: string | null | undefined;
+    } | null | undefined;
+    readonly href: string | null | undefined;
     readonly id: string;
-    readonly is_price_hidden: boolean | null;
-    readonly is_price_range: boolean | null;
+    readonly is_price_hidden: boolean | null | undefined;
+    readonly is_price_range: boolean | null | undefined;
     readonly listPrice: {
       readonly __typename: "Money";
       readonly currencyCode: string;
@@ -37,39 +37,39 @@ export type SeoDataForArtwork_Test_Query$rawResponse = {
       readonly __typename: "PriceRange";
       readonly maxPrice: {
         readonly major: number;
-      } | null;
+      } | null | undefined;
       readonly minPrice: {
         readonly currencyCode: string;
         readonly major: number;
-      } | null;
+      } | null | undefined;
     } | {
       readonly __typename: string;
-    } | null;
+    } | null | undefined;
     readonly meta: {
-      readonly description: string | null;
-      readonly title: string | null;
-    } | null;
+      readonly description: string | null | undefined;
+      readonly title: string | null | undefined;
+    } | null | undefined;
     readonly meta_image: {
       readonly resized: {
-        readonly height: number | null;
+        readonly height: number | null | undefined;
         readonly url: string;
-        readonly width: number | null;
-      } | null;
-    } | null;
+        readonly width: number | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
     readonly partner: {
       readonly id: string;
-      readonly name: string | null;
+      readonly name: string | null | undefined;
       readonly profile: {
         readonly id: string;
         readonly image: {
           readonly resized: {
             readonly url: string;
-          } | null;
-        } | null;
-      } | null;
-      readonly type: string | null;
-    } | null;
-  } | null;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+      readonly type: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type SeoDataForArtwork_Test_Query = {
   rawResponse: SeoDataForArtwork_Test_Query$rawResponse;

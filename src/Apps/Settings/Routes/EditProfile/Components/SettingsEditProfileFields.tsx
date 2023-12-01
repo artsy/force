@@ -49,14 +49,14 @@ import {
 const logger = createLogger("SettingsEditProfileFields")
 
 interface EditableLocationProps extends EditableLocation {
-  display: string | null
+  display: string | null | undefined
 }
 
 export interface EditProfileFormModel {
-  photo: File | null
+  photo: File | null | undefined
   name: string
-  displayLocation: { display: string | null }
-  location: EditableLocationProps | null
+  displayLocation: { display: string | null | undefined }
+  location: EditableLocationProps | null | undefined
   profession: string
   otherRelevantPositions: string
   bio: string
@@ -103,7 +103,7 @@ const SettingsEditProfileFields: React.FC<SettingsEditProfileFieldsProps> = ({
     try {
       const normalizedPhoto = normalizePhoto(photo)
       const iconUrl = await uploadPhotoToS3(
-        relayEnvironment!,
+        relayEnvironment,
         normalizedPhoto,
         () => {}
       )

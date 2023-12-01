@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3adf5f8477459b6f6c6f0d357a553b6f>>
+ * @generated SignedSource<<7a6288a9bae469dadad79cea50e47021>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,7 +17,7 @@ export type ArtistAuctionResults_Test_Query$variables = {
 export type ArtistAuctionResults_Test_Query$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistAuctionResultsRoute_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtistAuctionResults_Test_Query$rawResponse = {
   readonly artist: {
@@ -26,16 +26,16 @@ export type ArtistAuctionResults_Test_Query$rawResponse = {
         readonly node: {
           readonly artist: {
             readonly id: string;
-            readonly name: string | null;
-          } | null;
-          readonly boughtIn: boolean | null;
-          readonly categoryText: string | null;
-          readonly currency: string | null;
-          readonly date_text: string | null;
-          readonly dimension_text: string | null;
+            readonly name: string | null | undefined;
+          } | null | undefined;
+          readonly boughtIn: boolean | null | undefined;
+          readonly categoryText: string | null | undefined;
+          readonly currency: string | null | undefined;
+          readonly date_text: string | null | undefined;
+          readonly dimension_text: string | null | undefined;
           readonly estimate: {
-            readonly display: string | null;
-          } | null;
+            readonly display: string | null | undefined;
+          } | null | undefined;
           readonly id: string;
           readonly images: {
             readonly thumbnail: {
@@ -44,28 +44,28 @@ export type ArtistAuctionResults_Test_Query$rawResponse = {
                 readonly src: string;
                 readonly srcSet: string;
                 readonly width: number;
-              } | null;
-            } | null;
-          } | null;
+              } | null | undefined;
+            } | null | undefined;
+          } | null | undefined;
           readonly internalID: string;
-          readonly isUpcoming: boolean | null;
-          readonly location: string | null;
-          readonly lotNumber: string | null;
-          readonly mediumText: string | null;
-          readonly organization: string | null;
+          readonly isUpcoming: boolean | null | undefined;
+          readonly location: string | null | undefined;
+          readonly lotNumber: string | null | undefined;
+          readonly mediumText: string | null | undefined;
+          readonly organization: string | null | undefined;
           readonly performance: {
-            readonly mid: string | null;
-          } | null;
+            readonly mid: string | null | undefined;
+          } | null | undefined;
           readonly price_realized: {
-            readonly cents_usd: number | null;
-            readonly display: string | null;
-            readonly display_usd: string | null;
-          } | null;
-          readonly saleDate: string | null;
-          readonly saleTitle: string | null;
-          readonly title: string | null;
-        } | null;
-      } | null> | null;
+            readonly cents_usd: number | null | undefined;
+            readonly display: string | null | undefined;
+            readonly display_usd: string | null | undefined;
+          } | null | undefined;
+          readonly saleDate: string | null | undefined;
+          readonly saleTitle: string | null | undefined;
+          readonly title: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
       readonly pageCursors: {
         readonly around: ReadonlyArray<{
           readonly cursor: string;
@@ -76,51 +76,51 @@ export type ArtistAuctionResults_Test_Query$rawResponse = {
           readonly cursor: string;
           readonly isCurrent: boolean;
           readonly page: number;
-        } | null;
+        } | null | undefined;
         readonly last: {
           readonly cursor: string;
           readonly isCurrent: boolean;
           readonly page: number;
-        } | null;
+        } | null | undefined;
         readonly previous: {
           readonly cursor: string;
           readonly page: number;
-        } | null;
+        } | null | undefined;
       };
       readonly pageInfo: {
-        readonly endCursor: string | null;
+        readonly endCursor: string | null | undefined;
         readonly hasNextPage: boolean;
       };
-      readonly totalCount: number | null;
-    } | null;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
     readonly id: string;
     readonly internalID: string;
     readonly meta: {
       readonly description: string;
       readonly title: string;
     };
-    readonly name: string | null;
+    readonly name: string | null | undefined;
     readonly pastAuctionResults: {
-      readonly totalCount: number | null;
-    } | null;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
     readonly sidebarAggregations: {
       readonly aggregations: ReadonlyArray<{
         readonly counts: ReadonlyArray<{
           readonly count: number;
           readonly name: string;
           readonly value: string;
-        } | null> | null;
-        readonly slice: AuctionResultsAggregation | null;
-      } | null> | null;
-    } | null;
+        } | null | undefined> | null | undefined;
+        readonly slice: AuctionResultsAggregation | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
     readonly slug: string;
     readonly statuses: {
-      readonly auctionLots: boolean | null;
-    } | null;
+      readonly auctionLots: boolean | null | undefined;
+    } | null | undefined;
     readonly upcomingAuctionResults: {
-      readonly totalCount: number | null;
-    } | null;
-  } | null;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type ArtistAuctionResults_Test_Query = {
   rawResponse: ArtistAuctionResults_Test_Query$rawResponse;

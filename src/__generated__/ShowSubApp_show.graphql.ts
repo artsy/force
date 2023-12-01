@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<96f9fd7371fcef66a506012354aaa1c1>>
+ * @generated SignedSource<<efe2de63109e59fb467cd5f6cdebf62a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,14 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowSubApp_show$data = {
-  readonly href: string | null;
+  readonly href: string | null | undefined;
   readonly id: string;
   readonly internalID: string;
-  readonly isFairBooth: boolean | null;
-  readonly name: string | null;
+  readonly isFairBooth: boolean | null | undefined;
+  readonly name: string | null | undefined;
   readonly partner: {
-    readonly name?: string | null;
-  } | null;
+    readonly name?: string | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ShowMeta_show">;
   readonly " $fragmentType": "ShowSubApp_show";

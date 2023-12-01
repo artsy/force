@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<074a3b9e113461e2f245714a4ba6f1e9>>
+ * @generated SignedSource<<da0c858a1a87137c80b14583fe173937>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type artistRoutes_ArtistConsignQuery$variables = {
 export type artistRoutes_ArtistConsignQuery$data = {
   readonly artist: {
     readonly targetSupply: {
-      readonly isInMicrofunnel: boolean | null;
+      readonly isInMicrofunnel: boolean | null | undefined;
     };
     readonly " $fragmentSpreads": FragmentRefs<"ArtistConsignRoute_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type artistRoutes_ArtistConsignQuery = {
   response: artistRoutes_ArtistConsignQuery$data;

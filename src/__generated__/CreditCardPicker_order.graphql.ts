@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9f92a6afee2b947fac51d39278effad3>>
+ * @generated SignedSource<<77c9a4740f33c5949715cf5d263b2ca2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,55 +15,55 @@ import { FragmentRefs } from "relay-runtime";
 export type CreditCardPicker_order$data = {
   readonly creditCard: {
     readonly brand: string;
-    readonly city: string | null;
-    readonly country: string | null;
+    readonly city: string | null | undefined;
+    readonly country: string | null | undefined;
     readonly expirationMonth: number;
     readonly expirationYear: number;
     readonly internalID: string;
     readonly lastDigits: string;
-    readonly name: string | null;
-    readonly postalCode: string | null;
-    readonly state: string | null;
-    readonly street1: string | null;
-    readonly street2: string | null;
-  } | null;
+    readonly name: string | null | undefined;
+    readonly postalCode: string | null | undefined;
+    readonly state: string | null | undefined;
+    readonly street1: string | null | undefined;
+    readonly street2: string | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
           readonly slug: string;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly mode: CommerceOrderModeEnum | null;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly requestedFulfillment: {
     readonly __typename: "CommercePickup";
     readonly fulfillmentType: string;
   } | {
     readonly __typename: "CommerceShip";
-    readonly addressLine1: string | null;
-    readonly addressLine2: string | null;
-    readonly city: string | null;
-    readonly country: string | null;
-    readonly name: string | null;
-    readonly postalCode: string | null;
-    readonly region: string | null;
+    readonly addressLine1: string | null | undefined;
+    readonly addressLine2: string | null | undefined;
+    readonly city: string | null | undefined;
+    readonly country: string | null | undefined;
+    readonly name: string | null | undefined;
+    readonly postalCode: string | null | undefined;
+    readonly region: string | null | undefined;
   } | {
     readonly __typename: "CommerceShipArta";
-    readonly addressLine1: string | null;
-    readonly addressLine2: string | null;
-    readonly city: string | null;
-    readonly country: string | null;
-    readonly name: string | null;
-    readonly postalCode: string | null;
-    readonly region: string | null;
+    readonly addressLine1: string | null | undefined;
+    readonly addressLine2: string | null | undefined;
+    readonly city: string | null | undefined;
+    readonly country: string | null | undefined;
+    readonly name: string | null | undefined;
+    readonly postalCode: string | null | undefined;
+    readonly region: string | null | undefined;
   } | {
     // This will never be '%other', but we need some
     // value in case none of the concrete values match.
     readonly __typename: "%other";
-  } | null;
+  } | null | undefined;
   readonly state: CommerceOrderStateEnum;
   readonly " $fragmentType": "CreditCardPicker_order";
 };

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e82ae3fe913b088b1c997f57400103eb>>
+ * @generated SignedSource<<c5f20cdf8ad99820b64dcd3bc84ee414>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,13 +18,13 @@ export type AuctionArtworkFilter_viewer$data = {
         readonly count: number;
         readonly name: string;
         readonly value: string;
-      } | null> | null;
-      readonly slice: ArtworkAggregation | null;
-    } | null> | null;
+      } | null | undefined> | null | undefined;
+      readonly slice: ArtworkAggregation | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly counts: {
-      readonly followedArtists: any | null;
-    } | null;
-  } | null;
+      readonly followedArtists: any | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilter_viewer">;
   readonly " $fragmentType": "AuctionArtworkFilter_viewer";
 };

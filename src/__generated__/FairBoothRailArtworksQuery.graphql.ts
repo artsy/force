@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cfca86d605456980ba0e749e912435df>>
+ * @generated SignedSource<<cde3a3cc33a6d8ed896a14ed32173c90>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type FairBoothRailArtworksQuery$variables = {
 export type FairBoothRailArtworksQuery$data = {
   readonly show: {
     readonly " $fragmentSpreads": FragmentRefs<"FairBoothRailArtworks_show">;
-  } | null;
+  } | null | undefined;
 };
 export type FairBoothRailArtworksQuery = {
   response: FairBoothRailArtworksQuery$data;

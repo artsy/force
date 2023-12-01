@@ -52,14 +52,14 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
     setSubmitting(true)
 
     try {
-      const response = await EnableSecondFactor(relayEnvironment!, {
+      const response = await EnableSecondFactor(relayEnvironment, {
         secondFactorID: secondFactor.internalID,
         // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         code: values.code,
         password: password,
       })
 
-      setRecoveryCodes(response?.enableSecondFactor?.recoveryCodes!)
+      setRecoveryCodes(response?.enableSecondFactor?.recoveryCodes)
 
       setShowRecoveryCodes(true)
     } catch (error) {
@@ -106,7 +106,6 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
       setDelivering(true)
 
       try {
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         await UpdateSmsSecondFactor(relayEnvironment, {
           secondFactorID: secondFactor.internalID,
           attributes: {
@@ -116,7 +115,6 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
             countryCode: values.countryCode,
           },
         })
-        // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
         const response = await DeliverSecondFactor(relayEnvironment, {
           secondFactorID: secondFactor.internalID,
         })
@@ -146,6 +144,7 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
   }
 
   const steps: StepElement[] = [
+    // eslint-disable-next-line react/jsx-key
     <Step
       label="Phone Number"
       onSubmit={handleDeliverStepSubmit}
@@ -205,6 +204,7 @@ export const SmsSecondFactorModal: React.FC<SmsSecondFactorModalProps> = props =
       )}
     </Step>,
 
+    // eslint-disable-next-line react/jsx-key
     <Step
       label="Authentication Code"
       validationSchema={Yup.object().shape({

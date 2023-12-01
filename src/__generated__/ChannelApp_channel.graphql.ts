@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2641401d1d1d195bb74759a0d3204e29>>
+ * @generated SignedSource<<5991c231c1ec2b40c4470985b5d1efb3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,14 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ChannelApp_channel$data = {
   readonly image: {
-    readonly url: string | null;
-  } | null;
+    readonly url: string | null | undefined;
+  } | null | undefined;
   readonly links: ReadonlyArray<{
     readonly text: string;
     readonly url: string;
   }>;
   readonly name: string;
-  readonly tagline: string | null;
+  readonly tagline: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ChannelArticles_channel">;
   readonly " $fragmentType": "ChannelApp_channel";
 };

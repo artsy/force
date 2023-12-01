@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e57bab3cc99dca60db1ed9330e319f04>>
+ * @generated SignedSource<<771dfbb78f83cbb77b8181876c7d5402>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type artistRoutes_AuctionResultQuery$variables = {
 export type artistRoutes_AuctionResultQuery$data = {
   readonly auctionResult: {
     readonly " $fragmentSpreads": FragmentRefs<"AuctionResult_auctionResult">;
-  } | null;
+  } | null | undefined;
 };
 export type artistRoutes_AuctionResultQuery = {
   response: artistRoutes_AuctionResultQuery$data;

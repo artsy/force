@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1f2f5d1123cd7d56683c54ceebf2945e>>
+ * @generated SignedSource<<299cd73981b8fdfbfd0feacb3e9c1a2e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PriceEstimateContactInformation_me$data = {
-  readonly email: string | null;
+  readonly email: string | null | undefined;
   readonly internalID: string;
-  readonly name: string | null;
-  readonly phone: string | null;
+  readonly name: string | null | undefined;
+  readonly phone: string | null | undefined;
   readonly phoneNumber: {
-    readonly regionCode: string | null;
-  } | null;
+    readonly regionCode: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ContactInformationForm_me">;
   readonly " $fragmentType": "PriceEstimateContactInformation_me";
 };

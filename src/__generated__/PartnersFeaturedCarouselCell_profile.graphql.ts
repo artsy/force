@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5051fa2d0a247372d337ff29b41b02af>>
+ * @generated SignedSource<<4c2d6a331558c75422cf77b3f4665b55>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,22 +18,22 @@ export type PartnersFeaturedCarouselCell_profile$data = {
         readonly resized: {
           readonly src: string;
           readonly srcSet: string;
-        } | null;
-      } | null;
-      readonly endAt: string | null;
-      readonly href: string | null;
+        } | null | undefined;
+      } | null | undefined;
+      readonly endAt: string | null | undefined;
+      readonly href: string | null | undefined;
       readonly isOnlineExclusive: boolean;
       readonly location: {
-        readonly city: string | null;
-      } | null;
-      readonly name: string | null;
-      readonly startAt: string | null;
-      readonly status: string | null;
-      readonly statusUpdate: string | null;
-    } | null;
-    readonly href?: string | null;
+        readonly city: string | null | undefined;
+      } | null | undefined;
+      readonly name: string | null | undefined;
+      readonly startAt: string | null | undefined;
+      readonly status: string | null | undefined;
+      readonly statusUpdate: string | null | undefined;
+    } | null | undefined;
+    readonly href?: string | null | undefined;
     readonly internalID?: string;
-    readonly name?: string | null;
+    readonly name?: string | null | undefined;
   };
   readonly " $fragmentType": "PartnersFeaturedCarouselCell_profile";
 };

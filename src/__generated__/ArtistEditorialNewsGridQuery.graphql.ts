@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3918bfcb8bfd8b5beccaeb3ea3257f1d>>
+ * @generated SignedSource<<ee38aa353289cc908e76e1793cc7daf4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ArtistEditorialNewsGridQuery$variables = {
 export type ArtistEditorialNewsGridQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistEditorialNewsGrid_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtistEditorialNewsGridQuery = {
   response: ArtistEditorialNewsGridQuery$data;

@@ -1,5 +1,5 @@
 import express from "express"
-import { fetchQuery } from "relay-runtime"
+import { fetchQuery } from "react-relay"
 import { createRelaySSREnvironment } from "System/Relay/createRelaySSREnvironment"
 import { RSS_ARTICLES_QUERY } from "./queries/RssArticlesQuery"
 import { RssArticlesQuery } from "__generated__/RssArticlesQuery.graphql"

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b2afbaebec7f16731e8e6ee0a0599219>>
+ * @generated SignedSource<<1ea6e7e197ec8a79b6280501ef130af2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PollAccountBalanceQuery$variables = {
-  bankAccountId?: string | null;
-  setupIntentId?: string | null;
+  bankAccountId?: string | null | undefined;
+  setupIntentId?: string | null | undefined;
 };
 export type PollAccountBalanceQuery$data = {
   readonly commerceBankAccountBalance: {
     readonly " $fragmentSpreads": FragmentRefs<"PollAccountBalance_commerceBankAccountBalance">;
-  } | null;
+  } | null | undefined;
 };
 export type PollAccountBalanceQuery = {
   response: PollAccountBalanceQuery$data;

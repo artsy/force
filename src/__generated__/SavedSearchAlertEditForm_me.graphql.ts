@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6cee62f33faaffe9b81d6019f942131a>>
+ * @generated SignedSource<<5ec57b2ebf2f66b4e3b769a7be4f38ef>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,32 +13,33 @@ export type UserSearchCriteriaFrequency = "daily" | "instant" | "%future added v
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertEditForm_me$data = {
   readonly savedSearch: {
-    readonly acquireable: boolean | null;
+    readonly acquireable: boolean | null | undefined;
     readonly additionalGeneIDs: ReadonlyArray<string>;
-    readonly artistIDs: ReadonlyArray<string> | null;
-    readonly atAuction: boolean | null;
+    readonly artistIDs: ReadonlyArray<string> | null | undefined;
+    readonly artistSeriesIDs: ReadonlyArray<string>;
+    readonly atAuction: boolean | null | undefined;
     readonly attributionClass: ReadonlyArray<string>;
     readonly colors: ReadonlyArray<string>;
-    readonly dimensionRange: string | null;
-    readonly height: string | null;
-    readonly inquireableOnly: boolean | null;
+    readonly dimensionRange: string | null | undefined;
+    readonly height: string | null | undefined;
+    readonly inquireableOnly: boolean | null | undefined;
     readonly internalID: string;
     readonly locationCities: ReadonlyArray<string>;
     readonly majorPeriods: ReadonlyArray<string>;
     readonly materialsTerms: ReadonlyArray<string>;
-    readonly offerable: boolean | null;
+    readonly offerable: boolean | null | undefined;
     readonly partnerIDs: ReadonlyArray<string>;
-    readonly priceRange: string | null;
+    readonly priceRange: string | null | undefined;
     readonly sizes: ReadonlyArray<string>;
     readonly userAlertSettings: {
-      readonly details: string | null;
+      readonly details: string | null | undefined;
       readonly email: boolean;
       readonly frequency: UserSearchCriteriaFrequency;
-      readonly name: string | null;
+      readonly name: string | null | undefined;
       readonly push: boolean;
     };
-    readonly width: string | null;
-  } | null;
+    readonly width: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "SavedSearchAlertEditForm_me";
 };
 export type SavedSearchAlertEditForm_me$key = {
@@ -112,6 +113,13 @@ const node: ReaderFragment = {
           "args": null,
           "kind": "ScalarField",
           "name": "attributionClass",
+          "storageKey": null
+        },
+        {
+          "alias": null,
+          "args": null,
+          "kind": "ScalarField",
+          "name": "artistSeriesIDs",
           "storageKey": null
         },
         {
@@ -252,6 +260,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "fcd6cc64d79a3e95184e59d7fe5ee730";
+(node as any).hash = "c02bdca221ec190d5391c18a7711a636";
 
 export default node;

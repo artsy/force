@@ -2,7 +2,7 @@ import { Photo } from "Components/PhotoUpload/Utils/fileUtils"
 import { compact } from "lodash"
 import { uuid } from "uuid"
 import { MyCollectionEditArtwork_artwork$data } from "__generated__/MyCollectionEditArtwork_artwork.graphql"
-import { ArtworkModel, MyCollectionPhoto } from "./artworkModel"
+import { Artist, ArtworkModel, MyCollectionPhoto } from "./artworkModel"
 import { getAttributionClassByName } from "./rarityOptions"
 
 export const getMyCollectionArtworkFormInitialValues = (
@@ -10,7 +10,7 @@ export const getMyCollectionArtworkFormInitialValues = (
 ): ArtworkModel => ({
   artistId: artwork?.artist?.internalID ?? "",
   artistName: artwork?.artist?.name ?? "",
-  artist: artwork?.artist || undefined,
+  artist: artwork?.artist as Artist,
   category: artwork?.category ?? "",
   date: artwork?.date ?? "",
   title: artwork?.title ?? "",

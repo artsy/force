@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<81abbfd17aa54d8615074f131c4ba3d9>>
+ * @generated SignedSource<<132dcd7b300de07ed24e5ecc78ee79e9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,12 +11,12 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type PriceAggregationsQuery$variables = {
-  artistID: string;
+  artistIDs: ReadonlyArray<string>;
 };
 export type PriceAggregationsQuery$data = {
   readonly artworksConnection: {
     readonly " $fragmentSpreads": FragmentRefs<"Price_artworksConnection">;
-  } | null;
+  } | null | undefined;
 };
 export type PriceAggregationsQuery = {
   response: PriceAggregationsQuery$data;
@@ -28,7 +28,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "artistID"
+    "name": "artistIDs"
   }
 ],
 v1 = [
@@ -41,8 +41,8 @@ v1 = [
   },
   {
     "kind": "Variable",
-    "name": "artistID",
-    "variableName": "artistID"
+    "name": "artistIDs",
+    "variableName": "artistIDs"
   },
   {
     "kind": "Literal",
@@ -154,16 +154,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2145e19ab94ac1486d9e8c0c04170cc6",
+    "cacheID": "c4eff41d88c01a162bcfb26bb4bd2214",
     "id": null,
     "metadata": {},
     "name": "PriceAggregationsQuery",
     "operationKind": "query",
-    "text": "query PriceAggregationsQuery(\n  $artistID: String!\n) {\n  artworksConnection(aggregations: [SIMPLE_PRICE_HISTOGRAM], artistID: $artistID, first: 0) {\n    ...Price_artworksConnection\n    id\n  }\n}\n\nfragment Price_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      name\n      value\n      count\n    }\n  }\n}\n"
+    "text": "query PriceAggregationsQuery(\n  $artistIDs: [String!]!\n) {\n  artworksConnection(aggregations: [SIMPLE_PRICE_HISTOGRAM], artistIDs: $artistIDs, first: 0) {\n    ...Price_artworksConnection\n    id\n  }\n}\n\nfragment Price_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      name\n      value\n      count\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "c2c782473ddf596ca7e52c75d4bdb55e";
+(node as any).hash = "396b6104acd1c8e196c00f8b0d7c2d0b";
 
 export default node;

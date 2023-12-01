@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ebedae5fa9fcc89179fa9748b95b3fa1>>
+ * @generated SignedSource<<2261d6c014449104e22e77a754c03ee0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type EntityHeaderPartnerStoryQuery$variables = {
 export type EntityHeaderPartnerStoryQuery$data = {
   readonly partner: {
     readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderPartner_partner">;
-  } | null;
+  } | null | undefined;
 };
 export type EntityHeaderPartnerStoryQuery = {
   response: EntityHeaderPartnerStoryQuery$data;

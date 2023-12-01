@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dd19fc1d9e6cbd3d91abd35f84f22b6f>>
+ * @generated SignedSource<<1a1aa18d06babca86cd4b6bc4d0cf2c8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,28 +12,28 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NavigationTabs_partner$data = {
   readonly articles: {
-    readonly totalCount: number | null;
-  } | null;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly counts: {
-    readonly displayableShows: any | null;
-    readonly eligibleArtworks: any | null;
-  } | null;
-  readonly displayArtistsSection: boolean | null;
-  readonly displayWorksSection: boolean | null;
+    readonly displayableShows: any | null | undefined;
+    readonly eligibleArtworks: any | null | undefined;
+  } | null | undefined;
+  readonly displayArtistsSection: boolean | null | undefined;
+  readonly displayWorksSection: boolean | null | undefined;
   readonly locations: {
-    readonly totalCount: number | null;
-  } | null;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly notRepresentedArtists: {
-    readonly totalCount: number | null;
-  } | null;
-  readonly partnerType: string | null;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
+  readonly partnerType: string | null | undefined;
   readonly representedArtists: {
-    readonly totalCount: number | null;
-  } | null;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly viewingRooms: {
-    readonly totalCount: number | null;
-  } | null;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "NavigationTabs_partner";
 };
 export type NavigationTabs_partner$key = {

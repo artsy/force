@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2a0953e01c5ecd8c555b4fae5dcae8f3>>
+ * @generated SignedSource<<d7031f5b7e993e9b37d3d85aeead72aa>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,11 +15,11 @@ export type MyCollectionRoute_me$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly id: string;
-      } | null;
-    } | null> | null;
-    readonly totalCount: number | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionArtworkGrid_artworks">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "MyCollectionRoute_me";
 };
 export type MyCollectionRoute_me$key = {

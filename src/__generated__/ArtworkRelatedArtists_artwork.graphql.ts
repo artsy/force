@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a82fa237c8feebdd26f1bc45f76008ac>>
+ * @generated SignedSource<<e87b8927d86302648adb0b5de1960211>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,20 +12,20 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkRelatedArtists_artwork$data = {
   readonly artist: {
-    readonly href: string | null;
+    readonly href: string | null | undefined;
     readonly related: {
       readonly artistsConnection: {
         readonly edges: ReadonlyArray<{
           readonly node: {
             readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
-          } | null;
-        } | null> | null;
+          } | null | undefined;
+        } | null | undefined> | null | undefined;
         readonly pageInfo: {
           readonly hasNextPage: boolean;
         };
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtworkRelatedArtists_artwork";
 };

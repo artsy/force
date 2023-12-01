@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<179d814cb9d46af9c49bb076cde97c42>>
+ * @generated SignedSource<<c5eb18dfa7e1120232506c2eefd7fa9d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,15 +12,15 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionConfirmRegistrationRoute_sale$data = {
   readonly bidder: {
-    readonly qualifiedForBidding: boolean | null;
-  } | null;
+    readonly qualifiedForBidding: boolean | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
-  readonly isClosed: boolean | null;
-  readonly isLiveOpen: boolean | null;
-  readonly name: string | null;
-  readonly requireIdentityVerification: boolean | null;
+  readonly isClosed: boolean | null | undefined;
+  readonly isLiveOpen: boolean | null | undefined;
+  readonly name: string | null | undefined;
+  readonly requireIdentityVerification: boolean | null | undefined;
   readonly slug: string;
-  readonly status: string | null;
+  readonly status: string | null | undefined;
   readonly " $fragmentType": "AuctionConfirmRegistrationRoute_sale";
 };
 export type AuctionConfirmRegistrationRoute_sale$key = {

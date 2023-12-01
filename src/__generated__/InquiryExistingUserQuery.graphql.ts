@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<392a17b4f4ccee1b6cf89db6ae7d4cf2>>
+ * @generated SignedSource<<0117d4b10af9a77515d0f4a6393fd783>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,7 +15,7 @@ export type InquiryExistingUserQuery$variables = {
 export type InquiryExistingUserQuery$data = {
   readonly user: {
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
 };
 export type InquiryExistingUserQuery = {
   response: InquiryExistingUserQuery$data;

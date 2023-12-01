@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c08e66688acf7b90a8feac0b122a14a8>>
+ * @generated SignedSource<<8232064d3623900555dde287b05486e0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AdditionalArtworkDetails_order$data = {
-  readonly artworkDetails: string | null;
+  readonly artworkDetails: string | null | undefined;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artworkVersion: {
-          readonly condition_description: string | null;
-          readonly provenance: string | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
+          readonly condition_description: string | null | undefined;
+          readonly provenance: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "AdditionalArtworkDetails_order";
 };
 export type AdditionalArtworkDetails_order$key = {

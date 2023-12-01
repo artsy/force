@@ -25,6 +25,9 @@ const RelayFinishedLoading: RenderUntilPredicate<any, any, any> = tree =>
  * function for your `QueryRenderer` where possible, as it will do this plumbing
  * by default.
  *
+ * @deprecated This method should _not_ be used for new tests. See
+ * `setupTestWrapperTL` which uses `@testing-library/react`.
+ * 
  * @note
  * Use this function in tests, but not storybooks. For storybooks you should
  * usually use {@link MockRelayRenderer}.

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a06997785c5295c17990ad9a123d682d>>
+ * @generated SignedSource<<08a72352a1e1e49eb65f4bf025847bd8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,14 +12,14 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type HoverDetails_artwork$data = {
   readonly attributionClass: {
-    readonly name: string | null;
-  } | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
   readonly internalID: string;
   readonly mediumType: {
     readonly filterGene: {
-      readonly name: string | null;
-    } | null;
-  } | null;
+      readonly name: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "HoverDetails_artwork";
 };
 export type HoverDetails_artwork$key = {

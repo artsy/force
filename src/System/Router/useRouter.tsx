@@ -7,14 +7,25 @@ export function useRouter(): {
   match: Match
   router: Router
   route: AppRouteConfig
+  silentPush: (path: string) => void
+  silentReplace: (path: string) => void
 } {
   const { match, router } = useContext(RouterContext) ?? {}
   const route = findCurrentRoute(match)
-  return { match, router, route }
+
+  const silentPush = (path: string) => {
+    history.pushState({}, "", path)
+  }
+
+  const silentReplace = (path: string) => {
+    history.replaceState({}, "", path)
+  }
+
+  return { match, router, route, silentPush, silentReplace }
 }
 
 export function useIsRouteActive(
-  to: string | null,
+  to: string | null | undefined,
   options = { exact: true }
 ): boolean {
   const { match, router } = useRouter()

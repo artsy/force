@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4b6be75e76e2da7d40e0a551bac592af>>
+ * @generated SignedSource<<64c6a3d0c10d275ee71bfcc0f9b94789>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CascadingEndTimesBanner_Test_Query$variables = {};
+export type CascadingEndTimesBanner_Test_Query$variables = Record<PropertyKey, never>;
 export type CascadingEndTimesBanner_Test_Query$data = {
   readonly sale: {
     readonly " $fragmentSpreads": FragmentRefs<"CascadingEndTimesBanner_sale">;
-  } | null;
+  } | null | undefined;
 };
 export type CascadingEndTimesBanner_Test_Query = {
   response: CascadingEndTimesBanner_Test_Query$data;

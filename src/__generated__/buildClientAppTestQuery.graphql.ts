@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3a0f8219b63d5df921c6ad4d6dc670e9>>
+ * @generated SignedSource<<7e8b02280092e2bcbdf611ba28c72b8b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,11 +9,11 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type buildClientAppTestQuery$variables = {};
+export type buildClientAppTestQuery$variables = Record<PropertyKey, never>;
 export type buildClientAppTestQuery$data = {
   readonly me: {
     readonly id: string;
-  } | null;
+  } | null | undefined;
 };
 export type buildClientAppTestQuery = {
   response: buildClientAppTestQuery$data;

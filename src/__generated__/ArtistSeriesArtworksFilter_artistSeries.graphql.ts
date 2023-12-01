@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bcba03337e73c229760dc94781e1e9f2>>
+ * @generated SignedSource<<9f10254f136c1eaefcab74d26018f989>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,11 +13,11 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistSeriesArtworksFilter_artistSeries$data = {
   readonly filtered_artworks: {
     readonly counts: {
-      readonly total: any | null;
-    } | null;
+      readonly total: any | null | undefined;
+    } | null | undefined;
     readonly id: string;
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkFilterArtworkGrid_filtered_artworks">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ArtistSeriesArtworksFilter_artistSeries";
 };
 export type ArtistSeriesArtworksFilter_artistSeries$key = {

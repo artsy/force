@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c5e9023538a002f6bd2a26e0252267d6>>
+ * @generated SignedSource<<63c156728759dd2b0e44280c3d616f9b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ChannelArticlesQuery$variables = {
-  after?: string | null;
+  after?: string | null | undefined;
   id: string;
 };
 export type ChannelArticlesQuery$data = {

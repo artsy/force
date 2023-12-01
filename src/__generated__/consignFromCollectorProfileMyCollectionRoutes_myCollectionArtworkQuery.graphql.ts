@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<34fa441b6a855df069adb18f9058d258>>
+ * @generated SignedSource<<72a87a3d6b02cd51e323684cc8f97022>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type consignFromCollectorProfileMyCollectionRoutes_myCollectionArtworkQue
 export type consignFromCollectorProfileMyCollectionRoutes_myCollectionArtworkQuery$data = {
   readonly myCollectionArtwork: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetails_myCollectionArtwork">;
-  } | null;
+  } | null | undefined;
 };
 export type consignFromCollectorProfileMyCollectionRoutes_myCollectionArtworkQuery = {
   response: consignFromCollectorProfileMyCollectionRoutes_myCollectionArtworkQuery$data;

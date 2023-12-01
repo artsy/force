@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e2872bae6e3bb2b6f18befeadb837771>>
+ * @generated SignedSource<<5ce7684ec3737efdd7a9290a76d0b2ed>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,22 +12,22 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderArtist_artist$data = {
   readonly counts: {
-    readonly artworks: any | null;
-    readonly forSaleArtworks: any | null;
-  } | null;
+    readonly artworks: any | null | undefined;
+    readonly forSaleArtworks: any | null | undefined;
+  } | null | undefined;
   readonly coverArtwork: {
     readonly avatar: {
       readonly cropped: {
         readonly src: string;
         readonly srcSet: string;
-      } | null;
-    } | null;
-  } | null;
-  readonly formattedNationalityAndBirthday: string | null;
-  readonly href: string | null;
-  readonly initials: string | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
+  readonly formattedNationalityAndBirthday: string | null | undefined;
+  readonly href: string | null | undefined;
+  readonly initials: string | null | undefined;
   readonly internalID: string;
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "EntityHeaderArtist_artist";
 };

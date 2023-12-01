@@ -142,7 +142,6 @@ export const ShowContextCard: React.FC<Props> = ({ show }) => {
         </Column>
         <Column span={6}>
           <StyledLink
-            // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
             to={partnerHref}
             textDecoration="none"
             onClick={handleClick}

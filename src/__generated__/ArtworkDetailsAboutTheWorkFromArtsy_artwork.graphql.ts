@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<13c150a4fd96be3c7576e34350fd7eee>>
+ * @generated SignedSource<<2cde66a2a734f897f476ef3ccd254435>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetailsAboutTheWorkFromArtsy_artwork$data = {
-  readonly additionalInformation: string | null;
-  readonly description: string | null;
+  readonly additionalInformation: string | null | undefined;
+  readonly description: string | null | undefined;
   readonly " $fragmentType": "ArtworkDetailsAboutTheWorkFromArtsy_artwork";
 };
 export type ArtworkDetailsAboutTheWorkFromArtsy_artwork$key = {

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<31b55ebfe71aeb71f2fb8624c662e9fe>>
+ * @generated SignedSource<<f91adf14906c05d4c31d7852513ee162>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,18 +14,18 @@ export type UserRegistrationAuctions_me$data = {
   readonly saleRegistrationsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly isRegistered: boolean | null;
+        readonly isRegistered: boolean | null | undefined;
         readonly sale: {
-          readonly href: string | null;
+          readonly href: string | null | undefined;
           readonly id: string;
-          readonly isClosed: boolean | null;
-          readonly isRegistrationClosed: boolean | null;
-          readonly name: string | null;
-          readonly startAt: string | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
+          readonly isClosed: boolean | null | undefined;
+          readonly isRegistrationClosed: boolean | null | undefined;
+          readonly name: string | null | undefined;
+          readonly startAt: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "UserRegistrationAuctions_me";
 };
 export type UserRegistrationAuctions_me$key = {

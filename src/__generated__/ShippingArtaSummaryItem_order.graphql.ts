@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<557aa8ddf72c01624345575f05253e41>>
+ * @generated SignedSource<<9e30e059e85bb5dd670fa88dbae133a8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,15 +15,15 @@ export type ShippingArtaSummaryItem_order$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly selectedShippingQuote: {
-          readonly price: string | null;
+          readonly price: string | null | undefined;
           readonly typeName: string;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly requestedFulfillment: {
     readonly __typename: string;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ShippingArtaSummaryItem_order";
 };
 export type ShippingArtaSummaryItem_order$key = {

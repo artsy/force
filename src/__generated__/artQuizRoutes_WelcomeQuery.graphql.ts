@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f93d85fd080feb8b2c123f2e8f579b3e>>
+ * @generated SignedSource<<ecb945f80b96a5a00f2b623d35626130>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,13 +9,13 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type artQuizRoutes_WelcomeQuery$variables = {};
+export type artQuizRoutes_WelcomeQuery$variables = Record<PropertyKey, never>;
 export type artQuizRoutes_WelcomeQuery$data = {
   readonly me: {
     readonly quiz: {
-      readonly completedAt: string | null;
+      readonly completedAt: string | null | undefined;
     };
-  } | null;
+  } | null | undefined;
 };
 export type artQuizRoutes_WelcomeQuery = {
   response: artQuizRoutes_WelcomeQuery$data;

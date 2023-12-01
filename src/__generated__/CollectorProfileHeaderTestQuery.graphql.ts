@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6276bad8db8d8fb8884347c223cf2a01>>
+ * @generated SignedSource<<b3cf497464f31c81fef3e13c83e59ed6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CollectorProfileHeaderTestQuery$variables = {};
+export type CollectorProfileHeaderTestQuery$variables = Record<PropertyKey, never>;
 export type CollectorProfileHeaderTestQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"CollectorProfileHeader_me">;
-  } | null;
+  } | null | undefined;
 };
 export type CollectorProfileHeaderTestQuery = {
   response: CollectorProfileHeaderTestQuery$data;

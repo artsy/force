@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a2b74f5581c53cf7542c53249d830ef2>>
+ * @generated SignedSource<<61447d55ef02fc374e82883d8c13421c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,12 +13,12 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistOverviewRoute_artist$data = {
   readonly artistSeriesConnection: {
     readonly totalCount: number;
-  } | null;
+  } | null | undefined;
   readonly counts: {
-    readonly articles: number | null;
-    readonly artworks: any | null;
-    readonly relatedArtists: number | null;
-  } | null;
+    readonly articles: number | null | undefined;
+    readonly artworks: any | null | undefined;
+    readonly relatedArtists: number | null | undefined;
+  } | null | undefined;
   readonly insights: ReadonlyArray<{
     readonly __typename: "ArtistInsight";
   }>;
@@ -27,19 +27,19 @@ export type ArtistOverviewRoute_artist$data = {
     readonly description: string;
     readonly title: string;
   };
-  readonly name: string | null;
+  readonly name: string | null | undefined;
   readonly related: {
     readonly genes: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly __typename: "Gene";
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly showsConnection: {
-    readonly totalCount: number | null;
-  } | null;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ArtistOverviewRoute_artist";
 };
 export type ArtistOverviewRoute_artist$key = {

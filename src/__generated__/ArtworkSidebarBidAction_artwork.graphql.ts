@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b48fcd33f204341764ef234ce5a86e97>>
+ * @generated SignedSource<<13a9c21a90b44281d74e4dcca28f09f6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,29 +15,29 @@ export type ArtworkSidebarBidAction_artwork$data = {
   readonly myLotStanding: ReadonlyArray<{
     readonly most_recent_bid: {
       readonly max_bid: {
-        readonly cents: number | null;
-      } | null;
-    } | null;
-  }> | null;
+        readonly cents: number | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  }> | null | undefined;
   readonly sale: {
-    readonly is_closed: boolean | null;
-    readonly is_live_open: boolean | null;
-    readonly is_open: boolean | null;
-    readonly is_preview: boolean | null;
-    readonly is_registration_closed: boolean | null;
+    readonly is_closed: boolean | null | undefined;
+    readonly is_live_open: boolean | null | undefined;
+    readonly is_open: boolean | null | undefined;
+    readonly is_preview: boolean | null | undefined;
+    readonly is_registration_closed: boolean | null | undefined;
     readonly registrationStatus: {
-      readonly qualified_for_bidding: boolean | null;
-    } | null;
-    readonly requireIdentityVerification: boolean | null;
+      readonly qualified_for_bidding: boolean | null | undefined;
+    } | null | undefined;
+    readonly requireIdentityVerification: boolean | null | undefined;
     readonly slug: string;
-  } | null;
+  } | null | undefined;
   readonly sale_artwork: {
-    readonly endedAt: string | null;
+    readonly endedAt: string | null | undefined;
     readonly increments: ReadonlyArray<{
-      readonly cents: number | null;
-      readonly display: string | null;
-    } | null> | null;
-  } | null;
+      readonly cents: number | null | undefined;
+      readonly display: string | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtworkSidebarBidAction_artwork";
 };

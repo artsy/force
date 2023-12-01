@@ -73,7 +73,7 @@ export const MyCollectionArtworkArtistMarket = ({
         {annualLotsSold !== null && (
           <InsightColumn
             name="Annual Lots Sold"
-            value={annualLotsSold.toString()}
+            value={annualLotsSold?.toString() as string}
           />
         )}
         {
@@ -102,7 +102,13 @@ export const MyCollectionArtworkArtistMarket = ({
   )
 }
 
-const InsightColumn = ({ name, value }: { name: string; value: string }) => {
+const InsightColumn = ({
+  name,
+  value,
+}: {
+  name: string | null | undefined
+  value: string | null | undefined
+}) => {
   return (
     <Column span={[6, 4, 2]}>
       <Flex flexDirection={"column"} justifyContent="flex-start">

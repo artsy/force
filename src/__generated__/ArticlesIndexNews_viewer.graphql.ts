@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<53dfb74e3a727455adf7137cce92276e>>
+ * @generated SignedSource<<b3e221017e100fde5182fc496a2073eb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,9 +12,9 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticlesIndexNews_viewer$data = {
   readonly articles: ReadonlyArray<{
-    readonly href: string | null;
+    readonly href: string | null | undefined;
     readonly internalID: string;
-    readonly title: string | null;
+    readonly title: string | null | undefined;
   }>;
   readonly " $fragmentType": "ArticlesIndexNews_viewer";
 };

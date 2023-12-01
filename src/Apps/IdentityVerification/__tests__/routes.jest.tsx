@@ -7,6 +7,7 @@ import {
   getFarceResult,
 } from "found/server"
 import { Environment, RecordSource, Store } from "relay-runtime"
+import { Environment as IEnvironment } from "react-relay"
 
 import { identityVerificationRoutes } from "Apps/IdentityVerification/identityVerificationRoutes"
 
@@ -24,7 +25,7 @@ describe("IdentityVerification/routes", () => {
     const network = createMockNetworkLayer2({ mockData })
     const source = new RecordSource()
     const store = new Store(source)
-    const environment = new Environment({ network, store })
+    const environment = new Environment({ network, store }) as IEnvironment
 
     return (await getFarceResult({
       render: createRender({}),

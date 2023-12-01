@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f7149e3f544f84b1f6d945101481be83>>
+ * @generated SignedSource<<0fa5cc6995db2ac785654e784804d14c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,17 +16,17 @@ export type SettingsPaymentsMethods_me$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"SettingsBankAccount_bankAccount">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly creditCards: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"SettingsCreditCard_creditCard">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "SettingsPaymentsMethods_me";
 };
 export type SettingsPaymentsMethods_me$key = {

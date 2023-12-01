@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<12df8b6913e6c8c98e8d397aa3f43283>>
+ * @generated SignedSource<<678ea83b2339af487598627523e1c42b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,9 +16,9 @@ export type SettingsShippingAddresses_me$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"SettingsShippingAddress_address">;
-      } | null;
-    } | null> | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "SettingsShippingAddresses_me";
 };
 export type SettingsShippingAddresses_me$key = {

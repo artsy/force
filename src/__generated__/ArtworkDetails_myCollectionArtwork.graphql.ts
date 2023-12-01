@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<582555be7c0e1a736a63e0f08deda1f6>>
+ * @generated SignedSource<<2fe4a1d84a9a58832208c95866ed9a1f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,31 +13,31 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetails_myCollectionArtwork$data = {
   readonly artist: {
     readonly internalID: string;
-    readonly name: string | null;
-  } | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
   readonly attributionClass: {
-    readonly name: string | null;
-  } | null;
-  readonly date: string | null;
-  readonly depth: string | null;
-  readonly editionNumber: string | null;
-  readonly editionSize: string | null;
-  readonly height: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly date: string | null | undefined;
+  readonly depth: string | null | undefined;
+  readonly editionNumber: string | null | undefined;
+  readonly editionSize: string | null | undefined;
+  readonly height: string | null | undefined;
   readonly internalID: string;
   readonly location: {
-    readonly city: string | null;
-    readonly country: string | null;
-    readonly postalCode: string | null;
-    readonly state: string | null;
-  } | null;
-  readonly medium: string | null;
+    readonly city: string | null | undefined;
+    readonly country: string | null | undefined;
+    readonly postalCode: string | null | undefined;
+    readonly state: string | null | undefined;
+  } | null | undefined;
+  readonly medium: string | null | undefined;
   readonly mediumType: {
-    readonly name: string | null;
-  } | null;
-  readonly metric: string | null;
-  readonly provenance: string | null;
-  readonly title: string | null;
-  readonly width: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly metric: string | null | undefined;
+  readonly provenance: string | null | undefined;
+  readonly title: string | null | undefined;
+  readonly width: string | null | undefined;
   readonly " $fragmentType": "ArtworkDetails_myCollectionArtwork";
 };
 export type ArtworkDetails_myCollectionArtwork$key = {

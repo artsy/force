@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7c767e5a96b83204c2ba4a4c1e84b682>>
+ * @generated SignedSource<<0475434a5d5d3eeec208c6048e1d7e10>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,12 +12,12 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type MyCollectionRouteQuery$variables = {
   count: number;
-  cursor?: string | null;
+  cursor?: string | null | undefined;
 };
 export type MyCollectionRouteQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"MyCollectionRoute_me">;
-  } | null;
+  } | null | undefined;
 };
 export type MyCollectionRouteQuery = {
   response: MyCollectionRouteQuery$data;

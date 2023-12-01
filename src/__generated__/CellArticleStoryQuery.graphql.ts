@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7b36c8a41c507971df6a0178bb6da32e>>
+ * @generated SignedSource<<06af64d88b4b08a8c575c6d50a216ff9>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type CellArticleStoryQuery$variables = {
 export type CellArticleStoryQuery$data = {
   readonly article: {
     readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
-  } | null;
+  } | null | undefined;
 };
 export type CellArticleStoryQuery = {
   response: CellArticleStoryQuery$data;

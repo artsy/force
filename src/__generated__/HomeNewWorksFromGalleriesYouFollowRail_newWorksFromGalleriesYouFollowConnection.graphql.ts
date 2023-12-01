@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<90ceebdee4d2fcb12aa7dc3e887910bc>>
+ * @generated SignedSource<<0888bc0c00a6dc9ba26af28842b51c3d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,8 +16,8 @@ export type HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollo
       readonly internalID: string;
       readonly slug: string;
       readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-    } | null;
-  } | null> | null;
+    } | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection";
 };
 export type HomeNewWorksFromGalleriesYouFollowRail_newWorksFromGalleriesYouFollowConnection$key = {

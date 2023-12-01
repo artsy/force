@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5921ca998e29a6f23eb84d89cf940719>>
+ * @generated SignedSource<<20ac881412e2554bca3f98ec079ff932>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,36 +17,36 @@ export type NewSavedSearchAlertEditFormQuery$variables = {
 export type NewSavedSearchAlertEditFormQuery$data = {
   readonly me: {
     readonly savedSearch: {
-      readonly acquireable: boolean | null;
+      readonly acquireable: boolean | null | undefined;
       readonly additionalGeneIDs: ReadonlyArray<string>;
-      readonly artistIDs: ReadonlyArray<string> | null;
-      readonly atAuction: boolean | null;
+      readonly artistIDs: ReadonlyArray<string> | null | undefined;
+      readonly atAuction: boolean | null | undefined;
       readonly attributionClass: ReadonlyArray<string>;
       readonly colors: ReadonlyArray<string>;
-      readonly dimensionRange: string | null;
-      readonly height: string | null;
-      readonly inquireableOnly: boolean | null;
+      readonly dimensionRange: string | null | undefined;
+      readonly height: string | null | undefined;
+      readonly inquireableOnly: boolean | null | undefined;
       readonly internalID: string;
       readonly locationCities: ReadonlyArray<string>;
       readonly majorPeriods: ReadonlyArray<string>;
       readonly materialsTerms: ReadonlyArray<string>;
-      readonly offerable: boolean | null;
+      readonly offerable: boolean | null | undefined;
       readonly partnerIDs: ReadonlyArray<string>;
-      readonly priceRange: string | null;
+      readonly priceRange: string | null | undefined;
       readonly sizes: ReadonlyArray<string>;
       readonly userAlertSettings: {
-        readonly details: string | null;
+        readonly details: string | null | undefined;
         readonly email: boolean;
         readonly frequency: UserSearchCriteriaFrequency;
-        readonly name: string | null;
+        readonly name: string | null | undefined;
         readonly push: boolean;
       };
-      readonly width: string | null;
-    } | null;
-  } | null;
+      readonly width: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly viewer: {
     readonly " $fragmentSpreads": FragmentRefs<"NewSavedSearchAlertEditForm_viewer">;
-  } | null;
+  } | null | undefined;
 };
 export type NewSavedSearchAlertEditFormQuery = {
   response: NewSavedSearchAlertEditFormQuery$data;

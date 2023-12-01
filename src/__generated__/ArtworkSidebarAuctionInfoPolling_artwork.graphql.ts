@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<705342c31080cef71fba90e0419627f7>>
+ * @generated SignedSource<<09b1cb3df10c103f37c6e923e928a8e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,13 +13,13 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarAuctionInfoPolling_artwork$data = {
   readonly internalID: string;
   readonly sale: {
-    readonly isClosed: boolean | null;
-  } | null;
+    readonly isClosed: boolean | null | undefined;
+  } | null | undefined;
   readonly saleArtwork: {
     readonly currentBid: {
-      readonly display: string | null;
-    } | null;
-  } | null;
+      readonly display: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBidAction_artwork" | "ArtworkSidebarCurrentBidInfo_artwork">;
   readonly " $fragmentType": "ArtworkSidebarAuctionInfoPolling_artwork";
 };

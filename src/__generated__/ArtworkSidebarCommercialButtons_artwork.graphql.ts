@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bc0079bea3822565711119dcfe62759e>>
+ * @generated SignedSource<<909a8a6272bd2b9f31f070655a8cb0e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,32 +13,32 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarCommercialButtons_artwork$data = {
   readonly artists: ReadonlyArray<{
     readonly internalID: string;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly attributionClass: {
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
   readonly editionSets: ReadonlyArray<{
     readonly id: string;
     readonly internalID: string;
-    readonly isAcquireable: boolean | null;
-    readonly isOfferable: boolean | null;
-    readonly saleMessage: string | null;
-  } | null> | null;
+    readonly isAcquireable: boolean | null | undefined;
+    readonly isOfferable: boolean | null | undefined;
+    readonly saleMessage: string | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly internalID: string;
-  readonly isAcquireable: boolean | null;
+  readonly isAcquireable: boolean | null | undefined;
   readonly isEligibleToCreateAlert: boolean;
-  readonly isInquireable: boolean | null;
-  readonly isOfferable: boolean | null;
-  readonly isSold: boolean | null;
+  readonly isInquireable: boolean | null | undefined;
+  readonly isOfferable: boolean | null | undefined;
+  readonly isSold: boolean | null | undefined;
   readonly listPrice: {
-    readonly display?: string | null;
-  } | null;
+    readonly display?: string | null | undefined;
+  } | null | undefined;
   readonly mediumType: {
     readonly filterGene: {
       readonly slug: string;
-    } | null;
-  } | null;
-  readonly saleMessage: string | null;
+    } | null | undefined;
+  } | null | undefined;
+  readonly saleMessage: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkCreateAlertButton_artwork" | "ArtworkSidebarEditionSets_artwork">;
   readonly " $fragmentType": "ArtworkSidebarCommercialButtons_artwork";

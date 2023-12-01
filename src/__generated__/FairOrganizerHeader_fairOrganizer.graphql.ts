@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<511acc11388d9919add821da6c7a70b6>>
+ * @generated SignedSource<<691869d16998a2b6084b9f6ca1ab42da>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,18 +14,18 @@ export type FairOrganizerHeader_fairOrganizer$data = {
   readonly fairsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly exhibitionPeriod: string | null;
-        readonly href: string | null;
-        readonly startAt: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly name: string | null;
+        readonly exhibitionPeriod: string | null | undefined;
+        readonly href: string | null | undefined;
+        readonly startAt: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly profile: {
     readonly icon: {
-      readonly url: string | null;
-    } | null;
-  } | null;
+      readonly url: string | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"FairOrganizerFollowButton_fairOrganizer" | "FairOrganizerInfo_fairOrganizer">;
   readonly " $fragmentType": "FairOrganizerHeader_fairOrganizer";
 };

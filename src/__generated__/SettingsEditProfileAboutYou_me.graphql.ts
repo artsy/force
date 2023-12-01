@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dddfa4b8eae187e9f0eb2396a6e3f35a>>
+ * @generated SignedSource<<c33c4752c182c5ac7067646ba2933cce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,12 +12,12 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SettingsEditProfileAboutYou_me$data = {
   readonly location: {
-    readonly display: string | null;
-  } | null;
-  readonly priceRange: string | null;
-  readonly priceRangeMax: number | null;
-  readonly priceRangeMin: number | null;
-  readonly profession: string | null;
+    readonly display: string | null | undefined;
+  } | null | undefined;
+  readonly priceRange: string | null | undefined;
+  readonly priceRangeMax: number | null | undefined;
+  readonly priceRangeMin: number | null | undefined;
+  readonly profession: string | null | undefined;
   readonly shareFollows: boolean;
   readonly " $fragmentType": "SettingsEditProfileAboutYou_me";
 };

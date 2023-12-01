@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<49352116c629c396eb3a95a1e15c0d6c>>
+ * @generated SignedSource<<c357a0083ad443fb038f8e31fe83f3d4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,22 +16,22 @@ export type NewPayment_order$data = {
   readonly lastOffer?: {
     readonly createdAt: string;
     readonly internalID: string;
-    readonly note: string | null;
-  } | null;
+    readonly note: string | null | undefined;
+  } | null | undefined;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
           readonly artists: ReadonlyArray<{
             readonly slug: string;
-          } | null> | null;
+          } | null | undefined> | null | undefined;
           readonly slug: string;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly mode: CommerceOrderModeEnum | null;
-  readonly stateExpiresAt: string | null;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
+  readonly stateExpiresAt: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "CreditCardPicker_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "NewPayment_order";
 };

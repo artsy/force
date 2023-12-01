@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<992c135d95d8449e1cc2aa41acbf82ea>>
+ * @generated SignedSource<<07a9103a6076c0bae9a67692a36dbebe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SoldRecentlyOnArtsyQuery$variables = {};
+export type SoldRecentlyOnArtsyQuery$variables = Record<PropertyKey, never>;
 export type SoldRecentlyOnArtsyQuery$data = {
   readonly recentlySoldArtworks: {
     readonly " $fragmentSpreads": FragmentRefs<"SoldRecentlyOnArtsy_recentlySoldArtworks">;
-  } | null;
+  } | null | undefined;
 };
 export type SoldRecentlyOnArtsyQuery = {
   response: SoldRecentlyOnArtsyQuery$data;

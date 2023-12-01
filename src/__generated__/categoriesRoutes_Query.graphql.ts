@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f0129862e7cdb28b42ce0b513ac61fef>>
+ * @generated SignedSource<<5b546934139d7689614ab0437296a22b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type categoriesRoutes_Query$variables = {};
+export type categoriesRoutes_Query$variables = Record<PropertyKey, never>;
 export type categoriesRoutes_Query$data = {
   readonly geneFamiliesConnection: {
     readonly " $fragmentSpreads": FragmentRefs<"CategoriesApp_geneFamiliesConnection">;
-  } | null;
+  } | null | undefined;
 };
 export type categoriesRoutes_Query = {
   response: categoriesRoutes_Query$data;

@@ -1,4 +1,4 @@
-import { Environment, fetchQuery, graphql } from "relay-runtime"
+import { fetchQuery, graphql } from "react-relay"
 import { useSystemContext } from "System/useSystemContext"
 
 /**
@@ -11,7 +11,7 @@ export const useRefreshUserData = () => {
 
   const refreshUserData = () => {
     return fetchQuery(
-      relayEnvironment as Environment,
+      relayEnvironment,
       graphql`
         query useRefreshUserDataQuery {
           me {

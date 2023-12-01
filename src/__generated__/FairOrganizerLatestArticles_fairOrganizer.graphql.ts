@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<117071ea73461974a80764bbc766c5cd>>
+ * @generated SignedSource<<e691b8da215fb41f8260a18c13bb06b6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,11 +16,11 @@ export type FairOrganizerLatestArticles_fairOrganizer$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
-      } | null;
-    } | null> | null;
-    readonly totalCount: number | null;
-  } | null;
-  readonly name: string | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "FairOrganizerLatestArticles_fairOrganizer";
 };

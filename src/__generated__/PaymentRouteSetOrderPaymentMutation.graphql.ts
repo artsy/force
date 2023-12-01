@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0557892c300a40896136141750eefd71>>
+ * @generated SignedSource<<1d6d33a0dc5c6e414ad0683ca040e4ad>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,10 @@ import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 export type CommerceSetPaymentInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   id: string;
   paymentMethod: CommercePaymentMethodEnum;
-  paymentMethodId?: string | null;
+  paymentMethodId?: string | null | undefined;
 };
 export type PaymentRouteSetOrderPaymentMutation$variables = {
   input: CommerceSetPaymentInput;
@@ -25,25 +25,25 @@ export type PaymentRouteSetOrderPaymentMutation$data = {
     readonly orderOrError: {
       readonly error?: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
       readonly order?: {
         readonly creditCard: {
-          readonly city: string | null;
-          readonly country: string | null;
+          readonly city: string | null | undefined;
+          readonly country: string | null | undefined;
           readonly internalID: string;
-          readonly name: string | null;
-          readonly postal_code: string | null;
-          readonly state: string | null;
-          readonly street1: string | null;
-          readonly street2: string | null;
-        } | null;
+          readonly name: string | null | undefined;
+          readonly postal_code: string | null | undefined;
+          readonly state: string | null | undefined;
+          readonly street1: string | null | undefined;
+          readonly street2: string | null | undefined;
+        } | null | undefined;
         readonly id: string;
         readonly " $fragmentSpreads": FragmentRefs<"Payment_validation">;
       };
     };
-  } | null;
+  } | null | undefined;
 };
 export type PaymentRouteSetOrderPaymentMutation = {
   response: PaymentRouteSetOrderPaymentMutation$data;

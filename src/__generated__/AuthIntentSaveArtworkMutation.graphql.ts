@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ce6b33ac2cd8812f72c9514e58351f6a>>
+ * @generated SignedSource<<94a05125cc8fc94f599fc258463acbc2>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,9 +10,9 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SaveArtworkInput = {
-  artworkID?: string | null;
-  clientMutationId?: string | null;
-  remove?: boolean | null;
+  artworkID?: string | null | undefined;
+  clientMutationId?: string | null | undefined;
+  remove?: boolean | null | undefined;
 };
 export type AuthIntentSaveArtworkMutation$variables = {
   input: SaveArtworkInput;
@@ -21,17 +21,17 @@ export type AuthIntentSaveArtworkMutation$data = {
   readonly saveArtwork: {
     readonly artwork: {
       readonly id: string;
-      readonly isSaved: boolean | null;
-    } | null;
-  } | null;
+      readonly isSaved: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type AuthIntentSaveArtworkMutation$rawResponse = {
   readonly saveArtwork: {
     readonly artwork: {
       readonly id: string;
-      readonly isSaved: boolean | null;
-    } | null;
-  } | null;
+      readonly isSaved: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type AuthIntentSaveArtworkMutation = {
   rawResponse: AuthIntentSaveArtworkMutation$rawResponse;

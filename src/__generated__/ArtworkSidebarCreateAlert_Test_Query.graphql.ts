@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b9b613f37310bdd72d1f44831de6479c>>
+ * @generated SignedSource<<0d63b5e8faa4023d284a870ab793b8e3>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ArtworkSidebarCreateAlert_Test_Query$variables = {};
+export type ArtworkSidebarCreateAlert_Test_Query$variables = Record<PropertyKey, never>;
 export type ArtworkSidebarCreateAlert_Test_Query$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarCreateAlert_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtworkSidebarCreateAlert_Test_Query = {
   response: ArtworkSidebarCreateAlert_Test_Query$data;

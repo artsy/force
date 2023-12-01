@@ -10,7 +10,7 @@ export const useAuthValidation = () => {
   useEffect(() => {
     const exec = async () => {
       const data = await fetchQuery<useAuthValidationQuery>(
-        relayEnvironment!,
+        relayEnvironment,
         graphql`
           query useAuthValidationQuery {
             authenticationStatus

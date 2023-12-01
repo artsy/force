@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2e0f1f271a9e52c8beae42a9686a7cb5>>
+ * @generated SignedSource<<3e4718f8286fdc4c0a2c5b740a18b14e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,39 +12,39 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkDetailsAdditionalInfo_artwork$data = {
   readonly attributionClass: {
-    readonly name: string | null;
-  } | null;
-  readonly canRequestLotConditionsReport: boolean | null;
-  readonly category: string | null;
+    readonly name: string | null | undefined;
+  } | null | undefined;
+  readonly canRequestLotConditionsReport: boolean | null | undefined;
+  readonly category: string | null | undefined;
   readonly certificateOfAuthenticity: {
-    readonly details: string | null;
-    readonly label: string | null;
-  } | null;
+    readonly details: string | null | undefined;
+    readonly label: string | null | undefined;
+  } | null | undefined;
   readonly conditionDescription: {
-    readonly details: string | null;
-    readonly label: string | null;
-  } | null;
+    readonly details: string | null | undefined;
+    readonly label: string | null | undefined;
+  } | null | undefined;
   readonly dimensions: {
-    readonly cm: string | null;
-    readonly in: string | null;
-  } | null;
+    readonly cm: string | null | undefined;
+    readonly in: string | null | undefined;
+  } | null | undefined;
   readonly framed: {
-    readonly details: string | null;
-    readonly label: string | null;
-  } | null;
-  readonly image_rights: string | null;
+    readonly details: string | null | undefined;
+    readonly label: string | null | undefined;
+  } | null | undefined;
+  readonly image_rights: string | null | undefined;
   readonly internalID: string;
-  readonly manufacturer: string | null;
-  readonly medium: string | null;
+  readonly manufacturer: string | null | undefined;
+  readonly medium: string | null | undefined;
   readonly mediumType: {
     readonly __typename: "ArtworkMedium";
-  } | null;
-  readonly publisher: string | null;
-  readonly series: string | null;
+  } | null | undefined;
+  readonly publisher: string | null | undefined;
+  readonly series: string | null | undefined;
   readonly signatureInfo: {
-    readonly details: string | null;
-    readonly label: string | null;
-  } | null;
+    readonly details: string | null | undefined;
+    readonly label: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkDetailsMediumModal_artwork">;
   readonly " $fragmentType": "ArtworkDetailsAdditionalInfo_artwork";
 };

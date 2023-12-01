@@ -30,11 +30,10 @@ import { useAuthDialog } from "Components/AuthDialog"
 import { useRouter } from "System/Router/useRouter"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
-import RelayModernEnvironment from "relay-runtime/lib/store/RelayModernEnvironment"
 import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
 interface SaleMessageProps {
-  saleMessage: string | null
+  saleMessage: string | null | undefined
 }
 
 const SaleMessage: React.FC<SaleMessageProps> = ({ saleMessage }) => {
@@ -120,7 +119,7 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
     if (!!user?.id) {
       setIsCommitingCreateOrderMutation(true)
       commitMutation<ArtworkSidebarCommercialButtonsOrderMutation>(
-        relayEnvironment as RelayModernEnvironment,
+        relayEnvironment,
         {
           mutation: graphql`
             mutation ArtworkSidebarCommercialButtonsOrderMutation(
@@ -211,7 +210,7 @@ const ArtworkSidebarCommerialButtons: React.FC<ArtworkSidebarCommercialButtonsPr
     if (!!user?.id) {
       setIsCommitingCreateOfferOrderMutation(true)
       commitMutation<ArtworkSidebarCommercialButtonsOfferOrderMutation>(
-        relayEnvironment as RelayModernEnvironment,
+        relayEnvironment,
         {
           mutation: graphql`
             mutation ArtworkSidebarCommercialButtonsOfferOrderMutation(

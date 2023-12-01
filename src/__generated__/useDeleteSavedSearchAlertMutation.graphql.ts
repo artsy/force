@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fe8ed79c629ddf399cc18a9298aa9b80>>
+ * @generated SignedSource<<1e7b61c98c7cfda2e7de92f9dfbe9f61>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type DisableSavedSearchInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   searchCriteriaID: string;
 };
 export type useDeleteSavedSearchAlertMutation$variables = {
@@ -21,7 +21,7 @@ export type useDeleteSavedSearchAlertMutation$data = {
     readonly savedSearchOrErrors: {
       readonly internalID?: string;
     };
-  } | null;
+  } | null | undefined;
 };
 export type useDeleteSavedSearchAlertMutation = {
   response: useDeleteSavedSearchAlertMutation$data;

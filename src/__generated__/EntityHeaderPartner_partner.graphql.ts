@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cae6d835e6f122b2fb3a9963b38bf8ba>>
+ * @generated SignedSource<<bb979efba5ba37fa605790c1efefc883>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,37 +12,37 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type EntityHeaderPartner_partner$data = {
   readonly categories: ReadonlyArray<{
-    readonly name: string | null;
+    readonly name: string | null | undefined;
     readonly slug: string;
-  } | null> | null;
-  readonly href: string | null;
-  readonly initials: string | null;
+  } | null | undefined> | null | undefined;
+  readonly href: string | null | undefined;
+  readonly initials: string | null | undefined;
   readonly internalID: string;
   readonly locationsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly city: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly name: string | null;
+        readonly city: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly profile: {
     readonly avatar: {
       readonly cropped: {
         readonly src: string;
         readonly srcSet: string;
-      } | null;
-    } | null;
+      } | null | undefined;
+    } | null | undefined;
     readonly icon: {
       readonly cropped: {
         readonly src: string;
         readonly srcSet: string;
-      } | null;
-    } | null;
+      } | null | undefined;
+    } | null | undefined;
     readonly internalID: string;
-  } | null;
+  } | null | undefined;
   readonly slug: string;
-  readonly type: string | null;
+  readonly type: string | null | undefined;
   readonly " $fragmentType": "EntityHeaderPartner_partner";
 };
 export type EntityHeaderPartner_partner$key = {

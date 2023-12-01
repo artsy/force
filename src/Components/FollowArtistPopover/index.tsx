@@ -9,7 +9,7 @@ import {
 } from "@artsy/palette"
 import { FollowArtistPopover_artist$data } from "__generated__/FollowArtistPopover_artist.graphql"
 import { FollowArtistPopoverQuery } from "__generated__/FollowArtistPopoverQuery.graphql"
-import { SystemContext, SystemContextProps } from "System/SystemContext"
+import { SystemContext } from "System/SystemContext"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { useContext } from "react"
 import * as React from "react"
@@ -24,8 +24,9 @@ import {
 import { FollowArtistPopoverState } from "./state"
 import { extractNodes } from "Utils/extractNodes"
 
-interface FollowArtistPopoverProps extends SystemContextProps {
+interface FollowArtistPopoverProps {
   artist: FollowArtistPopover_artist$data
+  user: User
 }
 
 const FollowArtistPopover: React.FC<FollowArtistPopoverProps> = ({

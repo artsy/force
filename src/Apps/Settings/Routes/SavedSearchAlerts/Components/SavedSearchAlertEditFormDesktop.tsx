@@ -15,7 +15,7 @@ export const SavedSearchAlertEditFormDesktop: React.FC<EditAlertFormBase> = ({
         <Text variant={["md", "lg"]} flex={1} mr={1}>
           Edit Alert
         </Text>
-        <Clickable onClick={onCloseClick}>
+        <Clickable data-testid="closeButton" onClick={onCloseClick}>
           <CloseIcon display="flex" />
         </Clickable>
       </Flex>

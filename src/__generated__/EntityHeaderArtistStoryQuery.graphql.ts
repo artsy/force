@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e8b1864091e1e1485a8eef976c8b466e>>
+ * @generated SignedSource<<0743e75df54553f11cfbaae5690d069a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type EntityHeaderArtistStoryQuery$variables = {
 export type EntityHeaderArtistStoryQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"EntityHeaderArtist_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type EntityHeaderArtistStoryQuery = {
   response: EntityHeaderArtistStoryQuery$data;

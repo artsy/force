@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8a7ac7dfee398a39711ead3c73a0ebf0>>
+ * @generated SignedSource<<9189c1b3d6ef51a863d789da34d9b7ac>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,54 +13,55 @@ import { FragmentRefs } from "relay-runtime";
 export type CurrencyPreference = "EUR" | "GBP" | "USD" | "%future added value";
 export type LengthUnitPreference = "CM" | "IN" | "%future added value";
 export type UpdateMyProfileInput = {
-  artworksPerYear?: string | null;
-  bio?: string | null;
-  clientMutationId?: string | null;
-  collectorLevel?: number | null;
-  completedOnboarding?: boolean | null;
-  currencyPreference?: CurrencyPreference | null;
-  email?: string | null;
-  emailFrequency?: string | null;
-  gender?: string | null;
-  iconUrl?: string | null;
-  industry?: string | null;
-  isCollector?: boolean | null;
-  lengthUnitPreference?: LengthUnitPreference | null;
-  location?: EditableLocation | null;
-  name?: string | null;
-  notes?: string | null;
-  otherRelevantPositions?: string | null;
-  password?: string | null;
-  phone?: string | null;
-  phoneCountryCode?: string | null;
-  phoneNumber?: string | null;
-  priceRangeMax?: number | null;
-  priceRangeMin?: number | null;
-  privacy?: string | null;
-  profession?: string | null;
-  receiveLotOpeningSoonNotification?: boolean | null;
-  receiveNewSalesNotification?: boolean | null;
-  receiveNewWorksNotification?: boolean | null;
-  receiveOrderNotification?: boolean | null;
-  receiveOutbidNotification?: boolean | null;
-  receivePartnerShowNotification?: boolean | null;
-  receivePromotionNotification?: boolean | null;
-  receivePurchaseNotification?: boolean | null;
-  receiveSaleOpeningClosingNotification?: boolean | null;
-  receiveViewingRoomNotification?: boolean | null;
-  shareFollows?: boolean | null;
+  artworksPerYear?: string | null | undefined;
+  bio?: string | null | undefined;
+  clientMutationId?: string | null | undefined;
+  collectorLevel?: number | null | undefined;
+  completedOnboarding?: boolean | null | undefined;
+  currencyPreference?: CurrencyPreference | null | undefined;
+  email?: string | null | undefined;
+  emailFrequency?: string | null | undefined;
+  gender?: string | null | undefined;
+  iconUrl?: string | null | undefined;
+  industry?: string | null | undefined;
+  isCollector?: boolean | null | undefined;
+  lengthUnitPreference?: LengthUnitPreference | null | undefined;
+  location?: EditableLocation | null | undefined;
+  name?: string | null | undefined;
+  notes?: string | null | undefined;
+  otherRelevantPositions?: string | null | undefined;
+  password?: string | null | undefined;
+  phone?: string | null | undefined;
+  phoneCountryCode?: string | null | undefined;
+  phoneNumber?: string | null | undefined;
+  priceRangeMax?: number | null | undefined;
+  priceRangeMin?: number | null | undefined;
+  privacy?: string | null | undefined;
+  profession?: string | null | undefined;
+  receiveLotOpeningSoonNotification?: boolean | null | undefined;
+  receiveNewSalesNotification?: boolean | null | undefined;
+  receiveNewWorksNotification?: boolean | null | undefined;
+  receiveOrderNotification?: boolean | null | undefined;
+  receiveOutbidNotification?: boolean | null | undefined;
+  receivePartnerOfferNotification?: boolean | null | undefined;
+  receivePartnerShowNotification?: boolean | null | undefined;
+  receivePromotionNotification?: boolean | null | undefined;
+  receivePurchaseNotification?: boolean | null | undefined;
+  receiveSaleOpeningClosingNotification?: boolean | null | undefined;
+  receiveViewingRoomNotification?: boolean | null | undefined;
+  shareFollows?: boolean | null | undefined;
 };
 export type EditableLocation = {
-  address?: string | null;
-  address2?: string | null;
-  city?: string | null;
-  coordinates?: ReadonlyArray<number> | null;
-  country?: string | null;
-  countryCode?: string | null;
-  postalCode?: string | null;
-  state?: string | null;
-  stateCode?: string | null;
-  summary?: string | null;
+  address?: string | null | undefined;
+  address2?: string | null | undefined;
+  city?: string | null | undefined;
+  coordinates?: ReadonlyArray<number> | null | undefined;
+  country?: string | null | undefined;
+  countryCode?: string | null | undefined;
+  postalCode?: string | null | undefined;
+  state?: string | null | undefined;
+  stateCode?: string | null | undefined;
+  summary?: string | null | undefined;
 };
 export type useUpdateSettingsInformationMutation$variables = {
   input: UpdateMyProfileInput;
@@ -68,33 +69,33 @@ export type useUpdateSettingsInformationMutation$variables = {
 export type useUpdateSettingsInformationMutation$data = {
   readonly updateMyUserProfile: {
     readonly me: {
-      readonly email: string | null;
-      readonly name: string | null;
+      readonly email: string | null | undefined;
+      readonly name: string | null | undefined;
       readonly phoneNumber: {
-        readonly display: string | null;
-        readonly originalNumber: string | null;
-        readonly regionCode: string | null;
-      } | null;
-      readonly priceRangeMax: number | null;
-      readonly priceRangeMin: number | null;
+        readonly display: string | null | undefined;
+        readonly originalNumber: string | null | undefined;
+        readonly regionCode: string | null | undefined;
+      } | null | undefined;
+      readonly priceRangeMax: number | null | undefined;
+      readonly priceRangeMin: number | null | undefined;
       readonly " $fragmentSpreads": FragmentRefs<"SettingsEditSettingsInformation_me">;
-    } | null;
+    } | null | undefined;
     readonly userOrError: {
       readonly mutationError?: {
-        readonly detail: string | null;
-        readonly error: string | null;
+        readonly detail: string | null | undefined;
+        readonly error: string | null | undefined;
         readonly fieldErrors: ReadonlyArray<{
           readonly message: string;
           readonly name: string;
-        } | null> | null;
+        } | null | undefined> | null | undefined;
         readonly message: string;
-        readonly type: string | null;
-      } | null;
+        readonly type: string | null | undefined;
+      } | null | undefined;
       readonly user?: {
         readonly internalID: string;
-      } | null;
-    } | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useUpdateSettingsInformationMutation = {
   response: useUpdateSettingsInformationMutation$data;

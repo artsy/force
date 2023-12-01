@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cc7465133388951568e94b2abc5be2dc>>
+ * @generated SignedSource<<079e1dc6ca178dabeb44944dc78b6cc0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleSectionSocialEmbed_section$data = {
-  readonly embed: string | null;
-  readonly url: string | null;
+  readonly embed: string | null | undefined;
+  readonly url: string | null | undefined;
   readonly " $fragmentType": "ArticleSectionSocialEmbed_section";
 };
 export type ArticleSectionSocialEmbed_section$key = {

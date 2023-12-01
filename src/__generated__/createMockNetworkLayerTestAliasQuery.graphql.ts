@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3f904eee1cc2a8f7912afcb4c57387df>>
+ * @generated SignedSource<<17d982772f1553f36c2497bec5baa42e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,24 +9,24 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-export type createMockNetworkLayerTestAliasQuery$variables = {};
+export type createMockNetworkLayerTestAliasQuery$variables = Record<PropertyKey, never>;
 export type createMockNetworkLayerTestAliasQuery$data = {
   readonly artist: {
     readonly forSaleArtworks: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly id: string;
-        } | null;
-      } | null> | null;
-    } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
     readonly notForSaleArtworks: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly id: string;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type createMockNetworkLayerTestAliasQuery = {
   response: createMockNetworkLayerTestAliasQuery$data;

@@ -1,4 +1,4 @@
-import { commitMutation, graphql } from "relay-runtime"
+import { Environment, commitMutation, graphql } from "react-relay"
 import {
   useUpdateCollectorProfileMutation,
   UpdateCollectorProfileInput,
@@ -13,7 +13,7 @@ export const useUpdateCollectorProfile = () => {
   ) => {
     return new Promise((resolve, reject) => {
       commitMutation<useUpdateCollectorProfileMutation>(
-        relayEnvironment.current!,
+        relayEnvironment.current as Environment,
         {
           onError: reject,
           onCompleted: (res, errors) => {

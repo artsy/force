@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<52bb9ddfc72529d44b130a860c55e5ed>>
+ * @generated SignedSource<<c26224544ac7fc65646961163df8d9cc>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type DeleteBankAccountInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   id: string;
 };
 export type useDeleteBankAccountMutation$variables = {
@@ -22,15 +22,15 @@ export type useDeleteBankAccountMutation$data = {
     readonly bankAccountOrError: {
       readonly bankAccount?: {
         readonly " $fragmentSpreads": FragmentRefs<"SettingsBankAccount_bankAccount">;
-      } | null;
+      } | null | undefined;
       readonly mutationError?: {
         readonly message: string;
-      } | null;
-    } | null;
+      } | null | undefined;
+    } | null | undefined;
     readonly me: {
       readonly " $fragmentSpreads": FragmentRefs<"SettingsPaymentsMethods_me">;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useDeleteBankAccountMutation = {
   response: useDeleteBankAccountMutation$data;

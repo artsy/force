@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8d4cefb5a393bd27c221e5d22fd2ccb4>>
+ * @generated SignedSource<<969d332c62328604b806558704c2b21d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type CreateGeminiEntryForAssetInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   metadata: any;
   sourceBucket: string;
   sourceKey: string;
@@ -23,8 +23,8 @@ export type createGeminiAssetWithS3CredentialsMutation$data = {
   readonly createGeminiEntryForAsset: {
     readonly asset: {
       readonly token: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type createGeminiAssetWithS3CredentialsMutation = {
   response: createGeminiAssetWithS3CredentialsMutation$data;

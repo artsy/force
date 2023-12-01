@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<866aa34b927be26a93c9599adc50446b>>
+ * @generated SignedSource<<9d6dc64d1b70d04f6faee9105acac014>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,23 +12,23 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionFAQsDialog_viewer$data = {
   readonly bidding: {
-    readonly content: string | null;
+    readonly content: string | null | undefined;
     readonly name: string;
   };
   readonly buyersPremium: {
-    readonly content: string | null;
+    readonly content: string | null | undefined;
     readonly name: string;
   };
   readonly conditionsOfSale: {
-    readonly content: string | null;
+    readonly content: string | null | undefined;
     readonly name: string;
   };
   readonly emailsAndAlerts: {
-    readonly content: string | null;
+    readonly content: string | null | undefined;
     readonly name: string;
   };
   readonly paymentsAndShipping: {
-    readonly content: string | null;
+    readonly content: string | null | undefined;
     readonly name: string;
   };
   readonly " $fragmentType": "AuctionFAQsDialog_viewer";

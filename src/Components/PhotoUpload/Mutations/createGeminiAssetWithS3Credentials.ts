@@ -2,7 +2,8 @@ import {
   CreateGeminiEntryForAssetInput,
   createGeminiAssetWithS3CredentialsMutation,
 } from "__generated__/createGeminiAssetWithS3CredentialsMutation.graphql"
-import { commitMutation, Environment, graphql } from "relay-runtime"
+import { Environment } from "react-relay"
+import { commitMutation, graphql } from "react-relay"
 
 export const createGeminiAssetWithS3Credentials = (
   relayEnvironment: Environment,
@@ -34,7 +35,7 @@ export const createGeminiAssetWithS3Credentials = (
           if (errors && errors.length > 0) {
             reject(new Error(JSON.stringify(errors)))
           } else {
-            resolve(response.createGeminiEntryForAsset!.asset!.token)
+            resolve(response.createGeminiEntryForAsset?.asset?.token as string)
           }
         },
       }

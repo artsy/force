@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<dd6e507dea5adf1278b8e9e903f8129e>>
+ * @generated SignedSource<<7984213b87edcd3c8ce5d66edc9f91a6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type SubmitInquiryRequestMutationInput = {
-  clientMutationId?: string | null;
-  contactGallery?: boolean | null;
+  clientMutationId?: string | null | undefined;
+  contactGallery?: boolean | null | undefined;
   inquireableID: string;
   inquireableType: string;
-  message?: string | null;
-  questions?: ReadonlyArray<InquiryQuestionInput | null> | null;
+  message?: string | null | undefined;
+  questions?: ReadonlyArray<InquiryQuestionInput | null | undefined> | null | undefined;
 };
 export type InquiryQuestionInput = {
-  details?: string | null;
+  details?: string | null | undefined;
   questionID: string;
 };
 export type useArtworkInquiryRequestMutation$variables = {
@@ -26,16 +26,16 @@ export type useArtworkInquiryRequestMutation$variables = {
 };
 export type useArtworkInquiryRequestMutation$data = {
   readonly submitInquiryRequestMutation: {
-    readonly clientMutationId: string | null;
+    readonly clientMutationId: string | null | undefined;
     readonly inquiryRequest: {
       readonly inquireable: {
         readonly internalID?: string;
-        readonly price?: string | null;
+        readonly price?: string | null | undefined;
         readonly slug?: string;
-      } | null;
+      } | null | undefined;
       readonly internalID: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useArtworkInquiryRequestMutation = {
   response: useArtworkInquiryRequestMutation$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9dc5f207938f2b087df92222764452ae>>
+ * @generated SignedSource<<8481fc3ed14d960231a67de561be2734>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,18 +12,18 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarDetails_artwork$data = {
   readonly dimensions: {
-    readonly cm: string | null;
-    readonly in: string | null;
-  } | null;
-  readonly editionOf: string | null;
+    readonly cm: string | null | undefined;
+    readonly in: string | null | undefined;
+  } | null | undefined;
+  readonly editionOf: string | null | undefined;
   readonly editionSets: ReadonlyArray<{
     readonly internalID: string;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly framed: {
-    readonly details: string | null;
-  } | null;
-  readonly isEdition: boolean | null;
-  readonly medium: string | null;
+    readonly details: string | null | undefined;
+  } | null | undefined;
+  readonly isEdition: boolean | null | undefined;
+  readonly medium: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarAuthenticityCertificate_artwork" | "ArtworkSidebarClassification_artwork">;
   readonly " $fragmentType": "ArtworkSidebarDetails_artwork";
 };

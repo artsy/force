@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2462b52db009716357d784ec26395b56>>
+ * @generated SignedSource<<f846b15f13f6348a8bf1ddbb35e52047>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type partnerRoutes_ShowsQuery$variables = {
 export type partnerRoutes_ShowsQuery$data = {
   readonly partner: {
     readonly counts: {
-      readonly displayableShows: any | null;
-    } | null;
+      readonly displayableShows: any | null | undefined;
+    } | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"Shows_partner">;
-  } | null;
+  } | null | undefined;
 };
 export type partnerRoutes_ShowsQuery = {
   response: partnerRoutes_ShowsQuery$data;

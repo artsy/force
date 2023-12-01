@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<62a646c1c58c9260d83f24947b2643c1>>
+ * @generated SignedSource<<f66bfb56703832030a166063b3647561>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,24 +10,24 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
-export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type OrderApp_order$data = {
   readonly currencyCode: string;
-  readonly itemsTotalCents: number | null;
+  readonly itemsTotalCents: number | null | undefined;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
-          readonly href: string | null;
-          readonly is_acquireable: boolean | null;
-          readonly is_offerable: boolean | null;
+          readonly href: string | null | undefined;
+          readonly is_acquireable: boolean | null | undefined;
+          readonly is_offerable: boolean | null | undefined;
           readonly slug: string;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly mode: CommerceOrderModeEnum | null;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly source: CommerceOrderSourceEnum;
   readonly " $fragmentType": "OrderApp_order";
 };

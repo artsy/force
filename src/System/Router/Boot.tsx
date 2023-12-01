@@ -9,7 +9,7 @@ import { AppRouteConfig } from "System/Router/Route"
 import { useEffect } from "react"
 import * as React from "react"
 import { HeadProvider } from "react-head"
-import { Environment } from "relay-runtime"
+import { Environment } from "react-relay"
 // eslint-disable-next-line no-restricted-imports
 import { data as sd } from "sharify"
 // eslint-disable-next-line no-restricted-imports

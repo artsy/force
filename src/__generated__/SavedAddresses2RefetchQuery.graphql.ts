@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb5ec5a98daba5bcee386304316300e5>>
+ * @generated SignedSource<<609898a82f90e36e46b1fea2715f349e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,11 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavedAddresses2RefetchQuery$variables = {};
+export type SavedAddresses2RefetchQuery$variables = Record<PropertyKey, never>;
 export type SavedAddresses2RefetchQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses2_me">;
-  } | null;
+  } | null | undefined;
 };
 export type SavedAddresses2RefetchQuery = {
   response: SavedAddresses2RefetchQuery$data;

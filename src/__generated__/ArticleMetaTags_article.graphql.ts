@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<095a6edc9c8f0a84e5a62b5661ef9738>>
+ * @generated SignedSource<<f5a098d9592f80d8a06543c774f7ad38>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,17 +11,17 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ArticleMetaTags_article$data = {
-  readonly byline: string | null;
-  readonly description: string | null;
-  readonly href: string | null;
+  readonly byline: string | null | undefined;
+  readonly description: string | null | undefined;
+  readonly href: string | null | undefined;
   readonly keywords: ReadonlyArray<string>;
-  readonly metaPublishedAt: string | null;
-  readonly searchDescription: string | null;
-  readonly searchTitle: string | null;
+  readonly metaPublishedAt: string | null | undefined;
+  readonly searchDescription: string | null | undefined;
+  readonly searchTitle: string | null | undefined;
   readonly thumbnailImage: {
-    readonly url: string | null;
-  } | null;
-  readonly title: string | null;
+    readonly url: string | null | undefined;
+  } | null | undefined;
+  readonly title: string | null | undefined;
   readonly " $fragmentType": "ArticleMetaTags_article";
 };
 export type ArticleMetaTags_article$key = {

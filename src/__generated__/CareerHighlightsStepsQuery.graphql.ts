@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b21dc9b35dc0623da1793b4534003e07>>
+ * @generated SignedSource<<b0e14f77e9a1943d49221332572ea033>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CareerHighlightsStepsQuery$variables = {};
+export type CareerHighlightsStepsQuery$variables = Record<PropertyKey, never>;
 export type CareerHighlightsStepsQuery$data = {
   readonly me: {
     readonly myCollectionInfo: {
@@ -29,8 +29,8 @@ export type CareerHighlightsStepsQuery$data = {
       readonly SOLO_SHOW: ReadonlyArray<{
         readonly " $fragmentSpreads": FragmentRefs<"CareerHighlightModalStep_careerHighlight">;
       }>;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type CareerHighlightsStepsQuery = {
   response: CareerHighlightsStepsQuery$data;

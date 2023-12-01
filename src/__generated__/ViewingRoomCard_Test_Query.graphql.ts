@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<35c94b283195bef3d2e03e93bdbee1fd>>
+ * @generated SignedSource<<65218a07b9bdeb1b372a65a4d8d6ef52>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type ViewingRoomCard_Test_Query$variables = {};
+export type ViewingRoomCard_Test_Query$variables = Record<PropertyKey, never>;
 export type ViewingRoomCard_Test_Query$data = {
   readonly partner: {
     readonly viewingRoomsConnection: {
@@ -18,10 +18,10 @@ export type ViewingRoomCard_Test_Query$data = {
         readonly node: {
           readonly internalID: string;
           readonly " $fragmentSpreads": FragmentRefs<"ViewingRoomCard_viewingRoom">;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type ViewingRoomCard_Test_Query = {
   response: ViewingRoomCard_Test_Query$data;

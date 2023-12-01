@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<eb043dbd98ff7bd6c3d89665bbc40aab>>
+ * @generated SignedSource<<7a9a50d0feaa1cb12a85f8bb98ca65ec>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -17,9 +17,9 @@ export type SavedSearchAlertEditForm_artworksConnection$data = {
       readonly count: number;
       readonly name: string;
       readonly value: string;
-    } | null> | null;
-    readonly slice: ArtworkAggregation | null;
-  } | null> | null;
+    } | null | undefined> | null | undefined;
+    readonly slice: ArtworkAggregation | null | undefined;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "SavedSearchAlertEditForm_artworksConnection";
 };
 export type SavedSearchAlertEditForm_artworksConnection$key = {

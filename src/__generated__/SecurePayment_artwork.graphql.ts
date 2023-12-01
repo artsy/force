@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<beb3bd9d885b2ebe1a49c955942f5148>>
+ * @generated SignedSource<<09aa98201f68a179364bc55105662a73>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,8 +11,8 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SecurePayment_artwork$data = {
-  readonly is_acquireable: boolean | null;
-  readonly is_offerable: boolean | null;
+  readonly is_acquireable: boolean | null | undefined;
+  readonly is_offerable: boolean | null | undefined;
   readonly " $fragmentType": "SecurePayment_artwork";
 };
 export type SecurePayment_artwork$key = {

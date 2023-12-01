@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<590a0dedf1eaa30af87b1d7f84fb180a>>
+ * @generated SignedSource<<60fd0c1ae65bb551352e9f5eadef95c4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type RelatedWorks_Test_Query$variables = {
 export type RelatedWorks_Test_Query$data = {
   readonly artwork: {
     readonly " $fragmentSpreads": FragmentRefs<"RelatedWorks_artwork">;
-  } | null;
+  } | null | undefined;
 };
 export type RelatedWorks_Test_Query = {
   response: RelatedWorks_Test_Query$data;

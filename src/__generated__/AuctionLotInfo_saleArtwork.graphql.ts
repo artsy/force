@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<24731c3050ebebcc6c486319fd2c1473>>
+ * @generated SignedSource<<21f9fef4b34389bf228d78486277886f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,29 +12,29 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type AuctionLotInfo_saleArtwork$data = {
   readonly artwork: {
-    readonly artistNames: string | null;
-    readonly date: string | null;
+    readonly artistNames: string | null | undefined;
+    readonly date: string | null | undefined;
     readonly image: {
       readonly resized: {
-        readonly height: number | null;
+        readonly height: number | null | undefined;
         readonly src: string;
         readonly srcSet: string;
-        readonly width: number | null;
-      } | null;
-    } | null;
-    readonly imageUrl: string | null;
+        readonly width: number | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+    readonly imageUrl: string | null | undefined;
     readonly internalID: string;
     readonly slug: string;
-    readonly title: string | null;
-  } | null;
+    readonly title: string | null | undefined;
+  } | null | undefined;
   readonly counts: {
-    readonly bidderPositions: any | null;
-  } | null;
+    readonly bidderPositions: any | null | undefined;
+  } | null | undefined;
   readonly currentBid: {
-    readonly display: string | null;
-  } | null;
-  readonly formattedEndDateTime: string | null;
-  readonly lotLabel: string | null;
+    readonly display: string | null | undefined;
+  } | null | undefined;
+  readonly formattedEndDateTime: string | null | undefined;
+  readonly lotLabel: string | null | undefined;
   readonly " $fragmentType": "AuctionLotInfo_saleArtwork";
 };
 export type AuctionLotInfo_saleArtwork$key = {

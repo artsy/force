@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0a159fac22df0b970f91f88b87e476f9>>
+ * @generated SignedSource<<ad3335bcb996d019411ba1e834c4f4f6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,10 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type DeleteAccountInput = {
-  clientMutationId?: string | null;
-  explanation?: string | null;
-  password?: string | null;
-  url?: string | null;
+  clientMutationId?: string | null | undefined;
+  explanation?: string | null | undefined;
+  password?: string | null | undefined;
+  url?: string | null | undefined;
 };
 export type useDeleteAccountMutation$variables = {
   input: DeleteAccountInput;
@@ -22,13 +22,13 @@ export type useDeleteAccountMutation$data = {
   readonly deleteMyAccountMutation: {
     readonly userAccountOrError: {
       readonly mutationError?: {
-        readonly detail: string | null;
+        readonly detail: string | null | undefined;
         readonly message: string;
-        readonly type: string | null;
-      } | null;
-      readonly success?: boolean | null;
-    } | null;
-  } | null;
+        readonly type: string | null | undefined;
+      } | null | undefined;
+      readonly success?: boolean | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type useDeleteAccountMutation = {
   response: useDeleteAccountMutation$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<26e22a8c4cb6dcbed8915e87200e874b>>
+ * @generated SignedSource<<d84c7595f3fd52a80d33620c3e8ee1ee>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,12 +13,12 @@ export type OrderedSetLayouts = "DEFAULT" | "FULL" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type FeatureSetContainer_set$data = {
   readonly id: string;
-  readonly itemType: string | null;
+  readonly itemType: string | null | undefined;
   readonly layout: OrderedSetLayouts;
   readonly orderedItems: {
     readonly edges: ReadonlyArray<{
       readonly __typename: "OrderedSetItemEdge";
-    } | null> | null;
+    } | null | undefined> | null | undefined;
   };
   readonly " $fragmentType": "FeatureSetContainer_set";
 };

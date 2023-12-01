@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<747dffb68681579d854d11902eb21740>>
+ * @generated SignedSource<<295f8cf4dceaed91768e8da9d5d6aeb4>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -15,21 +15,21 @@ export type SavedAddresses_me$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly addressLine1: string;
-        readonly addressLine2: string | null;
-        readonly addressLine3: string | null;
+        readonly addressLine2: string | null | undefined;
+        readonly addressLine3: string | null | undefined;
         readonly city: string;
         readonly country: string;
         readonly id: string;
         readonly internalID: string;
         readonly isDefault: boolean;
-        readonly name: string | null;
-        readonly phoneNumber: string | null;
-        readonly postalCode: string | null;
-        readonly region: string | null;
-      } | null;
-    } | null> | null;
+        readonly name: string | null | undefined;
+        readonly phoneNumber: string | null | undefined;
+        readonly postalCode: string | null | undefined;
+        readonly region: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly totalCount: number;
-  } | null;
+  } | null | undefined;
   readonly id: string;
   readonly " $fragmentType": "SavedAddresses_me";
 };

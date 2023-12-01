@@ -1,7 +1,7 @@
 import { SystemContextProvider, useSystemContext } from "System/SystemContext"
 import { render, screen } from "@testing-library/react"
-import { buildAppRoutes } from "../buildAppRoutes"
-import { buildClientApp } from "../buildClientApp"
+import { buildAppRoutes } from "System/Router/buildAppRoutes"
+import { buildClientApp } from "System/Router/buildClientApp"
 
 jest.mock("Components/NavBar/NavBar", () => ({
   NavBar: () => <div />,
@@ -42,6 +42,7 @@ describe("buildAppRoutes", () => {
 
     expect(routes[0].Component?.displayName).toEqual("withRouter(Component)")
 
+    // eslint-disable-next-line testing-library/no-node-access
     expect(routes[0].children).toEqual([
       {
         path: "/foo",
@@ -73,6 +74,7 @@ describe("buildAppRoutes", () => {
       },
     ])
 
+    // eslint-disable-next-line testing-library/no-node-access
     expect(routes[0].children).toEqual([
       {
         path: "/foo",

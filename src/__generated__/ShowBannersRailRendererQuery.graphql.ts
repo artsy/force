@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<97416c810c779c9651b2d67f762a5360>>
+ * @generated SignedSource<<b1f79dd98d9c5e6932b5b50ee02fe16e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ShowBannersRailRendererQuery$variables = {
 export type ShowBannersRailRendererQuery$data = {
   readonly partner: {
     readonly " $fragmentSpreads": FragmentRefs<"ShowBannersRail_partner">;
-  } | null;
+  } | null | undefined;
 };
 export type ShowBannersRailRendererQuery = {
   response: ShowBannersRailRendererQuery$data;

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0f59778f90de26bb3ef4715d1ddd7127>>
+ * @generated SignedSource<<237c006873add066995228d378104e42>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,9 +14,9 @@ export type FairExhibitorsGroup_exhibitorsGroup$data = {
   readonly exhibitors: ReadonlyArray<{
     readonly partner: {
       readonly internalID: string;
-    } | null;
+    } | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"FairExhibitorCard_exhibitor">;
-  } | null> | null;
+  } | null | undefined> | null | undefined;
   readonly " $fragmentType": "FairExhibitorsGroup_exhibitorsGroup";
 };
 export type FairExhibitorsGroup_exhibitorsGroup$key = {

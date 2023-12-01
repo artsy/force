@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5d4582f2d5c2fee840947cbde7381638>>
+ * @generated SignedSource<<32241b4a0c075cb79106e7c5fd64515c>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,13 +11,13 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CellArtistSeries_artistSeries$data = {
-  readonly artworksCountMessage: string | null;
+  readonly artworksCountMessage: string | null | undefined;
   readonly image: {
     readonly cropped: {
       readonly src: string;
       readonly srcSet: string;
-    } | null;
-  } | null;
+    } | null | undefined;
+  } | null | undefined;
   readonly slug: string;
   readonly title: string;
   readonly " $fragmentType": "CellArtistSeries_artistSeries";

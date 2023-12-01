@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<03da071dcd47689766333b3d396243fa>>
+ * @generated SignedSource<<ac8363f53cd53d60e619b2099a866330>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type collectRoutes_MarketingCollectionsAppQuery$variables = {};
+export type collectRoutes_MarketingCollectionsAppQuery$variables = Record<PropertyKey, never>;
 export type collectRoutes_MarketingCollectionsAppQuery$data = {
   readonly marketingCategories: ReadonlyArray<{
     readonly " $fragmentSpreads": FragmentRefs<"Collections_marketingCategories">;

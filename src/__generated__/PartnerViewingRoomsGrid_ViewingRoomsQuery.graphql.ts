@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e3ad55e5f493588f480cddd658c8140e>>
+ * @generated SignedSource<<9c66b2c6d3f21de8025df65884e82e38>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,15 +12,15 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomStatusEnum = "closed" | "draft" | "live" | "scheduled" | "%future added value";
 export type PartnerViewingRoomsGrid_ViewingRoomsQuery$variables = {
-  after?: string | null;
+  after?: string | null | undefined;
   count: number;
   partnerId: string;
-  statuses?: ReadonlyArray<ViewingRoomStatusEnum> | null;
+  statuses?: ReadonlyArray<ViewingRoomStatusEnum> | null | undefined;
 };
 export type PartnerViewingRoomsGrid_ViewingRoomsQuery$data = {
   readonly viewingRoomsConnection: {
     readonly " $fragmentSpreads": FragmentRefs<"PartnerViewingRoomsGrid_viewingRoomsConnection">;
-  } | null;
+  } | null | undefined;
 };
 export type PartnerViewingRoomsGrid_ViewingRoomsQuery = {
   response: PartnerViewingRoomsGrid_ViewingRoomsQuery$data;

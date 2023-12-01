@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<394dbd591b3027c569413321ca71ded3>>
+ * @generated SignedSource<<82557b573c7a1e324418b0d8efabf2ce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type ArtistInfoQuery$variables = {
 export type ArtistInfoQuery$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistInfo_artist">;
-  } | null;
+  } | null | undefined;
 };
 export type ArtistInfoQuery = {
   response: ArtistInfoQuery$data;

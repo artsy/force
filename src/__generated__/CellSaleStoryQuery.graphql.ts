@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8168082c6b31c8d4578ba724f15c150f>>
+ * @generated SignedSource<<854a2e021bebc05602bca954f30b7108>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type CellSaleStoryQuery$variables = {};
+export type CellSaleStoryQuery$variables = Record<PropertyKey, never>;
 export type CellSaleStoryQuery$data = {
   readonly viewer: {
     readonly salesConnection: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly " $fragmentSpreads": FragmentRefs<"CellSale_sale">;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type CellSaleStoryQuery = {
   response: CellSaleStoryQuery$data;

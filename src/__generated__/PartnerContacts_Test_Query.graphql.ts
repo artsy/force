@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<ed6b2f8eb4b01b718bf9586267bfa667>>
+ * @generated SignedSource<<e5f11b0b2f9645d13083aea029b123c1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type PartnerContacts_Test_Query$variables = {};
+export type PartnerContacts_Test_Query$variables = Record<PropertyKey, never>;
 export type PartnerContacts_Test_Query$data = {
   readonly partner: {
     readonly locations: {
       readonly edges: ReadonlyArray<{
         readonly " $fragmentSpreads": FragmentRefs<"PartnerContacts_edges">;
-      } | null> | null;
-    } | null;
-  } | null;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type PartnerContacts_Test_Query$rawResponse = {
   readonly partner: {
@@ -26,22 +26,22 @@ export type PartnerContacts_Test_Query$rawResponse = {
     readonly locations: {
       readonly edges: ReadonlyArray<{
         readonly node: {
-          readonly address: string | null;
-          readonly address2: string | null;
-          readonly city: string | null;
+          readonly address: string | null | undefined;
+          readonly address2: string | null | undefined;
+          readonly city: string | null | undefined;
           readonly coordinates: {
-            readonly lat: number | null;
-            readonly lng: number | null;
-          } | null;
-          readonly displayCountry: string | null;
+            readonly lat: number | null | undefined;
+            readonly lng: number | null | undefined;
+          } | null | undefined;
+          readonly displayCountry: string | null | undefined;
           readonly id: string;
-          readonly phone: string | null;
-          readonly postalCode: string | null;
-          readonly state: string | null;
-        } | null;
-      } | null> | null;
-    } | null;
-  } | null;
+          readonly phone: string | null | undefined;
+          readonly postalCode: string | null | undefined;
+          readonly state: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+  } | null | undefined;
 };
 export type PartnerContacts_Test_Query = {
   rawResponse: PartnerContacts_Test_Query$rawResponse;

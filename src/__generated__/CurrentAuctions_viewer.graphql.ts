@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7d46de0ff00065fbcc893c5f1c476457>>
+ * @generated SignedSource<<85fb3a137cd4c5dd084c888ba2f39a04>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,16 +14,16 @@ export type CurrentAuctions_viewer$data = {
   readonly salesConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly href: string | null;
-        readonly isLiveOpen: boolean | null;
-        readonly liveStartAt: string | null;
-        readonly name: string | null;
+        readonly href: string | null | undefined;
+        readonly isLiveOpen: boolean | null | undefined;
+        readonly liveStartAt: string | null | undefined;
+        readonly name: string | null | undefined;
         readonly slug: string;
         readonly " $fragmentSpreads": FragmentRefs<"AuctionArtworksRail_sale">;
-      } | null;
-    } | null> | null;
-    readonly totalCount: number | null;
-  } | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly totalCount: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "CurrentAuctions_viewer";
 };
 export type CurrentAuctions_viewer$key = {

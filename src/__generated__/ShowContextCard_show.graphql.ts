@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<86b3c6a89281483811ae04bd09dd87db>>
+ * @generated SignedSource<<b8a9c60dcc83e5ba56dc421b9e06406e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,32 +12,32 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ShowContextCard_show$data = {
   readonly fair: {
-    readonly href: string | null;
+    readonly href: string | null | undefined;
     readonly internalID: string;
-    readonly isActive: boolean | null;
-    readonly name: string | null;
+    readonly isActive: boolean | null | undefined;
+    readonly name: string | null | undefined;
     readonly slug: string;
     readonly " $fragmentSpreads": FragmentRefs<"FairCard_fair" | "FairTiming_fair">;
-  } | null;
-  readonly isFairBooth: boolean | null;
+  } | null | undefined;
+  readonly isFairBooth: boolean | null | undefined;
   readonly partner: {
     readonly artworksConnection?: {
       readonly edges: ReadonlyArray<{
         readonly node: {
           readonly image: {
-            readonly url: string | null;
-          } | null;
-        } | null;
-      } | null> | null;
-    } | null;
-    readonly href?: string | null;
+            readonly url: string | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+    readonly href?: string | null | undefined;
     readonly internalID?: string;
     readonly locations?: ReadonlyArray<{
-      readonly city: string | null;
-    } | null> | null;
-    readonly name?: string | null;
+      readonly city: string | null | undefined;
+    } | null | undefined> | null | undefined;
+    readonly name?: string | null | undefined;
     readonly slug?: string;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ShowContextCard_show";
 };
 export type ShowContextCard_show$key = {

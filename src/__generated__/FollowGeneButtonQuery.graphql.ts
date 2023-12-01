@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3cd7b9583665332e9be7164cfdb59598>>
+ * @generated SignedSource<<456d9c76bdcafdb169d851dfb7678dfe>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type FollowGeneButtonQuery$variables = {
 export type FollowGeneButtonQuery$data = {
   readonly gene: {
     readonly " $fragmentSpreads": FragmentRefs<"FollowGeneButton_gene">;
-  } | null;
+  } | null | undefined;
 };
 export type FollowGeneButtonQuery = {
   response: FollowGeneButtonQuery$data;

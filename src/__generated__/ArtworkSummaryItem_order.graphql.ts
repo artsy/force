@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<661a0ca8ce8de6375243782bf141a92f>>
+ * @generated SignedSource<<ce5ccb38b346d46a661338e6e34ec03e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
-export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkSummaryItem_order$data = {
   readonly currencyCode: string;
@@ -18,36 +18,36 @@ export type ArtworkSummaryItem_order$data = {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly artwork: {
-          readonly shippingOrigin: string | null;
-        } | null;
+          readonly shippingOrigin: string | null | undefined;
+        } | null | undefined;
         readonly artworkOrEditionSet: {
           readonly __typename: "Artwork";
-          readonly price: string | null;
+          readonly price: string | null | undefined;
         } | {
           readonly __typename: "EditionSet";
-          readonly price: string | null;
+          readonly price: string | null | undefined;
         } | {
           // This will never be '%other', but we need some
           // value in case none of the concrete values match.
           readonly __typename: "%other";
-        } | null;
+        } | null | undefined;
         readonly artworkVersion: {
-          readonly artistNames: string | null;
-          readonly date: string | null;
+          readonly artistNames: string | null | undefined;
+          readonly date: string | null | undefined;
           readonly image: {
             readonly resized_ArtworkSummaryItem: {
               readonly url: string;
-            } | null;
-          } | null;
-          readonly title: string | null;
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly mode: CommerceOrderModeEnum | null;
+            } | null | undefined;
+          } | null | undefined;
+          readonly title: string | null | undefined;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly sellerDetails: {
-    readonly name?: string | null;
-  } | null;
+    readonly name?: string | null | undefined;
+  } | null | undefined;
   readonly source: CommerceOrderSourceEnum;
   readonly " $fragmentType": "ArtworkSummaryItem_order";
 };

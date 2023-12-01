@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<51fdff715c3338dd98ad166952329751>>
+ * @generated SignedSource<<551a738b73d09d57d4257ba273ffd7b7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,14 +13,14 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtistCVRoute_viewer$data = {
   readonly fairBooths: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistCVGroup_artist">;
-  } | null;
+  } | null | undefined;
   readonly groupShows: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistCVGroup_artist">;
-  } | null;
+  } | null | undefined;
   readonly soloShows: {
-    readonly name: string | null;
+    readonly name: string | null | undefined;
     readonly " $fragmentSpreads": FragmentRefs<"ArtistCVGroup_artist">;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "ArtistCVRoute_viewer";
 };
 export type ArtistCVRoute_viewer$key = {

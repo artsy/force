@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0c673af64af01cf2113f688f657dfe80>>
+ * @generated SignedSource<<36a5c2c8fb6d0697cb189cd209d0c733>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,10 +12,10 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ExampleApp_system$data = {
   readonly time: {
-    readonly day: number | null;
-    readonly month: number | null;
-    readonly year: number | null;
-  } | null;
+    readonly day: number | null | undefined;
+    readonly month: number | null | undefined;
+    readonly year: number | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "ExampleApp_system";
 };
 export type ExampleApp_system$key = {

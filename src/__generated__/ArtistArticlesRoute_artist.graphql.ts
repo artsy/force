@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e64ed87c46377c942046620941499217>>
+ * @generated SignedSource<<102d396cdac043b0b7c3105519d98677>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,16 +16,16 @@ export type ArtistArticlesRoute_artist$data = {
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"CellArticle_article">;
-      } | null;
-    } | null> | null;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
     readonly pageCursors: {
       readonly " $fragmentSpreads": FragmentRefs<"Pagination_pageCursors">;
     };
     readonly pageInfo: {
       readonly hasNextPage: boolean;
     };
-  } | null;
-  readonly name: string | null;
+  } | null | undefined;
+  readonly name: string | null | undefined;
   readonly slug: string;
   readonly " $fragmentType": "ArtistArticlesRoute_artist";
 };

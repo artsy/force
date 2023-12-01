@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<fcf3198b3509b2efb9dc5d45e3ce7f62>>
+ * @generated SignedSource<<8e579cf3ef130e86f2aa483f09fb5358>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -22,8 +22,8 @@ export type Offer_order$data = {
         readonly artwork: {
           readonly editionSets: ReadonlyArray<{
             readonly internalID: string;
-          } | null> | null;
-          readonly isPriceRange: boolean | null;
+          } | null | undefined> | null | undefined;
+          readonly isPriceRange: boolean | null | undefined;
           readonly listPrice: {
             readonly __typename: "Money";
             readonly major: number;
@@ -31,39 +31,39 @@ export type Offer_order$data = {
             readonly __typename: "PriceRange";
             readonly maxPrice: {
               readonly major: number;
-            } | null;
+            } | null | undefined;
             readonly minPrice: {
               readonly major: number;
-            } | null;
+            } | null | undefined;
           } | {
             // This will never be '%other', but we need some
             // value in case none of the concrete values match.
             readonly __typename: "%other";
-          } | null;
-          readonly price: string | null;
+          } | null | undefined;
+          readonly price: string | null | undefined;
           readonly slug: string;
           readonly " $fragmentSpreads": FragmentRefs<"PriceOptions_artwork">;
-        } | null;
+        } | null | undefined;
         readonly artworkOrEditionSet: {
           readonly __typename: "Artwork";
-          readonly displayPriceRange: boolean | null;
-          readonly price: string | null;
+          readonly displayPriceRange: boolean | null | undefined;
+          readonly price: string | null | undefined;
         } | {
           readonly __typename: "EditionSet";
-          readonly displayPriceRange: boolean | null;
-          readonly price: string | null;
+          readonly displayPriceRange: boolean | null | undefined;
+          readonly price: string | null | undefined;
         } | {
           // This will never be '%other', but we need some
           // value in case none of the concrete values match.
           readonly __typename: "%other";
-        } | null;
-      } | null;
-    } | null> | null;
-  } | null;
-  readonly mode: CommerceOrderModeEnum | null;
+        } | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
+  readonly mode: CommerceOrderModeEnum | null | undefined;
   readonly myLastOffer?: {
-    readonly note: string | null;
-  } | null;
+    readonly note: string | null | undefined;
+  } | null | undefined;
   readonly state: CommerceOrderStateEnum;
   readonly totalListPriceCents: number;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order" | "PriceOptions_order" | "TransactionDetailsSummaryItem_order">;

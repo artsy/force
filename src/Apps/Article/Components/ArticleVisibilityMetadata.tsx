@@ -2,6 +2,7 @@ import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { useIntersectionObserver } from "Utils/Hooks/useIntersectionObserver"
 import { ArticleVisibilityMetadata_article$data } from "__generated__/ArticleVisibilityMetadata_article.graphql"
+import { useRouter } from "System/Router/useRouter"
 
 interface ArticleVisibilityMetadataProps {
   article: ArticleVisibilityMetadata_article$data
@@ -14,6 +15,7 @@ const ArticleVisibilityMetadata: FC<ArticleVisibilityMetadataProps> = ({
   article,
   children,
 }) => {
+  const { silentReplace } = useRouter()
   const { ref } = useIntersectionObserver({
     once: false,
     onIntersection: () => {
@@ -21,7 +23,7 @@ const ArticleVisibilityMetadata: FC<ArticleVisibilityMetadataProps> = ({
 
       document.title = `${article.searchTitle || article.title} | Artsy`
 
-      window.history.replaceState({}, "", article.href)
+      silentReplace(article.href)
     },
   })
 

@@ -4,6 +4,7 @@ import { createMockNetworkLayer2 } from "DevTools/createMockNetworkLayer"
 import { mount } from "enzyme"
 import { graphql } from "react-relay"
 import { Environment, RecordSource, Store } from "relay-runtime"
+import { Environment as IEnvironment } from "react-relay"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import {
   CommitMutation,
@@ -23,7 +24,7 @@ describe("injectCommitMutation", () => {
   const relayEnvironment = new Environment({
     network,
     store,
-  })
+  }) as IEnvironment
 
   const Provider: React.FC = props => (
     <SystemContextProvider relayEnvironment={relayEnvironment}>
@@ -56,6 +57,7 @@ describe("injectCommitMutation", () => {
         word: string
       }) => {
         return (
+          // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions
           <div
             className={
               props.isCommittingMutation ? "isCommittingMutation" : "nothing"

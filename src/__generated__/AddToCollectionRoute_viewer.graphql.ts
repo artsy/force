@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9642a93c1c87856831f088f378d212c8>>
+ * @generated SignedSource<<2f525069b23102b176e2f254d957e335>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,21 +14,21 @@ export type AddToCollectionRoute_viewer$data = {
   readonly artworksConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
-        readonly artistNames: string | null;
-        readonly date: string | null;
+        readonly artistNames: string | null | undefined;
+        readonly date: string | null | undefined;
         readonly image: {
           readonly cropped: {
             readonly height: number;
             readonly src: string;
             readonly srcSet: string;
             readonly width: number;
-          } | null;
-        } | null;
+          } | null | undefined;
+        } | null | undefined;
         readonly internalID: string;
-        readonly title: string | null;
-      } | null;
-    } | null> | null;
-  } | null;
+        readonly title: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
+  } | null | undefined;
   readonly " $fragmentType": "AddToCollectionRoute_viewer";
 };
 export type AddToCollectionRoute_viewer$key = {

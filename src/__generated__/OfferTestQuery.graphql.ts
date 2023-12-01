@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<454b6c588719322f853db485cef3765d>>
+ * @generated SignedSource<<0f8d5781efd099e135f2931d374003cb>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,40 +13,40 @@ import { FragmentRefs } from "relay-runtime";
 export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderParticipantEnum = "BUYER" | "SELLER" | "%future added value";
-export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "private_sale" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
-export type OfferTestQuery$variables = {};
+export type OfferTestQuery$variables = Record<PropertyKey, never>;
 export type OfferTestQuery$data = {
   readonly order: {
     readonly " $fragmentSpreads": FragmentRefs<"Offer_order">;
-  } | null;
+  } | null | undefined;
 };
 export type OfferTestQuery$rawResponse = {
   readonly order: {
     readonly __typename: "CommerceOfferOrder";
     readonly __isCommerceOrder: "CommerceOfferOrder";
-    readonly buyerTotal: string | null;
+    readonly buyerTotal: string | null | undefined;
     readonly code: string;
     readonly currencyCode: string;
     readonly displayState: CommerceOrderDisplayStateEnum;
     readonly id: string;
     readonly internalID: string;
     readonly isInquiryOrder: boolean;
-    readonly itemsTotal: string | null;
+    readonly itemsTotal: string | null | undefined;
     readonly lastOffer: {
-      readonly amount: string | null;
+      readonly amount: string | null | undefined;
       readonly amountCents: number;
-      readonly buyerTotal: string | null;
-      readonly buyerTotalCents: number | null;
-      readonly fromParticipant: CommerceOrderParticipantEnum | null;
+      readonly buyerTotal: string | null | undefined;
+      readonly buyerTotalCents: number | null | undefined;
+      readonly fromParticipant: CommerceOrderParticipantEnum | null | undefined;
       readonly id: string;
       readonly internalID: string;
-      readonly note: string | null;
-      readonly shippingTotal: string | null;
-      readonly shippingTotalCents: number | null;
-      readonly taxTotal: string | null;
-      readonly taxTotalCents: number | null;
-    } | null;
+      readonly note: string | null | undefined;
+      readonly shippingTotal: string | null | undefined;
+      readonly shippingTotalCents: number | null | undefined;
+      readonly taxTotal: string | null | undefined;
+      readonly taxTotalCents: number | null | undefined;
+    } | null | undefined;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
@@ -54,9 +54,9 @@ export type OfferTestQuery$rawResponse = {
             readonly editionSets: ReadonlyArray<{
               readonly id: string;
               readonly internalID: string;
-            } | null> | null;
+            } | null | undefined> | null | undefined;
             readonly id: string;
-            readonly isPriceRange: boolean | null;
+            readonly isPriceRange: boolean | null | undefined;
             readonly listPrice: {
               readonly __typename: "Money";
               readonly major: number;
@@ -64,77 +64,77 @@ export type OfferTestQuery$rawResponse = {
               readonly __typename: "PriceRange";
               readonly maxPrice: {
                 readonly major: number;
-              } | null;
+              } | null | undefined;
               readonly minPrice: {
                 readonly major: number;
-              } | null;
+              } | null | undefined;
             } | {
               readonly __typename: string;
-            } | null;
-            readonly price: string | null;
-            readonly priceCurrency: string | null;
-            readonly shippingOrigin: string | null;
+            } | null | undefined;
+            readonly price: string | null | undefined;
+            readonly priceCurrency: string | null | undefined;
+            readonly shippingOrigin: string | null | undefined;
             readonly slug: string;
-          } | null;
+          } | null | undefined;
           readonly artworkOrEditionSet: {
             readonly __typename: "Artwork";
             readonly __isNode: "Artwork";
-            readonly displayPriceRange: boolean | null;
+            readonly displayPriceRange: boolean | null | undefined;
             readonly id: string;
-            readonly price: string | null;
+            readonly price: string | null | undefined;
           } | {
             readonly __typename: "EditionSet";
             readonly __isNode: "EditionSet";
-            readonly displayPriceRange: boolean | null;
+            readonly displayPriceRange: boolean | null | undefined;
             readonly id: string;
-            readonly price: string | null;
+            readonly price: string | null | undefined;
           } | {
             readonly __typename: string;
             readonly __isNode: string;
             readonly id: string;
-          } | null;
+          } | null | undefined;
           readonly artworkVersion: {
-            readonly artistNames: string | null;
-            readonly date: string | null;
+            readonly artistNames: string | null | undefined;
+            readonly date: string | null | undefined;
             readonly id: string;
             readonly image: {
               readonly resized_ArtworkSummaryItem: {
                 readonly url: string;
-              } | null;
-            } | null;
-            readonly title: string | null;
-          } | null;
+              } | null | undefined;
+            } | null | undefined;
+            readonly title: string | null | undefined;
+          } | null | undefined;
           readonly id: string;
           readonly selectedShippingQuote: {
             readonly id: string;
             readonly typeName: string;
-          } | null;
+          } | null | undefined;
           readonly shippingQuoteOptions: {
             readonly edges: ReadonlyArray<{
               readonly node: {
                 readonly id: string;
                 readonly isSelected: boolean;
-              } | null;
-            } | null> | null;
-          } | null;
-        } | null;
-      } | null> | null;
-    } | null;
-    readonly mode: CommerceOrderModeEnum | null;
+              } | null | undefined;
+            } | null | undefined> | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+    readonly mode: CommerceOrderModeEnum | null | undefined;
     readonly myLastOffer: {
-      readonly amount: string | null;
+      readonly amount: string | null | undefined;
       readonly amountCents: number;
-      readonly buyerTotal: string | null;
-      readonly buyerTotalCents: number | null;
-      readonly fromParticipant: CommerceOrderParticipantEnum | null;
+      readonly buyerTotal: string | null | undefined;
+      readonly buyerTotalCents: number | null | undefined;
+      readonly fromParticipant: CommerceOrderParticipantEnum | null | undefined;
       readonly id: string;
       readonly internalID: string;
-      readonly note: string | null;
-      readonly shippingTotal: string | null;
-      readonly shippingTotalCents: number | null;
-      readonly taxTotal: string | null;
-      readonly taxTotalCents: number | null;
-    } | null;
+      readonly note: string | null | undefined;
+      readonly shippingTotal: string | null | undefined;
+      readonly shippingTotalCents: number | null | undefined;
+      readonly taxTotal: string | null | undefined;
+      readonly taxTotalCents: number | null | undefined;
+    } | null | undefined;
     readonly paymentMethodDetails: {
       readonly __typename: "BankAccount";
       readonly id: string;
@@ -146,37 +146,37 @@ export type OfferTestQuery$rawResponse = {
       readonly isManualPayment: boolean;
     } | {
       readonly __typename: string;
-    } | null;
+    } | null | undefined;
     readonly requestedFulfillment: {
       readonly __typename: string;
-    } | null;
+    } | null | undefined;
     readonly sellerDetails: {
       readonly __typename: "Partner";
       readonly __isNode: "Partner";
       readonly id: string;
-      readonly name: string | null;
+      readonly name: string | null | undefined;
     } | {
       readonly __typename: string;
       readonly __isNode: string;
       readonly id: string;
-    } | null;
-    readonly shippingTotal: string | null;
-    readonly shippingTotalCents: number | null;
+    } | null | undefined;
+    readonly shippingTotal: string | null | undefined;
+    readonly shippingTotalCents: number | null | undefined;
     readonly source: CommerceOrderSourceEnum;
     readonly state: CommerceOrderStateEnum;
-    readonly taxTotal: string | null;
-    readonly taxTotalCents: number | null;
+    readonly taxTotal: string | null | undefined;
+    readonly taxTotalCents: number | null | undefined;
     readonly totalListPriceCents: number;
   } | {
     readonly __typename: string;
     readonly __isCommerceOrder: string;
-    readonly buyerTotal: string | null;
+    readonly buyerTotal: string | null | undefined;
     readonly code: string;
     readonly currencyCode: string;
     readonly displayState: CommerceOrderDisplayStateEnum;
     readonly id: string;
     readonly internalID: string;
-    readonly itemsTotal: string | null;
+    readonly itemsTotal: string | null | undefined;
     readonly lineItems: {
       readonly edges: ReadonlyArray<{
         readonly node: {
@@ -184,9 +184,9 @@ export type OfferTestQuery$rawResponse = {
             readonly editionSets: ReadonlyArray<{
               readonly id: string;
               readonly internalID: string;
-            } | null> | null;
+            } | null | undefined> | null | undefined;
             readonly id: string;
-            readonly isPriceRange: boolean | null;
+            readonly isPriceRange: boolean | null | undefined;
             readonly listPrice: {
               readonly __typename: "Money";
               readonly major: number;
@@ -194,63 +194,63 @@ export type OfferTestQuery$rawResponse = {
               readonly __typename: "PriceRange";
               readonly maxPrice: {
                 readonly major: number;
-              } | null;
+              } | null | undefined;
               readonly minPrice: {
                 readonly major: number;
-              } | null;
+              } | null | undefined;
             } | {
               readonly __typename: string;
-            } | null;
-            readonly price: string | null;
-            readonly priceCurrency: string | null;
-            readonly shippingOrigin: string | null;
+            } | null | undefined;
+            readonly price: string | null | undefined;
+            readonly priceCurrency: string | null | undefined;
+            readonly shippingOrigin: string | null | undefined;
             readonly slug: string;
-          } | null;
+          } | null | undefined;
           readonly artworkOrEditionSet: {
             readonly __typename: "Artwork";
             readonly __isNode: "Artwork";
-            readonly displayPriceRange: boolean | null;
+            readonly displayPriceRange: boolean | null | undefined;
             readonly id: string;
-            readonly price: string | null;
+            readonly price: string | null | undefined;
           } | {
             readonly __typename: "EditionSet";
             readonly __isNode: "EditionSet";
-            readonly displayPriceRange: boolean | null;
+            readonly displayPriceRange: boolean | null | undefined;
             readonly id: string;
-            readonly price: string | null;
+            readonly price: string | null | undefined;
           } | {
             readonly __typename: string;
             readonly __isNode: string;
             readonly id: string;
-          } | null;
+          } | null | undefined;
           readonly artworkVersion: {
-            readonly artistNames: string | null;
-            readonly date: string | null;
+            readonly artistNames: string | null | undefined;
+            readonly date: string | null | undefined;
             readonly id: string;
             readonly image: {
               readonly resized_ArtworkSummaryItem: {
                 readonly url: string;
-              } | null;
-            } | null;
-            readonly title: string | null;
-          } | null;
+              } | null | undefined;
+            } | null | undefined;
+            readonly title: string | null | undefined;
+          } | null | undefined;
           readonly id: string;
           readonly selectedShippingQuote: {
             readonly id: string;
             readonly typeName: string;
-          } | null;
+          } | null | undefined;
           readonly shippingQuoteOptions: {
             readonly edges: ReadonlyArray<{
               readonly node: {
                 readonly id: string;
                 readonly isSelected: boolean;
-              } | null;
-            } | null> | null;
-          } | null;
-        } | null;
-      } | null> | null;
-    } | null;
-    readonly mode: CommerceOrderModeEnum | null;
+              } | null | undefined;
+            } | null | undefined> | null | undefined;
+          } | null | undefined;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+    } | null | undefined;
+    readonly mode: CommerceOrderModeEnum | null | undefined;
     readonly paymentMethodDetails: {
       readonly __typename: "BankAccount";
       readonly id: string;
@@ -262,28 +262,28 @@ export type OfferTestQuery$rawResponse = {
       readonly isManualPayment: boolean;
     } | {
       readonly __typename: string;
-    } | null;
+    } | null | undefined;
     readonly requestedFulfillment: {
       readonly __typename: string;
-    } | null;
+    } | null | undefined;
     readonly sellerDetails: {
       readonly __typename: "Partner";
       readonly __isNode: "Partner";
       readonly id: string;
-      readonly name: string | null;
+      readonly name: string | null | undefined;
     } | {
       readonly __typename: string;
       readonly __isNode: string;
       readonly id: string;
-    } | null;
-    readonly shippingTotal: string | null;
-    readonly shippingTotalCents: number | null;
+    } | null | undefined;
+    readonly shippingTotal: string | null | undefined;
+    readonly shippingTotalCents: number | null | undefined;
     readonly source: CommerceOrderSourceEnum;
     readonly state: CommerceOrderStateEnum;
-    readonly taxTotal: string | null;
-    readonly taxTotalCents: number | null;
+    readonly taxTotal: string | null | undefined;
+    readonly taxTotalCents: number | null | undefined;
     readonly totalListPriceCents: number;
-  } | null;
+  } | null | undefined;
 };
 export type OfferTestQuery = {
   rawResponse: OfferTestQuery$rawResponse;
@@ -1255,6 +1255,7 @@ return {
           "enumValues": [
             "artwork_page",
             "inquiry",
+            "partner_offer",
             "private_sale"
           ],
           "nullable": false,

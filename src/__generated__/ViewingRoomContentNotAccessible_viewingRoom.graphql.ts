@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8b84ae63255844e144aa2796e02b4bab>>
+ * @generated SignedSource<<a1042d8b85ee99d9e21b8cc18b974a48>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,8 +12,8 @@ import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type ViewingRoomContentNotAccessible_viewingRoom$data = {
   readonly partner: {
-    readonly href: string | null;
-  } | null;
+    readonly href: string | null | undefined;
+  } | null | undefined;
   readonly status: string;
   readonly " $fragmentType": "ViewingRoomContentNotAccessible_viewingRoom";
 };

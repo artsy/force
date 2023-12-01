@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e81f243dbf0565abd311225018d1168>>
+ * @generated SignedSource<<0067fe9e7424226a409d65d9ce7c645a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type SubmittedOrderModalQuery$variables = {
 export type SubmittedOrderModalQuery$data = {
   readonly submittedOrder: {
     readonly " $fragmentSpreads": FragmentRefs<"SubmittedOrderModal_submittedOrder">;
-  } | null;
+  } | null | undefined;
 };
 export type SubmittedOrderModalQuery = {
   response: SubmittedOrderModalQuery$data;

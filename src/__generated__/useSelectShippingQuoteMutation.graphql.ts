@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<12a034e58affbe80bc92b62a53a8bff9>>
+ * @generated SignedSource<<a201c0b8045c705a905157cf6da1862f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type CommerceSelectShippingOptionInput = {
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   id: string;
   selectedShippingQuoteId: string;
 };
@@ -23,14 +23,14 @@ export type useSelectShippingQuoteMutation$data = {
     readonly orderOrError: {
       readonly error?: {
         readonly code: string;
-        readonly data: string | null;
+        readonly data: string | null | undefined;
         readonly type: string;
       };
       readonly order?: {
         readonly " $fragmentSpreads": FragmentRefs<"Shipping2_order">;
       };
     };
-  } | null;
+  } | null | undefined;
 };
 export type useSelectShippingQuoteMutation = {
   response: useSelectShippingQuoteMutation$data;

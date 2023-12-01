@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7019256b1771e7d024ee5eee7f5a77c0>>
+ * @generated SignedSource<<7bf8e3402f58f85d6f422db397e77b00>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,32 +13,32 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkSidebarCurrentBidInfo_artwork$data = {
   readonly myLotStanding: ReadonlyArray<{
     readonly active_bid: {
-      readonly is_winning: boolean | null;
-    } | null;
+      readonly is_winning: boolean | null | undefined;
+    } | null | undefined;
     readonly most_recent_bid: {
       readonly max_bid: {
-        readonly display: string | null;
-      } | null;
-    } | null;
-  }> | null;
+        readonly display: string | null | undefined;
+      } | null | undefined;
+    } | null | undefined;
+  }> | null | undefined;
   readonly sale: {
     readonly internalID: string;
-    readonly is_closed: boolean | null;
-    readonly is_live_open: boolean | null;
-    readonly is_with_buyers_premium: boolean | null;
-  } | null;
+    readonly is_closed: boolean | null | undefined;
+    readonly is_live_open: boolean | null | undefined;
+    readonly is_with_buyers_premium: boolean | null | undefined;
+  } | null | undefined;
   readonly sale_artwork: {
     readonly counts: {
-      readonly bidder_positions: any | null;
-    } | null;
+      readonly bidder_positions: any | null | undefined;
+    } | null | undefined;
     readonly current_bid: {
-      readonly display: string | null;
-    } | null;
-    readonly endedAt: string | null;
-    readonly is_with_reserve: boolean | null;
-    readonly reserve_message: string | null;
-    readonly reserve_status: string | null;
-  } | null;
+      readonly display: string | null | undefined;
+    } | null | undefined;
+    readonly endedAt: string | null | undefined;
+    readonly is_with_reserve: boolean | null | undefined;
+    readonly reserve_message: string | null | undefined;
+    readonly reserve_status: string | null | undefined;
+  } | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSidebarBiddingClosedMessage_artwork">;
   readonly " $fragmentType": "ArtworkSidebarCurrentBidInfo_artwork";
 };

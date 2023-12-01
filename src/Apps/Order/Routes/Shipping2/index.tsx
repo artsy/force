@@ -113,7 +113,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const orderTracking = useOrderTracking()
 
   const handleSubmitError = useCallback(
-    (error: { code: string; data: string | null }) => {
+    (error: { code: string; data: string | null | undefined }) => {
       logger.error(error)
       const parsedData = error.data ? JSON.parse(error.data) : {}
       if (

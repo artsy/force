@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<87402d4c462361875588beca4530ca3a>>
+ * @generated SignedSource<<94444243a926a0bbe0d708a9f81efe27>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -12,12 +12,12 @@ import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type VerifyAddressInput = {
   addressLine1: string;
-  addressLine2?: string | null;
-  city?: string | null;
-  clientMutationId?: string | null;
+  addressLine2?: string | null | undefined;
+  city?: string | null | undefined;
+  clientMutationId?: string | null | undefined;
   country: string;
   postalCode: string;
-  region?: string | null;
+  region?: string | null | undefined;
 };
 export type AddressVerificationFlowQuery$variables = {
   address: VerifyAddressInput;
@@ -25,7 +25,7 @@ export type AddressVerificationFlowQuery$variables = {
 export type AddressVerificationFlowQuery$data = {
   readonly verifyAddress: {
     readonly " $fragmentSpreads": FragmentRefs<"AddressVerificationFlow_verifyAddress">;
-  } | null;
+  } | null | undefined;
 };
 export type AddressVerificationFlowQuery = {
   response: AddressVerificationFlowQuery$data;

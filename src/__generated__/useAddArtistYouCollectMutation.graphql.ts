@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7cec6c8af210c92d8de1f3a7db5ed5f5>>
+ * @generated SignedSource<<849e6708e344741ccda14051bd62dda5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -13,25 +13,25 @@ import { FragmentRefs } from "relay-runtime";
 export type UserInterestCategory = "COLLECTED_BEFORE" | "INTERESTED_IN_COLLECTING" | "%future added value";
 export type UserInterestInterestType = "ARTIST" | "GENE" | "%future added value";
 export type CreateUserInterestMutationInput = {
-  anonymousSessionId?: string | null;
-  body?: string | null;
+  anonymousSessionId?: string | null | undefined;
+  body?: string | null | undefined;
   category: UserInterestCategory;
-  clientMutationId?: string | null;
+  clientMutationId?: string | null | undefined;
   interestId: string;
   interestType: UserInterestInterestType;
-  private?: boolean | null;
-  sessionID?: string | null;
+  private?: boolean | null | undefined;
+  sessionID?: string | null | undefined;
 };
 export type useAddArtistYouCollectMutation$variables = {
   input: CreateUserInterestMutationInput;
 };
 export type useAddArtistYouCollectMutation$data = {
   readonly createUserInterest: {
-    readonly clientMutationId: string | null;
+    readonly clientMutationId: string | null | undefined;
     readonly me: {
       readonly " $fragmentSpreads": FragmentRefs<"SettingsEditProfileArtistsYouCollect_me">;
     };
-  } | null;
+  } | null | undefined;
 };
 export type useAddArtistYouCollectMutation = {
   response: useAddArtistYouCollectMutation$data;
