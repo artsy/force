@@ -184,6 +184,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
         {alerts.map(node => {
           const isCurrentEdgeSelected = editAlertEntity?.id === node.internalID
           let variant: SavedSearchAlertListItemVariant | undefined
+
           if (isCurrentEdgeSelected) {
             variant = "active"
           } else if (!!editAlertEntity) {
