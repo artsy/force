@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<cc8eeeb057c7bb48df7fff5cab11a07d>>
+ * @generated SignedSource<<fbdedfed486da7a5a2942733b5674a7f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,10 +16,10 @@ export type CommerceCreatePartnerOfferOrderInput = {
   partnerOfferId: string;
   quantity?: number | null | undefined;
 };
-export type PartnerOfferCheckoutMutation$variables = {
+export type UsePartnerOfferCheckoutMutation$variables = {
   input: CommerceCreatePartnerOfferOrderInput;
 };
-export type PartnerOfferCheckoutMutation$data = {
+export type UsePartnerOfferCheckoutMutation$data = {
   readonly commerceCreatePartnerOfferOrder: {
     readonly orderOrError: {
       readonly __typename: "CommerceOrderWithMutationSuccess";
@@ -35,9 +35,9 @@ export type PartnerOfferCheckoutMutation$data = {
     };
   } | null | undefined;
 };
-export type PartnerOfferCheckoutMutation = {
-  response: PartnerOfferCheckoutMutation$data;
-  variables: PartnerOfferCheckoutMutation$variables;
+export type UsePartnerOfferCheckoutMutation = {
+  response: UsePartnerOfferCheckoutMutation$data;
+  variables: UsePartnerOfferCheckoutMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -120,7 +120,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "PartnerOfferCheckoutMutation",
+    "name": "UsePartnerOfferCheckoutMutation",
     "selections": [
       {
         "alias": null,
@@ -174,7 +174,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "PartnerOfferCheckoutMutation",
+    "name": "UsePartnerOfferCheckoutMutation",
     "selections": [
       {
         "alias": null,
@@ -231,16 +231,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "ee033eb77486da718116506d4eae598c",
+    "cacheID": "42f5f008a07e978a773aceca9c6257ca",
     "id": null,
     "metadata": {},
-    "name": "PartnerOfferCheckoutMutation",
+    "name": "UsePartnerOfferCheckoutMutation",
     "operationKind": "mutation",
-    "text": "mutation PartnerOfferCheckoutMutation(\n  $input: CommerceCreatePartnerOfferOrderInput!\n) {\n  commerceCreatePartnerOfferOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          mode\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation UsePartnerOfferCheckoutMutation(\n  $input: CommerceCreatePartnerOfferOrderInput!\n) {\n  commerceCreatePartnerOfferOrder(input: $input) {\n    orderOrError {\n      __typename\n      ... on CommerceOrderWithMutationSuccess {\n        __typename\n        order {\n          __typename\n          internalID\n          mode\n          id\n        }\n      }\n      ... on CommerceOrderWithMutationFailure {\n        error {\n          type\n          code\n          data\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "ecb22efb883dce15ff70edfe53becf15";
+(node as any).hash = "472b0d619723a00ac4744a4dc3f8b7f5";
 
 export default node;
