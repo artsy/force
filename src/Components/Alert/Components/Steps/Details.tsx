@@ -2,7 +2,6 @@ import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import {
   Box,
   Button,
-  Checkbox,
   Clickable,
   Flex,
   Join,
@@ -20,7 +19,7 @@ import { PriceRangeFilter } from "Components/Alert/Components/Form/PriceRange"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
-import { EmailPreferenceWarningMessageQueryRenderer } from "Components/Alert/Components/Filters/EmailPreferenceWarningMessage"
+import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 
 export interface AlertFormikValues {
   name: string
@@ -44,7 +43,7 @@ export const Details: FC = () => {
       initialValues={state.settings}
       onSubmit={onComplete}
     >
-      {({ isSubmitting, values, setFieldValue, handleSubmit }) => {
+      {({ isSubmitting, values, handleSubmit }) => {
         const transitionToFiltersAndTrack = () => {
           dispatch({ type: "SET_SETTINGS", payload: values })
           goToFilters()
@@ -102,27 +101,7 @@ export const Details: FC = () => {
 
                 <DetailsInput />
 
-                <Box>
-                  <Box display="flex" justifyContent="space-between">
-                    <Text variant="sm-display">Email</Text>
-                    <Checkbox
-                      onSelect={selected => setFieldValue("email", selected)}
-                      selected={values.email}
-                    />
-                  </Box>
-
-                  <EmailPreferenceWarningMessageQueryRenderer />
-
-                  <Spacer y={2} />
-
-                  <Box display="flex" justifyContent="space-between">
-                    <Text variant="sm-display">Push Notifications</Text>
-                    <Checkbox
-                      onSelect={selected => setFieldValue("push", selected)}
-                      selected={values.push}
-                    />
-                  </Box>
-                </Box>
+                <NotificationPreferencesQueryRenderer mode="create" />
               </Join>
             </Flex>
 
