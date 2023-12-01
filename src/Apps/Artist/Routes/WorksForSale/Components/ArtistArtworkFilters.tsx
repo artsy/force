@@ -28,13 +28,13 @@ export const ArtistArtworkFilters: React.FC<ArtistArtworkFiltersProps> = props =
   return (
     <Join separator={<Spacer y={4} />}>
       <KeywordFilter />
-      {isArtistSeriesFilterEnabled && <ArtistSeriesFilter expanded />}
       <ArtistsFilter user={user} expanded />
       <ProgressiveOnboardingAlertSelectFilter>
         <AttributionClassFilter expanded />
       </ProgressiveOnboardingAlertSelectFilter>
       <MediumFilter expanded />
       <PriceRangeFilter expanded />
+      {isArtistSeriesFilterEnabled && <ArtistSeriesFilter expanded />}
       <SizeFilter expanded />
       <WaysToBuyFilter expanded />
       <MaterialsFilter />
