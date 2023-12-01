@@ -67,6 +67,8 @@ const ArtistArtworkFilter: React.FC<ArtistArtworkFilterProps> = props => {
       ]}
       ZeroState={ZeroState}
       userPreferredMetric={userPreferences?.metric}
+      // Setting the key here to enforce a remount of the component when changing pages or query parameter filters within the query.
+      key={match.location.pathname + match.location.search}
     >
       <ArtworkFilterAlertContextProvider
         initialCriteria={{ artistIDs: [artist.internalID] }}
