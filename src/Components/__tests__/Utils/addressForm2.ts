@@ -12,7 +12,7 @@ import userEvent from "@testing-library/user-event"
 export const validAddress: Address = {
   name: "Erik David",
   addressLine1: "401 Broadway",
-  addressLine2: "",
+  addressLine2: "Suite 25",
   city: "New York",
   region: "NY",
   postalCode: "15601",

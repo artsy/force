@@ -10,12 +10,6 @@ type FulfillmentHelpers = Pick<
 >
 export interface ShippingContextProps {
   parsedOrderData: ParsedOrderData
-  initialValues: {
-    fulfillmentDetails: FulfillmentValues
-    shippingQuotes: {
-      selectedShippingQuoteId?: string | null
-    }
-  }
   step: ShippingRouteStep
   helpers: {
     fulfillmentDetails: FulfillmentHelpers & {

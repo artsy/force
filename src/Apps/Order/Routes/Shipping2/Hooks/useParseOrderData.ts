@@ -1,7 +1,7 @@
 import { ShippingProps } from "Apps/Order/Routes/Shipping2"
-import { FulfillmentValues } from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
 import {
   FulfillmentType,
+  PickupValues,
   SavedAddressType,
   ShippingAddressFormValues,
   addressWithFallbackValues,
@@ -15,11 +15,8 @@ export interface ParsedOrderData {
   shipsFrom: string
   availableShippingCountries: string[]
   requiresArtsyShippingTo: (shipTo: string) => boolean
-  selectedSavedAddressId: string | null
   selectedShippingQuoteId?: string
-  fulfillmentDetails: FulfillmentValues["attributes"] | null
-  fulfillmentType: FulfillmentValues["fulfillmentType"] | null
-  isArtsyShipping?: boolean
+  savedFulfillmentData: SavedFulfillmentData
   shippingQuotes?: Array<{ id: string; isSelected: boolean }>
 }
 // Compute and memoize data from the saved order.
@@ -81,11 +78,7 @@ export const useParseOrderData = (props: ShippingProps): ParsedOrderData => {
     ?.id
 
   return {
-    fulfillmentDetails: savedFulfillmentData?.fulfillmentDetails || null,
-    fulfillmentType: savedFulfillmentData?.fulfillmentType || null,
-    selectedSavedAddressId:
-      savedFulfillmentData?.selectedSavedAddressId || null,
-    isArtsyShipping: savedFulfillmentData?.isArtsyShipping,
+    savedFulfillmentData,
     shippingQuotes,
     availableShippingCountries,
     lockShippingCountryTo,
@@ -109,15 +102,25 @@ const matchAddressFields = (...addressPair: [object, object]) => {
   )
 }
 
+type SavedFulfillmentData =
+  | {
+      fulfillmentType: FulfillmentType.PICKUP
+      isArtsyShipping: false
+      fulfillmentDetails: PickupValues["attributes"]
+      selectedSavedAddressId: null
+    }
+  | {
+      fulfillmentType: FulfillmentType.SHIP
+      isArtsyShipping: boolean
+      fulfillmentDetails: ShippingAddressFormValues
+      selectedSavedAddressId: string | null
+    }
+  | null
+
 const getSavedFulfillmentData = (
   order: ShippingProps["order"],
   me: ShippingProps["me"]
-): {
-  fulfillmentType: FulfillmentType
-  isArtsyShipping: boolean
-  fulfillmentDetails: FulfillmentValues["attributes"]
-  selectedSavedAddressId: string | null
-} | null => {
+): SavedFulfillmentData => {
   if (
     !order.requestedFulfillment ||
     Object.keys(order.requestedFulfillment).length === 0
@@ -135,10 +138,11 @@ const getSavedFulfillmentData = (
       isArtsyShipping: false,
       // TODO: [When things are working again]
       // figure out what `name` is used for w/ pickup, where to get it from
-      fulfillmentDetails: { phoneNumber } as FulfillmentValues["attributes"],
+      fulfillmentDetails: { phoneNumber } as PickupValues["attributes"],
       selectedSavedAddressId: null,
     }
   }
+
   const fulfillmentDetails: ShippingAddressFormValues = addressWithFallbackValues(
     order.requestedFulfillment
   )

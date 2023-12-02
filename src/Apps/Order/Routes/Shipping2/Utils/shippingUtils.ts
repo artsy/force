@@ -1,3 +1,4 @@
+import { AddressVerifiedBy } from "Apps/Order/Components/AddressVerificationFlow"
 import { ShippingProps } from "Apps/Order/Routes/Shipping2"
 import { pick, omitBy, isNil } from "lodash"
 
@@ -5,6 +6,24 @@ export enum FulfillmentType {
   SHIP = "SHIP",
   PICKUP = "PICKUP",
 }
+
+export interface PickupValues {
+  fulfillmentType: FulfillmentType.PICKUP
+  attributes: {
+    name: string
+    phoneNumber: string
+  }
+}
+
+export interface ShipValues {
+  fulfillmentType: FulfillmentType.SHIP
+  attributes: ShippingAddressFormValues & {
+    saveAddress: boolean
+    addressVerifiedBy: AddressVerifiedBy | null
+  }
+}
+
+export type FulfillmentValues = ShipValues | PickupValues
 
 export interface ShippingAddressFormValues {
   name: string
