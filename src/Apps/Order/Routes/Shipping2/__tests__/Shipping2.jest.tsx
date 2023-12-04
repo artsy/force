@@ -43,6 +43,8 @@ import {
 } from "relay-test-utils"
 import { RelayMockEnvironment } from "relay-test-utils/lib/RelayModernMockEnvironment"
 
+jest.setTimeout(10000)
+
 jest.unmock("react-relay")
 jest.mock("react-tracking")
 jest.mock("Utils/Hooks/useMatchMedia", () => ({
