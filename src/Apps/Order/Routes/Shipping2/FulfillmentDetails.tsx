@@ -1,9 +1,8 @@
 import { FulfillmentDetailsForm_order$data } from "__generated__/FulfillmentDetailsForm_order.graphql"
 import { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
-import { AddressVerifiedBy } from "Apps/Order/Components/AddressVerificationFlow"
 
 import { FormikHelpers } from "formik"
-import { FC, useState } from "react"
+import { FC, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -12,26 +11,12 @@ import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippin
 import { FulfillmentDetailsForm } from "Apps/Order/Routes/Shipping2/FulfillmentDetailsForm"
 import {
   FulfillmentType,
-  ShippingAddressFormValues,
+  FulfillmentValues,
+  ShipValues,
+  addressWithFallbackValues,
+  getDefaultUserAddress,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
-
-interface PickupValues {
-  fulfillmentType: FulfillmentType.PICKUP
-  attributes: {
-    name: string
-    phoneNumber: string
-  }
-}
-
-export interface ShipValues {
-  fulfillmentType: FulfillmentType.SHIP
-  attributes: ShippingAddressFormValues & {
-    saveAddress: boolean
-    addressVerifiedBy: AddressVerifiedBy | null
-  }
-}
-
-export type FulfillmentValues = ShipValues | PickupValues
+import { ParsedOrderData } from "Apps/Order/Routes/Shipping2/Hooks/useParseOrderData"
 
 export interface FulfillmentDetailsProps {
   onSubmit: (
@@ -92,9 +77,15 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
     ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
     : [FulfillmentType.SHIP]
 
+  const initialValues = useMemo(
+    () => getInitialValues(props.me, shippingContext.parsedOrderData),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
+  )
+
   return (
     <FulfillmentDetailsForm
-      initialValues={shippingContext.initialValues.fulfillmentDetails}
+      initialValues={initialValues}
       onAddressVerificationComplete={handleVerificationComplete}
       me={props.me}
       verifyAddressNow={verifyAddressNow}
@@ -209,3 +200,63 @@ export const FulfillmentDetailsFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
+const getInitialValues = (
+  me: FulfillmentDetailsForm_me$data,
+  orderData: ParsedOrderData
+): FulfillmentValues => {
+  if (orderData.savedFulfillmentData) {
+    return {
+      fulfillmentType: orderData.savedFulfillmentData.fulfillmentType,
+      attributes: {
+        ...addressWithFallbackValues(
+          orderData.savedFulfillmentData.fulfillmentDetails
+        ),
+        saveAddress: false,
+        addressVerifiedBy: null,
+      },
+    } as FulfillmentValues
+  }
+  const savedAddresses = extractNodes(me?.addressConnection) ?? []
+
+  // The default ship-to address should be the first one that
+  // can be shipped-to, preferring the default
+
+  const defaultUserAddress = getDefaultUserAddress(
+    savedAddresses,
+    orderData.availableShippingCountries
+  )
+
+  const shippableDefaultAddress = defaultUserAddress
+    ? addressWithFallbackValues(defaultUserAddress)
+    : null
+
+  if (shippableDefaultAddress) {
+    return {
+      fulfillmentType: FulfillmentType.SHIP,
+      attributes: {
+        ...shippableDefaultAddress,
+        saveAddress: false,
+        addressVerifiedBy: null,
+      },
+    }
+  }
+
+  // The user doesn't have a valid ship-to address, so we'll return empty values.
+  // TODO: This doesn't account for matching the saved address id
+  // (that is still in parsedOrderData). In addition the initial values
+  // are less relevant if the user has saved addresses - Setting country
+  // doesn't matter.
+  const initialFulfillmentValues: ShipValues["attributes"] = {
+    ...addressWithFallbackValues({ country: orderData.shipsFrom }),
+
+    addressVerifiedBy: null,
+    saveAddress: savedAddresses.length === 0,
+  }
+
+  return {
+    fulfillmentType: FulfillmentType.SHIP,
+    attributes: initialFulfillmentValues,
+  }
+}
+export { FulfillmentValues }

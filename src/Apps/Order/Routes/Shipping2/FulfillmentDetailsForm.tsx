@@ -14,14 +14,13 @@ import {
   AddressVerifiedBy,
   AddressVerificationFlowQueryRenderer,
 } from "Apps/Order/Components/AddressVerificationFlow"
-import {
-  FulfillmentValues,
-  ShipValues,
-} from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
+
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { SavedAddressesFragmentContainer } from "Apps/Order/Routes/Shipping2/SavedAddresses2"
 import {
   FulfillmentType,
+  FulfillmentValues,
+  ShipValues,
   ShippingAddressFormValues,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { CountrySelect } from "Components/CountrySelect"
@@ -93,10 +92,9 @@ const FulfillmentDetailsFormLayout = (
   })
 
   const shippingContext = useShippingContext()
-  const active = shippingContext.step === "fulfillment_details"
 
   const renderMissingShippingQuotesError = !!(
-    shippingContext.parsedOrderData.isArtsyShipping &&
+    shippingContext.parsedOrderData.savedFulfillmentData?.isArtsyShipping &&
     shippingContext.parsedOrderData.shippingQuotes &&
     shippingContext.parsedOrderData.shippingQuotes.length === 0
   )
@@ -121,16 +119,21 @@ const FulfillmentDetailsFormLayout = (
   } = formikContext
 
   // Pass some key formik bits up to the shipping route
+  const setFulfillmentFormHelpers =
+    shippingContext.helpers.fulfillmentDetails.setFulfillmentFormHelpers
   useEffect(() => {
-    if (active) {
-      shippingContext.helpers.fulfillmentDetails.setFulfillmentFormHelpers({
-        handleSubmit: handleSubmit,
-        isValid: isValid,
-        values: values,
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [active, handleSubmit, isValid, values])
+    setFulfillmentFormHelpers({
+      handleSubmit: handleSubmit,
+      isValid: isValid,
+      values: values,
+    })
+  }, [
+    handleSubmit,
+    isValid,
+    setFulfillmentFormHelpers,
+    shippingContext.helpers.fulfillmentDetails.setFulfillmentFormHelpers,
+    values,
+  ])
 
   const trackAutoCompleteEdits = useCallback(
     (fieldName: string, handleChange) => (...args) => {
@@ -285,9 +288,10 @@ const FulfillmentDetailsFormLayout = (
             data-testid="addressFormCollapse"
             open={
               addressFormMode === "new_address" ||
-              (shippingContext.parsedOrderData.fulfillmentType ===
-                FulfillmentType.SHIP &&
-                !shippingContext.parsedOrderData.selectedSavedAddressId)
+              (shippingContext.parsedOrderData.savedFulfillmentData
+                ?.fulfillmentType === FulfillmentType.SHIP &&
+                !shippingContext.parsedOrderData.savedFulfillmentData
+                  ?.selectedSavedAddressId)
             }
           >
             <GridColumns>
@@ -519,12 +523,12 @@ const FulfillmentDetailsFormLayout = (
             <Spacer y={2} />
 
             <Checkbox
+              data-testid="FulfillmentDetailsForm_saveAddress"
               tabIndex={tabbableFormValue("new_address")}
               onSelect={selected => {
                 setFieldValue("attributes.saveAddress", selected)
               }}
               selected={values.attributes.saveAddress}
-              data-testid="save-address-checkbox"
             >
               Save shipping address for later use
             </Checkbox>
