@@ -25,6 +25,8 @@ export const saveAddressSuccess: CreateUserAddressMutation$data = {
 export const updateAddressSuccess: UpdateUserAddressMutation$data = {
   updateUserAddress: {
     userAddressOrErrors: {
+      // @ts-ignore - This is for the Shipping2 mutation result
+      __typename: "UserAddress",
       internalID: "address-id",
       id: "graphql-id",
       name: "Bob Ross",
@@ -43,6 +45,8 @@ export const updateAddressSuccess: UpdateUserAddressMutation$data = {
 export const updateAddressFailure: UpdateUserAddressMutation$data = {
   updateUserAddress: {
     userAddressOrErrors: {
+      // @ts-ignore - This is for the Shipping2 mutation result
+      __typename: "Errors",
       errors: [
         {
           code: "100",

@@ -25,7 +25,6 @@ import {
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { CountrySelect } from "Components/CountrySelect"
 import { RouterLink } from "System/Router/RouterLink"
-import { extractNodes } from "Utils/extractNodes"
 import {
   useFormikContext,
   Form,
@@ -33,7 +32,7 @@ import {
   FormikErrors,
   Formik,
 } from "formik"
-import { compact, pick } from "lodash"
+import { pick } from "lodash"
 import { useEffect, useCallback, useState } from "react"
 import { ADDRESS_VALIDATION_SHAPE } from "Apps/Order/Utils/shippingUtils"
 import { Collapse } from "Apps/Order/Components/Collapse"
@@ -94,16 +93,12 @@ const FulfillmentDetailsFormLayout = (
   const shippingContext = useShippingContext()
 
   const renderMissingShippingQuotesError = !!(
-    shippingContext.parsedOrderData.savedFulfillmentData?.isArtsyShipping &&
+    shippingContext.parsedOrderData.savedFulfillmentDetails?.isArtsyShipping &&
     shippingContext.parsedOrderData.shippingQuotes &&
     shippingContext.parsedOrderData.shippingQuotes.length === 0
   )
 
   const [hasAutocompletedAddress, setHasAutocompletedAddress] = useState(false)
-
-  const savedAddresses = compact(
-    extractNodes(props.me?.addressConnection) ?? []
-  )
 
   const formikContext = useFormikContext<FulfillmentValues>()
   const {
@@ -112,7 +107,7 @@ const FulfillmentDetailsFormLayout = (
     touched,
     handleChange,
     handleBlur,
-    handleSubmit,
+    submitForm,
     setFieldValue,
     setValues,
     isValid,
@@ -121,14 +116,15 @@ const FulfillmentDetailsFormLayout = (
   // Pass some key formik bits up to the shipping route
   const setFulfillmentFormHelpers =
     shippingContext.helpers.fulfillmentDetails.setFulfillmentFormHelpers
+
   useEffect(() => {
     setFulfillmentFormHelpers({
-      handleSubmit: handleSubmit,
+      submitForm,
       isValid: isValid,
       values: values,
     })
   }, [
-    handleSubmit,
+    submitForm,
     isValid,
     setFulfillmentFormHelpers,
     shippingContext.helpers.fulfillmentDetails.setFulfillmentFormHelpers,
@@ -165,12 +161,29 @@ const FulfillmentDetailsFormLayout = (
     formikContext.submitForm()
   }
 
+  // Once the user sees the address form, they should always see it.
+  const [forceNewAddressFormMode, setForceNewAddressFormMode] = useState(
+    shippingContext.parsedUserData.savedAddresses.length === 0
+  )
+
+  useEffect(() => {
+    if (
+      !forceNewAddressFormMode &&
+      shippingContext.parsedUserData.savedAddresses.length === 0
+    ) {
+      setForceNewAddressFormMode(true)
+    }
+  }, [
+    forceNewAddressFormMode,
+    shippingContext.parsedUserData.savedAddresses.length,
+  ])
   const addressFormMode: AddressFormMode =
     values.fulfillmentType === FulfillmentType.PICKUP
       ? "pickup"
-      : savedAddresses.length > 0
-      ? "saved_addresses"
-      : "new_address"
+      : forceNewAddressFormMode ||
+        shippingContext.parsedUserData.savedAddresses.length === 0
+      ? "new_address"
+      : "saved_addresses"
 
   // Reset form when switching between ship/pickup
   // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -273,7 +286,7 @@ const FulfillmentDetailsFormLayout = (
           {/* SAVED ADDRESSES */}
           <Collapse
             data-testid="savedAddressesCollapse"
-            open={savedAddresses.length > 0}
+            open={addressFormMode === "saved_addresses"}
           >
             <SavedAddressesFragmentContainer
               active={addressFormMode === "saved_addresses"}
@@ -286,13 +299,7 @@ const FulfillmentDetailsFormLayout = (
           {/* NEW ADDRESS */}
           <Collapse
             data-testid="addressFormCollapse"
-            open={
-              addressFormMode === "new_address" ||
-              (shippingContext.parsedOrderData.savedFulfillmentData
-                ?.fulfillmentType === FulfillmentType.SHIP &&
-                !shippingContext.parsedOrderData.savedFulfillmentData
-                  ?.selectedSavedAddressId)
-            }
+            open={addressFormMode === "new_address"}
           >
             <GridColumns>
               <Column span={12}>

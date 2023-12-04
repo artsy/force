@@ -7,7 +7,7 @@ import { Shipping2_order$data } from "__generated__/Shipping2_order.graphql"
 import { Shipping2_me$data } from "__generated__/Shipping2_me.graphql"
 import { CommerceSetShippingInput } from "__generated__/SetShippingMutation.graphql"
 
-import { Box, Button, Flex, Spacer, Text } from "@artsy/palette"
+import { Box, Button, Flex, Spacer, Text, usePrevious } from "@artsy/palette"
 import { RouterLink } from "System/Router/RouterLink"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
@@ -54,8 +54,8 @@ import { useCreateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/use
 import { useSelectShippingQuote } from "Apps/Order/Routes/Shipping2/Mutations/useSelectShippingQuote"
 import { ShippingContext } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext"
 import { useDeleteSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useDeleteSavedAddress"
-import { CreateUserAddressInput } from "__generated__/CreateUserAddressMutation.graphql"
 import { useUpdateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useUpdateSavedAddress"
+import { ParsedOrderData } from "Apps/Order/Routes/Shipping2/Hooks/useParseOrderData"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -69,26 +69,12 @@ export interface ShippingProps {
   commitMutation: CommitMutation
 }
 
-export type ShippingRouteStep = "fulfillment_details" | "shipping_quotes"
+export type ShippingStage = "fulfillment_details" | "shipping_quotes"
 
 interface State {
-  newSavedAddressID: string | null
+  newSavedAddressId: string | null
   selectedShippingQuoteId: string | null
-}
-
-type Action =
-  | { type: "SET_SELECTED_SHIPPING_QUOTE"; payload: string | null }
-  | { type: "SET_NEW_SAVED_ADDRESS_ID"; payload: string | null }
-
-const shippingStateReducer = (state: State, action: Action): State => {
-  switch (action.type) {
-    case "SET_SELECTED_SHIPPING_QUOTE":
-      return { ...state, selectedShippingQuoteId: action.payload }
-    case "SET_NEW_SAVED_ADDRESS_ID":
-      return { ...state, newSavedAddressID: action.payload }
-    default:
-      return state
-  }
+  stage: ShippingStage
 }
 
 export const ShippingRoute: FC<ShippingProps> = props => {
@@ -104,24 +90,47 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const {
     parsedOrderData,
-    step,
     helpers: { fulfillmentDetails: fulfillmentFormHelpers },
   } = orderContext
 
   const isOffer = order.mode === "OFFER"
-  const isArtsyShipping = parsedOrderData.savedFulfillmentData?.isArtsyShipping
+  const isArtsyShipping =
+    parsedOrderData.savedFulfillmentDetails?.isArtsyShipping
 
-  const initialState = {
-    newSavedAddressID: null,
+  const [state, dispatch] = useReducer(shippingStateReducer, {
+    newSavedAddressId: null,
     selectedShippingQuoteId: parsedOrderData.selectedShippingQuoteId ?? null,
-  }
-  const [state, dispatch] = useReducer(shippingStateReducer, initialState)
+    stage: parsedOrderData.savedFulfillmentDetails?.isArtsyShipping
+      ? "shipping_quotes"
+      : "fulfillment_details",
+  })
 
   const { requiresArtsyShippingTo, shippingQuotes } = parsedOrderData
 
   const advanceToPayment = useCallback(() => {
     props.router.push(`/orders/${props.order.internalID}/payment`)
   }, [props.router, props.order.internalID])
+
+  const formValues = fulfillmentFormHelpers.values
+  const previousFormValues = usePrevious(formValues)
+
+  useEffect(() => {
+    if (
+      state.stage === "fulfillment_details" ||
+      !orderContext.parsedOrderData.savedFulfillmentDetails ||
+      matchAddressFields(formValues.attributes, previousFormValues.attributes)
+    ) {
+      return
+    }
+
+    actionDispatchers.setStage(dispatch, "fulfillment_details")
+  }, [
+    formValues.attributes,
+    orderContext.helpers.fulfillmentDetails.values,
+    orderContext.parsedOrderData.savedFulfillmentDetails,
+    previousFormValues.attributes,
+    state.stage,
+  ])
 
   // /**
   //  * Reset fulfillment details on load if artsy shipping to refresh shipping
@@ -228,39 +237,88 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     ]
   )
 
-  const handleSaveNewAddress = useCallback(
-    async (address: CreateUserAddressInput["attributes"]) => {
+  const handleUserAddressUpdates = useCallback(
+    async ({
+      newValues,
+      previousData,
+    }: {
+      /* The values to use for user address updates */
+      newValues: ShipValues["attributes"]
+      previousData: {
+        /* The saved fulfillment details from before the form was submitted */
+        detailsForUpdate?: ParsedOrderData["savedFulfillmentDetails"]
+        /* The saved user address associated with the order */
+        newSavedAddressId: string | null
+      }
+    }) => {
+      const addressShouldBeSaved = !!newValues.saveAddress
+
       try {
-        const response = await createSavedAddress.submitMutation({
-          variables: {
-            input: { attributes: addressWithFallbackValues(address) },
-          },
-        })
-        const newAddress = response?.createUserAddress?.userAddressOrErrors
-        if (newAddress?.__typename === "UserAddress") {
-          dispatch({
-            type: "SET_NEW_SAVED_ADDRESS_ID",
-            payload: newAddress.internalID,
-          })
-        }
-        if (newAddress?.__typename === "Errors") {
-          logger.error(newAddress.errors[0])
-          return
+        if (addressShouldBeSaved) {
+          if (!previousData.newSavedAddressId) {
+            // Address not saved, create it
+            const response = await createSavedAddress.submitMutation({
+              variables: {
+                input: { attributes: addressWithFallbackValues(newValues) },
+              },
+            })
+            const newAddress = response?.createUserAddress?.userAddressOrErrors
+            if (newAddress?.__typename === "UserAddress") {
+              actionDispatchers.setNewSavedAddressId(
+                dispatch,
+                newAddress.internalID
+              )
+              return
+            }
+            // Address create failed
+            // const errorMessage = newAddress?.__typename === "Errors"
+            //   ? newAddress.errors.map(e => e.message).join(", ")
+            //   : "Something went wrong."
+            // throw new Error(errorMessage)
+            return
+          } else if (
+            previousData.newSavedAddressId &&
+            previousData.detailsForUpdate &&
+            !matchAddressFields(previousData.detailsForUpdate, newValues)
+          ) {
+            await updateSavedAddress.submitMutation({
+              variables: {
+                input: {
+                  userAddressID: previousData.newSavedAddressId,
+                  attributes: addressWithFallbackValues(newValues),
+                },
+              },
+            })
+          }
+        } else {
+          // Address should not be saved, delete it if it exists
+          if (state.newSavedAddressId) {
+            await deleteSavedAddress.submitMutation({
+              variables: {
+                input: { userAddressID: state.newSavedAddressId },
+              },
+            })
+            actionDispatchers.setNewSavedAddressId(dispatch, null)
+          }
         }
       } catch (error) {
         handleSubmitError(error)
       }
     },
-    [createSavedAddress, handleSubmitError]
+    [
+      createSavedAddress,
+      deleteSavedAddress,
+      handleSubmitError,
+      state.newSavedAddressId,
+      updateSavedAddress,
+    ]
   )
-
   const handleSubmitFulfillmentDetails = useCallback(
     async (
       formValues: FulfillmentValues,
       formikHelpers?: FormikHelpers<FulfillmentValues>
     ) => {
       const { setSubmitting } = formikHelpers || {}
-
       setSubmitting && setSubmitting(true)
       try {
         let fulfillmentMutationValues: CommerceSetShippingInput
@@ -315,17 +373,23 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           handleSubmitError(orderOrError.error)
           return
         }
-        if (
-          formValues.fulfillmentType === FulfillmentType.SHIP &&
-          formValues.attributes.saveAddress
-        ) {
-          await handleSaveNewAddress({
-            ...formValues.attributes,
+
+        if (formValues.fulfillmentType === FulfillmentType.SHIP) {
+          // Include existing address if it is an update
+          await handleUserAddressUpdates({
+            newValues: formValues.attributes,
+            previousData: {
+              detailsForUpdate: parsedOrderData.savedFulfillmentDetails,
+              newSavedAddressId: state.newSavedAddressId,
+            },
           })
         }
-        if (!requiresArtsyShipping) {
-          advanceToPayment()
+
+        if (requiresArtsyShipping) {
+          actionDispatchers.setStage(dispatch, "shipping_quotes")
+          return
         }
+        return advanceToPayment()
       } catch (error) {
         orderTracking.errorMessageViewed({
           error_code: null,
@@ -339,21 +403,31 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       }
     },
     [
+      parsedOrderData.savedFulfillmentDetails,
+      state.newSavedAddressId,
       saveFulfillmentDetails,
+      advanceToPayment,
       requiresArtsyShippingTo,
       props.order.internalID,
       props.dialog,
       handleSubmitError,
-      handleSaveNewAddress,
-      advanceToPayment,
+      handleUserAddressUpdates,
       orderTracking,
     ]
   )
 
   const saveSelectedShippingQuote = useCallback(async () => {
     const { order } = props
+
     if (!state.selectedShippingQuoteId) {
       logger.error("No shipping quote selected")
+      return
+    }
+    if (
+      parsedOrderData.savedFulfillmentDetails?.fulfillmentType !==
+      FulfillmentType.SHIP
+    ) {
+      logger.error("No shipping address saved")
       return
     }
     try {
@@ -365,7 +439,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           },
         },
       })
-      // TODO: result.commerceSelectShippingOption may be null due to other error?
       const orderOrError = result.commerceSelectShippingOption?.orderOrError
 
       if (orderOrError?.__typename === "CommerceOrderWithMutationFailure") {
@@ -373,43 +446,12 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         return
       }
 
-      // Handle possible updates to the shipping address.
-      const shippingFormValues = fulfillmentFormHelpers.values as ShipValues
-      const savedShippingAddress =
-        parsedOrderData.savedFulfillmentData?.fulfillmentType ===
-        FulfillmentType.SHIP
-          ? parsedOrderData.savedFulfillmentData.fulfillmentDetails
-          : null
-      const addressShouldBeSaved = !!shippingFormValues.attributes.saveAddress
-      // TODO: address update logic should move into the submitFulfillmentDetails mutation
-      // since it should happen when shipping quotes are hidden and unhidden.
-
-      if (savedShippingAddress) {
-        if (state.newSavedAddressID) {
-          const addressNeedsUpdates = !matchAddressFields(
-            savedShippingAddress,
-            shippingFormValues.attributes
-          )
-          if (addressNeedsUpdates) {
-            await updateSavedAddress.submitMutation({
-              variables: {
-                input: {
-                  userAddressID: state.newSavedAddressID,
-                  attributes: shippingFormValues.attributes,
-                },
-              },
-            })
-          }
-          if (!addressShouldBeSaved) {
-            await deleteSavedAddress.submitMutation({
-              variables: { input: { userAddressID: state.newSavedAddressID } },
-            })
-          }
-        } else if (addressShouldBeSaved) {
-          await handleSaveNewAddress(savedShippingAddress)
-        }
-      }
-
+      await handleUserAddressUpdates({
+        newValues: (fulfillmentFormHelpers.values as ShipValues).attributes,
+        previousData: {
+          newSavedAddressId: state.newSavedAddressId,
+        },
+      })
       advanceToPayment()
     } catch (error) {
       logger.error(error)
@@ -429,42 +471,20 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }, [
     props,
     state.selectedShippingQuoteId,
-    state.newSavedAddressID,
+    state.newSavedAddressId,
+    parsedOrderData.savedFulfillmentDetails,
     selectShippingQuote,
+    handleUserAddressUpdates,
     fulfillmentFormHelpers.values,
-    parsedOrderData.savedFulfillmentData,
     advanceToPayment,
     handleSubmitError,
-    updateSavedAddress,
-    deleteSavedAddress,
-    handleSaveNewAddress,
     orderTracking,
   ])
 
   const handleShippingQuoteSelected = (newShippingQuoteId: string) => {
     orderTracking.clickedSelectShippingOption(newShippingQuoteId)
-    dispatch({
-      type: "SET_SELECTED_SHIPPING_QUOTE",
-      payload: newShippingQuoteId,
-    })
+    actionDispatchers.setSelectedShippingQuote(dispatch, newShippingQuoteId)
   }
-
-  // TODO: (Erik) - we will need some way of handling the user going back.
-  // not sure if this is what's happening here, just a reminder
-
-  // const handleAddressEdit = (
-  //   editedAddress: UpdateUserAddressMutation$data["updateUserAddress"]
-  // ) => {
-  //   // reload shipping quotes if selected address edited
-  //   if (selectedAddressID === editedAddress?.userAddressOrErrors?.internalID) {
-  //     setShippingQuotes(null)
-  //     setShippingQuoteId(undefined)
-
-  //     if (checkIfArtsyShipping()) {
-  //       selectShipping(editedAddress.userAddressOrErrors)
-  //     }
-  //   }
-  // }
 
   const renderArtsyShippingOptionText = () => {
     let text
@@ -478,7 +498,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   }
 
   const showArtsyShipping =
-    !!isArtsyShipping && !!shippingQuotes && shippingQuotes.length > 0
+    state.stage === "shipping_quotes" &&
+    !!isArtsyShipping &&
+    !!shippingQuotes &&
+    shippingQuotes.length > 0
 
   const defaultShippingQuoteId = shippingQuotes?.[0]?.id
   const useDefaultArtsyShippingQuote =
@@ -493,10 +516,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       orderContext.parsedOrderData.selectedShippingQuoteId !==
         defaultShippingQuoteId
     ) {
-      dispatch({
-        type: "SET_SELECTED_SHIPPING_QUOTE",
-        payload: defaultShippingQuoteId,
-      })
+      actionDispatchers.setSelectedShippingQuote(
+        dispatch,
+        defaultShippingQuoteId
+      )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
@@ -505,24 +528,32 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     useDefaultArtsyShippingQuote,
   ])
 
-  const {
-    handleSubmit: fulfillmentDetailsFormikHandleSubmit,
-  } = fulfillmentFormHelpers
-  const onContinueButtonPressed = useMemo(() => {
-    if (step === "fulfillment_details") {
-      return (...args) => fulfillmentDetailsFormikHandleSubmit(...args)
+  // handleSubmitFulfillmentDetails with formik + address verification
+  const submitFulfillmentDetailsFormik: () => ReturnType<
+    typeof handleSubmitFulfillmentDetails
+  > = fulfillmentFormHelpers.submitForm
+
+  const onContinueButtonPressed = useCallback(async () => {
+    if (state.stage === "fulfillment_details") {
+      // TODO: Create vs update details for different mutations. do we need a separate state?
+      return submitFulfillmentDetailsFormik()
     }
-    return saveSelectedShippingQuote
-  }, [step, fulfillmentDetailsFormikHandleSubmit, saveSelectedShippingQuote])
+
+    if (state.stage === "shipping_quotes") {
+      await saveSelectedShippingQuote()
+
+      return
+    }
+  }, [state.stage, submitFulfillmentDetailsFormik, saveSelectedShippingQuote])
 
   const disableSubmit = useMemo(() => {
-    if (step === "fulfillment_details") {
+    if (state.stage === "fulfillment_details") {
       return !(fulfillmentFormHelpers.isValid || isCommittingMutation)
-    } else if (step === "shipping_quotes") {
+    } else if (state.stage === "shipping_quotes") {
       return !(state.selectedShippingQuoteId || isCommittingMutation)
     }
   }, [
-    step,
+    state.stage,
     fulfillmentFormHelpers.isValid,
     isCommittingMutation,
     state.selectedShippingQuoteId,
@@ -553,7 +584,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 />
 
                 {/* SHIPPING Quotes */}
-                <Collapse open={showArtsyShipping}>
+                <Collapse
+                  data-testid="ShippingQuotes_collapse"
+                  open={showArtsyShipping}
+                >
                   <Text variant="sm">Artsy shipping options</Text>
                   <Text variant="xs" mb="1" color="black60">
                     {renderArtsyShippingOptionText()}
@@ -736,3 +770,34 @@ const ArtaErrorDialogMessage = () => (
     .
   </>
 )
+
+type Action =
+  | { type: "SET_SELECTED_SHIPPING_QUOTE"; payload: string | null }
+  | { type: "SET_NEW_SAVED_ADDRESS_ID"; payload: string | null }
+  | { type: "SET_STAGE"; payload: ShippingStage }
+
+const shippingStateReducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case "SET_SELECTED_SHIPPING_QUOTE":
+      return { ...state, selectedShippingQuoteId: action.payload }
+    case "SET_NEW_SAVED_ADDRESS_ID":
+      return { ...state, newSavedAddressId: action.payload }
+    case "SET_STAGE":
+      return { ...state, stage: action.payload }
+    default:
+      return state
+  }
+}
+
+const actionDispatchers: Record<
+  string,
+  (dispatch: React.Dispatch<Action>, payload?: Action["payload"]) => void
+> = {
+  setSelectedShippingQuote: (dispatch, payload: string | null) =>
+    dispatch({ type: "SET_SELECTED_SHIPPING_QUOTE", payload }),
+  setNewSavedAddressId: (dispatch, payload: string | null) =>
+    dispatch({ type: "SET_NEW_SAVED_ADDRESS_ID", payload }),
+  setStage: (dispatch, payload: ShippingStage) => {
+    dispatch({ type: "SET_STAGE", payload })
+  },
+}

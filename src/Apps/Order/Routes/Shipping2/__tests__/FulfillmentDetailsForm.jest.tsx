@@ -82,6 +82,9 @@ beforeEach(() => {
       isArtsyShipping: false,
       shippingQuotes: [],
     },
+    parsedUserData: {
+      savedAddresses: [],
+    },
     helpers: {
       fulfillmentDetails: {
         setFulfillmentFormHelpers: jest.fn(),
@@ -164,10 +167,43 @@ describe("FulfillmentDetailsForm", () => {
       await screen.findByText("Phone number is required")
       expect(mockOnSubmit).not.toHaveBeenCalled()
     })
+    it.todo("user can select shipping and fill out form")
   })
   describe("Pickup not available", () => {
     beforeEach(() => {
       testProps.availableFulfillmentTypes = [FulfillmentType.SHIP]
+    })
+    describe("User has saved addresses", () => {
+      beforeEach(() => {
+        mockShippingContext.parsedUserData.savedAddresses = [
+          {
+            id: "123",
+            name: "John Doe",
+            addressLine1: "401 Broadway",
+            addressLine2: "Floor 25",
+            addressLine3: undefined,
+            city: "New York",
+            region: "NY",
+            postalCode: "10013",
+            phoneNumber: "1234567890",
+            country: "US",
+            isDefault: true,
+            internalID: "123",
+          },
+        ]
+      })
+      it("shows the saved addresses", async () => {
+        renderTree(testProps)
+        // Note - SavedAddresses is mocked out.
+        await waitFor(() => {
+          expect(screen.getByTestId("savedAddressesCollapse")).toHaveStyle({
+            height: "auto",
+          })
+          expect(screen.getByTestId("addressFormCollapse")).toHaveStyle({
+            height: "0px",
+          })
+        })
+      })
     })
     it("does not show delivery/pickup selector", async () => {
       renderTree(testProps)

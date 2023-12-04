@@ -1,12 +1,13 @@
-import { useContext, useMemo, useState } from "react"
+import { useContext, useState } from "react"
 import { FormikProps } from "formik"
-import { ShippingProps, ShippingRouteStep } from "Apps/Order/Routes/Shipping2"
+import { ShippingProps } from "Apps/Order/Routes/Shipping2"
 import { FulfillmentValues } from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
 import { useParseOrderData } from "Apps/Order/Routes/Shipping2/Hooks/useParseOrderData"
 import {
   ShippingContext,
   ShippingContextProps,
 } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext"
+import { useParseUserData } from "Apps/Order/Routes/Shipping2/Hooks/useParseUserData"
 
 export const useShippingContext = () => {
   return useContext(ShippingContext)
@@ -18,8 +19,8 @@ export const useShippingContext = () => {
 export const useComputeShippingContext = (
   props: ShippingProps
 ): ShippingContextProps => {
-  const parsedOrderData = useParseOrderData(props)
-
+  const parsedUserData = useParseUserData(props.me)
+  const parsedOrderData = useParseOrderData(props.order, parsedUserData)
   /**
    * Because there is a single button for both fulfillment details and
    * shipping quote steps (and duplicated in the sidebar)
@@ -28,10 +29,10 @@ export const useComputeShippingContext = (
    * Currently we need to pass up:
    */
   const [fulfillmentFormHelpers, setFulfillmentFormHelpers] = useState<
-    Pick<FormikProps<FulfillmentValues>, "handleSubmit" | "isValid" | "values">
+    Pick<FormikProps<FulfillmentValues>, "submitForm" | "isValid" | "values">
   >({
     // Used to submit the form
-    handleSubmit: () => {},
+    submitForm: () => Promise.reject(new Error("form not loaded")),
     // Used to disable the button
     isValid: false,
     // Used to get the form values for un-saving the address if the user
@@ -47,16 +48,9 @@ export const useComputeShippingContext = (
     setFulfillmentFormHelpers,
   }
 
-  const step: ShippingRouteStep = useMemo(() => {
-    if (parsedOrderData.savedFulfillmentData?.isArtsyShipping) {
-      return "shipping_quotes"
-    }
-    return "fulfillment_details"
-  }, [parsedOrderData.savedFulfillmentData])
-
   return {
+    parsedUserData,
     parsedOrderData,
-    step,
     helpers: {
       fulfillmentDetails: fulfillmentDetailsHelpers,
     },

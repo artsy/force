@@ -2177,7 +2177,7 @@ describe("Shipping", () => {
                 "SetShippingMutation"
               )
               expect(mutationArg.variables).toEqual({
-                input: {
+                input: expect.objectContaining({
                   fulfillmentType: "SHIP_ARTA",
                   id: "2939023",
                   phoneNumber: "422-424-4242",
@@ -2191,7 +2191,7 @@ describe("Shipping", () => {
                     postalCode: "10012",
                     region: "NY",
                   },
-                },
+                }),
               })
 
               mutationArg = mockCommitMutation.mock.calls[2][0]

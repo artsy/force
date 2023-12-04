@@ -43,12 +43,16 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
   const { onSelect, me, relay } = props
 
+  /* TODO: Remove relay/fragment container and
+   * use shippingContext.parsedUserData.savedAddresses
+   */
   const addressList = compact<SavedAddressType>(
     extractNodes(me?.addressConnection) ?? []
   )
 
   const selectedSavedAddressId =
-    shippingContext.parsedOrderData.savedFulfillmentData?.selectedSavedAddressId
+    shippingContext.parsedOrderData.savedFulfillmentDetails
+      ?.selectedSavedAddressId
   const [selectedAddressID, setSelectedAddressID] = useState<
     string | undefined
   >(

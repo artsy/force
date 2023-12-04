@@ -39,10 +39,17 @@ jest.mock("Apps/Order/Routes/Shipping2/Hooks/useParseOrderData", () => {
     }),
   }
 })
+jest.mock("Apps/Order/Routes/Shipping2/Hooks/useParseUserData", () => {
+  return {
+    useParseUserData: () => ({
+      savedAddresses: [mockSavedAddress],
+    }),
+  }
+})
 
 const errorBoxQuery = "Banner[data-testid='form-banner-error']"
 
-const savedAddress: SavedAddressType = {
+const mockSavedAddress: SavedAddressType = {
   ...validAddress,
   phoneNumber: "8475937743",
   id: "id",
@@ -102,7 +109,7 @@ describe("AddressModal", () => {
       onSuccess: jest.fn(),
       modalAction: {
         type: AddressModalActionType.EDIT_USER_ADDRESS,
-        address: savedAddress,
+        address: mockSavedAddress,
       },
 
       closeModal: jest.fn(),
@@ -128,7 +135,7 @@ describe("AddressModal", () => {
         modalAction: {
           type: AddressModalActionType.EDIT_USER_ADDRESS,
           address: {
-            ...savedAddress,
+            ...mockSavedAddress,
             isDefault: true,
           },
         },
@@ -212,7 +219,7 @@ describe("AddressModal", () => {
         UpdateUserAddressPayload: () => ({
           userAddressOrErrors: {
             __typename: "UserAddress",
-            ...savedAddress,
+            ...mockSavedAddress,
             isDefault: true,
           },
         }),
@@ -279,6 +286,7 @@ describe("AddressModal", () => {
     })
 
     // FIXME: Flakey test
+    // eslint-disable-next-line jest/no-disabled-tests
     it.skip("sets formik error when address mutation returns phone validation error", async () => {
       const { mockResolveLastOperation, wrapper } = getWrapper()
 
