@@ -43,7 +43,7 @@ describe("SuggestedFilters", () => {
     expect(mockTransitionToFiltersAndTrack).toHaveBeenCalled()
   })
 
-  it("Shows Suggested Filters when there are no suggested filters", async () => {
+  it("Does not show Suggested Filters when there are no suggested filters", async () => {
     renderWithRelay({
       PreviewSavedSearch: () => ({ suggestedFilters: [] }),
     })

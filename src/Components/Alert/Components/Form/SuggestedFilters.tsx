@@ -9,7 +9,7 @@ import {
   SkeletonText,
   Text,
 } from "@artsy/palette"
-import { handleFieldsWithMultipleValues } from "Components/Alert/Components/Filters/QuickMultipleSelectAlertFilter"
+import { handleFieldsWithMultipleValues } from "Components/Alert/Helpers/handleFieldsWithMultipleValues"
 import { isValueSelected } from "Components/Alert/Helpers/isValueSelected"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
@@ -69,7 +69,7 @@ export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
         <Text variant="sm-display">Suggested Filters</Text>
       </Box>
 
-      <Box mt={1}>
+      <Box>
         {suggestedFilters.map(suggestedFilter => {
           const key = `filter-label-${suggestedFilter.field}-${suggestedFilter.value}`
 
@@ -78,6 +78,7 @@ export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
               key={key}
               variant="dotted"
               mr={1}
+              mt={1}
               onClick={() => {
                 switch (suggestedFilter.field) {
                   case "additionalGeneIDs":
@@ -99,7 +100,7 @@ export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
           )
         })}
 
-        <Clickable onClick={transitionToFiltersAndTrack}>
+        <Clickable onClick={transitionToFiltersAndTrack} mt={1}>
           <Flex justifyContent={"space-between"} alignItems={"center"}>
             <Text variant="xs" color="black60" mr={0.5}>
               More Filters
