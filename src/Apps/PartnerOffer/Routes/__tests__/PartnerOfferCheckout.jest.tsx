@@ -1,27 +1,29 @@
-import { render } from "@testing-library/react"
+import { render, waitFor } from "@testing-library/react"
 import { PartnerOfferCheckout } from "Apps/PartnerOffer/Routes/PartnerOfferCheckout"
 import { useSystemContext } from "System/SystemContext"
-import { MockEnvironment, createMockEnvironment } from "relay-test-utils"
-
-const mockCommitMutation = jest.fn()
-const mockRouterPush = jest.fn()
+import { useMutation } from "Utils/Hooks/useMutation"
 
 jest.mock("System/SystemContext")
-jest.mock("react-relay", () => ({
-  ...jest.requireActual("react-relay"),
-  commitMutation: (...args) => mockCommitMutation(...args),
-}))
+jest.mock("Utils/Hooks/useMutation")
+
+const mockUseMutation = useMutation as jest.Mock
+const submitMutation = jest.fn()
+const mockRouterPush = jest.fn()
+
 jest.mock("System/Router/useRouter", () => ({
   useRouter: () => ({ match: { params: { partnerOfferID: "123" } } }),
 }))
 
 describe("PartnerOfferCheckout", () => {
-  let relayEnv: MockEnvironment = createMockEnvironment()
+  beforeEach(() => {
+    mockUseMutation.mockImplementation(() => {
+      return { submitMutation }
+    })
+  })
 
   beforeEach(() => {
     ;(useSystemContext as jest.Mock).mockImplementation(() => ({
       router: { push: mockRouterPush },
-      relayEnvironment: relayEnv,
     }))
   })
 
@@ -29,93 +31,96 @@ describe("PartnerOfferCheckout", () => {
     jest.clearAllMocks()
   })
 
-  it("redirects to artwork page if expired_partner_offer", () => {
-    mockCommitMutation.mockImplementationOnce((_relayEnv, { onCompleted }) => {
-      onCompleted({
+  it("redirects to artwork page if expired_partner_offer", async () => {
+    submitMutation.mockImplementation(() => {
+      return {
         commerceCreatePartnerOfferOrder: {
           orderOrError: {
             error: {
               code: "expired_partner_offer",
-              data: JSON.stringify({ artwork_id: "123" }),
+              data: JSON.stringify({ artwork_id: "1234" }),
             },
           },
         },
-      })
+      }
     })
 
     render(<PartnerOfferCheckout />)
 
-    expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-    expect(mockCommitMutation).toHaveBeenCalledWith(
-      relayEnv,
+    expect(submitMutation).toHaveBeenCalledTimes(1)
+    expect(submitMutation).toHaveBeenCalledWith(
       expect.objectContaining({
         variables: {
           input: { partnerOfferId: "123" },
         },
       })
     )
-    expect(mockRouterPush).toHaveBeenCalledWith("/artwork/123")
+    await waitFor(() => {
+      expect(mockRouterPush).toHaveBeenCalledWith("/artwork/1234")
+    })
   })
 
-  it("redirects to artwork page if not_acquireable", () => {
-    mockCommitMutation.mockImplementationOnce((_relayEnv, { onCompleted }) => {
-      onCompleted({
+  it("redirects to artwork page if not_acquireable", async () => {
+    submitMutation.mockImplementation(() => {
+      return {
         commerceCreatePartnerOfferOrder: {
           orderOrError: {
             error: {
               code: "not_acquireable",
-              data: JSON.stringify({ artwork_id: "123" }),
+              data: JSON.stringify({ artwork_id: "1235" }),
             },
           },
         },
-      })
+      }
     })
 
     render(<PartnerOfferCheckout />)
 
-    expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-    expect(mockCommitMutation).toHaveBeenCalledWith(
-      relayEnv,
+    expect(submitMutation).toHaveBeenCalledTimes(1)
+    expect(submitMutation).toHaveBeenCalledWith(
       expect.objectContaining({
         variables: {
           input: { partnerOfferId: "123" },
         },
       })
     )
-    expect(mockRouterPush).toHaveBeenCalledWith("/artwork/123")
+    await waitFor(() => {
+      expect(mockRouterPush).toHaveBeenCalledWith("/artwork/1235")
+    })
   })
 
-  it("redirects to the order page if successful", () => {
-    mockCommitMutation.mockImplementationOnce((_relayEnv, { onCompleted }) => {
-      onCompleted({
+  it("redirects to the order page if successful", async () => {
+    submitMutation.mockImplementation(() => {
+      return {
         commerceCreatePartnerOfferOrder: {
           orderOrError: {
             order: {
-              internalID: "123",
+              internalID: "1236",
               mode: "BUY",
             },
           },
         },
-      })
+      }
     })
 
     render(<PartnerOfferCheckout />)
 
-    expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-    expect(mockCommitMutation).toHaveBeenCalledWith(
-      relayEnv,
+    expect(submitMutation).toHaveBeenCalledTimes(1)
+    expect(submitMutation).toHaveBeenCalledWith(
       expect.objectContaining({
         variables: {
           input: { partnerOfferId: "123" },
         },
       })
     )
-    expect(mockRouterPush).toHaveBeenCalledWith("/orders/123")
+    await waitFor(() => {
+      expect(mockRouterPush).toHaveBeenCalledWith("/orders/1236")
+    })
   })
 
-  it("redirects to home with any other error", () => {
-    mockCommitMutation.mockImplementationOnce((_relayEnv, { onCompleted }) => {
-      onCompleted({
+  it("redirects to home with any other error", async () => {
+    submitMutation.mockImplementationOnce(() => {
+      return {
         commerceCreatePartnerOfferOrder: {
           orderOrError: {
             error: {
@@ -124,20 +129,21 @@ describe("PartnerOfferCheckout", () => {
             },
           },
         },
-      })
+      }
     })
 
     render(<PartnerOfferCheckout />)
 
-    expect(mockCommitMutation).toHaveBeenCalledTimes(1)
-    expect(mockCommitMutation).toHaveBeenCalledWith(
-      relayEnv,
+    expect(submitMutation).toHaveBeenCalledTimes(1)
+    expect(submitMutation).toHaveBeenCalledWith(
       expect.objectContaining({
         variables: {
           input: { partnerOfferId: "123" },
         },
       })
     )
-    expect(mockRouterPush).toHaveBeenCalledWith("/")
+    await waitFor(() => {
+      expect(mockRouterPush).toHaveBeenCalledWith("/")
+    })
   })
 })
