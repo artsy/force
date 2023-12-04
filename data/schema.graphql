@@ -11007,6 +11007,9 @@ type InquirerCollectorProfile {
     @deprecated(
       reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
     )
+
+  # The Collector follows the Gallery profile
+  hasPartnerFollow: Boolean
   icon: Image
 
   # A globally unique ID.
