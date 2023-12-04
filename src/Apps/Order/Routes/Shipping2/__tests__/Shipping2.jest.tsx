@@ -41,6 +41,7 @@ import {
   MockEnvironment,
   MockPayloadGenerator,
 } from "relay-test-utils"
+import { RelayMockEnvironment } from "relay-test-utils/lib/RelayModernMockEnvironment"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -227,12 +228,26 @@ const verifyAddressWithSuggestions = async (
 
 const resolveSaveFulfillmentDetails = async (
   mockResolveLastOperation,
-  commerceSetShipping
+  commerceSetShipping,
+  /* if you submitted the form with a different address than validAddress,
+   pass it here to override the address in the mutation response. */
+  requestedFulfillmentOverride?: any
 ) => {
   await flushPromiseQueue()
+  const payload = requestedFulfillmentOverride
+    ? merge({}, commerceSetShipping, {
+        orderOrError: {
+          order: { requestedFulfillment: requestedFulfillmentOverride },
+        },
+      })
+    : commerceSetShipping
   return await mockResolveLastOperation({
-    CommerceSetShippingPayload: () => commerceSetShipping,
+    CommerceSetShippingPayload: () => payload,
   })
+}
+
+const getAllPendingOperationNames = (env: RelayMockEnvironment) => {
+  return env.mock.getAllOperations().map(op => op.request.node.operation.name)
 }
 
 describe("Shipping", () => {
@@ -738,7 +753,7 @@ describe("Shipping", () => {
           )
 
           await fillAddressForm({
-            name: "Erik David",
+            name: "Joelle Van Dyne",
             addressLine1: "401 Broadway",
             addressLine2: "",
             city: "New York",
@@ -764,7 +779,7 @@ describe("Shipping", () => {
           })
 
           await fillAddressForm({
-            name: "Erik David",
+            name: "Joelle Van Dyne",
             addressLine1: "401 Broadway",
             addressLine2: "",
             city: "New York",
@@ -923,7 +938,7 @@ describe("Shipping", () => {
                 phoneNumber: validAddress.phoneNumber,
                 shipping: {
                   ...recommendedAddress,
-                  name: "Erik David",
+                  name: "Joelle Van Dyne",
                   phoneNumber: "",
                 },
               },
@@ -980,7 +995,7 @@ describe("Shipping", () => {
                   ...initialAddress,
                   city: "New York: the big apple",
 
-                  name: "Erik David",
+                  name: "Joelle Van Dyne",
                   phoneNumber: "",
                 },
               },
@@ -1081,7 +1096,7 @@ describe("Shipping", () => {
                 shipping: {
                   ...inputAddress,
                   addressLine1: "<recommended change>",
-                  name: "Erik David",
+                  name: "Joelle Van Dyne",
                   phoneNumber: "",
                 },
               },
@@ -1388,7 +1403,8 @@ describe("Shipping", () => {
 
             const fulfillmentOperation = await resolveSaveFulfillmentDetails(
               mockResolveLastOperation,
-              settingOrderArtaShipmentSuccess.commerceSetShipping
+              settingOrderArtaShipmentSuccess.commerceSetShipping,
+              recommendedAddress
             )
 
             expect(fulfillmentOperation.operationName).toBe(
@@ -1402,7 +1418,7 @@ describe("Shipping", () => {
                 phoneNumber: validAddress.phoneNumber,
                 shipping: {
                   ...recommendedAddress,
-                  name: "Erik David",
+                  name: "Joelle Van Dyne",
                   phoneNumber: "",
                 },
               },
@@ -1410,8 +1426,10 @@ describe("Shipping", () => {
 
             await flushPromiseQueue()
             const createAddressOperation = await mockResolveLastOperation({
-              CreateUserAddressPayload: () =>
-                saveAddressSuccess.createUserAddress,
+              CreateUserAddressPayload: () => ({
+                ...saveAddressSuccess.createUserAddress,
+                ...recommendedAddress,
+              }),
             })
             expect(createAddressOperation.operationName).toBe(
               "useCreateSavedAddressMutation"
@@ -1430,6 +1448,8 @@ describe("Shipping", () => {
             expect(selectNewShippingOptionOperation.operationName).toBe(
               "useSelectShippingQuoteMutation"
             )
+
+            expect(getAllPendingOperationNames(relayEnv)).toEqual([])
             expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
           })
 
@@ -1475,7 +1495,7 @@ describe("Shipping", () => {
                 phoneNumber: validAddress.phoneNumber,
                 shipping: {
                   ...validAddress,
-                  name: "Erik David",
+                  name: "Joelle Van Dyne",
                   phoneNumber: "",
                 },
               },
@@ -1499,6 +1519,8 @@ describe("Shipping", () => {
             expect(selectShippingOptionOperation.operationName).toBe(
               "useSelectShippingQuoteMutation"
             )
+
+            expect(getAllPendingOperationNames(relayEnv)).toEqual([])
             expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
           })
         })
@@ -1538,9 +1560,43 @@ describe("Shipping", () => {
         ).toBeInTheDocument()
       })
 
-      it.todo(
-        "sets address on order, default shipping quote is selected, then edits address and selects new shipping quote"
-      )
+      // TODO: EMI-1601
+      // fit("updates the address after saving selected shipping quote if the user edited the address after saving", async () => {
+      //   const { mockResolveLastOperation } = renderWithRelay(
+      //     {
+      //       CommerceOrder: () =>
+      //         UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+      //       Me: () => meWithoutAddress,
+      //     },
+      //     undefined,
+      //     relayEnv
+      //   )
+
+      //   await fillAddressForm(validAddress)
+      //   await saveAndContinue()
+
+      //   await resolveSaveFulfillmentDetails(
+      //     mockResolveLastOperation,
+      //     settingOrderArtaShipmentSuccess.commerceSetShipping
+      //   )
+
+      //   await flushPromiseQueue()
+      //   const saveAddressOperation = await mockResolveLastOperation({
+      //     CreateUserAddressPayload: () => saveAddressSuccess.createUserAddress,
+      //   })
+
+      //   expect(saveAddressOperation.operationName).toBe(
+      //     "useCreateSavedAddressMutation"
+      //   )
+      //   // ...
+      //   const premiumShipping = await screen.findByRole("radio", {
+      //     name: /Premium/,
+      //   })
+      //   // TODO: After saving the address, if the user edits the address
+      //   // the shipping quotes should disappear and on submit the update
+      //   // address mutation should be called, then they can proceed
+      //   expect("todo").toBe(false)
+      // })
 
       it("saves address upon selecting shipping quote if address is checked and it wasn't saved before", async () => {
         const { mockResolveLastOperation } = renderWithRelay(
@@ -1629,9 +1685,8 @@ describe("Shipping", () => {
 
         const fulfillmentOperation = await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
-          merge(settingOrderArtaShipmentSuccess.commerceSetShipping, {
-            orderOrError: { order: { requestedFulfillment: validAddress } },
-          })
+          settingOrderArtaShipmentSuccess.commerceSetShipping,
+          validAddress
         )
         expect(fulfillmentOperation.operationName).toBe(
           "useSaveFulfillmentDetailsMutation"
@@ -1648,14 +1703,14 @@ describe("Shipping", () => {
         expect(saveAddressOperation.operationVariables).toEqual({
           input: {
             attributes: {
+              name: "Joelle Van Dyne",
+              phoneNumber: "120938120983",
               addressLine1: "401 Broadway",
               addressLine2: "Suite 25",
               city: "New York",
-              country: "US",
-              name: "Erik David",
-              phoneNumber: "5555937743",
-              postalCode: "15601",
               region: "NY",
+              country: "US",
+              postalCode: "10013",
             },
           },
         })
@@ -2138,6 +2193,7 @@ describe("Shipping", () => {
                 "useSelectShippingQuoteMutation"
               )
 
+              expect(getAllPendingOperationNames(relayEnv)).toEqual([])
               expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
             })
 
@@ -2397,7 +2453,7 @@ describe("Shipping", () => {
       )
       await userEvent.paste(
         screen.getByPlaceholderText("Full name"),
-        "Erik David"
+        "Joelle Van Dyne"
       )
       await saveAndContinue()
 
@@ -2427,7 +2483,7 @@ describe("Shipping", () => {
           shipping: {
             addressLine1: "",
             addressLine2: "",
-            country: "US",
+            country: "",
             name: "",
             city: "",
             postalCode: "",

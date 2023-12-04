@@ -42,8 +42,11 @@ import { FormikHelpers } from "formik"
 import { useComputeShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 
 import {
+  addressWithFallbackValues,
   FulfillmentType,
   FulfillmentValues,
+  matchAddressFields,
+  onlyAddressValues,
   ShippingAddressFormValues,
   ShipValues,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
@@ -54,6 +57,7 @@ import { useSelectShippingQuote } from "Apps/Order/Routes/Shipping2/Mutations/us
 import { ShippingContext } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext"
 import { useDeleteSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useDeleteSavedAddress"
 import { CreateUserAddressInput } from "__generated__/CreateUserAddressMutation.graphql"
+import { useUpdateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useUpdateSavedAddress"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -94,6 +98,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const saveFulfillmentDetails = useSaveFulfillmentDetails()
   const createSavedAddress = useCreateSavedAddress()
+  const updateSavedAddress = useUpdateSavedAddress()
   const deleteSavedAddress = useDeleteSavedAddress()
   const selectShippingQuote = useSelectShippingQuote()
 
@@ -227,20 +232,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   const handleSaveNewAddress = useCallback(
     async (address: CreateUserAddressInput["attributes"]) => {
-      const attributes = pick(
-        address,
-        "addressLine1",
-        "addressLine2",
-        "city",
-        "country",
-        "name",
-        "phoneNumber",
-        "postalCode",
-        "region"
-      ) as ShippingAddressFormValues
       try {
         const response = await createSavedAddress.submitMutation({
-          variables: { input: { attributes } },
+          variables: {
+            input: { attributes: addressWithFallbackValues(address) },
+          },
         })
         const newAddress = response?.createUserAddress?.userAddressOrErrors
         if (newAddress?.errors) {
@@ -301,7 +297,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             shipping: {
               addressLine1: "",
               addressLine2: "",
-              country: "US",
+              country: "",
               name: "",
               city: "",
               postalCode: "",
@@ -379,23 +375,43 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         return
       }
 
-      const shipValues = fulfillmentFormHelpers.values as ShipValues
-      const addressShouldBeSaved = !!shipValues.attributes.saveAddress
-
-      if (
-        addressShouldBeSaved &&
-        !state.newSavedAddressID &&
+      // Handle possible updates to the shipping address.
+      const shippingFormValues = fulfillmentFormHelpers.values as ShipValues
+      const savedShippingAddress =
         parsedOrderData.savedFulfillmentData?.fulfillmentType ===
-          FulfillmentType.SHIP
-      ) {
-        await handleSaveNewAddress(
-          parsedOrderData.savedFulfillmentData.fulfillmentDetails
-        )
-      } else if (!addressShouldBeSaved && state.newSavedAddressID) {
-        await deleteSavedAddress.submitMutation({
-          variables: { input: { userAddressID: state.newSavedAddressID } },
-        })
+        FulfillmentType.SHIP
+          ? parsedOrderData.savedFulfillmentData.fulfillmentDetails
+          : null
+      const addressShouldBeSaved = !!shippingFormValues.attributes.saveAddress
+      // TODO: address update logic should move into the submitFulfillmentDetails mutation
+      // since it should happen when shipping quotes are hidden and unhidden.
+
+      if (savedShippingAddress) {
+        if (state.newSavedAddressID) {
+          const addressNeedsUpdates = !matchAddressFields(
+            savedShippingAddress,
+            shippingFormValues.attributes
+          )
+          if (addressNeedsUpdates) {
+            await updateSavedAddress.submitMutation({
+              variables: {
+                input: {
+                  userAddressID: state.newSavedAddressID,
+                  attributes: shippingFormValues.attributes,
+                },
+              },
+            })
+          }
+          if (!addressShouldBeSaved) {
+            await deleteSavedAddress.submitMutation({
+              variables: { input: { userAddressID: state.newSavedAddressID } },
+            })
+          }
+        } else if (addressShouldBeSaved) {
+          await handleSaveNewAddress(savedShippingAddress)
+        }
       }
+
       advanceToPayment()
     } catch (error) {
       logger.error(error)
@@ -414,24 +430,18 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     }
   }, [
     props,
-    state,
+    state.selectedShippingQuoteId,
+    state.newSavedAddressID,
     selectShippingQuote,
     fulfillmentFormHelpers.values,
     parsedOrderData.savedFulfillmentData,
     advanceToPayment,
     handleSubmitError,
-    handleSaveNewAddress,
+    updateSavedAddress,
     deleteSavedAddress,
+    handleSaveNewAddress,
     orderTracking,
   ])
-
-  // TODO: Make sure we re-set address verified by in the fulfillment details form
-  //   // If the address has already been verified and the user is editing the form,
-  //   // consider this a user-verified address (perform verification only once).
-  //   if (addressVerifiedBy) {
-  //     setAddressVerifiedBy(AddressVerifiedBy.USER)
-  //   }
-  // }
 
   const handleShippingQuoteSelected = (newShippingQuoteId: string) => {
     orderTracking.clickedSelectShippingOption(newShippingQuoteId)

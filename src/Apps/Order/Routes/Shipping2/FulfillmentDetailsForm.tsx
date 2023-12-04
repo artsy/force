@@ -92,7 +92,6 @@ const FulfillmentDetailsFormLayout = (
   })
 
   const shippingContext = useShippingContext()
-  const active = shippingContext.step === "fulfillment_details"
 
   const renderMissingShippingQuotesError = !!(
     shippingContext.parsedOrderData.savedFulfillmentData?.isArtsyShipping &&

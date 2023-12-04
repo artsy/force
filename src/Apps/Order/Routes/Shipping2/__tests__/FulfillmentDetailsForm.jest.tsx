@@ -80,6 +80,11 @@ beforeEach(() => {
       isArtsyShipping: false,
       shippingQuotes: [],
     },
+    helpers: {
+      fulfillmentDetails: {
+        setFulfillmentFormHelpers: jest.fn(),
+      },
+    },
   } as any
 })
 
