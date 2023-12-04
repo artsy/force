@@ -1,9 +1,7 @@
 import { render, waitFor } from "@testing-library/react"
 import { PartnerOfferCheckout } from "Apps/PartnerOffer/Routes/PartnerOfferCheckout"
-import { useSystemContext } from "System/SystemContext"
 import { useMutation } from "Utils/Hooks/useMutation"
 
-jest.mock("System/SystemContext")
 jest.mock("Utils/Hooks/useMutation")
 
 const mockUseMutation = useMutation as jest.Mock
@@ -11,7 +9,12 @@ const submitMutation = jest.fn()
 const mockRouterPush = jest.fn()
 
 jest.mock("System/Router/useRouter", () => ({
-  useRouter: () => ({ match: { params: { partnerOfferID: "123" } } }),
+  useRouter: () => ({
+    match: { params: { partnerOfferID: "123" } },
+    router: {
+      push: mockRouterPush,
+    },
+  }),
 }))
 
 describe("PartnerOfferCheckout", () => {
@@ -19,12 +22,6 @@ describe("PartnerOfferCheckout", () => {
     mockUseMutation.mockImplementation(() => {
       return { submitMutation }
     })
-  })
-
-  beforeEach(() => {
-    ;(useSystemContext as jest.Mock).mockImplementation(() => ({
-      router: { push: mockRouterPush },
-    }))
   })
 
   afterEach(() => {

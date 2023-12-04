@@ -1,13 +1,11 @@
 import { FC, useCallback, useEffect } from "react"
-import { useSystemContext } from "System/SystemContext"
 import { usePartnerOfferCheckoutMutation } from "./Mutations/UsePartnerOfferCheckoutMutation"
 import { useRouter } from "System/Router/useRouter"
 import { LoadingArea } from "Components/LoadingArea"
 import { Box } from "@artsy/palette"
 
 export const PartnerOfferCheckout: FC = () => {
-  const { router } = useSystemContext()
-  const { match } = useRouter()
+  const { match, router } = useRouter()
   const partnerOfferId = match.params.partnerOfferID
   const {
     submitMutation: partnerCheckoutMutation,
@@ -52,11 +50,9 @@ export const PartnerOfferCheckout: FC = () => {
   }, [partnerCheckoutMutation, partnerOfferId, router])
 
   useEffect(() => {
-    if (router) {
-      handleRedirect()
-    }
+    handleRedirect()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router])
+  }, [])
 
   return (
     <LoadingArea isLoading={true}>
