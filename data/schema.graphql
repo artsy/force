@@ -1400,6 +1400,8 @@ type Artist implements EntityWithFilterArtworksConnectionInterface & Node & Sear
     before: String
     first: Int
     last: Int
+    page: Int
+    size: Int
     sort: String
   ): AlertConnection
   alternateNames: [String]
@@ -11005,6 +11007,9 @@ type InquirerCollectorProfile {
     @deprecated(
       reason: "emailConfirmed is going to be removed, use isEmailConfirmed instead"
     )
+
+  # The Collector follows the Gallery profile
+  hasPartnerFollow: Boolean
   icon: Image
 
   # A globally unique ID.
@@ -13697,11 +13702,14 @@ type PageInfo {
 
 type Partner implements Node {
   alertsSummaryArtistsConnection(
+    activeInventory: Boolean
     after: String
     before: String
     first: Int
     last: Int
+    page: Int
     represented: Boolean
+    size: Int
   ): AlertsSummaryArtistConnection
 
   # A connection of all artists from a Partner.
