@@ -44,9 +44,16 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
     const currency = order.currencyCode
 
     if (order.mode === "BUY") {
+      let price_item_label
+      if (order.source === "partner_offer") {
+        price_item_label = "Seller's offer"
+      } else {
+        price_item_label = "Price"
+      }
+
       return (
         <Entry
-          label="Price"
+          label={price_item_label}
           value={appendCurrencySymbol(order.itemsTotal, currency)}
           data-test="price"
         />
