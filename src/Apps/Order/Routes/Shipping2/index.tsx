@@ -237,15 +237,15 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           },
         })
         const newAddress = response?.createUserAddress?.userAddressOrErrors
-        if (newAddress?.errors) {
-          // handleSubmitError(newAddress.errors[0])
-          logger.error(newAddress.errors[0])
-        }
-        if (newAddress?.internalID) {
+        if (newAddress?.__typename === "UserAddress") {
           dispatch({
             type: "SET_NEW_SAVED_ADDRESS_ID",
             payload: newAddress.internalID,
           })
+        }
+        if (newAddress?.__typename === "Errors") {
+          logger.error(newAddress.errors[0])
+          return
         }
       } catch (error) {
         handleSubmitError(error)
@@ -368,7 +368,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       // TODO: result.commerceSelectShippingOption may be null due to other error?
       const orderOrError = result.commerceSelectShippingOption?.orderOrError
 
-      if (orderOrError?.error) {
+      if (orderOrError?.__typename === "CommerceOrderWithMutationFailure") {
         handleSubmitError(orderOrError.error)
         return
       }

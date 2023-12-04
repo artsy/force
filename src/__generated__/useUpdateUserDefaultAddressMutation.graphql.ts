@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f61c784944a4509f7b9420188143464a>>
+ * @generated SignedSource<<31ec00c6d84b0f965fcf7f1558ecea4f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -23,9 +23,14 @@ export type useUpdateUserDefaultAddressMutation$data = {
       readonly " $fragmentSpreads": FragmentRefs<"Shipping2_me">;
     } | null | undefined;
     readonly userAddressOrErrors: {
-      readonly errors?: ReadonlyArray<{
+      readonly __typename: "Errors";
+      readonly errors: ReadonlyArray<{
         readonly message: string;
       }>;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
     };
   } | null | undefined;
 };
@@ -50,6 +55,13 @@ v1 = [
   }
 ],
 v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
+},
+v3 = {
   "kind": "InlineFragment",
   "selections": [
     {
@@ -74,41 +86,34 @@ v2 = {
   "type": "Errors",
   "abstractKey": null
 },
-v3 = {
+v4 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "name",
   "storageKey": null
 },
-v4 = {
+v5 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "id",
   "storageKey": null
 },
-v5 = {
+v6 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
   "name": "country",
   "storageKey": null
 },
-v6 = [
+v7 = [
   {
     "kind": "Literal",
     "name": "first",
     "value": 30
   }
-],
-v7 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -148,7 +153,8 @@ return {
             "name": "userAddressOrErrors",
             "plural": false,
             "selections": [
-              (v2/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/)
             ],
             "storageKey": null
           }
@@ -181,7 +187,7 @@ return {
             "name": "me",
             "plural": false,
             "selections": [
-              (v3/*: any*/),
+              (v4/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -189,7 +195,7 @@ return {
                 "name": "email",
                 "storageKey": null
               },
-              (v4/*: any*/),
+              (v5/*: any*/),
               {
                 "alias": null,
                 "args": null,
@@ -198,14 +204,14 @@ return {
                 "name": "location",
                 "plural": false,
                 "selections": [
-                  (v5/*: any*/),
-                  (v4/*: any*/)
+                  (v6/*: any*/),
+                  (v5/*: any*/)
                 ],
                 "storageKey": null
               },
               {
                 "alias": null,
-                "args": (v6/*: any*/),
+                "args": (v7/*: any*/),
                 "concreteType": "UserAddressConnection",
                 "kind": "LinkedField",
                 "name": "addressConnection",
@@ -234,7 +240,7 @@ return {
                         "name": "node",
                         "plural": false,
                         "selections": [
-                          (v4/*: any*/),
+                          (v5/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -270,7 +276,7 @@ return {
                             "name": "city",
                             "storageKey": null
                           },
-                          (v5/*: any*/),
+                          (v6/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -278,7 +284,7 @@ return {
                             "name": "isDefault",
                             "storageKey": null
                           },
-                          (v3/*: any*/),
+                          (v4/*: any*/),
                           {
                             "alias": null,
                             "args": null,
@@ -300,7 +306,7 @@ return {
                             "name": "region",
                             "storageKey": null
                           },
-                          (v7/*: any*/)
+                          (v2/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -358,7 +364,7 @@ return {
               },
               {
                 "alias": null,
-                "args": (v6/*: any*/),
+                "args": (v7/*: any*/),
                 "filters": null,
                 "handle": "connection",
                 "key": "SavedAddresses_addressConnection",
@@ -376,12 +382,12 @@ return {
             "name": "userAddressOrErrors",
             "plural": false,
             "selections": [
-              (v7/*: any*/),
               (v2/*: any*/),
+              (v3/*: any*/),
               {
                 "kind": "InlineFragment",
                 "selections": [
-                  (v4/*: any*/)
+                  (v5/*: any*/)
                 ],
                 "type": "UserAddress",
                 "abstractKey": null
@@ -405,6 +411,6 @@ return {
 };
 })();
 
-(node as any).hash = "07ece1c13d859eec097a0f9f8bc6ea4c";
+(node as any).hash = "cbee14ca2d44f82cdfb497dfe9331808";
 
 export default node;
