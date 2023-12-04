@@ -6,13 +6,15 @@ import {
   within,
 } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
-import { ShipValues } from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
 import {
   FulfillmentDetailsForm,
   FulfillmentDetailsFormProps,
 } from "Apps/Order/Routes/Shipping2/FulfillmentDetailsForm"
 import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext"
-import { FulfillmentType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
+import {
+  FulfillmentType,
+  ShipValues,
+} from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useTracking } from "react-tracking"

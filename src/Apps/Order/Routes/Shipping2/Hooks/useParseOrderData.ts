@@ -2,10 +2,8 @@ import { ShippingProps } from "Apps/Order/Routes/Shipping2"
 import {
   FulfillmentType,
   PickupValues,
-  SavedAddressType,
   ShippingAddressFormValues,
   addressWithFallbackValues,
-  matchAddressFields,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"

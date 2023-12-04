@@ -1,7 +1,7 @@
 import { FC, useCallback, useMemo, useEffect, useReducer } from "react"
 import { Router } from "found"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
-import { compact, pick } from "lodash"
+import { compact } from "lodash"
 
 import { Shipping2_order$data } from "__generated__/Shipping2_order.graphql"
 import { Shipping2_me$data } from "__generated__/Shipping2_me.graphql"
@@ -46,8 +46,6 @@ import {
   FulfillmentType,
   FulfillmentValues,
   matchAddressFields,
-  onlyAddressValues,
-  ShippingAddressFormValues,
   ShipValues,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
