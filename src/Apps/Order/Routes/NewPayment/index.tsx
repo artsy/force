@@ -145,9 +145,12 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
               orderId: order.internalID,
             },
           })
-        ).commerceFixFailedPayment?.orderOrError!
+        ).commerceFixFailedPayment?.orderOrError
 
-        if (orderOrError.error) {
+        if (!orderOrError) {
+          handleFixFailedPaymentError("invalid_response")
+          return
+        } else if (orderOrError.error) {
           handleFixFailedPaymentError(orderOrError.error.code)
           return
         }
@@ -163,7 +166,26 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
             })
             return
           } else {
-            onContinue()
+            const scaOrderOrError = (
+              await fixFailedPayment({
+                input: {
+                  creditCardId,
+                  offerId: order.lastOffer?.internalID,
+                  orderId: order.internalID,
+                },
+              })
+            ).commerceFixFailedPayment?.orderOrError
+
+            if (!scaOrderOrError) {
+              handleFixFailedPaymentError("invalid_response")
+              return
+            } else if (scaOrderOrError.error) {
+              handleFixFailedPaymentError(scaOrderOrError.error.code)
+              return
+            } else if (scaOrderOrError.actionData) {
+              handleFixFailedPaymentError("requires_action")
+              return
+            }
           }
         }
 
@@ -289,19 +311,21 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
           flexDirection="column"
           style={isLoading ? { pointerEvents: "none" } : {}}
         >
-          {order.mode === "OFFER" && (
-            <>
-              <Flex>
-                <CountdownTimer
-                  action="Submit new payment"
-                  note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
-                  countdownStart={order.lastOffer?.createdAt!}
-                  countdownEnd={order.stateExpiresAt!}
-                />
-              </Flex>
-              <Spacer y={[2, 4]} />
-            </>
-          )}
+          {order.mode === "OFFER" &&
+            order.lastOffer?.createdAt &&
+            order.stateExpiresAt && (
+              <>
+                <Flex>
+                  <CountdownTimer
+                    action="Submit new payment"
+                    note="Expiration will end negotiations on this offer. Keep in mind the work can be sold to another buyer in the meantime."
+                    countdownStart={order.lastOffer?.createdAt}
+                    countdownEnd={order.stateExpiresAt}
+                  />
+                </Flex>
+                <Spacer y={[2, 4]} />
+              </>
+            )}
           <Join separator={<Spacer y={4} />}>
             <CreditCardPickerFragmentContainer
               order={order}
