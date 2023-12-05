@@ -53,7 +53,9 @@ describe("PartnerOfferCheckout", () => {
       })
     )
     await waitFor(() => {
-      expect(mockRouterPush).toHaveBeenCalledWith("/artwork/1234")
+      expect(mockRouterPush).toHaveBeenCalledWith(
+        "/artwork/1234?expired_offer=true"
+      )
     })
   })
 
@@ -82,7 +84,9 @@ describe("PartnerOfferCheckout", () => {
       })
     )
     await waitFor(() => {
-      expect(mockRouterPush).toHaveBeenCalledWith("/artwork/1235")
+      expect(mockRouterPush).toHaveBeenCalledWith(
+        "/artwork/1235?unavailable=true"
+      )
     })
   })
 
