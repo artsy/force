@@ -13,6 +13,7 @@ export const useUpdateUserDefaultAddress = () => {
             ...Shipping2_me
           }
           userAddressOrErrors {
+            __typename
             ... on Errors {
               errors {
                 message

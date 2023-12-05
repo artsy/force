@@ -11,6 +11,7 @@ export const useCreateSavedAddress = () => {
             ...Shipping2_me
           }
           userAddressOrErrors {
+            __typename
             ... on Errors {
               errors {
                 message

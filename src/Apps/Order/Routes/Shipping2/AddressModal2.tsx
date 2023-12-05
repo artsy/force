@@ -147,9 +147,8 @@ export const AddressModal: React.FC<AddressModalProps> = ({
     | { data: SavedAddressType; errors: null }
     | { data: null; errors: ReadonlyArray<{ message: string }> } => {
     const addressOrErrors = payload?.userAddressOrErrors
-    const errors = addressOrErrors?.errors
-    if (errors?.length) {
-      return { errors, data: null }
+    if (addressOrErrors?.__typename === "Errors") {
+      return { errors: addressOrErrors.errors, data: null }
     }
     return { errors: null, data: addressOrErrors as SavedAddressType }
   }
@@ -205,7 +204,7 @@ export const AddressModal: React.FC<AddressModalProps> = ({
         })
         const updateAddressPayload =
           updateAddressResult.updateUserDefaultAddress?.userAddressOrErrors
-        if (updateAddressPayload?.errors) {
+        if (updateAddressPayload?.__typename === "Errors") {
           logger.error(
             updateAddressPayload.errors.map(error => error.message).join(", ")
           )
