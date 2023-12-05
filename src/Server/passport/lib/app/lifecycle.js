@@ -132,7 +132,6 @@ module.exports.afterSocialAuth = provider =>
     const linkingAccount = req.user != null
 
     passport.authenticate(provider)(req, res, function (err) {
-      let msg
       if (
         err &&
         err.response &&
@@ -140,37 +139,38 @@ module.exports.afterSocialAuth = provider =>
         err.response.body.error === "User Already Exists"
       ) {
         if (req.socialProfileEmail) {
-          msg =
-            `A user with the email address ${req.socialProfileEmail} already ` +
-            "exists. Log in to Artsy via email and password and link " +
-            `${providerName} in your settings instead.`
+          return res.redirect(
+            `${opts.loginPagePath}?error_code=ALREADY_EXISTS&email=${req.socialProfileEmail}&provider=${provider}`
+          )
         } else {
-          msg =
-            `${providerName} account previously linked to Artsy. ` +
-            "Log in to your Artsy account via email and password and link " +
-            `${providerName} in your settings instead.`
+          return res.redirect(
+            `${opts.loginPagePath}?error_code=PREVIOUSLY_LINKED_SETTINGS&provider=${provider}`
+          )
         }
-        return res.redirect(opts.loginPagePath + "?error=" + msg)
       } else if (
         err &&
         err.response &&
         err.response.body &&
         err.response.body.error === "Another Account Already Linked"
       ) {
-        msg = `${providerName} account previously linked to Artsy.`
-        return res.redirect(`${opts.settingsPagePath}?error=${msg}`)
+        return res.redirect(
+          `${opts.loginPagePath}?error_code=PREVIOUSLY_LINKED&provider=${provider}`
+        )
       } else if (
         err &&
         err.message &&
         err.message.match("Unauthorized source IP address")
       ) {
-        msg = `Your IP address was blocked by ${providerName}.`
-        return res.redirect(opts.loginPagePath + "?error=" + msg)
+        return res.redirect(
+          `${opts.loginPagePath}?error_code=IP_BLOCKED&provider=${provider}`
+        )
       } else if (err != null) {
-        msg =
+        const message =
           err.message ||
           (typeof err.toString === "function" ? err.toString() : undefined)
-        return res.redirect(opts.loginPagePath + "?error=" + msg)
+        return res.redirect(
+          `${opts.loginPagePath}?error_code=UNKNOWN&error=${message}`
+        )
       } else if (linkingAccount) {
         return res.redirect(opts.settingsPagePath)
       } else {
