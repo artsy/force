@@ -225,7 +225,7 @@ describe("TransactionDetailsSummaryItem", () => {
       expect(text).toMatch("TotalUS$215.25")
     })
 
-    describe("partenr offer", () => {
+    describe("partner offer", () => {
       it("shows the label", async () => {
         const { wrapper } = getWrapper({
           CommerceOrder: () => transactionSummaryBuyOrderWithPartnerOffer,
