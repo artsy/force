@@ -13,6 +13,8 @@ import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
 
 const logger = createLogger("Notifications")
 
+const MENU_HEIGHT = 100
+
 interface NotificationsProps extends NofiticationsTabsProps {
   paginationType?: NotificationPaginationType
 }
@@ -52,8 +54,6 @@ export const Notifications: React.FC<NotificationsProps> = ({
   const [height, setHeight] = useState(0)
 
   useEffect(() => {
-    const MENU_HEIGHT = 200
-
     const handleResize = () => {
       setHeight(window.innerHeight - MENU_HEIGHT)
     }

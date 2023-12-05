@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b93e00a856d1662bbbe48706f1cd8e6c>>
+ * @generated SignedSource<<9a7ea85a3e52e26559b93e05281dda5e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -18,15 +18,15 @@ export type Notification_me$data = {
         readonly node: {
           readonly internalID: string;
           readonly " $fragmentSpreads": FragmentRefs<"ShelfArtwork_artwork">;
-        } | null;
-      } | null> | null;
-      readonly totalCount: number | null;
-    } | null;
+        } | null | undefined;
+      } | null | undefined> | null | undefined;
+      readonly totalCount: number | null | undefined;
+    } | null | undefined;
     readonly internalID: string;
     readonly notificationType: NotificationTypesEnum;
     readonly publishedAt: string;
     readonly title: string;
-  } | null;
+  } | null | undefined;
   readonly " $fragmentType": "Notification_me";
 };
 export type Notification_me$key = {

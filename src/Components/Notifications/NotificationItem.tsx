@@ -87,21 +87,19 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
           {children}
         </NotificationItemLink>
       )
-    }
-
-    if (mode === "page") {
-      return (
-        <Flex onClick={handlePress} p={2}>
-          {children}
-        </Flex>
-      )
-    } else {
+    } else if (mode === "dropdown") {
       return (
         <NotificationItemLink
           to={`/notifications?notification_id=${item.internalID}`}
         >
           {children}
         </NotificationItemLink>
+      )
+    } else {
+      return (
+        <Flex onClick={handlePress} p={2}>
+          {children}
+        </Flex>
       )
     }
   }

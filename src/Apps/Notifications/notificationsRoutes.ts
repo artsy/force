@@ -20,6 +20,7 @@ const NotificationApp = loadable(
 export const notificationsRoutes: AppRouteConfig[] = [
   {
     path: "/notifications",
+    layout: "FullBleed",
     getComponent: () => NotificationsApp,
     onClientSideRender: () => {
       NotificationsApp.preload()

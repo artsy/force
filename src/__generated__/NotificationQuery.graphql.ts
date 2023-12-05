@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<292a847c2d4a67c0b6a11f15aa1d0ff3>>
+ * @generated SignedSource<<535e98371d0c3af7a5c5809fa5f43bf6>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -16,7 +16,7 @@ export type NotificationQuery$variables = {
 export type NotificationQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"Notification_me">;
-  } | null;
+  } | null | undefined;
 };
 export type NotificationQuery = {
   response: NotificationQuery$data;
