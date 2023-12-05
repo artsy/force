@@ -3,8 +3,10 @@ const sinon = require("sinon")
 let analytics = require("../../lib/app/analytics")
 import options from "Server/passport/lib/options"
 
-jest.mock("Server/passport/lib/options", () => ({
-  SEGMENT_WRITE_KEY: "foobar",
+jest.mock("sharify", () => ({
+  data: {
+    SEGMENT_WRITE_KEY: "foobar",
+  },
 }))
 
 describe("analytics", function () {
