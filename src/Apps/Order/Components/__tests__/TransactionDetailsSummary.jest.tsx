@@ -42,6 +42,17 @@ const transactionSummaryBuyOrderWithSelectedShippingQuote: TestBuyOrder = {
   buyerTotal: "$215.25",
 }
 
+const transactionSummaryBuyOrderWithPartnerOffer: TestBuyOrder = {
+  ...UntouchedBuyOrder,
+  source: "partner_offer",
+  shippingTotal: "$12.00",
+  shippingTotalCents: 1200,
+  taxTotal: "$3.25",
+  taxTotalCents: 325,
+  itemsTotal: "$200.00",
+  buyerTotal: "$215.25",
+}
+
 const transactionSummaryOfferOrder: TestOfferOrder = {
   ...OfferOrderWithOffers,
   shippingTotal: "$12.00",
@@ -212,6 +223,18 @@ describe("TransactionDetailsSummaryItem", () => {
       expect(text).toMatch("ShippingUS$12.00")
       expect(text).toMatch("Tax*US$3.25")
       expect(text).toMatch("TotalUS$215.25")
+    })
+
+    describe("partenr offer", () => {
+      it("shows the label", async () => {
+        const { wrapper } = getWrapper({
+          CommerceOrder: () => transactionSummaryBuyOrderWithPartnerOffer,
+        })
+
+        const text = wrapper.text()
+
+        expect(text).toMatch("Seller's offer")
+      })
     })
 
     describe("artsy shipping specific", () => {
