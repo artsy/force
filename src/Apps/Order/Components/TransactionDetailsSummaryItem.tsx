@@ -44,9 +44,17 @@ export const TransactionDetailsSummaryItem: FC<TransactionDetailsSummaryItemProp
     const currency = order.currencyCode
 
     if (order.mode === "BUY") {
+      let price_item_label
+      if (order.source === "partner_offer") {
+        price_item_label = "Seller's offer"
+      } else {
+        price_item_label = "Price"
+      }
+
       return (
         <Entry
-          label="Price"
+          label={price_item_label}
+          source={order.source}
           value={appendCurrencySymbol(order.itemsTotal, currency)}
           data-test="price"
         />
@@ -336,19 +344,20 @@ interface SecondaryEntryProps {
 
 interface EntryProps extends SecondaryEntryProps {
   final?: boolean
+  source?: string
 }
 
-const Entry: React.FC<EntryProps> = ({ label, value, final }) => (
+const Entry: React.FC<EntryProps> = ({ label, value, final, source }) => (
   <Flex justifyContent="space-between" alignItems="baseline">
     <div>
-      <Text variant="sm" color={final ? "black100" : "black60"}>
+      <Text variant="sm" color={getLabelColor(final, source)}>
         {label}
       </Text>
     </div>
     <div>
       <Text
         variant="sm"
-        color={final ? "black100" : "black60"}
+        color={getLabelColor(final, source)}
         fontWeight={final ? "semibold" : "regular"}
       >
         {value}
@@ -367,6 +376,19 @@ const SecondaryEntry: React.FC<SecondaryEntryProps> = ({ label, value }) => (
     </Text>
   </Flex>
 )
+
+const getLabelColor = (final?: boolean, source?: string) => {
+  let color;
+  if (source === "partner_offer") {
+    color = "blue100"
+  } else if (final) {
+    color = "black100"
+  } else {
+    color = "black60"
+  }
+  return color
+ }
+
 
 graphql`
   fragment TransactionDetailsSummaryItemOfferProperties on CommerceOffer {
@@ -413,6 +435,7 @@ export const TransactionDetailsSummaryItemFragmentContainer = createFragmentCont
           }
         }
         mode
+        source
         displayState
         shippingTotal(precision: 2)
         shippingTotalCents
