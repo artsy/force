@@ -47,12 +47,14 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     extractNodes(me?.addressConnection) ?? []
   )
 
+  const selectedSavedAddressId =
+    shippingContext.parsedOrderData.savedFulfillmentData?.selectedSavedAddressId
   const [selectedAddressID, setSelectedAddressID] = useState<
     string | undefined
   >(
     getBestAvailableAddress(
       addressList,
-      shippingContext.parsedOrderData.selectedSavedAddressId ?? undefined,
+      selectedSavedAddressId,
       shippingContext.parsedOrderData.availableShippingCountries
     )?.internalID
   )
@@ -68,7 +70,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       setSelectedAddressID(
         getBestAvailableAddress(
           addressList,
-          shippingContext.parsedOrderData.selectedSavedAddressId ?? undefined,
+          selectedSavedAddressId,
           shippingContext.parsedOrderData.availableShippingCountries
         )?.internalID
       )
@@ -76,7 +78,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   }, [
     selectedAddressPresent,
     addressList,
-    shippingContext.parsedOrderData.selectedSavedAddressId,
+    selectedSavedAddressId,
     shippingContext.parsedOrderData.availableShippingCountries,
   ])
 
@@ -239,7 +241,7 @@ const getAddressByID = (addressList: SavedAddressType[], addressID: string) => {
 
 const getBestAvailableAddress = (
   addressList: SavedAddressType[],
-  addressID?: string,
+  addressID?: string | null,
   availableShippingCountries?: string[]
 ) => {
   return (

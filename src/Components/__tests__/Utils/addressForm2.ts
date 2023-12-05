@@ -10,14 +10,14 @@ import { screen, waitFor } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 
 export const validAddress: Address = {
-  name: "Erik David",
+  name: "Joelle Van Dyne",
   addressLine1: "401 Broadway",
-  addressLine2: "",
+  addressLine2: "Suite 25",
   city: "New York",
   region: "NY",
-  postalCode: "15601",
-  phoneNumber: "5555937743",
+  phoneNumber: "120938120983",
   country: "US",
+  postalCode: "10013",
 }
 
 export const fillIn = (

@@ -4,6 +4,8 @@ import { CreateUserAddressMutation$data } from "__generated__/CreateUserAddressM
 export const saveAddressSuccess: CreateUserAddressMutation$data = {
   createUserAddress: {
     userAddressOrErrors: {
+      // @ts-ignore - This is for the Shipping2 mutation result
+      __typename: "UserAddress",
       internalID: "address-id",
       id: "graphql-id",
       isDefault: false,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<bc1ee02ee2625521145e51fa5b67bd01>>
+ * @generated SignedSource<<23d1e92157888b7e359d77f00c351d25>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -36,21 +36,28 @@ export type useUpdateSavedAddressMutation$data = {
       readonly " $fragmentSpreads": FragmentRefs<"Shipping2_me">;
     } | null | undefined;
     readonly userAddressOrErrors: {
-      readonly addressLine1?: string;
-      readonly addressLine2?: string | null | undefined;
-      readonly addressLine3?: string | null | undefined;
-      readonly city?: string;
-      readonly country?: string;
-      readonly errors?: ReadonlyArray<{
+      readonly __typename: "Errors";
+      readonly errors: ReadonlyArray<{
         readonly message: string;
       }>;
-      readonly id?: string;
-      readonly internalID?: string;
-      readonly isDefault?: boolean;
-      readonly name?: string | null | undefined;
-      readonly phoneNumber?: string | null | undefined;
-      readonly postalCode?: string | null | undefined;
-      readonly region?: string | null | undefined;
+    } | {
+      readonly __typename: "UserAddress";
+      readonly addressLine1: string;
+      readonly addressLine2: string | null | undefined;
+      readonly addressLine3: string | null | undefined;
+      readonly city: string;
+      readonly country: string;
+      readonly id: string;
+      readonly internalID: string;
+      readonly isDefault: boolean;
+      readonly name: string | null | undefined;
+      readonly phoneNumber: string | null | undefined;
+      readonly postalCode: string | null | undefined;
+      readonly region: string | null | undefined;
+    } | {
+      // This will never be '%other', but we need some
+      // value in case none of the concrete values match.
+      readonly __typename: "%other";
     };
   } | null | undefined;
 };
@@ -75,29 +82,11 @@ v1 = [
   }
 ],
 v2 = {
-  "kind": "InlineFragment",
-  "selections": [
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "Error",
-      "kind": "LinkedField",
-      "name": "errors",
-      "plural": true,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "message",
-          "storageKey": null
-        }
-      ],
-      "storageKey": null
-    }
-  ],
-  "type": "Errors",
-  "abstractKey": null
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "__typename",
+  "storageKey": null
 },
 v3 = {
   "alias": null,
@@ -184,23 +173,60 @@ v14 = {
   "storageKey": null
 },
 v15 = {
-  "kind": "InlineFragment",
+  "alias": null,
+  "args": null,
+  "concreteType": null,
+  "kind": "LinkedField",
+  "name": "userAddressOrErrors",
+  "plural": false,
   "selections": [
-    (v3/*: any*/),
-    (v4/*: any*/),
-    (v5/*: any*/),
-    (v6/*: any*/),
-    (v7/*: any*/),
-    (v8/*: any*/),
-    (v9/*: any*/),
-    (v10/*: any*/),
-    (v11/*: any*/),
-    (v12/*: any*/),
-    (v13/*: any*/),
-    (v14/*: any*/)
+    (v2/*: any*/),
+    {
+      "kind": "InlineFragment",
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "Error",
+          "kind": "LinkedField",
+          "name": "errors",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "message",
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "type": "Errors",
+      "abstractKey": null
+    },
+    {
+      "kind": "InlineFragment",
+      "selections": [
+        (v3/*: any*/),
+        (v4/*: any*/),
+        (v5/*: any*/),
+        (v6/*: any*/),
+        (v7/*: any*/),
+        (v8/*: any*/),
+        (v9/*: any*/),
+        (v10/*: any*/),
+        (v11/*: any*/),
+        (v12/*: any*/),
+        (v13/*: any*/),
+        (v14/*: any*/)
+      ],
+      "type": "UserAddress",
+      "abstractKey": null
+    }
   ],
-  "type": "UserAddress",
-  "abstractKey": null
+  "storageKey": null
 },
 v16 = [
   {
@@ -208,14 +234,7 @@ v16 = [
     "name": "first",
     "value": 30
   }
-],
-v17 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "__typename",
-  "storageKey": null
-};
+];
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -247,19 +266,7 @@ return {
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": null,
-            "kind": "LinkedField",
-            "name": "userAddressOrErrors",
-            "plural": false,
-            "selections": [
-              (v2/*: any*/),
-              (v15/*: any*/)
-            ],
-            "storageKey": null
-          }
+          (v15/*: any*/)
         ],
         "storageKey": null
       }
@@ -354,7 +361,7 @@ return {
                           (v12/*: any*/),
                           (v13/*: any*/),
                           (v14/*: any*/),
-                          (v17/*: any*/)
+                          (v2/*: any*/)
                         ],
                         "storageKey": null
                       },
@@ -422,20 +429,7 @@ return {
             ],
             "storageKey": null
           },
-          {
-            "alias": null,
-            "args": null,
-            "concreteType": null,
-            "kind": "LinkedField",
-            "name": "userAddressOrErrors",
-            "plural": false,
-            "selections": [
-              (v17/*: any*/),
-              (v2/*: any*/),
-              (v15/*: any*/)
-            ],
-            "storageKey": null
-          }
+          (v15/*: any*/)
         ],
         "storageKey": null
       }
@@ -452,6 +446,6 @@ return {
 };
 })();
 
-(node as any).hash = "6005a90d01d53af8cc661fe4e32fdd1f";
+(node as any).hash = "5acf946cf48c509fa220a0624f9363d5";
 
 export default node;

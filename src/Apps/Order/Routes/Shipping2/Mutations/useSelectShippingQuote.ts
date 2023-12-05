@@ -10,6 +10,7 @@ export const useSelectShippingQuote = () => {
       ) {
         commerceSelectShippingOption(input: $input) {
           orderOrError {
+            __typename
             ... on CommerceOrderWithMutationSuccess {
               order {
                 ...Shipping2_order

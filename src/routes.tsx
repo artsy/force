@@ -58,6 +58,7 @@ import { myCollectionInsightsCollectorProfileRoutes } from "Apps/MyCollectionIns
 import { endingSoonAuctionsRoutes } from "Apps/Auctions/EndingSoonAuctions/endingSoonAuctionsRoutes"
 import { newWorksFromGalleriesYouFollowRoutes } from "Apps/NewWorksFromGalleriesYouFollow/newWorksFromGalleriesYouFollowRoutes"
 import { alertRoutes } from "Apps/Alert/alertRoutes"
+import { partnerOfferRoutes } from "Apps/PartnerOffer/partnerOfferRoutes"
 import { conversationsRoutes } from "Apps/Conversations/conversationsRoutes"
 
 export const getAppRoutes = (): AppRouteConfig[] => {
@@ -108,6 +109,7 @@ export const getAppRoutes = (): AppRouteConfig[] => {
     { routes: orderRoutes },
     { routes: pageRoutes },
     { routes: partnerRoutes },
+    { routes: partnerOfferRoutes },
     { routes: partnersRoutes },
     { routes: preferencesRoutes },
     { routes: pressRoutes },

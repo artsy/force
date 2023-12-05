@@ -20,6 +20,7 @@ import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
+import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
 
 export interface AlertFormikValues {
   name: string
@@ -36,6 +37,10 @@ export const Details: FC = () => {
   const newAlertModalFilteresEnabled = useFeatureFlag(
     "onyx_artwork_alert_modal_v2_filters"
   )
+  const enableSuggestedFilters = useFeatureFlag(
+    "onyx_saved_searches_suggested_filters"
+  )
+
   const isMounted = useDidMount()
 
   return (
@@ -77,7 +82,7 @@ export const Details: FC = () => {
                   </Flex>
                 </Box>
 
-                {newAlertModalFilteresEnabled ? (
+                {newAlertModalFilteresEnabled && !enableSuggestedFilters && (
                   <Clickable
                     data-testid="addFilters"
                     onClick={transitionToFiltersAndTrack}
@@ -95,10 +100,17 @@ export const Details: FC = () => {
                       <ChevronRightIcon />
                     </Flex>
                   </Clickable>
-                ) : (
+                )}
+
+                {!newAlertModalFilteresEnabled && (
                   <PriceRangeFilter expanded={false} />
                 )}
 
+                {newAlertModalFilteresEnabled && enableSuggestedFilters && (
+                  <SugggestedFiltersQueryRenderer
+                    transitionToFiltersAndTrack={transitionToFiltersAndTrack}
+                  />
+                )}
                 <DetailsInput />
 
                 <NotificationPreferencesQueryRenderer mode="create" />
