@@ -17,7 +17,7 @@ module.exports = {
   reporters: ["default", "jest-junit"],
   setupFilesAfterEnv: ["<rootDir>/src/tests.ts"],
   testEnvironment: "jest-environment-jsdom",
-  testMatch: ["**/src/**/*.jest.(ts|tsx)"],
+  testMatch: ["**/src/**/*.jest.(ts|tsx|js|jsx)"],
   testEnvironmentOptions: {
     url: "http://localhost",
   },
