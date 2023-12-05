@@ -9,6 +9,7 @@ import { useAuthDialog } from "Components/AuthDialog"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useSystemContext } from "System/SystemContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -20,6 +21,7 @@ jest.mock("Utils/Events", () => ({
 jest.mock("System/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(() => true),
 }))
+
 jest.mock("System/useSystemContext")
 
 describe("AlertProvider", () => {
@@ -54,6 +56,14 @@ describe("AlertProvider", () => {
       isLoggedIn: true,
       relayEnvironment: relayEnv,
     }))
+    ;(useFeatureFlag as jest.Mock).mockImplementation(flag => {
+      switch (flag) {
+        case "onyx_artwork_alert_modal_v2_filters":
+          return true
+        case "onyx_saved_searches_suggested_filters":
+          return false
+      }
+    })
   })
 
   afterEach(() => {

@@ -1,7 +1,12 @@
 import { act, render, RenderResult } from "@testing-library/react"
 import { mount } from "enzyme"
 import * as React from "react"
-import { GraphQLTaggedNode, QueryRenderer, Variables } from "react-relay"
+import {
+  GraphQLTaggedNode,
+  QueryRenderer,
+  RelayEnvironmentProvider,
+  Variables,
+} from "react-relay"
 import { OperationDescriptor, OperationType } from "relay-runtime"
 import {
   createMockEnvironment,
@@ -12,9 +17,10 @@ import { MockResolvers } from "relay-test-utils/lib/RelayMockPayloadGenerator"
 
 type SetupTestWrapper<T extends OperationType> = {
   Component: React.ComponentType<T["response"]>
-  query: GraphQLTaggedNode
+  query?: GraphQLTaggedNode
   variables?: T["variables"]
 }
+
 /**
  * Creates a wrapper for testing Relay components using the `relay-test-utils`
  * package, which will provide automatic fixture data for GraphQL queries.
@@ -97,25 +103,30 @@ export const setupTestWrapperTL = <T extends OperationType>({
 }: SetupTestWrapper<T>) => {
   const renderWithRelay = (
     mockResolvers: MockResolvers = {},
-    componentProps?: {},
+    componentProps?: any,
     mockedEnv?: ReturnType<typeof createMockEnvironment>
   ): RenderWithRelay => {
     const env = mockedEnv ?? createMockEnvironment()
 
-    const TestRenderer = () => (
-      <QueryRenderer<T>
-        environment={env}
-        variables={variables}
-        query={query}
-        render={({ props, error }) => {
-          if (props) {
-            return <Component {...componentProps} {...(props as {})} />
-          } else if (error) {
-            console.error(error)
-          }
-        }}
-      />
-    )
+    const TestRenderer = () =>
+      query ? (
+        <QueryRenderer<T>
+          environment={env}
+          variables={variables}
+          query={query}
+          render={({ props, error }) => {
+            if (props) {
+              return <Component {...componentProps} {...(props as {})} />
+            } else if (error) {
+              console.error(error)
+            }
+          }}
+        />
+      ) : (
+        <RelayEnvironmentProvider environment={env}>
+          <Component {...componentProps} />
+        </RelayEnvironmentProvider>
+      )
 
     const mockResolveLastOperation = (mockResolvers: MockResolvers) => {
       const operation = env.mock.getMostRecentOperation()
@@ -151,7 +162,12 @@ export const setupTestWrapperTL = <T extends OperationType>({
       return MockPayloadGenerator.generate(operation, mockResolvers)
     })
 
-    return { ...view, env, mockResolveLastOperation, mockRejectLastOperation }
+    return {
+      ...view,
+      env,
+      mockResolveLastOperation,
+      mockRejectLastOperation,
+    }
   }
 
   return { renderWithRelay }
@@ -228,7 +244,12 @@ export const setupTestWrapper = <T extends OperationType>({
 
     wrapper.update()
 
-    return { wrapper, env, mockResolveLastOperation, mockRejectLastOperation }
+    return {
+      wrapper,
+      env,
+      mockResolveLastOperation,
+      mockRejectLastOperation,
+    }
   }
 
   return { getWrapper }
