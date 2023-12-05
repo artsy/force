@@ -23,20 +23,21 @@ export const PartnerOfferCheckout: FC = () => {
         })
 
         let redirectUrl = "/"
-        let orderOrError = response.commerceCreatePartnerOfferOrder?.orderOrError
+        let orderOrError =
+          response.commerceCreatePartnerOfferOrder?.orderOrError
 
         if (orderOrError?.error) {
           const errorCode = orderOrError.error.code
-          const errorData = JSON.parse(orderOrError.error.data?.toString() ?? "")
+          const errorData = JSON.parse(
+            orderOrError.error.data?.toString() ?? ""
+          )
 
           switch (errorCode) {
             case "expired_partner_offer":
-              // TODO: Show error message in artwork page
-              redirectUrl = `/artwork/${errorData.artwork_id}`
+              redirectUrl = `/artwork/${errorData.artwork_id}?expired_offer=true`
               break
             case "not_acquireable":
-              // TODO: Show error message in artwork page
-              redirectUrl = `/artwork/${errorData.artwork_id}`
+              redirectUrl = `/artwork/${errorData.artwork_id}?unavailable=true`
               break
           }
         } else {
