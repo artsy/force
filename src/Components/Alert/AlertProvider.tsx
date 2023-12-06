@@ -86,6 +86,8 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   >("ALERT_DETAILS")
 
   useEffect(() => {
+    // inject the values only when creating the alert
+    // for the edit mode we inject the values on mount
     if (isEditMode) return
     const criteria = getAllowedSearchCriteria(initialCriteria ?? {})
 
@@ -109,13 +111,6 @@ export const AlertProvider: FC<AlertProviderProps> = ({
           },
         },
       })
-
-      /*       trackEvent({
-        action: ActionType.editedSavedSearch,
-        saved_search_id: editAlertEntity.id,
-        current: JSON.stringify(userAlertSettings),
-        changed: JSON.stringify(updatedAlertSettings),
-      }) */
     } catch (error) {
       console.error("Alert/useAlertContext", error)
       logger.error(error)
@@ -192,7 +187,8 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   })
 
   useEffect(() => {
-    // proceed only for the Create Alert flow; ckip for the Edit Alert flow
+    // inject the values only when creating the alert
+    // for the edit mode we inject the values on mount
     if (!state.visible && !state.isEditMode) return
 
     const subscription = fetchQuery<AlertProviderPreviewQuery>(
@@ -249,8 +245,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
         goToFilters: () => {
           setCurrent("ALERT_FILTERS")
         },
-        onComplete: handleComplete,
-        onCompleteEdit: handleCompleteEdit,
+        onComplete: isEditMode ? handleCompleteEdit : handleComplete,
         state,
       }}
     >

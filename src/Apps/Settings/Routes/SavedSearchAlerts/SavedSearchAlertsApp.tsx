@@ -101,12 +101,10 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   }
 
   const handleDeleted = () => {
-    if (editAlertEntity) {
-      trackEvent({
-        action: ActionType.deletedSavedSearch,
-        saved_search_id: editAlertEntity.id,
-      })
-    }
+    trackEvent({
+      action: ActionType.deletedSavedSearch,
+      saved_search_id: editAlertEntity?.id,
+    })
 
     closeEditFormAndRefetch()
     closeDeleteModal()

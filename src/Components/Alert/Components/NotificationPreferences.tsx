@@ -15,17 +15,22 @@ import { NotificationPreferences_viewer$data } from "__generated__/NotificationP
 import { NotificationPreferencesQuery } from "__generated__/NotificationPreferencesQuery.graphql"
 import { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
 import { useFormikContext } from "formik"
+import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
+import { SavedSearchFrequency } from "Components/SavedSearchAlert/types"
+import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
 
 type AlertFormMode = "create" | "edit"
 
 interface NotificationPreferencesProps {
   mode: AlertFormMode
   viewer?: NotificationPreferences_viewer$data
+  frequency?: SavedSearchFrequency
 }
 
 export const NotificationPreferences: FC<NotificationPreferencesProps> = ({
   mode,
   viewer,
+  frequency,
 }) => {
   const { setFieldValue, values } = useFormikContext<AlertFormikValues>()
 
@@ -76,10 +81,28 @@ export const NotificationPreferences: FC<NotificationPreferencesProps> = ({
         <Text variant="sm-display">Push Notifications</Text>
 
         <Checkbox
-          onSelect={selected => setFieldValue("push", selected)}
+          onSelect={selected => {
+            setFieldValue("push", selected)
+            if (mode === "create") return
+            // Restore initial frequency when "Mobile Alerts" is unselected
+            if (!selected) {
+              setFieldValue("frequency", frequency || DEFAULT_FREQUENCY)
+            }
+          }}
           selected={values.push}
         />
       </Box>
+
+      <Spacer y={2} />
+
+      {values.push && (
+        <FrequenceRadioButtons
+          defaultFrequence={values.frequency || DEFAULT_FREQUENCY}
+          onSelect={selectedOption =>
+            setFieldValue("frequency", selectedOption)
+          }
+        />
+      )}
     </Box>
   )
 }
@@ -102,10 +125,12 @@ export const NotificationPreferencesFragmentContainer = createFragmentContainer(
 
 interface NotificationPreferencesQueryRendererProps {
   mode: AlertFormMode
+  frequency?: SavedSearchFrequency
 }
 
 export const NotificationPreferencesQueryRenderer: React.FC<NotificationPreferencesQueryRendererProps> = ({
   mode,
+  frequency,
 }) => {
   return (
     <SystemQueryRenderer<NotificationPreferencesQuery>
@@ -132,6 +157,7 @@ export const NotificationPreferencesQueryRenderer: React.FC<NotificationPreferen
           <NotificationPreferencesFragmentContainer
             mode={mode}
             viewer={props.viewer}
+            frequency={frequency}
           />
         )
       }}

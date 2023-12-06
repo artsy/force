@@ -1,11 +1,9 @@
 import {
   Box,
   Button,
-  Checkbox,
   Clickable,
   Flex,
   Join,
-  Message,
   Separator,
   Spacer,
   Text,
@@ -24,8 +22,6 @@ import {
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
-import { RouterLink } from "System/Router/RouterLink"
-import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
@@ -39,7 +35,7 @@ import { isEqual } from "lodash"
 import { FiltersFooter } from "Components/Alert/Components/Steps/StepsFooter/FiltersFooter"
 import { ModalHeader } from "Components/Alert/Components/Modal/ModalHeader"
 import { Modal } from "Components/Alert/Components/Modal/Modal"
-import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
+import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 
 interface NewSavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
@@ -116,33 +112,23 @@ const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> 
     </>
   )
 }
+
 const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = ({
-  viewer,
   onDeleteClick,
   onCompleted,
 }) => {
-  const { state, goToFilters, dispatch, onCompleteEdit } = useAlertContext()
-
-  const isCustomAlertsNotificationsEnabled = viewer.notificationPreferences.some(
-    preference => {
-      return (
-        preference.channel === "email" &&
-        preference.name === "custom_alerts" &&
-        preference.status === "SUBSCRIBED"
-      )
-    }
-  )
+  const { state, goToFilters, dispatch, onComplete } = useAlertContext()
 
   return (
     <Formik<AlertFormikValues>
       initialValues={state.settings}
-      onSubmit={onCompleteEdit}
+      onSubmit={() => {
+        onComplete()
+        onCompleted()
+      }}
       validateOnChange
     >
-      {({ isSubmitting, values, setFieldValue, handleSubmit, dirty }) => {
-        const userAllowsEmails = isCustomAlertsNotificationsEnabled ?? false
-        const shouldShowEmailWarning = !!values.email && !userAllowsEmails
-
+      {({ isSubmitting, values, handleSubmit }) => {
         let isSaveAlertButtonDisabled = true
 
         if (state.criteriaChanged || !isEqual(state.settings, values)) {
@@ -157,13 +143,6 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
           goToFilters()
         }
 
-        const finishEditing = () => {
-          dispatch({ type: "SET_SETTINGS", payload: values })
-          handleSubmit()
-          setTimeout(() => {
-            onCompleted()
-          }, 1000)
-        }
         return (
           <Box>
             <Join separator={<Spacer y={[4, 6]} />}>
@@ -194,56 +173,10 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                 <Separator my={2} />
               </Box>
 
-              <Box>
-                <Box display="flex" justifyContent="space-between">
-                  <Text variant="sm-display">Email</Text>
-                  <Checkbox
-                    onSelect={selected => setFieldValue("email", selected)}
-                    selected={values.email}
-                  />
-                </Box>
-                {shouldShowEmailWarning && (
-                  <Message
-                    variant="alert"
-                    title="Change your email preferences"
-                    mt={2}
-                  >
-                    To receive Email Alerts, please update{" "}
-                    <RouterLink inline to="/unsubscribe">
-                      your email preferences
-                    </RouterLink>
-                    .
-                  </Message>
-                )}
-
-                <Spacer y={4} />
-
-                <Box display="flex" justifyContent="space-between">
-                  <Text variant="sm-display">Push Notifications</Text>
-                  <Checkbox
-                    onSelect={selected => {
-                      setFieldValue("push", selected)
-
-                      // Restore initial frequency when "Mobile Alerts" is unselected
-                      if (!selected) {
-                        setFieldValue("frequency", state.settings.frequency)
-                      }
-                    }}
-                    selected={values.push}
-                  />
-                </Box>
-
-                <Spacer y={4} />
-
-                {values.push && (
-                  <FrequenceRadioButtons
-                    defaultFrequence={values.frequency || DEFAULT_FREQUENCY}
-                    onSelect={selectedOption =>
-                      setFieldValue("frequency", selectedOption)
-                    }
-                  />
-                )}
-              </Box>
+              <NotificationPreferencesQueryRenderer
+                mode="edit"
+                frequency={state.settings.frequency}
+              />
 
               <Media greaterThanOrEqual="md">
                 <Spacer y={6} />
@@ -260,7 +193,10 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                   <Button
                     flex={1}
                     loading={isSubmitting}
-                    onClick={finishEditing}
+                    onClick={() => {
+                      dispatch({ type: "SET_SETTINGS", payload: values })
+                      handleSubmit()
+                    }}
                     disabled={isSaveAlertButtonDisabled}
                   >
                     Save Alert
@@ -274,7 +210,10 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                 <Button
                   loading={isSubmitting}
                   width="100%"
-                  onClick={finishEditing}
+                  onClick={() => {
+                    dispatch({ type: "SET_SETTINGS", payload: values })
+                    handleSubmit()
+                  }}
                   disabled={isSaveAlertButtonDisabled}
                 >
                   Save Alert
