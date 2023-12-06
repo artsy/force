@@ -102,7 +102,7 @@ export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
 
         <Clickable onClick={transitionToFiltersAndTrack} mt={1}>
           <Flex justifyContent={"space-between"} alignItems={"center"}>
-            <Text variant="xs" color="black60" mr={0.5}>
+            <Text variant="xs" color="black100" mr={0.5}>
               More Filters
             </Text>
             <ChevronRightIcon height={14} width={14} />
