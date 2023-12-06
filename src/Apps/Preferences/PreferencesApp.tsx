@@ -75,7 +75,6 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
         Email Preference Center
       </Text>
       <Formik<FormValuesForNotificationPreferences>
-        // @ts-ignore
         initialValues={{ ...NOTIFICATION_FIELDS, ...initialValues }}
         onSubmit={async (values, actions) => {
           try {
@@ -94,9 +93,7 @@ export const PreferencesApp: FC<PreferencesAppProps> = ({ viewer }) => {
               variables: { input: { authenticationToken, subscriptionGroups } },
             })
 
-            actions.resetForm({
-              touched: {},
-            })
+            actions.setTouched({})
 
             sendToast({
               variant: "success",

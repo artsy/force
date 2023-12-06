@@ -17115,7 +17115,6 @@ type SearchCriteria {
 
   # Human readable price range value
   formattedPriceRange: String
-  hasRecentlyEnabledUserSearchCriteria: Boolean!
   height: String
   highPriceAmount(
     decimal: String = "."
@@ -17147,17 +17146,11 @@ type SearchCriteria {
   materialsTerms: [String!]!
   offerable: Boolean
   partnerIDs: [String!]!
-  priceArray: [Float]
   priceRange: String
   sizes: [String!]!
 
   # Summary of the fields selected
   summary: JSON
-  totalUserSearchCriteriaCount: Int
-  totalWithAdditionalGeneIdsCount: Int
-  totalWithAttributionClassCount: Int
-  totalWithOtherMetadataCount: Int
-  totalWithPriceRangeCount: Int
   userAlertSettings: SavedSearchUserAlertSettings!
   userSearchCriteriaCount: Int!
   width: String
