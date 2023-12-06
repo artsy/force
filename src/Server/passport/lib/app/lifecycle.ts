@@ -1,22 +1,35 @@
-//
-// Middleware functions that help control what happens before and after
-// logging in or signing up.
-//
+/**
+ * Middleware functions that help control what happens before and after
+ * logging in or signing up.
+ */
 
-const { capitalize } = require("underscore.string")
-const forwardedFor = require("./forwarded_for")
-const opts = require("../options")
-const passport = require("passport")
-const redirectBack = require("./redirectBack")
-const request = require("superagent")
-const artsyXapp = require("@artsy/xapp")
-const { parse, resolve } = require("url")
+import { capitalize } from "underscore.string"
+import forwardedFor from "./forwarded_for"
+import opts from "Server/passport/lib/options"
+import passport from "passport"
+import redirectBack from "./redirectBack"
+// eslint-disable-next-line no-restricted-imports
+import request from "superagent"
+import artsyXapp from "@artsy/xapp"
+import { parse, resolve } from "url"
+import { NextFunction } from "express"
+import { ArtsyRequest, ArtsyResponse } from "Server/middleware/artsyExpress"
 
-module.exports.onLocalLogin = function (req, res, next) {
+interface Req extends ArtsyRequest {
+  artsyPassportSignedUp?: boolean
+  socialProfileEmail?: string
+}
+
+module.exports.onLocalLogin = function (
+  req: Req,
+  res: ArtsyResponse,
+  next: NextFunction
+) {
   if (req.user && !req.xhr) {
     return next()
   }
-  passport.authenticate("local-with-otp")(req, res, function (err) {
+
+  passport.authenticate("local-with-otp")(req, res, function (err: any) {
     if (req.xhr) {
       if (err) {
         return res.status(500).send({ success: false, error: err.message })
@@ -42,7 +55,11 @@ module.exports.onLocalLogin = function (req, res, next) {
   })
 }
 
-module.exports.onLocalSignup = function (req, res, next) {
+module.exports.onLocalSignup = function (
+  req: Req,
+  res: ArtsyResponse,
+  next: NextFunction
+) {
   req.artsyPassportSignedUp = true
   request
     .post(opts.ARTSY_URL + "/api/v1/user")
@@ -63,7 +80,7 @@ module.exports.onLocalSignup = function (req, res, next) {
       recaptcha_token: req.body.recaptcha_token,
     })
     .end(function (err, sres) {
-      let msg
+      let msg = ""
       if (err && err.message === "Email is invalid.") {
         msg = "Email is invalid."
         if (req.xhr) {
@@ -98,8 +115,10 @@ module.exports.onLocalSignup = function (req, res, next) {
     })
 }
 
-module.exports.beforeSocialAuth = provider =>
-  function (req, res, next) {
+type Provider = "facebook" | "apple" | "google"
+
+module.exports.beforeSocialAuth = (provider: Provider) =>
+  function (req: Req, res: ArtsyResponse, next: NextFunction) {
     let options
 
     req.session.redirectTo = req.query["redirect-to"]
@@ -121,8 +140,8 @@ module.exports.beforeSocialAuth = provider =>
     passport.authenticate(provider, options)(req, res, next)
   }
 
-module.exports.afterSocialAuth = provider =>
-  function (req, res, next) {
+module.exports.afterSocialAuth = (provider: Provider) =>
+  function (req: Req, res: ArtsyResponse, next: NextFunction) {
     if (req.query.denied) {
       return next(new Error(`${provider} denied`))
     }
@@ -131,8 +150,8 @@ module.exports.afterSocialAuth = provider =>
     const providerName = capitalize(provider)
     const linkingAccount = req.user != null
 
-    passport.authenticate(provider)(req, res, function (err) {
-      let msg
+    passport.authenticate(provider)(req, res, function (err: any) {
+      let msg: string
       if (
         err &&
         err.response &&
@@ -179,7 +198,11 @@ module.exports.afterSocialAuth = provider =>
     })
   }
 
-module.exports.ensureLoggedInOnAfterSignupPage = function (req, res, next) {
+module.exports.ensureLoggedInOnAfterSignupPage = function (
+  req: Req,
+  res: ArtsyResponse,
+  next: NextFunction
+) {
   const toLogin = `${opts.loginPagePath}?redirect-to=${opts.afterSignupPagePath}`
   if (req.user == null) {
     res.redirect(toLogin)
@@ -187,9 +210,18 @@ module.exports.ensureLoggedInOnAfterSignupPage = function (req, res, next) {
   next()
 }
 
-module.exports.onError = (err, req, res, next) => next(err)
+module.exports.onError = (
+  err: Error,
+  _req: Req,
+  _res: ArtsyResponse,
+  next: NextFunction
+) => next(err)
 
-module.exports.ssoAndRedirectBack = function (req, res, _next) {
+module.exports.ssoAndRedirectBack = function (
+  req: Req,
+  res: ArtsyResponse,
+  _next: NextFunction
+) {
   if (req.xhr) {
     return res.send({
       success: true,
@@ -200,7 +232,7 @@ module.exports.ssoAndRedirectBack = function (req, res, _next) {
   let parsed = parse(redirectBack(req))
 
   if (!parsed.hostname) {
-    parsed = parse(resolve(opts.APP_URL, parsed.path))
+    parsed = parse(resolve(opts.APP_URL, parsed.path || ""))
   }
 
   const domain =
