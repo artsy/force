@@ -47,7 +47,7 @@ export const ConversationMessageBubble: FC<ConversationMessageBubbleProps> = ({
     isValidElement(children) && children?.type === ConversationMessageImage
 
   return (
-    <Flex width={["80%", "68%"]} alignSelf={bubbleDirection}>
+    <Flex maxWidth="85%" alignSelf={bubbleDirection}>
       {/* Avatar section */}
       {!simplified && !fromViewer && (
         <Flex
