@@ -71,8 +71,8 @@ export const Notifications: React.FC<NotificationsProps> = ({
     <NotificationsContextProvider id={null} mode={rest.mode}>
       <Box>
         {rest.mode === "page" && !isMobile ? (
-          <GridColumns gridColumnGap={0}>
-            <Column span={4} borderRight="1px solid #ddd">
+          <GridColumns>
+            <Column span={3} borderRight="1px solid #ddd" minWidth={340}>
               <Flex height={height} flexDirection={"column"}>
                 <NofiticationsTabs {...rest}>
                   <Tab name="All">
@@ -91,7 +91,7 @@ export const Notifications: React.FC<NotificationsProps> = ({
               </Flex>
             </Column>
 
-            <Column span={8}>
+            <Column span={9}>
               <Flex flexDirection={"column"} height={height} overflow="auto">
                 <NotificationQueryRenderer />
               </Flex>
