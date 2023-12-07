@@ -9,7 +9,6 @@ import { useAuthDialog } from "Components/AuthDialog"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { useSystemContext } from "System/SystemContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { useFeatureFlag } from "System/useFeatureFlag"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -56,14 +55,6 @@ describe("AlertProvider", () => {
       isLoggedIn: true,
       relayEnvironment: relayEnv,
     }))
-    ;(useFeatureFlag as jest.Mock).mockImplementation(flag => {
-      switch (flag) {
-        case "onyx_artwork_alert_modal_v2_filters":
-          return true
-        case "onyx_saved_searches_suggested_filters":
-          return false
-      }
-    })
   })
 
   afterEach(() => {
@@ -84,26 +75,16 @@ describe("AlertProvider", () => {
     // open modal, defaults to details step
     screen.getByTestId("createAlert").click()
 
-    const mockedPreviewResolver = {
-      Viewer: () => ({
-        previewSavedSearch: {
-          labels: [
-            {
-              displayValue: "Andy Warhol",
-              field: "artistIDs",
-              value: "artist-id",
-            },
-          ],
-        },
-      }),
-    }
-
+    // for notification channels
     mockResolveLastOperation(mockedNotificationPreferencesResolver)
+    // for AlertProvider preview
+    mockResolveLastOperation(mockedPreviewResolver)
+    // for SuggestedFilters
     mockResolveLastOperation(mockedPreviewResolver)
 
     await flushPromiseQueue()
 
-    expect(screen.getByText("Add Filters:")).toBeInTheDocument()
+    expect(screen.getByText("Add Filters")).toBeInTheDocument()
     expect(screen.getByText("Andy Warhol")).toBeInTheDocument()
 
     // transition to filters step
@@ -118,7 +99,7 @@ describe("AlertProvider", () => {
     // transition back to details step
     screen.getByTestId("setFilters").click()
 
-    expect(screen.getByText("Add Filters:")).toBeInTheDocument()
+    expect(screen.getByText("Add Filters")).toBeInTheDocument()
 
     // submit form
     screen.getByTestId("submitCreateAlert").click()
@@ -136,6 +117,28 @@ describe("AlertProvider", () => {
     ).toBeInTheDocument()
   })
 })
+
+const mockedPreviewResolver = {
+  Viewer: () => ({
+    previewSavedSearch: {
+      labels: [
+        {
+          displayValue: "Andy Warhol",
+          field: "artistIDs",
+          value: "artist-id",
+        },
+      ],
+      suggestedFilters: [
+        {
+          displayValue: "Unique",
+          field: "attributionClass",
+          name: "Rarity",
+          value: "unique",
+        },
+      ],
+    },
+  }),
+}
 
 const mockedNotificationPreferencesResolver = {
   Viewer: () => ({
