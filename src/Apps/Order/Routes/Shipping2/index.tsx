@@ -114,16 +114,15 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const formValues = fulfillmentFormHelpers.values
   const previousFormValues = usePrevious(formValues)
 
+  /* Go back to fulfillment details stage if the user edits the address */
   useEffect(() => {
     if (
-      state.stage === "fulfillment_details" ||
-      !orderContext.parsedOrderData.savedFulfillmentDetails ||
-      matchAddressFields(formValues.attributes, previousFormValues.attributes)
+      state.stage === "shipping_quotes" &&
+      orderContext.parsedOrderData.savedFulfillmentDetails &&
+      !matchAddressFields(formValues.attributes, previousFormValues.attributes)
     ) {
-      return
+      actionDispatchers.setStage(dispatch, "fulfillment_details")
     }
-
-    actionDispatchers.setStage(dispatch, "fulfillment_details")
   }, [
     formValues.attributes,
     orderContext.helpers.fulfillmentDetails.values,
@@ -134,18 +133,25 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 
   // /**
   //  * Reset fulfillment details on load if artsy shipping to refresh shipping
-  //  * quotes. See EMI-1534.
+  //  * quotes.
   //  */
-  // useEffect(() => {
-  //   if (
-  //     parsedOrderData.savedFulfillmentData?.fulfillmentType ===
-  //       FulfillmentType.SHIP &&
-  //     isArtsyShipping
-  //   ) {
-  //     handleSubmitFulfillmentDetails(initialValues.fulfillmentDetails)
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+  useEffect(() => {
+    if (
+      parsedOrderData.savedFulfillmentDetails?.fulfillmentType ===
+        FulfillmentType.SHIP &&
+      isArtsyShipping
+    ) {
+      actionDispatchers.setSelectedShippingQuote(dispatch, null)
+      actionDispatchers.setStage(dispatch, "fulfillment_details")
+      handleSubmitFulfillmentDetailsFactory({ skipUserAddressChecks: true })({
+        fulfillmentType: FulfillmentType.SHIP,
+        attributes: {
+          ...parsedOrderData.savedFulfillmentDetails.fulfillmentDetails,
+        } as ShipValues["attributes"],
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   const orderTracking = useOrderTracking()
 
@@ -314,8 +320,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     ]
   )
 
-  const handleSubmitFulfillmentDetails = useCallback(
-    async (
+  const handleSubmitFulfillmentDetailsFactory = useCallback(
+    ({
+      skipUserAddressChecks = false,
+    }: { skipUserAddressChecks?: boolean } = {}) => async (
       formValues: FulfillmentValues,
       formikHelpers?: FormikHelpers<FulfillmentValues>
     ) => {
@@ -375,7 +383,10 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           return
         }
 
-        if (formValues.fulfillmentType === FulfillmentType.SHIP) {
+        if (
+          formValues.fulfillmentType === FulfillmentType.SHIP &&
+          !skipUserAddressChecks
+        ) {
           // Include existing address if it is an update
           await handleUserAddressUpdates({
             newValues: formValues.attributes,
@@ -385,7 +396,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
             },
           })
         }
-
         if (requiresArtsyShipping) {
           actionDispatchers.setStage(dispatch, "shipping_quotes")
           return
@@ -529,10 +539,8 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     useDefaultArtsyShippingQuote,
   ])
 
-  // handleSubmitFulfillmentDetails with formik + address verification
-  const submitFulfillmentDetailsFormik: () => ReturnType<
-    typeof handleSubmitFulfillmentDetails
-  > = fulfillmentFormHelpers.submitForm
+  // handleSubmitFulfillmentDetailsFactory result, passed back from formik
+  const submitFulfillmentDetailsFormik = fulfillmentFormHelpers.submitForm
 
   const onContinueButtonPressed = useCallback(async () => {
     if (state.stage === "fulfillment_details") {
@@ -581,7 +589,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
                 <FulfillmentDetailsFragmentContainer
                   me={props.me}
                   order={props.order}
-                  onSubmit={handleSubmitFulfillmentDetails}
+                  onSubmit={handleSubmitFulfillmentDetailsFactory()}
                 />
 
                 {/* SHIPPING Quotes */}
@@ -785,6 +793,7 @@ const shippingStateReducer = (state: State, action: Action): State => {
     case "SET_NEW_SAVED_ADDRESS_ID":
       return { ...state, newSavedAddressId: action.payload }
     case "SET_STAGE":
+      logger.log("SET_STAGE", action.payload)
       return { ...state, stage: action.payload }
     default:
       return state

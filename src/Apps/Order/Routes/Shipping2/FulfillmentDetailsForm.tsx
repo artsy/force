@@ -358,6 +358,7 @@ const FulfillmentDetailsFormLayout = (
                     country: (values.attributes as ShipValues["attributes"])
                       .country,
                   }}
+                  flip={false}
                   disableAutocomplete={values.attributes.region === "AK"}
                   tabIndex={tabbableFormValue("new_address")}
                   name="attributes.addressLine1"

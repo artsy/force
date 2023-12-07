@@ -13,6 +13,7 @@ import {
   UntouchedBuyOrderWithShippingQuotes,
   UntouchedBuyOrderWithArtsyShippingInternationalFromUS,
   UntouchedBuyOrderWithArtsyShippingInternationalFromGermany,
+  BuyOrderWithArtaShippingDetails,
 } from "Apps/__tests__/Fixtures/Order"
 import {
   settingOrderShipmentSuccess,
@@ -1834,9 +1835,52 @@ describe("Shipping", () => {
       })
     })
 
-    // TODO: EMI-1526 https://artsyproduct.atlassian.net/browse/EMI-1526
-    describe.skip("with saved addresses", () => {
-      describe("Artsy shipping international only", () => {
+    describe("with saved addresses", () => {
+      it("re-saves an already-saved shipping address on load to refresh shipping quotes without saving address", async () => {
+        const { mockResolveLastOperation } = renderWithRelay(
+          {
+            CommerceOrder: () => BuyOrderWithArtaShippingDetails,
+            Me: () => meWithoutAddress,
+          },
+          undefined,
+          relayEnv
+        )
+
+        await waitFor(() => {
+          const shippingBox = screen.getByTestId("ShippingQuotes_collapse")
+          expect(shippingBox).toHaveStyle({ height: "0px" })
+        })
+
+        const fulfillmentOperation = await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderArtaShipmentSuccess.commerceSetShipping
+        )
+        expect(fulfillmentOperation.operationName).toBe(
+          "useSaveFulfillmentDetailsMutation"
+        )
+        expect(fulfillmentOperation.operationVariables).toEqual({
+          input: {
+            fulfillmentType: "SHIP_ARTA",
+            id: "2939023",
+            phoneNumber: "120938120983",
+            shipping: {
+              addressLine1: "401 Broadway",
+              addressLine2: "Suite 25",
+              city: "New York",
+              country: "US",
+              name: "Joelle Van Dyne",
+              phoneNumber: "",
+              postalCode: "10013",
+              region: "NY",
+            },
+          },
+        })
+
+        await flushPromiseQueue()
+        expect(getAllPendingOperationNames(relayEnv)).toEqual([])
+      })
+      // TODO: EMI-1526 https://artsyproduct.atlassian.net/browse/EMI-1526
+      describe.skip("Artsy shipping international only", () => {
         describe("with artwork located in the US", () => {
           it.skip("sets shipping on order if the collector is in the EU", async () => {
             const meWithDefaultAddressInSpain = cloneDeep(
@@ -1967,8 +2011,8 @@ describe("Shipping", () => {
           })
         })
       })
-
-      describe("Artsy shipping domestic only", () => {
+      // TODO: EMI-1526 https://artsyproduct.atlassian.net/browse/EMI-1526
+      describe.skip("Artsy shipping domestic only", () => {
         describe("with artwork located in Germany", () => {
           it.skip("sets shipping on order if the collector is in Germany", async () => {
             const meWithDefaultAddressInSpain = cloneDeep(
