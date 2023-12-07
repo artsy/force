@@ -312,36 +312,36 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
           return null
         }
 
-        if (props?.me?.savedSearch && props?.viewer) {
+        if (!props?.me?.savedSearch || !props?.viewer) {
           return (
-            <AlertProvider
-              initialCriteria={getAllowedSearchCriteria(
-                (props.me.savedSearch as unknown) as SearchCriteriaAttributes
-              )}
-              searchCriteriaID={props.me.savedSearch.internalID}
-              initialSettings={{
-                name: props.me.savedSearch.userAlertSettings.name ?? "",
-                push: props.me.savedSearch.userAlertSettings.push,
-                email: props.me.savedSearch.userAlertSettings.email,
-                details: props?.me?.savedSearch.userAlertSettings.details ?? "",
-              }}
-              isEditMode
-            >
-              <NewSavedSearchAlertEditFormFragmentContainer
-                savedSearch={props.me.savedSearch}
-                viewer={props.viewer}
-                onDeleteClick={onDeleteClick}
-                onCompleted={onCompleted}
-                onCloseClick={onCloseClick}
-              />
-            </AlertProvider>
+            <Box flex={1} p={4}>
+              <SavedSearchAlertEditFormPlaceholder />
+            </Box>
           )
         }
 
         return (
-          <Box flex={1} p={4}>
-            <SavedSearchAlertEditFormPlaceholder />
-          </Box>
+          <AlertProvider
+            initialCriteria={getAllowedSearchCriteria(
+              (props.me.savedSearch as unknown) as SearchCriteriaAttributes
+            )}
+            searchCriteriaID={props.me.savedSearch.internalID}
+            initialSettings={{
+              name: props.me.savedSearch.userAlertSettings.name ?? "",
+              push: props.me.savedSearch.userAlertSettings.push,
+              email: props.me.savedSearch.userAlertSettings.email,
+              details: props?.me?.savedSearch.userAlertSettings.details ?? "",
+            }}
+            isEditMode
+          >
+            <NewSavedSearchAlertEditFormFragmentContainer
+              savedSearch={props.me.savedSearch}
+              viewer={props.viewer}
+              onDeleteClick={onDeleteClick}
+              onCompleted={onCompleted}
+              onCloseClick={onCloseClick}
+            />
+          </AlertProvider>
         )
       }}
     />
