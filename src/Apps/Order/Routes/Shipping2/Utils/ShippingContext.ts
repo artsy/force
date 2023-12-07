@@ -1,7 +1,7 @@
 import { createContext, useContext } from "react"
 import { FormikProps } from "formik"
-import { FulfillmentValues } from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
 import { ParsedOrderData } from "Apps/Order/Routes/Shipping2/Hooks/useParseOrderData"
+import { FulfillmentValues } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 
 type FulfillmentHelpers = Pick<
   FormikProps<FulfillmentValues>,

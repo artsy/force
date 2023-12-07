@@ -267,4 +267,3 @@ const getInitialValues = (
     attributes: initialFulfillmentValues,
   }
 }
-export { FulfillmentValues }

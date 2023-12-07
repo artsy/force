@@ -35,11 +35,12 @@ type SavedFulfillmentData =
       selectedSavedAddressId: string | null
     }
   | null
+
 type SavedShippingQuoteData = {
   selectedShippingQuoteId: string | null
   shippingQuotes: Array<{ id: string; isSelected: boolean }>
 } | null
-// Compute and memoize data from the saved order.
+
 export const useParseOrderData = (
   order: ShippingProps["order"],
   me: ShippingProps["me"]
@@ -53,7 +54,7 @@ export const useParseOrderData = (
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const artworkCountry = firstArtwork?.shippingCountry!
-  const savedFulfillmentData = useSavedFulfillmentData(order, me)
+  const savedFulfillmentDetails = useSavedFulfillmentData(order, me)
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const shipsFrom = firstArtwork.shippingCountry!
@@ -99,7 +100,7 @@ export const useParseOrderData = (
     shippingQuotes.find(quote => quote.isSelected)?.id ?? null
 
   return {
-    savedFulfillmentDetails: savedFulfillmentData,
+    savedFulfillmentDetails,
     savedShippingQuoteData: {
       selectedShippingQuoteId,
       shippingQuotes,
@@ -144,6 +145,7 @@ const useSavedFulfillmentData = (
               matchAddressFields(node, fulfillmentDetails)
             )?.internalID) ??
           null
+
         return {
           fulfillmentType: FulfillmentType.SHIP,
           isArtsyShipping: fulfillmentTypeName === "CommerceShipArta",

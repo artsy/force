@@ -313,6 +313,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
       updateSavedAddress,
     ]
   )
+
   const handleSubmitFulfillmentDetails = useCallback(
     async (
       formValues: FulfillmentValues,
@@ -760,6 +761,7 @@ export const ShippingFragmentContainer = createFragmentContainer(
     `,
   }
 )
+
 const ArtaErrorDialogMessage = () => (
   <>
     There was a problem getting shipping quotes. <br />

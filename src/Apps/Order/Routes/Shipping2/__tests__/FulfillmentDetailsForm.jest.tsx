@@ -99,6 +99,7 @@ describe("FulfillmentDetailsForm", () => {
         FulfillmentType.SHIP,
       ]
     })
+
     it("shows pickup option", async () => {
       renderTree(testProps)
 
@@ -108,6 +109,7 @@ describe("FulfillmentDetailsForm", () => {
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       ).toBeVisible()
     })
+
     it("has name and phone number fields", async () => {
       renderTree(testProps)
       await userEvent.click(
@@ -153,6 +155,7 @@ describe("FulfillmentDetailsForm", () => {
         )
       })
     })
+
     it("does not submit an invalid form", async () => {
       renderTree(testProps)
       await userEvent.click(
@@ -165,8 +168,10 @@ describe("FulfillmentDetailsForm", () => {
       await screen.findByText("Phone number is required")
       expect(mockOnSubmit).not.toHaveBeenCalled()
     })
+
     it.todo("user can select shipping and fill out form")
   })
+
   describe("Pickup not available", () => {
     beforeEach(() => {
       testProps.availableFulfillmentTypes = [FulfillmentType.SHIP]
@@ -196,6 +201,7 @@ describe("FulfillmentDetailsForm", () => {
           },
         } as any
       })
+
       it("shows the saved addresses", async () => {
         renderTree(testProps)
         // Note - SavedAddresses is mocked out.
@@ -209,6 +215,7 @@ describe("FulfillmentDetailsForm", () => {
         })
       })
     })
+
     it("does not show delivery/pickup selector", async () => {
       renderTree(testProps)
 
@@ -218,6 +225,7 @@ describe("FulfillmentDetailsForm", () => {
       beforeEach(() => {
         ;(testProps.initialValues as ShipValues).attributes.country = "US"
       })
+
       it("shows all address fields, including US-specific fields", async () => {
         renderTree(testProps)
 
@@ -321,6 +329,7 @@ describe("FulfillmentDetailsForm", () => {
         featureName => featureName === "address_autocomplete_us"
       )
     })
+
     it("tracks when a user selects an address and the first time they edit it", async () => {
       renderTree(testProps)
       await waitFor(async () => {
