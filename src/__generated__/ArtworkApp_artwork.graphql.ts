@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<b94c48db6e3483f259ef586265793a58>>
+ * @generated SignedSource<<91368d0cce6cd2e48913baa45e9c02a0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,6 +14,13 @@ import { FragmentRefs } from "relay-runtime";
 export type ArtworkApp_artwork$data = {
   readonly artist: {
     readonly " $fragmentSpreads": FragmentRefs<"ArtistInfo_artist">;
+  } | null | undefined;
+  readonly artistSeriesConnection: {
+    readonly edges: ReadonlyArray<{
+      readonly node: {
+        readonly slug: string;
+      } | null | undefined;
+    } | null | undefined> | null | undefined;
   } | null | undefined;
   readonly artists: ReadonlyArray<{
     readonly id: string;
@@ -72,6 +79,9 @@ v1 = {
   "storageKey": null
 },
 v2 = [
+  (v1/*: any*/)
+],
+v3 = [
   {
     "alias": null,
     "args": null,
@@ -80,7 +90,7 @@ v2 = [
     "storageKey": null
   }
 ],
-v3 = {
+v4 = {
   "args": null,
   "kind": "FragmentSpread",
   "name": "ArtistInfo_artist"
@@ -102,6 +112,44 @@ return {
         (v0/*: any*/)
       ],
       "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "first",
+          "value": 20
+        }
+      ],
+      "concreteType": "ArtistSeriesConnection",
+      "kind": "LinkedField",
+      "name": "artistSeriesConnection",
+      "plural": false,
+      "selections": [
+        {
+          "alias": null,
+          "args": null,
+          "concreteType": "ArtistSeriesEdge",
+          "kind": "LinkedField",
+          "name": "edges",
+          "plural": true,
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "concreteType": "ArtistSeries",
+              "kind": "LinkedField",
+              "name": "node",
+              "plural": false,
+              "selections": (v2/*: any*/),
+              "storageKey": null
+            }
+          ],
+          "storageKey": null
+        }
+      ],
+      "storageKey": "artistSeriesConnection(first:20)"
     },
     (v1/*: any*/),
     (v0/*: any*/),
@@ -141,9 +189,7 @@ return {
           "kind": "LinkedField",
           "name": "filterGene",
           "plural": false,
-          "selections": [
-            (v1/*: any*/)
-          ],
+          "selections": (v2/*: any*/),
           "storageKey": null
         }
       ],
@@ -166,13 +212,13 @@ return {
       "selections": [
         {
           "kind": "InlineFragment",
-          "selections": (v2/*: any*/),
+          "selections": (v3/*: any*/),
           "type": "PriceRange",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v2/*: any*/),
+          "selections": (v3/*: any*/),
           "type": "Money",
           "abstractKey": null
         }
@@ -244,7 +290,7 @@ return {
         },
         (v0/*: any*/),
         (v1/*: any*/),
-        (v3/*: any*/)
+        (v4/*: any*/)
       ],
       "storageKey": null
     },
@@ -256,7 +302,7 @@ return {
       "name": "artist",
       "plural": false,
       "selections": [
-        (v3/*: any*/)
+        (v4/*: any*/)
       ],
       "storageKey": null
     },
@@ -296,6 +342,6 @@ return {
 };
 })();
 
-(node as any).hash = "9e413607b7545cf07e2c756f804b19ef";
+(node as any).hash = "55c58ba69ba16546f64f51622d5ce3b4";
 
 export default node;

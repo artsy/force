@@ -42,6 +42,8 @@ import { ArtworkAuctionCreateAlertHeaderFragmentContainer } from "Apps/Artwork/C
 import { compact } from "lodash"
 import { AlertProvider } from "Components/Alert/AlertProvider"
 import { FullBleedBanner } from "Components/FullBleedBanner"
+import { extractNodes } from "Utils/extractNodes"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -300,7 +302,14 @@ export const ArtworkApp: React.FC<Props> = props => {
 
 const WrappedArtworkApp: React.FC<Props> = props => {
   const {
-    artwork: { artists, attributionClass, internalID, mediumType, sale },
+    artwork: {
+      artists,
+      artistSeriesConnection,
+      attributionClass,
+      internalID,
+      mediumType,
+      sale,
+    },
   } = props
 
   const {
@@ -314,12 +323,23 @@ const WrappedArtworkApp: React.FC<Props> = props => {
   const referrer = state && state.previousHref
   const { isComplete } = useRouteComplete()
 
+  const isArtistSeriesFilterEnabled = useFeatureFlag(
+    "onyx_enable-artist-series-filter"
+  )
+
   const websocketEnabled = !!sale?.extendedBiddingIntervalMinutes
 
   const initialAlertCriteria = {
     attributionClass: compact([attributionClass?.internalID]),
     artistIDs: compact(artists).map(artist => artist.internalID),
     additionalGeneIDs: compact([mediumType?.filterGene?.slug as string]),
+  }
+
+  if (isArtistSeriesFilterEnabled) {
+    const artistSeriesSlugs = compact(
+      extractNodes(artistSeriesConnection).map(node => node.slug)
+    )
+    initialAlertCriteria["artistSeriesIDs"] = artistSeriesSlugs
   }
 
   return (
@@ -357,6 +377,13 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
       fragment ArtworkApp_artwork on Artwork {
         attributionClass {
           internalID
+        }
+        artistSeriesConnection(first: 20) {
+          edges {
+            node {
+              slug
+            }
+          }
         }
         slug
         internalID
