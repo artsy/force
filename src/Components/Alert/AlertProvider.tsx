@@ -197,7 +197,6 @@ export const AlertProvider: FC<AlertProviderProps> = ({
         ) {
           viewer {
             previewSavedSearch(attributes: $attributes) {
-              displayName
               labels {
                 displayValue
                 field
