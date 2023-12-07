@@ -30,7 +30,7 @@ describe("SuggestedFilters", () => {
 
     await flushPromiseQueue()
 
-    expect(screen.getByText("Suggested Filters")).toBeInTheDocument()
+    expect(screen.getByText("Add Filters")).toBeInTheDocument()
 
     mockSuggestedFilters.forEach(filter => {
       expect(screen.getByText(filter.displayValue)).toBeInTheDocument()
@@ -50,7 +50,7 @@ describe("SuggestedFilters", () => {
 
     await flushPromiseQueue()
 
-    expect(() => screen.getByText("Suggested Filters")).toThrow()
+    expect(() => screen.getByText("Add Filters")).toThrow()
 
     mockSuggestedFilters.forEach(filter => {
       expect(() => screen.getByText(filter.displayValue)).toThrow()

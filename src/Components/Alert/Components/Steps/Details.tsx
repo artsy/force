@@ -75,7 +75,7 @@ export const Details: FC = () => {
               <Join separator={<Spacer y={4} />}>
                 <Box>
                   <Text variant="sm-display" mb={1}>
-                    Filters
+                    We'll send you alerts for
                   </Text>
                   <Flex flexWrap="wrap" gap={1}>
                     <CriteriaPills />
