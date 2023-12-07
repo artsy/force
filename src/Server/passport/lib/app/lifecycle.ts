@@ -145,6 +145,7 @@ module.exports.afterSocialAuth = (provider: Provider) =>
     if (req.query.denied) {
       return next(new Error(`${provider} denied`))
     }
+
     // Determine if we're linking the account and handle any Gravity errors
     // that we can do a better job explaining and redirecting for.
     const providerName = capitalize(provider)
@@ -155,36 +156,30 @@ module.exports.afterSocialAuth = (provider: Provider) =>
         err?.response?.body?.error === "User Already Exists" &&
         req.socialProfileEmail
       ) {
-        const msg =
-          `A user with the email address ${req.socialProfileEmail} already ` +
-          "exists. Log in to Artsy via email and password and link " +
-          `${providerName} in your settings instead.`
-        return res.redirect(opts.loginPagePath + "?error=" + msg)
+        const message = `A user with the email address ${req.socialProfileEmail} already exists. Log in to Artsy via email and password and link ${providerName} in your settings instead.`
+        return res.redirect(`${opts.loginPagePath}?error=${message}`)
       }
 
       if (err?.response?.body?.error === "User Already Exists") {
-        const msg =
-          `${providerName} account previously linked to Artsy. ` +
-          "Log in to your Artsy account via email and password and link " +
-          `${providerName} in your settings instead.`
-        return res.redirect(opts.loginPagePath + "?error=" + msg)
+        const message = `${providerName} account previously linked to Artsy. Log in to your Artsy account via email and password and link ${providerName} in your settings instead.`
+        return res.redirect(`${opts.loginPagePath}?error=${message}`)
       }
 
       if (err?.response?.body?.error === "Another Account Already Linked") {
-        const msg = `${providerName} account previously linked to Artsy.`
-        return res.redirect(`${opts.settingsPagePath}?error=${msg}`)
+        const message = `${providerName} account previously linked to Artsy.`
+        return res.redirect(`${opts.settingsPagePath}?error=${message}`)
       }
 
       if (err?.message?.match("Unauthorized source IP address")) {
-        const msg = `Your IP address was blocked by ${providerName}.`
-        return res.redirect(opts.loginPagePath + "?error=" + msg)
+        const message = `Your IP address was blocked by ${providerName}.`
+        return res.redirect(`${opts.loginPagePath}?error=${message}`)
       }
 
       if (err !== null) {
-        const msg =
+        const message =
           err.message ||
           (typeof err.toString === "function" ? err.toString() : undefined)
-        return res.redirect(opts.loginPagePath + "?error=" + msg)
+        return res.redirect(`${opts.loginPagePath}?error=${message}`)
       }
 
       if (linkingAccount) {
