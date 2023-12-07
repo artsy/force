@@ -168,7 +168,7 @@ describe("lifecycle", function () {
       )
       lifecycle.afterSocialAuth("facebook")(req, res, next)
       expect(res.redirect.args[0][0]).toEqual(
-        "/login?error=Your IP address was blocked by Facebook."
+        "/login?error_code=IP_BLOCKED&provider=facebook"
       )
     })
 
@@ -178,7 +178,7 @@ describe("lifecycle", function () {
       )
       lifecycle.afterSocialAuth("facebook")(req, res, next)
       expect(res.redirect.args[0][0]).toEqual(
-        "/login?error=Facebook authorization failed"
+        "/login?error_code=UNKNOWN&error=Facebook authorization failed"
       )
     })
   })

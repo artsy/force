@@ -20,17 +20,25 @@ const AuthenticationInlineDialogContents: FC = () => {
     match: { location },
   } = useRouter()
 
-  // Errors might come back from 3rd party authentication
-  // as a string in an `error` query param, so display them if present.
+  // Errors might come back from 3rd party authentication so display them if present.
   useEffect(() => {
-    if (!location.query.error) return
+    if (!location.query.error_code) return
 
-    sendToast({
-      message: location.query.error,
-      variant: "error",
-      ttl: Infinity,
-    })
-  }, [location.query.error, sendToast])
+    const message = (
+      ERROR_CODES[location.query.error_code] || ERROR_CODES.UNKNOWN
+    ).replace(/{provider}/g, PROVIDERS[location.query.provider] || "—")
+
+    if (location.query.error) {
+      console.error(location.query.error)
+    }
+
+    sendToast({ message, variant: "error", ttl: Infinity })
+  }, [
+    location.query.error,
+    location.query.error_code,
+    location.query.provider,
+    sendToast,
+  ])
 
   return (
     <>
@@ -82,4 +90,18 @@ export const AuthenticationInlineDialog: FC<AuthenticationInlineDialogProps> = (
       <AuthenticationInlineDialogContents />
     </AuthenticationInlineDialogProvider>
   )
+}
+
+const ERROR_CODES = {
+  ALREADY_EXISTS: `A user with this email address already exists. Log in to Artsy via email and password and link {provider} in your settings instead.`,
+  PREVIOUSLY_LINKED_SETTINGS: `{provider} account previously linked to Artsy. Log in to your Artsy account via email and password and link {provider} in your settings instead.`,
+  PREVIOUSLY_LINKED: `{provider} account previously linked to Artsy.`,
+  IP_BLOCKED: "Your IP address was blocked by {provider}.",
+  UNKNOWN: "An unknown error occurred. Please try again.",
+}
+
+const PROVIDERS = {
+  facebook: "Facebook",
+  google: "Google",
+  apple: "Apple",
 }
