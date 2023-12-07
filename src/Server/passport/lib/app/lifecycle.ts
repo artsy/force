@@ -151,50 +151,47 @@ module.exports.afterSocialAuth = (provider: Provider) =>
     const linkingAccount = req.user != null
 
     passport.authenticate(provider)(req, res, function (err: any) {
-      let msg: string
       if (
-        err &&
-        err.response &&
-        err.response.body &&
-        err.response.body.error === "User Already Exists"
+        err?.response?.body?.error === "User Already Exists" &&
+        req.socialProfileEmail
       ) {
-        if (req.socialProfileEmail) {
-          msg =
-            `A user with the email address ${req.socialProfileEmail} already ` +
-            "exists. Log in to Artsy via email and password and link " +
-            `${providerName} in your settings instead.`
-        } else {
-          msg =
-            `${providerName} account previously linked to Artsy. ` +
-            "Log in to your Artsy account via email and password and link " +
-            `${providerName} in your settings instead.`
-        }
+        const msg =
+          `A user with the email address ${req.socialProfileEmail} already ` +
+          "exists. Log in to Artsy via email and password and link " +
+          `${providerName} in your settings instead.`
         return res.redirect(opts.loginPagePath + "?error=" + msg)
-      } else if (
-        err &&
-        err.response &&
-        err.response.body &&
-        err.response.body.error === "Another Account Already Linked"
-      ) {
-        msg = `${providerName} account previously linked to Artsy.`
+      }
+
+      if (err?.response?.body?.error === "User Already Exists") {
+        const msg =
+          `${providerName} account previously linked to Artsy. ` +
+          "Log in to your Artsy account via email and password and link " +
+          `${providerName} in your settings instead.`
+        return res.redirect(opts.loginPagePath + "?error=" + msg)
+      }
+
+      if (err?.response?.body?.error === "Another Account Already Linked") {
+        const msg = `${providerName} account previously linked to Artsy.`
         return res.redirect(`${opts.settingsPagePath}?error=${msg}`)
-      } else if (
-        err &&
-        err.message &&
-        err.message.match("Unauthorized source IP address")
-      ) {
-        msg = `Your IP address was blocked by ${providerName}.`
+      }
+
+      if (err?.message?.match("Unauthorized source IP address")) {
+        const msg = `Your IP address was blocked by ${providerName}.`
         return res.redirect(opts.loginPagePath + "?error=" + msg)
-      } else if (err != null) {
-        msg =
+      }
+
+      if (err !== null) {
+        const msg =
           err.message ||
           (typeof err.toString === "function" ? err.toString() : undefined)
         return res.redirect(opts.loginPagePath + "?error=" + msg)
-      } else if (linkingAccount) {
-        return res.redirect(opts.settingsPagePath)
-      } else {
-        return next()
       }
+
+      if (linkingAccount) {
+        return res.redirect(opts.settingsPagePath)
+      }
+
+      return next()
     })
   }
 
