@@ -296,7 +296,6 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
       `}
       variables={{
         id: editAlertEntity.id,
-        artistIds: editAlertEntity.artistIds,
       }}
       placeholder={
         <Box flex={1} p={4}>
