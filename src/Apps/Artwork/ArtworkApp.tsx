@@ -378,7 +378,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         attributionClass {
           internalID
         }
-        artistSeriesConnection(first: 20) {
+        artistSeriesConnection(first: 5) {
           edges {
             node {
               slug
