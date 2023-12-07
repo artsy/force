@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<9752312cfe6532a6ea304d31248f9c22>>
+ * @generated SignedSource<<7e9ed5578689a4fad30c1069b0ad763f>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,6 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type UserSearchCriteriaFrequency = "daily" | "instant" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type NewSavedSearchAlertEditForm_searchCriteria$data = {
   readonly acquireable: boolean | null | undefined;
@@ -32,7 +31,6 @@ export type NewSavedSearchAlertEditForm_searchCriteria$data = {
   readonly userAlertSettings: {
     readonly details: string | null | undefined;
     readonly email: boolean;
-    readonly frequency: UserSearchCriteriaFrequency;
     readonly name: string | null | undefined;
     readonly push: boolean;
   };
@@ -209,13 +207,6 @@ const node: ReaderFragment = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "frequency",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "details",
           "storageKey": null
         }
@@ -227,6 +218,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "056bed6a52a9e884465bbf601ba4ca4d";
+(node as any).hash = "e7f4e7a2d12753dfb192d9ac4a0b269d";
 
 export default node;

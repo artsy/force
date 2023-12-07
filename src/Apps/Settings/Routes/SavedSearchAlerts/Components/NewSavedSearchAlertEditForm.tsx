@@ -17,10 +17,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { Media } from "Utils/Responsive"
 import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
-import {
-  SavedSearchFrequency,
-  SearchCriteriaAttributes,
-} from "Components/SavedSearchAlert/types"
+import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
@@ -173,10 +170,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                 <Separator my={2} />
               </Box>
 
-              <NotificationPreferencesQueryRenderer
-                mode="edit"
-                frequency={state.settings.frequency}
-              />
+              <NotificationPreferencesQueryRenderer mode="edit" />
 
               <Media greaterThanOrEqual="md">
                 <Spacer y={6} />
@@ -273,7 +267,6 @@ export const NewSavedSearchAlertEditFormFragmentContainer = createFragmentContai
           name
           email
           push
-          frequency
           details
         }
       }
@@ -330,8 +323,6 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
                 name: props.me.savedSearch.userAlertSettings.name ?? "",
                 push: props.me.savedSearch.userAlertSettings.push,
                 email: props.me.savedSearch.userAlertSettings.email,
-                frequency: props.me.savedSearch.userAlertSettings
-                  .frequency as SavedSearchFrequency,
                 details: props?.me?.savedSearch.userAlertSettings.details ?? "",
               }}
               isEditMode

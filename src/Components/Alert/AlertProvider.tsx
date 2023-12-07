@@ -28,7 +28,6 @@ import {
 import { useToasts } from "@artsy/palette"
 import { t } from "i18next"
 import createLogger from "Utils/logger"
-import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { DEFAULT_METRIC, Metric } from "Utils/metrics"
 import { useFeatureFlag } from "System/useFeatureFlag"
 
@@ -68,7 +67,6 @@ export const AlertProvider: FC<AlertProviderProps> = ({
       details: initialSettings?.details ?? "",
       email: initialSettings?.email ?? true,
       push: initialSettings?.push ?? false,
-      frequency: initialSettings?.frequency ?? DEFAULT_FREQUENCY,
       name: initialSettings?.name ?? "",
     },
     criteria: getAllowedSearchCriteria(initialCriteria ?? {}),

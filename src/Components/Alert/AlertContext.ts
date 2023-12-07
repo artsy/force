@@ -2,7 +2,6 @@ import { createContext } from "react"
 
 import { CustomRange } from "Components/PriceRange/constants"
 import {
-  SavedSearchFrequency,
   SearchCriteriaAttributeKeys,
   SearchCriteriaAttributes,
 } from "Components/SavedSearchAlert/types"
@@ -15,7 +14,6 @@ export type Settings = {
   email: boolean
   name: string
   push: boolean
-  frequency?: SavedSearchFrequency
 }
 
 export type PreviewSavedSearch = NonNullable<
@@ -40,7 +38,6 @@ export const DEFAULT_STATE: State = {
     details: "",
     email: true,
     push: false,
-    frequency: "daily",
   },
   criteria: {},
   preview: null,

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<20ac881412e2554bca3f98ec079ff932>>
+ * @generated SignedSource<<3f62589a13a74921b3248be238f8b525>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,7 +10,6 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type UserSearchCriteriaFrequency = "daily" | "instant" | "%future added value";
 export type NewSavedSearchAlertEditFormQuery$variables = {
   id: string;
 };
@@ -37,7 +36,6 @@ export type NewSavedSearchAlertEditFormQuery$data = {
       readonly userAlertSettings: {
         readonly details: string | null | undefined;
         readonly email: boolean;
-        readonly frequency: UserSearchCriteriaFrequency;
         readonly name: string | null | undefined;
         readonly push: boolean;
       };
@@ -235,13 +233,6 @@ v2 = {
           "alias": null,
           "args": null,
           "kind": "ScalarField",
-          "name": "frequency",
-          "storageKey": null
-        },
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
           "name": "details",
           "storageKey": null
         }
@@ -355,12 +346,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "f9d3b029254cda9c344a63449735004c",
+    "cacheID": "2174b7718bb0957bce7a4d8758ae51b7",
     "id": null,
     "metadata": {},
     "name": "NewSavedSearchAlertEditFormQuery",
     "operationKind": "query",
-    "text": "query NewSavedSearchAlertEditFormQuery(\n  $id: ID!\n) {\n  viewer {\n    ...NewSavedSearchAlertEditForm_viewer\n  }\n  me {\n    savedSearch(id: $id) {\n      internalID\n      acquireable\n      additionalGeneIDs\n      artistIDs\n      atAuction\n      attributionClass\n      colors\n      dimensionRange\n      sizes\n      width\n      height\n      inquireableOnly\n      locationCities\n      majorPeriods\n      materialsTerms\n      offerable\n      partnerIDs\n      priceRange\n      userAlertSettings {\n        name\n        email\n        push\n        frequency\n        details\n      }\n    }\n    id\n  }\n}\n\nfragment NewSavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
+    "text": "query NewSavedSearchAlertEditFormQuery(\n  $id: ID!\n) {\n  viewer {\n    ...NewSavedSearchAlertEditForm_viewer\n  }\n  me {\n    savedSearch(id: $id) {\n      internalID\n      acquireable\n      additionalGeneIDs\n      artistIDs\n      atAuction\n      attributionClass\n      colors\n      dimensionRange\n      sizes\n      width\n      height\n      inquireableOnly\n      locationCities\n      majorPeriods\n      materialsTerms\n      offerable\n      partnerIDs\n      priceRange\n      userAlertSettings {\n        name\n        email\n        push\n        details\n      }\n    }\n    id\n  }\n}\n\nfragment NewSavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
   }
 };
 })();
