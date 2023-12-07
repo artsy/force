@@ -76,7 +76,9 @@ export const NotificationPreferences: FC<NotificationPreferencesProps> = ({
         <Text variant="sm-display">Push Notifications</Text>
 
         <Checkbox
-          onSelect={selected => setFieldValue("push", selected)}
+          onSelect={selected => {
+            setFieldValue("push", selected)
+          }}
           selected={values.push}
         />
       </Box>

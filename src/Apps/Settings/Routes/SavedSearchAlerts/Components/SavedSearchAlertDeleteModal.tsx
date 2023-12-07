@@ -1,7 +1,7 @@
 import { Text, Flex, ModalDialog, Button } from "@artsy/palette"
 import { useState } from "react"
 import createLogger from "Utils/logger"
-import { useDeleteSavedSearchAlert } from "../useDeleteSavedSearchAlert"
+import { useDeleteSavedSearchAlert } from "Apps/Settings/Routes/SavedSearchAlerts/useDeleteSavedSearchAlert"
 import { Media } from "Utils/Responsive"
 
 const logger = createLogger(

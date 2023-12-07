@@ -5,11 +5,15 @@ import { FiltersHeader } from "Components/Alert/Components/Steps/StepsHeader/Fil
 import { ConfirmationHeader } from "Components/Alert/Components/Steps/StepsHeader/ConfirmationHeader"
 
 export const ModalHeader: FC = () => {
-  const { current } = useAlertContext()
+  const { current, state } = useAlertContext()
 
   switch (current) {
     case "ALERT_DETAILS":
-      return <Text variant="lg">Create Alert</Text>
+      return (
+        <Text variant="lg">
+          {state.isEditMode ? "Edit Alert" : "Create Alert"}
+        </Text>
+      )
     case "ALERT_FILTERS":
       return <FiltersHeader />
     case "ALERT_CONFIRMATION":

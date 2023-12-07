@@ -12,7 +12,7 @@ const mockEditSavedSearchAlert = jest.fn()
 
 jest.unmock("react-relay")
 jest.mock("System/useSystemContext")
-jest.mock("../../useEditSavedSearchAlert", () => ({
+jest.mock("Components/Alert/Hooks/useEditSavedSearchAlert", () => ({
   useEditSavedSearchAlert: () => ({
     submitMutation: mockEditSavedSearchAlert,
   }),
