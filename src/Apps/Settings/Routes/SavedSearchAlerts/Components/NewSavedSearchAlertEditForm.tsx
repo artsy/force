@@ -274,19 +274,6 @@ export const NewSavedSearchAlertEditFormFragmentContainer = createFragmentContai
   }
 )
 
-const SAVED_SEARCH_ALERT_EDIT_FORM_QUERY = graphql`
-  query NewSavedSearchAlertEditFormQuery($id: ID!) {
-    viewer {
-      ...NewSavedSearchAlertEditForm_viewer
-    }
-    me {
-      savedSearch(id: $id) {
-        ...NewSavedSearchAlertEditForm_searchCriteria @relay(mask: false)
-      }
-    }
-  }
-`
-
 export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAlertEditFormQueryRendererProps> = ({
   editAlertEntity,
   onDeleteClick,
@@ -295,7 +282,18 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
 }) => {
   return (
     <SystemQueryRenderer<NewSavedSearchAlertEditFormQuery>
-      query={SAVED_SEARCH_ALERT_EDIT_FORM_QUERY}
+      query={graphql`
+        query NewSavedSearchAlertEditFormQuery($id: ID!) {
+          viewer {
+            ...NewSavedSearchAlertEditForm_viewer
+          }
+          me {
+            savedSearch(id: $id) {
+              ...NewSavedSearchAlertEditForm_searchCriteria @relay(mask: false)
+            }
+          }
+        }
+      `}
       variables={{
         id: editAlertEntity.id,
         artistIds: editAlertEntity.artistIds,
