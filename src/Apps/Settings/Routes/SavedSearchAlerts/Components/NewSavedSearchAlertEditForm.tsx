@@ -132,10 +132,6 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
           isSaveAlertButtonDisabled = false
         }
 
-        if (!values.email && !values.push) {
-          isSaveAlertButtonDisabled = true
-        }
-
         const transitionToFilters = () => {
           goToFilters()
         }
