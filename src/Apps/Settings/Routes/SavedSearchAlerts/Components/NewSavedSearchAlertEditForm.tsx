@@ -17,10 +17,7 @@ import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { Media } from "Utils/Responsive"
 import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
-import {
-  SavedSearchFrequency,
-  SearchCriteriaAttributes,
-} from "Components/SavedSearchAlert/types"
+import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
@@ -140,10 +137,6 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
           isSaveAlertButtonDisabled = false
         }
 
-        if (!values.email && !values.push) {
-          isSaveAlertButtonDisabled = true
-        }
-
         const transitionToFilters = () => {
           goToFilters()
         }
@@ -184,10 +177,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                 <Separator my={2} />
               </Box>
 
-              <NotificationPreferencesQueryRenderer
-                mode="edit"
-                frequency={state.settings.frequency}
-              />
+              <NotificationPreferencesQueryRenderer mode="edit" />
 
               <Media greaterThanOrEqual="md">
                 <Spacer y={6} />
@@ -284,26 +274,12 @@ export const NewSavedSearchAlertEditFormFragmentContainer = createFragmentContai
           name
           email
           push
-          frequency
           details
         }
       }
     `,
   }
 )
-
-const SAVED_SEARCH_ALERT_EDIT_FORM_QUERY = graphql`
-  query NewSavedSearchAlertEditFormQuery($id: ID!) {
-    viewer {
-      ...NewSavedSearchAlertEditForm_viewer
-    }
-    me {
-      savedSearch(id: $id) {
-        ...NewSavedSearchAlertEditForm_searchCriteria @relay(mask: false)
-      }
-    }
-  }
-`
 
 export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAlertEditFormQueryRendererProps> = ({
   editAlertEntity,
@@ -313,10 +289,20 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
 }) => {
   return (
     <SystemQueryRenderer<NewSavedSearchAlertEditFormQuery>
-      query={SAVED_SEARCH_ALERT_EDIT_FORM_QUERY}
+      query={graphql`
+        query NewSavedSearchAlertEditFormQuery($id: ID!) {
+          viewer {
+            ...NewSavedSearchAlertEditForm_viewer
+          }
+          me {
+            savedSearch(id: $id) {
+              ...NewSavedSearchAlertEditForm_searchCriteria @relay(mask: false)
+            }
+          }
+        }
+      `}
       variables={{
         id: editAlertEntity.id,
-        artistIds: editAlertEntity.artistIds,
       }}
       placeholder={
         <Box flex={1} p={4}>
@@ -330,38 +316,36 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
           return null
         }
 
-        if (props?.me?.savedSearch && props?.viewer) {
+        if (!props?.me?.savedSearch || !props?.viewer) {
           return (
-            <AlertProvider
-              initialCriteria={getAllowedSearchCriteria(
-                (props.me.savedSearch as unknown) as SearchCriteriaAttributes
-              )}
-              searchCriteriaID={props.me.savedSearch.internalID}
-              initialSettings={{
-                name: props.me.savedSearch.userAlertSettings.name ?? "",
-                push: props.me.savedSearch.userAlertSettings.push,
-                email: props.me.savedSearch.userAlertSettings.email,
-                frequency: props.me.savedSearch.userAlertSettings
-                  .frequency as SavedSearchFrequency,
-                details: props?.me?.savedSearch.userAlertSettings.details ?? "",
-              }}
-              isEditMode
-            >
-              <NewSavedSearchAlertEditFormFragmentContainer
-                savedSearch={props.me.savedSearch}
-                viewer={props.viewer}
-                onDeleteClick={onDeleteClick}
-                onCompleted={onCompleted}
-                onCloseClick={onCloseClick}
-              />
-            </AlertProvider>
+            <Box flex={1} p={4}>
+              <SavedSearchAlertEditFormPlaceholder />
+            </Box>
           )
         }
 
         return (
-          <Box flex={1} p={4}>
-            <SavedSearchAlertEditFormPlaceholder />
-          </Box>
+          <AlertProvider
+            initialCriteria={getAllowedSearchCriteria(
+              (props.me.savedSearch as unknown) as SearchCriteriaAttributes
+            )}
+            searchCriteriaID={props.me.savedSearch.internalID}
+            initialSettings={{
+              name: props.me.savedSearch.userAlertSettings.name ?? "",
+              push: props.me.savedSearch.userAlertSettings.push,
+              email: props.me.savedSearch.userAlertSettings.email,
+              details: props?.me?.savedSearch.userAlertSettings.details ?? "",
+            }}
+            isEditMode
+          >
+            <NewSavedSearchAlertEditFormFragmentContainer
+              savedSearch={props.me.savedSearch}
+              viewer={props.viewer}
+              onDeleteClick={onDeleteClick}
+              onCompleted={onCompleted}
+              onCloseClick={onCloseClick}
+            />
+          </AlertProvider>
         )
       }}
     />
