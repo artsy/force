@@ -87,7 +87,6 @@ describe("AlertProvider", () => {
     const mockedPreviewResolver = {
       Viewer: () => ({
         previewSavedSearch: {
-          displayName: "Andy Warhol",
           labels: [
             {
               displayValue: "Andy Warhol",

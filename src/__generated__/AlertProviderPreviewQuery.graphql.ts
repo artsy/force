@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5a15ab5b1b537c6cc2264aae2122d80c>>
+ * @generated SignedSource<<ff0293dbe42a3e60ff7bd110d371cc7e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -35,7 +35,6 @@ export type AlertProviderPreviewQuery$variables = {
 export type AlertProviderPreviewQuery$data = {
   readonly viewer: {
     readonly previewSavedSearch: {
-      readonly displayName: string;
       readonly labels: ReadonlyArray<{
         readonly displayValue: string;
         readonly field: string;
@@ -80,13 +79,6 @@ v1 = [
         "name": "previewSavedSearch",
         "plural": false,
         "selections": [
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "displayName",
-            "storageKey": null
-          },
           {
             "alias": null,
             "args": null,
@@ -144,16 +136,16 @@ return {
     "selections": (v1/*: any*/)
   },
   "params": {
-    "cacheID": "07c7e1e6af4c9f5a132c8efaad8c16d0",
+    "cacheID": "c37038e6282d87be348b8ee47f551631",
     "id": null,
     "metadata": {},
     "name": "AlertProviderPreviewQuery",
     "operationKind": "query",
-    "text": "query AlertProviderPreviewQuery(\n  $attributes: PreviewSavedSearchAttributes\n) {\n  viewer {\n    previewSavedSearch(attributes: $attributes) {\n      displayName\n      labels {\n        displayValue\n        field\n        value\n      }\n    }\n  }\n}\n"
+    "text": "query AlertProviderPreviewQuery(\n  $attributes: PreviewSavedSearchAttributes\n) {\n  viewer {\n    previewSavedSearch(attributes: $attributes) {\n      labels {\n        displayValue\n        field\n        value\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "77c3d48b13f44a144f4dcca7575a9701";
+(node as any).hash = "9b25c03b791f0b61fccd20104d20e3e3";
 
 export default node;
