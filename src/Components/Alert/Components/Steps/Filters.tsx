@@ -36,7 +36,7 @@ export const Filters: FC = () => {
             <WaysToBuy />
             <Color />
           </Join>
-          <Spacer y={6} />
+          <Spacer y={[4, 6]} />
         </Flex>
       </Box>
     </>

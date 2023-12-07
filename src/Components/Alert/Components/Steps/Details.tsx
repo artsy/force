@@ -21,12 +21,14 @@ import { useFeatureFlag } from "System/useFeatureFlag"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
+import { SavedSearchFrequency } from "Components/SavedSearchAlert/types"
 
 export interface AlertFormikValues {
   name: string
   push: boolean
   email: boolean
   details: string
+  frequency?: SavedSearchFrequency
 }
 
 export const Details: FC = () => {

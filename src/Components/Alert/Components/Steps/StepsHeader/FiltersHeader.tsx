@@ -4,7 +4,7 @@ import ChevronLeftIcon from "@artsy/icons/ChevronLeftIcon"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
 export const FiltersHeader: FC = () => {
-  const { goToDetails } = useAlertContext()
+  const { goToDetails, state } = useAlertContext()
 
   return (
     <Clickable
@@ -14,7 +14,9 @@ export const FiltersHeader: FC = () => {
     >
       <Flex justifyContent="flex-start" alignItems="center">
         <ChevronLeftIcon />
-        <Text variant="sm">Create Alert</Text>
+        <Text variant="sm">
+          {state.isEditMode ? "Edit Alert" : "Create Alert"}
+        </Text>
       </Flex>
     </Clickable>
   )

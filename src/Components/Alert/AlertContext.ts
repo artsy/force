@@ -9,7 +9,7 @@ import {
 import { AlertProviderPreviewQuery } from "__generated__/AlertProviderPreviewQuery.graphql"
 import { DEFAULT_METRIC, Metric } from "Utils/metrics"
 
-type Settings = {
+export type Settings = {
   details: string
   email: boolean
   name: string
@@ -27,6 +27,8 @@ export type State = {
   currentArtworkID?: string
   preview: PreviewSavedSearch
   visible: boolean
+  isEditMode?: boolean
+  criteriaChanged?: boolean
   metric?: Metric
 }
 
@@ -41,6 +43,7 @@ export const DEFAULT_STATE: State = {
   preview: null,
   visible: false,
   metric: DEFAULT_METRIC,
+  criteriaChanged: false,
 }
 
 type Action =
@@ -88,6 +91,7 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
       return {
         ...state,
         criteria: action.payload,
+        criteriaChanged: true,
       }
 
     case "SET_CRITERIA_ATTRIBUTE":
@@ -97,6 +101,7 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
           ...state.criteria,
           [action.payload.key]: action.payload.value,
         },
+        criteriaChanged: true,
       }
 
     case "REMOVE_CRITERIA_ATTRIBUTE_VALUE":
@@ -116,6 +121,7 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
           ...state.criteria,
           [action.payload.key]: criteriaValue,
         },
+        criteriaChanged: true,
       }
 
     case "SET_SEARCH_CRITERIA_ID":
@@ -128,6 +134,7 @@ export const reducer = (onShow: (State) => State, onReset: () => State) => (
       return {
         ...state,
         settings: action.payload,
+        criteriaChanged: true,
       }
 
     case "SET_METRIC":
