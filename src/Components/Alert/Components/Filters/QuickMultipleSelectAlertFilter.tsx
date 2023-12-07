@@ -2,6 +2,7 @@ import { Checkbox, Column, GridColumns, Spacer, Text } from "@artsy/palette"
 import { FC } from "react"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
+import { handleFieldsWithMultipleValues } from "Components/Alert/Helpers/handleFieldsWithMultipleValues"
 
 interface QuickMultipleSelectAlertFilterProps {
   criteriaKey: SearchCriteriaAttributeKeys
@@ -19,18 +20,13 @@ export const QuickMultipleSelectAlertFilter: FC<QuickMultipleSelectAlertFilterPr
 }) => {
   const { state, dispatch } = useAlertContext()
 
-  const toggleSelection = (selected, name) => {
-    let updatedValues = (state.criteria[criteriaKey] || []) as string[]
-
-    if (selected) {
-      updatedValues = [...updatedValues, name]
-    } else {
-      updatedValues = updatedValues.filter(item => item !== name)
-    }
-
-    dispatch({
-      type: "SET_CRITERIA_ATTRIBUTE",
-      payload: { key: criteriaKey, value: updatedValues },
+  const toggleSelection = (selected, value) => {
+    handleFieldsWithMultipleValues({
+      selectedValue: state.criteria[criteriaKey] as string[] | null,
+      criteriaKey,
+      selected,
+      value,
+      dispatch,
     })
   }
 

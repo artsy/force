@@ -19,7 +19,7 @@ jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => {
     useShippingContext: () => ({
       parsedOrderData: {
         availableShippingCountries: ["US"],
-        selectedSavedAddressId: "2",
+        savedFulfillmentData: { selectedSavedAddressId: "2" },
       },
     }),
   }

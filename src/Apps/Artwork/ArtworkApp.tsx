@@ -41,6 +41,7 @@ import { ArtworkDetailsPartnerInfoQueryRenderer } from "Apps/Artwork/Components/
 import { ArtworkAuctionCreateAlertHeaderFragmentContainer } from "Apps/Artwork/Components/ArtworkAuctionCreateAlertHeader/ArtworkAuctionCreateAlertHeader"
 import { compact } from "lodash"
 import { AlertProvider } from "Components/Alert/AlertProvider"
+import { FullBleedBanner } from "Components/FullBleedBanner"
 
 export interface Props {
   artwork: ArtworkApp_artwork$data
@@ -89,6 +90,9 @@ export const ArtworkApp: React.FC<Props> = props => {
 
   const showUnlistedArtworkBanner =
     artwork?.visibilityLevel == "UNLISTED" && artwork?.partner
+
+  const showExpiredOfferBanner = !!match?.location?.query?.expired_offer
+  const showUnavailableArtworkBanner = !!match?.location?.query?.unavailable
 
   const trackPageview = useCallback(() => {
     const { listPrice, availability, is_offerable, is_acquireable } = artwork
@@ -208,6 +212,24 @@ export const ArtworkApp: React.FC<Props> = props => {
       )}
       {showUnlistedArtworkBanner && (
         <UnlistedArtworkBannerFragmentContainer partner={artwork.partner} />
+      )}
+
+      {showExpiredOfferBanner && (
+        <FullBleedBanner variant="brand">
+          <Text>
+            This offer has expired. Please make a new offer or contact the
+            gallery.
+          </Text>
+        </FullBleedBanner>
+      )}
+
+      {showUnavailableArtworkBanner && (
+        <FullBleedBanner variant="brand">
+          <Text>
+            Sorry, this artwork is no longer available. Please create an alert
+            or contact orders@artsy.net to find similar artworks.
+          </Text>
+        </FullBleedBanner>
       )}
 
       <ArtworkMetaFragmentContainer artwork={artwork} />
