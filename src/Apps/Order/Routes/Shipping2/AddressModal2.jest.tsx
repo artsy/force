@@ -39,13 +39,6 @@ jest.mock("Apps/Order/Routes/Shipping2/Hooks/useParseOrderData", () => {
     }),
   }
 })
-jest.mock("Apps/Order/Routes/Shipping2/Hooks/useParseUserData", () => {
-  return {
-    useParseUserData: () => ({
-      savedAddresses: [mockSavedAddress],
-    }),
-  }
-})
 
 const errorBoxQuery = "Banner[data-testid='form-banner-error']"
 

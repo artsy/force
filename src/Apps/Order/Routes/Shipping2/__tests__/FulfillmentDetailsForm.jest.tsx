@@ -67,7 +67,7 @@ beforeEach(() => {
       attributes: {
         country: "US",
       },
-    } as any, // todo
+    } as any,
     onSubmit: mockOnSubmit,
     onAddressVerificationComplete: mockOnAddressVerificationComplete,
     verifyAddressNow: false,
@@ -75,16 +75,14 @@ beforeEach(() => {
       addressConnection: {
         edges: [],
       },
-    } as any, // todo: get rid of relay dependency
+    } as any,
   }
   mockShippingContext = {
     parsedOrderData: {
       isArtsyShipping: false,
       shippingQuotes: [],
     },
-    parsedUserData: {
-      savedAddresses: [],
-    },
+
     helpers: {
       fulfillmentDetails: {
         setFulfillmentFormHelpers: jest.fn(),
@@ -175,22 +173,28 @@ describe("FulfillmentDetailsForm", () => {
     })
     describe("User has saved addresses", () => {
       beforeEach(() => {
-        mockShippingContext.parsedUserData.savedAddresses = [
-          {
-            id: "123",
-            name: "John Doe",
-            addressLine1: "401 Broadway",
-            addressLine2: "Floor 25",
-            addressLine3: undefined,
-            city: "New York",
-            region: "NY",
-            postalCode: "10013",
-            phoneNumber: "1234567890",
-            country: "US",
-            isDefault: true,
-            internalID: "123",
+        testProps.me = {
+          addressConnection: {
+            edges: [
+              {
+                node: {
+                  id: "123",
+                  internalID: "123",
+                  name: "John Doe",
+                  addressLine1: "401 Broadway",
+                  addressLine2: "Floor 25",
+                  addressLine3: undefined,
+                  city: "New York",
+                  region: "NY",
+                  postalCode: "10013",
+                  phoneNumber: "1234567890",
+                  country: "US",
+                  isDefault: true,
+                },
+              },
+            ],
           },
-        ]
+        } as any
       })
       it("shows the saved addresses", async () => {
         renderTree(testProps)

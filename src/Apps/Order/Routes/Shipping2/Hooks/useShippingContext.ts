@@ -7,7 +7,6 @@ import {
   ShippingContext,
   ShippingContextProps,
 } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext"
-import { useParseUserData } from "Apps/Order/Routes/Shipping2/Hooks/useParseUserData"
 
 export const useShippingContext = () => {
   return useContext(ShippingContext)
@@ -19,8 +18,7 @@ export const useShippingContext = () => {
 export const useComputeShippingContext = (
   props: ShippingProps
 ): ShippingContextProps => {
-  const parsedUserData = useParseUserData(props.me)
-  const parsedOrderData = useParseOrderData(props.order, parsedUserData)
+  const parsedOrderData = useParseOrderData(props.order, props.me)
   /**
    * Because there is a single button for both fulfillment details and
    * shipping quote steps (and duplicated in the sidebar)
@@ -49,7 +47,6 @@ export const useComputeShippingContext = (
   }
 
   return {
-    parsedUserData,
     parsedOrderData,
     helpers: {
       fulfillmentDetails: fulfillmentDetailsHelpers,

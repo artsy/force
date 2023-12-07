@@ -43,6 +43,7 @@ import {
 } from "Components/Address/AddressAutocompleteInput"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
+import { extractNodes } from "Utils/extractNodes"
 
 export interface FulfillmentDetailsFormProps {
   // TODO: ideally we don't need to thread shipping2_me through here but that requires
@@ -89,6 +90,8 @@ const FulfillmentDetailsFormLayout = (
     contextOwnerType: OwnerType.ordersShipping,
     contextPageOwnerId: contextPageOwnerId || "",
   })
+
+  const savedAddresses = extractNodes(props.me.addressConnection)
 
   const shippingContext = useShippingContext()
 
@@ -163,25 +166,18 @@ const FulfillmentDetailsFormLayout = (
 
   // Once the user sees the address form, they should always see it.
   const [forceNewAddressFormMode, setForceNewAddressFormMode] = useState(
-    shippingContext.parsedUserData.savedAddresses.length === 0
+    savedAddresses.length === 0
   )
 
   useEffect(() => {
-    if (
-      !forceNewAddressFormMode &&
-      shippingContext.parsedUserData.savedAddresses.length === 0
-    ) {
+    if (!forceNewAddressFormMode && savedAddresses.length === 0) {
       setForceNewAddressFormMode(true)
     }
-  }, [
-    forceNewAddressFormMode,
-    shippingContext.parsedUserData.savedAddresses.length,
-  ])
+  }, [forceNewAddressFormMode, savedAddresses.length])
   const addressFormMode: AddressFormMode =
     values.fulfillmentType === FulfillmentType.PICKUP
       ? "pickup"
-      : forceNewAddressFormMode ||
-        shippingContext.parsedUserData.savedAddresses.length === 0
+      : forceNewAddressFormMode || savedAddresses.length === 0
       ? "new_address"
       : "saved_addresses"
 

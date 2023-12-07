@@ -16,7 +16,6 @@ import {
   getDefaultUserAddress,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { ParsedOrderData } from "Apps/Order/Routes/Shipping2/Hooks/useParseOrderData"
-import { ParsedUserData } from "Apps/Order/Routes/Shipping2/Hooks/useParseUserData"
 import { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
 
 export interface FulfillmentDetailsProps {
@@ -38,7 +37,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
     "address_verification_intl"
   )
 
-  const hasSavedAddresses = shippingContext.parsedUserData.savedAddresses.length
+  const hasSavedAddresses = extractNodes(props.me.addressConnection).length
   const shouldVerifyAddressOnSubmit = useCallback(
     (values: FulfillmentValues) => {
       const enabledForAddress =
@@ -87,11 +86,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
     : [FulfillmentType.SHIP]
 
   const initialValues = useMemo(
-    () =>
-      getInitialValues(
-        shippingContext.parsedUserData,
-        shippingContext.parsedOrderData
-      ),
+    () => getInitialValues(props.me, shippingContext.parsedOrderData),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   )
@@ -215,7 +210,7 @@ export const FulfillmentDetailsFragmentContainer = createFragmentContainer(
 )
 
 const getInitialValues = (
-  parsedUserData: ParsedUserData,
+  me: FulfillmentDetailsForm_me$data,
   orderData: ParsedOrderData
 ): FulfillmentValues => {
   if (orderData.savedFulfillmentDetails) {
@@ -231,11 +226,12 @@ const getInitialValues = (
     } as FulfillmentValues
   }
 
+  const savedAddresses = extractNodes(me.addressConnection)
   // The default ship-to address should be the first one that
   // can be shipped-to, preferring the default
 
   const defaultUserAddress = getDefaultUserAddress(
-    parsedUserData.savedAddresses,
+    savedAddresses,
     orderData.availableShippingCountries
   )
 
@@ -263,7 +259,7 @@ const getInitialValues = (
     ...addressWithFallbackValues({ country: orderData.shipsFrom }),
 
     addressVerifiedBy: null,
-    saveAddress: parsedUserData.savedAddresses.length === 0,
+    saveAddress: savedAddresses.length === 0,
   }
 
   return {

@@ -1,5 +1,4 @@
 import { ShippingProps } from "Apps/Order/Routes/Shipping2"
-import { ParsedUserData } from "Apps/Order/Routes/Shipping2/Hooks/useParseUserData"
 import {
   FulfillmentType,
   PickupValues,
@@ -9,7 +8,7 @@ import {
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
-import { Shipping2_order$data } from "__generated__/Shipping2_order.graphql"
+
 import { useCallback, useMemo } from "react"
 
 export interface ParsedOrderData {
@@ -42,8 +41,8 @@ type SavedShippingQuoteData = {
 } | null
 // Compute and memoize data from the saved order.
 export const useParseOrderData = (
-  order: Shipping2_order$data,
-  parsedUserData: ParsedUserData
+  order: ShippingProps["order"],
+  me: ShippingProps["me"]
 ): ParsedOrderData => {
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -54,7 +53,7 @@ export const useParseOrderData = (
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const artworkCountry = firstArtwork?.shippingCountry!
-  const savedFulfillmentData = useSavedFulfillmentData(order, parsedUserData)
+  const savedFulfillmentData = useSavedFulfillmentData(order, me)
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const shipsFrom = firstArtwork.shippingCountry!
@@ -115,7 +114,7 @@ export const useParseOrderData = (
 
 const useSavedFulfillmentData = (
   order: ShippingProps["order"],
-  parsedUserData: ParsedUserData
+  me: ShippingProps["me"]
 ): SavedFulfillmentData => {
   const fulfillmentTypeName = order.requestedFulfillment?.__typename
 
@@ -137,9 +136,11 @@ const useSavedFulfillmentData = (
         const fulfillmentDetails = addressWithFallbackValues(
           order.requestedFulfillment
         )
+        const savedAddresses = extractNodes(me.addressConnection)
+
         const selectedSavedAddressId =
           (fulfillmentDetails &&
-            parsedUserData.savedAddresses.find(node =>
+            savedAddresses.find(node =>
               matchAddressFields(node, fulfillmentDetails)
             )?.internalID) ??
           null
