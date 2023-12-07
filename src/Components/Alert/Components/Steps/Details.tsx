@@ -11,8 +11,6 @@ import {
 } from "@artsy/palette"
 import { Formik } from "formik"
 import { FC } from "react"
-
-import { AlertNameInput } from "Components/Alert/Components/Form/AlertNameInput"
 import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
 import { PriceRangeFilter } from "Components/Alert/Components/Form/PriceRange"
@@ -72,8 +70,6 @@ export const Details: FC = () => {
             }}
           >
             <Flex flexDirection="column" p={2}>
-              <AlertNameInput />
-              <Spacer y={4} />
               <Join separator={<Spacer y={4} />}>
                 <Box>
                   <Text variant="sm-display" mb={1}>
