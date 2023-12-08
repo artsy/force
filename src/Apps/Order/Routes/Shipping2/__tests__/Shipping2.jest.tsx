@@ -1626,13 +1626,19 @@ describe("Shipping", () => {
         await flushPromiseQueue()
         await resolveSaveFulfillmentDetails(
           mockResolveLastOperation,
-          settingOrderArtaShipmentSuccess.commerceSetShipping
+          settingOrderArtaShipmentSuccess.commerceSetShipping,
+          { addressLine1: "401 Broadway Suite 25", addressLine2: "" }
         )
 
         await flushPromiseQueue()
         const updateAddressOperation = await mockResolveLastOperation({
           UpdateUserAddressPayload: () =>
-            updateAddressSuccess.updateUserAddress,
+            merge({}, updateAddressSuccess.updateUserAddress, {
+              userAddressOrErrors: {
+                addressLine1: "401 Broadway Suite 25",
+                addressLine2: "",
+              },
+            }),
         })
 
         expect(updateAddressOperation.operationName).toBe(

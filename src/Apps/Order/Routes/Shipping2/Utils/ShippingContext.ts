@@ -1,19 +1,21 @@
 import { createContext, useContext } from "react"
-import { FormikProps } from "formik"
 import { ParsedOrderData } from "Apps/Order/Routes/Shipping2/Hooks/useParseOrderData"
-import { FulfillmentValues } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
+import { ShippingContextHelpers } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContextHelpers"
 
-type FulfillmentHelpers = Pick<
-  FormikProps<FulfillmentValues>,
-  "submitForm" | "isValid" | "values"
->
+export type ShippingStage =
+  | "fulfillment_details"
+  | "shipping_quotes"
+  | "refresh_shipping_quotes"
+
+export interface State {
+  newSavedAddressId: string | null
+  selectedShippingQuoteId: string | null
+  stage: ShippingStage
+}
 export interface ShippingContextProps {
+  state: State
   parsedOrderData: ParsedOrderData
-  helpers: {
-    fulfillmentDetails: FulfillmentHelpers & {
-      setFulfillmentFormHelpers: (helpers: FulfillmentHelpers) => void
-    }
-  }
+  helpers: ShippingContextHelpers
 }
 
 export const ShippingContext = createContext<ShippingContextProps>({} as any)

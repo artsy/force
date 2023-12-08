@@ -1,7 +1,7 @@
 import { FulfillmentDetailsForm_order$data } from "__generated__/FulfillmentDetailsForm_order.graphql"
 
 import { FormikHelpers } from "formik"
-import { FC, useCallback, useMemo, useState } from "react"
+import { FC, useCallback, useEffect, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -17,18 +17,26 @@ import {
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { ParsedOrderData } from "Apps/Order/Routes/Shipping2/Hooks/useParseOrderData"
 import { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
+import createLogger from "Utils/logger"
+import { Dialog, injectDialog } from "Apps/Order/Dialogs"
+import { useSaveFulfillmentDetails } from "Apps/Order/Routes/Shipping2/Mutations/useSaveFulfillmentDetails"
+import { CommerceSetShippingInput } from "__generated__/useSaveFulfillmentDetailsMutation.graphql"
+
+const logger = createLogger("Routes/Shipping2/FulfillmentDetails.tsx")
 
 export interface FulfillmentDetailsProps {
-  onSubmit: (
-    values: FulfillmentValues,
-    formikHelpers?: FormikHelpers<FulfillmentValues>
-  ) => void | Promise<any>
+  processUserAddressUpdates: (newValues: FulfillmentValues) => Promise<void>
+  onFulfillmentDetailsSaved: (result: {
+    requiresArtsyShipping: boolean
+  }) => void
   me: FulfillmentDetailsForm_me$data
   order: FulfillmentDetailsForm_order$data
+  dialog: Dialog
 }
 
 export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
   const shippingContext = useShippingContext()
+  const saveFulfillmentDetails = useSaveFulfillmentDetails()
 
   const addressVerificationUSEnabled = !!useFeatureFlag(
     "address_verification_us"
@@ -66,16 +74,150 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
     setVerifyAddressNow(false)
   }
 
+  // Once the user sees the address form, they should always see it.
+  const [forceNewAddressFormMode, setForceNewAddressFormMode] = useState(
+    !hasSavedAddresses
+  )
+
+  useEffect(() => {
+    if (!forceNewAddressFormMode && !hasSavedAddresses) {
+      setForceNewAddressFormMode(true)
+    }
+  }, [forceNewAddressFormMode, hasSavedAddresses])
+
+  const submitFulfillmentDetails = useCallback(
+    async ({
+      performUserAddressUpdates,
+      formValues,
+      formikHelpers,
+    }: {
+      performUserAddressUpdates: boolean
+      formValues: FulfillmentValues
+      formikHelpers?: FormikHelpers<FulfillmentValues>
+    }) => {
+      const { setSubmitting } = formikHelpers || {}
+      setSubmitting && setSubmitting(true)
+      try {
+        let fulfillmentMutationValues: CommerceSetShippingInput
+        let requiresArtsyShipping: boolean
+        if (formValues.fulfillmentType === FulfillmentType.SHIP) {
+          const {
+            saveAddress,
+            addressVerifiedBy,
+            phoneNumber,
+            ...addressValues
+          } = formValues.attributes
+          requiresArtsyShipping = shippingContext.parsedOrderData.requiresArtsyShippingTo(
+            addressValues.country
+          )
+
+          fulfillmentMutationValues = {
+            id: props.order.internalID,
+            fulfillmentType: requiresArtsyShipping
+              ? "SHIP_ARTA"
+              : FulfillmentType.SHIP,
+            phoneNumber,
+            shipping: { ...addressValues, phoneNumber: "" },
+          }
+
+          if (addressVerifiedBy) {
+            fulfillmentMutationValues.addressVerifiedBy = addressVerifiedBy
+          }
+        } else {
+          requiresArtsyShipping = false
+          fulfillmentMutationValues = {
+            id: props.order.internalID,
+            fulfillmentType: FulfillmentType.PICKUP,
+            phoneNumber: formValues.attributes.phoneNumber,
+            shipping: {
+              addressLine1: "",
+              addressLine2: "",
+              country: "",
+              name: "",
+              city: "",
+              postalCode: "",
+              region: "",
+              phoneNumber: "",
+            },
+          }
+        }
+
+        const result = await saveFulfillmentDetails.submitMutation({
+          variables: { input: fulfillmentMutationValues },
+        })
+
+        const orderOrError = result.commerceSetShipping?.orderOrError
+
+        if (orderOrError?.__typename === "CommerceOrderWithMutationFailure") {
+          shippingContext.helpers.handleExchangeError(
+            orderOrError.error,
+            logger
+          )
+          return
+        }
+
+        if (performUserAddressUpdates) {
+          await props.processUserAddressUpdates(formValues)
+        }
+
+        props.onFulfillmentDetailsSaved({ requiresArtsyShipping })
+      } catch (error) {
+        shippingContext.helpers.orderTracking.errorMessageViewed({
+          error_code: null,
+          title: "An error occurred",
+          message:
+            "Something went wrong. Please try again or contact orders@artsy.net.",
+          flow: "user selects a shipping option",
+        })
+
+        shippingContext.helpers.dialog.showErrorDialog()
+      }
+    },
+    [
+      saveFulfillmentDetails,
+      props,
+      shippingContext.parsedOrderData,
+      shippingContext.helpers,
+    ]
+  )
+
+  // Force-re-save fulfillment details with existing values to refresh shipping quotes
+  useEffect(() => {
+    const existingFulfillmentDetails =
+      shippingContext.parsedOrderData.savedFulfillmentDetails
+    if (
+      shippingContext.state.stage === "refresh_shipping_quotes" &&
+      existingFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP
+    ) {
+      submitFulfillmentDetails({
+        performUserAddressUpdates: false,
+        formValues: {
+          attributes: existingFulfillmentDetails.fulfillmentDetails as ShipValues["attributes"],
+          fulfillmentType: existingFulfillmentDetails?.fulfillmentType,
+        },
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const handleSubmit = useCallback(
     (values, helpers) => {
       if (shouldVerifyAddressOnSubmit(values)) {
         setVerifyAddressNow(true)
         return
       } else {
-        return props.onSubmit(values, helpers)
+        return submitFulfillmentDetails({
+          performUserAddressUpdates: forceNewAddressFormMode,
+          formValues: values,
+          formikHelpers: helpers,
+        })
       }
     },
-    [props, shouldVerifyAddressOnSubmit]
+    [
+      shouldVerifyAddressOnSubmit,
+      submitFulfillmentDetails,
+      forceNewAddressFormMode,
+    ]
   )
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -99,12 +241,13 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
       verifyAddressNow={verifyAddressNow}
       onSubmit={handleSubmit}
       availableFulfillmentTypes={availableFulfillmentTypes}
+      forceNewAddressFormMode={forceNewAddressFormMode}
     />
   )
 }
 
 export const FulfillmentDetailsFragmentContainer = createFragmentContainer(
-  FulfillmentDetails,
+  injectDialog(FulfillmentDetails),
   {
     order: graphql`
       fragment FulfillmentDetailsForm_order on CommerceOrder {

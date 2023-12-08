@@ -1,12 +1,13 @@
-import { useContext, useState } from "react"
-import { FormikProps } from "formik"
+import { useContext, useReducer } from "react"
 import { ShippingProps } from "Apps/Order/Routes/Shipping2"
 import { useParseOrderData } from "Apps/Order/Routes/Shipping2/Hooks/useParseOrderData"
 import {
   ShippingContext,
   ShippingContextProps,
+  ShippingStage,
+  State,
 } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext"
-import { FulfillmentValues } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
+import { useShippingContextHelpers } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContextHelpers"
 
 export const useShippingContext = () => {
   return useContext(ShippingContext)
@@ -19,37 +20,43 @@ export const useComputeShippingContext = (
   props: ShippingProps
 ): ShippingContextProps => {
   const parsedOrderData = useParseOrderData(props.order, props.me)
-  /**
-   * Because there is a single button for both fulfillment details and
-   * shipping quote steps (and duplicated in the sidebar)
-   * we need to hack some formik values UP from the fulfillment details form.
-   *
-   * Currently we need to pass up:
-   */
-  const [fulfillmentFormHelpers, setFulfillmentFormHelpers] = useState<
-    Pick<FormikProps<FulfillmentValues>, "submitForm" | "isValid" | "values">
-  >({
-    // Used to submit the form
-    submitForm: () => Promise.reject(new Error("form not loaded")),
-    // Used to disable the button
-    isValid: false,
-    // Used to get the form values for un-saving the address if the user
-    // unchecks it after saving it in the fulfillment details step.
-    values: ({
-      attributes: {
-        saveAddress: false,
-      },
-    } as unknown) as FulfillmentValues,
-  })
-  const fulfillmentDetailsHelpers = {
-    ...fulfillmentFormHelpers,
-    setFulfillmentFormHelpers,
+
+  const initialState: State = {
+    newSavedAddressId: null,
+    selectedShippingQuoteId: parsedOrderData.selectedShippingQuoteId ?? null,
+    stage: parsedOrderData.savedFulfillmentDetails?.isArtsyShipping
+      ? "refresh_shipping_quotes"
+      : "fulfillment_details",
   }
+  const [state, dispatch] = useReducer(shippingStateReducer, initialState)
+
+  const helpers = useShippingContextHelpers(
+    parsedOrderData,
+    props.dialog,
+    dispatch
+  )
 
   return {
+    state,
     parsedOrderData,
-    helpers: {
-      fulfillmentDetails: fulfillmentDetailsHelpers,
-    },
+    helpers,
+  }
+}
+
+export type Action =
+  | { type: "SET_SELECTED_SHIPPING_QUOTE"; payload: string | null }
+  | { type: "SET_NEW_SAVED_ADDRESS_ID"; payload: string | null }
+  | { type: "SET_STAGE"; payload: ShippingStage }
+
+const shippingStateReducer = (state: State, action: Action): State => {
+  switch (action.type) {
+    case "SET_SELECTED_SHIPPING_QUOTE":
+      return { ...state, selectedShippingQuoteId: action.payload }
+    case "SET_NEW_SAVED_ADDRESS_ID":
+      return { ...state, newSavedAddressId: action.payload }
+    case "SET_STAGE":
+      return { ...state, stage: action.payload }
+    default:
+      return state
   }
 }

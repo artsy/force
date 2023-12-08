@@ -54,6 +54,7 @@ export interface FulfillmentDetailsFormProps {
   onAddressVerificationComplete: () => void
   onSubmit: (values: FulfillmentValues, helpers: any) => void
   availableFulfillmentTypes: FulfillmentType[]
+  forceNewAddressFormMode: boolean
 }
 
 export const FulfillmentDetailsForm = (props: FulfillmentDetailsFormProps) => {
@@ -68,6 +69,7 @@ export const FulfillmentDetailsForm = (props: FulfillmentDetailsFormProps) => {
         verifyAddressNow={props.verifyAddressNow}
         onAddressVerificationComplete={props.onAddressVerificationComplete}
         availableFulfillmentTypes={props.availableFulfillmentTypes}
+        forceNewAddressFormMode={props.forceNewAddressFormMode}
       />
     </Formik>
   )
@@ -82,6 +84,7 @@ const FulfillmentDetailsFormLayout = (
     | "onAddressVerificationComplete"
     | "me"
     | "availableFulfillmentTypes"
+    | "forceNewAddressFormMode"
   >
 ) => {
   const { contextPageOwnerId } = useAnalyticsContext()
@@ -115,6 +118,13 @@ const FulfillmentDetailsFormLayout = (
     setValues,
     isValid,
   } = formikContext
+
+  const addressFormMode: AddressFormMode =
+    values.fulfillmentType === FulfillmentType.PICKUP
+      ? "pickup"
+      : props.forceNewAddressFormMode || savedAddresses.length === 0
+      ? "new_address"
+      : "saved_addresses"
 
   // Pass some key formik bits up to the shipping route
   const setFulfillmentFormHelpers =
@@ -163,23 +173,6 @@ const FulfillmentDetailsFormLayout = (
     await props.onAddressVerificationComplete()
     formikContext.submitForm()
   }
-
-  // Once the user sees the address form, they should always see it.
-  const [forceNewAddressFormMode, setForceNewAddressFormMode] = useState(
-    savedAddresses.length === 0
-  )
-
-  useEffect(() => {
-    if (!forceNewAddressFormMode && savedAddresses.length === 0) {
-      setForceNewAddressFormMode(true)
-    }
-  }, [forceNewAddressFormMode, savedAddresses.length])
-  const addressFormMode: AddressFormMode =
-    values.fulfillmentType === FulfillmentType.PICKUP
-      ? "pickup"
-      : forceNewAddressFormMode || savedAddresses.length === 0
-      ? "new_address"
-      : "saved_addresses"
 
   // Reset form when switching between ship/pickup
   // eslint-disable-next-line react-hooks/rules-of-hooks

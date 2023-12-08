@@ -61,6 +61,7 @@ beforeEach(() => {
   }))
   mockOnAddressVerificationComplete.mockReset()
   testProps = {
+    forceNewAddressFormMode: false,
     availableFulfillmentTypes: [FulfillmentType.SHIP],
     initialValues: {
       fulfillmentType: "SHIP",
