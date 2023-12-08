@@ -48,7 +48,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   )
 
   const selectedSavedAddressId =
-    shippingContext.parsedOrderData.savedFulfillmentData?.selectedSavedAddressId
+    shippingContext.parsedOrderData.savedFulfillmentDetails
+      ?.selectedSavedAddressId
   const [selectedAddressID, setSelectedAddressID] = useState<
     string | undefined
   >(

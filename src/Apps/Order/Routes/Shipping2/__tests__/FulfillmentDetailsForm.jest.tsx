@@ -67,7 +67,7 @@ beforeEach(() => {
       attributes: {
         country: "US",
       },
-    } as any, // todo
+    } as any,
     onSubmit: mockOnSubmit,
     onAddressVerificationComplete: mockOnAddressVerificationComplete,
     verifyAddressNow: false,
@@ -75,13 +75,14 @@ beforeEach(() => {
       addressConnection: {
         edges: [],
       },
-    } as any, // todo: get rid of relay dependency
+    } as any,
   }
   mockShippingContext = {
     parsedOrderData: {
       isArtsyShipping: false,
       shippingQuotes: [],
     },
+
     helpers: {
       fulfillmentDetails: {
         setFulfillmentFormHelpers: jest.fn(),
@@ -98,6 +99,7 @@ describe("FulfillmentDetailsForm", () => {
         FulfillmentType.SHIP,
       ]
     })
+
     it("shows pickup option", async () => {
       renderTree(testProps)
 
@@ -107,6 +109,7 @@ describe("FulfillmentDetailsForm", () => {
         screen.getByRole("radio", { name: /Arrange for pickup/ })
       ).toBeVisible()
     })
+
     it("has name and phone number fields", async () => {
       renderTree(testProps)
       await userEvent.click(
@@ -152,6 +155,7 @@ describe("FulfillmentDetailsForm", () => {
         )
       })
     })
+
     it("does not submit an invalid form", async () => {
       renderTree(testProps)
       await userEvent.click(
@@ -164,11 +168,54 @@ describe("FulfillmentDetailsForm", () => {
       await screen.findByText("Phone number is required")
       expect(mockOnSubmit).not.toHaveBeenCalled()
     })
+
+    it.todo("user can select shipping and fill out form")
   })
+
   describe("Pickup not available", () => {
     beforeEach(() => {
       testProps.availableFulfillmentTypes = [FulfillmentType.SHIP]
     })
+    describe("User has saved addresses", () => {
+      beforeEach(() => {
+        testProps.me = {
+          addressConnection: {
+            edges: [
+              {
+                node: {
+                  id: "123",
+                  internalID: "123",
+                  name: "John Doe",
+                  addressLine1: "401 Broadway",
+                  addressLine2: "Floor 25",
+                  addressLine3: undefined,
+                  city: "New York",
+                  region: "NY",
+                  postalCode: "10013",
+                  phoneNumber: "1234567890",
+                  country: "US",
+                  isDefault: true,
+                },
+              },
+            ],
+          },
+        } as any
+      })
+
+      it("shows the saved addresses", async () => {
+        renderTree(testProps)
+        // Note - SavedAddresses is mocked out.
+        await waitFor(() => {
+          expect(screen.getByTestId("savedAddressesCollapse")).toHaveStyle({
+            height: "auto",
+          })
+          expect(screen.getByTestId("addressFormCollapse")).toHaveStyle({
+            height: "0px",
+          })
+        })
+      })
+    })
+
     it("does not show delivery/pickup selector", async () => {
       renderTree(testProps)
 
@@ -178,6 +225,7 @@ describe("FulfillmentDetailsForm", () => {
       beforeEach(() => {
         ;(testProps.initialValues as ShipValues).attributes.country = "US"
       })
+
       it("shows all address fields, including US-specific fields", async () => {
         renderTree(testProps)
 
@@ -281,6 +329,7 @@ describe("FulfillmentDetailsForm", () => {
         featureName => featureName === "address_autocomplete_us"
       )
     })
+
     it("tracks when a user selects an address and the first time they edit it", async () => {
       renderTree(testProps)
       await waitFor(async () => {

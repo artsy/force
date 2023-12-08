@@ -62,7 +62,7 @@ export class Collapse extends React.Component<CollapseProps> {
   }
 
   componentWillUnmount() {
-    this.wrapperRef!.removeEventListener("transitionend", this.onTransitionEnd)
+    this.wrapperRef?.removeEventListener("transitionend", this.onTransitionEnd)
     clearTimeout(this.wrapperModifyTimeout)
   }
 
@@ -92,6 +92,7 @@ export class Collapse extends React.Component<CollapseProps> {
     }
     return (
       <div
+        data-testid={this.props["data-testid"]}
         ref={ref => (this.wrapperRef = ref)}
         style={{
           transition: "height 0.3s ease",

@@ -7,6 +7,7 @@ import { userAddressMutation } from "Apps/__tests__/Fixtures/Order/MutationResul
 import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/SavedAddressItem2"
 import { useTracking } from "react-tracking"
 import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
+import { waitFor } from "@testing-library/react"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -149,7 +150,7 @@ describe("Saved Addresses", () => {
       })
     })
 
-    it("renders radio buttons with addresses", () => {
+    it("renders radio buttons with addresses", async () => {
       const { wrapper } = getWrapper({
         Me: () => ({
           addressConnection: mockAddressConnection,
@@ -158,12 +159,17 @@ describe("Saved Addresses", () => {
       const radios = wrapper.find("Radio")
 
       expect(radios.length).toBe(2)
-      expect(radios.map(radio => radio.props().value)).toEqual(["1", "2"])
-      expect(radios.map(radio => radio.props().selected)).toEqual([false, true])
-      expect(radios.map(radio => radio.text())).toEqual([
-        "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit",
-        "Test Name401 BroadwayFloor 25New York, NY, USA, 10013422-424-4242Edit",
-      ])
+      await waitFor(() => {
+        expect(radios.map(radio => radio.props().value)).toEqual(["1", "2"])
+        expect(radios.map(radio => radio.props().selected)).toEqual([
+          false,
+          true,
+        ])
+        expect(radios.map(radio => radio.text())).toEqual([
+          "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit",
+          "Test Name401 BroadwayFloor 25New York, NY, US, 10013422-424-4242Edit",
+        ])
+      })
     })
   })
 })
@@ -194,7 +200,7 @@ const mockAddressConnection = {
         addressLine2: "Floor 25",
         addressLine3: "",
         city: "New York",
-        country: "USA",
+        country: "US",
         isDefault: true,
         name: "Test Name",
         phoneNumber: "422-424-4242",

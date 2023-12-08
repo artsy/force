@@ -4,9 +4,11 @@ import {
   PickupValues,
   ShippingAddressFormValues,
   addressWithFallbackValues,
+  matchAddressFields,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
+
 import { useCallback, useMemo } from "react"
 
 export interface ParsedOrderData {
@@ -15,12 +17,35 @@ export interface ParsedOrderData {
   availableShippingCountries: string[]
   requiresArtsyShippingTo: (shipTo: string) => boolean
   selectedShippingQuoteId?: string
-  savedFulfillmentData: SavedFulfillmentData
+  savedFulfillmentDetails: SavedFulfillmentData
+  savedShippingQuoteData: SavedShippingQuoteData
   shippingQuotes?: Array<{ id: string; isSelected: boolean }>
 }
-// Compute and memoize data from the saved order.
-export const useParseOrderData = (props: ShippingProps): ParsedOrderData => {
-  const { me, order } = props
+
+type SavedFulfillmentData =
+  | {
+      fulfillmentType: FulfillmentType.PICKUP
+      isArtsyShipping: false
+      fulfillmentDetails: PickupValues["attributes"]
+      selectedSavedAddressId: null
+    }
+  | {
+      fulfillmentType: FulfillmentType.SHIP
+      isArtsyShipping: boolean
+      fulfillmentDetails: ShippingAddressFormValues
+      selectedSavedAddressId: string | null
+    }
+  | null
+
+type SavedShippingQuoteData = {
+  selectedShippingQuoteId: string | null
+  shippingQuotes: Array<{ id: string; isSelected: boolean }>
+} | null
+
+export const useParseOrderData = (
+  order: ShippingProps["order"],
+  me: ShippingProps["me"]
+): ParsedOrderData => {
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstLineItem = extractNodes(order.lineItems)[0]!
@@ -30,8 +55,7 @@ export const useParseOrderData = (props: ShippingProps): ParsedOrderData => {
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const artworkCountry = firstArtwork?.shippingCountry!
-  const savedFulfillmentData = useSavedFulfillmentData(order, me)
-
+  const savedFulfillmentDetails = useSavedFulfillmentData(order, me)
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const shipsFrom = firstArtwork.shippingCountry!
@@ -73,34 +97,22 @@ export const useParseOrderData = (props: ShippingProps): ParsedOrderData => {
   )
 
   const shippingQuotes = extractNodes(firstLineItem.shippingQuoteOptions) ?? []
-  const selectedShippingQuoteId = shippingQuotes.find(quote => quote.isSelected)
-    ?.id
+  const selectedShippingQuoteId =
+    shippingQuotes.find(quote => quote.isSelected)?.id ?? null
 
   return {
-    savedFulfillmentData,
+    savedFulfillmentDetails,
+    savedShippingQuoteData: {
+      selectedShippingQuoteId,
+      shippingQuotes,
+    },
     shippingQuotes,
     availableShippingCountries,
     lockShippingCountryTo,
     requiresArtsyShippingTo,
-    selectedShippingQuoteId,
     shipsFrom,
   }
 }
-
-type SavedFulfillmentData =
-  | {
-      fulfillmentType: FulfillmentType.PICKUP
-      isArtsyShipping: false
-      fulfillmentDetails: PickupValues["attributes"]
-      selectedSavedAddressId: null
-    }
-  | {
-      fulfillmentType: FulfillmentType.SHIP
-      isArtsyShipping: boolean
-      fulfillmentDetails: ShippingAddressFormValues
-      selectedSavedAddressId: string | null
-    }
-  | null
 
 const useSavedFulfillmentData = (
   order: ShippingProps["order"],
@@ -123,13 +135,25 @@ const useSavedFulfillmentData = (
       } else if (
         ["CommerceShip", "CommerceShipArta"].includes(fulfillmentTypeName)
       ) {
+        const fulfillmentDetails = addressWithFallbackValues(
+          order.requestedFulfillment
+        )
+        const savedAddresses = extractNodes(me.addressConnection)
+
+        const selectedSavedAddressId =
+          (fulfillmentDetails &&
+            savedAddresses.find(node =>
+              matchAddressFields(node, fulfillmentDetails)
+            )?.internalID) ??
+          null
+
         return {
           fulfillmentType: FulfillmentType.SHIP,
           isArtsyShipping: fulfillmentTypeName === "CommerceShipArta",
           fulfillmentDetails: addressWithFallbackValues(
             order.requestedFulfillment
           ),
-          selectedSavedAddressId: null,
+          selectedSavedAddressId: selectedSavedAddressId,
         }
       }
     }

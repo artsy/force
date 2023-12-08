@@ -2181,7 +2181,7 @@ describe("Shipping", () => {
                   fulfillmentType: "SHIP_ARTA",
                   id: "2939023",
                   phoneNumber: "422-424-4242",
-                  shipping: {
+                  shipping: expect.objectContaining({
                     addressLine1: "1 Main St",
                     addressLine2: "",
                     city: "New York",
@@ -2190,7 +2190,7 @@ describe("Shipping", () => {
                     phoneNumber: "718-000-0000",
                     postalCode: "10012",
                     region: "NY",
-                  },
+                  }),
                 },
               })
 

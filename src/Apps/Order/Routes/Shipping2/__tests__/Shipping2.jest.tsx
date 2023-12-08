@@ -19,12 +19,15 @@ import {
   settingOrderArtaShipmentSuccess,
   selectShippingQuoteSuccess,
 } from "Apps/Order/Routes/__fixtures__/MutationResults/setOrderShipping"
-import { saveAddressSuccess } from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
+import {
+  saveAddressSuccess,
+  updateAddressSuccess,
+} from "Apps/Order/Routes/__fixtures__/MutationResults/saveAddress"
 import {
   Shipping2TestQuery,
   Shipping2TestQuery$rawResponse,
 } from "__generated__/Shipping2TestQuery.graphql"
-import { screen, waitFor } from "@testing-library/react"
+import { act, screen, waitFor } from "@testing-library/react"
 import { useTracking } from "react-tracking"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import {
@@ -255,7 +258,13 @@ const getAllPendingOperationNames = (env: RelayMockEnvironment) => {
 describe("Shipping", () => {
   let isCommittingMutation: boolean
   let relayEnv: MockEnvironment
-  const mockPush = jest.fn()
+  const mockPush = jest.fn(() => {
+    act(() =>
+      relayEnv.mock.getAllOperations().forEach(op => {
+        relayEnv.mock.resolve(op, MockPayloadGenerator.generate(op))
+      })
+    )
+  })
 
   beforeEach(() => {
     isCommittingMutation = false
@@ -441,6 +450,7 @@ describe("Shipping", () => {
           },
         })
         await waitFor(() => {
+          expect(getAllPendingOperationNames(relayEnv)).toEqual([])
           expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
         })
       })
@@ -470,6 +480,7 @@ describe("Shipping", () => {
           "useSaveFulfillmentDetailsMutation"
         )
         await waitFor(() => {
+          expect(getAllPendingOperationNames(relayEnv)).toEqual([])
           expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
         })
         expect(() => env.mock.getMostRecentOperation()).toThrow()
@@ -1124,6 +1135,9 @@ describe("Shipping", () => {
         // TODO: need a better way to check if the form is collapsed (height 0).
         // Zero height is not considered invisible.
         // https://github.com/testing-library/jest-dom/issues/450
+        expect(screen.getByTestId("addressFormCollapse")).toHaveStyle({
+          height: "0px",
+        })
         expect(screen.getByPlaceholderText("Street address")).toHaveAttribute(
           "tabindex",
           "-1"
@@ -1439,8 +1453,9 @@ describe("Shipping", () => {
 
             await waitFor(() => userEvent.click(screen.getByText(/^Premium/)))
 
+            await flushPromiseQueue()
             await saveAndContinue()
-
+            await flushPromiseQueue()
             const selectNewShippingOptionOperation = await mockResolveLastOperation(
               {
                 CommerceSelectShippingOptionPayload: () =>
@@ -1451,6 +1466,7 @@ describe("Shipping", () => {
               "useSelectShippingQuoteMutation"
             )
 
+            await flushPromiseQueue()
             expect(getAllPendingOperationNames(relayEnv)).toEqual([])
             expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
           })
@@ -1511,6 +1527,7 @@ describe("Shipping", () => {
               "useCreateSavedAddressMutation"
             )
 
+            await flushPromiseQueue()
             await saveAndContinue()
             const selectShippingOptionOperation = await mockResolveLastOperation(
               {
@@ -1522,6 +1539,7 @@ describe("Shipping", () => {
               "useSelectShippingQuoteMutation"
             )
 
+            await flushPromiseQueue()
             expect(getAllPendingOperationNames(relayEnv)).toEqual([])
             expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
           })
@@ -1562,43 +1580,102 @@ describe("Shipping", () => {
         ).toBeInTheDocument()
       })
 
-      // TODO: EMI-1601
-      // fit("updates the address after saving selected shipping quote if the user edited the address after saving", async () => {
-      //   const { mockResolveLastOperation } = renderWithRelay(
-      //     {
-      //       CommerceOrder: () =>
-      //         UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
-      //       Me: () => meWithoutAddress,
-      //     },
-      //     undefined,
-      //     relayEnv
-      //   )
+      it("hides shipping quotes and updates shipping address plus saved address if user edits address fields", async () => {
+        const { mockResolveLastOperation } = renderWithRelay(
+          {
+            CommerceOrder: () =>
+              UntouchedBuyOrderWithArtsyShippingDomesticFromUS,
+            Me: () => meWithoutAddress,
+          },
+          undefined,
+          relayEnv
+        )
 
-      //   await fillAddressForm(validAddress)
-      //   await saveAndContinue()
+        await fillAddressForm(validAddress)
+        await saveAndContinue()
 
-      //   await resolveSaveFulfillmentDetails(
-      //     mockResolveLastOperation,
-      //     settingOrderArtaShipmentSuccess.commerceSetShipping
-      //   )
+        await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderArtaShipmentSuccess.commerceSetShipping
+        )
 
-      //   await flushPromiseQueue()
-      //   const saveAddressOperation = await mockResolveLastOperation({
-      //     CreateUserAddressPayload: () => saveAddressSuccess.createUserAddress,
-      //   })
+        await flushPromiseQueue()
+        const saveAddressOperation = await mockResolveLastOperation({
+          CreateUserAddressPayload: () => saveAddressSuccess.createUserAddress,
+        })
 
-      //   expect(saveAddressOperation.operationName).toBe(
-      //     "useCreateSavedAddressMutation"
-      //   )
-      //   // ...
-      //   const premiumShipping = await screen.findByRole("radio", {
-      //     name: /Premium/,
-      //   })
-      //   // TODO: After saving the address, if the user edits the address
-      //   // the shipping quotes should disappear and on submit the update
-      //   // address mutation should be called, then they can proceed
-      //   expect("todo").toBe(false)
-      // })
+        expect(saveAddressOperation.operationName).toBe(
+          "useCreateSavedAddressMutation"
+        )
+
+        const addressLine1 = screen.getByPlaceholderText("Street address")
+        const addressLine2 = screen.getByPlaceholderText(
+          "Apt, floor, suite, etc."
+        )
+        await userEvent.clear(addressLine2)
+        await userEvent.paste(addressLine1, " Suite 25")
+
+        await waitFor(() => {
+          const shippingBox = screen.getByTestId("ShippingQuotes_collapse")
+
+          expect(shippingBox).toHaveStyle({ height: "0px" })
+        })
+
+        await saveAndContinue()
+        await flushPromiseQueue()
+        await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderArtaShipmentSuccess.commerceSetShipping
+        )
+
+        await flushPromiseQueue()
+        const updateAddressOperation = await mockResolveLastOperation({
+          UpdateUserAddressPayload: () =>
+            updateAddressSuccess.updateUserAddress,
+        })
+
+        expect(updateAddressOperation.operationName).toBe(
+          "useUpdateSavedAddressMutation"
+        )
+        expect(updateAddressOperation.operationVariables).toEqual({
+          input: {
+            attributes: {
+              name: "Joelle Van Dyne",
+              phoneNumber: "120938120983",
+              addressLine1: "401 Broadway Suite 25",
+              addressLine2: "",
+              city: "New York",
+              region: "NY",
+              country: "US",
+              postalCode: "10013",
+            },
+            userAddressID: "address-id",
+          },
+        })
+
+        const premiumShipping = await screen.findByRole("radio", {
+          name: /Premium/,
+        })
+        await userEvent.click(premiumShipping)
+        await saveAndContinue()
+        await flushPromiseQueue()
+        const selectShippingOptionOperation = await mockResolveLastOperation({
+          CommerceSelectShippingOptionPayload: () =>
+            selectShippingQuoteSuccess.commerceSelectShippingOption,
+        })
+        expect(selectShippingOptionOperation.operationName).toBe(
+          "useSelectShippingQuoteMutation"
+        )
+        expect(selectShippingOptionOperation.operationVariables).toEqual({
+          input: {
+            id: "2939023",
+            selectedShippingQuoteId: "1eb3ba19-643b-4101-b113-2eb4ef7e30b6",
+          },
+        })
+        await flushPromiseQueue()
+        expect(getAllPendingOperationNames(relayEnv)).toEqual([])
+        expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
+      })
 
       it("saves address upon selecting shipping quote if address is checked and it wasn't saved before", async () => {
         const { mockResolveLastOperation } = renderWithRelay(
@@ -1668,6 +1745,8 @@ describe("Shipping", () => {
           },
         })
         await flushPromiseQueue()
+
+        expect(getAllPendingOperationNames(relayEnv)).toEqual([])
         expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
       })
 
@@ -2496,6 +2575,7 @@ describe("Shipping", () => {
         },
       })
       await waitFor(() => {
+        expect(getAllPendingOperationNames(relayEnv)).toEqual([])
         expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
       })
     })
