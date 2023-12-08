@@ -73,7 +73,7 @@ module.exports.facebook = function (req, token, refreshToken, profile, done) {
     const post = request
       .post(`${opts.ARTSY_URL}/oauth2/access_token`)
       .set({ "User-Agent": req.get("user-agent") })
-      .query({
+      .send({
         client_id: opts.ARTSY_ID,
         client_secret: opts.ARTSY_SECRET,
         grant_type: "oauth_token",
@@ -117,7 +117,7 @@ module.exports.google = function (
     const post = request
       .post(`${opts.ARTSY_URL}/oauth2/access_token`)
       .set({ "User-Agent": req.get("user-agent") })
-      .query({
+      .send({
         client_id: opts.ARTSY_ID,
         client_secret: opts.ARTSY_SECRET,
         grant_type: "oauth_token",
@@ -172,7 +172,7 @@ module.exports.apple = function (
     const post = request
       .post(`${opts.ARTSY_URL}/oauth2/access_token`)
       .set({ "User-Agent": req.get("user-agent") })
-      .query({
+      .send({
         client_id: opts.ARTSY_ID,
         client_secret: opts.ARTSY_SECRET,
         grant_type: "apple_uid",
@@ -276,7 +276,7 @@ const onAccessToken = (req, done, params) =>
           const post = request
             .post(`${opts.ARTSY_URL}/oauth2/access_token`)
             .set({ "User-Agent": req.get("user-agent") })
-            .query(
+            .send(
               extend(auth_params, {
                 client_id: opts.ARTSY_ID,
                 client_secret: opts.ARTSY_SECRET,
