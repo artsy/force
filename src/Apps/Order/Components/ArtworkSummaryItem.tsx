@@ -82,12 +82,17 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
             </Text>
           </>
         )}
-        {!isPrivateSale && artworkPrice && (
+        {!isPrivateSale && artworkPrice?.price && (
           <Text variant="sm">
             {`${priceLabel} ${appendCurrencySymbol(
               artworkPrice.price,
               currencyCode
             )}`}
+          </Text>
+        )}
+        {isPartnerOffer && !artworkPrice?.price && (
+          <Text variant="sm">
+            {`${priceLabel}`}: Not publicly listed
           </Text>
         )}
       </Flex>
