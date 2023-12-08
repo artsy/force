@@ -73,9 +73,9 @@ describe("passport callbacks", function () {
     expect(request.post.args[0][0]).toEqual(
       "http://apiz.artsy.net/oauth2/access_token"
     )
-    const queryParams = request.query.args[0][0]
-    expect(queryParams.oauth_provider).toEqual("facebook")
-    expect(queryParams.oauth_token).toEqual("foo-token")
+    const sendArgs = request.send.args[0][0]
+    expect(sendArgs.oauth_provider).toEqual("facebook")
+    expect(sendArgs.oauth_token).toEqual("foo-token")
     const res = { body: { access_token: "access-token" }, status: 200 }
     request.end.args[0][0](null, res)
   })
@@ -88,9 +88,9 @@ describe("passport callbacks", function () {
     expect(request.post.args[0][0]).toEqual(
       "http://apiz.artsy.net/oauth2/access_token"
     )
-    const queryParams = request.query.args[0][0]
-    expect(queryParams.oauth_provider).toEqual("google")
-    expect(queryParams.oauth_token).toEqual("foo-token")
+    const sendArgs = request.send.args[0][0]
+    expect(sendArgs.oauth_provider).toEqual("google")
+    expect(sendArgs.oauth_token).toEqual("foo-token")
     const res = { body: { access_token: "access-token" }, status: 200 }
     request.end.args[0][0](null, res)
   })
@@ -114,10 +114,10 @@ describe("passport callbacks", function () {
     expect(request.post.args[0][0]).toEqual(
       "http://apiz.artsy.net/oauth2/access_token"
     )
-    const queryParams = request.query.args[0][0]
-    expect(queryParams.grant_type).toEqual("apple_uid")
-    expect(queryParams.apple_uid).toEqual("some-apple-uid")
-    expect(queryParams.id_token).toEqual("id-token")
+    const sendArgs = request.send.args[0][0]
+    expect(sendArgs.grant_type).toEqual("apple_uid")
+    expect(sendArgs.apple_uid).toEqual("some-apple-uid")
+    expect(sendArgs.id_token).toEqual("id-token")
     const res = { body: { access_token: "access-token" }, status: 200 }
     request.end.args[0][0](null, res)
   })
