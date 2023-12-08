@@ -90,7 +90,7 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
             )}`}
           </Text>
         )}
-        {isPartnerOffer && !artworkPrice?.price && (
+        {!artworkPrice?.price && (
           <Text variant="sm">
             {`${priceLabel}`}: Not publicly listed
           </Text>
