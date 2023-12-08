@@ -21,6 +21,7 @@ export interface ParsedOrderData {
   savedShippingQuoteData: SavedShippingQuoteData
   shippingQuotes?: Array<{ id: string; isSelected: boolean }>
 }
+
 type SavedFulfillmentData =
   | {
       fulfillmentType: FulfillmentType.PICKUP
