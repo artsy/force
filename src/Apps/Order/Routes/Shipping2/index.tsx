@@ -46,7 +46,7 @@ import { ShippingContext } from "Apps/Order/Routes/Shipping2/Utils/ShippingConte
 import { useDeleteSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useDeleteSavedAddress"
 import { useUpdateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useUpdateSavedAddress"
 import { extractNodes } from "Utils/extractNodes"
-import { ArtaErrorDialogMessage } from "Apps/Order/Routes/Shipping2/ArtaErrorDialogMessage"
+import { ArtaErrorDialogMessage } from "Apps/Order/Utils/getErrorDialogCopy"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 

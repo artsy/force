@@ -9,11 +9,11 @@ import { FulfillmentValues } from "Apps/Order/Routes/Shipping2/Utils/shippingUti
 import createLogger from "Utils/logger"
 import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
 import {
+  ArtaErrorDialogMessage,
   ErrorDialogs,
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
 import { Dialog } from "Apps/Order/Dialogs"
-import { ArtaErrorDialogMessage } from "Apps/Order/Routes/Shipping2/ArtaErrorDialogMessage"
 
 export const useShippingContext = () => {
   return useContext(ShippingContext)
@@ -72,6 +72,7 @@ export const useShippingContextHelpers = (
       },
     } as unknown) as FulfillmentValues,
   })
+
   const fulfillmentDetails = {
     ...fulfillmentFormHelpers,
     setFulfillmentFormHelpers,
@@ -87,7 +88,9 @@ export const useShippingContextHelpers = (
       logger: ReturnType<typeof createLogger>
     ) => {
       logger.error(error)
+
       const parsedData = error.data ? JSON.parse(error.data) : {}
+
       if (
         error.code === "missing_region" ||
         error.code === "missing_country" ||

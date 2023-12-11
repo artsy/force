@@ -12,6 +12,7 @@ export interface State {
   selectedShippingQuoteId: string | null
   stage: ShippingStage
 }
+
 export interface ShippingContextProps {
   state: State
   parsedOrderData: ParsedOrderData

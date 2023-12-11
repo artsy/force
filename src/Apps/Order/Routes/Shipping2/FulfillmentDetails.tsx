@@ -18,7 +18,6 @@ import {
 import { ParsedOrderData } from "Apps/Order/Routes/Shipping2/Hooks/useParseOrderData"
 import { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
 import createLogger from "Utils/logger"
-import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import { useSaveFulfillmentDetails } from "Apps/Order/Routes/Shipping2/Mutations/useSaveFulfillmentDetails"
 import { CommerceSetShippingInput } from "__generated__/useSaveFulfillmentDetailsMutation.graphql"
 
@@ -31,7 +30,6 @@ export interface FulfillmentDetailsProps {
   }) => void
   me: FulfillmentDetailsForm_me$data
   order: FulfillmentDetailsForm_order$data
-  dialog: Dialog
 }
 
 export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
@@ -99,7 +97,8 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
       setSubmitting && setSubmitting(true)
       try {
         let fulfillmentMutationValues: CommerceSetShippingInput
-        let requiresArtsyShipping: boolean
+        let requiresArtsyShippingToDestination: boolean
+
         if (formValues.fulfillmentType === FulfillmentType.SHIP) {
           const {
             saveAddress,
@@ -107,13 +106,13 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
             phoneNumber,
             ...addressValues
           } = formValues.attributes
-          requiresArtsyShipping = shippingContext.parsedOrderData.requiresArtsyShippingTo(
+          requiresArtsyShippingToDestination = shippingContext.parsedOrderData.requiresArtsyShippingTo(
             addressValues.country
           )
 
           fulfillmentMutationValues = {
             id: props.order.internalID,
-            fulfillmentType: requiresArtsyShipping
+            fulfillmentType: requiresArtsyShippingToDestination
               ? "SHIP_ARTA"
               : FulfillmentType.SHIP,
             phoneNumber,
@@ -124,7 +123,8 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
             fulfillmentMutationValues.addressVerifiedBy = addressVerifiedBy
           }
         } else {
-          requiresArtsyShipping = false
+          requiresArtsyShippingToDestination = false
+
           fulfillmentMutationValues = {
             id: props.order.internalID,
             fulfillmentType: FulfillmentType.PICKUP,
@@ -160,7 +160,9 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
           await props.processUserAddressUpdates(formValues)
         }
 
-        props.onFulfillmentDetailsSaved({ requiresArtsyShipping })
+        props.onFulfillmentDetailsSaved({
+          requiresArtsyShipping: requiresArtsyShippingToDestination,
+        })
       } catch (error) {
         shippingContext.helpers.orderTracking.errorMessageViewed({
           error_code: null,
@@ -247,7 +249,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
 }
 
 export const FulfillmentDetailsFragmentContainer = createFragmentContainer(
-  injectDialog(FulfillmentDetails),
+  FulfillmentDetails,
   {
     order: graphql`
       fragment FulfillmentDetailsForm_order on CommerceOrder {
