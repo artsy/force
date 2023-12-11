@@ -144,7 +144,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
           <Box>
             <Join separator={<Spacer y={[4, 6]} />}>
               <Box>
-                <Text variant="xs">Filters</Text>
+                <Text variant="sm-display">We'll send you alerts for</Text>
                 <Spacer y={2} />
                 <Flex flexWrap="wrap" gap={1}>
                   <CriteriaPills />
