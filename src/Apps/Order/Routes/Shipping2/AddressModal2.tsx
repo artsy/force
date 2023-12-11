@@ -46,7 +46,7 @@ export type AddressModalAction =
 
 export interface AddressModalProps {
   closeModal: () => void
-  onSuccess: (addressID: string) => Promise<void>
+  onSuccess: (addressID: string) => void
 
   modalAction: AddressModalAction | null
 }

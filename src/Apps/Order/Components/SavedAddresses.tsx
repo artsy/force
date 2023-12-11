@@ -83,7 +83,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     // FIXME: Remove this disable
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [me.addressConnection?.totalCount])
-  const addressList = extractNodes(me?.addressConnection) ?? []
+  const addressList = extractNodes(me.addressConnection)
   const { relayEnvironment } = useSystemContext()
 
   const refetchAddresses = (refetchSuccessCallback?: () => void) => {
@@ -108,6 +108,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
   const handleDeleteAddress = async (addressID: string) => {
     let response = await deleteUserAddress(
+      // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
       relayEnvironment!,
       addressID,
       () => {

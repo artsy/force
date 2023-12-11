@@ -49,9 +49,10 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
 
   const artworkPrice = getOfferItemFromOrder(lineItems)
 
-  const priceLabel = mode === "OFFER" ? "List price" : "Price"
-
   const isPrivateSale = source === "private_sale"
+  const isPartnerOffer = source === "partner_offer"
+
+  const priceLabel = ((mode === "OFFER") || isPartnerOffer) ? "List price" : "Price"
 
   return (
     <StackableBorderBox flexDirection="row" {...others}>
@@ -81,12 +82,17 @@ const ArtworkSummaryItem: React.FC<ArtworkSummaryItemProps> = ({
             </Text>
           </>
         )}
-        {!isPrivateSale && artworkPrice && (
+        {!isPrivateSale && artworkPrice?.price && (
           <Text variant="sm">
             {`${priceLabel} ${appendCurrencySymbol(
               artworkPrice.price,
               currencyCode
             )}`}
+          </Text>
+        )}
+        {!artworkPrice?.price && (
+          <Text variant="sm">
+            {`${priceLabel}`}: Not publicly listed
           </Text>
         )}
       </Flex>

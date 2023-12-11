@@ -3,7 +3,6 @@
  * logging in or signing up.
  */
 
-import { capitalize } from "underscore.string"
 import forwardedFor from "./forwarded_for"
 import opts from "Server/passport/lib/options"
 import passport from "passport"
@@ -145,56 +144,63 @@ module.exports.afterSocialAuth = (provider: Provider) =>
     if (req.query.denied) {
       return next(new Error(`${provider} denied`))
     }
+
     // Determine if we're linking the account and handle any Gravity errors
     // that we can do a better job explaining and redirecting for.
-    const providerName = capitalize(provider)
     const linkingAccount = req.user != null
 
     passport.authenticate(provider)(req, res, function (err: any) {
-      let msg: string
       if (
-        err &&
-        err.response &&
-        err.response.body &&
-        err.response.body.error === "User Already Exists"
+        err?.response?.body?.error === "User Already Exists" &&
+        req.socialProfileEmail
       ) {
-        if (req.socialProfileEmail) {
-          msg =
-            `A user with the email address ${req.socialProfileEmail} already ` +
-            "exists. Log in to Artsy via email and password and link " +
-            `${providerName} in your settings instead.`
-        } else {
-          msg =
-            `${providerName} account previously linked to Artsy. ` +
-            "Log in to your Artsy account via email and password and link " +
-            `${providerName} in your settings instead.`
-        }
-        return res.redirect(opts.loginPagePath + "?error=" + msg)
-      } else if (
-        err &&
-        err.response &&
-        err.response.body &&
-        err.response.body.error === "Another Account Already Linked"
-      ) {
-        msg = `${providerName} account previously linked to Artsy.`
-        return res.redirect(`${opts.settingsPagePath}?error=${msg}`)
-      } else if (
-        err &&
-        err.message &&
-        err.message.match("Unauthorized source IP address")
-      ) {
-        msg = `Your IP address was blocked by ${providerName}.`
-        return res.redirect(opts.loginPagePath + "?error=" + msg)
-      } else if (err != null) {
-        msg =
+        // A user with the email address <req.socialProfileEmail> already exists.
+        // Log in to Artsy via email and password and link ${providerName} in your settings instead.
+        // Redirect back to login page.
+        return res.redirect(
+          `${opts.loginPagePath}?error_code=ALREADY_EXISTS&email=${req.socialProfileEmail}&provider=${provider}`
+        )
+      }
+
+      if (err?.response?.body?.error === "User Already Exists") {
+        // Provider account previously linked to Artsy.
+        // Log in to your Artsy account via email and password and link the provider in your settings instead.
+        // Redirect back to login page.
+        return res.redirect(
+          `${opts.loginPagePath}?error_code=PREVIOUSLY_LINKED_SETTINGS&provider=${provider}`
+        )
+      }
+
+      if (err?.response?.body?.error === "Another Account Already Linked") {
+        // Provider account previously linked to Artsy. Redirect back to settings page.
+        return res.redirect(
+          `${opts.settingsPagePath}?error_code=PREVIOUSLY_LINKED&provider=${provider}`
+        )
+      }
+
+      if (err?.message?.match("Unauthorized source IP address")) {
+        // Your IP address was blocked by the provider. Redirect back to login page.
+        return res.redirect(
+          `${opts.loginPagePath}?error_code=IP_BLOCKED&provider=${provider}`
+        )
+      }
+
+      if (err != null) {
+        const message =
           err.message ||
           (typeof err.toString === "function" ? err.toString() : undefined)
-        return res.redirect(opts.loginPagePath + "?error=" + msg)
-      } else if (linkingAccount) {
-        return res.redirect(opts.settingsPagePath)
-      } else {
-        return next()
+        // Unknown error. Redirect back to login page. Do not show error message to user; log to console.
+        return res.redirect(
+          `${opts.loginPagePath}?error_code=UNKNOWN&error=${message}`
+        )
       }
+
+      if (linkingAccount) {
+        // Successful. Redirect back to settings page.
+        return res.redirect(opts.settingsPagePath)
+      }
+
+      return next()
     })
   }
 

@@ -23,7 +23,6 @@ import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInpu
 import ChevronRightIcon from "@artsy/icons/ChevronRightIcon"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { CriteriaPills } from "Components/Alert/Components/CriteriaPills"
-import { AlertNameInput } from "Components/Alert/Components/Form/AlertNameInput"
 import { Filters } from "Components/Alert/Components/Steps/Filters"
 import CloseIcon from "@artsy/icons/CloseIcon"
 import { AlertFormikValues } from "Components/Alert/Components/Steps/Details"
@@ -144,7 +143,6 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
         return (
           <Box>
             <Join separator={<Spacer y={[4, 6]} />}>
-              <AlertNameInput />
               <Box>
                 <Text variant="xs">Filters</Text>
                 <Spacer y={2} />
