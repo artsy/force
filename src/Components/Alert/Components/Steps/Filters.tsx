@@ -7,6 +7,7 @@ import { WaysToBuy } from "Components/Alert/Components/Filters/WaysToBuy"
 import { Color } from "Components/Alert/Components/Filters/Color"
 import { useDidMount } from "Utils/Hooks/useDidMount"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import { ArtistSeriesQueryRenderer } from "Components/Alert/Components/Filters/ArtistSeries"
 
 export const Filters: FC = () => {
   const isMounted = useDidMount()
@@ -34,6 +35,7 @@ export const Filters: FC = () => {
           <Medium />
           <Rarity />
           <PriceQueryRenderer />
+          <ArtistSeriesQueryRenderer />
           <WaysToBuy />
           <Color />
         </Join>
