@@ -20,7 +20,6 @@ import {
   ADDRESS_VALIDATION_SHAPE,
   SavedAddressType,
 } from "Apps/Order/Utils/shippingUtils"
-import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { addressWithFallbackValues } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { useCreateSavedAddressMutation$data } from "__generated__/useCreateSavedAddressMutation.graphql"
 import { useUpdateSavedAddressMutation$data } from "__generated__/useUpdateSavedAddressMutation.graphql"
@@ -29,6 +28,7 @@ import { useCreateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/use
 import { useDeleteSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useDeleteSavedAddress"
 import { useUpdateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useUpdateSavedAddress"
 import { useUpdateUserDefaultAddress } from "Apps/Order/Routes/Shipping2/Mutations/useUpdateUserDefaultAddress"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 
 export enum AddressModalActionType {
   EDIT_USER_ADDRESS = "editUserAddress",

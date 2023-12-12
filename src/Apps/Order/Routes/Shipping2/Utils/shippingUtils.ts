@@ -1,6 +1,6 @@
 import { AddressVerifiedBy } from "Apps/Order/Components/AddressVerificationFlow"
 import { ShippingProps } from "Apps/Order/Routes/Shipping2"
-import { pick, omitBy, isNil } from "lodash"
+import { pick, omitBy, isNil, isEqual } from "lodash"
 
 export enum FulfillmentType {
   SHIP = "SHIP",
@@ -86,14 +86,19 @@ export const getDefaultUserAddress = (
 
 export const matchAddressFields = (...addressPair: [object, object]) => {
   const [a1, a2] = addressPair.map(a => addressWithFallbackValues(a))
-  return (
-    a1.addressLine1 === a2.addressLine1 &&
-    a1.addressLine2 === a2.addressLine2 &&
-    a1.city === a2.city &&
-    a1.country === a2.country &&
-    a1.name === a2.name &&
-    a1.phoneNumber === a2.phoneNumber &&
-    a1.postalCode === a2.postalCode &&
-    a1.region === a2.region
-  )
+
+  const fields: Array<keyof ShippingAddressFormValues> = [
+    "addressLine1",
+    "addressLine2",
+    "city",
+    "country",
+    "name",
+    "phoneNumber",
+    "postalCode",
+    "region",
+  ]
+
+  const differences = fields.filter(field => !isEqual(a1[field], a2[field]))
+
+  return differences.length === 0
 }

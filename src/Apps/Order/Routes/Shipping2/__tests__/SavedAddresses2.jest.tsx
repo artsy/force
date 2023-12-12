@@ -1,5 +1,4 @@
 import { graphql } from "react-relay"
-import { SavedAddressesFragmentContainer } from "./SavedAddresses2"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { AddressModal } from "Apps/Order/Routes/Shipping2/AddressModal2"
 import { RootTestPage } from "DevTools/RootTestPage"
@@ -8,6 +7,7 @@ import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/SavedAddressItem2"
 import { useTracking } from "react-tracking"
 import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
 import { waitFor } from "@testing-library/react"
+import { SavedAddressesFragmentContainer } from "Apps/Order/Routes/Shipping2/SavedAddresses2"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
