@@ -47,6 +47,11 @@ import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippin
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
+export type ShippingStage =
+  | "fulfillment_details"
+  | "shipping_quotes"
+  | "refresh_shipping_quotes"
+
 export interface ShippingProps {
   order: Shipping2_order$data
   me: Shipping2_me$data

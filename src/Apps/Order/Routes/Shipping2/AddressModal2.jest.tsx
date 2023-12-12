@@ -8,12 +8,12 @@ import { validAddress } from "Components/__tests__/Utils/addressForm2"
 import { useSystemContext } from "System/useSystemContext"
 import { SavedAddressType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { createMockEnvironment } from "relay-test-utils"
-import { useComputeShippingContext } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext/useComputeShippingContext"
 import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { AddressModal2TestQuery } from "__generated__/AddressModal2TestQuery.graphql"
-import { ShippingContext } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext/ShippingContext"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext/ShippingContext"
+import { DeepPartial } from "Utils/typeSupport"
 
 /*
 Some tests queue up promises that bleed into subsequent tests
@@ -32,17 +32,6 @@ jest.mock("Utils/user", () => ({
   userHasLabFeature: jest.fn(),
 }))
 
-jest.mock(
-  "Apps/Order/Routes/Shipping2/Utils/ShippingContext/useParseOrderData",
-  () => {
-    return {
-      useParseOrderData: () => ({
-        shipsFrom: "US",
-      }),
-    }
-  }
-)
-
 const errorBoxQuery = "Banner[data-testid='form-banner-error']"
 
 const mockSavedAddress: SavedAddressType = {
@@ -58,13 +47,19 @@ let testAddressModalProps: AddressModalProps
 
 let mockRelayEnv: ReturnType<typeof createMockEnvironment>
 
+let mockShippingcontext: DeepPartial<ShippingContextProps> = {
+  parsedOrderData: {
+    shipsFrom: "US",
+  },
+}
+
+jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => ({
+  useShippingContext: () => mockShippingcontext,
+}))
+
 const { getWrapper: _getWrapper } = setupTestWrapper<AddressModal2TestQuery>({
   Component: (props: unknown) => {
-    return (
-      <ShippingContext.Provider value={useComputeShippingContext({} as any)}>
-        <AddressModal {...(props as AddressModalProps)} />
-      </ShippingContext.Provider>
-    )
+    return <AddressModal {...(props as AddressModalProps)} />
   },
   query: graphql`
     query AddressModal2TestQuery @relay_test_operation {

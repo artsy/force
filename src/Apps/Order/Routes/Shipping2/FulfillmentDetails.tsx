@@ -14,12 +14,12 @@ import {
   addressWithFallbackValues,
   getDefaultUserAddress,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
-import { ParsedOrderData } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext/useParseOrderData"
 import { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
 import createLogger from "Utils/logger"
 import { useSaveFulfillmentDetails } from "Apps/Order/Routes/Shipping2/Mutations/useSaveFulfillmentDetails"
 import { CommerceSetShippingInput } from "__generated__/useSaveFulfillmentDetailsMutation.graphql"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
+import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext/ShippingContext"
 
 const logger = createLogger("Routes/Shipping2/FulfillmentDetails.tsx")
 
@@ -357,7 +357,7 @@ export const FulfillmentDetailsFragmentContainer = createFragmentContainer(
 
 const getInitialValues = (
   me: FulfillmentDetailsForm_me$data,
-  orderData: ParsedOrderData
+  orderData: ShippingContextProps["parsedOrderData"]
 ): FulfillmentValues => {
   if (orderData.savedFulfillmentDetails) {
     return {
