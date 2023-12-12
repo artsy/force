@@ -81,7 +81,9 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
 
   const closeEditFormAndRefetch = () => {
     closeEditForm()
-    refetch()
+    setTimeout(() => {
+      refetch()
+    }, 100)
   }
 
   const closeDeleteModal = () => {
