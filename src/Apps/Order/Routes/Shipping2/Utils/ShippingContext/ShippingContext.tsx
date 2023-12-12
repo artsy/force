@@ -73,13 +73,8 @@ export const ShippingContextProvider: FC<Pick<
     stage: isArtsyShipping ? "refresh_shipping_quotes" : "fulfillment_details",
   }
 
-  /*
-    *******
-    Helpers
-    *******
-  */
-
   const [state, dispatch] = useReducer(shippingStateReducer, initialState)
+
   /**
    * Because there is a single button for both fulfillment details and
    * shipping quote steps (and duplicated in the sidebar)
