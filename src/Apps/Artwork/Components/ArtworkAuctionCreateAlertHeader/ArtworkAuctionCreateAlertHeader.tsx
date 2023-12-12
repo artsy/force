@@ -22,6 +22,9 @@ import { SuggestedArtworksShelfQueryRenderer } from "Apps/Artwork/Components/Art
 import { Media } from "Utils/Responsive"
 import { RouterLink } from "System/Router/RouterLink"
 import BellStrokeIcon from "@artsy/icons/BellStrokeIcon"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { ProgressiveOnboardingAlertCreateSimple } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreateSimple"
+import { CreateAlertButton } from "Components/Alert/Components/CreateAlertButton"
 
 interface ArtworkAuctionCreateAlertHeaderProps {
   artwork: ArtworkAuctionCreateAlertHeader_artwork$data
@@ -148,10 +151,7 @@ const ArtworkAuctionCreateAlertHeader: FC<ArtworkAuctionCreateAlertHeaderProps> 
                 Manage your alerts
               </Button>
             ) : (
-              <ArtworkCreateAlertButtonFragmentContainer
-                artwork={artwork}
-                analyticsContextModule={ContextModule.artworkSidebar}
-              />
+              <CreateAlertButtonSwitch artwork={artwork} />
             )}
           </Box>
         </Column>
@@ -227,3 +227,33 @@ export const ArtworkAuctionCreateAlertHeaderFragmentContainer = createFragmentCo
     `,
   }
 )
+
+interface CreateAlertButtonSwitchProps {
+  artwork: ArtworkAuctionCreateAlertHeader_artwork$data
+}
+
+const CreateAlertButtonSwitch: FC<CreateAlertButtonSwitchProps> = ({
+  artwork,
+}) => {
+  const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
+
+  if (newAlertModalEnabled) {
+    return (
+      <ProgressiveOnboardingAlertCreateSimple>
+        <CreateAlertButton
+          width="100%"
+          size="large"
+          backgroundColor="black100"
+          color="white100"
+        />
+      </ProgressiveOnboardingAlertCreateSimple>
+    )
+  }
+
+  return (
+    <ArtworkCreateAlertButtonFragmentContainer
+      artwork={artwork}
+      analyticsContextModule={ContextModule.artworkSidebar}
+    />
+  )
+}
