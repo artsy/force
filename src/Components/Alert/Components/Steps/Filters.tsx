@@ -6,39 +6,39 @@ import { PriceQueryRenderer } from "Components/Alert/Components/Filters/Price"
 import { WaysToBuy } from "Components/Alert/Components/Filters/WaysToBuy"
 import { Color } from "Components/Alert/Components/Filters/Color"
 import { useDidMount } from "Utils/Hooks/useDidMount"
+import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 
 export const Filters: FC = () => {
   const isMounted = useDidMount()
+  const { state } = useAlertContext()
 
   return (
-    <>
-      <Box
-        minWidth={[null, 700]}
-        p={2}
-        style={{
-          ...(isMounted
-            ? {
-                opacity: 1,
-                transition: "opacity 250ms",
-              }
-            : {
-                opacity: 0,
-              }),
-        }}
-      >
-        <Flex flexDirection="column" width="auto">
-          <Text variant="lg">Filters</Text>
-          <Separator my={2} />
-          <Join separator={<Separator my={2} />}>
-            <Medium />
-            <Rarity />
-            <PriceQueryRenderer />
-            <WaysToBuy />
-            <Color />
-          </Join>
-          <Spacer y={[4, 6]} />
-        </Flex>
-      </Box>
-    </>
+    <Box
+      minWidth={[null, state.isEditMode ? null : 700]}
+      p={2}
+      style={{
+        ...(isMounted
+          ? {
+              opacity: 1,
+              transition: "opacity 250ms",
+            }
+          : {
+              opacity: 0,
+            }),
+      }}
+    >
+      <Flex flexDirection="column" width="auto">
+        <Text variant="lg">Filters</Text>
+        <Separator my={2} />
+        <Join separator={<Separator my={2} />}>
+          <Medium />
+          <Rarity />
+          <PriceQueryRenderer />
+          <WaysToBuy />
+          <Color />
+        </Join>
+        <Spacer y={[4, 6]} />
+      </Flex>
+    </Box>
   )
 }

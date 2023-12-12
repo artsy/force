@@ -69,7 +69,7 @@ const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> 
     <>
       <Media greaterThanOrEqual="md">
         {current === "ALERT_DETAILS" && (
-          <Box flex={1} p={4}>
+          <Box p={4} minWidth={[null, null]}>
             <Flex justifyContent="space-between">
               <ModalHeader />
               <Clickable onClick={onCloseClick}>
@@ -141,7 +141,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
         }
 
         return (
-          <Box>
+          <Box flex={1}>
             <Join separator={<Spacer y={[4, 6]} />}>
               <Box>
                 <Text variant="sm-display">We'll send you alerts for</Text>
@@ -221,6 +221,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
                 <Spacer y={1} />
 
                 <Button
+                  mb={2}
                   variant="secondaryBlack"
                   width="100%"
                   onClick={onDeleteClick}
