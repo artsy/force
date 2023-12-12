@@ -1,9 +1,9 @@
 import * as React from "react"
-import { BoxProps, HorizontalOverflow, Pill } from "@artsy/palette"
+import { HorizontalOverflow, Pill } from "@artsy/palette"
 import { NavigationTabs_searchableConnection$data } from "__generated__/NavigationTabs_searchableConnection.graphql"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { createFragmentContainer, graphql } from "react-relay"
-import { RouterLink, RouterLinkProps } from "System/Router/RouterLink"
+import { RouterLink } from "System/Router/RouterLink"
 import { useIsRouteActive } from "System/Router/useRouter"
 import {
   ActionType,
@@ -37,42 +37,23 @@ const TAB_NAME_MAP = {
   gene: "Categories",
 }
 
-interface RouteTabProps extends BoxProps, RouterLinkProps {
+interface TabProps {
   text: string
+  to: string
+  exact?: boolean
   count?: number
 }
 
-const RoundedRouteTab: React.FC<RouteTabProps> = ({ text, count, ...rest }) => {
-  const isActive = useIsRouteActive(rest.to, { exact: rest.exact ?? true })
-
-  return (
-    // @ts-ignore
-    <Pill
-      variant="search"
-      count={count}
-      as={RouterLink}
-      my={1}
-      mr={1}
-      active={isActive}
-      {...rest}
-    >
-      {text}
-    </Pill>
-  )
-}
-
-export const NavigationTabs: React.FC<NavigationTabsProps> = ({
-  term,
-  artworkCount,
-  searchableConnection,
-}) => {
-  const tracking = useTracking()
+const Tab: React.FC<TabProps> = ({ text, to, exact, count }) => {
   const router = useRouter()
+  const tracking = useTracking()
   const {
     contextPageOwnerId,
     contextPageOwnerSlug,
     contextPageOwnerType,
   } = useAnalyticsContext()
+  const tabName = text.replace(/[0-9]/g, "").trim()
+  const isSelected = useIsRouteActive(to, { exact: exact ?? true })
 
   const trackClick = (destinationPath: string, subject: string) => () => {
     const trackingData: ClickedNavigationTab = {
@@ -88,6 +69,32 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
     tracking.trackEvent(trackingData)
   }
 
+  return (
+    // @ts-ignore
+    <Pill
+      variant="search"
+      count={count}
+      as={RouterLink}
+      my={1}
+      mr={1}
+      selected={isSelected}
+      key={tabName}
+      onClick={event => {
+        event.preventDefault()
+        router.router.push(to)
+        trackClick(tabName, to)
+      }}
+    >
+      {text}
+    </Pill>
+  )
+}
+
+export const NavigationTabs: React.FC<NavigationTabsProps> = ({
+  term,
+  artworkCount,
+  searchableConnection,
+}) => {
   const route = (tab: string) => {
     const encodedTerm = encodeURIComponent(term)
     const formattedTab = tab.replace(/\s/g, "_")
@@ -95,72 +102,36 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
     return `/search${formattedTab}?term=${encodedTerm}`
   }
 
-  // FIXME: Not rendering keys correctly.
-  // Move to it's own component & render normally.
-  // Avoid declaring "render functions" within other render bodies.
-  const renderTab = (
-    text: string,
-    to: string,
-    options: {
-      exact?: boolean
-      count?: number
-    } = {}
-  ) => {
-    const { exact, count } = options
-    const tabName = text.replace(/[0-9]/g, "").trim()
-
-    return (
-      <RoundedRouteTab
-        to={to}
-        text={tabName}
-        key={tabName}
-        exact={exact}
-        count={count}
-        onClick={event => {
-          event.preventDefault()
-          router.router.push(to)
-          trackClick(tabName, to)
-        }}
-      />
-    )
-  }
-
-  const tabs: JSX.Element[] = []
-
-  artworkCount > 0 &&
-    tabs.push(
-      renderTab("Artworks", route(""), {
-        count: artworkCount,
-        exact: true,
-      })
-    )
-
-  Object.entries(tabCountMap(searchableConnection)).map(
-    ([key, value]: [string, number]) => {
-      tabs.push(
-        renderTab(key, route(`/${key.toLowerCase()}`), {
-          count: value,
-        })
-      )
-    }
-  )
-
   const restAggregationCount = MORE_TABS.reduce((prev, key) => {
     const tabAggregation = aggregationFor(searchableConnection, key)?.count ?? 0
 
     return tabAggregation ? (prev += tabAggregation) : prev
   }, 0)
 
-  restAggregationCount > 0 &&
-    tabs.push(
-      renderTab("More", route("/more"), {
-        count: restAggregationCount,
-      })
-    )
-
   return (
     <AppContainer>
-      <HorizontalOverflow pl={[2, 4]}>{tabs}</HorizontalOverflow>
+      <HorizontalOverflow pl={[2, 4]}>
+        {artworkCount > 0 ?? (
+          <Tab text="Artworks" to={route("")} exact count={artworkCount} />
+        )}
+
+        {Object.entries(tabCountMap(searchableConnection)).map(
+          ([key, value]: [string, number]) => {
+            return (
+              <Tab
+                key={`pill-${key}`}
+                text={key}
+                to={route(`/${key.toLowerCase()}`)}
+                count={value}
+              />
+            )
+          }
+        )}
+
+        {restAggregationCount > 0 && (
+          <Tab text="More" to={route("/more")} count={restAggregationCount} />
+        )}
+      </HorizontalOverflow>
     </AppContainer>
   )
 }
