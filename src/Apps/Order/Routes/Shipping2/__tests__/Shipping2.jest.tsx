@@ -1466,10 +1466,10 @@ describe("Shipping", () => {
 
             await flushPromiseQueue()
             const createAddressOperation = await mockResolveLastOperation({
-              CreateUserAddressPayload: () => ({
-                ...saveAddressSuccess.createUserAddress,
-                ...recommendedAddress,
-              }),
+              CreateUserAddressPayload: () =>
+                merge({}, saveAddressSuccess.createUserAddress, {
+                  userAddressOrErrors: recommendedAddress,
+                }),
             })
             expect(createAddressOperation.operationName).toBe(
               "useCreateSavedAddressMutation"
@@ -1632,11 +1632,14 @@ describe("Shipping", () => {
           "useCreateSavedAddressMutation"
         )
 
+        await flushPromiseQueue()
+
         const addressLine1 = screen.getByPlaceholderText("Street address")
         const addressLine2 = screen.getByPlaceholderText(
           "Apt, floor, suite, etc."
         )
         await userEvent.clear(addressLine2)
+        await userEvent.tab()
         await userEvent.paste(addressLine1, " Suite 25")
 
         await waitFor(() => {
@@ -1644,6 +1647,8 @@ describe("Shipping", () => {
 
           expect(shippingBox).toHaveStyle({ height: "0px" })
         })
+
+        await flushPromiseQueue()
 
         await saveAndContinue()
         await flushPromiseQueue()
