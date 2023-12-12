@@ -181,7 +181,7 @@ const FulfillmentDetailsFormLayout = (
 
   // When not showing the form/creating a new address,
   // inputs should not be tabbable
-  const tabbableFormValue = (activeForm: typeof addressFormMode): 0 | -1 =>
+  const tabbableIf = (activeForm: AddressFormMode): 0 | -1 =>
     addressFormMode === activeForm ? 0 : -1
 
   const handleSelectSavedAddress = (address: ShippingAddressFormValues) => {
@@ -274,7 +274,7 @@ const FulfillmentDetailsFormLayout = (
             <GridColumns>
               <Column span={12}>
                 <Input
-                  tabIndex={tabbableFormValue("new_address")}
+                  tabIndex={tabbableIf("new_address")}
                   id="attributes.name"
                   placeholder="Full name"
                   title={"Full name"}
@@ -298,7 +298,7 @@ const FulfillmentDetailsFormLayout = (
                 </Text>
                 <CountrySelect
                   aria-labelledby="country-select"
-                  tabIndex={tabbableFormValue("new_address")}
+                  tabIndex={tabbableIf("new_address")}
                   selected={values.attributes.country}
                   onSelect={trackAutoCompleteEdits("country", selected => {
                     setFieldValue(`attributes.country`, selected)
@@ -334,7 +334,7 @@ const FulfillmentDetailsFormLayout = (
                   }}
                   flip={false}
                   disableAutocomplete={values.attributes.region === "AK"}
-                  tabIndex={tabbableFormValue("new_address")}
+                  tabIndex={tabbableIf("new_address")}
                   name="attributes.addressLine1"
                   placeholder="Street address"
                   title="Address line 1"
@@ -385,7 +385,7 @@ const FulfillmentDetailsFormLayout = (
               </Column>
               <Column span={12}>
                 <Input
-                  tabIndex={tabbableFormValue("new_address")}
+                  tabIndex={tabbableIf("new_address")}
                   name="attributes.addressLine2"
                   placeholder="Apt, floor, suite, etc."
                   title="Address line 2 (optional)"
@@ -406,7 +406,7 @@ const FulfillmentDetailsFormLayout = (
               </Column>
               <Column span={12}>
                 <Input
-                  tabIndex={tabbableFormValue("new_address")}
+                  tabIndex={tabbableIf("new_address")}
                   name="attributes.city"
                   placeholder="City"
                   title="City"
@@ -422,7 +422,7 @@ const FulfillmentDetailsFormLayout = (
               </Column>
               <Column span={6}>
                 <Input
-                  tabIndex={tabbableFormValue("new_address")}
+                  tabIndex={tabbableIf("new_address")}
                   name="attributes.region"
                   placeholder={
                     values.attributes.country === "US"
@@ -447,7 +447,7 @@ const FulfillmentDetailsFormLayout = (
               </Column>
               <Column span={6} data-testid="AddressForm_region_area">
                 <Input
-                  tabIndex={tabbableFormValue("new_address")}
+                  tabIndex={tabbableIf("new_address")}
                   name="attributes.postalCode"
                   placeholder={
                     values.attributes.country === "US"
@@ -477,7 +477,7 @@ const FulfillmentDetailsFormLayout = (
                 <>
                   <Column span={12}>
                     <Input
-                      tabIndex={tabbableFormValue("new_address")}
+                      tabIndex={tabbableIf("new_address")}
                       name="attributes.phoneNumber"
                       title="Phone number"
                       type="tel"
@@ -502,7 +502,7 @@ const FulfillmentDetailsFormLayout = (
 
             <Checkbox
               data-testid="FulfillmentDetailsForm_saveAddress"
-              tabIndex={tabbableFormValue("new_address")}
+              tabIndex={tabbableIf("new_address")}
               onSelect={selected => {
                 setFieldValue("attributes.saveAddress", selected)
               }}
@@ -522,7 +522,7 @@ const FulfillmentDetailsFormLayout = (
         {values.fulfillmentType === FulfillmentType.PICKUP && (
           <>
             <Input
-              tabIndex={tabbableFormValue("pickup")}
+              tabIndex={tabbableIf("pickup")}
               id="attributes.name"
               placeholder="Full name"
               title={"Full name"}
@@ -534,7 +534,7 @@ const FulfillmentDetailsFormLayout = (
               data-testid="AddressForm_name"
             />
             <Input
-              tabIndex={tabbableFormValue("pickup")}
+              tabIndex={tabbableIf("pickup")}
               name="attributes.phoneNumber"
               title="Phone number"
               type="tel"

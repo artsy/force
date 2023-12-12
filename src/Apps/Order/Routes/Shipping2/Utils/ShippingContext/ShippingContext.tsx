@@ -21,6 +21,7 @@ export interface State {
   newSavedAddressId: string | null
   selectedShippingQuoteId: string | null
   stage: ShippingStage
+  isPerformingOperation: boolean
 }
 
 type FulfillmentHelpers = Pick<
@@ -46,6 +47,7 @@ interface ShippingContextHelpers {
   ) => void
   setSelectedShippingQuote: (payload: string | null) => void
   setNewSavedAddressId: (payload: string | null) => void
+  setIsPerformingOperation: (payload: boolean) => void
   setStage: (payload: ShippingStage) => void
 }
 
@@ -71,6 +73,7 @@ export const ShippingContextProvider: FC<Pick<
     newSavedAddressId: null,
     selectedShippingQuoteId: parsedOrderData.selectedShippingQuoteId ?? null,
     stage: isArtsyShipping ? "refresh_shipping_quotes" : "fulfillment_details",
+    isPerformingOperation: false,
   }
 
   const [state, dispatch] = useReducer(shippingStateReducer, initialState)
@@ -193,6 +196,8 @@ export const ShippingContextProvider: FC<Pick<
     setStage: (payload: ShippingStage) => {
       dispatch({ type: "SET_STAGE", payload })
     },
+    setIsPerformingOperation: (payload: boolean) =>
+      dispatch({ type: "SET_IS_PERFORMING_OPERATION", payload }),
     handleExchangeError,
     orderTracking,
     fulfillmentDetails: fulfillmentDetailsHelpers,
@@ -216,6 +221,7 @@ export type Action =
   | { type: "SET_SELECTED_SHIPPING_QUOTE"; payload: string | null }
   | { type: "SET_NEW_SAVED_ADDRESS_ID"; payload: string | null }
   | { type: "SET_STAGE"; payload: ShippingStage }
+  | { type: "SET_IS_PERFORMING_OPERATION"; payload: boolean }
 
 const shippingStateReducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -225,6 +231,8 @@ const shippingStateReducer = (state: State, action: Action): State => {
       return { ...state, newSavedAddressId: action.payload }
     case "SET_STAGE":
       return { ...state, stage: action.payload }
+    case "SET_IS_PERFORMING_OPERATION":
+      return { ...state, isPerformingOperation: action.payload }
     default:
       return state
   }
