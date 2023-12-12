@@ -1,11 +1,8 @@
 import { FulfillmentDetailsForm_order$data } from "__generated__/FulfillmentDetailsForm_order.graphql"
-
-import { FormikHelpers } from "formik"
 import { FC, useCallback, useEffect, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
-
 import {
   AddressFormMode,
   FulfillmentDetailsForm,
@@ -27,7 +24,7 @@ import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippin
 const logger = createLogger("Routes/Shipping2/FulfillmentDetails.tsx")
 
 export interface FulfillmentDetailsProps {
-  processUserAddressUpdates: (newValues: FulfillmentValues) => Promise<void>
+  handleUserAddressUpdates: (newValues: FulfillmentValues) => Promise<void>
   onFulfillmentDetailsSaved: (result: {
     requiresArtsyShipping: boolean
   }) => void
@@ -87,7 +84,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
   }, [forceNewAddressFormMode, hasSavedAddresses])
 
   const savedAddresses = extractNodes(props.me.addressConnection)
-  const shippingMode: AddressFormMode =
+  const shippingMode: Exclude<AddressFormMode, "pickup"> =
     forceNewAddressFormMode || savedAddresses.length === 0
       ? "new_address"
       : "saved_addresses"
@@ -96,14 +93,10 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
     async ({
       performUserAddressUpdates,
       formValues,
-      formikHelpers,
     }: {
       performUserAddressUpdates: boolean
       formValues: FulfillmentValues
-      formikHelpers?: FormikHelpers<FulfillmentValues>
     }) => {
-      const { setSubmitting } = formikHelpers || {}
-      setSubmitting && setSubmitting(true)
       try {
         let fulfillmentMutationValues: CommerceSetShippingInput
         let requiresArtsyShippingToDestination: boolean
@@ -166,7 +159,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
         }
 
         if (performUserAddressUpdates) {
-          await props.processUserAddressUpdates(formValues)
+          await props.handleUserAddressUpdates(formValues)
         }
 
         props.onFulfillmentDetailsSaved({
@@ -220,7 +213,6 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
         return submitFulfillmentDetails({
           performUserAddressUpdates: forceNewAddressFormMode,
           formValues: values,
-          formikHelpers: helpers,
         })
       }
     },

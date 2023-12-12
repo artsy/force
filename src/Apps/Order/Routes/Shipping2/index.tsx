@@ -397,7 +397,7 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
               me={props.me}
               order={props.order}
               onFulfillmentDetailsSaved={handleFulfillmentDetailsSaved}
-              processUserAddressUpdates={handleUserAddressUpdates}
+              handleUserAddressUpdates={handleUserAddressUpdates}
             />
 
             {/* SHIPPING Quotes */}

@@ -55,7 +55,7 @@ interface FulfillmentDetailsFormLayoutProps {
   verifyAddressNow: boolean
   onAddressVerificationComplete: () => void
   availableFulfillmentTypes: FulfillmentType[]
-  shippingMode: "saved_addresses" | "new_address"
+  shippingMode: Exclude<AddressFormMode, "pickup">
 }
 
 export type AddressFormMode = "saved_addresses" | "new_address" | "pickup"
