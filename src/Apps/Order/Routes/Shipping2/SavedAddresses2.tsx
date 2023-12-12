@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useCallback, useState } from "react"
+import { useState } from "react"
 import styled from "styled-components"
 import { compact } from "lodash"
 import { RadioGroup, BorderedRadio, Spacer, Clickable } from "@artsy/palette"
@@ -83,21 +83,18 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     shippingContext.parsedOrderData.availableShippingCountries,
   ])
 
-  const handleSelectAddress = useCallback(
-    (id: string): void => {
-      setSelectedAddressID(id)
-      const selectedAddress = getAddressByID(addressList, id)
-      if (!selectedAddress) {
-        logger.warn("Address not found: ", id)
-      }
-      orderTracking.clickedShippingAddress()
-      // Set values on the fulfillment form context.
-      // Can these values be invalid? If so, maybe we could pop a form up for
-      // them to fix it. Seems unlikely.
-      onSelect(addressWithFallbackValues(selectedAddress))
-    },
-    [addressList, onSelect, orderTracking, logger]
-  )
+  const handleSelectAddress = (id: string): void => {
+    setSelectedAddressID(id)
+    const selectedAddress = getAddressByID(addressList, id)
+    if (!selectedAddress) {
+      logger.warn("Address not found: ", id)
+    }
+    orderTracking.clickedShippingAddress()
+    // Set values on the fulfillment form context.
+    // Can these values be invalid? If so, maybe we could pop a form up for
+    // them to fix it. Seems unlikely.
+    onSelect(addressWithFallbackValues(selectedAddress))
+  }
 
   const refetchAddresses = () => {
     return new Promise<void>((resolve, reject) =>

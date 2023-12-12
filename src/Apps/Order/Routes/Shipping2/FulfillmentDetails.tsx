@@ -1,5 +1,5 @@
 import { FulfillmentDetailsForm_order$data } from "__generated__/FulfillmentDetailsForm_order.graphql"
-import { FC, useCallback, useEffect, useMemo, useState } from "react"
+import { FC, useEffect, useRef, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
@@ -44,26 +44,19 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
   )
 
   const hasSavedAddresses = extractNodes(props.me.addressConnection).length
-  const shouldVerifyAddressOnSubmit = useCallback(
-    (values: FulfillmentValues) => {
-      const enabledForAddress =
-        (values as ShipValues).attributes.country === "US"
-          ? addressVerificationUSEnabled
-          : addressVerificationIntlEnabled
+  const shouldVerifyAddressOnSubmit = (values: FulfillmentValues) => {
+    const enabledForAddress =
+      (values as ShipValues).attributes.country === "US"
+        ? addressVerificationUSEnabled
+        : addressVerificationIntlEnabled
 
-      return (
-        values.fulfillmentType === FulfillmentType.SHIP &&
-        !hasSavedAddresses &&
-        enabledForAddress &&
-        values.attributes.addressVerifiedBy === null
-      )
-    },
-    [
-      addressVerificationIntlEnabled,
-      addressVerificationUSEnabled,
-      hasSavedAddresses,
-    ]
-  )
+    return (
+      values.fulfillmentType === FulfillmentType.SHIP &&
+      !hasSavedAddresses &&
+      enabledForAddress &&
+      values.attributes.addressVerifiedBy === null
+    )
+  }
 
   // trigger address verification by setting this to true
   const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)
@@ -89,101 +82,90 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
       ? "new_address"
       : "saved_addresses"
 
-  const submitFulfillmentDetails = useCallback(
-    async ({
-      performUserAddressUpdates,
-      formValues,
-    }: {
-      performUserAddressUpdates: boolean
-      formValues: FulfillmentValues
-    }) => {
-      try {
-        let fulfillmentMutationValues: CommerceSetShippingInput
-        let requiresArtsyShippingToDestination: boolean
+  const submitFulfillmentDetails = async ({
+    performUserAddressUpdates,
+    formValues,
+  }: {
+    performUserAddressUpdates: boolean
+    formValues: FulfillmentValues
+  }) => {
+    try {
+      let fulfillmentMutationValues: CommerceSetShippingInput
+      let requiresArtsyShippingToDestination: boolean
 
-        if (formValues.fulfillmentType === FulfillmentType.SHIP) {
-          const {
-            saveAddress,
-            addressVerifiedBy,
-            phoneNumber,
-            ...addressValues
-          } = formValues.attributes
-          requiresArtsyShippingToDestination = shippingContext.parsedOrderData.requiresArtsyShippingTo(
-            addressValues.country
-          )
+      if (formValues.fulfillmentType === FulfillmentType.SHIP) {
+        const {
+          saveAddress,
+          addressVerifiedBy,
+          phoneNumber,
+          ...addressValues
+        } = formValues.attributes
+        requiresArtsyShippingToDestination = shippingContext.parsedOrderData.requiresArtsyShippingTo(
+          addressValues.country
+        )
 
-          fulfillmentMutationValues = {
-            id: props.order.internalID,
-            fulfillmentType: requiresArtsyShippingToDestination
-              ? "SHIP_ARTA"
-              : FulfillmentType.SHIP,
-            phoneNumber,
-            shipping: { ...addressValues, phoneNumber: "" },
-          }
-
-          if (addressVerifiedBy) {
-            fulfillmentMutationValues.addressVerifiedBy = addressVerifiedBy
-          }
-        } else {
-          requiresArtsyShippingToDestination = false
-
-          fulfillmentMutationValues = {
-            id: props.order.internalID,
-            fulfillmentType: FulfillmentType.PICKUP,
-            phoneNumber: formValues.attributes.phoneNumber,
-            shipping: {
-              addressLine1: "",
-              addressLine2: "",
-              country: "",
-              name: "",
-              city: "",
-              postalCode: "",
-              region: "",
-              phoneNumber: "",
-            },
-          }
+        fulfillmentMutationValues = {
+          id: props.order.internalID,
+          fulfillmentType: requiresArtsyShippingToDestination
+            ? "SHIP_ARTA"
+            : FulfillmentType.SHIP,
+          phoneNumber,
+          shipping: { ...addressValues, phoneNumber: "" },
         }
 
-        const result = await saveFulfillmentDetails.submitMutation({
-          variables: { input: fulfillmentMutationValues },
-        })
-
-        const orderOrError = result.commerceSetShipping?.orderOrError
-
-        if (orderOrError?.__typename === "CommerceOrderWithMutationFailure") {
-          shippingContext.helpers.handleExchangeError(
-            orderOrError.error,
-            logger
-          )
-          return
+        if (addressVerifiedBy) {
+          fulfillmentMutationValues.addressVerifiedBy = addressVerifiedBy
         }
+      } else {
+        requiresArtsyShippingToDestination = false
 
-        if (performUserAddressUpdates) {
-          await props.handleUserAddressUpdates(formValues)
+        fulfillmentMutationValues = {
+          id: props.order.internalID,
+          fulfillmentType: FulfillmentType.PICKUP,
+          phoneNumber: formValues.attributes.phoneNumber,
+          shipping: {
+            addressLine1: "",
+            addressLine2: "",
+            country: "",
+            name: "",
+            city: "",
+            postalCode: "",
+            region: "",
+            phoneNumber: "",
+          },
         }
-
-        props.onFulfillmentDetailsSaved({
-          requiresArtsyShipping: requiresArtsyShippingToDestination,
-        })
-      } catch (error) {
-        shippingContext.helpers.orderTracking.errorMessageViewed({
-          error_code: null,
-          title: "An error occurred",
-          message:
-            "Something went wrong. Please try again or contact orders@artsy.net.",
-          flow: "user selects a shipping option",
-        })
-
-        shippingContext.helpers.dialog.showErrorDialog()
       }
-    },
-    [
-      saveFulfillmentDetails,
-      props,
-      shippingContext.parsedOrderData,
-      shippingContext.helpers,
-    ]
-  )
+
+      const result = await saveFulfillmentDetails.submitMutation({
+        variables: { input: fulfillmentMutationValues },
+      })
+
+      const orderOrError = result.commerceSetShipping?.orderOrError
+
+      if (orderOrError?.__typename === "CommerceOrderWithMutationFailure") {
+        shippingContext.helpers.handleExchangeError(orderOrError.error, logger)
+        return
+      }
+
+      if (performUserAddressUpdates) {
+        await props.handleUserAddressUpdates(formValues)
+      }
+
+      props.onFulfillmentDetailsSaved({
+        requiresArtsyShipping: requiresArtsyShippingToDestination,
+      })
+    } catch (error) {
+      shippingContext.helpers.orderTracking.errorMessageViewed({
+        error_code: null,
+        title: "An error occurred",
+        message:
+          "Something went wrong. Please try again or contact orders@artsy.net.",
+        flow: "user selects a shipping option",
+      })
+
+      shippingContext.helpers.dialog.showErrorDialog()
+    }
+  }
 
   // Force-re-save fulfillment details with existing values to refresh shipping quotes
   useEffect(() => {
@@ -204,24 +186,17 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleSubmit = useCallback(
-    (values, helpers) => {
-      if (shouldVerifyAddressOnSubmit(values)) {
-        setVerifyAddressNow(true)
-        return
-      } else {
-        return submitFulfillmentDetails({
-          performUserAddressUpdates: forceNewAddressFormMode,
-          formValues: values,
-        })
-      }
-    },
-    [
-      shouldVerifyAddressOnSubmit,
-      submitFulfillmentDetails,
-      forceNewAddressFormMode,
-    ]
-  )
+  const handleSubmit = values => {
+    if (shouldVerifyAddressOnSubmit(values)) {
+      setVerifyAddressNow(true)
+      return
+    } else {
+      return submitFulfillmentDetails({
+        performUserAddressUpdates: forceNewAddressFormMode,
+        formValues: values,
+      })
+    }
+  }
 
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstArtwork = extractNodes(props.order.lineItems)[0]!.artwork!
@@ -230,11 +205,10 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
     ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
     : [FulfillmentType.SHIP]
 
-  const initialValues = useMemo(
-    () => getInitialValues(props.me, shippingContext.parsedOrderData),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    []
-  )
+  // Only process once on load
+  const initialValues = useRef(
+    getInitialValues(props.me, shippingContext.parsedOrderData)
+  ).current
 
   return (
     <FulfillmentDetailsForm

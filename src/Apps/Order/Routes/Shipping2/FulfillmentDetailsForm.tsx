@@ -32,7 +32,7 @@ import {
   Formik,
 } from "formik"
 import { pick } from "lodash"
-import { useEffect, useCallback, useState } from "react"
+import { useEffect, useState } from "react"
 import { ADDRESS_VALIDATION_SHAPE } from "Apps/Order/Utils/shippingUtils"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
@@ -130,16 +130,15 @@ const FulfillmentDetailsFormLayout = (
     values,
   ])
 
-  const trackAutoCompleteEdits = useCallback(
-    (fieldName: string, handleChange) => (...args) => {
-      if (hasAutocompletedAddress) {
-        autocompleteTracking.editedAutocompletedAddress(fieldName)
-        setHasAutocompletedAddress(false)
-      }
-      handleChange(...args)
-    },
-    [autocompleteTracking, hasAutocompletedAddress]
-  )
+  const trackAutoCompleteEdits = (fieldName: string, handleChange) => (
+    ...args
+  ) => {
+    if (hasAutocompletedAddress) {
+      autocompleteTracking.editedAutocompletedAddress(fieldName)
+      setHasAutocompletedAddress(false)
+    }
+    handleChange(...args)
+  }
 
   const handleCloseVerification = async () => {
     await setFieldValue("attributes.addressVerifiedBy", AddressVerifiedBy.USER)
@@ -185,20 +184,16 @@ const FulfillmentDetailsFormLayout = (
   const tabbableFormValue = (activeForm: typeof addressFormMode): 0 | -1 =>
     addressFormMode === activeForm ? 0 : -1
 
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const handleSelectSavedAddress = useCallback(
-    (address: ShippingAddressFormValues) => {
-      setValues({
-        fulfillmentType: FulfillmentType.SHIP,
-        attributes: {
-          ...address,
-          saveAddress: false,
-          addressVerifiedBy: null,
-        },
-      })
-    },
-    [setValues]
-  )
+  const handleSelectSavedAddress = (address: ShippingAddressFormValues) => {
+    setValues({
+      fulfillmentType: FulfillmentType.SHIP,
+      attributes: {
+        ...address,
+        saveAddress: false,
+        addressVerifiedBy: null,
+      },
+    })
+  }
 
   return (
     <Form data-testid="FulfillmentDetails_form">

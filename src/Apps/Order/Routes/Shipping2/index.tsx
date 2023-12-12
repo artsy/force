@@ -1,4 +1,4 @@
-import { FC, useCallback, useMemo, useEffect } from "react"
+import { FC, useEffect } from "react"
 import { Router } from "found"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { compact } from "lodash"
@@ -102,20 +102,21 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
   const isArtsyShipping =
     parsedOrderData.savedFulfillmentDetails?.isArtsyShipping
 
-  const advanceToPayment = useCallback(() => {
+  const advanceToPayment = () => {
     props.router.push(`/orders/${props.order.internalID}/payment`)
-  }, [props.router, props.order.internalID])
+  }
 
-  const handleFulfillmentDetailsSaved = useCallback(
-    ({ requiresArtsyShipping }: { requiresArtsyShipping: boolean }) => {
-      if (requiresArtsyShipping) {
-        shippingContext.helpers.setStage("shipping_quotes")
-      } else {
-        advanceToPayment()
-      }
-    },
-    [advanceToPayment, shippingContext.helpers]
-  )
+  const handleFulfillmentDetailsSaved = ({
+    requiresArtsyShipping,
+  }: {
+    requiresArtsyShipping: boolean
+  }) => {
+    if (requiresArtsyShipping) {
+      shippingContext.helpers.setStage("shipping_quotes")
+    } else {
+      advanceToPayment()
+    }
+  }
 
   const formValues = fulfillmentFormHelpers.values
   const previousFormValues = usePrevious(formValues)
@@ -163,98 +164,87 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
     shippingContext.helpers,
   ])
 
-  const currentSavedFulfillmentDetails =
-    parsedOrderData.savedFulfillmentDetails?.fulfillmentDetails
-  const handleUserAddressUpdates = useCallback(
-    async (formValues: FulfillmentValues) => {
-      if (formValues.fulfillmentType !== FulfillmentType.SHIP) {
-        return
-      }
-      const formAddressAttributes = formValues.attributes
-      const addressShouldBeSaved = !!formAddressAttributes.saveAddress
-      const current = {
-        newSavedAddressId: shippingContext.state.newSavedAddressId,
-        savedFulfillmentDetails: currentSavedFulfillmentDetails,
-      }
+  const handleUserAddressUpdates = async (formValues: FulfillmentValues) => {
+    if (formValues.fulfillmentType !== FulfillmentType.SHIP) {
+      return
+    }
 
-      try {
-        if (addressShouldBeSaved) {
-          if (!current.newSavedAddressId) {
-            // Address not saved, create it
-            const response = await createSavedAddress.submitMutation({
-              variables: {
-                input: {
-                  attributes: addressWithFallbackValues(formAddressAttributes),
-                },
+    const formAddressAttributes = formValues.attributes
+    const addressShouldBeSaved = !!formAddressAttributes.saveAddress
+    const current = {
+      newSavedAddressId: shippingContext.state.newSavedAddressId,
+      savedFulfillmentDetails:
+        parsedOrderData.savedFulfillmentDetails?.fulfillmentDetails,
+    }
+
+    try {
+      if (addressShouldBeSaved) {
+        if (!current.newSavedAddressId) {
+          // Address not saved, create it
+          const response = await createSavedAddress.submitMutation({
+            variables: {
+              input: {
+                attributes: addressWithFallbackValues(formAddressAttributes),
               },
-            })
-            const newAddress = response?.createUserAddress?.userAddressOrErrors
-            if (newAddress?.__typename === "UserAddress") {
-              shippingContext.helpers.setNewSavedAddressId(
-                newAddress.internalID
-              )
-              return
-            }
-            // Address create failed
-            // const errorMessage = newAddress?.__typename === "Errors"
-            //   ? newAddress.errors.map(e => e.message).join(", ")
-            //   : "Something went wrong."
-            // throw new Error(errorMessage)
+            },
+          })
+          const newAddress = response?.createUserAddress?.userAddressOrErrors
+          if (newAddress?.__typename === "UserAddress") {
+            shippingContext.helpers.setNewSavedAddressId(newAddress.internalID)
             return
-          } else if (
-            current.newSavedAddressId &&
-            current.savedFulfillmentDetails &&
-            !matchAddressFields(
-              current.savedFulfillmentDetails,
-              formAddressAttributes
-            )
-          ) {
-            await updateSavedAddress.submitMutation({
-              variables: {
-                input: {
-                  userAddressID: current.newSavedAddressId,
-                  attributes: addressWithFallbackValues(formAddressAttributes),
-                },
-              },
-            })
           }
-        } else {
-          // Address should not be saved, delete it if it exists
-          if (shippingContext.state.newSavedAddressId) {
-            await deleteSavedAddress.submitMutation({
-              variables: {
-                input: {
-                  userAddressID: shippingContext.state.newSavedAddressId,
-                },
+          // Address create failed
+          // const errorMessage = newAddress?.__typename === "Errors"
+          //   ? newAddress.errors.map(e => e.message).join(", ")
+          //   : "Something went wrong."
+          // throw new Error(errorMessage)
+          return
+        } else if (
+          current.newSavedAddressId &&
+          current.savedFulfillmentDetails &&
+          !matchAddressFields(
+            current.savedFulfillmentDetails,
+            formAddressAttributes
+          )
+        ) {
+          await updateSavedAddress.submitMutation({
+            variables: {
+              input: {
+                userAddressID: current.newSavedAddressId,
+                attributes: addressWithFallbackValues(formAddressAttributes),
               },
-            })
-            shippingContext.helpers.setNewSavedAddressId(null)
-          }
+            },
+          })
         }
-      } catch (error) {
-        logger.error(error)
+      } else {
+        // Address should not be saved, delete it if it exists
+        if (shippingContext.state.newSavedAddressId) {
+          await deleteSavedAddress.submitMutation({
+            variables: {
+              input: {
+                userAddressID: shippingContext.state.newSavedAddressId,
+              },
+            },
+          })
+          shippingContext.helpers.setNewSavedAddressId(null)
+        }
       }
-    },
-    [
-      createSavedAddress,
-      currentSavedFulfillmentDetails,
-      deleteSavedAddress,
-      shippingContext.helpers,
-      shippingContext.state.newSavedAddressId,
-      updateSavedAddress,
-    ]
-  )
+    } catch (error) {
+      logger.error(error)
+    }
+  }
 
-  const savedFulfillmentType =
-    parsedOrderData.savedFulfillmentDetails?.fulfillmentType
-  const saveSelectedShippingQuote = useCallback(async () => {
+  const saveSelectedShippingQuote = async () => {
     const { order } = props
 
     if (!shippingContext.state.selectedShippingQuoteId) {
       logger.error("No shipping quote selected")
       return
     }
-    if (savedFulfillmentType !== FulfillmentType.SHIP) {
+    if (
+      parsedOrderData.savedFulfillmentDetails?.fulfillmentType !==
+      FulfillmentType.SHIP
+    ) {
       logger.error("No shipping address saved")
       return
     }
@@ -292,16 +282,7 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
         message: <ArtaErrorDialogMessage />,
       })
     }
-  }, [
-    props,
-    shippingContext.state.selectedShippingQuoteId,
-    savedFulfillmentType,
-    selectShippingQuote,
-    handleUserAddressUpdates,
-    fulfillmentFormHelpers.values,
-    advanceToPayment,
-    shippingContext.helpers,
-  ])
+  }
 
   const handleShippingQuoteSelected = (newShippingQuoteId: string) => {
     shippingContext.helpers.orderTracking.clickedSelectShippingOption(
@@ -351,7 +332,7 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
 
   const submitFulfillmentDetailsFormik = fulfillmentFormHelpers.submitForm
 
-  const onContinueButtonPressed = useCallback(async () => {
+  const onContinueButtonPressed = async () => {
     if (shippingContext.state.stage === "fulfillment_details") {
       return submitFulfillmentDetailsFormik()
     }
@@ -361,13 +342,9 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
 
       return
     }
-  }, [
-    shippingContext.state.stage,
-    submitFulfillmentDetailsFormik,
-    saveSelectedShippingQuote,
-  ])
+  }
 
-  const disableSubmit = useMemo(() => {
+  const disableSubmit = (() => {
     if (shippingContext.state.stage === "fulfillment_details") {
       return !(fulfillmentFormHelpers.isValid || isCommittingMutation)
     } else if (shippingContext.state.stage === "shipping_quotes") {
@@ -375,12 +352,7 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
         shippingContext.state.selectedShippingQuoteId || isCommittingMutation
       )
     }
-  }, [
-    shippingContext.state.stage,
-    fulfillmentFormHelpers.isValid,
-    isCommittingMutation,
-    shippingContext.state.selectedShippingQuoteId,
-  ])
+  })()
 
   const maybeShippingQuotesConnectionEdges =
     order.lineItems?.edges?.[0]?.node?.shippingQuoteOptions?.edges
