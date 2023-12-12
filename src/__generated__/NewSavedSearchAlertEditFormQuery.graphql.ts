@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3f62589a13a74921b3248be238f8b525>>
+ * @generated SignedSource<<55c8d19b6d7dd2217f0314877cdbff02>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,6 +19,7 @@ export type NewSavedSearchAlertEditFormQuery$data = {
       readonly acquireable: boolean | null | undefined;
       readonly additionalGeneIDs: ReadonlyArray<string>;
       readonly artistIDs: ReadonlyArray<string> | null | undefined;
+      readonly artistSeriesIDs: ReadonlyArray<string>;
       readonly atAuction: boolean | null | undefined;
       readonly attributionClass: ReadonlyArray<string>;
       readonly colors: ReadonlyArray<string>;
@@ -106,6 +107,13 @@ v2 = {
       "args": null,
       "kind": "ScalarField",
       "name": "artistIDs",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "artistSeriesIDs",
       "storageKey": null
     },
     {
@@ -346,12 +354,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2174b7718bb0957bce7a4d8758ae51b7",
+    "cacheID": "04bb3500b151eb23817586e4d5b38ba8",
     "id": null,
     "metadata": {},
     "name": "NewSavedSearchAlertEditFormQuery",
     "operationKind": "query",
-    "text": "query NewSavedSearchAlertEditFormQuery(\n  $id: ID!\n) {\n  viewer {\n    ...NewSavedSearchAlertEditForm_viewer\n  }\n  me {\n    savedSearch(id: $id) {\n      internalID\n      acquireable\n      additionalGeneIDs\n      artistIDs\n      atAuction\n      attributionClass\n      colors\n      dimensionRange\n      sizes\n      width\n      height\n      inquireableOnly\n      locationCities\n      majorPeriods\n      materialsTerms\n      offerable\n      partnerIDs\n      priceRange\n      userAlertSettings {\n        name\n        email\n        push\n        details\n      }\n    }\n    id\n  }\n}\n\nfragment NewSavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
+    "text": "query NewSavedSearchAlertEditFormQuery(\n  $id: ID!\n) {\n  viewer {\n    ...NewSavedSearchAlertEditForm_viewer\n  }\n  me {\n    savedSearch(id: $id) {\n      internalID\n      acquireable\n      additionalGeneIDs\n      artistIDs\n      artistSeriesIDs\n      atAuction\n      attributionClass\n      colors\n      dimensionRange\n      sizes\n      width\n      height\n      inquireableOnly\n      locationCities\n      majorPeriods\n      materialsTerms\n      offerable\n      partnerIDs\n      priceRange\n      userAlertSettings {\n        name\n        email\n        push\n        details\n      }\n    }\n    id\n  }\n}\n\nfragment NewSavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
   }
 };
 })();
