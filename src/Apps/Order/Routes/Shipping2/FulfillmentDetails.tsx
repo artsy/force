@@ -5,9 +5,11 @@ import { FC, useCallback, useEffect, useMemo, useState } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
-import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 
-import { FulfillmentDetailsForm } from "Apps/Order/Routes/Shipping2/FulfillmentDetailsForm"
+import {
+  AddressFormMode,
+  FulfillmentDetailsForm,
+} from "Apps/Order/Routes/Shipping2/FulfillmentDetailsForm"
 import {
   FulfillmentType,
   FulfillmentValues,
@@ -15,11 +17,12 @@ import {
   addressWithFallbackValues,
   getDefaultUserAddress,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
-import { ParsedOrderData } from "Apps/Order/Routes/Shipping2/Hooks/useParseOrderData"
+import { ParsedOrderData } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext/useParseOrderData"
 import { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
 import createLogger from "Utils/logger"
 import { useSaveFulfillmentDetails } from "Apps/Order/Routes/Shipping2/Mutations/useSaveFulfillmentDetails"
 import { CommerceSetShippingInput } from "__generated__/useSaveFulfillmentDetailsMutation.graphql"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 
 const logger = createLogger("Routes/Shipping2/FulfillmentDetails.tsx")
 
@@ -82,6 +85,12 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
       setForceNewAddressFormMode(true)
     }
   }, [forceNewAddressFormMode, hasSavedAddresses])
+
+  const savedAddresses = extractNodes(props.me.addressConnection)
+  const shippingMode: AddressFormMode =
+    forceNewAddressFormMode || savedAddresses.length === 0
+      ? "new_address"
+      : "saved_addresses"
 
   const submitFulfillmentDetails = useCallback(
     async ({
@@ -243,7 +252,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
       verifyAddressNow={verifyAddressNow}
       onSubmit={handleSubmit}
       availableFulfillmentTypes={availableFulfillmentTypes}
-      forceNewAddressFormMode={forceNewAddressFormMode}
+      shippingMode={shippingMode}
     />
   )
 }

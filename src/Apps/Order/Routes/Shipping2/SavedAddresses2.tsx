@@ -15,7 +15,6 @@ import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/SavedAddressItem2"
 import { extractNodes } from "Utils/extractNodes"
 import { themeGet } from "@styled-system/theme-get"
 
-import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import {
   SavedAddressType,
   ShippingAddressFormValues,
@@ -23,6 +22,7 @@ import {
   getDefaultUserAddress,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30

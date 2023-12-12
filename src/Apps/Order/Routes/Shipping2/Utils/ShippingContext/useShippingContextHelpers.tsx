@@ -1,10 +1,7 @@
-import { useCallback, useContext, useState } from "react"
+import { useCallback, useState } from "react"
 import { FormikProps } from "formik"
-import { ParsedOrderData } from "Apps/Order/Routes/Shipping2/Hooks/useParseOrderData"
-import {
-  ShippingContext,
-  ShippingStage,
-} from "Apps/Order/Routes/Shipping2/Utils/ShippingContext"
+import { ParsedOrderData } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext/useParseOrderData"
+import { ShippingStage } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext/ShippingContext"
 import { FulfillmentValues } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import createLogger from "Utils/logger"
 import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
@@ -14,10 +11,6 @@ import {
   getErrorDialogCopy,
 } from "Apps/Order/Utils/getErrorDialogCopy"
 import { Dialog } from "Apps/Order/Dialogs"
-
-export const useShippingContext = () => {
-  return useContext(ShippingContext)
-}
 
 type FulfillmentHelpers = Pick<
   FormikProps<FulfillmentValues>,

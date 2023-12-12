@@ -25,15 +25,11 @@ import {
 
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { Collapse } from "Apps/Order/Components/Collapse"
-
 import { ShippingQuotesFragmentContainer } from "Apps/Order/Components/ShippingQuotes"
-
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { Analytics } from "System/Analytics/AnalyticsContext"
 import { FulfillmentDetailsFragmentContainer } from "Apps/Order/Routes/Shipping2/FulfillmentDetails"
-import { useComputeShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
-
 import {
   addressWithFallbackValues,
   FulfillmentType,
@@ -42,11 +38,12 @@ import {
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { useCreateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useCreateSavedAddress"
 import { useSelectShippingQuote } from "Apps/Order/Routes/Shipping2/Mutations/useSelectShippingQuote"
-import { ShippingContext } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext"
+import { ShippingContextProvider } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext/ShippingContext"
 import { useDeleteSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useDeleteSavedAddress"
 import { useUpdateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useUpdateSavedAddress"
 import { extractNodes } from "Utils/extractNodes"
 import { ArtaErrorDialogMessage } from "Apps/Order/Utils/getErrorDialogCopy"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 
 const logger = createLogger("Order/Routes/Shipping/index.tsx")
 
@@ -61,6 +58,27 @@ export interface ShippingProps {
 }
 
 export const ShippingRoute: FC<ShippingProps> = props => {
+  return (
+    <Analytics contextPageOwnerId={props.order.internalID}>
+      <ShippingContextProvider
+        dialog={props.dialog}
+        order={props.order}
+        me={props.me}
+      >
+        <ShippingRouteLayout
+          dialog={props.dialog}
+          order={props.order}
+          me={props.me}
+          isCommittingMutation={props.isCommittingMutation}
+          commitMutation={props.commitMutation}
+          router={props.router}
+        />
+      </ShippingContextProvider>
+    </Analytics>
+  )
+}
+
+const ShippingRouteLayout: FC<ShippingProps> = props => {
   const { order, isCommittingMutation } = props
 
   const createSavedAddress = useCreateSavedAddress()
@@ -68,7 +86,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
   const deleteSavedAddress = useDeleteSavedAddress()
   const selectShippingQuote = useSelectShippingQuote()
 
-  const shippingContext = useComputeShippingContext(props)
+  const shippingContext = useShippingContext()
 
   const {
     parsedOrderData,
@@ -365,90 +383,86 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     ? compact(maybeShippingQuotesConnectionEdges)
     : ([] as NonNullable<typeof maybeShippingQuotesConnectionEdges>)
   return (
-    <Analytics contextPageOwnerId={order.internalID}>
-      <Box data-test="orderShipping">
-        <ShippingContext.Provider value={{ ...shippingContext }}>
-          <OrderRouteContainer
-            order={order}
-            currentStep="Shipping"
-            steps={isOffer ? offerFlowSteps : buyNowFlowSteps}
-            content={
-              <Flex
-                flexDirection="column"
-                style={isCommittingMutation ? { pointerEvents: "none" } : {}}
-              >
-                <FulfillmentDetailsFragmentContainer
-                  me={props.me}
-                  order={props.order}
-                  onFulfillmentDetailsSaved={handleFulfillmentDetailsSaved}
-                  processUserAddressUpdates={handleUserAddressUpdates}
-                />
+    <Box data-test="orderShipping">
+      <OrderRouteContainer
+        order={order}
+        currentStep="Shipping"
+        steps={isOffer ? offerFlowSteps : buyNowFlowSteps}
+        content={
+          <Flex
+            flexDirection="column"
+            style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+          >
+            <FulfillmentDetailsFragmentContainer
+              me={props.me}
+              order={props.order}
+              onFulfillmentDetailsSaved={handleFulfillmentDetailsSaved}
+              processUserAddressUpdates={handleUserAddressUpdates}
+            />
 
-                {/* SHIPPING Quotes */}
-                <Collapse
-                  data-testid="ShippingQuotes_collapse"
-                  open={showArtsyShipping}
-                >
-                  <Text variant="sm">Artsy shipping options</Text>
-                  <Text variant="xs" mb="1" color="black60">
-                    {renderArtsyShippingOptionText()}
-                  </Text>
-                  <ShippingQuotesFragmentContainer
-                    mb={3}
-                    selectedShippingQuoteId={
-                      shippingContext.parsedOrderData.selectedShippingQuoteId
-                    }
-                    shippingQuotes={shippingQuotesConnectionEdges}
-                    onSelect={handleShippingQuoteSelected}
-                  />
-                  <Spacer y={4} />
-                </Collapse>
-                <Media greaterThan="xs">
-                  <Button
-                    type="submit"
-                    onClick={onContinueButtonPressed}
-                    disabled={disableSubmit}
-                    loading={isCommittingMutation || undefined}
-                    variant="primaryBlack"
-                    width="50%"
-                  >
-                    Save and Continue
-                  </Button>
-                </Media>
-              </Flex>
-            }
-            sidebar={
-              <Flex flexDirection="column">
-                <Flex flexDirection="column">
-                  <ArtworkSummaryItem order={order} />
-                  <TransactionDetailsSummaryItem
-                    order={order}
-                    transactionStep="shipping"
-                  />
-                </Flex>
-                <BuyerGuarantee
-                  contextModule={ContextModule.ordersShipping}
-                  contextPageOwnerType={OwnerType.ordersShipping}
-                />
-                <Spacer y={[2, 4]} />
-                <Media at="xs">
-                  <Button
-                    type="submit"
-                    onClick={onContinueButtonPressed}
-                    disabled={disableSubmit}
-                    loading={isCommittingMutation}
-                    variant="primaryBlack"
-                    width="100%"
-                  >
-                    Save and Continue
-                  </Button>
-                </Media>
-              </Flex>
-            }
-          />
-        </ShippingContext.Provider>
-      </Box>
-    </Analytics>
+            {/* SHIPPING Quotes */}
+            <Collapse
+              data-testid="ShippingQuotes_collapse"
+              open={showArtsyShipping}
+            >
+              <Text variant="sm">Artsy shipping options</Text>
+              <Text variant="xs" mb="1" color="black60">
+                {renderArtsyShippingOptionText()}
+              </Text>
+              <ShippingQuotesFragmentContainer
+                mb={3}
+                selectedShippingQuoteId={
+                  shippingContext.parsedOrderData.selectedShippingQuoteId
+                }
+                shippingQuotes={shippingQuotesConnectionEdges}
+                onSelect={handleShippingQuoteSelected}
+              />
+              <Spacer y={4} />
+            </Collapse>
+            <Media greaterThan="xs">
+              <Button
+                type="submit"
+                onClick={onContinueButtonPressed}
+                disabled={disableSubmit}
+                loading={isCommittingMutation || undefined}
+                variant="primaryBlack"
+                width="50%"
+              >
+                Save and Continue
+              </Button>
+            </Media>
+          </Flex>
+        }
+        sidebar={
+          <Flex flexDirection="column">
+            <Flex flexDirection="column">
+              <ArtworkSummaryItem order={order} />
+              <TransactionDetailsSummaryItem
+                order={order}
+                transactionStep="shipping"
+              />
+            </Flex>
+            <BuyerGuarantee
+              contextModule={ContextModule.ordersShipping}
+              contextPageOwnerType={OwnerType.ordersShipping}
+            />
+            <Spacer y={[2, 4]} />
+            <Media at="xs">
+              <Button
+                type="submit"
+                onClick={onContinueButtonPressed}
+                disabled={disableSubmit}
+                loading={isCommittingMutation}
+                variant="primaryBlack"
+                width="100%"
+              >
+                Save and Continue
+              </Button>
+            </Media>
+          </Flex>
+        }
+      />
+    </Box>
   )
 }
 

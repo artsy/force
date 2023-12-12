@@ -15,7 +15,6 @@ import {
   AddressVerificationFlowQueryRenderer,
 } from "Apps/Order/Components/AddressVerificationFlow"
 
-import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { SavedAddressesFragmentContainer } from "Apps/Order/Routes/Shipping2/SavedAddresses2"
 import {
   FulfillmentType,
@@ -43,49 +42,42 @@ import {
 } from "Components/Address/AddressAutocompleteInput"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
-import { extractNodes } from "Utils/extractNodes"
+import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 
-export interface FulfillmentDetailsFormProps {
-  // TODO: ideally we don't need to thread shipping2_me through here but that requires
-  // adding savedAdderesses to the context.
-  me: FulfillmentDetailsForm_me$data
+export interface FulfillmentDetailsFormProps
+  extends FulfillmentDetailsFormLayoutProps {
   initialValues: FulfillmentValues
-  verifyAddressNow: boolean
-  onAddressVerificationComplete: () => void
   onSubmit: (values: FulfillmentValues, helpers: any) => void
-  availableFulfillmentTypes: FulfillmentType[]
-  forceNewAddressFormMode: boolean
 }
 
-export const FulfillmentDetailsForm = (props: FulfillmentDetailsFormProps) => {
+interface FulfillmentDetailsFormLayoutProps {
+  me: FulfillmentDetailsForm_me$data
+  verifyAddressNow: boolean
+  onAddressVerificationComplete: () => void
+  availableFulfillmentTypes: FulfillmentType[]
+  shippingMode: "saved_addresses" | "new_address"
+}
+
+export type AddressFormMode = "saved_addresses" | "new_address" | "pickup"
+
+export const FulfillmentDetailsForm = ({
+  initialValues,
+  onSubmit,
+  ...layoutProps
+}: FulfillmentDetailsFormProps) => {
   return (
     <Formik<FulfillmentValues>
-      initialValues={props.initialValues}
-      onSubmit={props.onSubmit}
+      initialValues={initialValues}
+      onSubmit={onSubmit}
       validationSchema={VALIDATION_SCHEMA}
     >
-      <FulfillmentDetailsFormLayout
-        me={props.me}
-        verifyAddressNow={props.verifyAddressNow}
-        onAddressVerificationComplete={props.onAddressVerificationComplete}
-        availableFulfillmentTypes={props.availableFulfillmentTypes}
-        forceNewAddressFormMode={props.forceNewAddressFormMode}
-      />
+      <FulfillmentDetailsFormLayout {...layoutProps} />
     </Formik>
   )
 }
 
-type AddressFormMode = "saved_addresses" | "new_address" | "pickup"
-
 const FulfillmentDetailsFormLayout = (
-  props: Pick<
-    FulfillmentDetailsFormProps,
-    | "verifyAddressNow"
-    | "onAddressVerificationComplete"
-    | "me"
-    | "availableFulfillmentTypes"
-    | "forceNewAddressFormMode"
-  >
+  props: FulfillmentDetailsFormLayoutProps
 ) => {
   const { contextPageOwnerId } = useAnalyticsContext()
   const autocompleteTracking = useAddressAutocompleteTracking({
@@ -93,8 +85,6 @@ const FulfillmentDetailsFormLayout = (
     contextOwnerType: OwnerType.ordersShipping,
     contextPageOwnerId: contextPageOwnerId || "",
   })
-
-  const savedAddresses = extractNodes(props.me.addressConnection)
 
   const shippingContext = useShippingContext()
 
@@ -120,11 +110,7 @@ const FulfillmentDetailsFormLayout = (
   } = formikContext
 
   const addressFormMode: AddressFormMode =
-    values.fulfillmentType === FulfillmentType.PICKUP
-      ? "pickup"
-      : props.forceNewAddressFormMode || savedAddresses.length === 0
-      ? "new_address"
-      : "saved_addresses"
+    values.fulfillmentType === "SHIP" ? props.shippingMode : "pickup"
 
   // Pass some key formik bits up to the shipping route
   const setFulfillmentFormHelpers =
