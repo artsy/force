@@ -160,6 +160,7 @@ export const AddressModal: React.FC<AddressModalProps> = ({
     const addressInput = addressWithFallbackValues(values)
     let operation: () => Promise<ReturnType<typeof handleMutationPayload>>
     try {
+      shippingContext.helpers.setIsPerformingOperation(true)
       if (modalAction.type === "createUserAddress") {
         operation = async () => {
           const result = await createSavedAddress({
@@ -216,6 +217,8 @@ export const AddressModal: React.FC<AddressModalProps> = ({
       closeModal()
     } catch (error) {
       handleErrors([error], helpers)
+    } finally {
+      shippingContext.helpers.setIsPerformingOperation(false)
     }
   }
   if (createUpdateError) {
