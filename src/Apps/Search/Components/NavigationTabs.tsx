@@ -111,7 +111,7 @@ export const NavigationTabs: React.FC<NavigationTabsProps> = ({
   return (
     <AppContainer>
       <HorizontalOverflow pl={[2, 4]}>
-        {artworkCount > 0 ?? (
+        {artworkCount > 0 && (
           <Tab text="Artworks" to={route("")} exact count={artworkCount} />
         )}
 
