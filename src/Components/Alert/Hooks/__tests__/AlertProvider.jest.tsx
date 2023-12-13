@@ -93,6 +93,11 @@ describe("AlertProvider", () => {
               field: "artistIDs",
               value: "artist-id",
             },
+            {
+              displayValue: "Soup Cans",
+              field: "artistSeriesID",
+              value: "artist-series-id",
+            },
           ],
         },
       }),
@@ -105,6 +110,7 @@ describe("AlertProvider", () => {
 
     expect(screen.getByText("Add Filters:")).toBeInTheDocument()
     expect(screen.getByText("Andy Warhol")).toBeInTheDocument()
+    expect(screen.getByText("Soup Cans")).toBeInTheDocument()
 
     // transition to filters step
     screen.getByTestId("addFilters").click()
