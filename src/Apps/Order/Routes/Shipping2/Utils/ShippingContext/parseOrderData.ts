@@ -9,8 +9,6 @@ import {
 import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
 
-import { useCallback, useMemo } from "react"
-
 export interface ParsedOrderData {
   lockShippingCountryTo: "EU" | string | null
   shipsFrom: string
@@ -42,7 +40,7 @@ type SavedShippingQuoteData = {
   shippingQuotes: Array<{ id: string; isSelected: boolean }>
 } | null
 
-export const useParseOrderData = (
+export const parseOrderData = (
   order: ShippingProps["order"],
   me: ShippingProps["me"]
 ): ParsedOrderData => {
@@ -55,7 +53,7 @@ export const useParseOrderData = (
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const artworkCountry = firstArtwork?.shippingCountry!
-  const savedFulfillmentDetails = useSavedFulfillmentData(order, me)
+  const savedFulfillmentDetails = getSavedFulfillmentDetails(order, me)
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const shipsFrom = firstArtwork.shippingCountry!
@@ -76,25 +74,17 @@ export const useParseOrderData = (
 
   // todo: Should this be moved into ShippingContext.helpers? It relies on several
   // intermediate values we don't expose.
-  const requiresArtsyShippingTo = useCallback(
-    (shipToCountry: string) => {
-      const isDomesticShipping =
-        (shipToCountry && shipToCountry === artworkCountry) ||
-        (EU_COUNTRY_CODES.includes(shipToCountry) &&
-          EU_COUNTRY_CODES.includes(artworkCountry))
+  const requiresArtsyShippingTo = (shipToCountry: string) => {
+    const isDomesticShipping =
+      (shipToCountry && shipToCountry === artworkCountry) ||
+      (EU_COUNTRY_CODES.includes(shipToCountry) &&
+        EU_COUNTRY_CODES.includes(artworkCountry))
 
-      const requiresArtsyShipping =
-        (isDomesticShipping &&
-          firstArtwork?.processWithArtsyShippingDomestic) ||
-        (!isDomesticShipping && !!firstArtwork?.artsyShippingInternational)
-      return requiresArtsyShipping
-    },
-    [
-      artworkCountry,
-      firstArtwork.artsyShippingInternational,
-      firstArtwork.processWithArtsyShippingDomestic,
-    ]
-  )
+    const requiresArtsyShipping =
+      (isDomesticShipping && firstArtwork?.processWithArtsyShippingDomestic) ||
+      (!isDomesticShipping && !!firstArtwork?.artsyShippingInternational)
+    return requiresArtsyShipping
+  }
 
   const shippingQuotes = extractNodes(firstLineItem.shippingQuoteOptions) ?? []
   const selectedShippingQuoteId =
@@ -114,50 +104,47 @@ export const useParseOrderData = (
   }
 }
 
-const useSavedFulfillmentData = (
+const getSavedFulfillmentDetails = (
   order: ShippingProps["order"],
   me: ShippingProps["me"]
 ): SavedFulfillmentData => {
   const fulfillmentTypeName = order.requestedFulfillment?.__typename
 
-  return useMemo(() => {
-    if (fulfillmentTypeName) {
-      if (fulfillmentTypeName === "CommercePickup") {
-        return {
-          fulfillmentType: FulfillmentType.PICKUP,
-          isArtsyShipping: false,
-          fulfillmentDetails: {
-            phoneNumber: order.requestedFulfillment.phoneNumber ?? "",
-            name: "",
-          },
-          selectedSavedAddressId: null,
-        }
-      } else if (
-        ["CommerceShip", "CommerceShipArta"].includes(fulfillmentTypeName)
-      ) {
-        const fulfillmentDetails = addressWithFallbackValues(
+  if (fulfillmentTypeName) {
+    if (fulfillmentTypeName === "CommercePickup") {
+      return {
+        fulfillmentType: FulfillmentType.PICKUP,
+        isArtsyShipping: false,
+        fulfillmentDetails: {
+          phoneNumber: order.requestedFulfillment.phoneNumber ?? "",
+          name: "",
+        },
+        selectedSavedAddressId: null,
+      }
+    } else if (
+      ["CommerceShip", "CommerceShipArta"].includes(fulfillmentTypeName)
+    ) {
+      const fulfillmentDetails = addressWithFallbackValues(
+        order.requestedFulfillment
+      )
+      const savedAddresses = extractNodes(me.addressConnection)
+
+      const selectedSavedAddressId =
+        (fulfillmentDetails &&
+          savedAddresses.find(node =>
+            matchAddressFields(node, fulfillmentDetails)
+          )?.internalID) ??
+        null
+
+      return {
+        fulfillmentType: FulfillmentType.SHIP,
+        isArtsyShipping: fulfillmentTypeName === "CommerceShipArta",
+        fulfillmentDetails: addressWithFallbackValues(
           order.requestedFulfillment
-        )
-        const savedAddresses = extractNodes(me.addressConnection)
-
-        const selectedSavedAddressId =
-          (fulfillmentDetails &&
-            savedAddresses.find(node =>
-              matchAddressFields(node, fulfillmentDetails)
-            )?.internalID) ??
-          null
-
-        return {
-          fulfillmentType: FulfillmentType.SHIP,
-          isArtsyShipping: fulfillmentTypeName === "CommerceShipArta",
-          fulfillmentDetails: addressWithFallbackValues(
-            order.requestedFulfillment
-          ),
-          selectedSavedAddressId: selectedSavedAddressId,
-        }
+        ),
+        selectedSavedAddressId: selectedSavedAddressId,
       }
     }
-    return null
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [fulfillmentTypeName, JSON.stringify(order.requestedFulfillment)])
+  }
+  return null
 }

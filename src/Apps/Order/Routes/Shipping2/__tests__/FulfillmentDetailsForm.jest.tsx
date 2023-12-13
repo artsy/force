@@ -4,13 +4,14 @@ import {
   waitFor,
   fireEvent,
   within,
+  cleanup,
 } from "@testing-library/react"
 import userEvent from "@testing-library/user-event"
 import {
   FulfillmentDetailsForm,
   FulfillmentDetailsFormProps,
 } from "Apps/Order/Routes/Shipping2/FulfillmentDetailsForm"
-import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext"
+import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext/ShippingContext"
 import {
   FulfillmentType,
   ShipValues,
@@ -61,6 +62,7 @@ beforeEach(() => {
   }))
   mockOnAddressVerificationComplete.mockReset()
   testProps = {
+    shippingMode: "saved_addresses",
     availableFulfillmentTypes: [FulfillmentType.SHIP],
     initialValues: {
       fulfillmentType: "SHIP",
@@ -169,7 +171,15 @@ describe("FulfillmentDetailsForm", () => {
       expect(mockOnSubmit).not.toHaveBeenCalled()
     })
 
-    it.todo("user can select shipping and fill out form")
+    it("user can select shipping and see shipping fields", async () => {
+      renderTree(testProps)
+      await userEvent.click(screen.getByRole("radio", { name: "Shipping" }))
+
+      // find address form fields
+      await waitFor(() => {
+        expect(screen.getByPlaceholderText("City")).toBeVisible()
+      })
+    })
   })
 
   describe("Pickup not available", () => {
@@ -202,7 +212,8 @@ describe("FulfillmentDetailsForm", () => {
         } as any
       })
 
-      it("shows the saved addresses", async () => {
+      it("shows the saved addresses or plain address form depending on the passed prop", async () => {
+        testProps.shippingMode = "saved_addresses"
         renderTree(testProps)
         // Note - SavedAddresses is mocked out.
         await waitFor(() => {
@@ -211,6 +222,19 @@ describe("FulfillmentDetailsForm", () => {
           })
           expect(screen.getByTestId("addressFormCollapse")).toHaveStyle({
             height: "0px",
+          })
+        })
+
+        cleanup()
+
+        testProps.shippingMode = "new_address"
+        renderTree(testProps)
+        await waitFor(() => {
+          expect(screen.getByTestId("savedAddressesCollapse")).toHaveStyle({
+            height: "0px",
+          })
+          expect(screen.getByTestId("addressFormCollapse")).toHaveStyle({
+            height: "auto",
           })
         })
       })
