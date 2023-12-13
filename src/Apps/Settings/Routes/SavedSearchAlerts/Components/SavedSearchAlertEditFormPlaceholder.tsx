@@ -111,14 +111,26 @@ export const NewSavedSearchAlertEditFormPlaceholder = () => {
       )}
 
       <Spacer y={4} />
-      <SkeletonText variant="sm-display" mb={2}>
+
+      <SkeletonText variant="sm-display" mb={1}>
         Tell us more about what you’re looking for
       </SkeletonText>
-      <SkeletonBox flex={1} height={100} mb={2} />
+      <SkeletonBox flex={1} height={120} mb={4} />
+
       <Spacer y={6} />
-      <CheckboxSkeleton>Email Alerts</CheckboxSkeleton>
+
+      <Flex alignItems="center" justifyContent="space-between">
+        <SkeletonText>Email</SkeletonText>
+        <SkeletonBox width={20} height={20} mr={1} />
+      </Flex>
+
       <Spacer y={2} />
-      <CheckboxSkeleton>Mobile Alerts</CheckboxSkeleton>
+
+      <Flex alignItems="center" justifyContent="space-between">
+        <SkeletonText>Push Notifications</SkeletonText>
+        <SkeletonBox width={20} height={20} mr={1} />
+      </Flex>
+
       <Media greaterThan="md">
         <Spacer y={6} />
         <Flex>
@@ -127,6 +139,7 @@ export const NewSavedSearchAlertEditFormPlaceholder = () => {
           <SkeletonBox flex={1} height={50} />
         </Flex>
       </Media>
+
       <Media lessThan="md">
         <Spacer y={4} />
         <Flex>
