@@ -43,7 +43,7 @@ interface RouteTabProps extends BoxProps, RouterLinkProps {
 }
 
 const RoundedRouteTab: React.FC<RouteTabProps> = ({ text, count, ...rest }) => {
-  const isActive = useIsRouteActive(rest.to, { exact: rest.exact ?? true })
+  const isSelected = useIsRouteActive(rest.to, { exact: rest.exact ?? true })
 
   return (
     // @ts-ignore
@@ -53,7 +53,7 @@ const RoundedRouteTab: React.FC<RouteTabProps> = ({ text, count, ...rest }) => {
       as={RouterLink}
       my={1}
       mr={1}
-      active={isActive}
+      selected={isSelected}
       {...rest}
     >
       {text}
