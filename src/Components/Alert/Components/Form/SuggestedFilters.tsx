@@ -36,7 +36,11 @@ export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
 
   if (!data.previewSavedSearch?.suggestedFilters.length) {
     return (
-      <Clickable onClick={transitionToFiltersAndTrack} width="100%">
+      <Clickable
+        data-testid="addFilters"
+        onClick={transitionToFiltersAndTrack}
+        width="100%"
+      >
         <Flex justifyContent="space-between" alignItems={"center"}>
           <Box>
             <Text variant="sm-display">Add Filters:</Text>
@@ -100,7 +104,11 @@ export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
           )
         })}
 
-        <Clickable onClick={transitionToFiltersAndTrack} mt={1}>
+        <Clickable
+          data-testid="addFilters"
+          onClick={transitionToFiltersAndTrack}
+          mt={1}
+        >
           <Flex justifyContent={"space-between"} alignItems={"center"}>
             <Text variant="xs" color="black100" mr={0.5}>
               More Filters
