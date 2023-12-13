@@ -4,7 +4,6 @@ import {
   Clickable,
   Flex,
   Join,
-  Separator,
   Spacer,
   Text,
 } from "@artsy/palette"
@@ -142,38 +141,36 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
 
         return (
           <Box flex={1}>
-            <Join separator={<Spacer y={[4, 6]} />}>
+            <Join separator={<Spacer y={4} />}>
               <Box>
-                <Text variant="sm-display">We'll send you alerts for</Text>
-                <Spacer y={2} />
+                <Text variant="sm-display" mb={1}>
+                  We'll send you alerts for
+                </Text>
                 <Flex flexWrap="wrap" gap={1}>
                   <CriteriaPills />
                 </Flex>
-
-                <Separator my={2} />
-
-                {enableSuggestedFilters ? (
-                  <SugggestedFiltersQueryRenderer
-                    transitionToFiltersAndTrack={transitionToFilters}
-                  />
-                ) : (
-                  <Clickable onClick={transitionToFilters} width="100%">
-                    <Flex justifyContent="space-between" alignItems={"center"}>
-                      <Box>
-                        <Text variant="sm-display">Add Filters:</Text>
-
-                        <Text variant="sm" color="black60">
-                          Including Price Range, Rarity, Medium, Color
-                        </Text>
-                      </Box>
-                      <ChevronRightIcon />
-                    </Flex>
-                  </Clickable>
-                )}
-                <Separator my={2} />
-                <DetailsInput />
-                <Separator my={2} />
               </Box>
+
+              {enableSuggestedFilters ? (
+                <SugggestedFiltersQueryRenderer
+                  transitionToFiltersAndTrack={transitionToFilters}
+                />
+              ) : (
+                <Clickable onClick={transitionToFilters} width="100%">
+                  <Flex justifyContent="space-between" alignItems={"center"}>
+                    <Box>
+                      <Text variant="sm-display">Add Filters:</Text>
+
+                      <Text variant="sm" color="black60">
+                        Including Price Range, Rarity, Medium, Color
+                      </Text>
+                    </Box>
+                    <ChevronRightIcon />
+                  </Flex>
+                </Clickable>
+              )}
+
+              <DetailsInput />
 
               <NotificationPreferencesQueryRenderer mode="edit" />
 
