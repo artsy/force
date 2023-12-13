@@ -16,7 +16,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { Media } from "Utils/Responsive"
-import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
+import { NewSavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
@@ -304,11 +304,7 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
       variables={{
         id: editAlertEntity.id,
       }}
-      placeholder={
-        <Box flex={1} p={4}>
-          <SavedSearchAlertEditFormPlaceholder />
-        </Box>
-      }
+      placeholder={<NewSavedSearchAlertEditFormPlaceholder />}
       cacheConfig={{ force: true }}
       render={({ props, error }) => {
         if (error) {
@@ -317,11 +313,7 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
         }
 
         if (!props?.me?.savedSearch || !props?.viewer) {
-          return (
-            <Box flex={1} p={4}>
-              <SavedSearchAlertEditFormPlaceholder />
-            </Box>
-          )
+          return <NewSavedSearchAlertEditFormPlaceholder />
         }
 
         return (
