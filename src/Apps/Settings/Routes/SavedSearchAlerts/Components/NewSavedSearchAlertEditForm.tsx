@@ -69,7 +69,7 @@ const NewSavedSearchAlertEditSteps: React.FC<NewSavedSearchAlertEditStepsProps> 
     <>
       <Media greaterThanOrEqual="md">
         {current === "ALERT_DETAILS" && (
-          <Box p={4} minWidth={[null, null]}>
+          <Box p={4}>
             <Flex justifyContent="space-between">
               <ModalHeader />
               <Clickable onClick={onCloseClick}>
