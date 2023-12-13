@@ -90,24 +90,18 @@ export const NewSavedSearchAlertEditFormPlaceholder = () => {
       <CriteriaPillsPlaceholder />
       <Spacer y={4} />
 
+      <SkeletonText variant="sm-display" mb={1}>
+        Add Filters
+      </SkeletonText>
+
       {enableSuggestedFilters ? (
-        <>
-          <SkeletonText variant="sm-display" mb={1}>
-            Suggested Filters
-          </SkeletonText>
-          <SkeletonText variant="sm-display" mb={2}>
-            More Filters
-          </SkeletonText>
-        </>
+        <SkeletonText variant="sm-display" mb={2}>
+          More Filters
+        </SkeletonText>
       ) : (
-        <>
-          <SkeletonText variant="sm-display" mb={1}>
-            Add Filters
-          </SkeletonText>
-          <SkeletonText variant="sm-display" mb={2}>
-            Including Price Range, Rarity, Medium, Color
-          </SkeletonText>
-        </>
+        <SkeletonText variant="sm-display" mb={2}>
+          Including Price Range, Rarity, Medium, Color
+        </SkeletonText>
       )}
 
       <Spacer y={4} />

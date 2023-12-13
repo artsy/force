@@ -66,7 +66,7 @@ export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
   return (
     <Flex justifyContent="space-between" flexDirection={"column"}>
       <Box>
-        <Text variant="sm-display">Suggested Filters</Text>
+        <Text variant="sm-display">Add Filters</Text>
       </Box>
 
       <Box>
@@ -138,7 +138,7 @@ const SuggestedFiltersPlaceholder: React.FC = () => {
   return (
     <Skeleton>
       <SkeletonText variant="xs" mb={2}>
-        Suggested Filters
+        Add Filters
       </SkeletonText>
 
       <Flex mb={4}>
