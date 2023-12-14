@@ -1,4 +1,4 @@
-import { HorizontalOverflow, Pill } from "@artsy/palette"
+import { Pill, Stack } from "@artsy/palette"
 import { NavigationTabs_searchableConnection$data } from "__generated__/NavigationTabs_searchableConnection.graphql"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { createFragmentContainer, graphql } from "react-relay"
@@ -9,7 +9,6 @@ import {
   ClickedNavigationTab,
   ContextModule,
 } from "@artsy/cohesion"
-import { AppContainer } from "Apps/Components/AppContainer"
 import { useTracking } from "react-tracking"
 import { FC, useMemo } from "react"
 import { compact } from "lodash"
@@ -132,8 +131,6 @@ const NavigationTab: FC<NavigationTabProps> = ({ count, term, tab: _tab }) => {
     <Pill
       variant="search"
       count={count}
-      my={1}
-      mr={1}
       selected={selected}
       as={RouterLink}
       onClick={() => {
@@ -187,22 +184,20 @@ export const NavigationTabs: FC<NavigationTabsProps> = ({
   )
 
   return (
-    <AppContainer>
-      <HorizontalOverflow pl={[2, 4]}>
-        {artworkCount > 0 && (
-          <NavigationTab count={artworkCount} tab="artwork" term={term} />
-        )}
+    <Stack flexDirection="row" gap={1} mr={2}>
+      {artworkCount > 0 && (
+        <NavigationTab count={artworkCount} tab="artwork" term={term} />
+      )}
 
-        {tabs.map(({ name: key, count }) => {
-          if (key === "artwork" || !isTab(key)) return null
-          return <NavigationTab key={key} tab={key} count={count} term={term} />
-        })}
+      {tabs.map(({ name: key, count }) => {
+        if (key === "artwork" || !isTab(key)) return null
+        return <NavigationTab key={key} tab={key} count={count} term={term} />
+      })}
 
-        {moreCount > 0 && (
-          <NavigationTab count={moreCount} tab="more" term={term} />
-        )}
-      </HorizontalOverflow>
-    </AppContainer>
+      {moreCount > 0 && (
+        <NavigationTab count={moreCount} tab="more" term={term} />
+      )}
+    </Stack>
   )
 }
 
