@@ -20,7 +20,11 @@ export const CriteriaPills: FC<CriteriaPillsProps> = ({ editable = true }) => {
   const showMorePillsText = `+${countPills - PILLS_TO_DISPLAY} more`
 
   return (
-    <ShowMore initial={PILLS_TO_DISPLAY} showMoreText={showMorePillsText}>
+    <ShowMore
+      initial={PILLS_TO_DISPLAY}
+      showMoreText={showMorePillsText}
+      textDecoration="underline"
+    >
       {labels.map(label => {
         if (!label) return null
 
