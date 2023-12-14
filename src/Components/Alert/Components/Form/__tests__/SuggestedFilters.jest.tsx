@@ -83,4 +83,10 @@ const mockSuggestedFilters = [
     name: "Price",
     value: "*-10000",
   },
+  {
+    displayValue: "Toys",
+    field: "artistSeriesIDs",
+    name: "Artist Series",
+    value: "kaws-toys",
+  },
 ]
