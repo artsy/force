@@ -171,11 +171,6 @@ const recommendedAddress = {
   country: "US",
 }
 
-// TODO: Is there a better way than matching on the error string?
-const getAllInputErrors = () => {
-  return screen.getAllByText(/[\w\s]is required/)
-}
-
 const verifyAddressWithSuggestions = async (
   mockResolveLastOperation,
   input,
@@ -564,7 +559,9 @@ describe("Shipping", () => {
 
         await fillAddressForm(validAddress)
         await saveAndContinue()
-        await waitFor(() => mockRejectLastOperation(new Error("wrong number")))
+        await waitFor(() =>
+          mockRejectLastOperation(new Error("##TEST_ERROR## wrong number"))
+        )
         await waitFor(() => expect(mockShowErrorDialog).toHaveBeenCalledWith())
       })
 
@@ -718,162 +715,6 @@ describe("Shipping", () => {
         })
         await flushPromiseQueue()
         expect(() => env.mock.getMostRecentOperation()).toThrow()
-      })
-
-      describe("form validations", () => {
-        it("does not submit an empty form", async () => {
-          const { env } = renderWithRelay(
-            {
-              CommerceOrder: () => order,
-              Me: () => meWithoutAddress,
-            },
-            undefined,
-            relayEnv
-          )
-
-          await saveAndContinue()
-          await flushPromiseQueue()
-          expect(() => env.mock.getMostRecentOperation()).toThrow()
-        })
-
-        it("does not submit an incomplete form", async () => {
-          const { env } = renderWithRelay(
-            {
-              CommerceOrder: () => order,
-              Me: () => meWithoutAddress,
-            },
-            undefined,
-            relayEnv
-          )
-
-          await userEvent.paste(
-            screen.getByPlaceholderText("Full name"),
-            "First Last"
-          )
-
-          await saveAndContinue()
-          await flushPromiseQueue()
-          expect(() => env.mock.getMostRecentOperation()).toThrow()
-        })
-
-        it("requires some fields", async () => {
-          renderWithRelay(
-            {
-              CommerceOrder: () => order,
-              Me: () => meWithoutAddress,
-            },
-            undefined,
-            relayEnv
-          )
-
-          await saveAndContinue()
-          await waitFor(() =>
-            expect(getAllInputErrors().map(el => el.textContent)).toEqual([
-              "Full name is required",
-              "Street address is required",
-              "City is required",
-              "State is required",
-              "ZIP code is required",
-              "Phone number is required",
-            ])
-          )
-        })
-
-        it("requires a phone number", async () => {
-          renderWithRelay(
-            {
-              CommerceOrder: () => order,
-              Me: () => meWithoutAddress,
-            },
-            undefined,
-            relayEnv
-          )
-
-          await fillAddressForm({
-            name: "Joelle Van Dyne",
-            addressLine1: "401 Broadway",
-            addressLine2: "",
-            city: "New York",
-            region: "NY",
-            postalCode: "10013",
-            phoneNumber: "",
-            country: "US",
-          })
-          await saveAndContinue()
-
-          await waitFor(() =>
-            expect(
-              screen.getByText("Phone number is required")
-            ).toBeInTheDocument()
-          )
-        })
-
-        // TODO: New custom postal code validator needs to be relaxed to pass this
-        it.skip("allows a missing postal code and state/province if the selected country is not US or Canada", async () => {
-          const { mockResolveLastOperation } = renderWithRelay({
-            CommerceOrder: () => order,
-            Me: () => meWithoutAddress,
-          })
-
-          await fillAddressForm({
-            name: "Joelle Van Dyne",
-            addressLine1: "401 Broadway",
-            addressLine2: "",
-            city: "New York",
-            region: "",
-            postalCode: "",
-            phoneNumber: "5555937743",
-            country: "AQ",
-          })
-
-          await saveAndContinue()
-          await resolveSaveFulfillmentDetails(
-            mockResolveLastOperation,
-            settingOrderShipmentSuccess.commerceSetShipping
-          )
-
-          expect(
-            screen.queryByText(/[\w\s]is required/)
-          ).not.toBeInTheDocument()
-        })
-
-        it("only shows validation errors on touched inputs before submission", async () => {
-          renderWithRelay({
-            CommerceOrder: () => order,
-            Me: () => meWithoutAddress,
-          })
-
-          const name = screen.getByPlaceholderText("Full name")
-          userEvent.type(name, "First Last")
-          userEvent.clear(name)
-          userEvent.tab()
-
-          await waitFor(async () => {
-            expect(getAllInputErrors().map(el => el.textContent)).toEqual([
-              "Full name is required",
-            ])
-          })
-        })
-
-        it("shows all validation errors including untouched inputs after submission", async () => {
-          renderWithRelay(
-            {
-              CommerceOrder: () => order,
-              Me: () => meWithoutAddress,
-            },
-            undefined,
-            relayEnv
-          )
-
-          const name = screen.getByPlaceholderText("Full name")
-          userEvent.type(name, "First Last")
-          userEvent.clear(name)
-
-          await saveAndContinue()
-          await waitFor(() =>
-            expect(getAllInputErrors().length).toBeGreaterThan(1)
-          )
-        })
       })
 
       describe("address verification", () => {

@@ -156,6 +156,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
         requiresArtsyShipping: requiresArtsyShippingToDestination,
       })
     } catch (error) {
+      console.log("error: ", error)
       shippingContext.helpers.orderTracking.errorMessageViewed({
         error_code: null,
         title: "An error occurred",

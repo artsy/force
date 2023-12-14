@@ -163,6 +163,10 @@ if (process.env.ALLOW_CONSOLE_LOGS !== "true") {
               !args[0].includes(
                 // Styled-components 5 warning
                 "You may see this warning because you've called styled inside another component"
+              ) &&
+              !args[0].includes(
+                // Expected error thrown on purpose from test
+                "##TEST_ERROR##"
               )
             ) {
               reject(logToError(type, args, handler))
