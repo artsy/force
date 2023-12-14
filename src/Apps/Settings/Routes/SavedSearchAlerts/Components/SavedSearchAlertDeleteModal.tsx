@@ -62,6 +62,7 @@ export const SavedSearchAlertDeleteModal: React.FC<SavedSearchAlertDeleteModalPr
                 loading={isDeleting}
                 size="large"
                 onClick={deleteAlertById}
+                data-testid="submitDeleteAlert"
               >
                 Delete
               </Button>
@@ -74,6 +75,7 @@ export const SavedSearchAlertDeleteModal: React.FC<SavedSearchAlertDeleteModalPr
               onClick={deleteAlertById}
               width="100%"
               mb={1}
+              data-testid="submitDeleteAlert"
             >
               Delete
             </Button>
