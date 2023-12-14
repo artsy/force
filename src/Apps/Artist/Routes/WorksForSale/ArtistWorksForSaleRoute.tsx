@@ -7,10 +7,6 @@ import { Title, Meta } from "react-head"
 import { useRouter } from "System/Router/useRouter"
 import { useJump } from "Utils/Hooks/useJump"
 import { ArtistWorksForSaleEmptyFragmentContainer } from "Apps/Artist/Routes/WorksForSale/Components/ArtistWorksForSaleEmpty"
-import {
-  useFeatureVariant,
-  useTrackFeatureVariant,
-} from "System/useFeatureFlag"
 
 interface ArtistWorksForSaleRouteProps {
   artist: ArtistWorksForSaleRoute_artist$data
@@ -38,24 +34,11 @@ const ArtistWorksForSaleRoute: React.FC<ArtistWorksForSaleRouteProps> = ({
 
   const total = artist.sidebarAggregations?.counts?.total ?? 0
 
-  const experimentName = "diamond_dry_run_for_horizontal_filters"
-  const variant = useFeatureVariant(experimentName)
-  const variantName = variant?.name || "unknown"
-
-  const { trackFeatureVariant } = useTrackFeatureVariant({
-    experimentName,
-    variantName,
-  })
-
-  useEffect(trackFeatureVariant, [trackFeatureVariant])
-
   return (
     <>
       <Title>{title}</Title>
       <Meta name="title" content={title} />
       <Meta name="description" content={description} />
-      <Meta name="experimentName" content={experimentName} />
-      <Meta name="variantName" content={variantName} />
 
       {total === 0 ? (
         <ArtistWorksForSaleEmptyFragmentContainer artist={artist} />
