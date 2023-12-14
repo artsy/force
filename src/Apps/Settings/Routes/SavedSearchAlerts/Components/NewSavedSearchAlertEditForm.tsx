@@ -6,6 +6,7 @@ import {
   Join,
   Spacer,
   Text,
+  useDidMount,
 } from "@artsy/palette"
 import { NewSavedSearchAlertEditFormQuery } from "__generated__/NewSavedSearchAlertEditFormQuery.graphql"
 import { NewSavedSearchAlertEditForm_viewer$data } from "__generated__/NewSavedSearchAlertEditForm_viewer.graphql"
@@ -119,6 +120,8 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
   )
   const { state, goToFilters, dispatch, onComplete } = useAlertContext()
 
+  const isMounted = useDidMount()
+
   return (
     <Formik<AlertFormikValues>
       initialValues={state.settings}
@@ -140,7 +143,19 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
         }
 
         return (
-          <Box flex={1}>
+          <Box
+            flex={1}
+            style={{
+              ...(isMounted
+                ? {
+                    opacity: 1,
+                    transition: "opacity 250ms",
+                  }
+                : {
+                    opacity: 0,
+                  }),
+            }}
+          >
             <Join separator={<Spacer y={4} />}>
               <Box>
                 <Text variant="sm-display" mb={1}>
