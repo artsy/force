@@ -1,4 +1,4 @@
-import { Pill, ShowMore, SkeletonBox } from "@artsy/palette"
+import { Pill, Flex, ShowMore, SkeletonBox } from "@artsy/palette"
 import { FC } from "react"
 import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
@@ -57,12 +57,12 @@ export const CriteriaPills: FC<CriteriaPillsProps> = ({ editable = true }) => {
   )
 }
 
-const CriteriaPillsPlaceholder: FC = () => {
+export const CriteriaPillsPlaceholder: FC = () => {
   return (
-    <>
-      <SkeletonBox width={150} height={30} />
-      <SkeletonBox width={80} height={30} />
-      <SkeletonBox width={100} height={30} />
-    </>
+    <Flex flexDirection="row">
+      <SkeletonBox width={150} height={30} mr={1} />
+      <SkeletonBox width={80} height={30} mr={1} />
+      <SkeletonBox width={100} height={30} mr={1} />
+    </Flex>
   )
 }

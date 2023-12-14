@@ -2,27 +2,20 @@ import { FC, useEffect } from "react"
 import { Router } from "found"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { compact } from "lodash"
+import { Box, Button, Flex, Spacer, Text, usePrevious } from "@artsy/palette"
 
 import { Shipping2_order$data } from "__generated__/Shipping2_order.graphql"
 import { Shipping2_me$data } from "__generated__/Shipping2_me.graphql"
 
-import { Box, Button, Flex, Spacer, Text, usePrevious } from "@artsy/palette"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
-
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import {
   buyNowFlowSteps,
   offerFlowSteps,
 } from "Apps/Order/Components/OrderStepper"
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
-
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
-import {
-  CommitMutation,
-  injectCommitMutation,
-} from "Apps/Order/Utils/commitMutation"
-
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { ShippingQuotesFragmentContainer } from "Apps/Order/Components/ShippingQuotes"
@@ -58,8 +51,6 @@ export interface ShippingProps {
   relay?: RelayProp
   router: Router
   dialog: Dialog
-  isCommittingMutation: boolean
-  commitMutation: CommitMutation
 }
 
 export const ShippingRoute: FC<ShippingProps> = props => {
@@ -74,8 +65,6 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           dialog={props.dialog}
           order={props.order}
           me={props.me}
-          isCommittingMutation={props.isCommittingMutation}
-          commitMutation={props.commitMutation}
           router={props.router}
         />
       </ShippingContextProvider>
@@ -84,7 +73,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
 }
 
 const ShippingRouteLayout: FC<ShippingProps> = props => {
-  const { order, isCommittingMutation } = props
+  const { order } = props
 
   const createSavedAddress = useCreateSavedAddress()
   const updateSavedAddress = useUpdateSavedAddress()
@@ -181,6 +170,7 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
       if (addressShouldBeSaved) {
         if (!current.newSavedAddressId) {
           // Address not saved, create it
+          shippingContext.helpers.setIsPerformingOperation(true)
           const response = await createSavedAddress.submitMutation({
             variables: {
               input: {
@@ -207,6 +197,7 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
             formAddressAttributes
           )
         ) {
+          shippingContext.helpers.setIsPerformingOperation(true)
           await updateSavedAddress.submitMutation({
             variables: {
               input: {
@@ -219,6 +210,7 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
       } else {
         // Address should not be saved, delete it if it exists
         if (shippingContext.state.newSavedAddressId) {
+          shippingContext.helpers.setIsPerformingOperation(true)
           await deleteSavedAddress.submitMutation({
             variables: {
               input: {
@@ -231,6 +223,8 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
       }
     } catch (error) {
       logger.error(error)
+    } finally {
+      shippingContext.helpers.setIsPerformingOperation(false)
     }
   }
 
@@ -249,6 +243,7 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
       return
     }
     try {
+      shippingContext.helpers.setIsPerformingOperation(true)
       const result = await selectShippingQuote.submitMutation({
         variables: {
           input: {
@@ -281,6 +276,8 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
       shippingContext.helpers.dialog.showErrorDialog({
         message: <ArtaErrorDialogMessage />,
       })
+    } finally {
+      shippingContext.helpers.setIsPerformingOperation(false)
     }
   }
 
@@ -309,25 +306,25 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
     parsedOrderData.shippingQuotes.length > 0
 
   const defaultShippingQuoteId = parsedOrderData.shippingQuotes?.[0]?.id
-  const useDefaultArtsyShippingQuote =
-    isArtsyShipping &&
-    defaultShippingQuoteId &&
-    !shippingContext.parsedOrderData.selectedShippingQuoteId
+  const bestArtsyShippingQuote = isArtsyShipping
+    ? parsedOrderData.shippingQuotes?.find(quote => quote.isSelected)?.id ||
+      defaultShippingQuoteId
+    : null
 
   // Automatically selects first shipping quote when they change
   useEffect(() => {
     if (
-      useDefaultArtsyShippingQuote &&
-      shippingContext.parsedOrderData.selectedShippingQuoteId !==
-        defaultShippingQuoteId
+      bestArtsyShippingQuote &&
+      bestArtsyShippingQuote !==
+        shippingContext.parsedOrderData.selectedShippingQuoteId
     ) {
-      shippingContext.helpers.setSelectedShippingQuote(defaultShippingQuoteId)
+      shippingContext.helpers.setSelectedShippingQuote(bestArtsyShippingQuote)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [
     shippingContext.parsedOrderData.selectedShippingQuoteId,
     defaultShippingQuoteId,
-    useDefaultArtsyShippingQuote,
+    bestArtsyShippingQuote,
   ])
 
   const submitFulfillmentDetailsFormik = fulfillmentFormHelpers.submitForm
@@ -346,10 +343,14 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
 
   const disableSubmit = (() => {
     if (shippingContext.state.stage === "fulfillment_details") {
-      return !(fulfillmentFormHelpers.isValid || isCommittingMutation)
+      return !(
+        fulfillmentFormHelpers.isValid ||
+        shippingContext.state.isPerformingOperation
+      )
     } else if (shippingContext.state.stage === "shipping_quotes") {
       return !(
-        shippingContext.state.selectedShippingQuoteId || isCommittingMutation
+        shippingContext.state.selectedShippingQuoteId ||
+        shippingContext.state.isPerformingOperation
       )
     }
   })()
@@ -368,7 +369,11 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
         content={
           <Flex
             flexDirection="column"
-            style={isCommittingMutation ? { pointerEvents: "none" } : {}}
+            style={
+              shippingContext.state.isPerformingOperation
+                ? { pointerEvents: "none" }
+                : {}
+            }
           >
             <FulfillmentDetailsFragmentContainer
               me={props.me}
@@ -401,7 +406,9 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
                 type="submit"
                 onClick={onContinueButtonPressed}
                 disabled={disableSubmit}
-                loading={isCommittingMutation || undefined}
+                loading={
+                  shippingContext.state.isPerformingOperation || undefined
+                }
                 variant="primaryBlack"
                 width="50%"
               >
@@ -429,7 +436,7 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
                 type="submit"
                 onClick={onContinueButtonPressed}
                 disabled={disableSubmit}
-                loading={isCommittingMutation}
+                loading={shippingContext.state.isPerformingOperation}
                 variant="primaryBlack"
                 width="100%"
               >
@@ -444,7 +451,7 @@ const ShippingRouteLayout: FC<ShippingProps> = props => {
 }
 
 export const ShippingFragmentContainer = createFragmentContainer(
-  injectCommitMutation(injectDialog(ShippingRoute)),
+  injectDialog(ShippingRoute),
   {
     order: graphql`
       fragment Shipping2_order on CommerceOrder {

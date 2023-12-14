@@ -11,6 +11,7 @@ import {
   withProgressiveOnboardingCounts,
   WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
+import { useFeatureFlag } from "System/useFeatureFlag"
 
 interface ProgressiveOnboardingSaveArtworkProps
   extends WithProgressiveOnboardingCountsProps {}
@@ -20,6 +21,9 @@ export const __ProgressiveOnboardingSaveArtwork__: FC<ProgressiveOnboardingSaveA
   children,
 }) => {
   const { dismiss, isDismissed } = useProgressiveOnboarding()
+  const isPartnerOfferEnabled = useFeatureFlag(
+    "emerald_partner-offers-from-saves"
+  )
 
   const isDisplayble =
     !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK).status &&
@@ -62,7 +66,15 @@ export const __ProgressiveOnboardingSaveArtwork__: FC<ProgressiveOnboardingSaveA
         <Text variant="xs">
           <strong>Like what you see?</strong>
           <br />
-          Hit the heart to save an artwork.
+          {isPartnerOfferEnabled ? (
+            <>
+              Tap the heart to save an artwork
+              <br />
+              and signal your interest to galleries.
+            </>
+          ) : (
+            <>Hit the heart to save an artwork.</>
+          )}
         </Text>
       }
     >

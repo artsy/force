@@ -138,7 +138,7 @@ const SuggestedFiltersPlaceholder: React.FC = () => {
   return (
     <Skeleton>
       <SkeletonText variant="xs" mb={2}>
-        Suggested Filters
+        Add Filters
       </SkeletonText>
 
       <Flex mb={4}>

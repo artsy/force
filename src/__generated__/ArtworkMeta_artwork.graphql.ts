@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<4f57916ebd96e684530391d1abac06d2>>
+ * @generated SignedSource<<cbdf9fba2a51d91b25dceec68fe1bbba>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,7 +9,7 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type Visibility = "DRAFT" | "LISTED" | "UNLISTED" | "%future added value";
+export type Visibility = "LISTED" | "UNLISTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type ArtworkMeta_artwork$data = {
   readonly href: string | null | undefined;

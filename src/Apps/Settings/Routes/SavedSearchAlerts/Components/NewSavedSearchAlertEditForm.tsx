@@ -4,9 +4,9 @@ import {
   Clickable,
   Flex,
   Join,
-  Separator,
   Spacer,
   Text,
+  useDidMount,
 } from "@artsy/palette"
 import { NewSavedSearchAlertEditFormQuery } from "__generated__/NewSavedSearchAlertEditFormQuery.graphql"
 import { NewSavedSearchAlertEditForm_viewer$data } from "__generated__/NewSavedSearchAlertEditForm_viewer.graphql"
@@ -16,7 +16,7 @@ import { createFragmentContainer, graphql } from "react-relay"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { Media } from "Utils/Responsive"
-import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
+import { NewSavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { DetailsInput } from "Components/SavedSearchAlert/Components/DetailsInput"
@@ -120,6 +120,8 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
   )
   const { state, goToFilters, dispatch, onComplete } = useAlertContext()
 
+  const isMounted = useDidMount()
+
   return (
     <Formik<AlertFormikValues>
       initialValues={state.settings}
@@ -141,39 +143,49 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
         }
 
         return (
-          <Box flex={1}>
-            <Join separator={<Spacer y={[4, 6]} />}>
+          <Box
+            flex={1}
+            style={{
+              ...(isMounted
+                ? {
+                    opacity: 1,
+                    transition: "opacity 250ms",
+                  }
+                : {
+                    opacity: 0,
+                  }),
+            }}
+          >
+            <Join separator={<Spacer y={4} />}>
               <Box>
-                <Text variant="sm-display">We'll send you alerts for</Text>
-                <Spacer y={2} />
+                <Text variant="sm-display" mb={1}>
+                  We'll send you alerts for
+                </Text>
                 <Flex flexWrap="wrap" gap={1}>
                   <CriteriaPills />
                 </Flex>
-
-                <Separator my={2} />
-
-                {enableSuggestedFilters ? (
-                  <SugggestedFiltersQueryRenderer
-                    transitionToFiltersAndTrack={transitionToFilters}
-                  />
-                ) : (
-                  <Clickable onClick={transitionToFilters} width="100%">
-                    <Flex justifyContent="space-between" alignItems={"center"}>
-                      <Box>
-                        <Text variant="sm-display">Add Filters:</Text>
-
-                        <Text variant="sm" color="black60">
-                          Including Price Range, Rarity, Medium, Color
-                        </Text>
-                      </Box>
-                      <ChevronRightIcon />
-                    </Flex>
-                  </Clickable>
-                )}
-                <Separator my={2} />
-                <DetailsInput />
-                <Separator my={2} />
               </Box>
+
+              {enableSuggestedFilters ? (
+                <SugggestedFiltersQueryRenderer
+                  transitionToFiltersAndTrack={transitionToFilters}
+                />
+              ) : (
+                <Clickable onClick={transitionToFilters} width="100%">
+                  <Flex justifyContent="space-between" alignItems={"center"}>
+                    <Box>
+                      <Text variant="sm-display">Add Filters:</Text>
+
+                      <Text variant="sm" color="black60">
+                        Including Price Range, Rarity, Medium, Color
+                      </Text>
+                    </Box>
+                    <ChevronRightIcon />
+                  </Flex>
+                </Clickable>
+              )}
+
+              <DetailsInput />
 
               <NotificationPreferencesQueryRenderer mode="edit" />
 
@@ -304,11 +316,7 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
       variables={{
         id: editAlertEntity.id,
       }}
-      placeholder={
-        <Box flex={1} p={4}>
-          <SavedSearchAlertEditFormPlaceholder />
-        </Box>
-      }
+      placeholder={<NewSavedSearchAlertEditFormPlaceholder />}
       cacheConfig={{ force: true }}
       render={({ props, error }) => {
         if (error) {
@@ -317,11 +325,7 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
         }
 
         if (!props?.me?.savedSearch || !props?.viewer) {
-          return (
-            <Box flex={1} p={4}>
-              <SavedSearchAlertEditFormPlaceholder />
-            </Box>
-          )
+          return <NewSavedSearchAlertEditFormPlaceholder />
         }
 
         return (
