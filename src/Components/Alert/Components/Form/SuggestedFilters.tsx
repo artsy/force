@@ -83,6 +83,7 @@ export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
                 switch (suggestedFilter.field) {
                   case "additionalGeneIDs":
                   case "attributionClass":
+                  case "artistSeriesIDs":
                     handleFieldsWithMultipleValues({
                       selectedValue:
                         state.criteria[suggestedFilter.field] || [],
