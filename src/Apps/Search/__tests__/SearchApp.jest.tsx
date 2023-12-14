@@ -46,7 +46,7 @@ describe("SearchApp", () => {
       Viewer: () => VIEWER_FIXTURE,
     })
     const html = wrapper.find("TotalResults").text()
-    expect(html).toContain("520 results for \u201Candy\u201D")
+    expect(html).toContain("521 results for “andy”")
   })
 
   it("includes tabs w/ counts", () => {
@@ -58,6 +58,14 @@ describe("SearchApp", () => {
     expect(html).toMatch(/Artists.*320/)
     expect(html).toMatch(/Galleries.*100/)
     expect(html).not.toContain("Categories")
+  })
+
+  it("includes the more tab", () => {
+    const { wrapper } = getWrapper({
+      Viewer: () => VIEWER_FIXTURE,
+    })
+    const html = wrapper.find("NavigationTabs").text()
+    expect(html).toContain("More")
   })
 })
 
@@ -74,6 +82,7 @@ const VIEWER_FIXTURE = {
           { count: 100, name: "PartnerGallery" },
           { count: 320, name: "artist" },
           { count: 0, name: "gene" },
+          { count: 1, name: "feature" },
         ],
         slice: "TYPE",
       },

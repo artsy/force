@@ -1,8 +1,8 @@
 import React from "react"
 import {
   Box,
-  DROP_SHADOW,
   FullBleed,
+  HorizontalOverflow,
   Separator,
   Spacer,
   Text,
@@ -84,24 +84,24 @@ export const SearchApp: React.FC<SearchAppProps> = ({ viewer, children }) => {
           <Spacer y={4} />
 
           {searchConnection && (
-            <Sticky bottomBoundary="#Sticky__SearchApp">
-              {({ stuck }) => {
-                return (
-                  <FullBleed
-                    backgroundColor="white100"
-                    style={stuck ? { boxShadow: DROP_SHADOW } : undefined}
-                  >
-                    <AppContainer>
+            <>
+              {/* Negative offset for positive sticky padding */}
+              <Spacer y={-1} />
+
+              <Sticky bottomBoundary="#Sticky__SearchApp">
+                <FullBleed backgroundColor="white100" pt={1}>
+                  <AppContainer>
+                    <HorizontalOverflow pl={[2, 4]}>
                       <NavigationTabs
                         artworkCount={artworkCount}
                         term={term}
                         searchableConnection={searchConnection}
                       />
-                    </AppContainer>
-                  </FullBleed>
-                )
-              }}
-            </Sticky>
+                    </HorizontalOverflow>
+                  </AppContainer>
+                </FullBleed>
+              </Sticky>
+            </>
           )}
 
           <Spacer y={4} />
