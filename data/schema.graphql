@@ -13759,6 +13759,9 @@ type Partner implements Node {
     after: String
     before: String
     first: Int
+    hasMedium: Boolean
+    hasPrice: Boolean
+    hasRarity: Boolean
     last: Int
     page: Int
     represented: Boolean
