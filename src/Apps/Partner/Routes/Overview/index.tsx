@@ -7,6 +7,7 @@ import { AboutPartnerFragmentContainer } from "Apps/Partner/Components/Overview/
 import { SubscriberBannerFragmentContainer } from "Apps/Partner/Components/Overview/SubscriberBanner"
 import { ArtworksRailRenderer } from "Apps/Partner/Components/Overview/ArtworksRail"
 import { ShowBannersRailRenderer } from "Apps/Partner/Components/Overview/ShowBannersRail/ShowBannersRail"
+import { NearbyGalleriesRailRenderer } from "Apps/Partner/Components/Overview/NearbyGalleriesRail"
 
 interface OverviewProps {
   partner: Overview_partner$data
@@ -19,7 +20,10 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
     displayFullPartnerPage,
     profileBannerDisplay,
     displayArtistsSection,
+    locationsConnection,
   } = partner
+
+  const location = locationsConnection?.edges?.[0]?.node
 
   return displayFullPartnerPage ? (
     <>
@@ -44,6 +48,15 @@ const Overview: React.FC<OverviewProps> = ({ partner }) => {
       {partnerType !== "Brand" && (
         <SubscriberBannerFragmentContainer partner={partner} />
       )}
+
+      <AboutPartnerFragmentContainer partner={partner} />
+
+      {location && location.coordinates && (
+        <NearbyGalleriesRailRenderer
+          mt={[4, 6]}
+          near={`${location.coordinates.lat},${location.coordinates.lng}`}
+        />
+      )}
     </>
   )
 }
@@ -61,6 +74,16 @@ export const OverviewFragmentContainer = createFragmentContainer(Overview, {
       ...ArtistsRail_partner
       ...SubscriberBanner_partner
       ...ArticlesRail_partner
+      locationsConnection(first: 1) {
+        edges {
+          node {
+            coordinates {
+              lat
+              lng
+            }
+          }
+        }
+      }
     }
   `,
 })
