@@ -236,12 +236,15 @@ export const BaseArtworkFilter: React.FC<
       jumpTo("artworkFilter")
     }
 
+    const keyword =
+      filterContext.filters?.term || filterContext.filters?.keyword
+
     const refetchVariables = {
       input: {
         first: 30,
         ...relayRefetchInputVariables,
         ...allowedFilters(filterContext.filters),
-        keyword: filterContext.filters?.term || filterContext.filters?.keyword,
+        keyword: keyword ? String(keyword) : undefined,
       },
       ...relayVariables,
     }

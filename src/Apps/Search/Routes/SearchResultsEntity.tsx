@@ -71,7 +71,7 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
         first: PAGE_SIZE,
         last: null,
         page: null,
-        term,
+        term: String(term),
       },
       null,
       error => {
