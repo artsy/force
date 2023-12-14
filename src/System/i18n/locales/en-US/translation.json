@@ -156,6 +156,7 @@
       "toast": {
         "artworkSaved": {
           "message": "Artwork saved",
+          "description": "Saving an artwork signals interest to galleries.",
           "button": "Add to a List"
         },
         "artworkRemoved": {
