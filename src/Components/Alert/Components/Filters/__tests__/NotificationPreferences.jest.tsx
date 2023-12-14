@@ -178,7 +178,7 @@ describe("NotificationPreferences", () => {
     })
 
     describe("when custom alert email notifications are disabled", () => {
-      it("email checkbox is disabled by default", async () => {
+      it("email checkbox is enabled by default", async () => {
         renderNotificationPreferences({ mode: "create" })
 
         environment.mock.resolveMostRecentOperation(operation =>
@@ -207,7 +207,7 @@ describe("NotificationPreferences", () => {
 
         const checkboxes = screen.getAllByRole("checkbox")
 
-        expect(checkboxes[0]).not.toBeChecked()
+        expect(checkboxes[0]).toBeChecked()
         expect(checkboxes[1]).not.toBeChecked()
       })
 

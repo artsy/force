@@ -9,7 +9,7 @@ import {
 } from "@artsy/palette"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
 import { RouterLink } from "System/Router/RouterLink"
-import { FC, useEffect } from "react"
+import { FC } from "react"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NotificationPreferences_viewer$data } from "__generated__/NotificationPreferences_viewer.graphql"
 import { NotificationPreferencesQuery } from "__generated__/NotificationPreferencesQuery.graphql"
@@ -38,14 +38,6 @@ export const NotificationPreferences: FC<NotificationPreferencesProps> = ({
       )
     }
   )
-
-  useEffect(() => {
-    // Don't want to override the user's email preference when in edit mode
-    if (mode === "edit") return
-
-    setFieldValue("email", areCustomAlertsEmailNotificationsEnabled)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
 
   const showEmailPreferenceWarning =
     values.email && !areCustomAlertsEmailNotificationsEnabled
