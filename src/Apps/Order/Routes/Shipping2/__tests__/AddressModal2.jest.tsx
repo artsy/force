@@ -51,6 +51,9 @@ let mockShippingcontext: DeepPartial<ShippingContextProps> = {
   parsedOrderData: {
     shipsFrom: "US",
   },
+  helpers: {
+    setIsPerformingOperation: jest.fn(),
+  },
 }
 
 jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => ({

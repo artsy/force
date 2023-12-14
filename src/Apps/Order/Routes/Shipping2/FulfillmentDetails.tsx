@@ -92,6 +92,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
     try {
       let fulfillmentMutationValues: CommerceSetShippingInput
       let requiresArtsyShippingToDestination: boolean
+      shippingContext.helpers.setIsPerformingOperation(true)
 
       if (formValues.fulfillmentType === FulfillmentType.SHIP) {
         const {
@@ -164,6 +165,8 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
       })
 
       shippingContext.helpers.dialog.showErrorDialog()
+    } finally {
+      shippingContext.helpers.setIsPerformingOperation(false)
     }
   }
 

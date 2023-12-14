@@ -487,19 +487,42 @@ describe("Shipping", () => {
         expect(() => env.mock.getMostRecentOperation()).toThrow()
       })
 
-      it("shows the button spinner while loading the mutation", async () => {
-        isCommittingMutation = true
-        renderWithRelay(
+      it("shows a loading spinner while operations are pending", async () => {
+        const { mockResolveLastOperation } = renderWithRelay(
           {
-            CommerceOrder: () => order,
+            CommerceOrder: () => ({ ...order, __id: order.id }),
             Me: () => meWithoutAddress,
           },
           undefined,
           relayEnv
         )
 
+        await fillAddressForm(validAddress)
+        await saveAndContinue()
+
         const button = screen.getByRole("button", { name: "Save and Continue" })
         expect(queryByAttribute("class", button, /Spinner/)).toBeInTheDocument()
+
+        await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderShipmentSuccess.commerceSetShipping
+        )
+
+        await flushPromiseQueue()
+
+        expect(queryByAttribute("class", button, /Spinner/)).toBeInTheDocument()
+
+        await mockResolveLastOperation({
+          CreateUserAddressPayload: () => saveAddressSuccess.createUserAddress,
+        })
+
+        await waitFor(() => {
+          expect(
+            queryByAttribute("class", button, /Spinner/)
+          ).not.toBeInTheDocument()
+          expect(getAllPendingOperationNames(relayEnv)).toEqual([])
+          expect(mockPush).toHaveBeenCalledWith("/orders/2939023/payment")
+        })
       })
 
       it("shows a generic error when there is an unrecognized error code in the result", async () => {
@@ -1443,10 +1466,10 @@ describe("Shipping", () => {
 
             await flushPromiseQueue()
             const createAddressOperation = await mockResolveLastOperation({
-              CreateUserAddressPayload: () => ({
-                ...saveAddressSuccess.createUserAddress,
-                ...recommendedAddress,
-              }),
+              CreateUserAddressPayload: () =>
+                merge({}, saveAddressSuccess.createUserAddress, {
+                  userAddressOrErrors: recommendedAddress,
+                }),
             })
             expect(createAddressOperation.operationName).toBe(
               "useCreateSavedAddressMutation"
@@ -1609,11 +1632,14 @@ describe("Shipping", () => {
           "useCreateSavedAddressMutation"
         )
 
+        await flushPromiseQueue()
+
         const addressLine1 = screen.getByPlaceholderText("Street address")
         const addressLine2 = screen.getByPlaceholderText(
           "Apt, floor, suite, etc."
         )
         await userEvent.clear(addressLine2)
+        await userEvent.tab()
         await userEvent.paste(addressLine1, " Suite 25")
 
         await waitFor(() => {
@@ -1621,6 +1647,8 @@ describe("Shipping", () => {
 
           expect(shippingBox).toHaveStyle({ height: "0px" })
         })
+
+        await flushPromiseQueue()
 
         await saveAndContinue()
         await flushPromiseQueue()
