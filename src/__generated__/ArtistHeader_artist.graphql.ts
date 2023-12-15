@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<02ee42f330495596e45e1618fb4228c8>>
+ * @generated SignedSource<<69555600faa2edb19450f5b88c0e892b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,7 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type ArtistInsightKind = "ACTIVE_SECONDARY_MARKET" | "ARTSY_VANGUARD_YEAR" | "AWARDS" | "BIENNIAL" | "COLLECTED" | "CRITICALLY_ACCLAIMED" | "CURATORS_PICK_EMERGING" | "GAINING_FOLLOWERS" | "GROUP_SHOW" | "HIGH_AUCTION_RECORD" | "PRIVATE_COLLECTIONS" | "RECENT_CAREER_EVENT" | "RESIDENCIES" | "REVIEWED" | "SOLO_SHOW" | "TRENDING_NOW" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
-export type ArtistHeader2_artist$data = {
+export type ArtistHeader_artist$data = {
   readonly biographyBlurb: {
     readonly credit: string | null | undefined;
     readonly text: string | null | undefined;
@@ -53,11 +53,11 @@ export type ArtistHeader2_artist$data = {
       } | null | undefined;
     };
   }>;
-  readonly " $fragmentType": "ArtistHeader2_artist";
+  readonly " $fragmentType": "ArtistHeader_artist";
 };
-export type ArtistHeader2_artist$key = {
-  readonly " $data"?: ArtistHeader2_artist$data;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader2_artist">;
+export type ArtistHeader_artist$key = {
+  readonly " $data"?: ArtistHeader_artist$data;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader_artist">;
 };
 
 const node: ReaderFragment = (function(){
@@ -95,7 +95,7 @@ return {
   "argumentDefinitions": [],
   "kind": "Fragment",
   "metadata": null,
-  "name": "ArtistHeader2_artist",
+  "name": "ArtistHeader_artist",
   "selections": [
     (v0/*: any*/),
     {
@@ -345,6 +345,6 @@ return {
 };
 })();
 
-(node as any).hash = "0ab0ef7edae5388ac910543e2bf1837f";
+(node as any).hash = "966307beb64f1a2a1d34d53688a526e4";
 
 export default node;

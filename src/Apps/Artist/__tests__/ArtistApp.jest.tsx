@@ -10,8 +10,8 @@ jest.mock("System/Router/Utils/findCurrentRoute")
 jest.mock("Apps/Artist/Components/ArtistMeta/ArtistMeta", () => ({
   ArtistMetaFragmentContainer: () => null,
 }))
-jest.mock("../Components/ArtistHeader/ArtistHeader2", () => ({
-  ArtistHeader2FragmentContainer: () => null,
+jest.mock("../Components/ArtistHeader/ArtistHeader", () => ({
+  ArtistHeaderFragmentContainer: () => null,
 }))
 jest.mock("../Components/ArtistBackLink.tsx", () => ({
   ArtistBackLinkFragmentContainer: () => null,

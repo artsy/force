@@ -2,7 +2,7 @@ import { Spacer } from "@artsy/palette"
 import { createFragmentContainer, graphql } from "react-relay"
 import { ArtistApp_artist$data } from "__generated__/ArtistApp_artist.graphql"
 import { Analytics } from "System/Analytics/AnalyticsContext"
-import { ArtistHeaderFragmentContainer as ArtistHeader2FragmentContainer } from "./Components/ArtistHeader/ArtistHeader2"
+import { ArtistHeaderFragmentContainer } from "./Components/ArtistHeader/ArtistHeader"
 import { RouteTab, RouteTabs } from "Components/RouteTabs"
 import { ArtistMetaFragmentContainer } from "./Components/ArtistMeta/ArtistMeta"
 import { useScrollToOpenArtistAuthModal } from "Utils/Hooks/useScrollToOpenArtistAuthModal"
@@ -22,7 +22,7 @@ const ArtistApp: React.FC<ArtistAppProps> = ({ artist, children }) => {
       <Analytics contextPageOwnerId={artist.internalID}>
         <Spacer y={[0, 4]} />
 
-        <ArtistHeader2FragmentContainer artist={artist} />
+        <ArtistHeaderFragmentContainer artist={artist} />
 
         <Spacer y={4} />
 
@@ -52,7 +52,7 @@ export const ArtistAppFragmentContainer = createFragmentContainer(ArtistApp, {
   artist: graphql`
     fragment ArtistApp_artist on Artist {
       ...ArtistMeta_artist
-      ...ArtistHeader2_artist
+      ...ArtistHeader_artist
       internalID
       slug
       name

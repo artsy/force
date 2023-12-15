@@ -19,7 +19,7 @@ import {
 } from "@artsy/cohesion"
 import { createFragmentContainer, graphql } from "react-relay"
 import { FollowArtistButtonQueryRenderer } from "Components/FollowButton/FollowArtistButton"
-import { ArtistHeader2_artist$data } from "__generated__/ArtistHeader2_artist.graphql"
+import { ArtistHeader_artist$data } from "__generated__/ArtistHeader_artist.graphql"
 import styled from "styled-components"
 import { RouterLink } from "System/Router/RouterLink"
 import {
@@ -34,7 +34,7 @@ import { ArtistCareerHighlightFragmentContainer } from "Apps/Artist/Routes/Overv
 import { FollowButtonInlineCount } from "Components/FollowButton/Button"
 
 interface ArtistHeaderProps {
-  artist: ArtistHeader2_artist$data
+  artist: ArtistHeader_artist$data
 }
 
 const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
@@ -177,7 +177,7 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                   const payload: ClickedVerifiedRepresentative = {
                     action: ActionType.clickedVerifiedRepresentative,
                     context_module: ContextModule.artistHeader,
-                    context_page_owner_id: contextPageOwnerId!,
+                    context_page_owner_id: contextPageOwnerId ?? "Unknown",
                     context_page_owner_type: contextPageOwnerType,
                     destination_page_owner_id: partner.internalID,
                     destination_page_owner_type: OwnerType.partner,
@@ -189,11 +189,13 @@ const ArtistHeader: React.FC<ArtistHeaderProps> = ({ artist }) => {
                       as={RouterLink}
                       variant="profile"
                       compact={artist.verifiedRepresentatives.length > 3}
-                      {...(partner.profile?.icon
+                      {...(partner.profile?.icon &&
+                      partner.profile.icon.src1x?.src &&
+                      partner.profile.icon.src2x?.src
                         ? {
                             src: [
-                              partner.profile.icon.src1x!.src!,
-                              partner.profile.icon.src2x!.src!,
+                              partner.profile.icon.src1x.src,
+                              partner.profile.icon.src2x.src,
                             ],
                           }
                         : {})}
@@ -235,7 +237,7 @@ export const ArtistHeaderFragmentContainer = createFragmentContainer(
   ArtistHeader,
   {
     artist: graphql`
-      fragment ArtistHeader2_artist on Artist {
+      fragment ArtistHeader_artist on Artist {
         internalID
         slug
         name
