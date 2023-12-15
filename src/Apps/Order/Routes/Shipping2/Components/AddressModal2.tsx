@@ -65,7 +65,7 @@ export const AddressModal: React.FC<AddressModalProps> = ({
       ? modalAction.address
       : {
           // TODO: Instead of using ShippingContext, initialValues could be a shippingUtils function
-          country: shippingContext.parsedOrderData.shipsFrom,
+          country: shippingContext.orderData.shipsFrom,
           internalID: undefined,
           isDefault: false,
         }
@@ -136,7 +136,7 @@ export const AddressModal: React.FC<AddressModalProps> = ({
     let operation: () => Promise<ReturnType<typeof handleMutationPayload>>
 
     try {
-      shippingContext.helpers.setIsPerformingOperation(true)
+      shippingContext.actions.setIsPerformingOperation(true)
 
       if (modalAction.type === "createUserAddress") {
         operation = async () => {
@@ -202,7 +202,7 @@ export const AddressModal: React.FC<AddressModalProps> = ({
     } catch (error) {
       handleErrors([error], helpers)
     } finally {
-      shippingContext.helpers.setIsPerformingOperation(false)
+      shippingContext.actions.setIsPerformingOperation(false)
     }
   }
 

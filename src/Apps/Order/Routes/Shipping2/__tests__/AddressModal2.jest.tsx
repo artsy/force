@@ -48,10 +48,10 @@ let testAddressModalProps: AddressModalProps
 let mockRelayEnv: ReturnType<typeof createMockEnvironment>
 
 let mockShippingcontext: DeepPartial<ShippingContextProps> = {
-  parsedOrderData: {
+  orderData: {
     shipsFrom: "US",
   },
-  helpers: {
+  actions: {
     setIsPerformingOperation: jest.fn(),
   },
 }

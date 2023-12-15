@@ -46,6 +46,7 @@ import {
   MockPayloadGenerator,
 } from "relay-test-utils"
 import { RelayMockEnvironment } from "relay-test-utils/lib/RelayModernMockEnvironment"
+import { useRouter } from "System/Router/useRouter"
 
 jest.setTimeout(10000)
 
@@ -73,6 +74,12 @@ jest.mock("@artsy/palette", () => {
 
 jest.mock("System/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
+}))
+
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: jest.fn().mockReturnValue({
+    router: jest.fn(),
+  }),
 }))
 
 const mockShowErrorDialog = jest.fn()
@@ -254,6 +261,7 @@ const getAllPendingOperationNames = (env: RelayMockEnvironment) => {
 let realConsoleError: typeof console.error
 
 describe("Shipping", () => {
+  const mockUseRouter = useRouter as jest.Mock
   let isCommittingMutation: boolean
   let relayEnv: MockEnvironment
   const mockPush = jest.fn(() => {
@@ -279,6 +287,12 @@ describe("Shipping", () => {
       trackEvent: jest.fn(),
     }))
     ;(useFeatureFlag as jest.Mock).mockImplementation(() => false)
+
+    mockUseRouter.mockReturnValue({
+      router: {
+        push: mockPush,
+      },
+    })
   })
 
   afterEach(() => {
@@ -292,7 +306,6 @@ describe("Shipping", () => {
         <ShippingFragmentContainer
           order={props.order!}
           me={props.me!}
-          router={{ push: mockPush } as any}
           // @ts-ignore // Is the return type for injectCommitMutation wrong?
           isCommittingMutation={isCommittingMutation}
         />
