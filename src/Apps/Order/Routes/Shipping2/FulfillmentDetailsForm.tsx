@@ -112,7 +112,10 @@ const FulfillmentDetailsFormLayout = (
   const addressFormMode: AddressFormMode =
     values.fulfillmentType === "SHIP" ? props.shippingMode : "pickup"
 
-  // Pass some key formik bits up to the shipping route
+  /*
+  Pass some key formik bits up to the shipping route
+  TODO: This could be accomplished with useImperativeHandle(ref, formikContext)
+  */
   const setFulfillmentFormHelpers =
     shippingContext.helpers.fulfillmentDetails.setFulfillmentFormHelpers
 
@@ -122,13 +125,7 @@ const FulfillmentDetailsFormLayout = (
       isValid: isValid,
       values: values,
     })
-  }, [
-    submitForm,
-    isValid,
-    setFulfillmentFormHelpers,
-    shippingContext.helpers.fulfillmentDetails.setFulfillmentFormHelpers,
-    values,
-  ])
+  }, [submitForm, isValid, setFulfillmentFormHelpers, values])
 
   const trackAutoCompleteEdits = (fieldName: string, handleChange) => (
     ...args

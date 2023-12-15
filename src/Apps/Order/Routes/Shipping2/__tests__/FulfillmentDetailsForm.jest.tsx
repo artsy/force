@@ -16,6 +16,7 @@ import {
   FulfillmentType,
   ShipValues,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
+import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import { useTracking } from "react-tracking"
@@ -55,6 +56,14 @@ const renderTree = testProps => {
   return { wrapper }
 }
 
+/*
+We have to submit the form element manually because the submit button
+is on the shipping route main screen
+*/
+const submitForm = async () => {
+  await fireEvent.submit(screen.getByTestId("FulfillmentDetails_form"))
+}
+
 beforeEach(() => {
   mockOnSubmit.mockReset()
   ;(useTracking as jest.Mock).mockImplementation(() => ({
@@ -65,11 +74,19 @@ beforeEach(() => {
     shippingMode: "saved_addresses",
     availableFulfillmentTypes: [FulfillmentType.SHIP],
     initialValues: {
-      fulfillmentType: "SHIP",
+      fulfillmentType: FulfillmentType.SHIP,
       attributes: {
+        name: "",
+        phoneNumber: "",
+        addressLine1: "",
+        city: "",
+        region: "",
+        postalCode: "",
+        saveAddress: false,
+        addressVerifiedBy: null,
         country: "US",
       },
-    } as any,
+    },
     onSubmit: mockOnSubmit,
     onAddressVerificationComplete: mockOnAddressVerificationComplete,
     verifyAddressNow: false,
@@ -92,6 +109,26 @@ beforeEach(() => {
     },
   } as any
 })
+
+const addressFormErrors = {
+  name: "Full name is required",
+  addressLine1: "Street address is required",
+  city: "City is required",
+  region: "State is required",
+  postalCode: "ZIP code is required",
+  phoneNumber: "Phone number is required",
+}
+
+const validAddress = {
+  name: "John Doe",
+  country: "US",
+  addressLine1: "401 Broadway",
+  addressLine2: "Floor 25",
+  city: "New York",
+  region: "NY",
+  postalCode: "10013",
+  phoneNumber: "1234567890",
+}
 
 describe("FulfillmentDetailsForm", () => {
   describe("Pickup available", () => {
@@ -129,7 +166,23 @@ describe("FulfillmentDetailsForm", () => {
       ).toBeInTheDocument()
     })
 
-    it("sends the values when the user submits a valid form", async () => {
+    it("will not submit without required fields", async () => {
+      renderTree(testProps)
+
+      await submitForm()
+
+      await waitFor(() => {
+        ;["Full name is required", "Phone number is required"].forEach(
+          error => {
+            expect(screen.getByText(error)).toBeInTheDocument()
+          }
+        )
+      })
+
+      expect(mockOnSubmit).not.toHaveBeenCalled()
+    })
+
+    it("calls the submit handler when the user submits a valid form", async () => {
       renderTree(testProps)
       await userEvent.click(
         screen.getByRole("radio", { name: /Arrange for pickup/ })
@@ -143,7 +196,7 @@ describe("FulfillmentDetailsForm", () => {
       await userEvent.type(phoneNumberField, "1234567890")
 
       // we have to submit the form manually because its submit button is on the shipping route main screen
-      await fireEvent.submit(screen.getByTestId("FulfillmentDetails_form"))
+      await submitForm()
       await waitFor(() => {
         expect(mockOnSubmit).toHaveBeenCalledWith(
           {
@@ -165,7 +218,7 @@ describe("FulfillmentDetailsForm", () => {
       )
 
       // we have to submit the form manually because its submit button is on the shipping route main screen
-      await fireEvent.submit(screen.getByTestId("FulfillmentDetails_form"))
+      await submitForm()
       await screen.findByText("Full name is required")
       await screen.findByText("Phone number is required")
       expect(mockOnSubmit).not.toHaveBeenCalled()
@@ -245,6 +298,98 @@ describe("FulfillmentDetailsForm", () => {
 
       expect(screen.queryByText("Delivery method")).not.toBeInTheDocument()
     })
+    describe("form validations", () => {
+      it("will not submit without required fields", async () => {
+        renderTree(testProps)
+
+        await submitForm()
+
+        await waitFor(() => {
+          ;[
+            "Full name is required",
+            "Street address is required",
+            "City is required",
+            "State is required",
+            "ZIP code is required",
+            "Phone number is required",
+          ].forEach(error => {
+            expect(screen.getByText(error)).toBeInTheDocument()
+          })
+        })
+        expect(mockOnSubmit).not.toHaveBeenCalled()
+      })
+
+      it("does not submit an incomplete form", async () => {
+        renderTree(testProps)
+
+        await fillAddressForm({ ...validAddress, name: "" })
+        await submitForm()
+
+        await waitFor(() => {
+          screen.getByText(addressFormErrors.name)
+        })
+        expect(mockOnSubmit).not.toHaveBeenCalled()
+      })
+
+      // // TODO: New custom postal code validator needs to be relaxed to pass this
+      it("allows a missing postal code and state/province if the selected country is not US or Canada", async () => {
+        renderTree(testProps)
+
+        await fillAddressForm({
+          ...validAddress,
+          name: "Joelle Van Dyne",
+          addressLine1: "401 Broadway",
+          addressLine2: "",
+          city: "New York",
+          region: "",
+          postalCode: "",
+          phoneNumber: "5555937743",
+          country: "AQ",
+        })
+
+        await submitForm()
+
+        await waitFor(() => {
+          expect(
+            screen.queryByText(/[\w\s]is required/)
+          ).not.toBeInTheDocument()
+
+          expect(mockOnSubmit).toHaveBeenCalledWith(
+            {
+              fulfillmentType: "SHIP",
+              attributes: {
+                name: "Joelle Van Dyne",
+                country: "AQ",
+                addressLine1: "401 Broadway",
+                city: "New York",
+                region: "",
+                postalCode: "",
+                phoneNumber: "5555937743",
+                addressVerifiedBy: null,
+                saveAddress: false,
+              },
+            },
+            expect.anything()
+          )
+        })
+      })
+
+      it("only shows validation errors on touched inputs before submission", async () => {
+        renderTree(testProps)
+
+        const name = screen.getByPlaceholderText("Full name")
+        userEvent.type(name, "First Last")
+        userEvent.clear(name)
+        userEvent.tab()
+
+        await waitFor(async () => {
+          expect(
+            screen.queryAllByText(/is required/).map(el => el.textContent)
+          ).toEqual(["Full name is required"])
+        })
+      })
+    })
+
     describe("US form", () => {
       beforeEach(() => {
         ;(testProps.initialValues as ShipValues).attributes.country = "US"
@@ -269,59 +414,32 @@ describe("FulfillmentDetailsForm", () => {
         )[0]
       })
 
-      it("sends the values when the user submits a valid form", async () => {
+      it("calls the submit handler when the user submits a valid form", async () => {
         renderTree(testProps)
         await waitFor(() => {
           const line1Input = screen.getByPlaceholderText("Street address")
           expect(line1Input).toBeEnabled()
         })
-        const address = {
-          name: "John Doe",
-          country: "US",
-          addressLine1: "401 Broadway",
-          addressLine2: "Floor 25",
-          city: "New York",
-          region: "NY",
-          postalCode: "10013",
-          phoneNumber: "1234567890",
-        }
-        const name = screen.getByPlaceholderText("Full name")
-        const country = screen.getByTestId("AddressForm_country")
-        const addressLine1 = screen.getByPlaceholderText("Street address")
-        const addressLine2 = screen.getByPlaceholderText(
-          "Apt, floor, suite, etc."
-        )
-        const city = screen.getByPlaceholderText("City")
-        const region = screen.getByPlaceholderText("State")
-        const postalCode = screen.getByPlaceholderText("ZIP code")
-        const phoneNumber = screen.getAllByPlaceholderText(
-          "Add phone number including country code"
-        )[0]
 
-        await userEvent.paste(name, address.name)
-        await userEvent.selectOptions(country, [address.country])
-        await userEvent.paste(addressLine1, address.addressLine1)
-        await userEvent.paste(addressLine2, address.addressLine2)
-        await userEvent.paste(city, address.city)
-        await userEvent.paste(region, address.region)
-        await userEvent.paste(postalCode, address.postalCode)
-        await userEvent.paste(phoneNumber, address.phoneNumber)
+        await fillAddressForm(validAddress)
 
-        await fireEvent.submit(screen.getByTestId("FulfillmentDetails_form"))
+        await submitForm()
 
         await waitFor(() => {
           expect(mockOnSubmit).toHaveBeenCalledWith(
             {
               fulfillmentType: "SHIP",
               attributes: {
-                name: address.name,
-                country: address.country,
-                addressLine1: address.addressLine1,
-                addressLine2: address.addressLine2,
-                city: address.city,
-                region: address.region,
-                postalCode: address.postalCode,
-                phoneNumber: address.phoneNumber,
+                name: validAddress.name,
+                country: validAddress.country,
+                addressLine1: validAddress.addressLine1,
+                addressLine2: validAddress.addressLine2,
+                city: validAddress.city,
+                region: validAddress.region,
+                postalCode: validAddress.postalCode,
+                phoneNumber: validAddress.phoneNumber,
+                addressVerifiedBy: null,
+                saveAddress: false,
               },
             },
             expect.anything()
