@@ -1,3 +1,4 @@
+import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { useHandleUserAddressUpdates } from "Apps/Order/Routes/Shipping2/Hooks/useHandleUserAddressUpdates"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { useSelectShippingQuote } from "Apps/Order/Routes/Shipping2/Mutations/useSelectShippingQuote"
@@ -15,6 +16,7 @@ export const useSaveSelectedShippingQuote = (
   order: SaveAndContinueButton_order$data
 ) => {
   const { router } = useRouter()
+  const orderTracking = useOrderTracking()
   const shippingContext = useShippingContext()
   const selectShippingQuote = useSelectShippingQuote()
   const { handleUserAddressUpdates } = useHandleUserAddressUpdates()
@@ -25,14 +27,14 @@ export const useSaveSelectedShippingQuote = (
       return
     }
     if (
-      shippingContext.parsedOrderData.savedFulfillmentDetails
-        ?.fulfillmentType !== FulfillmentType.SHIP
+      shippingContext.orderData.savedFulfillmentDetails?.fulfillmentType !==
+      FulfillmentType.SHIP
     ) {
       logger.error("No shipping address saved")
       return
     }
     try {
-      shippingContext.helpers.setIsPerformingOperation(true)
+      shippingContext.actions.setIsPerformingOperation(true)
 
       const result = await selectShippingQuote.submitMutation({
         variables: {
@@ -47,20 +49,18 @@ export const useSaveSelectedShippingQuote = (
       const orderOrError = result.commerceSelectShippingOption?.orderOrError
 
       if (orderOrError?.__typename === "CommerceOrderWithMutationFailure") {
-        shippingContext.helpers.handleExchangeError(orderOrError.error, logger)
+        shippingContext.actions.handleExchangeError(orderOrError.error, logger)
         return
       }
 
-      await handleUserAddressUpdates(
-        shippingContext.helpers.fulfillmentDetails.values
-      )
+      await handleUserAddressUpdates(shippingContext.state.formHelpers.values)
 
       // Advance to payment
       router.push(`/orders/${order.internalID}/payment`)
     } catch (error) {
       logger.error(error)
 
-      shippingContext.helpers.orderTracking.errorMessageViewed({
+      orderTracking.errorMessageViewed({
         error_code: null,
         title: "An error occurred",
         message:
@@ -68,11 +68,11 @@ export const useSaveSelectedShippingQuote = (
         flow: "user sets a shipping quote",
       })
 
-      shippingContext.helpers.dialog.showErrorDialog({
+      shippingContext.actions.dialog.showErrorDialog({
         message: <ArtaErrorDialogMessage />,
       })
     } finally {
-      shippingContext.helpers.setIsPerformingOperation(false)
+      shippingContext.actions.setIsPerformingOperation(false)
     }
   }
 

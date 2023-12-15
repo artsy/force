@@ -16,8 +16,7 @@ import { FulfillmentType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils
 export const useOrderTracking = () => {
   const { trackEvent } = useTracking()
   const analytics = useAnalyticsContext()
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const contextPageOwnerId = analytics.contextPageOwnerId!
+  const contextPageOwnerId = analytics.contextPageOwnerId as string
 
   const trackingCalls = useMemo(() => {
     return {

@@ -9,15 +9,15 @@ import {
 import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
 
-export interface ParsedOrderData {
-  lockShippingCountryTo: "EU" | string | null
-  shipsFrom: string
+export interface ComputedOrderData {
   availableShippingCountries: string[]
+  lockShippingCountryTo: "EU" | string | null
   requiresArtsyShippingTo: (shipTo: string) => boolean
-  selectedShippingQuoteId?: string
   savedFulfillmentDetails: SavedFulfillmentData
   savedShippingQuoteData: SavedShippingQuoteData
+  selectedShippingQuoteId?: string
   shippingQuotes?: Array<{ id: string; isSelected: boolean }>
+  shipsFrom: string
 }
 
 type SavedFulfillmentData =
@@ -40,10 +40,10 @@ type SavedShippingQuoteData = {
   shippingQuotes: Array<{ id: string; isSelected: boolean }>
 } | null
 
-export const parseOrderData = (
+export const computeOrderData = (
   order: ShippingProps["order"],
   me: ShippingProps["me"]
-): ParsedOrderData => {
+): ComputedOrderData => {
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const firstLineItem = extractNodes(order.lineItems)[0]!
@@ -72,7 +72,7 @@ export const parseOrderData = (
     ? EU_COUNTRY_CODES
     : [lockShippingCountryTo]
 
-  // todo: Should this be moved into ShippingContext.helpers? It relies on several
+  // todo: Should this be moved into shippingContext.actions? It relies on several
   // intermediate values we don't expose.
   const requiresArtsyShippingTo = (shipToCountry: string) => {
     const isDomesticShipping =
@@ -83,10 +83,12 @@ export const parseOrderData = (
     const requiresArtsyShipping =
       (isDomesticShipping && firstArtwork?.processWithArtsyShippingDomestic) ||
       (!isDomesticShipping && !!firstArtwork?.artsyShippingInternational)
+
     return requiresArtsyShipping
   }
 
   const shippingQuotes = extractNodes(firstLineItem.shippingQuoteOptions) ?? []
+
   const selectedShippingQuoteId =
     shippingQuotes.find(quote => quote.isSelected)?.id ?? null
 

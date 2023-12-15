@@ -32,15 +32,14 @@ export const useHandleUserAddressUpdates = () => {
     const current = {
       newSavedAddressId: shippingContext.state.newSavedAddressId,
       savedFulfillmentDetails:
-        shippingContext.parsedOrderData.savedFulfillmentDetails
-          ?.fulfillmentDetails,
+        shippingContext.orderData.savedFulfillmentDetails?.fulfillmentDetails,
     }
 
     try {
       if (addressShouldBeSaved) {
         // Address not saved, create it
         if (!current.newSavedAddressId) {
-          shippingContext.helpers.setIsPerformingOperation(true)
+          shippingContext.actions.setIsPerformingOperation(true)
 
           const response = await createSavedAddress.submitMutation({
             variables: {
@@ -53,7 +52,7 @@ export const useHandleUserAddressUpdates = () => {
           const newAddress = response?.createUserAddress?.userAddressOrErrors
 
           if (newAddress?.__typename === "UserAddress") {
-            shippingContext.helpers.setNewSavedAddressId(newAddress.internalID)
+            shippingContext.actions.setNewSavedAddressId(newAddress.internalID)
             return
           }
 
@@ -71,7 +70,7 @@ export const useHandleUserAddressUpdates = () => {
             formAddressAttributes
           )
         ) {
-          shippingContext.helpers.setIsPerformingOperation(true)
+          shippingContext.actions.setIsPerformingOperation(true)
 
           await updateSavedAddress.submitMutation({
             variables: {
@@ -85,7 +84,7 @@ export const useHandleUserAddressUpdates = () => {
         // Address should not be saved, delete it if it exists
       } else {
         if (shippingContext.state.newSavedAddressId) {
-          shippingContext.helpers.setIsPerformingOperation(true)
+          shippingContext.actions.setIsPerformingOperation(true)
 
           await deleteSavedAddress.submitMutation({
             variables: {
@@ -95,13 +94,13 @@ export const useHandleUserAddressUpdates = () => {
             },
           })
 
-          shippingContext.helpers.setNewSavedAddressId(null)
+          shippingContext.actions.setNewSavedAddressId(null)
         }
       }
     } catch (error) {
       logger.error(error)
     } finally {
-      shippingContext.helpers.setIsPerformingOperation(false)
+      shippingContext.actions.setIsPerformingOperation(false)
     }
   }
 

@@ -1,12 +1,8 @@
-import { FC, useEffect } from "react"
-import { Router } from "found"
+import { FC } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
-import { compact } from "lodash"
-import { Box, Flex, Spacer, Text, usePrevious } from "@artsy/palette"
-
+import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { Shipping2_order$data } from "__generated__/Shipping2_order.graphql"
 import { Shipping2_me$data } from "__generated__/Shipping2_me.graphql"
-
 import { Media } from "Utils/Responsive"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import {
@@ -16,17 +12,17 @@ import {
 import { TransactionDetailsSummaryItemFragmentContainer as TransactionDetailsSummaryItem } from "Apps/Order/Components/TransactionDetailsSummaryItem"
 import { Dialog, injectDialog } from "Apps/Order/Dialogs"
 import { BuyerGuarantee } from "Apps/Order/Components/BuyerGuarantee"
-import { Collapse } from "Apps/Order/Components/Collapse"
 import { ShippingQuotes2 } from "Apps/Order/Routes/Shipping2/Components/ShippingQuotes2"
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { OrderRouteContainer } from "Apps/Order/Components/OrderRouteContainer"
 import { Analytics } from "System/Analytics/AnalyticsContext"
 import { FulfillmentDetails } from "Apps/Order/Routes/Shipping2/Components/FulfillmentDetails"
-import { matchAddressFields } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { ShippingContextProvider } from "Apps/Order/Routes/Shipping2/ShippingContext"
-import { extractNodes } from "Utils/extractNodes"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { SaveAndContinueButton } from "Apps/Order/Routes/Shipping2/Components/SaveAndContinueButton"
+import { useBackToFullfillmentDetails } from "Apps/Order/Routes/Shipping2/Hooks/useBackToFulfillmentDetails"
+import { useSelectFirstShippingQuote } from "Apps/Order/Routes/Shipping2/Hooks/useSelectFirstShippingQuote"
+import { CollapseDetails } from "Apps/Order/Routes/Shipping2/Components/CollapseDetails"
 
 export type ShippingStage =
   | "fulfillment_details"
@@ -37,7 +33,6 @@ export interface ShippingProps {
   order: Shipping2_order$data
   me: Shipping2_me$data
   relay?: RelayProp
-  router: Router
   dialog: Dialog
 }
 
@@ -49,118 +44,26 @@ export const ShippingRoute: FC<ShippingProps> = props => {
         order={props.order}
         me={props.me}
       >
-        <ShippingRouteLayout
-          dialog={props.dialog}
-          order={props.order}
-          me={props.me}
-          router={props.router}
-        />
+        <ShippingRouteLayout order={props.order} me={props.me} />
       </ShippingContextProvider>
     </Analytics>
   )
 }
 
-const ShippingRouteLayout: FC<ShippingProps> = ({ me, order }) => {
+const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
+  me,
+  order,
+}) => {
   const shippingContext = useShippingContext()
-  const savedAddresses = extractNodes(me.addressConnection)
-  const previousSavedAddresses = usePrevious(savedAddresses)
 
   const isOffer = order.mode === "OFFER"
 
-  const isArtsyShipping =
-    shippingContext.parsedOrderData.savedFulfillmentDetails?.isArtsyShipping
-
-  const formValues = shippingContext.helpers.fulfillmentDetails.values
-  const previousFormValues = usePrevious(formValues)
-
-  const showArtsyShipping =
-    shippingContext.state.stage === "shipping_quotes" &&
-    !!isArtsyShipping &&
-    !!shippingContext.parsedOrderData.shippingQuotes &&
-    shippingContext.parsedOrderData.shippingQuotes.length > 0
-
-  const defaultShippingQuoteId =
-    shippingContext.parsedOrderData.shippingQuotes?.[0]?.id
-
-  const bestArtsyShippingQuote = isArtsyShipping
-    ? shippingContext.parsedOrderData.shippingQuotes?.find(
-        quote => quote.isSelected
-      )?.id || defaultShippingQuoteId
-    : null
-
-  const maybeShippingQuotesConnectionEdges =
-    order.lineItems?.edges?.[0]?.node?.shippingQuoteOptions?.edges
-
-  const shippingQuotesConnectionEdges = maybeShippingQuotesConnectionEdges
-    ? compact(maybeShippingQuotesConnectionEdges)
-    : ([] as NonNullable<typeof maybeShippingQuotesConnectionEdges>)
-
-  /**
-   * Go back to fulfillment details stage if the user edits the address or
-   * deletes a saved address.
-   */
-  useEffect(() => {
-    if (
-      shippingContext.state.stage === "fulfillment_details" ||
-      !shippingContext.parsedOrderData.savedFulfillmentDetails
-    ) {
-      return
-    }
-
-    const addressValuesChanged = !matchAddressFields(
-      formValues.attributes,
-      previousFormValues.attributes
-    )
-
-    const deletedNewSavedAddress =
-      shippingContext.state.newSavedAddressId &&
-      previousSavedAddresses.length > savedAddresses.length &&
-      !savedAddresses.find(
-        a => a.internalID === shippingContext.state.newSavedAddressId
-      )
-
-    if (addressValuesChanged || deletedNewSavedAddress) {
-      shippingContext.helpers.setStage("fulfillment_details")
-
-      if (deletedNewSavedAddress) {
-        shippingContext.helpers.setNewSavedAddressId(null)
-      }
-    }
-  }, [
-    formValues.attributes,
-    shippingContext.helpers.fulfillmentDetails.values,
-    shippingContext.parsedOrderData.savedFulfillmentDetails,
-    previousFormValues.attributes,
-    previousSavedAddresses.length,
-    savedAddresses,
-    savedAddresses.length,
-    shippingContext.state.newSavedAddressId,
-    shippingContext.state.stage,
-    shippingContext.helpers,
-  ])
+  // Go back to fulfillment details stage if the user edits the address or
+  // deletes a saved address.
+  useBackToFullfillmentDetails(me)
 
   // Automatically selects first shipping quote when they change
-  useEffect(() => {
-    if (
-      bestArtsyShippingQuote &&
-      bestArtsyShippingQuote !==
-        shippingContext.parsedOrderData.selectedShippingQuoteId
-    ) {
-      shippingContext.helpers.setSelectedShippingQuote(bestArtsyShippingQuote)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [
-    shippingContext.parsedOrderData.selectedShippingQuoteId,
-    defaultShippingQuoteId,
-    bestArtsyShippingQuote,
-  ])
-
-  const handleShippingQuoteSelected = (newShippingQuoteId: string) => {
-    shippingContext.helpers.orderTracking.clickedSelectShippingOption(
-      newShippingQuoteId
-    )
-    shippingContext.helpers.setSelectedShippingQuote(newShippingQuoteId)
-  }
+  useSelectFirstShippingQuote()
 
   return (
     <Box data-test="orderShipping">
@@ -179,10 +82,7 @@ const ShippingRouteLayout: FC<ShippingProps> = ({ me, order }) => {
           >
             <FulfillmentDetails me={me} order={order} />
 
-            <Collapse
-              data-testid="ShippingQuotes_collapse"
-              open={showArtsyShipping}
-            >
+            <CollapseDetails>
               <Text variant="sm">Artsy shipping options</Text>
 
               <Text variant="xs" mb="1" color="black60">
@@ -201,13 +101,14 @@ const ShippingRouteLayout: FC<ShippingProps> = ({ me, order }) => {
                 )}
               </Text>
 
-              <ShippingQuotes2
-                shippingQuotes={shippingQuotesConnectionEdges}
-                onSelect={handleShippingQuoteSelected}
-              />
+              {order.lineItems?.edges?.[0]?.node && (
+                <ShippingQuotes2
+                  commerceLineItem={order.lineItems?.edges?.[0]?.node}
+                />
+              )}
 
               <Spacer y={4} />
-            </Collapse>
+            </CollapseDetails>
 
             <Media greaterThan="xs">
               <SaveAndContinueButton width="50%" order={order} />
@@ -249,6 +150,9 @@ export const ShippingFragmentContainer = createFragmentContainer(
       fragment Shipping2_order on CommerceOrder {
         ...FulfillmentDetailsForm_order
         ...SaveAndContinueButton_order
+        ...ArtworkSummaryItem_order
+        ...TransactionDetailsSummaryItem_order
+        ...OrderStepper_order
 
         __typename
         id
@@ -284,6 +188,18 @@ export const ShippingFragmentContainer = createFragmentContainer(
         lineItems {
           edges {
             node {
+              ...ShippingQuotes2_commerceLineItem
+              shippingQuoteOptions {
+                edges {
+                  node {
+                    id
+                    isSelected
+                    price(precision: 2)
+                    priceCents
+                    typeName
+                  }
+                }
+              }
               artwork {
                 slug
                 processWithArtsyShippingDomestic
@@ -293,21 +209,9 @@ export const ShippingFragmentContainer = createFragmentContainer(
                 euShippingOrigin
                 shippingCountry
               }
-              shippingQuoteOptions {
-                edges {
-                  ...ShippingQuotes_shippingQuotes
-                  node {
-                    id
-                    isSelected
-                  }
-                }
-              }
             }
           }
         }
-        ...ArtworkSummaryItem_order
-        ...TransactionDetailsSummaryItem_order
-        ...OrderStepper_order
       }
     `,
     me: graphql`

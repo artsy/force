@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2c5767e608b27c5cb31de9aa6206a0ed>>
+ * @generated SignedSource<<a77358e3011f15581b8ecfe482d1c73d>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -33,10 +33,13 @@ export type Shipping2_order$data = {
             readonly node: {
               readonly id: string;
               readonly isSelected: boolean;
+              readonly price: string | null | undefined;
+              readonly priceCents: number;
+              readonly typeName: string;
             } | null | undefined;
-            readonly " $fragmentSpreads": FragmentRefs<"ShippingQuotes_shippingQuotes">;
           } | null | undefined> | null | undefined;
         } | null | undefined;
+        readonly " $fragmentSpreads": FragmentRefs<"ShippingQuotes2_commerceLineItem">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
@@ -168,6 +171,21 @@ return {
       "kind": "FragmentSpread",
       "name": "SaveAndContinueButton_order"
     },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "ArtworkSummaryItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "TransactionDetailsSummaryItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "OrderStepper_order"
+    },
     (v0/*: any*/),
     (v1/*: any*/),
     {
@@ -248,6 +266,79 @@ return {
               "plural": false,
               "selections": [
                 {
+                  "args": null,
+                  "kind": "FragmentSpread",
+                  "name": "ShippingQuotes2_commerceLineItem"
+                },
+                {
+                  "alias": null,
+                  "args": null,
+                  "concreteType": "CommerceShippingQuoteConnection",
+                  "kind": "LinkedField",
+                  "name": "shippingQuoteOptions",
+                  "plural": false,
+                  "selections": [
+                    {
+                      "alias": null,
+                      "args": null,
+                      "concreteType": "CommerceShippingQuoteEdge",
+                      "kind": "LinkedField",
+                      "name": "edges",
+                      "plural": true,
+                      "selections": [
+                        {
+                          "alias": null,
+                          "args": null,
+                          "concreteType": "CommerceShippingQuote",
+                          "kind": "LinkedField",
+                          "name": "node",
+                          "plural": false,
+                          "selections": [
+                            (v1/*: any*/),
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "isSelected",
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": [
+                                {
+                                  "kind": "Literal",
+                                  "name": "precision",
+                                  "value": 2
+                                }
+                              ],
+                              "kind": "ScalarField",
+                              "name": "price",
+                              "storageKey": "price(precision:2)"
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "priceCents",
+                              "storageKey": null
+                            },
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "typeName",
+                              "storageKey": null
+                            }
+                          ],
+                          "storageKey": null
+                        }
+                      ],
+                      "storageKey": null
+                    }
+                  ],
+                  "storageKey": null
+                },
+                {
                   "alias": null,
                   "args": null,
                   "concreteType": "Artwork",
@@ -306,52 +397,6 @@ return {
                     }
                   ],
                   "storageKey": null
-                },
-                {
-                  "alias": null,
-                  "args": null,
-                  "concreteType": "CommerceShippingQuoteConnection",
-                  "kind": "LinkedField",
-                  "name": "shippingQuoteOptions",
-                  "plural": false,
-                  "selections": [
-                    {
-                      "alias": null,
-                      "args": null,
-                      "concreteType": "CommerceShippingQuoteEdge",
-                      "kind": "LinkedField",
-                      "name": "edges",
-                      "plural": true,
-                      "selections": [
-                        {
-                          "args": null,
-                          "kind": "FragmentSpread",
-                          "name": "ShippingQuotes_shippingQuotes"
-                        },
-                        {
-                          "alias": null,
-                          "args": null,
-                          "concreteType": "CommerceShippingQuote",
-                          "kind": "LinkedField",
-                          "name": "node",
-                          "plural": false,
-                          "selections": [
-                            (v1/*: any*/),
-                            {
-                              "alias": null,
-                              "args": null,
-                              "kind": "ScalarField",
-                              "name": "isSelected",
-                              "storageKey": null
-                            }
-                          ],
-                          "storageKey": null
-                        }
-                      ],
-                      "storageKey": null
-                    }
-                  ],
-                  "storageKey": null
                 }
               ],
               "storageKey": null
@@ -361,21 +406,6 @@ return {
         }
       ],
       "storageKey": null
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtworkSummaryItem_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "TransactionDetailsSummaryItem_order"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "OrderStepper_order"
     }
   ],
   "type": "CommerceOrder",
@@ -383,6 +413,6 @@ return {
 };
 })();
 
-(node as any).hash = "e25a1e3fc2feb5e9cacde94ea28e9810";
+(node as any).hash = "c04babe27eb1a64becf14793ee701eb9";
 
 export default node;

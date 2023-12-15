@@ -25,6 +25,7 @@ import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippin
 import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import { useHandleUserAddressUpdates } from "Apps/Order/Routes/Shipping2/Hooks/useHandleUserAddressUpdates"
 import { useRouter } from "System/Router/useRouter"
+import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 
 const logger = createLogger("Routes/Shipping2/FulfillmentDetails.tsx")
 
@@ -44,6 +45,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
   const shippingContext = useShippingContext()
   const saveFulfillmentDetails = useSaveFulfillmentDetails()
   const { handleUserAddressUpdates } = useHandleUserAddressUpdates()
+  const orderTracking = useOrderTracking()
 
   const savedAddresses = extractNodes(meData.addressConnection)
   const hasSavedAddresses = !!savedAddresses.length
@@ -77,7 +79,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
 
   // Only process once on load
   const initialValues = useRef(
-    getInitialValues(meData, shippingContext.parsedOrderData)
+    getInitialValues(meData, shippingContext.orderData)
   ).current
 
   /**
@@ -93,7 +95,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
   // Force-re-save fulfillment details with existing values to refresh shipping quotes
   useEffect(() => {
     const existingFulfillmentDetails =
-      shippingContext.parsedOrderData.savedFulfillmentDetails
+      shippingContext.orderData.savedFulfillmentDetails
     if (
       shippingContext.state.stage === "refresh_shipping_quotes" &&
       existingFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP
@@ -119,7 +121,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
     requiresArtsyShipping: boolean
   }) => {
     if (requiresArtsyShipping) {
-      shippingContext.helpers.setStage("shipping_quotes")
+      shippingContext.actions.setStage("shipping_quotes")
     } else {
       // Advance to payment
       router.push(`/orders/${orderData.internalID}/payment`)
@@ -154,7 +156,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
     try {
       let fulfillmentMutationValues: CommerceSetShippingInput
       let requiresArtsyShippingToDestination: boolean
-      shippingContext.helpers.setIsPerformingOperation(true)
+      shippingContext.actions.setIsPerformingOperation(true)
 
       if (formValues.fulfillmentType === FulfillmentType.SHIP) {
         const {
@@ -163,7 +165,8 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
           phoneNumber,
           ...addressValues
         } = formValues.attributes
-        requiresArtsyShippingToDestination = shippingContext.parsedOrderData.requiresArtsyShippingTo(
+
+        requiresArtsyShippingToDestination = shippingContext.orderData.requiresArtsyShippingTo(
           addressValues.country
         )
 
@@ -206,7 +209,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
       const orderOrError = result.commerceSetShipping?.orderOrError
 
       if (orderOrError?.__typename === "CommerceOrderWithMutationFailure") {
-        shippingContext.helpers.handleExchangeError(orderOrError.error, logger)
+        shippingContext.actions.handleExchangeError(orderOrError.error, logger)
         return
       }
 
@@ -218,7 +221,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
         requiresArtsyShipping: requiresArtsyShippingToDestination,
       })
     } catch (error) {
-      shippingContext.helpers.orderTracking.errorMessageViewed({
+      orderTracking.errorMessageViewed({
         error_code: null,
         title: "An error occurred",
         message:
@@ -226,9 +229,9 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
         flow: "user selects a shipping option",
       })
 
-      shippingContext.helpers.dialog.showErrorDialog()
+      shippingContext.actions.dialog.showErrorDialog()
     } finally {
-      shippingContext.helpers.setIsPerformingOperation(false)
+      shippingContext.actions.setIsPerformingOperation(false)
     }
   }
 
@@ -361,7 +364,7 @@ const ME_FRAGMENT = graphql`
 
 const getInitialValues = (
   me: FulfillmentDetailsForm_me$data,
-  orderData: ShippingContextProps["parsedOrderData"]
+  orderData: ShippingContextProps["orderData"]
 ): FulfillmentValues => {
   if (orderData.savedFulfillmentDetails) {
     return {

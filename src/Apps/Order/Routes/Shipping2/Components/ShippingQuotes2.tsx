@@ -8,46 +8,55 @@ import {
   Text,
 } from "@artsy/palette"
 import { graphql, useFragment } from "react-relay"
-import { ShippingQuotes_shippingQuotes$key } from "__generated__/ShippingQuotes_shippingQuotes.graphql"
+import { ShippingQuotes2_commerceLineItem$key } from "__generated__/ShippingQuotes2_commerceLineItem.graphql"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
+import { extractNodes } from "Utils/extractNodes"
+import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 
 export interface ShippingQuotesProps {
-  onSelect: (shippingQuoteId: string) => void
-  shippingQuotes: ShippingQuotes_shippingQuotes$key
+  commerceLineItem: ShippingQuotes2_commerceLineItem$key
 }
 
 export const ShippingQuotes2: React.FC<ShippingQuotesProps> = ({
-  onSelect,
-  shippingQuotes,
+  commerceLineItem,
 }) => {
+  const shippingContext = useShippingContext()
+  const orderTracking = useOrderTracking()
+
   const data = useFragment(
     graphql`
-      fragment ShippingQuotes2_shippingQuotes on CommerceShippingQuoteEdge
-        @relay(plural: true) {
-        node {
-          id
-          isSelected
-          price(precision: 2)
-          priceCents
-          typeName
+      fragment ShippingQuotes2_commerceLineItem on CommerceLineItem {
+        shippingQuoteOptions {
+          edges {
+            node {
+              id
+              isSelected
+              price(precision: 2)
+              priceCents
+              typeName
+            }
+          }
         }
       }
     `,
-    shippingQuotes
+    commerceLineItem
   )
 
-  const shippingContext = useShippingContext()
+  const quotes = extractNodes(data.shippingQuoteOptions)
 
-  const quotes = data?.map(quote => quote.node)
-
-  if (!quotes || !quotes.length) {
+  if (!quotes.length) {
     return null
+  }
+
+  const handleShippingQuoteSelected = (newShippingQuoteId: string) => {
+    orderTracking.clickedSelectShippingOption(newShippingQuoteId)
+    shippingContext.actions.setSelectedShippingQuote(newShippingQuoteId)
   }
 
   return (
     <RadioGroup
-      onSelect={onSelect}
-      defaultValue={shippingContext.parsedOrderData.selectedShippingQuoteId}
+      onSelect={handleShippingQuoteSelected}
+      defaultValue={shippingContext.orderData.selectedShippingQuoteId}
     >
       {quotes.map(shippingQuote => {
         const description =

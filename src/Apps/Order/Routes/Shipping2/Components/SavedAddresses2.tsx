@@ -21,8 +21,8 @@ import {
   addressWithFallbackValues,
   getDefaultUserAddress,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
-import { useOrderTracking } from "Apps/Order/Utils/useOrderTracking"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
+import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
 const PAGE_SIZE = 30
@@ -48,15 +48,14 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   )
 
   const selectedSavedAddressId =
-    shippingContext.parsedOrderData.savedFulfillmentDetails
-      ?.selectedSavedAddressId
+    shippingContext.orderData.savedFulfillmentDetails?.selectedSavedAddressId
   const [selectedAddressID, setSelectedAddressID] = useState<
     string | undefined
   >(
     getBestAvailableAddress(
       addressList,
       selectedSavedAddressId,
-      shippingContext.parsedOrderData.availableShippingCountries
+      shippingContext.orderData.availableShippingCountries
     )?.internalID
   )
 
@@ -72,7 +71,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         getBestAvailableAddress(
           addressList,
           selectedSavedAddressId,
-          shippingContext.parsedOrderData.availableShippingCountries
+          shippingContext.orderData.availableShippingCountries
         )?.internalID
       )
     }
@@ -80,7 +79,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     selectedAddressPresent,
     addressList,
     selectedSavedAddressId,
-    shippingContext.parsedOrderData.availableShippingCountries,
+    shippingContext.orderData.availableShippingCountries,
   ])
 
   const handleSelectAddress = (id: string): void => {
