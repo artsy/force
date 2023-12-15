@@ -9,9 +9,9 @@ import {
   AddressModal,
   AddressModalAction,
   AddressModalActionType,
-} from "Apps/Order/Routes/Shipping2/AddressModal2"
+} from "Apps/Order/Routes/Shipping2/Components/AddressModal2"
 import createLogger from "Utils/logger"
-import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/SavedAddressItem2"
+import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/Components/SavedAddressItem2"
 import { extractNodes } from "Utils/extractNodes"
 import { themeGet } from "@styled-system/theme-get"
 

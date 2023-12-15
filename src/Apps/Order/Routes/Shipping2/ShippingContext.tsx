@@ -2,7 +2,7 @@ import { createContext, FC } from "react"
 import {
   ParsedOrderData,
   parseOrderData,
-} from "Apps/Order/Routes/Shipping2/Utils/ShippingContext/parseOrderData"
+} from "Apps/Order/Routes/Shipping2/Utils/parseOrderData"
 import { useReducer } from "react"
 import { ShippingProps, ShippingStage } from "Apps/Order/Routes/Shipping2"
 import { useState } from "react"

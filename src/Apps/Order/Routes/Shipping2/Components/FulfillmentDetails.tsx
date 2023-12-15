@@ -1,12 +1,12 @@
-import { FulfillmentDetailsForm_order$data } from "__generated__/FulfillmentDetailsForm_order.graphql"
+import { FulfillmentDetailsForm_order$key } from "__generated__/FulfillmentDetailsForm_order.graphql"
 import { FC, useEffect, useRef, useState } from "react"
-import { createFragmentContainer, graphql } from "react-relay"
+import { graphql, useFragment } from "react-relay"
 import { extractNodes } from "Utils/extractNodes"
 import { useFeatureFlag } from "System/useFeatureFlag"
 import {
   AddressFormMode,
   FulfillmentDetailsForm,
-} from "Apps/Order/Routes/Shipping2/FulfillmentDetailsForm"
+} from "Apps/Order/Routes/Shipping2/Components/FulfillmentDetailsForm"
 import {
   FulfillmentType,
   FulfillmentValues,
@@ -14,27 +14,47 @@ import {
   addressWithFallbackValues,
   getDefaultUserAddress,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
-import { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
+import {
+  FulfillmentDetailsForm_me$data,
+  FulfillmentDetailsForm_me$key,
+} from "__generated__/FulfillmentDetailsForm_me.graphql"
 import createLogger from "Utils/logger"
 import { useSaveFulfillmentDetails } from "Apps/Order/Routes/Shipping2/Mutations/useSaveFulfillmentDetails"
 import { CommerceSetShippingInput } from "__generated__/useSaveFulfillmentDetailsMutation.graphql"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
-import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext/ShippingContext"
+import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContext"
+import { useHandleUserAddressUpdates } from "Apps/Order/Routes/Shipping2/Hooks/useHandleUserAddressUpdates"
+import { useRouter } from "System/Router/useRouter"
 
 const logger = createLogger("Routes/Shipping2/FulfillmentDetails.tsx")
 
 export interface FulfillmentDetailsProps {
-  handleUserAddressUpdates: (newValues: FulfillmentValues) => Promise<void>
-  onFulfillmentDetailsSaved: (result: {
-    requiresArtsyShipping: boolean
-  }) => void
-  me: FulfillmentDetailsForm_me$data
-  order: FulfillmentDetailsForm_order$data
+  me: FulfillmentDetailsForm_me$key
+  order: FulfillmentDetailsForm_order$key
 }
 
-export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
+export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
+  me,
+  order,
+}) => {
+  const meData = useFragment(ME_FRAGMENT, me)
+  const orderData = useFragment(ORDER_FRAGMENT, order)
+
+  const { router } = useRouter()
   const shippingContext = useShippingContext()
   const saveFulfillmentDetails = useSaveFulfillmentDetails()
+  const { handleUserAddressUpdates } = useHandleUserAddressUpdates()
+
+  const savedAddresses = extractNodes(meData.addressConnection)
+  const hasSavedAddresses = !!savedAddresses.length
+
+  // Note: Trigger address verification by setting this to true
+  const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)
+
+  // Once the user sees the address form, they should always see it.
+  const [forceNewAddressFormMode, setForceNewAddressFormMode] = useState(
+    !hasSavedAddresses
+  )
 
   const addressVerificationUSEnabled = !!useFeatureFlag(
     "address_verification_us"
@@ -43,7 +63,69 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
     "address_verification_intl"
   )
 
-  const hasSavedAddresses = extractNodes(props.me.addressConnection).length
+  const shippingMode: Exclude<AddressFormMode, "pickup"> =
+    forceNewAddressFormMode || savedAddresses.length === 0
+      ? "new_address"
+      : "saved_addresses"
+
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
+  const firstArtwork = extractNodes(orderData.lineItems)[0]!.artwork!
+
+  const availableFulfillmentTypes: FulfillmentType[] = firstArtwork.pickupAvailable
+    ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
+    : [FulfillmentType.SHIP]
+
+  // Only process once on load
+  const initialValues = useRef(
+    getInitialValues(meData, shippingContext.parsedOrderData)
+  ).current
+
+  /**
+   * Effects
+   */
+
+  useEffect(() => {
+    if (!forceNewAddressFormMode && !hasSavedAddresses) {
+      setForceNewAddressFormMode(true)
+    }
+  }, [forceNewAddressFormMode, hasSavedAddresses])
+
+  // Force-re-save fulfillment details with existing values to refresh shipping quotes
+  useEffect(() => {
+    const existingFulfillmentDetails =
+      shippingContext.parsedOrderData.savedFulfillmentDetails
+    if (
+      shippingContext.state.stage === "refresh_shipping_quotes" &&
+      existingFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP
+    ) {
+      submitFulfillmentDetails({
+        performUserAddressUpdates: false,
+        formValues: {
+          attributes: existingFulfillmentDetails.fulfillmentDetails as ShipValues["attributes"],
+          fulfillmentType: existingFulfillmentDetails?.fulfillmentType,
+        },
+      })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  /**
+   * Handlers
+   */
+
+  const handleFulfillmentDetailsSaved = ({
+    requiresArtsyShipping,
+  }: {
+    requiresArtsyShipping: boolean
+  }) => {
+    if (requiresArtsyShipping) {
+      shippingContext.helpers.setStage("shipping_quotes")
+    } else {
+      // Advance to payment
+      router.push(`/orders/${orderData.internalID}/payment`)
+    }
+  }
+
   const shouldVerifyAddressOnSubmit = (values: FulfillmentValues) => {
     const enabledForAddress =
       (values as ShipValues).attributes.country === "US"
@@ -58,29 +140,9 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
     )
   }
 
-  // trigger address verification by setting this to true
-  const [verifyAddressNow, setVerifyAddressNow] = useState<boolean>(false)
-
   const handleVerificationComplete = () => {
     setVerifyAddressNow(false)
   }
-
-  // Once the user sees the address form, they should always see it.
-  const [forceNewAddressFormMode, setForceNewAddressFormMode] = useState(
-    !hasSavedAddresses
-  )
-
-  useEffect(() => {
-    if (!forceNewAddressFormMode && !hasSavedAddresses) {
-      setForceNewAddressFormMode(true)
-    }
-  }, [forceNewAddressFormMode, hasSavedAddresses])
-
-  const savedAddresses = extractNodes(props.me.addressConnection)
-  const shippingMode: Exclude<AddressFormMode, "pickup"> =
-    forceNewAddressFormMode || savedAddresses.length === 0
-      ? "new_address"
-      : "saved_addresses"
 
   const submitFulfillmentDetails = async ({
     performUserAddressUpdates,
@@ -106,7 +168,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
         )
 
         fulfillmentMutationValues = {
-          id: props.order.internalID,
+          id: orderData.internalID,
           fulfillmentType: requiresArtsyShippingToDestination
             ? "SHIP_ARTA"
             : FulfillmentType.SHIP,
@@ -121,7 +183,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
         requiresArtsyShippingToDestination = false
 
         fulfillmentMutationValues = {
-          id: props.order.internalID,
+          id: orderData.internalID,
           fulfillmentType: FulfillmentType.PICKUP,
           phoneNumber: formValues.attributes.phoneNumber,
           shipping: {
@@ -149,10 +211,10 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
       }
 
       if (performUserAddressUpdates) {
-        await props.handleUserAddressUpdates(formValues)
+        await handleUserAddressUpdates(formValues)
       }
 
-      props.onFulfillmentDetailsSaved({
+      handleFulfillmentDetailsSaved({
         requiresArtsyShipping: requiresArtsyShippingToDestination,
       })
     } catch (error) {
@@ -170,25 +232,6 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
     }
   }
 
-  // Force-re-save fulfillment details with existing values to refresh shipping quotes
-  useEffect(() => {
-    const existingFulfillmentDetails =
-      shippingContext.parsedOrderData.savedFulfillmentDetails
-    if (
-      shippingContext.state.stage === "refresh_shipping_quotes" &&
-      existingFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP
-    ) {
-      submitFulfillmentDetails({
-        performUserAddressUpdates: false,
-        formValues: {
-          attributes: existingFulfillmentDetails.fulfillmentDetails as ShipValues["attributes"],
-          fulfillmentType: existingFulfillmentDetails?.fulfillmentType,
-        },
-      })
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
   const handleSubmit = values => {
     if (shouldVerifyAddressOnSubmit(values)) {
       setVerifyAddressNow(true)
@@ -201,23 +244,11 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
     }
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
-  const firstArtwork = extractNodes(props.order.lineItems)[0]!.artwork!
-
-  const availableFulfillmentTypes: FulfillmentType[] = firstArtwork.pickupAvailable
-    ? [FulfillmentType.PICKUP, FulfillmentType.SHIP]
-    : [FulfillmentType.SHIP]
-
-  // Only process once on load
-  const initialValues = useRef(
-    getInitialValues(props.me, shippingContext.parsedOrderData)
-  ).current
-
   return (
     <FulfillmentDetailsForm
       initialValues={initialValues}
       onAddressVerificationComplete={handleVerificationComplete}
-      me={props.me}
+      me={meData}
       verifyAddressNow={verifyAddressNow}
       onSubmit={handleSubmit}
       availableFulfillmentTypes={availableFulfillmentTypes}
@@ -226,111 +257,107 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = props => {
   )
 }
 
-export const FulfillmentDetailsFragmentContainer = createFragmentContainer(
-  FulfillmentDetails,
-  {
-    order: graphql`
-      fragment FulfillmentDetailsForm_order on CommerceOrder {
-        internalID
-        mode
-        state
-        requestedFulfillment {
-          __typename
-          ... on CommercePickup {
-            phoneNumber
-          }
-          ... on CommerceShip {
-            name
-            addressLine1
-            addressLine2
-            city
-            region
-            country
-            postalCode
-            phoneNumber
-          }
-          ... on CommerceShipArta {
-            name
-            addressLine1
-            addressLine2
-            city
-            region
-            country
-            postalCode
-            phoneNumber
-          }
-        }
-        lineItems {
-          edges {
-            node {
-              artwork {
-                slug
-                processWithArtsyShippingDomestic
-                artsyShippingInternational
-                pickupAvailable
-                onlyShipsDomestically
-                euShippingOrigin
-                shippingCountry
-              }
-              shippingQuoteOptions {
-                edges {
-                  ...ShippingQuotes_shippingQuotes
-                  node {
-                    id
-                    isSelected
-                  }
-                }
-              }
-            }
-          }
-        }
-        ...ArtworkSummaryItem_order
-        ...TransactionDetailsSummaryItem_order
-        ...OrderStepper_order
+const ORDER_FRAGMENT = graphql`
+  fragment FulfillmentDetailsForm_order on CommerceOrder {
+    internalID
+    mode
+    state
+    requestedFulfillment {
+      __typename
+      ... on CommercePickup {
+        phoneNumber
       }
-    `,
-    me: graphql`
-      fragment FulfillmentDetailsForm_me on Me
-        @argumentDefinitions(
-          first: { type: "Int", defaultValue: 30 }
-          last: { type: "Int" }
-          after: { type: "String" }
-          before: { type: "String" }
-        ) {
+      ... on CommerceShip {
         name
-        email
-        id
-        location {
-          country
-        }
-        ...SavedAddresses2_me
-        addressConnection(
-          first: $first
-          last: $last
-          before: $before
-          after: $after
-        ) {
-          edges {
-            node {
-              id
-              internalID
-              addressLine1
-              addressLine2
-              addressLine3
-              city
-              country
-              isDefault
-              name
-              phoneNumber
-              postalCode
-              region
+        addressLine1
+        addressLine2
+        city
+        region
+        country
+        postalCode
+        phoneNumber
+      }
+      ... on CommerceShipArta {
+        name
+        addressLine1
+        addressLine2
+        city
+        region
+        country
+        postalCode
+        phoneNumber
+      }
+    }
+    lineItems {
+      edges {
+        node {
+          artwork {
+            slug
+            processWithArtsyShippingDomestic
+            artsyShippingInternational
+            pickupAvailable
+            onlyShipsDomestically
+            euShippingOrigin
+            shippingCountry
+          }
+          shippingQuoteOptions {
+            edges {
+              ...ShippingQuotes_shippingQuotes
+              node {
+                id
+                isSelected
+              }
             }
           }
         }
       }
-    `,
+    }
+    ...ArtworkSummaryItem_order
+    ...TransactionDetailsSummaryItem_order
+    ...OrderStepper_order
   }
-)
+`
+
+const ME_FRAGMENT = graphql`
+  fragment FulfillmentDetailsForm_me on Me
+    @argumentDefinitions(
+      first: { type: "Int", defaultValue: 30 }
+      last: { type: "Int" }
+      after: { type: "String" }
+      before: { type: "String" }
+    ) {
+    name
+    email
+    id
+    location {
+      country
+    }
+    ...SavedAddresses2_me
+    addressConnection(
+      first: $first
+      last: $last
+      before: $before
+      after: $after
+    ) {
+      edges {
+        node {
+          id
+          internalID
+          addressLine1
+          addressLine2
+          addressLine3
+          city
+          country
+          isDefault
+          name
+          phoneNumber
+          postalCode
+          region
+        }
+      }
+    }
+  }
+`
 
 const getInitialValues = (
   me: FulfillmentDetailsForm_me$data,

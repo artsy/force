@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<f56a70455279fab369a6ac2f9d0cf119>>
+ * @generated SignedSource<<2c5767e608b27c5cb31de9aa6206a0ed>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -70,7 +70,7 @@ export type Shipping2_order$data = {
     readonly __typename: "%other";
   } | null | undefined;
   readonly state: CommerceOrderStateEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "FulfillmentDetailsForm_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "FulfillmentDetailsForm_order" | "OrderStepper_order" | "SaveAndContinueButton_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Shipping2_order";
 };
 export type Shipping2_order$key = {
@@ -158,13 +158,18 @@ return {
   "metadata": null,
   "name": "Shipping2_order",
   "selections": [
-    (v0/*: any*/),
-    (v1/*: any*/),
     {
       "args": null,
       "kind": "FragmentSpread",
       "name": "FulfillmentDetailsForm_order"
     },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
+      "name": "SaveAndContinueButton_order"
+    },
+    (v0/*: any*/),
+    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -378,6 +383,6 @@ return {
 };
 })();
 
-(node as any).hash = "6559bacc39b9025e660276e5eff47d17";
+(node as any).hash = "e25a1e3fc2feb5e9cacde94ea28e9810";
 
 export default node;

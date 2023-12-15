@@ -10,8 +10,8 @@ import userEvent from "@testing-library/user-event"
 import {
   FulfillmentDetailsForm,
   FulfillmentDetailsFormProps,
-} from "Apps/Order/Routes/Shipping2/FulfillmentDetailsForm"
-import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext/ShippingContext"
+} from "Apps/Order/Routes/Shipping2/Components/FulfillmentDetailsForm"
+import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import {
   FulfillmentType,
   ShipValues,

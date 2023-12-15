@@ -15,7 +15,7 @@ import {
   AddressVerificationFlowQueryRenderer,
 } from "Apps/Order/Components/AddressVerificationFlow"
 
-import { SavedAddressesFragmentContainer } from "Apps/Order/Routes/Shipping2/SavedAddresses2"
+import { SavedAddressesFragmentContainer } from "Apps/Order/Routes/Shipping2/Components/SavedAddresses2"
 import {
   FulfillmentType,
   FulfillmentValues,
