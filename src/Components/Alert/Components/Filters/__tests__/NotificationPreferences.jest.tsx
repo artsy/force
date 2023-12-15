@@ -96,7 +96,7 @@ describe("NotificationPreferences", () => {
 
         const checkboxes = screen.getAllByRole("checkbox")
 
-        expect(checkboxes[0]).not.toBeChecked()
+        expect(checkboxes[0]).toBeChecked()
         expect(checkboxes[1]).not.toBeChecked()
       })
 
@@ -129,7 +129,7 @@ describe("NotificationPreferences", () => {
 
         expect(
           screen.queryByText("Change your email preferences")
-        ).not.toBeInTheDocument()
+        ).toBeInTheDocument()
 
         const checkboxes = screen.getAllByRole("checkbox")
 
@@ -137,8 +137,8 @@ describe("NotificationPreferences", () => {
         fireEvent.click(checkboxes[0])
 
         expect(
-          screen.getByText("Change your email preferences")
-        ).toBeInTheDocument()
+          screen.queryByText("Change your email preferences")
+        ).not.toBeInTheDocument()
       })
     })
   })
@@ -178,7 +178,7 @@ describe("NotificationPreferences", () => {
     })
 
     describe("when custom alert email notifications are disabled", () => {
-      it("email checkbox is disabled by default", async () => {
+      it("email checkbox is enabled by default", async () => {
         renderNotificationPreferences({ mode: "create" })
 
         environment.mock.resolveMostRecentOperation(operation =>
@@ -207,11 +207,11 @@ describe("NotificationPreferences", () => {
 
         const checkboxes = screen.getAllByRole("checkbox")
 
-        expect(checkboxes[0]).not.toBeChecked()
+        expect(checkboxes[0]).toBeChecked()
         expect(checkboxes[1]).not.toBeChecked()
       })
 
-      it("shows warning message when checkbox is checked", async () => {
+      it("shows warning message only when checkbox is checked", async () => {
         renderNotificationPreferences({ mode: "create" })
 
         environment.mock.resolveMostRecentOperation(operation =>
@@ -240,16 +240,18 @@ describe("NotificationPreferences", () => {
 
         expect(
           screen.queryByText("Change your email preferences")
-        ).not.toBeInTheDocument()
+        ).toBeInTheDocument()
 
         const checkboxes = screen.getAllByRole("checkbox")
 
         // Check the email checkbox
         fireEvent.click(checkboxes[0])
 
+        await flushPromiseQueue()
+
         expect(
-          screen.getByText("Change your email preferences")
-        ).toBeInTheDocument()
+          screen.queryByText("Change your email preferences")
+        ).not.toBeInTheDocument()
       })
     })
   })
