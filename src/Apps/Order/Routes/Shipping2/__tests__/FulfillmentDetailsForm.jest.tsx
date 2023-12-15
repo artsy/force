@@ -56,23 +56,6 @@ const renderTree = testProps => {
   return { wrapper }
 }
 
-let initialValues: ShipValues = {
-  fulfillmentType: FulfillmentType.SHIP,
-
-  attributes: {
-    name: "",
-    phoneNumber: "",
-    addressLine1: "",
-    city: "",
-    region: "",
-    postalCode: "",
-    saveAddress: false,
-    addressVerifiedBy: null,
-    // Add any other missing properties here
-    country: "US",
-  },
-}
-
 /*
 We have to submit the form element manually because the submit button
 is on the shipping route main screen
@@ -90,7 +73,20 @@ beforeEach(() => {
   testProps = {
     shippingMode: "saved_addresses",
     availableFulfillmentTypes: [FulfillmentType.SHIP],
-    initialValues,
+    initialValues: {
+      fulfillmentType: FulfillmentType.SHIP,
+      attributes: {
+        name: "",
+        phoneNumber: "",
+        addressLine1: "",
+        city: "",
+        region: "",
+        postalCode: "",
+        saveAddress: false,
+        addressVerifiedBy: null,
+        country: "US",
+      },
+    },
     onSubmit: mockOnSubmit,
     onAddressVerificationComplete: mockOnAddressVerificationComplete,
     verifyAddressNow: false,

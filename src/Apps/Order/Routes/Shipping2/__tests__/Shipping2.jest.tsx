@@ -251,6 +251,8 @@ const getAllPendingOperationNames = (env: RelayMockEnvironment) => {
   return env.mock.getAllOperations().map(op => op.request.node.operation.name)
 }
 
+let realConsoleError: typeof console.error
+
 describe("Shipping", () => {
   let isCommittingMutation: boolean
   let relayEnv: MockEnvironment
@@ -263,6 +265,14 @@ describe("Shipping", () => {
   })
 
   beforeEach(() => {
+    realConsoleError = console.error
+    console.error = jest.fn((...args) => {
+      // Swallow errors thrown intentionally from tests
+      if (args[0].includes("##TEST_ERROR##")) {
+        return
+      }
+      realConsoleError(...args)
+    })
     isCommittingMutation = false
     relayEnv = createMockEnvironment()
     ;(useTracking as jest.Mock).mockImplementation(() => ({
@@ -272,6 +282,7 @@ describe("Shipping", () => {
   })
 
   afterEach(() => {
+    console.error = realConsoleError
     jest.restoreAllMocks()
   })
 

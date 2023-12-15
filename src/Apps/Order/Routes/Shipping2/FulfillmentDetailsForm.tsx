@@ -472,7 +472,7 @@ const FulfillmentDetailsFormLayout = (
 
               {
                 <>
-                  <Column span={12} data-testid="xxx">
+                  <Column span={12}>
                     <Input
                       tabIndex={tabbableIf("new_address")}
                       name="attributes.phoneNumber"
