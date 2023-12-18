@@ -331,7 +331,10 @@ const WrappedArtworkApp: React.FC<Props> = props => {
         }}
         enabled={websocketEnabled}
       >
-        <AlertProvider initialCriteria={initialAlertCriteria}>
+        <AlertProvider
+          initialCriteria={initialAlertCriteria}
+          currentArtworkID={internalID}
+        >
           <ArtworkApp
             {...props}
             routerPathname={pathname}

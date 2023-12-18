@@ -26,11 +26,15 @@ export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
   const { state, dispatch } = useAlertContext()
 
   const { artistIDs } = state.criteria
+  const { currentArtworkID } = state
 
   const data = useLazyLoadQuery<SuggestedFiltersFetchQuery>(
     suggestedFiltersFetchQuery,
     {
       attributes: { artistIDs },
+      source: currentArtworkID
+        ? { type: "ARTWORK", id: currentArtworkID }
+        : undefined,
     }
   )
 
@@ -115,9 +119,12 @@ export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
 }
 
 const suggestedFiltersFetchQuery = graphql`
-  query SuggestedFiltersFetchQuery($attributes: PreviewSavedSearchAttributes!) {
+  query SuggestedFiltersFetchQuery(
+    $source: AlertSource
+    $attributes: PreviewSavedSearchAttributes!
+  ) {
     previewSavedSearch(attributes: $attributes) {
-      suggestedFilters {
+      suggestedFilters(source: $source) {
         displayValue
         field
         name
