@@ -109,7 +109,7 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
       relay.refetch(
         {
           hasTerm: true,
-          term: value,
+          term: String(value),
           entities: entities,
         },
         null,
@@ -341,7 +341,7 @@ export const SearchBarInputQueryRenderer: FC<SearchBarInputQueryRendererProps> =
       `}
       variables={{
         hasTerm: shouldStartSearching(term ?? ""),
-        term: term ?? "",
+        term: term ? String(term) : "",
         entities: [],
       }}
       render={({ props }) => {
