@@ -8,6 +8,8 @@ import { useTracking } from "react-tracking"
 import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
 import { waitFor } from "@testing-library/react"
 import { SavedAddressesFragmentContainer } from "Apps/Order/Routes/Shipping2/Components/SavedAddresses2"
+import { DeepPartial } from "Utils/typeSupport"
+import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContext"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -15,14 +17,15 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
+const mockContext: DeepPartial<ShippingContextProps> = {
+  orderData: {
+    availableShippingCountries: ["US"],
+    savedFulfillmentDetails: { selectedSavedAddressId: "2" },
+  },
+}
 jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => {
   return {
-    useShippingContext: () => ({
-      parsedOrderData: {
-        availableShippingCountries: ["US"],
-        savedFulfillmentData: { selectedSavedAddressId: "2" },
-      },
-    }),
+    useShippingContext: jest.fn(() => mockContext),
   }
 })
 
