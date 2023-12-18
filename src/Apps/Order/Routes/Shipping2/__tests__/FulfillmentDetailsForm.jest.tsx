@@ -19,6 +19,7 @@ import {
 import { fillAddressForm } from "Components/__tests__/Utils/addressForm2"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { DeepPartial } from "Utils/typeSupport"
 import { useTracking } from "react-tracking"
 
 jest.mock("System/useFeatureFlag", () => ({
@@ -39,15 +40,15 @@ jest.mock("react-tracking")
 
 const mockOnSubmit = jest.fn()
 const mockOnAddressVerificationComplete = jest.fn()
-let testProps: FulfillmentDetailsFormProps
-let mockShippingContext: ShippingContextProps
+let testProps: DeepPartial<FulfillmentDetailsFormProps>
+let mockShippingContext: DeepPartial<ShippingContextProps>
 
 jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => ({
   useShippingContext: () => mockShippingContext,
 }))
 
 // Mock relay-connected component
-jest.mock("Apps/Order/Routes/Shipping2/SavedAddresses2", () => ({
+jest.mock("Apps/Order/Routes/Shipping2/Components/SavedAddresses2", () => ({
   SavedAddressesFragmentContainer: () => <div />,
 }))
 
@@ -94,20 +95,16 @@ beforeEach(() => {
       addressConnection: {
         edges: [],
       },
-    } as any,
+    },
   }
   mockShippingContext = {
-    parsedOrderData: {
-      isArtsyShipping: false,
+    actions: {
+      setFormHelpers: jest.fn(),
+    },
+    orderData: {
       shippingQuotes: [],
     },
-
-    helpers: {
-      fulfillmentDetails: {
-        setFulfillmentFormHelpers: jest.fn(),
-      },
-    },
-  } as any
+  }
 })
 
 const addressFormErrors = {
