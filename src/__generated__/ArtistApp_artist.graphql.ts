@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<e6ccbf4e417999b2db15578a7338c0c2>>
+ * @generated SignedSource<<f443963bf458da522e76ac5cad2aa85b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,7 @@ export type ArtistApp_artist$data = {
   readonly internalID: string;
   readonly name: string | null | undefined;
   readonly slug: string;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader2_artist" | "ArtistHeader_artist" | "ArtistMeta_artist">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtistHeader_artist" | "ArtistMeta_artist">;
   readonly " $fragmentType": "ArtistApp_artist";
 };
 export type ArtistApp_artist$key = {
@@ -37,11 +37,6 @@ const node: ReaderFragment = {
       "args": null,
       "kind": "FragmentSpread",
       "name": "ArtistHeader_artist"
-    },
-    {
-      "args": null,
-      "kind": "FragmentSpread",
-      "name": "ArtistHeader2_artist"
     },
     {
       "alias": null,
@@ -69,6 +64,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "1f64dccee19fbbbb1758f2a3bd61e2f2";
+(node as any).hash = "d599f72de65cace018cb122c7029e1bf";
 
 export default node;

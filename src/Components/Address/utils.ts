@@ -14,12 +14,19 @@ export const yupPhoneValidator = Yup.string()
     },
   })
 
-const usPostalCodeRegexp = /^\d{5}(-\d{4})?$/
+const usPostalCodeRegexp = /^[0-9]{5}(?:-[0-9]{4})?$/
+const caPostalCodeRegexp = /^[A-Za-z]\d[A-Za-z][ -]?\d[A-Za-z]\d$/
 
 export const postalCodeValidator = Yup.string().when("country", {
   is: country => country === "US",
   then: Yup.string()
     .required("ZIP code is required")
     .matches(usPostalCodeRegexp, "Invalid postal code"),
-  otherwise: Yup.string().required("Postal code is required"),
+  otherwise: Yup.string().when("country", {
+    is: country => country === "CA",
+    then: Yup.string()
+      .required("Postal code is required")
+      .matches(caPostalCodeRegexp, "Invalid postal code"),
+    otherwise: Yup.string(),
+  }),
 })

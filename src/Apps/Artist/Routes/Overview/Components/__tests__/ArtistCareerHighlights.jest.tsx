@@ -6,7 +6,7 @@ import { MockBoot } from "DevTools/MockBoot"
 
 jest.unmock("react-relay")
 
-jest.mock("Apps/Artist/Components/ArtistHeader/ArtistHeader2", () => ({
+jest.mock("Apps/Artist/Components/ArtistHeader/ArtistHeader", () => ({
   ARTIST_HEADER_NUMBER_OF_INSIGHTS: 0,
 }))
 

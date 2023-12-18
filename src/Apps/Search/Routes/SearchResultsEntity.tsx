@@ -13,7 +13,6 @@ export interface Props extends RouterState {
   viewer: SearchResultsEntity_viewer$data
   relay: RelayRefetchProp
   entities: string[]
-  tab: string
 }
 
 interface State {
@@ -83,8 +82,8 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
 
         const {
           match: { location },
-          tab,
         } = this.props
+
         const { term } = location.query
         const urlParams = qs.stringify({
           page,
@@ -92,7 +91,7 @@ export class SearchResultsEntityRoute extends React.Component<Props, State> {
         })
         // TODO: use silentPush from useRouter if this class component is
         // converted to a function component
-        window.history.pushState({}, "", `/search/${tab}?${urlParams}`)
+        window.history.pushState({}, "", `${location.pathname}?${urlParams}`)
       }
     )
   }
