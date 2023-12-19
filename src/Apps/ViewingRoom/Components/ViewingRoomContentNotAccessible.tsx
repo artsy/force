@@ -34,7 +34,7 @@ const ViewingRoomContentNotAccessible: React.FC<ViewingRoomContentNotAccessibleP
             as={RouterLink}
             to={viewingRoom.partner.href}
           >
-            Visit Gallery
+            View Works
           </Button>
         </Column>
       )}
