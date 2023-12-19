@@ -1,5 +1,5 @@
-import { Box, Flex, Join, Separator, Spacer, Text } from "@artsy/palette"
-import { FC } from "react"
+import { Box, Flex, Separator, Spacer, Text } from "@artsy/palette"
+import React, { FC } from "react"
 import { Rarity } from "Components/Alert/Components/Filters/Rarity"
 import { Medium } from "Components/Alert/Components/Filters/Medium"
 import { PriceQueryRenderer } from "Components/Alert/Components/Filters/Price"
@@ -30,15 +30,25 @@ export const Filters: FC = () => {
     >
       <Flex flexDirection="column" width="auto">
         <Text variant="lg">Filters</Text>
+
         <Separator my={2} />
-        <Join separator={<Separator my={2} />}>
-          <Medium />
-          <Rarity />
-          <PriceQueryRenderer />
-          <ArtistSeriesQueryRenderer />
-          <WaysToBuy />
-          <Color />
-        </Join>
+        <Medium />
+
+        <Separator my={2} />
+        <Rarity />
+
+        <Separator my={2} />
+        <PriceQueryRenderer />
+
+        {/* no separator, in case null */}
+        <ArtistSeriesQueryRenderer />
+
+        <Separator my={2} />
+        <WaysToBuy />
+
+        <Separator my={2} />
+        <Color />
+
         <Spacer y={2} />
       </Flex>
     </Box>

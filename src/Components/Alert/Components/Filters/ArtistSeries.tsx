@@ -5,6 +5,7 @@ import { graphql, useLazyLoadQuery } from "react-relay"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import {
   Flex,
+  Separator,
   Skeleton,
   SkeletonBox,
   SkeletonText,
@@ -55,6 +56,8 @@ export const ArtistSeries: FC = () => {
 
   return (
     <>
+      <Separator my={2} />
+
       <QuickMultipleSelectAlertFilter
         label="Artist Series"
         // description="Optionally narrow down your alert to one or more of these series within this artist’s body of work"
