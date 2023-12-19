@@ -29,6 +29,19 @@ export const WithDescription = () => {
   )
 }
 
+export const WithTruncation = () => {
+  return (
+    <AlertProvider>
+      <QuickMultipleSelectAlertFilter
+        label="Colors"
+        criteriaKey="colors"
+        options={options}
+        truncate={4}
+      />
+    </AlertProvider>
+  )
+}
+
 const options = [
   { name: "Red", value: "red" },
   { name: "Orange", value: "orange" },

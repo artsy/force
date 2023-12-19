@@ -1,5 +1,12 @@
-import { Checkbox, Column, GridColumns, Spacer, Text } from "@artsy/palette"
-import { FC } from "react"
+import {
+  Checkbox,
+  Clickable,
+  Column,
+  GridColumns,
+  Spacer,
+  Text,
+} from "@artsy/palette"
+import { FC, useState } from "react"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
 import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
 import { handleFieldsWithMultipleValues } from "Components/Alert/Helpers/handleFieldsWithMultipleValues"
@@ -9,6 +16,9 @@ interface QuickMultipleSelectAlertFilterProps {
   description?: string
   label: string
   options: { value: string; name: string }[]
+
+  /** Optionally truncate the list of options to this size, and display a Show/Hide toggle to disclose the full list. */
+  truncate?: number
 }
 
 export const QuickMultipleSelectAlertFilter: FC<QuickMultipleSelectAlertFilterProps> = ({
@@ -16,8 +26,13 @@ export const QuickMultipleSelectAlertFilter: FC<QuickMultipleSelectAlertFilterPr
   description,
   label,
   options,
+  truncate = Infinity,
 }) => {
   const { state, dispatch } = useAlertContext()
+
+  const [isExpanded, setExpanded] = useState(false)
+  const hasMore = options.length > truncate
+  const displayedOptions = isExpanded ? options : options.slice(0, truncate)
 
   const toggleSelection = (selected, value) => {
     handleFieldsWithMultipleValues({
@@ -42,7 +57,7 @@ export const QuickMultipleSelectAlertFilter: FC<QuickMultipleSelectAlertFilterPr
       <Spacer y={2} />
 
       <GridColumns>
-        {options.map(({ name, value }, index) => {
+        {displayedOptions.map(({ name, value }, index) => {
           return (
             <Column span={6} key={index}>
               <Checkbox
@@ -57,6 +72,16 @@ export const QuickMultipleSelectAlertFilter: FC<QuickMultipleSelectAlertFilterPr
           )
         })}
       </GridColumns>
+
+      {hasMore && (
+        <Clickable
+          mt={2}
+          onClick={() => setExpanded(visibility => !visibility)}
+          textDecoration={"underline"}
+        >
+          {isExpanded ? "Hide" : "Show more"}
+        </Clickable>
+      )}
     </>
   )
 }

@@ -42,6 +42,35 @@ describe(QuickMultipleSelectAlertFilter, () => {
     userEvent.click(screen.getByText("Name 1"))
     expect(currentAlertContext().state.criteria.colors).toEqual([])
   })
+
+  it("can truncate and then expand the list of options", () => {
+    renderWithWrapper(
+      <QuickMultipleSelectAlertFilter
+        label="Custom Label"
+        description="Custom description text"
+        criteriaKey="colors"
+        options={someOptions}
+        truncate={4}
+      />
+    )
+
+    // truncate initially
+    expect(screen.queryByText("Name 1")).toBeInTheDocument()
+    expect(screen.queryByText("Name 4")).toBeInTheDocument()
+
+    expect(screen.queryByText("Name 5")).not.toBeInTheDocument()
+    expect(screen.queryByText("Name 6")).not.toBeInTheDocument()
+
+    // expand by clicking "Show more"
+    userEvent.click(screen.getByText("Show more"))
+    expect(screen.queryByText("Name 5")).toBeInTheDocument()
+    expect(screen.queryByText("Name 6")).toBeInTheDocument()
+
+    // collapse by clicking "Hide"
+    userEvent.click(screen.getByText("Hide"))
+    expect(screen.queryByText("Name 5")).not.toBeInTheDocument()
+    expect(screen.queryByText("Name 6")).not.toBeInTheDocument()
+  })
 })
 
 // fixtures
