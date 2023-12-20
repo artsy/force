@@ -1,13 +1,15 @@
-import {
-  PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT,
-  PROGRESSIVE_ONBOARDING_SAVE_FIND,
-  useProgressiveOnboarding,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
+import { useDismissibleContext } from "@artsy/dismissible"
 import {
   ProgressiveOnboardingHighlight,
   ProgressiveOnboardingHighlightPosition,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight"
+import { PROGRESSIVE_ONBOARDING_ALERTS } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
 import { FC, useEffect } from "react"
+
+const ALERTS = {
+  saveFind: PROGRESSIVE_ONBOARDING_ALERTS.saveFind,
+  saveHighlight: PROGRESSIVE_ONBOARDING_ALERTS.saveHighlight,
+}
 
 interface ProgressiveOnboardingSaveHighlightProps {
   position: ProgressiveOnboardingHighlightPosition
@@ -17,22 +19,21 @@ export const ProgressiveOnboardingSaveHighlight: FC<ProgressiveOnboardingSaveHig
   children,
   position,
 }) => {
-  const { isDismissed, dismiss } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =
     // You haven't already dismissed this
-    !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT).status &&
+    !isDismissed(ALERTS.saveHighlight).status &&
     // And you've previously dismissed the previous onboarding tip
-    isDismissed(PROGRESSIVE_ONBOARDING_SAVE_FIND).status &&
+    isDismissed(ALERTS.saveFind).status &&
     // And you've dismissed the previous step within the last 20 seconds
-    isDismissed(PROGRESSIVE_ONBOARDING_SAVE_FIND).timestamp >
-      Date.now() - 20 * 1000
+    isDismissed(ALERTS.saveFind).timestamp > Date.now() - 20 * 1000
 
   useEffect(() => {
     if (!isDisplayable) return
 
     const handleClick = () => {
-      dismiss(PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT)
+      dismiss(ALERTS.saveHighlight)
     }
 
     document.addEventListener("click", handleClick, { once: true })
@@ -49,7 +50,7 @@ export const ProgressiveOnboardingSaveHighlight: FC<ProgressiveOnboardingSaveHig
   return (
     <ProgressiveOnboardingHighlight
       position={position}
-      name={PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT}
+      name={ALERTS.saveHighlight}
     >
       {children}
     </ProgressiveOnboardingHighlight>

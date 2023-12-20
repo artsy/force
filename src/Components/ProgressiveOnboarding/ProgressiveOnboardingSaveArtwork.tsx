@@ -2,16 +2,18 @@ import { FC, useCallback, useEffect } from "react"
 import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import {
-  PROGRESSIVE_ONBOARDING_ALERT_CHAIN,
-  PROGRESSIVE_ONBOARDING_FOLLOW_CHAIN,
-  PROGRESSIVE_ONBOARDING_SAVE_ARTWORK,
-  useProgressiveOnboarding,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
-import {
   withProgressiveOnboardingCounts,
   WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { useDismissibleContext } from "@artsy/dismissible"
+import {
+  PROGRESSIVE_ONBOARDING_ALERTS,
+  PROGRESSIVE_ONBOARDING_ALERT_CHAIN,
+  PROGRESSIVE_ONBOARDING_FOLLOW_CHAIN,
+} from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+
+const ALERT_ID = PROGRESSIVE_ONBOARDING_ALERTS.saveArtwork
 
 interface ProgressiveOnboardingSaveArtworkProps
   extends WithProgressiveOnboardingCountsProps {}
@@ -20,27 +22,24 @@ export const __ProgressiveOnboardingSaveArtwork__: FC<ProgressiveOnboardingSaveA
   counts,
   children,
 }) => {
-  const { dismiss, isDismissed } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useDismissibleContext()
   const isPartnerOfferEnabled = useFeatureFlag(
     "emerald_partner-offers-from-saves"
   )
 
   const isDisplayble =
-    !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK).status &&
+    !isDismissed(ALERT_ID).status &&
     counts.isReady &&
     counts.savedArtworks === 0
 
   const handleClose = useCallback(() => {
-    dismiss(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK)
+    dismiss(ALERT_ID)
   }, [dismiss])
 
   useEffect(() => {
     // Dismiss the save artwork onboarding once you save an artwork.
-    if (
-      counts.savedArtworks > 0 &&
-      !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK).status
-    ) {
-      dismiss(PROGRESSIVE_ONBOARDING_SAVE_ARTWORK)
+    if (counts.savedArtworks > 0 && !isDismissed(ALERT_ID).status) {
+      dismiss(ALERT_ID)
 
       // If you've started another onboarding chain, ensure they are dismissed.
       if (isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_CHAIN[0]).status) {
@@ -59,7 +58,7 @@ export const __ProgressiveOnboardingSaveArtwork__: FC<ProgressiveOnboardingSaveA
 
   return (
     <ProgressiveOnboardingPopover
-      name={PROGRESSIVE_ONBOARDING_SAVE_ARTWORK}
+      name={ALERT_ID}
       placement="bottom"
       onClose={handleClose}
       popover={

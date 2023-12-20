@@ -1,13 +1,15 @@
-import {
-  PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT,
-  PROGRESSIVE_ONBOARDING_FOLLOW_FIND,
-  useProgressiveOnboarding,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
+import { useDismissibleContext } from "@artsy/dismissible"
 import {
   ProgressiveOnboardingHighlight,
   ProgressiveOnboardingHighlightPosition,
 } from "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight"
+import { PROGRESSIVE_ONBOARDING_ALERTS } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
 import { FC, useEffect } from "react"
+
+const ALERT = {
+  followFind: PROGRESSIVE_ONBOARDING_ALERTS.followFind,
+  followHighlight: PROGRESSIVE_ONBOARDING_ALERTS.followHighlight,
+}
 
 interface ProgressiveOnboardingFollowHighlightProps {
   position: ProgressiveOnboardingHighlightPosition
@@ -17,22 +19,21 @@ export const ProgressiveOnboardingFollowHighlight: FC<ProgressiveOnboardingFollo
   children,
   position,
 }) => {
-  const { isDismissed, dismiss } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =
     // You haven't already dismissed this
-    !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT).status &&
+    !isDismissed(ALERT.followHighlight).status &&
     // And you've previously dismissed the previous onboarding tip
-    isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_FIND).status &&
+    isDismissed(ALERT.followFind).status &&
     // And you've dismissed the previous step within the last 20 seconds
-    isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_FIND).timestamp >
-      Date.now() - 20 * 1000
+    isDismissed(ALERT.followFind).timestamp > Date.now() - 20 * 1000
 
   useEffect(() => {
     if (!isDisplayable) return
 
     const handleClick = () => {
-      dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT)
+      dismiss(ALERT.followHighlight)
     }
 
     document.addEventListener("click", handleClick, { once: true })
@@ -49,7 +50,7 @@ export const ProgressiveOnboardingFollowHighlight: FC<ProgressiveOnboardingFollo
   return (
     <ProgressiveOnboardingHighlight
       position={position}
-      name={PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT}
+      name={ALERT.followHighlight}
     >
       {children}
     </ProgressiveOnboardingHighlight>

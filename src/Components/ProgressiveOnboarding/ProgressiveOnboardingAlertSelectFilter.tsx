@@ -1,12 +1,14 @@
-import {
-  PROGRESSIVE_ONBOARDING_ALERT_CREATE,
-  PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER,
-  useProgressiveOnboarding,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { FC, ReactNode, useEffect, useRef } from "react"
 import { Position, Text } from "@artsy/palette"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
+import { useDismissibleContext } from "@artsy/dismissible"
+import { PROGRESSIVE_ONBOARDING_ALERTS } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+
+const ALERT = {
+  alertCreate: PROGRESSIVE_ONBOARDING_ALERTS.alertCreate,
+  alertSelectFilter: PROGRESSIVE_ONBOARDING_ALERTS.alertSelectFilter,
+}
 
 interface ProgressiveOnboardingAlertSelectFilterProps {
   children: ReactNode
@@ -17,7 +19,7 @@ export const ProgressiveOnboardingAlertSelectFilter: FC<ProgressiveOnboardingAle
   children,
   placement = "left-start",
 }) => {
-  const { dismiss, isDismissed } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useDismissibleContext()
 
   const { currentlySelectedFilters } = useArtworkFilterContext()
   const initialFilterState = useRef(
@@ -25,11 +27,11 @@ export const ProgressiveOnboardingAlertSelectFilter: FC<ProgressiveOnboardingAle
   )
 
   const isDisplayable =
-    isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE).status &&
-    !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER).status
+    isDismissed(ALERT.alertCreate).status &&
+    !isDismissed(ALERT.alertSelectFilter).status
 
   const handleClose = () => {
-    dismiss(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER)
+    dismiss(ALERT.alertSelectFilter)
   }
 
   const handleDismiss = () => {
@@ -41,11 +43,8 @@ export const ProgressiveOnboardingAlertSelectFilter: FC<ProgressiveOnboardingAle
       initialFilterState.current !==
       JSON.stringify(currentlySelectedFilters?.())
 
-    if (
-      isFilterStateChanged &&
-      !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER).status
-    ) {
-      dismiss(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER)
+    if (isFilterStateChanged && !isDismissed(ALERT.alertSelectFilter).status) {
+      dismiss(ALERT.alertSelectFilter)
     }
   }, [dismiss, currentlySelectedFilters, isDismissed])
 
@@ -55,7 +54,7 @@ export const ProgressiveOnboardingAlertSelectFilter: FC<ProgressiveOnboardingAle
 
   return (
     <ProgressiveOnboardingPopover
-      name={PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER}
+      name={ALERT.alertSelectFilter}
       placement={placement}
       onClose={handleClose}
       onDismiss={handleDismiss}

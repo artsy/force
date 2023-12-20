@@ -1,16 +1,18 @@
 import { Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import {
-  PROGRESSIVE_ONBOARDING_FOLLOW_FIND,
-  PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT,
-  useProgressiveOnboarding,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
-import {
   withProgressiveOnboardingCounts,
   WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { FC } from "react"
+import { useDismissibleContext } from "@artsy/dismissible"
+import { PROGRESSIVE_ONBOARDING_ALERTS } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+
+const ALERT = {
+  followFind: PROGRESSIVE_ONBOARDING_ALERTS.followFind,
+  followHighlight: PROGRESSIVE_ONBOARDING_ALERTS.followHighlight,
+}
 
 interface ProgressiveOnboardingFollowFindProps
   extends WithProgressiveOnboardingCountsProps {}
@@ -19,19 +21,18 @@ export const __ProgressiveOnboardingFollowFind__: FC<ProgressiveOnboardingFollow
   children,
   counts,
 }) => {
-  const { dismiss, isDismissed } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =
-    counts.followedArtists === 1 &&
-    !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_FIND).status
+    counts.followedArtists === 1 && !isDismissed(ALERT.followFind).status
 
   const handleClose = () => {
-    dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_FIND)
+    dismiss(ALERT.followFind)
   }
 
   const handleDismiss = () => {
     handleClose()
-    dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_HIGHLIGHT)
+    dismiss(ALERT.followHighlight)
   }
 
   if (!isDisplayable) {
@@ -40,7 +41,7 @@ export const __ProgressiveOnboardingFollowFind__: FC<ProgressiveOnboardingFollow
 
   return (
     <ProgressiveOnboardingPopover
-      name={PROGRESSIVE_ONBOARDING_FOLLOW_FIND}
+      name={ALERT.followFind}
       placement="bottom-end"
       onClose={handleClose}
       onDismiss={handleDismiss}
