@@ -147,6 +147,7 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
           internalID
           caption
           mobile: resized(
+            quality: 85
             width: 200
             version: ["main", "normalized", "larger", "large"]
           ) {
@@ -154,6 +155,7 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
             height
           }
           desktop: resized(
+            quality: 85
             width: 325
             version: ["main", "normalized", "larger", "large"]
           ) {
@@ -163,6 +165,7 @@ export const ShowInstallShotsFragmentContainer = createFragmentContainer(
             height
           }
           zoom: resized(
+            quality: 85
             width: 900
             height: 900
             version: ["main", "normalized", "larger", "large"]
