@@ -11,7 +11,7 @@ export interface SubscriberBannerProps {
 export const SubscriberBanner: React.FC<SubscriberBannerProps> = ({
   partner: { name },
 }) => {
-  const title = `${name} is not currently an Artsy partner and does not have a full profile.`
+  const title = `${name} does not have a full profile.`
   return (
     <Message mb={4} title={title}>
       <Text display="inline">{`Are you a representative of ${name}?`}</Text>
