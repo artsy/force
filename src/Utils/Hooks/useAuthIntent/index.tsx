@@ -9,8 +9,8 @@ import { saveArtworkMutation } from "./mutations/AuthIntentSaveArtworkMutation"
 import { createOrderMutation } from "./mutations/AuthIntentCreateOrderMutation"
 import { createOfferOrderMutation } from "./mutations/AuthIntentCreateOfferOrderMutation"
 import { associateSubmissionMutation } from "./mutations/AuthIntentAssociateSubmissionMutation"
-import { useProgressiveOnboarding } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import { Environment } from "react-relay"
+import { useDismissibleContext } from "@artsy/dismissible"
 
 export const AFTER_AUTH_ACTION_KEY = "afterSignUpAction"
 
@@ -122,7 +122,7 @@ export const useRunAuthIntent = () => {
 
   const { setValue } = useAuthIntent()
 
-  const { syncFromLoggedOutUser } = useProgressiveOnboarding()
+  const { syncFromLoggedOutUser } = useDismissibleContext()
 
   useEffect(() => {
     if (!relayEnvironment) return

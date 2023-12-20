@@ -16,7 +16,10 @@ import {
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useSystemContext } from "System/SystemContext"
 import { useDismissibleContext } from "@artsy/dismissible"
-import { PROGRESSIVE_ONBOARDING_ALERTS } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+import {
+  PROGRESSIVE_ONBOARDING_ALERTS,
+  PROGRESSIVE_ONBOARDING_ALERT_CHAIN,
+} from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
 
 const ALERT_ID = PROGRESSIVE_ONBOARDING_ALERTS.alertCreate
 
@@ -42,7 +45,7 @@ export const __ProgressiveOnboardingAlertCreate__: FC<ProgressiveOnboardingAlert
   const image = resized(IMAGE.src, { width: 230 })
 
   const handleDismiss = () => {
-    dismiss(ALERT_ID)
+    dismiss(PROGRESSIVE_ONBOARDING_ALERT_CHAIN)
   }
 
   const handleNext = () => {
