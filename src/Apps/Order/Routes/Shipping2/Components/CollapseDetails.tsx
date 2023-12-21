@@ -1,4 +1,4 @@
-import { Collapse } from "@artsy/palette"
+import { Collapse } from "Apps/Order/Components/Collapse"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import React from "react"
 
