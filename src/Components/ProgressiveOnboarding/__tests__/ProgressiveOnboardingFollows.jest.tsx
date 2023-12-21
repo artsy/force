@@ -1,16 +1,15 @@
 import { render, screen } from "@testing-library/react"
-import {
-  PROGRESSIVE_ONBOARDING_FOLLOW_FIND,
-  ProgressiveOnboardingProvider,
-  reset,
-  useProgressiveOnboarding,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { __ProgressiveOnboardingFollowArtist__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowArtist"
 import { __ProgressiveOnboardingFollowFind__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowFind"
 import { ProgressiveOnboardingFollowHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingFollowHighlight"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { FC, useEffect } from "react"
+import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
+import {
+  PROGRESSIVE_ONBOARDING_ALERTS,
+  getProgressiveOnboardingAlertKeys,
+} from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
 
 jest.mock("System/useSystemContext", () => ({
   useSystemContext: jest.fn().mockReturnValue({ isLoggedIn: true }),
@@ -49,7 +48,7 @@ const Example: FC = () => {
   )
 
   return (
-    <ProgressiveOnboardingProvider>
+    <DismissibleProvider keys={getProgressiveOnboardingAlertKeys()}>
       <ProgressiveOnboardingFollowFind>
         <button>Profile</button>
       </ProgressiveOnboardingFollowFind>
@@ -61,7 +60,7 @@ const Example: FC = () => {
       <ProgressiveOnboardingFollowArtist>
         <button>Follow</button>
       </ProgressiveOnboardingFollowArtist>
-    </ProgressiveOnboardingProvider>
+    </DismissibleProvider>
   )
 }
 
@@ -72,8 +71,12 @@ describe("ProgressiveOnboarding: Follows", () => {
   const followFindText = "Find and edit all your Follows here."
   const followHiglightedText = "Highlighted"
 
+  const reset = () => {
+    localStorage.clear()
+  }
+
   beforeEach(() => {
-    reset("user")
+    reset()
   })
 
   it("renders the chain of tips correctly", async () => {
@@ -145,10 +148,10 @@ describe("ProgressiveOnboarding: Follows", () => {
 })
 
 const DismissFollowFind = () => {
-  const { dismiss } = useProgressiveOnboarding()
+  const { dismiss } = useDismissibleContext()
 
   useEffect(() => {
-    dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_FIND)
+    dismiss(PROGRESSIVE_ONBOARDING_ALERTS.followFind)
   }, [dismiss])
 
   return null
@@ -157,12 +160,12 @@ const DismissFollowFind = () => {
 describe("ProgressiveOnboardingFollowHighlight", () => {
   it("renders the highlight", () => {
     render(
-      <ProgressiveOnboardingProvider>
+      <DismissibleProvider keys={getProgressiveOnboardingAlertKeys()}>
         <DismissFollowFind />
         <ProgressiveOnboardingFollowHighlight position="center">
           <div>Example</div>
         </ProgressiveOnboardingFollowHighlight>
-      </ProgressiveOnboardingProvider>
+      </DismissibleProvider>
     )
 
     expect(screen.getByText("Example")).toBeInTheDocument()
@@ -174,7 +177,7 @@ describe("ProgressiveOnboardingFollowHighlight", () => {
 
     const Example = ({ display }) => {
       return (
-        <ProgressiveOnboardingProvider>
+        <DismissibleProvider keys={getProgressiveOnboardingAlertKeys()}>
           <DismissFollowFind />
 
           {display && (
@@ -182,7 +185,7 @@ describe("ProgressiveOnboardingFollowHighlight", () => {
               <div>Example</div>
             </ProgressiveOnboardingFollowHighlight>
           )}
-        </ProgressiveOnboardingProvider>
+        </DismissibleProvider>
       )
     }
 

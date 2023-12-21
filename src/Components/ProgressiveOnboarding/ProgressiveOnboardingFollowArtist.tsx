@@ -2,19 +2,20 @@ import { FC, useCallback, useEffect } from "react"
 import { Text } from "@artsy/palette"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import {
-  PROGRESSIVE_ONBOARDING_ALERT_CHAIN,
-  PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST,
-  PROGRESSIVE_ONBOARDING_SAVE_CHAIN,
-  useProgressiveOnboarding,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
-import {
   withProgressiveOnboardingCounts,
   WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { useRouter } from "System/Router/useRouter"
 import { pathToRegexp } from "path-to-regexp"
 import { useSystemContext } from "System/SystemContext"
+import { useDismissibleContext } from "@artsy/dismissible"
+import {
+  PROGRESSIVE_ONBOARDING_ALERTS,
+  PROGRESSIVE_ONBOARDING_ALERT_CHAIN,
+  PROGRESSIVE_ONBOARDING_SAVE_CHAIN,
+} from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
 
+const ALERT_ID = PROGRESSIVE_ONBOARDING_ALERTS.followArtist
 interface ProgressiveOnboardingFollowArtistProps
   extends WithProgressiveOnboardingCountsProps {}
 
@@ -25,11 +26,11 @@ export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFoll
   const router = useRouter()
   const { isLoggedIn } = useSystemContext()
 
-  const { dismiss, isDismissed } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =
     // Hasn't dismissed the follow artist onboarding.
-    !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST).status &&
+    !isDismissed(ALERT_ID).status &&
     // Hasn't followed an artist yet.
     counts.isReady &&
     counts.followedArtists === 0 &&
@@ -41,16 +42,13 @@ export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFoll
       !pathToRegexp("/artist/:artistID").test(router.match.location.pathname))
 
   const handleClose = useCallback(() => {
-    dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
+    dismiss(ALERT_ID)
   }, [dismiss])
 
   useEffect(() => {
     // Dismiss the follow artist onboarding once you follow an artist.
-    if (
-      counts.followedArtists > 0 &&
-      !isDismissed(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST).status
-    ) {
-      dismiss(PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST)
+    if (counts.followedArtists > 0 && !isDismissed(ALERT_ID).status) {
+      dismiss(ALERT_ID)
 
       // If you've started another onboarding chain, ensure they are dismissed.
       if (isDismissed(PROGRESSIVE_ONBOARDING_SAVE_CHAIN[0]).status) {
@@ -69,7 +67,7 @@ export const __ProgressiveOnboardingFollowArtist__: FC<ProgressiveOnboardingFoll
 
   return (
     <ProgressiveOnboardingPopover
-      name={PROGRESSIVE_ONBOARDING_FOLLOW_ARTIST}
+      name={ALERT_ID}
       placement="bottom"
       onClose={handleClose}
       popover={

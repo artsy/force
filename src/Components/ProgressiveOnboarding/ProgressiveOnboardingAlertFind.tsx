@@ -1,15 +1,15 @@
 import { Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import {
-  PROGRESSIVE_ONBOARDING_ALERT_FIND,
-  useProgressiveOnboarding,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
-import {
   withProgressiveOnboardingCounts,
   WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { FC } from "react"
+import { useDismissibleContext } from "@artsy/dismissible"
+import { PROGRESSIVE_ONBOARDING_ALERTS } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+
+const ALERT_ID = PROGRESSIVE_ONBOARDING_ALERTS.alertFind
 
 interface ProgressiveOnboardingAlertFindProps
   extends WithProgressiveOnboardingCountsProps {}
@@ -18,14 +18,13 @@ export const __ProgressiveOnboardingAlertFind__: FC<ProgressiveOnboardingAlertFi
   children,
   counts,
 }) => {
-  const { dismiss, isDismissed } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =
-    counts.savedSearches === 1 &&
-    !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_FIND).status
+    counts.savedSearches === 1 && !isDismissed(ALERT_ID).status
 
   const handleClose = () => {
-    dismiss(PROGRESSIVE_ONBOARDING_ALERT_FIND)
+    dismiss(ALERT_ID)
   }
 
   const handleDismiss = () => {
@@ -38,7 +37,7 @@ export const __ProgressiveOnboardingAlertFind__: FC<ProgressiveOnboardingAlertFi
 
   return (
     <ProgressiveOnboardingPopover
-      name={PROGRESSIVE_ONBOARDING_ALERT_FIND}
+      name={ALERT_ID}
       placement="bottom-end"
       onClose={handleClose}
       onDismiss={handleDismiss}

@@ -31,8 +31,9 @@ import track from "react-tracking"
 import { StickyProvider } from "Components/Sticky"
 import { AuthIntentProvider } from "Utils/Hooks/useAuthIntent"
 import { AuthDialogProvider } from "Components/AuthDialog/AuthDialogContext"
-import { ProgressiveOnboardingProvider } from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import { CookieConsentManager } from "Components/CookieConsentManager/CookieConsentManager"
+import { DismissibleProvider } from "@artsy/dismissible"
+import { getProgressiveOnboardingAlertKeys } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
 
 export interface BootProps {
   children: React.ReactNode
@@ -91,14 +92,17 @@ export const Boot = track(undefined, {
                     <StickyProvider>
                       <AuthIntentProvider>
                         <AuthDialogProvider>
-                          <ProgressiveOnboardingProvider>
+                          <DismissibleProvider
+                            userID={props.user?.id}
+                            keys={getProgressiveOnboardingAlertKeys()}
+                          >
                             <CookieConsentManager>
                               <FocusVisible />
                               <SiftContainer />
 
                               {children}
                             </CookieConsentManager>
-                          </ProgressiveOnboardingProvider>
+                          </DismissibleProvider>
                         </AuthDialogProvider>
                       </AuthIntentProvider>
                     </StickyProvider>

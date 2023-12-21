@@ -1,12 +1,8 @@
-import {
-  PROGRESSIVE_ONBOARDING_ALERT_CREATE,
-  PROGRESSIVE_ONBOARDING_ALERT_READY,
-  PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER,
-  useProgressiveOnboarding,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { FC, ReactNode } from "react"
 import { Text } from "@artsy/palette"
+import { PROGRESSIVE_ONBOARDING_ALERTS } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+import { useDismissibleContext } from "@artsy/dismissible"
 
 interface ProgressiveOnboardingAlertReadyProps {
   children: (actions: { onSkip(): void }) => ReactNode
@@ -15,17 +11,17 @@ interface ProgressiveOnboardingAlertReadyProps {
 export const ProgressiveOnboardingAlertReady: FC<ProgressiveOnboardingAlertReadyProps> = ({
   children,
 }) => {
-  const { dismiss, isDismissed } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =
-    isDismissed(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER).status &&
-    isDismissed(PROGRESSIVE_ONBOARDING_ALERT_CREATE).status &&
-    !isDismissed(PROGRESSIVE_ONBOARDING_ALERT_READY).status
+    isDismissed(PROGRESSIVE_ONBOARDING_ALERTS.alertSelectFilter).status &&
+    isDismissed(PROGRESSIVE_ONBOARDING_ALERTS.alertCreate).status &&
+    !isDismissed(PROGRESSIVE_ONBOARDING_ALERTS.alertReady).status
 
   const handleClose = () => {
-    dismiss(PROGRESSIVE_ONBOARDING_ALERT_CREATE)
-    dismiss(PROGRESSIVE_ONBOARDING_ALERT_SELECT_FILTER)
-    dismiss(PROGRESSIVE_ONBOARDING_ALERT_READY)
+    dismiss(PROGRESSIVE_ONBOARDING_ALERTS.alertCreate)
+    dismiss(PROGRESSIVE_ONBOARDING_ALERTS.alertSelectFilter)
+    dismiss(PROGRESSIVE_ONBOARDING_ALERTS.alertReady)
   }
 
   if (!isDisplayable) {
@@ -34,7 +30,7 @@ export const ProgressiveOnboardingAlertReady: FC<ProgressiveOnboardingAlertReady
 
   return (
     <ProgressiveOnboardingPopover
-      name={PROGRESSIVE_ONBOARDING_ALERT_READY}
+      name={PROGRESSIVE_ONBOARDING_ALERTS.alertReady}
       placement="bottom"
       onClose={handleClose}
       popover={<Text variant="xs">When you’re ready, click Create Alert.</Text>}
