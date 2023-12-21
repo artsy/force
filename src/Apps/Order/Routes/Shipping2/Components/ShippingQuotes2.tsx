@@ -12,6 +12,7 @@ import { ShippingQuotes2_commerceLineItem$key } from "__generated__/ShippingQuot
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { extractNodes } from "Utils/extractNodes"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
+import { useEffect } from "react"
 
 export interface ShippingQuotesProps {
   commerceLineItem: ShippingQuotes2_commerceLineItem$key
@@ -43,6 +44,7 @@ export const ShippingQuotes2: React.FC<ShippingQuotesProps> = ({
   )
 
   const quotes = extractNodes(data.shippingQuoteOptions)
+  useAutoSelectBestShippingQuote(quotes)
 
   if (!quotes.length) {
     return null
@@ -125,4 +127,43 @@ export const shippingQuoteDisplayNames = {
   economy: "Saver",
   standard: "Standard",
   priority: "Priority",
+}
+
+const useAutoSelectBestShippingQuote = (
+  quotes: Array<{
+    readonly id: string
+    readonly isSelected: boolean
+    readonly price: string | null | undefined
+    readonly priceCents: number
+    readonly typeName: string
+  }>
+) => {
+  const shippingContext = useShippingContext()
+  // The best available quote is the one that is selected on the client,
+  // or the one that is already selected on the server,
+  // or the first quote in the list
+  const bestArtsyShippingQuoteId =
+    quotes.find(
+      quote => quote.id === shippingContext.state.selectedShippingQuoteId
+    )?.id ||
+    quotes.find(quote => quote.isSelected)?.id ||
+    quotes?.[0]?.id
+
+  const setSelectedShippingQuote =
+    shippingContext.actions.setSelectedShippingQuote
+  useEffect(() => {
+    if (
+      shippingContext.state.stage === "shipping_quotes" &&
+      bestArtsyShippingQuoteId &&
+      bestArtsyShippingQuoteId !== shippingContext.state.selectedShippingQuoteId
+    ) {
+      setSelectedShippingQuote(bestArtsyShippingQuoteId)
+    }
+  }, [
+    setSelectedShippingQuote,
+    bestArtsyShippingQuoteId,
+    shippingContext.orderData.selectedShippingQuoteId,
+    shippingContext.state.stage,
+    shippingContext.state.selectedShippingQuoteId,
+  ])
 }
