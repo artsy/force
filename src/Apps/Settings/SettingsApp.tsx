@@ -47,7 +47,7 @@ const SettingsApp: React.FC<SettingsAppProps> = ({ me, children }) => {
         <RouteTab to="/settings/edit-profile">Edit Profile</RouteTab>
 
         <ProgressiveOnboardingAlertHighlight position="center">
-          <RouteTab to="/settings/alerts">Saved Alerts</RouteTab>
+          <RouteTab to="/settings/alerts">Alerts</RouteTab>
         </ProgressiveOnboardingAlertHighlight>
 
         <RouteTab to="/settings/edit-settings">Account Settings</RouteTab>
