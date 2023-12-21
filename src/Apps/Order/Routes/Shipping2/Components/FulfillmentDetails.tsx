@@ -209,6 +209,8 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
       const orderOrError = result.commerceSetShipping?.orderOrError
 
       if (orderOrError?.__typename === "CommerceOrderWithMutationFailure") {
+        shippingContext.actions.setIsPerformingOperation(false)
+
         shippingContext.actions.handleExchangeError(orderOrError.error, logger)
         return
       }
