@@ -15,7 +15,7 @@ import {
   AddressVerificationFlowQueryRenderer,
 } from "Apps/Order/Components/AddressVerificationFlow"
 
-import { SavedAddressesFragmentContainer } from "Apps/Order/Routes/Shipping2/SavedAddresses2"
+import { SavedAddressesFragmentContainer } from "Apps/Order/Routes/Shipping2/Components/SavedAddresses2"
 import {
   FulfillmentType,
   FulfillmentValues,
@@ -89,9 +89,9 @@ const FulfillmentDetailsFormLayout = (
   const shippingContext = useShippingContext()
 
   const renderMissingShippingQuotesError = !!(
-    shippingContext.parsedOrderData.savedFulfillmentDetails?.isArtsyShipping &&
-    shippingContext.parsedOrderData.shippingQuotes &&
-    shippingContext.parsedOrderData.shippingQuotes.length === 0
+    shippingContext.orderData.savedFulfillmentDetails?.isArtsyShipping &&
+    shippingContext.orderData.shippingQuotes &&
+    shippingContext.orderData.shippingQuotes.length === 0
   )
 
   const [hasAutocompletedAddress, setHasAutocompletedAddress] = useState(false)
@@ -112,20 +112,14 @@ const FulfillmentDetailsFormLayout = (
   const addressFormMode: AddressFormMode =
     values.fulfillmentType === "SHIP" ? props.shippingMode : "pickup"
 
-  /*
-  Pass some key formik bits up to the shipping route
-  TODO: This could be accomplished with useImperativeHandle(ref, formikContext)
-  */
-  const setFulfillmentFormHelpers =
-    shippingContext.helpers.fulfillmentDetails.setFulfillmentFormHelpers
-
   useEffect(() => {
-    setFulfillmentFormHelpers({
-      submitForm,
-      isValid: isValid,
-      values: values,
-    })
-  }, [submitForm, isValid, setFulfillmentFormHelpers, values])
+    /**
+     * Pass some key formik bits up to the shipping route
+     * TODO: This could be accomplished with useImperativeHandle(ref, formikContext)
+     */
+    shippingContext.actions.setFormHelpers(formikContext)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [submitForm, isValid, values])
 
   const trackAutoCompleteEdits = (fieldName: string, handleChange) => (
     ...args
@@ -301,22 +295,19 @@ const FulfillmentDetailsFormLayout = (
                     setFieldValue(`attributes.country`, selected)
                   })}
                   disabled={
-                    !!shippingContext.parsedOrderData.lockShippingCountryTo &&
-                    shippingContext.parsedOrderData.lockShippingCountryTo !==
-                      "EU"
+                    !!shippingContext.orderData.lockShippingCountryTo &&
+                    shippingContext.orderData.lockShippingCountryTo !== "EU"
                   }
                   euShippingOnly={
-                    shippingContext.parsedOrderData.lockShippingCountryTo ===
-                    "EU"
+                    shippingContext.orderData.lockShippingCountryTo === "EU"
                   }
                   data-testid="AddressForm_country"
                 />
-                {shippingContext.parsedOrderData.lockShippingCountryTo && (
+                {shippingContext.orderData.lockShippingCountryTo && (
                   <>
                     <Spacer x={0.5} y={0.5} />
                     <Text variant="xs" color="black60">
-                      {shippingContext.parsedOrderData.lockShippingCountryTo ===
-                      "EU"
+                      {shippingContext.orderData.lockShippingCountryTo === "EU"
                         ? "Continental Europe shipping only."
                         : "Domestic shipping only."}
                     </Text>

@@ -30,47 +30,11 @@ import { useUpdateSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/use
 import { useUpdateUserDefaultAddress } from "Apps/Order/Routes/Shipping2/Mutations/useUpdateUserDefaultAddress"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 
-export enum AddressModalActionType {
-  EDIT_USER_ADDRESS = "editUserAddress",
-  CREATE_USER_ADDRESS = "createUserAddress",
-}
-
-export type AddressModalAction =
-  | {
-      type: AddressModalActionType.CREATE_USER_ADDRESS
-    }
-  | {
-      type: AddressModalActionType.EDIT_USER_ADDRESS
-      address: SavedAddressType
-    }
-
 export interface AddressModalProps {
   closeModal: () => void
   onSuccess: (addressID: string) => void
-
   modalAction: AddressModalAction | null
 }
-
-const MODAL_TITLE_MAP: Record<AddressModalActionType, string> = {
-  createUserAddress: "Add address",
-  editUserAddress: "Edit address",
-}
-
-const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
-  "Validation failed for phone: not a valid phone number": {
-    field: "phoneNumber",
-    message: "Please enter a valid phone number",
-  },
-  "Validation failed: Phone not a valid phone number": {
-    field: "phoneNumber",
-    message: "Please enter a valid phone number",
-  },
-}
-
-export const GENERIC_FAIL_MESSAGE =
-  "Sorry, there has been an issue saving your address. Please try again."
-
-const validationSchema = Yup.object().shape(ADDRESS_VALIDATION_SHAPE)
 
 export const AddressModal: React.FC<AddressModalProps> = ({
   closeModal,
@@ -90,15 +54,18 @@ export const AddressModal: React.FC<AddressModalProps> = ({
   const updateSavedAddress = useUpdateSavedAddress().submitMutation
   const updateUserDefaultAddress = useUpdateUserDefaultAddress().submitMutation
 
-  if (!modalAction) return null
+  if (!modalAction) {
+    return null
+  }
 
   const title = (modalAction && MODAL_TITLE_MAP[modalAction.type]) || ""
+
   const initialAddress =
     modalAction.type === "editUserAddress"
       ? modalAction.address
       : {
           // TODO: Instead of using ShippingContext, initialValues could be a shippingUtils function
-          country: shippingContext.parsedOrderData.shipsFrom,
+          country: shippingContext.orderData.shipsFrom,
           internalID: undefined,
           isDefault: false,
         }
@@ -147,10 +114,17 @@ export const AddressModal: React.FC<AddressModalProps> = ({
     | { data: SavedAddressType; errors: null }
     | { data: null; errors: ReadonlyArray<{ message: string }> } => {
     const addressOrErrors = payload?.userAddressOrErrors
+
     if (addressOrErrors?.__typename === "Errors") {
-      return { errors: addressOrErrors.errors, data: null }
+      return {
+        errors: addressOrErrors.errors,
+        data: null,
+      }
     }
-    return { errors: null, data: addressOrErrors as SavedAddressType }
+    return {
+      errors: null,
+      data: addressOrErrors as SavedAddressType,
+    }
   }
 
   const handleSubmit = async (
@@ -158,9 +132,12 @@ export const AddressModal: React.FC<AddressModalProps> = ({
     helpers: FormikHelpers<SavedAddressType>
   ) => {
     const addressInput = addressWithFallbackValues(values)
+
     let operation: () => Promise<ReturnType<typeof handleMutationPayload>>
+
     try {
-      shippingContext.helpers.setIsPerformingOperation(true)
+      shippingContext.actions.setIsPerformingOperation(true)
+
       if (modalAction.type === "createUserAddress") {
         operation = async () => {
           const result = await createSavedAddress({
@@ -168,6 +145,7 @@ export const AddressModal: React.FC<AddressModalProps> = ({
               input: { attributes: addressInput },
             },
           })
+
           return handleMutationPayload(result.createUserAddress)
         }
       } else {
@@ -181,6 +159,7 @@ export const AddressModal: React.FC<AddressModalProps> = ({
               },
             },
           })
+
           return handleMutationPayload(result.updateUserAddress)
         }
       }
@@ -193,6 +172,7 @@ export const AddressModal: React.FC<AddressModalProps> = ({
       }
 
       const savedAddressID = data?.internalID
+
       if (
         !!savedAddressID &&
         values?.isDefault &&
@@ -203,27 +183,33 @@ export const AddressModal: React.FC<AddressModalProps> = ({
             input: { userAddressID: savedAddressID },
           },
         })
+
         const updateAddressPayload =
           updateAddressResult.updateUserDefaultAddress?.userAddressOrErrors
+
         if (updateAddressPayload?.__typename === "Errors") {
           logger.error(
             updateAddressPayload.errors.map(error => error.message).join(", ")
           )
+
           return
         }
       }
+
       onSuccess(savedAddressID)
       setCreateUpdateError(null)
       closeModal()
     } catch (error) {
       handleErrors([error], helpers)
     } finally {
-      shippingContext.helpers.setIsPerformingOperation(false)
+      shippingContext.actions.setIsPerformingOperation(false)
     }
   }
+
   if (createUpdateError) {
     logger.log({ createUpdateError })
   }
+
   return (
     <>
       <ModalDialog title={title} onClose={handleModalClose} width={900}>
@@ -240,8 +226,11 @@ export const AddressModal: React.FC<AddressModalProps> = ({
                   {createUpdateError}
                 </Banner>
               )}
+
               <AddressModalFields />
+
               <Spacer y={2} />
+
               <Input
                 title="Phone number"
                 description="Required for shipping logistics"
@@ -256,6 +245,7 @@ export const AddressModal: React.FC<AddressModalProps> = ({
               />
 
               <Spacer y={2} />
+
               {!initialAddress?.isDefault && (
                 <Checkbox
                   onSelect={selected => {
@@ -267,6 +257,7 @@ export const AddressModal: React.FC<AddressModalProps> = ({
                   Set as default
                 </Checkbox>
               )}
+
               {modalAction.type === "editUserAddress" && (
                 <Flex mt={2} flexDirection="column" alignItems="center">
                   <Clickable
@@ -279,6 +270,7 @@ export const AddressModal: React.FC<AddressModalProps> = ({
                   </Clickable>
                 </Flex>
               )}
+
               <Button
                 data-test="saveButton"
                 type="submit"
@@ -305,7 +297,9 @@ export const AddressModal: React.FC<AddressModalProps> = ({
           <Text variant="xs">
             This will remove this address from your saved addressess.
           </Text>
+
           <Spacer y={2} />
+
           <Flex justifyContent="flex-end">
             <Button
               variant="secondaryNeutral"
@@ -314,7 +308,9 @@ export const AddressModal: React.FC<AddressModalProps> = ({
             >
               Cancel
             </Button>
+
             <Spacer x={1} />
+
             <Button
               size="small"
               onClick={() => {
@@ -333,3 +329,38 @@ export const AddressModal: React.FC<AddressModalProps> = ({
     </>
   )
 }
+
+export enum AddressModalActionType {
+  EDIT_USER_ADDRESS = "editUserAddress",
+  CREATE_USER_ADDRESS = "createUserAddress",
+}
+
+export type AddressModalAction =
+  | {
+      type: AddressModalActionType.CREATE_USER_ADDRESS
+    }
+  | {
+      type: AddressModalActionType.EDIT_USER_ADDRESS
+      address: SavedAddressType
+    }
+
+const MODAL_TITLE_MAP: Record<AddressModalActionType, string> = {
+  createUserAddress: "Add address",
+  editUserAddress: "Edit address",
+}
+
+const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
+  "Validation failed for phone: not a valid phone number": {
+    field: "phoneNumber",
+    message: "Please enter a valid phone number",
+  },
+  "Validation failed: Phone not a valid phone number": {
+    field: "phoneNumber",
+    message: "Please enter a valid phone number",
+  },
+}
+
+export const GENERIC_FAIL_MESSAGE =
+  "Sorry, there has been an issue saving your address. Please try again."
+
+const validationSchema = Yup.object().shape(ADDRESS_VALIDATION_SHAPE)

@@ -46,6 +46,7 @@ import {
   MockPayloadGenerator,
 } from "relay-test-utils"
 import { RelayMockEnvironment } from "relay-test-utils/lib/RelayModernMockEnvironment"
+import { useRouter } from "System/Router/useRouter"
 
 jest.setTimeout(10000)
 
@@ -73,6 +74,12 @@ jest.mock("@artsy/palette", () => {
 
 jest.mock("System/useFeatureFlag", () => ({
   useFeatureFlag: jest.fn(),
+}))
+
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: jest.fn().mockReturnValue({
+    router: jest.fn(),
+  }),
 }))
 
 const mockShowErrorDialog = jest.fn()
@@ -162,6 +169,15 @@ const saveAndContinue = async () => {
   await waitFor(() => userEvent.click(screen.getByText("Save and Continue")))
 }
 
+const validAddressBeforeVerification = {
+  ...validAddress,
+  addressLine1: "401 Broadway",
+  addressLine2: "Suite 25",
+  city: "New York",
+  region: "NY",
+  postalCode: "10013",
+  country: "US",
+}
 const recommendedAddress = {
   addressLine1: "401 Broadway Suite 25",
   addressLine2: null,
@@ -173,8 +189,8 @@ const recommendedAddress = {
 
 const verifyAddressWithSuggestions = async (
   mockResolveLastOperation,
-  input,
-  suggested
+  input = validAddressBeforeVerification,
+  suggested = recommendedAddress
 ) => {
   const addressLines = addr => {
     return [
@@ -242,6 +258,7 @@ const resolveSaveFulfillmentDetails = async (
         },
       })
     : commerceSetShipping
+
   return await mockResolveLastOperation({
     CommerceSetShippingPayload: () => payload,
   })
@@ -254,6 +271,7 @@ const getAllPendingOperationNames = (env: RelayMockEnvironment) => {
 let realConsoleError: typeof console.error
 
 describe("Shipping", () => {
+  const mockUseRouter = useRouter as jest.Mock
   let isCommittingMutation: boolean
   let relayEnv: MockEnvironment
   const mockPush = jest.fn(() => {
@@ -279,6 +297,12 @@ describe("Shipping", () => {
       trackEvent: jest.fn(),
     }))
     ;(useFeatureFlag as jest.Mock).mockImplementation(() => false)
+
+    mockUseRouter.mockReturnValue({
+      router: {
+        push: mockPush,
+      },
+    })
   })
 
   afterEach(() => {
@@ -292,7 +316,6 @@ describe("Shipping", () => {
         <ShippingFragmentContainer
           order={props.order!}
           me={props.me!}
-          router={{ push: mockPush } as any}
           // @ts-ignore // Is the return type for injectCommitMutation wrong?
           isCommittingMutation={isCommittingMutation}
         />
@@ -773,12 +796,13 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            await fillAddressForm(validAddress)
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await fillAddressForm(validAddressBeforeVerification)
+
+            await saveAndContinue()
 
             await verifyAddressWithSuggestions(
               mockResolveLastOperation,
-              validAddress,
+              validAddressBeforeVerification,
               recommendedAddress
             )
 
@@ -795,12 +819,13 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            await fillAddressForm(validAddress)
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await fillAddressForm(validAddressBeforeVerification)
+
+            await saveAndContinue()
 
             await verifyAddressWithSuggestions(
               mockResolveLastOperation,
-              validAddress,
+              validAddressBeforeVerification,
               recommendedAddress
             )
 
@@ -847,13 +872,13 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            const initialAddress = { ...validAddress, city: "New York" }
-            await fillAddressForm(initialAddress)
+            await fillAddressForm(validAddressBeforeVerification)
+
             await saveAndContinue()
 
             await verifyAddressWithSuggestions(
               mockResolveLastOperation,
-              validAddress,
+              validAddressBeforeVerification,
               recommendedAddress
             )
 
@@ -881,7 +906,7 @@ describe("Shipping", () => {
                 addressVerifiedBy: "USER",
                 phoneNumber: validAddress.phoneNumber,
                 shipping: {
-                  ...initialAddress,
+                  ...validAddressBeforeVerification,
                   city: "New York: the big apple",
 
                   name: "Joelle Van Dyne",
@@ -1358,19 +1383,21 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            await fillAddressForm(validAddress)
+            await fillAddressForm(validAddressBeforeVerification)
+
             await saveAndContinue()
 
             await verifyAddressWithSuggestions(
               mockResolveLastOperation,
-              validAddress,
+              validAddressBeforeVerification,
               recommendedAddress
             )
 
             // Clicking "Back to Edit" allows users to edit the address form
             // and requires clicking "Save and Continue" to proceed.
             userEvent.click(screen.getByText("Back to Edit"))
-            await userEvent.click(screen.getByText("Save and Continue"))
+
+            await saveAndContinue()
             await flushPromiseQueue()
 
             const fulfillmentOperation = await resolveSaveFulfillmentDetails(
