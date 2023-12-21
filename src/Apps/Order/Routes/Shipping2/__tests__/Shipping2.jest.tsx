@@ -169,6 +169,15 @@ const saveAndContinue = async () => {
   await waitFor(() => userEvent.click(screen.getByText("Save and Continue")))
 }
 
+const validAddressBeforeVerification = {
+  ...validAddress,
+  addressLine1: "401 Broadway",
+  addressLine2: "Suite 25",
+  city: "New York",
+  region: "NY",
+  postalCode: "10013",
+  country: "US",
+}
 const recommendedAddress = {
   addressLine1: "401 Broadway Suite 25",
   addressLine2: null,
@@ -180,8 +189,8 @@ const recommendedAddress = {
 
 const verifyAddressWithSuggestions = async (
   mockResolveLastOperation,
-  input,
-  suggested
+  input = validAddressBeforeVerification,
+  suggested = recommendedAddress
 ) => {
   const addressLines = addr => {
     return [
@@ -249,6 +258,7 @@ const resolveSaveFulfillmentDetails = async (
         },
       })
     : commerceSetShipping
+
   return await mockResolveLastOperation({
     CommerceSetShippingPayload: () => payload,
   })
@@ -786,12 +796,13 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            await fillAddressForm(validAddress)
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await fillAddressForm(validAddressBeforeVerification)
+
+            await saveAndContinue()
 
             await verifyAddressWithSuggestions(
               mockResolveLastOperation,
-              validAddress,
+              validAddressBeforeVerification,
               recommendedAddress
             )
 
@@ -808,12 +819,13 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            await fillAddressForm(validAddress)
-            await userEvent.click(screen.getByText("Save and Continue"))
+            await fillAddressForm(validAddressBeforeVerification)
+
+            await saveAndContinue()
 
             await verifyAddressWithSuggestions(
               mockResolveLastOperation,
-              validAddress,
+              validAddressBeforeVerification,
               recommendedAddress
             )
 
@@ -860,13 +872,13 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            const initialAddress = { ...validAddress, city: "New York" }
-            await fillAddressForm(initialAddress)
+            await fillAddressForm(validAddressBeforeVerification)
+
             await saveAndContinue()
 
             await verifyAddressWithSuggestions(
               mockResolveLastOperation,
-              validAddress,
+              validAddressBeforeVerification,
               recommendedAddress
             )
 
@@ -894,7 +906,7 @@ describe("Shipping", () => {
                 addressVerifiedBy: "USER",
                 phoneNumber: validAddress.phoneNumber,
                 shipping: {
-                  ...initialAddress,
+                  ...validAddressBeforeVerification,
                   city: "New York: the big apple",
 
                   name: "Joelle Van Dyne",
@@ -1371,19 +1383,21 @@ describe("Shipping", () => {
               relayEnv
             )
 
-            await fillAddressForm(validAddress)
+            await fillAddressForm(validAddressBeforeVerification)
+
             await saveAndContinue()
 
             await verifyAddressWithSuggestions(
               mockResolveLastOperation,
-              validAddress,
+              validAddressBeforeVerification,
               recommendedAddress
             )
 
             // Clicking "Back to Edit" allows users to edit the address form
             // and requires clicking "Save and Continue" to proceed.
             userEvent.click(screen.getByText("Back to Edit"))
-            await userEvent.click(screen.getByText("Save and Continue"))
+
+            await saveAndContinue()
             await flushPromiseQueue()
 
             const fulfillmentOperation = await resolveSaveFulfillmentDetails(
