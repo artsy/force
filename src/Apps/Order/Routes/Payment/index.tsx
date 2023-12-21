@@ -27,6 +27,7 @@ import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 
 // components
+import { PartnerOfferTimerItem } from "Apps/Order/Components/PartnerOfferTimerItem"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { AdditionalArtworkDetailsFragmentContainer as AdditionalArtworkDetails } from "Apps/Order/Components/AdditionalArtworkDetails"
 import {
@@ -495,6 +496,11 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
+              {
+                order.source === "partner_offer" &&
+                order.state === "PENDING" &&
+                <PartnerOfferTimerItem startAt={order.stateUpdatedAt} endAt={order.stateExpiresAt} />
+              }
               <ArtworkSummaryItem order={order} />
               <TransactionDetailsSummaryItem
                 transactionStep="payment"
@@ -572,6 +578,9 @@ export const PaymentFragmentContainer = createFragmentContainer(
       fragment Payment_order on CommerceOrder {
         artworkDetails
         source
+        state
+        stateExpiresAt
+        stateUpdatedAt
         conditionsOfSale
         bankAccountId
         availablePaymentMethods

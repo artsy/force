@@ -16,6 +16,7 @@ import {
   CommerceSetShippingInput,
 } from "__generated__/SetShippingMutation.graphql"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
+import { PartnerOfferTimerItem } from "Apps/Order/Components/PartnerOfferTimerItem"
 import {
   buyNowFlowSteps,
   offerFlowSteps,
@@ -970,6 +971,11 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           sidebar={
             <Flex flexDirection="column">
               <Flex flexDirection="column">
+                {
+                  order.source === "partner_offer" &&
+                  order.state === "PENDING" &&
+                  <PartnerOfferTimerItem startAt={order.stateUpdatedAt} endAt={order.stateExpiresAt} />
+                }
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem
                   order={order}

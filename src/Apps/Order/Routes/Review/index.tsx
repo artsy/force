@@ -2,6 +2,7 @@ import { Box, Button, Flex, Join, Spacer } from "@artsy/palette"
 import { Review_order$data } from "__generated__/Review_order.graphql"
 import { ReviewSubmitOfferOrderWithConversationMutation } from "__generated__/ReviewSubmitOfferOrderWithConversationMutation.graphql"
 import { ReviewSubmitOrderMutation } from "__generated__/ReviewSubmitOrderMutation.graphql"
+import { PartnerOfferTimerItem } from "Apps/Order/Components/PartnerOfferTimerItem"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { ItemReviewFragmentContainer as ItemReview } from "Apps/Order/Components/ItemReview"
@@ -594,6 +595,11 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
+              {
+                order.source === "partner_offer" &&
+                order.state === "PENDING" &&
+                <PartnerOfferTimerItem startAt={order.stateUpdatedAt} endAt={order.stateExpiresAt} />
+              }
               <ArtworkSummaryItem order={order} />
               <TransactionDetailsSummaryItem
                 order={order}
@@ -644,7 +650,8 @@ export const ReviewFragmentContainer = createFragmentContainer(
         conditionsOfSale
         itemsTotal(precision: 2)
         impulseConversationId
-        stateExpiresAt(format: "MMM D")
+        stateExpiresAt
+        stateUpdatedAt
         lineItems {
           edges {
             node {

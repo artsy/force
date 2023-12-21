@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<33dc4316488c5689b1e844226bcd95b1>>
+ * @generated SignedSource<<71c50fd3f04e5800a54fa42f8021f462>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -48,6 +48,7 @@ export type Review_order$data = {
   readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
   readonly stateExpiresAt: string | null | undefined;
+  readonly stateUpdatedAt: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "OfferSummaryItem_order" | "OrderStepper_order" | "PaymentMethodSummaryItem_order" | "ShippingArtaSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Review_order";
 };
@@ -149,16 +150,17 @@ return {
     },
     {
       "alias": null,
-      "args": [
-        {
-          "kind": "Literal",
-          "name": "format",
-          "value": "MMM D"
-        }
-      ],
+      "args": null,
       "kind": "ScalarField",
       "name": "stateExpiresAt",
-      "storageKey": "stateExpiresAt(format:\"MMM D\")"
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "stateUpdatedAt",
+      "storageKey": null
     },
     {
       "alias": null,
@@ -320,6 +322,6 @@ return {
 };
 })();
 
-(node as any).hash = "bef72db09da81130a96281294fc82958";
+(node as any).hash = "7400dc5dfd7486f660e39c34e912cd73";
 
 export default node;

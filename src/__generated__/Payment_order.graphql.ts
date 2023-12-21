@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<53efe87e5639e09738ee5c4135999460>>
+ * @generated SignedSource<<89a2b0d1854d3d12de54ade672695547>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
 export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
+export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 export type CommercePaymentMethodEnum = "CREDIT_CARD" | "SEPA_DEBIT" | "US_BANK_ACCOUNT" | "WIRE_TRANSFER" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Payment_order$data = {
@@ -52,6 +53,9 @@ export type Payment_order$data = {
     readonly __typename: "%other";
   } | null | undefined;
   readonly source: CommerceOrderSourceEnum;
+  readonly state: CommerceOrderStateEnum;
+  readonly stateExpiresAt: string | null | undefined;
+  readonly stateUpdatedAt: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "BankAccountPicker_order" | "CreditCardPicker_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Payment_order";
 };
@@ -88,6 +92,27 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "state",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "stateExpiresAt",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "stateUpdatedAt",
       "storageKey": null
     },
     {
@@ -315,6 +340,6 @@ return {
 };
 })();
 
-(node as any).hash = "591a8efd8831f1d5a68397e1d0c2c599";
+(node as any).hash = "ab3f28146bdb7bdadf09709b8dc23b33";
 
 export default node;
