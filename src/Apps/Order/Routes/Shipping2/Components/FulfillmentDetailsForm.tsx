@@ -117,11 +117,7 @@ const FulfillmentDetailsFormLayout = (
      * Pass some key formik bits up to the shipping route
      * TODO: This could be accomplished with useImperativeHandle(ref, formikContext)
      */
-    shippingContext.actions.setFormHelpers({
-      submitForm,
-      isValid: isValid,
-      values: values,
-    })
+    shippingContext.actions.setFormHelpers(formikContext)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [submitForm, isValid, values])
 

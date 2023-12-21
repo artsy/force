@@ -58,19 +58,19 @@ export const ShippingContextProvider: FC<Pick<
      * shipping quote steps (and duplicated in the sidebar)
      * we need to hack some formik values UP from the fulfillment details form.
      */
-    formHelpers: {
+    formHelpers: ({
       // Used to submit the form
       submitForm: () => Promise.reject(new Error("form not loaded")),
       // Used to disable the button
       isValid: false,
       // Used to get the form values for un-saving the address if the user
       // unchecks it after saving it in the fulfillment details step.
-      values: ({
+      values: {
         attributes: {
           saveAddress: false,
         },
-      } as unknown) as FulfillmentValues,
-    },
+      },
+    } as unknown) as FormHelpers,
     isArtsyShipping,
     isPerformingOperation: false,
     newSavedAddressId: null,
@@ -119,18 +119,12 @@ export const ShippingContextProvider: FC<Pick<
   )
 }
 
-type FormHelpers = Pick<
-  FormikProps<FulfillmentValues>,
-  "submitForm" | "isValid" | "values"
->
+type FormHelpers = FormikProps<FulfillmentValues>
 
 export type Action =
   | {
       type: "SET_FORM_HELPERS"
-      payload: Pick<
-        FormikProps<FulfillmentValues>,
-        "submitForm" | "isValid" | "values"
-      >
+      payload: FormHelpers
     }
   | { type: "SET_SELECTED_SHIPPING_QUOTE"; payload: string | null }
   | { type: "SET_NEW_SAVED_ADDRESS_ID"; payload: string | null }
