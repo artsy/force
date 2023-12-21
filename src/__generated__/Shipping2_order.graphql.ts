@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a77358e3011f15581b8ecfe482d1c73d>>
+ * @generated SignedSource<<b591ed1b65b697beda935ab1730973d1>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,9 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
-export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Shipping2_order$data = {
   readonly __typename: string;
-  readonly id: string;
   readonly internalID: string;
   readonly lineItems: {
     readonly edges: ReadonlyArray<{
@@ -72,7 +70,6 @@ export type Shipping2_order$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null | undefined;
-  readonly state: CommerceOrderStateEnum;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "FulfillmentDetailsForm_order" | "OrderStepper_order" | "SaveAndContinueButton_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Shipping2_order";
 };
@@ -93,17 +90,10 @@ v1 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
   "name": "phoneNumber",
   "storageKey": null
 },
-v3 = [
+v2 = [
   {
     "alias": null,
     "args": null,
@@ -153,7 +143,7 @@ v3 = [
     "name": "postalCode",
     "storageKey": null
   },
-  (v2/*: any*/)
+  (v1/*: any*/)
 ];
 return {
   "argumentDefinitions": [],
@@ -187,7 +177,6 @@ return {
       "name": "OrderStepper_order"
     },
     (v0/*: any*/),
-    (v1/*: any*/),
     {
       "alias": null,
       "args": null,
@@ -205,13 +194,6 @@ return {
     {
       "alias": null,
       "args": null,
-      "kind": "ScalarField",
-      "name": "state",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
       "concreteType": null,
       "kind": "LinkedField",
       "name": "requestedFulfillment",
@@ -221,20 +203,20 @@ return {
         {
           "kind": "InlineFragment",
           "selections": [
-            (v2/*: any*/)
+            (v1/*: any*/)
           ],
           "type": "CommercePickup",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v3/*: any*/),
+          "selections": (v2/*: any*/),
           "type": "CommerceShip",
           "abstractKey": null
         },
         {
           "kind": "InlineFragment",
-          "selections": (v3/*: any*/),
+          "selections": (v2/*: any*/),
           "type": "CommerceShipArta",
           "abstractKey": null
         }
@@ -294,7 +276,13 @@ return {
                           "name": "node",
                           "plural": false,
                           "selections": [
-                            (v1/*: any*/),
+                            {
+                              "alias": null,
+                              "args": null,
+                              "kind": "ScalarField",
+                              "name": "id",
+                              "storageKey": null
+                            },
                             {
                               "alias": null,
                               "args": null,
@@ -413,6 +401,6 @@ return {
 };
 })();
 
-(node as any).hash = "c04babe27eb1a64becf14793ee701eb9";
+(node as any).hash = "85fe5d5e0c26b1ad9caef7ff1c1e384d";
 
 export default node;

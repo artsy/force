@@ -153,12 +153,9 @@ export const ShippingFragmentContainer = createFragmentContainer(
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
         ...OrderStepper_order
-
         __typename
-        id
         internalID
         mode
-        state
         requestedFulfillment {
           __typename
           ... on CommercePickup {
@@ -224,12 +221,6 @@ export const ShippingFragmentContainer = createFragmentContainer(
         ) {
         ...FulfillmentDetailsForm_me
         ...SavedAddresses2_me
-        name
-        email
-        id
-        location {
-          country
-        }
         addressConnection(
           first: $first
           last: $last
