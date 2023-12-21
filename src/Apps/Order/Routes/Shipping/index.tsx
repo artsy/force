@@ -1008,6 +1008,9 @@ export const ShippingFragmentContainer = createFragmentContainer(
         internalID
         mode
         state
+        source
+        stateExpiresAt
+        stateUpdatedAt
         requestedFulfillment {
           __typename
           ... on CommercePickup {

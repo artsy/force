@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c5650ba371f45c7aca241bf6abfba303>>
+ * @generated SignedSource<<7cf7c89cd7e5081326c6541da3955b4b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Shipping_order$data = {
@@ -67,7 +68,10 @@ export type Shipping_order$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null | undefined;
+  readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
+  readonly stateExpiresAt: string | null | undefined;
+  readonly stateUpdatedAt: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Shipping_order";
 };
@@ -161,6 +165,27 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "state",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "stateExpiresAt",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "stateUpdatedAt",
       "storageKey": null
     },
     {
@@ -367,6 +392,6 @@ return {
 };
 })();
 
-(node as any).hash = "3720bc2915f2de540a7e198c5122956d";
+(node as any).hash = "494a2c8711249440fefb9b5edaca11d0";
 
 export default node;
