@@ -47,6 +47,12 @@ export const fillCountrySelect = (component, value) => {
   input.props().onSelect(value)
 }
 
+export const clickSaveAddress = async () => {
+  await userEvent.click(
+    screen.getByRole("checkbox", { name: /Save shipping address/ })
+  )
+}
+
 export const fillAddressForm = async (address: Address) => {
   await waitFor(() => {
     const line1Input = screen.getByPlaceholderText("Street address")

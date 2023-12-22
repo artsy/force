@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<3e0e4fc3199c6e8190e9193a7212f14d>>
+ * @generated SignedSource<<2f86201fc8d52eca765142072f5e48e7>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -19,7 +19,6 @@ export type SavedAddresses2_me$data = {
         readonly addressLine3: string | null | undefined;
         readonly city: string;
         readonly country: string;
-        readonly id: string;
         readonly internalID: string;
         readonly isDefault: boolean;
         readonly name: string | null | undefined;
@@ -38,15 +37,7 @@ export type SavedAddresses2_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"SavedAddresses2_me">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -84,7 +75,13 @@ return {
   },
   "name": "SavedAddresses2_me",
   "selections": [
-    (v0/*: any*/),
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "id",
+      "storageKey": null
+    },
     {
       "alias": "addressConnection",
       "args": null,
@@ -116,7 +113,6 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v0/*: any*/),
                 {
                   "alias": null,
                   "args": null,
@@ -260,8 +256,7 @@ return {
   "type": "Me",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "0f7178f7033b8a9711893f215d6ae5e2";
+(node as any).hash = "ff98fdc94c73ebba196c854e61d7feb2";
 
 export default node;

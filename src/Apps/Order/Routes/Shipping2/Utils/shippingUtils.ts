@@ -17,13 +17,42 @@ export interface PickupValues {
 
 export interface ShipValues {
   fulfillmentType: FulfillmentType.SHIP
-  attributes: ShippingAddressFormValues & {
-    saveAddress: boolean
-    addressVerifiedBy: AddressVerifiedBy | null
-  }
+  attributes: ShippingAddressFormValues
 }
 
-export type FulfillmentValues = ShipValues | PickupValues
+export type UserAddressAction =
+  | {
+      type: "edit"
+      addressID: string
+      setAsDefault?: boolean
+    }
+  | {
+      type: "delete"
+      addressID: string
+    }
+  | { type: "create"; setAsDefault?: boolean }
+  | null
+
+export type AddressModalAction = Extract<
+  UserAddressAction,
+  { type: "create" } | { type: "edit" }
+>
+
+export type FulfillmentValues = (ShipValues | PickupValues) & {
+  meta: {
+    mode: "new_address" | "saved_addresses" | "pickup"
+
+    addressVerifiedBy?: AddressVerifiedBy | null
+    // User saved an address within the lifecycle of this form
+    newSavedAddressId?: string
+    // User selected a saved address
+    selectedSavedAddressID?: string
+    // Address should be saved (create/update) to user's address book
+    saveAddress?: boolean
+    // Address should be set as default in user's address book
+    setAddressAsDefault?: boolean
+  }
+}
 
 export interface ShippingAddressFormValues {
   name: string
@@ -54,6 +83,11 @@ export const onlyAddressValues = (values: any) => {
   )
 }
 
+/**
+ * Takes an address object and returns a new address object with all the
+ * non-null values from the original address object. Useful for converting
+ * a SavedAddress from relay to a ShippingAddressFormValues object.
+ */
 export const addressWithFallbackValues = (
   address: any
 ): ShippingAddressFormValues => ({
@@ -68,6 +102,13 @@ export type SavedAddressType = NonNullable<
     >[number]
   >["node"]
 >
+
+export const getAddressByID = (
+  addressList: SavedAddressType[],
+  addressID: string
+) => {
+  return addressList.find(node => node.internalID === addressID)
+}
 
 // Get the user's default address, optionally filtering by a list of countries.
 export const getDefaultUserAddress = (

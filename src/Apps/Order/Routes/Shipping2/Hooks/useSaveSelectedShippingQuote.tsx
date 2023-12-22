@@ -36,6 +36,16 @@ export const useSaveSelectedShippingQuote = (
     try {
       shippingContext.actions.setIsPerformingOperation(true)
 
+      if (
+        shippingContext.state.fulfillmentDetailsCtx?.values.meta.mode ===
+        "new_address"
+      ) {
+        await handleUserAddressUpdates(
+          shippingContext.state.fulfillmentDetailsCtx.values,
+          shippingContext.state.fulfillmentDetailsCtx
+        )
+      }
+
       const result = await selectShippingQuote.submitMutation({
         variables: {
           input: {
@@ -52,8 +62,6 @@ export const useSaveSelectedShippingQuote = (
         shippingContext.actions.handleExchangeError(orderOrError.error, logger)
         return
       }
-
-      await handleUserAddressUpdates(shippingContext.state.formHelpers.values)
 
       // Advance to payment
       router.push(`/orders/${order.internalID}/payment`)

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<609898a82f90e36e46b1fea2715f349e>>
+ * @generated SignedSource<<75eba4ee304d6a2918afe03c8c057ad8>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -109,7 +109,6 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v0/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -187,6 +186,7 @@ return {
                         "name": "region",
                         "storageKey": null
                       },
+                      (v0/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -264,12 +264,12 @@ return {
     ]
   },
   "params": {
-    "cacheID": "a614695556421bb0853875a486fc9229",
+    "cacheID": "75b3d84bbfb65694ed385f75268a6134",
     "id": null,
     "metadata": {},
     "name": "SavedAddresses2RefetchQuery",
     "operationKind": "query",
-    "text": "query SavedAddresses2RefetchQuery {\n  me {\n    ...SavedAddresses2_me\n    id\n  }\n}\n\nfragment SavedAddresses2_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query SavedAddresses2RefetchQuery {\n  me {\n    ...SavedAddresses2_me\n    id\n  }\n}\n\nfragment SavedAddresses2_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();

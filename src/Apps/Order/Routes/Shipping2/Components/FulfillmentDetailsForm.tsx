@@ -20,7 +20,6 @@ import {
   FulfillmentType,
   FulfillmentValues,
   ShipValues,
-  ShippingAddressFormValues,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { CountrySelect } from "Components/CountrySelect"
 import { RouterLink } from "System/Router/RouterLink"
@@ -43,6 +42,7 @@ import {
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
+import { useBackToFullfillmentDetails } from "Apps/Order/Routes/Shipping2/Hooks/useBackToFullfillmentDetails" // pragma: allowlist secret
 
 export interface FulfillmentDetailsFormProps
   extends FulfillmentDetailsFormLayoutProps {
@@ -63,15 +63,23 @@ export type AddressFormMode = "saved_addresses" | "new_address" | "pickup"
 export const FulfillmentDetailsForm = ({
   initialValues,
   onSubmit,
+  shippingMode,
   ...layoutProps
 }: FulfillmentDetailsFormProps) => {
   return (
     <Formik<FulfillmentValues>
       initialValues={initialValues}
+      initialStatus={{}}
       onSubmit={onSubmit}
-      validationSchema={VALIDATION_SCHEMA}
+      validationSchema={
+        // Defer to SavedAddresses for validation
+        shippingMode === "new_address" ? VALIDATION_SCHEMA : null
+      }
     >
-      <FulfillmentDetailsFormLayout {...layoutProps} />
+      <FulfillmentDetailsFormLayout
+        shippingMode={shippingMode}
+        {...layoutProps}
+      />
     </Formik>
   )
 }
@@ -103,23 +111,23 @@ const FulfillmentDetailsFormLayout = (
     touched,
     handleChange,
     handleBlur,
-    submitForm,
     setFieldValue,
     setValues,
-    isValid,
   } = formikContext
 
   const addressFormMode: AddressFormMode =
     values.fulfillmentType === "SHIP" ? props.shippingMode : "pickup"
 
+  /**
+   * Expose formik context to entire shipping route
+   * via `shippingContext.state.fulfillmentDetailsCtx`
+   */
   useEffect(() => {
-    /**
-     * Pass some key formik bits up to the shipping route
-     * TODO: This could be accomplished with useImperativeHandle(ref, formikContext)
-     */
-    shippingContext.actions.setFormHelpers(formikContext)
+    shippingContext.actions.setFulfillmentDetailsCtx(formikContext)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [submitForm, isValid, values])
+  }, [formikContext.values, formikContext.isValid])
+
+  useBackToFullfillmentDetails()
 
   const trackAutoCompleteEdits = (fieldName: string, handleChange) => (
     ...args
@@ -132,59 +140,79 @@ const FulfillmentDetailsFormLayout = (
   }
 
   const handleCloseVerification = async () => {
-    await setFieldValue("attributes.addressVerifiedBy", AddressVerifiedBy.USER)
+    await setFieldValue("meta.addressVerifiedBy", AddressVerifiedBy.USER)
     await props.onAddressVerificationComplete()
   }
 
-  const handleChooseAddress = async (verifiedBy, chosenAddress) => {
+  const handleChooseAddressForVerification = async (
+    verifiedBy,
+    chosenAddress
+  ) => {
     const newValues = {
       ...values,
       attributes: {
         ...values.attributes,
         ...chosenAddress,
+      },
+      meta: {
+        ...values.meta,
         addressVerifiedBy: verifiedBy,
       },
     }
     await setValues(newValues)
     await props.onAddressVerificationComplete()
+    //  Submitting after choosing")
     formikContext.submitForm()
   }
 
-  // Reset form when switching between ship/pickup
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  const previousFulfillmentType = usePrevious(values.fulfillmentType)
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+  /**
+   * Effects
+   */
+
+  // Reset form fields when switching between ship/pickup
+  const previousValues = usePrevious(values)
+
   useEffect(() => {
-    if (
-      values.fulfillmentType === FulfillmentType.PICKUP &&
-      previousFulfillmentType !== FulfillmentType.PICKUP
-    ) {
-      setValues({
-        fulfillmentType: FulfillmentType.PICKUP,
-        attributes: {
-          name: "",
-          phoneNumber: "",
-        },
-      })
-      return
+    const resetAttributes = async () => {
+      if (values.fulfillmentType === FulfillmentType.PICKUP) {
+        console.log("*** changed to pickup, resetting")
+        await setValues({
+          ...values,
+          attributes: {
+            name: "",
+            phoneNumber: "",
+          },
+          meta: {
+            mode: "pickup",
+            addressVerifiedBy: null,
+          },
+        })
+        shippingContext.actions.setAddressModalAction(null)
+        return
+      }
+
+      if (values.fulfillmentType === FulfillmentType.SHIP) {
+        console.log("*** changed to ship, resetting form")
+        // reset to initial values
+        formikContext.resetForm()
+        shippingContext.actions.setAddressModalAction(null)
+      }
     }
-  }, [setValues, previousFulfillmentType, values.fulfillmentType])
+    if (values.fulfillmentType !== previousValues.fulfillmentType) {
+      resetAttributes()
+    }
+  }, [
+    setValues,
+    previousValues.fulfillmentType,
+    formikContext,
+    values,
+    shippingContext.actions,
+  ])
 
   // When not showing the form/creating a new address,
   // inputs should not be tabbable
   const tabbableIf = (activeForm: AddressFormMode): 0 | -1 =>
     addressFormMode === activeForm ? 0 : -1
-
-  const handleSelectSavedAddress = (address: ShippingAddressFormValues) => {
-    setValues({
-      fulfillmentType: FulfillmentType.SHIP,
-      attributes: {
-        ...address,
-        saveAddress: false,
-        addressVerifiedBy: null,
-      },
-    })
-  }
 
   return (
     <Form data-testid="FulfillmentDetails_form">
@@ -202,7 +230,7 @@ const FulfillmentDetailsFormLayout = (
             ]) as ShipValues["attributes"]
           }
           onClose={handleCloseVerification}
-          onChosenAddress={handleChooseAddress}
+          onChosenAddress={handleChooseAddressForVerification}
         />
       )}
       {props.availableFulfillmentTypes.length > 1 && (
@@ -252,9 +280,6 @@ const FulfillmentDetailsFormLayout = (
             <SavedAddressesFragmentContainer
               active={addressFormMode === "saved_addresses"}
               me={props.me}
-              onSelect={a => {
-                handleSelectSavedAddress(a)
-              }}
             />
           </Collapse>
           {/* NEW ADDRESS */}
@@ -492,9 +517,9 @@ const FulfillmentDetailsFormLayout = (
               data-testid="FulfillmentDetailsForm_saveAddress"
               tabIndex={tabbableIf("new_address")}
               onSelect={selected => {
-                setFieldValue("attributes.saveAddress", selected)
+                setFieldValue("meta.saveAddress", selected)
               }}
-              selected={values.attributes.saveAddress}
+              selected={values.meta.saveAddress}
             >
               Save shipping address for later use
             </Checkbox>
@@ -502,7 +527,6 @@ const FulfillmentDetailsFormLayout = (
           </Collapse>
         </>
       )}
-      {/* PHONE NUMBER */}
       <Collapse
         data-testid="phoneNumberCollapse"
         open={values.fulfillmentType === FulfillmentType.PICKUP}

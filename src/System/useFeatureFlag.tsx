@@ -30,7 +30,7 @@ export function useFeatureFlag(featureName: string): boolean | null {
 
   if (flagEnabled === undefined) {
     warnInDevelopment(
-      "[Force] Warning: cannot find flagName in featureFlags: ",
+      `[Force] Warning: cannot find ${featureName} in featureFlags: `,
       featureFlags
     )
     return null

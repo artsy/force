@@ -1,4 +1,5 @@
 import { ShippingProps } from "Apps/Order/Routes/Shipping2"
+import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import {
   FulfillmentType,
   PickupValues,
@@ -10,6 +11,7 @@ import { ALL_COUNTRY_CODES, EU_COUNTRY_CODES } from "Components/CountrySelect"
 import { extractNodes } from "Utils/extractNodes"
 
 export interface ComputedOrderData {
+  internalID: string
   availableShippingCountries: string[]
   lockShippingCountryTo: "EU" | string | null
   requiresArtsyShippingTo: (shipTo: string) => boolean
@@ -24,14 +26,14 @@ type SavedFulfillmentData =
   | {
       fulfillmentType: FulfillmentType.PICKUP
       isArtsyShipping: false
-      fulfillmentDetails: PickupValues["attributes"]
-      selectedSavedAddressId: null
+      attributes: PickupValues["attributes"]
+      selectedSavedAddressID: null
     }
   | {
       fulfillmentType: FulfillmentType.SHIP
       isArtsyShipping: boolean
-      fulfillmentDetails: ShippingAddressFormValues
-      selectedSavedAddressId: string | null
+      attributes: ShippingAddressFormValues
+      selectedSavedAddressID: string | null
     }
   | null
 
@@ -42,7 +44,7 @@ type SavedShippingQuoteData = {
 
 export const computeOrderData = (
   order: ShippingProps["order"],
-  me: ShippingProps["me"]
+  meData: ShippingContextProps["meData"]
 ): ComputedOrderData => {
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
@@ -53,7 +55,7 @@ export const computeOrderData = (
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const artworkCountry = firstArtwork?.shippingCountry!
-  const savedFulfillmentDetails = getSavedFulfillmentDetails(order, me)
+  const savedFulfillmentDetails = getSavedFulfillmentDetails(order, meData)
   // FIXME: Non-null assertion
   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const shipsFrom = firstArtwork.shippingCountry!
@@ -93,6 +95,7 @@ export const computeOrderData = (
     shippingQuotes.find(quote => quote.isSelected)?.id ?? null
 
   return {
+    internalID: order.internalID,
     savedFulfillmentDetails,
     savedShippingQuoteData: {
       selectedShippingQuoteId,
@@ -108,7 +111,7 @@ export const computeOrderData = (
 
 const getSavedFulfillmentDetails = (
   order: ShippingProps["order"],
-  me: ShippingProps["me"]
+  meData: ShippingContextProps["meData"]
 ): SavedFulfillmentData => {
   const fulfillmentTypeName = order.requestedFulfillment?.__typename
 
@@ -117,11 +120,11 @@ const getSavedFulfillmentDetails = (
       return {
         fulfillmentType: FulfillmentType.PICKUP,
         isArtsyShipping: false,
-        fulfillmentDetails: {
+        attributes: {
           phoneNumber: order.requestedFulfillment.phoneNumber ?? "",
           name: "",
         },
-        selectedSavedAddressId: null,
+        selectedSavedAddressID: null,
       }
     } else if (
       ["CommerceShip", "CommerceShipArta"].includes(fulfillmentTypeName)
@@ -129,11 +132,10 @@ const getSavedFulfillmentDetails = (
       const fulfillmentDetails = addressWithFallbackValues(
         order.requestedFulfillment
       )
-      const savedAddresses = extractNodes(me.addressConnection)
-
+      // TODO: can this logic be colocated with other areas, like FulfillmentDetails' getInitialValues?
       const selectedSavedAddressId =
         (fulfillmentDetails &&
-          savedAddresses.find(node =>
+          meData.addressList.find(node =>
             matchAddressFields(node, fulfillmentDetails)
           )?.internalID) ??
         null
@@ -141,10 +143,8 @@ const getSavedFulfillmentDetails = (
       return {
         fulfillmentType: FulfillmentType.SHIP,
         isArtsyShipping: fulfillmentTypeName === "CommerceShipArta",
-        fulfillmentDetails: addressWithFallbackValues(
-          order.requestedFulfillment
-        ),
-        selectedSavedAddressId: selectedSavedAddressId,
+        attributes: addressWithFallbackValues(order.requestedFulfillment),
+        selectedSavedAddressID: selectedSavedAddressId,
       }
     }
   }

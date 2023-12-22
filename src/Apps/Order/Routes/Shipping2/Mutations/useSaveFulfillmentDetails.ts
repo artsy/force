@@ -13,7 +13,7 @@ export const useSaveFulfillmentDetails = () => {
             __typename
             ... on CommerceOrderWithMutationSuccess {
               order {
-                id
+                internalID
                 __typename
                 ... on CommerceOrder {
                   ...Shipping2_order

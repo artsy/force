@@ -1,6 +1,7 @@
 import { Button, ButtonProps } from "@artsy/palette"
 import { useSaveSelectedShippingQuote } from "Apps/Order/Routes/Shipping2/Hooks/useSaveSelectedShippingQuote"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
+import { useRouter } from "System/Router/useRouter"
 import { SaveAndContinueButton_order$key } from "__generated__/SaveAndContinueButton_order.graphql"
 import { graphql, useFragment } from "react-relay"
 
@@ -22,35 +23,34 @@ export const SaveAndContinueButton: React.FC<SaveAndContinueButtonProps> = ({
     order
   )
 
+  const { router } = useRouter()
+
   const shippingContext = useShippingContext()
+
   const { saveSelectedShippingQuote } = useSaveSelectedShippingQuote(data)
 
-  const disableSubmit = (() => {
-    if (shippingContext.state.isPerformingOperation) {
-      return true
-    }
-    if (
-      shippingContext.state.stage === "fulfillment_details" &&
-      !shippingContext.state.formHelpers.isValid
-    ) {
-      return true
-    }
-    if (
-      shippingContext.state.stage === "shipping_quotes" &&
-      !shippingContext.state.selectedShippingQuoteId
-    ) {
-      return true
-    }
-    return false
-  })()
+  let disableSubmit = false
+
+  if (shippingContext.state.isPerformingOperation) {
+    disableSubmit = true
+  } else if (shippingContext.state.stage === "fulfillment_details") {
+    disableSubmit = !shippingContext.state.fulfillmentDetailsCtx.isValid
+  } else if (shippingContext.state.stage === "shipping_quotes") {
+    disableSubmit = !shippingContext.state.selectedShippingQuoteId
+  }
 
   const onContinueButtonPressed = async () => {
+    //  save and continue - stage", shippingContext.state.stage)
     if (shippingContext.state.stage === "fulfillment_details") {
-      return shippingContext.state.formHelpers.submitForm()
+      return shippingContext.state.fulfillmentDetailsCtx?.submitForm()
     }
 
     if (shippingContext.state.stage === "shipping_quotes") {
       await saveSelectedShippingQuote()
+    }
+
+    if (shippingContext.state.stage === "advance_on_click") {
+      router.push(`/orders/${data.internalID}/payment`)
     }
   }
 

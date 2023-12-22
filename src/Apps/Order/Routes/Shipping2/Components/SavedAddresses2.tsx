@@ -1,138 +1,155 @@
 import * as React from "react"
-import { useState } from "react"
+import { useCallback, useEffect } from "react"
 import styled from "styled-components"
-import { compact } from "lodash"
-import { RadioGroup, BorderedRadio, Spacer, Clickable } from "@artsy/palette"
+import {
+  RadioGroup,
+  BorderedRadio,
+  Spacer,
+  Clickable,
+  usePrevious,
+} from "@artsy/palette"
 import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
 import { SavedAddresses2_me$data } from "__generated__/SavedAddresses2_me.graphql"
-import {
-  AddressModal,
-  AddressModalAction,
-  AddressModalActionType,
-} from "Apps/Order/Routes/Shipping2/Components/AddressModal2"
+import { AddressModal } from "Apps/Order/Routes/Shipping2/Components/AddressModal2"
 import createLogger from "Utils/logger"
 import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/Components/SavedAddressItem2"
-import { extractNodes } from "Utils/extractNodes"
 import { themeGet } from "@styled-system/theme-get"
 
 import {
+  AddressModalAction,
+  FulfillmentValues,
   SavedAddressType,
-  ShippingAddressFormValues,
   addressWithFallbackValues,
+  getAddressByID,
   getDefaultUserAddress,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
+import { useFormikContext } from "formik"
 
 export const NEW_ADDRESS = "NEW_ADDRESS"
-const PAGE_SIZE = 30
 
 export interface SavedAddressesProps {
   relay: RelayRefetchProp
   me: SavedAddresses2_me$data
   active: boolean
-  onSelect: (address: ShippingAddressFormValues) => void
 }
 
 const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   const logger = createLogger("SavedAddresses.tsx")
-  const [activeModal, setActiveModal] = useState<AddressModalAction | null>(
-    null
-  )
+
   const shippingContext = useShippingContext()
-
-  const { onSelect, me, relay } = props
-
-  const addressList = compact<SavedAddressType>(
-    extractNodes(me?.addressConnection) ?? []
-  )
-
-  const selectedSavedAddressId =
-    shippingContext.orderData.savedFulfillmentDetails?.selectedSavedAddressId
-  const [selectedAddressID, setSelectedAddressID] = useState<
-    string | undefined
-  >(
-    getBestAvailableAddress(
-      addressList,
-      selectedSavedAddressId,
-      shippingContext.orderData.availableShippingCountries
-    )?.internalID
-  )
-
-  const selectedAddress =
-    selectedAddressID && getAddressByID(addressList, selectedAddressID)
-  const selectedAddressPresent = !!selectedAddress
-
   const orderTracking = useOrderTracking()
+  const formikContext = useFormikContext<FulfillmentValues>()
 
-  React.useEffect(() => {
-    if (!selectedAddressPresent) {
-      setSelectedAddressID(
-        getBestAvailableAddress(
-          addressList,
-          selectedSavedAddressId,
-          shippingContext.orderData.availableShippingCountries
-        )?.internalID
+  const addressList = shippingContext.meData.addressList
+
+  const savedToOrderAddressID =
+    shippingContext.orderData.savedFulfillmentDetails?.selectedSavedAddressID ??
+    undefined
+
+  /* Select an address radio button; set values on formik context
+   * and submit form.
+   */
+  const handleClickAddress = (id: string): void => {
+    orderTracking.clickedShippingAddress()
+    const address = getAddressByID(addressList, id)
+    if (!address) {
+      logger.error("Address not found: ", id)
+      return
+    }
+    handleSelectAddress(addressWithFallbackValues(address))
+  }
+
+  const handleSelectAddress = useCallback(
+    async (address: FulfillmentValues["attributes"]) => {
+      await formikContext.setValues({
+        ...formikContext.values,
+        attributes: addressWithFallbackValues(address),
+        meta: {
+          ...formikContext.values.meta,
+          addressVerifiedBy: null,
+        },
+      })
+
+      await formikContext.submitForm()
+    },
+    [formikContext]
+  )
+
+  const handleClickEditAddress = async (address: SavedAddressType) => {
+    const userAddressAction: AddressModalAction = {
+      type: "edit",
+      addressID: address.internalID,
+    }
+
+    await formikContext.setFieldValue(
+      "attributes",
+      addressWithFallbackValues(address)
+    )
+    shippingContext.actions.setAddressModalAction(userAddressAction)
+  }
+
+  /* Effects */
+
+  // Automatically select best available address ID if it isn't present
+  useEffect(() => {
+    const selectedAddress =
+      savedToOrderAddressID &&
+      getAddressByID(addressList, savedToOrderAddressID)
+    const selectedAddressPresent = !!selectedAddress
+
+    if (props.active && !selectedAddressPresent && addressList.length > 0) {
+      //  autoselect address")
+
+      const bestAddress = getBestAvailableAddress(
+        addressList,
+        savedToOrderAddressID,
+        shippingContext.orderData.availableShippingCountries
       )
+      if (bestAddress) {
+        handleSelectAddress(addressWithFallbackValues(bestAddress))
+      }
     }
   }, [
-    selectedAddressPresent,
     addressList,
-    selectedSavedAddressId,
+    savedToOrderAddressID,
     shippingContext.orderData.availableShippingCountries,
+    handleSelectAddress,
+    props.active,
   ])
 
-  const handleSelectAddress = (id: string): void => {
-    setSelectedAddressID(id)
-    const selectedAddress = getAddressByID(addressList, id)
-    if (!selectedAddress) {
-      logger.warn("Address not found: ", id)
+  // Automatically select the address (saving via onSelect prop)
+  // when the selectedAddressID changes (and on load, using the default address)
+  const previousSelectedAddressID = usePrevious(savedToOrderAddressID)
+  useEffect(() => {
+    if (
+      savedToOrderAddressID &&
+      savedToOrderAddressID !== previousSelectedAddressID
+    ) {
+      //  autoselect newly saved")
+
+      const selectedAddress = getAddressByID(addressList, savedToOrderAddressID)
+      if (!selectedAddress) {
+        logger.warn("Address not found, can't submit: ", savedToOrderAddressID)
+        return
+      }
+      handleSelectAddress(addressWithFallbackValues(selectedAddress))
     }
-    orderTracking.clickedShippingAddress()
-    // Set values on the fulfillment form context.
-    // Can these values be invalid? If so, maybe we could pop a form up for
-    // them to fix it. Seems unlikely.
-    onSelect(addressWithFallbackValues(selectedAddress))
-  }
-
-  const refetchAddresses = () => {
-    return new Promise<void>((resolve, reject) =>
-      relay.refetch(
-        {
-          first: PAGE_SIZE,
-        },
-        null,
-        error => {
-          if (error) {
-            logger.error(error)
-            reject(error)
-          } else {
-            resolve()
-          }
-        }
-      )
-    )
-  }
-
-  const handleClickEditAddress = (address: SavedAddressType) => {
-    setSelectedAddressID(address.id)
-    setActiveModal({
-      type: AddressModalActionType.EDIT_USER_ADDRESS,
-      address: address,
-    })
-  }
-
-  const refetchAndSelectAddress = async (addressID: string) => {
-    await refetchAddresses()
-    setSelectedAddressID(addressID)
-  }
+  }, [
+    savedToOrderAddressID,
+    addressList,
+    previousSelectedAddressID,
+    logger,
+    handleSelectAddress,
+  ])
 
   return (
     <>
       <RadioGroup
         disabled={!props.active}
-        onSelect={handleSelectAddress}
-        defaultValue={selectedAddressID}
+        onSelect={handleClickAddress}
+        defaultValue={savedToOrderAddressID}
       >
         {addressList.map((address, index) => {
           return (
@@ -159,18 +176,19 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
           data-test="shippingButton"
           onClick={() => {
             orderTracking.clickedAddNewShippingAddress()
-            setActiveModal({ type: AddressModalActionType.CREATE_USER_ADDRESS })
+            shippingContext.actions.setAddressModalAction({ type: "create" })
           }}
         >
           Add a new address
         </AddAddressButton>
       )}
       <AddressModal
-        modalAction={(props.active && activeModal) || null}
         closeModal={() => {
-          setActiveModal(null)
+          shippingContext.actions.setAddressModalAction(null)
         }}
-        onSuccess={refetchAndSelectAddress}
+        onSuccess={() => {
+          shippingContext.actions.setAddressModalAction(null)
+        }}
       />
       <Spacer y={4} />
     </>
@@ -198,7 +216,6 @@ export const SavedAddressesFragmentContainer = createRefetchContainer(
           totalCount
           edges {
             node {
-              id
               internalID
               addressLine1
               addressLine2
@@ -231,10 +248,6 @@ const AddAddressButton = styled(Clickable)`
     color: ${themeGet("colors.blue100")};
   }
 `
-
-const getAddressByID = (addressList: SavedAddressType[], addressID: string) => {
-  return addressList.find(node => node.internalID === addressID)
-}
 
 const getBestAvailableAddress = (
   addressList: SavedAddressType[],

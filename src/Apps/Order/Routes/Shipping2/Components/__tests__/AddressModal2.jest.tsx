@@ -102,7 +102,7 @@ describe.skip("AddressModal", () => {
 
     testAddressModalProps = {
       onSuccess: jest.fn(),
-      modalAction: {
+      addressModalAction: {
         type: AddressModalActionType.EDIT_USER_ADDRESS,
         address: mockSavedAddress,
       },
@@ -127,7 +127,7 @@ describe.skip("AddressModal", () => {
     const { wrapper } = getWrapper({
       componentProps: {
         ...testAddressModalProps,
-        modalAction: {
+        addressModalAction: {
           type: AddressModalActionType.EDIT_USER_ADDRESS,
           address: {
             ...mockSavedAddress,
@@ -144,7 +144,7 @@ describe.skip("AddressModal", () => {
     const { wrapper } = getWrapper({
       componentProps: {
         ...testAddressModalProps,
-        modalAction: {
+        addressModalAction: {
           type: AddressModalActionType.CREATE_USER_ADDRESS,
         },
       },

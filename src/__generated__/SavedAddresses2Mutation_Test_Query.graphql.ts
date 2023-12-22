@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6fcc7406799e51e5eaf5f0be29eb55ec>>
+ * @generated SignedSource<<2dc20d154c694b3e6618a55690fabf07>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -133,7 +133,6 @@ return {
                     "name": "node",
                     "plural": false,
                     "selections": [
-                      (v0/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -211,6 +210,7 @@ return {
                         "name": "region",
                         "storageKey": null
                       },
+                      (v0/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -288,7 +288,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "470da9e59f3c08d04092160f164c773f",
+    "cacheID": "d78cb998b8769809f4e30c2972e84cc5",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -351,7 +351,7 @@ return {
     },
     "name": "SavedAddresses2Mutation_Test_Query",
     "operationKind": "query",
-    "text": "query SavedAddresses2Mutation_Test_Query {\n  me {\n    ...SavedAddresses2_me\n    id\n  }\n}\n\nfragment SavedAddresses2_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        id\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
+    "text": "query SavedAddresses2Mutation_Test_Query {\n  me {\n    ...SavedAddresses2_me\n    id\n  }\n}\n\nfragment SavedAddresses2_me on Me {\n  id\n  addressConnection(first: 30) {\n    totalCount\n    edges {\n      node {\n        internalID\n        addressLine1\n        addressLine2\n        addressLine3\n        city\n        country\n        isDefault\n        name\n        phoneNumber\n        postalCode\n        region\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n      hasPreviousPage\n      startCursor\n    }\n  }\n}\n"
   }
 };
 })();

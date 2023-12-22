@@ -20,7 +20,7 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
 const mockContext: DeepPartial<ShippingContextProps> = {
   orderData: {
     availableShippingCountries: ["US"],
-    savedFulfillmentDetails: { selectedSavedAddressId: "2" },
+    savedFulfillmentDetails: { selectedSavedAddressID: "2" },
   },
 }
 jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => {

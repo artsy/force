@@ -83,8 +83,6 @@ beforeEach(() => {
         city: "",
         region: "",
         postalCode: "",
-        saveAddress: false,
-        addressVerifiedBy: null,
         country: "US",
       },
     },
@@ -99,7 +97,7 @@ beforeEach(() => {
   }
   mockShippingContext = {
     actions: {
-      setFormHelpers: jest.fn(),
+      setFulfillmentDetailsCtx: jest.fn(),
     },
     orderData: {
       shippingQuotes: [],
