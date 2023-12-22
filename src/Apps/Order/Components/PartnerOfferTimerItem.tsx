@@ -19,7 +19,7 @@ export const PartnerOfferTimerItem: React.FC<{
     endTime: endTime,
   })
 
-  if (data.state !== "PENDING") {
+  if (data.displayState !== "PENDING") {
     return null
   }
 
@@ -60,7 +60,7 @@ export const PartnerOfferTimerItem: React.FC<{
 
 const query = graphql`
   fragment PartnerOfferTimerItem_order on CommerceOrder {
-    state
+    displayState
     stateExpiresAt
     stateUpdatedAt
   }

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5dacd20e0787d9dc81de8a2be4673f62>>
+ * @generated SignedSource<<053e65754ae401fc8d92aa41f5922b5b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,10 +9,10 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
+export type CommerceOrderDisplayStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_TRANSIT" | "PENDING" | "PROCESSING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type PartnerOfferTimerItem_order$data = {
-  readonly state: CommerceOrderStateEnum;
+  readonly displayState: CommerceOrderDisplayStateEnum;
   readonly stateExpiresAt: string | null | undefined;
   readonly stateUpdatedAt: string | null | undefined;
   readonly " $fragmentType": "PartnerOfferTimerItem_order";
@@ -32,7 +32,7 @@ const node: ReaderFragment = {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "state",
+      "name": "displayState",
       "storageKey": null
     },
     {
@@ -54,6 +54,6 @@ const node: ReaderFragment = {
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "d4c4a37a1037d562a3ec3894fc65ab35";
+(node as any).hash = "06133f61d1582ce0c3c8890ca9352184";
 
 export default node;
