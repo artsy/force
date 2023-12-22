@@ -1,16 +1,15 @@
 import { render, screen } from "@testing-library/react"
-import {
-  PROGRESSIVE_ONBOARDING_SAVE_FIND,
-  ProgressiveOnboardingProvider,
-  reset,
-  useProgressiveOnboarding,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
 import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { __ProgressiveOnboardingSaveArtwork__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveArtwork"
 import { __ProgressiveOnboardingSaveFind__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveFind"
 import { ProgressiveOnboardingSaveHighlight } from "Components/ProgressiveOnboarding/ProgressiveOnboardingSaveHighlight"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { FC, useEffect } from "react"
+import { DismissibleProvider, useDismissibleContext } from "@artsy/dismissible"
+import {
+  PROGRESSIVE_ONBOARDING_ALERTS,
+  getProgressiveOnboardingAlertKeys,
+} from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
 
 jest.mock(
   "Components/ProgressiveOnboarding/ProgressiveOnboardingHighlight",
@@ -35,7 +34,7 @@ const Example: FC = () => {
   )
 
   return (
-    <ProgressiveOnboardingProvider>
+    <DismissibleProvider keys={getProgressiveOnboardingAlertKeys()}>
       <ProgressiveOnboardingSaveFind>
         <button>Profile</button>
       </ProgressiveOnboardingSaveFind>
@@ -47,7 +46,7 @@ const Example: FC = () => {
       <ProgressiveOnboardingSaveArtwork>
         <button>Save</button>
       </ProgressiveOnboardingSaveArtwork>
-    </ProgressiveOnboardingProvider>
+    </DismissibleProvider>
   )
 }
 
@@ -58,8 +57,12 @@ describe("ProgressiveOnboarding: Saves", () => {
   const saveFindText = "Find and edit all your Saves here."
   const saveHiglightedText = "Highlighted"
 
+  const reset = () => {
+    localStorage.clear()
+  }
+
   beforeEach(() => {
-    reset("user")
+    reset()
   })
 
   it("renders the chain of tips correctly", async () => {
@@ -117,10 +120,10 @@ describe("ProgressiveOnboarding: Saves", () => {
 })
 
 const DismissSaveFind = () => {
-  const { dismiss } = useProgressiveOnboarding()
+  const { dismiss } = useDismissibleContext()
 
   useEffect(() => {
-    dismiss(PROGRESSIVE_ONBOARDING_SAVE_FIND)
+    dismiss(PROGRESSIVE_ONBOARDING_ALERTS.saveFind)
   }, [dismiss])
 
   return null
@@ -129,12 +132,12 @@ const DismissSaveFind = () => {
 describe("ProgressiveOnboardingSaveHighlight", () => {
   it("renders the highlight", () => {
     render(
-      <ProgressiveOnboardingProvider>
+      <DismissibleProvider keys={getProgressiveOnboardingAlertKeys()}>
         <DismissSaveFind />
         <ProgressiveOnboardingSaveHighlight position="center">
           <div>Example</div>
         </ProgressiveOnboardingSaveHighlight>
-      </ProgressiveOnboardingProvider>
+      </DismissibleProvider>
     )
 
     expect(screen.getByText("Example")).toBeInTheDocument()
@@ -146,7 +149,7 @@ describe("ProgressiveOnboardingSaveHighlight", () => {
 
     const Example = ({ display }) => {
       return (
-        <ProgressiveOnboardingProvider>
+        <DismissibleProvider keys={getProgressiveOnboardingAlertKeys()}>
           <DismissSaveFind />
 
           {display && (
@@ -154,7 +157,7 @@ describe("ProgressiveOnboardingSaveHighlight", () => {
               <div>Example</div>
             </ProgressiveOnboardingSaveHighlight>
           )}
-        </ProgressiveOnboardingProvider>
+        </DismissibleProvider>
       )
     }
 

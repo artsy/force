@@ -1,12 +1,10 @@
+import { DismissibleProvider } from "@artsy/dismissible"
 import { render, screen } from "@testing-library/react"
 import { useArtworkFilterContext } from "Components/ArtworkFilter/ArtworkFilterContext"
 import { __ProgressiveOnboardingAlertCreate__ } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertCreate"
 import { ProgressiveOnboardingAlertReady } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertReady"
 import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
-import {
-  ProgressiveOnboardingProvider,
-  reset,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
+import { getProgressiveOnboardingAlertKeys } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
 import { withProgressiveOnboardingCounts } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { FC, useState } from "react"
@@ -29,7 +27,7 @@ const Example: FC = () => {
   )
 
   return (
-    <ProgressiveOnboardingProvider>
+    <DismissibleProvider keys={getProgressiveOnboardingAlertKeys()}>
       <div>{renders}</div>
 
       <ProgressiveOnboardingAlertSelectFilter>
@@ -58,11 +56,13 @@ const Example: FC = () => {
           </ProgressiveOnboardingAlertReady>
         )}
       </ProgressiveOnboardingAlertCreate>
-    </ProgressiveOnboardingProvider>
+    </DismissibleProvider>
   )
 }
 
 describe("ProgressiveOnboarding: Alerts", () => {
+  // FIXME:
+
   const mockWithProgressiveOnboardingCounts = withProgressiveOnboardingCounts as jest.Mock
   const mockUseArtworkFilterContext = useArtworkFilterContext as jest.Mock
 
@@ -70,8 +70,13 @@ describe("ProgressiveOnboarding: Alerts", () => {
   const alertSelectFilterText = "First, select the relevant filters."
   const alertReadyText = "When you’re ready, click Create Alert."
 
+  const reset = () => {
+    localStorage.clear()
+  }
+
   beforeEach(() => {
-    reset("user")
+    console.warn = jest.fn()
+    reset()
     ;(withProgressiveOnboardingCounts as jest.Mock).mockClear()
   })
 

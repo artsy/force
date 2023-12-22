@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5cdf7545157990dc1a6c79d39cf42edb>>
+ * @generated SignedSource<<6fe4d569a270b763ef14bc4f7780cd39>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,12 +29,6 @@ export type Shipping2_me$data = {
       } | null | undefined;
     } | null | undefined> | null | undefined;
   } | null | undefined;
-  readonly email: string | null | undefined;
-  readonly id: string;
-  readonly location: {
-    readonly country: string | null | undefined;
-  } | null | undefined;
-  readonly name: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"FulfillmentDetailsForm_me" | "SavedAddresses2_me">;
   readonly " $fragmentType": "Shipping2_me";
 };
@@ -43,29 +37,7 @@ export type Shipping2_me$key = {
   readonly " $fragmentSpreads": FragmentRefs<"Shipping2_me">;
 };
 
-const node: ReaderFragment = (function(){
-var v0 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "name",
-  "storageKey": null
-},
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-},
-v2 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "country",
-  "storageKey": null
-};
-return {
+const node: ReaderFragment = {
   "argumentDefinitions": [
     {
       "defaultValue": null,
@@ -101,27 +73,6 @@ return {
       "args": null,
       "kind": "FragmentSpread",
       "name": "SavedAddresses2_me"
-    },
-    (v0/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "email",
-      "storageKey": null
-    },
-    (v1/*: any*/),
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "MyLocation",
-      "kind": "LinkedField",
-      "name": "location",
-      "plural": false,
-      "selections": [
-        (v2/*: any*/)
-      ],
-      "storageKey": null
     },
     {
       "alias": null,
@@ -168,7 +119,13 @@ return {
               "name": "node",
               "plural": false,
               "selections": [
-                (v1/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "id",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -204,7 +161,13 @@ return {
                   "name": "city",
                   "storageKey": null
                 },
-                (v2/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "country",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -212,7 +175,13 @@ return {
                   "name": "isDefault",
                   "storageKey": null
                 },
-                (v0/*: any*/),
+                {
+                  "alias": null,
+                  "args": null,
+                  "kind": "ScalarField",
+                  "name": "name",
+                  "storageKey": null
+                },
                 {
                   "alias": null,
                   "args": null,
@@ -247,8 +216,7 @@ return {
   "type": "Me",
   "abstractKey": null
 };
-})();
 
-(node as any).hash = "64fdd35ca689ad9879684032c9f7dd60";
+(node as any).hash = "3d53d3dbf9bf4b645d6902a001000ff0";
 
 export default node;

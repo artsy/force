@@ -57,6 +57,7 @@ export const ShippingQuotes: React.FC<ShippingQuotesProps> = ({
   selectedShippingQuoteId,
   ...rest
 }) => {
+  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
   const quotes = shippingQuotes?.map(quote => quote.node!)
 
   if (!quotes || !quotes.length) {

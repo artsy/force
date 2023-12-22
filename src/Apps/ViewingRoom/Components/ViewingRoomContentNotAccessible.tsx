@@ -32,9 +32,9 @@ const ViewingRoomContentNotAccessible: React.FC<ViewingRoomContentNotAccessibleP
             variant="primaryGray"
             // @ts-ignore
             as={RouterLink}
-            to={viewingRoom.partner.href}
+            to={`${viewingRoom.partner.href}/works`}
           >
-            Visit Gallery
+            View Works
           </Button>
         </Column>
       )}
