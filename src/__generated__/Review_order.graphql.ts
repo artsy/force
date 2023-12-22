@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2a3aafeaf14d0d871aff05af9760cfa5>>
+ * @generated SignedSource<<c60594fb24f8de0aa03fd93c9a794489>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,6 +47,7 @@ export type Review_order$data = {
   readonly paymentMethod: CommercePaymentMethodEnum | null | undefined;
   readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
+  readonly stateExpiresAtFormatted: string | null | undefined;
   readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "OfferSummaryItem_order" | "OrderStepper_order" | "PartnerOfferTimerItem_order" | "PaymentMethodSummaryItem_order" | "ShippingArtaSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Review_order";
 };
@@ -145,6 +146,19 @@ return {
       "kind": "ScalarField",
       "name": "impulseConversationId",
       "storageKey": null
+    },
+    {
+      "alias": "stateExpiresAtFormatted",
+      "args": [
+        {
+          "kind": "Literal",
+          "name": "format",
+          "value": "MMM D"
+        }
+      ],
+      "kind": "ScalarField",
+      "name": "stateExpiresAt",
+      "storageKey": "stateExpiresAt(format:\"MMM D\")"
     },
     {
       "alias": null,
@@ -311,6 +325,6 @@ return {
 };
 })();
 
-(node as any).hash = "c5e83d963a78ad4e95b1dde9a734fdfc";
+(node as any).hash = "d4a325fbb750e431cbb877ee6bea5407";
 
 export default node;

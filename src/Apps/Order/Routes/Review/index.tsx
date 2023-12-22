@@ -181,7 +181,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                 JSON.stringify({
                   key: "goToInboxOnMakeOfferSubmission",
                   orderCode: order.code,
-                  message: `The seller will respond to your offer by ${order.stateExpiresAt}. Keep in mind making an offer doesn’t guarantee you the work.`,
+                  message: `The seller will respond to your offer by ${order.stateExpiresAtFormatted}. Keep in mind making an offer doesn’t guarantee you the work.`,
                 })
               )
               // We cannot expect Eigen to respond all the time to messages sent from the webview
@@ -648,6 +648,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
         conditionsOfSale
         itemsTotal(precision: 2)
         impulseConversationId
+        stateExpiresAtFormatted: stateExpiresAt(format: "MMM D")
         lineItems {
           edges {
             node {
