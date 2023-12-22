@@ -19,6 +19,10 @@ export const PartnerOfferTimerItem: React.FC<{
     endTime: endTime,
   })
 
+  if (remainingTime.match(/^NaN/)) {
+    return null
+  }
+
   if (data.displayState !== "PENDING") {
     return null
   }
