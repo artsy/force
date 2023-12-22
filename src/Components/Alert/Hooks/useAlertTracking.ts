@@ -51,7 +51,7 @@ export const useAlertTracking = () => {
       trackEvent(payload)
     },
 
-    deletedAlert: (searchCriteriaID: string) => {
+    deletedAlert: (searchCriteriaID?: string) => {
       const payload: DeletedSavedSearch = {
         action: ActionType.deletedSavedSearch,
         context_screen_owner_id: contextPageOwnerId,
