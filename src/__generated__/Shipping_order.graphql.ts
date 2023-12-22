@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<7cf7c89cd7e5081326c6541da3955b4b>>
+ * @generated SignedSource<<24a6ee24fd5f36f74094df35c2b49d50>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -70,9 +70,7 @@ export type Shipping_order$data = {
   } | null | undefined;
   readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
-  readonly stateExpiresAt: string | null | undefined;
-  readonly stateUpdatedAt: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order" | "PartnerOfferTimerItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Shipping_order";
 };
 export type Shipping_order$key = {
@@ -172,20 +170,6 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "source",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "stateExpiresAt",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "stateUpdatedAt",
       "storageKey": null
     },
     {
@@ -374,6 +358,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "PartnerOfferTimerItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "ArtworkSummaryItem_order"
     },
     {
@@ -392,6 +381,6 @@ return {
 };
 })();
 
-(node as any).hash = "494a2c8711249440fefb9b5edaca11d0";
+(node as any).hash = "be65a788c0766823a09bf75b37e2c742";
 
 export default node;

@@ -971,11 +971,9 @@ export const ShippingRoute: FC<ShippingProps> = props => {
           sidebar={
             <Flex flexDirection="column">
               <Flex flexDirection="column">
-                {
-                  order.source === "partner_offer" &&
-                  order.state === "PENDING" &&
-                  <PartnerOfferTimerItem startAt={order.stateUpdatedAt} endAt={order.stateExpiresAt} />
-                }
+                {order.source === "partner_offer" && (
+                  <PartnerOfferTimerItem order={order} />
+                )}
                 <ArtworkSummaryItem order={order} />
                 <TransactionDetailsSummaryItem
                   order={order}
@@ -1015,8 +1013,6 @@ export const ShippingFragmentContainer = createFragmentContainer(
         mode
         state
         source
-        stateExpiresAt
-        stateUpdatedAt
         requestedFulfillment {
           __typename
           ... on CommercePickup {
@@ -1067,6 +1063,7 @@ export const ShippingFragmentContainer = createFragmentContainer(
             }
           }
         }
+        ...PartnerOfferTimerItem_order
         ...ArtworkSummaryItem_order
         ...TransactionDetailsSummaryItem_order
         ...OrderStepper_order
