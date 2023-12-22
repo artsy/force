@@ -37,6 +37,7 @@ import { useSystemContext } from "System/SystemContext"
 import { SavedSearchAlertsApp_Alert_Query } from "__generated__/SavedSearchAlertsApp_Alert_Query.graphql"
 import { NewSavedSearchAlertEditFormQueryRenderer } from "Apps/Settings/Routes/SavedSearchAlerts/Components/NewSavedSearchAlertEditForm"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 
 interface SavedSearchAlertsAppProps {
   me: SavedSearchAlertsApp_me$data
@@ -58,6 +59,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const { relayEnvironment } = useSystemContext()
   const { sendToast } = useToasts()
   const { trackEvent } = useTracking()
+  const { deletedAlert } = useAlertTracking()
   const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [sort, setSort] = useState("CREATED_AT_DESC")
@@ -103,10 +105,12 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   }
 
   const handleDeleted = () => {
-    trackEvent({
-      action: ActionType.deletedSavedSearch,
-      saved_search_id: editAlertEntity?.id,
-    })
+    newAlertModalEnabled
+      ? deletedAlert(editAlertEntity?.id)
+      : trackEvent({
+          action: ActionType.deletedSavedSearch,
+          saved_search_id: editAlertEntity?.id,
+        })
 
     closeEditFormAndRefetch()
     closeDeleteModal()

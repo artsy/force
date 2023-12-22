@@ -12,6 +12,7 @@ import {
 import { handleFieldsWithMultipleValues } from "Components/Alert/Helpers/handleFieldsWithMultipleValues"
 import { isValueSelected } from "Components/Alert/Helpers/isValueSelected"
 import { useAlertContext } from "Components/Alert/Hooks/useAlertContext"
+import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { SearchCriteriaAttributeKeys } from "Components/SavedSearchAlert/types"
 import { SuggestedFiltersFetchQuery } from "__generated__/SuggestedFiltersFetchQuery.graphql"
 import { times } from "lodash"
@@ -24,6 +25,7 @@ export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
   transitionToFiltersAndTrack,
 }) => {
   const { state, dispatch } = useAlertContext()
+  const { clickedSuggestedFilterOption } = useAlertTracking()
 
   const { artistIDs } = state.criteria
   const { currentArtworkID } = state
@@ -98,6 +100,10 @@ export const SuggestedFilters: React.FC<SuggestedFiltersProps> = ({
                     })
                     break
                 }
+                clickedSuggestedFilterOption(
+                  suggestedFilter.field,
+                  state.isEditMode
+                )
               }}
             >
               {suggestedFilter.displayValue}

@@ -34,6 +34,7 @@ import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { NotificationPreferencesQueryRenderer } from "Components/Alert/Components/NotificationPreferences"
 import { SugggestedFiltersQueryRenderer } from "Components/Alert/Components/Form/SuggestedFilters"
 import { useFeatureFlag } from "System/useFeatureFlag"
+import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 
 interface NewSavedSearchAlertEditFormQueryRendererProps {
   editAlertEntity: EditAlertEntity
@@ -119,6 +120,7 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
     "onyx_saved_searches_suggested_filters"
   )
   const { state, goToFilters, dispatch, onComplete } = useAlertContext()
+  const { clickedAddFilters } = useAlertTracking()
 
   const isMounted = useDidMount()
 
@@ -138,8 +140,9 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
           isSaveAlertButtonDisabled = false
         }
 
-        const transitionToFilters = () => {
+        const transitionToFiltersAndTrack = () => {
           goToFilters()
+          clickedAddFilters(state.isEditMode)
         }
 
         return (
@@ -168,10 +171,10 @@ const NewSavedSearchAlertEditForm: React.FC<NewSavedSearchAlertEditFormProps> = 
 
               {enableSuggestedFilters ? (
                 <SugggestedFiltersQueryRenderer
-                  transitionToFiltersAndTrack={transitionToFilters}
+                  transitionToFiltersAndTrack={transitionToFiltersAndTrack}
                 />
               ) : (
-                <Clickable onClick={transitionToFilters} width="100%">
+                <Clickable onClick={transitionToFiltersAndTrack} width="100%">
                   <Flex justifyContent="space-between" alignItems={"center"}>
                     <Box>
                       <Text variant="sm-display">Add Filters:</Text>

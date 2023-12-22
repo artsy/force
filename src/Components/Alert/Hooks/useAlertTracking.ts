@@ -5,8 +5,10 @@ import {
   ClickedCreateAlert,
   ContextModule,
   DeletedSavedSearch,
+  EditedAlert,
   OwnerType,
   ScreenOwnerType,
+  SelectedSuggestedFilter,
   ToggledSavedSearch,
 } from "@artsy/cohesion"
 import { useTracking } from "react-tracking"
@@ -39,11 +41,22 @@ export const useAlertTracking = () => {
       trackEvent(payload)
     },
 
-    deletedAlert: () => {
+    editedAlert: (searchCriteriaID: string) => {
+      const payload: EditedAlert = {
+        action: ActionType.editedAlert,
+        saved_search_id: searchCriteriaID,
+        context_screen_owner_type: contextPageOwnerType as ScreenOwnerType,
+      }
+
+      trackEvent(payload)
+    },
+
+    deletedAlert: (searchCriteriaID: string) => {
       const payload: DeletedSavedSearch = {
         action: ActionType.deletedSavedSearch,
         context_screen_owner_id: contextPageOwnerId,
         context_screen_owner_type: contextPageOwnerType as ScreenOwnerType,
+        saved_search_id: searchCriteriaID,
       }
 
       trackEvent(payload)
@@ -60,10 +73,12 @@ export const useAlertTracking = () => {
       trackEvent(payload)
     },
 
-    clickedAddFilters: () => {
+    clickedAddFilters: (isEditMode?: boolean) => {
       const payload: ClickedAddFilters = {
         action: ActionType.clickedAddFilters,
-        context_module: ContextModule.alertFilters,
+        context_module: isEditMode
+          ? ContextModule.editAlert
+          : ContextModule.alertFilters,
       }
 
       trackEvent(payload)
@@ -78,6 +93,18 @@ export const useAlertTracking = () => {
         destination_page_owner_slug: slug,
         destination_page_owner_type: OwnerType.artwork,
         type: "thumbnail",
+      }
+
+      trackEvent(payload)
+    },
+
+    clickedSuggestedFilterOption: (criterion: string, isEditMode?: boolean) => {
+      const payload: SelectedSuggestedFilter = {
+        action: ActionType.selectedSuggestedFilter,
+        context_module: isEditMode
+          ? ContextModule.editAlert
+          : ContextModule.createAlert,
+        subject: criterion,
       }
 
       trackEvent(payload)

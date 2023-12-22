@@ -53,7 +53,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   isEditMode,
 }) => {
   const newAlertModalEnabled = useFeatureFlag("onyx_artwork_alert_modal_v2")
-  const { createdAlert } = useAlertTracking()
+  const { createdAlert, editedAlert } = useAlertTracking()
   const { showAuthDialog } = useAuthDialog()
   const { value, clearValue } = useAuthIntent()
   const { submitMutation } = useCreateAlert()
@@ -109,6 +109,8 @@ export const AlertProvider: FC<AlertProviderProps> = ({
           },
         },
       })
+
+      editedAlert(searchCriteriaID)
     } catch (error) {
       console.error("Alert/useAlertContext", error)
       logger.error(error)
