@@ -595,11 +595,9 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
-              {
-                order.source === "partner_offer" &&
-                order.state === "PENDING" &&
-                <PartnerOfferTimerItem startAt={order.stateUpdatedAt} endAt={order.stateExpiresAt} />
-              }
+              {order.source === "partner_offer" && (
+                <PartnerOfferTimerItem order={order} />
+              )}
               <ArtworkSummaryItem order={order} />
               <TransactionDetailsSummaryItem
                 order={order}
@@ -650,8 +648,6 @@ export const ReviewFragmentContainer = createFragmentContainer(
         conditionsOfSale
         itemsTotal(precision: 2)
         impulseConversationId
-        stateExpiresAt
-        stateUpdatedAt
         lineItems {
           edges {
             node {
@@ -676,6 +672,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
             internalID
           }
         }
+        ...PartnerOfferTimerItem_order
         ...ArtworkSummaryItem_order
         ...AdditionalArtworkDetails_order
         ...TransactionDetailsSummaryItem_order
