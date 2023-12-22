@@ -12,23 +12,9 @@ export const PartnerOfferTimerItem: React.FC<{
     startTime: startAt,
     endTime: endAt,
   })
-
-  const endDateTime = DateTime.fromISO(endAt).toLocal()
-  let hour: number
-  if (endDateTime.hour > 12) {
-    hour = endDateTime.hour - 12
-  } else if (endDateTime.hour === 0) {
-    hour = 12
-  } else {
-    hour = endDateTime.hour
-  }
-
-  const minutes =
-    endDateTime.minute < 10 ? "0" + endDateTime.minute : endDateTime.minute
-  const amPm = endDateTime.hour >= 12 ? "pm" : "am"
-  const time = `${hour}:${minutes}${amPm}`
-
-  const actionDeadline = `${endDateTime.monthShort} ${endDateTime.day}, ${time} ${endDateTime.offsetNameShort}`
+  const actionDeadline = DateTime.fromISO(endAt, {
+    zone: "America/New_York",
+  }).toFormat("MMM d, h:mm a ZZZZ")
 
   return (
     <>
@@ -41,7 +27,7 @@ export const PartnerOfferTimerItem: React.FC<{
               width={14}
               height={17}
               fill="blue100"
-            />{" "}
+            />
             {remainingTime} left
           </Text>
           <ProgressBar percentComplete={percentComplete} highlight="blue100" />
