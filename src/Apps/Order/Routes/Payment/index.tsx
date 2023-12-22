@@ -498,8 +498,7 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
             <Flex flexDirection="column">
               {
                 order.source === "partner_offer" &&
-                order.state === "PENDING" &&
-                <PartnerOfferTimerItem startAt={order.stateUpdatedAt} endAt={order.stateExpiresAt} />
+                <PartnerOfferTimerItem order={order} />
               }
               <ArtworkSummaryItem order={order} />
               <TransactionDetailsSummaryItem
@@ -578,9 +577,6 @@ export const PaymentFragmentContainer = createFragmentContainer(
       fragment Payment_order on CommerceOrder {
         artworkDetails
         source
-        state
-        stateExpiresAt
-        stateUpdatedAt
         conditionsOfSale
         bankAccountId
         availablePaymentMethods
@@ -605,6 +601,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
         ...Payment_validation @relay(mask: false)
         ...CreditCardPicker_order
         ...BankAccountPicker_order
+        ...PartnerOfferTimerItem_order
         ...ArtworkSummaryItem_order
         ...AdditionalArtworkDetails_order
         ...TransactionDetailsSummaryItem_order
