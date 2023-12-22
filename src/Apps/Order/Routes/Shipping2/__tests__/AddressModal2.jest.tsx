@@ -3,7 +3,7 @@ import {
   AddressModalProps,
   GENERIC_FAIL_MESSAGE,
   AddressModalActionType,
-} from "Apps/Order/Routes/Shipping2/AddressModal2"
+} from "Apps/Order/Routes/Shipping2/Components/AddressModal2"
 import { validAddress } from "Components/__tests__/Utils/addressForm2"
 import { useSystemContext } from "System/useSystemContext"
 import { SavedAddressType } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
@@ -12,7 +12,7 @@ import { setupTestWrapper } from "DevTools/setupTestWrapper"
 import { graphql } from "react-relay"
 import { AddressModal2TestQuery } from "__generated__/AddressModal2TestQuery.graphql"
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
-import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/Utils/ShippingContext/ShippingContext"
+import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import { DeepPartial } from "Utils/typeSupport"
 
 /*
@@ -48,10 +48,10 @@ let testAddressModalProps: AddressModalProps
 let mockRelayEnv: ReturnType<typeof createMockEnvironment>
 
 let mockShippingcontext: DeepPartial<ShippingContextProps> = {
-  parsedOrderData: {
+  orderData: {
     shipsFrom: "US",
   },
-  helpers: {
+  actions: {
     setIsPerformingOperation: jest.fn(),
   },
 }

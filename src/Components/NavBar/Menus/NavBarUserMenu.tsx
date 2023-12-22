@@ -120,7 +120,7 @@ export const NavBarUserMenu: React.FC = () => {
         position={{ top: "3.5px", left: "9.5px" }}
       >
         <NavBarMenuItemLink
-          aria-label="View your saved alerts"
+          aria-label="View your alerts"
           to="/settings/alerts"
           onClick={trackClick}
         >

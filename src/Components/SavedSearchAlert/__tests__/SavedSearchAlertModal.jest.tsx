@@ -126,7 +126,7 @@ describe("SavedSearchAlertModal", () => {
     expect(screen.getAllByRole("checkbox")[1]).toBeChecked()
   })
 
-  it("saved alert button is disabled when no one notification option selected", () => {
+  it("save alert button is disabled when no one notification option selected", () => {
     render(
       <TestComponent initialValues={{ ...formInitialValues, email: false }} />
     )
@@ -135,7 +135,7 @@ describe("SavedSearchAlertModal", () => {
     expect(saveAlertButton).toBeDisabled()
   })
 
-  it("saved alert button is enabled when at least one notification option selected", () => {
+  it("save alert button is enabled when at least one notification option selected", () => {
     render(<TestComponent />)
 
     expect(screen.getByText("Save Alert")).toBeEnabled()

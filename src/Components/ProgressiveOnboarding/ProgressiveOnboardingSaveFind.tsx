@@ -1,16 +1,18 @@
 import { Text } from "@artsy/palette"
 import { Z } from "Apps/Components/constants"
 import {
-  PROGRESSIVE_ONBOARDING_SAVE_FIND,
-  PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT,
-  useProgressiveOnboarding,
-} from "Components/ProgressiveOnboarding/ProgressiveOnboardingContext"
-import {
   withProgressiveOnboardingCounts,
   WithProgressiveOnboardingCountsProps,
 } from "Components/ProgressiveOnboarding/withProgressiveOnboardingCounts"
 import { ProgressiveOnboardingPopover } from "Components/ProgressiveOnboarding/ProgressiveOnboardingPopover"
 import { FC } from "react"
+import { useDismissibleContext } from "@artsy/dismissible"
+import { PROGRESSIVE_ONBOARDING_ALERTS } from "Components/ProgressiveOnboarding/progressiveOnboardingAlerts"
+
+const ALERTS = {
+  saveFind: PROGRESSIVE_ONBOARDING_ALERTS.saveFind,
+  saveHighlight: PROGRESSIVE_ONBOARDING_ALERTS.saveHighlight,
+}
 
 interface ProgressiveOnboardingSaveFindProps
   extends WithProgressiveOnboardingCountsProps {}
@@ -19,19 +21,18 @@ export const __ProgressiveOnboardingSaveFind__: FC<ProgressiveOnboardingSaveFind
   children,
   counts,
 }) => {
-  const { dismiss, isDismissed } = useProgressiveOnboarding()
+  const { dismiss, isDismissed } = useDismissibleContext()
 
   const isDisplayable =
-    counts.savedArtworks === 1 &&
-    !isDismissed(PROGRESSIVE_ONBOARDING_SAVE_FIND).status
+    counts.savedArtworks === 1 && !isDismissed(ALERTS.saveFind).status
 
   const handleClose = () => {
-    dismiss(PROGRESSIVE_ONBOARDING_SAVE_FIND)
+    dismiss(ALERTS.saveFind)
   }
 
   const handleDismiss = () => {
     handleClose()
-    dismiss(PROGRESSIVE_ONBOARDING_SAVE_HIGHLIGHT)
+    dismiss(ALERTS.saveHighlight)
   }
 
   if (!isDisplayable) {
@@ -40,7 +41,7 @@ export const __ProgressiveOnboardingSaveFind__: FC<ProgressiveOnboardingSaveFind
 
   return (
     <ProgressiveOnboardingPopover
-      name={PROGRESSIVE_ONBOARDING_SAVE_FIND}
+      name={ALERTS.saveFind}
       placement="bottom-end"
       onClose={handleClose}
       onDismiss={handleDismiss}

@@ -9,12 +9,11 @@ export interface SubscriberBannerProps {
 }
 
 export const SubscriberBanner: React.FC<SubscriberBannerProps> = ({
-  partner: { hasFairPartnership, name },
+  partner: { name },
 }) => {
-  const fairPartner = `${name} participated in Artsy’s art fair coverage but does not have a full profile.`
-  const churnedPartner = `${name} is not currently an Artsy partner and does not have a full profile.`
+  const title = `${name} does not have a full profile.`
   return (
-    <Message mb={4} title={hasFairPartnership ? fairPartner : churnedPartner}>
+    <Message mb={4} title={title}>
       <Text display="inline">{`Are you a representative of ${name}?`}</Text>
       <RouterLink inline to="https://partners.artsy.net/gallery-partnerships/">
         <Text display="inline">
@@ -30,7 +29,6 @@ export const SubscriberBannerFragmentContainer = createFragmentContainer(
   {
     partner: graphql`
       fragment SubscriberBanner_partner on Partner {
-        hasFairPartnership
         name
       }
     `,
