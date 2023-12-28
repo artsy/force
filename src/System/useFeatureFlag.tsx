@@ -4,6 +4,7 @@ import { Variant } from "unleash-client"
 import { getENV } from "Utils/getENV"
 import { useRouter } from "./Router/useRouter"
 import { pathToOwnerType } from "System/Analytics/AnalyticsContext"
+import { useRef } from "react"
 
 export type FeatureFlags = Record<string, FeatureFlagDetails>
 
@@ -78,6 +79,7 @@ export function useTrackFeatureVariant({
   payload,
 }: VariantTrackingProperties) {
   const router = useRouter()
+  const experimentViewTracked = useRef<boolean>(false)
 
   const trackFeatureVariant = () => {
     // HACK: Temporary hack while we refactor useAnalyticsContext
@@ -90,9 +92,7 @@ export function useTrackFeatureVariant({
     const pageSlug = pageParts[2]
     const pageType = pathToOwnerType(path)
 
-    const trackFeatureView = shouldTrack(experimentName, variantName)
-
-    if (trackFeatureView && variantName !== "disabled") {
+    if (experimentViewTracked.current !== true && variantName !== "disabled") {
       // HACK: We are using window.analytics.track over trackEvent from useTracking because
       // the trackEvent wasn't behaving as expected, it was never firing the event and
       // moving to using the solution below fixed the issue.
@@ -104,45 +104,12 @@ export function useTrackFeatureVariant({
         context_owner_type: pageType,
         context_owner_slug: pageSlug,
       })
+
+      experimentViewTracked.current = true
     }
   }
 
   return { trackFeatureVariant }
-}
-
-export function shouldTrack(featureName: string, variantName: string): boolean {
-  // Value to set and read from the experimentsViewed key in localStorage.
-  const experimentName = `${featureName}:${variantName}`
-  const viewedExperiments = getExperimentsViewed()
-
-  if (viewedExperiments.includes(experimentName)) {
-    return false
-  }
-
-  viewedExperiments.push(experimentName)
-  setExperimentsViewed(viewedExperiments)
-
-  return true
-}
-
-function getExperimentsViewed(): string[] {
-  let experimentsViewed = window.localStorage.getItem("experimentsViewed")
-
-  return experimentsViewed === null ? [] : JSON.parse(experimentsViewed)
-}
-
-function setExperimentsViewed(experiments: string[]) {
-  try {
-    window.localStorage.setItem(
-      "experimentsViewed",
-      JSON.stringify(experiments)
-    )
-  } catch (error) {
-    console.error(
-      "[Force] Error: unable to set experimentsViewed on local storage: ",
-      error
-    )
-  }
 }
 
 const warnInDevelopment = (...args: Parameters<typeof console.warn>) => {
