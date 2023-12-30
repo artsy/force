@@ -92,7 +92,7 @@ export function useTrackFeatureVariant({
     const pageSlug = pageParts[2]
     const pageType = pathToOwnerType(path)
 
-    if (experimentViewTracked.current !== true && variantName !== "disabled") {
+    if (!experimentViewTracked.current && variantName !== "disabled") {
       // HACK: We are using window.analytics.track over trackEvent from useTracking because
       // the trackEvent wasn't behaving as expected, it was never firing the event and
       // moving to using the solution below fixed the issue.
