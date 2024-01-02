@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useCountdownTimer } from "Apps/Conversations/hooks/useCountdownTimer"
+import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 import StopwatchIcon from "@artsy/icons/StopwatchIcon"
 import { DateTime } from "luxon"
 import { Box, ProgressBar, Spacer, Text } from "@artsy/palette"
