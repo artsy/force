@@ -274,7 +274,7 @@ export const UntouchedOrder = {
   creditCard: null,
   currencyCode: "USD",
   displayState: "SUBMITTED",
-  stateExpiresAt: "",
+  stateExpiresAt: "Jan 15",
   stateUpdatedAt: "",
   id: "2939023",
   internalID: "2939023",
