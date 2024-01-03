@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<53efe87e5639e09738ee5c4135999460>>
+ * @generated SignedSource<<6f29d830bd5c90349c2f6483a6a758c0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -52,7 +52,7 @@ export type Payment_order$data = {
     readonly __typename: "%other";
   } | null | undefined;
   readonly source: CommerceOrderSourceEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "BankAccountPicker_order" | "CreditCardPicker_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "BankAccountPicker_order" | "CreditCardPicker_order" | "OrderStepper_order" | "PartnerOfferTimerItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Payment_order";
 };
 export type Payment_order$key = {
@@ -292,6 +292,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "PartnerOfferTimerItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "ArtworkSummaryItem_order"
     },
     {
@@ -315,6 +320,6 @@ return {
 };
 })();
 
-(node as any).hash = "591a8efd8831f1d5a68397e1d0c2c599";
+(node as any).hash = "2e5aad5a99aedb891ca6d27ab4328781";
 
 export default node;

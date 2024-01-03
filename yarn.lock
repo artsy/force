@@ -91,48 +91,30 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@36.2.2":
-  version "36.2.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-36.2.2.tgz#90fb95cc4ab17dff7a863bfe804e21f723bd861c"
-  integrity sha512-DIwi4rgEG0aZdksrq8dTf6RCBz2iCCuRDJcs124Usrf2nmfvLwTY7JT7m+XodZiXSuk8UBCF3KEbvz0N+HrQ5Q==
+"@artsy/palette-charts@36.3.0":
+  version "36.3.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-36.3.0.tgz#465ce8ade88a577705d91f42fcca930423887929"
+  integrity sha512-mhuVVvzkbm9ClR9XLYBiKcS84odCxSlqtHfoUnQF+gkmcCCLRqFRkALdM/rfyDDeCEqGteP3e0bDr3/mntnSgQ==
   dependencies:
-    "@artsy/palette" "^37.2.2"
+    "@artsy/palette" "^37.3.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
     d3-shape "^1.3.5"
     styled-system "^5.1.5"
 
-"@artsy/palette-tokens@^5.0.0":
-  version "5.0.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-5.0.0.tgz#d1e1917d8163d88e7a9f877cf06b609fa8c8178c"
-  integrity sha512-nloC0ubH5XDVNiplehwTtDLEgY0vjeE3l8QUYppEIHFCgadntXm6aVlmEC79inO7L3lDYN7JckYlIYRrTJg3vw==
+"@artsy/palette-tokens@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-5.1.0.tgz#df546dda1aec2dbf631a816b047301333459aa2a"
+  integrity sha512-dBx1hkjTBQ460L8DTMou+vXNOaD1DAApt6UYGTSMVSfXX0/AE8ZJpPx0U3y2t20wNBPzIoYpDBusJ3vRFKrZzQ==
 
-"@artsy/palette@37.2.3":
-  version "37.2.3"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-37.2.3.tgz#cc9c57c901430dfab8c09fc191ed7e998319285e"
-  integrity sha512-RBMPZS2MDh+ZgWVseEMLkXXd45h1S0gmmzSwzL+fWP337ftOuHmvqUht54nWIOKalhSELHQSaRhsvOuPpqPZlg==
+"@artsy/palette@37.3.0", "@artsy/palette@^37.3.0":
+  version "37.3.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-37.3.0.tgz#930df3d9697800c0aa8e7b01a47cfb56c84b9245"
+  integrity sha512-DZXE7ili3g73cOAG+XXDQZyWx+bBjOjWg5Bkt77+BhBdSems/jHBcJ8vGvvZ0l7heVcYvU7B8W11NNYBSCkhAw==
   dependencies:
     "@artsy/icons" "^3.2.2"
-    "@artsy/palette-tokens" "^5.0.0"
-    "@seznam/compose-react-refs" "^1.0.6"
-    "@styled-system/theme-get" "^5.1.2"
-    lodash "^4.17.21"
-    proportional-scale "^4.0.0"
-    react-focus-on "^3.7.0"
-    react-lazy-load-image-component "1.5.5"
-    styled-system "^5.1.5"
-    trunc-html "^1.1.2"
-    use-cursor "^1.2.3"
-    use-keyboard-list-navigation "2.4.2"
-
-"@artsy/palette@^37.2.2":
-  version "37.2.2"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-37.2.2.tgz#529fc66cd1a32701c7360e7c33add924ab9a01c9"
-  integrity sha512-Rd9JOyGcF9GqwY070m6n9s0RcbEclnv7j/7BC11v+ShqnMiIHabTXx0MzPpgyDexesNfrAGeK35zy8fBu+ezsw==
-  dependencies:
-    "@artsy/icons" "^3.2.2"
-    "@artsy/palette-tokens" "^5.0.0"
+    "@artsy/palette-tokens" "^5.1.0"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     lodash "^4.17.21"
