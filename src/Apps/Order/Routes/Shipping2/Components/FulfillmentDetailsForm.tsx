@@ -233,7 +233,7 @@ const FulfillmentDetailsFormLayout = (
           onChosenAddress={handleChooseAddressForVerification}
         />
       )}
-      {props.availableFulfillmentTypes.length > 1 && (
+      {props.availableFulfillmentTypes.includes(FulfillmentType.PICKUP) && (
         <>
           <RadioGroup
             data-testid="shipping-options"

@@ -1,4 +1,4 @@
-import React, { createContext, FC, useReducer, useRef } from "react"
+import React, { createContext, FC, useMemo, useReducer, useRef } from "react"
 import {
   ComputedOrderData,
   computeOrderData,
@@ -58,11 +58,14 @@ export const ShippingContextProvider: FC<Pick<
   ShippingProps,
   "order" | "me" | "dialog"
 >> = props => {
-  const meData = {
-    addressList: compact<SavedAddressType>(
-      extractNodes(props.me?.addressConnection) ?? []
-    ),
-  }
+  const meData = useMemo(
+    () => ({
+      addressList: compact<SavedAddressType>(
+        extractNodes(props.me?.addressConnection) ?? []
+      ),
+    }),
+    [props.me.addressConnection]
+  )
   const orderData = computeOrderData(props.order, meData)
 
   const isArtsyShipping = !!orderData.savedFulfillmentDetails?.isArtsyShipping

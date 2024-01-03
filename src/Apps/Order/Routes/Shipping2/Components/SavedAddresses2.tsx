@@ -61,6 +61,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     handleSelectAddress(addressWithFallbackValues(address))
   }
 
+  const serializedValues = JSON.stringify(formikContext.values)
   const handleSelectAddress = useCallback(
     async (address: FulfillmentValues["attributes"]) => {
       await formikContext.setValues({
@@ -74,7 +75,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
       await formikContext.submitForm()
     },
-    [formikContext]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [formikContext.setValues, formikContext.submitForm, serializedValues]
   )
 
   const handleClickEditAddress = async (address: SavedAddressType) => {
@@ -93,14 +95,12 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   /* Effects */
 
   // Automatically select best available address ID if it isn't present
-  useEffect(() => {
-    const selectedAddress =
-      savedToOrderAddressID &&
-      getAddressByID(addressList, savedToOrderAddressID)
-    const selectedAddressPresent = !!selectedAddress
+  const selectedAddress =
+    savedToOrderAddressID && getAddressByID(addressList, savedToOrderAddressID)
 
-    if (props.active && !selectedAddressPresent && addressList.length > 0) {
-      //  autoselect address")
+  useEffect(() => {
+    if (props.active && !selectedAddress && addressList.length > 0) {
+      console.log("Auto-select best address")
 
       const bestAddress = getBestAvailableAddress(
         addressList,
@@ -117,6 +117,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
     shippingContext.orderData.availableShippingCountries,
     handleSelectAddress,
     props.active,
+    selectedAddress,
   ])
 
   // Automatically select the address (saving via onSelect prop)
@@ -127,8 +128,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       savedToOrderAddressID &&
       savedToOrderAddressID !== previousSelectedAddressID
     ) {
-      //  autoselect newly saved")
-
+      console.log("Auto-save address")
       const selectedAddress = getAddressByID(addressList, savedToOrderAddressID)
       if (!selectedAddress) {
         logger.warn("Address not found, can't submit: ", savedToOrderAddressID)

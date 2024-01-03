@@ -1052,10 +1052,9 @@ describe.skip("Shipping", () => {
       })
     })
 
-    // TODO: Reproducing saved address behavior ticketed in EMI-1520 https://artsyproduct.atlassian.net/browse/EMI-1520
     // e.g.: Should valid saved address be automatically saved to show shipping quotes?
-    describe.skip("with saved addresses", () => {
-      it.only("does not show the new address form", async () => {
+    describe("with saved addresses", () => {
+      it("does not show the new address form", async () => {
         renderWithRelay(
           {
             CommerceOrder: () => order,
@@ -2523,7 +2522,7 @@ describe.skip("Shipping", () => {
   })
 
   describe("with pickup", () => {
-    it.skip("shows an empty phone number input with saved addresses", async () => {
+    it("shows an empty phone number input with saved addresses", async () => {
       renderWithRelay({
         CommerceOrder: () => order,
         Me: () => meWithAddresses,
