@@ -70,7 +70,6 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
     order,
     me,
     router,
-    route,
     dialog,
     commitMutation,
     isCommittingMutation,
@@ -272,7 +271,7 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
           title: "Not available",
           message: "Sorry, the work is no longer available.",
         })
-        routeToArtistPage()
+        routeToArtworkPage()
         break
       }
       default: {
@@ -286,19 +285,12 @@ export const NewPaymentRoute: FC<NewPaymentProps & StripeProps> = props => {
     }
   }
 
-  const getArtistId = () => {
-    return get(
+  const routeToArtworkPage = () => {
+    const artworkId = get(
       order,
-      o => o.lineItems?.edges?.[0]?.node?.artwork?.artists?.[0]?.slug
+      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
     )
-  }
-
-  const routeToArtistPage = () => {
-    const artistId = getArtistId()
-
-    // Don't confirm whether or not you want to leave the page
-    route.onTransition = () => null
-    window.location.assign(`/artist/${artistId}`)
+    router.push(`/artwork/${artworkId}`)
   }
 
   return (
