@@ -496,10 +496,12 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
-              {
-                order.source === "partner_offer" &&
-                <PartnerOfferTimerItem order={order} />
-              }
+              {order.source === "partner_offer" && (
+                <>
+                  <PartnerOfferTimerItem order={order} />
+                  <Spacer y={2} />
+                </>
+              )}
               <ArtworkSummaryItem order={order} />
               <TransactionDetailsSummaryItem
                 transactionStep="payment"

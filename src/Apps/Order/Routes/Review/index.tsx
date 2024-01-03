@@ -596,7 +596,10 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           <Flex flexDirection="column">
             <Flex flexDirection="column">
               {order.source === "partner_offer" && (
-                <PartnerOfferTimerItem order={order} />
+                <>
+                  <PartnerOfferTimerItem order={order} />
+                  <Spacer y={2} />
+                </>
               )}
               <ArtworkSummaryItem order={order} />
               <TransactionDetailsSummaryItem
