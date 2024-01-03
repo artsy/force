@@ -226,7 +226,7 @@ describe("Review", () => {
         message:
           "Something about the work changed since you started checkout. Please review the work before submitting your order.",
       })
-      expect(window.location.assign).toBeCalledWith("/artwork/artworkId")
+      expect(pushMock).toBeCalledWith("/artwork/artworkId")
     })
 
     it("shows a modal with a helpful error message if a user has not entered shipping and payment information", async () => {
@@ -309,7 +309,8 @@ describe("Review", () => {
         title: "Not available",
         message: "Sorry, the work is no longer available.",
       })
-      expect(window.location.assign).toBeCalledWith("/artist/artistId")
+
+      expect(pushMock).toHaveBeenCalledWith(`/artwork/artworkId`)
     })
 
     it("shows a modal when the seller's Stripe Connect account is inactive", async () => {
@@ -470,7 +471,8 @@ describe("Review", () => {
         message:
           "Something about the work changed since you started checkout. Please review the work before submitting your order.",
       })
-      expect(window.location.assign).toBeCalledWith("/artwork/artworkId")
+
+      expect(pushMock).toBeCalledWith("/artwork/artworkId")
     })
 
     it("shows a modal if there is a payment_method_confirmation_failed", async () => {
