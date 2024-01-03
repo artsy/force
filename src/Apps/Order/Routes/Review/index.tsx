@@ -2,6 +2,7 @@ import { Box, Button, Flex, Join, Spacer } from "@artsy/palette"
 import { Review_order$data } from "__generated__/Review_order.graphql"
 import { ReviewSubmitOfferOrderWithConversationMutation } from "__generated__/ReviewSubmitOfferOrderWithConversationMutation.graphql"
 import { ReviewSubmitOrderMutation } from "__generated__/ReviewSubmitOrderMutation.graphql"
+import { PartnerOfferTimerItem } from "Apps/Order/Components/PartnerOfferTimerItem"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { ItemReviewFragmentContainer as ItemReview } from "Apps/Order/Components/ItemReview"
@@ -180,7 +181,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                 JSON.stringify({
                   key: "goToInboxOnMakeOfferSubmission",
                   orderCode: order.code,
-                  message: `The seller will respond to your offer by ${order.stateExpiresAt}. Keep in mind making an offer doesn’t guarantee you the work.`,
+                  message: `The seller will respond to your offer by ${order.stateExpiresAtFormatted}. Keep in mind making an offer doesn’t guarantee you the work.`,
                 })
               )
               // We cannot expect Eigen to respond all the time to messages sent from the webview
@@ -594,6 +595,12 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
+              {order.source === "partner_offer" && (
+                <>
+                  <PartnerOfferTimerItem order={order} />
+                  <Spacer y={2} />
+                </>
+              )}
               <ArtworkSummaryItem order={order} />
               <TransactionDetailsSummaryItem
                 order={order}
@@ -644,7 +651,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
         conditionsOfSale
         itemsTotal(precision: 2)
         impulseConversationId
-        stateExpiresAt(format: "MMM D")
+        stateExpiresAtFormatted: stateExpiresAt(format: "MMM D")
         lineItems {
           edges {
             node {
@@ -669,6 +676,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
             internalID
           }
         }
+        ...PartnerOfferTimerItem_order
         ...ArtworkSummaryItem_order
         ...AdditionalArtworkDetails_order
         ...TransactionDetailsSummaryItem_order

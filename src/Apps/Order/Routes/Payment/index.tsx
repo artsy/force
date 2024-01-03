@@ -27,6 +27,7 @@ import { useSetPayment } from "Apps/Order/Mutations/useSetPayment"
 import { useOrderPaymentContext } from "./PaymentContext/OrderPaymentContext"
 
 // components
+import { PartnerOfferTimerItem } from "Apps/Order/Components/PartnerOfferTimerItem"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { AdditionalArtworkDetailsFragmentContainer as AdditionalArtworkDetails } from "Apps/Order/Components/AdditionalArtworkDetails"
 import {
@@ -495,6 +496,12 @@ export const PaymentRoute: FC<PaymentRouteProps> = props => {
         sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
+              {order.source === "partner_offer" && (
+                <>
+                  <PartnerOfferTimerItem order={order} />
+                  <Spacer y={2} />
+                </>
+              )}
               <ArtworkSummaryItem order={order} />
               <TransactionDetailsSummaryItem
                 transactionStep="payment"
@@ -596,6 +603,7 @@ export const PaymentFragmentContainer = createFragmentContainer(
         ...Payment_validation @relay(mask: false)
         ...CreditCardPicker_order
         ...BankAccountPicker_order
+        ...PartnerOfferTimerItem_order
         ...ArtworkSummaryItem_order
         ...AdditionalArtworkDetails_order
         ...TransactionDetailsSummaryItem_order

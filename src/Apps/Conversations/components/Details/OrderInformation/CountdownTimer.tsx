@@ -1,5 +1,5 @@
 import { ProgressBar, Text } from "@artsy/palette"
-import { useCountdownTimer } from "Apps/Conversations/hooks/useCountdownTimer"
+import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 
 interface CountdownTimerProps {
   stateExpiresAt: string

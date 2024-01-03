@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<c5650ba371f45c7aca241bf6abfba303>>
+ * @generated SignedSource<<24a6ee24fd5f36f74094df35c2b49d50>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,6 +10,7 @@
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
 export type CommerceOrderModeEnum = "BUY" | "OFFER" | "%future added value";
+export type CommerceOrderSourceEnum = "artwork_page" | "inquiry" | "partner_offer" | "private_sale" | "%future added value";
 export type CommerceOrderStateEnum = "ABANDONED" | "APPROVED" | "CANCELED" | "FULFILLED" | "IN_REVIEW" | "PENDING" | "PROCESSING_APPROVAL" | "REFUNDED" | "SUBMITTED" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type Shipping_order$data = {
@@ -67,8 +68,9 @@ export type Shipping_order$data = {
     // value in case none of the concrete values match.
     readonly __typename: "%other";
   } | null | undefined;
+  readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
-  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order" | "TransactionDetailsSummaryItem_order">;
+  readonly " $fragmentSpreads": FragmentRefs<"ArtworkSummaryItem_order" | "OrderStepper_order" | "PartnerOfferTimerItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Shipping_order";
 };
 export type Shipping_order$key = {
@@ -161,6 +163,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "state",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "source",
       "storageKey": null
     },
     {
@@ -349,6 +358,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "PartnerOfferTimerItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "ArtworkSummaryItem_order"
     },
     {
@@ -367,6 +381,6 @@ return {
 };
 })();
 
-(node as any).hash = "3720bc2915f2de540a7e198c5122956d";
+(node as any).hash = "be65a788c0766823a09bf75b37e2c742";
 
 export default node;
