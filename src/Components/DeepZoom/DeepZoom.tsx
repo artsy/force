@@ -37,8 +37,10 @@ const DeepZoom: React.FC<DeepZoomProps> = ({ image, onClose }) => {
     }))
   }
 
+  const isMounted = useDidMount()
+
   useEffect(() => {
-    if (!deepZoomRef.current) return
+    if (!isMounted || !deepZoomRef.current) return
 
     import(/* webpackChunkName: "openseadragon" */ "openseadragon").then(
       OpenSeaDragon => {
@@ -92,7 +94,7 @@ const DeepZoom: React.FC<DeepZoomProps> = ({ image, onClose }) => {
       osdViewerRef.current.destroy()
       osdViewerRef.current = null
     }
-  }, [image.deepZoom])
+  }, [image.deepZoom, isMounted])
 
   const zoomBy = (amount: number) => {
     if (!osdViewerRef.current) return
@@ -127,8 +129,6 @@ const DeepZoom: React.FC<DeepZoomProps> = ({ image, onClose }) => {
 
   const { detectActivityProps, isActive } = useDetectActivity()
 
-  const isMounted = useDidMount()
-
   return (
     <ModalBase onClose={onClose} {...detectActivityProps}>
       <Box
@@ -140,6 +140,7 @@ const DeepZoom: React.FC<DeepZoomProps> = ({ image, onClose }) => {
       />
 
       <DeepZoomCloseButton
+        aria-label="Close"
         position="absolute"
         top={0}
         right={0}
@@ -158,6 +159,7 @@ const DeepZoom: React.FC<DeepZoomProps> = ({ image, onClose }) => {
         }}
       >
         <DeepZoomSlider
+          aria-label="Zoom level"
           onChange={handleSliderChanged}
           onZoomInClicked={handleZoomInClicked}
           onZoomOutClicked={handleZoomOutClicked}

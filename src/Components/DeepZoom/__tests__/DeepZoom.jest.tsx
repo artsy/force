@@ -1,16 +1,23 @@
 import { graphql } from "react-relay"
-import { setupTestWrapper } from "DevTools/setupTestWrapper"
+import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
 import { DeepZoomFragmentContainer } from "Components/DeepZoom/DeepZoom"
 import { DeepZoom_Test_Query } from "__generated__/DeepZoom_Test_Query.graphql"
+import { screen } from "@testing-library/react"
 
 jest.unmock("react-relay")
 
+jest.mock("@artsy/palette", () => {
+  return {
+    ...jest.requireActual("@artsy/palette"),
+    ModalBase: ({ children }) => children,
+  }
+})
+
 const handleClose = jest.fn()
 
-const { getWrapper } = setupTestWrapper<DeepZoom_Test_Query>({
+const { renderWithRelay } = setupTestWrapperTL<DeepZoom_Test_Query>({
   Component: ({ artwork }) => {
     const image = artwork!.images![0]!
-
     return <DeepZoomFragmentContainer image={image} onClose={handleClose} />
   },
   query: graphql`
@@ -30,19 +37,18 @@ describe("DeepZoom", () => {
   })
 
   it("renders correctly", () => {
-    const { wrapper } = getWrapper()
+    renderWithRelay()
 
-    expect(wrapper.html()).toContain(
-      'input min="0" max="1" step="0.001" type="range"'
-    )
+    expect(screen.getByLabelText("Zoom level")).toBeInTheDocument()
   })
 
   it("calls onClose when the close button is clicked", () => {
-    const { wrapper } = getWrapper()
+    renderWithRelay()
 
     expect(handleClose).not.toBeCalled()
 
-    wrapper.find("button").first().simulate("click")
+    const button = screen.getByLabelText("Close")
+    button.click()
 
     expect(handleClose).toBeCalledTimes(1)
   })
