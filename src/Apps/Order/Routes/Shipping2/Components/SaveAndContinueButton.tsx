@@ -3,6 +3,7 @@ import { useSaveSelectedShippingQuote } from "Apps/Order/Routes/Shipping2/Hooks/
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { useRouter } from "System/Router/useRouter"
 import { SaveAndContinueButton_order$key } from "__generated__/SaveAndContinueButton_order.graphql"
+import { useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface SaveAndContinueButtonProps {
@@ -39,7 +40,6 @@ export const SaveAndContinueButton: React.FC<SaveAndContinueButtonProps> = ({
     disableSubmit = !shippingContext.state.selectedShippingQuoteId
   }
 
-  console.log("shippingContext.state.stage", shippingContext.state.stage)
   const onContinueButtonPressed = async () => {
     //  save and continue - stage", shippingContext.state.stage)
     if (shippingContext.state.stage === "fulfillment_details") {

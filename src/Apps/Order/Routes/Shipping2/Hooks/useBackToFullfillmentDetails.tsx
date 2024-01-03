@@ -24,7 +24,10 @@ export const useBackToFullfillmentDetails = () => {
     if (shippingContext.state.stage !== "shipping_quotes") {
       return
     }
+
+    // TODO: Still a bug here
     if (formValuesDisagreeWithOrderAddress) {
+      console.log("going back to fulfillment details")
       shippingContext.actions.setStage("fulfillment_details")
     }
   }, [

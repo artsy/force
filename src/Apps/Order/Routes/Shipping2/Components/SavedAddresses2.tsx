@@ -116,10 +116,9 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
   ])
 
   // Automatically select best available address ID if it isn't present
+  // Note: Does not account for whether the address is valid for the selected country
   useEffect(() => {
     if (props.active && !locallySelectedAddress && addressList.length > 0) {
-      console.log("Auto-select best address")
-
       const bestAddress = getBestAvailableAddress(
         addressList,
         savedToOrderAddressID,
@@ -144,13 +143,21 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         data-testid="saved-addresses"
         disabled={!props.active}
         onSelect={handleClickAddress}
+        defaultValue={locallySelectedAddress?.internalID}
       >
         {addressList.map((address, index) => {
           return (
             <BorderedRadio
               value={address.internalID}
+              selected={
+                address.internalID === locallySelectedAddress?.internalID
+              }
               tabIndex={props.active ? 0 : -1}
-              // disabled={!availableShippingCountries.includes(address.country)}
+              disabled={
+                !shippingContext.orderData.availableShippingCountries.includes(
+                  address.country
+                )
+              }
               key={index}
               position="relative"
               data-testid="savedAddress"

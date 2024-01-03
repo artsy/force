@@ -195,7 +195,6 @@ const FulfillmentDetailsFormLayout = (
   useEffect(() => {
     const resetAttributes = async () => {
       if (values.fulfillmentType === FulfillmentType.PICKUP) {
-        console.log("*** changed to pickup, resetting")
         await setValues({
           ...values,
           attributes: {
@@ -212,7 +211,6 @@ const FulfillmentDetailsFormLayout = (
       }
 
       if (values.fulfillmentType === FulfillmentType.SHIP) {
-        console.log("*** changed to ship, resetting form")
         // reset to initial values
         formikContext.resetForm()
         shippingContext.actions.setAddressModalAction(null)
