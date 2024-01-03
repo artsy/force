@@ -91,7 +91,7 @@ const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
   useSelectFirstShippingQuote()
 
   return (
-    <Box data-test="orderShipping">
+    <Box data-testid="orderShipping">
       <OrderRouteContainer
         order={order}
         currentStep="Shipping"

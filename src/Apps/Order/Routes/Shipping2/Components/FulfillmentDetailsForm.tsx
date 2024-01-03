@@ -20,6 +20,7 @@ import {
   FulfillmentType,
   FulfillmentValues,
   ShipValues,
+  addressWithFallbackValues,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import { CountrySelect } from "Components/CountrySelect"
 import { RouterLink } from "System/Router/RouterLink"
@@ -31,7 +32,7 @@ import {
   Formik,
 } from "formik"
 import { pick } from "lodash"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { ADDRESS_VALIDATION_SHAPE } from "Apps/Order/Utils/shippingUtils"
 import { Collapse } from "Apps/Order/Components/Collapse"
 import { FulfillmentDetailsForm_me$data } from "__generated__/FulfillmentDetailsForm_me.graphql"
@@ -143,6 +144,25 @@ const FulfillmentDetailsFormLayout = (
     await setFieldValue("meta.addressVerifiedBy", AddressVerifiedBy.USER)
     await props.onAddressVerificationComplete()
   }
+
+  const serializedValues = JSON.stringify(formikContext.values)
+
+  const handleSelectSavedAddress = useCallback(
+    async (address: FulfillmentValues["attributes"]) => {
+      await formikContext.setValues({
+        ...formikContext.values,
+        attributes: addressWithFallbackValues(address),
+        meta: {
+          ...formikContext.values.meta,
+          addressVerifiedBy: null,
+        },
+      })
+
+      await formikContext.submitForm()
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [formikContext.setValues, formikContext.submitForm, serializedValues]
+  )
 
   const handleChooseAddressForVerification = async (
     verifiedBy,
@@ -280,6 +300,7 @@ const FulfillmentDetailsFormLayout = (
             <SavedAddressesFragmentContainer
               active={addressFormMode === "saved_addresses"}
               me={props.me}
+              onSelect={handleSelectSavedAddress}
             />
           </Collapse>
           {/* NEW ADDRESS */}
@@ -579,7 +600,7 @@ const ArtaMissingShippingQuoteMessage = () => {
       mb={2}
       bg="red10"
       color="red100"
-      data-test="artaErrorMessage"
+      data-testid="artaErrorMessage"
     >
       In order to provide a shipping quote, we need some more information from
       you. Please contact{" "}

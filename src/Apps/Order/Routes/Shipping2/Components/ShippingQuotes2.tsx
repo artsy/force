@@ -69,7 +69,7 @@ export const ShippingQuotes2: React.FC<ShippingQuotesProps> = ({
 
         return (
           <BorderedRadio
-            data-test="shipping-quotes"
+            data-testid="shipping-quotes"
             value={shippingQuote?.id}
             key={shippingQuote?.id}
             position="relative"
@@ -83,7 +83,7 @@ export const ShippingQuotes2: React.FC<ShippingQuotesProps> = ({
                   <Text textColor="black60">{description}</Text>
                 </Column>
                 <Column span={2} textAlign={"right"}>
-                  <Text textTransform="capitalize" data-test="quotePrice">
+                  <Text textTransform="capitalize" data-testid="quotePrice">
                     {shippingQuote?.price}
                   </Text>
                 </Column>

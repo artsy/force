@@ -1055,13 +1055,18 @@ describe.skip("Shipping", () => {
     // e.g.: Should valid saved address be automatically saved to show shipping quotes?
     describe("with saved addresses", () => {
       it("does not show the new address form", async () => {
-        renderWithRelay(
+        const { mockResolveLastOperation } = renderWithRelay(
           {
             CommerceOrder: () => order,
             Me: () => meWithAddresses,
           },
           undefined,
           relayEnv
+        )
+
+        await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderShipmentSuccess.commerceSetShipping
         )
 
         // TODO: need a better way to check if the form is collapsed (height 0).
@@ -1077,10 +1082,19 @@ describe.skip("Shipping", () => {
       })
 
       it("lists the addresses and renders the add address option", async () => {
-        renderWithRelay({
-          CommerceOrder: () => order,
-          Me: () => meWithAddresses,
-        })
+        const { mockResolveLastOperation } = renderWithRelay(
+          {
+            CommerceOrder: () => order,
+            Me: () => meWithAddresses,
+          },
+          undefined,
+          relayEnv
+        )
+
+        await resolveSaveFulfillmentDetails(
+          mockResolveLastOperation,
+          settingOrderShipmentSuccess.commerceSetShipping
+        )
 
         expect(
           screen.getByRole("radio", { name: /401 Broadway/ })
@@ -1237,19 +1251,27 @@ describe.skip("Shipping", () => {
             settingOrderShipmentSuccess.commerceSetShipping
           )
 
-          const selectedAddress = screen.getByRole("radio", {
-            name: /401 Broadway/,
-            checked: true,
-          })
+          const selectedAddress = screen.getAllByTestId("savedAddress")[1]
+          expect(selectedAddress).toHaveTextContent("401 Broadway")
+
           await userEvent.click(within(selectedAddress).getByText("Edit"))
 
           await waitFor(async () => {
+            const addressModal = screen.getByTestId("AddressModal")
             expect(screen.getByText("Edit address")).toBeVisible()
-            expect(screen.getAllByDisplayValue("401 Broadway")).toHaveLength(2)
-            expect(screen.getAllByDisplayValue("Floor 25")).toHaveLength(2)
-            expect(screen.getAllByDisplayValue("New York")).toHaveLength(2)
-            expect(screen.getAllByDisplayValue("NY")).toHaveLength(2)
-            expect(screen.getAllByDisplayValue("10013")).toHaveLength(2)
+            expect(
+              within(addressModal).getByDisplayValue("401 Broadway")
+            ).toBeVisible()
+            expect(
+              within(addressModal).getByDisplayValue("Floor 25")
+            ).toBeVisible()
+            expect(
+              within(addressModal).getByDisplayValue("New York")
+            ).toBeVisible()
+            expect(within(addressModal).getByDisplayValue("NY")).toBeVisible()
+            expect(
+              within(addressModal).getByDisplayValue("10013")
+            ).toBeVisible()
           })
         })
 
@@ -1269,21 +1291,23 @@ describe.skip("Shipping", () => {
             settingOrderShipmentSuccess.commerceSetShipping
           )
 
-          const selectedAddress = screen.getByRole("radio", {
-            name: /401 Broadway/,
-            checked: true,
-          })
+          const selectedAddress = screen.getAllByTestId("savedAddress")[1]
+          expect(selectedAddress).toHaveTextContent("401 Broadway")
+
           await userEvent.click(within(selectedAddress).getByText("Edit"))
 
-          const modalTitle = screen.getByText("Edit address")
+          const modalTitle = await screen.findByText("Edit address")
           expect(modalTitle).toBeVisible()
 
           // TODO: need a better way to get a specific input field from multiple forms
-          const addressLine2 = screen.getAllByPlaceholderText(
-            /Apt, floor, suite/
-          )[0]
-          userEvent.clear(addressLine2)
-          userEvent.paste(addressLine2, "25th fl.")
+          await waitFor(async () => {
+            const addressModal = screen.getByTestId("AddressModal")
+            const addressLine2 = within(addressModal).getByPlaceholderText(
+              /Apt, floor, suite/
+            )
+            await userEvent.clear(addressLine2)
+            await userEvent.paste(addressLine2, "25th fl.")
+          })
 
           userEvent.click(screen.getByRole("button", { name: "Save" }))
 

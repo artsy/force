@@ -118,9 +118,9 @@ describe.skip("AddressModal", () => {
     expect(wrapper.find("input").length).toBe(7)
     expect(wrapper.find("select").length).toBe(1)
 
-    expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(1)
-    expect(wrapper.find("Clickable[data-test='deleteButton']").length).toBe(1)
-    expect(wrapper.find("Button[data-test='saveButton']").length).toBe(1)
+    expect(wrapper.find("Checkbox[data-testid='setAsDefault']").length).toBe(1)
+    expect(wrapper.find("Clickable[data-testid='deleteButton']").length).toBe(1)
+    expect(wrapper.find("Button[data-testid='saveButton']").length).toBe(1)
   })
 
   it("renders EditModal without checkbox when address is default", () => {
@@ -137,7 +137,7 @@ describe.skip("AddressModal", () => {
       },
     })
     expect(wrapper.text()).toContain("Edit address")
-    expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(0)
+    expect(wrapper.find("Checkbox[data-testid='setAsDefault']").length).toBe(0)
   })
 
   it("renders AddModal with the title, input fields, checkbox and button", () => {
@@ -153,17 +153,19 @@ describe.skip("AddressModal", () => {
     expect(wrapper.find("input").length).toBe(7)
     expect(wrapper.find("select").length).toBe(1)
 
-    expect(wrapper.find("Checkbox[data-test='setAsDefault']").length).toBe(1)
-    expect(wrapper.find("Clickable[data-test='deleteButton']").length).toBe(0)
-    expect(wrapper.find("Button[data-test='saveButton']").length).toBe(1)
+    expect(wrapper.find("Checkbox[data-testid='setAsDefault']").length).toBe(1)
+    expect(wrapper.find("Clickable[data-testid='deleteButton']").length).toBe(0)
+    expect(wrapper.find("Button[data-testid='saveButton']").length).toBe(1)
   })
 
   it("clicking the delete button spawns a correct dialog", async () => {
     const { wrapper } = getWrapper()
-    const deleteButton = wrapper.find("Clickable[data-test='deleteButton']")
+    const deleteButton = wrapper.find("Clickable[data-testid='deleteButton']")
     deleteButton.simulate("click")
     await wrapper.update()
-    const dialog = wrapper.find("ModalDialog[data-test='deleteAddressDialog']")
+    const dialog = wrapper.find(
+      "ModalDialog[data-testid='deleteAddressDialog']"
+    )
 
     expect(dialog).toHaveLength(1)
     expect(dialog.text()).toContain("Delete address?")
@@ -179,9 +181,11 @@ describe.skip("AddressModal", () => {
   it("when the dialog is confirmed, the delete action happens", async () => {
     const { mockResolveLastOperation, wrapper } = getWrapper()
 
-    const deleteButton = wrapper.find("Clickable[data-test='deleteButton']")
+    const deleteButton = wrapper.find("Clickable[data-testid='deleteButton']")
     deleteButton.simulate("click")
-    const dialog = wrapper.find("ModalDialog[data-test='deleteAddressDialog']")
+    const dialog = wrapper.find(
+      "ModalDialog[data-testid='deleteAddressDialog']"
+    )
     const dialogDelete = dialog.find("Button").at(1)
     dialogDelete.simulate("click")
 

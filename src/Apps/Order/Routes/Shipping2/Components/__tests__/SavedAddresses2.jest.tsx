@@ -31,7 +31,7 @@ jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => {
 
 class SavedAddressesTestPage extends RootTestPage {
   async selectEdit() {
-    this.find(`[data-test="editAddressInShipping"]`)
+    this.find(`[data-testid="editAddressInShipping"]`)
       .first()
       .simulate("click", { preventDefault: () => {} })
     await this.update()
@@ -89,7 +89,7 @@ describe("Saved Addresses", () => {
         },
         { active: true }
       )
-      const button = wrapper.find("[data-test='shippingButton']").first()
+      const button = wrapper.find("[data-testid='shippingButton']").first()
       expect(wrapper.find(AddressModal).props().modalAction).toBeNull()
       button.simulate("click")
       await wrapper.update()
@@ -128,9 +128,9 @@ describe("Saved Addresses", () => {
           addressConnection: mockAddressConnection,
         }),
       })
-      expect(wrapper.find("[data-test='shippingButton']").first()).toHaveLength(
-        1
-      )
+      expect(
+        wrapper.find("[data-testid='shippingButton']").first()
+      ).toHaveLength(1)
     })
 
     describe("when clicking on the add address button", () => {
@@ -142,7 +142,7 @@ describe("Saved Addresses", () => {
         })
 
         await wrapper.update()
-        wrapper.find("[data-test='shippingButton']").first().simulate("click")
+        wrapper.find("[data-testid='shippingButton']").first().simulate("click")
 
         expect(trackEvent).toHaveBeenCalledWith({
           action: "clickedAddNewShippingAddress",

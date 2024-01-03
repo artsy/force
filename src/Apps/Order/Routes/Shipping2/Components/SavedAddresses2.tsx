@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useCallback, useEffect } from "react"
+import { useCallback, useEffect, useState } from "react"
 import styled from "styled-components"
 import {
   RadioGroup,
@@ -27,12 +27,11 @@ import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippin
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { useFormikContext } from "formik"
 
-export const NEW_ADDRESS = "NEW_ADDRESS"
-
 export interface SavedAddressesProps {
   relay: RelayRefetchProp
   me: SavedAddresses2_me$data
   active: boolean
+  onSelect: (address: FulfillmentValues["attributes"]) => void
 }
 
 const SavedAddresses: React.FC<SavedAddressesProps> = props => {
@@ -44,9 +43,10 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
   const addressList = shippingContext.meData.addressList
 
-  const savedToOrderAddressID =
-    shippingContext.orderData.savedFulfillmentDetails?.selectedSavedAddressID ??
-    undefined
+  const [
+    locallySelectedAddress,
+    setLocallySelectedAddress,
+  ] = useState<SavedAddressType | null>(null)
 
   /* Select an address radio button; set values on formik context
    * and submit form.
@@ -58,26 +58,8 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
       logger.error("Address not found: ", id)
       return
     }
-    handleSelectAddress(addressWithFallbackValues(address))
+    setLocallySelectedAddress(address)
   }
-
-  const serializedValues = JSON.stringify(formikContext.values)
-  const handleSelectAddress = useCallback(
-    async (address: FulfillmentValues["attributes"]) => {
-      await formikContext.setValues({
-        ...formikContext.values,
-        attributes: addressWithFallbackValues(address),
-        meta: {
-          ...formikContext.values.meta,
-          addressVerifiedBy: null,
-        },
-      })
-
-      await formikContext.submitForm()
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [formikContext.setValues, formikContext.submitForm, serializedValues]
-  )
 
   const handleClickEditAddress = async (address: SavedAddressType) => {
     const userAddressAction: AddressModalAction = {
@@ -94,12 +76,48 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
 
   /* Effects */
 
-  // Automatically select best available address ID if it isn't present
-  const selectedAddress =
-    savedToOrderAddressID && getAddressByID(addressList, savedToOrderAddressID)
+  const previousLocallySelectedAddressID = usePrevious(locallySelectedAddress)
+    ?.internalID
 
+  // Save address via prop when it changes locally
   useEffect(() => {
-    if (props.active && !selectedAddress && addressList.length > 0) {
+    if (
+      locallySelectedAddress &&
+      locallySelectedAddress?.internalID !== previousLocallySelectedAddressID
+    ) {
+      props.onSelect(addressWithFallbackValues(locallySelectedAddress))
+    }
+  })
+
+  const savedToOrderAddressID =
+    shippingContext.orderData.savedFulfillmentDetails?.selectedSavedAddressID
+  const previousSavedToOrderAddressID = usePrevious(savedToOrderAddressID)
+
+  // Automatically update selected address when it changes in order
+  useEffect(() => {
+    if (
+      props.active &&
+      savedToOrderAddressID &&
+      savedToOrderAddressID !== previousSavedToOrderAddressID &&
+      savedToOrderAddressID !== locallySelectedAddress?.internalID
+    ) {
+      const address = getAddressByID(addressList, savedToOrderAddressID)
+      if (address) {
+        setLocallySelectedAddress(address)
+      }
+    }
+  }, [
+    savedToOrderAddressID,
+    previousSavedToOrderAddressID,
+    addressList,
+    setLocallySelectedAddress,
+    props.active,
+    locallySelectedAddress,
+  ])
+
+  // Automatically select best available address ID if it isn't present
+  useEffect(() => {
+    if (props.active && !locallySelectedAddress && addressList.length > 0) {
       console.log("Auto-select best address")
 
       const bestAddress = getBestAvailableAddress(
@@ -107,49 +125,25 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         savedToOrderAddressID,
         shippingContext.orderData.availableShippingCountries
       )
+
       if (bestAddress) {
-        handleSelectAddress(addressWithFallbackValues(bestAddress))
+        setLocallySelectedAddress(bestAddress)
       }
     }
   }, [
     addressList,
     savedToOrderAddressID,
     shippingContext.orderData.availableShippingCountries,
-    handleSelectAddress,
     props.active,
-    selectedAddress,
-  ])
-
-  // Automatically select the address (saving via onSelect prop)
-  // when the selectedAddressID changes (and on load, using the default address)
-  const previousSelectedAddressID = usePrevious(savedToOrderAddressID)
-  useEffect(() => {
-    if (
-      savedToOrderAddressID &&
-      savedToOrderAddressID !== previousSelectedAddressID
-    ) {
-      console.log("Auto-save address")
-      const selectedAddress = getAddressByID(addressList, savedToOrderAddressID)
-      if (!selectedAddress) {
-        logger.warn("Address not found, can't submit: ", savedToOrderAddressID)
-        return
-      }
-      handleSelectAddress(addressWithFallbackValues(selectedAddress))
-    }
-  }, [
-    savedToOrderAddressID,
-    addressList,
-    previousSelectedAddressID,
-    logger,
-    handleSelectAddress,
+    locallySelectedAddress,
   ])
 
   return (
     <>
       <RadioGroup
+        data-testid="saved-addresses"
         disabled={!props.active}
         onSelect={handleClickAddress}
-        defaultValue={savedToOrderAddressID}
       >
         {addressList.map((address, index) => {
           return (
@@ -159,7 +153,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
               // disabled={!availableShippingCountries.includes(address.country)}
               key={index}
               position="relative"
-              data-test="savedAddress"
+              data-testid="savedAddress"
             >
               <SavedAddressItem
                 address={address}
@@ -173,7 +167,7 @@ const SavedAddresses: React.FC<SavedAddressesProps> = props => {
         <AddAddressButton
           mt={2}
           tabIndex={props.active ? 0 : -1}
-          data-test="shippingButton"
+          data-testid="shippingButton"
           onClick={() => {
             orderTracking.clickedAddNewShippingAddress()
             shippingContext.actions.setAddressModalAction({ type: "create" })
