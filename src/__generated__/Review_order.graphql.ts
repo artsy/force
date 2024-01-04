@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<33dc4316488c5689b1e844226bcd95b1>>
+ * @generated SignedSource<<c60594fb24f8de0aa03fd93c9a794489>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -47,8 +47,8 @@ export type Review_order$data = {
   readonly paymentMethod: CommercePaymentMethodEnum | null | undefined;
   readonly source: CommerceOrderSourceEnum;
   readonly state: CommerceOrderStateEnum;
-  readonly stateExpiresAt: string | null | undefined;
-  readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "OfferSummaryItem_order" | "OrderStepper_order" | "PaymentMethodSummaryItem_order" | "ShippingArtaSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
+  readonly stateExpiresAtFormatted: string | null | undefined;
+  readonly " $fragmentSpreads": FragmentRefs<"AdditionalArtworkDetails_order" | "ArtworkSummaryItem_order" | "OfferSummaryItem_order" | "OrderStepper_order" | "PartnerOfferTimerItem_order" | "PaymentMethodSummaryItem_order" | "ShippingArtaSummaryItem_order" | "ShippingSummaryItem_order" | "TransactionDetailsSummaryItem_order">;
   readonly " $fragmentType": "Review_order";
 };
 export type Review_order$key = {
@@ -148,7 +148,7 @@ return {
       "storageKey": null
     },
     {
-      "alias": null,
+      "alias": "stateExpiresAtFormatted",
       "args": [
         {
           "kind": "Literal",
@@ -277,6 +277,11 @@ return {
     {
       "args": null,
       "kind": "FragmentSpread",
+      "name": "PartnerOfferTimerItem_order"
+    },
+    {
+      "args": null,
+      "kind": "FragmentSpread",
       "name": "ArtworkSummaryItem_order"
     },
     {
@@ -320,6 +325,6 @@ return {
 };
 })();
 
-(node as any).hash = "bef72db09da81130a96281294fc82958";
+(node as any).hash = "d4a325fbb750e431cbb877ee6bea5407";
 
 export default node;

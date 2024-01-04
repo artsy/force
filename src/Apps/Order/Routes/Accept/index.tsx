@@ -51,7 +51,6 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
     stripe,
     dialog,
     commitMutation,
-    route,
   } = props
 
   const { trackEvent } = useTracking()
@@ -180,7 +179,7 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
           title: "Not available",
           message: "Sorry, the work is no longer available.",
         })
-        routeToArtistPage()
+        routeToArtworkPage()
         break
       }
       default:
@@ -207,19 +206,12 @@ export const Accept: FC<AcceptProps & StripeProps> = props => {
     router.push(`/orders/${order.internalID}/respond`)
   }
 
-  const getArtistId = () => {
-    return get(
+  const routeToArtworkPage = () => {
+    const artworkId = get(
       order,
-      o => o.lineItems?.edges?.[0]?.node?.artwork?.artists?.[0]?.slug
+      o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
     )
-  }
-
-  const routeToArtistPage = () => {
-    const artistId = getArtistId()
-
-    // Don't confirm whether or not you want to leave the page
-    route.onTransition = () => null
-    window.location.assign(`/artist/${artistId}`)
+    router.push(`/artwork/${artworkId}`)
   }
 
   return (

@@ -17,7 +17,7 @@ import { graphql, useFragment } from "react-relay"
 import { ConversationReviewOfferCTA_conversation$key } from "__generated__/ConversationReviewOfferCTA_conversation.graphql"
 import { extractNodes } from "Utils/extractNodes"
 import { useState } from "react"
-import { useCountdownTimer } from "Apps/Conversations/hooks/useCountdownTimer"
+import { useCountdownTimer } from "Utils/Hooks/useCountdownTimer"
 
 export interface ConversationReviewOfferCTAProps {
   conversation: ConversationReviewOfferCTA_conversation$key

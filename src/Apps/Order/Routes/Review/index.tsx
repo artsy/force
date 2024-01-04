@@ -2,6 +2,7 @@ import { Box, Button, Flex, Join, Spacer } from "@artsy/palette"
 import { Review_order$data } from "__generated__/Review_order.graphql"
 import { ReviewSubmitOfferOrderWithConversationMutation } from "__generated__/ReviewSubmitOfferOrderWithConversationMutation.graphql"
 import { ReviewSubmitOrderMutation } from "__generated__/ReviewSubmitOrderMutation.graphql"
+import { PartnerOfferTimerItem } from "Apps/Order/Components/PartnerOfferTimerItem"
 import { ArtworkSummaryItemFragmentContainer as ArtworkSummaryItem } from "Apps/Order/Components/ArtworkSummaryItem"
 import { ConditionsOfSaleDisclaimer } from "Apps/Order/Components/ConditionsOfSaleDisclaimer"
 import { ItemReviewFragmentContainer as ItemReview } from "Apps/Order/Components/ItemReview"
@@ -180,7 +181,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
                 JSON.stringify({
                   key: "goToInboxOnMakeOfferSubmission",
                   orderCode: order.code,
-                  message: `The seller will respond to your offer by ${order.stateExpiresAt}. Keep in mind making an offer doesn’t guarantee you the work.`,
+                  message: `The seller will respond to your offer by ${order.stateExpiresAtFormatted}. Keep in mind making an offer doesn’t guarantee you the work.`,
                 })
               )
               // We cannot expect Eigen to respond all the time to messages sent from the webview
@@ -315,10 +316,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           title: title,
           message: message,
         })
-        const artistId = getArtistId()
-        if (artistId) {
-          routeToArtistPage()
-        }
+        routeToArtworkPage()
         break
       }
       case "failed_charge_authorize": {
@@ -458,29 +456,12 @@ export const ReviewRoute: FC<ReviewProps> = props => {
     }
   }
 
-  const getArtistId = () => {
-    return get(
-      props.order,
-      o => o.lineItems?.edges?.[0]?.node?.artwork?.artists?.[0]?.slug
-    )
-  }
-
   const routeToArtworkPage = () => {
     const artworkId = get(
       props.order,
       o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
     )
-    // Don't confirm whether or not you want to leave the page
-    props.route.onTransition = () => null
-    window.location.assign(`/artwork/${artworkId}`)
-  }
-
-  const routeToArtistPage = () => {
-    const artistId = getArtistId()
-
-    // Don't confirm whether or not you want to leave the page
-    props.route.onTransition = () => null
-    window.location.assign(`/artist/${artistId}`)
+    props.router.push(`/artwork/${artworkId}`)
   }
 
   const onChangeOffer = () => {
@@ -594,6 +575,12 @@ export const ReviewRoute: FC<ReviewProps> = props => {
         sidebar={
           <Flex flexDirection="column">
             <Flex flexDirection="column">
+              {order.source === "partner_offer" && (
+                <>
+                  <PartnerOfferTimerItem order={order} />
+                  <Spacer y={2} />
+                </>
+              )}
               <ArtworkSummaryItem order={order} />
               <TransactionDetailsSummaryItem
                 order={order}
@@ -644,7 +631,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
         conditionsOfSale
         itemsTotal(precision: 2)
         impulseConversationId
-        stateExpiresAt(format: "MMM D")
+        stateExpiresAtFormatted: stateExpiresAt(format: "MMM D")
         lineItems {
           edges {
             node {
@@ -669,6 +656,7 @@ export const ReviewFragmentContainer = createFragmentContainer(
             internalID
           }
         }
+        ...PartnerOfferTimerItem_order
         ...ArtworkSummaryItem_order
         ...AdditionalArtworkDetails_order
         ...TransactionDetailsSummaryItem_order

@@ -269,8 +269,8 @@ describe("Accept seller offer", () => {
         "Not available",
         "Sorry, the work is no longer available."
       )
-      const artistId = testOrder.lineItems.edges[0].node.artwork.artists[0].slug
-      expect(window.location.assign).toHaveBeenCalledWith(`/artist/${artistId}`)
+      const artworkId = testOrder.lineItems.edges[0].node.artwork.slug
+      expect(pushMock).toHaveBeenCalledWith(`/artwork/${artworkId}`)
     })
   })
 })
