@@ -50,9 +50,14 @@ type RemainingTime =
 interface TimerProps {
   startTime: string
   endTime: string
+  includeSeconds?: boolean
 }
 
-export const useCountdownTimer = ({ startTime, endTime }: TimerProps) => {
+export const useCountdownTimer = ({
+  startTime,
+  endTime,
+  includeSeconds = false,
+}: TimerProps) => {
   const [remainingTime, setRemainingTime] = useState<RemainingTime>(
     "Calculating time"
   )
