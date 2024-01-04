@@ -108,6 +108,11 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-5.0.0.tgz#d1e1917d8163d88e7a9f877cf06b609fa8c8178c"
   integrity sha512-nloC0ubH5XDVNiplehwTtDLEgY0vjeE3l8QUYppEIHFCgadntXm6aVlmEC79inO7L3lDYN7JckYlIYRrTJg3vw==
 
+"@artsy/palette-tokens@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-5.1.0.tgz#df546dda1aec2dbf631a816b047301333459aa2a"
+  integrity sha512-dBx1hkjTBQ460L8DTMou+vXNOaD1DAApt6UYGTSMVSfXX0/AE8ZJpPx0U3y2t20wNBPzIoYpDBusJ3vRFKrZzQ==
+
 "@artsy/palette@37.2.2":
   version "37.2.2"
   resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-37.2.2.tgz#529fc66cd1a32701c7360e7c33add924ab9a01c9"
