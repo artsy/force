@@ -7,7 +7,6 @@ import { handleFieldsWithMultipleValues } from "Components/Alert/Helpers/handleF
 interface QuickMultipleSelectAlertFilterProps {
   criteriaKey: SearchCriteriaAttributeKeys
   description?: string
-  expanded?: boolean
   label: string
   options: { value: string; name: string }[]
 }
