@@ -11,8 +11,10 @@ export const PartnerOfferTimerItem: React.FC<{
 }> = ({ order }) => {
   const data = useFragment(query, order)
 
-  const startTime = data.stateUpdatedAt || ""
   const endTime = data.stateExpiresAt || ""
+  const startTime = endTime
+    ? DateTime.fromISO(endTime).minus({ days: 3 }).toString()
+    : ""
 
   const { remainingTime, percentComplete } = useCountdownTimer({
     startTime: startTime,
@@ -62,15 +64,5 @@ const query = graphql`
   fragment PartnerOfferTimerItem_order on CommerceOrder {
     displayState
     stateExpiresAt
-    stateUpdatedAt
-    lineItems {
-      edges {
-        node {
-          partnerOffer {
-            createdAt
-          }
-        }
-      }
-    }
   }
 `
