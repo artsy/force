@@ -63,5 +63,14 @@ const query = graphql`
     displayState
     stateExpiresAt
     stateUpdatedAt
+    lineItems {
+      edges {
+        node {
+          partnerOffer {
+            createdAt
+          }
+        }
+      }
+    }
   }
 `
