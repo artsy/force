@@ -1,26 +1,50 @@
 import { useState, useEffect } from "react"
-import { differenceInHours, differenceInMinutes } from "date-fns"
+import {
+  differenceInHours,
+  differenceInMinutes,
+  differenceInSeconds,
+} from "date-fns"
 
 const IMMINENT_TIME = 5 // hours
 
-const calculateTime = (endTime: string) => {
+const calculateTime = (endTime: string, includeSeconds: boolean) => {
   const now = new Date()
   const expiration = new Date(endTime)
-  const timeDiff = differenceInMinutes(expiration, now)
 
-  const ONE_DAY = 1440 // 24 hours * 60 minutes
+  if (!includeSeconds) {
+    const timeDiff = differenceInMinutes(expiration, now)
 
-  const days = Math.floor(timeDiff / ONE_DAY)
-  const hours = Math.floor((timeDiff % ONE_DAY) / 60)
-  const minutes = Math.floor(timeDiff % 60)
+    const ONE_DAY = 1440 // 24 hours * 60 minutes
 
-  if (timeDiff <= 0) {
-    return "Expired"
+    const days = Math.floor(timeDiff / ONE_DAY)
+    const hours = Math.floor((timeDiff % ONE_DAY) / 60)
+    const minutes = Math.floor(timeDiff % 60)
+
+    if (timeDiff <= 0) {
+      return "Expired"
+    }
+    if (timeDiff >= ONE_DAY) {
+      return `${days}d ${hours}h`
+    }
+    return `${hours}h ${minutes}m`
+  } else {
+    const timeDiff = differenceInSeconds(expiration, now)
+
+    const ONE_DAY = 86400 // 24 hours * 60 minutes * 60 seconds
+
+    const days = Math.floor(timeDiff / ONE_DAY)
+    const hours = Math.floor((timeDiff % ONE_DAY) / (60 * 60))
+    const minutes = Math.floor((timeDiff % (60 * 60)) / 60)
+    const seconds = Math.floor(timeDiff % 60)
+
+    if (timeDiff <= 0) {
+      return "Expired"
+    }
+    if (timeDiff >= ONE_DAY) {
+      return `${days}d ${hours}h ${minutes}m ${seconds}s`
+    }
+    return `${hours}h ${minutes}m ${seconds}s`
   }
-  if (timeDiff >= ONE_DAY) {
-    return `${days}d ${hours}h`
-  }
-  return `${hours}h ${minutes}m`
 }
 
 const calculateImminent = (endTime: string) =>
@@ -67,13 +91,13 @@ export const useCountdownTimer = ({
   const ONE_MINUTE = 60000
 
   useEffect(() => {
-    const timeTillExpiration = calculateTime(endTime)
+    const timeTillExpiration = calculateTime(endTime, includeSeconds)
     setRemainingTime(timeTillExpiration)
     setIsImminent(calculateImminent(endTime))
     setPercentComplete(calculatePercentage(startTime, endTime))
 
     const interval = setInterval(() => {
-      const timeTillExpiration = calculateTime(endTime)
+      const timeTillExpiration = calculateTime(endTime, includeSeconds)
       if (timeTillExpiration === remainingTime) {
         // we don't need to re-assign if the value is the same
         return
@@ -85,7 +109,7 @@ export const useCountdownTimer = ({
     }, ONE_MINUTE)
 
     return () => clearInterval(interval)
-  }, [startTime, endTime, remainingTime])
+  }, [startTime, endTime, remainingTime, includeSeconds])
 
   return { remainingTime, isImminent, percentComplete }
 }

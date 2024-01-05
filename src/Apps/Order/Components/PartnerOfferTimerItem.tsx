@@ -17,6 +17,7 @@ export const PartnerOfferTimerItem: React.FC<{
   const { remainingTime, percentComplete } = useCountdownTimer({
     startTime: startTime,
     endTime: endTime,
+    includeSeconds: true,
   })
 
   if (remainingTime.match(/^NaN/)) {
