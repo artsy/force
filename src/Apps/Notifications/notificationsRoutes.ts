@@ -11,9 +11,10 @@ const NotificationsApp = loadable(
 )
 
 const NotificationApp = loadable(
-  () => import(/* webpackChunkName: "notificationsBundle" */ "./Notification"),
+  () =>
+    import(/* webpackChunkName: "notificationsBundle" */ "./NotificationApp"),
   {
-    resolveComponent: component => component.NotificationFragmentContainer,
+    resolveComponent: component => component.NotificationAppFragmentContainer,
   }
 )
 
