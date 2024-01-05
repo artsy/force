@@ -6,8 +6,8 @@ import { userAddressMutation } from "Apps/__tests__/Fixtures/Order/MutationResul
 import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/Components/SavedAddressItem2"
 import { useTracking } from "react-tracking"
 import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
-import { waitFor } from "@testing-library/react"
-import { SavedAddressesFragmentContainer } from "Apps/Order/Routes/Shipping2/Components/SavedAddresses2"
+import { render, waitFor } from "@testing-library/react"
+import { SavedAddresses2 } from "Apps/Order/Routes/Shipping2/Components/SavedAddresses2"
 import { DeepPartial } from "Utils/typeSupport"
 import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContext"
 
@@ -38,6 +38,11 @@ class SavedAddressesTestPage extends RootTestPage {
   }
 }
 
+// const renderTree = (testProps: any) => {
+//   const wrapper = render(<SavedAddresses2 {...testProps} />)
+//   return { wrapper }
+// }
+
 describe("Saved Addresses", () => {
   const trackEvent = jest.fn()
 
@@ -51,7 +56,7 @@ describe("Saved Addresses", () => {
     Component: (props: any) => {
       return (
         <AnalyticsCombinedContextProvider contextPageOwnerId="example-order-id">
-          <SavedAddressesFragmentContainer {...props} />
+          <SavedAddresses2 {...props} />
         </AnalyticsCombinedContextProvider>
       )
     },

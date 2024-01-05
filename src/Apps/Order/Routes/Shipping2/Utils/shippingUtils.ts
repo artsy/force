@@ -1,6 +1,8 @@
+import * as Yup from "yup"
 import { AddressVerifiedBy } from "Apps/Order/Components/AddressVerificationFlow"
 import { ShippingProps } from "Apps/Order/Routes/Shipping2"
 import { pick, omitBy, isNil, isEqual } from "lodash"
+import { postalCodeValidator } from "Components/Address/utils"
 
 export enum FulfillmentType {
   SHIP = "SHIP",
@@ -13,46 +15,30 @@ export interface PickupValues {
     name: string
     phoneNumber: string
   }
+  meta: Pick<FormMetaValues, "mode">
 }
 
 export interface ShipValues {
   fulfillmentType: FulfillmentType.SHIP
   attributes: ShippingAddressFormValues
+  meta: FormMetaValues
 }
 
-export type UserAddressAction =
-  | {
-      type: "edit"
-      addressID: string
-      setAsDefault?: boolean
-    }
-  | {
-      type: "delete"
-      addressID: string
-    }
-  | { type: "create"; setAsDefault?: boolean }
-  | null
+interface FormMetaValues {
+  // TODO: still needed here?
+  mode: "new_address" | "saved_addresses" | "pickup"
 
-export type AddressModalAction = Extract<
-  UserAddressAction,
-  { type: "create" } | { type: "edit" }
->
-
-export type FulfillmentValues = (ShipValues | PickupValues) & {
-  meta: {
-    mode: "new_address" | "saved_addresses" | "pickup"
-
-    addressVerifiedBy?: AddressVerifiedBy | null
-    // User saved an address within the lifecycle of this form
-    newSavedAddressId?: string
-    // User selected a saved address
-    selectedSavedAddressID?: string
-    // Address should be saved (create/update) to user's address book
-    saveAddress?: boolean
-    // Address should be set as default in user's address book
-    setAddressAsDefault?: boolean
-  }
+  // Address was verified (in this flow instance)
+  addressVerifiedBy?: AddressVerifiedBy | null
+  // User saved an address within the lifecycle of this form
+  newSavedAddressId?: string
+  // Address should be saved (create/update) to user's address book
+  saveAddress?: boolean
+  // Address should be set as default in user's address book
+  setAddressAsDefault?: boolean
 }
+
+export type FulfillmentValues = (ShipValues | PickupValues) & {}
 
 export interface ShippingAddressFormValues {
   name: string
@@ -63,6 +49,19 @@ export interface ShippingAddressFormValues {
   region: string
   country: string
   postalCode: string
+}
+
+export const ADDRESS_VALIDATION_SHAPE = {
+  addressLine1: Yup.string().required("Street address is required"),
+  addressLine2: Yup.string().nullable(),
+  city: Yup.string().required("City is required"),
+  postalCode: postalCodeValidator,
+  region: Yup.string().when("country", {
+    is: country => ["US", "CA"].includes(country),
+    then: Yup.string().required("State is required"),
+    otherwise: Yup.string(),
+  }),
+  country: Yup.string().required("Country is required"),
 }
 
 const ORDER_EMPTY_ADDRESS: ShippingAddressFormValues = {

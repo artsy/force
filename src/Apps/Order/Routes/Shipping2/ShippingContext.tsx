@@ -23,7 +23,6 @@ export interface State {
   stage: ShippingStage
   isPerformingOperation: boolean
   isArtsyShipping: boolean
-  addressModalAction: AddressModalAction | null
 }
 
 interface Actions {
@@ -36,7 +35,6 @@ interface Actions {
     logger: ReturnType<typeof createLogger>
   ) => void
   setFulfillmentDetailsCtx: (payload: FormikProps<FulfillmentValues>) => void
-  setAddressModalAction: (payload: AddressModalAction | null) => void
   setSelectedShippingQuote: (payload: string | null) => void
   setNewSavedAddressId: (payload: string | null) => void
   setIsPerformingOperation: (payload: boolean) => void
@@ -96,7 +94,6 @@ export const ShippingContextProvider: FC<Pick<
     newSavedAddressId: null,
     selectedShippingQuoteId: orderData.selectedShippingQuoteId ?? null,
     stage: "fulfillment_details",
-    addressModalAction: null,
   }
 
   const [state, dispatch] = useReducer(shippingStateReducer, initialState)
@@ -123,9 +120,7 @@ export const ShippingContextProvider: FC<Pick<
     setIsPerformingOperation: (payload: boolean) => {
       dispatch({ type: "SET_IS_PERFORMING_OPERATION", payload })
     },
-    setAddressModalAction: (payload: AddressModalAction | null) => {
-      dispatch({ type: "SET_ADDRESS_MODAL_ACTION", payload })
-    },
+
     handleExchangeError,
     dialog: props.dialog,
   }
@@ -153,16 +148,9 @@ export type Action =
   | { type: "SET_NEW_SAVED_ADDRESS_ID"; payload: string | null }
   | { type: "SET_STAGE"; payload: ShippingStage }
   | { type: "SET_IS_PERFORMING_OPERATION"; payload: boolean }
-  | { type: "SET_ADDRESS_MODAL_ACTION"; payload: AddressModalAction | null }
 
 const shippingStateReducer = (state: State, action: Action): State => {
   switch (action.type) {
-    case "SET_ADDRESS_MODAL_ACTION": {
-      return {
-        ...state,
-        addressModalAction: action.payload,
-      }
-    }
     case "SET_FULFILLMENT_DETAILS_CTX": {
       return {
         ...state,

@@ -20,7 +20,7 @@ import {
 } from "__generated__/FulfillmentDetailsForm_me.graphql"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContext"
-import { useHandleUserAddressUpdates } from "Apps/Order/Routes/Shipping2/Hooks/useHandleUserAddressUpdates"
+import { useUserAddressUpdates } from "Apps/Order/Routes/Shipping2/Hooks/useUserAddressUpdates"
 import { useRouter } from "System/Router/useRouter"
 import { useOrderTracking } from "Apps/Order/Hooks/useOrderTracking"
 import { FormikHelpers } from "formik"
@@ -42,7 +42,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
 
   const shippingContext = useShippingContext()
   const orderTracking = useOrderTracking()
-  const { handleUserAddressUpdates } = useHandleUserAddressUpdates()
+  const { handleNewUserAddressUpdates } = useUserAddressUpdates()
   const { handleSaveFulfillmentDetails } = useHandleSaveFulfillmentDetails()
 
   const addressVerificationUSEnabled = !!useFeatureFlag(
@@ -168,31 +168,45 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
       shippingContext.actions.setIsPerformingOperation(true)
 
       if (values.fulfillmentType === FulfillmentType.SHIP) {
-        const userAddressUpdateResult = await handleUserAddressUpdates(
-          values,
-          helpers
+        const userAddressUpdateResult = await handleNewUserAddressUpdates(
+          values
         )
 
-        if (userAddressUpdateResult.errors) {
-          logger.error("Aborting: User address updates failed")
-          shippingContext.actions.setIsPerformingOperation(false)
+        if (userAddressUpdateResult) {
+          if (userAddressUpdateResult.errors) {
+            logger.error("Aborting: User address updates failed")
+            shippingContext.actions.setIsPerformingOperation(false)
 
-          return
+            return
+          } else {
+
+
+            // TODO: Left off here ...
+            if (userAddressUpdateResult.newSavedAddressID) {
+              shippingContext.actions.setNewSavedAddressId(
+                userAddressUpdateResult.newSavedAddressID
+              )
+            } else if (userAddressUpdateResult.deletedAddressID) {
+              shippingContext.actions.setNewSavedAddressId(null)
+            }
+
+            // double check if we need this and continue from here
+            helpers.setValues({
+              ...values,
+              meta: {
+                ...values.meta,
+              },
+            })
+
+          if (
+            userAddressUpdateResult.data?.internalID &&
+            shippingMode === "new_address"
+          ) {
+            shippingContext.actions.setNewSavedAddressId(
+              userAddressUpdateResult.data.internalID
+            )
+          }
         }
-        helpers.setValues({
-          ...values,
-          meta: {
-            ...values.meta,
-          },
-        })
-
-        if (
-          userAddressUpdateResult.data?.internalID &&
-          shippingMode === "new_address"
-        ) {
-          shippingContext.actions.setNewSavedAddressId(
-            userAddressUpdateResult.data.internalID
-          )
         }
       }
 
@@ -201,13 +215,14 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
         helpers
       )
 
-      if (saveFulfillmentDetailsResult.data) {
+      if (saveFulfillmentDetailsResult.data) {)
         if (
           saveFulfillmentDetailsResult.data.requiresArtsyShippingToDestination
         ) {
-          if (shippingContext.state.addressModalAction) {
-            shippingContext.actions.setAddressModalAction(null)
-          }
+          // TODO: move to caller
+          // if (shippingContext.state.addressModalAction) {
+          //   shippingContext.actions.setAddressModalAction(null)
+          // }
           shippingContext.actions.setStage("shipping_quotes")
         } else if (shippingMode === "new_address") {
           // Advance to payment
@@ -216,6 +231,10 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
           // Don't advance if we're using saved addresses; instead wait for click
           shippingContext.actions.setStage("advance_on_click")
         }
+      } else {
+        logger.error(
+          "No request for saveFulfillmentDetails - this should not happen"
+        )
       }
     } catch (error) {
       orderTracking.errorMessageViewed({

@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react"
+import { FC } from "react"
 import { RelayProp, createFragmentContainer, graphql } from "react-relay"
 import { Box, Flex, Spacer, Text } from "@artsy/palette"
 import { Shipping2_order$data } from "__generated__/Shipping2_order.graphql"
@@ -48,36 +48,7 @@ export const ShippingRoute: FC<ShippingProps> = props => {
     </Analytics>
   )
 }
-import { cloneDeep, isEqual, isObject } from "lodash"
 
-function useLogPropChanges<T>(props: T, name: string) {
-  const prevProps = useRef<T>(props)
-  const deepDiff = (object1, object2, path = "") => {
-    if (isEqual(object1, object2)) {
-      return []
-    }
-
-    if (!isObject(object1) || !isObject(object2)) {
-      return [{ path, value1: object1, value2: object2 }]
-    }
-
-    const diffs = [] as any
-    const allKeys = new Set([...Object.keys(object1), ...Object.keys(object2)])
-    allKeys.forEach(key => {
-      const newPath = path ? `${path}.${key}` : key
-      diffs.push(...deepDiff(object1[key], object2[key], newPath))
-    })
-
-    return diffs
-  }
-
-  useEffect(() => {
-    const diffs = deepDiff(prevProps.current, props)
-    if (diffs.length > 0) {
-      prevProps.current = cloneDeep(props)
-    }
-  })
-}
 const ShippingRouteLayout: FC<Omit<ShippingProps, "dialog">> = ({
   me,
   order,

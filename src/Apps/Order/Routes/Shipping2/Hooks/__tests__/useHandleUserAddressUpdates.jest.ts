@@ -5,7 +5,7 @@ import {
   createMockEnvironment,
 } from "relay-test-utils"
 import { FormikHelpers } from "formik"
-import { useHandleUserAddressUpdates } from "Apps/Order/Routes/Shipping2/Hooks/useHandleUserAddressUpdates"
+import { useUserAddressUpdates } from "Apps/Order/Routes/Shipping2/Hooks/useUserAddressUpdates"
 import {
   FulfillmentType,
   FulfillmentValues,
@@ -27,7 +27,7 @@ jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => ({
 }))
 
 const setupHook = () => {
-  const hookResult = renderHook(() => useHandleUserAddressUpdates())
+  const hookResult = renderHook(() => useUserAddressUpdates())
   return hookResult
 }
 

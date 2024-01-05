@@ -1,5 +1,5 @@
-import { useEffect, useState } from "react"
-import * as React from "react"
+import { useState, FC } from "react"
+import * as Yup from "yup"
 import {
   Button,
   Clickable,
@@ -14,109 +14,245 @@ import {
   Column,
 } from "@artsy/palette"
 
-import { Form, useFormikContext } from "formik"
-import { AddressModalFields } from "Components/Address/AddressModalFields"
+import { Form, Formik, FormikHelpers, useFormikContext } from "formik"
 
 import {
-  FulfillmentValues,
-  ShipValues,
+  ADDRESS_VALIDATION_SHAPE,
   addressWithFallbackValues,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
 import createLogger from "Utils/logger"
-import { useDeleteSavedAddress } from "Apps/Order/Routes/Shipping2/Mutations/useDeleteSavedAddress"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
-import { usePrevious } from "Utils/Hooks/usePrevious"
+import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
+import {
+  SavedAddressResult,
+  UserAddressAction,
+  useUserAddressUpdates,
+} from "Apps/Order/Routes/Shipping2/Hooks/useUserAddressUpdates"
 import { CountrySelect } from "Components/CountrySelect"
+import { values } from "lodash"
+
+const logger = createLogger("AddressModal2.tsx")
+
+/**
+ * Modal type to be rendered. the `address` property is used
+ * when the modal is in edit mode as the starting values.
+ */
+export type AddressModalAction =
+  | { type: "create" }
+  | { type: "edit"; address: SavedAddressType }
 
 export interface AddressModalProps {
   closeModal: () => void
-  onSuccess: (addressID: string) => void
+  onSuccess: (address: SavedAddressType) => void
+  addressModalAction: AddressModalAction | null
 }
 
-export const AddressModal: React.FC<AddressModalProps> = ({ closeModal }) => {
+interface FormValues {
+  attributes: {
+    name: string
+    phoneNumber: string
+    isDefault?: boolean
+    addressLine1: string
+    addressLine2?: string
+    city: string
+    region?: string
+    postalCode?: string
+    country: string
+  }
+  setAsDefault: boolean
+}
+
+export const AddressModal: FC<AddressModalProps> = ({
+  closeModal,
+  addressModalAction,
+  onSuccess,
+}) => {
   const logger = createLogger("AddressModal2.tsx")
   const shippingContext = useShippingContext()
-  const formikContext = useFormikContext<ShipValues>()
-  const { touched, errors, values } = formikContext
 
-  const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false)
+  const { executeUserAddressAction } = useUserAddressUpdates()
+  // const previousAddressModalAction = usePrevious(addressModalAction)
+  // useEffect(() => {
+  //   if (
+  //     !addressModalAction ||
+  //     previousAddressModalAction === addressModalAction
+  //   ) {
+  //     return
+  //   }
+  //   if (addressModalAction?.type === "edit") {
+  //     formikContext.setValues({
+  //       ...addressWithFallbackValues(addressModalAction.address),
+  //     })
+  //   } else {
+  //     formikContext.setFieldValue("attributes", addressWithFallbackValues({}))
+  //   }
+  // }, [
+  //   addressModalAction,
+  //   formikContext,
+  //   previousAddressModalAction,
+  //   shippingContext.meData.addressList,
+  // ])
 
-  const deleteSavedAddress = useDeleteSavedAddress().submitMutation
-
-  const addressModalAction = shippingContext.state.addressModalAction
-
-  const previousAddressModalAction = usePrevious(addressModalAction)
-  useEffect(() => {
-    if (
-      !addressModalAction ||
-      previousAddressModalAction === addressModalAction
-    ) {
-      return
-    }
-    if (addressModalAction?.type === "edit") {
-      formikContext.setFieldValue("attributes", {
-        ...addressWithFallbackValues(
-          shippingContext.meData.addressList.find(
-            a => a.internalID === addressModalAction.addressID
-          )
-        ),
-      })
-    } else {
-      formikContext.setFieldValue("attributes", addressWithFallbackValues({}))
-    }
-  }, [
-    addressModalAction,
-    formikContext,
-    previousAddressModalAction,
-    shippingContext.meData.addressList,
-  ])
+  let initialValues: FormValues
 
   if (!addressModalAction) {
-    return null
-  }
+    initialValues = {
+      attributes: {
+        isDefault: false,
+        ...addressWithFallbackValues({}),
+      },
+      setAsDefault: false,
+    }
+  } else {
+    const incomingAddress =
+      addressModalAction.type === "edit" ? addressModalAction.address : null
 
-  const savedAddress =
-    (addressModalAction.type === "edit" &&
-      shippingContext.meData.addressList.find(
-        a => a.internalID === addressModalAction.addressID
-      )) ||
-    undefined
+    initialValues = {
+      attributes: {
+        isDefault: incomingAddress?.isDefault ?? false,
 
-  const handleDeleteAddress = async () => {
-    if (addressModalAction?.type === "edit") {
-      try {
-        shippingContext.actions.setIsPerformingOperation(true)
-        setShowDeleteDialog(false)
-        closeModal()
-        await deleteSavedAddress({
-          variables: { input: { userAddressID: addressModalAction.addressID } },
-        })
-      } catch (error) {
-        logger.error(error)
-      } finally {
-        shippingContext.actions.setIsPerformingOperation(false)
-      }
+        ...addressWithFallbackValues(
+          addressModalAction.type === "edit" ? addressModalAction.address : {}
+        ),
+      },
+      setAsDefault: false,
     }
   }
 
-  const title =
-    addressModalAction.type === "create" ? "Add address" : "Edit address"
+  const handleSubmit = async (
+    values: FormValues,
+    helpers: FormikHelpers<FormValues>
+  ) => {
+    if (!addressModalAction) {
+      return
+    }
 
-  const handleModalClose = () => {
-    closeModal()
-    formikContext.setStatus({
-      ...formikContext.status,
-      gravityAddressError: null,
+    let userAddressAction: UserAddressAction
+    switch (addressModalAction.type) {
+      case "edit":
+        userAddressAction = {
+          type: "edit",
+          address: {
+            ...values.attributes,
+            internalID: addressModalAction.address.internalID,
+          },
+          setAsDefault: values.setAsDefault,
+        }
+        break
+      case "create":
+        userAddressAction = {
+          type: "create",
+          address: {
+            ...values.attributes,
+          },
+          setAsDefault: values.setAsDefault,
+        }
+        break
+      default:
+        throw new Error("Invalid address modal action")
+    }
+
+    try {
+      shippingContext.actions.setIsPerformingOperation(true)
+      const result = await executeUserAddressAction(userAddressAction)
+
+      if (result.errors) {
+        handleGravityErrors(result.errors, helpers)
+        closeModal()
+        return
+      }
+      onSuccess(result.data)
+      closeModal()
+    } catch (error) {
+      logger.error(error)
+
+      helpers.setStatus(GENERIC_FAIL_MESSAGE)
+    } finally {
+      shippingContext.actions.setIsPerformingOperation(false)
+    }
+  }
+
+  const handleDeleteAddress = async (address: SavedAddressType) => {
+    return await executeUserAddressAction({
+      type: "delete",
+      address: address,
     })
   }
 
   return (
     <>
+      <Formik<FormValues>
+        validateOnMount
+        validationSchema={validationSchema}
+        // reset form when initial values change
+        enableReinitialize={true}
+        initialValues={initialValues}
+        onSubmit={handleSubmit}
+      >
+        {
+          <AddressModalForm
+            addressModalAction={addressModalAction}
+            onClose={closeModal}
+            onDeleteAddress={handleDeleteAddress}
+          />
+        }
+      </Formik>
+    </>
+  )
+}
+
+const AddressModalForm: FC<{
+  onClose: () => void
+  addressModalAction: AddressModalProps["addressModalAction"]
+  onDeleteAddress: (address: SavedAddressType) => Promise<SavedAddressResult>
+}> = ({ addressModalAction, onClose, onDeleteAddress }) => {
+  const shippingContext = useShippingContext()
+  const formikContext = useFormikContext<FormValues>()
+  const [showDeleteDialog, setShowDeleteDialog] = useState<boolean>(false)
+
+  if (!addressModalAction) {
+    return null
+  }
+
+  const handleDeleteAddress = async () => {
+    if (addressModalAction?.type === "edit") {
+      try {
+        shippingContext.actions.setIsPerformingOperation(true)
+        await onDeleteAddress(addressModalAction.address)
+      } catch (error) {
+        logger.error(error)
+      } finally {
+        shippingContext.actions.setIsPerformingOperation(false)
+        setShowDeleteDialog(false)
+        onClose()
+      }
+    }
+  }
+
+  const {
+    values,
+    touched,
+    errors,
+    handleChange,
+    handleBlur,
+    setFieldValue,
+  } = formikContext
+
+  const handleModalClose = () => {
+    formikContext.resetForm()
+    onClose()
+  }
+
+  const title =
+    addressModalAction.type === "create" ? "Add address" : "Edit address"
+
+  return (
+    <>
       <ModalDialog title={title} onClose={handleModalClose} width={900}>
         <Form data-testid="AddressModal">
-          {formikContext.status.gravityAddressError && (
+          {formikContext.status && (
             <Banner my={2} data-testid="form-banner-error" variant="error">
-              {formikContext.status.gravityAddressError}
+              {formikContext.status}
             </Banner>
           )}
 
@@ -126,14 +262,11 @@ export const AddressModal: React.FC<AddressModalProps> = ({ closeModal }) => {
                 title="Full name"
                 placeholder="Full name"
                 id="name"
-                name="attributes.name"
+                name="name"
                 type="text"
-                onChange={formikContext.handleChange}
-                onBlur={formikContext.handleBlur}
-                error={
-                  formikContext.touched.attributes?.name &&
-                  formikContext.errors.attributes?.name
-                }
+                onChange={handleChange}
+                onBlur={handleBlur}
+                error={touched.attributes?.name && errors.attributes?.name}
                 value={values.attributes.name || undefined}
               />
             </Column>
@@ -142,10 +275,12 @@ export const AddressModal: React.FC<AddressModalProps> = ({ closeModal }) => {
                 title="Country"
                 selected={values.attributes.country}
                 onSelect={countryCode => {
-                  formikContext.setFieldValue("attributes.country", countryCode)
+                  setFieldValue("country", countryCode)
                 }}
                 error={
                   touched.attributes?.country && errors.attributes?.country
+                    ? errors.attributes.country
+                    : ""
                 }
               />
             </Column>
@@ -153,9 +288,9 @@ export const AddressModal: React.FC<AddressModalProps> = ({ closeModal }) => {
               <Input
                 title="Address Line 1"
                 placeholder="Street address"
-                name="attributes.addressLine1"
-                onChange={formikContext.handleChange}
-                onBlur={formikContext.handleBlur}
+                name="addressLine1"
+                onChange={handleChange}
+                onBlur={handleBlur}
                 error={
                   touched.attributes?.addressLine1 &&
                   errors.attributes?.addressLine1
@@ -167,23 +302,23 @@ export const AddressModal: React.FC<AddressModalProps> = ({ closeModal }) => {
               <Input
                 title="Address Line 2"
                 placeholder="Apt, floor, suite, etc. (optional)"
-                name="attributes.addressLine2"
-                onChange={formikContext.handleChange}
-                onBlur={formikContext.handleBlur}
+                name="addressLine2"
+                onChange={handleChange}
+                onBlur={handleBlur}
                 error={
                   touched.attributes?.addressLine2 &&
                   errors.attributes?.addressLine2
                 }
-                value={values.attributes.addressLine2}
+                value={values.attributes.addressLine2 || ""}
               />
             </Column>
             <Column span={12}>
               <Input
                 title="City"
                 placeholder="City"
-                name="attributes.city"
-                onChange={formikContext.handleChange}
-                onBlur={formikContext.handleBlur}
+                name="city"
+                onChange={handleChange}
+                onBlur={handleBlur}
                 error={touched.attributes?.city && errors.attributes?.city}
                 value={values.attributes.city}
               />
@@ -192,25 +327,25 @@ export const AddressModal: React.FC<AddressModalProps> = ({ closeModal }) => {
               <Input
                 title="State, province, or region"
                 placeholder="State, province, or region"
-                name="attributes.region"
-                onChange={formikContext.handleChange}
-                onBlur={formikContext.handleBlur}
+                name="region"
+                onChange={handleChange}
+                onBlur={handleBlur}
                 error={touched.attributes?.region && errors.attributes?.region}
-                value={values.attributes.region}
+                value={values.attributes?.region || ""}
               />
             </Column>
             <Column span={6}>
               <Input
                 title="Postal Code"
                 placeholder="ZIP/Postal code"
-                name="attributes.postalCode"
-                onChange={formikContext.handleChange}
-                onBlur={formikContext.handleBlur}
+                name="postalCode"
+                onChange={handleChange}
+                onBlur={handleBlur}
                 error={
                   touched.attributes?.postalCode &&
                   errors.attributes?.postalCode
                 }
-                value={values.attributes.postalCode}
+                value={values.attributes.postalCode || ""}
               />
             </Column>
           </GridColumns>
@@ -226,24 +361,21 @@ export const AddressModal: React.FC<AddressModalProps> = ({ closeModal }) => {
             onChange={formikContext.handleChange}
             onBlur={formikContext.handleBlur}
             error={
-              formikContext.touched?.attributes?.phoneNumber &&
-              formikContext.errors?.attributes?.phoneNumber
+              formikContext.touched.attributes?.phoneNumber &&
+              formikContext.errors.attributes?.phoneNumber
             }
-            value={formikContext.values.attributes.phoneNumber || ""}
+            value={formikContext.values.attributes.phoneNumber}
             data-testid="phoneInputWithoutValidationFlag"
           />
 
           <Spacer y={2} />
 
-          {!savedAddress?.isDefault && (
+          {!formikContext.initialValues.attributes.isDefault && (
             <Checkbox
               onSelect={selected => {
-                formikContext.setFieldValue(
-                  "meta.setAddressAsDefault",
-                  selected
-                )
+                formikContext.setFieldValue("setAsDefault", selected)
               }}
-              selected={formikContext.values.meta.setAddressAsDefault}
+              selected={formikContext.values.setAsDefault}
               data-testid="setAsDefault"
             >
               Set as default
@@ -276,7 +408,6 @@ export const AddressModal: React.FC<AddressModalProps> = ({ closeModal }) => {
           </Button>
         </Form>
       </ModalDialog>
-
       {showDeleteDialog && (
         <ModalDialog
           data-testid="deleteAddressDialog"
@@ -309,4 +440,47 @@ export const AddressModal: React.FC<AddressModalProps> = ({ closeModal }) => {
       )}
     </>
   )
+}
+
+// two different error messages for the same error?
+const SERVER_ERROR_MAP: Record<string, Record<string, string>> = {
+  "Validation failed for phone: not a valid phone number": {
+    field: "attributes.phoneNumber",
+    message: "Please enter a valid phone number",
+  },
+  "Validation failed: Phone not a valid phone number": {
+    field: "attributes.phoneNumber",
+    message: "Please enter a valid phone number",
+  },
+}
+
+const validationSchema = Yup.object().shape({
+  attributes: Yup.object().shape(ADDRESS_VALIDATION_SHAPE),
+})
+
+export const GENERIC_FAIL_MESSAGE =
+  "Sorry, there has been an issue saving your address. Please try again."
+
+const handleGravityErrors = (
+  errors: ReadonlyArray<{ message: string }>,
+  helpers: {
+    setFieldError: (field: string, message: string) => void
+    setStatus: (message: string) => void
+  }
+) => {
+  if (!errors?.length) return
+
+  const userMessage: Record<string, string> | null =
+    SERVER_ERROR_MAP[errors[0].message]
+
+  if (userMessage) {
+    helpers.setFieldError(
+      `attributes.${userMessage.field}`,
+      userMessage.message
+    )
+  } else {
+    helpers.setStatus(GENERIC_FAIL_MESSAGE)
+  }
+
+  logger.error(errors.map(error => error.message).join(", "))
 }

@@ -1,8 +1,6 @@
 import {
   AddressModal,
   AddressModalProps,
-  GENERIC_FAIL_MESSAGE,
-  AddressModalActionType,
 } from "Apps/Order/Routes/Shipping2/Components/AddressModal2"
 import { validAddress } from "Components/__tests__/Utils/addressForm2"
 import { useSystemContext } from "System/useSystemContext"
@@ -14,6 +12,7 @@ import { AddressModal2TestQuery } from "__generated__/AddressModal2TestQuery.gra
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import { DeepPartial } from "Utils/typeSupport"
+import { fillAddressForm } from "Components/__tests__/Utils/addressForm"
 
 /*
 Some tests queue up promises that bleed into subsequent tests
@@ -103,7 +102,7 @@ describe.skip("AddressModal", () => {
     testAddressModalProps = {
       onSuccess: jest.fn(),
       addressModalAction: {
-        type: AddressModalActionType.EDIT_USER_ADDRESS,
+        type: "edit",
         address: mockSavedAddress,
       },
 
@@ -128,7 +127,7 @@ describe.skip("AddressModal", () => {
       componentProps: {
         ...testAddressModalProps,
         addressModalAction: {
-          type: AddressModalActionType.EDIT_USER_ADDRESS,
+          type: "edit",
           address: {
             ...mockSavedAddress,
             isDefault: true,
@@ -145,7 +144,7 @@ describe.skip("AddressModal", () => {
       componentProps: {
         ...testAddressModalProps,
         addressModalAction: {
-          type: AddressModalActionType.CREATE_USER_ADDRESS,
+          type: "create",
         },
       },
     })
@@ -200,11 +199,15 @@ describe.skip("AddressModal", () => {
       input: { userAddressID: "internal-id" },
     })
 
+    await flushPromiseQueue()
+
     expect(wrapper.find(AddressModal).props().closeModal).toHaveBeenCalled()
   })
 
   describe("update mode", () => {
-    it("creates address when form is submitted with valid values", async () => {
+    // TODO: Migrate to RTL for easier address form filling?
+    // eslint-disable-next-line jest/no-disabled-tests
+    it.skip("updates address when form is submitted with valid values", async () => {
       const { mockResolveLastOperation, wrapper } = getWrapper()
 
       const formik = wrapper.find("Formik").first()
@@ -250,10 +253,11 @@ describe.skip("AddressModal", () => {
     it("shows generic error when mutation returns error", async () => {
       const { mockResolveLastOperation, wrapper } = getWrapper()
 
-      const formik = wrapper.find("Formik").first()
-      formik.props().onSubmit!(validAddress as any)
+      const form = wrapper.find("Form")
+      form.simulate("submit")
 
       await flushPromiseQueue()
+
       mockResolveLastOperation({
         UpdateUserAddressPayload: () => ({
           userAddressOrErrors: {
@@ -267,21 +271,34 @@ describe.skip("AddressModal", () => {
           },
         }),
       })
+
       await flushPromiseQueue()
+
       await wrapper.update()
-      expect(wrapper.find(errorBoxQuery).text()).toContain(GENERIC_FAIL_MESSAGE)
+
+      await flushPromiseQueue()
+
+      expect(wrapper.find(errorBoxQuery).text()).toContain(
+        "Sorry, there has been an issue saving your address. Please try again."
+      )
     })
 
     it("shows generic error when mutation fails", async () => {
       const { wrapper, mockRejectLastOperation } = getWrapper()
 
-      const formik = wrapper.find("Formik").first()
-      formik.props().onSubmit!(validAddress as any)
+      const form = wrapper.find("Form")
+      form.simulate("submit")
+
       await flushPromiseQueue()
+
       mockRejectLastOperation(new TypeError("Network request failed"))
+
       await flushPromiseQueue()
+
       await wrapper.update()
-      expect(wrapper.find(errorBoxQuery).text()).toContain(GENERIC_FAIL_MESSAGE)
+      expect(wrapper.find(errorBoxQuery).text()).toContain(
+        "Sorry, there has been an issue saving your address. Please try again."
+      )
     })
 
     // FIXME: Flakey test
