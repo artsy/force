@@ -81,10 +81,11 @@ describe("SearchResultsArtworks", () => {
     })
 
     expect(screen.getByText("Artists")).toBeInTheDocument()
-    expect(screen.getByText("Rarity")).toBeInTheDocument()
-    expect(screen.getByText("Medium")).toBeInTheDocument()
-    expect(screen.getByText("Medium")).toBeInTheDocument()
-    expect(screen.getByText("Medium")).toBeInTheDocument()
+
+    // Quick filters share same label
+    expect(screen.getAllByText("Rarity")).toHaveLength(2)
+    expect(screen.getAllByText("Medium")).toHaveLength(2)
+
     expect(screen.getByText("Price")).toBeInTheDocument()
     expect(screen.getByText("Size")).toBeInTheDocument()
     expect(screen.getByText("Ways to Buy")).toBeInTheDocument()
@@ -101,6 +102,6 @@ describe("SearchResultsArtworks", () => {
   it("renders sort input", () => {
     renderWithRelay()
 
-    expect(screen.getByText("Sort")).toBeInTheDocument()
+    expect(screen.getByText("Sort: Recommended")).toBeInTheDocument()
   })
 })

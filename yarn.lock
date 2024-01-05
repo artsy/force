@@ -22,10 +22,10 @@
   dependencies:
     tslib "~2.0.1"
 
-"@artsy/cohesion@4.161.0":
-  version "4.161.0"
-  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.161.0.tgz#bf946074287a3ddf643af8cc2a809e0b15e08067"
-  integrity sha512-Q4PsPmce8UwONek2e9mFxheKKzmABBsu6Yo55qHC3+OXCM0icDNISKGKzf2LEcV13SRuJmxpHZrZ+c6h7OgrWw==
+"@artsy/cohesion@4.162.0":
+  version "4.162.0"
+  resolved "https://registry.yarnpkg.com/@artsy/cohesion/-/cohesion-4.162.0.tgz#fe3330e8f3e9f5b39566d9dd059c125c47fa8dd5"
+  integrity sha512-KF+K5hUBt76agBGcbIZGS3gr3I3/W9d+8O+JZauh5nPxV6uyYyEiWTuKOpqEULFjhV7Xbz1Rg10lHwOWhmpasA==
   dependencies:
     core-js "3"
 
@@ -91,12 +91,12 @@
   dependencies:
     dotenv "^10.0.0"
 
-"@artsy/palette-charts@36.3.0":
-  version "36.3.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-36.3.0.tgz#465ce8ade88a577705d91f42fcca930423887929"
-  integrity sha512-mhuVVvzkbm9ClR9XLYBiKcS84odCxSlqtHfoUnQF+gkmcCCLRqFRkALdM/rfyDDeCEqGteP3e0bDr3/mntnSgQ==
+"@artsy/palette-charts@36.3.2":
+  version "36.3.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette-charts/-/palette-charts-36.3.2.tgz#3eac6ee2942ed730fa06a91e6e6338699c5379ed"
+  integrity sha512-DZeRf5bNWdzJ0nXDj0NX6a88yWmiLuDtTxo7BGGCrfd7fVRWFRMQ4OxVclgHbyGBDckRfYAMCZCvjVrMEMh2jw==
   dependencies:
-    "@artsy/palette" "^37.3.0"
+    "@artsy/palette" "^37.3.2"
     "@seznam/compose-react-refs" "^1.0.6"
     "@styled-system/theme-get" "^5.1.2"
     d3-interpolate "^1.3.2"
@@ -108,10 +108,10 @@
   resolved "https://registry.yarnpkg.com/@artsy/palette-tokens/-/palette-tokens-5.1.0.tgz#df546dda1aec2dbf631a816b047301333459aa2a"
   integrity sha512-dBx1hkjTBQ460L8DTMou+vXNOaD1DAApt6UYGTSMVSfXX0/AE8ZJpPx0U3y2t20wNBPzIoYpDBusJ3vRFKrZzQ==
 
-"@artsy/palette@37.3.0", "@artsy/palette@^37.3.0":
-  version "37.3.0"
-  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-37.3.0.tgz#930df3d9697800c0aa8e7b01a47cfb56c84b9245"
-  integrity sha512-DZXE7ili3g73cOAG+XXDQZyWx+bBjOjWg5Bkt77+BhBdSems/jHBcJ8vGvvZ0l7heVcYvU7B8W11NNYBSCkhAw==
+"@artsy/palette@37.3.2", "@artsy/palette@^37.3.2":
+  version "37.3.2"
+  resolved "https://registry.yarnpkg.com/@artsy/palette/-/palette-37.3.2.tgz#aff4ee0b5123644f79db40926dce0e296e5da802"
+  integrity sha512-JF+uYCdW5xUpC7/XlPvExC/5pIjzOF2b442ScRjqp1DYVX9VxYTsKUYalIVT5ZF2X3q814Kv43ZNQvIceQPSLw==
   dependencies:
     "@artsy/icons" "^3.2.2"
     "@artsy/palette-tokens" "^5.1.0"

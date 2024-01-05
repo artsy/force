@@ -280,6 +280,9 @@ type Alert {
 
   # A type-specific ID.
   internalID: ID!
+
+  # Human-friendly labels that are added by Metaphysics to the upstream SearchCriteria type coming from Gravity
+  labels: [SearchCriteriaLabel]!
   materialsTerms: [String]
   priceRange: String
   summary: JSON
@@ -2458,6 +2461,7 @@ type Artwork implements Node & Searchable & Sellable {
   priceCurrency: String
   priceIncludesTax: Boolean
   priceIncludesTaxDisplay: String
+  priceListed: Float
 
   # The price paid for the artwork in a user's 'my collection'
   pricePaid: Money
@@ -9364,9 +9368,6 @@ type Fair implements EntityWithFilterArtworksConnectionInterface & Node {
   # Are we currently in the fair's active period?
   isActive: Boolean
   isPublished: Boolean
-
-  # Have we indexed this fair's artworks to tineye?
-  isReverseImageSearchEnabled: Boolean!
   links(format: Format): String
   location: Location
   marketingCollections(size: Int): [MarketingCollection]!
@@ -10992,17 +10993,6 @@ type Image {
   url(version: [String]): String
   versions: [String]
   width: Int
-}
-
-type ImageSearch {
-  # File stream transfer encoding
-  encoding: String!
-
-  # File name
-  filename: String!
-
-  # File MIME type. Provided by the client and can’t be trusted
-  mimetype: String!
 }
 
 type ImageURLs {
@@ -15480,12 +15470,6 @@ type Query {
   ): ArtistConnection
   departments: [Department!]!
 
-  # Get an image info
-  doNotUseImageSearch(
-    # Image file
-    image: Upload!
-  ): ImageSearch
-
   # A namespace external partners (provided by Galaxy)
   external: External!
 
@@ -15986,12 +15970,6 @@ type Query {
   # A requested location
   requestLocation(ip: String): RequestLocation
 
-  # Search for matching artworks by image
-  reverseImageSearch(
-    # Image file
-    image: Upload!
-  ): ReverseImageSearchResults
-
   # A Sale
   sale(
     # The slug or ID of the Sale
@@ -16091,6 +16069,9 @@ type Query {
   show(
     # The slug or ID of the Show
     id: String!
+
+    # Include shows that are no longer running/active (defaults to false)
+    includeAllShows: Boolean = false
   ): Show
 
   # A list of Shows
@@ -16432,42 +16413,6 @@ type ResizedImageUrl {
   srcSet: String!
   url: String!
   width: Int
-}
-
-type ReverseImageSearchResult {
-  artwork: Artwork
-
-  # The matching collection image’s file path
-  filepath: String!
-
-  # How much of the query image’s fingerprint overlaps the collection image’s fingerprint, as a percentage
-  matchPercent: Float!
-
-  # Location of the matching area in the first image
-  queryMatchRect: ReverseImageSearchResultMatchRect!
-
-  # How much of the query image overlaps the collection image, as a percentage
-  queryOverlapPercent: Float!
-
-  # How closely the query image matches the collection image
-  score: Float!
-
-  # Location of the matching area in the second image
-  targetMatchRect: ReverseImageSearchResultMatchRect!
-
-  # How much of the collection image overlaps the query image, as a percentage
-  targetOverlapPercent: Float!
-}
-
-type ReverseImageSearchResultMatchRect {
-  bottom: Float!
-  left: Float!
-  right: Float!
-  top: Float!
-}
-
-type ReverseImageSearchResults {
-  results: [ReverseImageSearchResult]!
 }
 
 # The conditions for uploading assets to media.artsy.net
@@ -17665,9 +17610,6 @@ type Show implements EntityWithFilterArtworksConnectionInterface & Node {
 
   # Is it a show provided for historical reference?
   isReference: Boolean
-
-  # Have we indexed this show's artworks to tineye?
-  isReverseImageSearchEnabled: Boolean!
 
   # Is it an outsourced local discovery stub show?
   isStubShow: Boolean
@@ -19163,9 +19105,6 @@ type UpdateViewingRoomSubsectionsPayload {
   subsections: [ViewingRoomSubsection!]!
 }
 
-# The `Upload` scalar type represents a file upload.
-scalar Upload
-
 type User implements Node {
   accessiblePropertiesConnection(
     after: String
@@ -20147,12 +20086,6 @@ type Viewer {
   ): ArtistConnection
   departments: [Department!]!
 
-  # Get an image info
-  doNotUseImageSearch(
-    # Image file
-    image: Upload!
-  ): ImageSearch
-
   # A namespace external partners (provided by Galaxy)
   external: External!
 
@@ -20594,12 +20527,6 @@ type Viewer {
   # A requested location
   requestLocation(ip: String): RequestLocation
 
-  # Search for matching artworks by image
-  reverseImageSearch(
-    # Image file
-    image: Upload!
-  ): ReverseImageSearchResults
-
   # A Sale
   sale(
     # The slug or ID of the Sale
@@ -20699,6 +20626,9 @@ type Viewer {
   show(
     # The slug or ID of the Show
     id: String!
+
+    # Include shows that are no longer running/active (defaults to false)
+    includeAllShows: Boolean = false
   ): Show
 
   # A list of Shows

@@ -212,8 +212,8 @@ describe("Payment", () => {
       message: "Sorry, the work is no longer available.",
     })
     // @ts-expect-error PLEASE_FIX_ME_STRICT_NULL_CHECK_MIGRATION
-    const artistId = testOrder.lineItems.edges[0].node.artwork.artists[0].slug
-    expect(window.location.assign).toHaveBeenCalledWith(`/artist/${artistId}`)
+    const artworkId = testOrder.lineItems.edges[0].node.artwork.slug
+    expect(pushMock).toHaveBeenCalledWith(`/artwork/${artworkId}`)
   })
 
   it("shows a custom error modal with when the payment picker returns a normal error", async () => {

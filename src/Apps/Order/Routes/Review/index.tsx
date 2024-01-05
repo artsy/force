@@ -316,10 +316,7 @@ export const ReviewRoute: FC<ReviewProps> = props => {
           title: title,
           message: message,
         })
-        const artistId = getArtistId()
-        if (artistId) {
-          routeToArtistPage()
-        }
+        routeToArtworkPage()
         break
       }
       case "failed_charge_authorize": {
@@ -459,29 +456,12 @@ export const ReviewRoute: FC<ReviewProps> = props => {
     }
   }
 
-  const getArtistId = () => {
-    return get(
-      props.order,
-      o => o.lineItems?.edges?.[0]?.node?.artwork?.artists?.[0]?.slug
-    )
-  }
-
   const routeToArtworkPage = () => {
     const artworkId = get(
       props.order,
       o => o.lineItems?.edges?.[0]?.node?.artwork?.slug
     )
-    // Don't confirm whether or not you want to leave the page
-    props.route.onTransition = () => null
-    window.location.assign(`/artwork/${artworkId}`)
-  }
-
-  const routeToArtistPage = () => {
-    const artistId = getArtistId()
-
-    // Don't confirm whether or not you want to leave the page
-    props.route.onTransition = () => null
-    window.location.assign(`/artist/${artistId}`)
+    props.router.push(`/artwork/${artworkId}`)
   }
 
   const onChangeOffer = () => {
