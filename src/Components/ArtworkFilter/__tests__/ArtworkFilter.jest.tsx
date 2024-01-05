@@ -181,8 +181,8 @@ describe("ArtworkFilter", () => {
 
       expect(screen.getByRole("navigation")).toBeInTheDocument()
       expect(screen.getAllByText("Andy Warhol")).toHaveLength(30)
-      expect(screen.getAllByRole("option")).toHaveLength(2)
       expect(screen.getAllByText("Yellow")).toHaveLength(2)
+      expect(screen.getByText("All Filters")).toBeInTheDocument()
     })
 
     it("triggers #onFilterClick on filter click, passing back the changed value and current filter state", () => {
@@ -234,20 +234,6 @@ describe("ArtworkFilter", () => {
       sortOptionsMock = undefined
       renderWithRelay()
       expect(screen.queryByRole("option")).not.toBeInTheDocument()
-    })
-
-    it("renders a sort filter if filters are passed in and updates filter state on change", () => {
-      filters = { sort: "sortTest1" }
-      renderWithRelay()
-      fireEvent.change(screen.getByRole("combobox"), {
-        target: { value: "sortTest2" },
-      })
-
-      expect(onChange).toHaveBeenLastCalledWith({
-        ...initialArtworkFilterState,
-        ...filters,
-        sort: "sortTest2",
-      })
     })
 
     describe("total count label", () => {

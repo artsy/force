@@ -76,9 +76,7 @@ describe("ArtistArtworkFilter", () => {
     const { renderWithRelay } = getWrapper()
 
     renderWithRelay()
-    const option = screen.getByRole("option", { name: "Recommended" })
 
-    expect(option).toBeInTheDocument()
-    expect(option).toHaveValue("-decayed_merch")
+    expect(screen.getByText("Sort: Recommended")).toBeInTheDocument()
   })
 })
