@@ -7,9 +7,9 @@ import { markNotificationsAsSeen } from "./Mutations/markNotificationsAsSeen"
 import { useSystemContext } from "System/useSystemContext"
 import createLogger from "Utils/logger"
 import { NotificationsContextProvider } from "Components/Notifications/useNotificationsContext"
-import { NotificationQueryRenderer } from "Apps/Notifications/Notification"
 import { NotificationsListQueryRenderer } from "Components/Notifications/NotificationsList"
 import { __internal__useMatchMedia } from "Utils/Hooks/useMatchMedia"
+import { NotificationQueryRenderer } from "Components/Notifications/Notification"
 
 const logger = createLogger("Notifications")
 

@@ -2,7 +2,7 @@ import { FullBleed } from "@artsy/palette"
 import { MetaTags } from "Components/MetaTags"
 import { createFragmentContainer, graphql } from "react-relay"
 import { NotificationApp_me$data } from "__generated__/NotificationApp_me.graphql"
-import { NotificationFragmentContainer } from "Apps/Notifications/Notification"
+import { NotificationFragmentContainer } from "Components/Notifications/Notification"
 
 interface NotificationAppProps {
   me: NotificationApp_me$data

@@ -25,7 +25,11 @@ const Notification: React.FC<NotificationProps> = ({ me }) => {
   const { notification } = me
 
   if (!notification) {
-    return null
+    return (
+      <Text variant="sm-display" px={2} py={4}>
+        There is nothing to show.
+      </Text>
+    )
   }
 
   const currentArtworks = extractNodes(notification.artworks)
