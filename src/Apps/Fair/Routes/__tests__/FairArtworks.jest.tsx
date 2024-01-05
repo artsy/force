@@ -18,12 +18,6 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-jest.mock("Components/ArtworkFilter/useRevisedArtworkFilters", () => ({
-  useRevisedArtworkFilters: () => ({
-    enabled: false,
-  }),
-}))
-
 describe("FairArtworks", () => {
   const trackEvent = jest.fn()
 

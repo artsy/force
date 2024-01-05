@@ -280,6 +280,9 @@ type Alert {
 
   # A type-specific ID.
   internalID: ID!
+
+  # Human-friendly labels that are added by Metaphysics to the upstream SearchCriteria type coming from Gravity
+  labels: [SearchCriteriaLabel]!
   materialsTerms: [String]
   priceRange: String
   summary: JSON
@@ -16066,6 +16069,9 @@ type Query {
   show(
     # The slug or ID of the Show
     id: String!
+
+    # Include shows that are no longer running/active (defaults to false)
+    includeAllShows: Boolean = false
   ): Show
 
   # A list of Shows
@@ -20620,6 +20626,9 @@ type Viewer {
   show(
     # The slug or ID of the Show
     id: String!
+
+    # Include shows that are no longer running/active (defaults to false)
+    includeAllShows: Boolean = false
   ): Show
 
   # A list of Shows

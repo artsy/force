@@ -11,10 +11,8 @@ import {
   BoxProps,
   Button,
   Clickable,
-  Column,
   Flex,
   FullBleed,
-  GridColumns,
   HorizontalOverflow,
   Pill,
   Spacer,
@@ -25,7 +23,6 @@ import { ArtworkFilterDrawer } from "Components/ArtworkFilter/ArtworkFilterDrawe
 import { ArtworkFilterExpandableSort } from "Components/ArtworkFilter/ArtworkFilters/ArtworkFilterExpandableSort"
 import { useArtworkGridContext } from "Components/ArtworkGrid/ArtworkGridContext"
 import { ProgressiveOnboardingAlertSelectFilter } from "Components/ProgressiveOnboarding/ProgressiveOnboardingAlertSelectFilter"
-import { ActiveFilterPills } from "Components/SavedSearchAlert/Components/ActiveFilterPills"
 import { Sticky } from "Components/Sticky"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useSystemContext } from "System/useSystemContext"
@@ -45,7 +42,6 @@ import {
 } from "./ArtworkFilterContext"
 import { ArtworkFilterMobileOverlay } from "./ArtworkFilterMobileOverlay"
 import { ArtworkFilters } from "./ArtworkFilters"
-import { ArtworkSortFilter } from "./ArtworkFilters/ArtworkSortFilter"
 import { ArtworkQueryFilter } from "./ArtworkQueryFilter"
 import { allowedFilters } from "./Utils/allowedFilters"
 import { getTotalSelectedFiltersCount } from "./Utils/getTotalSelectedFiltersCount"
@@ -55,7 +51,6 @@ import {
   ARTWORK_FILTERS_QUICK_FIELDS,
   ArtworkFiltersQuick,
 } from "Components/ArtworkFilter/ArtworkFiltersQuick"
-import { useRevisedArtworkFilters } from "Components/ArtworkFilter/useRevisedArtworkFilters"
 import { AppContainer } from "Apps/Components/AppContainer"
 import { HorizontalPadding } from "Apps/Components/HorizontalPadding"
 
@@ -152,8 +147,6 @@ export const BaseArtworkFilter: React.FC<
   const total = viewer.filtered_artworks?.counts?.total ?? 0
   const totalCountLabel = getTotalCountLabel({ total, isAuctionArtwork })
 
-  const { enabled: isRevisedArtworkFiltersEnabled } = useRevisedArtworkFilters()
-
   // Count of all filters, sans `sort`
   const revisedArtworkFiltersCount = useMemo(() => {
     return Object.entries(filterContext.selectedFiltersCounts || {}).reduce(
@@ -232,9 +225,7 @@ export const BaseArtworkFilter: React.FC<
   const fetchResults = () => {
     setIsLoading(true)
 
-    if (isRevisedArtworkFiltersEnabled) {
-      jumpTo("artworkFilter")
-    }
+    jumpTo("artworkFilter")
 
     const keyword =
       filterContext.filters?.term || filterContext.filters?.keyword
@@ -265,151 +256,67 @@ export const BaseArtworkFilter: React.FC<
 
       {/* Mobile Artwork Filter */}
       <Media at="xs">
-        {isRevisedArtworkFiltersEnabled ? (
-          // New mobile filters
-          <>
-            <Sticky>
-              <FullBleed backgroundColor="white100">
-                <Flex
-                  justifyContent="space-between"
+        <Sticky>
+          <FullBleed backgroundColor="white100">
+            <Flex
+              justifyContent="space-between"
+              alignItems="center"
+              p={2}
+              gap={2}
+              borderBottom="1px solid"
+              borderColor="black10"
+            >
+              <ProgressiveOnboardingAlertSelectFilter placement="bottom-start">
+                <Clickable
+                  onClick={handleOpen}
+                  display="flex"
                   alignItems="center"
-                  p={2}
-                  gap={2}
-                  borderBottom="1px solid"
-                  borderColor="black10"
+                  gap={0.5}
                 >
-                  <ProgressiveOnboardingAlertSelectFilter placement="bottom-start">
+                  <FilterIcon />
+                  <Text variant="xs">
+                    Sort & Filter
+                    {appliedFiltersTotalCount > 0 && (
+                      <Box as="span" color="brand">
+                        {" "}
+                        • {appliedFiltersTotalCount}
+                      </Box>
+                    )}
+                  </Text>
+                </Clickable>
+
+                {isOpen && (
+                  <ArtworkFilterMobileOverlay onClose={handleClose}>
+                    <ArtworkFilterExpandableSort />
+
+                    <Spacer y={4} />
+
+                    {Filters ? Filters : <ArtworkFilters user={user} />}
+                  </ArtworkFilterMobileOverlay>
+                )}
+              </ProgressiveOnboardingAlertSelectFilter>
+
+              <ArtworkFilterCreateAlert
+                renderButton={props => {
+                  return (
                     <Clickable
-                      onClick={handleOpen}
                       display="flex"
                       alignItems="center"
                       gap={0.5}
+                      {...props}
                     >
-                      <FilterIcon />
-                      <Text variant="xs">
-                        Sort & Filter
-                        {appliedFiltersTotalCount > 0 && (
-                          <Box as="span" color="brand">
-                            {" "}
-                            • {appliedFiltersTotalCount}
-                          </Box>
-                        )}
-                      </Text>
+                      <BellStrokeIcon />
+
+                      <Text variant="xs">Create Alert</Text>
                     </Clickable>
+                  )
+                }}
+              />
+            </Flex>
+          </FullBleed>
+        </Sticky>
 
-                    {isOpen && (
-                      <ArtworkFilterMobileOverlay onClose={handleClose}>
-                        <ArtworkFilterExpandableSort />
-
-                        <Spacer y={4} />
-
-                        {Filters ? Filters : <ArtworkFilters user={user} />}
-                      </ArtworkFilterMobileOverlay>
-                    )}
-                  </ProgressiveOnboardingAlertSelectFilter>
-
-                  <ArtworkFilterCreateAlert
-                    renderButton={props => {
-                      return (
-                        <Clickable
-                          display="flex"
-                          alignItems="center"
-                          gap={0.5}
-                          {...props}
-                        >
-                          <BellStrokeIcon />
-
-                          <Text variant="xs">Create Alert</Text>
-                        </Clickable>
-                      )
-                    }}
-                  />
-                </Flex>
-              </FullBleed>
-            </Sticky>
-
-            <Spacer y={4} />
-          </>
-        ) : (
-          // Old mobile filters
-          <>
-            <Sticky>
-              {({ stuck }) => {
-                return (
-                  <FullBleed backgroundColor="white100">
-                    <Flex
-                      justifyContent="space-between"
-                      alignItems="center"
-                      py={1}
-                      px={2}
-                      gap={2}
-                      {...(stuck
-                        ? {
-                            borderBottom: "1px solid",
-                            borderColor: "black10",
-                          }
-                        : {})}
-                    >
-                      <ProgressiveOnboardingAlertSelectFilter placement="bottom-start">
-                        <Button
-                          size="small"
-                          onClick={handleOpen}
-                          Icon={FilterIcon}
-                        >
-                          Filter
-                          {appliedFiltersTotalCount > 0
-                            ? ` • ${appliedFiltersTotalCount}`
-                            : ""}
-                        </Button>
-
-                        {isOpen && (
-                          <ArtworkFilterMobileOverlay onClose={handleClose}>
-                            <Box
-                              overflowY="scroll"
-                              height="100%"
-                              data-testid="FiltersWithScrollIntoView"
-                            >
-                              {Filters ? (
-                                Filters
-                              ) : (
-                                <ArtworkFilters user={user} />
-                              )}
-                            </Box>
-                          </ArtworkFilterMobileOverlay>
-                        )}
-                      </ProgressiveOnboardingAlertSelectFilter>
-
-                      <ArtworkSortFilter />
-                    </Flex>
-                  </FullBleed>
-                )
-              }}
-            </Sticky>
-
-            <Spacer y={2} />
-
-            <ActiveFilterPills />
-
-            <Spacer y={1} />
-
-            <ArtworkFilterCreateAlert
-              renderButton={props => {
-                return (
-                  <Button
-                    variant="secondaryBlack"
-                    size="small"
-                    Icon={BellStrokeIcon}
-                    {...props}
-                  >
-                    Create Alert
-                  </Button>
-                )
-              }}
-            />
-
-            <Spacer y={2} />
-          </>
-        )}
+        <Spacer y={4} />
 
         <Text variant="sm" fontWeight="bold">
           {totalCountLabel}
@@ -427,167 +334,99 @@ export const BaseArtworkFilter: React.FC<
 
       {/* Desktop Artwork Filter */}
       <Media greaterThan="xs">
-        {isRevisedArtworkFiltersEnabled ? (
-          // New desktop filters
-          <>
-            {/* Negative offset for positive sticky padding */}
-            <Spacer y={-1} />
+        {/* Negative offset for positive sticky padding */}
+        <Spacer y={-1} />
 
-            <Sticky bottomBoundary="#Sticky__ArtworkFilter">
-              {({ stuck }) => {
-                return (
-                  <FullBleed backgroundColor="white100">
-                    <AppContainer>
-                      <HorizontalPadding>
-                        <Flex
-                          alignItems="center"
-                          justifyContent="space-between"
-                          gap={2}
-                          py={1}
-                          bg="white100"
-                        >
-                          <HorizontalOverflow minWidth={0}>
-                            <Flex gap={1}>
-                              <Flex gap={2}>
-                                <ArtworkFilterCreateAlert
-                                  renderButton={props => {
-                                    return (
-                                      <Button
-                                        variant={
-                                          revisedArtworkFiltersCount > 0
-                                            ? "primaryBlack"
-                                            : "secondaryBlack"
-                                        }
-                                        size="small"
-                                        Icon={BellStrokeIcon}
-                                        {...props}
-                                      >
-                                        Create Alert
-                                      </Button>
-                                    )
-                                  }}
-                                >
-                                  <Box width="1px" bg="black30" />
-                                </ArtworkFilterCreateAlert>
+        <Sticky bottomBoundary="#Sticky__ArtworkFilter">
+          {({ stuck }) => {
+            return (
+              <FullBleed backgroundColor="white100">
+                <AppContainer>
+                  <HorizontalPadding>
+                    <Flex
+                      alignItems="center"
+                      justifyContent="space-between"
+                      gap={2}
+                      py={1}
+                      bg="white100"
+                    >
+                      <HorizontalOverflow minWidth={0}>
+                        <Flex gap={1}>
+                          <Flex gap={2}>
+                            <ArtworkFilterCreateAlert
+                              renderButton={props => {
+                                return (
+                                  <Button
+                                    variant={
+                                      revisedArtworkFiltersCount > 0
+                                        ? "primaryBlack"
+                                        : "secondaryBlack"
+                                    }
+                                    size="small"
+                                    Icon={BellStrokeIcon}
+                                    {...props}
+                                  >
+                                    Create Alert
+                                  </Button>
+                                )
+                              }}
+                            >
+                              <Box width="1px" bg="black30" />
+                            </ArtworkFilterCreateAlert>
 
-                                <Pill
-                                  Icon={FilterIcon}
-                                  size="small"
-                                  onClick={handleOpen}
-                                >
-                                  All Filters
-                                  {extendedFiltersCount > 0 && (
-                                    <Box as="span" color="brand">
-                                      {" "}
-                                      • {extendedFiltersCount}
-                                    </Box>
-                                  )}
-                                </Pill>
-                              </Flex>
+                            <Pill
+                              Icon={FilterIcon}
+                              size="small"
+                              onClick={handleOpen}
+                            >
+                              All Filters
+                              {extendedFiltersCount > 0 && (
+                                <Box as="span" color="brand">
+                                  {" "}
+                                  • {extendedFiltersCount}
+                                </Box>
+                              )}
+                            </Pill>
+                          </Flex>
 
-                              <ArtworkFiltersQuick
-                                {...(stuck ? { offset: 20 } : {})}
-                              />
-                            </Flex>
-                          </HorizontalOverflow>
-
-                          <ArtworkFilterSort
+                          <ArtworkFiltersQuick
                             {...(stuck ? { offset: 20 } : {})}
                           />
-
-                          <ArtworkFilterDrawer
-                            open={isOpen}
-                            onClose={handleClose}
-                          >
-                            {Filters ? Filters : <ArtworkFilters user={user} />}
-                          </ArtworkFilterDrawer>
                         </Flex>
-                      </HorizontalPadding>
-                    </AppContainer>
-                  </FullBleed>
-                )
-              }}
-            </Sticky>
+                      </HorizontalOverflow>
 
-            <Spacer y={2} />
+                      <ArtworkFilterSort {...(stuck ? { offset: 20 } : {})} />
 
-            <ArtworkFilterActiveFilters />
+                      <ArtworkFilterDrawer open={isOpen} onClose={handleClose}>
+                        {Filters ? Filters : <ArtworkFilters user={user} />}
+                      </ArtworkFilterDrawer>
+                    </Flex>
+                  </HorizontalPadding>
+                </AppContainer>
+              </FullBleed>
+            )
+          }}
+        </Sticky>
 
-            <Spacer y={4} />
+        <Spacer y={2} />
 
-            <Text variant="xs" flexShrink={0}>
-              {totalCountLabel}:
-            </Text>
+        <ArtworkFilterActiveFilters />
 
-            <Spacer y={2} />
+        <Spacer y={4} />
 
-            {children || (
-              <ArtworkFilterArtworkGrid
-                filtered_artworks={viewer.filtered_artworks}
-                isLoading={isLoading}
-                offset={offset}
-                columnCount={[2, 3, 3, 4]}
-              />
-            )}
-          </>
-        ) : (
-          // Old desktop filters
-          <GridColumns>
-            <Column span={3}>
-              <Text variant="xs">Filter by</Text>
-            </Column>
+        <Text variant="xs" flexShrink={0}>
+          {totalCountLabel}:
+        </Text>
 
-            <Column span={6}>
-              <Text variant="sm" fontWeight="bold">
-                {totalCountLabel}:
-              </Text>
-            </Column>
+        <Spacer y={2} />
 
-            <Column span={3}>
-              <ArtworkSortFilter />
-            </Column>
-
-            <Column span={3}>
-              {Filters ? Filters : <ArtworkFilters user={user} />}
-            </Column>
-
-            <Column
-              span={9}
-              // Fix for issue in Firefox where contents overflow container.
-              // Safe to remove once artwork masonry uses CSS grid.
-              width="100%"
-            >
-              <Flex gap={1}>
-                <ActiveFilterPills />
-
-                <ArtworkFilterCreateAlert
-                  renderButton={props => {
-                    return (
-                      <Button
-                        variant="secondaryBlack"
-                        size="small"
-                        Icon={BellStrokeIcon}
-                        {...props}
-                      >
-                        Create Alert
-                      </Button>
-                    )
-                  }}
-                />
-              </Flex>
-
-              <Spacer y={2} />
-
-              {children || (
-                <ArtworkFilterArtworkGrid
-                  filtered_artworks={viewer.filtered_artworks}
-                  isLoading={isLoading}
-                  offset={offset}
-                  columnCount={[2, 2, 2, 3]}
-                />
-              )}
-            </Column>
-          </GridColumns>
+        {children || (
+          <ArtworkFilterArtworkGrid
+            filtered_artworks={viewer.filtered_artworks}
+            isLoading={isLoading}
+            offset={offset}
+            columnCount={[2, 3, 3, 4]}
+          />
         )}
       </Media>
     </Box>
