@@ -10,36 +10,24 @@ const IMMINENT_TIME = 5 // hours
 const calculateTime = (endTime: string, includeSeconds: boolean) => {
   const now = new Date()
   const expiration = new Date(endTime)
+  const timeDiff = differenceInSeconds(expiration, now)
 
+  const ONE_DAY = 86400 // 24 hours * 60 minutes * 60 seconds
+
+  const days = Math.floor(timeDiff / ONE_DAY)
+  const hours = Math.floor((timeDiff % ONE_DAY) / (60 * 60))
+  const minutes = Math.floor((timeDiff % (60 * 60)) / 60)
+  const seconds = Math.floor(timeDiff % 60)
+
+  if (timeDiff <= 0) {
+    return "Expired"
+  }
   if (!includeSeconds) {
-    const timeDiff = differenceInMinutes(expiration, now)
-
-    const ONE_DAY = 1440 // 24 hours * 60 minutes
-
-    const days = Math.floor(timeDiff / ONE_DAY)
-    const hours = Math.floor((timeDiff % ONE_DAY) / 60)
-    const minutes = Math.floor(timeDiff % 60)
-
-    if (timeDiff <= 0) {
-      return "Expired"
-    }
     if (timeDiff >= ONE_DAY) {
       return `${days}d ${hours}h`
     }
     return `${hours}h ${minutes}m`
   } else {
-    const timeDiff = differenceInSeconds(expiration, now)
-
-    const ONE_DAY = 86400 // 24 hours * 60 minutes * 60 seconds
-
-    const days = Math.floor(timeDiff / ONE_DAY)
-    const hours = Math.floor((timeDiff % ONE_DAY) / (60 * 60))
-    const minutes = Math.floor((timeDiff % (60 * 60)) / 60)
-    const seconds = Math.floor(timeDiff % 60)
-
-    if (timeDiff <= 0) {
-      return "Expired"
-    }
     if (timeDiff >= ONE_DAY) {
       return `${days}d ${hours}h ${minutes}m ${seconds}s`
     }
