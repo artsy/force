@@ -83,7 +83,7 @@ describe("PartnerOfferTimerItem", () => {
     })
     await flushPromiseQueue()
 
-    expect(screen.getByText("1d 23h 59m 59s left")).toBeInTheDocument()
+    expect(screen.getByText("1d 23h left")).toBeInTheDocument()
     expect(screen.getByText(/Purchase by.+E[DS]T$/)).toBeInTheDocument()
   })
 })

@@ -22,15 +22,12 @@ const calculateTime = (endTime: string, includeSeconds: boolean) => {
   if (timeDiff <= 0) {
     return "Expired"
   }
+  if (timeDiff >= ONE_DAY) {
+    return `${days}d ${hours}h`
+  }
   if (!includeSeconds) {
-    if (timeDiff >= ONE_DAY) {
-      return `${days}d ${hours}h`
-    }
     return `${hours}h ${minutes}m`
   } else {
-    if (timeDiff >= ONE_DAY) {
-      return `${days}d ${hours}h ${minutes}m ${seconds}s`
-    }
     return `${hours}h ${minutes}m ${seconds}s`
   }
 }
