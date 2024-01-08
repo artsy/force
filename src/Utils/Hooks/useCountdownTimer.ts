@@ -5,8 +5,6 @@ import {
   differenceInSeconds,
 } from "date-fns"
 
-const IMMINENT_TIME = 5 // hours
-
 const calculateTime = (endTime: string, includeSeconds: boolean) => {
   const now = new Date()
   const expiration = new Date(endTime)
@@ -32,10 +30,10 @@ const calculateTime = (endTime: string, includeSeconds: boolean) => {
   }
 }
 
-const calculateImminent = (endTime: string) =>
+const calculateImminent = (endTime: string, imminentTime: number) =>
   differenceInHours(new Date(endTime), new Date(), {
     roundingMethod: "ceil",
-  }) <= IMMINENT_TIME
+  }) <= imminentTime
 
 const calculatePercentage = (startTime: string, endTime: string) => {
   const now = new Date()
@@ -60,12 +58,14 @@ interface TimerProps {
   startTime: string
   endTime: string
   includeSeconds?: boolean
+  imminentTime?: number // in hours
 }
 
 export const useCountdownTimer = ({
   startTime,
   endTime,
   includeSeconds = false,
+  imminentTime = 5,
 }: TimerProps) => {
   const [remainingTime, setRemainingTime] = useState<RemainingTime>(
     "Calculating time"
@@ -78,7 +78,7 @@ export const useCountdownTimer = ({
   useEffect(() => {
     const timeTillExpiration = calculateTime(endTime, includeSeconds)
     setRemainingTime(timeTillExpiration)
-    setIsImminent(calculateImminent(endTime))
+    setIsImminent(calculateImminent(endTime, imminentTime))
     setPercentComplete(calculatePercentage(startTime, endTime))
 
     const interval = setInterval(() => {
@@ -88,13 +88,13 @@ export const useCountdownTimer = ({
         return
       }
       setRemainingTime(timeTillExpiration)
-      setIsImminent(calculateImminent(endTime))
+      setIsImminent(calculateImminent(endTime, imminentTime))
       setPercentComplete(calculatePercentage(startTime, endTime))
       if (timeTillExpiration === "Expired") clearInterval(interval)
     }, ONE_MINUTE)
 
     return () => clearInterval(interval)
-  }, [startTime, endTime, remainingTime, includeSeconds])
+  }, [startTime, endTime, remainingTime, includeSeconds, imminentTime])
 
   return { remainingTime, isImminent, percentComplete }
 }

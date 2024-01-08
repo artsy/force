@@ -16,11 +16,14 @@ export const PartnerOfferTimerItem: React.FC<{
     ? DateTime.fromISO(endTime).minus({ days: 3 }).toString()
     : ""
 
-  const { remainingTime, percentComplete } = useCountdownTimer({
+  const { remainingTime, percentComplete, isImminent } = useCountdownTimer({
     startTime: startTime,
     endTime: endTime,
     includeSeconds: true,
+    imminentTime: 1,
   })
+
+  const remainingTimeColor = isImminent ? "orange100" : "blue100"
 
   if (remainingTime.match(/^NaN/)) {
     return null
@@ -36,13 +39,13 @@ export const PartnerOfferTimerItem: React.FC<{
 
   return (
     <Box flexDirection="row" textAlign="center">
-      <Text variant="sm" color="blue100" mt={2}>
+      <Text variant="sm" color={remainingTimeColor} mt={2}>
         <StopwatchIcon
           display="inline-block"
           top="0.2rem"
           width={14}
           height={17}
-          fill="blue100"
+          fill={remainingTimeColor}
         />
         {remainingTime} left
       </Text>
