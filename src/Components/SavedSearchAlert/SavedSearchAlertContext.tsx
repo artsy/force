@@ -19,7 +19,7 @@ interface SavedSearchAlertContextProps {
   entity: SavedSearchEntity
   criteria: SearchCriteriaAttributes
   isCriteriaChanged: boolean
-  /** Artwork ID, if the current saved search alert is being set from an artwork */
+  /** Artwork ID, if the current alert is being set from an artwork */
   currentArtworkID?: string
 
   removeCriteriaValue: (
@@ -40,7 +40,7 @@ export interface SavedSearchAlertContextProviderProps {
   criteria: SearchCriteriaAttributes
   metric?: Metric
   artistSlug?: string
-  /** Artwork ID, if the current saved search alert is being set from an artwork */
+  /** Artwork ID, if the current alert is being set from an artwork */
   currentArtworkID?: string
 }
 

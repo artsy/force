@@ -25,7 +25,7 @@ export interface SavedSearchCreateAlertButtonContainerProps {
   metric?: Metric
   aggregations?: Aggregations
   authDialogOptions: Omit<ShowAuthDialogOptions, "mode">
-  /** Artwork ID, if the current saved search alert is being set from an artwork */
+  /** Artwork ID, if the current alert is being set from an artwork */
   currentArtworkID?: string
 }
 
