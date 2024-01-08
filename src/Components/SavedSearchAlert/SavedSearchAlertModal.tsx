@@ -58,7 +58,7 @@ export interface SavedSearchAlertFormContainerProps
   criteria: SearchCriteriaAttributes
   metric?: Metric
   aggregations: Aggregations | undefined
-  /** Artwork ID, if the current saved search alert is being set from an artwork */
+  /** Artwork ID, if the current alert is being set from an artwork */
   currentArtworkID?: string
   onComplete?: () => void
 }
@@ -115,11 +115,12 @@ export const SavedSearchAlertModal: FC<SavedSearchAlertFormProps> = ({
         userAlertSettings,
         criteria
       )
+
       const result = {
-        id: response.createSavedSearch?.savedSearchOrErrors.internalID!,
+        id: response.createSavedSearch?.savedSearchOrErrors.internalID,
       }
 
-      if (values.hearFromArtsyAdvisor) {
+      if (values.hearFromArtsyAdvisor && result.id) {
         await submitCreateAdvisoryOpportunity({
           variables: {
             input: {
@@ -360,7 +361,9 @@ export const SavedSearchAlertModalContainer: React.FC<SavedSearchAlertFormContai
   )
 
   const handleCreateAlert = (result: SavedSearchAlertMutationResult) => {
-    setSearchCriteriaId(result.id)
+    if (result.id) {
+      setSearchCriteriaId(result.id)
+    }
     onCreateAlert?.(result)
     setStep("CONFIRMATION")
   }
