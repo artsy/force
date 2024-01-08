@@ -34,7 +34,7 @@ export const notificationsRoutes: AppRouteConfig[] = [
     `,
   },
   {
-    path: "/notifications/:id",
+    path: "/notification/:id",
     getComponent: () => NotificationApp,
     onClientSideRender: () => {
       NotificationApp.preload()
