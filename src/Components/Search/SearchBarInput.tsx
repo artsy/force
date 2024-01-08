@@ -177,7 +177,6 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
     })
 
     resetValue()
-    redirect(option.href)
   }
 
   const handleFocus = () => {
@@ -215,6 +214,7 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
     <AutocompleteInput
       forwardRef={ref}
       key={match.location.pathname}
+      value={value}
       placeholder={t`navbar.searchBy`}
       spellCheck={false}
       options={shouldStartSearching(value) ? formattedOptions : []}
@@ -222,7 +222,6 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
       onChange={handleChange}
       onClear={resetValue}
       onSubmit={handleSubmit}
-      onSelect={handleSelect}
       onClick={handleFocus}
       header={
         <SearchInputPillsFragmentContainer
@@ -243,7 +242,11 @@ const SearchBarInput: FC<SearchBarInputProps> = ({
         }
 
         return (
-          <SuggestionItem query={value} option={option} onClick={resetValue} />
+          <SuggestionItem
+            query={value}
+            option={option}
+            onClick={handleSelect}
+          />
         )
       }}
       dropdownMaxHeight={`calc(100vh - ${DESKTOP_NAV_BAR_TOP_TIER_HEIGHT}px - 90px)`}
