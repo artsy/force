@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<6755219a4f0604ea84046af45c9f0d15>>
+ * @generated SignedSource<<b4b81a120a8ddba4d04f593b696d6fae>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -32,12 +32,6 @@ var v0 = [
 v1 = {
   "enumValues": null,
   "nullable": false,
-  "plural": false,
-  "type": "String"
-},
-v2 = {
-  "enumValues": null,
-  "nullable": true,
   "plural": false,
   "type": "String"
 };
@@ -111,13 +105,6 @@ return {
             "alias": null,
             "args": null,
             "kind": "ScalarField",
-            "name": "stateUpdatedAt",
-            "storageKey": null
-          },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
             "name": "id",
             "storageKey": null
           }
@@ -127,7 +114,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "e240a59ab4afd271fb9fdfccb1115d39",
+    "cacheID": "131f22d54f682fd77a2c7c5a973b1ba6",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -162,13 +149,17 @@ return {
           "plural": false,
           "type": "ID"
         },
-        "order.stateExpiresAt": (v2/*: any*/),
-        "order.stateUpdatedAt": (v2/*: any*/)
+        "order.stateExpiresAt": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "String"
+        }
       }
     },
     "name": "PartnerOfferTimerItemTestQuery",
     "operationKind": "query",
-    "text": "query PartnerOfferTimerItemTestQuery {\n  order: commerceOrder(id: \"123\") {\n    __typename\n    ...PartnerOfferTimerItem_order\n    id\n  }\n}\n\nfragment PartnerOfferTimerItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  displayState\n  stateExpiresAt\n  stateUpdatedAt\n}\n"
+    "text": "query PartnerOfferTimerItemTestQuery {\n  order: commerceOrder(id: \"123\") {\n    __typename\n    ...PartnerOfferTimerItem_order\n    id\n  }\n}\n\nfragment PartnerOfferTimerItem_order on CommerceOrder {\n  __isCommerceOrder: __typename\n  displayState\n  stateExpiresAt\n}\n"
   }
 };
 })();
