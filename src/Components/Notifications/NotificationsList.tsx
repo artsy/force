@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Join, Separator, THEME, Text } from "@artsy/palette"
+import { Box, Button, Flex, Join, Separator, Text } from "@artsy/palette"
 import {
   createPaginationContainer,
   graphql,
