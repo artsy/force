@@ -72,5 +72,5 @@ export interface HearFromArtsyAdvisorFormValues {
 }
 
 export interface SavedSearchAlertMutationResult {
-  id: string
+  id?: string
 }

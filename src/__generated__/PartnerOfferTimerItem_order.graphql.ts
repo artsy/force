@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<053e65754ae401fc8d92aa41f5922b5b>>
+ * @generated SignedSource<<2a26283fa16010da080bafa0ef59da68>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -14,7 +14,6 @@ import { FragmentRefs } from "relay-runtime";
 export type PartnerOfferTimerItem_order$data = {
   readonly displayState: CommerceOrderDisplayStateEnum;
   readonly stateExpiresAt: string | null | undefined;
-  readonly stateUpdatedAt: string | null | undefined;
   readonly " $fragmentType": "PartnerOfferTimerItem_order";
 };
 export type PartnerOfferTimerItem_order$key = {
@@ -41,19 +40,12 @@ const node: ReaderFragment = {
       "kind": "ScalarField",
       "name": "stateExpiresAt",
       "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "stateUpdatedAt",
-      "storageKey": null
     }
   ],
   "type": "CommerceOrder",
   "abstractKey": "__isCommerceOrder"
 };
 
-(node as any).hash = "06133f61d1582ce0c3c8890ca9352184";
+(node as any).hash = "09b03612c73375c263a55e9245c003bf";
 
 export default node;
