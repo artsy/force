@@ -1,5 +1,5 @@
 import * as React from "react"
-import { useCallback, useEffect, useState } from "react"
+import { useEffect, useState } from "react"
 import styled from "styled-components"
 import {
   RadioGroup,
@@ -8,8 +8,6 @@ import {
   Clickable,
   usePrevious,
 } from "@artsy/palette"
-import { createRefetchContainer, graphql, RelayRefetchProp } from "react-relay"
-import { SavedAddresses2_me$data } from "__generated__/SavedAddresses2_me.graphql"
 import {
   AddressModal,
   AddressModalAction,
@@ -19,11 +17,8 @@ import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/Components/SavedAd
 import { themeGet } from "@styled-system/theme-get"
 
 import {
-  FulfillmentType,
   FulfillmentValues,
   SavedAddressType,
-  ShipValues,
-  addressWithFallbackValues,
   getAddressByID,
   getDefaultUserAddress,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"
@@ -43,7 +38,6 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
   const orderTracking = useOrderTracking()
   const formikContext = useFormikContext<FulfillmentValues>()
 
-  console.log({ form: formikContext })
   const [
     addressModalAction,
     setAddressModalAction,
@@ -143,6 +137,13 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
     setAddressModalAction(addressModalAction)
   }
 
+  const handleAddressModalSuccess = (address: SavedAddressType) => {
+    // TODO: Check that address is valid?
+    props.onSelect(address)
+    // set save in process before clearing the modal?
+    setAddressModalAction(null)
+  }
+
   /* Effects */
 
   return (
@@ -196,9 +197,7 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
         closeModal={() => {
           setAddressModalAction(null)
         }}
-        onSuccess={(address: SavedAddressType) => {
-          setAddressModalAction(null)
-        }}
+        onSuccess={handleAddressModalSuccess}
       />
       <Spacer y={4} />
     </>

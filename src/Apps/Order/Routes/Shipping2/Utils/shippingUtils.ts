@@ -38,7 +38,7 @@ interface FormMetaValues {
   setAddressAsDefault?: boolean
 }
 
-export type FulfillmentValues = (ShipValues | PickupValues) & {}
+export type FulfillmentValues = ShipValues | PickupValues
 
 export interface ShippingAddressFormValues {
   name: string

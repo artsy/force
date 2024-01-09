@@ -63,11 +63,6 @@ export type UserAddressAction =
       setAsDefault?: boolean
     }
 
-type Helpers = {
-  setFieldError: (field: string, message: string) => void
-  setStatus: (status: { formError: string }) => void
-}
-
 export const useUserAddressUpdates = () => {
   const createSavedAddress = useCreateSavedAddress()
   const updateSavedAddress = useUpdateSavedAddress()
@@ -76,8 +71,7 @@ export const useUserAddressUpdates = () => {
   const shippingContext = useShippingContext()
 
   const handleNewUserAddressUpdates = async (
-    values: FulfillmentValues,
-    helpers: Helpers
+    values: FulfillmentValues
   ): Promise<SavedAddressResult | null> => {
     if (values.fulfillmentType !== FulfillmentType.SHIP) {
       return null
@@ -240,7 +234,7 @@ const getUserAddressActionForAddressFormValues = (
       savedFulfillmentDetails?.fulfillmentType === FulfillmentType.SHIP &&
       !matchAddressFields(
         formAddressAttributes,
-        savedFulfillmentDetails.attributes
+        savedFulfillmentDetails.fulfillmentDetails
       )
     ) {
       const newSavedAddress = getAddressByID(

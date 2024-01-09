@@ -19,7 +19,7 @@ export const useSaveSelectedShippingQuote = (
   const orderTracking = useOrderTracking()
   const shippingContext = useShippingContext()
   const selectShippingQuote = useSelectShippingQuote()
-  const { handleUserAddressUpdates } = useUserAddressUpdates()
+  const { handleNewUserAddressUpdates } = useUserAddressUpdates()
 
   const saveSelectedShippingQuote = async () => {
     if (!shippingContext.state.selectedShippingQuoteId) {
@@ -40,9 +40,8 @@ export const useSaveSelectedShippingQuote = (
         shippingContext.state.fulfillmentDetailsCtx?.values.meta.mode ===
         "new_address"
       ) {
-        await handleUserAddressUpdates(
-          shippingContext.state.fulfillmentDetailsCtx.values,
-          shippingContext.state.fulfillmentDetailsCtx
+        await handleNewUserAddressUpdates(
+          shippingContext.state.fulfillmentDetailsCtx.values
         )
       }
 

@@ -8,7 +8,6 @@ import { extractNodes } from "Utils/extractNodes"
 import { ShippingProps, ShippingStage } from "Apps/Order/Routes/Shipping2"
 import { FormikProps } from "formik"
 import {
-  AddressModalAction,
   FulfillmentValues,
   SavedAddressType,
 } from "Apps/Order/Routes/Shipping2/Utils/shippingUtils"

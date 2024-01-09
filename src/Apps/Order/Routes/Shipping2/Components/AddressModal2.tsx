@@ -29,7 +29,6 @@ import {
   useUserAddressUpdates,
 } from "Apps/Order/Routes/Shipping2/Hooks/useUserAddressUpdates"
 import { CountrySelect } from "Components/CountrySelect"
-import { values } from "lodash"
 
 const logger = createLogger("AddressModal2.tsx")
 
@@ -262,7 +261,7 @@ const AddressModalForm: FC<{
                 title="Full name"
                 placeholder="Full name"
                 id="name"
-                name="name"
+                name="attributes.name"
                 type="text"
                 onChange={handleChange}
                 onBlur={handleBlur}
@@ -273,9 +272,10 @@ const AddressModalForm: FC<{
             <Column span={12}>
               <CountrySelect
                 title="Country"
+                data-testid="AddressModalForm_country"
                 selected={values.attributes.country}
                 onSelect={countryCode => {
-                  setFieldValue("country", countryCode)
+                  setFieldValue("attributes.country", countryCode)
                 }}
                 error={
                   touched.attributes?.country && errors.attributes?.country
@@ -288,7 +288,7 @@ const AddressModalForm: FC<{
               <Input
                 title="Address Line 1"
                 placeholder="Street address"
-                name="addressLine1"
+                name="attributes.addressLine1"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={
@@ -301,8 +301,8 @@ const AddressModalForm: FC<{
             <Column span={12}>
               <Input
                 title="Address Line 2"
-                placeholder="Apt, floor, suite, etc. (optional)"
-                name="addressLine2"
+                placeholder="Apt, floor, suite, etc."
+                name="attributes.addressLine2"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={
@@ -316,7 +316,7 @@ const AddressModalForm: FC<{
               <Input
                 title="City"
                 placeholder="City"
-                name="city"
+                name="attributes.city"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.attributes?.city && errors.attributes?.city}
@@ -327,7 +327,7 @@ const AddressModalForm: FC<{
               <Input
                 title="State, province, or region"
                 placeholder="State, province, or region"
-                name="region"
+                name="attributes.region"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={touched.attributes?.region && errors.attributes?.region}
@@ -336,9 +336,17 @@ const AddressModalForm: FC<{
             </Column>
             <Column span={6}>
               <Input
-                title="Postal Code"
-                placeholder="ZIP/Postal code"
-                name="postalCode"
+                placeholder={
+                  values.attributes.country === "US"
+                    ? "ZIP code"
+                    : "ZIP/Postal code"
+                }
+                title={
+                  values.attributes.country === "US"
+                    ? "ZIP code"
+                    : "Postal code"
+                }
+                name="attributes.postalCode"
                 onChange={handleChange}
                 onBlur={handleBlur}
                 error={
@@ -355,7 +363,7 @@ const AddressModalForm: FC<{
           <Input
             title="Phone number"
             description="Required for shipping logistics"
-            placeholder="Add phone number"
+            placeholder="Add phone number including country code"
             name="attributes.phoneNumber"
             type="tel"
             onChange={formikContext.handleChange}

@@ -12,7 +12,6 @@ import { AddressModal2TestQuery } from "__generated__/AddressModal2TestQuery.gra
 import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContext"
 import { DeepPartial } from "Utils/typeSupport"
-import { fillAddressForm } from "Components/__tests__/Utils/addressForm"
 
 /*
 Some tests queue up promises that bleed into subsequent tests

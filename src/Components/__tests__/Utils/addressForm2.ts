@@ -58,7 +58,7 @@ export const fillAddressForm = async (address: Address) => {
     const line1Input = screen.getByPlaceholderText("Street address")
     expect(line1Input).toBeEnabled()
   })
-  const country = screen.getByTestId("AddressForm_country")
+  const country = screen.getByTestId(/Form_country/)
   await userEvent.selectOptions(country, [address.country])
 
   const name = screen.getByPlaceholderText("Full name")
@@ -69,7 +69,7 @@ export const fillAddressForm = async (address: Address) => {
     address.country === "US" ? "State" : "State, province, or region"
   )
   const postalCode = screen.getByPlaceholderText(
-    address.country === "US" ? "ZIP code" : /ZIP\/postal code/,
+    address.country === "US" ? "ZIP code" : /ZIP\/Postal code/,
     { exact: false }
   )
   const phoneNumber = screen.getAllByPlaceholderText(

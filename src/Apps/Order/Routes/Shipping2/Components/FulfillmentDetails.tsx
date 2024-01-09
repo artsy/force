@@ -179,18 +179,15 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
 
             return
           } else {
-
-
-            // TODO: Left off here ...
-            if (userAddressUpdateResult.newSavedAddressID) {
+            if (userAddressUpdateResult.actionType === "create") {
               shippingContext.actions.setNewSavedAddressId(
-                userAddressUpdateResult.newSavedAddressID
+                userAddressUpdateResult.data.internalID
               )
-            } else if (userAddressUpdateResult.deletedAddressID) {
+            } else if (userAddressUpdateResult.actionType === "delete") {
               shippingContext.actions.setNewSavedAddressId(null)
             }
 
-            // double check if we need this and continue from here
+            // TODO: double check if we need this and continue from here
             helpers.setValues({
               ...values,
               meta: {
@@ -198,15 +195,15 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
               },
             })
 
-          if (
-            userAddressUpdateResult.data?.internalID &&
-            shippingMode === "new_address"
-          ) {
-            shippingContext.actions.setNewSavedAddressId(
-              userAddressUpdateResult.data.internalID
-            )
+            if (
+              userAddressUpdateResult.data?.internalID &&
+              shippingMode === "new_address"
+            ) {
+              shippingContext.actions.setNewSavedAddressId(
+                userAddressUpdateResult.data.internalID
+              )
+            }
           }
-        }
         }
       }
 
@@ -215,7 +212,7 @@ export const FulfillmentDetails: FC<FulfillmentDetailsProps> = ({
         helpers
       )
 
-      if (saveFulfillmentDetailsResult.data) {)
+      if (saveFulfillmentDetailsResult.data) {
         if (
           saveFulfillmentDetailsResult.data.requiresArtsyShippingToDestination
         ) {
@@ -339,7 +336,6 @@ const ME_FRAGMENT = graphql`
     location {
       country
     }
-    ...SavedAddresses2_me
     addressConnection(
       first: $first
       last: $last

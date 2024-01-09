@@ -43,7 +43,6 @@ import {
 import { ContextModule, OwnerType } from "@artsy/cohesion"
 import { useAnalyticsContext } from "System/Analytics/AnalyticsContext"
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
-import { useBackToFullfillmentDetails } from "Apps/Order/Routes/Shipping2/Hooks/useBackToFullfillmentDetails" // pragma: allowlist secret
 import { SavedAddressType } from "Apps/Order/Utils/shippingUtils"
 
 export interface FulfillmentDetailsFormProps
@@ -213,7 +212,6 @@ const FulfillmentDetailsFormLayout = (
           },
           meta: {
             mode: "pickup",
-            addressVerifiedBy: null,
           },
         })
         return
@@ -495,7 +493,7 @@ const FulfillmentDetailsFormLayout = (
                   placeholder={
                     values.attributes.country === "US"
                       ? "ZIP code"
-                      : "ZIP/postal code"
+                      : "ZIP/Postal code"
                   }
                   title={
                     values.attributes.country === "US"

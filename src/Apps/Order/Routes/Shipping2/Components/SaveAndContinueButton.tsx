@@ -3,7 +3,6 @@ import { useSaveSelectedShippingQuote } from "Apps/Order/Routes/Shipping2/Hooks/
 import { useShippingContext } from "Apps/Order/Routes/Shipping2/Hooks/useShippingContext"
 import { useRouter } from "System/Router/useRouter"
 import { SaveAndContinueButton_order$key } from "__generated__/SaveAndContinueButton_order.graphql"
-import { useEffect } from "react"
 import { graphql, useFragment } from "react-relay"
 
 interface SaveAndContinueButtonProps {

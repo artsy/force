@@ -216,7 +216,6 @@ export const ShippingFragmentContainer = createFragmentContainer(
           before: { type: "String" }
         ) {
         ...FulfillmentDetailsForm_me
-        ...SavedAddresses2_me
         addressConnection(
           first: $first
           last: $last
