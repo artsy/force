@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<436ce5cfe879313b40f197c86e5e6b29>>
+ * @generated SignedSource<<5905e4d468f112493aaf238b934a74a0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,6 +11,7 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type NotificationApp_me$data = {
+  readonly unreadNotificationsCount: number;
   readonly " $fragmentSpreads": FragmentRefs<"Notification_me">;
   readonly " $fragmentType": "NotificationApp_me";
 };
@@ -32,6 +33,13 @@ const node: ReaderFragment = {
   "name": "NotificationApp_me",
   "selections": [
     {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "unreadNotificationsCount",
+      "storageKey": null
+    },
+    {
       "args": [
         {
           "kind": "Variable",
@@ -47,6 +55,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a532eb63f088d4e3238f0fe688583e36";
+(node as any).hash = "3022b028f7b6190f1ef863e9d3e9c18d";
 
 export default node;

@@ -21,6 +21,7 @@ const NotificationApp = loadable(
 export const notificationsRoutes: AppRouteConfig[] = [
   {
     path: "/notifications",
+    layout: "FullBleed",
     getComponent: () => NotificationsApp,
     onClientSideRender: () => {
       NotificationsApp.preload()
@@ -34,15 +35,16 @@ export const notificationsRoutes: AppRouteConfig[] = [
     `,
   },
   {
-    path: "/notification/:id",
+    path: "/notification/:notificationId",
+    layout: "FullBleed",
     getComponent: () => NotificationApp,
     onClientSideRender: () => {
       NotificationApp.preload()
     },
     query: graphql`
-      query notificationsRoutesNotificationQuery($id: String!) {
+      query notificationsRoutesNotificationQuery($notificationId: String!) {
         me {
-          ...Notification_me @arguments(notificationId: $id)
+          ...Notification_me @arguments(notificationId: $notificationId)
         }
       }
     `,

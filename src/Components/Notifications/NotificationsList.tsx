@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Join, Separator, Text } from "@artsy/palette"
+import { Box, Button, Flex, Join, Separator, THEME, Text } from "@artsy/palette"
 import {
   createPaginationContainer,
   graphql,
@@ -12,13 +12,14 @@ import {
 } from "__generated__/NotificationsListQuery.graphql"
 import { NotificationItemFragmentContainer } from "Components/Notifications/NotificationItem"
 import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { SystemContext } from "System/SystemContext"
 import { NotificationsListScrollSentinel } from "./NotificationsListScrollSentinel"
 import { NotificationPaginationType, NotificationType } from "./types"
 import { NotificationsEmptyStateByType } from "./NotificationsEmptyStateByType"
 import { shouldDisplayNotification } from "./util"
 import { NotificationsListPlaceholder } from "./NotificationsListPlaceholder"
+import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
 
 interface NotificationsListQueryRendererProps {
   type: NotificationType
@@ -43,6 +44,17 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
   const nodes = extractNodes(viewer.notifications).filter(node =>
     shouldDisplayNotification(node)
   )
+
+  const { state, setCurrentNotificationId } = useNotificationsContext()
+
+  // Set the current notification ID to the first one from the list in case no ID is selected.
+  useEffect(() => {
+    const firstNotificationId = nodes[0]?.internalID
+
+    if (!state.currentNotificationId && firstNotificationId) {
+      setCurrentNotificationId(firstNotificationId)
+    }
+  })
 
   const handleLoadNext = () => {
     if (!relay.hasMore() || relay.isLoading()) {
@@ -73,7 +85,7 @@ const NotificationsList: React.FC<NotificationsListProps> = ({
     }
 
     return (
-      <Box textAlign="center" mt={4}>
+      <Box textAlign="center" my={4}>
         <Button
           onClick={handleLoadNext}
           loading={loading}

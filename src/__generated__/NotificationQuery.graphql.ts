@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2293f6250b82e32a928e4463231ee817>>
+ * @generated SignedSource<<58809ae0f79de99312372e3c84e441a0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,17 +10,17 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type notificationsRoutesNotificationQuery$variables = {
-  notificationId: string;
+export type NotificationQuery$variables = {
+  id: string;
 };
-export type notificationsRoutesNotificationQuery$data = {
+export type NotificationQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"Notification_me">;
   } | null | undefined;
 };
-export type notificationsRoutesNotificationQuery = {
-  response: notificationsRoutesNotificationQuery$data;
-  variables: notificationsRoutesNotificationQuery$variables;
+export type NotificationQuery = {
+  response: NotificationQuery$data;
+  variables: NotificationQuery$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -28,7 +28,7 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "notificationId"
+    "name": "id"
   }
 ],
 v1 = {
@@ -43,7 +43,7 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "notificationsRoutesNotificationQuery",
+    "name": "NotificationQuery",
     "selections": [
       {
         "alias": null,
@@ -58,7 +58,7 @@ return {
               {
                 "kind": "Variable",
                 "name": "notificationId",
-                "variableName": "notificationId"
+                "variableName": "id"
               }
             ],
             "kind": "FragmentSpread",
@@ -75,7 +75,7 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "notificationsRoutesNotificationQuery",
+    "name": "NotificationQuery",
     "selections": [
       {
         "alias": null,
@@ -91,7 +91,7 @@ return {
               {
                 "kind": "Variable",
                 "name": "id",
-                "variableName": "notificationId"
+                "variableName": "id"
               }
             ],
             "concreteType": "Notification",
@@ -117,16 +117,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c8f2ce8e5f810039d256af5005dc4058",
+    "cacheID": "e80b3d279ce06ee581baf3f898d42180",
     "id": null,
     "metadata": {},
-    "name": "notificationsRoutesNotificationQuery",
+    "name": "NotificationQuery",
     "operationKind": "query",
-    "text": "query notificationsRoutesNotificationQuery(\n  $notificationId: String!\n) {\n  me {\n    ...Notification_me_2a8bQo\n    id\n  }\n}\n\nfragment Notification_me_2a8bQo on Me {\n  notification(id: $notificationId) {\n    title\n    id\n  }\n}\n"
+    "text": "query NotificationQuery(\n  $id: String!\n) {\n  me {\n    ...Notification_me_2X2oUh\n    id\n  }\n}\n\nfragment Notification_me_2X2oUh on Me {\n  notification(id: $id) {\n    title\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "b37add378d96553a5677b53616b80d5c";
+(node as any).hash = "fce76f7d3b57f7688647ccc72af35abb";
 
 export default node;
