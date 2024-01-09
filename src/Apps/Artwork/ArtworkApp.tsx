@@ -209,7 +209,7 @@ export const ArtworkApp: React.FC<Props> = props => {
 
       {!artwork.published && (
         <FullBleedBanner variant="error">
-          <Text>This work is not published on Artsy yet.</Text>
+          <Text>This work is not currently published on Artsy.</Text>
         </FullBleedBanner>
       )}
 
