@@ -19,8 +19,10 @@ import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/Components/SavedAd
 import { themeGet } from "@styled-system/theme-get"
 
 import {
+  FulfillmentType,
   FulfillmentValues,
   SavedAddressType,
+  ShipValues,
   addressWithFallbackValues,
   getAddressByID,
   getDefaultUserAddress,
@@ -41,6 +43,7 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
   const orderTracking = useOrderTracking()
   const formikContext = useFormikContext<FulfillmentValues>()
 
+  console.log({ form: formikContext })
   const [
     addressModalAction,
     setAddressModalAction,
@@ -48,57 +51,25 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
 
   const addressList = shippingContext.meData.addressList
 
+  const savedToOrderAddress = shippingContext.orderData.savedFulfillmentDetails
+    ?.selectedSavedAddressID
+    ? getAddressByID(
+        addressList,
+        shippingContext.orderData.savedFulfillmentDetails
+          ?.selectedSavedAddressID
+      ) ?? null
+    : null
+  const previousSavedToOrderAddressID = usePrevious(
+    savedToOrderAddress?.internalID
+  )
+
   const [
     locallySelectedAddress,
     setLocallySelectedAddress,
-  ] = useState<SavedAddressType | null>(null)
+  ] = useState<SavedAddressType | null>(savedToOrderAddress)
 
-  // Save address to order via prop when it changes locally
-  const previousLocallySelectedAddressID = usePrevious(locallySelectedAddress)
-    ?.internalID
-
-  useEffect(() => {
-    if (
-      locallySelectedAddress &&
-      locallySelectedAddress?.internalID !== previousLocallySelectedAddressID
-    ) {
-      props.onSelect(locallySelectedAddress)
-    }
-  })
-
-  /* Select an address radio button; set values on formik context
-   * [and submit form].
-   */
-  const handleClickAddress = (id: string): void => {
-    orderTracking.clickedShippingAddress()
-    const address = getAddressByID(addressList, id)
-    if (!address) {
-      logger.error("Address not found: ", id)
-      return
-    }
-    setLocallySelectedAddress(address)
-  }
-
-  const handleClickEditAddress = async (address: SavedAddressType) => {
-    const addressModalAction: AddressModalAction = {
-      type: "edit",
-      address: address,
-    }
-
-    await formikContext.setFieldValue(
-      "attributes",
-      addressWithFallbackValues(address)
-    )
-    setAddressModalAction(addressModalAction)
-  }
-
-  /* Effects */
-
-  const savedToOrderAddressID =
-    shippingContext.orderData.savedFulfillmentDetails?.selectedSavedAddressID
-  const previousSavedToOrderAddressID = usePrevious(savedToOrderAddressID)
-
-  // Automatically update selected address when it changes in order
+  // Automatically update selected address when it changes in order (without saving)
+  const savedToOrderAddressID = savedToOrderAddress?.internalID
   useEffect(() => {
     if (
       props.active &&
@@ -112,27 +83,32 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
       }
     }
   }, [
-    savedToOrderAddressID,
     previousSavedToOrderAddressID,
     addressList,
     setLocallySelectedAddress,
     props.active,
     locallySelectedAddress,
+    savedToOrderAddressID,
   ])
 
-  // Automatically select best available address ID if it isn't present
+  // Automatically select (save) best available address ID if it isn't present
+  // TODO: account for errors on save? maybe using formik status or modal dialog
   // Note: Does not account for whether the address is valid for the selected country
   useEffect(() => {
+    if (formikContext.isSubmitting) {
+      return
+    }
     if (props.active && !locallySelectedAddress && addressList.length > 0) {
       const bestAddress = getBestAvailableAddress(
         addressList,
         savedToOrderAddressID,
         shippingContext.orderData.availableShippingCountries
       )
-
-      if (bestAddress) {
-        setLocallySelectedAddress(bestAddress)
+      if (!bestAddress) {
+        logger.error("No best address found")
+        return
       }
+      props.onSelect(bestAddress)
     }
   }, [
     addressList,
@@ -140,7 +116,34 @@ export const SavedAddresses2: React.FC<SavedAddressesProps> = props => {
     shippingContext.orderData.availableShippingCountries,
     props.active,
     locallySelectedAddress,
+    props,
+    formikContext.isSubmitting,
+    logger,
   ])
+
+  /* Select an address radio button and pass the address to the parent.
+   */
+  const handleClickAddress = (id: string): void => {
+    orderTracking.clickedShippingAddress()
+    const address = getAddressByID(addressList, id)
+    if (!address) {
+      logger.error("Address not found: ", id)
+      return
+    }
+
+    props.onSelect(address)
+  }
+
+  const handleClickEditAddress = async (address: SavedAddressType) => {
+    const addressModalAction: AddressModalAction = {
+      type: "edit",
+      address: address,
+    }
+
+    setAddressModalAction(addressModalAction)
+  }
+
+  /* Effects */
 
   return (
     <>

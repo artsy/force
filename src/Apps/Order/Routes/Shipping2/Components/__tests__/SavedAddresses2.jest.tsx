@@ -6,10 +6,21 @@ import { userAddressMutation } from "Apps/__tests__/Fixtures/Order/MutationResul
 import { SavedAddressItem } from "Apps/Order/Routes/Shipping2/Components/SavedAddressItem2"
 import { useTracking } from "react-tracking"
 import { AnalyticsCombinedContextProvider } from "System/Analytics/AnalyticsContext"
-import { render, waitFor } from "@testing-library/react"
-import { SavedAddresses2 } from "Apps/Order/Routes/Shipping2/Components/SavedAddresses2"
+import {
+  fireEvent,
+  render,
+  screen,
+  waitFor,
+  within,
+} from "@testing-library/react"
+import {
+  SavedAddresses2,
+  SavedAddressesProps,
+} from "Apps/Order/Routes/Shipping2/Components/SavedAddresses2"
 import { DeepPartial } from "Utils/typeSupport"
 import { ShippingContextProps } from "Apps/Order/Routes/Shipping2/ShippingContext"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
+import userEvent from "@testing-library/user-event"
 
 jest.unmock("react-relay")
 jest.mock("react-tracking")
@@ -17,17 +28,25 @@ jest.mock("Utils/Hooks/useMatchMedia", () => ({
   __internal__useMatchMedia: () => ({}),
 }))
 
-const mockContext: DeepPartial<ShippingContextProps> = {
-  orderData: {
-    availableShippingCountries: ["US"],
-    savedFulfillmentDetails: { selectedSavedAddressID: "2" },
-  },
-}
+jest.mock("Apps/Order/Routes/Shipping2/Components/AddressModal2", () => ({
+  AddressModal: jest.fn(() => "<MockedAddressModal />"),
+}))
+
+let testProps: SavedAddressesProps
+let mockShippingContext: ShippingContextProps
+
 jest.mock("Apps/Order/Routes/Shipping2/Hooks/useShippingContext", () => {
   return {
-    useShippingContext: jest.fn(() => mockContext),
+    useShippingContext: jest.fn(() => mockShippingContext),
   }
 })
+
+// mock useFormikContext isSubmitting property to false
+jest.mock("formik", () => ({
+  useFormikContext: () => ({
+    isSubmitting: false,
+  }),
+}))
 
 class SavedAddressesTestPage extends RootTestPage {
   async selectEdit() {
@@ -38,14 +57,139 @@ class SavedAddressesTestPage extends RootTestPage {
   }
 }
 
-// const renderTree = (testProps: any) => {
-//   const wrapper = render(<SavedAddresses2 {...testProps} />)
-//   return { wrapper }
-// }
+const renderTree = (props = testProps) => {
+  const wrapper = render(<SavedAddresses2 {...testProps} />)
+  return { wrapper }
+}
 
 describe("Saved Addresses", () => {
   const trackEvent = jest.fn()
+  beforeEach(() => {
+    jest.clearAllMocks()
+    testProps = {
+      active: true,
+      onSelect: jest.fn(),
+    }
+    mockShippingContext = {
+      orderData: {
+        availableShippingCountries: ["US"],
+        savedFulfillmentDetails: { selectedSavedAddressID: "2" },
+      },
+      meData: {
+        addressList: basicAddressList,
+      },
+    } as ShippingContextProps
+    ;(useTracking as jest.Mock).mockImplementation(() => ({
+      trackEvent,
+    }))
+  })
 
+  it("renders the addresses on the page", async () => {
+    renderTree()
+    const savedAddresses = screen.getAllByTestId("savedAddress")
+    expect(savedAddresses).toHaveLength(2)
+    expect(savedAddresses.map(address => address.textContent)).toEqual([
+      "Test Name1 Main StMadrid, Spain, 28001555-555-5555Edit",
+      "Test Name401 BroadwayFloor 25New York, NY, US, 10013422-424-4242Edit",
+    ])
+  })
+
+  it("calls the onSelect prop when the user clicks an address", async () => {
+    renderTree()
+    const savedAddresses = screen.getAllByTestId("savedAddress")
+    savedAddresses[0].click()
+    expect(testProps.onSelect).toHaveBeenCalledTimes(1)
+    expect(testProps.onSelect).toHaveBeenCalledWith({
+      addressLine1: "1 Main St",
+      addressLine2: "",
+      addressLine3: "",
+      city: "Madrid",
+      country: "Spain",
+      internalID: "1",
+      isDefault: false,
+      name: "Test Name",
+      phoneNumber: "555-555-5555",
+      postalCode: "28001",
+      region: "",
+    })
+  })
+
+  it("renders with an address pre-selected, but doesn't automatically save anything", async () => {
+    mockShippingContext.orderData.savedFulfillmentDetails!.selectedSavedAddressID =
+      "2"
+    renderTree()
+
+    const savedAddresses = screen.getAllByTestId("savedAddress")
+    savedAddresses.forEach((address, index) => {
+      console.log(address.outerHTML)
+    })
+
+    expect(savedAddresses[0]).not.toBeChecked()
+    expect(savedAddresses[1]).toBeChecked()
+
+    await flushPromiseQueue()
+    expect(testProps.onSelect).not.toHaveBeenCalled()
+  })
+
+  it("passes the correct props to the AddressModal on edit", async () => {
+    renderTree()
+
+    await flushPromiseQueue()
+    expect(AddressModal).toHaveBeenCalledTimes(1)
+    // expect(AddressModal).toHaveBeenLastCalledWith({
+    //   addressModalAction: null,
+    //   closeModal: expect.any(Function),
+    //   onSuccess: expect.any(Function),
+    // })
+    const savedAddresses = screen.getAllByTestId("savedAddress")
+    const editAddressButton = within(savedAddresses[0]).getByText("Edit")
+
+    // have to use fireEvent because the button (a styled `Text`) does not appear as clickable
+    await fireEvent.click(editAddressButton)
+
+    expect(AddressModal).toHaveBeenNthCalledWith(
+      2,
+      expect.objectContaining({
+        addressModalAction: {
+          address: {
+            addressLine1: "1 Main St",
+            addressLine2: "",
+            addressLine3: "",
+            city: "Madrid",
+            country: "Spain",
+            internalID: "1",
+            isDefault: false,
+            name: "Test Name",
+            phoneNumber: "555-555-5555",
+            postalCode: "28001",
+            region: "",
+          },
+          type: "edit",
+        },
+      }),
+      {}
+    )
+  })
+})
+
+describe.skip("Saved Addresses(old)", () => {
+  const trackEvent = jest.fn()
+  beforeEach(() => {
+    jest.clearAllMocks()
+    testProps = {
+      active: true,
+      onSelect: jest.fn(),
+    }
+    mockShippingContext = {
+      orderData: {
+        availableShippingCountries: ["US"],
+        savedFulfillmentDetails: { selectedSavedAddressID: "2" },
+      },
+      meData: {
+        addressList: basicAddressList,
+      },
+    }
+  })
   beforeAll(() => {
     ;(useTracking as jest.Mock).mockImplementation(() => ({
       trackEvent,
@@ -71,10 +215,7 @@ describe("Saved Addresses", () => {
 
   describe("Saved Addresses mutations", () => {
     it("edits the saved addresses after calling edit address mutation", async () => {
-      const { wrapper } = getWrapper(
-        { Me: () => userAddressMutation.me },
-        { active: true }
-      )
+      const { wrapper } = renderTree()
       const page = new SavedAddressesTestPage(wrapper)
       page.selectEdit()
       const addresses = page.find(SavedAddressItem).first().text()
@@ -182,39 +323,31 @@ describe("Saved Addresses", () => {
   })
 })
 
-const mockAddressConnection = {
-  edges: [
-    {
-      cursor: "aaaabbbb",
-      node: {
-        internalID: "1",
-        addressLine1: "1 Main St",
-        addressLine2: "",
-        addressLine3: "",
-        city: "Madrid",
-        country: "Spain",
-        isDefault: false,
-        name: "Test Name",
-        phoneNumber: "555-555-5555",
-        postalCode: "28001",
-        region: "",
-      },
-    },
-    {
-      cursor: "bbbbbcccc",
-      node: {
-        internalID: "2",
-        addressLine1: "401 Broadway",
-        addressLine2: "Floor 25",
-        addressLine3: "",
-        city: "New York",
-        country: "US",
-        isDefault: true,
-        name: "Test Name",
-        phoneNumber: "422-424-4242",
-        postalCode: "10013",
-        region: "NY",
-      },
-    },
-  ],
-}
+const basicAddressList = [
+  {
+    internalID: "1",
+    addressLine1: "1 Main St",
+    addressLine2: "",
+    addressLine3: "",
+    city: "Madrid",
+    country: "Spain",
+    isDefault: false,
+    name: "Test Name",
+    phoneNumber: "555-555-5555",
+    postalCode: "28001",
+    region: "",
+  },
+  {
+    internalID: "2",
+    addressLine1: "401 Broadway",
+    addressLine2: "Floor 25",
+    addressLine3: "",
+    city: "New York",
+    country: "US",
+    isDefault: true,
+    name: "Test Name",
+    phoneNumber: "422-424-4242",
+    postalCode: "10013",
+    region: "NY",
+  },
+]

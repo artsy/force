@@ -165,7 +165,6 @@ const FulfillmentDetailsFormLayout = (
         attributes: addressWithFallbackValues(address),
         meta: {
           ...formikContext.values.meta,
-          addressVerifiedBy: null,
         },
       })
 
