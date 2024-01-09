@@ -207,6 +207,12 @@ export const ArtworkApp: React.FC<Props> = props => {
     <>
       <UseRecordArtworkView />
 
+      {!artwork.published && (
+        <FullBleedBanner variant="error">
+          <Text>This work is not currently published on Artsy.</Text>
+        </FullBleedBanner>
+      )}
+
       {artwork.sale && (
         <CascadingEndTimesBannerFragmentContainer sale={artwork.sale} />
       )}
@@ -365,6 +371,7 @@ export const ArtworkAppFragmentContainer = createFragmentContainer(
         internalID
         is_acquireable: isAcquireable
         is_offerable: isOfferable
+        published
         availability
         mediumType {
           filterGene {
