@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<31331498e0e33e31dce953a06795bac9>>
+ * @generated SignedSource<<a4048aebe9fe7d8766be50cb0e4c1f37>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -40,6 +40,7 @@ export type ArtworkApp_artwork$data = {
   readonly partner: {
     readonly " $fragmentSpreads": FragmentRefs<"UnlistedArtworkBanner_partner">;
   } | null | undefined;
+  readonly published: boolean;
   readonly sale: {
     readonly extendedBiddingIntervalMinutes: number | null | undefined;
     readonly internalID: string;
@@ -117,6 +118,13 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "isOfferable",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "kind": "ScalarField",
+      "name": "published",
       "storageKey": null
     },
     {
@@ -296,6 +304,6 @@ return {
 };
 })();
 
-(node as any).hash = "9e413607b7545cf07e2c756f804b19ef";
+(node as any).hash = "360cb0ea8dcbccba61ed19e08edaf79c";
 
 export default node;
