@@ -37,7 +37,11 @@ export const NotificationTypeLabel: React.FC<Props> = ({ item }) => {
     <Flex flex-flexDirection="row" alignItems="center" gap="3px">
       {notificationTypeLabel && (
         <>
-          <Text variant="xs" color={notificationTypeColor}>
+          <Text
+            variant="xs"
+            color={notificationTypeColor}
+            aria-label={`Notification type: ${notificationTypeLabel}`}
+          >
             {notificationTypeLabel}
           </Text>
           <Text variant="xs" color="black60">
