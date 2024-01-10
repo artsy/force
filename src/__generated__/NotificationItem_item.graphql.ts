@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a8b187909974f541082e02c018e0bd4a>>
+ * @generated SignedSource<<e7f4e4303032c91f95d1c25f5f017dce>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -29,6 +29,9 @@ export type NotificationItem_item$data = {
   readonly id: string;
   readonly internalID: string;
   readonly isUnread: boolean;
+  readonly item: {
+    readonly expiresAt?: string | null | undefined;
+  } | null | undefined;
   readonly message: string;
   readonly notificationType: NotificationTypesEnum;
   readonly objectsCount: number;
@@ -118,6 +121,31 @@ return {
       "args": null,
       "kind": "ScalarField",
       "name": "objectsCount",
+      "storageKey": null
+    },
+    {
+      "alias": null,
+      "args": null,
+      "concreteType": null,
+      "kind": "LinkedField",
+      "name": "item",
+      "plural": false,
+      "selections": [
+        {
+          "kind": "InlineFragment",
+          "selections": [
+            {
+              "alias": null,
+              "args": null,
+              "kind": "ScalarField",
+              "name": "expiresAt",
+              "storageKey": null
+            }
+          ],
+          "type": "PartnerOfferCreatedNotificationItem",
+          "abstractKey": null
+        }
+      ],
       "storageKey": null
     },
     {
@@ -214,6 +242,6 @@ return {
 };
 })();
 
-(node as any).hash = "d329f50b2438b6a5cfd93b5cec50eb7b";
+(node as any).hash = "2ecd404896641813e08997f220192988";
 
 export default node;

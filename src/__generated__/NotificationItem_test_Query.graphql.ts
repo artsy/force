@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<43e96b778aa01d3c66b6b6fb84c7a4ec>>
+ * @generated SignedSource<<6c6414431dd1baab92eed76a1003fb8a>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -63,6 +63,12 @@ v4 = {
 v5 = {
   "enumValues": null,
   "nullable": false,
+  "plural": false,
+  "type": "String"
+},
+v6 = {
+  "enumValues": null,
+  "nullable": true,
   "plural": false,
   "type": "String"
 };
@@ -198,6 +204,38 @@ return {
                   },
                   {
                     "alias": null,
+                    "args": null,
+                    "concreteType": null,
+                    "kind": "LinkedField",
+                    "name": "item",
+                    "plural": false,
+                    "selections": [
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "__typename",
+                        "storageKey": null
+                      },
+                      {
+                        "kind": "InlineFragment",
+                        "selections": [
+                          {
+                            "alias": null,
+                            "args": null,
+                            "kind": "ScalarField",
+                            "name": "expiresAt",
+                            "storageKey": null
+                          }
+                        ],
+                        "type": "PartnerOfferCreatedNotificationItem",
+                        "abstractKey": null
+                      }
+                    ],
+                    "storageKey": null
+                  },
+                  {
+                    "alias": null,
                     "args": [
                       {
                         "kind": "Literal",
@@ -297,7 +335,7 @@ return {
     ]
   },
   "params": {
-    "cacheID": "db4938c2d9f94a779604a630062bafb3",
+    "cacheID": "695592e61425e4a8afa4e17c4cbafa74",
     "id": null,
     "metadata": {
       "relayTestingSelectionTypeInfo": {
@@ -353,12 +391,7 @@ return {
         "notificationsConnection.edges.node.artworksConnection.edges.node.image.thumb.src": (v5/*: any*/),
         "notificationsConnection.edges.node.artworksConnection.edges.node.image.thumb.srcSet": (v5/*: any*/),
         "notificationsConnection.edges.node.artworksConnection.edges.node.internalID": (v4/*: any*/),
-        "notificationsConnection.edges.node.artworksConnection.edges.node.title": {
-          "enumValues": null,
-          "nullable": true,
-          "plural": false,
-          "type": "String"
-        },
+        "notificationsConnection.edges.node.artworksConnection.edges.node.title": (v6/*: any*/),
         "notificationsConnection.edges.node.id": (v4/*: any*/),
         "notificationsConnection.edges.node.internalID": (v4/*: any*/),
         "notificationsConnection.edges.node.isUnread": {
@@ -367,6 +400,14 @@ return {
           "plural": false,
           "type": "Boolean"
         },
+        "notificationsConnection.edges.node.item": {
+          "enumValues": null,
+          "nullable": true,
+          "plural": false,
+          "type": "NotificationItem"
+        },
+        "notificationsConnection.edges.node.item.__typename": (v5/*: any*/),
+        "notificationsConnection.edges.node.item.expiresAt": (v6/*: any*/),
         "notificationsConnection.edges.node.message": (v5/*: any*/),
         "notificationsConnection.edges.node.notificationType": {
           "enumValues": [
@@ -394,7 +435,7 @@ return {
     },
     "name": "NotificationItem_test_Query",
     "operationKind": "query",
-    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
+    "text": "query NotificationItem_test_Query {\n  notificationsConnection(first: 1) {\n    edges {\n      node {\n        ...NotificationItem_item\n        id\n      }\n    }\n  }\n}\n\nfragment NotificationItem_item on Notification {\n  id\n  internalID\n  title\n  message\n  publishedAt(format: \"RELATIVE\")\n  targetHref\n  isUnread\n  notificationType\n  objectsCount\n  item {\n    __typename\n    ... on PartnerOfferCreatedNotificationItem {\n      expiresAt\n    }\n  }\n  artworksConnection(first: 4) {\n    edges {\n      node {\n        internalID\n        title\n        image {\n          thumb: cropped(width: 58, height: 58) {\n            src\n            srcSet\n          }\n        }\n        id\n      }\n    }\n  }\n}\n"
   }
 };
 })();

@@ -10,11 +10,13 @@ import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/useSystemContext"
 import createLogger from "Utils/logger"
 import { markNotificationAsRead } from "Components/Notifications/Mutations/markNotificationAsRead"
-import {
-  isArtworksBasedNotification,
-  shouldDisplayNotificationTypeLabel,
-} from "./util"
+import { isArtworksBasedNotification } from "./util"
 import { NotificationTypeLabel } from "./NotificationTypeLabel"
+import React from "react"
+import {
+  ExpiresInTimer,
+  shouldDisplayExpiresInTimer,
+} from "Components/Notifications/ExpiresInTimer"
 
 const logger = createLogger("NotificationItem")
 
@@ -67,18 +69,18 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
   return (
     <NotificationItemLink to={item.targetHref} onClick={handlePress}>
       <Flex flex={1} flexDirection="column">
-        <Text variant="xs" color="black60">
-          {shouldDisplayNotificationTypeLabel(item.notificationType) && (
-            <NotificationTypeLabel notificationType={item.notificationType} />
-          )}
-          {item.publishedAt}
-        </Text>
+        <NotificationTypeLabel item={item} />
 
         <Text variant="sm-display" fontWeight="bold">
           {item.title}
         </Text>
 
-        <Text variant="sm-display">{item.message}</Text>
+        <Flex flexDirection="row" gap={0.5}>
+          <Text variant="sm-display">{item.message}</Text>
+          {shouldDisplayExpiresInTimer(item) && (
+            <ExpiresInTimer expiresAt={item?.item?.expiresAt ?? ""} />
+          )}
+        </Flex>
 
         <Spacer y={1} />
 
@@ -142,6 +144,13 @@ export const NotificationItemFragmentContainer = createFragmentContainer(
         isUnread
         notificationType
         objectsCount
+
+        item {
+          ... on PartnerOfferCreatedNotificationItem {
+            expiresAt
+          }
+        }
+
         artworksConnection(first: 4) {
           edges {
             node {
