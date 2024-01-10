@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<d8f7c39026d42aefdde679499edccadb>>
+ * @generated SignedSource<<a48c3e6528e9014ba3e71f0c1d205895>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,10 +10,10 @@
 
 import { ConcreteRequest, Mutation } from 'relay-runtime';
 export type AlertSettingsFrequency = "DAILY" | "INSTANT" | "%future added value";
-export type createAlertInput = {
+export type updateAlertInput = {
   acquireable?: boolean | null | undefined;
   additionalGeneIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
-  artistIDs: ReadonlyArray<string | null | undefined>;
+  artistIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
   artistSeriesIDs?: ReadonlyArray<string | null | undefined> | null | undefined;
   atAuction?: boolean | null | undefined;
   attributionClass?: ReadonlyArray<string | null | undefined> | null | undefined;
@@ -21,6 +21,7 @@ export type createAlertInput = {
   colors?: ReadonlyArray<string | null | undefined> | null | undefined;
   dimensionRange?: string | null | undefined;
   height?: string | null | undefined;
+  id: string;
   inquireableOnly?: boolean | null | undefined;
   keyword?: string | null | undefined;
   locationCities?: ReadonlyArray<string | null | undefined> | null | undefined;
@@ -40,26 +41,24 @@ export type AlertSettingsInput = {
   name?: string | null | undefined;
   push?: boolean | null | undefined;
 };
-export type useCreateAlertMutation$variables = {
-  input: createAlertInput;
+export type useUpdateAlertMutation$variables = {
+  input: updateAlertInput;
 };
-export type useCreateAlertMutation$data = {
-  readonly createAlert: {
+export type useUpdateAlertMutation$data = {
+  readonly updateAlert: {
     readonly responseOrError: {
       readonly alert?: {
         readonly internalID: string;
-      } | null | undefined;
-      readonly me?: {
-        readonly counts: {
-          readonly savedSearches: number;
+        readonly settings: {
+          readonly name: string | null | undefined;
         } | null | undefined;
-      };
+      } | null | undefined;
     } | null | undefined;
   } | null | undefined;
 };
-export type useCreateAlertMutation = {
-  response: useCreateAlertMutation$data;
-  variables: useCreateAlertMutation$variables;
+export type useUpdateAlertMutation = {
+  response: useUpdateAlertMutation$data;
+  variables: useUpdateAlertMutation$variables;
 };
 
 const node: ConcreteRequest = (function(){
@@ -80,33 +79,26 @@ v1 = [
 v2 = {
   "alias": null,
   "args": null,
-  "concreteType": "MeCounts",
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "AlertSettings",
   "kind": "LinkedField",
-  "name": "counts",
+  "name": "settings",
   "plural": false,
   "selections": [
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "savedSearches",
+      "name": "name",
       "storageKey": null
     }
   ],
-  "storageKey": null
-},
-v3 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "internalID",
-  "storageKey": null
-},
-v4 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
   "storageKey": null
 };
 return {
@@ -114,14 +106,14 @@ return {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Fragment",
     "metadata": null,
-    "name": "useCreateAlertMutation",
+    "name": "useUpdateAlertMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "createAlertPayload",
+        "concreteType": "updateAlertPayload",
         "kind": "LinkedField",
-        "name": "createAlert",
+        "name": "updateAlert",
         "plural": false,
         "selections": [
           {
@@ -138,29 +130,18 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Me",
-                    "kind": "LinkedField",
-                    "name": "me",
-                    "plural": false,
-                    "selections": [
-                      (v2/*: any*/)
-                    ],
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
                     "concreteType": "Alert",
                     "kind": "LinkedField",
                     "name": "alert",
                     "plural": false,
                     "selections": [
+                      (v2/*: any*/),
                       (v3/*: any*/)
                     ],
                     "storageKey": null
                   }
                 ],
-                "type": "CreateAlertSuccess",
+                "type": "UpdateAlertSuccess",
                 "abstractKey": null
               }
             ],
@@ -177,14 +158,14 @@ return {
   "operation": {
     "argumentDefinitions": (v0/*: any*/),
     "kind": "Operation",
-    "name": "useCreateAlertMutation",
+    "name": "useUpdateAlertMutation",
     "selections": [
       {
         "alias": null,
         "args": (v1/*: any*/),
-        "concreteType": "createAlertPayload",
+        "concreteType": "updateAlertPayload",
         "kind": "LinkedField",
-        "name": "createAlert",
+        "name": "updateAlert",
         "plural": false,
         "selections": [
           {
@@ -208,31 +189,25 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "Me",
-                    "kind": "LinkedField",
-                    "name": "me",
-                    "plural": false,
-                    "selections": [
-                      (v2/*: any*/),
-                      (v4/*: any*/)
-                    ],
-                    "storageKey": null
-                  },
-                  {
-                    "alias": null,
-                    "args": null,
                     "concreteType": "Alert",
                     "kind": "LinkedField",
                     "name": "alert",
                     "plural": false,
                     "selections": [
+                      (v2/*: any*/),
                       (v3/*: any*/),
-                      (v4/*: any*/)
+                      {
+                        "alias": null,
+                        "args": null,
+                        "kind": "ScalarField",
+                        "name": "id",
+                        "storageKey": null
+                      }
                     ],
                     "storageKey": null
                   }
                 ],
-                "type": "CreateAlertSuccess",
+                "type": "UpdateAlertSuccess",
                 "abstractKey": null
               }
             ],
@@ -244,16 +219,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "2f5d229741087a6f2475c3cfad8cb557",
+    "cacheID": "ce6f8b497e52ba8ddd70660110c6e389",
     "id": null,
     "metadata": {},
-    "name": "useCreateAlertMutation",
+    "name": "useUpdateAlertMutation",
     "operationKind": "mutation",
-    "text": "mutation useCreateAlertMutation(\n  $input: createAlertInput!\n) {\n  createAlert(input: $input) {\n    responseOrError {\n      __typename\n      ... on CreateAlertSuccess {\n        me {\n          counts {\n            savedSearches\n          }\n          id\n        }\n        alert {\n          internalID\n          id\n        }\n      }\n    }\n  }\n}\n"
+    "text": "mutation useUpdateAlertMutation(\n  $input: updateAlertInput!\n) {\n  updateAlert(input: $input) {\n    responseOrError {\n      __typename\n      ... on UpdateAlertSuccess {\n        alert {\n          internalID\n          settings {\n            name\n          }\n          id\n        }\n      }\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "14e2e3ed29fbac52f36187762cd2f87d";
+(node as any).hash = "3b801a013fbef9e75edea391cfe2c261";
 
 export default node;

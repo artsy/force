@@ -2,7 +2,7 @@ import { PageOwnerType } from "@artsy/cohesion"
 
 export interface SearchCriteriaAttributes {
   artistID?: string | null
-  artistIDs?: string[] | null
+  artistIDs: string[]
   locationCities?: string[] | null
   colors?: string[] | null
   partnerIDs?: string[] | null
@@ -61,6 +61,16 @@ export interface SavedSearchAlertFormValues {
   email: boolean
   push: boolean
   frequency: SavedSearchFrequency
+  details: string
+}
+
+export type AlertFrequency = "DAILY" | "INSTANT"
+
+export interface AlertSettingsFormValues {
+  name: string
+  email: boolean
+  push: boolean
+  frequency: AlertFrequency
   details: string
 }
 

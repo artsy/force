@@ -62,7 +62,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
   const [showDeleteModal, setShowDeleteModal] = useState(false)
   const [sort, setSort] = useState("CREATED_AT_DESC")
   const [loading, setLoading] = useState(false)
-  const alerts = extractNodes(me.savedSearchesConnection)
+  const alerts = extractNodes(me.alertsConnection)
   const isEditMode = editAlertEntity !== null
   const { match, silentPush } = useRouter()
 
@@ -139,36 +139,36 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     })
   }
 
-  const searchCriteriaID = match?.params?.searchCriteriaID
+  const alertID = match?.params?.searchCriteriaID
 
   useEffect(() => {
-    if (!searchCriteriaID) return
+    if (!alertID) return
 
     const subscription = fetchQuery<SavedSearchAlertsApp_Alert_Query>(
       relayEnvironment as Environment,
       graphql`
-        query SavedSearchAlertsApp_Alert_Query($searchCriteriaID: ID!) {
+        query SavedSearchAlertsApp_Alert_Query($alertID: String!) {
           me {
-            savedSearch(id: $searchCriteriaID) {
+            alert(id: $alertID) {
               internalID
               artistIDs
-              userAlertSettings {
+              settings {
                 name
               }
             }
           }
         }
       `,
-      { searchCriteriaID: searchCriteriaID }
+      { alertID }
     )?.subscribe?.({
       next: data => {
-        const alert = data?.me?.savedSearch
+        const alert = data?.me?.alert
         if (!alert) return
 
         setEditAlertEntity({
           id: alert.internalID,
           artistIds: alert.artistIDs as string[],
-          name: alert.userAlertSettings.name ?? "",
+          name: alert.settings?.name ?? "",
         })
       },
     })
@@ -176,7 +176,7 @@ export const SavedSearchAlertsApp: React.FC<SavedSearchAlertsAppProps> = ({
     return () => {
       subscription?.unsubscribe?.()
     }
-  }, [searchCriteriaID, relayEnvironment])
+  }, [alertID, relayEnvironment])
 
   const list = (
     <>
@@ -347,10 +347,9 @@ export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer
         @argumentDefinitions(
           after: { type: "String" }
           count: { type: "Int", defaultValue: 10 }
-          sort: { type: "SavedSearchesSortEnum", defaultValue: CREATED_AT_DESC }
         ) {
-        savedSearchesConnection(first: $count, after: $after, sort: $sort)
-          @connection(key: "SavedSearchAlertsApp_savedSearchesConnection") {
+        alertsConnection(first: $count, after: $after)
+          @connection(key: "SavedSearchAlertsApp_alertsConnection") {
           edges {
             node {
               internalID
@@ -374,14 +373,9 @@ export const SavedSearchAlertsAppPaginationContainer = createPaginationContainer
       }
     },
     query: graphql`
-      query SavedSearchAlertsAppRefetchQuery(
-        $after: String
-        $count: Int!
-        $sort: SavedSearchesSortEnum
-      ) {
+      query SavedSearchAlertsAppRefetchQuery($after: String, $count: Int!) {
         me {
-          ...SavedSearchAlertsApp_me
-            @arguments(after: $after, count: $count, sort: $sort)
+          ...SavedSearchAlertsApp_me @arguments(after: $after, count: $count)
         }
       }
     `,

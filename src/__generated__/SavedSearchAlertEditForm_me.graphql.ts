@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<5ec57b2ebf2f66b4e3b769a7be4f38ef>>
+ * @generated SignedSource<<8e42eec3b27aa6b6eb0eb262867fd0c5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,35 +9,35 @@
 // @ts-nocheck
 
 import { Fragment, ReaderFragment } from 'relay-runtime';
-export type UserSearchCriteriaFrequency = "daily" | "instant" | "%future added value";
+export type AlertSettingsFrequency = "DAILY" | "INSTANT" | "%future added value";
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertEditForm_me$data = {
-  readonly savedSearch: {
+  readonly alert: {
     readonly acquireable: boolean | null | undefined;
-    readonly additionalGeneIDs: ReadonlyArray<string>;
-    readonly artistIDs: ReadonlyArray<string> | null | undefined;
-    readonly artistSeriesIDs: ReadonlyArray<string>;
+    readonly additionalGeneIDs: ReadonlyArray<string | null | undefined> | null | undefined;
+    readonly artistIDs: ReadonlyArray<string | null | undefined> | null | undefined;
+    readonly artistSeriesIDs: ReadonlyArray<string | null | undefined> | null | undefined;
     readonly atAuction: boolean | null | undefined;
-    readonly attributionClass: ReadonlyArray<string>;
-    readonly colors: ReadonlyArray<string>;
+    readonly attributionClass: ReadonlyArray<string | null | undefined> | null | undefined;
+    readonly colors: ReadonlyArray<string | null | undefined> | null | undefined;
     readonly dimensionRange: string | null | undefined;
     readonly height: string | null | undefined;
     readonly inquireableOnly: boolean | null | undefined;
     readonly internalID: string;
-    readonly locationCities: ReadonlyArray<string>;
-    readonly majorPeriods: ReadonlyArray<string>;
-    readonly materialsTerms: ReadonlyArray<string>;
+    readonly locationCities: ReadonlyArray<string | null | undefined> | null | undefined;
+    readonly majorPeriods: ReadonlyArray<string | null | undefined> | null | undefined;
+    readonly materialsTerms: ReadonlyArray<string | null | undefined> | null | undefined;
     readonly offerable: boolean | null | undefined;
-    readonly partnerIDs: ReadonlyArray<string>;
+    readonly partnerIDs: ReadonlyArray<string | null | undefined> | null | undefined;
     readonly priceRange: string | null | undefined;
-    readonly sizes: ReadonlyArray<string>;
-    readonly userAlertSettings: {
+    readonly settings: {
       readonly details: string | null | undefined;
-      readonly email: boolean;
-      readonly frequency: UserSearchCriteriaFrequency;
+      readonly email: boolean | null | undefined;
+      readonly frequency: AlertSettingsFrequency | null | undefined;
       readonly name: string | null | undefined;
-      readonly push: boolean;
-    };
+      readonly push: boolean | null | undefined;
+    } | null | undefined;
+    readonly sizes: ReadonlyArray<string | null | undefined> | null | undefined;
     readonly width: string | null | undefined;
   } | null | undefined;
   readonly " $fragmentType": "SavedSearchAlertEditForm_me";
@@ -52,7 +52,7 @@ const node: ReaderFragment = {
     {
       "defaultValue": null,
       "kind": "LocalArgument",
-      "name": "savedSearchId"
+      "name": "alertID"
     }
   ],
   "kind": "Fragment",
@@ -65,12 +65,12 @@ const node: ReaderFragment = {
         {
           "kind": "Variable",
           "name": "id",
-          "variableName": "savedSearchId"
+          "variableName": "alertID"
         }
       ],
-      "concreteType": "SearchCriteria",
+      "concreteType": "Alert",
       "kind": "LinkedField",
-      "name": "savedSearch",
+      "name": "alert",
       "plural": false,
       "selections": [
         {
@@ -209,9 +209,9 @@ const node: ReaderFragment = {
         {
           "alias": null,
           "args": null,
-          "concreteType": "SavedSearchUserAlertSettings",
+          "concreteType": "AlertSettings",
           "kind": "LinkedField",
-          "name": "userAlertSettings",
+          "name": "settings",
           "plural": false,
           "selections": [
             {
@@ -260,6 +260,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "c02bdca221ec190d5391c18a7711a636";
+(node as any).hash = "107137dadedf626c5284e3d41dea8333";
 
 export default node;

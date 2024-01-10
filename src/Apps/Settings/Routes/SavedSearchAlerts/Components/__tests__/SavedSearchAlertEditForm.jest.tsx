@@ -8,13 +8,13 @@ import { SavedSearchAlertEditFormFragmentContainer } from "Apps/Settings/Routes/
 import { useTracking } from "react-tracking"
 import { useSystemContext } from "System/useSystemContext"
 
-const mockEditSavedSearchAlert = jest.fn()
+const mockUpdateAlert = jest.fn()
 
 jest.unmock("react-relay")
 jest.mock("System/useSystemContext")
-jest.mock("Components/Alert/Hooks/useEditSavedSearchAlert", () => ({
-  useEditSavedSearchAlert: () => ({
-    submitMutation: mockEditSavedSearchAlert,
+jest.mock("Components/Alert/Hooks/useUpdateAlert", () => ({
+  useUpdateAlertAlert: () => ({
+    submitMutation: mockUpdateAlert,
   }),
 }))
 
@@ -77,7 +77,7 @@ describe("SavedSearchAlertEditForm", () => {
           ...SavedSearchAlertEditForm_viewer
         }
         me {
-          ...SavedSearchAlertEditForm_me @arguments(savedSearchId: "id")
+          ...SavedSearchAlertEditForm_me @arguments(alertID: "id")
         }
         artistsConnection(slugs: $artistIDs) {
           ...SavedSearchAlertEditForm_artistsConnection

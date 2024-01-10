@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<50e3eb1745f73eeaad1442b4f47e0c69>>
+ * @generated SignedSource<<b34d5f63e97483c78b676d73d8c9720b>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -11,14 +11,14 @@
 import { Fragment, ReaderFragment } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
 export type SavedSearchAlertsApp_me$data = {
-  readonly savedSearchesConnection: {
+  readonly alertsConnection: {
     readonly edges: ReadonlyArray<{
       readonly node: {
         readonly internalID: string;
         readonly " $fragmentSpreads": FragmentRefs<"SavedSearchAlertListItem_item">;
       } | null | undefined;
     } | null | undefined> | null | undefined;
-  } | null | undefined;
+  };
   readonly " $fragmentType": "SavedSearchAlertsApp_me";
 };
 export type SavedSearchAlertsApp_me$key = {
@@ -37,11 +37,6 @@ const node: ReaderFragment = {
       "defaultValue": 10,
       "kind": "LocalArgument",
       "name": "count"
-    },
-    {
-      "defaultValue": "CREATED_AT_DESC",
-      "kind": "LocalArgument",
-      "name": "sort"
     }
   ],
   "kind": "Fragment",
@@ -52,7 +47,7 @@ const node: ReaderFragment = {
         "cursor": "after",
         "direction": "forward",
         "path": [
-          "savedSearchesConnection"
+          "alertsConnection"
         ]
       }
     ]
@@ -60,23 +55,17 @@ const node: ReaderFragment = {
   "name": "SavedSearchAlertsApp_me",
   "selections": [
     {
-      "alias": "savedSearchesConnection",
-      "args": [
-        {
-          "kind": "Variable",
-          "name": "sort",
-          "variableName": "sort"
-        }
-      ],
-      "concreteType": "SearchCriteriaConnection",
+      "alias": "alertsConnection",
+      "args": null,
+      "concreteType": "AlertConnection",
       "kind": "LinkedField",
-      "name": "__SavedSearchAlertsApp_savedSearchesConnection_connection",
+      "name": "__SavedSearchAlertsApp_alertsConnection_connection",
       "plural": false,
       "selections": [
         {
           "alias": null,
           "args": null,
-          "concreteType": "SearchCriteriaEdge",
+          "concreteType": "AlertEdge",
           "kind": "LinkedField",
           "name": "edges",
           "plural": true,
@@ -84,7 +73,7 @@ const node: ReaderFragment = {
             {
               "alias": null,
               "args": null,
-              "concreteType": "SearchCriteria",
+              "concreteType": "Alert",
               "kind": "LinkedField",
               "name": "node",
               "plural": false,
@@ -154,6 +143,6 @@ const node: ReaderFragment = {
   "abstractKey": null
 };
 
-(node as any).hash = "a85e13be4e90808804eb46649153d8df";
+(node as any).hash = "e290035b6c43b573ef6e5f1185d3b116";
 
 export default node;

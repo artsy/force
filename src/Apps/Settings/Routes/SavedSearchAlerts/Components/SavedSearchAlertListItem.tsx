@@ -80,7 +80,7 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
             onClick={() => {
               onEditAlertClick({
                 id: item.internalID,
-                name: item.userAlertSettings.name ?? undefined,
+                name: item.settings?.name ?? undefined,
                 artistIds: item.artistIDs as string[],
               })
             }}
@@ -97,15 +97,15 @@ export const SavedSearchAlertListItem: React.FC<SavedSearchAlertListItemProps> =
       <GridColumns>
         <Column span={[12, 8]}>
           {isExpanded &&
-            item.labels.map(label => (
+            item.labels.filter(Boolean).map(label => (
               <Pill
-                key={label.displayValue}
+                key={label!.displayValue}
                 variant="filter"
                 disabled
                 mr={1}
                 mb={1}
               >
-                {label.displayValue}
+                {label!.displayValue}
               </Pill>
             ))}
         </Column>
@@ -118,7 +118,7 @@ export const SavedSearchAlertListItemFragmentContainer = createFragmentContainer
   SavedSearchAlertListItem,
   {
     item: graphql`
-      fragment SavedSearchAlertListItem_item on SearchCriteria {
+      fragment SavedSearchAlertListItem_item on Alert {
         internalID
         displayName
         artistIDs
@@ -127,7 +127,7 @@ export const SavedSearchAlertListItemFragmentContainer = createFragmentContainer
         labels {
           displayValue
         }
-        userAlertSettings {
+        settings {
           name
         }
       }

@@ -19,7 +19,7 @@ import { SavedSearchAlertEditForm_artistsConnection$data } from "__generated__/S
 import { SavedSearchAlertEditForm_viewer$data } from "__generated__/SavedSearchAlertEditForm_viewer.graphql"
 import { EditAlertEntity } from "Apps/Settings/Routes/SavedSearchAlerts/types"
 import { SavedSearchAlertEditForm_artworksConnection$data } from "__generated__/SavedSearchAlertEditForm_artworksConnection.graphql"
-import { useEditSavedSearchAlert } from "Components/Alert/Hooks/useEditSavedSearchAlert"
+import { useUpdateAlert } from "Components/Alert/Hooks/useUpdateAlert"
 import createLogger from "Utils/logger"
 import { Media } from "Utils/Responsive"
 import { SavedSearchAlertEditFormPlaceholder } from "./SavedSearchAlertEditFormPlaceholder"
@@ -29,10 +29,10 @@ import {
   useSavedSearchAlertContext,
 } from "Components/SavedSearchAlert/SavedSearchAlertContext"
 import {
-  SavedSearchAlertFormValues,
+  AlertFrequency,
+  AlertSettingsFormValues,
   SavedSearchEntity,
   SavedSearchEntityCriteria,
-  SavedSearchFrequency,
 } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
 import { SavedSearchAlertPills } from "Components/SavedSearchAlert/Components/SavedSearchAlertPills"
@@ -40,7 +40,6 @@ import { useTracking } from "react-tracking"
 import { ActionType, OwnerType } from "@artsy/cohesion"
 import { extractNodes } from "Utils/extractNodes"
 import { RouterLink } from "System/Router/RouterLink"
-import { DEFAULT_FREQUENCY } from "Components/SavedSearchAlert/constants"
 import { FrequenceRadioButtons } from "Components/SavedSearchAlert/Components/FrequencyRadioButtons"
 import { PriceRangeFilter } from "Components/SavedSearchAlert/Components/PriceRangeFilter"
 import { SavedSearchAlertNameInputQueryRenderer } from "Components/SavedSearchAlert/Components/SavedSearchAlertNameInput"
@@ -73,9 +72,9 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   onDeleteClick,
   onCompleted,
 }) => {
-  const { savedSearch } = me
-  const { userAlertSettings } = savedSearch!
-  const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
+  const { alert } = me
+  const { settings } = alert!
+  const { submitMutation: submitUpdateAlert } = useUpdateAlert()
   const { trackEvent } = useTracking()
   const {
     pills,
@@ -84,12 +83,12 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
     removePill,
   } = useSavedSearchAlertContext()
 
-  const initialValues: SavedSearchAlertFormValues = {
-    name: userAlertSettings.name ?? "",
-    push: userAlertSettings.push,
-    email: userAlertSettings.email,
-    frequency: userAlertSettings.frequency as SavedSearchFrequency,
-    details: userAlertSettings.details ?? "",
+  const initialValues: AlertSettingsFormValues = {
+    name: settings?.name ?? "",
+    push: settings?.push ?? false,
+    email: settings?.email ?? false,
+    frequency: settings?.frequency as AlertFrequency,
+    details: settings?.details ?? "",
   }
   const isCustomAlertsNotificationsEnabled = viewer.notificationPreferences.some(
     preference => {
@@ -103,21 +102,21 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
   const userAllowsEmails = isCustomAlertsNotificationsEnabled ?? false
   const shouldShowEmailWarning = !!initialValues.email && !userAllowsEmails
 
-  const handleSubmit = async (values: SavedSearchAlertFormValues) => {
+  const handleSubmit = async (values: AlertSettingsFormValues) => {
     try {
-      const updatedAlertSettings: SavedSearchAlertFormValues = {
+      const updatedAlertSettings: AlertSettingsFormValues = {
         ...values,
         name: values.name || "",
-        frequency: values.push ? values.frequency : DEFAULT_FREQUENCY,
+        frequency: values.push ? values.frequency : "DAILY",
         details: values.details ?? "",
       }
 
-      await submitEditAlert({
+      await submitUpdateAlert({
         variables: {
           input: {
-            searchCriteriaID: editAlertEntity!.id,
-            attributes: criteria,
-            userAlertSettings: updatedAlertSettings,
+            id: editAlertEntity!.id,
+            ...criteria,
+            settings: updatedAlertSettings,
           },
         },
       })
@@ -125,7 +124,7 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
       trackEvent({
         action: ActionType.editedSavedSearch,
         saved_search_id: editAlertEntity.id,
-        current: JSON.stringify(userAlertSettings),
+        current: JSON.stringify(settings),
         changed: JSON.stringify(updatedAlertSettings),
       })
 
@@ -284,9 +283,9 @@ const SavedSearchAlertEditForm: React.FC<SavedSearchAlertEditFormProps> = ({
 
 const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps> = props => {
   const { artworksConnection, artistsConnection, me } = props
-  const { savedSearch } = me
+  const { alert } = me
   const aggregations = artworksConnection?.aggregations as Aggregations
-  const criteria = getAllowedSearchCriteria(savedSearch as any)
+  const criteria = getAllowedSearchCriteria(alert as any)
   const artists = extractNodes(artistsConnection)
   const defaultArtistsCriteria: SavedSearchEntityCriteria[] = artists.map(
     artist => {
@@ -303,10 +302,10 @@ const SavedSearchAlertEditFormContainer: React.FC<SavedSearchAlertEditFormProps>
     },
     owner: {
       type: OwnerType.savedSearch,
-      id: savedSearch?.internalID!,
+      id: alert?.internalID!,
       // alert doesn't have a slug, for this reason we pass internalID
-      slug: savedSearch?.internalID!,
-      name: savedSearch?.userAlertSettings.name ?? undefined,
+      slug: alert?.internalID!,
+      name: alert?.settings?.name ?? undefined,
     },
   }
 
@@ -335,8 +334,8 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
     `,
     me: graphql`
       fragment SavedSearchAlertEditForm_me on Me
-        @argumentDefinitions(savedSearchId: { type: "ID" }) {
-        savedSearch(id: $savedSearchId) {
+        @argumentDefinitions(alertID: { type: "String!" }) {
+        alert(id: $alertID) {
           internalID
           acquireable
           additionalGeneIDs
@@ -357,7 +356,7 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
           offerable
           partnerIDs
           priceRange
-          userAlertSettings {
+          settings {
             name
             email
             push
@@ -394,12 +393,12 @@ export const SavedSearchAlertEditFormFragmentContainer = createFragmentContainer
 )
 
 const SAVED_SEARCH_ALERT_EDIT_FORM_QUERY = graphql`
-  query SavedSearchAlertEditFormQuery($id: ID!, $artistIds: [String!]) {
+  query SavedSearchAlertEditFormQuery($id: String!, $artistIds: [String!]) {
     viewer {
       ...SavedSearchAlertEditForm_viewer
     }
     me {
-      ...SavedSearchAlertEditForm_me @arguments(savedSearchId: $id)
+      ...SavedSearchAlertEditForm_me @arguments(alertID: $id)
     }
     # If we pass artist IDs using ids argument, we will get an empty array.
     # For this reason we use slugs argument, in which ids can also be passed

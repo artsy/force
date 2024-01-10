@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<8484fab65e215e99d4c6807bf09634bf>>
+ * @generated SignedSource<<87308503aa31abb8c3309e3d23d94573>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,11 +10,9 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type SavedSearchesSortEnum = "CREATED_AT_DESC" | "NAME_ASC" | "%future added value";
 export type SavedSearchAlertsAppRefetchQuery$variables = {
   after?: string | null | undefined;
   count: number;
-  sort?: SavedSearchesSortEnum | null | undefined;
 };
 export type SavedSearchAlertsAppRefetchQuery$data = {
   readonly me: {
@@ -37,11 +35,6 @@ var v0 = [
     "defaultValue": null,
     "kind": "LocalArgument",
     "name": "count"
-  },
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "sort"
   }
 ],
 v1 = {
@@ -49,20 +42,21 @@ v1 = {
   "name": "after",
   "variableName": "after"
 },
-v2 = {
-  "kind": "Variable",
-  "name": "sort",
-  "variableName": "sort"
-},
-v3 = [
+v2 = [
   (v1/*: any*/),
   {
     "kind": "Variable",
     "name": "first",
     "variableName": "count"
-  },
-  (v2/*: any*/)
-];
+  }
+],
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
+  "storageKey": null
+};
 return {
   "fragment": {
     "argumentDefinitions": (v0/*: any*/),
@@ -85,8 +79,7 @@ return {
                 "kind": "Variable",
                 "name": "count",
                 "variableName": "count"
-              },
-              (v2/*: any*/)
+              }
             ],
             "kind": "FragmentSpread",
             "name": "SavedSearchAlertsApp_me"
@@ -114,16 +107,16 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": (v3/*: any*/),
-            "concreteType": "SearchCriteriaConnection",
+            "args": (v2/*: any*/),
+            "concreteType": "AlertConnection",
             "kind": "LinkedField",
-            "name": "savedSearchesConnection",
+            "name": "alertsConnection",
             "plural": false,
             "selections": [
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "SearchCriteriaEdge",
+                "concreteType": "AlertEdge",
                 "kind": "LinkedField",
                 "name": "edges",
                 "plural": true,
@@ -131,7 +124,7 @@ return {
                   {
                     "alias": null,
                     "args": null,
-                    "concreteType": "SearchCriteria",
+                    "concreteType": "Alert",
                     "kind": "LinkedField",
                     "name": "node",
                     "plural": false,
@@ -192,9 +185,9 @@ return {
                       {
                         "alias": null,
                         "args": null,
-                        "concreteType": "SavedSearchUserAlertSettings",
+                        "concreteType": "AlertSettings",
                         "kind": "LinkedField",
-                        "name": "userAlertSettings",
+                        "name": "settings",
                         "plural": false,
                         "selections": [
                           {
@@ -207,6 +200,7 @@ return {
                         ],
                         "storageKey": null
                       },
+                      (v3/*: any*/),
                       {
                         "alias": null,
                         "args": null,
@@ -257,38 +251,30 @@ return {
           },
           {
             "alias": null,
-            "args": (v3/*: any*/),
-            "filters": [
-              "sort"
-            ],
+            "args": (v2/*: any*/),
+            "filters": null,
             "handle": "connection",
-            "key": "SavedSearchAlertsApp_savedSearchesConnection",
+            "key": "SavedSearchAlertsApp_alertsConnection",
             "kind": "LinkedHandle",
-            "name": "savedSearchesConnection"
+            "name": "alertsConnection"
           },
-          {
-            "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
-            "storageKey": null
-          }
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "bb3ba5f4e2141ef7c795604d7d68f028",
+    "cacheID": "faa0274b517b28e0a26695168c3612cc",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsAppRefetchQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsAppRefetchQuery(\n  $after: String\n  $count: Int!\n  $sort: SavedSearchesSortEnum\n) {\n  me {\n    ...SavedSearchAlertsApp_me_3P8D4U\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on SearchCriteria {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  userAlertSettings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me_3P8D4U on Me {\n  savedSearchesConnection(first: $count, after: $after, sort: $sort) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
+    "text": "query SavedSearchAlertsAppRefetchQuery(\n  $after: String\n  $count: Int!\n) {\n  me {\n    ...SavedSearchAlertsApp_me_2QE1um\n    id\n  }\n}\n\nfragment SavedSearchAlertListItem_item on Alert {\n  internalID\n  displayName\n  artistIDs\n  artistSeriesIDs\n  href\n  labels {\n    displayValue\n  }\n  settings {\n    name\n  }\n}\n\nfragment SavedSearchAlertsApp_me_2QE1um on Me {\n  alertsConnection(first: $count, after: $after) {\n    edges {\n      node {\n        internalID\n        ...SavedSearchAlertListItem_item\n        id\n        __typename\n      }\n      cursor\n    }\n    pageInfo {\n      endCursor\n      hasNextPage\n    }\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "cc3a87efafde010064adaeb79d565e4c";
+(node as any).hash = "67fb652d034bc04efb73c22b2566f3f2";
 
 export default node;

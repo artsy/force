@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<a18716ffe9a1de2936016639bbd19841>>
+ * @generated SignedSource<<f623025c2fac69f1d36835ec179dffbf>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,16 +10,16 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 export type SavedSearchAlertsApp_Alert_Query$variables = {
-  searchCriteriaID: string;
+  alertID: string;
 };
 export type SavedSearchAlertsApp_Alert_Query$data = {
   readonly me: {
-    readonly savedSearch: {
-      readonly artistIDs: ReadonlyArray<string> | null | undefined;
+    readonly alert: {
+      readonly artistIDs: ReadonlyArray<string | null | undefined> | null | undefined;
       readonly internalID: string;
-      readonly userAlertSettings: {
+      readonly settings: {
         readonly name: string | null | undefined;
-      };
+      } | null | undefined;
     } | null | undefined;
   } | null | undefined;
 };
@@ -33,56 +33,53 @@ var v0 = [
   {
     "defaultValue": null,
     "kind": "LocalArgument",
-    "name": "searchCriteriaID"
+    "name": "alertID"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "alertID"
+  }
+],
+v2 = {
   "alias": null,
-  "args": [
-    {
-      "kind": "Variable",
-      "name": "id",
-      "variableName": "searchCriteriaID"
-    }
-  ],
-  "concreteType": "SearchCriteria",
+  "args": null,
+  "kind": "ScalarField",
+  "name": "internalID",
+  "storageKey": null
+},
+v3 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "artistIDs",
+  "storageKey": null
+},
+v4 = {
+  "alias": null,
+  "args": null,
+  "concreteType": "AlertSettings",
   "kind": "LinkedField",
-  "name": "savedSearch",
+  "name": "settings",
   "plural": false,
   "selections": [
     {
       "alias": null,
       "args": null,
       "kind": "ScalarField",
-      "name": "internalID",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "kind": "ScalarField",
-      "name": "artistIDs",
-      "storageKey": null
-    },
-    {
-      "alias": null,
-      "args": null,
-      "concreteType": "SavedSearchUserAlertSettings",
-      "kind": "LinkedField",
-      "name": "userAlertSettings",
-      "plural": false,
-      "selections": [
-        {
-          "alias": null,
-          "args": null,
-          "kind": "ScalarField",
-          "name": "name",
-          "storageKey": null
-        }
-      ],
+      "name": "name",
       "storageKey": null
     }
   ],
+  "storageKey": null
+},
+v5 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "id",
   "storageKey": null
 };
 return {
@@ -100,7 +97,20 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v1/*: any*/)
+          {
+            "alias": null,
+            "args": (v1/*: any*/),
+            "concreteType": "Alert",
+            "kind": "LinkedField",
+            "name": "alert",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/)
+            ],
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
@@ -122,30 +132,38 @@ return {
         "name": "me",
         "plural": false,
         "selections": [
-          (v1/*: any*/),
           {
             "alias": null,
-            "args": null,
-            "kind": "ScalarField",
-            "name": "id",
+            "args": (v1/*: any*/),
+            "concreteType": "Alert",
+            "kind": "LinkedField",
+            "name": "alert",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/),
+              (v3/*: any*/),
+              (v4/*: any*/),
+              (v5/*: any*/)
+            ],
             "storageKey": null
-          }
+          },
+          (v5/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "48fca4eb1e2e09efa701f574fe7619cc",
+    "cacheID": "4782c640d6aaeada6c04914b18ff7a3a",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertsApp_Alert_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertsApp_Alert_Query(\n  $searchCriteriaID: ID!\n) {\n  me {\n    savedSearch(id: $searchCriteriaID) {\n      internalID\n      artistIDs\n      userAlertSettings {\n        name\n      }\n    }\n    id\n  }\n}\n"
+    "text": "query SavedSearchAlertsApp_Alert_Query(\n  $alertID: String!\n) {\n  me {\n    alert(id: $alertID) {\n      internalID\n      artistIDs\n      settings {\n        name\n      }\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "3152f9c9bcc26ce920b71cd52732a3d4";
+(node as any).hash = "bddc8eb33c85689d519ba4151cd04187";
 
 export default node;

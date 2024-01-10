@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<1a7f865996b43341f51e3752562de298>>
+ * @generated SignedSource<<8e8042ba2c66585df03c60de48d634e0>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -134,7 +134,7 @@ return {
             "args": [
               {
                 "kind": "Variable",
-                "name": "savedSearchId",
+                "name": "alertID",
                 "variableName": "id"
               }
             ],
@@ -243,9 +243,9 @@ return {
                 "variableName": "id"
               }
             ],
-            "concreteType": "SearchCriteria",
+            "concreteType": "Alert",
             "kind": "LinkedField",
-            "name": "savedSearch",
+            "name": "alert",
             "plural": false,
             "selections": [
               (v5/*: any*/),
@@ -378,9 +378,9 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "SavedSearchUserAlertSettings",
+                "concreteType": "AlertSettings",
                 "kind": "LinkedField",
-                "name": "userAlertSettings",
+                "name": "settings",
                 "plural": false,
                 "selections": [
                   (v4/*: any*/),
@@ -414,7 +414,8 @@ return {
                   }
                 ],
                 "storageKey": null
-              }
+              },
+              (v6/*: any*/)
             ],
             "storageKey": null
           },
@@ -524,16 +525,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "c6eb6b248cb9901451e6c4cc2762a9f6",
+    "cacheID": "89369415ee32c43e8946bd052f1760a9",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertEditFormQuery",
     "operationKind": "query",
-    "text": "query SavedSearchAlertEditFormQuery(\n  $id: ID!\n  $artistIds: [String!]\n) {\n  viewer {\n    ...SavedSearchAlertEditForm_viewer\n  }\n  me {\n    ...SavedSearchAlertEditForm_me_3PSMXk\n    id\n  }\n  artistsConnection(slugs: $artistIds) {\n    ...SavedSearchAlertEditForm_artistsConnection\n  }\n  artworksConnection(first: 0, artistIDs: $artistIds, aggregations: [ARTIST_SERIES, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artistsConnection on ArtistConnection {\n  edges {\n    node {\n      internalID\n      name\n      slug\n      id\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_me_3PSMXk on Me {\n  savedSearch(id: $id) {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    artistSeriesIDs\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n      frequency\n      details\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
+    "text": "query SavedSearchAlertEditFormQuery(\n  $id: String!\n  $artistIds: [String!]\n) {\n  viewer {\n    ...SavedSearchAlertEditForm_viewer\n  }\n  me {\n    ...SavedSearchAlertEditForm_me_1Wxbz6\n    id\n  }\n  artistsConnection(slugs: $artistIds) {\n    ...SavedSearchAlertEditForm_artistsConnection\n  }\n  artworksConnection(first: 0, artistIDs: $artistIds, aggregations: [ARTIST_SERIES, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artistsConnection on ArtistConnection {\n  edges {\n    node {\n      internalID\n      name\n      slug\n      id\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_me_1Wxbz6 on Me {\n  alert(id: $id) {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    artistSeriesIDs\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    settings {\n      name\n      email\n      push\n      frequency\n      details\n    }\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "79f8ea4db2e57e1f06b299ceca7c791d";
+(node as any).hash = "5da1a61bc6b748f6d191d51a4fb7c74f";
 
 export default node;

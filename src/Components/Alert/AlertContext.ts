@@ -39,7 +39,7 @@ export const DEFAULT_STATE: State = {
     email: true,
     push: false,
   },
-  criteria: {},
+  criteria: { artistIDs: [] },
   preview: null,
   visible: false,
   metric: DEFAULT_METRIC,

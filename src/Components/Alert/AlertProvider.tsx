@@ -13,7 +13,7 @@ import { Modal } from "Components/Alert/Components/Modal/Modal"
 import { Steps } from "Components/Alert/Components/Steps"
 import { useAlertTracking } from "Components/Alert/Hooks/useAlertTracking"
 import { useCreateAlert } from "Components/Alert/Hooks/useCreateAlert"
-import { useEditSavedSearchAlert } from "Components/Alert/Hooks/useEditSavedSearchAlert"
+import { useUpdateAlert } from "Components/Alert/Hooks/useUpdateAlert"
 import { useAuthDialog } from "Components/AuthDialog"
 import { SearchCriteriaAttributes } from "Components/SavedSearchAlert/types"
 import { getAllowedSearchCriteria } from "Components/SavedSearchAlert/Utils/savedSearchCriteria"
@@ -57,7 +57,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
   const { showAuthDialog } = useAuthDialog()
   const { value, clearValue } = useAuthIntent()
   const { submitMutation } = useCreateAlert()
-  const { submitMutation: submitEditAlert } = useEditSavedSearchAlert()
+  const { submitMutation: submitUpdateAlert } = useUpdateAlert()
   const { sendToast } = useToasts()
   const { isLoggedIn, relayEnvironment } = useSystemContext()
   const { userPreferences } = useSystemContext()
@@ -69,7 +69,7 @@ export const AlertProvider: FC<AlertProviderProps> = ({
       push: initialSettings?.push ?? false,
       name: initialSettings?.name ?? "",
     },
-    criteria: getAllowedSearchCriteria(initialCriteria ?? {}),
+    criteria: getAllowedSearchCriteria(initialCriteria ?? { artistIDs: [] }),
     currentArtworkID,
     searchCriteriaID,
     preview: null,
@@ -87,7 +87,9 @@ export const AlertProvider: FC<AlertProviderProps> = ({
     // inject the values only when creating the alert
     // for the edit mode we inject the values on mount
     if (isEditMode) return
-    const criteria = getAllowedSearchCriteria(initialCriteria ?? {})
+    const criteria = getAllowedSearchCriteria(
+      initialCriteria ?? { artistIDs: [] }
+    )
 
     dispatch({ type: "SET_CRITERIA", payload: criteria })
   }, [initialCriteria, isEditMode])
@@ -100,12 +102,12 @@ export const AlertProvider: FC<AlertProviderProps> = ({
       })
     }
     try {
-      await submitEditAlert({
+      await submitUpdateAlert({
         variables: {
           input: {
-            searchCriteriaID: searchCriteriaID,
-            attributes: state.criteria,
-            userAlertSettings: state.settings,
+            id: searchCriteriaID,
+            ...state.criteria,
+            settings: state.settings,
           },
         },
       })
@@ -120,14 +122,14 @@ export const AlertProvider: FC<AlertProviderProps> = ({
       const reponse = await submitMutation({
         variables: {
           input: {
-            attributes: state.criteria,
-            userAlertSettings: state.settings,
+            ...state.criteria,
+            settings: state.settings,
           },
         },
       })
 
       const searchCriteriaID =
-        reponse.createSavedSearch?.savedSearchOrErrors.internalID
+        reponse.createAlert?.responseOrError?.alert?.internalID
 
       if (searchCriteriaID) {
         dispatch({

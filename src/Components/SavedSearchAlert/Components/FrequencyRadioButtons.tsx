@@ -3,10 +3,13 @@ import { themeGet } from "@styled-system/theme-get"
 import styled from "styled-components"
 import { useSystemContext } from "System/useSystemContext"
 import { userIsTeam } from "Utils/user"
-import { SavedSearchFrequency } from "Components/SavedSearchAlert/types"
+import {
+  AlertFrequency,
+  SavedSearchFrequency,
+} from "Components/SavedSearchAlert/types"
 
 interface FrequenceRadioButtonsProps {
-  defaultFrequence: SavedSearchFrequency
+  defaultFrequence: SavedSearchFrequency | AlertFrequency
   onSelect: (selectedOption: string) => void
 }
 

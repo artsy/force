@@ -45,7 +45,7 @@ interface NewSavedSearchAlertEditFormQueryRendererProps {
 interface NewSavedSearchAlertEditStepsProps {
   savedSearch: NonNullable<
     NewSavedSearchAlertEditFormQuery["response"]["me"]
-  >["savedSearch"]
+  >["alert"]
   viewer: NewSavedSearchAlertEditForm_viewer$data
   onDeleteClick: () => void
   onCompleted: () => void
@@ -261,8 +261,8 @@ export const NewSavedSearchAlertEditFormFragmentContainer = createFragmentContai
         }
       }
     `,
-    savedSearch: graphql`
-      fragment NewSavedSearchAlertEditForm_searchCriteria on SearchCriteria {
+    alert: graphql`
+      fragment NewSavedSearchAlertEditForm_searchCriteria on Alert {
         internalID
         acquireable
         additionalGeneIDs
@@ -282,7 +282,7 @@ export const NewSavedSearchAlertEditFormFragmentContainer = createFragmentContai
         offerable
         partnerIDs
         priceRange
-        userAlertSettings {
+        settings {
           name
           email
           push
@@ -302,12 +302,12 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
   return (
     <SystemQueryRenderer<NewSavedSearchAlertEditFormQuery>
       query={graphql`
-        query NewSavedSearchAlertEditFormQuery($id: ID!) {
+        query NewSavedSearchAlertEditFormQuery($id: String!) {
           viewer {
             ...NewSavedSearchAlertEditForm_viewer
           }
           me {
-            savedSearch(id: $id) {
+            alert(id: $id) {
               ...NewSavedSearchAlertEditForm_searchCriteria @relay(mask: false)
             }
           }
@@ -324,26 +324,26 @@ export const NewSavedSearchAlertEditFormQueryRenderer: React.FC<NewSavedSearchAl
           return null
         }
 
-        if (!props?.me?.savedSearch || !props?.viewer) {
+        if (!props?.me?.alert || !props?.viewer) {
           return <NewSavedSearchAlertEditFormPlaceholder />
         }
 
         return (
           <AlertProvider
             initialCriteria={getAllowedSearchCriteria(
-              (props.me.savedSearch as unknown) as SearchCriteriaAttributes
+              (props.me.alert as unknown) as SearchCriteriaAttributes
             )}
-            searchCriteriaID={props.me.savedSearch.internalID}
+            searchCriteriaID={props.me.alert.internalID}
             initialSettings={{
-              name: props.me.savedSearch.userAlertSettings.name ?? "",
-              push: props.me.savedSearch.userAlertSettings.push,
-              email: props.me.savedSearch.userAlertSettings.email,
-              details: props?.me?.savedSearch.userAlertSettings.details ?? "",
+              name: props.me.alert.settings?.name ?? "",
+              push: props.me.alert.settings?.push ?? false,
+              email: props.me.alert.settings?.email ?? false,
+              details: props?.me?.alert.settings?.details ?? "",
             }}
             isEditMode
           >
             <NewSavedSearchAlertEditFormFragmentContainer
-              savedSearch={props.me.savedSearch}
+              savedSearch={props.me.alert}
               viewer={props.viewer}
               onDeleteClick={onDeleteClick}
               onCompleted={onCompleted}

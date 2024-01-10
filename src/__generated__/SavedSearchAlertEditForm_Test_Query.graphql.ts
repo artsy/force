@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<0546374b03f913e6f8ad95d220990532>>
+ * @generated SignedSource<<36dadfc82da7cc6eb9798d3292f61d8e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,9 +10,9 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
+export type AlertSettingsFrequency = "DAILY" | "INSTANT" | "%future added value";
 export type ArtworkAggregation = "ARTIST" | "ARTIST_NATIONALITY" | "ARTIST_SERIES" | "ATTRIBUTION_CLASS" | "COLOR" | "DIMENSION_RANGE" | "FOLLOWED_ARTISTS" | "GALLERY" | "INSTITUTION" | "LOCATION_CITY" | "MAJOR_PERIOD" | "MATERIALS_TERMS" | "MEDIUM" | "MERCHANDISABLE_ARTISTS" | "PARTNER" | "PARTNER_CITY" | "PERIOD" | "PRICE_RANGE" | "SIMPLE_PRICE_HISTOGRAM" | "TOTAL" | "%future added value";
 export type SubGroupStatus = "SUBSCRIBED" | "UNSUBSCRIBED" | "%future added value";
-export type UserSearchCriteriaFrequency = "daily" | "instant" | "%future added value";
 export type SavedSearchAlertEditForm_Test_Query$variables = {
   artistIDs?: ReadonlyArray<string> | null | undefined;
 };
@@ -53,35 +53,36 @@ export type SavedSearchAlertEditForm_Test_Query$rawResponse = {
     readonly id: string;
   } | null | undefined;
   readonly me: {
-    readonly id: string;
-    readonly savedSearch: {
+    readonly alert: {
       readonly acquireable: boolean | null | undefined;
-      readonly additionalGeneIDs: ReadonlyArray<string>;
-      readonly artistIDs: ReadonlyArray<string> | null | undefined;
-      readonly artistSeriesIDs: ReadonlyArray<string>;
+      readonly additionalGeneIDs: ReadonlyArray<string | null | undefined> | null | undefined;
+      readonly artistIDs: ReadonlyArray<string | null | undefined> | null | undefined;
+      readonly artistSeriesIDs: ReadonlyArray<string | null | undefined> | null | undefined;
       readonly atAuction: boolean | null | undefined;
-      readonly attributionClass: ReadonlyArray<string>;
-      readonly colors: ReadonlyArray<string>;
+      readonly attributionClass: ReadonlyArray<string | null | undefined> | null | undefined;
+      readonly colors: ReadonlyArray<string | null | undefined> | null | undefined;
       readonly dimensionRange: string | null | undefined;
       readonly height: string | null | undefined;
+      readonly id: string;
       readonly inquireableOnly: boolean | null | undefined;
       readonly internalID: string;
-      readonly locationCities: ReadonlyArray<string>;
-      readonly majorPeriods: ReadonlyArray<string>;
-      readonly materialsTerms: ReadonlyArray<string>;
+      readonly locationCities: ReadonlyArray<string | null | undefined> | null | undefined;
+      readonly majorPeriods: ReadonlyArray<string | null | undefined> | null | undefined;
+      readonly materialsTerms: ReadonlyArray<string | null | undefined> | null | undefined;
       readonly offerable: boolean | null | undefined;
-      readonly partnerIDs: ReadonlyArray<string>;
+      readonly partnerIDs: ReadonlyArray<string | null | undefined> | null | undefined;
       readonly priceRange: string | null | undefined;
-      readonly sizes: ReadonlyArray<string>;
-      readonly userAlertSettings: {
+      readonly settings: {
         readonly details: string | null | undefined;
-        readonly email: boolean;
-        readonly frequency: UserSearchCriteriaFrequency;
+        readonly email: boolean | null | undefined;
+        readonly frequency: AlertSettingsFrequency | null | undefined;
         readonly name: string | null | undefined;
-        readonly push: boolean;
-      };
+        readonly push: boolean | null | undefined;
+      } | null | undefined;
+      readonly sizes: ReadonlyArray<string | null | undefined> | null | undefined;
       readonly width: string | null | undefined;
     } | null | undefined;
+    readonly id: string;
   } | null | undefined;
   readonly viewer: {
     readonly notificationPreferences: ReadonlyArray<{
@@ -192,7 +193,7 @@ return {
             "args": [
               {
                 "kind": "Literal",
-                "name": "savedSearchId",
+                "name": "alertID",
                 "value": "id"
               }
             ],
@@ -298,9 +299,9 @@ return {
                 "value": "id"
               }
             ],
-            "concreteType": "SearchCriteria",
+            "concreteType": "Alert",
             "kind": "LinkedField",
-            "name": "savedSearch",
+            "name": "alert",
             "plural": false,
             "selections": [
               (v4/*: any*/),
@@ -433,9 +434,9 @@ return {
               {
                 "alias": null,
                 "args": null,
-                "concreteType": "SavedSearchUserAlertSettings",
+                "concreteType": "AlertSettings",
                 "kind": "LinkedField",
-                "name": "userAlertSettings",
+                "name": "settings",
                 "plural": false,
                 "selections": [
                   (v3/*: any*/),
@@ -469,9 +470,10 @@ return {
                   }
                 ],
                 "storageKey": null
-              }
+              },
+              (v5/*: any*/)
             ],
-            "storageKey": "savedSearch(id:\"id\")"
+            "storageKey": "alert(id:\"id\")"
           },
           (v5/*: any*/)
         ],
@@ -579,16 +581,16 @@ return {
     ]
   },
   "params": {
-    "cacheID": "1bdfc1c7d5d4112fd1e25a43a4070def",
+    "cacheID": "fc128fbd8ade870cf8989aca24b1f295",
     "id": null,
     "metadata": {},
     "name": "SavedSearchAlertEditForm_Test_Query",
     "operationKind": "query",
-    "text": "query SavedSearchAlertEditForm_Test_Query(\n  $artistIDs: [String!]\n) {\n  viewer {\n    ...SavedSearchAlertEditForm_viewer\n  }\n  me {\n    ...SavedSearchAlertEditForm_me_1LtJCq\n    id\n  }\n  artistsConnection(slugs: $artistIDs) {\n    ...SavedSearchAlertEditForm_artistsConnection\n  }\n  artworksConnection(first: 0, artistIDs: $artistIDs, aggregations: [ARTIST_SERIES, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artistsConnection on ArtistConnection {\n  edges {\n    node {\n      internalID\n      name\n      slug\n      id\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_me_1LtJCq on Me {\n  savedSearch(id: \"id\") {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    artistSeriesIDs\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    userAlertSettings {\n      name\n      email\n      push\n      frequency\n      details\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
+    "text": "query SavedSearchAlertEditForm_Test_Query(\n  $artistIDs: [String!]\n) {\n  viewer {\n    ...SavedSearchAlertEditForm_viewer\n  }\n  me {\n    ...SavedSearchAlertEditForm_me_4ESjKM\n    id\n  }\n  artistsConnection(slugs: $artistIDs) {\n    ...SavedSearchAlertEditForm_artistsConnection\n  }\n  artworksConnection(first: 0, artistIDs: $artistIDs, aggregations: [ARTIST_SERIES, LOCATION_CITY, MATERIALS_TERMS, MEDIUM, PARTNER, COLOR]) {\n    ...SavedSearchAlertEditForm_artworksConnection\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_artistsConnection on ArtistConnection {\n  edges {\n    node {\n      internalID\n      name\n      slug\n      id\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_artworksConnection on FilterArtworksConnection {\n  aggregations {\n    slice\n    counts {\n      count\n      name\n      value\n    }\n  }\n}\n\nfragment SavedSearchAlertEditForm_me_4ESjKM on Me {\n  alert(id: \"id\") {\n    internalID\n    acquireable\n    additionalGeneIDs\n    artistIDs\n    atAuction\n    attributionClass\n    artistSeriesIDs\n    colors\n    dimensionRange\n    sizes\n    width\n    height\n    inquireableOnly\n    locationCities\n    majorPeriods\n    materialsTerms\n    offerable\n    partnerIDs\n    priceRange\n    settings {\n      name\n      email\n      push\n      frequency\n      details\n    }\n    id\n  }\n}\n\nfragment SavedSearchAlertEditForm_viewer on Viewer {\n  notificationPreferences {\n    status\n    name\n    channel\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "929f36360d72c82991ec0e9c83fcf455";
+(node as any).hash = "9c417a84a5fd05b8dfafcd801710d59e";
 
 export default node;
