@@ -66,6 +66,15 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
     })
   }
 
+  // Temporary until new activity panel is ready
+  const message = () => {
+    if (item.notificationType === "PARTNER_OFFER_CREATED") {
+      return "Offer"
+    }
+
+    return item.message
+  }
+
   return (
     <NotificationItemLink to={item.targetHref} onClick={handlePress}>
       <Flex flex={1} flexDirection="column">
@@ -76,7 +85,7 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
         </Text>
 
         <Flex flexDirection="row" gap={0.5}>
-          <Text variant="sm-display">{item.message}</Text>
+          <Text variant="sm-display">{message()}</Text>
           {shouldDisplayExpiresInTimer(item) && (
             <ExpiresInTimer expiresAt={item?.item?.expiresAt ?? ""} />
           )}
