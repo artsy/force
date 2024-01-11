@@ -1,11 +1,12 @@
 # A/B Testing with Unleash
 
-### Create an A/B test via our Internal Tools app: 
+### Create an A/B test via our Internal Tools app:
+
 - Login to https://tools.artsy.net/feature-flags
-- Select `Create` 
+- Select `Create`
 - Give your A/B test a name
-- Select `Experiment` checkbox 
-- Assign weights to each `control` and `experiment` (eg, 50-50; 50% of users will see control and 50% of users will see experiment) 
+- Select `Experiment` checkbox
+- Assign weights to each `control` and `experiment` (eg, 50-50; 50% of users will see control and 50% of users will see experiment)
 - Add additional variants if necessary
 - Hit `Create`
 
@@ -118,8 +119,6 @@ function MyComponent() {
 
 }
 ```
-
-The number of segment events sent for an experiment is [throttled](https://github.com/artsy/force/blob/main/src/System/useFeatureFlag.tsx#L65) to one event per user, per variant view.
 
 ### Accessing flags on the server
 
