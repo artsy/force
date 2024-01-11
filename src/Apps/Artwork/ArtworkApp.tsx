@@ -233,7 +233,7 @@ export const ArtworkApp: React.FC<Props> = props => {
         <FullBleedBanner variant="brand">
           <Text>
             Sorry, this artwork is no longer available. Please create an alert
-            or contact orders@artsy.net to find similar artworks.
+            or contact the gallery to find similar artworks.
           </Text>
         </FullBleedBanner>
       )}
