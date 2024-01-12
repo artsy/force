@@ -1,33 +1,33 @@
 import { screen } from "@testing-library/react"
 import { setupTestWrapperTL } from "DevTools/setupTestWrapper"
-import { graphql } from "react-relay"
-import { NotificationFragmentContainer } from "Components/Notifications/Notification"
-import { Notification_test_Query } from "__generated__/Notification_test_Query.graphql"
+import { NotificationQueryRenderer } from "Components/Notifications/Notification"
+import { NotificationsContextProvider } from "Components/Notifications/useNotificationsContext"
+import { flushPromiseQueue } from "DevTools/flushPromiseQueue"
 
 jest.unmock("react-relay")
+jest.mock("System/Router/useRouter", () => ({
+  useRouter: () => ({
+    match: { params: { notificationId: "test-id" } },
+  }),
+}))
 
-const { renderWithRelay } = setupTestWrapperTL<Notification_test_Query>({
-  Component: props => {
-    if (props.me) {
-      return <NotificationFragmentContainer me={props.me} />
-    }
-
-    return null
+const { renderWithRelay } = setupTestWrapperTL({
+  Component: () => {
+    return (
+      <NotificationsContextProvider>
+        <NotificationQueryRenderer />
+      </NotificationsContextProvider>
+    )
   },
-  query: graphql`
-    query Notification_test_Query($id: String!) @relay_test_operation {
-      me {
-        ...Notification_me @arguments(notificationId: $id)
-      }
-    }
-  `,
 })
 
 describe("Notification", () => {
-  it("should render notification items", () => {
+  it("should render notification items", async () => {
     renderWithRelay({
       Notification: () => notification,
     })
+
+    await flushPromiseQueue()
 
     expect(screen.getByText("Notification One")).toBeInTheDocument()
   })

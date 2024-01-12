@@ -10,7 +10,11 @@ const { renderWithRelay } = setupTestWrapperTL<NotificationsList_test_Query>({
   Component: props => {
     if (props.viewer) {
       return (
-        <NotificationsListFragmentContainer type="all" viewer={props.viewer} />
+        <NotificationsListFragmentContainer
+          mode="dropdown"
+          type="all"
+          viewer={props.viewer}
+        />
       )
     }
 

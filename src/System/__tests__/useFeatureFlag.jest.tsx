@@ -1,11 +1,12 @@
+import { render } from "@testing-library/react"
 import {
   useFeatureFlag,
   useFeatureVariant,
   useTrackFeatureVariant,
-  shouldTrack,
   getFeatureVariant,
 } from "System/useFeatureFlag"
 import { useSystemContext } from "System/useSystemContext"
+import { useEffect } from "react"
 
 const FEATURE_FLAGS = {
   "feature-a": {
@@ -105,6 +106,37 @@ describe("getFeatureVariant", () => {
 describe("useTrackFeatureVariantView", () => {
   const analytics = window.analytics
 
+  const analyticsPayload = {
+    context_owner_slug: "daniel-arsham",
+    context_owner_type: "artist",
+    experiment_name: "cool-experiment",
+    payload: undefined,
+    service: "unleash",
+    variant_name: "experiment",
+  }
+
+  // variantName is only for testing disabled variants.
+  // It will not be a prop in production.
+  const TestComponent: React.FC<{
+    greeting?: string
+    variantName?: string
+  }> = ({ greeting = "Hello", variantName = "experiment" }) => {
+    const { trackFeatureVariant } = useTrackFeatureVariant({
+      experimentName: "cool-experiment",
+      variantName,
+    })
+    useEffect(trackFeatureVariant, [trackFeatureVariant])
+    return (
+      <div>
+        <div>{greeting}!</div>
+      </div>
+    )
+  }
+
+  const renderTestComponent = (variantName?: string) => {
+    return render(<TestComponent variantName={variantName} />)
+  }
+
   beforeEach(() => {
     window.analytics = {
       track: jest.fn(),
@@ -112,56 +144,46 @@ describe("useTrackFeatureVariantView", () => {
   })
 
   afterEach(() => {
-    window.localStorage.clear()
     window.analytics = analytics
   })
 
   it("calls the tracking function with the correct payload", () => {
-    const { trackFeatureVariant } = useTrackFeatureVariant({
-      experimentName: "cool-experiment",
-      variantName: "experiment",
-    })
+    renderTestComponent()
 
-    trackFeatureVariant()
-
-    expect(window?.analytics?.track).toHaveBeenLastCalledWith(
+    expect(window?.analytics?.track).toHaveBeenCalledWith(
       "experiment_viewed",
-      {
-        context_owner_slug: "daniel-arsham",
-        context_owner_type: "artist",
-        experiment_name: "cool-experiment",
-        payload: undefined,
-        service: "unleash",
-        variant_name: "experiment",
-      }
+      analyticsPayload
     )
   })
 
-  it("does not call the tracking function if the variantName is disabled", () => {
-    const { trackFeatureVariant } = useTrackFeatureVariant({
-      experimentName: "cool-experiment",
-      variantName: "disabled",
-    })
+  it("Does not refire tracking on component rerender", () => {
+    const { rerender, unmount } = renderTestComponent()
 
-    trackFeatureVariant()
+    rerender(<TestComponent greeting="Hi" />)
+    rerender(<TestComponent greeting="Hola" />)
+
+    unmount()
+
+    renderTestComponent()
+
+    expect(window?.analytics?.track).toHaveBeenNthCalledWith(
+      1,
+      "experiment_viewed",
+      analyticsPayload
+    )
+
+    expect(window?.analytics?.track).toHaveBeenNthCalledWith(
+      2,
+      "experiment_viewed",
+      analyticsPayload
+    )
+
+    expect(window?.analytics?.track).toHaveBeenCalledTimes(2)
+  })
+
+  it("does not call the tracking function if the variantName is disabled", () => {
+    renderTestComponent("disabled")
 
     expect(window?.analytics?.track).toHaveBeenCalledTimes(0)
-  })
-})
-
-describe("shouldTrack", () => {
-  afterEach(() => {
-    window.localStorage.clear()
-  })
-
-  it("returns true if the experiment has not been viewed", () => {
-    const track = shouldTrack("coolFeature", "variantName")
-    expect(track).toEqual(true)
-  })
-
-  it("returns false if the experiment has been viewed", () => {
-    shouldTrack("coolFeature", "variantName")
-    const track = shouldTrack("coolFeature", "variantName")
-    expect(track).toEqual(false)
   })
 })
