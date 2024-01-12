@@ -136,7 +136,10 @@
       "listCreated": "{{listName}} Created",
       "savedArtworks": "Saves",
       "curateYourList": "Curate your own lists of the works you love",
-      "createNewListButton": "Create New List"
+      "createNewListButton": "Create New List",
+      "connector": "and",
+      "signalInterest": "signal your interest to galleries",
+      "popover": "Learn more about saves and how to manage your preferences."
     },
     "createNewListModal": {
       "title": "Create a new list"

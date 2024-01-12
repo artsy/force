@@ -8,6 +8,7 @@ export const PROGRESSIVE_ONBOARDING_ALERTS = {
   saveArtwork: "save-artwork",
   saveFind: "save-find",
   saveHighlight: "save-highlight",
+  saveTitle: "save-title",
 
   // Alerts
   alertCreate: "alert-create",
@@ -35,6 +36,7 @@ export const PROGRESSIVE_ONBOARDING_SAVE_CHAIN = [
   PROGRESSIVE_ONBOARDING_ALERTS.saveArtwork,
   PROGRESSIVE_ONBOARDING_ALERTS.saveFind,
   PROGRESSIVE_ONBOARDING_ALERTS.saveHighlight,
+  PROGRESSIVE_ONBOARDING_ALERTS.saveTitle,
 ] as const
 
 export const getProgressiveOnboardingAlertKeys = () => {
