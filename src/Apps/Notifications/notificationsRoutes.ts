@@ -19,7 +19,7 @@ export const notificationsRoutes: AppRouteConfig[] = [
       NotificationsApp.preload()
     },
     query: graphql`
-      query notificationsRoutesQuery {
+      query notificationsRoutesNotificationsQuery {
         me {
           ...NotificationsApp_me
         }
@@ -34,9 +34,9 @@ export const notificationsRoutes: AppRouteConfig[] = [
       NotificationsApp.preload()
     },
     query: graphql`
-      query notificationsRoutesNotificationQuery($notificationId: String!) {
+      query notificationsRoutesNotificationQuery {
         me {
-          ...Notification_me @arguments(notificationId: $notificationId)
+          ...NotificationsApp_me
         }
       }
     `,

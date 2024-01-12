@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2293f6250b82e32a928e4463231ee817>>
+ * @generated SignedSource<<9adc1e7189623979a727228ad8f8cc7e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,12 +10,10 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type notificationsRoutesNotificationQuery$variables = {
-  notificationId: string;
-};
+export type notificationsRoutesNotificationQuery$variables = Record<PropertyKey, never>;
 export type notificationsRoutesNotificationQuery$data = {
   readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"Notification_me">;
+    readonly " $fragmentSpreads": FragmentRefs<"NotificationsApp_me">;
   } | null | undefined;
 };
 export type notificationsRoutesNotificationQuery = {
@@ -23,24 +21,9 @@ export type notificationsRoutesNotificationQuery = {
   variables: notificationsRoutesNotificationQuery$variables;
 };
 
-const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "notificationId"
-  }
-],
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ConcreteRequest = {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "notificationsRoutesNotificationQuery",
@@ -54,15 +37,9 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "notificationId",
-                "variableName": "notificationId"
-              }
-            ],
+            "args": null,
             "kind": "FragmentSpread",
-            "name": "Notification_me"
+            "name": "NotificationsApp_me"
           }
         ],
         "storageKey": null
@@ -73,7 +50,7 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "notificationsRoutesNotificationQuery",
     "selections": [
@@ -87,46 +64,33 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "id",
-                "variableName": "notificationId"
-              }
-            ],
-            "concreteType": "Notification",
-            "kind": "LinkedField",
-            "name": "notification",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "title",
-                "storageKey": null
-              },
-              (v1/*: any*/)
-            ],
+            "args": null,
+            "kind": "ScalarField",
+            "name": "unreadNotificationsCount",
             "storageKey": null
           },
-          (v1/*: any*/)
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "c8f2ce8e5f810039d256af5005dc4058",
+    "cacheID": "d5cb685c05ec202e795271ea5bc225f7",
     "id": null,
     "metadata": {},
     "name": "notificationsRoutesNotificationQuery",
     "operationKind": "query",
-    "text": "query notificationsRoutesNotificationQuery(\n  $notificationId: String!\n) {\n  me {\n    ...Notification_me_2a8bQo\n    id\n  }\n}\n\nfragment Notification_me_2a8bQo on Me {\n  notification(id: $notificationId) {\n    title\n    id\n  }\n}\n"
+    "text": "query notificationsRoutesNotificationQuery {\n  me {\n    ...NotificationsApp_me\n    id\n  }\n}\n\nfragment NotificationsApp_me on Me {\n  unreadNotificationsCount\n}\n"
   }
 };
-})();
 
-(node as any).hash = "b37add378d96553a5677b53616b80d5c";
+(node as any).hash = "4b25572db1fc5773e8cfeb61d82e6408";
 
 export default node;

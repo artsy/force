@@ -19,7 +19,9 @@ interface NotificationsAppProps {
 const NotificationsApp: React.FC<NotificationsAppProps> = ({ me }) => {
   const { match } = useRouter()
 
-  const isNotificationsPage = match.location.pathname === "/notifications"
+  const isNotificationsPage = match.location.pathname.startsWith(
+    "/notifications"
+  )
 
   return (
     <NotificationsContextProvider>

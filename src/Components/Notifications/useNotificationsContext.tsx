@@ -1,4 +1,4 @@
-import { useRouter } from "found"
+import { useRouter } from "System/Router/useRouter"
 import { createContext, FC, useState, useContext, useEffect } from "react"
 
 export type State = {
@@ -9,13 +9,14 @@ export const DEFAULT_STATE: State = {
   currentNotificationId: null,
 }
 
-const NotificationsContext = createContext<{
+type NotificationsContextType = {
   state: State
   setCurrentNotificationId: (id: string) => void
-}>({
+}
+
+const NotificationsContext = createContext<NotificationsContextType>(({
   state: DEFAULT_STATE,
-  setCurrentNotificationId: () => {},
-})
+} as unknown) as NotificationsContextType)
 
 interface NotificationsContextProviderProps {
   id?: string | null

@@ -6,11 +6,10 @@ import {
   Spacer,
   Text,
 } from "@artsy/palette"
-import { createFragmentContainer, graphql } from "react-relay"
-import { Notification_me$data } from "__generated__/Notification_me.graphql"
-import { SystemQueryRenderer } from "System/Relay/SystemQueryRenderer"
+import { graphql, useLazyLoadQuery } from "react-relay"
 import { NotificationQuery } from "__generated__/NotificationQuery.graphql"
 import { useNotificationsContext } from "Components/Notifications/useNotificationsContext"
+import { Suspense } from "react"
 
 export const SUPPORTED_NOTIFICATION_TYPES = [
   "ARTWORK_ALERT",
@@ -18,10 +17,18 @@ export const SUPPORTED_NOTIFICATION_TYPES = [
 ]
 
 interface NotificationProps {
-  me: Notification_me$data
+  notificationId: string
 }
 
-const Notification: React.FC<NotificationProps> = ({ me }) => {
+const Notification: React.FC<NotificationProps> = ({ notificationId }) => {
+  const { me } = useLazyLoadQuery<NotificationQuery>(notificationQuery, {
+    id: notificationId,
+  })
+
+  if (!me) {
+    return null
+  }
+
   const { notification } = me
 
   if (!notification) {
@@ -43,29 +50,8 @@ const Notification: React.FC<NotificationProps> = ({ me }) => {
     </Flex>
   )
 }
-export const NotificationFragmentContainer = createFragmentContainer(
-  Notification,
-  {
-    me: graphql`
-      fragment Notification_me on Me
-        @argumentDefinitions(notificationId: { type: "String!" }) {
-        notification(id: $notificationId) {
-          title
-        }
-      }
-    `,
-  }
-)
 
-const QUERY = graphql`
-  query NotificationQuery($id: String!) {
-    me {
-      ...Notification_me @arguments(notificationId: $id)
-    }
-  }
-`
-
-export const NotificationQueryRenderer: React.FC = () => {
+export const NotificationQueryRenderer: React.FC = props => {
   const { state } = useNotificationsContext()
 
   if (!state.currentNotificationId) {
@@ -73,28 +59,21 @@ export const NotificationQueryRenderer: React.FC = () => {
   }
 
   return (
-    <SystemQueryRenderer<NotificationQuery>
-      query={QUERY}
-      variables={{
-        id: state.currentNotificationId,
-      }}
-      placeholder={<Placeholder />}
-      cacheConfig={{ force: true }}
-      render={({ props, error }) => {
-        if (error) {
-          console.error(error)
-          return null
-        }
-
-        if (props?.me) {
-          return <NotificationFragmentContainer me={props.me} />
-        }
-
-        return <Placeholder />
-      }}
-    />
+    <Suspense fallback={<Placeholder />}>
+      <Notification notificationId={state.currentNotificationId} {...props} />
+    </Suspense>
   )
 }
+
+const notificationQuery = graphql`
+  query NotificationQuery($id: String!) {
+    me {
+      notification(id: $id) {
+        title
+      }
+    }
+  }
+`
 
 export const Placeholder: React.FC = () => (
   <Flex flexDirection="column" m={4}>

@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<58809ae0f79de99312372e3c84e441a0>>
+ * @generated SignedSource<<97cd82ab5cddb5cc2079fec20ca116e5>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -9,13 +9,14 @@
 // @ts-nocheck
 
 import { ConcreteRequest, Query } from 'relay-runtime';
-import { FragmentRefs } from "relay-runtime";
 export type NotificationQuery$variables = {
   id: string;
 };
 export type NotificationQuery$data = {
   readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"Notification_me">;
+    readonly notification: {
+      readonly title: string;
+    } | null | undefined;
   } | null | undefined;
 };
 export type NotificationQuery = {
@@ -31,7 +32,21 @@ var v0 = [
     "name": "id"
   }
 ],
-v1 = {
+v1 = [
+  {
+    "kind": "Variable",
+    "name": "id",
+    "variableName": "id"
+  }
+],
+v2 = {
+  "alias": null,
+  "args": null,
+  "kind": "ScalarField",
+  "name": "title",
+  "storageKey": null
+},
+v3 = {
   "alias": null,
   "args": null,
   "kind": "ScalarField",
@@ -54,15 +69,16 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "notificationId",
-                "variableName": "id"
-              }
+            "alias": null,
+            "args": (v1/*: any*/),
+            "concreteType": "Notification",
+            "kind": "LinkedField",
+            "name": "notification",
+            "plural": false,
+            "selections": [
+              (v2/*: any*/)
             ],
-            "kind": "FragmentSpread",
-            "name": "Notification_me"
+            "storageKey": null
           }
         ],
         "storageKey": null
@@ -87,46 +103,34 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "id",
-                "variableName": "id"
-              }
-            ],
+            "args": (v1/*: any*/),
             "concreteType": "Notification",
             "kind": "LinkedField",
             "name": "notification",
             "plural": false,
             "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "title",
-                "storageKey": null
-              },
-              (v1/*: any*/)
+              (v2/*: any*/),
+              (v3/*: any*/)
             ],
             "storageKey": null
           },
-          (v1/*: any*/)
+          (v3/*: any*/)
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "e80b3d279ce06ee581baf3f898d42180",
+    "cacheID": "9ef897a3efbc4ea5ea1e5ffd42c4bb66",
     "id": null,
     "metadata": {},
     "name": "NotificationQuery",
     "operationKind": "query",
-    "text": "query NotificationQuery(\n  $id: String!\n) {\n  me {\n    ...Notification_me_2X2oUh\n    id\n  }\n}\n\nfragment Notification_me_2X2oUh on Me {\n  notification(id: $id) {\n    title\n    id\n  }\n}\n"
+    "text": "query NotificationQuery(\n  $id: String!\n) {\n  me {\n    notification(id: $id) {\n      title\n      id\n    }\n    id\n  }\n}\n"
   }
 };
 })();
 
-(node as any).hash = "fce76f7d3b57f7688647ccc72af35abb";
+(node as any).hash = "a82be41c0ee4f4061d4490dac0f76efc";
 
 export default node;
