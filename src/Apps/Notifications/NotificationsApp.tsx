@@ -31,7 +31,8 @@ const NotificationsApp: React.FC<NotificationsAppProps> = ({ me }) => {
         <GridColumns>
           <Column
             span={3}
-            borderRight="1px solid #ddd"
+            borderRight="1px solid"
+            borderColor="black10"
             minWidth={MIN_LIST_WIDTH}
           >
             <Flex height={DESKTOP_HEIGHT} flexDirection="column">
