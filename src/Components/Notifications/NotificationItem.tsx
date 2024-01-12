@@ -15,6 +15,8 @@ import {
   shouldDisplayNotificationTypeLabel,
 } from "./util"
 import { NotificationTypeLabel } from "./NotificationTypeLabel"
+import { useFeatureFlag } from "System/useFeatureFlag"
+import { SUPPORTED_NOTIFICATION_TYPES } from "Components/Notifications/Notification"
 
 const logger = createLogger("NotificationItem")
 
@@ -25,6 +27,7 @@ interface NotificationItemProps {
 const UNREAD_INDICATOR_SIZE = 8
 
 const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
+  const enableNewActivityPanel = useFeatureFlag("onyx_new_notification_page")
   const { trackEvent } = useTracking()
   const { relayEnvironment } = useSystemContext()
   const artworks = extractNodes(item.artworksConnection)
@@ -64,8 +67,12 @@ const NotificationItem: React.FC<NotificationItemProps> = ({ item }) => {
     })
   }
 
+  const itemUrl = enableNewActivityPanel
+    ? getNotificationUrl(item)
+    : item.targetHref
+
   return (
-    <NotificationItemLink to={item.targetHref} onClick={handlePress}>
+    <NotificationItemLink to={itemUrl} onClick={handlePress}>
       <Flex flex={1} flexDirection="column">
         <Text variant="xs" color="black60">
           {shouldDisplayNotificationTypeLabel(item.notificationType) && (
@@ -173,4 +180,16 @@ const NotificationItemLink = styled(RouterLink)`
 
 NotificationItemLink.defaultProps = {
   p: 2,
+}
+
+/**
+ * Until we support all notification types in the new activity panel,
+ * we only link to the notification detail page for the supported types.
+ */
+const getNotificationUrl = (notification: NotificationItem_item$data) => {
+  if (SUPPORTED_NOTIFICATION_TYPES.includes(notification.notificationType)) {
+    return `/notification/${notification.internalID}`
+  }
+
+  return notification.targetHref
 }

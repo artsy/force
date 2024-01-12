@@ -26,8 +26,9 @@ const VERTICAL_OFFSET = 10
 const DROPDOWN_CONTENT_HEIGHT =
   DROPDOWN_HEADER_HEIGHT + DESKTOP_NAV_BAR_TOP_TIER_HEIGHT + VERTICAL_OFFSET
 
+export type NotificationListMode = "dropdown" | "page"
 export interface NofiticationsTabsProps extends MarkAllAsReadPanelProps {
-  mode: "dropdown" | "page"
+  mode: NotificationListMode
 }
 
 export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
@@ -102,7 +103,9 @@ export const NofiticationsTabs: React.FC<NofiticationsTabsProps> = ({
         <MarkAllAsReadPanel unreadCounts={unreadCounts} />
       </Sticky>
 
-      {activeTab.current.child}
+      <Flex overflow="scroll" flexDirection="column">
+        {activeTab.current.child}
+      </Flex>
     </>
   )
 }
