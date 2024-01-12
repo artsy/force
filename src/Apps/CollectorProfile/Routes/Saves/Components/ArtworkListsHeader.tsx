@@ -70,7 +70,7 @@ export const ArtworkListsHeader: FC<ArtworkListsHeaderProps> = ({
                   " " +
                   t("collectorSaves.artworkListsHeader.connector") +
                   " "}
-                <RouterLink to="TODO.com">
+                <RouterLink to="https://support.artsy.net/s/article/Offers-on-saved-works">
                   {t("collectorSaves.artworkListsHeader.signalInterest")}
                 </RouterLink>
               </ProgressiveOnboardingSaveTitle>
