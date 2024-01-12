@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<33a06a845958f38585d9cd8cbd8a4296>>
+ * @generated SignedSource<<fe38e539c7523967482461e35a053a64>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,15 +10,15 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type notificationsRoutesQuery$variables = Record<PropertyKey, never>;
-export type notificationsRoutesQuery$data = {
+export type notificationsRoutesNotificationsQuery$variables = Record<PropertyKey, never>;
+export type notificationsRoutesNotificationsQuery$data = {
   readonly me: {
     readonly " $fragmentSpreads": FragmentRefs<"NotificationsApp_me">;
   } | null | undefined;
 };
-export type notificationsRoutesQuery = {
-  response: notificationsRoutesQuery$data;
-  variables: notificationsRoutesQuery$variables;
+export type notificationsRoutesNotificationsQuery = {
+  response: notificationsRoutesNotificationsQuery$data;
+  variables: notificationsRoutesNotificationsQuery$variables;
 };
 
 const node: ConcreteRequest = {
@@ -26,7 +26,7 @@ const node: ConcreteRequest = {
     "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
-    "name": "notificationsRoutesQuery",
+    "name": "notificationsRoutesNotificationsQuery",
     "selections": [
       {
         "alias": null,
@@ -52,7 +52,7 @@ const node: ConcreteRequest = {
   "operation": {
     "argumentDefinitions": [],
     "kind": "Operation",
-    "name": "notificationsRoutesQuery",
+    "name": "notificationsRoutesNotificationsQuery",
     "selections": [
       {
         "alias": null,
@@ -82,15 +82,15 @@ const node: ConcreteRequest = {
     ]
   },
   "params": {
-    "cacheID": "ab5d7db55ce1042593c953f1b52ff6be",
+    "cacheID": "2613f5bce30bf33016091dc423a701cd",
     "id": null,
     "metadata": {},
-    "name": "notificationsRoutesQuery",
+    "name": "notificationsRoutesNotificationsQuery",
     "operationKind": "query",
-    "text": "query notificationsRoutesQuery {\n  me {\n    ...NotificationsApp_me\n    id\n  }\n}\n\nfragment NotificationsApp_me on Me {\n  unreadNotificationsCount\n}\n"
+    "text": "query notificationsRoutesNotificationsQuery {\n  me {\n    ...NotificationsApp_me\n    id\n  }\n}\n\nfragment NotificationsApp_me on Me {\n  unreadNotificationsCount\n}\n"
   }
 };
 
-(node as any).hash = "186bea32415fd2b3c522c5bebe874558";
+(node as any).hash = "699c940096905e074ae2cacd53333427";
 
 export default node;

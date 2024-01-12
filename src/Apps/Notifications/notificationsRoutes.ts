@@ -10,23 +10,16 @@ const NotificationsApp = loadable(
   }
 )
 
-const NotificationApp = loadable(
-  () =>
-    import(/* webpackChunkName: "notificationsBundle" */ "./NotificationApp"),
-  {
-    resolveComponent: component => component.NotificationAppFragmentContainer,
-  }
-)
-
 export const notificationsRoutes: AppRouteConfig[] = [
   {
     path: "/notifications",
+    layout: "FullBleed",
     getComponent: () => NotificationsApp,
     onClientSideRender: () => {
       NotificationsApp.preload()
     },
     query: graphql`
-      query notificationsRoutesQuery {
+      query notificationsRoutesNotificationsQuery {
         me {
           ...NotificationsApp_me
         }
@@ -34,15 +27,16 @@ export const notificationsRoutes: AppRouteConfig[] = [
     `,
   },
   {
-    path: "/notification/:id",
-    getComponent: () => NotificationApp,
+    path: "/notification/:notificationId",
+    layout: "FullBleed",
+    getComponent: () => NotificationsApp,
     onClientSideRender: () => {
-      NotificationApp.preload()
+      NotificationsApp.preload()
     },
     query: graphql`
-      query notificationsRoutesNotificationQuery($id: String!) {
+      query notificationsRoutesNotificationQuery {
         me {
-          ...Notification_me @arguments(notificationId: $id)
+          ...NotificationsApp_me
         }
       }
     `,

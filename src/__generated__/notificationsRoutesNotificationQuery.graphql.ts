@@ -1,5 +1,5 @@
 /**
- * @generated SignedSource<<2a4a8097afc2172a4b73a0cd9b98f952>>
+ * @generated SignedSource<<9adc1e7189623979a727228ad8f8cc7e>>
  * @lightSyntaxTransform
  * @nogrep
  */
@@ -10,12 +10,10 @@
 
 import { ConcreteRequest, Query } from 'relay-runtime';
 import { FragmentRefs } from "relay-runtime";
-export type notificationsRoutesNotificationQuery$variables = {
-  id: string;
-};
+export type notificationsRoutesNotificationQuery$variables = Record<PropertyKey, never>;
 export type notificationsRoutesNotificationQuery$data = {
   readonly me: {
-    readonly " $fragmentSpreads": FragmentRefs<"Notification_me">;
+    readonly " $fragmentSpreads": FragmentRefs<"NotificationsApp_me">;
   } | null | undefined;
 };
 export type notificationsRoutesNotificationQuery = {
@@ -23,24 +21,9 @@ export type notificationsRoutesNotificationQuery = {
   variables: notificationsRoutesNotificationQuery$variables;
 };
 
-const node: ConcreteRequest = (function(){
-var v0 = [
-  {
-    "defaultValue": null,
-    "kind": "LocalArgument",
-    "name": "id"
-  }
-],
-v1 = {
-  "alias": null,
-  "args": null,
-  "kind": "ScalarField",
-  "name": "id",
-  "storageKey": null
-};
-return {
+const node: ConcreteRequest = {
   "fragment": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Fragment",
     "metadata": null,
     "name": "notificationsRoutesNotificationQuery",
@@ -54,15 +37,9 @@ return {
         "plural": false,
         "selections": [
           {
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "notificationId",
-                "variableName": "id"
-              }
-            ],
+            "args": null,
             "kind": "FragmentSpread",
-            "name": "Notification_me"
+            "name": "NotificationsApp_me"
           }
         ],
         "storageKey": null
@@ -73,7 +50,7 @@ return {
   },
   "kind": "Request",
   "operation": {
-    "argumentDefinitions": (v0/*: any*/),
+    "argumentDefinitions": [],
     "kind": "Operation",
     "name": "notificationsRoutesNotificationQuery",
     "selections": [
@@ -87,46 +64,33 @@ return {
         "selections": [
           {
             "alias": null,
-            "args": [
-              {
-                "kind": "Variable",
-                "name": "id",
-                "variableName": "id"
-              }
-            ],
-            "concreteType": "Notification",
-            "kind": "LinkedField",
-            "name": "notification",
-            "plural": false,
-            "selections": [
-              {
-                "alias": null,
-                "args": null,
-                "kind": "ScalarField",
-                "name": "title",
-                "storageKey": null
-              },
-              (v1/*: any*/)
-            ],
+            "args": null,
+            "kind": "ScalarField",
+            "name": "unreadNotificationsCount",
             "storageKey": null
           },
-          (v1/*: any*/)
+          {
+            "alias": null,
+            "args": null,
+            "kind": "ScalarField",
+            "name": "id",
+            "storageKey": null
+          }
         ],
         "storageKey": null
       }
     ]
   },
   "params": {
-    "cacheID": "1c79ac149b34078a4574c547ceab8205",
+    "cacheID": "d5cb685c05ec202e795271ea5bc225f7",
     "id": null,
     "metadata": {},
     "name": "notificationsRoutesNotificationQuery",
     "operationKind": "query",
-    "text": "query notificationsRoutesNotificationQuery(\n  $id: String!\n) {\n  me {\n    ...Notification_me_2X2oUh\n    id\n  }\n}\n\nfragment Notification_me_2X2oUh on Me {\n  notification(id: $id) {\n    title\n    id\n  }\n}\n"
+    "text": "query notificationsRoutesNotificationQuery {\n  me {\n    ...NotificationsApp_me\n    id\n  }\n}\n\nfragment NotificationsApp_me on Me {\n  unreadNotificationsCount\n}\n"
   }
 };
-})();
 
-(node as any).hash = "e7b549d11d265e94642e4ccc2420a299";
+(node as any).hash = "4b25572db1fc5773e8cfeb61d82e6408";
 
 export default node;

@@ -345,7 +345,7 @@ describe("Shipping", () => {
           relayEnv
         )
 
-        expect(screen.getAllByRole("button", { name: "Offer" }).length).toBe(2)
+        expect(screen.getAllByRole("button", { name: "Offer" }).length).toBe(1)
       })
 
       it("renders fulfillment selection if artwork is available for pickup", async () => {
